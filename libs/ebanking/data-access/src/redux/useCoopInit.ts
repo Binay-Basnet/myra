@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   authenticateCooperative,
@@ -85,6 +85,7 @@ export const useCoopInit = ({ isMeEnabled }: IUseCoopInitProps) => {
         dispatch(logoutCooperative());
         replace('/login/coop').then(() => {
           queryClient.clear();
+          localStorage.removeItem('db');
           setIsLoading(false);
         });
       }

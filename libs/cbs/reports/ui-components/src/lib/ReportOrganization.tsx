@@ -3,14 +3,15 @@ import dayjs from 'dayjs';
 
 import { Box, Text } from '@myra-ui';
 
-import { PeriodInput, useAppSelector } from '@coop/cbs/data-access';
-import { formatAddress } from '@coop/cbs/utils';
+import { LocalizedDateFilter, useAppSelector } from '@coop/cbs/data-access';
+import { formatAddress, localizedDate } from '@coop/cbs/utils';
 
 export const ReportOrganization = () => {
   const { watch } = useFormContext();
   const user = useAppSelector((state) => state.auth.user);
 
-  const period = watch('period') as PeriodInput;
+  const period = watch('period') as LocalizedDateFilter;
+  console.log(period);
 
   return (
     <Box
@@ -57,13 +58,13 @@ export const ReportOrganization = () => {
           </Text>
 
           <Text fontSize="r1" color="gray.700" fontWeight="500">
-            {period?.customPeriod?.from.en}
+            {localizedDate(period?.from)}
           </Text>
           <Text fontSize="r1" color="gray.700">
             to
           </Text>
           <Text fontSize="r1" color="gray.700" fontWeight="500">
-            {period?.customPeriod?.to.en}
+            {localizedDate(period?.to)}
           </Text>
         </Box>
 

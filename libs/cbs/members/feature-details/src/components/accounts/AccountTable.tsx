@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
@@ -52,6 +53,30 @@ export const AccountTable = ({ data }: ILoanPaymentScheduleTableProps) => {
       {
         header: 'Interest',
         accessorKey: 'interestRate',
+        cell: (props) => (
+          <Box>
+            {props.getValue() !== '-' && (
+              <Text
+                fontSize="s3"
+                textTransform="capitalize"
+                textOverflow="ellipsis"
+                overflow="hidden"
+              >
+                {props.getValue() as string} %
+              </Text>
+            )}
+            {props.getValue() === '-' && (
+              <Text
+                fontSize="s3"
+                textTransform="capitalize"
+                textOverflow="ellipsis"
+                overflow="hidden"
+              >
+                {props.getValue() as string}
+              </Text>
+            )}
+          </Box>
+        ),
         meta: {
           isNumeric: true,
         },

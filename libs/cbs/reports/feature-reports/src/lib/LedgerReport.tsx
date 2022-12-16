@@ -22,7 +22,7 @@ export const LedgerReport = () => {
     },
     { enabled: !!filters }
   );
-  const ledgerReport = data?.report?.generalLedgerReport?.data;
+  const ledgerReport = data?.report?.otherReport?.generalLedgerReport?.data;
 
   return (
     <Report

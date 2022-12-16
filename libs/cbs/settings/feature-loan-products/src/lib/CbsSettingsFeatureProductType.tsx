@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { useGetLoanProductTypeQuery, useSetProductTypeMutation } from '@coop/cbs/data-access';
 import { asyncToast, Box, Divider, SettingsFooter } from '@myra-ui';
+
+import { useGetLoanProductTypeQuery, useSetProductTypeMutation } from '@coop/cbs/data-access';
 
 import { ProductSubTypeTable, ProductTypeTable } from '../components';
 
@@ -27,7 +28,7 @@ export const CbsSettingsFeatureProductType = () => {
   const methods = useForm<ProductTypeForm>();
 
   const { mutateAsync: setProductType } = useSetProductTypeMutation();
-  const { data, isLoading } = useGetLoanProductTypeQuery();
+  const { data, isLoading, refetch } = useGetLoanProductTypeQuery();
 
   const productData = data?.settings?.general?.loan?.productType;
 
@@ -39,6 +40,7 @@ export const CbsSettingsFeatureProductType = () => {
         success: 'Loan Settings Updated Successfully',
         loading: 'Updating Loan Settings',
       },
+      onSuccess: () => refetch(),
     });
   };
 

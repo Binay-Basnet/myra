@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { Box, GridItem, Text } from '@myra-ui';
+import { Box, ExpandedCell, ExpandedHeader, GridItem, Text } from '@myra-ui';
 
 import {
-  PeriodInput,
+  LocalizedDateFilter,
   TrialSheetReportDataEntry,
   TrialSheetReportFilter,
   useGetTrialSheetReportQuery,
@@ -11,6 +11,8 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedText } from '@coop/cbs/utils';
+import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -27,7 +29,7 @@ export const TrialSheetReport = () => {
     {
       data: {
         branchId: filters?.branchId as string,
-        period: filters?.period as PeriodInput,
+        period: filters?.period as LocalizedDateFilter,
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
         },
@@ -37,16 +39,20 @@ export const TrialSheetReport = () => {
   );
 
   const assetsReport = sortCoa(
-    (data?.report?.trialSheetReport?.data?.assets ?? []) as TrialSheetReportDataEntry[]
+    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.assets ??
+      []) as TrialSheetReportDataEntry[]
   );
   const equityAndLiablities = sortCoa(
-    (data?.report?.trialSheetReport?.data?.equityAndLiablities ?? []) as TrialSheetReportDataEntry[]
+    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.equityAndLiablities ??
+      []) as TrialSheetReportDataEntry[]
   );
   const incomeReport = sortCoa(
-    (data?.report?.trialSheetReport?.data?.income ?? []) as TrialSheetReportDataEntry[]
+    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.income ??
+      []) as TrialSheetReportDataEntry[]
   );
   const expensesReport = sortCoa(
-    (data?.report?.trialSheetReport?.data?.expenses ?? []) as TrialSheetReportDataEntry[]
+    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.expenses ??
+      []) as TrialSheetReportDataEntry[]
   );
 
   return (
@@ -91,7 +97,10 @@ export const TrialSheetReport = () => {
               </Text>
               <COATable
                 type="Liabilities"
-                total={data?.report?.trialSheetReport?.data?.totalLiablitiesIncome}
+                total={
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.equityAndLiablitiesTotal
+                }
                 data={equityAndLiablities as TrialSheetReportDataEntry[]}
               />
             </Box>
@@ -103,7 +112,9 @@ export const TrialSheetReport = () => {
                 2. Assets
               </Text>
               <COATable
-                total={data?.report?.trialSheetReport?.data?.assetsTotal}
+                total={
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data?.assetsTotal
+                }
                 type="Assets"
                 data={assetsReport as TrialSheetReportDataEntry[]}
               />
@@ -117,7 +128,9 @@ export const TrialSheetReport = () => {
               </Text>
 
               <COATable
-                total={data?.report?.trialSheetReport?.data?.expenseTotal}
+                total={
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data?.expenseTotal
+                }
                 type="Expenses"
                 data={expensesReport as TrialSheetReportDataEntry[]}
               />
@@ -130,7 +143,9 @@ export const TrialSheetReport = () => {
                 4. Income
               </Text>
               <COATable
-                total={data?.report?.trialSheetReport?.data?.incomeTotal}
+                total={
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data?.incomeTotal
+                }
                 type="Income"
                 data={incomeReport as TrialSheetReportDataEntry[]}
               />
@@ -162,7 +177,10 @@ export const TrialSheetReport = () => {
                 Total Profit/Loss (Total Income - Total Expenses)
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
-                {amountConverter(data?.report?.trialSheetReport?.data?.totalProfitLoss ?? 0)}
+                {amountConverter(
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.totalProfitLoss ?? 0
+                )}
               </Box>
             </Box>
             <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.element">
@@ -181,7 +199,10 @@ export const TrialSheetReport = () => {
                 Total Assets + Total Expenses
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
-                {amountConverter(data?.report?.trialSheetReport?.data?.totalAssetExpense ?? 0)}
+                {amountConverter(
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.totalAssetExpense ?? 0
+                )}
               </Box>
             </Box>
             <Box h="40px" display="flex">
@@ -200,7 +221,10 @@ export const TrialSheetReport = () => {
                 Total Liabilities + Total Income
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
-                {amountConverter(data?.report?.trialSheetReport?.data?.totalLiablitiesIncome ?? 0)}
+                {amountConverter(
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.totalLiablitiesIncome ?? 0
+                )}
               </Box>
             </Box>
           </Box>
@@ -233,22 +257,26 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
     return null;
   }
 
+  const tree = arrayToTree(
+    data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
+    ''
+  );
+
   return (
     <Report.Table<TrialSheetReportDataEntry>
       showFooter
-      data={data as TrialSheetReportDataEntry[]}
+      data={tree}
       columns={[
         {
-          header: 'General Ledger Name',
+          header: ({ table }) => <ExpandedHeader table={table} value="General Ledger Name" />,
           accessorKey: 'ledgerName',
           cell: (props) => (
-            <Text
-              fontSize="r1"
-              fontWeight={props.row.original.ledgerId?.includes('.') ? '400' : '600'}
-              color="gray.700"
-            >
-              {props.row.original.ledgerId} - {props?.row?.original?.ledgerName?.local}
-            </Text>
+            <ExpandedCell
+              row={props.row}
+              value={` ${props.row.original.ledgerId} - ${localizedText(
+                props?.row?.original?.ledgerName
+              )}`}
+            />
           ),
           footer: () => <>Total {type}</>,
           meta: {

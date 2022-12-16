@@ -1,14 +1,12 @@
 import { BiBell } from 'react-icons/bi';
 import { IoCheckmark } from 'react-icons/io5';
 import { VscDebugDisconnect } from 'react-icons/vsc';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { ChevronDownIcon } from '@chakra-ui/icons';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { logout, useAppDispatch, useAppSelector } from '@coop/ebanking/data-access';
 import {
   Avatar,
-  BasicSearchBar,
   Box,
   Button,
   Icon,
@@ -20,6 +18,8 @@ import {
   SwitchTabs,
   Text,
 } from '@myra-ui';
+
+import { logout, useAppDispatch, useAppSelector } from '@coop/ebanking/data-access';
 
 const languageList = [
   { label: 'EN', value: 'en' },
@@ -150,9 +150,10 @@ export const EbankingHeader = () => {
       </Box>
 
       <Box w="100%" display="flex" alignItems="center" justifyContent="space-between">
-        <Box mt="-1.2px" w="50vw">
-          <BasicSearchBar />
-        </Box>
+        {/* <Box mt="-1.2px" w="50vw"> */}
+        {/*   <BasicSearchBar /> */}
+        {/* </Box> */}
+        <Box />
 
         <HeaderRightSection />
       </Box>

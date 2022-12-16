@@ -656,11 +656,14 @@ export const GetCoopMeDocument = `
           memberProfilePicUrl
           memberMobileNo
         }
+        error {
+          ...QueryError
+        }
       }
     }
   }
 }
-    `;
+    ${QueryErrorFragmentDoc}`;
 export const useGetCoopMeQuery = <
       TData = Types.GetCoopMeQuery,
       TError = unknown
@@ -902,6 +905,63 @@ export const useGetDownloadCoopListQuery = <
     useQuery<Types.GetDownloadCoopListQuery, TError, TData>(
       variables === undefined ? ['getDownloadCoopList'] : ['getDownloadCoopList', variables],
       useAxios<Types.GetDownloadCoopListQuery, Types.GetDownloadCoopListQueryVariables>(GetDownloadCoopListDocument).bind(null, variables),
+      options
+    );
+export const GetBranchListEbankingDocument = `
+    query getBranchListEbanking {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        branchList {
+          data {
+            id
+            branchCode
+            name
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBranchListEbankingQuery = <
+      TData = Types.GetBranchListEbankingQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetBranchListEbankingQueryVariables,
+      options?: UseQueryOptions<Types.GetBranchListEbankingQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetBranchListEbankingQuery, TError, TData>(
+      variables === undefined ? ['getBranchListEbanking'] : ['getBranchListEbanking', variables],
+      useAxios<Types.GetBranchListEbankingQuery, Types.GetBranchListEbankingQueryVariables>(GetBranchListEbankingDocument).bind(null, variables),
+      options
+    );
+export const GetCollectorListEbankingDocument = `
+    query getCollectorListEbanking {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        collectors {
+          data {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCollectorListEbankingQuery = <
+      TData = Types.GetCollectorListEbankingQuery,
+      TError = unknown
+    >(
+      variables?: Types.GetCollectorListEbankingQueryVariables,
+      options?: UseQueryOptions<Types.GetCollectorListEbankingQuery, TError, TData>
+    ) =>
+    useQuery<Types.GetCollectorListEbankingQuery, TError, TData>(
+      variables === undefined ? ['getCollectorListEbanking'] : ['getCollectorListEbanking', variables],
+      useAxios<Types.GetCollectorListEbankingQuery, Types.GetCollectorListEbankingQueryVariables>(GetCollectorListEbankingDocument).bind(null, variables),
       options
     );
 export const GetLoanHistoryDocument = `

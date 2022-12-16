@@ -4,8 +4,8 @@ import { Box, GridItem } from '@myra-ui';
 
 import {
   FormFieldSearchTerm,
+  LocalizedDateFilter,
   MemberAgeRange,
-  PeriodInput,
   ShareTransactionReport,
   useGetAllDistrictsQuery,
   useGetAllLocalGovernmentQuery,
@@ -16,6 +16,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -26,7 +27,7 @@ import { amountConverter } from '@coop/shared/utils';
 
 type Filter = {
   branchId: string;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
   filter: {
     gender?: { label: string; value: string }[];
     eductaion?: { label: string; value: string }[];
@@ -72,7 +73,7 @@ export const ShareTransactionsReport = () => {
     {
       data: {
         branchId: filters?.branchId as string,
-        period: filters?.period as PeriodInput,
+        period: filters?.period as LocalizedDateFilter,
         filter: {
           ...filters?.filter,
           provinceId: provinceIDs,
@@ -87,10 +88,11 @@ export const ShareTransactionsReport = () => {
     { enabled: !!filters }
   );
 
-  const shareData = data?.report?.shareTransactionReport?.data;
-  const footerData = data?.report?.shareTransactionReport?.footer;
-  const totalShare = data?.report?.shareTransactionReport?.totalShareIssued;
-  const averageSharePerMember = data?.report?.shareTransactionReport?.avgSharePerMember;
+  const shareData = data?.report?.shareReport?.shareTransactionReport?.data;
+  const footerData = data?.report?.shareReport?.shareTransactionReport?.footer;
+  const totalShare = data?.report?.shareReport?.shareTransactionReport?.totalShareIssued;
+  const averageSharePerMember =
+    data?.report?.shareReport?.shareTransactionReport?.avgSharePerMember;
 
   const { data: provinceData } = useGetAllProvinceQuery();
   const { data: districtsData } = useGetAllDistrictsQuery();
@@ -162,7 +164,7 @@ export const ShareTransactionsReport = () => {
                     header: 'Share Transaction Date',
                     footer: () => <Box textAlign="right">Total Balance</Box>,
                     accessorKey: 'transactionDate',
-                    accessorFn: (row) => row?.transactionDate?.local,
+                    accessorFn: (row) => localizedDate(row?.transactionDate),
                     meta: {
                       width: '60px',
                       Footer: {
@@ -197,7 +199,7 @@ export const ShareTransactionsReport = () => {
                 columns: [
                   {
                     header: 'Share Return Amount Dr.',
-                    footer: () => footerData?.totatDr,
+                    footer: () => footerData?.totalDr,
                     accessorKey: 'shareReturnDr',
                     cell: (props) => amountConverter(props.getValue() as string),
                     meta: {
@@ -324,7 +326,7 @@ export const ShareTransactionsReport = () => {
             </Box>
           </Report.Filter>
           <Report.Filter title="Age Range">
-            <FormAmountFilter name="filter.ageRange" />
+            <FormAmountFilter placeholder="Age" name="filter.ageRange" />
           </Report.Filter>
         </Report.Filters>
       </Report.Body>

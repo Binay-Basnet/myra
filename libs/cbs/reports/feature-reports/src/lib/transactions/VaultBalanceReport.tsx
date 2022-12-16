@@ -2,8 +2,9 @@ import { useState } from 'react';
 
 import { Box, GridItem } from '@myra-ui';
 
-import { useGetValutBalanceReportQuery, VaultBalanceReportFilter } from '@coop/cbs/data-access';
+import { useGetVaultBalanceReportQuery, VaultBalanceReportFilter } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
+import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
@@ -29,7 +30,7 @@ const cashOptions = ['1,000', '500', '100', '50', '25', '20', '10', '5', '2', '1
 export const VaultBalanceReport = () => {
   const [filters, setFilters] = useState<VaultBalanceReportFilter | null>(null);
 
-  const { data, isFetching } = useGetValutBalanceReportQuery(
+  const { data, isFetching } = useGetVaultBalanceReportQuery(
     { data: filters as VaultBalanceReportFilter },
     { enabled: !!filters }
   );
@@ -79,16 +80,7 @@ export const VaultBalanceReport = () => {
   };
   // const combinedArray = arrayNew?.push(noneArray)
   const combinedArray = arrayNew?.length !== 0 ? [...arrayNew, noneArray] : null;
-  const footerData = [
-    openingBalance?.noteTotal,
-    openingBalance?.amountTotal,
-    vaultInBalance?.noteTotal,
-    vaultInBalance?.amountTotal,
-    vaultOutBalance?.noteTotal,
-    vaultOutBalance?.amountTotal,
-    closingBalance?.noteTotal,
-    closingBalance?.amountTotal,
-  ];
+
   return (
     <Report
       defaultFilters={{}}
@@ -106,8 +98,11 @@ export const VaultBalanceReport = () => {
           ]}
         />
         <Report.Inputs hideDate>
-          <GridItem colSpan={3}>
+          <GridItem colSpan={2}>
             <FormBranchSelect name="branchId" label="Branch" />
+          </GridItem>
+          <GridItem colSpan={1}>
+            <ReportDateRange name="date" />
           </GridItem>
           {/* <GridItem colSpan={1}>
             <ReportDateRange />
@@ -121,32 +116,33 @@ export const VaultBalanceReport = () => {
           <Report.Organization />
           <Box display="flex" flexDirection="column">
             <Report.Table<VaultBalanceReportDataType & { index: number }>
+              showFooter
               columns={[
                 {
                   header: 'Opening Cash Balance',
                   id: 'Opening Cash Balance',
-
                   columns: [
                     {
                       header: 'Opening',
                       id: 'Opening column ',
                       columns: [
                         {
-                          header: 'Deno',
+                          header: 'Denomination',
                           accessorKey: 'value',
+                          footer: () => 'Total',
                           meta: {
-                            width: '150px',
                             isNumeric: true,
+                            Footer: {
+                              colspan: 1,
+                            },
                           },
                         },
                         {
                           header: 'Count',
                           id: 'opening count',
                           accessorFn: (row) => row?.quantity?.opening,
-
+                          footer: () => amountConverter(openingBalance?.noteTotal as string),
                           meta: {
-                            width: '150px',
-
                             isNumeric: true,
                           },
                         },
@@ -154,14 +150,9 @@ export const VaultBalanceReport = () => {
                           header: 'Amount',
                           id: 'opening Amount',
                           footer: () => amountConverter(openingBalance?.amountTotal as string),
-
                           accessorFn: (row) => row?.amount?.opening,
-
                           cell: (props) => amountConverter(props.getValue() as string),
-
                           meta: {
-                            width: '150px',
-
                             isNumeric: true,
                           },
                         },
@@ -175,32 +166,23 @@ export const VaultBalanceReport = () => {
                   columns: [
                     {
                       header: 'Vault In',
-
                       columns: [
                         {
                           header: 'Count',
                           id: 'vault In Count',
                           footer: () => amountConverter(vaultInBalance?.noteTotal as string),
-
                           accessorFn: (row) => row?.quantity?.inVault,
-
                           meta: {
                             isNumeric: true,
-                            width: '150px',
                           },
                         },
                         {
                           header: 'Amount',
                           id: 'vault in Amount',
-
                           accessorFn: (row) => row?.amount?.inVault,
                           footer: () => amountConverter(vaultInBalance?.amountTotal as string),
-
                           cell: (props) => amountConverter(props.getValue() as string),
-
                           meta: {
-                            width: '150px',
-
                             isNumeric: true,
                           },
                         },
@@ -214,12 +196,8 @@ export const VaultBalanceReport = () => {
                           header: 'Count',
                           id: 'vault out Count',
                           footer: () => amountConverter(vaultOutBalance?.noteTotal as string),
-
                           accessorFn: (row) => row?.quantity?.outVault,
-
                           meta: {
-                            width: '150px',
-
                             isNumeric: true,
                           },
                         },
@@ -228,12 +206,9 @@ export const VaultBalanceReport = () => {
                           accessorFn: (row) => row?.amount?.outVault,
                           id: 'vault out Amount',
                           footer: () => amountConverter(vaultOutBalance?.amountTotal as string),
-
                           cell: (props) => amountConverter(props.getValue() as string),
-
                           meta: {
                             isNumeric: true,
-                            width: '150px',
                           },
                         },
                       ],
@@ -242,7 +217,6 @@ export const VaultBalanceReport = () => {
                 },
                 {
                   header: 'Closing Cash Balance',
-
                   columns: [
                     {
                       header: 'Closing',
@@ -251,14 +225,9 @@ export const VaultBalanceReport = () => {
                         {
                           header: 'Count',
                           id: 'closing count',
-
                           footer: () => amountConverter(closingBalance?.noteTotal as string),
-
                           accessorFn: (row) => row?.quantity?.closingVal,
-
                           meta: {
-                            width: '150px',
-
                             isNumeric: true,
                           },
                         },
@@ -267,12 +236,8 @@ export const VaultBalanceReport = () => {
                           id: 'closing Amount',
                           accessorFn: (row) => row?.amount?.closingVal,
                           footer: () => amountConverter(closingBalance?.amountTotal as string),
-
                           cell: (props) => amountConverter(props.getValue() as string),
-
                           meta: {
-                            width: '150px',
-
                             isNumeric: true,
                           },
                         },
@@ -281,53 +246,7 @@ export const VaultBalanceReport = () => {
                   ],
                 },
               ]}
-            />{' '}
-            <Box
-              display="flex"
-              flexDir="column"
-              mt="-16px"
-              mb="s16"
-              mx="s16"
-              borderLeft="1px"
-              borderColor="border.element"
-            >
-              <Box
-                h="40px"
-                display="flex"
-                borderBottom="1px"
-                borderBottomColor="border.element"
-                alignItems="center"
-              >
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  w="150px"
-                  h="100%"
-                  justifyContent="right"
-                  pr="s8"
-                  borderRight="1px"
-                  borderRightColor="border.element"
-                  fontSize="r1"
-                  fontWeight={600}
-                  color="gray.700"
-                >
-                  Total
-                </Box>
-                {footerData?.map((item) => (
-                  <Box
-                    px="s12"
-                    w="150px"
-                    alignItems="center"
-                    h="100%"
-                    borderRight="1px"
-                    borderRightColor="border.element"
-                    textAlign="right"
-                  >
-                    {amountConverter(item as string)}
-                  </Box>
-                ))}
-              </Box>
-            </Box>
+            />
           </Box>
         </Report.Content>
       </Report.Body>

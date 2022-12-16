@@ -6,7 +6,7 @@ import {
   SharePurchaseRegisterReport,
   SharePurchaseRegisterReportFilter,
   ShareTransactionType,
-  useGetshareRegisterReportQuery,
+  useGetShareRegisterReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
@@ -17,14 +17,14 @@ import { amountConverter } from '@coop/shared/utils';
 export const ShareRegisterReport = () => {
   const [filters, setFilters] = useState<SharePurchaseRegisterReportFilter | null>(null);
 
-  const { data, isFetching } = useGetshareRegisterReportQuery(
+  const { data, isFetching } = useGetShareRegisterReportQuery(
     {
       data: filters as SharePurchaseRegisterReportFilter,
     },
     { enabled: !!filters }
   );
 
-  const shareRegisterData = data?.report?.sharePurchaseRegisterReport?.data;
+  const shareRegisterData = data?.report?.shareReport?.sharePurchaseRegisterReport?.data;
 
   return (
     <Report

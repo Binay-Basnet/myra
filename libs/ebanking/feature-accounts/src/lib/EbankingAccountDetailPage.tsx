@@ -1,18 +1,19 @@
 import { Fragment } from 'react';
-import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 
+import { Box, Button, Divider, Grid, Icon, PathBar } from '@myra-ui';
+
 import { AccountLargeCard, InfoCard, TransactionCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
 import {
   EbankingAccount,
+  useAppSelector,
   useGetAccountDetailsQuery,
   useGetEbankLoanAccountDetailsQuery,
 } from '@coop/ebanking/data-access';
-import { Box, Button, Divider, Grid, Icon, PathBar } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 import { AccountDetail } from '../components/AccountDetail';
@@ -56,6 +57,7 @@ interface IAccountDetailsProps {
 
 export const AccountDetails = ({ account, isLoading }: IAccountDetailsProps) => {
   const router = useRouter();
+  const name = useAppSelector((state) => state?.auth?.cooperative?.user?.memberName);
 
   const transactions = account?.transactions?.edges;
 
@@ -83,17 +85,17 @@ export const AccountDetails = ({ account, isLoading }: IAccountDetailsProps) => 
         {account ? (
           <InfoCard title="Account Details">
             <Grid templateColumns="repeat(3, 1fr)" gap="s16" p="s16">
-              <AccountDetail title="Account Holder Name " value="Krishna Thapa" />
+              <AccountDetail title="Account Holder Name " value={name as string} />
               <AccountDetail title="Account Number " value={account.accountNumber} />
               <AccountDetail title="Account Type " value={account.accountSubType} />
               <AccountDetail title="Interest Rate" value={`${account.interestRate.toFixed(2)}%`} />
               <AccountDetail
                 title="Interest Booked"
-                value={`${Number(account.interestBooked).toFixed(2)}%`}
+                value={`${Number(account.interestBooked).toFixed(2)}`}
               />
               <AccountDetail
                 title="Interest Earned"
-                value={`${Number(account.interestEarned).toFixed(2)}%`}
+                value={`${Number(account.interestEarned).toFixed(2)}`}
               />
               <AccountDetail title="Total Balance" value={amountConverter(account.balance)} />
               <AccountDetail
@@ -106,11 +108,11 @@ export const AccountDetails = ({ account, isLoading }: IAccountDetailsProps) => 
           <Skeleton isLoaded={!isLoading} h="172px" />
         )}
 
-        <InfoCard title="Balance History">
-          <Box position="relative" w="100%" h="300px" p="s8">
-            <Image src="/account-dummy-chart.svg" layout="fill" objectFit="contain" />
-          </Box>
-        </InfoCard>
+        {/* <InfoCard title="Balance History"> */}
+        {/*   <Box position="relative" w="100%" h="300px" p="s8"> */}
+        {/*     <Image src="/account-dummy-chart.svg" layout="fill" objectFit="contain" /> */}
+        {/*   </Box> */}
+        {/* </InfoCard> */}
         <InfoCard
           title="Recent Transactions"
           btn={

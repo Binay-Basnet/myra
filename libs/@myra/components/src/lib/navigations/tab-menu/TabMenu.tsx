@@ -59,13 +59,13 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'requests',
     icon: IoMailUnreadOutline,
-    link: '/requests/member',
+    link: '/requests/withdraw-via-collector',
     match: ['requests'],
   },
   {
     title: 'withdrawSlip',
     icon: TbMailForward,
-    link: '/withdraw/cheque-book',
+    link: '/withdraw/withdraw-slip-book/list',
     match: ['withdraw'],
   },
   {
@@ -77,7 +77,7 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'others',
     icon: IoPrismOutline,
-    link: '/others/market-representatives/list',
+    link: '/others/market-representative/list',
     match: ['others'],
   },
 ];

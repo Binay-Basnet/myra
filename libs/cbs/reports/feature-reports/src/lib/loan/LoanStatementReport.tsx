@@ -4,12 +4,13 @@ import dayjs from 'dayjs';
 import { Box } from '@myra-ui';
 
 import {
+  LoanAccReportDetails,
   LoanStatement,
   LoanStatementReportSettings,
   useGetLoanStatementReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { LoanReportInputs } from '@coop/cbs/reports/components';
+import { LoanReportInputs, LoanReportMember } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -23,8 +24,11 @@ export const LoanStatementReport = () => {
     { enabled: !!filters }
   );
 
-  const loanData = data?.report?.loanStatementReport?.statement;
+  const loanData = data?.report?.loanReport?.loanStatementReport?.statement;
   const loanReport = loanData && 'loanStatement' in loanData ? loanData.loanStatement : [];
+  const loanMember = data?.report?.loanReport?.loanStatementReport?.member;
+  const loanAccountMeta =
+    loanData && 'loanStatement' in loanData ? (loanData.meta as LoanAccReportDetails) : null;
 
   return (
     <Report
@@ -51,6 +55,7 @@ export const LoanStatementReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
+          <LoanReportMember member={loanMember} account={loanAccountMeta as LoanAccReportDetails} />
           <Report.Table<LoanStatement & { index: number }>
             showFooter
             columns={[

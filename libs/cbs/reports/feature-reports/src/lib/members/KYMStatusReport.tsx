@@ -33,7 +33,7 @@ export const KYMStatusReport = () => {
     },
     { enabled: !!filters }
   );
-  const mobileBankingReport = data?.report?.kymStatusReport?.data;
+  const mobileBankingReport = data?.report?.memberReport?.kymStatusReport?.data;
 
   return (
     <Report
@@ -164,8 +164,9 @@ export const KYMStatusReport = () => {
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                 {
-                  data?.report?.kymStatusReport?.data?.filter((d) => d?.kymStatus === 'Updated')
-                    ?.length
+                  data?.report?.memberReport?.kymStatusReport?.data?.filter(
+                    (d) => d?.kymStatus === 'Updated'
+                  )?.length
                 }
               </Box>
             </Box>
@@ -186,8 +187,9 @@ export const KYMStatusReport = () => {
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                 {
-                  data?.report?.kymStatusReport?.data?.filter((d) => d?.kymStatus === 'Not Updated')
-                    ?.length
+                  data?.report?.memberReport?.kymStatusReport?.data?.filter(
+                    (d) => d?.kymStatus === 'Not Updated'
+                  )?.length
                 }
               </Box>
             </Box>
@@ -207,7 +209,7 @@ export const KYMStatusReport = () => {
                 Total Member
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
-                {data?.report?.kymStatusReport?.data?.length ?? 0}
+                {data?.report?.memberReport?.kymStatusReport?.data?.length ?? 0}
               </Box>
             </Box>
           </Box>

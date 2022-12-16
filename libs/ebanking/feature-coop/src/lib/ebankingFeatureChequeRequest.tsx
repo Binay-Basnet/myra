@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import { asyncToast, Box, PathBar } from '@myra-ui';
+
 import { FormAccountHeader } from '@coop/ebanking/accounts';
 import { InfoCard } from '@coop/ebanking/cards';
 import {
@@ -12,13 +14,12 @@ import {
   useSetChequeRequestDataMutation,
 } from '@coop/ebanking/data-access';
 import {
-  FormAgentSelect,
-  FormBranchSelect,
+  FormAgentSelectEbanking,
+  FormBranchSelectEbanking,
   FormSelect,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { asyncToast, Box, PathBar } from '@myra-ui';
 import { getLoggedInUserId } from '@coop/shared/utils';
 
 const RequestTypeOptions = [
@@ -112,9 +113,9 @@ export const EbankingFeatureChequeRequest = () => {
               />
 
               {type === EBankingChequeRequestType.SelfPickup ? (
-                <FormBranchSelect name="branch" label="Branch" />
+                <FormBranchSelectEbanking name="branch" label="Branch" />
               ) : (
-                <FormAgentSelect label="Collector" name="collector" />
+                <FormAgentSelectEbanking label="Collector" name="collector" />
               )}
 
               <FormTextArea name="note" label="Note" />

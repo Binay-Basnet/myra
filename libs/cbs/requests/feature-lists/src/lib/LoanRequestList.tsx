@@ -6,7 +6,7 @@ import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@m
 import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, useGetLoanRequestsQuery } from '@coop/cbs/data-access';
-import { amountConverter, getRouterQuery } from '@coop/shared/utils';
+import { amountConverter, featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { LoanApproveOrDeclineModal } from '../components/LoanApproveOrDeclineModal';
@@ -101,7 +101,7 @@ export const LoanRequestList = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="110px" zIndex={3}>
-        <PageHeader heading="Loan Request" />
+        <PageHeader heading={`Loan Request - ${featureCode.loanRequestList}`} />
       </Box>
 
       <Table
@@ -128,7 +128,7 @@ export const LoanRequestList = () => {
       />
 
       <LoanApproveOrDeclineModal queryKey="getLoanRequests" approveModal={modalProps}>
-        <Grid templateColumns="repeat(2, 1fr)" gap="s20" p="s16">
+        <Grid templateColumns="repeat(3, 1fr)" gap="s20" p="s16">
           <DetailCardContent
             title="Requested By"
             subtitle={String(selectedRequest?.memberName.local)}

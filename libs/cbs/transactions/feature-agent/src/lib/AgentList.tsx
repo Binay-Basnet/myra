@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 // const MEMBER_TAB_ITEMS = [
 //   {
@@ -99,7 +99,9 @@ export const AgentList = () => {
               {
                 title: 'transactionsAgentListViewDetail',
                 onClick: () => {
-                  router.push(`/transactions/agent/${cell?.row?.original?.node?.id}/overview`);
+                  router.push(
+                    `/${getUrl(router.pathname, 2)}/${cell?.row?.original?.node?.id}/overview`
+                  );
                 },
               },
             ]}
@@ -117,7 +119,7 @@ export const AgentList = () => {
   return (
     <>
       <PageHeader
-        heading={`${t['agentListMarketRepresentativeList']} - ${featureCode?.agentList}`}
+        heading={`${t['agentListMarketRepresentativeList']} - ${featureCode?.marketRepresentativeList}`}
         // tabItems={MEMBER_TAB_ITEMS}
       />
 

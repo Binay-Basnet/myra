@@ -20,7 +20,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
     useTransactionDetailHooks();
 
   return (
-    <DetailsCard title={t['transDetailPaymentDetails']}>
+    <DetailsCard title={t['transDetailPaymentDetails']} hasThreeRows>
       {detailPage === 'deposit' && (
         <>
           <DetailCardContent

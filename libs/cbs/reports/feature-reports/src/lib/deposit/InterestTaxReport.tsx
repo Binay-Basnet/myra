@@ -21,7 +21,7 @@ export const InterestTaxReport = () => {
     },
     { enabled: !!filters }
   );
-  const interestTaxReport = interestTaxReportData?.report?.interestTaxReport?.data;
+  const interestTaxReport = interestTaxReportData?.report?.depositReport?.interestTaxReport?.data;
 
   return (
     <Report

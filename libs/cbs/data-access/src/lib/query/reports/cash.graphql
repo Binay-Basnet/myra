@@ -1,0 +1,28 @@
+query getCashLedgerReport($data: CashLedgerReportFilterData) {
+  report {
+    cashReport {
+      cashLedgerReport(data: $data) {
+        openingBalance
+        closingBalance
+        summary {
+          date
+          ledgerCode
+          particular
+          voucherNo
+          cashDr
+          cashCr
+          balance
+        }
+        details {
+          date
+          ledgerCode
+          particular
+          voucherNo
+          cashDr
+          cashCr
+          balance
+        }
+      }
+    }
+  }
+}

@@ -10,6 +10,12 @@ interface IProductServiceTable {
 }
 
 export const ProductServiceTable = ({ serviceList }: IProductServiceTable) => {
+  const serviceListWithIndex =
+    serviceList?.map((service, index) => ({
+      index: index + 1,
+      ...service,
+    })) ?? [];
+
   const columns = React.useMemo<Column<ServiceTypeFormState>[]>(
     () => [
       {
@@ -39,9 +45,7 @@ export const ProductServiceTable = ({ serviceList }: IProductServiceTable) => {
     []
   );
 
-  if (serviceList?.length === 0) return null;
+  if (serviceListWithIndex?.length === 0) return null;
 
-  return (
-    <Table variant="report" size="report" isStatic data={serviceList ?? []} columns={columns} />
-  );
+  return <Table isStatic data={serviceListWithIndex ?? []} columns={columns} />;
 };

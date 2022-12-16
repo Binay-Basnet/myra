@@ -2,13 +2,16 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { Alert, asyncToast, Grid, GridItem, Modal } from '@myra-ui';
+
 import {
+  PickupMethod,
   useAccountDetails,
   useGetAvailableRangeQuery,
   useSetIssueNewSlipMutation,
+  WithdrawSlipIssueInput,
 } from '@coop/cbs/data-access';
-import { FormSelect } from '@coop/shared/form';
-import { Alert, asyncToast, Modal, Grid, GridItem } from '@myra-ui';
+import { FormAgentSelect, FormBranchSelect, FormSelect, FormSwitchTab } from '@coop/shared/form';
 
 interface ICreateWithdrawSlipModalProps {
   isOpen: boolean;
@@ -34,14 +37,21 @@ const totalNumberOptions = [
   },
 ];
 
+const pickupMethodOptions = [
+  { label: 'Self', value: PickupMethod.Self },
+  { label: 'Through Market Representative', value: PickupMethod.MarketRepresentative },
+];
+
 export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlipModalProps) => {
   const { accountDetails } = useAccountDetails();
 
   const queryClient = useQueryClient();
 
-  const methods = useForm();
+  const methods = useForm<WithdrawSlipIssueInput>({
+    defaultValues: { pickupMethod: PickupMethod.Self },
+  });
 
-  const { watch, setValue } = methods;
+  const { watch, resetField, getValues } = methods;
 
   const count = watch('count');
 
@@ -61,16 +71,20 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
   const { mutateAsync: issueWithdrawSlip } = useSetIssueNewSlipMutation({});
 
   const handleSave = () => {
+    const data = getValues();
+
     asyncToast({
       id: 'account-issue-new-withdraw-slip',
       msgs: {
         loading: 'Issuing withdraw slip',
         success: 'Withdraw slip issued',
       },
-      promise: issueWithdrawSlip({ accountId: accountDetails?.accountId as string, count }),
+      promise: issueWithdrawSlip({
+        data: { ...data, accountId: accountDetails?.accountId as string },
+      }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getAvailableSlipsList']);
-        setValue('count', '');
+        resetField('count');
         onClose();
       },
     });
@@ -95,12 +109,27 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
             />
 
             {count && from && to && (
-              <GridItem colSpan={2}>
-                <Alert
-                  status="info"
-                  title={`Withdraw Slip Start Number ${from} and Withdraw Slip End Number ${to}`}
-                />
-              </GridItem>
+              <>
+                <GridItem colSpan={2}>
+                  <Alert
+                    status="info"
+                    title={`Withdraw Slip Start Number ${from} and Withdraw Slip End Number ${to}`}
+                    hideCloseIcon
+                  />
+                </GridItem>
+
+                <GridItem colSpan={2}>
+                  <FormSwitchTab
+                    name="pickupMethod"
+                    label="Pickup Method"
+                    options={pickupMethodOptions}
+                  />
+                </GridItem>
+
+                <FormBranchSelect name="branchId" label="Service Center" />
+
+                <FormAgentSelect name="marketRepresentative" label="Market Representative" />
+              </>
             )}
           </Grid>
         </form>

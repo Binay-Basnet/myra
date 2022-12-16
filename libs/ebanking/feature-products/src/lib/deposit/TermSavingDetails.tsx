@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
 
+import { Box, DetailsCard, PathBar } from '@myra-ui';
+
 import {
   DepositProductCriteria,
   DepositProductFormStateData,
   ServiceTypeFormState,
 } from '@coop/ebanking/data-access';
-import { Box, DetailsCard, PathBar } from '@myra-ui';
 
 import {
   AccountCloseCharge,
@@ -16,7 +17,6 @@ import {
   ProductDormantSetup,
   ProductFeatures,
   ProductGeneralInformation,
-  ProductLimits,
   ProductServiceCharge,
 } from '../../components/deposit';
 import { ProductInterestRate } from '../../components/deposit/ProductInterestRate';
@@ -28,23 +28,23 @@ interface IRecurringDepositDetailsProps {
 
 export const TermSavingDetails = ({ product, criteria }: IRecurringDepositDetailsProps) => {
   const router = useRouter();
-  const limits = [
-    {
-      name: 'Balance',
-      minAmount: product?.balanceLimit?.minAmount,
-      maxAmount: product?.balanceLimit?.maxAmount,
-    },
-    {
-      name: 'Deposit',
-      minAmount: product?.depositAmount?.minAmount,
-      maxAmount: product?.depositAmount?.maxAmount,
-    },
-    {
-      name: 'Withdraw',
-      minAmount: product?.withdrawAmountLimit?.minAmount,
-      maxAmount: product?.withdrawAmountLimit?.maxAmount,
-    },
-  ];
+  // const limits = [
+  //   {
+  //     name: 'Balance',
+  //     minAmount: product?.balanceLimit?.minAmount,
+  //     maxAmount: product?.balanceLimit?.maxAmount,
+  //   },
+  //   {
+  //     name: 'Deposit',
+  //     minAmount: product?.depositAmount?.minAmount,
+  //     maxAmount: product?.depositAmount?.maxAmount,
+  //   },
+  //   {
+  //     name: 'Withdraw',
+  //     minAmount: product?.withdrawAmountLimit?.minAmount,
+  //     maxAmount: product?.withdrawAmountLimit?.maxAmount,
+  //   },
+  // ];
 
   const otherFeatures: { feature: string; status: 'yes' | 'no' }[] = [
     {
@@ -112,7 +112,7 @@ export const TermSavingDetails = ({ product, criteria }: IRecurringDepositDetail
       />
       <ProductServiceCharge serviceCharge={product?.serviceCharge} />
       <AccountCloseCharge accountCloseCharge={product?.accountCloseCharge} />
-      <ProductLimits limits={limits} />
+      {/* <ProductLimits limits={limits} /> */}
       <ProductInterestRate interestRate={product?.interest} />
       <ProductDormantSetup dormantSetup={product?.dormantSetup} />
 

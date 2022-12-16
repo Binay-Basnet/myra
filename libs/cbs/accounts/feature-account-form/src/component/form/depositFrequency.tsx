@@ -39,7 +39,7 @@ export const DepositFrequency = () => {
     { label: t['accMonday'], value: Week.Monday },
     { label: t['accTuesday'], value: Week.Tuesday },
     { label: t['accWednesday'], value: Week.Wednesday },
-    { label: t['accThursday'], value: Week.Thursaday },
+    { label: t['accThursday'], value: Week.Thursday },
     { label: t['accFriday'], value: Week.Friday },
     { label: t['accSaturday'], value: Week.Saturday },
   ];

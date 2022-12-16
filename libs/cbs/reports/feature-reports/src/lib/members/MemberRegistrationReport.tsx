@@ -5,10 +5,10 @@ import { Box, GridItem, Text } from '@myra-ui';
 
 import {
   Address,
+  LocalizedDateFilter,
   MemberIndividualData,
   MemberOtherData,
   MemberType,
-  PeriodInput,
   useGetMemberRegistrationReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -25,7 +25,7 @@ type Filter = {
     institutionType?: string;
     occupation?: string[];
   };
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export const MemberRegisterReport = () => {
@@ -37,7 +37,7 @@ export const MemberRegisterReport = () => {
   const { data: memberRegistrationReportData, isFetching } = useGetMemberRegistrationReportQuery(
     {
       data: {
-        period: filters?.period as PeriodInput,
+        period: filters?.period as LocalizedDateFilter,
         filter: {
           ...filters?.filter,
           memberType: memberTypes,
@@ -47,10 +47,10 @@ export const MemberRegisterReport = () => {
     { enabled: !!filters }
   );
 
-  const individualReport = memberRegistrationReportData?.report?.memberRegistrationReport?.data
-    ?.individual as MemberIndividualData[];
-  const otherReport = memberRegistrationReportData?.report?.memberRegistrationReport?.data
-    ?.other as MemberOtherData[];
+  const individualReport = memberRegistrationReportData?.report?.memberReport
+    ?.memberRegistrationReport?.data?.individual as MemberIndividualData[];
+  const otherReport = memberRegistrationReportData?.report?.memberReport?.memberRegistrationReport
+    ?.data?.other as MemberOtherData[];
 
   return (
     <Report

@@ -1,0 +1,22 @@
+query getUserReport($data: UserReportFilter) {
+  report {
+    employeeReport {
+      userReport(data: $data) {
+        data {
+          isCoreEmployee
+          employeeName
+          empCode
+          username
+          usernameCode
+          accessForBranch
+          accessForGroup
+          role
+          createdDate
+          createdBy
+          status
+          remarks
+        }
+      }
+    }
+  }
+}

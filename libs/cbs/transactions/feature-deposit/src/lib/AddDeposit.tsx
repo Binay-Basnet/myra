@@ -34,7 +34,7 @@ import {
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
 import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
-import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
+import { amountConverter, decimalAdjust, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';
 
@@ -261,8 +261,8 @@ export const AddDeposit = () => {
         preferenceDate === DateType.Bs
           ? pendingInstallments[pendingInstallments.length - 1]?.monthName?.np
           : pendingInstallments[pendingInstallments.length - 1]?.monthName?.en,
-      fine: String(tempFine),
-      rebate: String(tempRebate),
+      fine: decimalAdjust('ceil', tempFine, -2),
+      rebate: decimalAdjust('floor', tempRebate, -2),
     };
   }, [noOfInstallments, installmentsListQueryData, preferenceDate]);
 
@@ -596,6 +596,14 @@ export const AddDeposit = () => {
                               expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
                               lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
                               productName: selectedAccount?.product?.productName,
+                              installmentAmount:
+                                selectedAccount?.product?.nature ===
+                                  NatureOfDepositProduct.RecurringSaving ||
+                                (selectedAccount?.product?.nature ===
+                                  NatureOfDepositProduct.Saving &&
+                                  selectedAccount?.product?.isMandatorySaving)
+                                  ? selectedAccount?.installmentAmount
+                                  : null,
                             }
                           : null
                       }

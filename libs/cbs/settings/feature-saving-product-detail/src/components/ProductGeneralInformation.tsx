@@ -18,7 +18,7 @@ interface IProductGeneralInformation {
 }
 
 export const ProductGeneralInformation = ({ generalInformation }: IProductGeneralInformation) => (
-  <DetailsCard title="General Information">
+  <DetailsCard title="General Information" hasThreeRows>
     <DetailCardContent title="Product Name" subtitle={generalInformation?.productName} />
     <DetailCardContent
       title="Product Code"
@@ -26,7 +26,7 @@ export const ProductGeneralInformation = ({ generalInformation }: IProductGenera
     />
     <DetailCardContent
       title="Nature of Saving Product"
-      subtitle={generalInformation?.nature?.toLowerCase()}
+      subtitle={generalInformation?.nature?.replace(/_/g, ' ')}
     />
     <DetailCardContent
       title="Interest Positing Frequency"

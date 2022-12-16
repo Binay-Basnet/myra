@@ -4,7 +4,11 @@ import { useRouter } from 'next/router';
 import { Avatar, Box } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Share_Transaction_Direction, useGetShareRegisterListQuery } from '@coop/cbs/data-access';
+import {
+  Filter_Mode,
+  Share_Transaction_Direction,
+  useGetShareRegisterListQuery,
+} from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -12,9 +16,16 @@ export const ShareRegisterTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  const searchTerm = router?.query['search'] as string;
+
   const { data, isFetching, refetch } = useGetShareRegisterListQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        memberName: searchTerm,
+        memberCode: searchTerm,
+        filterMode: Filter_Mode.Or,
+      },
     },
     {
       staleTime: 0,

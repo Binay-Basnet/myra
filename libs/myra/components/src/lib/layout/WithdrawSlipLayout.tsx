@@ -14,6 +14,11 @@ interface IMemberPageLayout {
 
 const shareColumns = [
   {
+    title: 'Withdraw Slip Book',
+    link: '/withdraw/withdraw-slip-book/list',
+    addLink: '/withdraw/withdraw-slip-book/add',
+  },
+  {
     title: 'withdrawSlipRequests',
     link: '/withdraw/cheque-book',
   },
@@ -25,6 +30,10 @@ const shareColumns = [
 ];
 
 const addButtoncolumns = [
+  {
+    title: 'Withraw Slip Book',
+    link: '/withdraw/withdraw-slip-book/add',
+  },
   {
     title: 'Block Withdraw Slip Requests',
     link: '/withdraw/block-withdraw-slip-requests/add',

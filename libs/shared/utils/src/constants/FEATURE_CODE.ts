@@ -15,15 +15,16 @@ export const featureCode = {
   accountCloseList: '10204',
   depositProductList: '10205',
 
-  newDeposit: '10301',
-  newWithdraw: '10302',
-  newAccountTransfer: '10303',
+  newDeposit: '10401',
+  newWithdraw: '10402',
+  newAccountTransfer: '10403',
   newLoanPayment: '10304',
-  newAgentTransaction: '10305',
-  depositList: '10306',
-  withdrawList: '10308',
-  accountTransferList: '10310',
-  agentList: '10314',
+  newMarketRepresentativeTransaction: '10404',
+  depositList: '10405',
+  withdrawList: '10406',
+  accountTransferList: '10407',
+  marketRepresentativeList: '10410',
+  marketRepresentativeTransactionsList: '10408',
 
   newLoan: '10401',
   loanList: '10402',
@@ -70,4 +71,7 @@ export const featureCode = {
   tellerTransferList: '10504',
   newVaultTransfer: '10501',
   newTellerTransfer: '10502',
+
+  withdrawRequestList: '10602',
+  loanRequestList: '10603',
 };

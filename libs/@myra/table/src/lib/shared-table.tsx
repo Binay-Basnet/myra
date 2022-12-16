@@ -13,12 +13,12 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { flexRender, SortingState } from '@tanstack/react-table';
+import { ExpandedState, flexRender, SortingState } from '@tanstack/react-table';
 import qs from 'qs';
 
-import { Loader, Modal, Pagination } from '@myra-ui/components';
+import { Loader, Pagination } from '@myra-ui/components';
 import { Text } from '@myra-ui/foundations';
-import { NoDataState, WIPState } from '@myra-ui/templates';
+import { NoDataState } from '@myra-ui/templates';
 
 // eslint-disable-next-line import/no-cycle
 import { TableSearch, TableSelectionBar } from '../components';
@@ -41,19 +41,15 @@ export const Table = <T extends Record<string, unknown>>({
   rowOnClick,
   enableSorting,
   manualSorting = true,
-  onChange,
+  getSubRows,
 }: TableProps<T>) => {
   const router = useRouter();
   const sortQuery = router?.query['sort'] as string;
 
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
 
   const table = useTable<T>({
     columns,
@@ -63,13 +59,17 @@ export const Table = <T extends Record<string, unknown>>({
     state: {
       sorting,
       rowSelection,
+      expanded,
     },
+
+    onExpandedChange: setExpanded,
 
     onSortingChange: setSorting,
     onRowSelectionChange: setRowSelection,
     getRowId,
     enableSorting,
     manualSorting,
+    getSubRows,
   });
 
   useEffect(() => {
@@ -90,39 +90,16 @@ export const Table = <T extends Record<string, unknown>>({
         <TableSelectionBar tableInstance={table} columns={columns as Column<T>[]} />
       </Collapse>
       {!isStatic && (
-        <>
-          <TableSearch
-            placeholder={searchPlaceholder}
-            pagination={pagination}
-            size={tableSize}
-            setSize={setTableSize}
-            // onClick={() => setIsModalOpen(true)}
-            onChange={onChange}
-          />
-          <Modal open={isModalOpen} onClose={handleModalClose} isCentered width="3xl">
-            <WIPState />
-          </Modal>
-        </>
+        <TableSearch
+          placeholder={searchPlaceholder}
+          pagination={pagination}
+          size={tableSize}
+          setSize={setTableSize}
+        />
       )}
 
-      <TableContainer
-        minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
-        {...(variant === 'report'
-          ? { borderRadius: 'br1', border: '0px', borderColor: 'border.element' }
-          : {})}
-      >
-        <ChakraTable
-          size={tableSize}
-          variant={variant}
-          {...(variant === 'report'
-            ? {
-                border: '0',
-                borderRadius: 'br1',
-
-                borderColor: 'border.element',
-              }
-            : {})}
-        >
+      <TableContainer minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}>
+        <ChakraTable size={tableSize} variant={variant}>
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
@@ -131,10 +108,9 @@ export const Table = <T extends Record<string, unknown>>({
                     key={header.id}
                     colSpan={header.colSpan}
                     isNumeric={header.column.columnDef.meta?.isNumeric}
-                    width={header.column.columnDef.meta?.width}
+                    minW={header.column.columnDef.meta?.width}
+                    w={header.column.columnDef.meta?.width}
                     textAlign={header.column.columns.length !== 0 ? 'center' : 'left'}
-                    px="s12"
-                    py="0"
                   >
                     {header.isPlaceholder ? null : (
                       <Box
@@ -181,7 +157,10 @@ export const Table = <T extends Record<string, unknown>>({
               </Tr>
             ))}
           </Thead>
-          <Tbody position={isLoading || !data || data?.length === 0 ? 'relative' : 'static'}>
+          <Tbody
+            h={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
+            position={isLoading || !data || data?.length === 0 ? 'relative' : 'static'}
+          >
             {isLoading ? (
               <Box as="tr">
                 <Box
@@ -226,13 +205,15 @@ export const Table = <T extends Record<string, unknown>>({
                   e.stopPropagation();
                 }}
               >
-                {row.getVisibleCells().map((cell) => (
+                {row.getVisibleCells().map((cell, index) => (
                   <Td
                     key={cell.id}
                     isNumeric={cell.column.columnDef.meta?.isNumeric}
-                    width={cell.column.columnDef.meta?.width}
-                    px="s12"
-                    py="0"
+                    minW={cell.column.columnDef.meta?.width}
+                    w={cell.column.columnDef.meta?.width}
+                    position={index === 0 ? 'sticky' : 'static'}
+                    top={0}
+                    left={0}
                   >
                     <Text
                       as="div"
@@ -251,24 +232,28 @@ export const Table = <T extends Record<string, unknown>>({
 
           {showFooter && (
             <Tfoot>
-              {table.getFooterGroups().map((footerGroup) => (
-                <Tr key={footerGroup.id}>
-                  {footerGroup.headers.map((footer) =>
-                    footer.column.columnDef.meta?.Footer?.display === 'none' ? null : (
-                      <Th
-                        key={footer.id}
-                        isNumeric={footer.column.columnDef.meta?.isNumeric}
-                        width={footer.column.columnDef.meta?.width}
-                        colSpan={footer.column.columnDef.meta?.Footer?.colspan}
-                      >
-                        {footer.isPlaceholder
-                          ? null
-                          : flexRender(footer.column.columnDef.footer, footer.getContext())}
-                      </Th>
-                    )
-                  )}
-                </Tr>
-              ))}
+              {table.getFooterGroups().map((footerGroup, index) => {
+                if (index !== 0) return null;
+
+                return (
+                  <Tr key={footerGroup.id}>
+                    {footerGroup.headers.map((footer) =>
+                      footer.column.columnDef.meta?.Footer?.display === 'none' ? null : (
+                        <Th
+                          key={footer.id}
+                          isNumeric={footer.column.columnDef.meta?.isNumeric}
+                          width={footer.column.columnDef.meta?.width}
+                          colSpan={footer.column.columnDef.meta?.Footer?.colspan}
+                        >
+                          {footer.isPlaceholder
+                            ? null
+                            : flexRender(footer.column.columnDef.footer, footer.getContext())}
+                        </Th>
+                      )
+                    )}
+                  </Tr>
+                );
+              })}
             </Tfoot>
           )}
         </ChakraTable>

@@ -13,7 +13,7 @@ import {
   useGetSavingStatementQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { SavingReportInputs } from '@coop/cbs/reports/components';
+import { ReportMember, SavingReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormAmountFilter, FormRadioGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
@@ -27,7 +27,10 @@ export const SavingStatementReport = () => {
     },
     { enabled: !!filters }
   );
-  const savingData = data?.report?.savingStatementReport?.statement;
+
+  const savingMember = data?.report?.depositReport?.savingStatementReport?.member;
+
+  const savingData = data?.report?.depositReport?.savingStatementReport?.statement;
   const savingReport =
     savingData && 'savingStatement' in savingData ? savingData.savingStatement : [];
   const savingReportTotal = (
@@ -64,6 +67,8 @@ export const SavingStatementReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
+          <ReportMember member={savingMember} />
+
           <Report.Table<SavingStatement & { index: number }>
             showFooter
             columns={[
@@ -99,7 +104,7 @@ export const SavingStatementReport = () => {
                 },
               },
               {
-                header: 'Cheque/Voucher no',
+                header: 'Transaction ID',
                 accessorKey: 'chequeOrVoucherNo',
                 meta: {
                   isNumeric: true,
@@ -112,7 +117,7 @@ export const SavingStatementReport = () => {
                 header: 'Withdraw Amount (Dr.)',
                 accessorKey: 'withdrawDr',
                 cell: (props) => amountConverter(props.getValue() as string),
-                footer: () => amountConverter(savingReportTotal?.totalWithdraw),
+                footer: () => amountConverter(savingReportTotal?.totalWithdraw as string),
                 meta: {
                   isNumeric: true,
                 },
@@ -122,7 +127,7 @@ export const SavingStatementReport = () => {
                 accessorKey: 'depositCr',
                 cell: (props) => amountConverter(props.getValue() as string),
 
-                footer: () => amountConverter(savingReportTotal?.totalDeposit),
+                footer: () => amountConverter(savingReportTotal?.totalDeposit as string),
                 meta: {
                   isNumeric: true,
                 },
@@ -130,9 +135,16 @@ export const SavingStatementReport = () => {
               {
                 header: 'Balance Amount',
                 accessorKey: 'balanceAmount',
-                cell: (props) => amountConverter(props.getValue() as string),
+                // cell: (props) => (
+                //   <Box display="flex" gap="s16">
+                //     <Text fontSize="r1" fontWeight="400">
+                //       {amountConverter(props.getValue() as string)}
+                //     </Text>
 
-                footer: () => amountConverter(savingReportTotal?.totalBalance),
+                //   </Box>
+                // ),
+
+                footer: () => amountConverter(savingReportTotal?.totalBalance as string),
                 meta: {
                   isNumeric: true,
                 },

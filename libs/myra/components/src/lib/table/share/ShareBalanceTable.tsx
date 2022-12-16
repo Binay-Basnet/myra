@@ -4,16 +4,24 @@ import { useRouter } from 'next/router';
 import { Avatar, Box } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
+  const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
+
   const { data, isFetching, refetch } = useGetShareBalanceListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    filter: {
+      memberName: searchTerm,
+      memberCode: searchTerm,
+      filterMode: Filter_Mode.Or,
+    },
   });
+
   const { t } = useTranslation();
-  const router = useRouter();
 
   useEffect(() => {
     refetch();

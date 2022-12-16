@@ -3,7 +3,12 @@ import dayjs from 'dayjs';
 
 import { GridItem } from '@myra-ui';
 
-import { PeriodInput, RolesFilter, useGetUserReportQuery, UserReport } from '@coop/cbs/data-access';
+import {
+  LocalizedDateFilter,
+  RolesFilter,
+  useGetUserReportQuery,
+  UserReport,
+} from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
@@ -15,7 +20,7 @@ type UserReportFilter = {
     isCoreEmployee?: 'yes' | 'no';
     role?: { label: string; value: RolesFilter }[];
   };
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export const UsersReport = () => {
@@ -29,7 +34,7 @@ export const UsersReport = () => {
   const { data, isFetching } = useGetUserReportQuery(
     {
       data: {
-        period: filters?.period as PeriodInput,
+        period: filters?.period as LocalizedDateFilter,
         branchId: filters?.branchId,
         filter: {
           isCoreEmployee: filters?.filter?.isCoreEmployee === 'yes',
@@ -39,7 +44,7 @@ export const UsersReport = () => {
     },
     { enabled: !!filters }
   );
-  const userReport = data?.report?.userReport?.data;
+  const userReport = data?.report?.employeeReport?.userReport?.data;
 
   return (
     <Report

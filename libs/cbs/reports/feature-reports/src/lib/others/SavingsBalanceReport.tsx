@@ -4,10 +4,10 @@ import { Box, GridItem } from '@myra-ui';
 
 import {
   KymMemberTypesEnum,
+  LocalizedDateFilter,
   MinMaxFilter,
   MinorWiseFilter,
   NatureOfDepositProduct,
-  PeriodInput,
   SavingsBalanceFilterData,
   SavingsBalanceReport,
   SavingsBalanceReportResult,
@@ -42,7 +42,7 @@ const minorOptions = [
 
 type Filter = {
   branchId: string;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
   filter: {
     memberIds?: string[];
     minorWise?: MinorWiseFilter;
@@ -61,8 +61,8 @@ export const SavingBalanceReport = () => {
     { enabled: !!filters }
   );
 
-  const savingBalanceData = data?.report?.savingsBalanceReport?.data;
-  const totalBalance = data?.report?.savingsBalanceReport?.totalBalance;
+  const savingBalanceData = data?.report?.otherReport?.savingsBalanceReport?.data;
+  const totalBalance = data?.report?.otherReport?.savingsBalanceReport?.totalBalance;
 
   return (
     <Report
@@ -118,8 +118,8 @@ export const SavingBalanceReport = () => {
                 },
               },
               {
-                header: 'Member ID',
-                accessorKey: 'memberId',
+                header: 'Member COde',
+                accessorKey: 'memberCode',
                 meta: {
                   Footer: {
                     display: 'none',
@@ -145,8 +145,8 @@ export const SavingBalanceReport = () => {
                 },
               },
               {
-                header: 'Product ID',
-                accessorKey: 'productId',
+                header: 'Product Code',
+                accessorKey: 'productCode',
                 meta: {
                   Footer: {
                     display: 'none',

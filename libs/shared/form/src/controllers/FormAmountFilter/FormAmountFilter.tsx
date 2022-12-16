@@ -11,20 +11,33 @@ enum AmountConditions {
   amt_equal = 'amt_equal',
 }
 
-const options = [
-  { label: 'Amount Between (<>)', value: AmountConditions.amt_between },
-  { label: 'Amount Less (<>)', value: AmountConditions.amt_less },
-  { label: 'Amount More (<>)', value: AmountConditions.amt_more },
-  { label: 'Amount Equal (<>)', value: AmountConditions.amt_equal },
-];
-
 interface IAmountFilterProps {
+  placeholder?: string;
   value: { min: string | null; max: string | null };
   onChange: (newValue: { min: string | null; max: string | null }) => void;
 }
 
-export const AmountFilter = ({ value, onChange }: IAmountFilterProps) => {
+export const AmountFilter = ({ placeholder, value, onChange }: IAmountFilterProps) => {
   const [amountCondition, setAmountCondition] = useState(AmountConditions.amt_between);
+
+  const options = [
+    {
+      label: placeholder ? `${placeholder} Between (<>)` : 'Amount Between (<>)',
+      value: AmountConditions.amt_between,
+    },
+    {
+      label: placeholder ? `${placeholder} Less (<>)` : 'Amount Less (<>)',
+      value: AmountConditions.amt_less,
+    },
+    {
+      label: placeholder ? `${placeholder} More (<>)` : 'Amount More (<>)',
+      value: AmountConditions.amt_more,
+    },
+    {
+      label: placeholder ? `${placeholder} Equal (<>)` : 'Amount Equal (<>)',
+      value: AmountConditions.amt_equal,
+    },
+  ];
 
   useEffect(() => {
     onChange({ min: null, max: null });
@@ -46,7 +59,7 @@ export const AmountFilter = ({ value, onChange }: IAmountFilterProps) => {
               <Input
                 type="number"
                 textAlign="right"
-                placeholder="Minimum Amt"
+                placeholder={placeholder ? `Minimum ${placeholder}` : 'Minimum Amt'}
                 value={value?.min ?? ''}
                 onChange={(e) => onChange({ min: e.target.value, max: value?.max ?? null })}
               />
@@ -56,7 +69,7 @@ export const AmountFilter = ({ value, onChange }: IAmountFilterProps) => {
               <Input
                 type="number"
                 textAlign="right"
-                placeholder="Maximum Amt"
+                placeholder={placeholder ? `Maximum ${placeholder}` : 'Maximum Amt'}
                 value={value?.max ?? ''}
                 onChange={(e) => onChange({ max: e.target.value, min: value?.min ?? null })}
               />
@@ -69,7 +82,7 @@ export const AmountFilter = ({ value, onChange }: IAmountFilterProps) => {
             <Input
               type="number"
               textAlign="right"
-              placeholder="Maximum Amt"
+              placeholder={placeholder ? `Maximum ${placeholder}` : 'Maximum Amt'}
               value={value?.max ?? ''}
               onChange={(e) => onChange({ max: e.target.value, min: null })}
             />
@@ -81,7 +94,7 @@ export const AmountFilter = ({ value, onChange }: IAmountFilterProps) => {
             <Input
               type="number"
               textAlign="right"
-              placeholder="Minimum Amt"
+              placeholder={placeholder ? `Minimum ${placeholder}` : 'Minimum Amt'}
               value={value?.min ?? ''}
               onChange={(e) => onChange({ min: e.target.value, max: null })}
             />
@@ -93,7 +106,7 @@ export const AmountFilter = ({ value, onChange }: IAmountFilterProps) => {
             <Input
               type="number"
               textAlign="right"
-              placeholder="Amount"
+              placeholder={placeholder ? `${placeholder}` : 'Amount'}
               value={value?.min ?? ''}
               onChange={(e) => onChange({ min: e.target.value, max: e.target.value })}
             />
@@ -108,17 +121,19 @@ export const AmountFilter = ({ value, onChange }: IAmountFilterProps) => {
 
 interface IFormAmountFilter<T extends Record<string, { min: string | null; max: null }>> {
   name: Path<T>;
+  placeholder?: string;
 }
 
 export const FormAmountFilter = <T extends Record<string, { min: string | null; max: null }>>({
   name,
+  placeholder,
 }: IFormAmountFilter<T>) => {
   const { control } = useFormContext<T>();
   return (
     <Controller
       control={control}
       render={({ field: { onChange, value } }) => (
-        <AmountFilter value={value} onChange={onChange} />
+        <AmountFilter placeholder={placeholder} value={value} onChange={onChange} />
       )}
       name={name}
     />

@@ -124,3 +124,35 @@ query getDownloadCoopList($filter: EBankingDownloadsFilter) {
     }
   }
 }
+
+
+query getBranchListEbanking {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        branchList {
+          data {
+            id
+            branchCode
+            name
+          }
+        }
+      }
+    }
+  }
+}
+
+query getCollectorListEbanking {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        collectors {
+          data {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+}

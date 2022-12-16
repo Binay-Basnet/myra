@@ -28,7 +28,6 @@ export const MemberListPage = () => {
   const [ID, setID] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const { mutateAsync } = useDeleteDraftMutation();
-  const [IDMember, setIDMember] = useState('');
 
   const onOpenModal = () => {
     setOpenModal(true);
@@ -40,6 +39,7 @@ export const MemberListPage = () => {
   const queryClient = useQueryClient();
 
   const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
   const isDraft = router?.query['objState'] === 'DRAFT';
   const isSubmitted = router?.query['objState'] === 'VALIDATED';
 
@@ -47,17 +47,17 @@ export const MemberListPage = () => {
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
       filter: {
-        query: IDMember,
-        id: IDMember,
-        memberCode: IDMember,
-        mobileNo: IDMember,
+        query: searchTerm,
+        id: searchTerm,
+        memberCode: searchTerm,
+        mobileNo: searchTerm,
         filterMode: Filter_Mode.Or,
         objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
       },
     },
     {
       staleTime: 0,
-      enabled: IDMember !== 'undefined',
+      enabled: searchTerm !== 'undefined',
     }
   );
 
@@ -235,7 +235,6 @@ export const MemberListPage = () => {
           total: data?.members?.list?.totalCount ?? 'Many',
           pageInfo: data?.members?.list?.pageInfo,
         }}
-        onChange={(e) => setIDMember(e.target.value)}
       />
       <Modal
         open={openModal}

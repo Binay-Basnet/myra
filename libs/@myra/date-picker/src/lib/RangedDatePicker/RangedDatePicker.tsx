@@ -58,12 +58,12 @@ type DateRange = {
   from: {
     date: Date;
     en: string;
-    ne: string;
+    np: string;
   } | null;
   to: {
     date: Date;
     en: string;
-    ne: string;
+    np: string;
   } | null;
 };
 
@@ -178,10 +178,10 @@ export const RangedDatePicker = ({
               w="100%"
               value={
                 calendarType === 'BS'
-                  ? value?.from?.ne
+                  ? value?.from?.np
                     ? locale === 'en'
-                      ? `${value?.from?.ne} - ${value?.to?.ne}`
-                      : ordinal(`${value?.from?.ne} - ${value?.to?.ne}`)
+                      ? `${value?.from?.np} - ${value?.to?.np}`
+                      : ordinal(`${value?.from?.np} - ${value?.to?.np}`)
                     : ''
                   : value?.from?.en
                   ? locale === 'en'
@@ -597,6 +597,7 @@ export const DateRangeFooter = ({
         <Button
           w="100px"
           type="button"
+          isDisabled={!rangeEndDate || !rangeEndDate}
           onClick={() => {
             onChange({
               from: convertDate(rangeStartDate),
@@ -631,7 +632,7 @@ const convertDate = (
     return {
       date,
       en: dateStringAD,
-      ne: dateStringBs,
+      np: dateStringBs,
     };
   }
 
@@ -644,7 +645,7 @@ const convertDate = (
   return {
     date,
     en: _adDate,
-    ne: dateStringBs,
+    np: dateStringBs,
   };
 };
 

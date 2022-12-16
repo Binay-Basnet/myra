@@ -36,9 +36,6 @@ import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils
 /* eslint-disable-next-line */
 export interface NewAccountTransferProps {}
 
-const FINE = '0';
-const REBATE = '0';
-
 type AccountTransferForm = TransferInput & { destMemberId: string };
 
 export const NewAccountTransfer = () => {
@@ -152,12 +149,7 @@ export const NewAccountTransfer = () => {
     [srcAccountId, accountListData]
   );
 
-  const amountToBeDeposited = watch('amount') ?? 0;
-
-  const totalDeposit = useMemo(
-    () => (amountToBeDeposited ? Number(amountToBeDeposited) + Number(FINE) - Number(REBATE) : 0),
-    [amountToBeDeposited]
-  );
+  const totalDeposit = watch('amount') || 0;
 
   const { mutateAsync } = useSetAccountTransferDataMutation();
 
@@ -347,12 +339,19 @@ export const NewAccountTransfer = () => {
                               interestAccured: sourceAccount?.interestAccured ?? '0',
                               guaranteeBalance: sourceAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: sourceAccount?.overDrawnBalance ?? '0',
-                              fine: FINE,
+                              fine: sourceAccount?.dues?.fine ?? 0,
                               // branch: 'Kumaripati',
                               openDate: sourceAccount?.accountOpenedDate ?? 'N/A',
                               expiryDate: sourceAccount?.accountExpiryDate ?? 'N/A',
                               lastTransactionDate: sourceAccount?.lastTransactionDate ?? 'N/A',
                               productName: sourceAccount?.product?.productName,
+                              installmentAmount:
+                                sourceAccount?.product?.nature ===
+                                  NatureOfDepositProduct.RecurringSaving ||
+                                (sourceAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                                  sourceAccount?.product?.isMandatorySaving)
+                                  ? sourceAccount?.installmentAmount
+                                  : null,
                             }
                           : null
                       }

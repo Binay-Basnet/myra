@@ -55,7 +55,7 @@ export const ProductPenalty = ({ penaltyData }: IProductPenalty) => {
 
   return (
     <DetailsCard title="Penalty" hasTable>
-      <Table variant="report" size="report" isStatic data={penaltyDataArray} columns={columns} />
+      <Table isStatic data={penaltyDataArray} columns={columns} />
     </DetailsCard>
   );
 };

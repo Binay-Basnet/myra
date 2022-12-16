@@ -62,6 +62,7 @@ export interface MemberCardProps {
         expiryDate?: string;
         lastTransactionDate?: string;
         productName: string;
+        installmentAmount: string | null | undefined;
       }
     | undefined
     | null;
@@ -405,6 +406,16 @@ export const MemberCard = ({
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {amountConverter(accountInfo.minimumBalance)}
+                      </Text>
+                    </Box>
+                  )}
+                  {accountInfo.installmentAmount && (
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
+                        Installment Amount
+                      </Text>
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
+                        {amountConverter(accountInfo.installmentAmount)}
                       </Text>
                     </Box>
                   )}

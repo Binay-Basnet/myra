@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { Box, GridItem, Text } from '@myra-ui';
+import { Box, GridItem, MultiFooter, Text } from '@myra-ui';
 
 import {
-  PeriodInput,
+  LocalizedDateFilter,
   Roles,
   TellerDataEntry,
   TellerType,
@@ -25,7 +25,7 @@ type Filter = {
       value: string;
     }[];
   };
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 export const TellerReport = () => {
   const [filters, setFilters] = useState<Filter | null>(null);
@@ -44,7 +44,7 @@ export const TellerReport = () => {
     {
       data: {
         branchId: filters?.branchId as string,
-        period: filters?.period as PeriodInput,
+        period: filters?.period as LocalizedDateFilter,
         filter: {
           ...filters?.filter,
           tellerId: tellerIds,
@@ -184,7 +184,8 @@ export const TellerReport = () => {
                   columns={[
                     {
                       header: 'Teller Name',
-                      footer: () => <Box textAlign="right">Total </Box>,
+                      footer: () => <MultiFooter texts={['Total', 'Grand Total']} />,
+
                       accessorKey: 'name',
                       meta: {
                         width: '60px',
@@ -197,6 +198,7 @@ export const TellerReport = () => {
                       header: 'Currency',
                       accessorKey: 'index',
                       cell: () => <Box> NPR </Box>,
+
                       meta: {
                         Footer: {
                           display: 'none',
@@ -207,15 +209,36 @@ export const TellerReport = () => {
                       header: 'In Transit Amount',
                       accessorKey: 'inTransit',
                       cell: (props) => props.getValue(),
+                      footer: () => (
+                        <MultiFooter
+                          texts={[
+                            amountConverter(allTellerStats?.inTransitTotal as string) as string,
+                            amountConverter(
+                              Number(allTellerStats?.inTransitTotal) +
+                                Number(headTellerStats?.inTransitTotal)
+                            ) as string,
+                          ]}
+                        />
+                      ),
 
-                      footer: () => amountConverter(allTellerStats?.inTransitTotal as string),
                       meta: {
                         width: '100%',
                       },
                     },
                     {
                       header: 'Stack Amount',
-                      footer: () => amountConverter(allTellerStats?.stackTotal as string),
+                      footer: () => (
+                        <MultiFooter
+                          texts={[
+                            amountConverter(allTellerStats?.stackTotal as string) as string,
+                            amountConverter(
+                              Number(allTellerStats?.stackTotal) +
+                                Number(headTellerStats?.stackTotal)
+                            ) as string,
+                          ]}
+                        />
+                      ),
+
                       cell: (props) => props.getValue(),
 
                       accessorKey: 'stack',
@@ -225,8 +248,19 @@ export const TellerReport = () => {
                     },
                     {
                       header: 'In Amount',
-                      footer: () => amountConverter(allTellerStats?.inAmountTotal as string),
                       cell: (props) => amountConverter(props.getValue() as string),
+
+                      footer: () => (
+                        <MultiFooter
+                          texts={[
+                            amountConverter(allTellerStats?.inAmountTotal as string) as string,
+                            amountConverter(
+                              Number(allTellerStats?.inAmountTotal) +
+                                Number(headTellerStats?.inAmountTotal)
+                            ) as string,
+                          ]}
+                        />
+                      ),
 
                       accessorKey: 'inAmount',
                       meta: {
@@ -235,7 +269,17 @@ export const TellerReport = () => {
                     },
                     {
                       header: 'Out Amount',
-                      footer: () => amountConverter(allTellerStats?.outAmountTotal as string),
+                      footer: () => (
+                        <MultiFooter
+                          texts={[
+                            amountConverter(allTellerStats?.outAmountTotal as string) as string,
+                            amountConverter(
+                              Number(allTellerStats?.outAmountTotal) +
+                                Number(headTellerStats?.outAmountTotal)
+                            ) as string,
+                          ]}
+                        />
+                      ),
                       cell: (props) => amountConverter(props.getValue() as string),
 
                       accessorKey: 'outAmount',
@@ -245,7 +289,17 @@ export const TellerReport = () => {
                     },
                     {
                       header: 'Balance',
-                      footer: () => amountConverter(allTellerStats?.balanceTotal as string),
+                      footer: () => (
+                        <MultiFooter
+                          texts={[
+                            amountConverter(allTellerStats?.balanceTotal as string) as string,
+                            amountConverter(
+                              Number(allTellerStats?.balanceTotal) +
+                                Number(headTellerStats?.balanceTotal)
+                            ) as string,
+                          ]}
+                        />
+                      ),
                       cell: (props) => amountConverter(props.getValue() as string),
 
                       accessorKey: 'balance',

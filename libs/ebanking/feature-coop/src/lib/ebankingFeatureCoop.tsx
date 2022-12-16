@@ -30,7 +30,7 @@ const CHEQUE_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
     icon: IoCashOutline,
     link: '/coop/cheque/withdraw',
   },
-  'Block Withdraw Slip': {
+  'Block Withdraw slip': {
     icon: ImBlocked,
     link: '/coop/cheque/block',
   },

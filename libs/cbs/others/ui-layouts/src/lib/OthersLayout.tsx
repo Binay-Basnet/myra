@@ -25,14 +25,14 @@ interface IOthersPageLayoutProps {
 const othersColumns = [
   {
     title: 'Market Representatives List',
-    link: '/others/market-representatives/list',
-    name: 'market-representatives',
+    link: '/others/market-representative/list',
+    name: 'market-representative',
   },
   {
     title: 'Market Representatives Transactions',
-    link: '/others/market-representatives-transactions/list',
-    name: 'market-representatives-transactions',
-    addLink: '/others/market-representatives-transactions/add',
+    link: '/others/market-representative-transaction/list',
+    name: 'market-representative-transaction',
+    addLink: '/others/market-representative-transaction/add',
   },
   {
     title: 'Profit to Fund Management',

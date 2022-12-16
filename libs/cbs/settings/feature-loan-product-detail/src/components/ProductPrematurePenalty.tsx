@@ -20,7 +20,8 @@ export const ProductPrematurePenalty = ({ penaltyData }: IProductPrematurePenalt
         meta: {
           width: '33%',
         },
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
+        cell: (props) =>
+          props.getValue() ? (props.getValue() as string)?.replace(/_/g, ' ') : 'N/A',
       },
       {
         header: 'No. of days',
@@ -65,7 +66,7 @@ export const ProductPrematurePenalty = ({ penaltyData }: IProductPrematurePenalt
 
   return (
     <DetailsCard title="Premature Penalty Setup" hasTable>
-      <Table variant="report" size="report" isStatic data={penaltyDataArray} columns={columns} />
+      <Table isStatic data={penaltyDataArray} columns={columns} />
     </DetailsCard>
   );
 };

@@ -1,5 +1,4 @@
 export * from './components/Report/useReport';
-export * from './lib/CbsReportsFeatureReports';
 export * from './lib/deposit/AccountClosingReport';
 export * from './lib/deposit/AccountOpeningReport';
 export * from './lib/deposit/InterestPostingReport';
@@ -20,6 +19,7 @@ export * from './lib/mobile-banking/MBRegistrationReport';
 export * from './lib/mobile-banking/MBTransactionReport';
 export * from './lib/others/SavingsBalanceReport';
 export * from './lib/service-center/ServiceCenterListReport';
+export * from './lib/share/ShareBalanceReport';
 export * from './lib/share/ShareRegisterReport';
 export * from './lib/share/ShareStatementReport';
 export * from './lib/share/ShareTransactionReport';
@@ -28,3 +28,4 @@ export * from './lib/transactions/CashLedgerReport';
 export * from './lib/transactions/TellerReport';
 export * from './lib/transactions/TrialSheetReport';
 export * from './lib/transactions/VaultBalanceReport';
+export * from './lib/transactions/DayBookReport';

@@ -1,6 +1,7 @@
 import {
   ColumnDef,
   getCoreRowModel,
+  getExpandedRowModel,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
@@ -25,9 +26,8 @@ export const useTable = <T extends Record<string, unknown>>({
   return useReactTable<T>({
     defaultColumn: {
       enableSorting: false,
-
       meta: {
-        width: '150px',
+        width: '100px',
       },
     },
 
@@ -40,5 +40,6 @@ export const useTable = <T extends Record<string, unknown>>({
 
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
   });
 };

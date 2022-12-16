@@ -8,7 +8,6 @@ import {
   LocalizedDateFilter,
   MinMaxFilter,
   NatureOfTransaction,
-  PeriodInput,
   TtrDataEntry,
   useGetTtrReportQuery,
 } from '@coop/cbs/data-access';
@@ -35,7 +34,7 @@ type Filter = {
     }[];
     natureOfTransactions?: NatureOfTransaction[];
   };
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export const TTRReport = () => {
@@ -50,7 +49,7 @@ export const TTRReport = () => {
     {
       data: {
         branchId: filters?.branchId as string,
-        period: filters?.period as PeriodInput,
+        period: filters?.period as LocalizedDateFilter,
         filter: {
           ...filters?.filter,
           member: memberIds,
@@ -59,8 +58,8 @@ export const TTRReport = () => {
     },
     { enabled: !!filters }
   );
-  const reportData = data?.report?.thresholdTransactionReport?.data?.yearly;
-  const eachTransReport = data?.report?.thresholdTransactionReport?.data?.perTranx;
+  const reportData = data?.report?.depositReport?.thresholdTransactionReport?.data?.yearly;
+  const eachTransReport = data?.report?.depositReport?.thresholdTransactionReport?.data?.perTranx;
 
   const memberFromYearlyData =
     reportData?.map((d) => ({

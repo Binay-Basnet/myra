@@ -27,7 +27,7 @@ export const MemberActiveInactiveReport = () => {
       { enabled: !!filters }
     );
   const memberActiveInactiveReport =
-    memberActiveInactiveReportData?.report?.activeInactiveMemberReport?.statement;
+    memberActiveInactiveReportData?.report?.memberReport?.activeInactiveMemberReport?.statement;
 
   const report = (memberActiveInactiveReport &&
     'reportStatement' in memberActiveInactiveReport &&

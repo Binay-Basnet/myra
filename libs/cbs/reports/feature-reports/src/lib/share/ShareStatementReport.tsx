@@ -11,7 +11,9 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange, ReportMember } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormMemberSelect, FormRadioGroup } from '@coop/shared/form';
+import { amountConverter, quantityConverter } from '@coop/shared/utils';
 
 export const ShareStatementReport = () => {
   const [filters, setFilters] = useState<ShareStatementReportSettings | null>(null);
@@ -21,7 +23,7 @@ export const ShareStatementReport = () => {
     { enabled: !!filters }
   );
 
-  const shareMember = data?.report?.shareStatementReport?.member;
+  const shareMember = data?.report?.shareReport?.shareStatementReport?.member;
   // const branch = useAppSelector((state) => state?.auth?.user?.branch);
 
   // const member = {
@@ -32,7 +34,7 @@ export const ShareStatementReport = () => {
   //   'Membership Date': dayjs(shareMember?.dateJoined).format('YYYY-MM-DD') as string,
   // };
 
-  const shareData = data?.report?.shareStatementReport?.statement;
+  const shareData = data?.report?.shareReport?.shareStatementReport?.statement;
   const shareReport = shareData && 'shareStatement' in shareData ? shareData.shareStatement : [];
   const shareReportTotal = shareData && 'shareStatement' in shareData ? shareData.totals : {};
 
@@ -84,7 +86,7 @@ export const ShareStatementReport = () => {
               {
                 header: 'Date',
                 accessorKey: 'date',
-                accessorFn: (row) => row?.date?.local,
+                accessorFn: (row) => localizedDate(row?.date),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -105,6 +107,8 @@ export const ShareStatementReport = () => {
                 header: 'No of Share',
                 footer: () => shareReportTotal?.totalShares,
                 accessorKey: 'noOfShares',
+                cell: (props) => quantityConverter(props.getValue() as string),
+
                 meta: {
                   isNumeric: true,
                 },
@@ -112,7 +116,9 @@ export const ShareStatementReport = () => {
               {
                 header: 'Return Amount (Dr.)',
                 accessorKey: 'returnAmountDr',
-                footer: () => shareReportTotal?.totalDr,
+                cell: (props) => amountConverter(props.getValue() as string),
+
+                footer: () => amountConverter(shareReportTotal?.totalDr as number),
                 meta: {
                   isNumeric: true,
                 },
@@ -120,7 +126,9 @@ export const ShareStatementReport = () => {
               {
                 header: 'Issue Amount (Cr.)',
                 accessorKey: 'purchaseAmountCr',
-                footer: () => shareReportTotal?.totalCr,
+                cell: (props) => amountConverter(props.getValue() as string),
+
+                footer: () => amountConverter(shareReportTotal?.totalCr as number),
 
                 meta: {
                   isNumeric: true,
@@ -129,7 +137,9 @@ export const ShareStatementReport = () => {
               {
                 header: 'Balance Sheet',
                 accessorKey: 'balanceSheet',
-                footer: () => shareReportTotal?.totalBalanceSheet,
+                cell: (props) => amountConverter(props.getValue() as string),
+
+                footer: () => amountConverter(shareReportTotal?.totalBalanceSheet as number),
 
                 meta: {
                   isNumeric: true,

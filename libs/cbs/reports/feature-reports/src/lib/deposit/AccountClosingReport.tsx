@@ -27,12 +27,13 @@ export const AccountCloseReport = () => {
     },
     { enabled: !!filters }
   );
-  const accountClosingReport = data?.report?.accountClosingReport?.data;
+
+  const accountClosingReport = data?.report?.depositReport?.accountClosingReport?.data;
   const userList = userListData?.settings?.myraUser?.list?.edges;
 
   return (
     <Report
-      defaultFilters={null}
+      defaultFilters={{}}
       data={accountClosingReport as AccountClosingReport[]}
       filters={filters}
       setFilters={setFilters}
@@ -114,7 +115,7 @@ export const AccountCloseReport = () => {
                 label: user.node?.name as string,
                 value: user.node?.id as string,
               }))}
-              name="user"
+              name="filter.user"
             />
           </Report.Filter>
         </Report.Filters>

@@ -1,10 +1,11 @@
+import { DetailCardContent, DetailsCard } from '@myra-ui';
+
 import {
   DefaultAccountType,
   Frequency,
   NatureOfDepositProduct,
   ProductCodeFormState,
 } from '@coop/ebanking/data-access';
-import { DetailCardContent, DetailsCard } from '@myra-ui';
 
 interface IProductGeneralInformation {
   generalInformation: {
@@ -23,10 +24,13 @@ export const ProductGeneralInformation = ({ generalInformation }: IProductGenera
       title="Product Code"
       subtitle={`${generalInformation?.productCode?.prefix}-${generalInformation?.productCode?.initialNo}`}
     />
-    <DetailCardContent title="Product Type" subtitle={generalInformation?.nature?.toLowerCase()} />
+    <DetailCardContent
+      title="Product Type"
+      subtitle={generalInformation?.nature?.toLowerCase()?.replace(/_/g, ' ')}
+    />
     <DetailCardContent
       title="Nature of Deposit Product"
-      subtitle={generalInformation?.nature?.toLowerCase()}
+      subtitle={generalInformation?.nature?.toLowerCase()?.replace(/_/g, ' ')}
     />
     <DetailCardContent
       title="Deposit Frequency"

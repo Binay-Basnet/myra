@@ -3,13 +3,14 @@ import { useRouter } from 'next/router';
 
 import { RangedDatePicker } from '@myra-ui/date-picker';
 
-import { ReportPeriodType, useAppSelector } from '@coop/cbs/data-access';
+import { useAppSelector } from '@coop/cbs/data-access';
 
 interface IReportDateRange {
   label?: string;
+  name?: string;
 }
 
-export const ReportDateRange = ({ label = 'Select Period' }: IReportDateRange) => {
+export const ReportDateRange = ({ label = 'Select Period', name }: IReportDateRange) => {
   const { control } = useFormContext();
   const { locale } = useRouter();
   const calendarType = useAppSelector((state) => state?.auth?.preference?.date);
@@ -21,19 +22,16 @@ export const ReportDateRange = ({ label = 'Select Period' }: IReportDateRange) =
           label={label}
           locale={locale === 'ne' ? 'ne' : 'en'}
           calendarType={calendarType || 'AD'}
-          value={value?.customPeriod}
+          value={value}
           onChange={(newDate) =>
             onChange({
-              periodType: ReportPeriodType.CustomPeriod,
-              customPeriod: {
-                from: {
-                  en: newDate?.from?.en,
-                  ne: newDate?.from?.ne,
-                },
-                to: {
-                  en: newDate?.to?.en,
-                  ne: newDate?.to?.ne,
-                },
+              from: {
+                en: newDate?.from?.en,
+                np: newDate?.from?.np,
+              },
+              to: {
+                en: newDate?.to?.en,
+                np: newDate?.to?.np,
               },
             })
           }
@@ -41,7 +39,7 @@ export const ReportDateRange = ({ label = 'Select Period' }: IReportDateRange) =
         />
       )}
       control={control}
-      name="period"
+      name={name ?? 'period'}
     />
   );
 };

@@ -1,9 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+
 import { Box } from '@myra-ui';
 
 import { DetailPageSideBar, TransactionDetailPathBar } from '@coop/cbs/transactions/ui-components';
-import { useTranslation } from '@coop/shared/utils';
+import { getUrl, useTranslation } from '@coop/shared/utils';
 
 interface AgentDetailPageLayoutProps {
   children: React.ReactNode;
@@ -20,23 +21,23 @@ export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) 
   const tabList = [
     {
       title: t['agentDetailPageLayoutOverview'],
-      to: `/transactions/agent/${id}/overview`,
+      to: `/${getUrl(router.pathname, 2)}/${id}/overview`,
     },
     {
       title: t['agentDetailPageLayoutAssigendMembers'],
-      to: `/transactions/agent/${id}/assigned-members`,
+      to: `/${getUrl(router.pathname, 2)}/${id}/assigned-members`,
     },
     {
       title: t['agentDetailPageLayoutTasks'],
-      to: `/transactions/agent/${id}/tasks`,
+      to: `/${getUrl(router.pathname, 2)}/${id}/tasks`,
     },
     {
       title: t['agentDetailPageLayoutDocuments'],
-      to: `/transactions/agent/${id}/documents`,
+      to: `/${getUrl(router.pathname, 2)}/${id}/documents`,
     },
     {
       title: t['agentDetailPageLayoutActivity'],
-      to: `/transactions/agent/${id}/activity`,
+      to: `/${getUrl(router.pathname, 2)}/${id}/activity`,
     },
   ];
 

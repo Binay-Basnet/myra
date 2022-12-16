@@ -33,7 +33,7 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
     fontWeight: state.isSelected && !state.isMulti ? 600 : 400,
     bg: state.isFocused ? 'highlight.500' : 'none',
     p: 's8',
-    height: 's40',
+    minH: 's40',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',

@@ -1,0 +1,110 @@
+query getLoanBalanceReport($data: LoanBalanceFilterData!) {
+  report {
+    loanReport {
+      loanBalanceReport(data: $data) {
+        data {
+          memberId
+          loanAccountId
+          memberName
+          productName
+          productCode
+          outstandingBalance
+          remainingBalance
+          remainingInterest
+          lastPaymentDate
+        }
+        totalOutstandingBalance
+        totalRemainingBalance
+      }
+    }
+  }
+}
+
+query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
+  report {
+    loanReport {
+      loanAgingStatementReport(data: $data) {
+        data {
+          report {
+            memberNo
+            loanNo
+            name
+            address
+            phoneNo
+            loanType
+            paymentMode
+            issueDate
+            loanMaturityDate
+            disbursePrincipal
+            remainingPrincipal
+            installmentAmount
+            remainingInstallmentAmount
+            remainingInterest
+            remainingPenalty
+            totalDueAmount
+            goodAmount
+            matured1To30Days
+            matured1To12Months
+            maturedAbove12Months
+            lastPrincipalPaidDate
+            lastInterestPaidDate
+            installmentLateDays
+          }
+          summary {
+            disbursePrincipalTotal
+            remainingPrincipalTotal
+            installmentAmountTotal
+            remainingInstallmentAmountTotal
+            remainingInterestTotal
+            remainingPenaltyTotal
+            dueAmountTotal
+            goodAmountTotal
+            matured1To30DaysTotal
+            matured1To12MonthsTotal
+            maturedAbove12MonthsTotal
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLoanStatementReport($data: LoanStatementReportSettings!) {
+  report {
+    loanReport {
+      loanStatementReport(data: $data) {
+        memberId
+        member {
+          name
+          code
+        }
+        statement {
+          ... on LoanStatementReport {
+            meta {
+              accountNo
+              approvedAmount
+              interestRate
+              loanType
+              loanSubtype
+              issuedDate
+              installment
+              charge
+            }
+
+            loanStatement {
+              date
+              particular
+              txnId
+              disbursePrinciple
+              paidPrinciple
+              interestPaid
+              finePaid
+              discount
+              remainingPrinciple
+            }
+          }
+        }
+      }
+    }
+  }
+}

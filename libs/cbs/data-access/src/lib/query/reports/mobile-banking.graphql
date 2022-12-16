@@ -1,0 +1,58 @@
+query getMBankingRegistrationReport($data: EbankingReportFilter) {
+  report {
+    mobileBankingReport {
+      mbankingRegistrationReport(data: $data) {
+        data {
+          memberId
+          memberName
+          mobileNo
+          branchCode
+          regDate
+          expDate
+          status
+          registeredBy
+        }
+      }
+    }
+  }
+}
+
+query getMBankingExpiryReport($data: EbankingReportFilter) {
+  report {
+    mobileBankingReport {
+      mbankingRegistrationReport(data: $data) {
+        data {
+          memberId
+          memberName
+          mobileNo
+          branchCode
+          regDate
+          expDate
+          status
+          registeredBy
+        }
+      }
+    }
+  }
+}
+
+query getMBTransactionReport($data: MBankingTransactionFilter) {
+  report {
+    mobileBankingReport {
+      mBankingTransactionReport(data: $data) {
+        data {
+          initiatorName
+          phoneNo
+          srcAccount
+          destAccount
+          amount
+          transactionType
+          transThrough
+          transDate
+          narration
+          status
+        }
+      }
+    }
+  }
+}

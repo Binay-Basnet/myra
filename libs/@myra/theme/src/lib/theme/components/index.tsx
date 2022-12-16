@@ -6,7 +6,7 @@ import Input from './input';
 import Modal from './modal';
 import { radioTheme } from './radio';
 import Switch from './switches';
-import Table from './table';
+import { tableTheme } from './table';
 import Tags from './tags';
 import Textarea from './textarea';
 
@@ -19,7 +19,7 @@ export const components = {
   Modal,
   Radio: radioTheme,
   Switch,
-  Table,
+  Table: tableTheme,
   Tags,
   Textarea,
 };

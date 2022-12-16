@@ -1,0 +1,112 @@
+query getShareStatement($data: ShareStatementReportSettings!) {
+  report {
+    shareReport {
+      shareStatementReport(data: $data) {
+        member {
+          id
+          code
+          name
+          address {
+            wardNo
+            state
+            district
+            houseNo
+            localGovernment
+          }
+          dateJoined
+        }
+        statement {
+          ... on ShareStatementReport {
+            shareStatement {
+              date
+              particular
+              noOfShares
+              returnAmountDr
+              purchaseAmountCr
+              balanceSheet
+            }
+            totals {
+              totalShares
+              totalDr
+              totalCr
+              totalBalanceSheet
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getShareRegisterReport($data: SharePurchaseRegisterReportFilter!) {
+  report {
+    shareReport {
+      sharePurchaseRegisterReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          name
+          particular
+          perShareAmount
+          kittaNumFrom
+          kittaNumTo
+          totalKitta
+          totalAmount
+        }
+      }
+    }
+  }
+}
+
+query getShareTransactionReport($data: ShareTransactionReportFilter) {
+  report {
+    shareReport {
+      shareTransactionReport(data: $data) {
+        data {
+          transactionDate
+          memberId
+          memberCode
+          name
+          particular
+          shareReturnDr
+          shareIssueCr
+          balance
+        }
+        footer {
+          totalCr
+          totalDr
+          totalBalance
+        }
+        totalShareIssued
+        avgSharePerMember
+      }
+    }
+  }
+}
+
+query getShareBalanceReport($data: ShareBalanceReportFilter!) {
+  report {
+    shareReport {
+      shareBalanceReport(data: $data) {
+        data {
+          shareType
+          shareCertificateNo
+          memberId
+          memberCode
+          memberName
+          address {
+            ...Address
+          }
+          contactNo
+          membershipDate
+          noOfKitta
+          balance
+        }
+        totalBalance
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}

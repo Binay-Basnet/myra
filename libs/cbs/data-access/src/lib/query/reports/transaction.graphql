@@ -1,0 +1,197 @@
+query getTrialSheetReport($data: TrialSheetReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        trialSheetReport(data: $data) {
+          data {
+            equityAndLiablities {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            expenses {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            income {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            assets {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+
+            equityAndLiablitiesTotal
+            assetsTotal
+            expenseTotal
+            incomeTotal
+
+            totalAssetExpense
+            totalLiablitiesIncome
+            totalProfitLoss
+          }
+        }
+      }
+    }
+  }
+}
+
+query getTransactionTellerReport($data: TellerReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        tellerReport(data: $data) {
+          data {
+            headTeller {
+              entries {
+                tellerId
+                name
+                inTransit
+                stack
+                inAmount
+                outAmount
+                balance
+              }
+              inTransitTotal
+              stackTotal
+              inAmountTotal
+              outAmountTotal
+              balanceTotal
+            }
+            teller {
+              entries {
+                tellerId
+                name
+                inTransit
+                stack
+                inAmount
+                outAmount
+                balance
+              }
+              inTransitTotal
+              stackTotal
+              inAmountTotal
+              outAmountTotal
+              balanceTotal
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getVaultBalanceReport($data: VaultBalanceReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        vaultBalanceReport(data: $data) {
+          data {
+            opening {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            vaultIn {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            vaultOut {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            closing {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getBankGLStatementReport($data: BankGLStatementFilter!) {
+  report {
+    transactionReport {
+      financial {
+        bankGLStatementReport(data: $data) {
+          data {
+            date
+            name
+            particular
+            chequeNo
+            depositAmount
+            withdrawAmount
+            balance
+            remarks
+          }
+        }
+      }
+    }
+  }
+}
+
+
+query getDayBookReport($data: DayBookReportFilter!){
+  report {
+    transactionReport {
+      financial {
+        dayBookReport(data: $data){
+          data {
+            closingAmount
+            openingBalance
+            payments {
+              particular
+              accountHead
+              ledger
+              amount
+              voucherNo
+            }
+            receipts {
+              particular
+              accountHead
+              ledger
+              amount
+              voucherNo
+            }
+            totalAmount
+            totalPayment
+            totalReceipts
+          }
+        }
+      }
+    }
+  }
+}

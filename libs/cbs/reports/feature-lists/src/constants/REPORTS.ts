@@ -29,6 +29,7 @@ export enum Report {
   SHARE_REGISTER = 'Share Register',
   SHARE_STATEMENT = 'Share Statement Report',
   SHARE_TRANSACTION_REPORT = 'Share Transaction Report',
+  SHARE_BALANCE_REPORT = 'Share Balance Report',
   SHARE_CONSOLIDATED_REPORT = 'Share Consolidated Report',
   SHARE_CERTIFICATE_PRINT = 'Share Certificate Print',
   SHARE_BONUS_DISTRIBUTION_REPORT = 'Share Bonus Distribution Report',
@@ -78,6 +79,7 @@ export enum Report {
   TRANSACTION_TELLER_REPORT = 'Teller Report',
   TRANSACTION_CASH_LEDGER = 'Cash Ledger Report',
   TRANSACTION_VAULT_BALANCE = 'Vault Balance Report',
+  TRANSACTION_DAY_BOOK_REPORT = 'Day Book Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -165,6 +167,11 @@ export const REPORTS = {
     },
     {
       id: '3.4',
+      report: Report.SHARE_BALANCE_REPORT,
+      link: 'balance',
+    },
+    {
+      id: '3.4.1',
       report: Report.SHARE_CONSOLIDATED_REPORT,
     },
     {
@@ -426,6 +433,11 @@ export const REPORTS = {
       id: '7.7',
       report: Report.TRANSACTION_BANK_GL_REPORT,
       link: 'bank-gl-statement',
+    },
+    {
+      id: '7.8',
+      report: Report.TRANSACTION_DAY_BOOK_REPORT,
+      link: 'day-book',
     },
   ],
   [ReportGroup.BRANCHLESS_BANKING]: [
