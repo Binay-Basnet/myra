@@ -29,3 +29,16 @@ mutation cancelWithdrawSlipRequest(
     }
   }
 }
+
+mutation approveOrDeclineMemberRequest($data: RequestApproveOrDeclineInput) {
+  requests {
+    approveOrDecline {
+      membershipRequest(data: $data) {
+        error {
+          ...MutationError
+        }
+        requestId
+      }
+    }
+  }
+}

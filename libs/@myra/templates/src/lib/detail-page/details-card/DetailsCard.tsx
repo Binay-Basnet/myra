@@ -21,7 +21,6 @@ export const DetailsCard = ({
   hasTable,
   bg,
   hasThreeRows,
-
   leftBtn = null,
 }: DetailsCardProps) => (
   <Box borderRadius="br2" bg={bg ?? 'white'}>

@@ -11,22 +11,10 @@ interface IAccountPageLayoutProps {
 }
 
 const accountColumns = [
-  // {
-  //   title: 'Member Request',
-  //   link: '/requests/member',
-  // },
-  // {
-  //   title: 'Chequebook Request',
-  //   link: '/requests/cheque-book',
-  // },
-  // {
-  //   title: 'Teller Transfer Request',
-  //   link: '/requests/teller-transfer',
-  // },
-  // {
-  //   title: 'Branch Transfer Request',
-  //   link: '/requests/branch-transfer',
-  // },
+  {
+    title: 'Member Request',
+    link: '/requests/member',
+  },
   {
     title: 'Withdraw Request',
     link: '/requests/withdraw-via-collector',
@@ -35,11 +23,6 @@ const accountColumns = [
     title: 'Loan Request',
     link: '/requests/loan',
   },
-
-  // {
-  //   title: 'Block Cheque Request',
-  //   link: '/requests/block-cheque',
-  // },
 ];
 
 export const RequestListLayout = ({ children }: IAccountPageLayoutProps) => {

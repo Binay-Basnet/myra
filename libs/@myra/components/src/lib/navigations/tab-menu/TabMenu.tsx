@@ -59,7 +59,7 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'requests',
     icon: IoMailUnreadOutline,
-    link: '/requests/withdraw-via-collector',
+    link: '/requests/member',
     match: ['requests'],
   },
   {

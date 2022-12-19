@@ -23,7 +23,7 @@ export const DetailCardContent = ({
       {title ?? 'N/A'}
     </Text>
     {subtitle !== undefined && (
-      <Text fontWeight="600" fontSize="r1" color="gray.900" textTransform="capitalize">
+      <Text fontWeight="600" fontSize="r1" color="gray.900">
         {subtitle ?? 'N/A'}
       </Text>
     )}
