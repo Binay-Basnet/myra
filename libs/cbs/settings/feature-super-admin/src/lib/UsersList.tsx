@@ -137,7 +137,7 @@ export const UsersList = () => {
   return (
     <>
       <SettingsPageHeader
-        heading="Super Admin"
+        heading="Roles"
         buttonLabel="New User"
         buttonHandler={handleAddUserModalOpen}
         // buttonHandler={() =>
