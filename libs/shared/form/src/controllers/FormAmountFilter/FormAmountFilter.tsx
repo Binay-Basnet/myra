@@ -94,9 +94,9 @@ export const AmountFilter = ({ placeholder, value, onChange }: IAmountFilterProp
             <Input
               type="number"
               textAlign="right"
-              placeholder={placeholder ? `Minimum ${placeholder}` : 'Minimum Amt'}
+              placeholder={placeholder ? `Maximum ${placeholder}` : 'Maximum Amt'}
               value={value?.min ?? ''}
-              onChange={(e) => onChange({ min: e.target.value, max: null })}
+              onChange={(e) => onChange({ min: null, max: e.target.value })}
             />
           );
         }
