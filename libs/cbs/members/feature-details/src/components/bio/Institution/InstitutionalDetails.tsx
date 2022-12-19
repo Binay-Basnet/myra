@@ -61,10 +61,10 @@ export const BioInstitution = () => {
       <DetailsCard title="Sister Concern Details" bg="white">
         {bioDataInstitutionSisterConcern?.map((item) => (
           <SisterConcernComponent
-            address={item?.Address as string}
-            name={item?.Name?.local}
-            phoneNo={item?.Phone as string}
-            type={item?.NatureOfBusiness as string}
+            address={item?.address as string}
+            name={item?.name?.local}
+            phoneNo={item?.phone as string}
+            type={item?.natureOfBusiness as string}
           />
         ))}
       </DetailsCard>

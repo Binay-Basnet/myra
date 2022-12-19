@@ -417,10 +417,10 @@ query getMemberOverviewBioDetails($id: ID!) {
               expectedMonthlyTransaction
             }
             sisterConcernDetails {
-              Name
-              Address
-              Phone
-              NatureOfBusiness
+              name
+              address
+              phone
+              natureOfBusiness
             }
             operatorInstructionDetails {
               accountType
