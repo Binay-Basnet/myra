@@ -1,18 +1,25 @@
+import { useRouter } from 'next/router';
+
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
-export const CurrentMemberDetailsCOOP = () => (
-  // const router = useRouter();
-  // const memberDetails = useGetMemberDetailsOverviewQuery({
-  //   id: router.query['id'] as string,
-  // });
+import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
 
-  // const memberBasicInfo =
-  //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
-  <DetailsCard title="Contact Details" bg="white" hasThreeRows>
-    <DetailCardContent title="No. of Male Members" subtitle="" />
-    <DetailCardContent title="No. of Female Members" subtitle="" />
-    <DetailCardContent title="No. of Other Members" subtitle="" />
-    <DetailCardContent title="Last Audit  Date" subtitle="" />
-    <DetailCardContent title="Last AGM Date" subtitle="" />
-  </DetailsCard>
-);
+export const CurrentMemberDetailsCOOP = () => {
+  const router = useRouter();
+  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+    id: router.query['id'] as string,
+  });
+
+  const bioDataCoop =
+    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'CoopBio'
+      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.currentMemberDetails
+      : null;
+  return (
+    <DetailsCard title="Current Member Details" bg="white" hasThreeRows>
+      <DetailCardContent title="No. of Male Members" subtitle={bioDataCoop?.noOfMaleMembers} />
+      <DetailCardContent title="No. of Female Members" subtitle={bioDataCoop?.noOfFemaleMembers} />
+      <DetailCardContent title="No. of Other Members" subtitle={bioDataCoop?.noOfOtherMembers} />
+      <DetailCardContent title="Last Audit  Date" subtitle={bioDataCoop?.lastAuditDate?.local} />
+    </DetailsCard>
+  );
+};

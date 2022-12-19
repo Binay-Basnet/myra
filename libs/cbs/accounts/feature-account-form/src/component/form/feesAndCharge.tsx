@@ -1,13 +1,14 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
+import { Box, Text } from '@myra-ui';
+
 import {
   DepositLoanAccountInput,
   useGetAccountOpenProductDetailsQuery,
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Box, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IFeesAndCharge {

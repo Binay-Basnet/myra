@@ -1,16 +1,24 @@
+import { useRouter } from 'next/router';
+
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
-export const ContactDetailsCOOP = () => (
-  // const router = useRouter();
-  // const memberDetails = useGetMemberDetailsOverviewQuery({
-  //   id: router.query['id'] as string,
-  // });
+import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
 
-  // const memberBasicInfo =
-  //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
-  <DetailsCard title="Contact Details" bg="white" hasThreeRows>
-    <DetailCardContent title="Offfice Mail" subtitle="" />
-    <DetailCardContent title="Website Link" subtitle="" />
-    <DetailCardContent title="Phone Number" subtitle="" />
-  </DetailsCard>
-);
+export const ContactDetailsCOOP = () => {
+  const router = useRouter();
+  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+    id: router.query['id'] as string,
+  });
+
+  const bioDataCoop =
+    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'CoopBio'
+      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.contactDetails
+      : null;
+  return (
+    <DetailsCard title="Contact Details" bg="white" hasThreeRows>
+      <DetailCardContent title="Offfice Mail" subtitle={bioDataCoop?.email} />
+      <DetailCardContent title="Website Link" subtitle={bioDataCoop?.website} />
+      <DetailCardContent title="Phone Number" subtitle={bioDataCoop?.phone} />
+    </DetailsCard>
+  );
+};
