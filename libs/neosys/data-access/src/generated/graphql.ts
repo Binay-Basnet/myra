@@ -21,7 +21,7 @@ export type Scalars = {
   Date: string;
   Email: any;
   InvalidData: Record<string, Array<string>>;
-  Localized: Record<"local"|"en"|"np",string>;
+  Localized: Record<'local' | 'en' | 'np', string>;
   Map: Record<string, string>;
   Time: string;
 };
@@ -34,17 +34,14 @@ export type AdministrationQuery = {
   wards: Array<Scalars['Int']>;
 };
 
-
 export type AdministrationQueryDistrictsArgs = {
   provinceId?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AdministrationQueryMunicipalitiesArgs = {
   districtId?: InputMaybe<Scalars['Int']>;
   provinceId?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AdministrationQueryWardsArgs = {
   districtId: Scalars['Int'];
@@ -73,12 +70,12 @@ export enum AllModules {
   HrManagement = 'HR_MANAGEMENT',
   InventoryManagement = 'INVENTORY_MANAGEMENT',
   MemberAndShareManagement = 'MEMBER_AND_SHARE_MANAGEMENT',
-  QualityAssuranceForNefscun = 'QUALITY_ASSURANCE_FOR_NEFSCUN'
+  QualityAssuranceForNefscun = 'QUALITY_ASSURANCE_FOR_NEFSCUN',
 }
 
 export enum Arrange {
   Asc = 'ASC',
-  Desc = 'DESC'
+  Desc = 'DESC',
 }
 
 export type AuthorizationError = {
@@ -103,7 +100,7 @@ export type Base = {
 export enum ComparatorType {
   EqualTo = 'EqualTo',
   GreaterThan = 'GreaterThan',
-  LessThan = 'LessThan'
+  LessThan = 'LessThan',
 }
 
 export type Condition = {
@@ -197,7 +194,7 @@ export enum Id_Type {
   Sharenumbers = 'SHARENUMBERS',
   Shareregister = 'SHAREREGISTER',
   User = 'USER',
-  Userpreference = 'USERPREFERENCE'
+  Userpreference = 'USERPREFERENCE',
 }
 
 export type Identity = {
@@ -219,14 +216,19 @@ export type Mutation = {
   presignedUrl: PresignedUrlMutation;
 };
 
-export type MutationError = AuthorizationError | BadRequestError | NotFoundError | ServerError | ValidationError;
+export type MutationError =
+  | AuthorizationError
+  | BadRequestError
+  | NotFoundError
+  | ServerError
+  | ValidationError;
 
 export enum NatureOfCooperative {
   AgricultureCooperative = 'AGRICULTURE_COOPERATIVE',
   HealthCooperative = 'HEALTH_COOPERATIVE',
   MultipurposeCooperative = 'MULTIPURPOSE_COOPERATIVE',
   Others = 'OTHERS',
-  SavingAndCredit = 'SAVING_AND_CREDIT'
+  SavingAndCredit = 'SAVING_AND_CREDIT',
 }
 
 export type NeosysAuthMutation = {
@@ -234,11 +236,9 @@ export type NeosysAuthMutation = {
   token?: Maybe<NeosysAuthTokenResult>;
 };
 
-
 export type NeosysAuthMutationLoginArgs = {
   data: NeosysLoginInput;
 };
-
 
 export type NeosysAuthMutationTokenArgs = {
   refreshToken: Scalars['String'];
@@ -282,11 +282,9 @@ export type NeosysClientMutation = {
   createDB?: Maybe<DbCreateResult>;
 };
 
-
 export type NeosysClientMutationAddArgs = {
   data?: InputMaybe<OrganizationClientInput>;
 };
-
 
 export type NeosysClientMutationCreateDbArgs = {
   saccosId: Scalars['ID'];
@@ -295,7 +293,6 @@ export type NeosysClientMutationCreateDbArgs = {
 export type NeosysClientQuery = {
   list?: Maybe<Array<Maybe<NeosysClientMinimalInfo>>>;
 };
-
 
 export type NeosysClientQueryListArgs = {
   filter?: InputMaybe<NeosysClientFilter>;
@@ -359,7 +356,7 @@ export enum ObjState {
   Draft = 'DRAFT',
   Inactive = 'INACTIVE',
   Submitted = 'SUBMITTED',
-  Validated = 'VALIDATED'
+  Validated = 'VALIDATED',
 }
 
 export type OrConditions = {
@@ -480,7 +477,7 @@ export type OrganizationContactDetailsInput = {
 export enum OrganizationInstallmentLicense {
   Basic = 'BASIC',
   Professional = 'PROFESSIONAL',
-  Standard = 'STANDARD'
+  Standard = 'STANDARD',
 }
 
 export type OrganizationRegistrationDetails = {
@@ -500,14 +497,14 @@ export type OrganizationRegistrationDetailsInput = {
 
 export enum OrganizationSecuritySetup {
   PureSass = 'PURE_SASS',
-  Vpn = 'VPN'
+  Vpn = 'VPN',
 }
 
 export enum OrganizationType {
   CooperativeUnion = 'COOPERATIVE_UNION',
   DistrictUnion = 'DISTRICT_UNION',
   Preliminary = 'PRELIMINARY',
-  ProvinceUnion = 'PROVINCE_UNION'
+  ProvinceUnion = 'PROVINCE_UNION',
 }
 
 export type PageInfo = {
@@ -528,7 +525,6 @@ export type Pagination = {
 export type PresignedUrlMutation = {
   upload?: Maybe<PresignedUrlOutput>;
 };
-
 
 export type PresignedUrlMutationUploadArgs = {
   contentType?: InputMaybe<Scalars['String']>;
@@ -567,18 +563,18 @@ export type ServerError = {
 
 export enum Transaction_Direction {
   Purchased = 'PURCHASED',
-  Sold = 'SOLD'
+  Sold = 'SOLD',
 }
 
 export enum TextFormat {
   Email = 'EMAIL',
   IPv4 = 'IPv4',
-  IPv6 = 'IPv6'
+  IPv6 = 'IPv6',
 }
 
 export enum UserType {
   Human = 'HUMAN',
-  System = 'SYSTEM'
+  System = 'SYSTEM',
 }
 
 export type ValidationError = {
@@ -590,63 +586,236 @@ export type LoginMutationVariables = Exact<{
   data: NeosysLoginInput;
 }>;
 
-
-export type LoginMutation = { neosys: { auth?: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, user: { id: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string> } } | null } | null } | null } };
+export type LoginMutation = {
+  neosys: {
+    auth?: {
+      login?: {
+        recordId?: string | null;
+        record?: {
+          token: { access: string; refresh: string };
+          user: {
+            id: string;
+            objState: ObjState;
+            username: string;
+            firstName: Record<'local' | 'en' | 'np', string>;
+            middleName: Record<'local' | 'en' | 'np', string>;
+            lastName: Record<'local' | 'en' | 'np', string>;
+          };
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type RefreshMutationVariables = Exact<{
   refreshToken: Scalars['String'];
 }>;
 
-
-export type RefreshMutation = { neosys: { auth?: { token?: { token?: { access: string, refresh: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
+export type RefreshMutation = {
+  neosys: {
+    auth?: {
+      token?: {
+        token?: { access: string; refresh: string } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type AddNewClientMutationVariables = Exact<{
   data?: InputMaybe<OrganizationClientInput>;
 }>;
 
-
-export type AddNewClientMutation = { neosys: { client?: { add?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
+export type AddNewClientMutation = {
+  neosys: {
+    client?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type CreateDbMutationVariables = Exact<{
   saccosID: Scalars['ID'];
 }>;
 
+export type CreateDbMutation = {
+  neosys: {
+    client?: {
+      createDB?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type CreateDbMutation = { neosys: { client?: { createDB?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
+export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
+export type AllAdministrationQuery = {
+  administration: {
+    all: Array<{
+      id: number;
+      name: string;
+      districts: Array<{
+        id: number;
+        name: string;
+        municipalities: Array<{ id: number; name: string; wards: Array<number> }>;
+      }>;
+    }>;
+  };
+};
 
+export type GetAllProvinceQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMeQuery = { neosys: { auth?: { me: { data?: { id: string, username: string, email?: string | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } | null } };
+export type GetAllProvinceQuery = {
+  administration: { provinces: Array<{ id: number; name: string }> };
+};
 
-export type GetClientsListQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllDistrictsQueryVariables = Exact<{ [key: string]: never }>;
 
+export type GetAllDistrictsQuery = {
+  administration: { districts: Array<{ id: number; name: string }> };
+};
 
-export type GetClientsListQuery = { neosys: { client?: { list?: Array<{ id?: string | null, clientName?: string | null, provinceId?: string | null, districtId?: string | null, localGovernmentId?: string | null, locality?: string | null, houseNo?: string | null, wardNo?: number | null, dateJoined?: string | null, dbCreated?: boolean | null } | null> | null } | null } };
+export type GetAllLocalGovernmentQueryVariables = Exact<{ [key: string]: never }>;
 
-type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
+export type GetAllLocalGovernmentQuery = {
+  administration: { municipalities: Array<{ id: number; name: string }> };
+};
 
-type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
+export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
 
-type MutationError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
+export type GetMeQuery = {
+  neosys: {
+    auth?: {
+      me: {
+        data?: { id: string; username: string; email?: string | null } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
 
-type MutationError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
+export type GetClientsListQueryVariables = Exact<{ [key: string]: never }>;
 
-type MutationError_ValidationError_Fragment = { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> };
+export type GetClientsListQuery = {
+  neosys: {
+    client?: {
+      list?: Array<{
+        id?: string | null;
+        clientName?: string | null;
+        provinceId?: string | null;
+        districtId?: string | null;
+        localGovernmentId?: string | null;
+        locality?: string | null;
+        houseNo?: string | null;
+        wardNo?: number | null;
+        dateJoined?: string | null;
+        dbCreated?: boolean | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
-export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
+type MutationError_AuthorizationError_Fragment = {
+  __typename: 'AuthorizationError';
+  code: number;
+  authorizationErrorMsg: string;
+};
 
-type QueryError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
+type MutationError_BadRequestError_Fragment = {
+  __typename: 'BadRequestError';
+  code: number;
+  badRequestErrorMessage: string;
+};
 
-type QueryError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
+type MutationError_NotFoundError_Fragment = {
+  __typename: 'NotFoundError';
+  code: number;
+  notFoundErrorMsg: string;
+};
 
-type QueryError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
+type MutationError_ServerError_Fragment = {
+  __typename: 'ServerError';
+  code: number;
+  serverErrorMessage: string;
+};
 
-type QueryError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
+type MutationError_ValidationError_Fragment = {
+  __typename: 'ValidationError';
+  code: number;
+  validationErrorMsg: Record<string, Array<string>>;
+};
 
-export type QueryErrorFragment = QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment;
+export type MutationErrorFragment =
+  | MutationError_AuthorizationError_Fragment
+  | MutationError_BadRequestError_Fragment
+  | MutationError_NotFoundError_Fragment
+  | MutationError_ServerError_Fragment
+  | MutationError_ValidationError_Fragment;
 
-export type PaginationFragment = { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean };
+type QueryError_AuthorizationError_Fragment = {
+  __typename: 'AuthorizationError';
+  code: number;
+  authorizationErrorMsg: string;
+};
+
+type QueryError_BadRequestError_Fragment = {
+  __typename: 'BadRequestError';
+  code: number;
+  badRequestErrorMessage: string;
+};
+
+type QueryError_NotFoundError_Fragment = {
+  __typename: 'NotFoundError';
+  code: number;
+  notFoundErrorMsg: string;
+};
+
+type QueryError_ServerError_Fragment = {
+  __typename: 'ServerError';
+  code: number;
+  serverErrorMessage: string;
+};
+
+export type QueryErrorFragment =
+  | QueryError_AuthorizationError_Fragment
+  | QueryError_BadRequestError_Fragment
+  | QueryError_NotFoundError_Fragment
+  | QueryError_ServerError_Fragment;
+
+export type PaginationFragment = {
+  startCursor?: string | null;
+  endCursor?: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+};
 
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
@@ -734,15 +903,14 @@ export const LoginDocument = `
   }
 }
     `;
-export const useLoginMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>) =>
-    useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
-      ['login'],
-      useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
-      options
-    );
+export const useLoginMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>
+) =>
+  useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
+    ['login'],
+    useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
+    options
+  );
 export const RefreshDocument = `
     mutation refresh($refreshToken: String!) {
   neosys {
@@ -760,15 +928,14 @@ export const RefreshDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useRefreshMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>) =>
-    useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
-      ['refresh'],
-      useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
-      options
-    );
+export const useRefreshMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>
+) =>
+  useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
+    ['refresh'],
+    useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
+    options
+  );
 export const AddNewClientDocument = `
     mutation addNewClient($data: OrganizationClientInput) {
   neosys {
@@ -783,15 +950,19 @@ export const AddNewClientDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAddNewClientMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddNewClientMutation, TError, AddNewClientMutationVariables, TContext>) =>
-    useMutation<AddNewClientMutation, TError, AddNewClientMutationVariables, TContext>(
-      ['addNewClient'],
-      useAxios<AddNewClientMutation, AddNewClientMutationVariables>(AddNewClientDocument),
-      options
-    );
+export const useAddNewClientMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddNewClientMutation,
+    TError,
+    AddNewClientMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddNewClientMutation, TError, AddNewClientMutationVariables, TContext>(
+    ['addNewClient'],
+    useAxios<AddNewClientMutation, AddNewClientMutationVariables>(AddNewClientDocument),
+    options
+  );
 export const CreateDbDocument = `
     mutation createDB($saccosID: ID!) {
   neosys {
@@ -806,15 +977,109 @@ export const CreateDbDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useCreateDbMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateDbMutation, TError, CreateDbMutationVariables, TContext>) =>
-    useMutation<CreateDbMutation, TError, CreateDbMutationVariables, TContext>(
-      ['createDB'],
-      useAxios<CreateDbMutation, CreateDbMutationVariables>(CreateDbDocument),
-      options
-    );
+export const useCreateDbMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<CreateDbMutation, TError, CreateDbMutationVariables, TContext>
+) =>
+  useMutation<CreateDbMutation, TError, CreateDbMutationVariables, TContext>(
+    ['createDB'],
+    useAxios<CreateDbMutation, CreateDbMutationVariables>(CreateDbDocument),
+    options
+  );
+export const AllAdministrationDocument = `
+    query allAdministration {
+  administration {
+    all {
+      id
+      name
+      districts {
+        id
+        name
+        municipalities {
+          id
+          name
+          wards
+        }
+      }
+    }
+  }
+}
+    `;
+export const useAllAdministrationQuery = <TData = AllAdministrationQuery, TError = unknown>(
+  variables?: AllAdministrationQueryVariables,
+  options?: UseQueryOptions<AllAdministrationQuery, TError, TData>
+) =>
+  useQuery<AllAdministrationQuery, TError, TData>(
+    variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
+    useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(
+      AllAdministrationDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllProvinceDocument = `
+    query getAllProvince {
+  administration {
+    provinces {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetAllProvinceQuery = <TData = GetAllProvinceQuery, TError = unknown>(
+  variables?: GetAllProvinceQueryVariables,
+  options?: UseQueryOptions<GetAllProvinceQuery, TError, TData>
+) =>
+  useQuery<GetAllProvinceQuery, TError, TData>(
+    variables === undefined ? ['getAllProvince'] : ['getAllProvince', variables],
+    useAxios<GetAllProvinceQuery, GetAllProvinceQueryVariables>(GetAllProvinceDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetAllDistrictsDocument = `
+    query getAllDistricts {
+  administration {
+    districts {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetAllDistrictsQuery = <TData = GetAllDistrictsQuery, TError = unknown>(
+  variables?: GetAllDistrictsQueryVariables,
+  options?: UseQueryOptions<GetAllDistrictsQuery, TError, TData>
+) =>
+  useQuery<GetAllDistrictsQuery, TError, TData>(
+    variables === undefined ? ['getAllDistricts'] : ['getAllDistricts', variables],
+    useAxios<GetAllDistrictsQuery, GetAllDistrictsQueryVariables>(GetAllDistrictsDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetAllLocalGovernmentDocument = `
+    query getAllLocalGovernment {
+  administration {
+    municipalities {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetAllLocalGovernmentQuery = <TData = GetAllLocalGovernmentQuery, TError = unknown>(
+  variables?: GetAllLocalGovernmentQueryVariables,
+  options?: UseQueryOptions<GetAllLocalGovernmentQuery, TError, TData>
+) =>
+  useQuery<GetAllLocalGovernmentQuery, TError, TData>(
+    variables === undefined ? ['getAllLocalGovernment'] : ['getAllLocalGovernment', variables],
+    useAxios<GetAllLocalGovernmentQuery, GetAllLocalGovernmentQueryVariables>(
+      GetAllLocalGovernmentDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMeDocument = `
     query getMe {
   neosys {
@@ -833,18 +1098,15 @@ export const GetMeDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useGetMeQuery = <
-      TData = GetMeQuery,
-      TError = unknown
-    >(
-      variables?: GetMeQueryVariables,
-      options?: UseQueryOptions<GetMeQuery, TError, TData>
-    ) =>
-    useQuery<GetMeQuery, TError, TData>(
-      variables === undefined ? ['getMe'] : ['getMe', variables],
-      useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
-      options
-    );
+export const useGetMeQuery = <TData = GetMeQuery, TError = unknown>(
+  variables?: GetMeQueryVariables,
+  options?: UseQueryOptions<GetMeQuery, TError, TData>
+) =>
+  useQuery<GetMeQuery, TError, TData>(
+    variables === undefined ? ['getMe'] : ['getMe', variables],
+    useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
+    options
+  );
 export const GetClientsListDocument = `
     query getClientsList {
   neosys {
@@ -865,15 +1127,15 @@ export const GetClientsListDocument = `
   }
 }
     `;
-export const useGetClientsListQuery = <
-      TData = GetClientsListQuery,
-      TError = unknown
-    >(
-      variables?: GetClientsListQueryVariables,
-      options?: UseQueryOptions<GetClientsListQuery, TError, TData>
-    ) =>
-    useQuery<GetClientsListQuery, TError, TData>(
-      variables === undefined ? ['getClientsList'] : ['getClientsList', variables],
-      useAxios<GetClientsListQuery, GetClientsListQueryVariables>(GetClientsListDocument).bind(null, variables),
-      options
-    );
+export const useGetClientsListQuery = <TData = GetClientsListQuery, TError = unknown>(
+  variables?: GetClientsListQueryVariables,
+  options?: UseQueryOptions<GetClientsListQuery, TError, TData>
+) =>
+  useQuery<GetClientsListQuery, TError, TData>(
+    variables === undefined ? ['getClientsList'] : ['getClientsList', variables],
+    useAxios<GetClientsListQuery, GetClientsListQueryVariables>(GetClientsListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
