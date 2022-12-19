@@ -1386,6 +1386,66 @@ export type BulkInstallmentResult = {
   value?: Maybe<InstallmentResult>;
 };
 
+export type CbsCodeManagement = {
+  codeType?: Maybe<CbsCodeType>;
+  id?: Maybe<Scalars['ID']>;
+  initialNo?: Maybe<Scalars['Int']>;
+  noOfDigit?: Maybe<Scalars['Int']>;
+  prefix?: Maybe<Scalars['String']>;
+};
+
+export type CbsCodeManagementData = {
+  data?: Maybe<CbsCodeManagement>;
+  error?: Maybe<QueryError>;
+};
+
+export type CbsCodeManagementList = {
+  data?: Maybe<Array<Maybe<CbsCodeManagement>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type CbsCodeManagementMutation = {
+  add?: Maybe<CbsCodeMangementResult>;
+};
+
+export type CbsCodeManagementMutationAddArgs = {
+  data?: InputMaybe<CodeManagementInput>;
+};
+
+export type CbsCodeManagementQuery = {
+  allCbsCodes?: Maybe<CbsCodeManagementList>;
+  get?: Maybe<CbsCodeManagementData>;
+};
+
+export type CbsCodeManagementQueryGetArgs = {
+  codeType?: InputMaybe<CbsCodeType>;
+};
+
+export type CbsCodeMangementResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<CbsCodeManagementQuery>;
+  record?: Maybe<CbsCodeManagement>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export enum CbsCodeType {
+  AccountTransfer = 'ACCOUNT_TRANSFER',
+  BranchTransfer = 'BRANCH_TRANSFER',
+  Deposit = 'DEPOSIT',
+  JournalVoucher = 'JOURNAL_VOUCHER',
+  LoanRepayment = 'LOAN_REPAYMENT',
+  MarketRepresentativeTransaction = 'MARKET_REPRESENTATIVE_TRANSACTION',
+  ShareCertificate = 'SHARE_CERTIFICATE',
+  ShareIssue = 'SHARE_ISSUE',
+  ShareReturn = 'SHARE_RETURN',
+  TellerTransfer = 'TELLER_TRANSFER',
+  Valuator = 'VALUATOR',
+  VaultTransfer = 'VAULT_TRANSFER',
+  Withdraw = 'WITHDRAW',
+  WithdrawSlipBlockRequest = 'WITHDRAW_SLIP_BLOCK_REQUEST',
+  WithdrawSlipRequest = 'WITHDRAW_SLIP_REQUEST',
+}
+
 export enum CoaAccountSetup {
   AllBranch = 'ALL_BRANCH',
   ThisBranch = 'THIS_BRANCH',
@@ -1686,6 +1746,21 @@ export type Citizenship = {
 
 export type CitizenshipInNepali = {
   issuePlace?: Maybe<Scalars['String']>;
+};
+
+export type CodeManagementInput = {
+  codeType: CbsCodeType;
+  initialNo: Scalars['Int'];
+  noOfDigit: Scalars['Int'];
+  prefix: Scalars['String'];
+};
+
+export type CodeManagementMutation = {
+  cbs?: Maybe<CbsCodeManagementMutation>;
+};
+
+export type CodeManagementQuery = {
+  cbs?: Maybe<CbsCodeManagementQuery>;
 };
 
 export enum Collateral {
@@ -4705,6 +4780,7 @@ export type GeneralSettingsMutation = {
   alternativeChannel?: Maybe<AlternativeChannelSettingsMutation>;
   branch?: Maybe<GeneralBranchSettingsMutation>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
+  codes?: Maybe<CodeManagementMutation>;
   deposit?: Maybe<DepositSettingsMutation>;
   depositProduct?: Maybe<DepositProductSettingsMutation>;
   loan?: Maybe<LoanSettingsMutation>;
@@ -4719,6 +4795,7 @@ export type GeneralSettingsQuery = {
   alternativeChannel?: Maybe<AlternativeChannelSettingsQuery>;
   branch?: Maybe<GeneralBranchSettingsQuery>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
+  codes?: Maybe<CodeManagementQuery>;
   deposit?: Maybe<DepositSettingsQuery>;
   depositProduct?: Maybe<DepositProductSettingsQuery>;
   loan?: Maybe<LoanSettingsQuery>;
@@ -13396,6 +13473,28 @@ export type ResetPasswordMutation = {
         | MutationError_ServerError_Fragment
         | MutationError_ValidationError_Fragment
         | null;
+    } | null;
+  };
+};
+
+export type SetRecoveryPasswordMutationVariables = Exact<{
+  email: Scalars['String'];
+  url: Scalars['String'];
+}>;
+
+export type SetRecoveryPasswordMutation = {
+  user: {
+    passwordRecovery?: {
+      sendRecoveryEmail?: {
+        recordID?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
     } | null;
   };
 };
@@ -23901,6 +24000,35 @@ export const useResetPasswordMutation = <TError = unknown, TContext = unknown>(
     useAxios<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument),
     options
   );
+export const SetRecoveryPasswordDocument = `
+    mutation setRecoveryPassword($email: String!, $url: String!) {
+  user {
+    passwordRecovery {
+      sendRecoveryEmail(data: {email: $email, url: $url}) {
+        recordID
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetRecoveryPasswordMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetRecoveryPasswordMutation,
+    TError,
+    SetRecoveryPasswordMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetRecoveryPasswordMutation, TError, SetRecoveryPasswordMutationVariables, TContext>(
+    ['setRecoveryPassword'],
+    useAxios<SetRecoveryPasswordMutation, SetRecoveryPasswordMutationVariables>(
+      SetRecoveryPasswordDocument
+    ),
+    options
+  );
 export const AddNewAccountInCoaDocument = `
     mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
   settings {
@@ -25280,6 +25408,40 @@ export const useCancelWithdrawSlipRequestMutation = <TError = unknown, TContext 
     ['cancelWithdrawSlipRequest'],
     useAxios<CancelWithdrawSlipRequestMutation, CancelWithdrawSlipRequestMutationVariables>(
       CancelWithdrawSlipRequestDocument
+    ),
+    options
+  );
+export const ApproveOrDeclineMemberRequestDocument = `
+    mutation approveOrDeclineMemberRequest($data: RequestApproveOrDeclineInput) {
+  requests {
+    approveOrDecline {
+      membershipRequest(data: $data) {
+        error {
+          ...MutationError
+        }
+        requestId
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useApproveOrDeclineMemberRequestMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ApproveOrDeclineMemberRequestMutation,
+    TError,
+    ApproveOrDeclineMemberRequestMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ApproveOrDeclineMemberRequestMutation,
+    TError,
+    ApproveOrDeclineMemberRequestMutationVariables,
+    TContext
+  >(
+    ['approveOrDeclineMemberRequest'],
+    useAxios<ApproveOrDeclineMemberRequestMutation, ApproveOrDeclineMemberRequestMutationVariables>(
+      ApproveOrDeclineMemberRequestDocument
     ),
     options
   );
@@ -33984,6 +34146,50 @@ export const useGetBlockChequeListQuery = <TData = GetBlockChequeListQuery, TErr
     variables === undefined ? ['getBlockChequeList'] : ['getBlockChequeList', variables],
     useAxios<GetBlockChequeListQuery, GetBlockChequeListQueryVariables>(
       GetBlockChequeListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberRequestListDocument = `
+    query getMemberRequestList($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      membershipRequest(filter: $filter, paginate: $pagination) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            dateOfBirth
+            email
+            firstName
+            gender
+            lastName
+            middleName
+            mobileNumber
+            permanentAddress {
+              ...Address
+            }
+            phoneNumber
+            requestedDate
+            status
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}
+${AddressFragmentDoc}`;
+export const useGetMemberRequestListQuery = <TData = GetMemberRequestListQuery, TError = unknown>(
+  variables?: GetMemberRequestListQueryVariables,
+  options?: UseQueryOptions<GetMemberRequestListQuery, TError, TData>
+) =>
+  useQuery<GetMemberRequestListQuery, TError, TData>(
+    variables === undefined ? ['getMemberRequestList'] : ['getMemberRequestList', variables],
+    useAxios<GetMemberRequestListQuery, GetMemberRequestListQueryVariables>(
+      GetMemberRequestListDocument
     ).bind(null, variables),
     options
   );

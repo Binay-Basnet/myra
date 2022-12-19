@@ -11535,6 +11535,395 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "CBSCodeManagement",
+        "description": null,
+        "fields": [
+          {
+            "name": "codeType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "CBSCodeType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "initialNo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "noOfDigit",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "prefix",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CBSCodeManagementData",
+        "description": null,
+        "fields": [
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CBSCodeManagement",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CBSCodeManagementList",
+        "description": null,
+        "fields": [
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CBSCodeManagement",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CBSCodeManagementMutation",
+        "description": null,
+        "fields": [
+          {
+            "name": "add",
+            "description": null,
+            "args": [
+              {
+                "name": "data",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CodeManagementInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CBSCodeMangementResult",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CBSCodeManagementQuery",
+        "description": null,
+        "fields": [
+          {
+            "name": "allCbsCodes",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CBSCodeManagementList",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "get",
+            "description": null,
+            "args": [
+              {
+                "name": "codeType",
+                "description": null,
+                "type": {
+                  "kind": "ENUM",
+                  "name": "CBSCodeType",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CBSCodeManagementData",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CBSCodeMangementResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "MutationError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "query",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CBSCodeManagementQuery",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "record",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CBSCodeManagement",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recordId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "CBSCodeType",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ACCOUNT_TRANSFER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "BRANCH_TRANSFER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DEPOSIT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "JOURNAL_VOUCHER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LOAN_REPAYMENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MARKET_REPRESENTATIVE_TRANSACTION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHARE_CERTIFICATE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHARE_ISSUE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHARE_RETURN",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TELLER_TRANSFER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "VALUATOR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "VAULT_TRANSFER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WITHDRAW",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WITHDRAW_SLIP_BLOCK_REQUEST",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WITHDRAW_SLIP_REQUEST",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "ENUM",
         "name": "COAAccountSetup",
         "description": null,
@@ -14189,6 +14578,127 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "CodeManagementInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "codeType",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "CBSCodeType",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "initialNo",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "noOfDigit",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "prefix",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CodeManagementMutation",
+        "description": null,
+        "fields": [
+          {
+            "name": "cbs",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CBSCodeManagementMutation",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CodeManagementQuery",
+        "description": null,
+        "fields": [
+          {
+            "name": "cbs",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CBSCodeManagementQuery",
               "ofType": null
             },
             "isDeprecated": false,
@@ -40393,6 +40903,18 @@
             "deprecationReason": null
           },
           {
+            "name": "codes",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CodeManagementMutation",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "deposit",
             "description": null,
             "args": [],
@@ -40530,6 +41052,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "ChartsOfAccountSettingsQuery",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "codes",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CodeManagementQuery",
               "ofType": null
             },
             "isDeprecated": false,
@@ -111607,14 +112141,19 @@
         "name": "asBase",
         "description": null,
         "isRepeatable": false,
-        "locations": ["OBJECT"],
+        "locations": [
+          "OBJECT"
+        ],
         "args": []
       },
       {
         "name": "date",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "after",
@@ -111683,7 +112222,10 @@
         "name": "email",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "required",
@@ -111715,7 +112257,9 @@
         "name": "faker",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "tag",
@@ -111735,7 +112279,10 @@
         "name": "goField",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "forceResolver",
@@ -111767,7 +112314,11 @@
         "name": "include",
         "description": "The @include directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional inclusion during execution as described by the if argument.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -111791,7 +112342,10 @@
         "name": "localized",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "format",
@@ -111859,7 +112413,10 @@
         "name": "nestedField",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "section_name",
@@ -111891,7 +112448,10 @@
         "name": "number",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "max",
@@ -111947,7 +112507,11 @@
         "name": "skip",
         "description": "The @skip directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional exclusion during execution as described by the if argument.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -111971,7 +112535,9 @@
         "name": "specifiedBy",
         "description": "The @specifiedBy built-in directive is used within the type system definition language to provide a scalar specification URL for specifying the behavior of custom scalar types.",
         "isRepeatable": false,
-        "locations": ["SCALAR"],
+        "locations": [
+          "SCALAR"
+        ],
         "args": [
           {
             "name": "url",
@@ -111995,7 +112561,10 @@
         "name": "text",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "format",
@@ -112063,7 +112632,9 @@
         "name": "translate",
         "description": null,
         "isRepeatable": false,
-        "locations": ["INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "lang",
@@ -112087,7 +112658,10 @@
         "name": "validate",
         "description": null,
         "isRepeatable": false,
-        "locations": ["INPUT_OBJECT", "OBJECT"],
+        "locations": [
+          "INPUT_OBJECT",
+          "OBJECT"
+        ],
         "args": []
       }
     ]
