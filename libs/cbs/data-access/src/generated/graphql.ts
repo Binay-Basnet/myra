@@ -19415,7 +19415,104 @@ export type GetMemberOverviewBioDetailsQuery = {
     memberOverview?: {
       data?: {
         bio?:
-          | { __typename: 'CoopBio' }
+          | {
+              __typename: 'CoopBio';
+              basicInfo?: {
+                memberName?: string | null;
+                profilePic?: string | null;
+                memberCode?: string | null;
+                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+                registrationNo?: string | null;
+                registrationOffice?: string | null;
+                registrationDate?: Record<'local' | 'en' | 'np', string> | null;
+              } | null;
+              registeredAddress?: AddressFragment | null;
+              operatingAddress?: AddressFragment | null;
+              contactDetails?: {
+                email?: string | null;
+                website?: string | null;
+                phone?: string | null;
+              } | null;
+              currentMemberDetails?: {
+                noOfMaleMembers?: number | null;
+                noOfFemaleMembers?: number | null;
+                noOfOtherMembers?: number | null;
+                lastAuditDate?: Record<'local' | 'en' | 'np', string> | null;
+              } | null;
+              representativeDetails?: {
+                name?: string | null;
+                designation?: string | null;
+                contactNumber?: string | null;
+                email?: string | null;
+                panVatNo?: string | null;
+                address?: AddressFragment | null;
+                docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
+              } | null;
+              additionalCoopDetails?: {
+                coopType?: string | null;
+                mainServiceProduct?: string | null;
+              } | null;
+              employeeDetails?: {
+                male?: number | null;
+                female?: number | null;
+                other?: number | null;
+                total?: number | null;
+              } | null;
+              equityLiabilities?: {
+                shareCapital?: string | null;
+                reserveAndSurplus?: string | null;
+                savingDeposit?: string | null;
+                loanAccount?: string | null;
+                capitalGrant?: string | null;
+                total?: string | null;
+              } | null;
+              assetDetails?: {
+                cashAndEquivalents?: string | null;
+                bank?: string | null;
+                investments?: string | null;
+                loan?: string | null;
+                nonCurrentAssets?: string | null;
+                otherNonCurrentAssets?: string | null;
+                other?: string | null;
+              } | null;
+              partnerDirectorDetails?: Array<{
+                name?: string | null;
+                designation?: string | null;
+                dateOfMembership?: Record<'local' | 'en' | 'np', string> | null;
+                highestQualification?: string | null;
+                mobileNo?: string | null;
+                email?: string | null;
+                citizenshipNo?: string | null;
+                panNo?: string | null;
+                permAddress?: AddressFragment | null;
+                tempAddress?: AddressFragment | null;
+                docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
+              } | null> | null;
+              operatorDetails?: Array<{
+                name?: string | null;
+                contactNo?: string | null;
+                email?: string | null;
+                panNo?: string | null;
+                pemAddress?: {
+                  state?: Record<'local' | 'en' | 'np', string> | null;
+                  district?: Record<'local' | 'en' | 'np', string> | null;
+                  localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                  wardNo?: string | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                } | null;
+                tempAddress?: {
+                  state?: Record<'local' | 'en' | 'np', string> | null;
+                  district?: Record<'local' | 'en' | 'np', string> | null;
+                  localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                  wardNo?: string | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                } | null;
+                docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
+              } | null> | null;
+              docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
+            }
           | { __typename: 'CoopUnionBio' }
           | { __typename: 'IndividualBio' }
           | {
