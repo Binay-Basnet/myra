@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Tags, Text } from '@myra-ui';
+import { Chips, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { LoanInstallment } from '@coop/cbs/data-access';
@@ -107,9 +107,9 @@ export const LoanPaymentScheduleTable = ({
               }
             >
               {installmentNo === nextInstallmentNumber ? (
-                <Tags borderRadius="br5" label="Current" type="tag" labelColor="info.500" />
+                <Chips variant="solid" theme="success" size="md" type="label" label="Current" />
               ) : value ? (
-                <Tags borderRadius="br5" label="Paid" type="tag" labelColor="primary.500" />
+                <Chips variant="solid" theme="info" size="md" type="label" label="Paid" />
               ) : (
                 '-'
               )}

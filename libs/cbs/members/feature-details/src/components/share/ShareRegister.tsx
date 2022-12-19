@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 
+import { Box, Chips, Text } from '@myra-ui';
+
 import { ShareTransactionType, useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
-import { Box, Tags, Text } from '@myra-ui';
 
 export const ShareRegister = () => {
   const router = useRouter();
@@ -57,20 +58,23 @@ export const ShareRegister = () => {
                 </Box>
                 {items?.noOfShares && (
                   <Box>
-                    <Tags
-                      label={String(items?.noOfShares as unknown)}
-                      type="chip"
-                      bg={
-                        items?.txnType === ShareTransactionType?.Return
-                          ? 'danger.100'
-                          : 'primary.100'
-                      }
-                      labelColor={
-                        items?.txnType === ShareTransactionType?.Return
-                          ? 'danger.500'
-                          : 'primary.500'
-                      }
-                    />
+                    {items?.txnType === ShareTransactionType?.Return ? (
+                      <Chips
+                        variant="solid"
+                        theme="danger"
+                        size="md"
+                        type="label"
+                        label={String(items?.noOfShares as unknown)}
+                      />
+                    ) : (
+                      <Chips
+                        variant="solid"
+                        theme="success"
+                        size="md"
+                        type="label"
+                        label={String(items?.noOfShares as unknown)}
+                      />
+                    )}
                   </Box>
                 )}
               </Box>

@@ -4,7 +4,7 @@ import Tags from './Tags';
 
 describe('Tags', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Tags />);
+    const { baseElement } = render(<Tags label="Success" type="tag" />);
     expect(baseElement).toBeTruthy();
   });
 });

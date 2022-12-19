@@ -2,7 +2,7 @@ import { IoCopyOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { Avatar } from '@chakra-ui/react';
 
-import { Box, DetailPageTabs, Icon, Tags, Text } from '@myra-ui';
+import { Box, Chips, DetailPageTabs, Icon, Text } from '@myra-ui';
 
 import {
   CooperativeBasicMinInfo,
@@ -79,41 +79,22 @@ export const MemberDetailsSidebar = () => {
         <Box display="flex" flexDirection="column" gap="s8">
           <Box display="flex" alignItems="center" gap="s8">
             <Text fontSize="l1" fontWeight="600">
-              {' '}
               {memberInfo?.memberName}
               {memberBasicInstitution?.memberName}
               {memberBasicCooperative?.memberName}
               {memberBasicCooperativeUnion?.memberName}
             </Text>
             {memberInfo?.isStaff && (
-              <Tags
-                label="staff"
-                type="chip"
-                bg="info.0"
-                labelColor="info.500"
-                minW="fit-content"
-              />
+              <Chips variant="solid" theme="info" size="md" type="label" label="Staff" />
             )}
             {memberBasicInstitution && (
-              <Tags
-                label="institute"
-                type="chip"
-                bg="info.0"
-                labelColor="info.500"
-                minW="fit-content"
-              />
+              <Chips variant="solid" theme="info" size="md" type="label" label="Institute" />
             )}
             {memberBasicCooperative && (
-              <Tags label="coop" type="chip" bg="info.0" labelColor="info.500" minW="fit-content" />
+              <Chips variant="solid" theme="info" size="md" type="label" label="Coop" />
             )}
             {memberBasicCooperativeUnion && (
-              <Tags
-                label="coop-union"
-                type="chip"
-                bg="info.0"
-                labelColor="info.500"
-                minW="fit-content"
-              />
+              <Chips variant="solid" theme="info" size="md" type="label" label="Coop Union" />
             )}
           </Box>
           {memberInfo?.memberCode && (

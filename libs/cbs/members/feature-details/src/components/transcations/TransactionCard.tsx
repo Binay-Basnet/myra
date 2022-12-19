@@ -1,5 +1,6 @@
+import { Box, Chips, Text } from '@myra-ui';
+
 import { MemberRecentTransactionViewTxnType } from '@coop/cbs/data-access';
-import { Box, Tags, Text } from '@myra-ui';
 
 interface ITransactionview {
   date: string;
@@ -49,16 +50,23 @@ export const TransactionViewCard = ({
       </Box>
       {noOfShares && (
         <Box>
-          <Tags
-            label={String(noOfShares as unknown)}
-            type="chip"
-            bg={
-              txnType === MemberRecentTransactionViewTxnType?.Debit ? 'danger.100' : 'primary.100'
-            }
-            labelColor={
-              txnType === MemberRecentTransactionViewTxnType?.Debit ? 'danger.500' : 'primary.500'
-            }
-          />
+          {txnType === MemberRecentTransactionViewTxnType?.Debit ? (
+            <Chips
+              variant="solid"
+              theme="danger"
+              size="md"
+              type="label"
+              label={String(noOfShares as unknown)}
+            />
+          ) : (
+            <Chips
+              variant="solid"
+              theme="success"
+              size="md"
+              type="label"
+              label={String(noOfShares as unknown)}
+            />
+          )}
         </Box>
       )}
     </Box>

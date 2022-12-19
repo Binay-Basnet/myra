@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 
+import { Box, Chips, PageHeaderTab, Text } from '@myra-ui';
+
 import { BoxContainer, DividerContainer } from '@coop/accounting/ui-components';
-import { Box, PageHeaderTab, Tags, Text } from '@myra-ui';
 
 import { SalesBox, SalesDetails } from '../components/form-components/salesEntry';
 
@@ -34,7 +35,7 @@ export const SalesObject = () => {
           <BreadcrumbItem>
             <BreadcrumbLink href="/accounting/sales/list" _focus={{ boxShadow: 'none' }}>
               {' '}
-              <Text fontSize={'r2'} fontWeight="500" color="gray.800">
+              <Text fontSize="r2" fontWeight="500" color="gray.800">
                 Home
               </Text>
             </BreadcrumbLink>
@@ -43,7 +44,7 @@ export const SalesObject = () => {
           <BreadcrumbItem>
             <BreadcrumbLink href="#" _focus={{ boxShadow: 'none' }}>
               {' '}
-              <Text fontSize={'r2'} fontWeight="500" color="gray.800">
+              <Text fontSize="r2" fontWeight="500" color="gray.800">
                 MX004
               </Text>
             </BreadcrumbLink>
@@ -53,45 +54,45 @@ export const SalesObject = () => {
       <Box p="s32">
         <Box
           border="1px solid"
-          borderColor={'border.layout'}
+          borderColor="border.layout"
           p="s16"
-          display={'flex'}
+          display="flex"
           justifyContent="space-between"
           borderRadius="br2"
         >
           <Box w="30%">
             <BoxContainer>
-              <Text fontWeight={'400'} fontSize="l2">
+              <Text fontWeight="400" fontSize="l2">
                 {' '}
                 MX004
               </Text>
-              <Box display={'flex'} flexDirection="column" gap={'8px'}>
-                <Text fontWeight={'400'} fontSize="r1" color="gray.900">
+              <Box display="flex" flexDirection="column" gap="8px">
+                <Text fontWeight="400" fontSize="r1" color="gray.900">
                   {' '}
                   Elive Store
                 </Text>
-                <Text fontWeight={'600'} fontSize="r1" color="gray.900">
+                <Text fontWeight="600" fontSize="r1" color="gray.900">
                   {' '}
                   24,098.99{' '}
                 </Text>
               </Box>
-              <Box display={'flex'} flexDirection="row" gap="s40">
-                <Box display={'flex'} flexDirection="column" gap="s4">
-                  <Text fontWeight={'400'} fontSize="r1" color="gray.900">
+              <Box display="flex" flexDirection="row" gap="s40">
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Text fontWeight="400" fontSize="r1" color="gray.900">
                     {' '}
                     Created Date
                   </Text>
-                  <Text fontWeight={'400'} fontSize="r1" color="gray.900">
+                  <Text fontWeight="400" fontSize="r1" color="gray.900">
                     {' '}
                     Created By
                   </Text>
                 </Box>
-                <Box display={'flex'} flexDirection="column" gap="s4">
-                  <Text fontWeight={'600'} fontSize="r1" color="gray.900">
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Text fontWeight="600" fontSize="r1" color="gray.900">
                     {' '}
                     09-07-2022
                   </Text>
-                  <Text fontWeight={'600'} fontSize="r1" color="gray.900">
+                  <Text fontWeight="600" fontSize="r1" color="gray.900">
                     {' '}
                     Abc Xyz
                   </Text>
@@ -101,18 +102,18 @@ export const SalesObject = () => {
           </Box>
 
           <Box h="fit-content">
-            <Tags label="Approved" type="chip" />
+            <Chips variant="solid" theme="success" size="md" type="label" label="Approved" />
           </Box>
         </Box>
         <Box py="s24">
           <Box
             // px="s16"
-            position={'sticky'}
+            position="sticky"
             top="169px"
             zIndex={12}
             w="100%"
             bg="white"
-            borderBottom={'1px solid'}
+            borderBottom="1px solid"
             borderColor="border.layout"
           >
             <PageHeaderTab list={tabHeader} />
@@ -123,11 +124,11 @@ export const SalesObject = () => {
                 <DividerContainer>
                   <SalesDetails />
                   {/* -------------------- TODO -----------ADD Table here */}
-                  <Box></Box>
+                  <Box />
                   <SalesBox />
                   <SalesDetails />
                   {/* -------------------- TODO -----------ADD Table here */}
-                  <Box></Box>
+                  <Box />
                   <SalesBox />
                 </DividerContainer>
               </Box>
