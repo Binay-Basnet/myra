@@ -102,10 +102,10 @@ export const CBSAccountList = () => {
                   title: 'View Details',
                   onClick: (row) => router.push(`/savings/details/${row['id']}`),
                 },
-                {
-                  title: 'depositProductEdit',
-                  onClick: (row) => router.push(`/savings/account-open/edit/${row['id']}`),
-                },
+                // {
+                //   title: 'depositProductEdit',
+                //   onClick: (row) => router.push(`/savings/account-open/edit/${row['id']}`),
+                // },
               ]}
               node={props?.row?.original?.node}
             />

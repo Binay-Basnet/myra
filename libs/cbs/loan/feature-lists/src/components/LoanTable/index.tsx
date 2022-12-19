@@ -11,9 +11,10 @@ interface ILoanTable {
   isLoading: boolean;
   type: LoanObjState;
   viewLink: string;
+  isDisbured?: boolean;
 }
 
-export const LoanTable = ({ data, isLoading, type, viewLink }: ILoanTable) => {
+export const LoanTable = ({ data, isLoading, type, viewLink, isDisbured }: ILoanTable) => {
   const router = useRouter();
 
   const rowData = useMemo<LoanAccountEdge[]>(
@@ -70,7 +71,8 @@ export const LoanTable = ({ data, isLoading, type, viewLink }: ILoanTable) => {
         accessorFn: (row) => row?.node?.product.productName,
       },
       {
-        header: 'Loan Applied Date',
+        id: 'loan Account Creation Date id',
+        header: () => (isDisbured ? 'Account Opened Date' : 'Loan Applied Date'),
         accessorFn: (row) => row?.node?.createdAt,
         cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
       },

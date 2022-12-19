@@ -24,6 +24,7 @@ export const LoanAccountList = () => {
         isLoading={isFetching}
         type={LoanObjState.Disbursed}
         viewLink="/loan/accounts/view"
+        isDisbured
       />
     </>
   );
