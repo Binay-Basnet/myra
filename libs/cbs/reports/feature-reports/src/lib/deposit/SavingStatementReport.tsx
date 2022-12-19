@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import { Box } from '@myra-ui';
 
@@ -15,6 +14,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportMember, SavingReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormAmountFilter, FormRadioGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -86,7 +86,7 @@ export const SavingStatementReport = () => {
               {
                 header: 'Date',
                 accessorKey: 'date',
-                cell: ({ cell }) => dayjs(cell.row.original.date?.local).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.date),
                 meta: {
                   Footer: {
                     display: 'none',

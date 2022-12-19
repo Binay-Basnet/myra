@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import { Box, GridItem, Text } from '@myra-ui';
 
@@ -14,6 +13,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -110,10 +110,8 @@ export const CashLedgersReport = () => {
                   columns={[
                     {
                       header: 'Date',
+                      accessorFn: (row) => localizedDate(row?.date),
                       footer: () => <Box textAlign="right">Total </Box>,
-                      accessorFn: (row) => row?.date?.local,
-                      cell: ({ cell }) => dayjs(cell.row.original.date?.local).format('YYYY-MM-DD'),
-
                       meta: {
                         width: '60px',
                         Footer: {
@@ -203,9 +201,8 @@ export const CashLedgersReport = () => {
                   columns={[
                     {
                       header: 'Date',
+                      accessorFn: (row) => localizedDate(row?.date),
                       footer: () => <Box textAlign="right">Total </Box>,
-                      accessorFn: (row) => row?.date?.local,
-                      cell: ({ cell }) => dayjs(cell.row.original.date?.local).format('YYYY-MM-DD'),
 
                       meta: {
                         width: '60px',

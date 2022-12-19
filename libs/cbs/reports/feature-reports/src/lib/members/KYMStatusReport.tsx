@@ -14,7 +14,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { formatTableAddress } from '@coop/cbs/utils';
+import { formatTableAddress, localizedDate } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 
 const riskCategory = [
@@ -112,8 +112,7 @@ export const KYMStatusReport = () => {
               },
               {
                 header: 'Member Registration Date',
-                accessorFn: (row) => row?.regDate?.local,
-                cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.regDate),
               },
               {
                 header: 'Risk Category',

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import { Box, GridItem, Text } from '@myra-ui';
 
@@ -14,7 +13,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { formatAddress } from '@coop/cbs/utils';
+import { formatAddress, localizedDate } from '@coop/cbs/utils';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -104,8 +103,7 @@ export const MemberRegisterReport = () => {
 
                     {
                       header: 'DOB',
-                      accessorFn: (row) => row?.dob?.local,
-                      cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                      accessorFn: (row) => localizedDate(row?.dob),
                     },
                     {
                       header: 'GrandFather Name',
@@ -193,8 +191,7 @@ export const MemberRegisterReport = () => {
 
                     {
                       header: 'DOE',
-                      accessorFn: (row) => row?.doe?.local,
-                      cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                      accessorFn: (row) => localizedDate(row?.doe),
                     },
                     {
                       header: 'Type of Institution',

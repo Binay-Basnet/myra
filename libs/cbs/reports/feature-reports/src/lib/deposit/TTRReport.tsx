@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import { Box, GridItem, Text } from '@myra-ui';
 
@@ -14,7 +13,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { formatAddress } from '@coop/cbs/utils';
+import { formatAddress, localizedDate } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -141,8 +140,7 @@ export const TTRReport = () => {
                   },
                   {
                     header: 'Date',
-                    accessorFn: (row) => row?.date?.local,
-                    cell: ({ cell }) => dayjs(cell.row.original.date?.en).format('YYYY-MM-DD'),
+                    accessorFn: (row) => localizedDate(row?.date),
                   },
                   {
                     header: 'Nature of Transaction',
@@ -207,8 +205,7 @@ export const TTRReport = () => {
                   },
                   {
                     header: 'Date',
-                    accessorFn: (row) => row?.date?.local,
-                    cell: ({ cell }) => dayjs(cell.row.original.date?.en).format('YYYY-MM-DD'),
+                    accessorFn: (row) => localizedDate(row?.date),
                   },
                   {
                     header: 'Nature of Transaction',

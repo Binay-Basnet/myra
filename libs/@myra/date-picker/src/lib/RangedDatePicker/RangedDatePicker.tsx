@@ -166,7 +166,16 @@ export const RangedDatePicker = ({
   return (
     <Popover placement="bottom-start" isOpen={isOpen} onClose={onClose} onOpen={onToggle}>
       <PopoverTrigger>
-        <Box w="100%" as="button" type="button" display="flex" flexDir="column" gap="s4" mb="1px">
+        <Box
+          w="100%"
+          as="button"
+          type="button"
+          display="flex"
+          flexDir="column"
+          gap="s4"
+          mb="1px"
+          alignItems="flex-start"
+        >
           <Text fontWeight="500" lineHeight="1.5" fontSize="s3" color="gray.700">
             {label}
           </Text>

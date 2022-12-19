@@ -12,6 +12,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
 import { amountConverter, featureCode } from '@coop/shared/utils';
 
@@ -78,7 +79,7 @@ export const BankGLStatementReport = () => {
               },
               {
                 header: 'Date',
-                accessorFn: (row) => row?.date?.local,
+                accessorFn: (row) => localizedDate(row?.date),
               },
               {
                 header: 'Particular',

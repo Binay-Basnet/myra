@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import { GridItem } from '@myra-ui';
 
@@ -11,6 +10,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormBranchSelect } from '@coop/shared/form';
 
 export const MBRegistrationReport = () => {
@@ -84,13 +84,11 @@ export const MBRegistrationReport = () => {
               },
               {
                 header: 'Registered Date',
-                accessorFn: (row) => row?.regDate?.local,
-                cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.regDate),
               },
               {
                 header: 'Expiry Date',
-                accessorFn: (row) => row?.expDate?.local,
-                cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.expDate),
               },
               {
                 header: 'Status',
