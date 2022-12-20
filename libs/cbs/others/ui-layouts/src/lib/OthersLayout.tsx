@@ -29,7 +29,7 @@ const othersColumns = [
     name: 'market-representative',
   },
   {
-    title: 'Market Representatives Transactions',
+    title: 'Market Representative Transactions',
     link: '/others/market-representative-transaction/list',
     name: 'market-representative-transaction',
     addLink: '/others/market-representative-transaction/add',
