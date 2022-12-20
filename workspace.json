@@ -79,6 +79,7 @@
     "cbs-settings-feature-valuator": "libs/cbs/settings/feature-valuator",
     "cbs-settings-ui-containers": "libs/cbs/settings/ui-containers",
     "cbs-settings-ui-layout": "libs/cbs/settings/ui-layout",
+    "cbs-share-feature-share-register-detail": "libs/cbs/share/feature-share-register-detail",
     "cbs-transactions-feature-account-transfer": "libs/cbs/transactions/feature-account-transfer",
     "cbs-transactions-feature-agent": "libs/cbs/transactions/feature-agent",
     "cbs-transactions-feature-agent-transaction": "libs/cbs/transactions/feature-agent-transaction",
