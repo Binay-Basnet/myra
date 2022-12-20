@@ -467,7 +467,6 @@ volumes:
       path: /var/run/docker.sock
 
 ---
----
 kind: pipeline
 name: Build and Push ebanking
 type: docker
