@@ -431,7 +431,7 @@ volumes:
 - name: myra-app
   temp: {}
 
-when:
+trigger:
   branch:
   - staging
   event:
@@ -490,7 +490,7 @@ volumes:
 - name: neosys-app
   temp: {}
 
-when:
+trigger:
   branch:
   - staging
   event:
@@ -549,7 +549,7 @@ volumes:
 - name: ebanking-app
   temp: {}
 
-when:
+trigger:
   branch:
   - staging
   event:
