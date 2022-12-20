@@ -15,6 +15,7 @@ import {
   BioCoop,
   BioCoopUnion,
   BioInstitution,
+  DocumentInd,
   MemberAddressInfo,
   MemberBasicInfo,
   MemberContactInfo,
@@ -155,6 +156,7 @@ export const Bio = () => {
           <MemberAddressInfo />
           <MemberFamilyInfo />
           <MemberFamilyRelationsInfo />
+          <DocumentInd />
         </Box>
       )}
       {memberBasicInstitution && <BioInstitution />}
