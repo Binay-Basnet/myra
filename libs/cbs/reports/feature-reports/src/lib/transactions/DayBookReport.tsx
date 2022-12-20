@@ -25,8 +25,6 @@ export const DayBookReport = () => {
     },
   });
 
-  console.log(data);
-
   return (
     <Report
       data={

@@ -1,4 +1,4 @@
-import { Box, Tags, Text } from '@myra-ui';
+import { Box, Chips, Text } from '@myra-ui';
 
 import { amountConverter } from '@coop/shared/utils';
 
@@ -33,11 +33,12 @@ export const Summary = ({ sidebarData }: SidebarType) => (
 
     <Box display="flex" flexDirection="column" gap="s10">
       <Box display="flex" justifyContent="flex-end">
-        <Tags
-          type="chip"
+        <Chips
+          variant="solid"
+          theme="success"
+          size="md"
+          type="label"
           label={sidebarData?.status ?? ''}
-          tagColor="primary.100"
-          labelColor="success.500"
         />
       </Box>
       <Text fontSize="r1" fontWeight="SemiBold" color="gray.700" lineHeight="150%">

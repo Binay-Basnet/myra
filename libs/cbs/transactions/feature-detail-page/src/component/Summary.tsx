@@ -1,6 +1,6 @@
 import { IoCopyOutline } from 'react-icons/io5';
 
-import { Box, Icon, Tags, Text } from '@myra-ui';
+import { Box, Chips, Icon, Text } from '@myra-ui';
 
 import { TransferType } from '@coop/cbs/data-access';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
@@ -69,11 +69,12 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
                 </Text>
               </Box>
               <Box display="flex" justifyContent="flex-end">
-                <Tags
-                  type="chip"
+                <Chips
+                  type="label"
+                  theme="success"
+                  variant="solid"
                   label={summary.paymentMode ?? ''}
-                  tagColor="primary.100"
-                  labelColor="success.500"
+                  size="md"
                 />
               </Box>
             </Box>

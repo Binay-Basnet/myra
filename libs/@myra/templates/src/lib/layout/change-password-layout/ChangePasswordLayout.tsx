@@ -3,7 +3,7 @@ import Image from 'next/legacy/image';
 import { Box } from '@myra-ui/foundations';
 
 /* eslint-disable-next-line */
-export interface ChangePasswordLayoutProps {
+interface ChangePasswordLayoutProps {
   children: React.ReactNode;
 }
 
@@ -22,5 +22,3 @@ export const ChangePasswordLayout = (props: ChangePasswordLayoutProps) => {
     </>
   );
 };
-
-export default ChangePasswordLayout;

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import dayjs from 'dayjs';
 
 import { Box, GridItem } from '@myra-ui';
 
@@ -15,6 +14,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -137,8 +137,7 @@ export const LoanAgingStatementsReport = () => {
               },
               {
                 header: 'Issue Date',
-                accessorKey: 'issueDate',
-                cell: ({ cell }) => dayjs(cell.row.original.issueDate?.local).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.issueDate),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -147,9 +146,7 @@ export const LoanAgingStatementsReport = () => {
               },
               {
                 header: 'Loan Maturity Date',
-                accessorKey: 'loanMaturityDate',
-                cell: ({ cell }) =>
-                  dayjs(cell.row.original?.loanMaturityDate?.local).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.loanMaturityDate),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -268,10 +265,7 @@ export const LoanAgingStatementsReport = () => {
               },
               {
                 header: 'Last Principal Paid Date',
-                accessorKey: 'lastPrincipalPaidDate',
-                cell: ({ cell }) =>
-                  dayjs(cell.row.original.lastPrincipalPaidDate?.local).format('YYYY-MM-DD'),
-
+                accessorFn: (row) => localizedDate(row?.lastPrincipalPaidDate),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -280,9 +274,7 @@ export const LoanAgingStatementsReport = () => {
               },
               {
                 header: 'Last Interest Paid Date',
-                accessorKey: 'lastInterestPaidDate',
-                cell: ({ cell }) =>
-                  dayjs(cell.row.original.lastInterestPaidDate?.local).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.lastInterestPaidDate),
                 meta: {
                   Footer: {
                     display: 'none',

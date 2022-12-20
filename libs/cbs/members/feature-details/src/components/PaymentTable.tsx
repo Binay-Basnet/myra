@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Tags, Text } from '@myra-ui';
+import { Chips, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { amountConverter } from '@coop/shared/utils';
@@ -43,11 +43,12 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
           const value = props.getValue() as string;
 
           return (
-            <Tags
-              type="chip"
+            <Chips
+              variant="solid"
+              theme={value !== 'LOAN' ? 'success' : 'danger'}
+              size="md"
+              type="label"
               label={value}
-              bg={value !== 'LOAN' ? 'primary.100' : 'danger.100'}
-              labelColor={value !== 'LOAN' ? 'primary.500' : 'danger.500'}
             />
           );
         },
@@ -72,5 +73,5 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
     []
   );
 
-  return <Table<typeof data[0]> size="report" isStatic data={data ?? []} columns={columns} />;
+  return <Table<typeof data[0]> isStatic data={data ?? []} columns={columns} />;
 };

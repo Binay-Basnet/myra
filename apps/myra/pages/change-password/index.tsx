@@ -1,43 +1,20 @@
 import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { BiArrowBack } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
-import { useAppSelector, useResetPasswordMutation } from '@coop/cbs/data-access';
 import {
   asyncToast,
   Box,
   Button,
+  ChangePasswordContainerLayout,
   ChangePasswordLayout,
-  Icon,
   PasswordInput,
   Text,
 } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
 
-const Container = ({ children }) => {
-  const { t } = useTranslation();
-  const route = useRouter();
-  return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      w={492}
-      bg="white"
-      mt="s20"
-      borderRadius={8}
-      p="s16"
-      gap="s32"
-    >
-      <Box display="flex" gap={2} alignItems="center" cursor="pointer" onClick={() => route.back()}>
-        <Icon as={BiArrowBack} size="sm" />
-        <Text fontSize="r1">{t['backText']}</Text>
-      </Box>
-      {children}
-    </Box>
-  );
-};
+import { useAppSelector, useResetPasswordMutation } from '@coop/cbs/data-access';
+import { useTranslation } from '@coop/shared/utils';
 
 const errorText = (type) => {
   switch (type) {
@@ -98,7 +75,7 @@ const ChangePassword = () => {
 
   if (!success) {
     return (
-      <Container>
+      <>
         <Box>
           <Text fontSize="l1" fontWeight="medium">
             {t['passwordRecoveryText']}
@@ -128,11 +105,11 @@ const ChangePassword = () => {
             <Button type="submit">{t['updatePasswordText']}</Button>
           </Box>
         </form>
-      </Container>
+      </>
     );
   }
   return (
-    <Container>
+    <>
       <Text fontSize="l1" fontWeight="medium">
         {t['passwordUpdatedText']}
       </Text>
@@ -144,12 +121,16 @@ const ChangePassword = () => {
       >
         {t['proceedToLoginText']}
       </Button>
-    </Container>
+    </>
   );
 };
 
 ChangePassword.getLayout = function getLayout(page: ReactElement) {
-  return <ChangePasswordLayout>{page}</ChangePasswordLayout>;
+  return (
+    <ChangePasswordLayout>
+      <ChangePasswordContainerLayout>{page}</ChangePasswordContainerLayout>
+    </ChangePasswordLayout>
+  );
 };
 
 export default ChangePassword;

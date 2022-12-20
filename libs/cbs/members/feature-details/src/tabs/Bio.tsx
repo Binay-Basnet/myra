@@ -12,8 +12,6 @@ import {
 } from '@coop/cbs/data-access';
 
 import {
-  BioCoop,
-  BioCoopUnion,
   BioInstitution,
   MemberAddressInfo,
   MemberBasicInfo,
@@ -88,6 +86,7 @@ export const Bio = () => {
       <Text fontSize="r3" fontWeight="600">
         Bio{' '}
       </Text>
+      Member Since : ￼
       <Box display="flex" flexDirection="column" gap="s16" pb="s16">
         <Text fontWeight="600" fontSize="r1">
           Quick Links
@@ -157,8 +156,8 @@ export const Bio = () => {
         </Box>
       )}
       {memberBasicInstitution && <BioInstitution />}
-      {memberBasicCooperative && <BioCoop />}
-      {memberBasicCooperativeUnion && <BioCoopUnion />}
+      {/* {memberBasicCooperative && <BioCoop />} */}
+      {/* {memberBasicCooperativeUnion && <BioCoopUnion />} */}
     </>
   );
 };

@@ -83,3 +83,29 @@ mutation resetPassword($userId: String!, $newPassword: String!) {
     }
   }
 }
+
+mutation setRecoveryPassword($email: String!, $url: String!) {
+  user {
+    passwordRecovery {
+      sendRecoveryEmail(data: { email: $email, url: $url }) {
+        recordID
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setNewPassword($token: String!, $newPassword: String!) {
+  user {
+    passwordRecovery {
+      setNewPassword(data: { token: $token, newPassword: $newPassword }) {
+        recordID
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

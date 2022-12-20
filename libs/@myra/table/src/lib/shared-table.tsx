@@ -103,7 +103,7 @@ export const Table = <T extends Record<string, unknown>>({
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
+                {headerGroup.headers.map((header, index) => (
                   <Th
                     key={header.id}
                     colSpan={header.colSpan}
@@ -111,6 +111,9 @@ export const Table = <T extends Record<string, unknown>>({
                     minW={header.column.columnDef.meta?.width}
                     w={header.column.columnDef.meta?.width}
                     textAlign={header.column.columns.length !== 0 ? 'center' : 'left'}
+                    position={index === 0 ? 'sticky' : 'static'}
+                    top={0}
+                    left={0}
                   >
                     {header.isPlaceholder ? null : (
                       <Box
@@ -214,6 +217,7 @@ export const Table = <T extends Record<string, unknown>>({
                     position={index === 0 ? 'sticky' : 'static'}
                     top={0}
                     left={0}
+                    bg="white"
                   >
                     <Text
                       as="div"

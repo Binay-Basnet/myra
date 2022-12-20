@@ -115,3 +115,34 @@ query getBlockChequeList($pagination: Pagination, $filter: RequestFilter) {
     }
   }
 }
+
+query getMemberRequestList($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      membershipRequest(filter: $filter, paginate: $pagination) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            dateOfBirth
+            email
+            firstName
+            gender
+            lastName
+            middleName
+            mobileNumber
+            permanentAddress {
+              ...Address
+            }
+            phoneNumber
+            requestedDate
+            status
+          }
+        }
+      }
+    }
+  }
+}

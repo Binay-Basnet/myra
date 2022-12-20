@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import { GridItem } from '@myra-ui';
 
@@ -11,6 +10,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormBranchSelect } from '@coop/shared/form';
 
 export const MBExpiryReport = () => {
@@ -87,8 +87,7 @@ export const MBExpiryReport = () => {
               },
               {
                 header: 'Expiry Date',
-                accessorFn: (row) => row?.expDate?.local,
-                cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.expDate),
               },
             ]}
           />

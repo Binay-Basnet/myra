@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Tags } from '@myra-ui/components';
+import { Chips } from '@myra-ui/components';
 import { Box, Text } from '@myra-ui/foundations';
 
 export interface DetailCardContentProps {
@@ -23,13 +23,13 @@ export const DetailCardContent = ({
       {title ?? 'N/A'}
     </Text>
     {subtitle !== undefined && (
-      <Text fontWeight="600" fontSize="r1" color="gray.900" textTransform="capitalize">
+      <Text fontWeight="600" fontSize="r1" color="gray.900">
         {subtitle ?? 'N/A'}
       </Text>
     )}
     {status && (
       <Box w="100px">
-        <Tags type="chip" label="Complete" tagColor="primary.100" labelColor="success.500" />
+        <Chips variant="solid" theme="success" size="md" type="label" label="Complete" />
       </Box>
     )}
 

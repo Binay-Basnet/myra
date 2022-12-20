@@ -1,13 +1,14 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
+import { Box, Text } from '@myra-ui';
+
 import {
   DepositLoanAccountInput,
   useGetAccountOpenProductDetailsQuery,
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Box, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IFeesAndCharge {
@@ -46,6 +47,7 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
   const aTMCharge = data?.settings?.general?.depositProduct?.formState?.data?.atmCharge;
   const extraCharge = data?.settings?.general?.depositProduct?.formState?.data?.serviceCharge;
 
+  // If shown NAN somewhere, set amount || 0
   const chargeChecks = [
     ...(extraCharge?.map((charge) => ({
       name: charge?.serviceName,
@@ -161,7 +163,7 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
             </Text>
 
             <Text fontSize="s3" fontWeight="600">
-              {serviceCharge?.reduce((a, b) => a + Number(b?.amount), 0)}
+              {serviceCharge?.reduce((a, b) => a + Number(b?.amount || 0), 0)}
             </Text>
           </Box>
         </Box>

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import { Box, GridItem } from '@myra-ui';
 
@@ -12,7 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { formatAddress } from '@coop/cbs/utils';
+import { formatAddress, localizedDate } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -123,9 +122,7 @@ export const ShareBalanceReport = () => {
               {
                 header: 'Membership Date',
                 accessorKey: 'membershipDate',
-                accessorFn: (row) => row?.membershipDate?.local,
-                cell: ({ cell }) =>
-                  dayjs(cell.row.original.membershipDate?.local).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.membershipDate),
                 meta: {
                   Footer: {
                     display: 'none',

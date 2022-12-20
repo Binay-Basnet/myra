@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { MainLayout } from '@myra-ui';
 
-import { DayBookReport, VaultBalanceReport } from '@coop/cbs/reports';
+import { DayBookReport } from '@coop/cbs/reports';
 
 const DayBookReportPage = () => <DayBookReport />;
 

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import { Box } from '@myra-ui';
 
@@ -12,6 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { LoanReportInputs, LoanReportMember } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 export const LoanStatementReport = () => {
@@ -66,14 +66,13 @@ export const LoanStatementReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 3,
+                    colspan: 4,
                   },
                 },
               },
               {
                 header: 'Date',
-                accessorKey: 'date',
-                cell: ({ cell }) => dayjs(cell.row.original.date?.local).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.date),
                 meta: {
                   Footer: {
                     display: 'none',

@@ -45,7 +45,7 @@ const whatsNewData = {
       'Service Center Creation',
       'Member Detail Page for all member',
       'Teller Account Validation ( Can only withdraw the amount if theres balance in tellers account)',
-
+      'Search on member, share and saving account list',
       'Completed Reports:',
       '1. Mobile Banking Registration',
       '2. Mobile Banking Expiry',
@@ -73,23 +73,38 @@ const whatsNewData = {
       '24. Share Return / Purchase Register',
       '25. Bank GL Statement',
       '26. Vault Balance',
+      '27. Share Balance Report',
     ],
   },
   bugsSquashed: {
     title: 'Bug Squashed',
-    data: [],
+    data: [
+      'loan individual statement report interest fine to be mapped.',
+      'member details with value parameters of the service center are mapped.',
+      'Banks are added in the Bank GL statement.',
+      'nationality in kym appears in the form.',
+      'add balance in the member detail page in the share section.',
+      'share trans. report  filters are mapped.',
+      'member recent transactions are amount values are fixed with amount power.',
+      'Remove the loan account from search, if all the loans are paid.',
+      'Change validation message in withdraw and deposit section.',
+      'Error popup issue in Loan Repayment.',
+      'account name in loan application ( member name - product name).',
+      'negative sign remove from all reports',
+    ],
   },
   knownBugs: {
     title: 'Known Bugs',
     data: [
-      'Report filters might not be working properly.',
-      'Some links might not work functionally.',
-      'Global search doesn’t function completely sometimes.',
-      'Kym form validation has some unusual errands and issues.',
-      'Loan aging reports might not be working completely.',
-      'Other sections like profit to fund management, share dividend posting are not able to function, only UI level are handled properly.',
-      'Audit logs is currently only available for new user registration.',
-      'Calendar may not properly work in all forms cases.',
+      'Share transaction report filters have some issues in filters.',
+      'Member register report table fields are not properly populated.',
+      'Saving statement service filter and amount range not working.',
+      'Interest reports with filters, TTR reports filters might not work.',
+      'Vault balance filter, bank GL filter, ledger report filter are not working in the reports.',
+      'Mobile banking channel transaction report,userlist reports are not working.',
+      'Other sections are not fully workable as share dividend posting, profit to fund management with UI only.',
+      'In the accounting section, bank accounts do not reflect the amount of transactions paid by the bank.',
+      'kym member selection placement should be fixed ',
     ],
   },
 };
@@ -128,8 +143,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.9</Text>
-          <Text fontSize="s3">December 10, 2022</Text>
+          <Text fontSize="r2">Version 1.1.0</Text>
+          <Text fontSize="s3">December 16, 2022</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import {
   InterestTaxReportEntry,
@@ -9,6 +8,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormAmountFilter } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -85,8 +85,7 @@ export const InterestTaxReport = () => {
               },
               {
                 header: 'Tax Deduct Date',
-                accessorKey: 'date',
-                cell: ({ cell }) => dayjs(cell.row.original.date?.local).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.date),
               },
               {
                 header: 'Remarks',

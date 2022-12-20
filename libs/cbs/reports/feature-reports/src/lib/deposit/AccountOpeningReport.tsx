@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import { GridItem } from '@myra-ui';
 
@@ -12,6 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 
 export const AccountOpenReport = () => {
@@ -86,9 +86,7 @@ export const AccountOpenReport = () => {
               },
               {
                 header: 'Account Opening Date',
-                accessorKey: 'openingDate',
-                cell: ({ cell }) =>
-                  dayjs(cell.row.original.openingDate?.local).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.openingDate),
               },
               {
                 header: 'Account Opened By User',

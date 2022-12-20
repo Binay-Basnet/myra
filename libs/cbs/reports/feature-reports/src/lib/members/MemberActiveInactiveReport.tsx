@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import { Box, GridItem, Text } from '@myra-ui';
 
@@ -14,6 +13,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 
 export const MemberActiveInactiveReport = () => {
@@ -112,8 +112,7 @@ export const MemberActiveInactiveReport = () => {
                     },
                     {
                       header: 'DOB',
-                      accessorFn: (row) => row?.dob?.local,
-                      cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                      accessorFn: (row) => localizedDate(row?.dob),
                     },
                     {
                       header: 'Age',
@@ -133,8 +132,7 @@ export const MemberActiveInactiveReport = () => {
                     },
                     {
                       header: 'Member Registration Date',
-                      accessorFn: (row) => row?.memberRegistrationDate?.local,
-                      cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                      accessorFn: (row) => localizedDate(row?.memberRegistrationDate),
                     },
                     {
                       header: 'Status',
@@ -183,8 +181,7 @@ export const MemberActiveInactiveReport = () => {
                     },
                     {
                       header: 'DOE',
-                      accessorFn: (row) => row?.dob?.local,
-                      cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                      accessorFn: (row) => localizedDate(row?.dob),
                     },
                     {
                       header: 'Age',
@@ -207,8 +204,7 @@ export const MemberActiveInactiveReport = () => {
                     },
                     {
                       header: 'Member Registration Date',
-                      accessorFn: (row) => row?.memberRegistrationDate?.local,
-                      cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                      accessorFn: (row) => localizedDate(row?.memberRegistrationDate),
                     },
                     {
                       header: 'Status',

@@ -13,6 +13,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -106,7 +107,7 @@ export const MBTransactionsReport = () => {
               },
               {
                 header: 'Transaction Date',
-                accessorFn: (row) => row?.transDate?.local,
+                accessorFn: (row) => localizedDate(row?.transDate),
                 cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
               },
               {

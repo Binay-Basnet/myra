@@ -1,60 +1,93 @@
 import React from 'react';
+import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
-import { Box, PageHeader, TablePopover } from '@myra-ui';
+import { Box, DetailCardContent, DetailsCard, Grid, PageHeader, TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { RequestStatus } from '@coop/cbs/data-access';
+import { RequestStatus, useAppSelector, useGetMemberRequestListQuery } from '@coop/cbs/data-access';
+import { localizedDate, localizedText } from '@coop/cbs/utils';
+import { getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
-
-type TMemberRequestTable = {
-  id: string;
-  name: string;
-  approvalStatus: RequestStatus;
-  contactNumber: string;
-  requestedDate: string;
-};
+import { MemberApproveOrDeclineModal } from '../components/MemberApproveOrDeclineModal';
 
 export const MemberRequestPage = () => {
-  const columns = React.useMemo<Column<TMemberRequestTable>[]>(
+  const router = useRouter();
+  const modalProps = useDisclosure();
+  const preference = useAppSelector((state) => state?.auth?.preference?.date);
+
+  const { data, isFetching } = useGetMemberRequestListQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  });
+  const memberRequests = data?.requests?.list?.membershipRequest?.edges || [];
+
+  const columns = React.useMemo<Column<typeof memberRequests[0]>[]>(
     () => [
       {
         header: 'ID',
-        accessorFn: (row) => row?.id,
+        accessorFn: (row) => row?.node?.id,
       },
       {
         header: 'Name',
-        accessorFn: (row) => row?.name,
+        accessorFn: (row) => `${row?.node?.firstName} ${row?.node?.lastName}`,
         meta: {
           width: '60%',
         },
       },
       {
         header: 'Approval Status',
-        accessorFn: (row) => row?.approvalStatus,
-        cell: (props) => <ApprovalStatusItem status={props.row.original.approvalStatus} />,
+        accessorFn: (row) => row?.node?.status,
+        cell: (props) => (
+          <ApprovalStatusItem status={props.row.original?.node?.status as RequestStatus} />
+        ),
       },
       {
         header: 'Contact Number',
-        accessorFn: (row) => row?.contactNumber,
+        accessorFn: (row) => row?.node?.phoneNumber,
       },
       {
         header: 'Requested Date',
-        accessorFn: (row) => row?.requestedDate,
+        accessorFn: (row) => localizedDate(row?.node?.requestedDate),
+        cell: (props) => localizedDate(props?.row?.original?.node?.requestedDate),
       },
       {
         id: '_actions',
         header: '',
         cell: (props) => (
-          <TablePopover items={[{ title: 'View Details' }]} node={props.row.original} />
+          <TablePopover
+            items={[
+              {
+                title: 'View Details',
+                onClick: () => {
+                  router.push(
+                    {
+                      query: {
+                        id: props?.row?.original?.node?.id,
+                        status: props?.row?.original?.node?.status === RequestStatus.Pending,
+                      },
+                    },
+                    undefined,
+                    { shallow: true }
+                  );
+                  modalProps.onToggle();
+                },
+              },
+            ]}
+            node={props.row.original}
+          />
         ),
         meta: {
           width: '60px',
         },
       },
     ],
-    []
+    [router.locale, preference]
   );
+
+  const selectedMemberRequest = memberRequests?.find(
+    (request) => request?.node?.id === router.query['id']
+  )?.node;
 
   return (
     <Box display="flex" flexDir="column">
@@ -63,32 +96,84 @@ export const MemberRequestPage = () => {
       </Box>
 
       <Table
-        data={[
-          {
-            id: '12214',
-            name: 'Ram Krishna',
-            contactNumber: '9800000000',
-            approvalStatus: RequestStatus.Approved,
-            requestedDate: '2079-01-30',
-          },
-          {
-            id: '12214',
-            name: 'Ram Krishna',
-            contactNumber: '9800000000',
-            approvalStatus: RequestStatus.Declined,
-            requestedDate: '2079-01-30',
-          },
-
-          {
-            id: '12214',
-            name: 'Ram Krishna',
-            contactNumber: '9800000000',
-            approvalStatus: RequestStatus.Pending,
-            requestedDate: '2079-01-30',
-          },
-        ]}
+        isLoading={isFetching}
+        data={memberRequests}
         columns={columns}
+        rowOnClick={(row) => {
+          router.push(
+            {
+              query: {
+                id: row?.node?.id,
+                status: row?.node?.status === RequestStatus.Pending,
+              },
+            },
+            undefined,
+            { shallow: true }
+          );
+          modalProps.onToggle();
+        }}
+        pagination={{
+          total: data?.requests?.list?.membershipRequest?.totalCount ?? 'Many',
+          pageInfo: data?.requests?.list?.membershipRequest?.pageInfo,
+        }}
       />
+
+      <MemberApproveOrDeclineModal approveModal={modalProps}>
+        <DetailsCard hasTable title="Basic Information">
+          <Grid templateColumns="repeat(2, 1fr)" gap="s20">
+            <DetailCardContent title="First Name" subtitle={selectedMemberRequest?.firstName} />
+            <DetailCardContent title="Middle Name" subtitle={selectedMemberRequest?.middleName} />
+            <DetailCardContent title="Last Name" subtitle={selectedMemberRequest?.lastName} />
+            <DetailCardContent title="Gender" subtitle={selectedMemberRequest?.gender} />
+            <DetailCardContent
+              title="Date of Birth"
+              subtitle={selectedMemberRequest?.dateOfBirth}
+            />
+          </Grid>
+        </DetailsCard>
+
+        <DetailsCard hasTable title="Contact Details">
+          <Grid templateColumns="repeat(2, 1fr)" gap="s20">
+            <DetailCardContent
+              title="Mobile Number"
+              subtitle={selectedMemberRequest?.mobileNumber}
+            />
+            <DetailCardContent title="Phone Number" subtitle={selectedMemberRequest?.phoneNumber} />
+            <DetailCardContent title="Email" subtitle={selectedMemberRequest?.email} />
+          </Grid>
+        </DetailsCard>
+
+        <DetailsCard hasTable title="Address">
+          <Grid templateColumns="repeat(2, 1fr)" gap="s20">
+            <DetailCardContent
+              title="Province"
+              subtitle={localizedText(selectedMemberRequest?.permanentAddress?.state)}
+            />
+            <DetailCardContent
+              title="District"
+              subtitle={localizedText(selectedMemberRequest?.permanentAddress?.district)}
+            />
+            <DetailCardContent
+              title="Local Government"
+              subtitle={
+                localizedText(selectedMemberRequest?.permanentAddress?.localGovernment) || '-'
+              }
+            />
+            <DetailCardContent
+              title="Ward Number"
+              subtitle={selectedMemberRequest?.permanentAddress?.wardNo}
+            />
+            <DetailCardContent
+              title="Locality"
+              subtitle={localizedText(selectedMemberRequest?.permanentAddress?.locality)}
+            />
+            <DetailCardContent
+              title="House Number"
+              subtitle={selectedMemberRequest?.permanentAddress?.houseNo}
+            />
+          </Grid>
+        </DetailsCard>
+      </MemberApproveOrDeclineModal>
     </Box>
   );
 };

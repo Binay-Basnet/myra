@@ -13,6 +13,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormCheckbox, FormSelect } from '@coop/shared/form';
 
 type Filter = {
@@ -174,8 +175,7 @@ export const ServiceCenterListReport = () => {
                   },
                   {
                     header: 'Service Center Opening Date',
-                    accessorKey: 'estDate',
-                    accessorFn: (row) => row?.estDate?.local,
+                    accessorFn: (row) => localizedDate(row?.estDate),
                   },
                   {
                     header: 'Service Center Status',

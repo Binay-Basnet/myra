@@ -8,6 +8,7 @@ export const spacing = {
   s18: '18px',
   s20: '20px',
   s24: '24px',
+  s28: '28px',
   s32: '32px',
   s36: '36px',
   s40: '40px',

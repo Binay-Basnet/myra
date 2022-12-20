@@ -2,12 +2,14 @@ import { DetailCardContent, DetailsCard } from '@myra-ui';
 
 export const MemberCooperativeUnionBasicInfo = () => (
   // const router = useRouter();
-  // const memberDetails = useGetMemberDetailsOverviewQuery({
+  // const memberBioData = useGetMemberOverviewBioDetailsQuery({
   //   id: router.query['id'] as string,
-  // });
+  // const router = useRouter();
 
-  // const memberBasicInfo =
-  //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
+  // const bioDataCOOPUnion =
+  //   memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'CoopUnionBio'
+  //     ? memberBioData?.data?.members?.memberOverview?.data?.bio?.
+  //     : null;
   <DetailsCard title="Basic Information " bg="white" hasThreeRows>
     <DetailCardContent title="Name of Institution" subtitle="" />
     <DetailCardContent title="Institution Type" subtitle="" />

@@ -24,9 +24,9 @@ export const FixedDepositAmount = () => {
         name="fixedDepositAmountLimit.maxAmount"
         label={t['depositProductMaximumAmount']}
         rules={{
-          max: {
+          min: {
             value: fixedMinAmount,
-            message: 'Fixed minimum amount should be greater than minimum amount',
+            message: 'Fixed maximum amount should be greater than minimum amount',
           },
         }}
       />

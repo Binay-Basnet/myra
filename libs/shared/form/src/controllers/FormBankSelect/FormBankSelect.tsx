@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 
 import { SelectProps } from '@myra-ui';
 
-import { useGetCoaAccountsUnderLeafListQuery } from '@coop/cbs/data-access';
+import { useGetBankAccountListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { featureCode } from '@coop/shared/utils';
+import { getRouterQuery } from '@coop/shared/utils';
 
 interface IFormBankSelectProps extends SelectProps {
   name: string;
@@ -14,18 +14,17 @@ interface IFormBankSelectProps extends SelectProps {
 export const FormBankSelect = (props: IFormBankSelectProps) => {
   const { name, label, ...rest } = props;
 
-  const { data: accountsListQueryData, isFetching } = useGetCoaAccountsUnderLeafListQuery({
-    parentId: featureCode.accountCode as string[],
-    currentBranch: true,
+  const { data: bankAccountListQueryData, isFetching } = useGetBankAccountListQuery({
+    pagination: { ...getRouterQuery({ type: ['PAGINATION'] }), first: -1 },
   });
 
   const bankOptions = useMemo(
     () =>
-      accountsListQueryData?.settings?.chartsOfAccount?.accountsUnderLeaf?.map((item) => ({
-        label: item?.name as string,
-        value: item?.accountId as string,
+      bankAccountListQueryData?.accounting?.bankAccounts?.list?.edges?.map((item) => ({
+        label: item?.node?.displayName as string,
+        value: item?.node?.id as string,
       })),
-    [accountsListQueryData]
+    [bankAccountListQueryData]
   );
 
   return (

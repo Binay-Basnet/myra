@@ -1,17 +1,15 @@
 import { useFormContext } from 'react-hook-form';
-import dayjs from 'dayjs';
 
 import { Box, Text } from '@myra-ui';
 
 import { LocalizedDateFilter, useAppSelector } from '@coop/cbs/data-access';
-import { formatAddress, localizedDate } from '@coop/cbs/utils';
+import { formatAddress, getLocalizedTodaysDate, localizedDate } from '@coop/cbs/utils';
 
 export const ReportOrganization = () => {
   const { watch } = useFormContext();
   const user = useAppSelector((state) => state.auth.user);
 
   const period = watch('period') as LocalizedDateFilter;
-  console.log(period);
 
   return (
     <Box
@@ -73,7 +71,7 @@ export const ReportOrganization = () => {
             Printed Date:
           </Text>
           <Text fontSize="r1" color="gray.700" fontWeight="500">
-            {dayjs().format('YYYY-MM-DD')}
+            {getLocalizedTodaysDate()}
           </Text>
         </Box>
       </Box>

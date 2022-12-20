@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useAllAdministrationQuery } from '@coop/cbs/data-access';
+import { useAllAdministrationQuery } from '@coop/neosys-admin/data-access';
 
 interface IUseAddressProps {
   name: string;
