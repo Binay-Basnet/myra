@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import {
   authenticate,
@@ -14,6 +15,7 @@ const url = getSchemaPath();
 
 export const useInit = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const route = useRouter();
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const dispatch = useAppDispatch();
   const replace = useReplace();
@@ -40,6 +42,10 @@ export const useInit = () => {
         }
       })
       .catch(() => {
+        if (route?.pathname.includes('password-recovery')) {
+          setIsLoading(false);
+          return;
+        }
         dispatch(logout());
         replace('/login').then(() => setIsLoading(false));
       });

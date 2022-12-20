@@ -13499,6 +13499,28 @@ export type SetRecoveryPasswordMutation = {
   };
 };
 
+export type SetNewPasswordMutationVariables = Exact<{
+  token: Scalars['String'];
+  newPassword: Scalars['String'];
+}>;
+
+export type SetNewPasswordMutation = {
+  user: {
+    passwordRecovery?: {
+      setNewPassword?: {
+        recordID?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type AddNewAccountInCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
@@ -24124,6 +24146,33 @@ export const useSetRecoveryPasswordMutation = <TError = unknown, TContext = unkn
     useAxios<SetRecoveryPasswordMutation, SetRecoveryPasswordMutationVariables>(
       SetRecoveryPasswordDocument
     ),
+    options
+  );
+export const SetNewPasswordDocument = `
+    mutation setNewPassword($token: String!, $newPassword: String!) {
+  user {
+    passwordRecovery {
+      setNewPassword(data: {token: $token, newPassword: $newPassword}) {
+        recordID
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetNewPasswordMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetNewPasswordMutation,
+    TError,
+    SetNewPasswordMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetNewPasswordMutation, TError, SetNewPasswordMutationVariables, TContext>(
+    ['setNewPassword'],
+    useAxios<SetNewPasswordMutation, SetNewPasswordMutationVariables>(SetNewPasswordDocument),
     options
   );
 export const AddNewAccountInCoaDocument = `
