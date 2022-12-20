@@ -185,6 +185,7 @@ export const NewLoanApplication = () => {
 
   // Get Currently Selected Loan Product
   const { loanProduct } = useLoanProductDetails({ productId: String(productId) });
+  const loanProductDetailsdata = loanProduct?.product;
 
   // Reset Fields
   useEffect(() => {
@@ -245,6 +246,7 @@ export const NewLoanApplication = () => {
     resetField('productSubType');
     resetField('productId');
   }, [loanLinkedData, resetField]);
+
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -334,6 +336,16 @@ export const NewLoanApplication = () => {
                           name="appliedLoanAmount"
                           label="Applied Loan Amount"
                           placeholder="0.00"
+                          rules={{
+                            max: {
+                              value: loanProductDetailsdata?.maxLoanAmount as number,
+                              message: 'Maximum loan amount exceeded',
+                            },
+                            min: {
+                              value: loanProductDetailsdata?.minimumLoanAmount as number,
+                              message: 'Minimum loan amount must be higher',
+                            },
+                          }}
                         />
                       </Box>
                     </>

@@ -292,6 +292,28 @@ query getMemberOverviewBioDetails($id: ID!) {
       data {
         bio {
           __typename
+          ... on IndividualBio {
+            memberName
+            profilePic
+            memberCode
+            memberJoined
+            dob
+            gender
+            mobile
+            email
+            currentAddress
+            permanentAddress
+            maritalStatus
+            familyMembers {
+              relationship
+              fullName
+              dob
+            }
+            docs {
+              key
+              value
+            }
+          }
           ... on InstitutionBio {
             basicInfo {
               memberName
@@ -559,6 +581,194 @@ query getMemberOverviewBioDetails($id: ID!) {
                 key
                 value
               }
+            }
+            docs {
+              key
+              value
+            }
+          }
+          ... on CoopUnionBio {
+            basicInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+            address {
+              ...Address
+            }
+            registrationDetails {
+              registeredNo
+              issuingOffice
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+            }
+            operatingAddress {
+              ...Address
+            }
+            serviceCenterAddress {
+              ...Address
+            }
+            contactDetails {
+              phoneNo
+              fax
+              email
+              website
+              poBoxNo
+              noOfEmployees
+              agmDetails
+            }
+            bankAccDetails {
+              bank
+              accountNumber
+              accountName
+            }
+            applicantDetails {
+              name
+              designation
+              contactNo
+              email
+              panNo
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            memberInfo {
+              noOfMaleCurrent
+              noOfFemaleCurrent
+              noOfInstitutionalCurrent
+              noOfMaleTarget
+              noOfFemaleTarget
+              noOfInstitutionalTarget
+              totalCurrent
+              totalTarget
+            }
+            partnerDirectorDetails {
+              name
+              designation
+              email
+              panNo
+              mobileNo
+              permAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            operatorDetails {
+              name
+              designation
+              contactNo
+              email
+              panNo
+              pemAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            equityLiabilities {
+              shareCapitalCurrent
+              reserveAndSurplusCurrent
+              savingDepositCurrent
+              loanAccountCurrent
+              capitalGrantCurrent
+              liabilitiesPayableCurrent
+              nonCurrentLiabilitiesCurrent
+              totalCurrent
+              shareCapitalTarget
+              reserveAndSurplusTarget
+              savingDepositTarget
+              loanAccountTarget
+              capitalGrantTarget
+              liabilitiesPayableTarget
+              nonCurrentLiabilitiesTarget
+              totalTarget
+            }
+            assetDetails {
+              cashAndEquivalentsCurrent
+              bankCurrent
+              investmentsCurrent
+              loanCurrent
+              nonCurrentAssetsCurrent
+              otherNonCurrentAssetsCurrent
+              totalCurrent
+              cashAndEquivalentsTarget
+              bankTarget
+              investmentsTarget
+              loanTarget
+              nonCurrentAssetsTarget
+              otherNonCurrentAssetsTarget
+              totalTarget
+            }
+            incomeDetails {
+              financialInvestment
+              nonFinancialInvestment
+              investment
+              serviceOperations
+              sales
+              otherIncome
+              miscIncome
+              total
+            }
+            expenseDetails {
+              purchase
+              directExpense
+              adminExpense
+              financialCost
+              riskManagement
+              deferredTax
+              total
             }
             docs {
               key

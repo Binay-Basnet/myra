@@ -6,10 +6,9 @@ services:
       context: .
       dockerfile: apps/ebanking/Dockerfile
     image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/prod-ebanking:staging
-    container_name: ${EBANKING_CONTAINER_NAME}
-    env_file: .env
+    container_name: ebanking-ui-staging
     ports:
-      - ${EBANKING_PORT}:3000
+      - 7000:3000
     restart: unless-stopped
     networks:
       - myra-frontend
@@ -19,10 +18,9 @@ services:
       context: .
       dockerfile: apps/myra/Dockerfile
     image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/prod-myra:staging
-    container_name: ${MYRA_CONTAINER_NAME}
-    env_file: .env
+    container_name: myra-ui-staging
     ports:
-      - ${MYRA_PORT}:3000
+      - 3000:3000
     restart: unless-stopped
     networks:
       - myra-frontend
@@ -32,10 +30,9 @@ services:
       context: .
       dockerfile: apps/neosys-admin/Dockerfile
     image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/prod-neosys:staging
-    container_name: ${ADMIN_CONTAINER_NAME}
-    env_file: .env
+    container_name: admin-ui-staging
     ports:
-      - ${ADMIN_PORT}:3000
+      - 5000:3000
     restart: unless-stopped
     networks:
       - myra-frontend
