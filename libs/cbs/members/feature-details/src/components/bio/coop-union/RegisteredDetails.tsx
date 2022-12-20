@@ -1,21 +1,33 @@
+import { useRouter } from 'next/router';
+
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
-export const RegisteredDetails = () => (
-  // const router = useRouter();
-  // const memberDetails = useGetMemberDetailsOverviewQuery({
-  //   id: router.query['id'] as string,
-  // });
+import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
 
-  // const memberBasicInfo =
-  //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
-  <DetailsCard title="Registered Details" bg="white" hasThreeRows>
-    <DetailCardContent title="Registered Number" subtitle="" />
-    <DetailCardContent title="Issuing Office" subtitle="" />
-    <DetailCardContent title="Province" subtitle="" />
-    <DetailCardContent title="District" subtitle="" />
-    <DetailCardContent title="Local Government" subtitle="" />
-    <DetailCardContent title="Ward No" subtitle="" />
-    <DetailCardContent title="Locality" subtitle="" />
-    <DetailCardContent title="House No" subtitle="" />
-  </DetailsCard>
-);
+export const RegisteredDetails = () => {
+  const router = useRouter();
+  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+    id: router.query['id'] as string,
+  });
+
+  const bioDataCoopUnion =
+    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'CoopUnionBio'
+      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.registrationDetails
+      : null;
+
+  return (
+    <DetailsCard title="Registered Details" bg="white" hasThreeRows>
+      <DetailCardContent title="Registered Number" subtitle={bioDataCoopUnion?.registeredNo} />
+      <DetailCardContent title="Issuing Office" subtitle={bioDataCoopUnion?.issuingOffice} />
+      <DetailCardContent title="Province" subtitle={bioDataCoopUnion?.address?.state?.local} />
+      <DetailCardContent title="District" subtitle={bioDataCoopUnion?.address?.district?.local} />
+      <DetailCardContent
+        title="Local Government"
+        subtitle={bioDataCoopUnion?.address?.localGovernment?.local}
+      />
+      <DetailCardContent title="Ward No" subtitle={bioDataCoopUnion?.address?.wardNo} />
+      <DetailCardContent title="Locality" subtitle={bioDataCoopUnion?.address?.locality?.local} />
+      <DetailCardContent title="House No" subtitle={bioDataCoopUnion?.address?.houseNo} />
+    </DetailsCard>
+  );
+};
