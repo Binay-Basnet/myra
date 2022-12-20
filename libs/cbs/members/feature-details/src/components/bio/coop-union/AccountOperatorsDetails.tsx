@@ -18,7 +18,7 @@ import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
 import { AccordianMemberDetailsCardComponent } from '../components/AccordianCard';
 import { DocumentComponent } from '../components/Documents';
 
-export const PropritersDirectors = () => {
+export const AccountOperatorDetails = () => {
   const router = useRouter();
 
   const memberBioData = useGetMemberOverviewBioDetailsQuery({
@@ -27,7 +27,7 @@ export const PropritersDirectors = () => {
 
   const bioDataCoopUnionOperator =
     memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'CoopUnionBio'
-      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.partnerDirectorDetails
+      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.operatorDetails
       : null;
 
   return (
@@ -54,7 +54,7 @@ export const PropritersDirectors = () => {
                     {item?.name}
                   </Text>
                   <Text fontSize="s3" fontWeight="400">
-                    Director{' '}
+                    Operator{' '}
                   </Text>
                 </Box>
               </Box>
@@ -63,15 +63,15 @@ export const PropritersDirectors = () => {
               {' '}
               <AccordianMemberDetailsCardComponent
                 permanentAddress={{
-                  province: item?.permAddress?.state?.local as string,
-                  district: item?.permAddress?.district?.local as string,
-                  houseNo: item?.permAddress?.houseNo as string,
-                  localGovernment: item?.permAddress?.localGovernment?.local as string,
-                  locality: item?.permAddress?.locality?.local as string,
-                  wardNo: item?.permAddress?.wardNo as string,
+                  province: item?.pemAddress?.state?.local as string,
+                  district: item?.pemAddress?.district?.local as string,
+                  houseNo: item?.pemAddress?.houseNo as string,
+                  localGovernment: item?.pemAddress?.localGovernment?.local as string,
+                  locality: item?.pemAddress?.locality?.local as string,
+                  wardNo: item?.pemAddress?.wardNo as string,
                 }}
                 mainDetails={{
-                  contactNo: item?.mobileNo as string,
+                  contactNo: item?.contactNo as string,
                   email: item?.email as string,
                   pan: item?.email as string,
                 }}
