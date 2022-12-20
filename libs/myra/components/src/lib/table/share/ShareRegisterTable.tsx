@@ -141,6 +141,7 @@ export const ShareRegisterTable = () => {
         isLoading={isFetching}
         data={rowData ?? []}
         columns={columns}
+        rowOnClick={(row) => router.push(`/share/register/view?id=${row?.node?.id}`)}
         pagination={{
           total: data?.share?.register?.totalCount ?? 'Many',
           pageInfo: data?.share?.register?.pageInfo,

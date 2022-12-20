@@ -22701,6 +22701,7 @@ export type GetShareRegisterListQuery = {
       edges: Array<{
         cursor: string;
         node: {
+          id?: string | null;
           transactionDate?: string | null;
           transactionDirection: Share_Transaction_Direction;
           balance?: number | null;
@@ -22779,6 +22780,51 @@ export type GetShareChargesQuery = {
       name?: string | null;
       charge?: string | null;
     } | null> | null;
+  };
+};
+
+export type GetShareDetailQueryVariables = Exact<{
+  transactionID: Scalars['ID'];
+}>;
+
+export type GetShareDetailQuery = {
+  share: {
+    shareDetail?: {
+      data?: {
+        id: string;
+        totalShareCount?: number | null;
+        totalShareAmount?: string | null;
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        type?: string | null;
+        noOfShare?: number | null;
+        amount?: string | null;
+        total?: string | null;
+        status?: string | null;
+        transactionBranch?: string | null;
+        teller?: string | null;
+        totalCredit?: string | null;
+        totalDebit?: string | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+          type: KymMemberTypesEnum;
+          profilePicUrl?: string | null;
+        } | null;
+        fromTo?: { start?: number | null; end?: number | null } | null;
+        charges?: Array<{ name?: string | null; value?: string | null } | null> | null;
+        paymentDetail?: {
+          paymentMode?: SharePaymentMode | null;
+          amount?: string | null;
+          sourceOfFund?: string | null;
+        } | null;
+        glTransactions?: Array<{
+          account: string;
+          debit?: string | null;
+          credit?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
   };
 };
 
@@ -36843,6 +36889,7 @@ export const GetShareRegisterListDocument = `
     register(pagination: $pagination, filter: $filter) {
       edges {
         node {
+          id
           transactionDate
           transactionDirection
           member {
@@ -36955,6 +37002,66 @@ export const useGetShareChargesQuery = <TData = GetShareChargesQuery, TError = u
   useQuery<GetShareChargesQuery, TError, TData>(
     ['getShareCharges', variables],
     useAxios<GetShareChargesQuery, GetShareChargesQueryVariables>(GetShareChargesDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetShareDetailDocument = `
+    query getShareDetail($transactionID: ID!) {
+  share {
+    shareDetail(transactionID: $transactionID) {
+      data {
+        id
+        member {
+          id
+          name
+          code
+          type
+          profilePicUrl
+        }
+        totalShareCount
+        totalShareAmount
+        date
+        type
+        fromTo {
+          start
+          end
+        }
+        noOfShare
+        amount
+        total
+        status
+        charges {
+          name
+          value
+        }
+        paymentDetail {
+          paymentMode
+          amount
+          sourceOfFund
+        }
+        transactionBranch
+        teller
+        glTransactions {
+          account
+          debit
+          credit
+        }
+        totalCredit
+        totalDebit
+      }
+    }
+  }
+}
+    `;
+export const useGetShareDetailQuery = <TData = GetShareDetailQuery, TError = unknown>(
+  variables: GetShareDetailQueryVariables,
+  options?: UseQueryOptions<GetShareDetailQuery, TError, TData>
+) =>
+  useQuery<GetShareDetailQuery, TError, TData>(
+    ['getShareDetail', variables],
+    useAxios<GetShareDetailQuery, GetShareDetailQueryVariables>(GetShareDetailDocument).bind(
       null,
       variables
     ),
