@@ -58,8 +58,12 @@ export const useInit = () => {
         preference && dispatch(setPreference({ preference }));
         setIsLoading(false);
       } else {
+        if (route?.pathname.includes('password-recovery')) {
+          setIsLoading(false);
+          return;
+        }
         dispatch(logout());
-        replace('/gg').then(() => setIsLoading(false));
+        replace('/login').then(() => setIsLoading(false));
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData, replace]);
