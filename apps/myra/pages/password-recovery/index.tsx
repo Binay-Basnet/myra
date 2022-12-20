@@ -17,7 +17,7 @@ const PasswordRecovery = () => {
   const [isEmailVerified, setIsEmailVerified] = React.useState(null);
   const fullPath = window?.location?.href;
   const { register, handleSubmit } = useForm();
-  const { mutateAsync } = useSetRecoveryPasswordMutation();
+  const { mutateAsync, isLoading } = useSetRecoveryPasswordMutation();
   const onSubmit = (data: { email: string }) => {
     mutateAsync({ email: data?.email, url: fullPath }).then((res) => {
       const error = findError(res, 'error');
@@ -47,7 +47,9 @@ const PasswordRecovery = () => {
               </Text>
               <Input {...register('email')} autoFocus />
             </Box>
-            <Button type="submit">Check for account</Button>
+            <Button type="submit" isLoading={isLoading}>
+              Check for account
+            </Button>
           </Box>
         </form>
       </>
@@ -62,7 +64,7 @@ const PasswordRecovery = () => {
           </Text>
           <Text fontSize="r1">Please enter the email address linked to this account.</Text>
         </Box>
-        <Button type="submit" onClick={handleSubmit(onSubmit)}>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} isLoading={isLoading}>
           Re-sent Email
         </Button>
       </>

@@ -291,8 +291,8 @@ export const AddDeposit = () => {
     const values = getValues();
     let filteredValues = {
       ...values,
-      fine: fine ?? FINE,
-      rebate: rebate ?? REBATE,
+      fine: String(fine ?? FINE),
+      rebate: String(rebate ?? REBATE),
     };
 
     if (values.payment_type === DepositPaymentType.Cash) {
