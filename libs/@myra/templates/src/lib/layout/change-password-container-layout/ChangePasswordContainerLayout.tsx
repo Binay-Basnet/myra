@@ -24,7 +24,15 @@ export const ChangePasswordContainerLayout = (props: ChangePasswordLayoutProps) 
       p="s16"
       gap="s32"
     >
-      <Box display="flex" gap={2} alignItems="center" cursor="pointer" onClick={() => route.back()}>
+      <Box
+        display="flex"
+        gap={2}
+        alignItems="center"
+        cursor="pointer"
+        onClick={() =>
+          route.pathname.includes('password-recovery') ? route.push('/login') : route.back()
+        }
+      >
         <Icon as={BiArrowBack} size="sm" />
         <Text fontSize="r1">{t['backText']}</Text>
       </Box>
