@@ -411,6 +411,9 @@ steps:
   - name: myra-ui-${DRONE_BRANCH}
     host:
       path: /drone/src/apps/myra/.env
+  - name: myra-ui-${DRONE_BRANCH}-root
+    host:
+      path: /drone/src/.env
   - name: docker_sock
     path: /var/run/docker.sock
 
@@ -418,6 +421,9 @@ volumes:
   - name: myra-env-${DRONE_BRANCH}
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.erp
+  - name: myra-env-${DRONE_BRANCH}-root
+    host:
+      path: /build-cache/myra-ui-${DRONE_BRANCH}/.env
   - name: docker_sock
     host:
       path: /var/run/docker.sock
@@ -444,8 +450,8 @@ steps:
   - aws configure set aws_access_key_id $aws_access_key
   - aws configure set aws_secret_access_key $aws_secret_key
   - aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.us-east-1.amazonaws.com
-  - docker compose -f docker-compose/docker-compose.${DRONE_BRANCH}.yaml build neosys-admin
-  - docker compose -f docker-compose/docker-compose.${DRONE_BRANCH}.yaml push neosys-admin
+  - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build neosys-admin
+  - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push neosys-admin
   when:
     branch:
     - staging
@@ -455,6 +461,9 @@ steps:
   - name: myra-ui-${DRONE_BRANCH}
     host:
       path: /drone/src/apps/neosys-admin/.env
+  - name: myra-ui-${DRONE_BRANCH}-root
+    host:
+      path: /drone/src/.env
   - name: docker_sock
     path: /var/run/docker.sock
 
@@ -462,6 +471,9 @@ volumes:
   - name: myra-env-${DRONE_BRANCH}
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.neosys
+  - name: myra-env-${DRONE_BRANCH}-root
+    host:
+      path: /build-cache/myra-ui-${DRONE_BRANCH}/.env
   - name: docker_sock
     host:
       path: /var/run/docker.sock
@@ -487,8 +499,8 @@ steps:
   - aws configure set aws_access_key_id $aws_access_key
   - aws configure set aws_secret_access_key $aws_secret_key
   - aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.us-east-1.amazonaws.com
-  - docker compose -f docker-compose/docker-compose.${DRONE_BRANCH}.yaml build ebanking
-  - docker compose -f docker-compose/docker-compose.${DRONE_BRANCH}.yaml push ebanking
+  - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build ebanking
+  - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push ebanking
   when:
     branch:
     - staging
@@ -498,6 +510,9 @@ steps:
   - name: myra-ui-${DRONE_BRANCH}
     host:
       path: /drone/src/apps/ebanking/.env
+  - name: myra-ui-${DRONE_BRANCH}-root
+    host:
+      path: /drone/src/.env
   - name: docker_sock
     path: /var/run/docker.sock
 
@@ -505,6 +520,9 @@ volumes:
   - name: myra-env-${DRONE_BRANCH}
     host:
       path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.ebanking
+  - name: myra-env-${DRONE_BRANCH}-root
+    host:
+      path: /build-cache/myra-ui-${DRONE_BRANCH}/.env
   - name: docker_sock
     host:
       path: /var/run/docker.sock
