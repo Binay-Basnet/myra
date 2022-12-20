@@ -16,7 +16,11 @@ import { useSetRecoveryPasswordMutation } from '@coop/cbs/data-access';
 const PasswordRecovery = () => {
   const [isEmailVerified, setIsEmailVerified] = React.useState(null);
   const fullPath = window?.location?.href;
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const { mutateAsync, isLoading } = useSetRecoveryPasswordMutation();
   const onSubmit = (data: { email: string }) => {
     mutateAsync({ email: data?.email, url: fullPath }).then((res) => {
@@ -45,7 +49,17 @@ const PasswordRecovery = () => {
               <Text variant="formLabel" color="gray.700">
                 Email
               </Text>
-              <Input {...register('email')} autoFocus />
+              <Input
+                {...register('email', {
+                  required: true,
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'invalid email address',
+                  },
+                })}
+                autoFocus
+              />
+              <Text fontSize="s3">{errors.email && 'Invalid Email'}</Text>
             </Box>
             <Button type="submit" isLoading={isLoading}>
               Check for account
