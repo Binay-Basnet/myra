@@ -17,7 +17,7 @@ export const RecentTransactions = () => {
     memberDetails?.data?.members?.memberOverview?.data?.overview?.recentTransactions;
 
   const memberRecentTransWithIndex =
-    memberRecentTrans?.map((trans, index) => ({
+    memberRecentTrans?.slice(0, 10)?.map((trans, index) => ({
       index: index + 1,
       ...trans,
     })) ?? [];
