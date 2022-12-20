@@ -11705,7 +11705,7 @@ export type ShareRegister = {
   member?: Maybe<Member>;
   memberId?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<SharePaymentMode>;
-  shareAmount?: Maybe<Scalars['Float']>;
+  shareAmount?: Maybe<Scalars['String']>;
   startNumber: Scalars['Int'];
   status?: Maybe<Share_Status>;
   totalAmount?: Maybe<Scalars['Float']>;
@@ -19202,7 +19202,7 @@ export type GetMemberDetailsOverviewQuery = {
                 startNumber: number;
                 endNumber: number;
                 balance?: number | null;
-                shareAmount?: number | null;
+                shareAmount?: string | null;
                 totalAmount?: number | null;
                 paymentMode?: SharePaymentMode | null;
                 bankId?: string | null;
@@ -19322,7 +19322,7 @@ export type GetMemberDetailsShareBalanceQuery = {
         startNumber: number;
         endNumber: number;
         balance?: number | null;
-        shareAmount?: number | null;
+        shareAmount?: string | null;
         totalAmount?: number | null;
         paymentMode?: SharePaymentMode | null;
         bankId?: string | null;
@@ -22683,7 +22683,7 @@ export type GetShareRegisterListQuery = {
           transactionDirection: Share_Transaction_Direction;
           balance?: number | null;
           startNumber: number;
-          shareAmount?: number | null;
+          shareAmount?: string | null;
           endNumber: number;
           credit?: number | null;
           debit?: number | null;
@@ -22723,7 +22723,7 @@ export type GetShareHistoryQuery = {
         startNumber: number;
         endNumber: number;
         balance?: number | null;
-        shareAmount?: number | null;
+        shareAmount?: string | null;
         totalAmount?: number | null;
         paymentMode?: SharePaymentMode | null;
         bankId?: string | null;
