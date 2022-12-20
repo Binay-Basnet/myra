@@ -59,7 +59,7 @@ export const useInit = () => {
         setIsLoading(false);
       } else {
         dispatch(logout());
-        replace('/login').then(() => setIsLoading(false));
+        replace('/gg').then(() => setIsLoading(false));
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData, replace]);
