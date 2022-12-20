@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect, useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import { AiFillBank, AiOutlineSetting } from 'react-icons/ai';
 import { CgLoadbarDoc } from 'react-icons/cg';
 import { IoMdPerson } from 'react-icons/io';
@@ -77,6 +77,13 @@ interface MemberTypeButtonProps {
 
 type MemberType = 'INDIVIDUAL' | 'INSTITUTION' | 'COOPERATIVE' | 'COOPERATIVE_UNION';
 
+enum MemberTypeSlug {
+  individual = 'INDIVIDUAL',
+  institution = 'INSTITUTION',
+  cooperative = 'COOPERATIVE',
+  cooperative_union = 'COOPERATIVE_UNION',
+}
+
 const MemberTypeButton = (props: MemberTypeButtonProps) => {
   const { icon, title, featCode, subtitle, onClick } = props;
   const { t } = useTranslation();
@@ -124,13 +131,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
   const router = useRouter();
   const newId = useGetNewIdMutation();
 
-  // const memberTypesQuery = useGetMemberTypesQuery();
-
   const { t } = useTranslation();
-
-  // const memberTypes =i memberTypesQuery?.data?.members?.memberTypes?.data;
-  // memberTypes?.[0]?.type?
-  const memberTypes = ['INDIVIDUAL', 'INSTITUTION', 'COOPERATIVE', 'COOPERATIVE_UNION'];
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -164,7 +165,12 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
     }
   };
 
-  const { data: editValues, refetch } = useGetGeneralMemberSettingsDataQuery();
+  const { data: editValues } = useGetGeneralMemberSettingsDataQuery(
+    {},
+    {
+      staleTime: 0,
+    }
+  );
 
   const memberListQuery =
     editValues?.settings?.general?.KYM?.general?.generalMember?.record?.memberType;
@@ -201,14 +207,15 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
     },
   };
 
-  if (!memberListQuery?.individual) memberTypes?.splice(0, 1);
-  if (!memberListQuery?.institution) memberTypes?.splice(1, 1);
-  if (!memberListQuery?.cooperative) memberTypes?.splice(2, 1);
-  if (!memberListQuery?.cooperativeUnion) memberTypes?.splice(3, 1);
-
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
+  const MemberTypeFunctionButton = ({ type }: { type: MemberType }) => (
+    <MemberTypeButton
+      icon={memberTypesArray[type]?.icon}
+      title={memberTypesArray[type]?.title}
+      featCode={memberTypesArray[type]?.featureCode}
+      subtitle={memberTypesArray[type]?.subtitle}
+      onClick={() => memberTypeRedirect(type as MemberType)}
+    />
+  );
 
   return (
     <Box display="flex">
@@ -270,25 +277,26 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
           >
             <Box py="s16">
               <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-                {/* {memberTypes?.[0]?.type?.map((item, index) => { */}
-                {memberTypes?.map((item) => {
-                  if (!item) {
-                    return null;
-                  }
-                  const dataItem = item as keyof typeof memberTypesArray;
-
-                  return (
-                    <GridItem key={item}>
-                      <MemberTypeButton
-                        icon={memberTypesArray[dataItem]?.icon}
-                        title={memberTypesArray[dataItem]?.title}
-                        featCode={memberTypesArray[dataItem]?.featureCode}
-                        subtitle={memberTypesArray[dataItem]?.subtitle}
-                        onClick={() => memberTypeRedirect(item as MemberType)}
-                      />
-                    </GridItem>
-                  );
-                })}
+                {memberListQuery?.individual && (
+                  <GridItem>
+                    <MemberTypeFunctionButton type={MemberTypeSlug?.individual} />
+                  </GridItem>
+                )}
+                {memberListQuery?.institution && (
+                  <GridItem>
+                    <MemberTypeFunctionButton type={MemberTypeSlug?.institution} />
+                  </GridItem>
+                )}
+                {memberListQuery?.cooperative && (
+                  <GridItem>
+                    <MemberTypeFunctionButton type={MemberTypeSlug?.cooperative} />
+                  </GridItem>
+                )}
+                {memberListQuery?.cooperativeUnion && (
+                  <GridItem>
+                    <MemberTypeFunctionButton type={MemberTypeSlug?.cooperative_union} />
+                  </GridItem>
+                )}
               </Grid>
             </Box>
           </Modal>

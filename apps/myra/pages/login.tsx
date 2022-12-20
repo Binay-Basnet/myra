@@ -112,7 +112,12 @@ export const Login = () => {
                   <Checkbox />
                   <Text fontSize="r1">{t['loginKeepSignedIn']}</Text>
                 </Box>
-                <Text fontSize="s2" color="success">
+                <Text
+                  fontSize="s2"
+                  color="success"
+                  cursor="pointer"
+                  onClick={() => replace('/password-recovery')}
+                >
                   {t['loginForgotPassword']}
                 </Text>
               </Box>

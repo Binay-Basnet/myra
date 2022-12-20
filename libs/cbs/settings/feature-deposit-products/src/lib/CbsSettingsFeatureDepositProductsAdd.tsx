@@ -117,7 +117,6 @@ export const SettingsDepositProductsAdd = () => {
   const typesOfMember = watch('typeOfMember');
   const withdrawRestricted = watch('withdrawRestricted');
   const isMandatorySaving = watch('isMandatorySaving');
-  const isTenureApplicable = watch('isTenureApplicable');
 
   const submitForm = () => {
     const values = getValues();
@@ -403,9 +402,8 @@ export const SettingsDepositProductsAdd = () => {
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                 depositNature === NatureOfDepositProduct.TermSavingOrFd) && <Tenure />}
 
-              {((depositNature === NatureOfDepositProduct.RecurringSaving && isTenureApplicable) ||
-                (depositNature === NatureOfDepositProduct.TermSavingOrFd &&
-                  isTenureApplicable)) && <DefaultAccountName />}
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <DefaultAccountName />}
 
               {depositNature !== NatureOfDepositProduct.Current && (
                 <>

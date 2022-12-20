@@ -236,7 +236,11 @@ export const FilePreview = ({
           setError(true);
           return;
         }
+
         const putResponse = await axios.put(putUrl, file, {
+          headers: {
+            'Content-Type': file.type,
+          },
           onUploadProgress: (progressEvent) => {
             const percentCompleted = (progressEvent.loaded * 98) / progressEvent.total + 2;
             setFileUploadProgress(percentCompleted);

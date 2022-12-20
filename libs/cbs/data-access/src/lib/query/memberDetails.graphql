@@ -417,10 +417,10 @@ query getMemberOverviewBioDetails($id: ID!) {
               expectedMonthlyTransaction
             }
             sisterConcernDetails {
-              Name
-              Address
-              Phone
-              NatureOfBusiness
+              name
+              address
+              phone
+              natureOfBusiness
             }
             operatorInstructionDetails {
               accountType
@@ -438,6 +438,126 @@ query getMemberOverviewBioDetails($id: ID!) {
                 wardNo
                 locality
                 houseNo
+              }
+            }
+            docs {
+              key
+              value
+            }
+          }
+          ... on CoopBio {
+            basicInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              registrationNo
+              registrationOffice
+              registrationDate
+            }
+            registeredAddress {
+              ...Address
+            }
+            operatingAddress {
+              ...Address
+            }
+            contactDetails {
+              email
+              website
+              phone
+            }
+            currentMemberDetails {
+              noOfMaleMembers
+              noOfFemaleMembers
+              noOfOtherMembers
+              lastAuditDate
+            }
+            representativeDetails {
+              name
+              designation
+              contactNumber
+              email
+              panVatNo
+              address {
+                ...Address
+              }
+              docs {
+                key
+                value
+              }
+            }
+
+            additionalCoopDetails {
+              coopType
+              mainServiceProduct
+            }
+            employeeDetails {
+              male
+              female
+              other
+              total
+            }
+            equityLiabilities {
+              shareCapital
+              reserveAndSurplus
+              savingDeposit
+              loanAccount
+              capitalGrant
+              total
+            }
+            assetDetails {
+              cashAndEquivalents
+              bank
+              investments
+              loan
+              nonCurrentAssets
+              otherNonCurrentAssets
+              other
+            }
+            partnerDirectorDetails {
+              name
+              designation
+              permAddress {
+                ...Address
+              }
+              tempAddress {
+                ...Address
+              }
+              dateOfMembership
+              highestQualification
+              mobileNo
+              email
+              citizenshipNo
+              panNo
+              docs {
+                key
+                value
+              }
+            }
+            operatorDetails {
+              name
+              contactNo
+              email
+              panNo
+              pemAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
               }
             }
             docs {

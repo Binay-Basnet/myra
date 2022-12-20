@@ -28,6 +28,7 @@ const accountTypes = {
 
 export const Overview = () => {
   const { accountDetails } = useAccountDetails();
+  const isTermSaving = accountDetails?.accountType === 'TERM_SAVING_OR_FD';
 
   const links = [
     {
@@ -108,7 +109,7 @@ export const Overview = () => {
     <>
       <TabHeader heading="Overview" />
 
-      <DetailPageQuickLinks links={links} />
+      {!isTermSaving && <DetailPageQuickLinks links={links} />}
 
       <AccountStatistics />
 
