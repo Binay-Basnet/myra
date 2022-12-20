@@ -409,11 +409,9 @@ steps:
     - push
   volumes:
   - name: myra-ui-${DRONE_BRANCH}
-    host:
-      path: /drone/src/apps/myra/.env
+    path: /drone/src/apps/myra/.env
   - name: myra-ui-${DRONE_BRANCH}-root
-    host:
-      path: /drone/src/.env
+    path: /drone/src/.env
   - name: docker_sock
     path: /var/run/docker.sock
 
