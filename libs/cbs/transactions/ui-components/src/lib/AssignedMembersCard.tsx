@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { useGetAgentDetailDataQuery, useGetAgentTodayListDataQuery } from '@coop/cbs/data-access';
 import { Box, Button, Grid, Text } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import { useGetAgentDetailDataQuery, useGetAgentTodayListDataQuery } from '@coop/cbs/data-access';
+import { getUrl, useTranslation } from '@coop/shared/utils';
 
 export const AssignedMembersCard = () => {
   const { t } = useTranslation();
@@ -41,7 +42,7 @@ export const AssignedMembersCard = () => {
 
         <Button
           variant="link"
-          onClick={() => router.push(`/transactions/agent/${id}/assigned-members`)}
+          onClick={() => router.push(`/${getUrl(router?.pathname, 2)}/${id}/assigned-members`)}
         >
           {t['agentOverviewViewAllMembers']}
         </Button>
