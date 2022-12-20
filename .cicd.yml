@@ -392,7 +392,7 @@ steps:
 - name: Build myra-ui
   image: node:16
   volumes:
-  - name: myra-ui-${DRONE_BRANCH}
+  - name: myra-env-${DRONE_BRANCH}
     path: /drone/src/apps/myra/.env
   - name: docker-sock
     path: /var/run/docker.sock
@@ -451,7 +451,7 @@ steps:
 - name: Build neosys-ui
   image: node:16
   volumes:
-  - name: myra-ui-${DRONE_BRANCH}
+  - name: myra-env-${DRONE_BRANCH}
     path: /drone/src/apps/neosys-admin/.env
   - name: docker-sock
     path: /var/run/docker.sock
@@ -510,7 +510,7 @@ steps:
 - name: Build ebanking-ui
   image: node:16
   volumes:
-  - name: myra-ui-${DRONE_BRANCH}
+  - name: myra-env-${DRONE_BRANCH}
     path: /drone/src/apps/ebanking/.env
   - name: docker-sock
     path: /var/run/docker.sock
