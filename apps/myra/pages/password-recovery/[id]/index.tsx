@@ -50,7 +50,7 @@ const ConfirmPassword = () => {
   const route = useRouter();
   const token = route?.query?.id as string;
   const { t } = useTranslation();
-  const { mutateAsync } = useSetNewPasswordMutation();
+  const { mutateAsync, isLoading } = useSetNewPasswordMutation();
   const { register, handleSubmit, formState } = useForm();
 
   const onSubmit = async (data) => {
@@ -112,7 +112,9 @@ const ConfirmPassword = () => {
             />
             {cPasswordError && errorText(cPasswordError?.type)}
           </Box>
-          <Button type="submit">{t['updatePasswordText']}</Button>
+          <Button isLoading={isLoading} type="submit">
+            {t['updatePasswordText']}
+          </Button>
         </Box>
       </form>
     </>
