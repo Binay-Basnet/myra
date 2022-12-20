@@ -10,7 +10,7 @@ const ShareRegister = () => <ShareRegisterTable />;
 ShareRegister.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
-      <SharePageLayout>{page}</SharePageLayout>{' '}
+      <SharePageLayout>{page}</SharePageLayout>
     </MainLayout>
   );
 };

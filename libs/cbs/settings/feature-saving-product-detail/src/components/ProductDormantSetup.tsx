@@ -34,8 +34,6 @@ export const ProductDormantSetup = ({ dormantSetup }: IProductDormantSetup) => {
     []
   );
 
-  if (dormantSetupWithIndex?.length === 0) return null;
-
   return (
     <DetailsCard title="Dormant Setup" hasTable>
       <Table isStatic data={dormantSetupWithIndex} columns={columns} />

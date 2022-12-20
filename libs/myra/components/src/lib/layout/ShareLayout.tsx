@@ -136,7 +136,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
         </Box>
       </Box>
       <Box w="100%" ml="260px">
-        <Box bg="white" minHeight="calc(100vh - 110px)" width="100%">
+        <Box minHeight="calc(100vh - 110px)" width="100%">
           {children}
         </Box>
       </Box>

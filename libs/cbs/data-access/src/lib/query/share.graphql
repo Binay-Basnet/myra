@@ -30,6 +30,7 @@ query getShareRegisterList($pagination: Pagination, $filter: ShareRegisterFilter
     register(pagination: $pagination, filter: $filter) {
       edges {
         node {
+          id
           transactionDate
           transactionDirection
           member {
@@ -106,6 +107,53 @@ query getShareCharges($transactionType: SHARE_TRANSACTION_DIRECTION!, $shareCoun
       id
       name
       charge
+    }
+  }
+}
+
+query getShareDetail($transactionID: ID!) {
+  share {
+    shareDetail(transactionID: $transactionID) {
+      data {
+        id
+        member {
+          id
+          name
+          code
+          type
+          profilePicUrl
+        }
+        totalShareCount
+        totalShareAmount
+        date
+        type
+        fromTo {
+          start
+          end
+        }
+        noOfShare
+        amount
+        total
+        status
+        charges {
+          name
+          value
+        }
+        paymentDetail {
+          paymentMode
+          amount
+          sourceOfFund
+        }
+        transactionBranch
+        teller
+        glTransactions {
+          account
+          debit
+          credit
+        }
+        totalCredit
+        totalDebit
+      }
     }
   }
 }
