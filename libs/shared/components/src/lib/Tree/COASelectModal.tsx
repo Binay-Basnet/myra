@@ -48,6 +48,10 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
     () => getCOA(fullView, 'INCOME'),
     [fullView?.settings?.chartsOfAccount?.fullView.data]
   );
+  const coaOffSheetBalanceFullView = useMemo(
+    () => getCOA(fullView, 'OFF_BALANCE_SHEET'),
+    [fullView?.settings?.chartsOfAccount?.fullView.data]
+  );
 
   // TODO !DO SOMETHING ABOUT THESE EFFECTS!
   useEffect(() => {
@@ -60,7 +64,7 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
 
   useEffect(() => {
     if (searchTerm) {
-      setAccordionIndices([0, 1, 2, 3]);
+      setAccordionIndices([0, 1, 2, 3, 4]);
     } else {
       setAccordionIndices([]);
     }
@@ -78,6 +82,7 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
       ...coaAssetsFullView,
       ...coaExpenditureFullView,
       ...coaIncomeFullView,
+      ...coaOffSheetBalanceFullView,
     ];
 
     const foundLedger = allLedgers.find((ledger) => ledger?.id === defaultValue);
@@ -251,6 +256,42 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
                       value={value}
                       setValue={(newValue) => setValue(newValue)}
                       data={coaIncomeFullView ?? []}
+                      searchTerm={searchTerm}
+                    />
+                  </AccordionPanel>
+                </>
+              )}
+            </AccordionItem>
+            <AccordionItem mt="s8">
+              {({ isExpanded }) => (
+                <>
+                  <AccordionButton
+                    onClick={() => {
+                      setAccordionIndices((prev) =>
+                        prev?.includes(4) ? prev?.filter((p) => p !== 4) : [...prev, 4]
+                      );
+                    }}
+                    p="s12"
+                    bg={isExpanded ? '#E0E5EB' : ''}
+                    h="60px"
+                  >
+                    <Box flex="1" textAlign="left">
+                      <Text fontSize="r1" fontWeight="SemiBold">
+                        Off Balance Sheet
+                      </Text>
+                    </Box>
+                    {isExpanded ? (
+                      <IoChevronUpOutline fontSize="18px" />
+                    ) : (
+                      <IoChevronDownOutline fontSize="18px" />
+                    )}
+                  </AccordionButton>
+
+                  <AccordionPanel display="flex" flexDir="column" gap="s16">
+                    <MultiTree
+                      value={value}
+                      setValue={(newValue) => setValue(newValue)}
+                      data={coaOffSheetBalanceFullView ?? []}
                       searchTerm={searchTerm}
                     />
                   </AccordionPanel>
