@@ -1429,22 +1429,32 @@ export type CbsCodeMangementResult = {
 };
 
 export enum CbsCodeType {
-  AccountTransfer = 'ACCOUNT_TRANSFER',
   BranchTransfer = 'BRANCH_TRANSFER',
-  Deposit = 'DEPOSIT',
-  JournalVoucher = 'JOURNAL_VOUCHER',
-  LoanRepayment = 'LOAN_REPAYMENT',
-  MarketRepresentativeTransaction = 'MARKET_REPRESENTATIVE_TRANSACTION',
   ShareCertificate = 'SHARE_CERTIFICATE',
-  ShareIssue = 'SHARE_ISSUE',
-  ShareReturn = 'SHARE_RETURN',
   TellerTransfer = 'TELLER_TRANSFER',
-  Valuator = 'VALUATOR',
   VaultTransfer = 'VAULT_TRANSFER',
-  Withdraw = 'WITHDRAW',
   WithdrawSlipBlockRequest = 'WITHDRAW_SLIP_BLOCK_REQUEST',
   WithdrawSlipRequest = 'WITHDRAW_SLIP_REQUEST',
 }
+
+export type CoaAccount = {
+  accountClass?: Maybe<Scalars['String']>;
+  accountCode?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['Localized']>;
+  parentGroup?: Maybe<Scalars['Localized']>;
+};
+
+export type CoaAccountListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<CoaAccount>;
+};
+
+export type CoaAccountListResult = {
+  edges?: Maybe<Array<Maybe<CoaAccountListEdges>>>;
+  error?: Maybe<QueryError>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
 
 export enum CoaAccountSetup {
   AllBranch = 'ALL_BRANCH',
@@ -1678,6 +1688,7 @@ export type ChartsOfAccountSettingsQuery = {
   accountsUnder?: Maybe<CoaMinimalResult>;
   accountsUnderLeaf?: Maybe<Array<Maybe<AccountsUnderLeafNode>>>;
   class?: Maybe<ChartsOfAccountClassResult>;
+  coaAccountList?: Maybe<CoaAccountListResult>;
   fullView: CoaFullView;
   search?: Maybe<CoaMinimalResult>;
 };
@@ -1693,6 +1704,11 @@ export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
 export type ChartsOfAccountSettingsQueryAccountsUnderLeafArgs = {
   currentBranch?: InputMaybe<Scalars['Boolean']>;
   parentId: Array<InputMaybe<Scalars['String']>>;
+};
+
+export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
+  branchId?: InputMaybe<Scalars['String']>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type ChartsOfAccountSettingsQuerySearchArgs = {
@@ -2642,18 +2658,23 @@ export enum DateType {
 }
 
 export type DayBookDataEntry = {
-  accountHead?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   ledger?: Maybe<Scalars['String']>;
   particular?: Maybe<Scalars['String']>;
   voucherNo?: Maybe<Scalars['String']>;
 };
 
+export type DayBookDataValue = {
+  accountHead?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  entries?: Maybe<Array<Maybe<DayBookDataEntry>>>;
+};
+
 export type DayBookReportData = {
   closingAmount?: Maybe<Scalars['String']>;
   openingBalance?: Maybe<Scalars['String']>;
-  payments?: Maybe<Array<Maybe<DayBookDataEntry>>>;
-  receipts?: Maybe<Array<Maybe<DayBookDataEntry>>>;
+  payments?: Maybe<Array<Maybe<DayBookDataValue>>>;
+  receipts?: Maybe<Array<Maybe<DayBookDataValue>>>;
   totalAmount?: Maybe<Scalars['String']>;
   totalPayment?: Maybe<Scalars['String']>;
   totalReceipts?: Maybe<Scalars['String']>;
@@ -2662,6 +2683,7 @@ export type DayBookReportData = {
 export type DayBookReportFilter = {
   branchId: Scalars['String'];
   date?: InputMaybe<LocalizedDateFilter>;
+  user?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
 
 export type DayBookReportResult = {
@@ -9130,6 +9152,7 @@ export type MeResult = {
 export type Member = Base & {
   activeDate?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
+  branch?: Maybe<Scalars['String']>;
   code: Scalars['String'];
   contact?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
@@ -12127,6 +12150,7 @@ export type TellerActivityEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
+  denomination?: Maybe<Array<Maybe<DenominationValue>>>;
   destBranch?: Maybe<Scalars['Localized']>;
   destProfilePic?: Maybe<Scalars['String']>;
   destProfilePicUrl?: Maybe<Scalars['String']>;
@@ -12494,6 +12518,8 @@ export type TrialSheetReportData = {
   expenses?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
   income?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
   incomeTotal?: Maybe<Scalars['String']>;
+  offBalance?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
+  offBalanceTotal?: Maybe<Scalars['String']>;
   totalAssetExpense?: Maybe<Scalars['String']>;
   totalLiablitiesIncome?: Maybe<Scalars['String']>;
   totalProfitLoss?: Maybe<Scalars['String']>;
@@ -20942,18 +20968,24 @@ export type GetDayBookReportQuery = {
             totalPayment?: string | null;
             totalReceipts?: string | null;
             payments?: Array<{
-              particular?: string | null;
               accountHead?: string | null;
-              ledger?: string | null;
               amount?: string | null;
-              voucherNo?: string | null;
+              entries?: Array<{
+                particular?: string | null;
+                ledger?: string | null;
+                voucherNo?: string | null;
+                amount?: string | null;
+              } | null> | null;
             } | null> | null;
             receipts?: Array<{
-              particular?: string | null;
               accountHead?: string | null;
-              ledger?: string | null;
               amount?: string | null;
-              voucherNo?: string | null;
+              entries?: Array<{
+                particular?: string | null;
+                ledger?: string | null;
+                voucherNo?: string | null;
+                amount?: string | null;
+              } | null> | null;
             } | null> | null;
           } | null;
         };
@@ -34654,18 +34686,24 @@ export const GetDayBookReportDocument = `
             closingAmount
             openingBalance
             payments {
-              particular
               accountHead
-              ledger
               amount
-              voucherNo
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
             }
             receipts {
-              particular
               accountHead
-              ledger
               amount
-              voucherNo
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
             }
             totalAmount
             totalPayment
