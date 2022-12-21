@@ -3657,6 +3657,14 @@ const en: Record<string, string> = {
   acTotalAmount: 'Total Amount',
   acProceedToPayment: 'Proceed To Payment',
   acLastActive: 'Last Active',
+  acDownload: 'Downloads',
+  acActivateMBanking: 'Activate Mobile Banking',
+  acActivateSMSBanking: 'Activate SMS Banking',
+  acActivateEBanking: 'Activate eBanking',
+  acDownloadsForms: 'Forms',
+  acDownloadsGuidelines: 'Guidelines',
+  acDownloadsReports: 'Reports',
+  acDwnloadsDirectives: 'Directives',
 
   /* Alternative Channels End */
 

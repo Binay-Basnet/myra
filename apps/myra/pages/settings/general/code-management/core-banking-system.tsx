@@ -8,7 +8,6 @@ import { CoreBankingSystemCodeManagement } from 'libs/cbs/settings/feature-code-
 
 const CBSCodeManagementPage = () => <CoreBankingSystemCodeManagement />;
 
-export default CBSCodeManagementPage;
 CBSCodeManagementPage.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
@@ -18,3 +17,5 @@ CBSCodeManagementPage.getLayout = function getLayout(page) {
     </SettingsLayout>
   );
 };
+
+export default CBSCodeManagementPage;

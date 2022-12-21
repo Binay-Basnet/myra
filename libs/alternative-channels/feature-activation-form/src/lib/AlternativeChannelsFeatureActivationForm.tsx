@@ -173,7 +173,7 @@ export const ActivationForm = () => {
       },
 
       onSuccess: () => {
-        router.push(`/alternative-channels/${router.query['type']}/users`);
+        router.push(`/alternative-channels/users/${router.query['type']}`);
         queryClient.invalidateQueries(['getActivatedService']);
         queryClient.invalidateQueries(['getAlternativeChannelList']);
       },

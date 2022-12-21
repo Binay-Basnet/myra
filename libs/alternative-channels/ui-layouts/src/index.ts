@@ -1,4 +1,3 @@
 export * from './lib/ACMainLayout';
-export * from './lib/EBankingListLayout';
-export * from './lib/MobileBankingListLayout';
-export * from './lib/SMSBankingListLayout';
+export * from './lib/DownloadLayout';
+export * from './lib/UserLayout';

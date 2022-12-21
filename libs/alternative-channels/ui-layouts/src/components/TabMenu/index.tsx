@@ -12,26 +12,26 @@ import { en, useTranslation } from '@coop/shared/utils';
 export interface TabMenuProps {}
 
 const NAVBAR_TAB_OBJECT: Record<string, number> = {
-  '/alternative-channels/mBanking/users': 0,
-  '/alternative-channels/eBanking/users': 1,
-  '/alternative-channels/smsBanking/users': 2,
+  '/alternative-channels/users/mBanking': 0,
+  '/alternative-channels/users/eBanking': 1,
+  '/alternative-channels/users/smsBanking': 2,
 };
 
 const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'acMBanking',
     icon: IoPhonePortraitSharp,
-    link: '/alternative-channels/mBanking/users',
+    link: '/alternative-channels/users/mBanking',
   },
   {
     title: 'acEBanking',
     icon: IoTvOutline,
-    link: '/alternative-channels/eBanking/users',
+    link: '/alternative-channels/users/eBanking',
   },
   {
     title: 'acSMSBanking',
     icon: IoChatboxEllipsesOutline,
-    link: '/alternative-channels/smsBanking/users',
+    link: '/alternative-channels/users/smsBanking',
   },
 ];
 

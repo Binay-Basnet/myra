@@ -1,8 +1,7 @@
 import React from 'react';
-import { IoChatboxEllipsesOutline, IoPhonePortraitSharp, IoTvOutline } from 'react-icons/io5';
-import { Box } from '@chakra-ui/react';
+import { AiOutlineCloudDownload, AiOutlineUser } from 'react-icons/ai';
 
-import { TabMenu, TopLevelHeader } from '@myra-ui';
+import { Box, TabMenu, TopLevelHeader } from '@myra-ui';
 
 export interface ACMainLayoutProps {
   children: React.ReactNode;
@@ -18,22 +17,16 @@ export const ACMainLayout = (props: ACMainLayoutProps) => {
           routeIndex={2}
           tabs={[
             {
-              title: 'acMBanking',
-              icon: IoPhonePortraitSharp,
-              link: '/alternative-channels/mBanking/users',
-              match: ['mBanking'],
+              title: 'acUsers',
+              icon: AiOutlineUser,
+              link: '/alternative-channels/users/mBanking',
+              match: ['users'],
             },
             {
-              title: 'acEBanking',
-              icon: IoTvOutline,
-              link: '/alternative-channels/eBanking/users',
-              match: ['eBanking'],
-            },
-            {
-              title: 'acSMSBanking',
-              icon: IoChatboxEllipsesOutline,
-              link: '/alternative-channels/smsBanking/users',
-              match: ['smsBanking'],
+              title: 'acDownload',
+              icon: AiOutlineCloudDownload,
+              link: '/alternative-channels/downloads/forms',
+              match: ['downloads'],
             },
           ]}
         />
