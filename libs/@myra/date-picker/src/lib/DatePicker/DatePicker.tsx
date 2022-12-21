@@ -76,18 +76,6 @@ export const DatePicker = ({
     }
   }, [value?.date?.toString(), value?.ad, value?.bs]);
 
-  useEffect(() => {
-    if (dateState?.current) {
-      if (onChange) {
-        onChange({
-          date: dateState?.current,
-          ad: dayjs(dateState?.current).format(dateFormat),
-          bs: new NepaliDate(dateState?.current).format(dateFormat),
-        });
-      }
-    }
-  }, [calendarType]);
-
   return (
     <Box w="100%" display="flex" flexDir="column" gap="s4" mb="1px" alignItems="flex-start">
       <Text fontWeight="500" lineHeight="1.5" fontSize="s3" color="gray.700">
