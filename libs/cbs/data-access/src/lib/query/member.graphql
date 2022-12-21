@@ -8,6 +8,7 @@ query getMemberList($pagination: Pagination!, $filter: KymMemberDataFilter) {
           name
           code
           type
+          branch
           address {
             state
             district

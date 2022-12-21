@@ -117,6 +117,13 @@ export const MemberListPage = () => {
         },
       },
       {
+        header: 'Branch',
+        accessorFn: (row) => row?.node?.branch,
+        meta: {
+          width: '120px',
+        },
+      },
+      {
         header: isDraft || isSubmitted ? t['memberListDateJoined'] : t['memberListActiveDate'],
         accessorFn: (row) =>
           isDraft || isSubmitted

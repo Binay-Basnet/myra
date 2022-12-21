@@ -23,7 +23,7 @@ const userColumns = [
     link: '/alternative-channels/downloads/reports',
   },
   {
-    title: 'cDwnloadsDirectives',
+    title: 'acDwnloadsDirectives',
     link: '/alternative-channels/downloads/directives',
   },
 ];

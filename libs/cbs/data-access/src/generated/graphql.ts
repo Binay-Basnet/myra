@@ -18703,6 +18703,7 @@ export type GetMemberListQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           type: KymMemberTypesEnum;
+          branch?: string | null;
           profilePicUrl?: string | null;
           signaturePicUrl?: string | null;
           contact?: string | null;
@@ -31864,6 +31865,7 @@ export const GetMemberListDocument = `
           name
           code
           type
+          branch
           address {
             state
             district
