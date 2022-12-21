@@ -104586,6 +104586,18 @@
             "deprecationReason": null
           },
           {
+            "name": "transferCode",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "transferState",
             "description": null,
             "args": [],
