@@ -28,11 +28,18 @@ query getTrialSheetReport($data: TrialSheetReportFilter!) {
               ledgerName
               under
             }
+            offBalance {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
 
             equityAndLiablitiesTotal
             assetsTotal
             expenseTotal
             incomeTotal
+            offBalanceTotal
 
             totalAssetExpense
             totalLiablitiesIncome

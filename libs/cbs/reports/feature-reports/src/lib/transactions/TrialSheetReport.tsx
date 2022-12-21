@@ -55,6 +55,11 @@ export const TrialSheetReport = () => {
       []) as TrialSheetReportDataEntry[]
   );
 
+  const offBalanceSheetReport = sortCoa(
+    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.offBalance ??
+      []) as TrialSheetReportDataEntry[]
+  );
+
   return (
     <Report
       defaultFilters={{
@@ -148,6 +153,22 @@ export const TrialSheetReport = () => {
                 }
                 type="Income"
                 data={incomeReport as TrialSheetReportDataEntry[]}
+              />
+            </Box>
+          )}
+
+          {offBalanceSheetReport?.length !== 0 && (
+            <Box display="flex" py="s16" flexDir="column">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                5. Off Balance Sheet
+              </Text>
+              <COATable
+                type="Off Balance"
+                total={
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.offBalanceTotal
+                }
+                data={offBalanceSheetReport as TrialSheetReportDataEntry[]}
               />
             </Box>
           )}
