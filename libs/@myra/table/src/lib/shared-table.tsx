@@ -104,7 +104,7 @@ export const Table = <T extends Record<string, unknown>>({
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
-                {headerGroup.headers.map((header, index) => (
+                {headerGroup.headers.map((header) => (
                   <Th
                     bg={isDetailPageTable ? 'highlight.500' : 'gray.0'}
                     key={header.id}
@@ -113,9 +113,9 @@ export const Table = <T extends Record<string, unknown>>({
                     minW={header.column.columnDef.meta?.width}
                     w={header.column.columnDef.meta?.width}
                     textAlign={header.column.columns.length !== 0 ? 'center' : 'left'}
-                    position={index === 0 ? 'sticky' : 'static'}
-                    top={0}
-                    left={0}
+                    // position={index === 0 ? 'sticky' : 'static'}
+                    // top={0}
+                    // left={0}
                   >
                     {header.isPlaceholder ? null : (
                       <Box
@@ -210,15 +210,15 @@ export const Table = <T extends Record<string, unknown>>({
                   e.stopPropagation();
                 }}
               >
-                {row.getVisibleCells().map((cell, index) => (
+                {row.getVisibleCells().map((cell) => (
                   <Td
                     key={cell.id}
                     isNumeric={cell.column.columnDef.meta?.isNumeric}
                     minW={cell.column.columnDef.meta?.width}
                     w={cell.column.columnDef.meta?.width}
-                    position={index === 0 ? 'sticky' : 'static'}
-                    top={0}
-                    left={0}
+                    // position={index === 0 ? 'sticky' : 'static'}
+                    // top={0}
+                    // left={0}
                     bg="white"
                   >
                     <Text

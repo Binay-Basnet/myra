@@ -1,0 +1,65 @@
+query listCBSShareCodes {
+  settings {
+    general {
+      codes {
+        cbs {
+          allCbsCodes {
+            data {
+              share {
+                id
+                codeType
+                prefix
+                noOfDigit
+                initialNo
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query listCBSTransfersCodes {
+  settings {
+    general {
+      codes {
+        cbs {
+          allCbsCodes {
+            data {
+              transfers {
+                id
+                codeType
+                prefix
+                noOfDigit
+                initialNo
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query listCBSWithdrawSlipCodes {
+  settings {
+    general {
+      codes {
+        cbs {
+          allCbsCodes {
+            data {
+              withdrawSlip {
+                id
+                codeType
+                prefix
+                noOfDigit
+                initialNo
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
