@@ -1,9 +1,5 @@
-import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
-
 import { FormSection, GridItem } from '@myra-ui';
 
-import { RootState, useAppSelector } from '@coop/cbs/data-access';
 import { FormAmountInput, FormBankSelect, FormDatePicker, FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -13,15 +9,6 @@ type PurchaseProps = {
 
 export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
   const { t } = useTranslation();
-
-  const { resetField } = useFormContext();
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    resetField('bankVoucher.depositedDate');
-  }, [preference?.date]);
 
   return (
     <FormSection templateColumns={2}>

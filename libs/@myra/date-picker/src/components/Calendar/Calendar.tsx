@@ -137,6 +137,7 @@ export const Calendar = ({
                     cursor="pointer"
                     borderRadius="br1"
                     as="button"
+                    type="button"
                     _hover={{ bg: 'gray.100' }}
                   >
                     <Icon as={IoSettingsOutline} />

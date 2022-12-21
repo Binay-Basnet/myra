@@ -71,8 +71,22 @@ export const DatePicker = ({
       }
 
       setDateState(convertedDate);
+    } else {
+      setDateState(null);
     }
   }, [value?.date?.toString(), value?.ad, value?.bs]);
+
+  useEffect(() => {
+    if (dateState?.current) {
+      if (onChange) {
+        onChange({
+          date: dateState?.current,
+          ad: dayjs(dateState?.current).format(dateFormat),
+          bs: new NepaliDate(dateState?.current).format(dateFormat),
+        });
+      }
+    }
+  }, [calendarType]);
 
   return (
     <Box w="100%" display="flex" flexDir="column" gap="s4" mb="1px" alignItems="flex-start">
