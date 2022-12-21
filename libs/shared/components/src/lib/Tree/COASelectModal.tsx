@@ -63,9 +63,9 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
   }, [value]);
 
   useEffect(() => {
-    if (searchTerm) {
-      setAccordionIndices([0, 1, 2, 3, 4]);
-    } else {
+    if (!searchTerm) {
+      //   setAccordionIndices([0, 1, 2, 3, 4]);
+      // } else {
       setAccordionIndices([]);
     }
   }, [searchTerm]);
@@ -143,10 +143,13 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
 
                   <AccordionPanel display="flex" flexDir="column" gap="s16">
                     <MultiTree
+                      index={0}
                       value={value}
                       setValue={(newValue) => setValue(newValue)}
                       data={coaLiabilitiesFullView ?? []}
                       searchTerm={searchTerm}
+                      setAccordianIndices={setAccordionIndices}
+                      accordionIndices={accordionIndices}
                     />
                   </AccordionPanel>
                 </>
@@ -180,10 +183,13 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
 
                   <AccordionPanel display="flex" flexDir="column" gap="s16">
                     <MultiTree
+                      index={1}
                       value={value}
                       setValue={(newValue) => setValue(newValue)}
                       data={coaAssetsFullView ?? []}
                       searchTerm={searchTerm}
+                      setAccordianIndices={setAccordionIndices}
+                      accordionIndices={accordionIndices}
                     />
                   </AccordionPanel>
                 </>
@@ -217,10 +223,13 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
 
                   <AccordionPanel display="flex" flexDir="column" gap="s16">
                     <MultiTree
+                      index={2}
                       value={value}
                       setValue={(newValue) => setValue(newValue)}
                       data={coaExpenditureFullView ?? []}
                       searchTerm={searchTerm}
+                      setAccordianIndices={setAccordionIndices}
+                      accordionIndices={accordionIndices}
                     />
                   </AccordionPanel>
                 </>
@@ -253,10 +262,13 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
 
                   <AccordionPanel display="flex" flexDir="column" gap="s16">
                     <MultiTree
+                      index={3}
                       value={value}
                       setValue={(newValue) => setValue(newValue)}
                       data={coaIncomeFullView ?? []}
                       searchTerm={searchTerm}
+                      setAccordianIndices={setAccordionIndices}
+                      accordionIndices={accordionIndices}
                     />
                   </AccordionPanel>
                 </>
@@ -289,10 +301,13 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
 
                   <AccordionPanel display="flex" flexDir="column" gap="s16">
                     <MultiTree
+                      index={4}
                       value={value}
                       setValue={(newValue) => setValue(newValue)}
                       data={coaOffSheetBalanceFullView ?? []}
                       searchTerm={searchTerm}
+                      setAccordianIndices={setAccordionIndices}
+                      accordionIndices={accordionIndices}
                     />
                   </AccordionPanel>
                 </>
