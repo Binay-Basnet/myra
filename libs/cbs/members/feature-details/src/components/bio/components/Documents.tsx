@@ -30,7 +30,7 @@ export const DocumentComponent = ({ keyText, value }: IDocumentCard) => (
         {keyText}
       </Text>
     </Box>
-    <a href={value as string}>
+    <a href={value as string} target="_blank" rel="noreferrer">
       <Icon as={AiOutlineFilePdf} />
     </a>
   </Box>
