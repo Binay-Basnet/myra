@@ -24,7 +24,7 @@ type GuaranteeDetailForm = {
   index?: number;
   memberId: string;
   accountId: string;
-  accountName?: string;
+  accountName?: string | null;
   maxGuranteeAmount: number;
   guranteeAmount: number;
 };
@@ -114,7 +114,7 @@ export const GuaranteeDetails = () => {
           const index = methods.getValues()?.index;
           const savedValues = {
             ...methods.getValues(),
-            accountName: selectedAccount?.product.productName,
+            accountName: selectedAccount?.accountName,
           };
 
           if (index !== undefined) {
