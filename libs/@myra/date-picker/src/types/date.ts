@@ -26,3 +26,23 @@ export type DateFieldState = {
   month: string | null;
   day: string | null;
 };
+
+export type Period = {
+  title: string;
+  key: string;
+  lastDays: number;
+  closePopover: boolean;
+};
+
+export type DateRange = {
+  from: {
+    date: Date;
+    en: string;
+    np: string;
+  } | null;
+  to: {
+    date: Date;
+    en: string;
+    np: string;
+  } | null;
+};

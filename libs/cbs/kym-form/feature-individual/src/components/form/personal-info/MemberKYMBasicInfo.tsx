@@ -1,12 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection } from '@myra-ui';
+
 import {
   FormFieldSearchTerm,
   KymIndMemberInput,
   useGetIndividualKymOptionsQuery,
 } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';
@@ -61,7 +62,11 @@ export const MemberKYMBasicInfo = ({ setKymCurrentSection }: IMemberKYMBasicInfo
             isLoading={genderLoading}
             options={getFieldOption(genderFields)}
           />
-          <FormDatePicker name="dateOfBirth" label={t['kymIndDateofBirthBS']} maxToday />
+          <FormDatePicker
+            name="dateOfBirth"
+            label={t['kymIndDateofBirthBS']}
+            maxDate={new Date()}
+          />
           <FormSelect
             name="ethnicityId"
             label={t['kymIndEthnicity']}

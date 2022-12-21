@@ -5,19 +5,23 @@ import { Icon } from '@chakra-ui/icons';
 import { Box, Popover, PopoverContent, PopoverTrigger } from '@chakra-ui/react';
 
 import { CalendarBase } from '../CalendarBase';
-import { CalendarBaseNepali } from '../CalendarBaseNepali';
 import { CalendarWeek } from '../CalendarWeek';
 import { MonthSelect } from '../MonthSelect';
 import { TopButtonWrapper } from '../wrappers/TopButtonWrapper';
 import { YearSelect } from '../YearSelect/YearSelect';
+import { useMonthNavigateHook } from '../../hooks/useMonthNavigateHook';
 import { TDateState } from '../../types/date';
-import { ad2bs, bs2ad } from '../../utils/ad-bs-converter';
-import { getNextMonth, getPreviousMonth, isDate } from '../../utils/calendar-builder';
+import { ad2bs } from '../../utils/ad-bs-converter';
+import { isDate } from '../../utils/calendar-builder';
 
 interface ICalendar {
   calendarType: 'AD' | 'BS';
+  locale: 'en' | 'ne';
   onDateChange?: (newState: TDateState) => void;
   value: TDateState | null;
+
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 const adDate = {
@@ -36,118 +40,50 @@ const todayDate = {
   bs: bsDate,
 };
 
-export const Calendar = ({ calendarType = 'AD', value, onDateChange }: ICalendar) => {
-  const [dateState, setDateState] = useState<TDateState>(value ?? todayDate);
+export const Calendar = ({
+  calendarType = 'AD',
+  value,
+  onDateChange,
+  locale,
+  minDate,
+  maxDate,
+}: ICalendar) => {
+  const [dateState, setDateState] = useState<TDateState>(value || todayDate);
   const [internalCalendarType, setInternalCalendarType] = useState(calendarType);
 
-  console.log(value);
-
-  const gotoPreviousMonth = () => {
-    if (internalCalendarType === 'BS') {
-      const { bs } = dateState;
-      const { year, month, day } = bs;
-      const previousMonth = getPreviousMonth(month, year);
-      const ad = bs2ad(previousMonth.year, previousMonth.month, day);
-
-      setDateState((prev) => ({
-        ...prev,
-        bs: {
-          ...prev.bs,
-          month: previousMonth.month,
-          year: previousMonth.year,
-        },
-        ad,
-      }));
-      return;
-    }
-
-    const { ad } = dateState;
-    const { year, month, day } = ad;
-    const previousMonth = getPreviousMonth(month, year);
-    const bs = ad2bs(previousMonth.year, previousMonth.month, day);
-
-    setDateState((prev) => ({
-      ...prev,
-      ad: {
-        ...prev.ad,
-        month: previousMonth.month,
-        year: previousMonth.year,
-      },
-      bs,
-    }));
-  };
-
-  const gotToNextMonth = () => {
-    if (internalCalendarType === 'BS') {
-      const { bs } = dateState;
-      const { year, month, day } = bs;
-      // this.setState(getPreviousMonth(month, year));
-      const nexMonth = getNextMonth(month, year);
-      const ad = ad2bs(nexMonth.year, nexMonth.month, day);
-
-      setDateState((prev) => ({
-        ...prev,
-        bs: {
-          ...prev.bs,
-          month: nexMonth.month,
-          year: nexMonth.year,
-        },
-        ad,
-      }));
-      return;
-    }
-
-    const { ad } = dateState;
-    const { year, month, day } = ad;
-    // this.setState(getPreviousMonth(month, year));
-    const nexMonth = getNextMonth(month, year);
-    const bs = ad2bs(nexMonth.year, nexMonth.month, day);
-
-    setDateState((prev) => ({
-      ...prev,
-      ad: {
-        ...prev.ad,
-        month: nexMonth.month,
-        year: nexMonth.year,
-      },
-      bs,
-    }));
-  };
+  const { gotoPreviousMonth, gotToNextMonth } = useMonthNavigateHook({
+    calendarType: internalCalendarType,
+    setState: setDateState,
+    state: dateState,
+  });
 
   const addDateToState = (date?: Date | null) => {
     const isDateObject = isDate(date);
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const _date = isDateObject && date ? date : new Date();
 
     const bsDateCurrent = ad2bs(_date.getFullYear(), _date.getMonth() + 1, _date.getDate());
 
-    setDateState({
-      current: null,
-      today: new Date(),
-      ad: {
-        year: _date.getFullYear(),
-        month: _date.getMonth() + 1,
-        day: _date.getDate(),
-        dayOfWeek: _date.getDay(),
-      },
-      bs: bsDateCurrent,
-    });
+    if (date) {
+      setDateState({
+        current: date,
+        today: new Date(),
+        ad: {
+          year: _date.getFullYear(),
+          month: _date.getMonth() + 1,
+          day: _date.getDate(),
+          dayOfWeek: _date.getDay(),
+        },
+        bs: bsDateCurrent,
+      });
+    }
   };
-
-  // Todo: Redo these useffects
-
-  useEffect(() => {
-    addDateToState(value?.current);
-  }, []);
 
   useEffect(() => {
     setInternalCalendarType(calendarType);
   }, [calendarType]);
 
   useEffect(() => {
-    if (value) {
-      setDateState(value);
-    }
+    addDateToState(value?.current);
   }, [value?.current?.toString()]);
 
   return (
@@ -173,63 +109,17 @@ export const Calendar = ({ calendarType = 'AD', value, onDateChange }: ICalendar
           </TopButtonWrapper>
 
           <MonthSelect
+            locale={locale}
             calendarType={internalCalendarType}
-            month={internalCalendarType === 'BS' ? dateState.bs.month : dateState.ad.month}
-            onChange={(newMonth) => {
-              if (internalCalendarType === 'AD') {
-                const bs = ad2bs(dateState.ad.year, newMonth, dateState.ad.day);
-
-                setDateState((prev) => ({
-                  ...prev,
-                  bs,
-                  ad: {
-                    ...prev.ad,
-                    month: newMonth,
-                  },
-                }));
-              } else {
-                const ad = bs2ad(dateState.bs.year, newMonth, dateState.bs.day);
-
-                setDateState((prev) => ({
-                  ...prev,
-                  bs: {
-                    ...prev.bs,
-                    month: newMonth,
-                  },
-                  ad,
-                }));
-              }
-            }}
+            state={dateState}
+            setState={setDateState}
           />
 
           <YearSelect
+            locale={locale}
             calendarType={internalCalendarType}
-            year={internalCalendarType === 'BS' ? dateState.bs.year : dateState.ad.year}
-            onChange={(newYear) => {
-              if (internalCalendarType === 'AD') {
-                const bs = ad2bs(newYear, dateState.ad.month, dateState.ad.day);
-
-                setDateState((prev) => ({
-                  ...prev,
-                  bs,
-                  ad: {
-                    ...prev.ad,
-                    year: newYear,
-                  },
-                }));
-              } else {
-                const ad = bs2ad(newYear, dateState.bs.month, dateState.bs.day);
-
-                setDateState((prev) => ({
-                  ...prev,
-                  ad,
-                  bs: {
-                    ...prev.bs,
-                    year: newYear,
-                  },
-                }));
-              }
-            }}
+            state={dateState}
+            setState={setDateState}
           />
 
           <Popover placement="bottom-end">
@@ -298,20 +188,16 @@ export const Calendar = ({ calendarType = 'AD', value, onDateChange }: ICalendar
         </Box>
 
         <Box display="flex" flexDir="column" gap="s4" fontSize="s2" alignItems="center" w="100%">
-          <CalendarWeek locale="en" calendarType={internalCalendarType} />
-          {internalCalendarType === 'AD' ? (
-            <CalendarBase
-              onDateChange={onDateChange}
-              dateState={dateState}
-              setDateState={setDateState}
-            />
-          ) : (
-            <CalendarBaseNepali
-              onDateChange={onDateChange}
-              dateState={dateState}
-              setDateState={setDateState}
-            />
-          )}
+          <CalendarWeek locale={locale} calendarType={internalCalendarType} />
+          <CalendarBase
+            maxDate={maxDate}
+            minDate={minDate}
+            dateState={dateState}
+            setDateState={setDateState}
+            locale={locale}
+            calendarType={internalCalendarType}
+            onDateChange={onDateChange}
+          />
         </Box>
       </Box>
     </Box>

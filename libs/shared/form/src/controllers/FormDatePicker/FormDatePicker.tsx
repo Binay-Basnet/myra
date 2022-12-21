@@ -1,31 +1,29 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
-import { DatePicker } from '@raralabs/react-patro';
-import format from 'date-fns/format';
-import NepaliDate from 'nepali-date-converter';
 
 import { Box, InputProps, Text } from '@myra-ui';
+import { DatePicker } from '@myra-ui/date-picker';
 
-import { DateType, RootState, useAppSelector } from '@coop/cbs/data-access';
+import { useAppSelector } from '@coop/cbs/data-access';
 
 interface IFormDatePickerProps<T> extends InputProps {
   name: Path<T> | string;
   label?: string;
   rules?: UseControllerProps['rules'];
+  maxDate?: Date;
+  minDate?: Date;
   maxToday?: boolean;
-  maxDate?: string;
-  minDate?: string;
 }
 
 export const FormDatePicker = <T,>({
   name,
   label,
-  maxToday,
   maxDate,
   minDate,
+  maxToday,
   ...rest
 }: IFormDatePickerProps<T>) => {
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+  const preference = useAppSelector((state) => state?.auth?.preference);
 
   const methods = useFormContext();
 
@@ -40,41 +38,24 @@ export const FormDatePicker = <T,>({
       name={name}
       rules={rest.rules}
       control={control}
-      render={({ field: { onChange, value, ...fieldProps } }) => (
+      render={({ field: { onChange, value } }) => (
         <Box display="flex" flexDirection="column" gap="s4">
-          {label && (
-            <Text variant="formLabel" color="gray.700">
-              {label}
-            </Text>
-          )}
-
           <DatePicker
-            id={name}
-            calendarType={preference?.date ?? 'AD'}
-            key={`${preference?.date}-${value}`}
-            dateFormat="YYYY-MM-DD"
-            errorText={errors[name]?.message as string}
-            onChange={(...args: (number | Date)[]) => {
-              if (args[3]) {
-                onChange(args[0]);
-              }
+            label={label}
+            locale={preference?.languageCode as 'en' | 'ne'}
+            onChange={(newValue) => {
               if (errors[name]?.type === 'required') {
                 clearErrors(name);
               }
+              onChange(newValue.ad);
             }}
-            value={value ?? ''}
-            className="form-datepicker"
-            maxDate={
-              maxToday
-                ? preference?.date === DateType.Bs
-                  ? new NepaliDate(new Date()).format('YYYY-MM-DD')
-                  : format(new Date(), 'yyyy-MM-dd')
-                : maxDate || null
-            }
-            minDate={minDate ?? null}
-            {...rest}
-            {...fieldProps}
+            isInvalid={!!errors[name]?.message}
+            calendarType={preference?.date || 'AD'}
+            value={value ? { ad: value } : undefined}
+            maxDate={maxToday ? new Date() : maxDate}
+            minDate={minDate}
           />
+
           {errors[name] ? (
             <Text variant="formHelper" color="danger.500">
               {errors[name]?.message as string}
