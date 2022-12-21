@@ -45,7 +45,11 @@ export const BioCoop = () => {
       <DirectorDetails />
       <DetailsCard title="Documents" bg="white">
         {bioDataCoopDocs?.map((docs) => (
-          <DocumentComponent keyText={docs?.key as string} value={docs?.value as string} />
+          <DocumentComponent
+            keyText={docs?.key as string}
+            value={docs?.value as string}
+            key={docs?.value}
+          />
         ))}
       </DetailsCard>
     </>

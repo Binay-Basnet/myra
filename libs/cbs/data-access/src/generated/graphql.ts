@@ -1400,8 +1400,14 @@ export type CbsCodeManagementData = {
 };
 
 export type CbsCodeManagementList = {
-  data?: Maybe<Array<Maybe<CbsCodeManagement>>>;
+  data?: Maybe<CbsCodeManagementListData>;
   error?: Maybe<QueryError>;
+};
+
+export type CbsCodeManagementListData = {
+  share?: Maybe<Array<Maybe<CbsCodeManagement>>>;
+  transfers?: Maybe<Array<Maybe<CbsCodeManagement>>>;
+  withdrawSlip?: Maybe<Array<Maybe<CbsCodeManagement>>>;
 };
 
 export type CbsCodeManagementMutation = {
@@ -3634,6 +3640,7 @@ export enum DormantCondition {
 }
 
 export enum DormantDuration {
+  Day = 'DAY',
   HalfYear = 'HALF_YEAR',
   Month = 'MONTH',
   Quarter = 'QUARTER',

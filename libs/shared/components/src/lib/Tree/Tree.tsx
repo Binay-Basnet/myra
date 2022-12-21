@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsFillCaretRightFill } from 'react-icons/bs';
 import { MdOutlineCircle } from 'react-icons/md';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
-import { Icon, NoDataState } from '@myra-ui';
+import { Icon } from '@myra-ui';
 
 import Accordion, { useAccordion } from './useAccordion';
 
@@ -19,6 +19,9 @@ interface IMultiTreeProps<T extends ArrayTree> {
   searchTerm?: string;
   setValue: (newValue: BaseType) => void;
   value: BaseType | null;
+  setAccordianIndices: React.Dispatch<React.SetStateAction<number[]>>;
+  index: number;
+  accordionIndices: number[];
 }
 
 export const MultiTree = <T extends ArrayTree>({
@@ -26,30 +29,40 @@ export const MultiTree = <T extends ArrayTree>({
   setValue,
   value,
   searchTerm = '',
+  setAccordianIndices,
+  index,
+  accordionIndices,
 }: IMultiTreeProps<T>) => {
   const treeAfterSearch =
     searchTerm === '' ? arrayToTree(data) : arrayToTree(searchTree(data, searchTerm));
+  useEffect(() => {
+    if (!searchTerm) return;
+    if (treeAfterSearch?.length === 0) {
+      setAccordianIndices((prev) => prev?.filter((d) => d !== index));
+    } else {
+      setAccordianIndices((prev) => [...prev, index]);
+    }
+  }, [accordionIndices, treeAfterSearch.length, searchTerm]);
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
-      {treeAfterSearch?.length === 0 ? (
+      {/* {treeAfterSearch?.length === 0 ? (
         <NoDataState
           custom={{
             title: 'No Accounts',
             subtitle: 'Please try searching another account',
           }}
         />
-      ) : (
-        treeAfterSearch.map((account) => (
-          <Tree
-            value={value}
-            setValue={setValue}
-            open={!!searchTerm}
-            data={account.children}
-            current={account}
-          />
-        ))
-      )}
+      ) : ( */}
+      {treeAfterSearch.map((account) => (
+        <Tree
+          value={value}
+          setValue={setValue}
+          open={!!searchTerm}
+          data={account.children}
+          current={account}
+        />
+      ))}
     </Box>
   );
 };

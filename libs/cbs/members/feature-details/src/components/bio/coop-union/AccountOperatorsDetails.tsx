@@ -34,7 +34,7 @@ export const AccountOperatorDetails = () => {
     <DetailsCard title="Account Operator Details" bg="white" hasTable>
       <Accordion defaultIndex={[0]} display="flex" flexDirection="column" gap="s16" allowToggle>
         {bioDataCoopUnionOperator?.map((item) => (
-          <AccordionItem>
+          <AccordionItem key={item?.email}>
             <AccordionButton>
               <Box
                 flex="1"
