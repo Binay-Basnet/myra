@@ -227,6 +227,7 @@ query getLoanProductDetail($id: ID!) {
               rebateRate
               rebateAmount
               rebateLedgerMapping
+              noOfInstallment
             }
             principalMaxGraceNumber
             interestMaxGraceNumber

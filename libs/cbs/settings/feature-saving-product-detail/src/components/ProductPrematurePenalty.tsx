@@ -33,7 +33,7 @@ export const ProductPrematurePenalty = ({ penaltyData }: IProductPrematurePenalt
         },
       },
       {
-        header: 'Penalty Rs.',
+        header: 'Penalty Amount',
         accessorKey: 'penaltyAmount',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
         meta: {
@@ -62,11 +62,9 @@ export const ProductPrematurePenalty = ({ penaltyData }: IProductPrematurePenalt
     []
   );
 
-  if (!penaltyData || Object.keys(penaltyData).length === 0) return null;
-
   return (
     <DetailsCard title="Premature Penalty Setup" hasTable>
-      <Table isStatic data={penaltyDataArray} columns={columns} />
+      <Table isDetailPageTable isStatic data={penaltyDataArray} columns={columns} />
     </DetailsCard>
   );
 };

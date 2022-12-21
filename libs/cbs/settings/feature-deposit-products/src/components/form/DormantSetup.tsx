@@ -1,6 +1,7 @@
+import { FormSection, GridItem } from '@myra-ui';
+
 import { DormantCondition, DormantDuration } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type DormantSetupTable = {
@@ -9,6 +10,7 @@ type DormantSetupTable = {
 };
 
 const durationList = [
+  { label: '1 Day', value: DormantDuration.Day },
   { label: '1 month', value: DormantDuration.Month },
   { label: '3 months', value: DormantDuration.Quarter },
   { label: '6 months', value: DormantDuration.HalfYear },

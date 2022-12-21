@@ -14,6 +14,7 @@ import {
   ProductDormantSetup,
   ProductFeatures,
   ProductGeneralInformation,
+  ProductLadderRate,
   ProductLimits,
   ProductPenalty,
   ProductPrematurePenalty,
@@ -30,7 +31,13 @@ import { useSavingDepositHook } from '../hooks/useSavingDepositHook';
 export const OverviewPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { detailData, criteriaData, featureTable, productLimits } = useSavingDepositHook();
+  const {
+    detailData,
+    criteriaData,
+    currentTermSavingFeatureTable,
+    savingRecurringFeatureTable,
+    productLimits,
+  } = useSavingDepositHook();
 
   return (
     <>
@@ -75,8 +82,8 @@ export const OverviewPage = () => {
           {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
             detailData?.nature === NatureOfDepositProduct.Current) && (
             <>
-              <ProductRebate rebateData={detailData?.rebateData} />
               <ProductPenalty penaltyData={detailData?.penaltyData} />
+              <ProductRebate rebateData={detailData?.rebateData} />
             </>
           )}
 
@@ -102,16 +109,33 @@ export const OverviewPage = () => {
             </>
           )}
 
-          <DetailsCard title="Others " hasTable>
-            <Box display="flex" flexDir="column" gap="s32">
-              <ProductFeatures features={featureTable} />
+          {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
+            detailData?.nature === NatureOfDepositProduct.Saving) && (
+            <DetailsCard title="Ladder Rate " hasTable>
+              <ProductLadderRate ladderRate={detailData?.ladderRateData} />
+            </DetailsCard>
+          )}
 
-              {(detailData?.nature === NatureOfDepositProduct.Current ||
-                detailData?.nature === NatureOfDepositProduct.Saving) && (
-                <ProductServiceTable serviceList={detailData?.savingCharges ?? []} />
-              )}
-            </Box>
-          </DetailsCard>
+          {(detailData?.nature === NatureOfDepositProduct.Current ||
+            detailData?.nature === NatureOfDepositProduct.TermSavingOrFd) && (
+            <DetailsCard title="Features " hasTable>
+              <ProductFeatures features={currentTermSavingFeatureTable} />
+            </DetailsCard>
+          )}
+
+          {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
+            detailData?.nature === NatureOfDepositProduct.Saving) && (
+            <DetailsCard title="Features " hasTable>
+              <ProductFeatures features={savingRecurringFeatureTable} />
+            </DetailsCard>
+          )}
+
+          {(detailData?.nature === NatureOfDepositProduct.Current ||
+            detailData?.nature === NatureOfDepositProduct.Saving) && (
+            <DetailsCard title="Others Details" hasTable>
+              <ProductServiceTable serviceList={detailData?.savingCharges ?? []} />
+            </DetailsCard>
+          )}
           {/* <TextAreaInput name="note" label="note" /> */}
         </Box>
       </Box>

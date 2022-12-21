@@ -8,27 +8,23 @@ interface ProductTenureProps {
   minTenure: number | undefined | null;
 }
 
-export const ProductTenure = ({ tenureUnit, maxTenure, minTenure }: ProductTenureProps) => {
-  if (!maxTenure && !minTenure) return null;
-
-  return (
-    <DetailsCard title="Tenure">
-      <Box px="s16" fontSize="r1" textTransform="capitalize">
-        <ul>
-          <li>
-            Minimum Tenure: &nbsp;
-            <b>
-              {minTenure} {tenureUnit?.toLowerCase()}
-            </b>
-          </li>
-          <li>
-            Maximum Tenure: &nbsp;
-            <b>
-              {maxTenure} {tenureUnit?.toLowerCase()}
-            </b>
-          </li>
-        </ul>
-      </Box>
-    </DetailsCard>
-  );
-};
+export const ProductTenure = ({ tenureUnit, maxTenure, minTenure }: ProductTenureProps) => (
+  <DetailsCard title="Tenure">
+    <Box px="s16" fontSize="r1" textTransform="capitalize">
+      <ul>
+        <li>
+          Minimum Tenure: &nbsp;
+          <b>
+            {minTenure} {tenureUnit?.toLowerCase()}
+          </b>
+        </li>
+        <li>
+          Maximum Tenure: &nbsp;
+          <b>
+            {maxTenure} {tenureUnit?.toLowerCase()}
+          </b>
+        </li>
+      </ul>
+    </Box>
+  </DetailsCard>
+);

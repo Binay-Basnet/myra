@@ -12,21 +12,28 @@ interface IProductLoanProcessingCharge {
 export const ProductLoanProcessingCharge = ({
   loanProcessingCharge,
 }: IProductLoanProcessingCharge) => {
-  const columns = useMemo<Column<ServiceTypeFormState>[]>(
+  const loanProcessingChargeListWithIndex =
+    loanProcessingCharge?.map((loanProcess, index) => ({
+      index: index + 1,
+      ...loanProcess,
+    })) ?? [];
+
+  const columns = useMemo<Column<typeof loanProcessingChargeListWithIndex[0]>[]>(
     () => [
+      {
+        header: 'SN',
+        accessorKey: 'index',
+      },
       {
         header: 'Service Name',
         accessorKey: 'serviceName',
         meta: {
-          width: '33%',
+          width: '80%',
         },
       },
       {
         header: 'Ledger Name',
         accessorKey: 'ledgerName',
-        meta: {
-          width: '33%',
-        },
       },
       {
         header: 'Amount',
@@ -34,18 +41,20 @@ export const ProductLoanProcessingCharge = ({
         cell: (props) => amountConverter(props.getValue() as string),
         meta: {
           isNumeric: true,
-          width: '33%',
         },
       },
     ],
     []
   );
 
-  if (loanProcessingCharge?.length === 0) return null;
-
   return (
     <DetailsCard title="Loan Processing Charge" hasTable>
-      <Table isStatic data={loanProcessingCharge ?? []} columns={columns} />
+      <Table
+        isDetailPageTable
+        isStatic
+        data={loanProcessingChargeListWithIndex ?? []}
+        columns={columns}
+      />
     </DetailsCard>
   );
 };

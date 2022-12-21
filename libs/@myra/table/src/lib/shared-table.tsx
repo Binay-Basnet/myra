@@ -31,6 +31,7 @@ export const Table = <T extends Record<string, unknown>>({
   data,
   pagination,
   isStatic = false,
+  isDetailPageTable = false,
   searchPlaceholder,
   size = 'default',
   isLoading,
@@ -105,6 +106,7 @@ export const Table = <T extends Record<string, unknown>>({
               <Tr key={headerGroup.id}>
                 {headerGroup.headers.map((header, index) => (
                   <Th
+                    bg={isDetailPageTable ? 'highlight.500' : 'gray.0'}
                     key={header.id}
                     colSpan={header.colSpan}
                     isNumeric={header.column.columnDef.meta?.isNumeric}

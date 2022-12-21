@@ -43,11 +43,9 @@ export const ProductWithdrawPenalty = ({ penaltyData }: IProductWithdrawPenalty)
     []
   );
 
-  if (!penaltyData || Object.keys(penaltyData).length === 0) return null;
-
   return (
-    <DetailsCard title="Premature Penalty Setup" hasTable>
-      <Table isStatic data={penaltyDataArray} columns={columns} />
+    <DetailsCard title="Withdraw Penalty Setup" hasTable>
+      <Table isDetailPageTable isStatic data={penaltyDataArray} columns={columns} />
     </DetailsCard>
   );
 };
