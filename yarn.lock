@@ -4364,18 +4364,10 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
-"@popperjs/core@^2.9.2", "@popperjs/core@^2.9.3":
+"@popperjs/core@^2.9.3":
   version "2.11.6"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.6.tgz#cee20bd55e68a1720bdab363ecf0c821ded4cd45"
   integrity sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
-
-"@raralabs/react-patro@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@raralabs/react-patro/-/react-patro-1.0.1.tgz#8bc5ba08e30c18bec6c69430c71baae92613108d"
-  integrity sha512-8nEQztOj1/rOCZoY1r0Srp8Nm1ZYvSwfsc4XZj7792Jz42cIVBIGzjvy8o980iAKn5W+Vaw6giIrpzg0UqFLpA==
-  dependencies:
-    "@popperjs/core" "^2.9.2"
-    date-fns "^2.22.1"
 
 "@raralabs/web-feedback@^2.0.4":
   version "2.0.4"
@@ -10888,7 +10880,7 @@ dataloader@2.1.0:
   resolved "https://registry.yarnpkg.com/dataloader/-/dataloader-2.1.0.tgz#c69c538235e85e7ac6c6c444bae8ecabf5de9df7"
   integrity sha512-qTcEYLen3r7ojZNgVUaRggOI+KM7jrKxXeSHhogh/TWxYMeONEMqY+hmkobiYQozsGIyg9OYVzO4ZIfoB4I0pQ==
 
-date-fns@^2.22.1, date-fns@^2.28.0, date-fns@^2.29.1:
+date-fns@^2.28.0, date-fns@^2.29.1:
   version "2.29.2"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.2.tgz#0d4b3d0f3dff0f920820a070920f0d9662c51931"
   integrity sha512-0VNbwmWJDS/G3ySwFSJA3ayhbURMTJLtwM2DTxf9CWondCnh6DTNlO9JgRSq6ibf4eD0lfMJNBxUdEAHHix+bA==

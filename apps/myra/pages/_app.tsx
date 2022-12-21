@@ -13,8 +13,7 @@ import { theme } from '@myra-ui/theme';
 
 import { store, useInit } from '@coop/cbs/data-access';
 
-import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
-import '@raralabs/react-patro/src/styles.css';
+import '@raralabs/web-feedback/dist/css/style.css';
 import './app.css';
 
 const { ToastContainer } = createStandaloneToast();
