@@ -4,7 +4,11 @@ import { AddIcon } from '@chakra-ui/icons';
 
 import { Button, Column, DetailsCard, Table, Text } from '@myra-ui';
 
-import { useAccountDetails, useGetAccountTransactionList } from '@coop/cbs/data-access';
+import {
+  EbankingTransactionDirection,
+  useAccountDetails,
+  useGetAccountTransactionList,
+} from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 import { TabHeader } from '../details';
@@ -38,7 +42,7 @@ export const Transactions = () => {
       },
       {
         header: 'Transaction ID',
-        accessorKey: 'accountId',
+        accessorKey: 'id',
         cell: (props) =>
           props.getValue() ? (
             <Text fontWeight="500" fontSize="r1" color="primary.500">
@@ -52,51 +56,37 @@ export const Transactions = () => {
         header: 'Type',
         accessorKey: 'transactionDirection',
         cell: (props) =>
-          props.getValue() ? `${(props.getValue() as string).toLowerCase()}` : 'N/A',
+          props.getValue() ? (
+            <Text fontWeight="Medium" fontSize="s3" lineHeight="17px">
+              {props.getValue() as string}
+            </Text>
+          ) : (
+            'N/A'
+          ),
       },
 
       {
         header: 'Account / Particulars',
-        accessorKey: 'currentBalance',
+        accessorKey: 'name',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
         meta: {
           width: '33%',
         },
       },
       {
-        header: 'Amount',
+        header: 'Total',
         accessorKey: 'amount',
         cell: (props) =>
-          props.getValue() ? `${amountConverter(props.getValue() as string)}` : '-',
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-      {
-        header: 'Fine',
-        accessorKey: 'currentBalance',
-        cell: (props) => (props.getValue() ? `${props.getValue()}` : '-'),
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-      {
-        header: 'Rebate',
-        accessorKey: 'currentBalance',
-        cell: (props) => (props.getValue() ? `${props.getValue()}` : '-'),
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-      {
-        header: 'Total',
-        accessorKey: 'currentBalance',
-        cell: (props) =>
           props.getValue() ? (
-            <Text fontWeight="500" fontSize="r1" color="primary.500">
+            <Text
+              fontWeight="500"
+              fontSize="r1"
+              color={
+                props.row?.original?.transactionDirection === EbankingTransactionDirection.Incoming
+                  ? 'primary.500'
+                  : 'danger.500'
+              }
+            >
               {amountConverter(props.getValue() as string)}
             </Text>
           ) : (
@@ -110,8 +100,6 @@ export const Transactions = () => {
     ],
     []
   );
-
-  if (!transactionListWithIndex || Object.keys(transactionListWithIndex).length === 0) return null;
 
   return (
     <>
@@ -144,7 +132,7 @@ export const Transactions = () => {
         //   </Button>
         // }
       >
-        <Table isStatic data={transactionListWithIndex} columns={columns} />
+        <Table isDetailPageTable isStatic data={transactionListWithIndex} columns={columns} />
         {/* {transactionList?.map((item) => item && <TransactionCard transactionItem={item} />)} */}
       </DetailsCard>
     </>

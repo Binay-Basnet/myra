@@ -14282,6 +14282,15 @@ export type SetTellerTransferDataMutationVariables = Exact<{
 
 export type SetTellerTransferDataMutation = { transaction: { tellerTransfer: { record?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
 
+export type SetTellerTransferActionMutationVariables = Exact<{
+  requestId: Scalars['ID'];
+  action: TransferRequestAction;
+  declineReason?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type SetTellerTransferActionMutation = { transaction: { tellerTransferAction: { record?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
@@ -15468,6 +15477,14 @@ export type GetCoaAccountsUnderLeafListQueryVariables = Exact<{
 
 export type GetCoaAccountsUnderLeafListQuery = { settings: { chartsOfAccount?: { accountsUnderLeaf?: Array<{ accountId?: string | null, name?: string | null } | null> | null } | null } };
 
+export type GetCoaAccountListQueryVariables = Exact<{
+  branchId?: InputMaybe<Scalars['String']>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+
+export type GetCoaAccountListQuery = { settings: { chartsOfAccount?: { coaAccountList?: { edges?: Array<{ node?: { accountCode?: string | null, accountName?: Record<"local"|"en"|"np",string> | null, accountClass?: string | null, parentGroup?: Record<"local"|"en"|"np",string> | null } | null } | null> | null } | null } | null } };
+
 export type ListCbsShareCodesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -15770,7 +15787,7 @@ export type GetTellerTransactionListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetTellerTransactionListDataQuery = { transaction: { listTellerTransaction: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, transferType: TellerTransferType, srcTeller?: Record<"local"|"en"|"np",string> | null, amount?: string | null, destTeller?: Record<"local"|"en"|"np",string> | null, date?: string | null, srcProfilePic?: string | null, destProfilePic?: string | null, srcProfilePicUrl?: string | null, destProfilePicUrl?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetTellerTransactionListDataQuery = { transaction: { listTellerTransaction: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, transferType: TellerTransferType, transferState: TellerActivityState, srcTeller?: Record<"local"|"en"|"np",string> | null, amount?: string | null, destTeller?: Record<"local"|"en"|"np",string> | null, date?: string | null, srcProfilePic?: string | null, destProfilePic?: string | null, srcProfilePicUrl?: string | null, destProfilePicUrl?: string | null, denomination?: Array<{ value: CashValue, quantity: number, amount?: string | null } | null> | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type TransactionDepositDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
@@ -18994,6 +19011,31 @@ export const useSetTellerTransferDataMutation = <
     useMutation<SetTellerTransferDataMutation, TError, SetTellerTransferDataMutationVariables, TContext>(
       ['setTellerTransferData'],
       useAxios<SetTellerTransferDataMutation, SetTellerTransferDataMutationVariables>(SetTellerTransferDataDocument),
+      options
+    );
+export const SetTellerTransferActionDocument = `
+    mutation setTellerTransferAction($requestId: ID!, $action: TransferRequestAction!, $declineReason: String) {
+  transaction {
+    tellerTransferAction(
+      requestId: $requestId
+      action: $action
+      declineReason: $declineReason
+    ) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTellerTransferActionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetTellerTransferActionMutation, TError, SetTellerTransferActionMutationVariables, TContext>) =>
+    useMutation<SetTellerTransferActionMutation, TError, SetTellerTransferActionMutationVariables, TContext>(
+      ['setTellerTransferAction'],
+      useAxios<SetTellerTransferActionMutation, SetTellerTransferActionMutationVariables>(SetTellerTransferActionDocument),
       options
     );
 export const GetAccountMemberListDocument = `
@@ -26760,6 +26802,36 @@ export const useGetCoaAccountsUnderLeafListQuery = <
       useAxios<GetCoaAccountsUnderLeafListQuery, GetCoaAccountsUnderLeafListQueryVariables>(GetCoaAccountsUnderLeafListDocument).bind(null, variables),
       options
     );
+export const GetCoaAccountListDocument = `
+    query getCoaAccountList($branchId: String, $pagination: Pagination) {
+  settings {
+    chartsOfAccount {
+      coaAccountList(branchId: $branchId, pagination: $pagination) {
+        edges {
+          node {
+            accountCode
+            accountName
+            accountClass
+            parentGroup
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoaAccountListQuery = <
+      TData = GetCoaAccountListQuery,
+      TError = unknown
+    >(
+      variables?: GetCoaAccountListQueryVariables,
+      options?: UseQueryOptions<GetCoaAccountListQuery, TError, TData>
+    ) =>
+    useQuery<GetCoaAccountListQuery, TError, TData>(
+      variables === undefined ? ['getCoaAccountList'] : ['getCoaAccountList', variables],
+      useAxios<GetCoaAccountListQuery, GetCoaAccountListQueryVariables>(GetCoaAccountListDocument).bind(null, variables),
+      options
+    );
 export const ListCbsShareCodesDocument = `
     query listCBSShareCodes {
   settings {
@@ -29085,6 +29157,7 @@ export const GetTellerTransactionListDataDocument = `
         node {
           ID
           transferType
+          transferState
           srcTeller
           amount
           destTeller
@@ -29093,6 +29166,11 @@ export const GetTellerTransactionListDataDocument = `
           destProfilePic
           srcProfilePicUrl
           destProfilePicUrl
+          denomination {
+            value
+            quantity
+            amount
+          }
         }
         cursor
       }

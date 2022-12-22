@@ -44,7 +44,13 @@ export const RecentTransactions = () => {
         header: 'Type',
         accessorKey: 'txnType',
         cell: (props) =>
-          props.getValue() ? `${(props.getValue() as string).toLowerCase()}` : 'N/A',
+          props.getValue() ? (
+            <Text fontWeight="Medium" fontSize="s3" lineHeight="17px">
+              {props.getValue() as string}
+            </Text>
+          ) : (
+            'N/A'
+          ),
       },
 
       {
@@ -59,50 +65,21 @@ export const RecentTransactions = () => {
         header: 'Amount',
         accessorKey: 'amount',
         cell: (props) =>
-          props.getValue() ? `${amountConverter(props.getValue() as string)}` : 'N/A',
+          props.table ? (
+            <Text fontWeight="Medium" fontSize="r1" lineHeight="17px" color="primary.500">
+              {amountConverter(props.getValue() as string)}
+            </Text>
+          ) : (
+            'N/A'
+          ),
         meta: {
           isNumeric: true,
           width: '33%',
         },
       },
-      // {
-      //   header: 'Fine',
-      //   accessorKey: 'noOfShares',
-      //   cell: (props) => (props.getValue() ? `${props.getValue()}` : '-'),
-      //   meta: {
-      //     isNumeric: true,
-      //     width: '33%',
-      //   },
-      // },
-      // {
-      //   header: 'Rebate',
-      //   accessorKey: 'noOfShares',
-      //   cell: (props) => (props.getValue() ? `${props.getValue()}` : '-'),
-      //   meta: {
-      //     isNumeric: true,
-      //     width: '33%',
-      //   },
-      // },
-      // {
-      //   header: 'Total',
-      //   accessorKey: 'noOfShares',
-      //   cell: (props) =>
-      //     props.getValue() ? (
-      //       <Text color="primary.500">{amountConverter(props.getValue() as string)}</Text>
-      //     ) : (
-      //       'N/A'
-      //     ),
-      //   meta: {
-      //     isNumeric: true,
-      //     width: '33%',
-      //   },
-      // },
     ],
     []
   );
-
-  if (!memberRecentTransWithIndex || Object.keys(memberRecentTransWithIndex).length === 0)
-    return null;
 
   return (
     <DetailsCard
@@ -117,75 +94,7 @@ export const RecentTransactions = () => {
         </Button>
       }
     >
-      <Table isStatic data={memberRecentTransWithIndex} columns={columns} />
+      <Table isDetailPageTable isStatic data={memberRecentTransWithIndex} columns={columns} />
     </DetailsCard>
-    // <Box p="s16" bg="white" borderRadius="br2">
-    //   <Box display="flex" justifyContent="space-between" alignItems="center" h="50px">
-    //     <Text fontWeight="600" fontSize="r1">
-    //       Recent Transactions{' '}
-    //     </Text>
-    //   </Box>
-    //   {memberRecentTrans && (
-    //     <Box>
-    //       {memberRecentTrans?.slice(0, 10).map((items) => (
-    //         <Box
-    //           h="80px"
-    //           display="flex"
-    //           justifyContent="space-between"
-    //           borderBottom="1px solid"
-    //           alignItems="center"
-    //           borderBottomColor="border.layout"
-    //           key={`${items?.date}${items?.title}${items?.amount}`}
-    //         >
-    //           <Box display="flex" flexDirection="column" gap="s4">
-    //             <Text fontSize="s3" fontWeight="500">
-    //               {items?.title}
-    //             </Text>
-    //             <Text fontSize="s3" fontWeight="400">
-    //               {items?.date}
-    //             </Text>
-    //           </Box>
-    //           <Box>
-    //             <Box
-    //               display="flex"
-    //               justifyContent="flex-start"
-    //               color={
-    //                 items?.txnType === MemberRecentTransactionViewTxnType?.Debit
-    //                   ? 'danger.500'
-    //                   : 'primary.500'
-    //               }
-    //             >
-    //               <Text fontSize="s3" fontWeight="400">
-    //                 {items?.txnType === MemberRecentTransactionViewTxnType?.Debit ? '-' : '+'}
-    //               </Text>
-    //               <Text fontSize="s3" fontWeight="400">
-    //                 {' '}
-    //                 {amountConverter(items?.amount as string)}
-    //               </Text>
-    //             </Box>
-    //             {items?.noOfShares && (
-    //               <Box>
-    //                 <Tags
-    //                   label={String(items?.noOfShares as unknown)}
-    //                   type="chip"
-    //                   bg={
-    //                     items?.txnType === MemberRecentTransactionViewTxnType?.Debit
-    //                       ? 'danger.100'
-    //                       : 'primary.100'
-    //                   }
-    //                   labelColor={
-    //                     items?.txnType === MemberRecentTransactionViewTxnType?.Debit
-    //                       ? 'danger.500'
-    //                       : 'primary.500'
-    //                   }
-    //                 />
-    //               </Box>
-    //             )}
-    //           </Box>
-    //         </Box>
-    //       ))}
-    //     </Box>
-    //   )}
-    // </Box>
   );
 };

@@ -54,7 +54,14 @@ export const InstallmentDetails = ({ data }: InstallmentDetailsProps) => {
   );
   return (
     <DetailsCard title={t['transDetailInstallmentDetails']} hasTable>
-      <Table showFooter isStatic isLoading={false} data={rowData ?? []} columns={columns} />
+      <Table
+        isDetailPageTable
+        showFooter
+        isStatic
+        isLoading={false}
+        data={rowData ?? []}
+        columns={columns}
+      />
     </DetailsCard>
   );
 };

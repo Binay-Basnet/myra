@@ -74,3 +74,18 @@ mutation setTellerTransferData($data: TellerTransferInput!) {
     }
   }
 }
+
+mutation setTellerTransferAction(
+  $requestId: ID!
+  $action: TransferRequestAction!
+  $declineReason: String
+) {
+  transaction {
+    tellerTransferAction(requestId: $requestId, action: $action, declineReason: $declineReason) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
