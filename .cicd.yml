@@ -403,10 +403,10 @@ steps:
   - npx nx run myra:build:production
 
 - name: Breakpoint
-  image: ubuntu
+  image: docker:dind
   volumes:
   - name: myra-app
-    path: /drone/src/apps/myra
+    path: /drone/src/apps/myra/dist
   - name: docker-sock
     path: /var/run/docker.sock
   commands:
