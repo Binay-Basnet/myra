@@ -40,8 +40,7 @@ export const MemberListPage = () => {
 
   const router = useRouter();
   const searchTerm = router?.query['search'] as string;
-  const isDraft = router?.query['objState'] === 'DRAFT';
-  const isSubmitted = router?.query['objState'] === 'VALIDATED';
+  const objState = router?.query['objState'];
 
   const { data, isFetching, refetch } = useGetMemberListQuery(
     {
@@ -71,8 +70,9 @@ export const MemberListPage = () => {
     () => [
       {
         id: 'id',
-        header: isDraft ? t['memberListTableMemberId'] : t['memberListTableMemberCode'],
-        accessorFn: (row) => (isDraft ? row?.node?.id : row?.node?.code),
+        header:
+          objState === 'DRAFT' ? t['memberListTableMemberId'] : t['memberListTableMemberCode'],
+        accessorFn: (row) => (objState === 'DRAFT' ? row?.node?.id : row?.node?.code),
         // enableSorting: true,
       },
       {
@@ -124,9 +124,12 @@ export const MemberListPage = () => {
         },
       },
       {
-        header: isDraft || isSubmitted ? t['memberListDateJoined'] : t['memberListActiveDate'],
+        header:
+          objState === 'DRAFT' || objState === 'VALIDATED'
+            ? t['memberListDateJoined']
+            : t['memberListActiveDate'],
         accessorFn: (row) =>
-          isDraft || isSubmitted
+          objState === 'DRAFT' || objState === 'VALIDATED'
             ? row?.node?.dateJoined?.split(' ')[0]
             : row?.node?.activeDate?.split(' ')[0] ?? 'N/A',
         meta: {
@@ -142,12 +145,8 @@ export const MemberListPage = () => {
             <TablePopover
               node={cell.row.original?.node}
               items={
-                isDraft
+                objState === 'DRAFT'
                   ? [
-                      {
-                        title: t['memberListTableViewMemberProfile'],
-                        onClick: (node) => router.push(`/members/details?id=${node?.id}`),
-                      },
                       {
                         title: t['memberListTableEditMember'],
                         onClick: (node) => {
@@ -168,8 +167,10 @@ export const MemberListPage = () => {
                     ]
                   : [
                       {
-                        title: t['memberListTableViewMemberProfile'],
-                        onClick: (node) => router.push(`/members/details?id=${node?.id}`),
+                        title: objState !== 'VALIDATED' && t['memberListTableViewMemberProfile'],
+                        onClick: (node) =>
+                          objState !== 'VALIDATED' &&
+                          router.push(`/members/details?id=${node?.id}`),
                       },
                       {
                         title: t['memberListTableEditMember'],
@@ -182,11 +183,12 @@ export const MemberListPage = () => {
                         },
                       },
                       {
-                        title: isSubmitted
-                          ? t['memberListTableMakeActive']
-                          : t['memberListTableMakeInactive'],
+                        title:
+                          objState === 'VALIDATED'
+                            ? t['memberListTableMakeActive']
+                            : t['memberListTableMakeInactive'],
                         onClick: (node) => {
-                          isSubmitted
+                          objState === 'VALIDATED'
                             ? router.push(`/members/activation/${node?.id}`)
                             : router.push(`/members/inactivation/${node?.id}`);
                         },
@@ -200,7 +202,7 @@ export const MemberListPage = () => {
         },
       },
     ],
-    [t, isDraft, isSubmitted]
+    [t, objState]
   );
 
   const deleteMember = useCallback(async () => {
@@ -234,7 +236,9 @@ export const MemberListPage = () => {
         getRowId={(row) => String(row?.node?.id)}
         rowOnClick={(row) => {
           queryClient.invalidateQueries(['getMemberDetailsOverview']);
-          router.push(`/members/details?id=${row?.node?.id}`);
+          if (objState !== 'VALIDATED' && objState !== 'DRAFT') {
+            router.push(`/members/details?id=${row?.node?.id}`);
+          }
         }}
         isLoading={isFetching}
         noDataTitle={t['member']}
