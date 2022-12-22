@@ -55,5 +55,13 @@ export const ShareTableComponent = ({ data }: ILoanPaymentScheduleTableProps) =>
     []
   );
 
-  return <Table<typeof data[0]> size="report" isStatic data={data ?? []} columns={columns} />;
+  return (
+    <Table<typeof data[0]>
+      size="report"
+      isStatic
+      data={data ?? []}
+      isDetailPageTable
+      columns={columns}
+    />
+  );
 };

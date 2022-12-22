@@ -75,7 +75,5 @@ export const LoanPaymentScheduleTable = ({
     []
   );
 
-  return (
-    <Table variant="report" size="report" isStatic showFooter data={data ?? []} columns={columns} />
-  );
+  return <Table isDetailPageTable isStatic showFooter data={data ?? []} columns={columns} />;
 };

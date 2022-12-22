@@ -1,13 +1,10 @@
 import { useMemo } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, TablePopover } from '@myra-ui';
+import { TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { CoaView, useDeleteCoaMutation, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
-import { useTranslation } from '@coop/shared/utils';
-
-import { arrayToTreeCOA, getArrLeafNodes } from '../../utils/arrayToTree';
+import { useAppSelector, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const accountClass = {
   EQUITY_AND_LIABILITIES: 'Equity and Liabilities',
@@ -18,112 +15,33 @@ const accountClass = {
 
 export const COAListView = () => {
   const { t } = useTranslation();
+  const branch = useAppSelector((state) => state?.auth?.user?.branch);
 
-  const queryClient = useQueryClient();
-  const { mutateAsync: deleteCOA } = useDeleteCoaMutation();
+  const { data: accountList, isFetching } = useGetCoaAccountListQuery({
+    branchId: branch?.id,
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  });
 
-  const { data: fullView, isFetching } = useGetCoaFullViewQuery();
+  const accountListData = accountList?.settings?.chartsOfAccount?.coaAccountList?.edges;
 
-  const coaLiabilitiesFullView = useMemo(
-    () =>
-      fullView?.settings?.chartsOfAccount?.fullView.data
-        ?.filter((account) => account?.accountClass === 'EQUITY_AND_LIABILITIES')
-        .sort((a, b) =>
-          Number(
-            a?.accountCode?.localeCompare(b?.accountCode as string, undefined, {
-              numeric: true,
-              sensitivity: 'base',
-            })
-          )
-        ) ?? [],
-    [isFetching]
-  );
-
-  const coaLiabilitiesTree = useMemo(
-    () => arrayToTreeCOA(coaLiabilitiesFullView as CoaView[]),
-    [coaLiabilitiesFullView.length]
-  );
-
-  const coaLiablilitesLeafs = getArrLeafNodes(coaLiabilitiesTree);
-
-  const coaAssetsFullView = useMemo(
-    () =>
-      fullView?.settings?.chartsOfAccount?.fullView.data
-        ?.filter((account) => account?.accountClass === 'ASSETS')
-        .sort((a, b) =>
-          Number(
-            a?.accountCode?.localeCompare(b?.accountCode as string, undefined, {
-              numeric: true,
-              sensitivity: 'base',
-            })
-          )
-        ) ?? [],
-
-    [isFetching]
-  );
-
-  const coaAssetsTree = useMemo(
-    () => arrayToTreeCOA(coaAssetsFullView as CoaView[]),
-    [coaAssetsFullView.length]
-  );
-
-  const coaAssetsLeafs = getArrLeafNodes(coaAssetsTree);
-
-  const coaExpenditureFullView = useMemo(
-    () =>
-      fullView?.settings?.chartsOfAccount?.fullView.data
-        ?.filter((account) => account?.accountClass === 'EXPENDITURE')
-        .sort((a, b) => (String(a?.accountCode) > String(b?.accountCode) ? 1 : -1)) ?? [],
-
-    [isFetching]
-  );
-
-  const coaExpenditureTree = useMemo(
-    () => arrayToTreeCOA(coaExpenditureFullView as CoaView[]),
-    [coaExpenditureFullView.length]
-  );
-
-  const coaExpenditureLeafs = getArrLeafNodes(coaExpenditureTree);
-
-  const coaIncomeFullView = useMemo(
-    () =>
-      fullView?.settings?.chartsOfAccount?.fullView.data
-        ?.filter((account) => account?.accountClass === 'INCOME')
-        .sort((a, b) => (String(a?.accountCode) > String(b?.accountCode) ? 1 : -1)) ?? [],
-
-    [isFetching]
-  );
-
-  const coaIncomeTree = useMemo(
-    () => arrayToTreeCOA(coaIncomeFullView as CoaView[]),
-    [coaIncomeFullView.length]
-  );
-
-  const coaIncomeLeafs = getArrLeafNodes(coaIncomeTree);
-
-  const rowData = [
-    ...coaLiablilitesLeafs,
-    ...coaAssetsLeafs,
-    ...coaExpenditureLeafs,
-    ...coaIncomeLeafs,
-  ];
+  const rowData = useMemo(() => accountListData ?? [], [accountListData]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         header: t['settingsCoaTableAccountCode'],
-        accessorFn: (row) => row?.accountCode,
+        accessorFn: (row) => row?.node?.accountCode,
       },
       {
         header: t['settingsCoaTableAccountName'],
-        accessorFn: (row) => row?.name?.en,
+        accessorFn: (row) => row?.node?.accountName?.local,
         meta: {
           width: '50%',
         },
       },
       {
         header: t['settingsCoaTableAccountClass'],
-        accessorFn: (row) => row?.accountClass,
+        accessorFn: (row) => row?.node?.accountClass,
         cell: (props) => (
           <span>
             {props.getValue()
@@ -138,10 +56,7 @@ export const COAListView = () => {
 
       {
         header: t['settingsCoaTableAccountParentGroup'],
-        accessorFn: (row) =>
-          fullView?.settings?.chartsOfAccount?.fullView.data?.find(
-            (account) => account?.id === row?.under
-          )?.name?.local,
+        accessorFn: (row) => row?.node?.parentGroup?.local,
         meta: {
           width: '200px',
         },
@@ -155,28 +70,7 @@ export const COAListView = () => {
           width: '60px',
         },
         cell: (props) =>
-          props?.row?.original?.category === 'USER_DEFINED' ? (
-            <TablePopover
-              items={[
-                { title: 'View Details' },
-                { title: 'Edit Account' },
-                {
-                  title: 'Delete Account',
-                  onClick: async (node) =>
-                    asyncToast({
-                      id: 'delete-coa',
-                      msgs: {
-                        loading: 'Deleting',
-                        success: 'Deleted Successfully',
-                      },
-                      promise: deleteCOA({ id: node?.id as string }),
-                      onSuccess: () => queryClient.invalidateQueries(['getCoaFullView']),
-                    }),
-                },
-              ]}
-              node={props.row.original}
-            />
-          ) : (
+          props?.row && (
             <TablePopover
               items={[{ title: 'View Details' }, { title: 'Edit Account' }]}
               node={props.row.original}

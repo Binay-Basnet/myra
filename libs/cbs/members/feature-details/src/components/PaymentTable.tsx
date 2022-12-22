@@ -73,5 +73,5 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
     []
   );
 
-  return <Table<typeof data[0]> isStatic data={data ?? []} columns={columns} />;
+  return <Table<typeof data[0]> isStatic data={data ?? []} isDetailPageTable columns={columns} />;
 };

@@ -15477,6 +15477,14 @@ export type GetCoaAccountsUnderLeafListQueryVariables = Exact<{
 
 export type GetCoaAccountsUnderLeafListQuery = { settings: { chartsOfAccount?: { accountsUnderLeaf?: Array<{ accountId?: string | null, name?: string | null } | null> | null } | null } };
 
+export type GetCoaAccountListQueryVariables = Exact<{
+  branchId?: InputMaybe<Scalars['String']>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+
+export type GetCoaAccountListQuery = { settings: { chartsOfAccount?: { coaAccountList?: { edges?: Array<{ node?: { accountCode?: string | null, accountName?: Record<"local"|"en"|"np",string> | null, accountClass?: string | null, parentGroup?: Record<"local"|"en"|"np",string> | null } | null } | null> | null } | null } | null } };
+
 export type ListCbsShareCodesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -26792,6 +26800,36 @@ export const useGetCoaAccountsUnderLeafListQuery = <
     useQuery<GetCoaAccountsUnderLeafListQuery, TError, TData>(
       ['getCOAAccountsUnderLeafList', variables],
       useAxios<GetCoaAccountsUnderLeafListQuery, GetCoaAccountsUnderLeafListQueryVariables>(GetCoaAccountsUnderLeafListDocument).bind(null, variables),
+      options
+    );
+export const GetCoaAccountListDocument = `
+    query getCoaAccountList($branchId: String, $pagination: Pagination) {
+  settings {
+    chartsOfAccount {
+      coaAccountList(branchId: $branchId, pagination: $pagination) {
+        edges {
+          node {
+            accountCode
+            accountName
+            accountClass
+            parentGroup
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoaAccountListQuery = <
+      TData = GetCoaAccountListQuery,
+      TError = unknown
+    >(
+      variables?: GetCoaAccountListQueryVariables,
+      options?: UseQueryOptions<GetCoaAccountListQuery, TError, TData>
+    ) =>
+    useQuery<GetCoaAccountListQuery, TError, TData>(
+      variables === undefined ? ['getCoaAccountList'] : ['getCoaAccountList', variables],
+      useAxios<GetCoaAccountListQuery, GetCoaAccountListQueryVariables>(GetCoaAccountListDocument).bind(null, variables),
       options
     );
 export const ListCbsShareCodesDocument = `

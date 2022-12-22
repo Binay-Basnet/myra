@@ -49,8 +49,8 @@ export const JournalVoucerDetailPage = () => {
         <TransactionDetails detailData={detailData} />
         <GlTransaction
           data={voucherData?.glTransaction}
-          totalDebit={voucherData?.totalDebit}
-          totalCredit={voucherData?.totalCredit}
+          totalDebit={voucherData?.totalDebit ?? '-'}
+          totalCredit={voucherData?.totalCredit ?? '-'}
         />
       </Box>
     </>
