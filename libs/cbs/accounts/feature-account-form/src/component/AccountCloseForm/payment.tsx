@@ -3,12 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Box, Grid, GridItem, Text } from '@myra-ui';
 
-import {
-  AccountClosePaymentMode,
-  ObjState,
-  RootState,
-  useAppSelector,
-} from '@coop/cbs/data-access';
+import { AccountClosePaymentMode, ObjState } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
   FormAccountSelect,
@@ -61,7 +56,7 @@ type PaymentTableType = {
 };
 
 export const Payment = ({ totalDeposit }: PaymentProps) => {
-  const { watch, resetField, setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   const selectedPaymentMode = watch('paymentMode');
 
@@ -84,13 +79,6 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
     selectedPaymentMode === AccountClosePaymentMode.Cash
       ? totalCashPaid - Math.floor(totalDeposit)
       : totalCashPaid - totalDeposit;
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    resetField('accountTransfer.depositedDate');
-  }, [preference?.date]);
 
   useEffect(() => {
     setValue('accountTransfer.amount', String(totalDeposit));

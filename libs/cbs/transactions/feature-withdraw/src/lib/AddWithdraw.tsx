@@ -16,6 +16,7 @@ import {
   Text,
 } from '@myra-ui';
 
+import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   CashValue,
   NatureOfDepositProduct,
@@ -30,7 +31,6 @@ import {
   WithdrawWith,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
-import { SuspiciousTransaction } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAmountInput,

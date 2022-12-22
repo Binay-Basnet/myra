@@ -55,6 +55,7 @@
     "lottie-react": "^2.3.1",
     "nepali-date-converter": "^3.3.1",
     "next": "13.0.0",
+    "postcss-loader": "^7.0.2",
     "qrcode.react": "^3.1.0",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.0",
@@ -74,7 +75,6 @@
     "regenerator-runtime": "0.13.7",
     "to-words": "^3.3.0",
     "tslib": "^2.3.0",
-    "yarn": "^1.22.19",
     "yup": "^0.32.11"
   },
   "devDependencies": {

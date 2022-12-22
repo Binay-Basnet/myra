@@ -7,9 +7,7 @@ import { asyncToast, Box, Container, FormFooter, FormHeader, GridItem, Text } fr
 import {
   BranchCategory,
   BranchInput,
-  RootState,
   useAllAdministrationQuery,
-  useAppSelector,
   useGetBranchEditDataQuery,
   useGetCoaListQuery,
   useSetBranchDataMutation,
@@ -25,7 +23,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const methods = useForm<BranchInput>({});
 
-  const { getValues, watch, reset, resetField, setError, clearErrors } = methods;
+  const { getValues, watch, reset, setError, clearErrors } = methods;
 
   const id = String(router?.query?.['id']);
 
@@ -145,19 +143,6 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
       }
     }
   }, [editValues, id]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    if (router.asPath.includes('edit')) {
-      refetch();
-    }
-
-    if (router.asPath.includes('add')) {
-      resetField('estDate');
-    }
-  }, [preference?.date, router?.asPath]);
 
   useEffect(() => {
     if (id) {

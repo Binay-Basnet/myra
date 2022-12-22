@@ -1,8 +1,7 @@
 import { Box, Grid, GridItem, Text } from '@myra-ui';
-import dayjs from 'dayjs';
 
 import { Member, useAppSelector } from '@coop/cbs/data-access';
-import { formatAddress } from '@coop/cbs/utils';
+import { formatAddress, localizedDate } from '@coop/cbs/utils';
 
 interface ReportMemberProps {
   member: Partial<Member> | undefined | null;
@@ -67,7 +66,7 @@ export const ReportMember = ({ member }: ReportMemberProps) => {
                   {member?.code ?? '-'}
                 </Text>
                 <Text fontSize="r1" color="gray.700" fontWeight="500">
-                  {dayjs(member?.dateJoined).format('YYYY-MM-DD')}
+                  {localizedDate(member?.dateJoined)}
                 </Text>
               </Box>
             </GridItem>

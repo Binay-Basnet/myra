@@ -1,17 +1,18 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { Avatar, Box, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { Column, Table } from '@myra-ui/table';
-import { Avatar, Box, Text } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseSupplierPaymentProps {}
 
-export function AccountingFeaturePurchaseSupplierPayment() {
+export const AccountingFeaturePurchaseSupplierPayment = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -46,21 +47,19 @@ export function AccountingFeaturePurchaseSupplierPayment() {
       {
         accessorFn: (row) => row?.node?.name?.local,
         header: t['accountingSupplierPaymentListSupplierName'],
-        cell: (props) => {
-          return (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          );
-        },
+        cell: (props) => (
+          <Box display="flex" alignItems="center" gap="s12">
+            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+            <Text
+              fontSize="s3"
+              textTransform="capitalize"
+              textOverflow="ellipsis"
+              overflow="hidden"
+            >
+              {props.getValue() as string}
+            </Text>
+          </Box>
+        ),
 
         meta: {
           width: '60%',
@@ -75,7 +74,7 @@ export function AccountingFeaturePurchaseSupplierPayment() {
       },
       {
         header: t['accountingSupplierPaymentListDate'],
-        accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => row?.node?.dateJoined?.en,
       },
       {
         id: '_actions',
@@ -112,6 +111,6 @@ export function AccountingFeaturePurchaseSupplierPayment() {
       />
     </>
   );
-}
+};
 
 export default AccountingFeaturePurchaseSupplierPayment;

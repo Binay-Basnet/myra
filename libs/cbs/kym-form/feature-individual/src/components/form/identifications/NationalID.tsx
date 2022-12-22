@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 
+import { Box, FormSection, Text } from '@myra-ui';
+
 import {
   Id_Type,
   KymIndIdentification,
@@ -12,7 +14,6 @@ import {
   useSetKymIndividualIdentificationDataMutation,
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Box, FormSection, Text } from '@myra-ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface INationalIDProps {
@@ -25,7 +26,7 @@ type NationalIdData =
       idNo: string;
       idType: string;
       place: Record<'en' | 'local' | 'np', string>;
-      date: string;
+      date: Record<'en' | 'local' | 'np', string>;
     }[]
   | null
   | undefined;

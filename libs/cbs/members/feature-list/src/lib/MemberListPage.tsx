@@ -11,7 +11,7 @@ import {
   useDeleteDraftMutation,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
-import { formatTableAddress } from '@coop/cbs/utils';
+import { formatTableAddress, localizedDate } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
@@ -130,8 +130,12 @@ export const MemberListPage = () => {
             : t['memberListActiveDate'],
         accessorFn: (row) =>
           objState === 'DRAFT' || objState === 'VALIDATED'
-            ? row?.node?.dateJoined?.split(' ')[0]
-            : row?.node?.activeDate?.split(' ')[0] ?? 'N/A',
+            ? localizedDate(row?.node?.dateJoined)
+            : localizedDate(row?.node?.activeDate),
+        cell: (row) =>
+          objState === 'DRAFT' || objState === 'VALIDATED'
+            ? localizedDate(row?.cell?.row?.original?.node?.dateJoined)
+            : localizedDate(row?.cell?.row?.original?.node?.activeDate),
         meta: {
           width: '100px',
         },
@@ -167,7 +171,8 @@ export const MemberListPage = () => {
                     ]
                   : [
                       {
-                        title: objState !== 'VALIDATED' && t['memberListTableViewMemberProfile'],
+                        title:
+                          objState !== 'VALIDATED' ? t['memberListTableViewMemberProfile'] : '',
                         onClick: (node) =>
                           objState !== 'VALIDATED' &&
                           router.push(`/members/details?id=${node?.id}`),

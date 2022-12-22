@@ -9,7 +9,6 @@ import {
   addInstitutionDirectorError,
   addInstitutionError,
   CoopUnionPersonnelInput,
-  RootState,
   useAppDispatch,
   useAppSelector,
   useGetInsBoardDirectorEditListQuery,
@@ -68,13 +67,6 @@ export const useDirector = ({ methods, directorId }: IUseCoopUnionBodProps) => {
       await refetchEdit();
     },
   });
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetchEdit();
-  }, [preference?.date]);
 
   // Get Back The Initial Data when page reloads or user edits
   useEffect(() => {

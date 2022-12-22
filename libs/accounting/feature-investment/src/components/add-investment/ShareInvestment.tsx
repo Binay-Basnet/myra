@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import { FormSection, GridItem } from '@myra-ui';
 
 import {
   FormAmountInput,
+  FormDatePicker,
   FormInput,
-  FormLocalDatePicker,
   FormNumberInput,
   FormTextArea,
 } from '@coop/shared/form';
@@ -37,7 +38,7 @@ export const ShareInvestment = () => {
 
       <FormInput name="share.certificateNo" label="Share Certificate Number" />
 
-      <FormLocalDatePicker name="share.date" label="Purchase Date" />
+      <FormDatePicker name="share.date" label="Purchase Date" />
 
       <GridItem colSpan={3}>
         <FormTextArea name="share.notes" label="Notes" rows={3} />

@@ -1,11 +1,13 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { Avatar, Box, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
-import { Column, Table } from '@myra-ui/table';
-import { Avatar, Box, Text } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -87,7 +89,7 @@ export const AccountingFeatureQuickPaymentList = () => {
       },
       {
         header: t['accountingQuickPaymentListItemQuantity'],
-        accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.dateJoined),
       },
       {
         id: '_actions',

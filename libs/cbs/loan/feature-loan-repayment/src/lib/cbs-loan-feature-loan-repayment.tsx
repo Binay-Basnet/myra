@@ -18,6 +18,7 @@ import {
   Text,
 } from '@myra-ui';
 
+import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   CashValue,
   LoanInstallment,
@@ -30,7 +31,6 @@ import {
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
-import { SuspiciousTransaction } from '@coop/cbs/utils';
 import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 

@@ -11,7 +11,6 @@ import {
   FormFieldSearchTerm,
   GetIndividualKymEditDataQuery,
   KymIndMemberInput,
-  RootState,
   setIndividualFormDirty,
   useAppDispatch,
   useAppSelector,
@@ -85,7 +84,6 @@ export const useIndividual = ({ methods }: IIndividualHookProps) => {
   const {
     data: editValues,
     isLoading: editLoading,
-    refetch,
     isFetching,
   } = useGetIndividualKymEditDataQuery(
     {
@@ -145,13 +143,6 @@ export const useIndividual = ({ methods }: IIndividualHookProps) => {
     );
     return () => unsubscribe();
   }, [watch, id]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetch();
-  }, [preference?.date]);
 
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {

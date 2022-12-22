@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Box, Chips, Text } from '@myra-ui';
 
 import { ShareTransactionType, useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 
 export const ShareRegister = () => {
   const router = useRouter();
@@ -37,7 +38,7 @@ export const ShareRegister = () => {
                   {items?.title}
                 </Text>
                 <Text fontSize="s3" fontWeight="400">
-                  {items?.date}
+                  {localizedDate(items?.date)}
                 </Text>
               </Box>
               <Box>

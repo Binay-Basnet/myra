@@ -1,5 +1,6 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
+import { useRouter } from 'next/router';
 
 import { Box, InputProps, Text } from '@myra-ui';
 import { DatePicker } from '@myra-ui/date-picker';
@@ -23,6 +24,7 @@ export const FormDatePicker = <T,>({
   maxToday,
   ...rest
 }: IFormDatePickerProps<T>) => {
+  const router = useRouter();
   const preference = useAppSelector((state) => state?.auth?.preference);
 
   const methods = useFormContext();
@@ -42,16 +44,21 @@ export const FormDatePicker = <T,>({
         <Box display="flex" flexDirection="column" gap="s4">
           <DatePicker
             label={label}
-            locale={preference?.languageCode as 'en' | 'ne'}
+            locale={router.locale as 'en' | 'ne'}
             onChange={(newValue) => {
               if (errors[name]?.type === 'required') {
                 clearErrors(name);
               }
-              onChange(newValue.ad);
+              if (preference?.date === 'AD') {
+                onChange({ en: newValue.ad, np: newValue.bs, local: '' });
+              } else {
+                onChange({ np: newValue.bs, en: newValue.ad, local: '' });
+              }
             }}
+            value={value ? { ad: value.en } : undefined}
             isInvalid={!!errors[name]?.message}
             calendarType={preference?.date || 'AD'}
-            value={value ? (preference?.date === 'AD' ? { ad: value } : { bs: value }) : undefined}
+            // value={value ? (preference?.date === 'AD' ? { ad: value } : { bs: value }) : undefined}
             maxDate={maxToday ? new Date() : maxDate}
             minDate={minDate}
           />

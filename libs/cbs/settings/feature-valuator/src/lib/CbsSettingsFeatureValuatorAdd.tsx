@@ -6,8 +6,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { asyncToast, Box, Container, FormFooter, FormHeader, Grid, GridItem, Text } from '@myra-ui';
 
 import {
-  RootState,
-  useAppSelector,
   useGetValuatorQuery,
   useSetValuatorMutation,
   ValuatorInput,
@@ -31,9 +29,9 @@ export const CbsSettingsFeatureValuatorAdd = () => {
 
   const methods = useForm();
 
-  const { reset, resetField } = methods;
+  const { reset } = methods;
 
-  const { data: editValues, refetch } = useGetValuatorQuery(
+  const { data: editValues } = useGetValuatorQuery(
     { id: router.query['id'] as string },
     { enabled: !!router.query['id'] && router.query['action'] === 'edit' }
   );
@@ -71,20 +69,6 @@ export const CbsSettingsFeatureValuatorAdd = () => {
     });
   };
 
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    if (router.asPath.includes('edit')) {
-      refetch();
-    }
-
-    if (router.asPath.includes('add')) {
-      resetField('renewalDate');
-      resetField('contractDate');
-    }
-  }, [preference?.date, router?.asPath]);
-
   useEffect(() => {
     if (editData) {
       reset({
@@ -92,7 +76,7 @@ export const CbsSettingsFeatureValuatorAdd = () => {
         address: { ...editData?.address, locality: editData?.address?.locality?.local },
       });
     }
-  }, [reset, editData]);
+  }, [reset, editData, router.query?.['id']]);
 
   return (
     <>

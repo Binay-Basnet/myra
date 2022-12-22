@@ -17,6 +17,7 @@ import {
   Text,
 } from '@myra-ui';
 
+import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   CashValue,
   DateType,
@@ -33,7 +34,6 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { SuspiciousTransaction } from '@coop/cbs/utils';
 import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
 import { amountConverter, decimalAdjust, featureCode, useTranslation } from '@coop/shared/utils';
 

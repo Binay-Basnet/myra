@@ -11,7 +11,6 @@ import {
   addCooperativeAccountError,
   addCooperativeError,
   KymCoopAccountOperatorDetailsFormInput,
-  RootState,
   useAppSelector,
   useGetCoOperativeAccountOperatorEditDataQuery,
   useSetCoopAccOperatorDataMutation,
@@ -96,13 +95,6 @@ export const useAccountOperators = ({ accountId, methods }: IUseAccountOperators
       }
     }
   }, [editValues]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetch();
-  }, [preference?.date]);
 
   useEffect(() => {
     const subscription = watch(

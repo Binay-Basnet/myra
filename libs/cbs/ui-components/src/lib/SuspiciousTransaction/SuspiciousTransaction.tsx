@@ -1,7 +1,5 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { useFormContext } from 'react-hook-form';
-
-import { Box, Text } from '@myra-ui/foundations';
+import { Box, Text } from '@chakra-ui/react';
 
 import { SuspiciousTransactionTopology } from '@coop/cbs/data-access';
 import { FormCheckbox, FormCheckboxGroup, FormTextArea } from '@coop/shared/form';
