@@ -79,3 +79,20 @@ query getCOAAccountsUnderLeafList($parentId: [String]!, $currentBranch: Boolean)
     }
   }
 }
+
+query getCoaAccountList($branchId: String, $pagination: Pagination) {
+  settings {
+    chartsOfAccount {
+      coaAccountList(branchId: $branchId, pagination: $pagination) {
+        edges {
+          node {
+            accountCode
+            accountName
+            accountClass
+            parentGroup
+          }
+        }
+      }
+    }
+  }
+}

@@ -76,7 +76,14 @@ export const UpcomingInstallments = () => {
 
   return (
     <DetailsCard title="Upcoming Payments" bg="white" hasTable>
-      <Table isStatic showFooter data={data} columns={columns} noDataTitle="upcoming payment" />
+      <Table
+        isDetailPageTable
+        isStatic
+        showFooter
+        data={data}
+        columns={columns}
+        noDataTitle="upcoming payment"
+      />
     </DetailsCard>
   );
 };
