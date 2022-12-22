@@ -1,23 +1,7 @@
 import React from 'react';
-import { CgLoadbarDoc } from 'react-icons/cg';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { AddIcon } from '@chakra-ui/icons';
 
-import {
-  Box,
-  Button,
-  Divider,
-  Icon,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-  SettingsButton,
-  Text,
-} from '@myra-ui';
+import { Sidebar } from '@myra-ui';
 
-import { TabColumn } from '@coop/myra/components';
 import { useTranslation } from '@coop/shared/utils';
 
 interface ITransactionsSidebarLayoutProps {
@@ -76,31 +60,31 @@ const transactionSidebarColumns = [
 
 const dropdownButtons = [
   {
-    label: 'transactionSidebarNewDeposit',
+    title: 'transactionSidebarNewDeposit',
     link: '/transactions/deposit/add',
   },
   {
-    label: 'transactionSidebarNewWithdraw',
+    title: 'transactionSidebarNewWithdraw',
     link: '/transactions/withdraw/add',
   },
   {
-    label: 'transactionSidebarNewAccountTransfer',
+    title: 'transactionSidebarNewAccountTransfer',
     link: '/transactions/account-transfer/add',
   },
   {
-    label: 'transactionSidebarNewLoanPayment',
+    title: 'transactionSidebarNewLoanPayment',
     link: '/loan/repayments/add',
   },
   // {
-  //   label: 'New Agent',
+  //   title: 'New Agent',
   //   link: '/transactions/agent/add',
   // },
   {
-    label: 'transactionSidebarNewMarketRepresentativeTransaction',
+    title: 'transactionSidebarNewMarketRepresentativeTransaction',
     link: '/transactions/agent-transaction/add',
   },
   {
-    label: 'New Journal Voucher',
+    title: 'New Journal Voucher',
     link: '/transactions/journal-vouchers/add',
   },
 ];
@@ -137,106 +121,18 @@ const reportColumn = [
 ];
 
 export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayoutProps) => {
-  const router = useRouter();
-
   const { t } = useTranslation();
 
   return (
-    <Box minH="calc(100vh - 110px)">
-      <Box
-        sx={{
-          '&::-webkit-scrollbar': {
-            display: 'none',
-          },
-        }}
-        width="260px"
-        height="calc(100vh - 110px)"
-        overflowY="auto"
-        position="fixed"
-      >
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="start"
-          py="s16"
-          pb="s8"
-          justifyContent="center"
-          gap="s2"
-          px="s16"
-        >
-          <Text fontSize="s2" fontWeight="600" color="primary.500">
-            {t['corebankingSystems']}
-          </Text>
-
-          <Link href="/transactions/deposit/list">
-            <Text lineHeight="125%" fontSize="l1" fontWeight="600" color="gray.800">
-              {t['transactions']}
-            </Text>
-          </Link>
-        </Box>
-
-        <Box p="s16">
-          <Popover placement="bottom-start" gutter={3}>
-            <PopoverTrigger>
-              <Button width="full" size="md" justifyContent="start" leftIcon={<AddIcon />}>
-                {t['transactionSidebarNewTransaction']}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent
-              // bg="gray.0"
-              p={0}
-              w="225px"
-              _focus={{
-                boxShadow: 'none',
-              }}
-            >
-              <PopoverBody p={0}>
-                <Box>
-                  {dropdownButtons.map((addButton) => (
-                    <Box
-                      px="s16"
-                      py="s10"
-                      width="100%"
-                      display="flex"
-                      alignItems="center"
-                      _hover={{ bg: 'gray.100' }}
-                      cursor="pointer"
-                      onClick={() => router.push(addButton.link)}
-                      key={addButton.link}
-                    >
-                      <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                      <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                        {t[addButton.label] ?? addButton.label}
-                      </Text>
-                    </Box>
-                  ))}
-                </Box>
-              </PopoverBody>
-            </PopoverContent>
-          </Popover>
-
-          <Divider my="s16" />
-
-          <TabColumn list={transactionSidebarColumns} />
-          <Divider my="s16" />
-          {reportColumn.map((item) => (
-            <SettingsButton
-              icon={CgLoadbarDoc}
-              buttonLabel={t[item?.label]}
-              onClick={() => router.push(item.navigate)}
-            />
-          ))}
-        </Box>
-      </Box>
-      <Box
-        bg="background.500"
-        width="calc(100% - 260px)"
-        position="relative"
-        left="260px"
-        minH="calc(100vh - 110px)"
-      >
-        {children}
-      </Box>
-    </Box>
+    <Sidebar
+      applicationName={t['corebankingSystems']}
+      featureName={t['transactions']}
+      featureLink="/transactions/deposit/list"
+      mainButtonLabel={t['transactionSidebarNewTransaction']}
+      tabColumns={transactionSidebarColumns}
+      addButtonList={dropdownButtons}
+      children={children}
+      reportButtons={reportColumn}
+    />
   );
 };
