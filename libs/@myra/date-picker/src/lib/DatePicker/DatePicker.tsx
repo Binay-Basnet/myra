@@ -127,7 +127,7 @@ export const DatePicker = ({
           </Box>
         </PopoverTrigger>
 
-        <PopoverContent w="100%" border="none">
+        <PopoverContent w="100%" border="none" boxShadow="E2">
           <Calendar
             locale={locale}
             calendarType={calendarType}

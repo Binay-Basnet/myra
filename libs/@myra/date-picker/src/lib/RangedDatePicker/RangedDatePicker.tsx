@@ -146,7 +146,6 @@ export const RangedDatePicker = ({
                   calendarType={calendarType}
                   onChange={onChange}
                   locale={locale}
-                  tillDate={tillDate}
                   onToggle={onToggle}
                   rangeStartDate={rangeStartDate}
                   rangeEndDate={rangeEndDate}

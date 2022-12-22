@@ -7,7 +7,6 @@ import { DateSegments } from '@myra-ui/date-picker';
 
 import { useLocale } from '../../../locale/useLocale';
 import { CalendarBuilderDate, DateRange } from '../../../types/date';
-import { today } from '../../../utils/constants';
 import { convertDate, getJSDate } from '../../../utils/functions';
 
 interface IDateRangeFooterProps {
@@ -18,7 +17,6 @@ interface IDateRangeFooterProps {
   locale: 'en' | 'ne';
   calendarType: 'AD' | 'BS';
 
-  tillDate: CalendarBuilderDate;
   onRangeStartDateChange: (newDate: CalendarBuilderDate) => void;
   onRangeEndDateChange: (newDate: CalendarBuilderDate) => void;
 }
@@ -26,7 +24,6 @@ interface IDateRangeFooterProps {
 export const DateRangeFooter = ({
   onToggle,
   rangeEndDate,
-  tillDate,
   rangeStartDate,
   onRangeEndDateChange,
   onRangeStartDateChange,
@@ -126,15 +123,7 @@ export const DateRangeFooter = ({
         </Box>
       </Box>
       <Box display="flex" gap="s8">
-        <Button
-          w="100px"
-          colorScheme="gray"
-          variant="ghost"
-          onClick={() => {
-            onRangeStartDateChange(tillDate);
-            onRangeEndDateChange(today);
-          }}
-        >
+        <Button w="100px" colorScheme="gray" variant="ghost" onClick={onToggle}>
           {t.cancel}
         </Button>
         <Button
