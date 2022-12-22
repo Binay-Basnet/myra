@@ -30,6 +30,7 @@ import {
   WithdrawWith,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
+import { SuspiciousTransaction } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAmountInput,
@@ -351,78 +352,78 @@ export const AddWithdraw = () => {
                   )}
 
                   {memberId && accountId && (
-                    <FormSwitchTab
-                      name="withdrawWith"
-                      label={t['addWithdrawWithdrawBy']}
-                      options={withdrawTypes}
-                    />
-                  )}
-
-                  {memberId && accountId && withdrawn === WithdrawWith.WithdrawSlip && (
-                    <InputGroupContainer>
-                      <FormSelect
-                        name="withdrawSlipNo"
-                        label="Withdraw Slip No"
-                        options={availableSlipListOptions}
+                    <>
+                      <FormSwitchTab
+                        name="withdrawWith"
+                        label={t['addWithdrawWithdrawBy']}
+                        options={withdrawTypes}
                       />
-                    </InputGroupContainer>
-                  )}
 
-                  {memberId && accountId && withdrawn === WithdrawWith.CounterSlip && (
-                    <InputGroupContainer>
-                      <FormInput name="counterSlipNo" label="Counter Slip No" />
-                    </InputGroupContainer>
-                  )}
+                      {withdrawn === WithdrawWith.WithdrawSlip && (
+                        <InputGroupContainer>
+                          <FormSelect
+                            name="withdrawSlipNo"
+                            label="Withdraw Slip No"
+                            options={availableSlipListOptions}
+                          />
+                        </InputGroupContainer>
+                      )}
 
-                  {memberId && accountId && (
-                    <FormAmountInput
-                      type="number"
-                      min={0}
-                      name="amount"
-                      label={t['addWithdrawWithdrawAmount']}
-                    />
-                  )}
+                      {withdrawn === WithdrawWith.CounterSlip && (
+                        <InputGroupContainer>
+                          <FormInput name="counterSlipNo" label="Counter Slip No" />
+                        </InputGroupContainer>
+                      )}
 
-                  {memberId && accountId && (
-                    <Box
-                      bg="background.500"
-                      borderRadius="br2"
-                      px="s16"
-                      py="s18"
-                      display="flex"
-                      flexDirection="column"
-                      gap="s14"
-                    >
-                      <Box display="flex" justifyContent="space-between">
-                        <Text fontSize="s3" fontWeight={500} color="gray.600">
-                          {t['addWithdrawWithdrawAmount']}
-                        </Text>
+                      <FormAmountInput
+                        type="number"
+                        min={0}
+                        name="amount"
+                        label={t['addWithdrawWithdrawAmount']}
+                      />
 
-                        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-                          {amountConverter(amountToBeWithdrawn)}
-                        </Text>
+                      <SuspiciousTransaction />
+
+                      <Box
+                        bg="background.500"
+                        borderRadius="br2"
+                        px="s16"
+                        py="s18"
+                        display="flex"
+                        flexDirection="column"
+                        gap="s14"
+                      >
+                        <Box display="flex" justifyContent="space-between">
+                          <Text fontSize="s3" fontWeight={500} color="gray.600">
+                            {t['addWithdrawWithdrawAmount']}
+                          </Text>
+
+                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
+                            {amountConverter(amountToBeWithdrawn)}
+                          </Text>
+                        </Box>
+
+                        <Box display="flex" justifyContent="space-between">
+                          <Text fontSize="s3" fontWeight={500} color="gray.600">
+                            {t['addWithdrawFine']}
+                          </Text>
+
+                          <Text fontSize="s3" fontWeight={500} color="danger.500">
+                            {`- ${amountConverter(fine)}`}
+                          </Text>
+                        </Box>
+
+                        <Box display="flex" justifyContent="space-between">
+                          <Text fontSize="s3" fontWeight={500} color="gray.600">
+                            {t['addWithdrawTotalWithdraw']}
+                          </Text>
+
+                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
+                            {amountConverter(totalWithdraw)}
+                          </Text>
+                        </Box>
                       </Box>
-
-                      <Box display="flex" justifyContent="space-between">
-                        <Text fontSize="s3" fontWeight={500} color="gray.600">
-                          {t['addWithdrawFine']}
-                        </Text>
-
-                        <Text fontSize="s3" fontWeight={500} color="danger.500">
-                          {`- ${amountConverter(fine)}`}
-                        </Text>
-                      </Box>
-
-                      <Box display="flex" justifyContent="space-between">
-                        <Text fontSize="s3" fontWeight={500} color="gray.600">
-                          {t['addWithdrawTotalWithdraw']}
-                        </Text>
-
-                        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-                          {amountConverter(totalWithdraw)}
-                        </Text>
-                      </Box>
-                    </Box>
+                    </>
                   )}
                 </Box>
 

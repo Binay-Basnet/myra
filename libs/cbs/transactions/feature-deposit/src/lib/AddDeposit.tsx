@@ -33,6 +33,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
+import { SuspiciousTransaction } from '@coop/cbs/utils';
 import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
 import { amountConverter, decimalAdjust, featureCode, useTranslation } from '@coop/shared/utils';
 
@@ -440,7 +441,7 @@ export const AddDeposit = () => {
                       </>
                     )}
 
-                  {accountId &&
+                  {/* {accountId &&
                     selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
@@ -454,6 +455,8 @@ export const AddDeposit = () => {
                           />
                         </Grid>
 
+                        <SuspiciousTransaction />
+
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
                             {t['addDepositTotalAmountAfterDeposit']}
@@ -465,12 +468,14 @@ export const AddDeposit = () => {
                           </Text>
                         </Box>
                       </>
-                    )}
+                    )} */}
 
                   {accountId &&
                     (selectedAccount?.product?.nature === NatureOfDepositProduct.Current ||
                       (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-                        !selectedAccount?.product?.isMandatorySaving)) && (
+                        !selectedAccount?.product?.isMandatorySaving) ||
+                      selectedAccount?.product?.nature ===
+                        NatureOfDepositProduct.TermSavingOrFd) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
                           <FormInput name="voucherId" label="Deposit Slip No" />
@@ -481,6 +486,8 @@ export const AddDeposit = () => {
                             label={t['addDepositAmountToBeDeposited']}
                           />
                         </Grid>
+
+                        <SuspiciousTransaction />
 
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">

@@ -30,7 +30,8 @@ import {
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
+import { SuspiciousTransaction } from '@coop/cbs/utils';
+import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
@@ -293,8 +294,11 @@ export const LoanRepayment = () => {
                       />
                     </Modal>
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormInput name="amountPaid" label="Amount to Pay" textAlign="right" />
+                      <FormAmountInput name="amountPaid" label="Amount to Pay" />
                     </Grid>
+
+                    <SuspiciousTransaction />
+
                     <Box mt="s20">
                       <InstallmentData loanAccountId={loanAccountId} />
                     </Box>
