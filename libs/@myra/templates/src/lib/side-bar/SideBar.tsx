@@ -4,9 +4,11 @@ import { CgLoadbarDoc } from 'react-icons/cg';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { AddButtonList, SettingsButton } from '@myra-ui/components';
 import { Box, Divider, Text } from '@myra-ui/foundations';
 
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -38,6 +40,8 @@ interface ISideBarProps {
   applicationName: string;
   featureName: string;
   featureLink: string;
+  hasActionURL?: boolean;
+
   idType?: Id_Type;
   mainButtonLabel?: string;
   addButtonList?: AddButtonListProps[];
@@ -51,6 +55,7 @@ export const Sidebar = ({
   children,
   applicationName,
   featureName,
+  hasActionURL,
   mainButtonLabel,
   addButtonList,
   reportButtons,
@@ -105,10 +110,15 @@ export const Sidebar = ({
                   <AddButtonList
                     label={t[item.title] || item?.title}
                     onClick={() => {
-                      if (item.linkId) {
+                      if (item.linkId && !hasActionURL) {
                         newId
                           .mutateAsync({ idType: idType ?? null })
                           .then((res) => router.push(`${item.linkId}/${res?.newId}`));
+                      }
+                      if (item.linkId && hasActionURL) {
+                        newId
+                          .mutateAsync({ idType: idType ?? null })
+                          .then((res) => router.push(`${item.linkId}/new/${res?.newId}`));
                       } else {
                         item.link && router.push(item.link);
                       }

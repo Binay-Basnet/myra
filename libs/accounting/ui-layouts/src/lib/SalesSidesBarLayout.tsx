@@ -49,7 +49,7 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
     },
     {
       title: t['accountingSalesCustomers'],
-      linkId: '/accounting/sales/customers/add',
+      linkId: '/accounting/sales/customer/add',
     },
   ];
 
