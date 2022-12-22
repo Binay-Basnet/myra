@@ -25,7 +25,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const methods = useForm<BranchInput>({});
 
-  const { getValues, watch, reset, resetField } = methods;
+  const { getValues, watch, reset, resetField, setError, clearErrors } = methods;
 
   const id = String(router?.query?.['id']);
 
@@ -120,8 +120,9 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
       onSuccess: () => router.push('/settings/general/service-center'),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
+          clearErrors();
           Object.keys(error.validationErrorMsg).map((key) =>
-            methods.setError(key as keyof BranchInput, {
+            setError(key as keyof BranchInput, {
               message: error.validationErrorMsg[key][0] as string,
             })
           );
