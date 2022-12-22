@@ -41,7 +41,7 @@ export const DayBookReport = () => {
     {
       data: {
         user: filters?.filter?.user ? [filters?.filter?.user as string] : null,
-        date: filters?.date,
+        // date: filters?.date,
         branchId: filters?.branchId as string,
       },
     },
