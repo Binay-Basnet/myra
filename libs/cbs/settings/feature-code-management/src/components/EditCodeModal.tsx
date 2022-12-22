@@ -12,9 +12,10 @@ interface IEditCodeModalProps {
   open: boolean;
   onClose: () => void;
   codeType: CbsCodeType | undefined | null;
+  queryKey: string;
 }
 
-export const EditCodeModal = ({ open, onClose, codeType }: IEditCodeModalProps) => {
+export const EditCodeModal = ({ open, onClose, codeType, queryKey }: IEditCodeModalProps) => {
   const queryClient = useQueryClient();
 
   const [codePreview, setCodePreview] = useState<string>('');
@@ -48,9 +49,7 @@ export const EditCodeModal = ({ open, onClose, codeType }: IEditCodeModalProps) 
       },
       promise: setCBSCode({ data: { ...getValues(), codeType: codeType as CbsCodeType } }),
       onSuccess: () => {
-        queryClient.invalidateQueries(['listCBSShareCodes']);
-        queryClient.invalidateQueries(['listCBSTransfersCodes']);
-        queryClient.invalidateQueries(['listCBSWithdrawSlipCodes']);
+        queryClient.invalidateQueries([queryKey]);
         resetField('prefix');
         resetField('noOfDigit');
         resetField('initialNo');
