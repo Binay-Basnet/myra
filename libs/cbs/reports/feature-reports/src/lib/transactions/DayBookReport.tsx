@@ -107,7 +107,7 @@ export const DayBookReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Trial Balance', link: '/reports/cbs/transactions/trail-sheet/new' },
+            { label: 'Day Book Report', link: '/reports/cbs/transactions/day-book/new' },
           ]}
         />
 
