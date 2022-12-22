@@ -81,7 +81,7 @@ const dropdownButtons = [
   // },
   {
     title: 'transactionSidebarNewMarketRepresentativeTransaction',
-    link: '/transactions/agent-transaction/add',
+    link: '/transactions/market-representative-transaction/add',
   },
   {
     title: 'New Journal Voucher',

@@ -90,6 +90,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
       applicationName={t['corebankingSystems']}
       featureName={t['savings']}
       featureLink="/savings/list"
+      hasActionURL
       mainButtonLabel={t['accountLayoutNewAccount']}
       idType={Id_Type.Account}
       tabColumns={accountColumns}
