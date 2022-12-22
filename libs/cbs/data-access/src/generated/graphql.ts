@@ -10586,6 +10586,7 @@ export type OverviewView = {
   basicInformation?: Maybe<MemberBasicInfoView>;
   memberGraphs?: Maybe<MemberOverviewGraphs>;
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
+  pendingView?: Maybe<Array<Maybe<PendingOverview>>>;
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactionView>>>;
   statistics?: Maybe<MemberStatisticsView>;
 };
@@ -10706,6 +10707,11 @@ export type PenaltyTypeInput = {
   penaltyAmount?: InputMaybe<Scalars['Amount']>;
   penaltyLedgerMapping?: InputMaybe<Scalars['String']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
+};
+
+export type PendingOverview = {
+  account?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
 };
 
 export type PendingRequestInfo = {

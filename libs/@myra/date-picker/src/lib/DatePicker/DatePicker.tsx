@@ -58,23 +58,33 @@ export const DatePicker = ({
     value ? convertValueToDate(value) : null
   );
 
+  console.log(value);
+
   useEffect(() => {
     if (value) {
       const convertedDate = convertValueToDate(value);
 
-      if (onChange && convertedDate) {
-        onChange({
-          date: convertedDate.current,
-          ad: dayjs(convertedDate.current).format(dateFormat),
-          bs: new NepaliDate(convertedDate.current).format(dateFormat),
-        });
-      }
+      // if (
+      //   onChange &&
+      //   convertedDate &&
+      //   (value.bs && new NepaliDate(value.bs).format(dateFormat)) !==
+      //     new NepaliDate(convertedDate.current).format(dateFormat) &&
+      //   dayjs(value.ad).format(dateFormat) !== dayjs(convertedDate.current).format(dateFormat)
+      // ) {
+      //   onChange({
+      //     date: convertedDate.current,
+      //     ad: dayjs(convertedDate.current).format(dateFormat),
+      //     bs: new NepaliDate(convertedDate.current).format(dateFormat),
+      //   });
+      // }
 
       setDateState(convertedDate);
     } else {
       setDateState(null);
     }
   }, [value?.date?.toString(), value?.ad, value?.bs]);
+
+  console.log(dateState);
 
   return (
     <Box w="100%" display="flex" flexDir="column" gap="s4" mb="1px" alignItems="flex-start">

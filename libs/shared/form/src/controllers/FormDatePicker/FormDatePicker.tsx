@@ -51,7 +51,7 @@ export const FormDatePicker = <T,>({
             }}
             isInvalid={!!errors[name]?.message}
             calendarType={preference?.date || 'AD'}
-            value={value ? { ad: value } : undefined}
+            value={value ? (preference?.date === 'AD' ? { ad: value } : { bs: value }) : undefined}
             maxDate={maxToday ? new Date() : maxDate}
             minDate={minDate}
           />
