@@ -16,7 +16,7 @@ import { SettingsCard } from '@coop/cbs/settings/ui-components';
 import { EditCodeModal } from '../components';
 
 export const CoreBankingSystemCodeManagement = () => {
-  const [selectedCodeType, setSelectedCodeType] = useState<CbsCodeType | null>();
+  const [selectedCode, setSelectedCode] = useState<{ codeType: CbsCodeType; queryKey: string }>();
 
   const { onClose, isOpen, onToggle } = useDisclosure();
 
@@ -26,7 +26,7 @@ export const CoreBankingSystemCodeManagement = () => {
 
   const { data: cbsWithdrawSlipCodesListQueryData } = useListCbsWithdrawSlipCodesQuery();
 
-  const columns: Column<CbsCodeManagement>[] = [
+  const getColumns = (queryKey: string): Column<CbsCodeManagement>[] => [
     {
       header: 'Name',
       accessorFn: (row) => row?.codeType?.replace(/_/gi, ' '),
@@ -53,7 +53,10 @@ export const CoreBankingSystemCodeManagement = () => {
           <Button
             variant="ghost"
             onClick={() => {
-              setSelectedCodeType(props?.row?.original?.codeType);
+              setSelectedCode({
+                codeType: props?.row?.original?.codeType as CbsCodeType,
+                queryKey,
+              });
               onToggle();
             }}
           >
@@ -73,7 +76,7 @@ export const CoreBankingSystemCodeManagement = () => {
               cbsShareCodesListQueryData?.settings?.general?.codes?.cbs?.allCbsCodes?.data?.share ??
               []
             }
-            columns={columns}
+            columns={getColumns('listCBSShareCodes')}
           />
         </SettingsCard>
 
@@ -84,7 +87,7 @@ export const CoreBankingSystemCodeManagement = () => {
               cbsTransfersCodesListQueryData?.settings?.general?.codes?.cbs?.allCbsCodes?.data
                 ?.transfers ?? []
             }
-            columns={columns}
+            columns={getColumns('listCBSTransfersCodes')}
           />
         </SettingsCard>
 
@@ -95,12 +98,17 @@ export const CoreBankingSystemCodeManagement = () => {
               cbsWithdrawSlipCodesListQueryData?.settings?.general?.codes?.cbs?.allCbsCodes?.data
                 ?.withdrawSlip ?? []
             }
-            columns={columns}
+            columns={getColumns('listCBSWithdrawSlipCodes')}
           />
         </SettingsCard>
       </Box>
 
-      <EditCodeModal open={isOpen} onClose={onClose} codeType={selectedCodeType} />
+      <EditCodeModal
+        open={isOpen}
+        onClose={onClose}
+        codeType={selectedCode?.codeType}
+        queryKey={selectedCode?.queryKey as string}
+      />
     </>
   );
 };
