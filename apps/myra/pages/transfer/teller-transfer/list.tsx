@@ -1,8 +1,9 @@
 import { ReactElement } from 'react';
 
+import { MainLayout } from '@myra-ui';
+
 import { TransferLayout } from '@coop/cbs/transactions/ui-layouts';
 import { TellerTransferList } from '@coop/cbs/transfer';
-import { MainLayout } from '@myra-ui';
 
 const Transfer = () => <TellerTransferList />;
 

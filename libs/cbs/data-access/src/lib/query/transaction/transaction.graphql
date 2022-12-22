@@ -92,6 +92,7 @@ query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination
       edges {
         node {
           ID
+          transferCode
           transferType
           transferState
           srcTeller

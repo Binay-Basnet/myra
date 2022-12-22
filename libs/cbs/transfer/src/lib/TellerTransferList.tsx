@@ -43,8 +43,8 @@ export const TellerTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Teller Transfer ID',
-        accessorFn: (row) => row?.node?.ID,
+        header: 'Teller Transfer Code',
+        accessorFn: (row) => row?.node?.transferCode,
       },
       {
         accessorFn: (row) => row?.node?.srcTeller?.local,
