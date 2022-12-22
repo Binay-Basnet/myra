@@ -93,6 +93,7 @@ query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination
         node {
           ID
           transferType
+          transferState
           srcTeller
           amount
           destTeller
@@ -101,6 +102,11 @@ query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination
           destProfilePic
           srcProfilePicUrl
           destProfilePicUrl
+          denomination {
+            value
+            quantity
+            amount
+          }
         }
         cursor
       }

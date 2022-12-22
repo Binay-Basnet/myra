@@ -56,7 +56,14 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
       //   </Button>
       // }
     >
-      <Table showFooter isStatic isLoading={false} data={rowData ?? []} columns={columns} />
+      <Table
+        isDetailPageTable
+        showFooter
+        isStatic
+        isLoading={false}
+        data={rowData ?? []}
+        columns={columns}
+      />
     </DetailsCard>
   );
 };

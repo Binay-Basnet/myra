@@ -44,6 +44,7 @@
     "cbs-kym-form-ui-form-elements": "libs/cbs/kym-form/ui-form-elements",
     "cbs-loan-feature-details": "libs/cbs/loan/feature-details",
     "cbs-loan-feature-lists": "libs/cbs/loan/feature-lists",
+    "cbs-loan-feature-loan-account-detail": "libs/cbs/loan/feature-loan-account-detail",
     "cbs-loan-feature-loan-application": "libs/cbs/loan/feature-loan-application",
     "cbs-loan-feature-loan-repayment": "libs/cbs/loan/feature-loan-repayment",
     "cbs-loan-ui-layouts": "libs/cbs/loan/ui-layouts",
