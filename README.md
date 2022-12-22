@@ -56,7 +56,7 @@ yarn start:myra
 Runs the storybook for myra ui component
 
 ```
-yarn storybook:myra-ui
+yarn storybook
 ```
 
 Runs the neosys admin app
