@@ -16,6 +16,7 @@ export const ProductFeatures = ({ features }: IProductFeaturesProps) => {
 
   return (
     <Table
+      isDetailPageTable
       isStatic
       data={featuresListWithIndex}
       columns={[
@@ -27,15 +28,12 @@ export const ProductFeatures = ({ features }: IProductFeaturesProps) => {
           header: 'Features',
           accessorKey: 'feature',
           meta: {
-            width: '70%',
+            width: '80%',
           },
         },
         {
           header: 'Status',
           accessorKey: 'status',
-          meta: {
-            width: '33%',
-          },
         },
       ]}
     />

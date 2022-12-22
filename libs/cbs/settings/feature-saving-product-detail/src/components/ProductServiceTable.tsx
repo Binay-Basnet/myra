@@ -22,15 +22,12 @@ export const ProductServiceTable = ({ serviceList }: IProductServiceTable) => {
         header: 'Service Name',
         accessorKey: 'serviceName',
         meta: {
-          width: '33%',
+          width: '80%',
         },
       },
       {
         header: 'Ledger Name',
         accessorKey: 'ledgerName',
-        meta: {
-          width: '33%',
-        },
       },
       {
         header: 'Amount',
@@ -38,14 +35,11 @@ export const ProductServiceTable = ({ serviceList }: IProductServiceTable) => {
         cell: (props) => amountConverter(props.getValue() as string),
         meta: {
           isNumeric: true,
-          width: '33%',
         },
       },
     ],
     []
   );
 
-  if (serviceListWithIndex?.length === 0) return null;
-
-  return <Table isStatic data={serviceListWithIndex ?? []} columns={columns} />;
+  return <Table isDetailPageTable isStatic data={serviceListWithIndex ?? []} columns={columns} />;
 };

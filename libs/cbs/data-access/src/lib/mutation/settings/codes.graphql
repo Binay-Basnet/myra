@@ -1,0 +1,16 @@
+mutation setCBSCode($data: CodeManagementInput) {
+  settings {
+    general {
+      codes {
+        cbs {
+          add(data: $data) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}

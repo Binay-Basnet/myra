@@ -1,8 +1,9 @@
 import { Box, FormFooter, Text } from '@myra-ui';
+
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type FooterProps = {
-  disableButton: number;
+  disableButton: number | boolean;
   totalAmount: number;
   paymentButtonHandler: () => void;
 };

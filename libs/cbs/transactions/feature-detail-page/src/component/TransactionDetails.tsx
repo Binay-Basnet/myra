@@ -76,7 +76,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailWithdrawBy']}
-            subtitle={withdrawDetailData?.withdrawWith?.replace('_', ' ')}
+            subtitle={withdrawDetailData?.withdrawWith?.replace(/_/g, ' ')}
           />
           <DetailCardContent
             title={t['transDetailChequeNo']}
@@ -132,7 +132,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailWithdrawBy']}
-            subtitle={accountTransferDetailData?.withdrawnBy}
+            subtitle={accountTransferDetailData?.withdrawnBy?.replace(/_/g, ' ')}
           />
           <DetailCardContent
             title={t['transDetailWithdrawSlipNo']}

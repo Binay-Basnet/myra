@@ -16,15 +16,12 @@ export const AccountCloseCharge = ({ accountCloseCharge }: IAccountCloseCharge) 
         header: 'Service Name',
         accessorKey: 'serviceName',
         meta: {
-          width: '33%',
+          width: '80%',
         },
       },
       {
         header: 'Ledger Name',
         accessorKey: 'ledgerName',
-        meta: {
-          width: '33%',
-        },
       },
       {
         header: 'Amount',
@@ -32,18 +29,15 @@ export const AccountCloseCharge = ({ accountCloseCharge }: IAccountCloseCharge) 
         cell: (props) => amountConverter(props.getValue() as string),
         meta: {
           isNumeric: true,
-          width: '33%',
         },
       },
     ],
     []
   );
 
-  if (accountCloseCharge && accountCloseCharge?.length === 0) return null;
-
   return (
     <DetailsCard title="Account Close Service Charge" hasTable>
-      <Table isStatic data={accountCloseCharge ?? []} columns={columns} />
+      <Table isDetailPageTable isStatic data={accountCloseCharge ?? []} columns={columns} />
     </DetailsCard>
   );
 };

@@ -1,5 +1,6 @@
 // np= nepali, rm="roman" , en="english"
 import dayjs from 'dayjs';
+import NepaliDate from 'nepali-date-converter';
 
 export const lang = ['np', 'rm', 'en'];
 export const variant = ['long', 'short', 'min'];
@@ -259,7 +260,58 @@ const convertDate = (date: Date) => {
   };
 };
 
+const convertNepaliDate = (date: NepaliDate) => ({
+  year: date.getYear(),
+  month: String(Number(date.getMonth()) + 1),
+  day: String(date.getDate()),
+  dayOfWeek: date.getDay(),
+});
+
 export const today = convertDate(dayjs(new Date()).toDate());
 export const yesterday = convertDate(dayjs(new Date()).subtract(1, 'day')?.toDate());
 export const last7Days = convertDate(dayjs(new Date()).subtract(7, 'day')?.toDate());
 export const last30Days = convertDate(dayjs(new Date()).subtract(30, 'day')?.toDate());
+
+export const bsToday = convertNepaliDate(new NepaliDate(dayjs(new Date()).toDate()));
+export const bsLast7Days = convertNepaliDate(
+  new NepaliDate(dayjs(new Date()).subtract(7, 'day')?.toDate())
+);
+export const bsLast30Days = convertNepaliDate(
+  new NepaliDate(dayjs(new Date()).subtract(30, 'day')?.toDate())
+);
+
+export const getPeriodDate = (numberOfDays: number, calendarType: 'AD' | 'BS') => {
+  if (calendarType === 'AD') {
+    return convertDate(dayjs(new Date()).subtract(numberOfDays, 'day')?.toDate());
+  }
+  return convertNepaliDate(
+    new NepaliDate(dayjs(new Date()).subtract(numberOfDays, 'day')?.toDate())
+  );
+};
+
+export const DEFAULT_PERIODS = [
+  {
+    title: 'today',
+    key: 'TODAY',
+    lastDays: 0,
+    closePopover: true,
+  },
+  {
+    title: 'yesterday',
+    key: 'YESTERDAY',
+    lastDays: 1,
+    closePopover: true,
+  },
+  {
+    title: 'last7Days',
+    key: 'LAST_7_DAYS',
+    lastDays: 7,
+    closePopover: false,
+  },
+  {
+    title: 'last30Days',
+    key: 'LAST_30_DAYS',
+    lastDays: 30,
+    closePopover: false,
+  },
+];

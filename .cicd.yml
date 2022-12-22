@@ -402,6 +402,16 @@ steps:
   - yarn
   - npx nx run myra:build:production
 
+- name: Breakpoint
+  image: ubuntu
+  volumes:
+  - name: myra-app
+    path: /drone/src/apps/myra
+  - name: docker-sock
+    path: /var/run/docker.sock
+  commands:
+  - sleep infinity
+
 - name: Publish myra-ui
   image: bentolor/docker-dind-awscli:dind
   environment:

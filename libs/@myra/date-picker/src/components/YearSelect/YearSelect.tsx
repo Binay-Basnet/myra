@@ -1,5 +1,9 @@
+import React from 'react';
 import { GroupBase, Select } from 'chakra-react-select';
 
+import { TDateState } from '../../types/date';
+import { ad2bs, bs2ad } from '../../utils/ad-bs-converter';
+import { getNextMonth } from '../../utils/calendar-builder';
 import { calendarData, ordinal } from '../../utils/constants';
 
 interface SelectOption {
@@ -8,18 +12,23 @@ interface SelectOption {
   disabled?: boolean;
 }
 
-interface IYearSelectProps {
+interface IYearBaseSelectProps {
   calendarType: 'AD' | 'BS';
   locale?: 'en' | 'ne';
   year: number;
   onChange: (newYear: number) => void;
 }
 
-export const YearSelect = ({ calendarType, year, onChange, locale = 'en' }: IYearSelectProps) => {
+export const YearBaseSelect = ({
+  calendarType,
+  year,
+  onChange,
+  locale = 'en',
+}: IYearBaseSelectProps) => {
   const options =
     calendarType === 'BS'
       ? Object.keys(calendarData).map((fullYear) => ({
-          label: fullYear,
+          label: locale === 'ne' ? ordinal(String(fullYear)) : String(fullYear),
           value: Number(fullYear),
         }))
       : Array.from(Array(100), (_, x) => x + 1943).map((fullYear) => ({
@@ -167,3 +176,60 @@ export const YearSelect = ({ calendarType, year, onChange, locale = 'en' }: IYea
     />
   );
 };
+
+interface IYearSelectProps {
+  calendarType: 'AD' | 'BS';
+  locale?: 'en' | 'ne';
+
+  showNextYear?: boolean;
+  year?: number;
+  state: TDateState;
+  setState: React.Dispatch<React.SetStateAction<TDateState>>;
+}
+
+export const YearSelect = ({
+  calendarType,
+  locale,
+  state,
+  setState,
+  showNextYear,
+}: IYearSelectProps) => (
+  <YearBaseSelect
+    locale={locale}
+    calendarType={calendarType}
+    year={
+      showNextYear
+        ? calendarType === 'AD'
+          ? getNextMonth(state.ad.month, state.ad.year).year
+          : getNextMonth(state.bs.month, state.ad.year).year
+        : calendarType === 'AD'
+        ? state.ad.year
+        : state.bs.year
+    }
+    onChange={(newYear) => {
+      if (calendarType === 'AD') {
+        const bs = ad2bs(newYear, state.ad.month, state.ad.day);
+
+        setState((prev) => ({
+          ...prev,
+          bs,
+          ad: {
+            ...prev.ad,
+            year: newYear,
+          },
+        }));
+      } else {
+        const ad = bs2ad(newYear, state.bs.month, state.bs.day);
+
+        setState((prev) => ({
+          ...prev,
+          ad,
+          bs: {
+            ...prev.bs,
+            year: newYear,
+          },
+        }));
+      }
+    }}
+  />
+);

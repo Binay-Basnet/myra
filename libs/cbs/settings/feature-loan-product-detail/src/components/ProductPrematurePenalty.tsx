@@ -15,38 +15,20 @@ export const ProductPrematurePenalty = ({ penaltyData }: IProductPrematurePenalt
   const columns = React.useMemo<Column<typeof penaltyDataArray[0]>[]>(
     () => [
       {
-        header: 'Penalty Date Type',
+        header: 'Effective Days From Start',
         accessorKey: 'penaltyDateType',
-        meta: {
-          width: '33%',
-        },
         cell: (props) =>
           props.getValue() ? (props.getValue() as string)?.replace(/_/g, ' ') : 'N/A',
+        meta: {
+          width: '25%',
+        },
       },
       {
-        header: 'No. of days',
+        header: 'Remaining Days to get Matured',
         accessorKey: 'noOfDays',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
         meta: {
           isNumeric: true,
-          width: '33%',
-        },
-      },
-      {
-        header: 'Penalty Ledger Mapping',
-        accessorKey: 'penaltyLedgerMapping',
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-        meta: {
-          width: '33%',
-        },
-      },
-      {
-        header: 'Penalty Rate',
-        accessorKey: 'penaltyRate',
-        cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
-        meta: {
-          isNumeric: true,
-          width: '33%',
         },
       },
       {
@@ -55,18 +37,28 @@ export const ProductPrematurePenalty = ({ penaltyData }: IProductPrematurePenalt
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
         meta: {
           isNumeric: true,
-          width: '33%',
         },
+      },
+      {
+        header: 'Penalty Rate',
+        accessorKey: 'penaltyRate',
+        cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Penalty Ledger Mapping',
+        accessorKey: 'penaltyLedgerMapping',
+        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
       },
     ],
     []
   );
 
-  if (!penaltyData || Object.keys(penaltyData).length === 0) return null;
-
   return (
     <DetailsCard title="Premature Penalty Setup" hasTable>
-      <Table isStatic data={penaltyDataArray} columns={columns} />
+      <Table isDetailPageTable isStatic data={penaltyDataArray} columns={columns} />
     </DetailsCard>
   );
 };

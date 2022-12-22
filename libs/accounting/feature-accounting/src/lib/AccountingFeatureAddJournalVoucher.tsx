@@ -36,10 +36,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
     defaultValues: { paymentMode: JournalVoucherPaymentMode.Cash },
   });
 
-  const {
-    // watch,
-    getValues,
-  } = methods;
+  const { getValues } = methods;
 
   // const paymentMode = watch('paymentMode');
 

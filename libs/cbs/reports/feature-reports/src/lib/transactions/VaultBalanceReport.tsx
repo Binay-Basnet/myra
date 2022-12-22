@@ -102,11 +102,8 @@ export const VaultBalanceReport = () => {
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange name="date" />
-          </GridItem>
-          {/* <GridItem colSpan={1}>
             <ReportDateRange />
-          </GridItem> */}
+          </GridItem>
         </Report.Inputs>
       </Report.Header>
 

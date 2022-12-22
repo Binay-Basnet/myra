@@ -30,7 +30,7 @@ const myraAppn = [
   {
     title: 'alternativeChannelsAndCrossConnectivity',
     img: '/tnt.svg',
-    link: '/alternative-channels/mBanking/users',
+    link: '/alternative-channels/users/mBanking',
   },
   {
     title: 'inventoryManagement',

@@ -34,7 +34,7 @@ export const DirectorDetails = () => {
     <DetailsCard title="Board Director Details" bg="white" hasTable>
       <Accordion defaultIndex={[0]} display="flex" flexDirection="column" gap="s16" allowToggle>
         {bioDataCoopDirector?.map((item) => (
-          <AccordionItem>
+          <AccordionItem key={item?.citizenshipNo}>
             <AccordionButton>
               <Box
                 flex="1"

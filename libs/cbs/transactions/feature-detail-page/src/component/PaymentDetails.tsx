@@ -25,7 +25,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
         <>
           <DetailCardContent
             title={t['transDetailPaymentMode']}
-            subtitle={depositDetailData?.paymentMode}
+            subtitle={depositDetailData?.paymentMode?.replace(/_/g, ' ')}
           />
           <DetailCardContent
             title={t['transDetailSourcefund']}
@@ -46,7 +46,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
         <>
           <DetailCardContent
             title={t['transDetailPaymentMode']}
-            subtitle={withdrawDetailData?.paymentMode}
+            subtitle={withdrawDetailData?.paymentMode?.replace(/_/g, ' ')}
           />
           <DetailCardContent
             title={t['transDetailAmount']}
@@ -54,7 +54,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailWithdrawnBy']}
-            subtitle={withdrawDetailData?.withdrawnBy}
+            subtitle={withdrawDetailData?.withdrawnBy?.replace(/_/g, ' ')}
           />
         </>
       )}
@@ -64,7 +64,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
           <>
             <DetailCardContent
               title={t['transDetailPaymentMode']}
-              subtitle={withdrawDetailData?.paymentMode}
+              subtitle={withdrawDetailData?.paymentMode?.replace(/_/g, ' ')}
             />
             <DetailCardContent
               title={t['transDetailChequeNo']}
@@ -76,7 +76,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
             />
             <DetailCardContent
               title={t['transDetailWithdrawnBy']}
-              subtitle={withdrawDetailData?.withdrawnBy}
+              subtitle={withdrawDetailData?.withdrawnBy?.replace(/_/g, ' ')}
             />
           </>
         )}
@@ -85,7 +85,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
         <>
           <DetailCardContent
             title={t['transDetailPaymentMode']}
-            subtitle={loanRepaymentDetailData?.paymentMode}
+            subtitle={loanRepaymentDetailData?.paymentMode?.replace(/_/g, ' ')}
           />
           <DetailCardContent
             title={t['transDetailAmount']}

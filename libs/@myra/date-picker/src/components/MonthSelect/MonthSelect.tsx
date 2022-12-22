@@ -1,7 +1,11 @@
+import React from 'react';
 import { GroupBase, Select } from 'chakra-react-select';
 
 import { ne } from '../../locale/ne';
 import { useLocale } from '../../locale/useLocale';
+import { TDateState } from '../../types/date';
+import { ad2bs, bs2ad } from '../../utils/ad-bs-converter';
+import { getNextMonth } from '../../utils/calendar-builder';
 import { en, rm } from '../../utils/constants';
 
 interface SelectOption {
@@ -10,7 +14,7 @@ interface SelectOption {
   disabled?: boolean;
 }
 
-interface IMonthSelectProps {
+interface IMonthBaseSelectProps {
   calendarType: 'AD' | 'BS';
   locale?: 'en' | 'ne';
   month: number;
@@ -18,19 +22,19 @@ interface IMonthSelectProps {
   rightAlignMonth?: boolean;
 }
 
-export const MonthSelect = ({
+const MonthBaseSelect = ({
   calendarType,
   month,
   onChange,
   locale = 'en',
   rightAlignMonth = false,
-}: IMonthSelectProps) => {
+}: IMonthBaseSelectProps) => {
   const { t } = useLocale(locale);
 
   const options =
     calendarType === 'BS'
       ? rm.monthName.full.map((fullMonth, index) => ({
-          label: fullMonth,
+          label: t[fullMonth as keyof typeof ne],
           value: index + 1,
         }))
       : en.monthName.full.map((fullMonth, index) => ({
@@ -98,7 +102,6 @@ export const MonthSelect = ({
           alignItems: 'center',
           justifyContent: 'start',
           fontSize: 'r1',
-
           _hover: {
             bg: !state.isSelected ? 'highlight.500' : 'primary.500',
           },
@@ -177,3 +180,62 @@ export const MonthSelect = ({
     />
   );
 };
+
+interface IMonthSelectProps {
+  calendarType: 'AD' | 'BS';
+  locale?: 'en' | 'ne';
+  rightAlignMonth?: boolean;
+
+  showNextMonth?: boolean;
+  state: TDateState;
+  setState: React.Dispatch<React.SetStateAction<TDateState>>;
+}
+
+export const MonthSelect = ({
+  calendarType,
+  locale,
+  rightAlignMonth,
+  state,
+  setState,
+  showNextMonth,
+}: IMonthSelectProps) => (
+  <MonthBaseSelect
+    locale={locale}
+    calendarType={calendarType}
+    rightAlignMonth={rightAlignMonth}
+    month={
+      showNextMonth
+        ? calendarType === 'AD'
+          ? getNextMonth(state.ad.month, state.ad.year).month
+          : getNextMonth(state.bs.month, state.ad.year).month
+        : calendarType === 'AD'
+        ? state.ad.month
+        : state.bs.month
+    }
+    onChange={(newMonth) => {
+      if (calendarType === 'AD') {
+        const bs = ad2bs(state.ad.year, newMonth, state.ad.day);
+
+        setState((prev) => ({
+          ...prev,
+          bs,
+          ad: {
+            ...prev.ad,
+            month: newMonth,
+          },
+        }));
+      } else {
+        const ad = bs2ad(state.bs.year, newMonth, state.bs.day);
+
+        setState((prev) => ({
+          ...prev,
+          bs: {
+            ...prev.bs,
+            month: newMonth,
+          },
+          ad,
+        }));
+      }
+    }}
+  />
+);

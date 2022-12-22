@@ -10,25 +10,35 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import dayjs from 'dayjs';
+import NepaliDate from 'nepali-date-converter';
 
 import { Calendar } from '../../components/Calendar';
 import { TDateState } from '../../types/date';
-import { convertValueToDate, getTodayDate } from '../../utils/functions';
+import { convertValueToDate } from '../../utils/functions';
 
 type DateValue = {
-  date: Date;
+  date?: Date;
   ad?: string;
   bs?: string;
 };
 
 interface IDatePickerProps {
   calendarType?: 'AD' | 'BS';
+  locale?: 'en' | 'ne';
+
   value?: DateValue;
   onChange?: (newValue: DateValue) => void;
+  label?: string;
   dateFormat?: string;
+
+  minDate?: Date;
+  maxDate?: Date;
+
+  isInvalid?: boolean;
 }
 
 export const DatePicker = ({
@@ -36,76 +46,110 @@ export const DatePicker = ({
   value,
   onChange,
   dateFormat = 'YYYY-MM-DD',
+  locale = 'en',
+  isInvalid,
+  minDate,
+  maxDate,
+  label,
 }: IDatePickerProps) => {
   const { isOpen, onClose, onToggle } = useDisclosure();
 
-  const [dateState, setDateState] = React.useState<TDateState>(
-    value ? convertValueToDate(value) : getTodayDate()
+  const [dateState, setDateState] = React.useState<TDateState | null>(
+    value ? convertValueToDate(value) : null
   );
 
   useEffect(() => {
     if (value) {
-      setDateState(convertValueToDate(value));
+      const convertedDate = convertValueToDate(value);
+
+      if (onChange && convertedDate) {
+        onChange({
+          date: convertedDate.current,
+          ad: dayjs(convertedDate.current).format(dateFormat),
+          bs: new NepaliDate(convertedDate.current).format(dateFormat),
+        });
+      }
+
+      setDateState(convertedDate);
+    } else {
+      setDateState(null);
     }
-  }, [value?.date?.toString()]);
+  }, [value?.date?.toString(), value?.ad, value?.bs]);
 
   return (
-    <Popover isOpen={isOpen} onClose={onClose} onOpen={onToggle}>
-      <PopoverTrigger>
-        <Box as="button">
-          <InputGroup w="350px">
-            <InputLeftElement>
-              <Icon color="gray.400" as={CalendarIcon} />
-            </InputLeftElement>
-            <Input
-              isDisabled
-              key={dateState?.current?.toString()}
-              value={dateState?.current ? dayjs(dateState?.current).format(dateFormat) : undefined}
-              _disabled={{
-                bg: 'white',
-                cursor: 'pointer',
-                border: '1px',
-                borderColor: isOpen ? 'primary.500' : 'gray.300',
-                boxShadow: isOpen ? `0 0 0 2px var(--myra-colors-primary-300)` : 'none',
-              }}
-              placeholder={dateFormat}
-            />
-            <InputRightElement>
-              <Icon
-                color="gray.400"
-                onClick={() => {
-                  setDateState((prev) => ({
-                    ...prev,
-                    current: null,
-                  }));
+    <Box w="100%" display="flex" flexDir="column" gap="s4" mb="1px" alignItems="flex-start">
+      <Text fontWeight="500" lineHeight="1.5" fontSize="s3" color="gray.700">
+        {label}
+      </Text>
+      <Popover placement="bottom-start" isOpen={isOpen} onClose={onClose} onOpen={onToggle}>
+        <PopoverTrigger>
+          <Box as="button" w="100%" type="button">
+            <InputGroup>
+              <InputLeftElement>
+                <Icon color="gray.400" as={CalendarIcon} />
+              </InputLeftElement>
+              <Input
+                isInvalid={isInvalid}
+                key={dateState?.current?.toString()}
+                value={
+                  calendarType === 'AD'
+                    ? dateState?.current
+                      ? dayjs(dateState?.current).format(dateFormat)
+                      : undefined
+                    : dateState?.current
+                    ? new NepaliDate(dateState?.current).format(dateFormat)
+                    : undefined
+                }
+                isReadOnly
+                _readOnly={{
+                  bg: 'white',
+                  cursor: 'pointer',
+                  border: '1px',
+                  borderColor: isOpen ? 'primary.500' : 'gray.300',
+                  boxShadow: isOpen ? `0 0 0 2px var(--myra-colors-primary-300)` : 'none',
                 }}
-                as={IoIosCloseCircleOutline}
-                w="s20"
-                h="s20"
+                placeholder={dateFormat}
               />
-            </InputRightElement>
-          </InputGroup>
-        </Box>
-      </PopoverTrigger>
+              {dateState && (
+                <InputRightElement>
+                  <Icon
+                    color="gray.400"
+                    onClick={() => {
+                      setDateState(null);
+                    }}
+                    as={IoIosCloseCircleOutline}
+                    w="s20"
+                    h="s20"
+                  />
+                </InputRightElement>
+              )}
+            </InputGroup>
+          </Box>
+        </PopoverTrigger>
 
-      <PopoverContent w="100%" border="none">
-        <Calendar
-          calendarType={calendarType}
-          value={dateState}
-          onDateChange={(date) => {
-            setDateState(date);
-            if (date.current) {
-              if (onChange) {
-                onChange({
-                  date: date.current,
-                  ad: dayjs(date.current).format(dateFormat),
-                });
-                onToggle();
+        <PopoverContent w="100%" border="none" boxShadow="E2">
+          <Calendar
+            locale={locale}
+            calendarType={calendarType}
+            value={dateState}
+            maxDate={maxDate}
+            minDate={minDate}
+            onDateChange={(date) => {
+              setDateState(date);
+              if (date.current) {
+                if (onChange) {
+                  onChange({
+                    date: date.current,
+                    ad: dayjs(date.current).format(dateFormat),
+                    bs: new NepaliDate(date.current).format(dateFormat),
+                  });
+                  onToggle();
+                }
               }
-            }
-          }}
-        />
-      </PopoverContent>
-    </Popover>
+            }}
+          />
+        </PopoverContent>
+      </Popover>
+    </Box>
   );
 };

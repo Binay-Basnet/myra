@@ -25,9 +25,6 @@ export const ProductPenalty = ({ penaltyData }: IProductPenalty) => {
         header: 'Day after Installment Date',
         accessorKey: 'penaltyDayAfterInstallmentDate',
         cell: (props) => (props.getValue() ? `${props.getValue()}` : 'N/A'),
-        meta: {
-          width: '33%',
-        },
       },
       {
         header: 'Penalty',
@@ -35,26 +32,20 @@ export const ProductPenalty = ({ penaltyData }: IProductPenalty) => {
         cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
         meta: {
           isNumeric: true,
-          width: '33%',
         },
       },
       {
         header: 'Penalty Amount',
         accessorKey: 'penaltyAmount',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-        meta: {
-          width: '33%',
-        },
       },
     ],
     []
   );
 
-  if (!penaltyData || Object.keys(penaltyData).length === 0) return null;
-
   return (
     <DetailsCard title="Penalty" hasTable>
-      <Table isStatic data={penaltyDataArray} columns={columns} />
+      <Table isDetailPageTable isStatic data={penaltyDataArray} columns={columns} />
     </DetailsCard>
   );
 };

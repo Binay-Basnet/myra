@@ -35,7 +35,7 @@ export const ProductCriteria = ({
     <Box px="s16" fontSize="r1" textTransform="capitalize">
       <ul>
         <li>
-          Member Type: <b>{memberType?.join(', ') ?? 'N/A'}</b>
+          Member Type: <b>{memberType?.join(', ')?.replace(/_/g, ' ') ?? 'N/A'}</b>
         </li>
         {/* <li>
           Targeted Profession: <b>{criteria?.institutionType?.join(', ') ?? 'N/A'}</b>

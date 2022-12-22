@@ -74,6 +74,7 @@ export enum Report {
   TRANSACTION_CASH_FLOW_STATEMENT = 'Cash Flow Statement',
   TRANSACTION_CHANGE_OF_EQUITY = 'Change of Equity',
   TRANSACTION_APPROPRIATE_OF_PROFIT = 'Appropriation of Profit',
+  TRANSACTION_PROFIT_AND_LOSS = 'Profit and Loss',
   TRANSACTION_BANK_GL_BALANCE = 'Bank GL Balance',
   TRANSACTION_BANK_GL_REPORT = 'Bank GL Statement',
   TRANSACTION_TELLER_REPORT = 'Teller Report',
@@ -393,6 +394,11 @@ export const REPORTS = {
       id: '7.1',
       report: Report.TRANSACTION_TRIAL_SHEET,
       link: 'trial-sheet',
+    },
+    {
+      id: '7.21',
+      report: Report.TRANSACTION_PROFIT_AND_LOSS,
+      link: 'profit-and-loss',
     },
     {
       id: '7.2',

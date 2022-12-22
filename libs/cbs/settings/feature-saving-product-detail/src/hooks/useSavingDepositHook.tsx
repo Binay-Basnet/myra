@@ -23,7 +23,33 @@ export const useSavingDepositHook = () => {
     productType: detailData?.accountType,
   };
 
-  const featureTable = [
+  const currentTermSavingFeatureTable = [
+    { feature: 'Auto Open when member joins', status: detailData?.autoOpen ? 'Yes' : 'No' },
+    { feature: 'Allow Loan Product', status: detailData?.allowLoan ? 'Yes' : 'No' },
+    {
+      feature: 'Does this product allow Alternative Channels',
+      status: detailData?.alternativeChannels ? 'Yes' : 'No',
+    },
+    {
+      feature: 'Does this product allow Multiple Accounts',
+      status: detailData?.alternativeChannels ? 'Yes' : 'No',
+    },
+    { feature: 'Is this staff product', status: detailData?.staffProduct ? 'Yes' : 'No' },
+    { feature: 'Is this product for minors', status: detailData?.isForMinors ? 'Yes' : 'No' },
+    { feature: 'Allow Cheque Issue', status: detailData?.chequeIssue ? 'Yes' : 'No' },
+    {
+      feature: 'Does this product provide ATM facility ',
+      status: detailData?.atmFacility ? 'Yes' : 'No',
+    },
+    { feature: 'Withdraw Restricted', status: detailData?.withdrawRestricted ? 'Yes' : 'No' },
+    { feature: 'Ladder Rate', status: detailData?.ladderRate ? 'Yes' : 'No' },
+    {
+      feature: 'Wealth Building Product',
+      status: detailData?.wealthBuildingProduct ? 'Yes' : 'No',
+    },
+  ];
+
+  const savingRecurringFeatureTable = [
     { feature: 'Auto Open when member joins', status: detailData?.autoOpen ? 'Yes' : 'No' },
     { feature: 'Is this staff product', status: detailData?.staffProduct ? 'Yes' : 'No' },
     { feature: 'Is this product for minors', status: detailData?.isForMinors ? 'Yes' : 'No' },
@@ -57,7 +83,8 @@ export const useSavingDepositHook = () => {
     detailData,
     criteriaData,
     sidebarData,
-    featureTable,
+    currentTermSavingFeatureTable,
+    savingRecurringFeatureTable,
     productLimits,
   };
 };

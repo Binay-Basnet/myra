@@ -1,13 +1,13 @@
 import { ReactElement } from 'react';
 
-import { ACMainLayout, SMSBankingListLayout } from '@coop/ac/layouts';
+import { ACMainLayout, UserLayout } from '@coop/ac/layouts';
 import { SMSBankingUsersList } from '@coop/ac/lists';
 
 const SMSBankingListPage = () => <SMSBankingUsersList />;
 
 SMSBankingListPage.getLayout = (page: ReactElement) => (
   <ACMainLayout>
-    <SMSBankingListLayout>{page}</SMSBankingListLayout>
+    <UserLayout>{page}</UserLayout>
   </ACMainLayout>
 );
 

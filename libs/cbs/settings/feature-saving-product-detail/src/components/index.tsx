@@ -8,6 +8,7 @@ export * from './ProductDormantSetup';
 export * from './ProductFeatures';
 export * from './ProductGeneralInformation';
 export * from './ProductInfo';
+export * from './ProductLadderRate';
 export * from './ProductLimits';
 export * from './ProductPenalty';
 export * from './ProductPrematurePenalty';

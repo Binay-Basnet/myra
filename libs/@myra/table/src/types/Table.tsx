@@ -37,6 +37,7 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
   size?: 'default' | 'compact' | 'report' | 'small';
   isLoading?: boolean;
   isStatic?: boolean;
+  isDetailPageTable?: boolean;
 
   searchPlaceholder?: string;
 

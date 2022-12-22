@@ -40,7 +40,11 @@ export const AppicantDetails = () => {
         <Divider />
         <Grid templateColumns="repeat(2,1fr)" gap="s20">
           {bioDataCoop?.docs?.map((docs) => (
-            <DocumentComponent keyText={docs?.key as string} value={docs?.value as string} />
+            <DocumentComponent
+              keyText={docs?.key as string}
+              value={docs?.value as string}
+              key={docs?.value}
+            />
           ))}
         </Grid>
       </Box>

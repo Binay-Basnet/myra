@@ -22,32 +22,41 @@ export const ProductRebate = ({ rebateData }: IProductRebateProps) => {
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
       },
       {
-        header: 'Rebate Amount',
-        accessorKey: 'rebateAmount',
+        header: 'No. of Installments',
+        accessorKey: 'noOfInstallment',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
         meta: {
-          width: '25%',
           isNumeric: true,
         },
       },
       {
-        header: 'Deposited amount',
+        header: 'Rebate Amount',
+        accessorKey: 'rebateAmount',
+        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: '% of Deposited amount',
         accessorKey: 'rebateRate',
         cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
         meta: {
-          width: '25%',
           isNumeric: true,
         },
+      },
+      {
+        header: 'Rebate Ledger Mapping',
+        accessorKey: 'rebateLedgerMapping',
+        cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
       },
     ],
     []
   );
 
-  if (!rebateData || Object.keys(rebateData).length === 0) return null;
-
   return (
     <DetailsCard title="Rebate" hasTable>
-      <Table isStatic data={rebateDataArray} columns={columns} />
+      <Table isDetailPageTable isStatic data={rebateDataArray} columns={columns} />
     </DetailsCard>
   );
 };
