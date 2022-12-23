@@ -54,15 +54,12 @@ export const Transactions = () => {
       },
       {
         header: 'Type',
-        accessorKey: 'transactionDirection',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="Medium" fontSize="s3" lineHeight="17px">
-              {props.getValue() as string}
-            </Text>
-          ) : (
-            'N/A'
-          ),
+        accessorKey: 'transactionType',
+        cell: (props) => (
+          <Text fontWeight="Medium" fontSize="s3" lineHeight="17px" textTransform="capitalize">
+            {props.row?.original?.transactionType?.replace(/_/gi, ' ')?.toLowerCase()}
+          </Text>
+        ),
       },
 
       {

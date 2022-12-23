@@ -544,6 +544,7 @@ query getAccountTransactionLists($filter: AccountsTransactionFilter!, $paginatio
           date
           month
           transactionDirection
+          transactionType
           amount
           currentBalance
         }

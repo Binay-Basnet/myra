@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Button, Column, DetailsCard, Table, Text } from '@myra-ui';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 export const RecentTransactions = () => {
@@ -32,7 +33,7 @@ export const RecentTransactions = () => {
       {
         header: 'Date',
         accessorKey: 'date',
-        cell: (props) => (props.getValue() ? `${props.getValue()}` : 'N/A'),
+        cell: (props) => localizedDate(props?.row?.original?.date),
       },
       {
         header: 'Transaction ID',
