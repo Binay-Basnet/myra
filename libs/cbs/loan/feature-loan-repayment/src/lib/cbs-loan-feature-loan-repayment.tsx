@@ -229,6 +229,11 @@ export const LoanRepayment = () => {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
+  const isSuspicious = watch('isSuspicious');
+
+  const suspicionRemarks = watch('suspicionRemarks');
+
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -347,7 +352,7 @@ export const LoanRepayment = () => {
             <FormFooter
               mainButtonLabel="Proceed to Payment"
               mainButtonHandler={proceedButtonHandler}
-              isMainButtonDisabled={!amountPaid}
+              isMainButtonDisabled={Boolean(!amountPaid || (isSuspicious && !suspicionRemarks))}
             />
           )}
           {mode === '1' && (
