@@ -9635,6 +9635,7 @@ export type MemberRecentTransactionView = {
   date?: Maybe<Scalars['Localized']>;
   noOfShares?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   txnType?: Maybe<MemberRecentTransactionViewTxnType>;
 };
 
