@@ -100,9 +100,9 @@ export enum Report {
   BB_USERWISE_TRANSACTION_REPORT = 'Userwise Transaction Report',
   BB_PROGRESS_REPORT = 'Progress Report',
 
-  BRANCH_WISE_FINANCIAL_REPORT = 'Branchwise financial Report',
+  BRANCH_WISE_FINANCIAL_REPORT = 'Service Centerwise financial Report',
   SERVICE_CENTER_LIST_REPORT = 'Service Center List Report',
-  BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Branchwise Target vs Achievement',
+  BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Service Centerwise Target vs Achievement',
 
   USER_LIST_REPORT = 'User List Report',
   SAVING_BALANCE_REPORT = 'Saving Balance [Individual]',
