@@ -25,7 +25,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
         <>
           <DetailCardContent
             title={t['transDetailTransactionID']}
-            subtitle={depositDetailData?.id}
+            subtitle={depositDetailData?.transactionCode}
           />
           <DetailCardContent
             title={t['transDetailTransactionDate']}
@@ -64,7 +64,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
         <>
           <DetailCardContent
             title={t['transDetailTransactionID']}
-            subtitle={withdrawDetailData?.id}
+            subtitle={withdrawDetailData?.transactionCode}
           />
           <DetailCardContent
             title={t['transDetailTransactionDate']}
@@ -104,7 +104,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
         <>
           <DetailCardContent
             title={t['transDetailTransactionID']}
-            subtitle={accountTransferDetailData?.id}
+            subtitle={accountTransferDetailData?.transactionCode}
           />
           <DetailCardContent
             title={t['transDetailTransactionDate']}

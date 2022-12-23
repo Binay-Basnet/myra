@@ -128,6 +128,21 @@ export const SharePurchaseForm = () => {
 
   const previousButtonHandler = () => setMode('shareInfo');
 
+  // const disableSubmitButtonFxn = () => {
+  //   if (paymentModes === SharePaymentMode.Cash && !disableDenomination) {
+  //     return !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount));
+  //   }
+  //   if (SharePaymentMode.BankVoucherOrCheque && bankSelected === undefined) {
+  //     return true;
+  //   }
+  //   if (paymentModes === SharePaymentMode.Account && accountSelected === undefined) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
+
+  // console.log('test', disableSubmitButtonFxn);
+
   const handleSubmit = () => {
     const values = getValues();
 
@@ -303,6 +318,7 @@ export const SharePurchaseForm = () => {
               <SharePaymentFooter
                 previousButtonHandler={previousButtonHandler}
                 handleSubmit={handleSubmit}
+                // isDisabled={disableSubmitButtonFxn()}
                 isDisabled={
                   paymentModes === SharePaymentMode.Cash && !disableDenomination
                     ? !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount))

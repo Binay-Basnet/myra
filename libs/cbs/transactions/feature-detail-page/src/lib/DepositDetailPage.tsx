@@ -20,7 +20,7 @@ export const DepositDetailPage = () => {
     memberId: depositDetailData?.member?.id,
     name: depositDetailData?.member?.name?.local,
     profilePic: depositDetailData?.member?.profilePicUrl,
-    transactionId: depositDetailData?.id,
+    transactionId: depositDetailData?.transactionCode,
     transactionDate: depositDetailData?.transactionDate,
     paymentMode: depositDetailData?.paymentMode,
     amount: depositDetailData?.amount,
@@ -28,7 +28,7 @@ export const DepositDetailPage = () => {
   };
 
   return (
-    <>
+    <Box bg="gray.100">
       <Box
         bg="gray.0"
         w="320px"
@@ -56,6 +56,6 @@ export const DepositDetailPage = () => {
           data={tableData ?? []}
         />
       </Box>
-    </>
+    </Box>
   );
 };
