@@ -36,16 +36,10 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Add Journal Voucher',
-      'Journal Voucher Detail Page',
-      'COA - Add Group , Add Account',
-      'Loan Product Detail Page',
-      'Saving Detail Page',
-      'User Creation and Credentials are sent on email',
-      'Service Center Creation',
-      'Member Detail Page for all member',
-      'Teller Account Validation ( Can only withdraw the amount if theres balance in tellers account)',
-      'Search on member, share and saving account list',
+      'Password Recovery',
+      'Share register detail page',
+      'New date picker',
+      'STR Transaction',
       'Completed Reports:',
       '1. Mobile Banking Registration',
       '2. Mobile Banking Expiry',
@@ -74,6 +68,9 @@ const whatsNewData = {
       '25. Bank GL Statement',
       '26. Vault Balance',
       '27. Share Balance Report',
+      '28. Loan Ageing Report',
+      '29. Daybook Report',
+      '30. Pl Report',
     ],
   },
   bugsSquashed: {
@@ -143,8 +140,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.1.0</Text>
-          <Text fontSize="s3">December 16, 2022</Text>
+          <Text fontSize="r2">Version 1.1.1</Text>
+          <Text fontSize="s3">December 23, 2022</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
