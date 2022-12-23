@@ -281,6 +281,10 @@ export const AddWithdraw = () => {
     }
   }, [memberId, redirectAccountId]);
 
+  const isSuspicious = watch('isSuspicious');
+
+  const suspicionRemarks = watch('suspicionRemarks');
+
   const checkIsSubmitButtonDisabled = () => {
     if (mode === 0) {
       if (!totalWithdraw) {
@@ -293,6 +297,10 @@ export const AddWithdraw = () => {
 
       if (withdrawn === WithdrawWith.CounterSlip && !counterSlipNo) {
         return true;
+      }
+
+      if (isSuspicious) {
+        return !suspicionRemarks;
       }
     }
 

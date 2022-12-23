@@ -179,9 +179,13 @@ export const AddDeposit = () => {
 
   const selectedPaymentMode = watch('payment_type');
 
+  const isSuspicious = watch('isSuspicious');
+
+  const suspicionRemarks = watch('suspicionRemarks');
+
   const checkIsSubmitButtonDisabled = () => {
     if (mode === 0) {
-      return !totalDeposit;
+      return Boolean(!totalDeposit || (isSuspicious && !suspicionRemarks));
     }
 
     if (selectedPaymentMode === DepositPaymentType.Cash) {
