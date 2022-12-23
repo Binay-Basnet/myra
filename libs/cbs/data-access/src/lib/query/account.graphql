@@ -539,6 +539,7 @@ query getAccountTransactionLists($filter: AccountsTransactionFilter!, $paginatio
       edges {
         node {
           id
+          transactionId
           accountId
           name
           date

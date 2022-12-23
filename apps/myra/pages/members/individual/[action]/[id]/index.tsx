@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { KYMIndividualPage } from '@coop/cbs/kym-form/feature-individual';
 import { MainLayout } from '@myra-ui';
+
+import { KYMIndividualPage } from '@coop/cbs/kym-form/feature-individual';
 
 const AddMember = () => <KYMIndividualPage />;
 

@@ -199,7 +199,7 @@ export const KYMInstitutionPage = () => {
               if (response) {
                 dispatch(setInstitutionHasPressedNext(true));
                 if (!basicErrors) {
-                  router.push(`/members/translation/${router.query['id']}`);
+                  router.push(`/members/activation/${id}`);
                 } else {
                   toast({
                     id: 'validation-error',

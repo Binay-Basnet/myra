@@ -204,7 +204,7 @@ export const KYMCooperativePage = () => {
               if (response) {
                 dispatch(setCooperativeHasPressedNext(true));
                 if (!basicErrors) {
-                  router.push(`/members/translation/${router.query['id']}`);
+                  router.push(`/members/activation/${id}`);
                 } else {
                   toast({
                     id: 'validation-error',

@@ -1,85 +1,32 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Button, Column, DetailsCard, Table, Text } from '@myra-ui';
+import { Button, DetailsCard } from '@myra-ui';
 
-import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
-import { amountConverter } from '@coop/shared/utils';
+import { TransactionTable } from '@coop/cbs/components';
+import { EbankingTransaction, useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
+import { getRouterQuery } from '@coop/shared/utils';
 
 export const RecentTransactions = () => {
   const router = useRouter();
   const id = router.query['id'] as string;
-  const memberDetails = useGetMemberDetailsOverviewQuery({
-    id: id as string,
-  });
 
-  const memberRecentTrans =
-    memberDetails?.data?.members?.memberOverview?.data?.overview?.recentTransactions;
+  const { data: transactionListQueryData } = useGetAccountTransactionListsQuery(
+    {
+      filter: { memberIds: [id as string] },
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    },
+    {
+      enabled: !!id,
+    }
+  );
 
-  const memberRecentTransWithIndex =
-    memberRecentTrans?.slice(0, 10)?.map((trans, index) => ({
-      index: index + 1,
-      ...trans,
-    })) ?? [];
-
-  const columns = useMemo<Column<typeof memberRecentTransWithIndex[0]>[]>(
-    () => [
-      {
-        header: 'SN',
-        accessorKey: 'index',
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-      },
-      {
-        header: 'Date',
-        accessorKey: 'date',
-        cell: (props) => localizedDate(props?.row?.original?.date),
-      },
-      {
-        header: 'Transaction ID',
-        accessorKey: 'noOfShares',
-        cell: (props) =>
-          props.getValue() ? <Text color="primary.500">#{props.getValue() as string}</Text> : 'N/A',
-      },
-      {
-        header: 'Type',
-        accessorKey: 'txnType',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="Medium" fontSize="s3" lineHeight="17px">
-              {props.getValue() as string}
-            </Text>
-          ) : (
-            'N/A'
-          ),
-      },
-
-      {
-        header: 'Account / Particulars',
-        accessorKey: 'title',
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-        meta: {
-          width: '33%',
-        },
-      },
-      {
-        header: 'Amount',
-        accessorKey: 'amount',
-        cell: (props) =>
-          props.table ? (
-            <Text fontWeight="Medium" fontSize="r1" lineHeight="17px" color="primary.500">
-              {amountConverter(props.getValue() as string)}
-            </Text>
-          ) : (
-            'N/A'
-          ),
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-    ],
-    []
+  const transactionList = useMemo(
+    () =>
+      transactionListQueryData?.account?.listTransactions?.edges
+        ?.slice(0, 10)
+        ?.map((item) => item?.node as EbankingTransaction) ?? [],
+    [transactionListQueryData]
   );
 
   return (
@@ -95,7 +42,7 @@ export const RecentTransactions = () => {
         </Button>
       }
     >
-      <Table isDetailPageTable isStatic data={memberRecentTransWithIndex} columns={columns} />
+      <TransactionTable data={transactionList} hasIndex />
     </DetailsCard>
   );
 };

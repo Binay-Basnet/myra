@@ -49,7 +49,7 @@ export const LoanAgingStatementsReport = () => {
         />
         <Report.Inputs hideDate>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Select Branch" />
+            <FormBranchSelect name="branchId" label="Select Service Center" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

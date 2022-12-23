@@ -24,7 +24,7 @@ export const ReportMember = ({ member }: ReportMemberProps) => {
                   Address:
                 </Text>
                 <Text fontSize="r1" color="gray.700">
-                  Branch Name:
+                  Service Center Name:
                 </Text>
               </Box>
             </GridItem>
@@ -66,7 +66,7 @@ export const ReportMember = ({ member }: ReportMemberProps) => {
                   {member?.code ?? '-'}
                 </Text>
                 <Text fontSize="r1" color="gray.700" fontWeight="500">
-                  {localizedDate(member?.dateJoined)}
+                  {localizedDate(member?.activeDate)}
                 </Text>
               </Box>
             </GridItem>

@@ -27,6 +27,7 @@ export const CBSAccountList = () => {
 
   const { t } = useTranslation();
   const searchTerm = router?.query['search'] as string;
+  const objState = router?.query['objState'];
 
   const { data, isFetching } = useGetAccountTableListMinimalQuery(
     {
@@ -93,17 +94,27 @@ export const CBSAccountList = () => {
         id: '_actions',
         header: '',
         cell: (props) =>
-          props?.row?.original?.node && (
+          props?.row?.original?.node && objState !== 'DORMANT' && objState !== 'SUBMITTED' ? (
             <TablePopover
               items={[
                 {
                   title: 'View Details',
                   onClick: (row) => router.push(`/savings/details/${row['id']}`),
                 },
-                // {
-                //   title: 'depositProductEdit',
-                //   onClick: (row) => router.push(`/savings/account-open/edit/${row['id']}`),
-                // },
+                {
+                  title: 'depositProductEdit',
+                  onClick: (row) => router.push(`/savings/account-open/edit/${row['id']}`),
+                },
+              ]}
+              node={props?.row?.original?.node}
+            />
+          ) : (
+            <TablePopover
+              items={[
+                {
+                  title: 'View Details',
+                  onClick: (row) => router.push(`/savings/details/${row['id']}`),
+                },
               ]}
               node={props?.row?.original?.node}
             />
@@ -113,7 +124,7 @@ export const CBSAccountList = () => {
         },
       },
     ],
-    [t]
+    [t, objState]
   );
 
   return (

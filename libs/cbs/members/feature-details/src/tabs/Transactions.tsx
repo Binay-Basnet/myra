@@ -1,9 +1,12 @@
+import { useMemo } from 'react';
 import { IoAddOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Grid, Icon, Text } from '@myra-ui';
+import { Box, DetailsCard, Grid, Icon, Text } from '@myra-ui';
 
-import { TransactionTable } from '../components';
+import { TransactionTable } from '@coop/cbs/components';
+import { EbankingTransaction, useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
+import { getRouterQuery } from '@coop/shared/utils';
 
 export const Transactions = () => {
   const router = useRouter();
@@ -22,6 +25,24 @@ export const Transactions = () => {
       link: `/transactions/account-transfer/add?memberId=${id}`,
     },
   ];
+
+  const { data: transactionListQueryData } = useGetAccountTransactionListsQuery(
+    {
+      filter: { memberIds: [id as string] },
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    },
+    {
+      enabled: !!id,
+    }
+  );
+
+  const transactionList = useMemo(
+    () =>
+      transactionListQueryData?.account?.listTransactions?.edges?.map(
+        (item) => item?.node as EbankingTransaction
+      ) ?? [],
+    [transactionListQueryData]
+  );
 
   return (
     <>
@@ -57,7 +78,10 @@ export const Transactions = () => {
           ))}
         </Grid>
       </Box>
-      <TransactionTable />
+
+      <DetailsCard title="Recent Transactions" hasTable>
+        <TransactionTable data={transactionList} hasIndex />
+      </DetailsCard>
     </>
   );
 };
