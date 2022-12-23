@@ -104,32 +104,35 @@ export const Sidebar = ({
 
         <Box p="s16">
           {mainButtonLabel && (
-            <PopOverComponentForButtonList buttonLabel={mainButtonLabel}>
-              {addButtonList?.map((item) => (
-                <Box key={item?.title}>
-                  <AddButtonList
-                    label={t[item.title] || item?.title}
-                    onClick={() => {
-                      if (item.linkId && !hasActionURL) {
-                        newId
-                          .mutateAsync({ idType: idType ?? null })
-                          .then((res) => router.push(`${item.linkId}/${res?.newId}`));
-                      }
-                      if (item.linkId && hasActionURL) {
-                        newId
-                          .mutateAsync({ idType: idType ?? null })
-                          .then((res) => router.push(`${item.linkId}/new/${res?.newId}`));
-                      } else {
-                        item.link && router.push(item.link);
-                      }
-                    }}
-                  />
-                </Box>
-              ))}
-            </PopOverComponentForButtonList>
+            <>
+              <PopOverComponentForButtonList buttonLabel={mainButtonLabel}>
+                {addButtonList?.map((item) => (
+                  <Box key={item?.title}>
+                    <AddButtonList
+                      label={t[item.title] || item?.title}
+                      onClick={() => {
+                        if (item.linkId && !hasActionURL) {
+                          newId
+                            .mutateAsync({ idType: idType ?? null })
+                            .then((res) => router.push(`${item.linkId}/${res?.newId}`));
+                        }
+                        if (item.linkId && hasActionURL) {
+                          newId
+                            .mutateAsync({ idType: idType ?? null })
+                            .then((res) => router.push(`${item.linkId}/new/${res?.newId}`));
+                        } else {
+                          item.link && router.push(item.link);
+                        }
+                      }}
+                    />
+                  </Box>
+                ))}
+              </PopOverComponentForButtonList>
+
+              <Divider my="s16" />
+            </>
           )}
 
-          <Divider my="s16" />
           <TabColumn list={tabColumns} />
           <Divider my="s16" />
           {settingButtons?.map((item) => (
