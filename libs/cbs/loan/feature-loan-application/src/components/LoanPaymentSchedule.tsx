@@ -189,7 +189,7 @@ export const LoanPaymentSchedule = () => {
         data?.loanAccount?.getLoanInstallments?.data?.installments && (
           <Table<LoanInstallment>
             variant="report"
-            size="small"
+            size="report"
             isStatic
             showFooter
             data={loanInstallmentData}

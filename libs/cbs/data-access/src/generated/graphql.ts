@@ -929,9 +929,12 @@ export type Bank = Base & {
 
 export type BankAccount = {
   accountNo?: Maybe<Scalars['String']>;
+  accountType?: Maybe<AccountingBankAccountType>;
   balance?: Maybe<Scalars['String']>;
   bankId?: Maybe<Scalars['String']>;
   bankName?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   displayName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
 };
@@ -2779,6 +2782,7 @@ export type DepositAccount = Base & {
   accountExpiryDate?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   accountOpenedDate?: Maybe<Scalars['String']>;
+  availableBalance?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
   closedAt?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
@@ -3399,6 +3403,21 @@ export enum DepositProductStatus {
   Inactive = 'INACTIVE',
 }
 
+export type DepositRecord = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositedBy?: Maybe<DepositedBy>;
+  fine?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentMode?: Maybe<DepositPaymentType>;
+  rebate?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+  transactionID?: Maybe<Scalars['ID']>;
+};
+
 export type DepositReport = {
   accountClosingReport?: Maybe<AccountClosingReportResult>;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
@@ -3440,6 +3459,7 @@ export type DepositReportThresholdTransactionReportArgs = {
 export type DepositResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
+  record?: Maybe<DepositRecord>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -8906,10 +8926,26 @@ export enum LoanRepaymentMethod {
   Cash = 'CASH',
 }
 
+export type LoanRepaymentRecord = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  installmentNo?: Maybe<Scalars['String']>;
+  interestAmount?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentMethod?: Maybe<LoanRepaymentMethod>;
+  penaltyAmount?: Maybe<Scalars['String']>;
+  principalAmount?: Maybe<Scalars['String']>;
+  rebateAmount?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
+};
+
 export type LoanRepaymentResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<LoanAccountQuery>;
-  record?: Maybe<LoanAccount>;
+  record?: Maybe<LoanRepaymentRecord>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -9635,6 +9671,7 @@ export type MemberRecentTransactionView = {
   date?: Maybe<Scalars['Localized']>;
   noOfShares?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   txnType?: Maybe<MemberRecentTransactionViewTxnType>;
 };
 
@@ -11761,13 +11798,17 @@ export type ShareRegister = {
   id?: Maybe<Scalars['ID']>;
   member?: Maybe<Member>;
   memberId?: Maybe<Scalars['String']>;
+  noOfShare?: Maybe<Scalars['String']>;
+  otherCharge?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<SharePaymentMode>;
   shareAmount?: Maybe<Scalars['String']>;
+  shareCertificateCharge?: Maybe<Scalars['String']>;
   startNumber: Scalars['Int'];
   status?: Maybe<Share_Status>;
   totalAmount?: Maybe<Scalars['Float']>;
-  transactionDate?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
   transactionDirection: Share_Transaction_Direction;
+  transactionId?: Maybe<Scalars['String']>;
   voucherNumber?: Maybe<Scalars['String']>;
 };
 
@@ -12553,11 +12594,25 @@ export enum TransactionTypeFilter {
 }
 
 export type TransferData = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  fine?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   payeeNumber?: Maybe<Scalars['String']>;
+  receiverAccountId?: Maybe<Scalars['String']>;
+  receiverAccountName?: Maybe<Scalars['String']>;
+  receiverMemberId?: Maybe<Scalars['String']>;
+  receiverMemberName?: Maybe<Scalars['Localized']>;
   remarks?: Maybe<Scalars['String']>;
+  senderAccountId?: Maybe<Scalars['String']>;
+  senderAccountName?: Maybe<Scalars['String']>;
+  senderMemberId?: Maybe<Scalars['String']>;
+  senderMemberName?: Maybe<Scalars['Localized']>;
+  totalAmount?: Maybe<Scalars['String']>;
   transactionAccount?: Maybe<Scalars['String']>;
   transactionMode?: Maybe<TransactionMode>;
+  transferType?: Maybe<TransferType>;
+  withdrawWith?: Maybe<WithdrawWith>;
 };
 
 export type TransferInput = {
@@ -12990,9 +13045,25 @@ export type WithdrawPenaltyFormState = {
   penaltyRate?: Maybe<Scalars['Float']>;
 };
 
+export type WithdrawRecord = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  fine?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentMode?: Maybe<WithdrawPaymentType>;
+  totalAmount?: Maybe<Scalars['String']>;
+  transactionID?: Maybe<Scalars['ID']>;
+  withdrawWith?: Maybe<WithdrawWith>;
+  withdrawnBy?: Maybe<WithdrawBy>;
+};
+
 export type WithdrawResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
+  record?: Maybe<WithdrawRecord>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -19398,7 +19469,7 @@ export type GetMemberDetailsOverviewQuery = {
                 id?: string | null;
                 memberId?: string | null;
                 status?: Share_Status | null;
-                transactionDate?: string | null;
+                transactionDate?: Record<'local' | 'en' | 'np', string> | null;
                 transactionDirection: Share_Transaction_Direction;
                 credit?: number | null;
                 debit?: number | null;
@@ -19518,7 +19589,7 @@ export type GetMemberDetailsShareBalanceQuery = {
         id?: string | null;
         memberId?: string | null;
         status?: Share_Status | null;
-        transactionDate?: string | null;
+        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         transactionDirection: Share_Transaction_Direction;
         credit?: number | null;
         debit?: number | null;
@@ -23180,7 +23251,7 @@ export type GetShareRegisterListQuery = {
         cursor: string;
         node: {
           id?: string | null;
-          transactionDate?: string | null;
+          transactionDate?: Record<'local' | 'en' | 'np', string> | null;
           transactionDirection: Share_Transaction_Direction;
           balance?: number | null;
           startNumber: number;
@@ -23217,7 +23288,7 @@ export type GetShareHistoryQuery = {
       history?: Array<{
         id?: string | null;
         status?: Share_Status | null;
-        transactionDate?: string | null;
+        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         transactionDirection: Share_Transaction_Direction;
         credit?: number | null;
         debit?: number | null;
