@@ -23,7 +23,7 @@ export const LoanRepaymentDetailPage = () => {
     code: loanRepaymentDetailData?.member?.code,
     name: loanRepaymentDetailData?.member?.name?.local,
     profilePic: loanRepaymentDetailData?.member?.profilePicUrl,
-    transactionId: loanRepaymentDetailData?.member?.id,
+    transactionId: loanRepaymentDetailData?.transactionCode,
     loanAccountName: loanRepaymentDetailData?.loanAccountName,
     loanSubtype: loanRepaymentDetailData?.loanSubType,
     loanAccId: loanRepaymentDetailData?.loanAccountId,
@@ -32,7 +32,7 @@ export const LoanRepaymentDetailPage = () => {
   };
 
   return (
-    <>
+    <Box bg="gray.100">
       <Box
         bg="gray.0"
         w="320px"
@@ -61,6 +61,6 @@ export const LoanRepaymentDetailPage = () => {
           totalDebit={String(amountConverter(loanRepaymentDetailData?.totalDebit ?? 0))}
         />
       </Box>
-    </>
+    </Box>
   );
 };

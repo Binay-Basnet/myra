@@ -9,6 +9,7 @@ type GlTransactionDetailProps = {
   data:
     | ({
         account: string;
+        serviceCenter?: string | null | undefined;
         debit?: string | null | undefined;
         credit?: string | null | undefined;
       } | null)[]
@@ -32,6 +33,10 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
         meta: {
           width: '500px',
         },
+      },
+      {
+        header: 'Service Center',
+        accessorFn: (row) => row?.serviceCenter,
       },
       {
         header: t['transDetailDebit'],

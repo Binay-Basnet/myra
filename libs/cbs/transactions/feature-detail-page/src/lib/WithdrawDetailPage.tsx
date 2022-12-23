@@ -23,14 +23,14 @@ export const WithdrawDetailPage = () => {
     code: withdrawDetailData?.member?.code,
     name: withdrawDetailData?.member?.name?.local,
     profilePic: withdrawDetailData?.member?.profilePicUrl,
-    transactionId: withdrawDetailData?.id,
+    transactionId: withdrawDetailData?.transactionCode,
     transactionDate: withdrawDetailData?.transactionDate,
     paymentMode: withdrawDetailData?.paymentMode,
     amount: withdrawDetailData?.withdrawAmount,
     method: withdrawDetailData?.withdrawnBy,
   };
   return (
-    <>
+    <Box bg="gray.100">
       <Box
         bg="gray.0"
         w="320px"
@@ -62,6 +62,6 @@ export const WithdrawDetailPage = () => {
           data={tableData ?? []}
         />
       </Box>
-    </>
+    </Box>
   );
 };

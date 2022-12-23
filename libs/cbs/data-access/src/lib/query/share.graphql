@@ -150,6 +150,7 @@ query getShareDetail($transactionID: ID!) {
           account
           debit
           credit
+          serviceCenter
         }
         totalCredit
         totalDebit

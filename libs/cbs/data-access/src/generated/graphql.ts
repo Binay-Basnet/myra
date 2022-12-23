@@ -16527,12 +16527,14 @@ export type GetJournalVoucherDetailQuery = {
           status?: string | null;
           reference?: string | null;
           note?: string | null;
+          transactionCode?: string | null;
           totalDebit?: string | null;
           totalCredit?: string | null;
           glTransaction?: Array<{
             account: string;
             debit?: string | null;
             credit?: string | null;
+            serviceCenter?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -23375,6 +23377,7 @@ export type GetShareDetailQuery = {
           account: string;
           debit?: string | null;
           credit?: string | null;
+          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -23531,6 +23534,7 @@ export type TransactionDepositDetailQuery = {
     viewDeposit?: {
       data?: {
         id: string;
+        transactionCode?: string | null;
         transactionDate?: string | null;
         accountName?: string | null;
         voucherId?: string | null;
@@ -23560,6 +23564,7 @@ export type TransactionDepositDetailQuery = {
           account: string;
           debit?: string | null;
           credit?: string | null;
+          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -23576,6 +23581,7 @@ export type TransactionWithdrawDetailQuery = {
       data?: {
         id: string;
         transactionDate?: string | null;
+        transactionCode?: string | null;
         accountName?: string | null;
         chequeNo?: string | null;
         withdrawAmount?: string | null;
@@ -23602,6 +23608,7 @@ export type TransactionWithdrawDetailQuery = {
           account: string;
           debit?: string | null;
           credit?: string | null;
+          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -23617,6 +23624,7 @@ export type TransactionAccountTransferDetailQuery = {
     viewAccountTransfer?: {
       data?: {
         id: string;
+        transactionCode?: string | null;
         transactionDate?: string | null;
         transferAmount?: string | null;
         transferType?: TransferType | null;
@@ -23643,6 +23651,7 @@ export type TransactionAccountTransferDetailQuery = {
           account: string;
           debit?: string | null;
           credit?: string | null;
+          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -23699,6 +23708,7 @@ export type LoanRepaymentDetailQuery = {
     viewLoanRepayment?: {
       data?: {
         repaymentId: string;
+        transactionCode?: string | null;
         loanSubType?: string | null;
         loanAccountId?: string | null;
         loanAccountName?: string | null;
@@ -23729,6 +23739,7 @@ export type LoanRepaymentDetailQuery = {
           account: string;
           debit?: string | null;
           credit?: string | null;
+          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -29091,10 +29102,12 @@ export const GetJournalVoucherDetailDocument = `
           status
           reference
           note
+          transactionCode
           glTransaction {
             account
             debit
             credit
+            serviceCenter
           }
           totalDebit
           totalCredit
@@ -38035,6 +38048,7 @@ export const GetShareDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalCredit
         totalDebit
@@ -38254,6 +38268,7 @@ export const TransactionDepositDetailDocument = `
     viewDeposit(transactionId: $transactionId) {
       data {
         id
+        transactionCode
         member {
           id
           code
@@ -38282,6 +38297,7 @@ export const TransactionDepositDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -38318,6 +38334,7 @@ export const TransactionWithdrawDetailDocument = `
           profilePicUrl
         }
         transactionDate
+        transactionCode
         accountName
         chequeNo
         withdrawAmount
@@ -38335,6 +38352,7 @@ export const TransactionWithdrawDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -38369,6 +38387,7 @@ export const TransactionAccountTransferDetailDocument = `
           profilePic
           profilePicUrl
         }
+        transactionCode
         transactionDate
         transferAmount
         sourceAccount {
@@ -38394,6 +38413,7 @@ export const TransactionAccountTransferDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -38488,6 +38508,7 @@ export const LoanRepaymentDetailDocument = `
           name
           profilePicUrl
         }
+        transactionCode
         loanSubType
         loanAccountId
         loanAccountName
@@ -38510,6 +38531,7 @@ export const LoanRepaymentDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
