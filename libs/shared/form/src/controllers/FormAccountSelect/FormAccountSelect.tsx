@@ -18,6 +18,7 @@ interface Option {
     accountId?: string;
     accountType?: string;
     balance?: string;
+    availableBalance?: string;
     fine?: string;
     productName: string;
   };
@@ -90,7 +91,7 @@ export const FormAccountSelect = ({
             accountName: curVal?.accountName,
             accountId: curVal?.product?.nature,
             accountType: curVal?.product?.nature ? accountTypes[curVal?.product?.nature] : '',
-            balance: curVal?.balance as string,
+            balance: curVal?.availableBalance as string,
             fine: '0',
             productName: curVal?.product?.productName,
           },
@@ -116,7 +117,7 @@ export const FormAccountSelect = ({
             accountType: curVal?.node?.product?.nature
               ? accountTypes[curVal?.node?.product?.nature]
               : '',
-            balance: curVal?.node?.balance as string,
+            balance: curVal?.node?.availableBalance as string,
             fine: curVal?.node?.dues?.fine as string,
             productName: curVal?.node?.product?.productName,
           },

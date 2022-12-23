@@ -260,6 +260,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
           }
           installmentAmount
           balance
+          availableBalance
           accountOpenedDate
           lastTransactionDate
           accountExpiryDate

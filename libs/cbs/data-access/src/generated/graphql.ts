@@ -15833,6 +15833,7 @@ export type GetAccountTableListQuery = {
           modifiedAt: string;
           installmentAmount?: string | null;
           balance?: string | null;
+          availableBalance?: string | null;
           accountOpenedDate?: string | null;
           lastTransactionDate?: string | null;
           accountExpiryDate?: string | null;
@@ -18803,6 +18804,7 @@ export type GetMemberLinkedAccountsQuery = {
           id: string;
           accountName?: string | null;
           balance?: string | null;
+          availableBalance?: string | null;
           interestAccured?: string | null;
           interestTax?: string | null;
           prematurePenalty?: string | null;
@@ -28175,6 +28177,7 @@ export const GetAccountTableListDocument = `
           }
           installmentAmount
           balance
+          availableBalance
           accountOpenedDate
           lastTransactionDate
           accountExpiryDate
@@ -31995,6 +31998,7 @@ export const GetMemberLinkedAccountsDocument = `
             name
           }
           balance
+          availableBalance
           interestAccured
           interestTax
           prematurePenalty
