@@ -37,7 +37,7 @@ type ValidationError = {
   validationErrorMsg: Record<string, Array<string>>;
 };
 
-type MutationError =
+export type MutationError =
   | AuthorizationError
   | BadRequestError
   | NotFoundError
