@@ -49,7 +49,7 @@ export const AccountOpenReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Select Branch" />
+            <FormBranchSelect name="branchId" label="Select Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange />

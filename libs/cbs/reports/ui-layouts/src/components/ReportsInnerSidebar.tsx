@@ -43,7 +43,7 @@ const REPORTS_INNER_TAB_LINKS = [
     to: '/reports/cbs/branch-less-report',
   },
   {
-    title: 'Branch Report',
+    title: 'Service Center Report',
     to: '/reports/cbs/service-center',
   },
   {

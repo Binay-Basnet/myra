@@ -24,7 +24,7 @@ export const ReportMember = ({ member }: ReportMemberProps) => {
                   Address:
                 </Text>
                 <Text fontSize="r1" color="gray.700">
-                  Branch Name:
+                  Service Center Name:
                 </Text>
               </Box>
             </GridItem>
