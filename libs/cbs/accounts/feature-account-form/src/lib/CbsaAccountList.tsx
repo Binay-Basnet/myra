@@ -41,7 +41,6 @@ export const CBSAccountList = () => {
       },
     },
     {
-      staleTime: 0,
       enabled: searchTerm !== 'undefined',
     }
   );
@@ -54,7 +53,6 @@ export const CBSAccountList = () => {
         header: 'Account Id',
         accessorFn: (row) => row?.node?.id,
       },
-
       {
         header: 'Member Name',
         accessorFn: (row) => row?.node?.member?.name?.local,
