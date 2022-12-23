@@ -539,11 +539,13 @@ query getAccountTransactionLists($filter: AccountsTransactionFilter!, $paginatio
       edges {
         node {
           id
+          transactionId
           accountId
           name
           date
           month
           transactionDirection
+          transactionType
           amount
           currentBalance
         }

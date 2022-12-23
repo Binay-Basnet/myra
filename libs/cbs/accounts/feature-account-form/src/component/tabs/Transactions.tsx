@@ -2,14 +2,15 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { Button, Column, DetailsCard, Table, Text } from '@myra-ui';
+import { Button, DetailsCard } from '@myra-ui';
 
+import { TransactionTable } from '@coop/cbs/components';
 import {
-  EbankingTransactionDirection,
+  EbankingTransaction,
   useAccountDetails,
-  useGetAccountTransactionList,
+  useGetAccountTransactionListsQuery,
 } from '@coop/cbs/data-access';
-import { amountConverter } from '@coop/shared/utils';
+import { getRouterQuery } from '@coop/shared/utils';
 
 import { TabHeader } from '../details';
 
@@ -18,87 +19,22 @@ export const Transactions = () => {
 
   const { accountDetails } = useAccountDetails();
 
-  const { transactionList } = useGetAccountTransactionList({
-    accountId: accountDetails?.accountId,
-  });
+  const { data: transactionListQueryData } = useGetAccountTransactionListsQuery(
+    {
+      filter: { accountIds: [accountDetails?.accountId as string] },
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    },
+    {
+      enabled: !!accountDetails?.accountId,
+    }
+  );
 
-  const transactionListWithIndex =
-    transactionList?.map((trans, index) => ({
-      index: index + 1,
-      ...trans,
-    })) ?? [];
-
-  const columns = useMemo<Column<typeof transactionListWithIndex[0]>[]>(
-    () => [
-      {
-        header: 'SN',
-        accessorKey: 'index',
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-      },
-      {
-        header: 'Date',
-        accessorKey: 'date',
-        cell: (props) => (props.getValue() ? `${props.getValue()}` : 'N/A'),
-      },
-      {
-        header: 'Transaction ID',
-        accessorKey: 'id',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="500" fontSize="r1" color="primary.500">
-              #{props.getValue() as string}
-            </Text>
-          ) : (
-            'N/A'
-          ),
-      },
-      {
-        header: 'Type',
-        accessorKey: 'transactionDirection',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="Medium" fontSize="s3" lineHeight="17px">
-              {props.getValue() as string}
-            </Text>
-          ) : (
-            'N/A'
-          ),
-      },
-
-      {
-        header: 'Account / Particulars',
-        accessorKey: 'name',
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-        meta: {
-          width: '33%',
-        },
-      },
-      {
-        header: 'Total',
-        accessorKey: 'amount',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text
-              fontWeight="500"
-              fontSize="r1"
-              color={
-                props.row?.original?.transactionDirection === EbankingTransactionDirection.Incoming
-                  ? 'primary.500'
-                  : 'danger.500'
-              }
-            >
-              {amountConverter(props.getValue() as string)}
-            </Text>
-          ) : (
-            'N/A'
-          ),
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-    ],
-    []
+  const transactionList = useMemo(
+    () =>
+      transactionListQueryData?.account?.listTransactions?.edges?.map(
+        (item) => item?.node as EbankingTransaction
+      ) ?? [],
+    [transactionListQueryData]
   );
 
   return (
@@ -132,8 +68,7 @@ export const Transactions = () => {
         //   </Button>
         // }
       >
-        <Table isDetailPageTable isStatic data={transactionListWithIndex} columns={columns} />
-        {/* {transactionList?.map((item) => item && <TransactionCard transactionItem={item} />)} */}
+        <TransactionTable data={transactionList} hasIndex />
       </DetailsCard>
     </>
   );
