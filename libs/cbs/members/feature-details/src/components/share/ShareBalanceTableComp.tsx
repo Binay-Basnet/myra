@@ -2,12 +2,13 @@ import React from 'react';
 
 import { Column, Table } from '@myra-ui/table';
 
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
     | {
-        date: string | null | undefined;
+        date: Record<'local' | 'en' | 'np', string> | null | undefined;
         type: string | null | undefined;
         toFrom: string | null | undefined;
         shareCr: number | null | undefined;
@@ -24,6 +25,8 @@ export const ShareTableComponent = ({ data }: ILoanPaymentScheduleTableProps) =>
       {
         header: 'Date',
         accessorKey: 'date',
+        cell: (props) =>
+          props.getValue() ? localizedDate(props?.cell?.row?.original?.date) : 'N/A',
       },
       {
         header: 'Type',
