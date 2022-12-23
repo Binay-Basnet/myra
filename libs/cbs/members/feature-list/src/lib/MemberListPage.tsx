@@ -149,6 +149,7 @@ export const MemberListPage = () => {
             <TablePopover
               node={cell.row.original?.node}
               items={
+                /* eslint-disable no-nested-ternary */
                 objState === 'DRAFT'
                   ? [
                       {
@@ -169,13 +170,34 @@ export const MemberListPage = () => {
                         },
                       },
                     ]
-                  : [
+                  : objState === 'VALIDATED'
+                  ? [
+                      {
+                        title: t['memberListTableEditMember'],
+                        onClick: (node) => {
+                          router.push(
+                            `/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
+                              node?.id
+                            }`
+                          );
+                        },
+                      },
                       {
                         title:
-                          objState !== 'VALIDATED' ? t['memberListTableViewMemberProfile'] : '',
-                        onClick: (node) =>
-                          objState !== 'VALIDATED' &&
-                          router.push(`/members/details?id=${node?.id}`),
+                          objState === 'VALIDATED'
+                            ? t['memberListTableMakeActive']
+                            : t['memberListTableMakeInactive'],
+                        onClick: (node) => {
+                          objState === 'VALIDATED'
+                            ? router.push(`/members/activation/${node?.id}`)
+                            : router.push(`/members/inactivation/${node?.id}`);
+                        },
+                      },
+                    ]
+                  : [
+                      {
+                        title: t['memberListTableViewMemberProfile'],
+                        onClick: (node) => router.push(`/members/details?id=${node?.id}`),
                       },
                       {
                         title: t['memberListTableEditMember'],

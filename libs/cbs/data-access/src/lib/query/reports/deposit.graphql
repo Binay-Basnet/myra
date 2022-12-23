@@ -132,6 +132,7 @@ query getSavingStatement($data: SavingStatementReportSettings!) {
             localGovernment
           }
           dateJoined
+          activeDate
         }
         statement {
           ... on SavingStatementReport {

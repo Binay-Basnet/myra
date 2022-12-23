@@ -68,7 +68,6 @@ export const SavingStatementReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization />
           <ReportMember member={savingMember} />
-
           <Report.Table<SavingStatement & { index: number }>
             showFooter
             columns={[

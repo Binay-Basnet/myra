@@ -41,9 +41,8 @@ const accountingSidebarColumns = [
   },
   {
     title: 'accountingAccountingSidebarChartsOfAccounts',
-    link: '/accounting/accounting/charts-of-account/list',
+    link: '/accounting/accounting/charts-of-account',
     name: 'charts-of-account',
-    addLink: '/accounting/accounting/charts-of-accounts/add',
   },
 ];
 
@@ -74,7 +73,7 @@ export const AccountingSidebarLayout = ({ children }: IAccountingSidebarLayoutPr
     },
     {
       title: t['accountingAccountingSidebarChartsOfAccounts'],
-      link: '/accounting/accounting/charts-of-accounts/add',
+      link: '/accounting/accounting/charts-of-accounts',
     },
   ];
 
