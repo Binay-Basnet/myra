@@ -267,7 +267,7 @@ export const TTRReport = () => {
             <FormSelect
               name="filter.member"
               options={getUniqueListBy(
-                memberListArray.filter((m) => !m.value),
+                memberListArray.filter((m) => !!m.value),
                 'value'
               )}
               isMulti
