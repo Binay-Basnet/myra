@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router';
 
 import {
+  AllTransactionType,
   useAgentTransactionDetailQuery,
   useGetAgentDetailQuery,
+  useGetAllTransactionsDetailQuery,
   useLoanRepaymentDetailQuery,
   useTransactionAccountTransferDetailQuery,
   useTransactionDepositDetailQuery,
@@ -12,7 +14,7 @@ import {
 export const useTransactionDetailHooks = () => {
   const router = useRouter();
 
-  const { id, date } = router.query;
+  const { id, date, txnType } = router.query;
 
   // deposit
   const { data: deposit } = useTransactionDepositDetailQuery(
@@ -67,6 +69,12 @@ export const useTransactionDetailHooks = () => {
     { staleTime: 0, enabled: !!id && router?.asPath?.includes('/loan-payment/') }
   );
 
+  const { data: allTransactionsDetails } = useGetAllTransactionsDetailQuery(
+    { id: id as string, txnType: txnType as AllTransactionType },
+    { staleTime: 0, enabled: !!id && router?.asPath?.includes('/all-transactions/') }
+  );
+  const allTransactionsData = allTransactionsDetails?.transaction?.viewTransactionDetail?.data;
+
   const loanRepaymentDetailData = loanRepaymentDetail?.transaction?.viewLoanRepayment?.data;
 
   return {
@@ -76,6 +84,7 @@ export const useTransactionDetailHooks = () => {
     agentTransactionDetailData,
     agentDetailData,
     loanRepaymentDetailData,
+    allTransactionsData,
     memberDetail: {
       name:
         depositDetailData?.member?.name?.local ??

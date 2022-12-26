@@ -362,3 +362,33 @@ query getAllTransactionsList($filter: AllTransactionFilter, $pagination: Paginat
     }
   }
 }
+
+query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
+  transaction {
+    viewTransactionDetail(transactionId: $id, txnType: $txnType) {
+      data {
+        id
+        member {
+          id
+          code
+          name
+          profilePicUrl
+        }
+        transactionDate
+        txnType
+        transactionMode
+        amount
+        branch
+        status
+        glTransaction {
+          account
+          serviceCenter
+          debit
+          credit
+        }
+        totalDebit
+        totalCredit
+      }
+    }
+  }
+}
