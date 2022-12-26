@@ -27,10 +27,6 @@ export const AllTransactionsList = () => {
       {
         accessorFn: (row) => row?.node?.transactionType,
         header: 'Type',
-
-        meta: {
-          width: '60%',
-        },
       },
       {
         header: 'Narration',
@@ -40,9 +36,6 @@ export const AllTransactionsList = () => {
       {
         header: 'Amount',
         accessorFn: (row) => row?.node?.amount,
-        meta: {
-          isNumeric: true,
-        },
       },
       {
         header: 'Date',
