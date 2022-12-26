@@ -51,15 +51,19 @@ export const SuccessCard = ({
           gap="s10"
           py="s8"
         >
-          {Object.entries(details).map((detail) => (
+          {Object.entries(details).map((detail, index) => (
             <Box display="flex" alignItems="center" justifyContent="space-between">
               <Box color="gray.600" fontSize="s3" fontWeight="500">
                 {detail[0]}
               </Box>
 
-              <Box color="gray.700" fontSize="s3" fontWeight="600" textTransform="capitalize">
-                {detail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
-              </Box>
+              {index === 0 ? (
+                detail[1]
+              ) : (
+                <Box color="gray.700" fontSize="s3" fontWeight="600" textTransform="capitalize">
+                  {detail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
+                </Box>
+              )}
             </Box>
           ))}
         </Box>
