@@ -1,12 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection } from '@myra-ui';
+
 import {
   FormFieldSearchTerm,
   KymCooperativeFormInput,
   useGetCooperativeKymOptionsQuery,
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -42,6 +43,7 @@ export const KymCoopAddCoopDetails = (props: IProps) => {
           header="kymCoopAdditionalCoorperativeDetails"
         >
           <FormSelect
+            isRequired
             name="cooperativeTypeId"
             label={t['kymCoopType']}
             options={getFieldOption(cooperativeTypeFields)}

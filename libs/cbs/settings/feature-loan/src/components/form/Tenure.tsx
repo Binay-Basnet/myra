@@ -89,6 +89,7 @@ export const Tenure = () => {
           <Grid templateColumns="repeat(3,1fr)" gap="s20">
             <GridItem colSpan={1}>
               <FormInput
+                isRequired
                 name="minTenureUnitNumber"
                 textAlign="right"
                 label={t['depositProductMinimumTenure']}
@@ -101,6 +102,7 @@ export const Tenure = () => {
 
             <GridItem colSpan={1}>
               <FormInput
+                isRequired
                 name="maxTenureUnitNumber"
                 textAlign="right"
                 label={t['depositProductMaxinumTenure']}

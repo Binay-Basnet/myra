@@ -1,8 +1,11 @@
+import { useRouter } from 'next/router';
+
 import { Avatar, Box, Text } from '@myra-ui';
 
 import { useShareRegisterDetailHooks } from '../hooks/useShareRegisterDetailHooks';
 
 export const Summary = () => {
+  const router = useRouter();
   const { shareDetails } = useShareRegisterDetailHooks();
   return (
     <>
@@ -44,6 +47,10 @@ export const Summary = () => {
         alignItems="center"
         borderBottom="1px"
         borderBottomColor="border.layout"
+        _hover={{
+          cursor: 'pointer',
+        }}
+        onClick={() => router.push(`/members/details?id=${shareDetails?.member?.id}`)}
       >
         <Avatar src={shareDetails?.member?.profilePicUrl as string} h="s32" w="s32" />
         <Text color="primary.500" fontWeight="Medium" fontSize="r1" lineHeight="150%">

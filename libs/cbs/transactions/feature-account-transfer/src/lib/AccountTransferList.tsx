@@ -50,7 +50,7 @@ export const AccountTransferList = () => {
       },
       {
         header: t['accountTransferListTransactionId'],
-        accessorFn: (row) => row?.node?.ID,
+        accessorFn: (row) => row?.node?.transactionCode,
       },
       {
         header: t['accountTransferListTransactionType'],

@@ -256,7 +256,7 @@ export const LoanRepayment = () => {
                 w="100%"
                 display={mode === '0' ? 'flex' : 'none'}
               >
-                <FormMemberSelect name="memberId" label="Member" />
+                <FormMemberSelect isRequired name="memberId" label="Member" />
                 {memberId && (
                   <FormSelect
                     name="loanAccountId"
@@ -299,7 +299,7 @@ export const LoanRepayment = () => {
                       />
                     </Modal>
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormAmountInput name="amountPaid" label="Amount to Pay" />
+                      <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
                     </Grid>
 
                     <SuspiciousTransaction />

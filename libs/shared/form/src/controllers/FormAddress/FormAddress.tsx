@@ -79,12 +79,14 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
   return (
     <>
       <FormSelect
+        isRequired
         name={`${name}.provinceId`}
         label={t['kymIndProvince']}
         options={provinceList}
         errorText={errors?.[name]?.provinceId?.message}
       />
       <FormSelect
+        isRequired
         name={`${name}.districtId`}
         label={t['kymIndDistrict']}
         errorText={errors?.[name]?.districtId?.message}
@@ -94,6 +96,7 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
         }))}
       />
       <FormSelect
+        isRequired
         name={`${name}.localGovernmentId`}
         label={t['kymIndLocalGovernment']}
         errorText={errors?.[name]?.localGovernmentId?.message}
@@ -103,6 +106,7 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
         }))}
       />
       <FormSelect
+        isRequired
         name={`${name}.wardNo`}
         label={t['kymIndWardNo']}
         errorText={errors?.[name]?.wardNo?.message}

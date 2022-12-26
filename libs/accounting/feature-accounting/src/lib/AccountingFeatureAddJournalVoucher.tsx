@@ -77,11 +77,13 @@ export const AccountingFeatureAddJournalVoucher = () => {
             <Box bg="white" minH="calc(100vh - 220px)">
               <FormSection>
                 <FormDatePicker
+                  isRequired
                   name="date"
                   type="date"
                   label={t['accountingJournalVoucherAddDueDate']}
                 />
                 <FormInput
+                  isRequired
                   name="reference"
                   type="text"
                   label={t['accountingJournalVoucherAddReference']}
@@ -110,6 +112,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
               <FormSection divider={false}>
                 <GridItem colSpan={2}>
                   <FormTextArea
+                    isRequired
                     name="notes"
                     label={t['accountingJournalVoucherAddNotes']}
                     rows={3}

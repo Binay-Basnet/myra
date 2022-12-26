@@ -40,6 +40,7 @@ export const AllowedTransaction = () => {
       </GridItem>
 
       <FormInput
+        isRequired
         type="number"
         textAlign="right"
         name="noOftransactionAllowed"

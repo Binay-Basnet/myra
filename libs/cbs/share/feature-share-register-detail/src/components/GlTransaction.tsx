@@ -45,7 +45,7 @@ export const GlTransaction = ({ tableData, totalCredit, totalDebit }: GlTransact
         },
       },
       {
-        header: 'Srvice Center',
+        header: 'Service Center',
         accessorFn: (row) => row?.serviceCenter,
       },
       {

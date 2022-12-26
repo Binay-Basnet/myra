@@ -1,12 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection, GridItem } from '@myra-ui';
+
 import {
   CoopUnionInstitutionInformationInput,
   FormFieldSearchTerm,
   useGetCoopUnionKymOptionsQuery,
 } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
 import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
@@ -39,24 +40,27 @@ export const InstituteBasicInfo = ({ setSection }: IInstituteBasicInfoProps) => 
         <FormSection id="kymCoopUnionAccBasicInformation" header="kymCoopUnionBasicInformation">
           <GridItem colSpan={2}>
             <FormInput
+              isRequired
               type="text"
               name="nameOfInstitutionEn"
               label={t['kymCoopUnionNameOfInstitution']}
             />
           </GridItem>
           <FormSelect
+            isRequired
             name="institutionType"
             label={t['kymCoopUnionInstitutionType']}
             options={getFieldOption(organizationTypeFields)}
           />
           <FormInput
+            isRequired
             type="text"
             name="natureOfBusinessEn"
             label={t['kymCoopUnionNatureOfBusiness']}
           />
 
           <FormDatePicker name="regdDate" label={t['kymCoopUnionRegistrationDate']} maxToday />
-          <FormInput type="number" name="vatOrPan" label={t['kymCoopUnionVATPanNo']} />
+          <FormInput isRequired type="number" name="vatOrPan" label={t['kymCoopUnionVATPanNo']} />
 
           <FormInput type="text" name="noOfBranches" label={t['serviceCenterNoOfServiceCenter']} />
         </FormSection>

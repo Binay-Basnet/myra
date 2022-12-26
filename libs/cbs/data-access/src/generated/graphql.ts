@@ -648,6 +648,44 @@ export type AllTransactionFilter = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
+export type AllTransactionResult = {
+  amount?: Maybe<Scalars['String']>;
+  branch?: Maybe<Scalars['String']>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  id: Scalars['ID'];
+  member?: Maybe<Member>;
+  status?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
+  transactionMode?: Maybe<Scalars['String']>;
+  txnType?: Maybe<AllTransactionType>;
+};
+
+export enum AllTransactionType {
+  AccountClose = 'ACCOUNT_CLOSE',
+  AlternateChannel = 'ALTERNATE_CHANNEL',
+  Deposit = 'DEPOSIT',
+  Ebanking = 'EBANKING',
+  InterestBooking = 'INTEREST_BOOKING',
+  InterestPosting = 'INTEREST_POSTING',
+  JournalVoucher = 'JOURNAL_VOUCHER',
+  LoanDisbursment = 'LOAN_DISBURSMENT',
+  LoanRepayment = 'LOAN_REPAYMENT',
+  Membership = 'MEMBERSHIP',
+  OpeningBalance = 'OPENING_BALANCE',
+  SharePurchase = 'SHARE_PURCHASE',
+  ShareReturn = 'SHARE_RETURN',
+  TellerTransfer = 'TELLER_TRANSFER',
+  Transfer = 'TRANSFER',
+  Withdraw = 'WITHDRAW',
+}
+
+export type AllTransactionViewResult = {
+  data?: Maybe<AllTransactionResult>;
+  error?: Maybe<QueryError>;
+};
+
 export type AllTransactionsConnection = {
   edges?: Maybe<Array<Maybe<AllTransactionsEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -12509,6 +12547,7 @@ export type TransactionQuery = {
   viewAgentList?: Maybe<AgentTransactionViewResult>;
   viewDeposit?: Maybe<DepositTransactionViewResult>;
   viewLoanRepayment?: Maybe<LoanRepaymentViewResult>;
+  viewTransactionDetail?: Maybe<AllTransactionViewResult>;
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
 };
 
@@ -12570,6 +12609,11 @@ export type TransactionQueryViewDepositArgs = {
 
 export type TransactionQueryViewLoanRepaymentArgs = {
   paymentId: Scalars['ID'];
+};
+
+export type TransactionQueryViewTransactionDetailArgs = {
+  transactionId: Scalars['ID'];
+  txnType?: InputMaybe<AllTransactionType>;
 };
 
 export type TransactionQueryViewWithdrawArgs = {
@@ -23386,6 +23430,7 @@ export type GetShareDetailQuery = {
         amount?: string | null;
         total?: string | null;
         status?: string | null;
+        transactionCode?: string | null;
         transactionBranch?: string | null;
         teller?: string | null;
         totalCredit?: string | null;
@@ -23428,6 +23473,7 @@ export type GetDepositListDataQuery = {
         cursor: string;
         node?: {
           ID: string;
+          transactionCode?: string | null;
           name?: Record<'local' | 'en' | 'np', string> | null;
           amount?: string | null;
           state: TransactionState;
@@ -23463,6 +23509,7 @@ export type GetWithdrawListDataQuery = {
         cursor: string;
         node?: {
           ID: string;
+          transactionCode?: string | null;
           name?: Record<'local' | 'en' | 'np', string> | null;
           amount?: string | null;
           state: TransactionState;
@@ -23495,6 +23542,7 @@ export type GetAccountTransferListDataQuery = {
         cursor: string;
         node?: {
           ID: string;
+          transactionCode?: string | null;
           amount?: string | null;
           state: TransactionState;
           transferType: TransferType;
@@ -38115,6 +38163,7 @@ export const GetShareDetailDocument = `
           amount
           sourceOfFund
         }
+        transactionCode
         transactionBranch
         teller
         glTransactions {
@@ -38150,6 +38199,7 @@ export const GetDepositListDataDocument = `
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -38192,6 +38242,7 @@ export const GetWithdrawListDataDocument = `
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -38231,6 +38282,7 @@ export const GetAccountTransferListDataDocument = `
       edges {
         node {
           ID
+          transactionCode
           amount
           state
           transferType

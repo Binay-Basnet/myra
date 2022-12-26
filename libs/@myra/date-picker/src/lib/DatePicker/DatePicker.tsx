@@ -39,6 +39,7 @@ interface IDatePickerProps {
   maxDate?: Date;
 
   isInvalid?: boolean;
+  isRequired?: boolean;
 }
 
 export const DatePicker = ({
@@ -48,6 +49,7 @@ export const DatePicker = ({
   dateFormat = 'YYYY-MM-DD',
   locale = 'en',
   isInvalid,
+  isRequired,
   minDate,
   maxDate,
   label,
@@ -57,8 +59,6 @@ export const DatePicker = ({
   const [dateState, setDateState] = React.useState<TDateState | null>(
     value ? convertValueToDate(value) : null
   );
-
-  console.log(value);
 
   useEffect(() => {
     if (value) {
@@ -84,13 +84,18 @@ export const DatePicker = ({
     }
   }, [value?.date?.toString(), value?.ad, value?.bs]);
 
-  console.log(dateState);
-
   return (
     <Box w="100%" display="flex" flexDir="column" gap="s4" mb="1px" alignItems="flex-start">
-      <Text fontWeight="500" lineHeight="1.5" fontSize="s3" color="gray.700">
-        {label}
-      </Text>
+      {isRequired ? (
+        <Text fontWeight="500" lineHeight="1.5" fontSize="s3" color="gray.700">
+          {label} *
+        </Text>
+      ) : (
+        <Text fontWeight="500" lineHeight="1.5" fontSize="s3" color="gray.700">
+          {label}
+        </Text>
+      )}
+
       <Popover placement="bottom-start" isOpen={isOpen} onClose={onClose} onOpen={onToggle}>
         <PopoverTrigger>
           <Box as="button" w="100%" type="button">

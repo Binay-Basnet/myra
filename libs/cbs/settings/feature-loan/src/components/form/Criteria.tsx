@@ -1,8 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 
+import { FormSection } from '@myra-ui';
+
 import { CriteriaSection } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const Critera = () => {

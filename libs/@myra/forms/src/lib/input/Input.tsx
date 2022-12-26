@@ -37,6 +37,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
     label,
     size = 'default',
     rightAddonText,
+    isRequired,
     ...rest
   } = props;
 
@@ -44,7 +45,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
     <Box w="auto" display="flex" flexDirection="column" flexGrow={1} gap="s4">
       {label && (
         <Text variant="formLabel" color="gray.700">
-          {label}
+          {isRequired ? `${label} *` : label}
         </Text>
       )}
 

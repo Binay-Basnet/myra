@@ -31,9 +31,9 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
         }}
       >
         <FormSection id="kymInsAccountHolderDeclaration" header="kymInAccountHolderDeclarations">
-          <FormInput name="accountHolderName" label={t['kymInsAccountHolderName']} />
-          <FormInput name="accountHolderPhone" label={t['kymInsPhone']} />
-          <FormInput name="accountHolderEmail" label={t['kymInsEmail']} />
+          <FormInput isRequired name="accountHolderName" label={t['kymInsAccountHolderName']} />
+          <FormInput isRequired name="accountHolderPhone" label={t['kymInsPhone']} />
+          <FormInput isRequired name="accountHolderEmail" label={t['kymInsEmail']} />
         </FormSection>
 
         <FormAddress

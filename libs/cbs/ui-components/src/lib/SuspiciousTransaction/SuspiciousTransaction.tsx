@@ -33,7 +33,7 @@ export const SuspiciousTransaction = () => {
 
           <FormCheckboxGroup name="suspicionTopologies" list={topologiesList} orientation="grid" />
 
-          <FormTextArea name="suspicionRemarks" label="Remarks" rows={3} />
+          <FormTextArea isRequired name="suspicionRemarks" label="Remarks" rows={3} />
         </Box>
       )}
     </>

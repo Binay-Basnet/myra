@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection } from '@myra-ui';
+
 import { KymInsInput } from '@coop/cbs/data-access';
 import { FormDatePicker, FormEmailInput, FormInput, FormPhoneNumber } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
@@ -29,9 +30,9 @@ export const ContactDetailsInstitution = (props: IProps) => {
         }}
       >
         <FormSection id="kymInsContactDetails" header="kymInsContactDetails">
-          <FormPhoneNumber name="phone" label={t['kymInsPhone']} />
+          <FormPhoneNumber isRequired name="phone" label={t['kymInsPhone']} />
           <FormInput type="number" name="fax" label={t['kymInsFax']} />
-          <FormEmailInput name="email" label={t['kymInsEmail']} />
+          <FormEmailInput isRequired name="email" label={t['kymInsEmail']} />
           <FormInput type="text" name="website" label={t['kymInsWebsiteLinkany']} />
           <FormInput type="number" name="postBoxNo" label={t['kymInsPostBoxNo']} />
           <FormInput type="number" name="numberOfEmployee" label={t['kymInsNumberofEmployees']} />

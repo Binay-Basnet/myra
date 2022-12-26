@@ -166,27 +166,34 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                     <Box>
                       <InputGroupContainer>
                         <GridItem colSpan={2}>
-                          <FormInput name="name" label={t['serviceCenterFormName']} />
+                          <FormInput isRequired name="name" label={t['serviceCenterFormName']} />
                         </GridItem>
-                        <FormInput name="branchCode" label={t['serviceCenterCode']} />
+                        <FormInput isRequired name="branchCode" label={t['serviceCenterCode']} />
                       </InputGroupContainer>
 
                       <InputGroupContainer mt="s16">
                         <FormInput
+                          isRequired
                           type="text"
                           name="managerName"
                           label={t['serviceCenterManager']}
                         />
                         <FormSelect
+                          isRequired
                           label={t['serviceCenterCategory']}
                           name="category"
                           options={branchCategories}
                         />
-                        <FormDatePicker label={t['settingsBranchEstablishedDate']} name="estDate" />
+                        <FormDatePicker
+                          isRequired
+                          label={t['settingsBranchEstablishedDate']}
+                          name="estDate"
+                        />
                       </InputGroupContainer>
 
                       <InputGroupContainer mt="s16">
                         <FormInput
+                          isRequired
                           type="text"
                           name="serviceCenterPhone"
                           label={t['serviceCenterServiceCenterContactNumber']}
@@ -243,8 +250,12 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                         {t['serviceCenterManager']}
                       </Text>
                       <InputGroupContainer>
-                        <FormInput name="phoneNumber" label={t['settingsBranchPhoneNumber']} />
-                        <FormInput name="email" label={t['settingsBranchEmail']} />
+                        <FormInput
+                          isRequired
+                          name="phoneNumber"
+                          label={t['settingsBranchPhoneNumber']}
+                        />
+                        <FormInput isRequired name="email" label={t['settingsBranchEmail']} />
                       </InputGroupContainer>
                     </Box>
 

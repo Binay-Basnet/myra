@@ -1,6 +1,7 @@
+import { Alert, Box, Text } from '@myra-ui';
+
 import { LoanRepaymentScheme } from '@coop/cbs/data-access';
 import { FormSwitchTab } from '@coop/shared/form';
-import { Alert, Box, Text } from '@myra-ui';
 
 import { useLoanProductContext } from '../hooks/useLoanProduct';
 

@@ -90,9 +90,23 @@ export const ShareReturnForm = () => {
   const extraFee = watch('extraFee');
   const paymentModes = watch('paymentMode');
   const bankSelected = watch('bankCheque.bankId');
+  const accountSelected = watch('account.accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [mode, setMode] = useState('shareInfo');
+
+  const disableSubmitButtonFxn = (paymentMode: SharePaymentMode | undefined | null) => {
+    if (paymentMode === SharePaymentMode.Cash && !disableDenomination) {
+      return !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount));
+    }
+    if (paymentMode === SharePaymentMode.BankVoucherOrCheque && bankSelected === undefined) {
+      return true;
+    }
+    if (paymentMode === SharePaymentMode.Account && accountSelected === undefined) {
+      return true;
+    }
+    return false;
+  };
 
   const { data: chargesData, isLoading } = useGetShareChargesQuery(
     {
@@ -313,12 +327,7 @@ export const ShareReturnForm = () => {
               <SharePaymentFooter
                 previousButtonHandler={previousButtonHandler}
                 handleSubmit={handleSubmit}
-                isDisabled={
-                  paymentModes === SharePaymentMode.Cash && !disableDenomination
-                    ? !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount))
-                    : paymentModes === SharePaymentMode.BankVoucherOrCheque &&
-                      bankSelected === undefined
-                }
+                isDisabled={disableSubmitButtonFxn(paymentModes)}
               />
             )}
           </Container>

@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { GridItem } from '@chakra-ui/react';
 
+import { FormSection } from '@myra-ui';
+
 import { KymCooperativeFormInput, useAllAdministrationQuery } from '@coop/cbs/data-access';
 import {
   FormEmailInput,
@@ -11,7 +13,6 @@ import {
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -147,9 +148,15 @@ export const KymCoopRepresentative = (props: IProps) => {
       >
         <FormSection id="kymCoopAccRepresentative" header="kymCoopRepresentative">
           <GridItem colSpan={2}>
-            <FormInput type="text" name="representativeFullName" label={t['kymCoopName']} />
+            <FormInput
+              isRequired
+              type="text"
+              name="representativeFullName"
+              label={t['kymCoopName']}
+            />
           </GridItem>
           <FormInput
+            isRequired
             type="text"
             name="representativeDesignatiton"
             label={t['kymCoopDesignation']}
@@ -164,11 +171,13 @@ export const KymCoopRepresentative = (props: IProps) => {
 
         <FormSection id="kymAccIndPermanentAddress" header="kymCoopRepresentativePermanentAddress">
           <FormSelect
+            isRequired
             name="permanentRepresentativeAddress.provinceId"
             label={t['kymCoopRepresentativeProvince']}
             options={province}
           />
           <FormSelect
+            isRequired
             name="permanentRepresentativeAddress.districtId"
             label={t['kymCoopRepresentativeDistrict']}
             options={districtList.map((d) => ({
@@ -177,6 +186,7 @@ export const KymCoopRepresentative = (props: IProps) => {
             }))}
           />
           <FormSelect
+            isRequired
             name="permanentRepresentativeAddress.localGovernmentId"
             label={t['kymCoopRepresentativeLocalGovernment']}
             options={localityList.map((d) => ({
@@ -185,6 +195,7 @@ export const KymCoopRepresentative = (props: IProps) => {
             }))}
           />
           <FormSelect
+            isRequired
             name="permanentRepresentativeAddress.wardNo"
             label={t['kymCoopRepresentativeWardNo']}
             options={wardList?.map((d) => ({
@@ -219,11 +230,13 @@ export const KymCoopRepresentative = (props: IProps) => {
           {!isPermanentAndTemporaryAddressSame && (
             <>
               <FormSelect
+                isRequired
                 name="temporaryRepresentativeAddress.provinceId"
                 label={t['kymCoopRepresentativeProvince']}
                 options={province}
               />
               <FormSelect
+                isRequired
                 name="temporaryRepresentativeAddress.districtId"
                 label={t['kymCoopRepresentativeDistrict']}
                 options={districtTempList.map((d) => ({
@@ -232,6 +245,7 @@ export const KymCoopRepresentative = (props: IProps) => {
                 }))}
               />
               <FormSelect
+                isRequired
                 name="temporaryRepresentativeAddress.localGovernmentId"
                 label={t['kymCoopRepresentativeLocalGovernment']}
                 options={localityTempList.map((d) => ({
@@ -240,6 +254,7 @@ export const KymCoopRepresentative = (props: IProps) => {
                 }))}
               />
               <FormSelect
+                isRequired
                 name="temporaryRepresentativeAddress.wardNo"
                 label={t['kymCoopRepresentativeWardNo']}
                 options={wardTempList.map((d) => ({

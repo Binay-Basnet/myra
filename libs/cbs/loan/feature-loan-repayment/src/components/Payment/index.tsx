@@ -90,6 +90,7 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
             <GridItem colSpan={2}>
               <FormAccountSelect
+                isRequired
                 name="account.destination_account"
                 label="Destination Account"
                 memberId={memberId}
@@ -106,9 +107,8 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
 
         {selectedPaymentMode === LoanRepaymentMethod?.BankVoucher && (
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
-            {' '}
             <GridItem colSpan={2}>
-              <FormBankSelect name="bankVoucher.bank" label="Bank Name" />
+              <FormBankSelect isRequired name="bankVoucher.bank" label="Bank Name" />
             </GridItem>
             <FormInput name="bankVoucher.voucher_no" label="Voucher Number" />
             <FormInput name="bankVoucher.amount" value={loanTotal} isDisabled label="Amount" />
@@ -138,7 +138,13 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
         {selectedPaymentMode === LoanRepaymentMethod?.Cash && (
           <>
             <Grid templateColumns="repeat(2,1fr)" gap="s20">
-              <FormInput name="cash.cashPaid" type="number" label="Cash" textAlign="right" />
+              <FormInput
+                isRequired
+                name="cash.cashPaid"
+                type="number"
+                label="Cash"
+                textAlign="right"
+              />
             </Grid>
 
             <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />

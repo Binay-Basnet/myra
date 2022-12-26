@@ -3,6 +3,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
+import { Box, FormSection } from '@myra-ui';
+
 import {
   KymIndMemberInput,
   RootState,
@@ -11,7 +13,6 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Box, FormSection } from '@myra-ui';
 import { getKymSection } from '@coop/shared/utils';
 
 import { Citizenship, DrivingLicense, NationalID, Passport, VoterCard } from '../identifications';
@@ -111,6 +112,7 @@ export const MemberKYMIdentificationDetails = ({
         >
           <FormSection
             flexLayout
+            isRequired
             header="kymIndIDENTIFICATIONDETAILS"
             subHeader="kymIndChooseidentificationdetails"
           >

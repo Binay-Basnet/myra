@@ -95,6 +95,8 @@ export const SharePurchaseForm = () => {
   const paymentModes = watch('paymentMode');
   const disableDenomination = watch('cash.disableDenomination');
   const bankSelected = watch('bankVoucher.bankId');
+  const accountSelected = watch('account.accountId');
+  const bankVoucherDateSelected = watch('bankVoucher.depositedDate');
 
   const { data: chargesData, isLoading } = useGetShareChargesQuery(
     {
@@ -128,20 +130,22 @@ export const SharePurchaseForm = () => {
 
   const previousButtonHandler = () => setMode('shareInfo');
 
-  // const disableSubmitButtonFxn = () => {
-  //   if (paymentModes === SharePaymentMode.Cash && !disableDenomination) {
-  //     return !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount));
-  //   }
-  //   if (SharePaymentMode.BankVoucherOrCheque && bankSelected === undefined) {
-  //     return true;
-  //   }
-  //   if (paymentModes === SharePaymentMode.Account && accountSelected === undefined) {
-  //     return true;
-  //   }
-  //   return false;
-  // };
-
-  // console.log('test', disableSubmitButtonFxn);
+  const disableSubmitButtonFxn = (paymentMode: SharePaymentMode) => {
+    if (paymentMode === SharePaymentMode.Cash && !disableDenomination) {
+      return !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount));
+    }
+    if (
+      (paymentModes === SharePaymentMode.BankVoucherOrCheque && bankSelected === undefined) ||
+      (paymentModes === SharePaymentMode.BankVoucherOrCheque &&
+        bankVoucherDateSelected === undefined)
+    ) {
+      return true;
+    }
+    if (paymentMode === SharePaymentMode.Account && accountSelected === undefined) {
+      return true;
+    }
+    return false;
+  };
 
   const handleSubmit = () => {
     const values = getValues();
@@ -318,13 +322,7 @@ export const SharePurchaseForm = () => {
               <SharePaymentFooter
                 previousButtonHandler={previousButtonHandler}
                 handleSubmit={handleSubmit}
-                // isDisabled={disableSubmitButtonFxn()}
-                isDisabled={
-                  paymentModes === SharePaymentMode.Cash && !disableDenomination
-                    ? !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount))
-                    : paymentModes === SharePaymentMode.BankVoucherOrCheque &&
-                      bankSelected === undefined
-                }
+                isDisabled={disableSubmitButtonFxn(paymentModes)}
               />
             )}
           </Container>

@@ -42,6 +42,7 @@ export const AccountSelect = ({
   isMulti,
   label,
   options,
+  isRequired,
   value,
   ...rest
 }: AccountSelectProps) => {
@@ -52,7 +53,7 @@ export const AccountSelect = ({
   return (
     <Flex direction="column" gap="s4">
       <Text variant="formLabel" color="gray.700">
-        {label}
+        {isRequired ? `${label} *` : label}
       </Text>
       <ChakraSelect<Option, boolean, GroupBase<Option>>
         options={options}
