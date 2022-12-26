@@ -1,4 +1,5 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 type OtherDetailProps = {

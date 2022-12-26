@@ -5,6 +5,7 @@ query getDepositListData($filter: AccountTransactionFilter, $pagination: Paginat
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -35,6 +36,7 @@ query getWithdrawListData($filter: AccountTransactionFilter, $pagination: Pagina
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -62,6 +64,7 @@ query getAccountTransferListData($filter: AccountTransactionFilter, $pagination:
       edges {
         node {
           ID
+          transactionCode
           amount
           state
           transferType
@@ -92,7 +95,9 @@ query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination
       edges {
         node {
           ID
+          transferCode
           transferType
+          transferState
           srcTeller
           amount
           destTeller
@@ -101,6 +106,11 @@ query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination
           destProfilePic
           srcProfilePicUrl
           destProfilePicUrl
+          denomination {
+            value
+            quantity
+            amount
+          }
         }
         cursor
       }
@@ -119,6 +129,7 @@ query transactionDepositDetail($transactionId: ID!) {
     viewDeposit(transactionId: $transactionId) {
       data {
         id
+        transactionCode
         member {
           id
           code
@@ -147,6 +158,7 @@ query transactionDepositDetail($transactionId: ID!) {
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -168,6 +180,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
           profilePicUrl
         }
         transactionDate
+        transactionCode
         accountName
         chequeNo
         withdrawAmount
@@ -185,6 +198,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -204,6 +218,7 @@ query transactionAccountTransferDetail($transactionId: ID!) {
           profilePic
           profilePicUrl
         }
+        transactionCode
         transactionDate
         transferAmount
         sourceAccount {
@@ -230,6 +245,7 @@ query transactionAccountTransferDetail($transactionId: ID!) {
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -281,6 +297,7 @@ query loanRepaymentDetail($paymentId: ID!) {
           name
           profilePicUrl
         }
+        transactionCode
         loanSubType
         loanAccountId
         loanAccountName
@@ -303,6 +320,7 @@ query loanRepaymentDetail($paymentId: ID!) {
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit

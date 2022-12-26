@@ -14,7 +14,6 @@ import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedText } from '@coop/cbs/utils';
 import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter'> & {
   filter: {
@@ -55,6 +54,11 @@ export const TrialSheetReport = () => {
       []) as TrialSheetReportDataEntry[]
   );
 
+  const offBalanceSheetReport = sortCoa(
+    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.offBalance ??
+      []) as TrialSheetReportDataEntry[]
+  );
+
   return (
     <Report
       defaultFilters={{
@@ -78,7 +82,7 @@ export const TrialSheetReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Branch" />
+            <FormBranchSelect name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Date Period" />
@@ -152,6 +156,22 @@ export const TrialSheetReport = () => {
             </Box>
           )}
 
+          {offBalanceSheetReport?.length !== 0 && (
+            <Box display="flex" py="s16" flexDir="column">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                5. Off Balance Sheet
+              </Text>
+              <COATable
+                type="Off Balance"
+                total={
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.offBalanceTotal
+                }
+                data={offBalanceSheetReport as TrialSheetReportDataEntry[]}
+              />
+            </Box>
+          )}
+
           <Box
             display="flex"
             flexDir="column"
@@ -177,10 +197,8 @@ export const TrialSheetReport = () => {
                 Total Profit/Loss (Total Income - Total Expenses)
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
-                {amountConverter(
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.totalProfitLoss ?? 0
-                )}
+                {data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                  ?.totalProfitLoss ?? 0}
               </Box>
             </Box>
             <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.element">
@@ -199,10 +217,8 @@ export const TrialSheetReport = () => {
                 Total Assets + Total Expenses
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
-                {amountConverter(
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.totalAssetExpense ?? 0
-                )}
+                {data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                  ?.totalAssetExpense ?? 0}
               </Box>
             </Box>
             <Box h="40px" display="flex">
@@ -221,10 +237,8 @@ export const TrialSheetReport = () => {
                 Total Liabilities + Total Income
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
-                {amountConverter(
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.totalLiablitiesIncome ?? 0
-                )}
+                {data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                  ?.totalLiablitiesIncome ?? 0}
               </Box>
             </Box>
           </Box>
@@ -252,7 +266,7 @@ interface ICOATableProps {
   total: string | null | undefined;
 }
 
-const COATable = ({ data, type, total }: ICOATableProps) => {
+export const COATable = ({ data, type, total }: ICOATableProps) => {
   if (data?.length === 0) {
     return null;
   }
@@ -268,7 +282,7 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
       data={tree}
       columns={[
         {
-          header: ({ table }) => <ExpandedHeader table={table} value="General Ledger Name" />,
+          header: ({ table }) => <ExpandedHeader table={table} value={type} />,
           accessorKey: 'ledgerName',
           cell: (props) => (
             <ExpandedCell
@@ -286,8 +300,8 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
         {
           header: 'Balance',
           accessorKey: 'balance',
-          cell: (props) => amountConverter(props.getValue() as string),
-          footer: () => <>{amountConverter(total ?? 0)}</>,
+          cell: (props) => props.getValue() as string,
+          footer: () => total ?? 0,
           meta: {
             isNumeric: true,
           },
@@ -297,7 +311,7 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
   );
 };
 
-const sortCoa = (data: TrialSheetReportDataEntry[]) =>
+export const sortCoa = (data: TrialSheetReportDataEntry[]) =>
   data?.sort((a, b) =>
     Number(
       a?.ledgerId?.localeCompare(b?.ledgerId as string, undefined, {

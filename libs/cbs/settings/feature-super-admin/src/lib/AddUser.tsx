@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import omit from 'lodash/omit';
+
 import {
   asyncToast,
   Box,
@@ -11,7 +13,6 @@ import {
   Grid,
   Text,
 } from '@myra-ui';
-import omit from 'lodash/omit';
 
 import {
   MyraUserIdentificationInput,
@@ -82,7 +83,7 @@ export const AddUser = () => {
 
   const methods = useForm<UserFormInput>();
 
-  const { watch, getValues, reset, resetField } = methods;
+  const { watch, getValues, reset } = methods;
 
   const role = watch('role');
 
@@ -164,21 +165,6 @@ export const AddUser = () => {
     { enabled: Boolean(id && router?.asPath?.includes('edit')), staleTime: 0 }
   );
 
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    if (router.asPath.includes('edit')) {
-      refetchUserData();
-    }
-
-    if (router.asPath.includes('add')) {
-      resetField('dob');
-      resetField('citizenship.date');
-      resetField('drivingLicense.date');
-      resetField('passport.date');
-    }
-  }, [preference?.date, router?.asPath]);
-
   useEffect(() => {
     const userData = userQueryData?.settings?.myraUser?.formState?.data;
 
@@ -232,20 +218,26 @@ export const AddUser = () => {
                 <FormSwitch name="isCoreEmployee" label="This user is a core employee" />
               </Box>
               <FormSection header="settingsUserAddUserBasicInformation" templateColumns={2}>
-                <FormInput type="text" name="name" label="Name" />
+                <FormInput isRequired type="text" name="name" label="Name" />
                 <FormInput type="text" name="empCode" label="Employee Code" />
 
-                <FormSelect name="gender" label="Gender" options={genderOptions} />
+                <FormSelect isRequired name="gender" label="Gender" options={genderOptions} />
 
                 {/* <FormInput type="date" name="dob" label="Date of Birth (BS)" /> */}
 
-                <FormDatePicker name="dob" label="Date of Birth" />
+                <FormDatePicker isRequired name="dob" label="Date of Birth" />
 
-                <FormPhoneNumber name="contactNo" label="Mobile No" />
+                <FormPhoneNumber isRequired name="contactNo" label="Mobile No" />
 
-                <FormEmailInput name="email" label="Email" />
+                <FormEmailInput isRequired name="email" label="Email" />
 
-                <FormSelect name="role" label="Role" options={roleOptions} isDisabled={isEdit} />
+                <FormSelect
+                  isRequired
+                  name="role"
+                  label="Role"
+                  options={roleOptions}
+                  isDisabled={isEdit}
+                />
 
                 <FormBranchSelect
                   name="branch"

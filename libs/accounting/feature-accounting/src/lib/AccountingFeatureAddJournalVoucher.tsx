@@ -13,7 +13,7 @@ import {
 } from '@myra-ui';
 
 import { JournalVoucherPaymentMode, useSetJournalVoucherDataMutation } from '@coop/cbs/data-access';
-import { FormInput, FormLocalDatePicker, FormTextArea } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { JournalVouchersTable } from '../components';
@@ -36,10 +36,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
     defaultValues: { paymentMode: JournalVoucherPaymentMode.Cash },
   });
 
-  const {
-    // watch,
-    getValues,
-  } = methods;
+  const { getValues } = methods;
 
   // const paymentMode = watch('paymentMode');
 
@@ -79,12 +76,14 @@ export const AccountingFeatureAddJournalVoucher = () => {
           <form>
             <Box bg="white" minH="calc(100vh - 220px)">
               <FormSection>
-                <FormLocalDatePicker
+                <FormDatePicker
+                  isRequired
                   name="date"
                   type="date"
                   label={t['accountingJournalVoucherAddDueDate']}
                 />
                 <FormInput
+                  isRequired
                   name="reference"
                   type="text"
                   label={t['accountingJournalVoucherAddReference']}
@@ -113,6 +112,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
               <FormSection divider={false}>
                 <GridItem colSpan={2}>
                   <FormTextArea
+                    isRequired
                     name="notes"
                     label={t['accountingJournalVoucherAddNotes']}
                     rows={3}

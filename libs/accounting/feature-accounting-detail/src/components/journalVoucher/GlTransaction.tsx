@@ -9,13 +9,14 @@ type GlTransactionDetailProps = {
   data:
     | ({
         account: string;
+        serviceCenter?: string | null | undefined;
         debit?: string | null | undefined;
         credit?: string | null | undefined;
       } | null)[]
     | null
     | undefined;
-  totalDebit: string | null | undefined;
-  totalCredit: string | null | undefined;
+  totalDebit: string;
+  totalCredit: string;
 };
 
 export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDetailProps) => {
@@ -34,6 +35,10 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
         },
       },
       {
+        header: 'Service Center',
+        accessorFn: (row) => row?.serviceCenter,
+      },
+      {
         header: t['transDetailDebit'],
         footer: totalDebit,
         accessorFn: (row) => amountConverter(row?.debit ?? 0),
@@ -48,7 +53,14 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
   );
   return (
     <DetailsCard title={t['transDetailGLTransactions']} hasTable>
-      <Table showFooter isStatic isLoading={false} data={rowData ?? []} columns={columns} />
+      <Table
+        isDetailPageTable
+        showFooter
+        isStatic
+        isLoading={false}
+        data={rowData ?? []}
+        columns={columns}
+      />
     </DetailsCard>
   );
 };

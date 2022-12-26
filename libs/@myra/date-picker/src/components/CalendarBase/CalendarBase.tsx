@@ -1,20 +1,32 @@
 import React from 'react';
-import { Grid, GridItem } from '@chakra-ui/react';
+import { Grid } from '@chakra-ui/react';
 
-import { CalendarBuilderDate, TDateState } from '../../types/date';
+import { CalendarCell } from '../CalendarCell/CalendarCell';
+import { TDateState } from '../../types/date';
 import { ad2bs } from '../../utils/ad-bs-converter';
-import calendarBuilder, { isSameDay, isSameMonth } from '../../utils/calendar-builder';
+import calendarBuilder from '../../utils/calendar-builder';
+import nepaliCalendarBuilder from '../../utils/nepali-calendar-builder';
 
 interface ICalendarBase {
   onDateChange?: (newState: TDateState) => void;
-
   dateState: TDateState;
   setDateState: React.Dispatch<React.SetStateAction<TDateState>>;
+
+  locale: 'en' | 'ne';
+  calendarType: 'AD' | 'BS';
+  minDate?: Date;
+  maxDate?: Date;
 }
 
-export const CalendarBase = ({ dateState, setDateState, onDateChange }: ICalendarBase) => {
-  const currentDate = new Date(dateState.ad.year, dateState.ad.month - 1);
-
+export const CalendarBase = ({
+  dateState,
+  setDateState,
+  onDateChange,
+  locale,
+  calendarType,
+  minDate,
+  maxDate,
+}: ICalendarBase) => {
   const getCalendarDates = () => {
     const { ad, current } = dateState;
     const { month, year } = ad;
@@ -24,72 +36,62 @@ export const CalendarBase = ({ dateState, setDateState, onDateChange }: ICalenda
     return calendarBuilder(calendarMonth, calendarYear);
   };
 
-  const onDayClick = (date: CalendarBuilderDate) => {
-    const bs = ad2bs(date.year, +date.month, +date.day);
+  const getNepaliCalendarDates = () => {
+    const { bs, current } = dateState;
+    const { month, year } = bs;
 
-    if (onDateChange) {
-      onDateChange({
-        today: dateState.today,
-        current: new Date(date.year, +date.month - 1, +date.day),
-        ad: {
-          year: date.year,
-          month: +date.month,
-          day: +date.day,
-          dayOfWeek: date.dayOfWeek,
-        },
-        bs,
-      });
-    }
+    const currentDate = current || new Date();
 
-    setDateState((prevState) => ({
-      ...prevState,
-      current: new Date(date.year, +date.month - 1, +date.day),
-      ad: {
-        year: date.year,
-        month: +date.month,
-        day: +date.day,
-        dayOfWeek: date.dayOfWeek,
-      },
-      bs,
-    }));
+    const currentBs = ad2bs(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 1,
+      currentDate?.getDate()
+    );
+
+    const calendarMonth = month || currentBs.month;
+    const calendarYear = year || currentBs.year;
+    return nepaliCalendarBuilder(calendarMonth, calendarYear);
   };
 
   return (
     <Grid templateColumns="repeat(7, 1fr)" rowGap="s4" w="100%" placeItems="center">
-      {getCalendarDates().map((calendarDate) => (
-        <GridItem
-          key={`${calendarDate.year}-${calendarDate.month}-${calendarDate.day}`}
-          cursor="pointer"
-          _hover={{
-            bg: isSameDay(getJSDate(calendarDate), dateState.current ?? new Date())
-              ? 'primary.500'
-              : 'gray.200',
-          }}
-          w="40px"
-          borderRadius="br2"
-          onClick={() => onDayClick(calendarDate)}
-          h="40px"
-          bg={
-            isSameDay(getJSDate(calendarDate), dateState.current ?? new Date())
-              ? 'primary.500'
-              : 'transparent'
-          }
-          color={
-            isSameDay(getJSDate(calendarDate), dateState.current ?? new Date())
-              ? '#fff'
-              : isSameMonth(getJSDate(calendarDate), currentDate)
-              ? 'gray.900'
-              : 'gray.200'
-          }
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          {calendarDate.day}
-        </GridItem>
-      ))}
+      {calendarType === 'AD'
+        ? getCalendarDates().map((calendarDate) => (
+            <CalendarCell
+              maxDate={maxDate}
+              minDate={minDate}
+              locale={locale}
+              calendarType="AD"
+              dateState={dateState}
+              onDateStateChange={(newDate) => {
+                if (onDateChange) {
+                  onDateChange(newDate);
+                  setDateState(newDate);
+                } else {
+                  setDateState(newDate);
+                }
+              }}
+              calendarDate={calendarDate}
+            />
+          ))
+        : getNepaliCalendarDates().map((calendarDate) => (
+            <CalendarCell
+              maxDate={maxDate}
+              minDate={minDate}
+              locale={locale}
+              calendarType="BS"
+              dateState={dateState}
+              onDateStateChange={(newDate) => {
+                if (onDateChange) {
+                  onDateChange(newDate);
+                  setDateState(newDate);
+                } else {
+                  setDateState(newDate);
+                }
+              }}
+              calendarDate={calendarDate}
+            />
+          ))}
     </Grid>
   );
 };
-
-const getJSDate = (date: CalendarBuilderDate) => new Date(date.year, +date.month - 1, +date.day);

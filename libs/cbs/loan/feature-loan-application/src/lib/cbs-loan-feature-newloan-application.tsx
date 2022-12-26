@@ -17,6 +17,7 @@ import {
 
 import {
   LoanAccountInput,
+  LoanRepaymentScheme,
   NatureOfDepositProduct,
   useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
@@ -64,6 +65,9 @@ export const NewLoanApplication = () => {
 
   const methods = useForm<LoanAccountInput>({
     mode: 'onChange',
+    defaultValues: {
+      repaymentScheme: LoanRepaymentScheme.Epi,
+    },
   });
   const { watch, resetField, setValue } = methods;
 
@@ -185,6 +189,7 @@ export const NewLoanApplication = () => {
 
   // Get Currently Selected Loan Product
   const { loanProduct } = useLoanProductDetails({ productId: String(productId) });
+  const loanProductDetailsdata = loanProduct?.product;
 
   // Reset Fields
   useEffect(() => {
@@ -245,6 +250,7 @@ export const NewLoanApplication = () => {
     resetField('productSubType');
     resetField('productId');
   }, [loanLinkedData, resetField]);
+
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -262,7 +268,12 @@ export const NewLoanApplication = () => {
             <form>
               <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
                 <Box display="flex" flexDir="column" gap="s16">
-                  <FormMemberSelect name="memberId" label="Member Id" isDisabled={!!id} />
+                  <FormMemberSelect
+                    isRequired
+                    name="memberId"
+                    label="Member Id"
+                    isDisabled={!!id}
+                  />
                   {memberId && !loanLinkedData && !isLinkAccDataFetching && (
                     <Alert status="error"> Member does not have a Saving Account </Alert>
                   )}
@@ -330,10 +341,21 @@ export const NewLoanApplication = () => {
                       <FormInput name="loanAccountName" label="Loan Account Name" />
                       <Box w="50%">
                         <FormAmountInput
+                          isRequired
                           type="number"
                           name="appliedLoanAmount"
                           label="Applied Loan Amount"
                           placeholder="0.00"
+                          rules={{
+                            max: {
+                              value: loanProductDetailsdata?.maxLoanAmount as number,
+                              message: 'Maximum loan amount exceeded',
+                            },
+                            min: {
+                              value: loanProductDetailsdata?.minimumLoanAmount as number,
+                              message: 'Minimum loan amount must be higher',
+                            },
+                          }}
                         />
                       </Box>
                     </>

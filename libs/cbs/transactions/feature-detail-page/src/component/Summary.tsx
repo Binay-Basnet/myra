@@ -57,12 +57,12 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
                 </Text>
               ) : (
                 <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
-                  {t['transDetailDeposit']} -
+                  {t['transDetailDeposit']} -&nbsp;
                   {summary.method === 'AGENT' ? agentSlug[summary.method] : summary.method}
                 </Text>
               )}
             </Box>
-            <Box gap="s4" display="flex" flexDirection="column">
+            <Box w="100%" gap="s4" display="flex" flexDirection="column">
               <Box display="flex" justifyContent="flex-end">
                 <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
                   {amountConverter(summary.amount ?? 0)}

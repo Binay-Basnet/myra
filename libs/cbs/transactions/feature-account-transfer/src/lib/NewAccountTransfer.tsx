@@ -214,7 +214,11 @@ export const NewAccountTransfer = () => {
                 >
                   <ContainerWithDivider>
                     <BoxContainer>
-                      <FormMemberSelect name="memberId" label={t['newAccountTransferMember']} />
+                      <FormMemberSelect
+                        isRequired
+                        name="memberId"
+                        label={t['newAccountTransferMember']}
+                      />
 
                       {memberId && (
                         <FormAccountSelect
@@ -237,6 +241,7 @@ export const NewAccountTransfer = () => {
 
                         {transferType === TransferType.Self && (
                           <FormAccountSelect
+                            isRequired
                             name="destAccountId"
                             label={t['newAccountTransferReceipentAccount']}
                             memberId={memberId}
@@ -254,6 +259,7 @@ export const NewAccountTransfer = () => {
                             />
 
                             <FormAccountSelect
+                              isRequired
                               name="destAccountId"
                               label={t['newAccountTransferReceipentAccount']}
                               memberId={destMemberId}

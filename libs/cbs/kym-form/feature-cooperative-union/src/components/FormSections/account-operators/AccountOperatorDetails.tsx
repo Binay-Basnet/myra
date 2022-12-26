@@ -6,9 +6,19 @@ import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import {
+  Box,
+  Button,
+  Collapse,
+  FormSection,
+  Grid,
+  GridItem,
+  Icon,
+  IconButton,
+  Text,
+} from '@myra-ui';
+
+import {
   CoopUnionPersonnelInput,
-  RootState,
-  useAppSelector,
   useDeletePersonnelDetailsMutation,
   useGetAccountOperatorDetailsListQuery,
   useGetNewIdMutation,
@@ -20,17 +30,6 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormAddress, FormDatePicker, FormInput, FormSwitch } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Collapse,
-  FormSection,
-  Grid,
-  GridItem,
-  Icon,
-  IconButton,
-  Text,
-} from '@myra-ui';
 import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { AccountOperatorTraining } from './accountOperatorTraining';
@@ -127,6 +126,7 @@ const AddDirector = ({
                   <Box display="flex" flexDirection="column" gap="s16">
                     <InputGroupContainer>
                       <FormInput
+                        isRequired
                         type="text"
                         name="fullName"
                         id="accountOperator.fullName"
@@ -191,18 +191,21 @@ const AddDirector = ({
                       label={t['kymCoopUnionOpHighestQualification']}
                     />
                     <FormInput
+                      isRequired
                       type="number"
                       name="mobileNumber"
                       id="accountOperator.mobileNumber"
                       label={t['kymCoopUnionOpMobileNo']}
                     />
                     <FormInput
+                      isRequired
                       type="text"
                       name="email"
                       id="accountOperator.email"
                       label={t['kymCoopUnionOpEmail']}
                     />
                     <FormInput
+                      isRequired
                       type="string"
                       name="citizenshipNo"
                       id="accountOperator.citizenshipNo"
@@ -210,6 +213,7 @@ const AddDirector = ({
                     />
 
                     <FormInput
+                      isRequired
                       type="string"
                       name="panNo"
                       id="centralRepresentative.panNo"
@@ -336,13 +340,6 @@ export const AccountOperatorInfo = ({ setSection }: IAccountOperatorInfoProps) =
       );
     }
   }, [accountOperatorEditValues]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetch();
-  }, [preference?.date]);
 
   useEffect(() => {
     refetch();

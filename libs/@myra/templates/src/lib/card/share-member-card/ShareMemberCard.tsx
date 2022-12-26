@@ -2,7 +2,9 @@ import { useRouter } from 'next/router';
 
 import { Avatar, Box, Button, Text } from '@myra-ui/foundations';
 
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { Share_Transaction_Direction, useGetShareHistoryQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type MemberType = {
@@ -12,7 +14,7 @@ type MemberType = {
   gender?: string | undefined | null;
   age?: string | number | undefined | null;
   maritalStatus?: string;
-  dateJoined?: string | undefined | null;
+  dateJoined?: string | undefined | null | Record<'en' | 'local' | 'np', string>;
   branch?: string;
   phoneNo?: string | undefined | null;
   email?: string | undefined | null;
@@ -45,7 +47,6 @@ export const ShareMemberCard = ({
       staleTime: 0,
     }
   );
-
   const shareHistoryTableData = data?.share?.history;
   const shareHistoryData =
     shareHistoryTableData?.history && shareHistoryTableData?.history?.slice(0, 5);
@@ -131,7 +132,7 @@ export const ShareMemberCard = ({
                       t['sharePurchaseTableShareDr']}
                   </Text>
                   <Text fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-60">
-                    {item?.transactionDate}
+                    {localizedDate(item?.transactionDate)}
                   </Text>
                 </Box>
                 <Text as="span" fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-80">

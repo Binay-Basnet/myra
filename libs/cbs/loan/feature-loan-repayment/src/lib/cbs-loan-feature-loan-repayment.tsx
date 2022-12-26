@@ -18,6 +18,7 @@ import {
   Text,
 } from '@myra-ui';
 
+import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   CashValue,
   LoanInstallment,
@@ -30,7 +31,7 @@ import {
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
+import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
@@ -228,6 +229,11 @@ export const LoanRepayment = () => {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
+  const isSuspicious = watch('isSuspicious');
+
+  const suspicionRemarks = watch('suspicionRemarks');
+
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -250,7 +256,7 @@ export const LoanRepayment = () => {
                 w="100%"
                 display={mode === '0' ? 'flex' : 'none'}
               >
-                <FormMemberSelect name="memberId" label="Member" />
+                <FormMemberSelect isRequired name="memberId" label="Member" />
                 {memberId && (
                   <FormSelect
                     name="loanAccountId"
@@ -293,8 +299,11 @@ export const LoanRepayment = () => {
                       />
                     </Modal>
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormInput name="amountPaid" label="Amount to Pay" textAlign="right" />
+                      <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
                     </Grid>
+
+                    <SuspiciousTransaction />
+
                     <Box mt="s20">
                       <InstallmentData loanAccountId={loanAccountId} />
                     </Box>
@@ -343,7 +352,7 @@ export const LoanRepayment = () => {
             <FormFooter
               mainButtonLabel="Proceed to Payment"
               mainButtonHandler={proceedButtonHandler}
-              isMainButtonDisabled={!amountPaid}
+              isMainButtonDisabled={Boolean(!amountPaid || (isSuspicious && !suspicionRemarks))}
             />
           )}
           {mode === '1' && (

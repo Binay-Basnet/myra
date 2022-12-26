@@ -2,6 +2,14 @@ mutation setDepositData($data: DepositInput!) {
   transaction {
     deposit(data: $data) {
       recordId
+      record {
+        transactionID
+        date
+        amount
+        rebate
+        paymentMode
+        depositedBy
+      }
       error {
         ...MutationError
       }
@@ -67,6 +75,21 @@ mutation setEndOfDayData($option: EODOption) {
 mutation setTellerTransferData($data: TellerTransferInput!) {
   transaction {
     tellerTransfer(data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation setTellerTransferAction(
+  $requestId: ID!
+  $action: TransferRequestAction!
+  $declineReason: String
+) {
+  transaction {
+    tellerTransferAction(requestId: $requestId, action: $action, declineReason: $declineReason) {
       record
       error {
         ...MutationError

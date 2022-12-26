@@ -21,7 +21,9 @@ interface AddUserState {
   userData: {
     name: string;
     gender: UserGender;
-    dob: string;
+    dob:
+      | { local?: string | undefined; en?: string | undefined; np?: string | undefined }
+      | undefined;
     contactNo: string;
     email: string;
     role: Roles;
@@ -34,7 +36,7 @@ const initialState: AddUserState = {
   userData: {
     name: '',
     gender: UserGender.Male,
-    dob: '',
+    dob: undefined,
     contactNo: '',
     email: '',
     role: Roles.Agent,

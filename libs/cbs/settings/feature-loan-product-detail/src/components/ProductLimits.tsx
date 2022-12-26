@@ -18,16 +18,13 @@ export const ProductLimits = ({ limits }: IProductLimits) => {
       {
         header: 'Limits',
         accessorKey: 'name',
-        meta: {
-          width: '33%',
-        },
       },
       {
         header: 'Minimum Amount',
         accessorKey: 'minAmount',
         meta: {
           isNumeric: true,
-          width: '33%',
+          width: '75%',
         },
         cell: (props) => (props.getValue() ? amountConverter(props.getValue() as string) : 'N/A'),
       },
@@ -36,18 +33,16 @@ export const ProductLimits = ({ limits }: IProductLimits) => {
         accessorKey: 'maxAmount',
         meta: {
           isNumeric: true,
-          width: '33%',
         },
         cell: (props) => (props.getValue() ? amountConverter(props.getValue() as string) : 'N/A'),
       },
     ],
     []
   );
-  if (limits?.length !== 0) return null;
 
   return (
     <DetailsCard title="Limits" hasTable>
-      <Table isStatic data={limits} columns={columns} />
+      <Table isDetailPageTable isStatic data={limits} columns={columns} />
     </DetailsCard>
   );
 };

@@ -6,15 +6,6 @@ import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import {
-  KymInsDirectorInput,
-  RootState,
-  useAppSelector,
-  useDeleteDirectorInstitutionMutation,
-  useGetInsBoardDirectorEditListQuery,
-  useGetNewIdMutation,
-} from '@coop/cbs/data-access';
-import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
-import {
   Box,
   Button,
   Collapse,
@@ -25,6 +16,14 @@ import {
   IconButton,
   Text,
 } from '@myra-ui';
+
+import {
+  KymInsDirectorInput,
+  useDeleteDirectorInstitutionMutation,
+  useGetInsBoardDirectorEditListQuery,
+  useGetNewIdMutation,
+} from '@coop/cbs/data-access';
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { DirectorsWithAffliation, DirectorTopPart, DocumentComponent } from './AccordianComponents';
@@ -174,7 +173,7 @@ export const BoardDirectorInfo = (props: IProps) => {
 
   const [directorIds, setDirectorIds] = useState<string[]>([]);
 
-  const { data: editValues, refetch: refetchEdit } = useGetInsBoardDirectorEditListQuery(
+  const { data: editValues } = useGetInsBoardDirectorEditListQuery(
     {
       id: String(id),
     },
@@ -192,13 +191,6 @@ export const BoardDirectorInfo = (props: IProps) => {
       );
     }
   }, [editValues]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetchEdit();
-  }, [preference?.date]);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

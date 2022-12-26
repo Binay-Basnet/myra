@@ -1,5 +1,6 @@
-import { FormInput } from '@coop/shared/form';
 import { FormSection } from '@myra-ui';
+
+import { FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const ProductCode = () => {
@@ -7,9 +8,14 @@ export const ProductCode = () => {
 
   return (
     <FormSection header="depositProductProductCode" subHeader="depositProductAddprefixintial">
-      <FormInput label={t['depositProductPrefix']} name="productCode.prefix" />
-      <FormInput label={t['depositProductIntitialNumber']} name="productCode.initialNo" />
+      <FormInput isRequired label={t['depositProductPrefix']} name="productCode.prefix" />
       <FormInput
+        isRequired
+        label={t['depositProductIntitialNumber']}
+        name="productCode.initialNo"
+      />
+      <FormInput
+        isRequired
         type="number"
         label={t['depositProductNumberOfDigit']}
         name="productCode.noOfDigits"

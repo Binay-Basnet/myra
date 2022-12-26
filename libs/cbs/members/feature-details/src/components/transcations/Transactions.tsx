@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Column, DetailsCard, Table, Text } from '@myra-ui';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 export const TransactionTable = () => {
@@ -31,25 +32,25 @@ export const TransactionTable = () => {
       {
         header: 'Date',
         accessorKey: 'date',
-        cell: (props) => (props.getValue() ? `${props.getValue()}` : 'N/A'),
+        cell: (props) => localizedDate(props?.row?.original?.date),
       },
       {
         header: 'Transaction ID',
         accessorKey: 'noOfShares',
         cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="500" fontSize="r1" color="primary.500">
-              #{props.getValue() as string}
-            </Text>
-          ) : (
-            'N/A'
-          ),
+          props.getValue() ? <Text color="primary.500">#{props.getValue() as string}</Text> : 'N/A',
       },
       {
         header: 'Type',
         accessorKey: 'txnType',
         cell: (props) =>
-          props.getValue() ? `${(props.getValue() as string).toLowerCase()}` : 'N/A',
+          props.getValue() ? (
+            <Text fontWeight="Medium" fontSize="s3" lineHeight="17px">
+              {props.getValue() as string}
+            </Text>
+          ) : (
+            'N/A'
+          ),
       },
 
       {
@@ -61,10 +62,16 @@ export const TransactionTable = () => {
         },
       },
       {
-        header: 'Amount',
+        header: 'Total',
         accessorKey: 'amount',
         cell: (props) =>
-          props.getValue() ? `${amountConverter(props.getValue() as string)}` : '-',
+          props.table ? (
+            <Text fontWeight="Medium" fontSize="r1" lineHeight="17px" color="primary.500">
+              {amountConverter(props.getValue() as string)}
+            </Text>
+          ) : (
+            'N/A'
+          ),
         meta: {
           isNumeric: true,
           width: '33%',
@@ -109,7 +116,7 @@ export const TransactionTable = () => {
 
   return (
     <DetailsCard title="Recent Transactions" hasTable>
-      <Table isStatic data={memberRecentTransWithIndex} columns={columns} />
+      <Table isDetailPageTable isStatic data={memberRecentTransWithIndex} columns={columns} />
     </DetailsCard>
     // <DetailsCard title="Recent Transactions" bg="white" hasTable>
     //   {memberRecentTrans?.map(

@@ -5,7 +5,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
-  asyncToast,
   Box,
   Button,
   Container,
@@ -14,9 +13,11 @@ import {
   FormHeader,
   Grid,
   MemberCard,
+  ResponseDialog,
   Text,
 } from '@myra-ui';
 
+import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   CashValue,
   DateType,
@@ -33,6 +34,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
 import { amountConverter, decimalAdjust, featureCode, useTranslation } from '@coop/shared/utils';
 
@@ -178,9 +180,13 @@ export const AddDeposit = () => {
 
   const selectedPaymentMode = watch('payment_type');
 
+  const isSuspicious = watch('isSuspicious');
+
+  const suspicionRemarks = watch('suspicionRemarks');
+
   const checkIsSubmitButtonDisabled = () => {
     if (mode === 0) {
-      return !totalDeposit;
+      return Boolean(!totalDeposit || (isSuspicious && !suspicionRemarks));
     }
 
     if (selectedPaymentMode === DepositPaymentType.Cash) {
@@ -341,22 +347,7 @@ export const AddDeposit = () => {
       }
     }
 
-    asyncToast({
-      id: 'add-new-deposit',
-      msgs: {
-        success: t['addDepositNewDepositAdded'],
-        loading: t['addDepositAddingNewDeposit'],
-      },
-      promise: mutateAsync({ data: filteredValues as DepositInput }),
-      onSuccess: () => {
-        if (values.payment_type === DepositPaymentType.WithdrawSlip) {
-          queryClient.invalidateQueries(['getAvailableSlipsList']);
-          queryClient.invalidateQueries(['getPastSlipsList']);
-        }
-        queryClient.invalidateQueries(['getDepositListData']);
-        router.push('/transactions/deposit/list');
-      },
-    });
+    return filteredValues as DepositInput;
   };
   // redirect from member details
   useEffect(() => {
@@ -396,10 +387,11 @@ export const AddDeposit = () => {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <FormMemberSelect name="memberId" label="Member" />
+                  <FormMemberSelect isRequired name="memberId" label="Member" />
 
                   {memberId && (
                     <FormAccountSelect
+                      isRequired
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
@@ -413,11 +405,12 @@ export const AddDeposit = () => {
                         selectedAccount?.product?.isMandatorySaving)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
-                          <FormInput name="voucherId" label="Deposit Slip No" />
+                          <FormInput isRequired name="voucherId" label="Deposit Slip No" />
 
                           <Box />
 
                           <FormInput
+                            isRequired
                             name="noOfInstallments"
                             label={t['addDepositNoOfInstallments']}
                           />
@@ -430,17 +423,21 @@ export const AddDeposit = () => {
                         </Grid>
 
                         <Box display="flex" flexDirection="column" gap="s4">
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
+                          <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70">
                             {t['addDepositPaymentRange']}
                           </Text>
-                          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
+                          <Text
+                            fontSize="s3"
+                            fontWeight="Regular"
+                            color="neutralColorLight.Gray-70"
+                          >
                             {`Payment made from ${firstMonth} to ${lastMonth}`}
                           </Text>
                         </Box>
                       </>
                     )}
 
-                  {accountId &&
+                  {/* {accountId &&
                     selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
@@ -454,6 +451,8 @@ export const AddDeposit = () => {
                           />
                         </Grid>
 
+                        <SuspiciousTransaction />
+
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
                             {t['addDepositTotalAmountAfterDeposit']}
@@ -465,22 +464,27 @@ export const AddDeposit = () => {
                           </Text>
                         </Box>
                       </>
-                    )}
+                    )} */}
 
                   {accountId &&
                     (selectedAccount?.product?.nature === NatureOfDepositProduct.Current ||
                       (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-                        !selectedAccount?.product?.isMandatorySaving)) && (
+                        !selectedAccount?.product?.isMandatorySaving) ||
+                      selectedAccount?.product?.nature ===
+                        NatureOfDepositProduct.TermSavingOrFd) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
-                          <FormInput name="voucherId" label="Deposit Slip No" />
+                          <FormInput isRequired name="voucherId" label="Deposit Slip No" />
 
                           <FormAmountInput
+                            isRequired
                             type="number"
                             name="amount"
                             label={t['addDepositAmountToBeDeposited']}
                           />
                         </Grid>
+
+                        <SuspiciousTransaction />
 
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
@@ -627,6 +631,49 @@ export const AddDeposit = () => {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">
             <FormFooter
+              mainButton={
+                mode === 1 ? (
+                  <ResponseDialog
+                    onSuccess={() => {
+                      if (methods.getValues().payment_type === DepositPaymentType.WithdrawSlip) {
+                        queryClient.invalidateQueries(['getAvailableSlipsList']);
+                        queryClient.invalidateQueries(['getPastSlipsList']);
+                      }
+                      queryClient.invalidateQueries(['getDepositListData']);
+                      router.push('/transactions/deposit/list');
+                    }}
+                    promise={() => mutateAsync({ data: handleSubmit() })}
+                    successCardProps={(response) => {
+                      const result = response?.transaction?.deposit?.record;
+
+                      return {
+                        type: 'Deposit',
+                        total: amountConverter(result?.amount || 0) as string,
+                        title: 'Deposit Successful',
+                        details: {
+                          'Transaction Id': (
+                            <Text fontSize="s3" color="primary.500" fontWeight="600">
+                              {result?.transactionID}
+                            </Text>
+                          ),
+                          Date: localizedDate(result?.date),
+                          'Deposit Amount': amountConverter(result?.amount || 0),
+                          Rebate: amountConverter(result?.rebate || 0),
+                          'Payment Mode': result?.paymentMode,
+                          'Deposited By': result?.depositedBy,
+                        },
+                        subTitle:
+                          'Amount deposited successfully. Details of the transaction is listed below.',
+                      };
+                    }}
+                    errorCardProps={{
+                      title: 'New Deposit Failed',
+                    }}
+                  >
+                    <Button width="160px">Add New Deposit</Button>
+                  </ResponseDialog>
+                ) : undefined
+              }
               status={
                 mode === 0 ? (
                   <Box display="flex" gap="s32">

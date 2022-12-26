@@ -115,7 +115,7 @@ export const ShareRegisterTable = () => {
       },
       {
         header: t['shareRegisterTableNameBalance'],
-        accessorFn: (row) => row?.node.balance,
+        accessorFn: (row) => row?.node?.shareAmount,
         cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
       },
       {

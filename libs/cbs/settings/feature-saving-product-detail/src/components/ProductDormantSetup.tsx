@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Column, DetailsCard, Table } from '@myra-ui';
 
+import { DormantDuration } from '@coop/cbs/data-access';
 import { DormantSetupFormState, Maybe } from '@coop/ebanking/data-access';
 
 interface IProductDormantSetup {
@@ -28,7 +29,10 @@ export const ProductDormantSetup = ({ dormantSetup }: IProductDormantSetup) => {
         meta: {
           isNumeric: true,
         },
-        cell: (props) => (props.getValue() ? `${props.getValue()} months` : 'N/A'),
+        cell: (props) =>
+          props?.getValue() === DormantDuration.Day
+            ? `${props.getValue()}`
+            : `${props.getValue()} months`,
       },
     ],
     []
@@ -36,7 +40,7 @@ export const ProductDormantSetup = ({ dormantSetup }: IProductDormantSetup) => {
 
   return (
     <DetailsCard title="Dormant Setup" hasTable>
-      <Table isStatic data={dormantSetupWithIndex} columns={columns} />
+      <Table isDetailPageTable isStatic data={dormantSetupWithIndex} columns={columns} />
     </DetailsCard>
   );
 };

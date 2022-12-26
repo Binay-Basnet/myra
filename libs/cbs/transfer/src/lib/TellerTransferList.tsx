@@ -1,19 +1,35 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { ApprovalStatusCell, Column, Table } from '@myra-ui/table';
 
-import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
+import {
+  TellerActivityEntry,
+  TellerActivityState,
+  TellerTransferType,
+  useGetTellerTransactionListDataQuery,
+} from '@coop/cbs/data-access';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+
+import { TellerTransferApproveModal } from '../components';
 
 /* eslint-disable-next-line */
 export interface TellerTransferListProps {}
+
+const tellerActivityVariant: Record<TellerActivityState, 'success' | 'failure' | 'pending'> = {
+  [TellerActivityState.Approved]: 'success',
+  [TellerActivityState.Pending]: 'pending',
+  [TellerActivityState.Cancelled]: 'failure',
+};
 
 export const TellerTransferList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
+
+  const modalProps = useDisclosure();
 
   const { data, isFetching } = useGetTellerTransactionListDataQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -27,8 +43,8 @@ export const TellerTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Teller Transfer ID',
-        accessorFn: (row) => row?.node?.ID,
+        header: 'Teller Transfer Code',
+        accessorFn: (row) => row?.node?.transferCode,
       },
       {
         accessorFn: (row) => row?.node?.srcTeller?.local,
@@ -52,7 +68,7 @@ export const TellerTransferList = () => {
         ),
 
         meta: {
-          width: '60%',
+          width: '25%',
         },
       },
       {
@@ -77,8 +93,20 @@ export const TellerTransferList = () => {
         ),
 
         meta: {
-          width: '60%',
+          width: '25%',
         },
+      },
+      {
+        header: 'Approval Status',
+        accessorFn: (row) => row?.node?.transferState,
+        cell: (props) => (
+          <ApprovalStatusCell
+            status={props.row.original?.node?.transferState as string}
+            variant={
+              tellerActivityVariant[props.row.original?.node?.transferState as TellerActivityState]
+            }
+          />
+        ),
       },
       {
         header: 'Cash Amount',
@@ -92,22 +120,13 @@ export const TellerTransferList = () => {
         header: 'Transfer Date',
         accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
-      //   accessorKey: 'actions',
-      //   cell: (cell) => {
-      //     const member = cell?.row?.original?.node;
-      //     const memberData = { id: member?.ID };
-      //     return <PopoverComponent items={[]} member={memberData} />;
-      //   },
-      //   meta: {
-      //     width: '60px',
-      //   },
-      // },
     ],
     [t]
   );
+
+  const selectedTransfer = rowData?.find(
+    (transfer) => transfer?.node?.ID === router.query['id']
+  )?.node;
 
   return (
     <>
@@ -129,6 +148,23 @@ export const TellerTransferList = () => {
           pageInfo: data?.transaction?.listTellerTransaction?.pageInfo,
         }}
         noDataTitle="teller transfer list"
+        rowOnClick={(row) => {
+          router.push(
+            {
+              query: {
+                id: row?.node?.ID,
+              },
+            },
+            undefined,
+            { shallow: true }
+          );
+          modalProps.onToggle();
+        }}
+      />
+
+      <TellerTransferApproveModal
+        transfer={selectedTransfer as TellerActivityEntry}
+        approveModal={modalProps}
       />
     </>
   );

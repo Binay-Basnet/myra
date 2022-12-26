@@ -35,31 +35,27 @@ export const SettingsServiceCenterTable = () => {
         accessorFn: (row) => row?.node?.branchCode,
       },
       {
+        header: 'Service Center Name',
+        accessorFn: (row) => row?.node?.name,
+      },
+      {
         header: t['settingsBranchAddress'],
         accessorFn: (row) => row?.node?.address?.locality?.local,
         cell: (props) => (
           <span>
-            {props?.row?.original?.node?.address?.localGovernment?.local} - &nbsp;
+            {props?.row?.original?.node?.address?.localGovernment?.local?.split(' ')[0]} - &nbsp;
             {props?.row?.original?.node?.address?.wardNo}
           </span>
         ),
       },
-
       {
         header: t['settingsBranchDistrict'],
         accessorFn: (row) => row?.node?.address?.district?.local,
-        meta: {
-          width: '40%',
-        },
       },
       {
         header: t['settingsBranchManager'],
         accessorFn: (row) => row?.node?.managerName,
-        meta: {
-          width: '30%',
-        },
       },
-
       {
         header: t['settingsBranchContactNumber'],
         accessorFn: (row) => row?.node?.contactNumber,

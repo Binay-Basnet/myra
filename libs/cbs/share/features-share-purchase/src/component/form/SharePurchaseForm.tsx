@@ -23,6 +23,7 @@ import {
   ShareVoucherDepositedBy,
   useAddSharePurchaseMutation,
   useGetIndividualMemberDetails,
+  useGetSettingsShareGeneralDataQuery,
   useGetShareChargesQuery,
 } from '@coop/cbs/data-access';
 import { FormMemberSelect } from '@coop/shared/form';
@@ -93,6 +94,9 @@ export const SharePurchaseForm = () => {
   const extraFee = watch('extraFee');
   const paymentModes = watch('paymentMode');
   const disableDenomination = watch('cash.disableDenomination');
+  const bankSelected = watch('bankVoucher.bankId');
+  const accountSelected = watch('account.accountId');
+  const bankVoucherDateSelected = watch('bankVoucher.depositedDate');
 
   const { data: chargesData, isLoading } = useGetShareChargesQuery(
     {
@@ -115,12 +119,33 @@ export const SharePurchaseForm = () => {
   const returnAmount = totalCashPaid - totalAmount;
 
   const { memberDetailData } = useGetIndividualMemberDetails({ memberId });
+  const { data: shareData } = useGetSettingsShareGeneralDataQuery();
+  const multiplicityFactor = shareData?.settings?.general?.share?.general?.multiplicityFactor;
+
+  const isMultiple = Number(noOfShares) % Number(multiplicityFactor) === 0;
 
   const { mutateAsync } = useAddSharePurchaseMutation();
 
   const paymentButtonHandler = () => memberId && setMode('sharePayment');
 
   const previousButtonHandler = () => setMode('shareInfo');
+
+  const disableSubmitButtonFxn = (paymentMode: SharePaymentMode) => {
+    if (paymentMode === SharePaymentMode.Cash && !disableDenomination) {
+      return !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount));
+    }
+    if (
+      (paymentModes === SharePaymentMode.BankVoucherOrCheque && bankSelected === undefined) ||
+      (paymentModes === SharePaymentMode.BankVoucherOrCheque &&
+        bankVoucherDateSelected === undefined)
+    ) {
+      return true;
+    }
+    if (paymentMode === SharePaymentMode.Account && accountSelected === undefined) {
+      return true;
+    }
+    return false;
+  };
 
   const handleSubmit = () => {
     const values = getValues();
@@ -288,7 +313,7 @@ export const SharePurchaseForm = () => {
           <Container minW="container.xl" height="fit-content" p="0">
             {mode === 'shareInfo' && (
               <ShareInfoFooter
-                disableButton={noOfShares}
+                disableButton={noOfShares && isMultiple}
                 totalAmount={totalAmount}
                 paymentButtonHandler={paymentButtonHandler}
               />
@@ -297,11 +322,7 @@ export const SharePurchaseForm = () => {
               <SharePaymentFooter
                 previousButtonHandler={previousButtonHandler}
                 handleSubmit={handleSubmit}
-                isDisabled={
-                  paymentModes === SharePaymentMode.Cash && !disableDenomination
-                    ? !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount))
-                    : false
-                }
+                isDisabled={disableSubmitButtonFxn(paymentModes)}
               />
             )}
           </Container>

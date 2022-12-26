@@ -29,7 +29,7 @@ export const LoanApproveOrDeclineModal = ({
     defaultValues: {
       reasonForDeclination: '',
       notifyMember: false,
-      purposedDate: '',
+      purposedDate: null,
     },
   });
 
@@ -70,7 +70,7 @@ export const LoanApproveOrDeclineModal = ({
               methods.reset();
               methods.setValue('reasonForDeclination', '');
               methods.setValue('notifyMember', false);
-              methods.setValue('purposedDate', '');
+              methods.setValue('purposedDate', null);
             },
           });
         }}
@@ -80,7 +80,7 @@ export const LoanApproveOrDeclineModal = ({
           methods.reset();
           methods.setValue('reasonForDeclination', '');
           methods.setValue('notifyMember', false);
-          methods.setValue('purposedDate', '');
+          methods.setValue('purposedDate', null);
         }}
         primaryButtonLabel="Done"
         secondaryButtonLabel="Undo"
@@ -117,7 +117,7 @@ export const LoanApproveOrDeclineModal = ({
               methods.reset();
               methods.setValue('reasonForDeclination', '');
               methods.setValue('notifyMember', false);
-              methods.setValue('purposedDate', '');
+              methods.setValue('purposedDate', null);
               onToggle();
             },
           });

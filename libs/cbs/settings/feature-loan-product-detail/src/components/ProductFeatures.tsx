@@ -7,25 +7,35 @@ interface IProductFeaturesProps {
   }[];
 }
 
-export const ProductFeatures = ({ features }: IProductFeaturesProps) => (
-  <Table
-    isStatic
-    data={features}
-    columns={[
-      {
-        header: 'Features',
-        accessorKey: 'feature',
-        meta: {
-          width: '70%',
+export const ProductFeatures = ({ features }: IProductFeaturesProps) => {
+  const featuresListWithIndex =
+    features?.map((feature, index) => ({
+      index: index + 1,
+      ...feature,
+    })) ?? [];
+
+  return (
+    <Table
+      isDetailPageTable
+      isStatic
+      data={featuresListWithIndex}
+      columns={[
+        {
+          header: 'SN',
+          accessorKey: 'index',
         },
-      },
-      {
-        header: 'Status',
-        accessorKey: 'status',
-        meta: {
-          width: '33%',
+        {
+          header: 'Features',
+          accessorKey: 'feature',
+          meta: {
+            width: '80%',
+          },
         },
-      },
-    ]}
-  />
-);
+        {
+          header: 'Status',
+          accessorKey: 'status',
+        },
+      ]}
+    />
+  );
+};

@@ -77,6 +77,7 @@ export const Interest = () => {
         }}
       />
       <FormInput
+        isRequired
         name="interest.defaultRate"
         type="number"
         label={t['loanProductDefaultRate']}

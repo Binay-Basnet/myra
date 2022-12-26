@@ -3,13 +3,14 @@ import React from 'react';
 import { Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
     | {
         sn: number;
-        date: string | null | undefined;
+        date: Record<'local' | 'en' | 'np', string> | null | undefined;
         accountName: string | null | undefined;
         installmentNo: string | null | undefined;
         interestRate: string | null | undefined;
@@ -30,6 +31,7 @@ export const UpcomingLoanPaymentTable = ({ data }: ILoanPaymentScheduleTableProp
       {
         header: 'Date',
         accessorKey: 'date',
+        cell: (props) => localizedDate(props.cell.row.original.date),
       },
       {
         header: 'Account Name',
@@ -71,5 +73,5 @@ export const UpcomingLoanPaymentTable = ({ data }: ILoanPaymentScheduleTableProp
     []
   );
 
-  return <Table<typeof data[0]> isStatic data={data ?? []} columns={columns} />;
+  return <Table<typeof data[0]> isStatic data={data ?? []} isDetailPageTable columns={columns} />;
 };

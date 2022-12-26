@@ -2,10 +2,15 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { Button, Column, DetailsCard, Table, Text } from '@myra-ui';
+import { Button, DetailsCard } from '@myra-ui';
 
-import { useAccountDetails, useGetAccountTransactionList } from '@coop/cbs/data-access';
-import { amountConverter } from '@coop/shared/utils';
+import { TransactionTable } from '@coop/cbs/components';
+import {
+  EbankingTransaction,
+  useAccountDetails,
+  useGetAccountTransactionListsQuery,
+} from '@coop/cbs/data-access';
+import { getRouterQuery } from '@coop/shared/utils';
 
 import { TabHeader } from '../details';
 
@@ -14,104 +19,23 @@ export const Transactions = () => {
 
   const { accountDetails } = useAccountDetails();
 
-  const { transactionList } = useGetAccountTransactionList({
-    accountId: accountDetails?.accountId,
-  });
-
-  const transactionListWithIndex =
-    transactionList?.map((trans, index) => ({
-      index: index + 1,
-      ...trans,
-    })) ?? [];
-
-  const columns = useMemo<Column<typeof transactionListWithIndex[0]>[]>(
-    () => [
-      {
-        header: 'SN',
-        accessorKey: 'index',
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-      },
-      {
-        header: 'Date',
-        accessorKey: 'date',
-        cell: (props) => (props.getValue() ? `${props.getValue()}` : 'N/A'),
-      },
-      {
-        header: 'Transaction ID',
-        accessorKey: 'accountId',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="500" fontSize="r1" color="primary.500">
-              #{props.getValue() as string}
-            </Text>
-          ) : (
-            'N/A'
-          ),
-      },
-      {
-        header: 'Type',
-        accessorKey: 'transactionDirection',
-        cell: (props) =>
-          props.getValue() ? `${(props.getValue() as string).toLowerCase()}` : 'N/A',
-      },
-
-      {
-        header: 'Account / Particulars',
-        accessorKey: 'currentBalance',
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-        meta: {
-          width: '33%',
-        },
-      },
-      {
-        header: 'Amount',
-        accessorKey: 'amount',
-        cell: (props) =>
-          props.getValue() ? `${amountConverter(props.getValue() as string)}` : '-',
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-      {
-        header: 'Fine',
-        accessorKey: 'currentBalance',
-        cell: (props) => (props.getValue() ? `${props.getValue()}` : '-'),
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-      {
-        header: 'Rebate',
-        accessorKey: 'currentBalance',
-        cell: (props) => (props.getValue() ? `${props.getValue()}` : '-'),
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-      {
-        header: 'Total',
-        accessorKey: 'currentBalance',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="500" fontSize="r1" color="primary.500">
-              {amountConverter(props.getValue() as string)}
-            </Text>
-          ) : (
-            'N/A'
-          ),
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-    ],
-    []
+  const { data: transactionListQueryData } = useGetAccountTransactionListsQuery(
+    {
+      filter: { accountIds: [accountDetails?.accountId as string] },
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    },
+    {
+      enabled: !!accountDetails?.accountId,
+    }
   );
 
-  if (!transactionListWithIndex || Object.keys(transactionListWithIndex).length === 0) return null;
+  const transactionList = useMemo(
+    () =>
+      transactionListQueryData?.account?.listTransactions?.edges?.map(
+        (item) => item?.node as EbankingTransaction
+      ) ?? [],
+    [transactionListQueryData]
+  );
 
   return (
     <>
@@ -144,8 +68,7 @@ export const Transactions = () => {
         //   </Button>
         // }
       >
-        <Table isStatic data={transactionListWithIndex} columns={columns} />
-        {/* {transactionList?.map((item) => item && <TransactionCard transactionItem={item} />)} */}
+        <TransactionTable data={transactionList} hasIndex />
       </DetailsCard>
     </>
   );

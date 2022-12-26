@@ -28,11 +28,18 @@ query getTrialSheetReport($data: TrialSheetReportFilter!) {
               ledgerName
               under
             }
+            offBalance {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
 
             equityAndLiablitiesTotal
             assetsTotal
             expenseTotal
             incomeTotal
+            offBalanceTotal
 
             totalAssetExpense
             totalLiablitiesIncome
@@ -163,28 +170,33 @@ query getBankGLStatementReport($data: BankGLStatementFilter!) {
   }
 }
 
-
-query getDayBookReport($data: DayBookReportFilter!){
+query getDayBookReport($data: DayBookReportFilter!) {
   report {
     transactionReport {
       financial {
-        dayBookReport(data: $data){
+        dayBookReport(data: $data) {
           data {
             closingAmount
             openingBalance
             payments {
-              particular
               accountHead
-              ledger
               amount
-              voucherNo
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
             }
             receipts {
-              particular
               accountHead
-              ledger
               amount
-              voucherNo
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
             }
             totalAmount
             totalPayment

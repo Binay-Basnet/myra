@@ -18,6 +18,7 @@ interface Option {
     accountId?: string;
     accountType?: string;
     balance?: string;
+    availableBalance?: string;
     fine?: string;
     productName: string;
   };
@@ -31,6 +32,7 @@ interface IAccountSelectProps {
   isLinkedAccounts?: boolean;
   filterBy?: ObjState;
   excludeIds?: string[];
+  isRequired?: boolean;
 }
 
 export const FormAccountSelect = ({
@@ -41,6 +43,7 @@ export const FormAccountSelect = ({
   placeholder,
   filterBy,
   excludeIds,
+  isRequired,
 }: IAccountSelectProps) => {
   const { t } = useTranslation();
   const { data: accountListData, isFetching } = useGetAccountTableListQuery(
@@ -90,7 +93,7 @@ export const FormAccountSelect = ({
             accountName: curVal?.accountName,
             accountId: curVal?.product?.nature,
             accountType: curVal?.product?.nature ? accountTypes[curVal?.product?.nature] : '',
-            balance: curVal?.balance as string,
+            balance: curVal?.availableBalance as string,
             fine: '0',
             productName: curVal?.product?.productName,
           },
@@ -116,7 +119,7 @@ export const FormAccountSelect = ({
             accountType: curVal?.node?.product?.nature
               ? accountTypes[curVal?.node?.product?.nature]
               : '',
-            balance: curVal?.node?.balance as string,
+            balance: curVal?.node?.availableBalance as string,
             fine: curVal?.node?.dues?.fine as string,
             productName: curVal?.node?.product?.productName,
           },
@@ -129,6 +132,7 @@ export const FormAccountSelect = ({
       render={({ field: { value, onChange } }) => (
         <AccountSelect
           label={label}
+          isRequired={isRequired}
           value={
             isLinkedAccounts
               ? linkedAccountsOptions?.find((option) => option.value === value)

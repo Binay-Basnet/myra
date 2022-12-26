@@ -47,6 +47,7 @@ export type AccountActivityEntry = {
   profilePic?: Maybe<Scalars['String']>;
   profilePicUrl?: Maybe<Scalars['String']>;
   state: TransactionState;
+  transactionCode?: Maybe<Scalars['String']>;
 };
 
 export type AccountActivityListConnection = {
@@ -191,6 +192,7 @@ export type AccountTransferEntry = {
   destAccountID: Scalars['String'];
   srcAccountID: Scalars['String'];
   state: TransactionState;
+  transactionCode?: Maybe<Scalars['String']>;
   transferType: TransferType;
 };
 
@@ -228,6 +230,7 @@ export type AccountTransferView = {
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   transferAmount?: Maybe<Scalars['String']>;
   transferType?: Maybe<TransferType>;
@@ -645,6 +648,44 @@ export type AllTransactionFilter = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
+export type AllTransactionResult = {
+  amount?: Maybe<Scalars['String']>;
+  branch?: Maybe<Scalars['String']>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  id: Scalars['ID'];
+  member?: Maybe<Member>;
+  status?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
+  transactionMode?: Maybe<Scalars['String']>;
+  txnType?: Maybe<AllTransactionType>;
+};
+
+export enum AllTransactionType {
+  AccountClose = 'ACCOUNT_CLOSE',
+  AlternateChannel = 'ALTERNATE_CHANNEL',
+  Deposit = 'DEPOSIT',
+  Ebanking = 'EBANKING',
+  InterestBooking = 'INTEREST_BOOKING',
+  InterestPosting = 'INTEREST_POSTING',
+  JournalVoucher = 'JOURNAL_VOUCHER',
+  LoanDisbursment = 'LOAN_DISBURSMENT',
+  LoanRepayment = 'LOAN_REPAYMENT',
+  Membership = 'MEMBERSHIP',
+  OpeningBalance = 'OPENING_BALANCE',
+  SharePurchase = 'SHARE_PURCHASE',
+  ShareReturn = 'SHARE_RETURN',
+  TellerTransfer = 'TELLER_TRANSFER',
+  Transfer = 'TRANSFER',
+  Withdraw = 'WITHDRAW',
+}
+
+export type AllTransactionViewResult = {
+  data?: Maybe<AllTransactionResult>;
+  error?: Maybe<QueryError>;
+};
+
 export type AllTransactionsConnection = {
   edges?: Maybe<Array<Maybe<AllTransactionsEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -926,9 +967,12 @@ export type Bank = Base & {
 
 export type BankAccount = {
   accountNo?: Maybe<Scalars['String']>;
+  accountType?: Maybe<AccountingBankAccountType>;
   balance?: Maybe<Scalars['String']>;
   bankId?: Maybe<Scalars['String']>;
   bankName?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   displayName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
 };
@@ -1111,7 +1155,7 @@ export type BankDepositData = {
   amount: Scalars['String'];
   bankId: Scalars['String'];
   depositedBy: PaymentDepositedBy;
-  depositedDate: Scalars['String'];
+  depositedDate: Scalars['Localized'];
   voucherId: Scalars['String'];
 };
 
@@ -1252,7 +1296,7 @@ export type BranchFormData = {
   category?: Maybe<BranchCategory>;
   districtId?: Maybe<Scalars['Int']>;
   email?: Maybe<Scalars['String']>;
-  estDate?: Maybe<Scalars['String']>;
+  estDate?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   localGovernmentId?: Maybe<Scalars['Int']>;
   locality?: Maybe<Scalars['String']>;
@@ -1289,7 +1333,7 @@ export type BranchInput = {
   category?: InputMaybe<BranchCategory>;
   districtId?: InputMaybe<Scalars['Int']>;
   email?: InputMaybe<Scalars['String']>;
-  estDate?: InputMaybe<Scalars['String']>;
+  estDate?: InputMaybe<Scalars['Localized']>;
   localGovernmentId?: InputMaybe<Scalars['Int']>;
   locality?: InputMaybe<Scalars['String']>;
   location?: InputMaybe<LocationCoordinateInput>;
@@ -1400,8 +1444,14 @@ export type CbsCodeManagementData = {
 };
 
 export type CbsCodeManagementList = {
-  data?: Maybe<Array<Maybe<CbsCodeManagement>>>;
+  data?: Maybe<CbsCodeManagementListData>;
   error?: Maybe<QueryError>;
+};
+
+export type CbsCodeManagementListData = {
+  share?: Maybe<Array<Maybe<CbsCodeManagement>>>;
+  transfers?: Maybe<Array<Maybe<CbsCodeManagement>>>;
+  withdrawSlip?: Maybe<Array<Maybe<CbsCodeManagement>>>;
 };
 
 export type CbsCodeManagementMutation = {
@@ -1429,22 +1479,32 @@ export type CbsCodeMangementResult = {
 };
 
 export enum CbsCodeType {
-  AccountTransfer = 'ACCOUNT_TRANSFER',
   BranchTransfer = 'BRANCH_TRANSFER',
-  Deposit = 'DEPOSIT',
-  JournalVoucher = 'JOURNAL_VOUCHER',
-  LoanRepayment = 'LOAN_REPAYMENT',
-  MarketRepresentativeTransaction = 'MARKET_REPRESENTATIVE_TRANSACTION',
   ShareCertificate = 'SHARE_CERTIFICATE',
-  ShareIssue = 'SHARE_ISSUE',
-  ShareReturn = 'SHARE_RETURN',
   TellerTransfer = 'TELLER_TRANSFER',
-  Valuator = 'VALUATOR',
   VaultTransfer = 'VAULT_TRANSFER',
-  Withdraw = 'WITHDRAW',
   WithdrawSlipBlockRequest = 'WITHDRAW_SLIP_BLOCK_REQUEST',
   WithdrawSlipRequest = 'WITHDRAW_SLIP_REQUEST',
 }
+
+export type CoaAccount = {
+  accountClass?: Maybe<Scalars['String']>;
+  accountCode?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['Localized']>;
+  parentGroup?: Maybe<Scalars['Localized']>;
+};
+
+export type CoaAccountListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<CoaAccount>;
+};
+
+export type CoaAccountListResult = {
+  edges?: Maybe<Array<Maybe<CoaAccountListEdges>>>;
+  error?: Maybe<QueryError>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
 
 export enum CoaAccountSetup {
   AllBranch = 'ALL_BRANCH',
@@ -1678,6 +1738,7 @@ export type ChartsOfAccountSettingsQuery = {
   accountsUnder?: Maybe<CoaMinimalResult>;
   accountsUnderLeaf?: Maybe<Array<Maybe<AccountsUnderLeafNode>>>;
   class?: Maybe<ChartsOfAccountClassResult>;
+  coaAccountList?: Maybe<CoaAccountListResult>;
   fullView: CoaFullView;
   search?: Maybe<CoaMinimalResult>;
 };
@@ -1693,6 +1754,11 @@ export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
 export type ChartsOfAccountSettingsQueryAccountsUnderLeafArgs = {
   currentBranch?: InputMaybe<Scalars['Boolean']>;
   parentId: Array<InputMaybe<Scalars['String']>>;
+};
+
+export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
+  branchId?: InputMaybe<Scalars['String']>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type ChartsOfAccountSettingsQuerySearchArgs = {
@@ -1739,7 +1805,7 @@ export enum ChequePickUpMethod {
 
 export type Citizenship = {
   inNepali?: Maybe<CitizenshipInNepali>;
-  issueDate?: Maybe<Scalars['String']>;
+  issueDate?: Maybe<Scalars['Localized']>;
   issuePlace?: Maybe<Scalars['String']>;
   number?: Maybe<Scalars['String']>;
 };
@@ -1911,13 +1977,13 @@ export type CoopEquityLiabilityDetails = {
 };
 
 export type CoopRelatedTraining = {
-  dateOfTraining?: InputMaybe<Scalars['String']>;
+  dateOfTraining?: InputMaybe<Scalars['Localized']>;
   subjectOfTraining?: InputMaybe<Scalars['String']>;
   trainingOrganization?: InputMaybe<Scalars['String']>;
 };
 
 export type CoopRelatedTrainingType = {
-  dateOfTraining?: Maybe<Scalars['String']>;
+  dateOfTraining?: Maybe<Scalars['Localized']>;
   subjectOfTraining?: Maybe<Scalars['String']>;
   trainingOrganization?: Maybe<Scalars['String']>;
 };
@@ -2128,7 +2194,7 @@ export type CoopUnionInstitutionInformationInput = {
   accountName?: InputMaybe<Scalars['String']>;
   accountNumber?: InputMaybe<Scalars['String']>;
   applicantContactNo?: InputMaybe<Scalars['String']>;
-  applicantDateOfMembership?: InputMaybe<Scalars['String']>;
+  applicantDateOfMembership?: InputMaybe<Scalars['Localized']>;
   applicantDesignationEn?: InputMaybe<Scalars['String']>;
   applicantDesignationNp?: InputMaybe<Scalars['String']>;
   applicantEmail?: InputMaybe<Scalars['String']>;
@@ -2145,7 +2211,7 @@ export type CoopUnionInstitutionInformationInput = {
   fax?: InputMaybe<Scalars['String']>;
   institutionType?: InputMaybe<Scalars['ID']>;
   issuingOffice?: InputMaybe<Scalars['String']>;
-  lastAgmDate?: InputMaybe<Scalars['String']>;
+  lastAgmDate?: InputMaybe<Scalars['Localized']>;
   nameOfBank?: InputMaybe<Scalars['ID']>;
   nameOfInstitutionEn?: InputMaybe<Scalars['String']>;
   nameOfInstitutionNp?: InputMaybe<Scalars['String']>;
@@ -2163,7 +2229,7 @@ export type CoopUnionInstitutionInformationInput = {
   phone?: InputMaybe<Scalars['String']>;
   postBoxNo?: InputMaybe<Scalars['String']>;
   regdAddress?: InputMaybe<KymAddressInput>;
-  regdDate?: InputMaybe<Scalars['String']>;
+  regdDate?: InputMaybe<Scalars['Localized']>;
   regdNo?: InputMaybe<Scalars['String']>;
   vatOrPan?: InputMaybe<Scalars['String']>;
   website?: InputMaybe<Scalars['String']>;
@@ -2191,7 +2257,7 @@ export type CoopUnionPersonnelDetails = {
   centralRepID?: Maybe<Scalars['ID']>;
   citizenshipNo?: Maybe<Scalars['String']>;
   cooperativeUnionId?: Maybe<Scalars['ID']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designationEn?: Maybe<Scalars['String']>;
   designationNp?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -2224,7 +2290,7 @@ export type CoopUnionPersonnelDetailsResultType = {
 export type CoopUnionPersonnelInput = {
   centralRepID?: InputMaybe<Scalars['ID']>;
   citizenshipNo?: InputMaybe<Scalars['String']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
   designationEn?: InputMaybe<Scalars['String']>;
   designationNp?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
@@ -2260,8 +2326,8 @@ export enum CoopUnionSection {
 export type CooperativeAccountOperatorDetails = {
   citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
-  dateofTrainig?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
+  dateofTrainig?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -2291,7 +2357,7 @@ export type CooperativeAddLastUpdated = {
 export type CooperativeBodDetails = {
   citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -2357,8 +2423,8 @@ export type CooperativeOrganizationInformation = {
   contactNumber?: Maybe<Scalars['String']>;
   cooperativeTypeId?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  lastAgmDate?: Maybe<Scalars['String']>;
-  lastAuditDate?: Maybe<Scalars['String']>;
+  lastAgmDate?: Maybe<Scalars['Localized']>;
+  lastAuditDate?: Maybe<Scalars['Localized']>;
   mainServiceProduct?: Maybe<Scalars['String']>;
   nameOfOrganization?: Maybe<Scalars['String']>;
   noOfFemaleEmloyee?: Maybe<Scalars['Int']>;
@@ -2370,7 +2436,7 @@ export type CooperativeOrganizationInformation = {
   oprLatitude?: Maybe<Scalars['String']>;
   oprLongitude?: Maybe<Scalars['String']>;
   regdAddress?: Maybe<Address>;
-  regdDate?: Maybe<Scalars['String']>;
+  regdDate?: Maybe<Scalars['Localized']>;
   regdLatitude?: Maybe<Scalars['String']>;
   regdLongitude?: Maybe<Scalars['String']>;
   regdNumber?: Maybe<Scalars['Int']>;
@@ -2405,7 +2471,7 @@ export type CooperativeUnionCentralRepresentativeDetails = {
   citizenshipOrPassportOrLicenseNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   crDecisionDocument?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -2491,7 +2557,7 @@ export type CooperativeUnionInstitutionInformation = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
   applicantContactNo?: Maybe<Scalars['String']>;
-  applicantDateOfMembership?: Maybe<Scalars['String']>;
+  applicantDateOfMembership?: Maybe<Scalars['Localized']>;
   applicantDesignationEn?: Maybe<Scalars['String']>;
   applicantDesignationNp?: Maybe<Scalars['String']>;
   applicantEmail?: Maybe<Scalars['String']>;
@@ -2508,7 +2574,7 @@ export type CooperativeUnionInstitutionInformation = {
   fax?: Maybe<Scalars['String']>;
   institutionType?: Maybe<Scalars['ID']>;
   issuingOffice?: Maybe<Scalars['String']>;
-  lastAgmDate?: Maybe<Scalars['String']>;
+  lastAgmDate?: Maybe<Scalars['Localized']>;
   nameOfBank?: Maybe<Scalars['ID']>;
   nameOfInstitutionEn?: Maybe<Scalars['String']>;
   nameOfInstitutionNp?: Maybe<Scalars['String']>;
@@ -2526,7 +2592,7 @@ export type CooperativeUnionInstitutionInformation = {
   phone?: Maybe<Scalars['String']>;
   postBoxNo?: Maybe<Scalars['String']>;
   regdAddress?: Maybe<KymAddress>;
-  regdDate?: Maybe<Scalars['String']>;
+  regdDate?: Maybe<Scalars['Localized']>;
   regdNo?: Maybe<Scalars['String']>;
   vatOrPan?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
@@ -2642,18 +2708,23 @@ export enum DateType {
 }
 
 export type DayBookDataEntry = {
-  accountHead?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   ledger?: Maybe<Scalars['String']>;
   particular?: Maybe<Scalars['String']>;
   voucherNo?: Maybe<Scalars['String']>;
 };
 
+export type DayBookDataValue = {
+  accountHead?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  entries?: Maybe<Array<Maybe<DayBookDataEntry>>>;
+};
+
 export type DayBookReportData = {
   closingAmount?: Maybe<Scalars['String']>;
   openingBalance?: Maybe<Scalars['String']>;
-  payments?: Maybe<Array<Maybe<DayBookDataEntry>>>;
-  receipts?: Maybe<Array<Maybe<DayBookDataEntry>>>;
+  payments?: Maybe<Array<Maybe<DayBookDataValue>>>;
+  receipts?: Maybe<Array<Maybe<DayBookDataValue>>>;
   totalAmount?: Maybe<Scalars['String']>;
   totalPayment?: Maybe<Scalars['String']>;
   totalReceipts?: Maybe<Scalars['String']>;
@@ -2661,7 +2732,8 @@ export type DayBookReportData = {
 
 export type DayBookReportFilter = {
   branchId: Scalars['String'];
-  date?: InputMaybe<LocalizedDateFilter>;
+  period?: InputMaybe<LocalizedDateFilter>;
+  user?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
 
 export type DayBookReportResult = {
@@ -2748,6 +2820,7 @@ export type DepositAccount = Base & {
   accountExpiryDate?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   accountOpenedDate?: Maybe<Scalars['String']>;
+  availableBalance?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
   closedAt?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
@@ -2799,7 +2872,7 @@ export type DepositAccountInstallmentResult = {
 export type DepositBankVoucher = {
   amount: Scalars['String'];
   bankId: Scalars['String'];
-  depositedAt: Scalars['String'];
+  depositedAt: Scalars['Localized'];
   depositedBy: Scalars['String'];
   voucherId: Scalars['String'];
 };
@@ -2830,6 +2903,7 @@ export type DepositInput = {
   depositedBy: DepositedBy;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
+  isSuspicious?: InputMaybe<Scalars['Boolean']>;
   memberId?: InputMaybe<Scalars['String']>;
   noOfInstallments?: InputMaybe<Scalars['Int']>;
   notes?: InputMaybe<Scalars['String']>;
@@ -2838,6 +2912,8 @@ export type DepositInput = {
   payment_type: DepositPaymentType;
   rebate?: InputMaybe<Scalars['String']>;
   sourceOfFund?: InputMaybe<Scalars['String']>;
+  suspicionRemarks?: InputMaybe<Scalars['String']>;
+  suspicionTopologies?: InputMaybe<Array<InputMaybe<SuspiciousTransactionTopology>>>;
   voucherId?: InputMaybe<Scalars['String']>;
   withdrawSlip?: InputMaybe<WithdrawSlip>;
 };
@@ -3365,12 +3441,28 @@ export enum DepositProductStatus {
   Inactive = 'INACTIVE',
 }
 
+export type DepositRecord = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositedBy?: Maybe<DepositedBy>;
+  fine?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentMode?: Maybe<DepositPaymentType>;
+  rebate?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+  transactionID?: Maybe<Scalars['ID']>;
+};
+
 export type DepositReport = {
   accountClosingReport?: Maybe<AccountClosingReportResult>;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
   interestStatementReport: InterestPostingReportResult;
   interestTaxReport: InterestTaxReportResult;
   savingStatementReport?: Maybe<ReportResult>;
+  suspiciousTransctionReport?: Maybe<SuspiciousTransactionReportResult>;
   thresholdTransactionReport: TtrReportResult;
 };
 
@@ -3394,6 +3486,10 @@ export type DepositReportSavingStatementReportArgs = {
   data: SavingStatementReportSettings;
 };
 
+export type DepositReportSuspiciousTransctionReportArgs = {
+  data?: InputMaybe<SuspiciousTransactionReportInput>;
+};
+
 export type DepositReportThresholdTransactionReportArgs = {
   data: TtrReportFilter;
 };
@@ -3401,6 +3497,7 @@ export type DepositReportThresholdTransactionReportArgs = {
 export type DepositResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
+  record?: Maybe<DepositRecord>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -3473,6 +3570,7 @@ export type DepositTransactionView = {
   totalDebit?: Maybe<Scalars['String']>;
   totalDepositedAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   voucherId?: Maybe<Scalars['String']>;
 };
@@ -3498,7 +3596,7 @@ export type DirectorAffiliatedFirms = {
 
 export type DirectorDetailsFormState = {
   citizenshipNo?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   firmDetails?: Maybe<AffiliatedDirectorDetailsFormState>;
@@ -3517,7 +3615,7 @@ export type DirectorDetailsFormState = {
 export type DirectorDetailsType = {
   affiliatedFirms?: Maybe<Array<Maybe<DirectorAffiliatedFirms>>>;
   citizenshipNo?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   documentPhotograph?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -3612,6 +3710,7 @@ export enum DormantCondition {
 }
 
 export enum DormantDuration {
+  Day = 'DAY',
   HalfYear = 'HALF_YEAR',
   Month = 'MONTH',
   Quarter = 'QUARTER',
@@ -3854,22 +3953,22 @@ export type ExternalLoanApplicationInput = {
   approvedAmount?: InputMaybe<Scalars['String']>;
   collateral?: InputMaybe<Array<InputMaybe<ExternalLoanCollateralInput>>>;
   documents?: InputMaybe<ExternalLoanApplicationDocumentInput>;
-  effectiveStartDate?: InputMaybe<Scalars['String']>;
+  effectiveStartDate?: InputMaybe<Scalars['Localized']>;
   fixDeposit?: InputMaybe<Scalars['String']>;
   installmentFrequency?: InputMaybe<InstallmentFrequency>;
   installmentType?: InputMaybe<LoanRepaymentScheme>;
   insurance?: InputMaybe<Scalars['Boolean']>;
   insuranceCompany?: InputMaybe<Scalars['String']>;
   insurancePremiumAmount?: InputMaybe<Scalars['String']>;
-  insuranceStartDate?: InputMaybe<Scalars['String']>;
+  insuranceStartDate?: InputMaybe<Scalars['Localized']>;
   insuranceValidUpto?: InputMaybe<Scalars['String']>;
   interestRate?: InputMaybe<Scalars['Float']>;
-  loanAppliedDate?: InputMaybe<Scalars['String']>;
-  loanApprovedDate?: InputMaybe<Scalars['String']>;
+  loanAppliedDate?: InputMaybe<Scalars['Localized']>;
+  loanApprovedDate?: InputMaybe<Scalars['Localized']>;
   loanCharges?: InputMaybe<Array<InputMaybe<ExternalLoanChargeInput>>>;
   loanName?: InputMaybe<Scalars['String']>;
   loanNumber?: InputMaybe<Scalars['String']>;
-  maturityDate?: InputMaybe<Scalars['String']>;
+  maturityDate?: InputMaybe<Scalars['Localized']>;
   nameOfOrganization?: InputMaybe<Scalars['String']>;
   nameOfRepresentative?: InputMaybe<Scalars['String']>;
   paymentMethod?: InputMaybe<ExternalLoanPaymentMethod>;
@@ -3950,7 +4049,7 @@ export type ExternalLoanPaymentFilter = {
 
 export type ExternalLoanPaymentInput = {
   amountPaid?: InputMaybe<Scalars['String']>;
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
   fine?: InputMaybe<Scalars['String']>;
   installmentAmount?: InputMaybe<Scalars['String']>;
   loanId?: InputMaybe<Scalars['String']>;
@@ -4809,6 +4908,7 @@ export type GlTransaction = {
   account: Scalars['String'];
   credit?: Maybe<Scalars['String']>;
   debit?: Maybe<Scalars['String']>;
+  serviceCenter?: Maybe<Scalars['String']>;
 };
 
 export enum GlobalPageAppName {
@@ -5172,7 +5272,7 @@ export type InstitutionOrganizationInformation = {
   accountNumber?: Maybe<Scalars['String']>;
   bank?: Maybe<Scalars['ID']>;
   branchOfficeAddress?: Maybe<KymAddress>;
-  dateOfLastAGM?: Maybe<Scalars['String']>;
+  dateOfLastAGM?: Maybe<Scalars['Localized']>;
   email?: Maybe<Scalars['String']>;
   fax?: Maybe<Scalars['String']>;
   institutionName?: Maybe<Scalars['String']>;
@@ -5186,7 +5286,7 @@ export type InstitutionOrganizationInformation = {
   postBoxNo?: Maybe<Scalars['String']>;
   registeredAddress?: Maybe<KymAddress>;
   registeredNumber?: Maybe<Scalars['String']>;
-  registrationDate?: Maybe<Scalars['String']>;
+  registrationDate?: Maybe<Scalars['Localized']>;
   sisterConcernDetails?: Maybe<Array<Maybe<SisterConcernDetailsType>>>;
   vatOrPanNo?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
@@ -5772,6 +5872,7 @@ export type JournalVoucherDetail = {
   status?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
 };
 
 export type JournalVoucherDetailResult = {
@@ -5941,7 +6042,7 @@ export type KymGeneralSettingsQuery = {
 
 export type KymIndBasicInformation = {
   age?: Maybe<Scalars['Int']>;
-  dateOfBirth?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
   educationQualificationId?: Maybe<Scalars['String']>;
   ethnicityId?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['Localized']>;
@@ -5981,7 +6082,7 @@ export type KymIndEstimatedTransactions = {
 
 export type KymIndFamilyMember = {
   additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
-  dateOfBirth?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
   familyMemberId?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['Localized']>;
   id: Scalars['String'];
@@ -5990,7 +6091,7 @@ export type KymIndFamilyMember = {
 
 export type KymIndFamilyMemberInput = {
   additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
-  dateOfBirth?: InputMaybe<Scalars['String']>;
+  dateOfBirth?: InputMaybe<Scalars['Localized']>;
   familyMemberId?: InputMaybe<Scalars['String']>;
   fullName?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
@@ -6032,7 +6133,7 @@ export type KymIndForeignEmployment = {
 
 export type KymIndIdentification = {
   additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   id: Scalars['String'];
   idNo?: Maybe<Scalars['String']>;
   idType: Scalars['String'];
@@ -6041,7 +6142,7 @@ export type KymIndIdentification = {
 
 export type KymIndIdentificationInput = {
   additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
   id: Scalars['String'];
   idNo?: InputMaybe<Scalars['String']>;
   idType: Scalars['String'];
@@ -6138,7 +6239,7 @@ export type KymIndOccupation = {
   additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
   address?: Maybe<Scalars['Localized']>;
   contact?: Maybe<Scalars['String']>;
-  establishedDate?: Maybe<Scalars['String']>;
+  establishedDate?: Maybe<Scalars['Localized']>;
   estimatedAnnualIncome?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   isOwner?: Maybe<Scalars['Boolean']>;
@@ -6152,7 +6253,7 @@ export type KymIndOccupationInput = {
   additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
   address?: InputMaybe<Scalars['String']>;
   contact?: InputMaybe<Scalars['String']>;
-  establishedDate?: InputMaybe<Scalars['String']>;
+  establishedDate?: InputMaybe<Scalars['Localized']>;
   estimatedAnnualIncome?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
   isOwner?: InputMaybe<Scalars['Boolean']>;
@@ -6249,7 +6350,7 @@ export type KymCoopAccountOperatorDetailsFormInput = {
   contactNumber?: InputMaybe<Scalars['String']>;
   coopRelatedTraining?: InputMaybe<Array<InputMaybe<CoopRelatedTraining>>>;
   cooperativeId?: InputMaybe<Scalars['ID']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
   designation?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   highestQualification?: InputMaybe<Scalars['String']>;
@@ -6285,7 +6386,7 @@ export type KymCoopDirectorDetailsFormInput = {
   citizenshipNo?: InputMaybe<Scalars['String']>;
   contactNumber?: InputMaybe<Scalars['String']>;
   cooperativeId?: InputMaybe<Scalars['ID']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
   designation?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   highestQualification?: InputMaybe<Scalars['String']>;
@@ -6321,7 +6422,7 @@ export type KymCoopMembershipDetails = {
 export type KymCoopUnionAccountOperatorDetails = {
   citizenshipOrPassportOrLicenseNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -6395,7 +6496,7 @@ export type KymCoopUnionAddSectionStatus = {
 export type KymCoopUnionBodDetails = {
   citizenshipOrPassportOrLicenseNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -6571,7 +6672,7 @@ export type KymCooperativeAccountOperatorDetailsFormState = {
   citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   coopRelatedTraining?: Maybe<Array<Maybe<CoopRelatedTrainingType>>>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -6586,8 +6687,8 @@ export type KymCooperativeAccountOperatorDetailsFormState = {
 export type KymCooperativeAccountOperatorDetailsInput = {
   citizenshipNo?: InputMaybe<Scalars['Int']>;
   contactNumber?: InputMaybe<Scalars['String']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
-  dateofTrainig?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
+  dateofTrainig?: InputMaybe<Scalars['Localized']>;
   designation?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   fullName?: InputMaybe<Scalars['String']>;
@@ -6658,7 +6759,7 @@ export type KymCooperativeAddSectionStatus = {
 export type KymCooperativeBodDetailsFormState = {
   citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -6673,7 +6774,7 @@ export type KymCooperativeBodDetailsFormState = {
 export type KymCooperativeBodDetailsInput = {
   citizenshipNo?: InputMaybe<Scalars['Int']>;
   contactNumber?: InputMaybe<Scalars['String']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
   designation?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   fullName?: InputMaybe<Scalars['String']>;
@@ -6763,8 +6864,8 @@ export type KymCooperativeFormData = {
   hasTCAccepted?: Maybe<Scalars['Boolean']>;
   investments?: Maybe<Scalars['Float']>;
   isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
-  lastAgmDate?: Maybe<Scalars['String']>;
-  lastAuditDate?: Maybe<Scalars['String']>;
+  lastAgmDate?: Maybe<Scalars['Localized']>;
+  lastAuditDate?: Maybe<Scalars['Localized']>;
   loan?: Maybe<Scalars['Float']>;
   loanAccount?: Maybe<Scalars['Float']>;
   mainServiceProduct?: Maybe<Scalars['String']>;
@@ -6779,7 +6880,7 @@ export type KymCooperativeFormData = {
   operatingAddress?: Maybe<KymAddress>;
   otherNonCurrentAssets?: Maybe<Scalars['Float']>;
   permanentRepresentativeAddress?: Maybe<KymAddress>;
-  regdDate?: Maybe<Scalars['String']>;
+  regdDate?: Maybe<Scalars['Localized']>;
   regdNumber?: Maybe<Scalars['Int']>;
   regdOffice?: Maybe<Scalars['String']>;
   registeredAddress?: Maybe<KymAddress>;
@@ -6810,8 +6911,8 @@ export type KymCooperativeFormInput = {
   hasTCAccepted?: InputMaybe<Scalars['Boolean']>;
   investments?: InputMaybe<Scalars['Float']>;
   isPermanentAndTemporaryAddressSame?: InputMaybe<Scalars['Boolean']>;
-  lastAgmDate?: InputMaybe<Scalars['String']>;
-  lastAuditDate?: InputMaybe<Scalars['String']>;
+  lastAgmDate?: InputMaybe<Scalars['Localized']>;
+  lastAuditDate?: InputMaybe<Scalars['Localized']>;
   loan?: InputMaybe<Scalars['Float']>;
   loanAccount?: InputMaybe<Scalars['Float']>;
   mainServiceProduct?: InputMaybe<Scalars['String']>;
@@ -6826,7 +6927,7 @@ export type KymCooperativeFormInput = {
   operatingAddress?: InputMaybe<KymAddressInput>;
   otherNonCurrentAssets?: InputMaybe<Scalars['Float']>;
   permanentRepresentativeAddress?: InputMaybe<KymAddressInput>;
-  regdDate?: InputMaybe<Scalars['String']>;
+  regdDate?: InputMaybe<Scalars['Localized']>;
   regdNumber?: InputMaybe<Scalars['Int']>;
   regdOffice?: InputMaybe<Scalars['String']>;
   registeredAddress?: InputMaybe<KymAddressInput>;
@@ -7134,7 +7235,7 @@ export type KymIndMemberInput = {
   beneficialFullName?: InputMaybe<Scalars['String']>;
   beneficialRelationshipId?: InputMaybe<Scalars['String']>;
   convictedDetails?: InputMaybe<Scalars['String']>;
-  dateOfBirth?: InputMaybe<Scalars['String']>;
+  dateOfBirth?: InputMaybe<Scalars['Localized']>;
   declarationAgreement?: InputMaybe<Scalars['Boolean']>;
   educationQualificationId?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
@@ -7198,7 +7299,7 @@ export type KymIndMutationAddArgs = {
 
 export type KymIndPersonalInformation = {
   contact?: Maybe<Contact>;
-  dateOfBirth?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
   educationQualificationId?: Maybe<Scalars['ID']>;
   ethnicityId?: Maybe<Scalars['ID']>;
   familyDetails?: Maybe<Array<Maybe<KymFamilyDetailsType>>>;
@@ -7389,7 +7490,7 @@ export type KymInsDirectorDetailsStatus = {
 
 export type KymInsDirectorInput = {
   citizenshipNo?: InputMaybe<Scalars['String']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
   designation?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   firmDetails?: InputMaybe<KymInsDirectorAffiliatedFirmInput>;
@@ -7420,7 +7521,7 @@ export type KymInsFormData = {
   bank?: Maybe<Scalars['ID']>;
   branchOfficeAddress?: Maybe<KymAddress>;
   companyStamp?: Maybe<Scalars['String']>;
-  dateOfLastAGM?: Maybe<Scalars['String']>;
+  dateOfLastAGM?: Maybe<Scalars['Localized']>;
   detailsOfDirectors?: Maybe<Array<Maybe<DirectorDetailsFormState>>>;
   documents?: Maybe<Array<Maybe<KymFieldData>>>;
   email?: Maybe<Scalars['String']>;
@@ -7441,7 +7542,7 @@ export type KymInsFormData = {
   postBoxNo?: Maybe<Scalars['String']>;
   registeredAddress?: Maybe<KymAddress>;
   registeredNumber?: Maybe<Scalars['String']>;
-  registrationDate?: Maybe<Scalars['String']>;
+  registrationDate?: Maybe<Scalars['Localized']>;
   sisterConcernDetails?: Maybe<Array<Maybe<SisterConcernDetailsFormState>>>;
   specialInstruction?: Maybe<Scalars['String']>;
   vatOrPanNo?: Maybe<Scalars['String']>;
@@ -7489,7 +7590,7 @@ export type KymInsInput = {
   bank?: InputMaybe<Scalars['ID']>;
   branchOfficeAddress?: InputMaybe<KymAddressInput>;
   companyStamp?: InputMaybe<Scalars['String']>;
-  dateOfLastAGM?: InputMaybe<Scalars['String']>;
+  dateOfLastAGM?: InputMaybe<Scalars['Localized']>;
   email?: InputMaybe<Scalars['String']>;
   expectedMonthlyTransaction?: InputMaybe<Scalars['String']>;
   expectedMonthlyTurnover?: InputMaybe<Scalars['String']>;
@@ -7508,7 +7609,7 @@ export type KymInsInput = {
   postBoxNo?: InputMaybe<Scalars['String']>;
   registeredAddress?: InputMaybe<KymAddressInput>;
   registeredNumber?: InputMaybe<Scalars['String']>;
-  registrationDate?: InputMaybe<Scalars['String']>;
+  registrationDate?: InputMaybe<Scalars['Localized']>;
   specialInstruction?: InputMaybe<Scalars['String']>;
   vatOrPanNo?: InputMaybe<Scalars['String']>;
   website?: InputMaybe<Scalars['String']>;
@@ -8849,9 +8950,12 @@ export type LoanRepaymentInput = {
   amountPaid: Scalars['String'];
   bankVoucher?: InputMaybe<LoanRepaymentBankVoucher>;
   cash?: InputMaybe<DepositCash>;
+  isSuspicious?: InputMaybe<Scalars['Boolean']>;
   loanAccountId: Scalars['ID'];
   memberId: Scalars['ID'];
   paymentMethod: LoanRepaymentMethod;
+  suspicionRemarks?: InputMaybe<Scalars['String']>;
+  suspicionTopologies?: InputMaybe<Array<InputMaybe<SuspiciousTransactionTopology>>>;
 };
 
 export enum LoanRepaymentMethod {
@@ -8860,10 +8964,26 @@ export enum LoanRepaymentMethod {
   Cash = 'CASH',
 }
 
+export type LoanRepaymentRecord = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  installmentNo?: Maybe<Scalars['String']>;
+  interestAmount?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentMethod?: Maybe<LoanRepaymentMethod>;
+  penaltyAmount?: Maybe<Scalars['String']>;
+  principalAmount?: Maybe<Scalars['String']>;
+  rebateAmount?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
+};
+
 export type LoanRepaymentResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<LoanAccountQuery>;
-  record?: Maybe<LoanAccount>;
+  record?: Maybe<LoanRepaymentRecord>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -8892,6 +9012,7 @@ export type LoanRepaymentView = {
   totalDebit?: Maybe<Scalars['String']>;
   totalRepaymentAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
 };
 
 export type LoanRepaymentViewResult = {
@@ -9128,13 +9249,14 @@ export type MeResult = {
 };
 
 export type Member = Base & {
-  activeDate?: Maybe<Scalars['String']>;
+  activeDate?: Maybe<Scalars['Localized']>;
   address?: Maybe<Address>;
+  branch?: Maybe<Scalars['String']>;
   code: Scalars['String'];
   contact?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
-  dateJoined?: Maybe<Scalars['String']>;
+  dateJoined?: Maybe<Scalars['Localized']>;
   id: Scalars['ID'];
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -9199,7 +9321,7 @@ export type MemberAccountMinView = {
   interestRate?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
   productType?: Maybe<Scalars['String']>;
-  subscriptionDate?: Maybe<Scalars['String']>;
+  subscriptionDate?: Maybe<Scalars['Localized']>;
   totalBalance?: Maybe<Scalars['String']>;
 };
 
@@ -9506,7 +9628,7 @@ export type MemberOverviewShareView = {
 export type MemberPaymentView = {
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   installmentNo?: Maybe<Scalars['String']>;
   interestRate?: Maybe<Scalars['String']>;
   paymentType?: Maybe<Scalars['String']>;
@@ -9584,9 +9706,10 @@ export type MemberQueryTranslateArgs = {
 
 export type MemberRecentTransactionView = {
   amount?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   noOfShares?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   txnType?: Maybe<MemberRecentTransactionViewTxnType>;
 };
 
@@ -9909,7 +10032,7 @@ export type MyraUserEdge = {
 export type MyraUserFormStateData = {
   branch?: Maybe<Scalars['String']>;
   contactNo?: Maybe<Scalars['String']>;
-  dob?: Maybe<Scalars['String']>;
+  dob?: Maybe<Scalars['Localized']>;
   email?: Maybe<Scalars['String']>;
   empCode?: Maybe<Scalars['String']>;
   gender?: Maybe<UserGender>;
@@ -9933,7 +10056,7 @@ export type MyraUserFormStateResult = {
 };
 
 export type MyraUserIdentification = {
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   idNo?: Maybe<Scalars['String']>;
   idType?: Maybe<Scalars['String']>;
@@ -9941,7 +10064,7 @@ export type MyraUserIdentification = {
 };
 
 export type MyraUserIdentificationInput = {
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
   idNo?: InputMaybe<Scalars['String']>;
   idType?: InputMaybe<Scalars['String']>;
   place?: InputMaybe<Scalars['String']>;
@@ -9957,7 +10080,7 @@ export type MyraUserIdentificationResult = {
 export type MyraUserInput = {
   branch?: InputMaybe<Scalars['String']>;
   contactNo: Scalars['String'];
-  dob: Scalars['String'];
+  dob: Scalars['Localized'];
   email: Scalars['String'];
   empCode?: InputMaybe<Scalars['String']>;
   gender: UserGender;
@@ -10043,9 +10166,11 @@ export enum NatureOfTransaction {
   Ebanking = 'EBANKING',
   InterestBooking = 'INTEREST_BOOKING',
   InterestPosting = 'INTEREST_POSTING',
+  JournalVoucher = 'JOURNAL_VOUCHER',
   LoanDisbursment = 'LOAN_DISBURSMENT',
   LoanRepayment = 'LOAN_REPAYMENT',
   Membership = 'MEMBERSHIP',
+  OpeningBalance = 'OPENING_BALANCE',
   SharePurchase = 'SHARE_PURCHASE',
   ShareReturn = 'SHARE_RETURN',
   TellerTransfer = 'TELLER_TRANSFER',
@@ -10326,6 +10451,7 @@ export type OverviewView = {
   basicInformation?: Maybe<MemberBasicInfoView>;
   memberGraphs?: Maybe<MemberOverviewGraphs>;
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
+  pendingView?: Maybe<Array<Maybe<PendingOverview>>>;
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactionView>>>;
   statistics?: Maybe<MemberStatisticsView>;
 };
@@ -10446,6 +10572,11 @@ export type PenaltyTypeInput = {
   penaltyRate?: InputMaybe<Scalars['Float']>;
 };
 
+export type PendingOverview = {
+  account?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+};
+
 export type PendingRequestInfo = {
   loanApplicationRequest?: Maybe<Scalars['Int']>;
   loanDisbursementRequest?: Maybe<Scalars['Int']>;
@@ -10470,7 +10601,7 @@ export enum PeriodTypeEnum {
 
 export type PersonalInformation = {
   citizenship?: Maybe<Citizenship>;
-  dateOfBirth?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
   gender?: Maybe<Scalars['String']>;
   inNepali?: Maybe<PersonalInformationInNepali>;
   name?: Maybe<Name>;
@@ -10765,7 +10896,7 @@ export type ReportResult = {
 export type RequestApproveOrDeclineInput = {
   approve: Scalars['Boolean'];
   notifyMember?: InputMaybe<Scalars['Boolean']>;
-  purposedDate?: InputMaybe<Scalars['String']>;
+  purposedDate?: InputMaybe<Scalars['Localized']>;
   reasonForDeclination?: InputMaybe<Scalars['String']>;
   requestId: Scalars['String'];
 };
@@ -11477,6 +11608,7 @@ export type ShareDetailData = {
   totalShareAmount?: Maybe<Scalars['String']>;
   totalShareCount?: Maybe<Scalars['Int']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
 };
 
@@ -11704,13 +11836,17 @@ export type ShareRegister = {
   id?: Maybe<Scalars['ID']>;
   member?: Maybe<Member>;
   memberId?: Maybe<Scalars['String']>;
+  noOfShare?: Maybe<Scalars['String']>;
+  otherCharge?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<SharePaymentMode>;
   shareAmount?: Maybe<Scalars['String']>;
+  shareCertificateCharge?: Maybe<Scalars['String']>;
   startNumber: Scalars['Int'];
   status?: Maybe<Share_Status>;
   totalAmount?: Maybe<Scalars['Float']>;
-  transactionDate?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
   transactionDirection: Share_Transaction_Direction;
+  transactionId?: Maybe<Scalars['String']>;
   voucherNumber?: Maybe<Scalars['String']>;
 };
 
@@ -11721,7 +11857,7 @@ export type ShareRegisterConnection = {
 };
 
 export type ShareRegisterDetails = {
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   noOfShares?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
   txnAmount?: Maybe<Scalars['String']>;
@@ -11961,6 +12097,7 @@ export type ShareTransactionReportResult = {
   data?: Maybe<Array<Maybe<ShareTransactionReport>>>;
   error?: Maybe<QueryError>;
   footer?: Maybe<ShareTransactionFooter>;
+  openingValue?: Maybe<Scalars['String']>;
   totalShareIssued?: Maybe<Scalars['String']>;
 };
 
@@ -11975,7 +12112,7 @@ export type ShareTransactionVoucherPayment = {
   citizenshipDocument?: InputMaybe<Scalars['String']>;
   depositedBy: ShareVoucherDepositedBy;
   depositedByOtherName?: InputMaybe<Scalars['String']>;
-  depositedDate: Scalars['String'];
+  depositedDate: Scalars['Localized'];
   fileUpload?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
   sourceOfFund?: InputMaybe<Scalars['String']>;
@@ -12077,6 +12214,48 @@ export type SubscriptionMutationUpsertArgs = {
   identifiers: Array<Scalars['String']>;
 };
 
+export type SuspiciousTransactionReport = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  product_name?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Boolean']>;
+  tranxType?: Maybe<NatureOfTransaction>;
+};
+
+export type SuspiciousTransactionReportInput = {
+  branchId: Scalars['String'];
+  filter?: InputMaybe<SuspiciousTransactionReportInputFilter>;
+  period: LocalizedDateFilter;
+};
+
+export type SuspiciousTransactionReportInputFilter = {
+  amount?: InputMaybe<MinMaxFilter>;
+  memberId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nature?: InputMaybe<Array<InputMaybe<NatureOfTransaction>>>;
+};
+
+export type SuspiciousTransactionReportResult = {
+  data?: Maybe<Array<Maybe<SuspiciousTransactionReport>>>;
+  error?: Maybe<QueryError>;
+};
+
+export enum SuspiciousTransactionTopology {
+  ChequeFraud = 'CHEQUE_FRAUD',
+  CorruptionGratuity = 'CORRUPTION_GRATUITY',
+  CounterfeitInstrument = 'COUNTERFEIT_INSTRUMENT',
+  DebitCreditOrOtherCardFraud = 'DEBIT_CREDIT_OR_OTHER_CARD_FRAUD',
+  FalseStatement = 'FALSE_STATEMENT',
+  IdentityTheft = 'IDENTITY_THEFT',
+  LoanFraud = 'LOAN_FRAUD',
+  MisuseOfPositionOrSelf = 'MISUSE_OF_POSITION_OR_SELF',
+  MysteriousDisapperanceBehaviour = 'MYSTERIOUS_DISAPPERANCE_BEHAVIOUR',
+  TaxEvasion = 'TAX_EVASION',
+  TerroristFinancing = 'TERRORIST_FINANCING',
+}
+
 export enum Transaction_Direction {
   Purchased = 'PURCHASED',
   Sold = 'SOLD',
@@ -12127,6 +12306,7 @@ export type TellerActivityEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
+  denomination?: Maybe<Array<Maybe<DenominationValue>>>;
   destBranch?: Maybe<Scalars['Localized']>;
   destProfilePic?: Maybe<Scalars['String']>;
   destProfilePicUrl?: Maybe<Scalars['String']>;
@@ -12135,6 +12315,8 @@ export type TellerActivityEntry = {
   srcProfilePic?: Maybe<Scalars['String']>;
   srcProfilePicUrl?: Maybe<Scalars['String']>;
   srcTeller?: Maybe<Scalars['Localized']>;
+  transferCode?: Maybe<Scalars['String']>;
+  transferState: TellerActivityState;
   transferType: TellerTransferType;
 };
 
@@ -12148,6 +12330,12 @@ export type TellerActivityListEdges = {
   cursor: Scalars['Cursor'];
   node?: Maybe<TellerActivityEntry>;
 };
+
+export enum TellerActivityState {
+  Approved = 'APPROVED',
+  Cancelled = 'CANCELLED',
+  Pending = 'PENDING',
+}
 
 export type TellerDataEntry = {
   balance?: Maybe<Scalars['String']>;
@@ -12191,6 +12379,12 @@ export type TellerReportResult = {
 
 export type TellerTransactionFilter = {
   type?: InputMaybe<Array<InputMaybe<TellerTransferType>>>;
+};
+
+export type TellerTransferActionResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  record?: Maybe<Scalars['ID']>;
 };
 
 export type TellerTransferInput = {
@@ -12275,6 +12469,7 @@ export type TransactionMutation = {
   deposit: DepositResult;
   endOfDay?: Maybe<EodResult>;
   tellerTransfer: TellerTransferResult;
+  tellerTransferAction: TellerTransferActionResult;
   transfer: TransferResult;
   withdraw: WithdrawResult;
 };
@@ -12309,6 +12504,12 @@ export type TransactionMutationEndOfDayArgs = {
 
 export type TransactionMutationTellerTransferArgs = {
   data: TellerTransferInput;
+};
+
+export type TransactionMutationTellerTransferActionArgs = {
+  action: TransferRequestAction;
+  declineReason?: InputMaybe<Scalars['String']>;
+  requestId: Scalars['ID'];
 };
 
 export type TransactionMutationTransferArgs = {
@@ -12346,6 +12547,7 @@ export type TransactionQuery = {
   viewAgentList?: Maybe<AgentTransactionViewResult>;
   viewDeposit?: Maybe<DepositTransactionViewResult>;
   viewLoanRepayment?: Maybe<LoanRepaymentViewResult>;
+  viewTransactionDetail?: Maybe<AllTransactionViewResult>;
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
 };
 
@@ -12409,6 +12611,11 @@ export type TransactionQueryViewLoanRepaymentArgs = {
   paymentId: Scalars['ID'];
 };
 
+export type TransactionQueryViewTransactionDetailArgs = {
+  transactionId: Scalars['ID'];
+  txnType?: InputMaybe<AllTransactionType>;
+};
+
 export type TransactionQueryViewWithdrawArgs = {
   transactionId: Scalars['ID'];
 };
@@ -12431,11 +12638,25 @@ export enum TransactionTypeFilter {
 }
 
 export type TransferData = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  fine?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   payeeNumber?: Maybe<Scalars['String']>;
+  receiverAccountId?: Maybe<Scalars['String']>;
+  receiverAccountName?: Maybe<Scalars['String']>;
+  receiverMemberId?: Maybe<Scalars['String']>;
+  receiverMemberName?: Maybe<Scalars['Localized']>;
   remarks?: Maybe<Scalars['String']>;
+  senderAccountId?: Maybe<Scalars['String']>;
+  senderAccountName?: Maybe<Scalars['String']>;
+  senderMemberId?: Maybe<Scalars['String']>;
+  senderMemberName?: Maybe<Scalars['Localized']>;
+  totalAmount?: Maybe<Scalars['String']>;
   transactionAccount?: Maybe<Scalars['String']>;
   transactionMode?: Maybe<TransactionMode>;
+  transferType?: Maybe<TransferType>;
+  withdrawWith?: Maybe<WithdrawWith>;
 };
 
 export type TransferInput = {
@@ -12451,6 +12672,11 @@ export type TransferInput = {
   withdrawSlipNo?: InputMaybe<Scalars['String']>;
   withdrawWith?: InputMaybe<WithdrawWith>;
 };
+
+export enum TransferRequestAction {
+  Approve = 'APPROVE',
+  Decline = 'DECLINE',
+}
 
 export type TransferResult = {
   error?: Maybe<MutationError>;
@@ -12494,6 +12720,8 @@ export type TrialSheetReportData = {
   expenses?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
   income?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
   incomeTotal?: Maybe<Scalars['String']>;
+  offBalance?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
+  offBalanceTotal?: Maybe<Scalars['String']>;
   totalAssetExpense?: Maybe<Scalars['String']>;
   totalLiablitiesIncome?: Maybe<Scalars['String']>;
   totalProfitLoss?: Maybe<Scalars['String']>;
@@ -12698,13 +12926,13 @@ export type ValuatorEdge = {
 export type ValuatorFormStateData = {
   academicQualification?: Maybe<Scalars['String']>;
   address?: Maybe<KymAddress>;
-  contractDate?: Maybe<Scalars['String']>;
+  contractDate?: Maybe<Scalars['Localized']>;
   documents?: Maybe<Array<Maybe<Scalars['String']>>>;
   email?: Maybe<Scalars['String']>;
   insurancePremium?: Maybe<Scalars['Float']>;
   mobileNo?: Maybe<Scalars['String']>;
   phoneNo?: Maybe<Scalars['String']>;
-  renewalDate?: Maybe<Scalars['String']>;
+  renewalDate?: Maybe<Scalars['Localized']>;
   valuationLicenseNo?: Maybe<Scalars['String']>;
   valuatorId?: Maybe<Scalars['String']>;
   valuatorName?: Maybe<Scalars['String']>;
@@ -12719,13 +12947,13 @@ export type ValuatorFormStateResult = {
 export type ValuatorInput = {
   academicQualification?: InputMaybe<Scalars['String']>;
   address?: InputMaybe<KymAddressInput>;
-  contractDate?: InputMaybe<Scalars['String']>;
+  contractDate?: InputMaybe<Scalars['Localized']>;
   documents?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   email?: InputMaybe<Scalars['String']>;
   insurancePremium?: InputMaybe<Scalars['Float']>;
   mobileNo?: InputMaybe<Scalars['String']>;
   phoneNo?: InputMaybe<Scalars['String']>;
-  renewalDate?: InputMaybe<Scalars['String']>;
+  renewalDate?: InputMaybe<Scalars['Localized']>;
   valuationLicenseNo?: InputMaybe<Scalars['String']>;
   valuatorId?: InputMaybe<Scalars['String']>;
   valuatorName?: InputMaybe<Scalars['String']>;
@@ -12788,7 +13016,7 @@ export type VaultBalanceReportData = {
 
 export type VaultBalanceReportFilter = {
   branchId: Scalars['String'];
-  date: LocalizedDateFilter;
+  period: LocalizedDateFilter;
 };
 
 export type VaultBalanceReportResult = {
@@ -12831,11 +13059,14 @@ export type WithdrawInput = {
   counterSlipNo?: InputMaybe<Scalars['String']>;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
+  isSuspicious?: InputMaybe<Scalars['Boolean']>;
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
   override?: InputMaybe<Scalars['Boolean']>;
   payment_type: WithdrawPaymentType;
   sourceOfFund?: InputMaybe<Scalars['String']>;
+  suspicionRemarks?: InputMaybe<Scalars['String']>;
+  suspicionTopologies?: InputMaybe<Array<InputMaybe<SuspiciousTransactionTopology>>>;
   withdrawSlipNo?: InputMaybe<Scalars['String']>;
   withdrawWith: WithdrawWith;
   withdrawnBy: WithdrawBy;
@@ -12858,9 +13089,25 @@ export type WithdrawPenaltyFormState = {
   penaltyRate?: Maybe<Scalars['Float']>;
 };
 
+export type WithdrawRecord = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  fine?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentMode?: Maybe<WithdrawPaymentType>;
+  totalAmount?: Maybe<Scalars['String']>;
+  transactionID?: Maybe<Scalars['ID']>;
+  withdrawWith?: Maybe<WithdrawWith>;
+  withdrawnBy?: Maybe<WithdrawBy>;
+};
+
 export type WithdrawResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
+  record?: Maybe<WithdrawRecord>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -12884,7 +13131,7 @@ export type WithdrawSlipDepositData = {
 
 export type WithdrawSlipIssueInput = {
   accountId: Scalars['ID'];
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Scalars['String']>;
   count: Scalars['Int'];
   marketRepresentative?: InputMaybe<Scalars['String']>;
   pickupMethod: PickupMethod;
@@ -12940,6 +13187,7 @@ export type WithdrawTransactionView = {
   totalDebit?: Maybe<Scalars['String']>;
   totalWithdrawnAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   withdrawAmount?: Maybe<Scalars['String']>;
   withdrawWith?: Maybe<WithdrawWith>;
@@ -14307,6 +14555,31 @@ export type SetBranchDataMutation = {
   };
 };
 
+export type SetCbsCodeMutationVariables = Exact<{
+  data?: InputMaybe<CodeManagementInput>;
+}>;
+
+export type SetCbsCodeMutation = {
+  settings: {
+    general?: {
+      codes?: {
+        cbs?: {
+          add?: {
+            recordId?: string | null;
+            error?:
+              | MutationError_AuthorizationError_Fragment
+              | MutationError_BadRequestError_Fragment
+              | MutationError_NotFoundError_Fragment
+              | MutationError_ServerError_Fragment
+              | MutationError_ValidationError_Fragment
+              | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetDepositProductMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<DepositProductInput>;
@@ -15212,6 +15485,14 @@ export type SetDepositDataMutation = {
   transaction: {
     deposit: {
       recordId?: string | null;
+      record?: {
+        transactionID?: string | null;
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        amount?: string | null;
+        rebate?: string | null;
+        paymentMode?: DepositPaymentType | null;
+        depositedBy?: DepositedBy | null;
+      } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -15338,6 +15619,27 @@ export type SetTellerTransferDataMutation = {
   };
 };
 
+export type SetTellerTransferActionMutationVariables = Exact<{
+  requestId: Scalars['ID'];
+  action: TransferRequestAction;
+  declineReason?: InputMaybe<Scalars['String']>;
+}>;
+
+export type SetTellerTransferActionMutation = {
+  transaction: {
+    tellerTransferAction: {
+      record?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
@@ -15356,7 +15658,7 @@ export type GetAccountMemberListQuery = {
           type: KymMemberTypesEnum;
           contact?: string | null;
           createdAt: string;
-          dateJoined?: string | null;
+          dateJoined?: Record<'local' | 'en' | 'np', string> | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -15583,6 +15885,7 @@ export type GetAccountTableListQuery = {
           modifiedAt: string;
           installmentAmount?: string | null;
           balance?: string | null;
+          availableBalance?: string | null;
           accountOpenedDate?: string | null;
           lastTransactionDate?: string | null;
           accountExpiryDate?: string | null;
@@ -15600,7 +15903,7 @@ export type GetAccountTableListQuery = {
             profilePicUrl?: string | null;
             profilePic?: string | null;
             contact?: string | null;
-            dateJoined?: string | null;
+            dateJoined?: Record<'local' | 'en' | 'np', string> | null;
             address?: {
               state?: Record<'local' | 'en' | 'np', string> | null;
               district?: Record<'local' | 'en' | 'np', string> | null;
@@ -15905,11 +16208,13 @@ export type GetAccountTransactionListsQuery = {
       edges?: Array<{
         node: {
           id: string;
+          transactionId?: string | null;
           accountId?: string | null;
           name: string;
           date: Record<'local' | 'en' | 'np', string>;
           month: Record<'local' | 'en' | 'np', string>;
           transactionDirection: EbankingTransactionDirection;
+          transactionType?: string | null;
           amount: string;
           currentBalance: string;
         };
@@ -16274,12 +16579,14 @@ export type GetJournalVoucherDetailQuery = {
           status?: string | null;
           reference?: string | null;
           note?: string | null;
+          transactionCode?: string | null;
           totalDebit?: string | null;
           totalCredit?: string | null;
           glTransaction?: Array<{
             account: string;
             debit?: string | null;
             credit?: string | null;
+            serviceCenter?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -16850,7 +17157,7 @@ export type GetCoOperativeKymEditDataQuery = {
           formData?: {
             nameOfOrganization?: string | null;
             regdNumber?: number | null;
-            regdDate?: string | null;
+            regdDate?: Record<'local' | 'en' | 'np', string> | null;
             regdOffice?: string | null;
             email?: string | null;
             website?: string | null;
@@ -16858,8 +17165,8 @@ export type GetCoOperativeKymEditDataQuery = {
             noOfMaleMembers?: number | null;
             noOfFemaleMembers?: number | null;
             noOfOtherMembers?: number | null;
-            lastAuditDate?: string | null;
-            lastAgmDate?: string | null;
+            lastAuditDate?: Record<'local' | 'en' | 'np', string> | null;
+            lastAgmDate?: Record<'local' | 'en' | 'np', string> | null;
             representativeFullName?: string | null;
             representativeDesignatiton?: string | null;
             representativeEmail?: string | null;
@@ -16960,7 +17267,7 @@ export type GetCoOperativeDirectorEditDataQuery = {
           fullName?: string | null;
           designation?: string | null;
           isPermanentAndTemporaryAddressSame?: boolean | null;
-          dateOfMembership?: string | null;
+          dateOfMembership?: Record<'local' | 'en' | 'np', string> | null;
           highestQualification?: string | null;
           contactNumber?: string | null;
           email?: string | null;
@@ -17011,7 +17318,7 @@ export type GetCoOperativeAccountOperatorEditDataQuery = {
           fullName?: string | null;
           designation?: string | null;
           isPermanentAndTemporaryAddressSame?: boolean | null;
-          dateOfMembership?: string | null;
+          dateOfMembership?: Record<'local' | 'en' | 'np', string> | null;
           highestQualification?: string | null;
           contactNumber?: string | null;
           email?: string | null;
@@ -17037,7 +17344,7 @@ export type GetCoOperativeAccountOperatorEditDataQuery = {
           } | null;
           coopRelatedTraining?: Array<{
             subjectOfTraining?: string | null;
-            dateOfTraining?: string | null;
+            dateOfTraining?: Record<'local' | 'en' | 'np', string> | null;
             trainingOrganization?: string | null;
           } | null> | null;
         } | null> | null;
@@ -17108,7 +17415,7 @@ export type GetCooperativeUnionKymEditDataQuery = {
               institutionType?: string | null;
               natureOfBusinessEn?: string | null;
               natureOfBusinessNp?: string | null;
-              regdDate?: string | null;
+              regdDate?: Record<'local' | 'en' | 'np', string> | null;
               vatOrPan?: string | null;
               noOfBranches?: number | null;
               regdNo?: string | null;
@@ -17119,7 +17426,7 @@ export type GetCooperativeUnionKymEditDataQuery = {
               website?: string | null;
               postBoxNo?: string | null;
               noOfEmployee?: number | null;
-              lastAgmDate?: string | null;
+              lastAgmDate?: Record<'local' | 'en' | 'np', string> | null;
               nameOfBank?: string | null;
               accountNumber?: string | null;
               accountName?: string | null;
@@ -17130,7 +17437,7 @@ export type GetCooperativeUnionKymEditDataQuery = {
               applicantEmail?: string | null;
               applicantContactNo?: string | null;
               applicantPanNo?: string | null;
-              applicantDateOfMembership?: string | null;
+              applicantDateOfMembership?: Record<'local' | 'en' | 'np', string> | null;
               applicantHighestQualification?: string | null;
               applicantIsPermanentAndTemporaryAddrSame?: boolean | null;
               noOfMaleMemberCurrent?: number | null;
@@ -17280,7 +17587,7 @@ export type GetBoardOfDirectorsDetailsListQuery = {
                 designationEn?: string | null;
                 designationNp?: string | null;
                 isPermanentAndTemporaryAddressSame?: boolean | null;
-                dateOfMembership?: string | null;
+                dateOfMembership?: Record<'local' | 'en' | 'np', string> | null;
                 highestQualification?: string | null;
                 mobileNumber?: string | null;
                 email?: string | null;
@@ -17306,7 +17613,7 @@ export type GetBoardOfDirectorsDetailsListQuery = {
                 } | null;
                 trainingAttended?: Array<{
                   subjectOfTraining?: string | null;
-                  dateOfTraining?: string | null;
+                  dateOfTraining?: Record<'local' | 'en' | 'np', string> | null;
                   trainingOrganization?: string | null;
                 } | null> | null;
               } | null> | null;
@@ -17346,7 +17653,7 @@ export type GetAccountOperatorDetailsListQuery = {
                 designationEn?: string | null;
                 designationNp?: string | null;
                 isPermanentAndTemporaryAddressSame?: boolean | null;
-                dateOfMembership?: string | null;
+                dateOfMembership?: Record<'local' | 'en' | 'np', string> | null;
                 highestQualification?: string | null;
                 mobileNumber?: string | null;
                 email?: string | null;
@@ -17372,7 +17679,7 @@ export type GetAccountOperatorDetailsListQuery = {
                 } | null;
                 trainingAttended?: Array<{
                   subjectOfTraining?: string | null;
-                  dateOfTraining?: string | null;
+                  dateOfTraining?: Record<'local' | 'en' | 'np', string> | null;
                   trainingOrganization?: string | null;
                 } | null> | null;
               } | null> | null;
@@ -17411,7 +17718,7 @@ export type GetCentralRepresentativeDetailsQuery = {
               designationEn?: string | null;
               designationNp?: string | null;
               isPermanentAndTemporaryAddressSame?: boolean | null;
-              dateOfMembership?: string | null;
+              dateOfMembership?: Record<'local' | 'en' | 'np', string> | null;
               highestQualification?: string | null;
               mobileNumber?: string | null;
               email?: string | null;
@@ -17439,7 +17746,7 @@ export type GetCentralRepresentativeDetailsQuery = {
               } | null;
               trainingAttended?: Array<{
                 subjectOfTraining?: string | null;
-                dateOfTraining?: string | null;
+                dateOfTraining?: Record<'local' | 'en' | 'np', string> | null;
                 trainingOrganization?: string | null;
               } | null> | null;
             } | null;
@@ -17687,7 +17994,7 @@ export type GetInstitutionKymEditDataQuery = {
             institutionName?: string | null;
             institutionTypeId?: string | null;
             natureOfBusiness?: string | null;
-            registrationDate?: string | null;
+            registrationDate?: Record<'local' | 'en' | 'np', string> | null;
             vatOrPanNo?: string | null;
             noOfBranches?: number | null;
             registeredNumber?: string | null;
@@ -17698,7 +18005,7 @@ export type GetInstitutionKymEditDataQuery = {
             website?: string | null;
             postBoxNo?: string | null;
             numberOfEmployee?: number | null;
-            dateOfLastAGM?: string | null;
+            dateOfLastAGM?: Record<'local' | 'en' | 'np', string> | null;
             bank?: string | null;
             accountNumber?: string | null;
             accountName?: string | null;
@@ -17808,7 +18115,7 @@ export type GetInsBoardDirectorEditListQuery = {
           name?: string | null;
           designation?: string | null;
           isTemporaryAndPermanentAddressSame?: boolean | null;
-          dateOfMembership?: string | null;
+          dateOfMembership?: Record<'local' | 'en' | 'np', string> | null;
           highestQualification?: string | null;
           mobileNo?: string | null;
           email?: string | null;
@@ -18551,6 +18858,7 @@ export type GetMemberLinkedAccountsQuery = {
           id: string;
           accountName?: string | null;
           balance?: string | null;
+          availableBalance?: string | null;
           interestAccured?: string | null;
           interestTax?: string | null;
           prematurePenalty?: string | null;
@@ -18619,12 +18927,13 @@ export type GetMemberListQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           type: KymMemberTypesEnum;
+          branch?: string | null;
           profilePicUrl?: string | null;
           signaturePicUrl?: string | null;
           contact?: string | null;
           createdAt: string;
-          dateJoined?: string | null;
-          activeDate?: string | null;
+          dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+          activeDate?: Record<'local' | 'en' | 'np', string> | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -18722,7 +19031,7 @@ export type GetMemberIndividualDataQuery = {
         profilePicUrl?: string | null;
         profilePic?: string | null;
         contact?: string | null;
-        dateJoined?: string | null;
+        dateJoined?: Record<'local' | 'en' | 'np', string> | null;
         address?: {
           state?: Record<'local' | 'en' | 'np', string> | null;
           district?: Record<'local' | 'en' | 'np', string> | null;
@@ -18745,7 +19054,7 @@ export type GetMemberIndividualDataQuery = {
                 formData?: {
                   nameOfOrganization?: string | null;
                   regdNumber?: number | null;
-                  regdDate?: string | null;
+                  regdDate?: Record<'local' | 'en' | 'np', string> | null;
                 } | null;
               } | null;
             }
@@ -18755,7 +19064,7 @@ export type GetMemberIndividualDataQuery = {
                   maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
                   maritalStatusId?: string | null;
                   basicInformation?: {
-                    dateOfBirth?: string | null;
+                    dateOfBirth?: Record<'local' | 'en' | 'np', string> | null;
                     age?: number | null;
                     gender?: Record<'local' | 'en' | 'np', string> | null;
                   } | null;
@@ -18806,7 +19115,7 @@ export type GetIndividualKymEditDataQuery = {
               middleName?: Record<'local' | 'en' | 'np', string> | null;
               lastName?: Record<'local' | 'en' | 'np', string> | null;
               genderId?: string | null;
-              dateOfBirth?: string | null;
+              dateOfBirth?: Record<'local' | 'en' | 'np', string> | null;
               ethnicityId?: string | null;
               nationalityId?: string | null;
               educationQualificationId?: string | null;
@@ -18908,7 +19217,7 @@ export type GetIndividualKymFamilyMembersListQuery = {
           relationshipId?: string | null;
           fullName?: Record<'local' | 'en' | 'np', string> | null;
           familyMemberId?: string | null;
-          dateOfBirth?: string | null;
+          dateOfBirth?: Record<'local' | 'en' | 'np', string> | null;
         } | null> | null;
       } | null;
     } | null;
@@ -18931,7 +19240,7 @@ export type GetIndividualKymFamilyOccupationListQuery = {
           panVatNo?: string | null;
           address?: Record<'local' | 'en' | 'np', string> | null;
           estimatedAnnualIncome?: string | null;
-          establishedDate?: string | null;
+          establishedDate?: Record<'local' | 'en' | 'np', string> | null;
           registrationNo?: string | null;
           contact?: string | null;
           isOwner?: boolean | null;
@@ -18987,7 +19296,7 @@ export type GetIndividualKymIdentificationListQuery = {
           idNo?: string | null;
           idType: string;
           place?: Record<'local' | 'en' | 'np', string> | null;
-          date?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
         } | null> | null;
       } | null;
     } | null;
@@ -19034,7 +19343,7 @@ export type GetMemberDetailsQuery = {
                 formData?: {
                   basicInformation?: {
                     gender?: Record<'local' | 'en' | 'np', string> | null;
-                    dateOfBirth?: string | null;
+                    dateOfBirth?: Record<'local' | 'en' | 'np', string> | null;
                     age?: number | null;
                   } | null;
                 } | null;
@@ -19187,7 +19496,7 @@ export type GetMemberDetailsOverviewQuery = {
             interestRate?: string | null;
           } | null> | null;
           payments?: Array<{
-            date?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
             accountName?: string | null;
             paymentType?: string | null;
             amount?: string | null;
@@ -19203,7 +19512,7 @@ export type GetMemberDetailsOverviewQuery = {
             totalBalance?: string | null;
           } | null;
           registerDetails?: Array<{
-            date?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
             title?: string | null;
             txnAmount?: string | null;
             txnType?: ShareTransactionType | null;
@@ -19217,7 +19526,7 @@ export type GetMemberDetailsOverviewQuery = {
                 id?: string | null;
                 memberId?: string | null;
                 status?: Share_Status | null;
-                transactionDate?: string | null;
+                transactionDate?: Record<'local' | 'en' | 'np', string> | null;
                 transactionDirection: Share_Transaction_Direction;
                 credit?: number | null;
                 debit?: number | null;
@@ -19239,7 +19548,7 @@ export type GetMemberDetailsOverviewQuery = {
                   type: KymMemberTypesEnum;
                   name?: Record<'local' | 'en' | 'np', string> | null;
                   contact?: string | null;
-                  dateJoined?: string | null;
+                  dateJoined?: Record<'local' | 'en' | 'np', string> | null;
                   profilePic?: string | null;
                   signaturepic?: string | null;
                   profilePicUrl?: string | null;
@@ -19264,12 +19573,12 @@ export type GetMemberDetailsOverviewQuery = {
             productName?: string | null;
             productType?: string | null;
             interestRate?: string | null;
-            subscriptionDate?: string | null;
+            subscriptionDate?: Record<'local' | 'en' | 'np', string> | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
           } | null> | null;
           payments?: Array<{
-            date?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
             accountName?: string | null;
             paymentType?: string | null;
             amount?: string | null;
@@ -19301,13 +19610,13 @@ export type GetMemberDetailsOverviewQuery = {
             loanBalance?: string | null;
           } | null;
           payments?: Array<{
-            date?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
             accountName?: string | null;
             paymentType?: string | null;
             amount?: string | null;
           } | null> | null;
           recentTransactions?: Array<{
-            date?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
             title?: string | null;
             txnType?: MemberRecentTransactionViewTxnType | null;
             amount?: string | null;
@@ -19337,7 +19646,7 @@ export type GetMemberDetailsShareBalanceQuery = {
         id?: string | null;
         memberId?: string | null;
         status?: Share_Status | null;
-        transactionDate?: string | null;
+        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         transactionDirection: Share_Transaction_Direction;
         credit?: number | null;
         debit?: number | null;
@@ -19535,8 +19844,197 @@ export type GetMemberOverviewBioDetailsQuery = {
               } | null> | null;
               docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
             }
-          | { __typename: 'CoopUnionBio' }
-          | { __typename: 'IndividualBio' }
+          | {
+              __typename: 'CoopUnionBio';
+              basicInfo?: {
+                memberName?: string | null;
+                profilePic?: string | null;
+                memberCode?: string | null;
+                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+                type?: string | null;
+                nature?: string | null;
+                registrationDate?: Record<'local' | 'en' | 'np', string> | null;
+                vatPanNo?: string | null;
+                noOfServiceCenters?: number | null;
+              } | null;
+              address?: AddressFragment | null;
+              registrationDetails?: {
+                registeredNo?: string | null;
+                issuingOffice?: string | null;
+                address?: {
+                  state?: Record<'local' | 'en' | 'np', string> | null;
+                  district?: Record<'local' | 'en' | 'np', string> | null;
+                  localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                  wardNo?: string | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                } | null;
+              } | null;
+              operatingAddress?: AddressFragment | null;
+              serviceCenterAddress?: AddressFragment | null;
+              contactDetails?: {
+                phoneNo?: string | null;
+                fax?: string | null;
+                email?: string | null;
+                website?: string | null;
+                poBoxNo?: string | null;
+                noOfEmployees?: number | null;
+                agmDetails?: Record<'local' | 'en' | 'np', string> | null;
+              } | null;
+              bankAccDetails?: {
+                bank?: string | null;
+                accountNumber?: string | null;
+                accountName?: string | null;
+              } | null;
+              applicantDetails?: {
+                name?: string | null;
+                designation?: string | null;
+                contactNo?: string | null;
+                email?: string | null;
+                panNo?: string | null;
+                address?: {
+                  state?: Record<'local' | 'en' | 'np', string> | null;
+                  district?: Record<'local' | 'en' | 'np', string> | null;
+                  localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                  wardNo?: string | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                } | null;
+                docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
+              } | null;
+              memberInfo?: {
+                noOfMaleCurrent?: number | null;
+                noOfFemaleCurrent?: number | null;
+                noOfInstitutionalCurrent?: number | null;
+                noOfMaleTarget?: number | null;
+                noOfFemaleTarget?: number | null;
+                noOfInstitutionalTarget?: number | null;
+                totalCurrent?: number | null;
+                totalTarget?: number | null;
+              } | null;
+              partnerDirectorDetails?: Array<{
+                name?: string | null;
+                designation?: string | null;
+                email?: string | null;
+                panNo?: string | null;
+                mobileNo?: string | null;
+                permAddress?: {
+                  state?: Record<'local' | 'en' | 'np', string> | null;
+                  district?: Record<'local' | 'en' | 'np', string> | null;
+                  localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                  wardNo?: string | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                } | null;
+                tempAddress?: {
+                  state?: Record<'local' | 'en' | 'np', string> | null;
+                  district?: Record<'local' | 'en' | 'np', string> | null;
+                  localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                  wardNo?: string | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                } | null;
+                docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
+              } | null> | null;
+              operatorDetails?: Array<{
+                name?: string | null;
+                designation?: string | null;
+                contactNo?: string | null;
+                email?: string | null;
+                panNo?: string | null;
+                pemAddress?: {
+                  state?: Record<'local' | 'en' | 'np', string> | null;
+                  district?: Record<'local' | 'en' | 'np', string> | null;
+                  localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                  wardNo?: string | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                } | null;
+                tempAddress?: {
+                  state?: Record<'local' | 'en' | 'np', string> | null;
+                  district?: Record<'local' | 'en' | 'np', string> | null;
+                  localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                  wardNo?: string | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                } | null;
+                docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
+              } | null> | null;
+              equityLiabilities?: {
+                shareCapitalCurrent?: number | null;
+                reserveAndSurplusCurrent?: number | null;
+                savingDepositCurrent?: number | null;
+                loanAccountCurrent?: number | null;
+                capitalGrantCurrent?: number | null;
+                liabilitiesPayableCurrent?: number | null;
+                nonCurrentLiabilitiesCurrent?: number | null;
+                totalCurrent?: number | null;
+                shareCapitalTarget?: number | null;
+                reserveAndSurplusTarget?: number | null;
+                savingDepositTarget?: number | null;
+                loanAccountTarget?: number | null;
+                capitalGrantTarget?: number | null;
+                liabilitiesPayableTarget?: number | null;
+                nonCurrentLiabilitiesTarget?: number | null;
+                totalTarget?: number | null;
+              } | null;
+              assetDetails?: {
+                cashAndEquivalentsCurrent?: number | null;
+                bankCurrent?: number | null;
+                investmentsCurrent?: number | null;
+                loanCurrent?: number | null;
+                nonCurrentAssetsCurrent?: number | null;
+                otherNonCurrentAssetsCurrent?: number | null;
+                totalCurrent?: number | null;
+                cashAndEquivalentsTarget?: number | null;
+                bankTarget?: number | null;
+                investmentsTarget?: number | null;
+                loanTarget?: number | null;
+                nonCurrentAssetsTarget?: number | null;
+                otherNonCurrentAssetsTarget?: number | null;
+                totalTarget?: number | null;
+              } | null;
+              incomeDetails?: {
+                financialInvestment?: number | null;
+                nonFinancialInvestment?: number | null;
+                investment?: number | null;
+                serviceOperations?: number | null;
+                sales?: number | null;
+                otherIncome?: number | null;
+                miscIncome?: number | null;
+                total?: number | null;
+              } | null;
+              expenseDetails?: {
+                purchase?: number | null;
+                directExpense?: number | null;
+                adminExpense?: number | null;
+                financialCost?: number | null;
+                riskManagement?: number | null;
+                deferredTax?: number | null;
+                total?: number | null;
+              } | null;
+              docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
+            }
+          | {
+              __typename: 'IndividualBio';
+              memberName?: string | null;
+              profilePic?: string | null;
+              memberCode?: string | null;
+              memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+              dob?: Record<'local' | 'en' | 'np', string> | null;
+              gender?: Record<'local' | 'en' | 'np', string> | null;
+              mobile?: string | null;
+              email?: string | null;
+              currentAddress?: Record<'local' | 'en' | 'np', string> | null;
+              permanentAddress?: Record<'local' | 'en' | 'np', string> | null;
+              maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+              familyMembers?: Array<{
+                relationship?: string | null;
+                fullName?: string | null;
+                dob?: Record<'local' | 'en' | 'np', string> | null;
+              } | null> | null;
+              docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
+            }
           | {
               __typename: 'InstitutionBio';
               basicInfo?: {
@@ -19881,7 +20379,8 @@ export type GetSavingStatementQuery = {
           id: string;
           code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
-          dateJoined?: string | null;
+          dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+          activeDate?: Record<'local' | 'en' | 'np', string> | null;
           address?: {
             wardNo?: string | null;
             state?: Record<'local' | 'en' | 'np', string> | null;
@@ -19946,6 +20445,29 @@ export type GetInterestStatementReportQuery = {
           } | null;
         } | null;
       };
+    };
+  };
+};
+
+export type GetSuspiciousTransactionReportQueryVariables = Exact<{
+  data: SuspiciousTransactionReportInput;
+}>;
+
+export type GetSuspiciousTransactionReportQuery = {
+  report: {
+    depositReport: {
+      suspiciousTransctionReport?: {
+        data?: Array<{
+          id?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          memberId?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          product_name?: string | null;
+          tranxType?: NatureOfTransaction | null;
+          status?: boolean | null;
+        } | null> | null;
+      } | null;
     };
   };
 };
@@ -20439,7 +20961,7 @@ export type GetShareStatementQuery = {
           id: string;
           code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
-          dateJoined?: string | null;
+          dateJoined?: Record<'local' | 'en' | 'np', string> | null;
           address?: {
             wardNo?: string | null;
             state?: Record<'local' | 'en' | 'np', string> | null;
@@ -20572,6 +21094,7 @@ export type GetTrialSheetReportQuery = {
             assetsTotal?: string | null;
             expenseTotal?: string | null;
             incomeTotal?: string | null;
+            offBalanceTotal?: string | null;
             totalAssetExpense?: string | null;
             totalLiablitiesIncome?: string | null;
             totalProfitLoss?: string | null;
@@ -20594,6 +21117,12 @@ export type GetTrialSheetReportQuery = {
               under?: string | null;
             } | null> | null;
             assets?: Array<{
+              balance?: string | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            offBalance?: Array<{
               balance?: string | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
@@ -20753,18 +21282,24 @@ export type GetDayBookReportQuery = {
             totalPayment?: string | null;
             totalReceipts?: string | null;
             payments?: Array<{
-              particular?: string | null;
               accountHead?: string | null;
-              ledger?: string | null;
               amount?: string | null;
-              voucherNo?: string | null;
+              entries?: Array<{
+                particular?: string | null;
+                ledger?: string | null;
+                voucherNo?: string | null;
+                amount?: string | null;
+              } | null> | null;
             } | null> | null;
             receipts?: Array<{
-              particular?: string | null;
               accountHead?: string | null;
-              ledger?: string | null;
               amount?: string | null;
-              voucherNo?: string | null;
+              entries?: Array<{
+                particular?: string | null;
+                ledger?: string | null;
+                voucherNo?: string | null;
+                amount?: string | null;
+              } | null> | null;
             } | null> | null;
           } | null;
         };
@@ -21121,7 +21656,7 @@ export type GetBranchEditDataQuery = {
             name?: string | null;
             serviceCenterPhone?: string | null;
             category?: BranchCategory | null;
-            estDate?: string | null;
+            estDate?: Record<'local' | 'en' | 'np', string> | null;
             managerName?: string | null;
             provinceId?: number | null;
             districtId?: number | null;
@@ -21244,6 +21779,100 @@ export type GetCoaAccountsUnderLeafListQuery = {
   settings: {
     chartsOfAccount?: {
       accountsUnderLeaf?: Array<{ accountId?: string | null; name?: string | null } | null> | null;
+    } | null;
+  };
+};
+
+export type GetCoaAccountListQueryVariables = Exact<{
+  branchId?: InputMaybe<Scalars['String']>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetCoaAccountListQuery = {
+  settings: {
+    chartsOfAccount?: {
+      coaAccountList?: {
+        edges?: Array<{
+          node?: {
+            accountCode?: string | null;
+            accountName?: Record<'local' | 'en' | 'np', string> | null;
+            accountClass?: string | null;
+            parentGroup?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ListCbsShareCodesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListCbsShareCodesQuery = {
+  settings: {
+    general?: {
+      codes?: {
+        cbs?: {
+          allCbsCodes?: {
+            data?: {
+              share?: Array<{
+                id?: string | null;
+                codeType?: CbsCodeType | null;
+                prefix?: string | null;
+                noOfDigit?: number | null;
+                initialNo?: number | null;
+              } | null> | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ListCbsTransfersCodesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListCbsTransfersCodesQuery = {
+  settings: {
+    general?: {
+      codes?: {
+        cbs?: {
+          allCbsCodes?: {
+            data?: {
+              transfers?: Array<{
+                id?: string | null;
+                codeType?: CbsCodeType | null;
+                prefix?: string | null;
+                noOfDigit?: number | null;
+                initialNo?: number | null;
+              } | null> | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ListCbsWithdrawSlipCodesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListCbsWithdrawSlipCodesQuery = {
+  settings: {
+    general?: {
+      codes?: {
+        cbs?: {
+          allCbsCodes?: {
+            data?: {
+              withdrawSlip?: Array<{
+                id?: string | null;
+                codeType?: CbsCodeType | null;
+                prefix?: string | null;
+                noOfDigit?: number | null;
+                initialNo?: number | null;
+              } | null> | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
     } | null;
   };
 };
@@ -21482,6 +22111,7 @@ export type GetLoanProductDetailQuery = {
               rebateRate?: number | null;
               rebateAmount?: any | null;
               rebateLedgerMapping?: string | null;
+              noOfInstallment?: number | null;
             } | null;
             interest?: {
               minRate?: number | null;
@@ -22522,7 +23152,7 @@ export type GetSettingsUserEditDataQuery = {
           email?: string | null;
           contactNo?: string | null;
           gender?: UserGender | null;
-          dob?: string | null;
+          dob?: Record<'local' | 'en' | 'np', string> | null;
           empCode?: string | null;
           isCoreEmployee?: boolean | null;
           role?: Roles | null;
@@ -22536,7 +23166,7 @@ export type GetSettingsUserEditDataQuery = {
             idNo?: string | null;
             idType?: string | null;
             place?: string | null;
-            date?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
           } | null> | null;
           permanentAddress?: {
             provinceId?: number | null;
@@ -22578,8 +23208,8 @@ export type GetValuatorQuery = {
             valuatorId?: string | null;
             academicQualification?: string | null;
             valuationLicenseNo?: string | null;
-            renewalDate?: string | null;
-            contractDate?: string | null;
+            renewalDate?: Record<'local' | 'en' | 'np', string> | null;
+            contractDate?: Record<'local' | 'en' | 'np', string> | null;
             insurancePremium?: number | null;
             mobileNo?: string | null;
             phoneNo?: string | null;
@@ -22702,7 +23332,7 @@ export type GetShareRegisterListQuery = {
         cursor: string;
         node: {
           id?: string | null;
-          transactionDate?: string | null;
+          transactionDate?: Record<'local' | 'en' | 'np', string> | null;
           transactionDirection: Share_Transaction_Direction;
           balance?: number | null;
           startNumber: number;
@@ -22739,7 +23369,7 @@ export type GetShareHistoryQuery = {
       history?: Array<{
         id?: string | null;
         status?: Share_Status | null;
-        transactionDate?: string | null;
+        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         transactionDirection: Share_Transaction_Direction;
         credit?: number | null;
         debit?: number | null;
@@ -22800,6 +23430,7 @@ export type GetShareDetailQuery = {
         amount?: string | null;
         total?: string | null;
         status?: string | null;
+        transactionCode?: string | null;
         transactionBranch?: string | null;
         teller?: string | null;
         totalCredit?: string | null;
@@ -22822,6 +23453,7 @@ export type GetShareDetailQuery = {
           account: string;
           debit?: string | null;
           credit?: string | null;
+          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -22841,6 +23473,7 @@ export type GetDepositListDataQuery = {
         cursor: string;
         node?: {
           ID: string;
+          transactionCode?: string | null;
           name?: Record<'local' | 'en' | 'np', string> | null;
           amount?: string | null;
           state: TransactionState;
@@ -22876,6 +23509,7 @@ export type GetWithdrawListDataQuery = {
         cursor: string;
         node?: {
           ID: string;
+          transactionCode?: string | null;
           name?: Record<'local' | 'en' | 'np', string> | null;
           amount?: string | null;
           state: TransactionState;
@@ -22908,6 +23542,7 @@ export type GetAccountTransferListDataQuery = {
         cursor: string;
         node?: {
           ID: string;
+          transactionCode?: string | null;
           amount?: string | null;
           state: TransactionState;
           transferType: TransferType;
@@ -22941,7 +23576,9 @@ export type GetTellerTransactionListDataQuery = {
         cursor: string;
         node?: {
           ID: string;
+          transferCode?: string | null;
           transferType: TellerTransferType;
+          transferState: TellerActivityState;
           srcTeller?: Record<'local' | 'en' | 'np', string> | null;
           amount?: string | null;
           destTeller?: Record<'local' | 'en' | 'np', string> | null;
@@ -22950,6 +23587,11 @@ export type GetTellerTransactionListDataQuery = {
           destProfilePic?: string | null;
           srcProfilePicUrl?: string | null;
           destProfilePicUrl?: string | null;
+          denomination?: Array<{
+            value: CashValue;
+            quantity: number;
+            amount?: string | null;
+          } | null> | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -22971,6 +23613,7 @@ export type TransactionDepositDetailQuery = {
     viewDeposit?: {
       data?: {
         id: string;
+        transactionCode?: string | null;
         transactionDate?: string | null;
         accountName?: string | null;
         voucherId?: string | null;
@@ -23000,6 +23643,7 @@ export type TransactionDepositDetailQuery = {
           account: string;
           debit?: string | null;
           credit?: string | null;
+          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -23016,6 +23660,7 @@ export type TransactionWithdrawDetailQuery = {
       data?: {
         id: string;
         transactionDate?: string | null;
+        transactionCode?: string | null;
         accountName?: string | null;
         chequeNo?: string | null;
         withdrawAmount?: string | null;
@@ -23042,6 +23687,7 @@ export type TransactionWithdrawDetailQuery = {
           account: string;
           debit?: string | null;
           credit?: string | null;
+          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -23057,6 +23703,7 @@ export type TransactionAccountTransferDetailQuery = {
     viewAccountTransfer?: {
       data?: {
         id: string;
+        transactionCode?: string | null;
         transactionDate?: string | null;
         transferAmount?: string | null;
         transferType?: TransferType | null;
@@ -23083,6 +23730,7 @@ export type TransactionAccountTransferDetailQuery = {
           account: string;
           debit?: string | null;
           credit?: string | null;
+          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -23139,6 +23787,7 @@ export type LoanRepaymentDetailQuery = {
     viewLoanRepayment?: {
       data?: {
         repaymentId: string;
+        transactionCode?: string | null;
         loanSubType?: string | null;
         loanAccountId?: string | null;
         loanAccountName?: string | null;
@@ -23169,6 +23818,7 @@ export type LoanRepaymentDetailQuery = {
           account: string;
           debit?: string | null;
           credit?: string | null;
+          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -25734,6 +26384,32 @@ export const useSetBranchDataMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetBranchDataMutation, SetBranchDataMutationVariables>(SetBranchDataDocument),
     options
   );
+export const SetCbsCodeDocument = `
+    mutation setCBSCode($data: CodeManagementInput) {
+  settings {
+    general {
+      codes {
+        cbs {
+          add(data: $data) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetCbsCodeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetCbsCodeMutation, TError, SetCbsCodeMutationVariables, TContext>
+) =>
+  useMutation<SetCbsCodeMutation, TError, SetCbsCodeMutationVariables, TContext>(
+    ['setCBSCode'],
+    useAxios<SetCbsCodeMutation, SetCbsCodeMutationVariables>(SetCbsCodeDocument),
+    options
+  );
 export const SetDepositProductDocument = `
     mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
   settings {
@@ -27051,6 +27727,14 @@ export const SetDepositDataDocument = `
   transaction {
     deposit(data: $data) {
       recordId
+      record {
+        transactionID
+        date
+        amount
+        rebate
+        paymentMode
+        depositedBy
+      }
       error {
         ...MutationError
       }
@@ -27242,6 +27926,42 @@ export const useSetTellerTransferDataMutation = <TError = unknown, TContext = un
     ['setTellerTransferData'],
     useAxios<SetTellerTransferDataMutation, SetTellerTransferDataMutationVariables>(
       SetTellerTransferDataDocument
+    ),
+    options
+  );
+export const SetTellerTransferActionDocument = `
+    mutation setTellerTransferAction($requestId: ID!, $action: TransferRequestAction!, $declineReason: String) {
+  transaction {
+    tellerTransferAction(
+      requestId: $requestId
+      action: $action
+      declineReason: $declineReason
+    ) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTellerTransferActionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetTellerTransferActionMutation,
+    TError,
+    SetTellerTransferActionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetTellerTransferActionMutation,
+    TError,
+    SetTellerTransferActionMutationVariables,
+    TContext
+  >(
+    ['setTellerTransferAction'],
+    useAxios<SetTellerTransferActionMutation, SetTellerTransferActionMutationVariables>(
+      SetTellerTransferActionDocument
     ),
     options
   );
@@ -27555,6 +28275,7 @@ export const GetAccountTableListDocument = `
           }
           installmentAmount
           balance
+          availableBalance
           accountOpenedDate
           lastTransactionDate
           accountExpiryDate
@@ -27978,11 +28699,13 @@ export const GetAccountTransactionListsDocument = `
       edges {
         node {
           id
+          transactionId
           accountId
           name
           date
           month
           transactionDirection
+          transactionType
           amount
           currentBalance
         }
@@ -28466,10 +29189,12 @@ export const GetJournalVoucherDetailDocument = `
           status
           reference
           note
+          transactionCode
           glTransaction {
             account
             debit
             credit
+            serviceCenter
           }
           totalDebit
           totalCredit
@@ -31373,6 +32098,7 @@ export const GetMemberLinkedAccountsDocument = `
             name
           }
           balance
+          availableBalance
           interestAccured
           interestTax
           prematurePenalty
@@ -31479,6 +32205,7 @@ export const GetMemberListDocument = `
           name
           code
           type
+          branch
           address {
             state
             district
@@ -32555,6 +33282,28 @@ export const GetMemberOverviewBioDetailsDocument = `
       data {
         bio {
           __typename
+          ... on IndividualBio {
+            memberName
+            profilePic
+            memberCode
+            memberJoined
+            dob
+            gender
+            mobile
+            email
+            currentAddress
+            permanentAddress
+            maritalStatus
+            familyMembers {
+              relationship
+              fullName
+              dob
+            }
+            docs {
+              key
+              value
+            }
+          }
           ... on InstitutionBio {
             basicInfo {
               memberName
@@ -32821,6 +33570,194 @@ export const GetMemberOverviewBioDetailsDocument = `
                 key
                 value
               }
+            }
+            docs {
+              key
+              value
+            }
+          }
+          ... on CoopUnionBio {
+            basicInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+            address {
+              ...Address
+            }
+            registrationDetails {
+              registeredNo
+              issuingOffice
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+            }
+            operatingAddress {
+              ...Address
+            }
+            serviceCenterAddress {
+              ...Address
+            }
+            contactDetails {
+              phoneNo
+              fax
+              email
+              website
+              poBoxNo
+              noOfEmployees
+              agmDetails
+            }
+            bankAccDetails {
+              bank
+              accountNumber
+              accountName
+            }
+            applicantDetails {
+              name
+              designation
+              contactNo
+              email
+              panNo
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            memberInfo {
+              noOfMaleCurrent
+              noOfFemaleCurrent
+              noOfInstitutionalCurrent
+              noOfMaleTarget
+              noOfFemaleTarget
+              noOfInstitutionalTarget
+              totalCurrent
+              totalTarget
+            }
+            partnerDirectorDetails {
+              name
+              designation
+              email
+              panNo
+              mobileNo
+              permAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            operatorDetails {
+              name
+              designation
+              contactNo
+              email
+              panNo
+              pemAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            equityLiabilities {
+              shareCapitalCurrent
+              reserveAndSurplusCurrent
+              savingDepositCurrent
+              loanAccountCurrent
+              capitalGrantCurrent
+              liabilitiesPayableCurrent
+              nonCurrentLiabilitiesCurrent
+              totalCurrent
+              shareCapitalTarget
+              reserveAndSurplusTarget
+              savingDepositTarget
+              loanAccountTarget
+              capitalGrantTarget
+              liabilitiesPayableTarget
+              nonCurrentLiabilitiesTarget
+              totalTarget
+            }
+            assetDetails {
+              cashAndEquivalentsCurrent
+              bankCurrent
+              investmentsCurrent
+              loanCurrent
+              nonCurrentAssetsCurrent
+              otherNonCurrentAssetsCurrent
+              totalCurrent
+              cashAndEquivalentsTarget
+              bankTarget
+              investmentsTarget
+              loanTarget
+              nonCurrentAssetsTarget
+              otherNonCurrentAssetsTarget
+              totalTarget
+            }
+            incomeDetails {
+              financialInvestment
+              nonFinancialInvestment
+              investment
+              serviceOperations
+              sales
+              otherIncome
+              miscIncome
+              total
+            }
+            expenseDetails {
+              purchase
+              directExpense
+              adminExpense
+              financialCost
+              riskManagement
+              deferredTax
+              total
             }
             docs {
               key
@@ -33120,6 +34057,7 @@ export const GetSavingStatementDocument = `
             localGovernment
           }
           dateJoined
+          activeDate
         }
         statement {
           ... on SavingStatementReport {
@@ -33202,6 +34140,40 @@ export const useGetInterestStatementReportQuery = <
     ['getInterestStatementReport', variables],
     useAxios<GetInterestStatementReportQuery, GetInterestStatementReportQueryVariables>(
       GetInterestStatementReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSuspiciousTransactionReportDocument = `
+    query getSuspiciousTransactionReport($data: SuspiciousTransactionReportInput!) {
+  report {
+    depositReport {
+      suspiciousTransctionReport(data: $data) {
+        data {
+          id
+          date
+          memberId
+          memberName
+          amount
+          product_name
+          tranxType
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSuspiciousTransactionReportQuery = <
+  TData = GetSuspiciousTransactionReportQuery,
+  TError = unknown
+>(
+  variables: GetSuspiciousTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetSuspiciousTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetSuspiciousTransactionReportQuery, TError, TData>(
+    ['getSuspiciousTransactionReport', variables],
+    useAxios<GetSuspiciousTransactionReportQuery, GetSuspiciousTransactionReportQueryVariables>(
+      GetSuspiciousTransactionReportDocument
     ).bind(null, variables),
     options
   );
@@ -34059,10 +35031,17 @@ export const GetTrialSheetReportDocument = `
               ledgerName
               under
             }
+            offBalance {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
             equityAndLiablitiesTotal
             assetsTotal
             expenseTotal
             incomeTotal
+            offBalanceTotal
             totalAssetExpense
             totalLiablitiesIncome
             totalProfitLoss
@@ -34255,18 +35234,24 @@ export const GetDayBookReportDocument = `
             closingAmount
             openingBalance
             payments {
-              particular
               accountHead
-              ledger
               amount
-              voucherNo
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
             }
             receipts {
-              particular
               accountHead
-              ledger
               amount
-              voucherNo
+              entries {
+                particular
+                ledger
+                voucherNo
+                amount
+              }
             }
             totalAmount
             totalPayment
@@ -34953,6 +35938,142 @@ export const useGetCoaAccountsUnderLeafListQuery = <
     ).bind(null, variables),
     options
   );
+export const GetCoaAccountListDocument = `
+    query getCoaAccountList($branchId: String, $pagination: Pagination) {
+  settings {
+    chartsOfAccount {
+      coaAccountList(branchId: $branchId, pagination: $pagination) {
+        edges {
+          node {
+            accountCode
+            accountName
+            accountClass
+            parentGroup
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoaAccountListQuery = <TData = GetCoaAccountListQuery, TError = unknown>(
+  variables?: GetCoaAccountListQueryVariables,
+  options?: UseQueryOptions<GetCoaAccountListQuery, TError, TData>
+) =>
+  useQuery<GetCoaAccountListQuery, TError, TData>(
+    variables === undefined ? ['getCoaAccountList'] : ['getCoaAccountList', variables],
+    useAxios<GetCoaAccountListQuery, GetCoaAccountListQueryVariables>(
+      GetCoaAccountListDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListCbsShareCodesDocument = `
+    query listCBSShareCodes {
+  settings {
+    general {
+      codes {
+        cbs {
+          allCbsCodes {
+            data {
+              share {
+                id
+                codeType
+                prefix
+                noOfDigit
+                initialNo
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListCbsShareCodesQuery = <TData = ListCbsShareCodesQuery, TError = unknown>(
+  variables?: ListCbsShareCodesQueryVariables,
+  options?: UseQueryOptions<ListCbsShareCodesQuery, TError, TData>
+) =>
+  useQuery<ListCbsShareCodesQuery, TError, TData>(
+    variables === undefined ? ['listCBSShareCodes'] : ['listCBSShareCodes', variables],
+    useAxios<ListCbsShareCodesQuery, ListCbsShareCodesQueryVariables>(
+      ListCbsShareCodesDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListCbsTransfersCodesDocument = `
+    query listCBSTransfersCodes {
+  settings {
+    general {
+      codes {
+        cbs {
+          allCbsCodes {
+            data {
+              transfers {
+                id
+                codeType
+                prefix
+                noOfDigit
+                initialNo
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListCbsTransfersCodesQuery = <TData = ListCbsTransfersCodesQuery, TError = unknown>(
+  variables?: ListCbsTransfersCodesQueryVariables,
+  options?: UseQueryOptions<ListCbsTransfersCodesQuery, TError, TData>
+) =>
+  useQuery<ListCbsTransfersCodesQuery, TError, TData>(
+    variables === undefined ? ['listCBSTransfersCodes'] : ['listCBSTransfersCodes', variables],
+    useAxios<ListCbsTransfersCodesQuery, ListCbsTransfersCodesQueryVariables>(
+      ListCbsTransfersCodesDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListCbsWithdrawSlipCodesDocument = `
+    query listCBSWithdrawSlipCodes {
+  settings {
+    general {
+      codes {
+        cbs {
+          allCbsCodes {
+            data {
+              withdrawSlip {
+                id
+                codeType
+                prefix
+                noOfDigit
+                initialNo
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListCbsWithdrawSlipCodesQuery = <
+  TData = ListCbsWithdrawSlipCodesQuery,
+  TError = unknown
+>(
+  variables?: ListCbsWithdrawSlipCodesQueryVariables,
+  options?: UseQueryOptions<ListCbsWithdrawSlipCodesQuery, TError, TData>
+) =>
+  useQuery<ListCbsWithdrawSlipCodesQuery, TError, TData>(
+    variables === undefined
+      ? ['listCBSWithdrawSlipCodes']
+      : ['listCBSWithdrawSlipCodes', variables],
+    useAxios<ListCbsWithdrawSlipCodesQuery, ListCbsWithdrawSlipCodesQueryVariables>(
+      ListCbsWithdrawSlipCodesDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanProductListDocument = `
     query getLoanProductList($paginate: Pagination, $filter: LoanProductSearchFilter) {
   settings {
@@ -35209,6 +36330,7 @@ export const GetLoanProductDetailDocument = `
               rebateRate
               rebateAmount
               rebateLedgerMapping
+              noOfInstallment
             }
             principalMaxGraceNumber
             interestMaxGraceNumber
@@ -37041,12 +38163,14 @@ export const GetShareDetailDocument = `
           amount
           sourceOfFund
         }
+        transactionCode
         transactionBranch
         teller
         glTransactions {
           account
           debit
           credit
+          serviceCenter
         }
         totalCredit
         totalDebit
@@ -37075,6 +38199,7 @@ export const GetDepositListDataDocument = `
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -37117,6 +38242,7 @@ export const GetWithdrawListDataDocument = `
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -37156,6 +38282,7 @@ export const GetAccountTransferListDataDocument = `
       edges {
         node {
           ID
+          transactionCode
           amount
           state
           transferType
@@ -37215,7 +38342,9 @@ export const GetTellerTransactionListDataDocument = `
       edges {
         node {
           ID
+          transferCode
           transferType
+          transferState
           srcTeller
           amount
           destTeller
@@ -37224,6 +38353,11 @@ export const GetTellerTransactionListDataDocument = `
           destProfilePic
           srcProfilePicUrl
           destProfilePicUrl
+          denomination {
+            value
+            quantity
+            amount
+          }
         }
         cursor
       }
@@ -37259,6 +38393,7 @@ export const TransactionDepositDetailDocument = `
     viewDeposit(transactionId: $transactionId) {
       data {
         id
+        transactionCode
         member {
           id
           code
@@ -37287,6 +38422,7 @@ export const TransactionDepositDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -37323,6 +38459,7 @@ export const TransactionWithdrawDetailDocument = `
           profilePicUrl
         }
         transactionDate
+        transactionCode
         accountName
         chequeNo
         withdrawAmount
@@ -37340,6 +38477,7 @@ export const TransactionWithdrawDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -37374,6 +38512,7 @@ export const TransactionAccountTransferDetailDocument = `
           profilePic
           profilePicUrl
         }
+        transactionCode
         transactionDate
         transferAmount
         sourceAccount {
@@ -37399,6 +38538,7 @@ export const TransactionAccountTransferDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -37493,6 +38633,7 @@ export const LoanRepaymentDetailDocument = `
           name
           profilePicUrl
         }
+        transactionCode
         loanSubType
         loanAccountId
         loanAccountName
@@ -37515,6 +38656,7 @@ export const LoanRepaymentDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit

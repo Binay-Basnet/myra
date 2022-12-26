@@ -73,6 +73,8 @@ export const AddWithdrawSlipBook = () => {
 
   const count = watch('count');
 
+  const pickupMethod = watch('pickupMethod');
+
   const { data: availableRangeQueryData } = useGetAvailableRangeQuery(
     { count },
     { enabled: !!count }
@@ -151,9 +153,12 @@ export const AddWithdrawSlipBook = () => {
                     />
                   </GridItem>
 
-                  <FormBranchSelect name="branchId" label="Service Center" />
-
-                  <FormAgentSelect name="marketRepresentative" label="Market Representative" />
+                  {pickupMethod === PickupMethod.MarketRepresentative && (
+                    <>
+                      <FormBranchSelect name="branchId" label="Service Center" />
+                      <FormAgentSelect name="marketRepresentative" label="Market Representative" />
+                    </>
+                  )}
                 </FormSection>
               </Box>
             </form>

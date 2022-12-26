@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router';
 
+import { Box } from '@myra-ui';
+
 import { COAFullView, COAListView } from '@coop/cbs/settings/coa';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
   SettingsPageHeader,
 } from '@coop/cbs/settings/ui-layout';
-import { Box } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const ChartsOfAccounts = () => {

@@ -130,7 +130,7 @@ export const Chips = forwardRef<HTMLButtonElement, ChipsProps>((props, ref) => {
         >
           {type === 'label' && (
             <TagLabel color={COLORS.text[theme]} fontSize={SIZE[size].fontSize}>
-              {label}
+              {label?.replace(/_/g, ' ')}
             </TagLabel>
           )}
 
@@ -192,7 +192,7 @@ export const Chips = forwardRef<HTMLButtonElement, ChipsProps>((props, ref) => {
         >
           {type === 'label' && (
             <TagLabel color={COLORS.text[theme]} fontSize={SIZE[size].fontSize}>
-              {label}
+              {label?.replace(/_/g, ' ')}
             </TagLabel>
           )}
 

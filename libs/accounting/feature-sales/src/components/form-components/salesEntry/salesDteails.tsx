@@ -1,5 +1,6 @@
-import { FormCustomerSelect, FormInput, FormLocalDatePicker } from '@coop/shared/form';
 import { FormSection, GridItem } from '@myra-ui';
+
+import { FormCustomerSelect, FormDatePicker, FormInput } from '@coop/shared/form';
 
 export const SalesDetails = () => (
   <FormSection>
@@ -9,8 +10,8 @@ export const SalesDetails = () => (
 
     <FormInput name="reference" type="number" label="Reference" />
 
-    <FormLocalDatePicker name="invoiceDate" label="Invoice Date" />
+    <FormDatePicker name="invoiceDate" label="Invoice Date" />
 
-    <FormLocalDatePicker name="dueDate" label="Due Date" />
+    <FormDatePicker name="dueDate" label="Due Date" />
   </FormSection>
 );

@@ -38,6 +38,7 @@
       "@coop/cbs/accounts/ui-layouts": ["libs/cbs/accounts/ui-layouts/src/index.ts"],
       "@coop/cbs/audit-log": ["libs/cbs/settings/feature-audit-log/src/index.ts"],
       "@coop/cbs/close-day": ["libs/cbs/close-day/src/index.ts"],
+      "@coop/cbs/components": ["libs/cbs/ui-components/src/index.ts"],
       "@coop/cbs/dashboard": ["libs/cbs/feature-dashboard/src/index.ts"],
       "@coop/cbs/data-access": ["libs/cbs/data-access/src/index.ts"],
       "@coop/cbs/kym-form/cooperative": ["libs/cbs/kym-form/feature-cooperative/src/index.ts"],
@@ -74,6 +75,9 @@
       "@coop/cbs/settings//feature-loan": ["libs/cbs/settings/feature-loan/src/index.ts"],
       "@coop/cbs/settings/branches": ["libs/cbs/settings/feature-branches/src/index.ts"],
       "@coop/cbs/settings/coa": ["libs/cbs/settings/feature-coa/src/index.ts"],
+      "@coop/cbs/settings/code-management": [
+        "libs/cbs/settings/feature-code-management/src/index.ts"
+      ],
       "@coop/cbs/settings/deposit": ["libs/cbs/settings/feature-deposit/src/index.ts"],
       "@coop/cbs/settings/deposit-products": [
         "libs/cbs/settings/feature-deposit-products/src/index.ts"
@@ -87,6 +91,7 @@
       "@coop/cbs/settings/organization": ["libs/cbs/settings/feature-organization/src/index.ts"],
       "@coop/cbs/settings/share": ["libs/cbs/settings/feature-share/src/index.ts"],
       "@coop/cbs/settings/super-admin": ["libs/cbs/settings/feature-super-admin/src/index.ts"],
+      "@coop/cbs/settings/ui-components": ["libs/cbs/settings/ui-components/src/index.ts"],
       "@coop/cbs/settings/ui-containers": ["libs/cbs/settings/ui-containers/src/index.ts"],
       "@coop/cbs/settings/ui-layout": ["libs/cbs/settings/ui-layout/src/index.ts"],
       "@coop/cbs/settings/valuator": ["libs/cbs/settings/feature-valuator/src/index.ts"],
@@ -126,6 +131,7 @@
       "@coop/ebanking/ui-layout": ["libs/ebanking/ui-layout/src/index.ts"],
       "@coop/inventory/inventory": ["libs/inventory/feature-inventory/src/index.ts"],
       "@coop/inventory/warehouse": ["libs/inventory/feature-warehouse/src/index.ts"],
+      "@coop/loan/account-details": ["libs/cbs/loan/feature-loan-account-detail/src/index.ts"],
       "@coop/members/activations": ["libs/cbs/members/feature-activations/src/index.ts"],
       "@coop/myra/components": ["libs/myra/components/src/index.ts"],
       "@coop/myra/inventory/item": ["libs/inventory/feature-item/src/index.ts"],

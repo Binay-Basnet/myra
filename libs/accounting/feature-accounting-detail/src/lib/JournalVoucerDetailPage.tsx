@@ -16,7 +16,7 @@ export const JournalVoucerDetailPage = () => {
   const voucherData = data?.accounting?.journalVoucher?.viewJournalVoucherDetail?.data;
 
   const detailData = {
-    id: voucherData?.id,
+    id: voucherData?.transactionCode,
     date: voucherData?.date?.local,
     reference: voucherData?.reference,
     note: voucherData?.note,
@@ -30,7 +30,7 @@ export const JournalVoucerDetailPage = () => {
   };
 
   return (
-    <>
+    <Box bg="gray.100">
       <Box
         bg="gray.0"
         w="320px"
@@ -49,10 +49,10 @@ export const JournalVoucerDetailPage = () => {
         <TransactionDetails detailData={detailData} />
         <GlTransaction
           data={voucherData?.glTransaction}
-          totalDebit={voucherData?.totalDebit}
-          totalCredit={voucherData?.totalCredit}
+          totalDebit={voucherData?.totalDebit ?? '-'}
+          totalCredit={voucherData?.totalCredit ?? '-'}
         />
       </Box>
-    </>
+    </Box>
   );
 };

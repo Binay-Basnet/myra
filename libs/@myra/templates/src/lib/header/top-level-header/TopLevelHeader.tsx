@@ -445,7 +445,7 @@ export const TopLevelHeader = () => {
                         </AppSwitcherIconWrapper>
 
                         <AppSwitcherIconWrapper
-                          onClick={() => router.push('/alternative-channels/mBanking/users')}
+                          onClick={() => router.push('/alternative-channels/users/mBanking')}
                         >
                           <Image width={32} height={32} src="/tnt.svg" alt="Alternativer channel" />
                           <AppSwitcherText>

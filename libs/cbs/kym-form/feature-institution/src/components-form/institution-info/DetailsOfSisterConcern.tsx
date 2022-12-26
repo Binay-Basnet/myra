@@ -7,6 +7,8 @@ import { CloseButton } from '@chakra-ui/react';
 import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 
+import { Box, Button, FormSection, Grid, GridItem, Icon, IconButton } from '@myra-ui';
+
 import {
   addInstitutionError,
   addSisterError,
@@ -21,7 +23,6 @@ import {
 } from '@coop/cbs/data-access';
 import { DynamicBoxContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Box, Button, FormSection, Grid, GridItem, Icon, IconButton } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IAddSisterConcern {
@@ -85,13 +86,6 @@ export const useSisterConcernInstitution = ({
       await refetchEdit();
     },
   });
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetchEdit();
-  }, [preference?.date]);
 
   // Get Back The Initial Data when page reloads or user edits
   useEffect(() => {

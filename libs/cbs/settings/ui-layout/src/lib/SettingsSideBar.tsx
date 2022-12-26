@@ -60,6 +60,10 @@ const tabList: TabList[] = [
 
 const otherTabList: TabList[] = [
   {
+    title: 'Code Management',
+    to: '/settings/general/code-management/core-banking-system',
+  },
+  {
     title: 'settingsAlternativeChannel',
     to: '/settings/general/alternative-channels/charges',
   },

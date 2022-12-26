@@ -30,7 +30,7 @@ const myraAppn = [
   {
     title: 'alternativeChannelsAndCrossConnectivity',
     img: '/tnt.svg',
-    link: '/alternative-channels/mBanking/users',
+    link: '/alternative-channels/users/mBanking',
   },
   {
     title: 'inventoryManagement',
@@ -101,7 +101,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
         justifyContent="flex-start"
         height="calc(100vh - 60px)"
         px="s16"
-        py="s32"
+        py="s16"
         gap="s32"
         overflowY="auto"
       >
@@ -267,9 +267,10 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
       <Box
         display="flex"
         justifyContent="center"
-        p="s32"
+        p="s16"
         ml="300px"
-        mr="300px"
+        mr="150px"
+        flexGrow="1"
         overflowX="hidden"
         position="relative"
         mt="60px"

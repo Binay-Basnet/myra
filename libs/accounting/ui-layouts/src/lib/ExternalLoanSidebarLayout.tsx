@@ -1,17 +1,8 @@
 import React from 'react';
-import { AiOutlineSetting } from 'react-icons/ai';
-import { useRouter } from 'next/router';
-import {
-  AddButtonList,
-  Box,
-  Button,
-  Divider,
-  Icon,
-  PopOverComponentForButtonList,
-  Text,
-} from '@myra-ui';
 
-import { TabColumn } from '@coop/myra/components';
+import { Sidebar } from '@myra-ui';
+
+import { useTranslation } from '@coop/shared/utils';
 
 interface IExternalLoanSidebarLayoutProps {
   children: React.ReactNode;
@@ -54,47 +45,17 @@ const addButtoncolumns = [
 ];
 
 export const ExternalLoanSidebarLayout = ({ children }: IExternalLoanSidebarLayoutProps) => {
-  const router = useRouter();
+  const { t } = useTranslation();
 
   return (
-    <Box>
-      <Box width="275px" p="s24" position="fixed">
-        <Text fontSize="l1" fontWeight="SemiBold" color="gray.800">
-          External Loan
-        </Text>
-        <Divider my="s16" />
-
-        <PopOverComponentForButtonList buttonLabel="accountingAccountingSidebarCreate">
-          {addButtoncolumns.map((item) => (
-            <Box key={item?.title}>
-              <AddButtonList label={item?.title} onClick={() => router.push(`${item.link}`)} />
-            </Box>
-          ))}
-        </PopOverComponentForButtonList>
-
-        <Divider my="s16" />
-        <TabColumn list={externalLoanSidebarColumns} />
-        <Divider my="s16" />
-        <Button
-          variant="ghost"
-          color="#37474F"
-          height="s48"
-          width="full"
-          justifyContent="start"
-          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
-        >
-          External Loan
-        </Button>
-      </Box>
-      <Box
-        width="calc(100% - 275px)"
-        position="relative"
-        left="275px"
-        minH="calc(100vh - 110px)"
-        bg="white"
-      >
-        {children}
-      </Box>
-    </Box>
+    <Sidebar
+      applicationName={t['accountingAccountingSidebarAccounting']}
+      featureName="External Loan"
+      featureLink="/accounting/loan/external-loan/list"
+      mainButtonLabel={t['accountingAccountingSidebarCreate']}
+      addButtonList={addButtoncolumns}
+      tabColumns={externalLoanSidebarColumns}
+      children={children}
+    />
   );
 };

@@ -7,9 +7,7 @@ import { asyncToast, Box, Container, FormFooter, FormHeader, GridItem, Text } fr
 import {
   BranchCategory,
   BranchInput,
-  RootState,
   useAllAdministrationQuery,
-  useAppSelector,
   useGetBranchEditDataQuery,
   useGetCoaListQuery,
   useSetBranchDataMutation,
@@ -25,7 +23,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const methods = useForm<BranchInput>({});
 
-  const { getValues, watch, reset, resetField } = methods;
+  const { getValues, watch, reset, setError, clearErrors } = methods;
 
   const id = String(router?.query?.['id']);
 
@@ -120,8 +118,9 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
       onSuccess: () => router.push('/settings/general/service-center'),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
+          clearErrors();
           Object.keys(error.validationErrorMsg).map((key) =>
-            methods.setError(key as keyof BranchInput, {
+            setError(key as keyof BranchInput, {
               message: error.validationErrorMsg[key][0] as string,
             })
           );
@@ -145,19 +144,6 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
     }
   }, [editValues, id]);
 
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    if (router.asPath.includes('edit')) {
-      refetch();
-    }
-
-    if (router.asPath.includes('add')) {
-      resetField('estDate');
-    }
-  }, [preference?.date, router?.asPath]);
-
   useEffect(() => {
     if (id) {
       refetch();
@@ -180,27 +166,34 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                     <Box>
                       <InputGroupContainer>
                         <GridItem colSpan={2}>
-                          <FormInput name="name" label={t['serviceCenterFormName']} />
+                          <FormInput isRequired name="name" label={t['serviceCenterFormName']} />
                         </GridItem>
-                        <FormInput name="branchCode" label={t['serviceCenterCode']} />
+                        <FormInput isRequired name="branchCode" label={t['serviceCenterCode']} />
                       </InputGroupContainer>
 
                       <InputGroupContainer mt="s16">
                         <FormInput
+                          isRequired
                           type="text"
                           name="managerName"
                           label={t['serviceCenterManager']}
                         />
                         <FormSelect
+                          isRequired
                           label={t['serviceCenterCategory']}
                           name="category"
                           options={branchCategories}
                         />
-                        <FormDatePicker label={t['settingsBranchEstablishedDate']} name="estDate" />
+                        <FormDatePicker
+                          isRequired
+                          label={t['settingsBranchEstablishedDate']}
+                          name="estDate"
+                        />
                       </InputGroupContainer>
 
                       <InputGroupContainer mt="s16">
                         <FormInput
+                          isRequired
                           type="text"
                           name="serviceCenterPhone"
                           label={t['serviceCenterServiceCenterContactNumber']}
@@ -257,8 +250,12 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                         {t['serviceCenterManager']}
                       </Text>
                       <InputGroupContainer>
-                        <FormInput name="phoneNumber" label={t['settingsBranchPhoneNumber']} />
-                        <FormInput name="email" label={t['settingsBranchEmail']} />
+                        <FormInput
+                          isRequired
+                          name="phoneNumber"
+                          label={t['settingsBranchPhoneNumber']}
+                        />
+                        <FormInput isRequired name="email" label={t['settingsBranchEmail']} />
                       </InputGroupContainer>
                     </Box>
 

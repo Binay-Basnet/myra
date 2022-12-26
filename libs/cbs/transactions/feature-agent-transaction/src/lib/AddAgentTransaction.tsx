@@ -149,7 +149,7 @@ export const AddAgentTransaction = () => {
                   <Box display="flex" flexDirection="column" gap="s16">
                     <Text>Market Representative Transaction</Text>
 
-                    <FormAgentSelect name="agentId" label="Market Representative" />
+                    <FormAgentSelect isRequired name="agentId" label="Market Representative" />
                   </Box>
 
                   {agentId && (

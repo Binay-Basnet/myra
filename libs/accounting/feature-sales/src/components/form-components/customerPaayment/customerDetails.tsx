@@ -1,11 +1,6 @@
 import { FormSection, GridItem } from '@myra-ui';
 
-import {
-  FormAmountInput,
-  FormCustomerSelect,
-  FormInput,
-  FormLocalDatePicker,
-} from '@coop/shared/form';
+import { FormAmountInput, FormCustomerSelect, FormDatePicker, FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CustomerDetails = () => {
@@ -22,10 +17,7 @@ export const CustomerDetails = () => {
 
       <FormInput name="receivedAccount" label={t['accountingCustomerPaymentAddReceivedAccount']} />
 
-      <FormLocalDatePicker
-        name="receivedDate"
-        label={t['accountingCustomerPaymentAddReceivedDate']}
-      />
+      <FormDatePicker name="receivedDate" label={t['accountingCustomerPaymentAddReceivedDate']} />
 
       <FormAmountInput
         type="number"

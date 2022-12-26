@@ -25,7 +25,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
         <>
           <DetailCardContent
             title={t['transDetailTransactionID']}
-            subtitle={depositDetailData?.id}
+            subtitle={depositDetailData?.transactionCode}
           />
           <DetailCardContent
             title={t['transDetailTransactionDate']}
@@ -64,7 +64,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
         <>
           <DetailCardContent
             title={t['transDetailTransactionID']}
-            subtitle={withdrawDetailData?.id}
+            subtitle={withdrawDetailData?.transactionCode}
           />
           <DetailCardContent
             title={t['transDetailTransactionDate']}
@@ -76,7 +76,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailWithdrawBy']}
-            subtitle={withdrawDetailData?.withdrawWith?.replace('_', ' ')}
+            subtitle={withdrawDetailData?.withdrawWith?.replace(/_/g, ' ')}
           />
           <DetailCardContent
             title={t['transDetailChequeNo']}
@@ -104,7 +104,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
         <>
           <DetailCardContent
             title={t['transDetailTransactionID']}
-            subtitle={accountTransferDetailData?.id}
+            subtitle={accountTransferDetailData?.transactionCode}
           />
           <DetailCardContent
             title={t['transDetailTransactionDate']}
@@ -132,7 +132,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailWithdrawBy']}
-            subtitle={accountTransferDetailData?.withdrawnBy}
+            subtitle={accountTransferDetailData?.withdrawnBy?.replace(/_/g, ' ')}
           />
           <DetailCardContent
             title={t['transDetailWithdrawSlipNo']}

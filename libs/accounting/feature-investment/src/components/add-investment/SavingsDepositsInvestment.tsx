@@ -3,7 +3,7 @@ import { FormSection, GridItem, Text } from '@myra-ui';
 import { InstallmentFrequency, SavingInvestmentType } from '@coop/cbs/data-access';
 import {
   FormAmountInput,
-  FormLocalDatePicker,
+  FormDatePicker,
   FormNumberInput,
   FormSelect,
   FormSwitchTab,
@@ -67,7 +67,7 @@ export const SavingsDepositsInvestment = () => (
       }
     />
 
-    <FormLocalDatePicker name="saving.openDate" label="Account Open Date" />
+    <FormDatePicker name="saving.openDate" label="Account Open Date" />
 
     <FormAmountInput name="saving.initialDepositAmount" label="Initial Deposit Amount" />
 

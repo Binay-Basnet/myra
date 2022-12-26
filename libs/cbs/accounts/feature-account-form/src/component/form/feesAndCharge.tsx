@@ -8,8 +8,8 @@ import {
   useGetAccountOpenProductDetailsQuery,
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import { FormAmountInput } from '@coop/shared/form';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 interface IFeesAndCharge {
   setTotalCharge: Dispatch<SetStateAction<number>>;
@@ -153,7 +153,7 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
                 </Text>
               </Box>
               <Box w="300px">
-                <FormInput textAlign="right" name={`serviceCharge.${index}.amount`} type="number" />
+                <FormAmountInput name={`serviceCharge.${index}.amount`} />
               </Box>
             </Box>
           ))}
@@ -163,7 +163,7 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
             </Text>
 
             <Text fontSize="s3" fontWeight="600">
-              {serviceCharge?.reduce((a, b) => a + Number(b?.amount || 0), 0)}
+              {amountConverter(serviceCharge?.reduce((a, b) => a + Number(b?.amount || 0), 0) ?? 0)}
             </Text>
           </Box>
         </Box>

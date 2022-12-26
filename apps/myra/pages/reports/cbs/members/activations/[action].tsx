@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { MemberActiveInactiveReport } from '@coop/cbs/reports';
 import { MainLayout } from '@myra-ui';
+
+import { MemberActiveInactiveReport } from '@coop/cbs/reports';
 
 const MBankingExpiryReport = () => <MemberActiveInactiveReport />;
 

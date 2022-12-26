@@ -22,6 +22,7 @@ import {
   ShareReturnInput,
   useAddShareReturnMutation,
   useGetIndividualMemberDetails,
+  useGetSettingsShareGeneralDataQuery,
   useGetShareChargesQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
@@ -88,9 +89,24 @@ export const ShareReturnForm = () => {
   const disableDenomination = watch('cash.disableDenomination');
   const extraFee = watch('extraFee');
   const paymentModes = watch('paymentMode');
+  const bankSelected = watch('bankCheque.bankId');
+  const accountSelected = watch('account.accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [mode, setMode] = useState('shareInfo');
+
+  const disableSubmitButtonFxn = (paymentMode: SharePaymentMode | undefined | null) => {
+    if (paymentMode === SharePaymentMode.Cash && !disableDenomination) {
+      return !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount));
+    }
+    if (paymentMode === SharePaymentMode.BankVoucherOrCheque && bankSelected === undefined) {
+      return true;
+    }
+    if (paymentMode === SharePaymentMode.Account && accountSelected === undefined) {
+      return true;
+    }
+    return false;
+  };
 
   const { data: chargesData, isLoading } = useGetShareChargesQuery(
     {
@@ -113,6 +129,11 @@ export const ShareReturnForm = () => {
   const returnAmount = totalCashPaid - totalAmount;
 
   const { memberDetailData } = useGetIndividualMemberDetails({ memberId });
+
+  const { data: shareData } = useGetSettingsShareGeneralDataQuery();
+  const multiplicityFactor = shareData?.settings?.general?.share?.general?.multiplicityFactor;
+
+  const isMultiple = Number(noOfShares) % Number(multiplicityFactor) === 0;
 
   const { data: shareHistoryTableData } = useGetShareHistoryQuery(
     {
@@ -297,7 +318,7 @@ export const ShareReturnForm = () => {
           <Container minW="container.xl" height="fit-content" p="0">
             {mode === 'shareInfo' && (
               <ShareInfoFooter
-                disableButton={noOfShares}
+                disableButton={noOfShares && isMultiple}
                 totalAmount={totalAmount}
                 paymentButtonHandler={paymentButtonHandler}
               />
@@ -306,11 +327,7 @@ export const ShareReturnForm = () => {
               <SharePaymentFooter
                 previousButtonHandler={previousButtonHandler}
                 handleSubmit={handleSubmit}
-                isDisabled={
-                  paymentModes === SharePaymentMode.Cash && !disableDenomination
-                    ? !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount))
-                    : false
-                }
+                isDisabled={disableSubmitButtonFxn(paymentModes)}
               />
             )}
           </Container>

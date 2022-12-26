@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection } from '@myra-ui';
+
 import { KymInsInput, useGetBankListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
@@ -31,6 +32,7 @@ export const BankAccountDetailsInstitution = (props: IProps) => {
       >
         <FormSection id="kymInsBankAccountDetails" header="kymInsBankAccountDetails">
           <FormSelect
+            isRequired
             name="bank"
             label={t['kymInsNameofBank']}
             options={bankList?.bank?.bank?.list?.map((bank) => ({
@@ -38,9 +40,9 @@ export const BankAccountDetailsInstitution = (props: IProps) => {
               value: String(bank?.id),
             }))}
           />
-          <FormInput type="text" name="accountNumber" label={t['kymInsAccountNumber']} />
+          <FormInput isRequired type="text" name="accountNumber" label={t['kymInsAccountNumber']} />
 
-          <FormInput type="text" name="accountName" label={t['kymInsAccountName']} />
+          <FormInput isRequired type="text" name="accountName" label={t['kymInsAccountName']} />
         </FormSection>
       </form>
     </FormProvider>

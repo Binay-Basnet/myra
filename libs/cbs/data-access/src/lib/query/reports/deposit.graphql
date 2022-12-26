@@ -132,6 +132,7 @@ query getSavingStatement($data: SavingStatementReportSettings!) {
             localGovernment
           }
           dateJoined
+          activeDate
         }
         statement {
           ... on SavingStatementReport {
@@ -185,6 +186,25 @@ query getInterestStatementReport($data: InterestStatementFilter!) {
               latitude
             }
           }
+        }
+      }
+    }
+  }
+}
+
+query getSuspiciousTransactionReport($data: SuspiciousTransactionReportInput!) {
+  report {
+    depositReport {
+      suspiciousTransctionReport(data: $data) {
+        data {
+          id
+          date
+          memberId
+          memberName
+          amount
+          product_name
+          tranxType
+          status
         }
       }
     }

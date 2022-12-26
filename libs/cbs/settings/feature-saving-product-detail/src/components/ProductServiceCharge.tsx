@@ -16,15 +16,12 @@ export const ProductServiceCharge = ({ serviceCharge }: IProductServiceCharge) =
         header: 'Service Name',
         accessorKey: 'serviceName',
         meta: {
-          width: '33%',
+          width: '80%',
         },
       },
       {
         header: 'Ledger Name',
         accessorKey: 'ledgerName',
-        meta: {
-          width: '33%',
-        },
       },
       {
         header: 'Amount',
@@ -32,18 +29,15 @@ export const ProductServiceCharge = ({ serviceCharge }: IProductServiceCharge) =
         cell: (props) => amountConverter(props.getValue() as string),
         meta: {
           isNumeric: true,
-          width: '33%',
         },
       },
     ],
     []
   );
 
-  if (serviceCharge?.length === 0) return null;
-
   return (
     <DetailsCard title="Account Service Charge" hasTable>
-      <Table isStatic data={serviceCharge ?? []} columns={columns} />
+      <Table isStatic isDetailPageTable data={serviceCharge ?? []} columns={columns} />
     </DetailsCard>
   );
 };

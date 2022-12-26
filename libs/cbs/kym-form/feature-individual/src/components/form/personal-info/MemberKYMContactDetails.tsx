@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection } from '@myra-ui';
+
 import { KymIndMemberInput } from '@coop/cbs/data-access';
 import { FormEmailInput, FormPhoneNumber } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';
@@ -28,9 +29,9 @@ export const MemberKYMContactDetails = ({
         }}
       >
         <FormSection id="kymAccIndContactDetails" header="kymIndCONTACTDETAILS">
-          <FormPhoneNumber name="mobileNumber" label={t['kymIndMobileNo']} />
-          <FormPhoneNumber name="phoneNumber" label={t['kymIndPhoneNo']} />
-          <FormEmailInput type="text" name="email" label={t['kymIndEmail']} />
+          <FormPhoneNumber isRequired name="mobileNumber" label={t['kymIndMobileNo']} />
+          <FormPhoneNumber isRequired name="phoneNumber" label={t['kymIndPhoneNo']} />
+          <FormEmailInput isRequired type="text" name="email" label={t['kymIndEmail']} />
         </FormSection>
       </form>
     </FormProvider>

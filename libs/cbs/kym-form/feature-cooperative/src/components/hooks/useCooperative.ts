@@ -10,7 +10,6 @@ import {
   addCooperativeError,
   GetCoOperativeKymEditDataQuery,
   KymCooperativeFormInput,
-  RootState,
   setCooperativeFormDirty,
   useAppSelector,
   useGetCoOperativeKymEditDataQuery,
@@ -20,6 +19,7 @@ import {
 interface IInstitutionHookProps {
   methods: UseFormReturn<KymCooperativeFormInput>;
 }
+
 const getCooperativeData = (data: GetCoOperativeKymEditDataQuery | undefined) => {
   if (!data) {
     return {};
@@ -123,13 +123,6 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
       }
     }
   }, [editLoading]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetch();
-  }, [preference?.date]);
 
   useDeepCompareEffect(() => {
     // Cleanup Previous Errors

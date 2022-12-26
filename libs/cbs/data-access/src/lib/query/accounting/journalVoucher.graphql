@@ -34,10 +34,12 @@ query getJournalVoucherDetail($entryId: ID!) {
           status
           reference
           note
+          transactionCode
           glTransaction {
             account
             debit
             credit
+            serviceCenter
           }
           totalDebit
           totalCredit

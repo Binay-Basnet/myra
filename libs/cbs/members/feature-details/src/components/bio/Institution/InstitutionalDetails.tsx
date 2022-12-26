@@ -72,7 +72,7 @@ export const BioInstitution = () => {
       <DetailsCard title="Proprietor, Partners, Director Details" bg="white" hasTable>
         <Accordion defaultIndex={[0]} display="flex" flexDirection="column" gap="s16" allowToggle>
           {bioDataInstitutionDirector?.map((item) => (
-            <AccordionItem>
+            <AccordionItem key={item?.email}>
               <AccordionButton>
                 <Box
                   flex="1"
@@ -145,7 +145,7 @@ export const BioInstitution = () => {
       <DetailsCard title="Account Operator Details" bg="white" hasTable>
         <Accordion defaultIndex={[0]} display="flex" flexDirection="column" gap="s16" allowToggle>
           {bioDataInstitutionAccountOPerator?.map((item) => (
-            <AccordionItem>
+            <AccordionItem key={item?.email}>
               <AccordionButton>
                 <Box flex="1" display="flex" p="s16" justifyContent="flex-start" gap="s8">
                   <Box display="flex" flexDirection="column" gap="s4" textAlign="left">
@@ -205,7 +205,11 @@ export const BioInstitution = () => {
       <AccountHolderDecleration />
       <DetailsCard title="Documents" bg="white">
         {bioDataInstitutionDocs?.map((docs) => (
-          <DocumentComponent keyText={docs?.key as string} value={docs?.value as string} />
+          <DocumentComponent
+            keyText={docs?.key as string}
+            value={docs?.value as string}
+            key={docs?.value}
+          />
         ))}
       </DetailsCard>
     </>

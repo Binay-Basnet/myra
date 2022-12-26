@@ -1,6 +1,7 @@
+import { Box, FormSection } from '@myra-ui';
+
 import { KymMemberTypesEnum } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Box, FormSection } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const TypesOfMember = () => {
@@ -22,7 +23,7 @@ export const TypesOfMember = () => {
     },
   ];
   return (
-    <FormSection header="loanProductMemberCategory">
+    <FormSection isRequired header="loanProductMemberCategory">
       <Box>
         <FormCheckboxGroup name="typeOfMember" list={typesOfMember} orientation="column" />
       </Box>

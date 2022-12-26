@@ -32,8 +32,8 @@ export const VaultTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Vault Transfer ID',
-        accessorFn: (row) => row?.node?.ID,
+        header: 'Vault Transfer Code',
+        accessorFn: (row) => row?.node?.transferCode,
       },
       {
         accessorFn: (row) =>

@@ -53,7 +53,7 @@ export const SettingsInnerVerticalMenu = ({ tablinks }: IVerticalSidebarProps) =
         {tablinks.map(({ title, to }) => (
           <Link href={to} key={title}>
             <TabCol>
-              <Text>{t[title]}</Text>
+              <Text>{t[title] ?? title}</Text>
             </TabCol>
           </Link>
         ))}

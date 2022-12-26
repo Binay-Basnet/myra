@@ -65,8 +65,16 @@ const variantOutline: PartsStyleFunction<typeof parts> = (props) => {
       },
 
       _readOnly: {
-        boxShadow: 'none !important',
-        userSelect: 'all',
+        _focus: {
+          zIndex: 1,
+          borderColor: mode('primary.500', 'primary.400')(props),
+          boxShadow: `0 0 0 2px ${getColor(theme, 'primary.300')}`,
+        },
+        _focusVisible: {
+          zIndex: 1,
+          borderColor: mode('primary.500', 'primary.400')(props),
+          boxShadow: `0 0 0 2px ${getColor(theme, 'primary.300')}`,
+        },
       },
       _disabled: {
         opacity: 1,

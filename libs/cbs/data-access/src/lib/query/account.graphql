@@ -260,6 +260,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
           }
           installmentAmount
           balance
+          availableBalance
           accountOpenedDate
           lastTransactionDate
           accountExpiryDate
@@ -539,11 +540,13 @@ query getAccountTransactionLists($filter: AccountsTransactionFilter!, $paginatio
       edges {
         node {
           id
+          transactionId
           accountId
           name
           date
           month
           transactionDirection
+          transactionType
           amount
           currentBalance
         }

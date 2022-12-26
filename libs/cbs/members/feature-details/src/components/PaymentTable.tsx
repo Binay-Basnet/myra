@@ -3,13 +3,14 @@ import React from 'react';
 import { Chips, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
     | {
         sn: number;
-        date?: string | null | undefined;
+        date: Record<'local' | 'en' | 'np', string> | null | undefined;
         accountName?: string | null | undefined;
         paymentType?: string | null | undefined;
         amount?: string | 0;
@@ -28,6 +29,7 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
       {
         header: 'Date',
         accessorKey: 'date',
+        cell: (props) => localizedDate(props.cell.row.original.date),
       },
       {
         header: 'Account Name',
@@ -73,5 +75,5 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
     []
   );
 
-  return <Table<typeof data[0]> isStatic data={data ?? []} columns={columns} />;
+  return <Table<typeof data[0]> isStatic data={data ?? []} isDetailPageTable columns={columns} />;
 };

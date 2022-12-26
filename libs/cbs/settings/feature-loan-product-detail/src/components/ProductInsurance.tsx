@@ -10,39 +10,44 @@ export interface IProductInsurance {
 }
 
 export const ProductInsurance = ({ insurance }: IProductInsurance) => {
-  const insuranceArray = [insurance ?? {}];
-  const columns = useMemo<Column<typeof insuranceArray[0]>[]>(
+  const insuranceArray = [insurance];
+
+  const insuranceListWithIndex =
+    insuranceArray?.map((ins, index) => ({
+      index: index + 1,
+      ...ins,
+    })) ?? [];
+
+  const columns = useMemo<Column<typeof insuranceListWithIndex[0]>[]>(
     () => [
+      {
+        header: 'SN',
+        accessorKey: 'index',
+      },
       {
         header: 'Insurance Type',
         accessorKey: 'type',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
         meta: {
-          width: '33%',
+          width: '80%',
         },
       },
       {
-        header: 'Insurance Rate',
+        header: 'Rate',
         accessorKey: 'rate',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-        meta: {
-          width: '33%',
-        },
       },
       {
-        header: 'Insurance Amount',
+        header: 'Amount',
         accessorKey: 'amount',
         cell: (props) => amountConverter(props.getValue() ? (props.getValue() as string) : 'N/A'),
         meta: {
           isNumeric: true,
-          width: '33%',
         },
       },
     ],
     []
   );
 
-  if (insuranceArray?.length === 0) return null;
-
-  return <Table isStatic data={insuranceArray ?? []} columns={columns} />;
+  return <Table isDetailPageTable isStatic data={insuranceListWithIndex ?? []} columns={columns} />;
 };

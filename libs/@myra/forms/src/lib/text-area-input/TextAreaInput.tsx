@@ -13,12 +13,16 @@ export interface TextAreaInputProps extends TextareaProps {
 }
 
 export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>((props, ref) => {
-  const { label, placeholder, errorText, id, ...rest } = props;
+  const { label, placeholder, errorText, id, isRequired, ...rest } = props;
   return (
     <Flex flexDir="column" gap="s4">
-      {label && (
+      {label ? (
         <Text variant="formLabel" color="gray.800">
-          {label ?? 'Description'}
+          {isRequired ? `${label} *` : label}
+        </Text>
+      ) : (
+        <Text variant="formLabel" color="gray.800">
+          {isRequired ? `Description *` : 'Description'}
         </Text>
       )}
 

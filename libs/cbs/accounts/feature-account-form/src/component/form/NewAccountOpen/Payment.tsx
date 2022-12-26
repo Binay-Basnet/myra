@@ -7,8 +7,6 @@ import {
   DepositedBy,
   DepositPaymentType,
   ObjState,
-  RootState,
-  useAppSelector,
   useGetAvailableSlipsListQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -114,7 +112,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
     },
   ];
 
-  const { watch, resetField, setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   useEffect(() => {
     if (totalAmount) {
@@ -166,13 +164,6 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
 
   const returnAmount = totalCashPaid - totalAmount ?? 0;
 
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    resetField('openingPayment.bankVoucher.depositedAt');
-  }, [preference?.date]);
-
   useEffect(() => {
     if (disableDenomination === undefined)
       setValue('openingPayment.cash.disableDenomination', true);
@@ -197,6 +188,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormBankSelect
+                isRequired
                 name="openingPayment.bankVoucher.bankId"
                 label={t['depositPaymentBankName']}
               />
@@ -214,6 +206,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
             />
 
             <FormDatePicker
+              isRequired
               name="openingPayment.bankVoucher.depositedAt"
               label={t['depositPaymentDepositedDate']}
               maxToday
@@ -244,6 +237,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
 
             <GridItem colSpan={2}>
               <FormAccountSelect
+                isRequired
                 name="openingPayment.withdrawSlip.accId"
                 memberId={isDiffMember ? dmemberId : memberId}
                 label="Account Name"
@@ -252,12 +246,14 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
             </GridItem>
 
             <FormSelect
+              isRequired
               name="openingPayment.withdrawSlip.withdrawSlipNo"
               label="Withdraw Slip No"
               options={availableSlipListOptions}
             />
 
             <FormAmountInput
+              isRequired
               type="number"
               name="openingPayment.withdrawSlip.amount"
               label={t['depositPaymentAmount']}
@@ -269,6 +265,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
           <>
             <InputGroupContainer>
               <FormAmountInput
+                isRequired
                 type="number"
                 name="openingPayment.cash.cashPaid"
                 label={t['depositPaymentCash']}

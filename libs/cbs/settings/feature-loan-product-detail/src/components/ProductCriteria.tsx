@@ -39,7 +39,7 @@ export const ProductCriteria = ({
           Foreign Employment: <b>{criteria?.foreignEmployment ?? 'N/A'}</b>
         </li>
         <li>
-          Member Type: <b>{memberType ?? 'N/A'}</b>
+          Member Type: <b>{memberType?.join(', ')?.replace(/_/g, ' ') ?? 'N/A'}</b>
         </li>
         <li>
           Institution Type: <b>{criteria?.institutionType ?? 'N/A'}</b>

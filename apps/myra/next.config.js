@@ -3,7 +3,7 @@ const withNx = require('@nrwl/next/plugins/with-nx');
 const path = require('path');
 
 /**
- * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
+ * @type {import("@nrwl/next/plugins/with-nx").WithNxOptions}
  **/
 const nextConfig = {
   output: 'standalone',
@@ -41,7 +41,7 @@ const nextConfig = {
   // },
   images: {
     domains: ['images.unsplash.com', 'cdn.raralabs.live'],
-    unoptimized: true,
+    // unoptimized: true,
   },
   i18n: {
     locales: ['en', 'ne'],

@@ -111,21 +111,21 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
         <form>
           <Box px="s12" py="s8" display="flex" flexDirection="column" gap="s24">
             <FormSwitch name="isCoreEmployee" label="This user is a core employee" />
-            <FormInput type="text" name="name" label="Name" />
+            <FormInput isRequired type="text" name="name" label="Name" />
             <FormInput type="text" name="empCode" label="Employee Code" />
             <Grid templateColumns="repeat(2, 1fr)" rowGap="s24" columnGap="s20">
-              <FormSelect name="gender" label="Gender" options={genderOptions} />
+              <FormSelect isRequired name="gender" label="Gender" options={genderOptions} />
 
               {/* <FormInput type="date" name="dob" label="Date of Birth (BS)" /> */}
 
-              <FormDatePicker name="dob" label="Date of Birth" />
+              <FormDatePicker isRequired name="dob" label="Date of Birth" />
 
-              <FormPhoneNumber name="contactNo" label="Mobile No" />
+              <FormPhoneNumber isRequired name="contactNo" label="Mobile No" />
 
-              <FormEmailInput name="email" label="Email" />
+              <FormEmailInput isRequired name="email" label="Email" />
             </Grid>
 
-            <FormSelect name="role" label="Role" options={roleOptions} />
+            <FormSelect isRequired name="role" label="Role" options={roleOptions} />
 
             <FormBranchSelect
               name="branch"

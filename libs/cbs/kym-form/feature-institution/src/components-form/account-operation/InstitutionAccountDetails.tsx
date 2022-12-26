@@ -5,16 +5,15 @@ import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
+import { Box, Button, Collapse, FormSection, GridItem, Icon, IconButton, Text } from '@myra-ui';
+
 import {
-  RootState,
-  useAppSelector,
   useDeleteAccountOperatorInstitutionMutation,
   useGetInsAccountOperatorEditListQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
 import { DynamicBoxGroupContainer, SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormAddress, FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
-import { Box, Button, Collapse, FormSection, GridItem, Icon, IconButton, Text } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { BottomDocument } from './components/BottomComponents';
@@ -238,7 +237,7 @@ export const InstitutionKYMAccountDetail = ({ setSection }: IProps) => {
 
   const [accOperatorIds, setAccOperatorIds] = useState<string[]>([]);
 
-  const { data: editValues, refetch: refetchEdit } = useGetInsAccountOperatorEditListQuery(
+  const { data: editValues } = useGetInsAccountOperatorEditListQuery(
     {
       id: String(id),
     },
@@ -257,12 +256,6 @@ export const InstitutionKYMAccountDetail = ({ setSection }: IProps) => {
       );
     }
   }, [editValues]);
-
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetchEdit();
-  }, [preference?.date]);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

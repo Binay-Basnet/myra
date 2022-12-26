@@ -7,11 +7,14 @@ import isBetween from 'dayjs/plugin/isBetween';
 import { CalendarBuilderDate, TDateState } from '../../types/date';
 import { isSameDay, isSameMonth } from '../../utils/calendar-builder';
 import { ordinal } from '../../utils/constants';
+import { getJSDate } from '../../utils/functions';
 
 dayjs.extend(isBetween);
 
 interface ICalendarCellProps {
   locale: 'en' | 'ne';
+  calendarType: 'AD' | 'BS';
+
   cellState: CalendarBuilderDate;
   rangeStartDate: CalendarBuilderDate | null;
   setRangeStartDate: React.Dispatch<React.SetStateAction<CalendarBuilderDate | null>>;
@@ -22,6 +25,8 @@ interface ICalendarCellProps {
   hoveredDate: CalendarBuilderDate | null;
   setHoveredDate: React.Dispatch<React.SetStateAction<CalendarBuilderDate | null>>;
   gridState: TDateState;
+
+  activeMonth?: number;
 }
 
 export const CalendarCell = ({
@@ -33,9 +38,16 @@ export const CalendarCell = ({
   setRangeStartDate,
   hoveredDate,
   setHoveredDate,
+  calendarType,
   gridState,
+  activeMonth,
 }: ICalendarCellProps) => {
-  const isInvalidDate = !isSameMonth(getJSDate(cellState), gridState.current ?? new Date());
+  const isInvalidDate =
+    calendarType === 'AD'
+      ? !isSameMonth(getJSDate(cellState), gridState.current ?? new Date())
+      : activeMonth
+      ? Number(cellState.month) !== activeMonth
+      : false;
 
   const { pressProps } = usePress({
     preventFocusOnPress: true,
@@ -61,7 +73,6 @@ export const CalendarCell = ({
       }
       if (rangeStartDate && !rangeEndDate) {
         setRangeEndDate(cellState);
-
         return;
       }
 
@@ -75,34 +86,40 @@ export const CalendarCell = ({
 
   const isDateInRange =
     rangeStartDate && hoveredDate
-      ? dayjs(getJSDate(cellState)).isBetween(
-          getJSDate(rangeStartDate),
-          getJSDate(rangeEndDate ?? hoveredDate),
+      ? dayjs(getJSDate(cellState, calendarType)).isBetween(
+          getJSDate(rangeStartDate, calendarType),
+          getJSDate(rangeEndDate ?? hoveredDate, calendarType),
           'day',
           '[]'
         )
       : null;
 
   const _isRangeStart =
-    rangeStartDate && isSameDay(getJSDate(rangeStartDate), getJSDate(cellState));
-  const _isRangeEnd = rangeEndDate && isSameDay(getJSDate(rangeEndDate), getJSDate(cellState));
+    rangeStartDate &&
+    isSameDay(getJSDate(rangeStartDate, calendarType), getJSDate(cellState, calendarType));
+  const _isRangeEnd =
+    rangeEndDate &&
+    isSameDay(getJSDate(rangeEndDate, calendarType), getJSDate(cellState, calendarType));
 
   const isRangeStart =
     rangeStartDate &&
     hoveredDate &&
-    dayjs(getJSDate(rangeStartDate)).diff(getJSDate(rangeEndDate ?? hoveredDate)) <= 0
+    dayjs(getJSDate(rangeStartDate, calendarType)).diff(
+      getJSDate(rangeEndDate ?? hoveredDate, calendarType)
+    ) <= 0
       ? _isRangeStart
       : _isRangeEnd;
 
   const isRangeEnd =
     rangeStartDate &&
     hoveredDate &&
-    dayjs(getJSDate(rangeStartDate)).diff(getJSDate(rangeEndDate ?? hoveredDate)) >= 0
+    dayjs(getJSDate(rangeStartDate, calendarType)).diff(
+      getJSDate(rangeEndDate ?? hoveredDate, calendarType)
+    ) >= 0
       ? _isRangeStart
       : _isRangeEnd;
 
   const isRangeStartOrEnd = isRangeStart || isRangeEnd;
-  // const isToday = isSameDay(getJSDate(cellState), new Date());
 
   return (
     <Button
@@ -141,5 +158,3 @@ export const CalendarCell = ({
     </Button>
   );
 };
-
-const getJSDate = (date: CalendarBuilderDate) => new Date(date.year, +date.month - 1, +date.day);

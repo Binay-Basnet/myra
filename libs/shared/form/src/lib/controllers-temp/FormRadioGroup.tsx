@@ -8,9 +8,10 @@ interface IFormSelectProps extends RadioGroupProps {
   control?: Control;
   name: string;
   label?: string;
+  isRequired?: boolean;
 }
 
-export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
+export const FormRadioGroup = ({ name, label, isRequired, ...rest }: IFormSelectProps) => {
   const methods = useFormContext();
 
   const {
@@ -26,7 +27,7 @@ export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
       name={name}
       render={({ field: { onChange, value } }) => (
         <Box display="flex" flexDirection="column" gap="s16">
-          {label && <Text variant="formLabel">{label}</Text>}
+          {label && <Text variant="formLabel">{isRequired ? `${label} *` : label}</Text>}
           <RadioGroup
             {...rest}
             value={value}
