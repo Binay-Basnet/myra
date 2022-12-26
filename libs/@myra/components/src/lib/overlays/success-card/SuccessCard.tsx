@@ -141,15 +141,18 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
           '@media print': {
             display: 'flex',
           },
+          '@page': {
+            size: 'A4 portrait',
+          },
         }}
       >
-        <Box>
-          <Box px="s16" py="s16" display="flex" alignItems="center" justifyContent="space-between">
-            <Box display="flex" alignItems="center" gap="s16">
-              <Box position="relative" w="s60" h="s60">
+        <Box w="100%">
+          <Box display="flex" alignItems="center" justifyContent="space-between">
+            <Box display="flex" alignItems="flex-start" gap="s8">
+              <Box position="relative">
                 <Avatar
-                  w="s60"
-                  h="s60"
+                  w="s40"
+                  h="s40"
                   name={user?.organization?.basicDetails?.name as string}
                   src={user?.organization?.basicDetails?.logo as string}
                 />
@@ -159,7 +162,7 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
                 <Text fontSize="r2" fontWeight="500" color="gray.800" lineHeight="0.8">
                   {user?.organization?.basicDetails?.name}
                 </Text>
-                <Text fontSize="s1" fontWeight="400" color="gray.700">
+                <Text fontSize="s2" fontWeight="400" color="gray.700">
                   Contact: {user?.organization?.contactDetails?.phoneNumber} | Email:{' '}
                   {user?.organization?.contactDetails?.email ?? 'N/A'} | Website:{' '}
                   {user?.organization?.contactDetails?.website ?? 'N/A'}
@@ -168,49 +171,39 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
             </Box>
             <Box>
               <Box display="flex" gap="s4">
-                <Text fontSize="s1" color="gray.700">
+                <Text fontSize="s2" color="gray.700">
                   Address:
                 </Text>
-                <Text fontSize="s1" color="gray.700" fontWeight="500" whiteSpace="nowrap">
+                <Text fontSize="s2" color="gray.700" fontWeight="500" whiteSpace="nowrap">
                   {formatAddress(user?.organization?.address)}
                 </Text>
               </Box>
 
               <Box display="flex" gap="s4">
-                <Text fontSize="s1" color="gray.700">
+                <Text fontSize="s2" color="gray.700">
                   Regd No:
                 </Text>
-                <Text fontSize="s1" color="gray.700" fontWeight="500">
+                <Text fontSize="s2" color="gray.700" fontWeight="500">
                   {user?.organization?.registrationDetails?.regdNo ?? 'N/A'}
                 </Text>
               </Box>
 
               <Box display="flex" gap="s4">
-                <Text fontSize="s1" color="gray.700">
+                <Text fontSize="s2" color="gray.700">
                   Pan:
                 </Text>
-                <Text fontSize="s1" color="gray.700" fontWeight="500">
+                <Text fontSize="s2" color="gray.700" fontWeight="500">
                   {user?.organization?.registrationDetails?.panOrVat ?? 'N/A'}
                 </Text>
               </Box>
+              <Text fontSize="s2" color="gray.700" as="span">
+                Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
+              </Text>
             </Box>
-          </Box>
-
-          <Box
-            w="100%"
-            textAlign="right"
-            gap="s4"
-            py="s16"
-            borderBottom="2px"
-            borderBottomColor="#000"
-          >
-            <Text fontSize="s1" color="gray.700" as="span">
-              Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
-            </Text>
           </Box>
         </Box>
 
-        <Box bg="highlight.500" display="flex" flexDir="column" py="s8" px="s16">
+        <Box w="100%" bg="highlight.500" display="flex" flexDir="column" py="s8" px="s16">
           <Box
             borderBottom={total ? '1px' : 'none'}
             borderBottomColor="border.layout"
@@ -221,11 +214,11 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
           >
             {Object.entries(details).map((detail) => (
               <Box display="flex" alignItems="center" justifyContent="space-between">
-                <Box color="gray.600" fontSize="s3" fontWeight="500">
+                <Box color="gray.600" fontSize="s2" fontWeight="500">
                   {detail[0]}
                 </Box>
 
-                <Box color="gray.700" fontSize="s3" fontWeight="600" textTransform="capitalize">
+                <Box color="gray.700" fontSize="s2" fontWeight="600" textTransform="capitalize">
                   {detail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
                 </Box>
               </Box>
