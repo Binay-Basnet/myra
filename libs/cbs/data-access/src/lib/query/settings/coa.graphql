@@ -96,3 +96,34 @@ query getCoaAccountList($branchId: String, $pagination: Pagination) {
     }
   }
 }
+
+query getCOAAccountDetails($id: String!) {
+  settings {
+    chartsOfAccount {
+      coaAccountDetails(id: $id) {
+        data {
+          meta {
+            accountName
+            accountId
+            accountType
+            createdDate
+          }
+          overview {
+            openingBalance
+            dr
+            cr
+            closingBalance
+          }
+          totalNoOfTxns
+          recentTxns {
+            date
+            txnId
+            txnType
+            particulars
+            total
+          }
+        }
+      }
+    }
+  }
+}
