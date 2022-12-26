@@ -525,7 +525,7 @@ export const MemberCard = ({
                 <Button
                   variant="ghost"
                   onClick={() =>
-                    router.push(`/accounts/details/${accountInfo?.ID}?tab=transactions`)
+                    router.push(`/savings/details/${accountInfo?.ID}?tab=transactions`)
                   }
                 >
                   View Account Transactions
