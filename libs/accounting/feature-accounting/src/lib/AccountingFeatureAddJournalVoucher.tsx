@@ -13,7 +13,7 @@ import {
 } from '@myra-ui';
 
 import { JournalVoucherPaymentMode, useSetJournalVoucherDataMutation } from '@coop/cbs/data-access';
-import { FormInput, FormLocalDatePicker, FormTextArea } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { JournalVouchersTable } from '../components';
@@ -76,7 +76,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
           <form>
             <Box bg="white" minH="calc(100vh - 220px)">
               <FormSection>
-                <FormLocalDatePicker
+                <FormDatePicker
                   name="date"
                   type="date"
                   label={t['accountingJournalVoucherAddDueDate']}

@@ -13,7 +13,7 @@ export const AccountTransferDetailPage = () => {
   const summary = {
     name: accountTransferDetailData?.member?.name?.local,
     profilePic: accountTransferDetailData?.member?.profilePicUrl,
-    transactionId: accountTransferDetailData?.id,
+    transactionId: accountTransferDetailData?.transactionCode,
     transactionDate: accountTransferDetailData?.transactionDate,
     paymentMode: accountTransferDetailData?.withdrawnBy,
     amount: accountTransferDetailData?.transferAmount,
@@ -23,7 +23,7 @@ export const AccountTransferDetailPage = () => {
     destinationAccount: accountTransferDetailData?.destinationAccount?.accountName,
   };
   return (
-    <>
+    <Box bg="gray.100">
       <Box
         bg="gray.0"
         w="320px"
@@ -50,6 +50,6 @@ export const AccountTransferDetailPage = () => {
           data={tableData}
         />
       </Box>
-    </>
+    </Box>
   );
 };

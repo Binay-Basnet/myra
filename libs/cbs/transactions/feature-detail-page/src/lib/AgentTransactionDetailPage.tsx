@@ -18,7 +18,7 @@ export const AgentTransactionDetailPage = () => {
     amount: agentTransactionDetailData?.totalAmount,
   };
   return (
-    <>
+    <Box bg="gray.100">
       <Box
         bg="gray.0"
         w="320px"
@@ -37,6 +37,6 @@ export const AgentTransactionDetailPage = () => {
         <TransactionDetails detailPage="agentTransaction" />
         <AssignedMemberList data={tableData ?? []} />
       </Box>
-    </>
+    </Box>
   );
 };

@@ -626,7 +626,7 @@ export const CbsAccountClose = () => {
                     gender: memberDetailData?.gender,
                     age: memberDetailData?.age,
                     maritalStatus: memberDetailData?.maritalStatus,
-                    dateJoined: memberDetailData?.dateJoined,
+                    dateJoined: memberDetailData?.dateJoined?.en,
                     // branch: 'Basantapur',
                     phoneNo: memberDetailData?.contact,
                     email: memberDetailData?.email,

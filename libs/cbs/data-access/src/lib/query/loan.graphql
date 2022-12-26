@@ -530,6 +530,7 @@ query getMemberLinkedAccounts(
             name
           }
           balance
+          availableBalance
           interestAccured
           interestTax
           prematurePenalty

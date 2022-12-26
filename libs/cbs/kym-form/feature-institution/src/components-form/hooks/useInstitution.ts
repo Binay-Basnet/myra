@@ -11,7 +11,6 @@ import {
   addInstitutionError,
   GetInstitutionKymEditDataQuery,
   KymInsInput,
-  RootState,
   setInstitutionFormDirty,
   useAppSelector,
   useGetInstitutionKymEditDataQuery,
@@ -130,13 +129,6 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
 
     return () => subscription.unsubscribe();
   }, [watch, id, mutateAsync]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetch();
-  }, [preference?.date]);
 
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {

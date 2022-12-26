@@ -14,7 +14,7 @@ export const AccountDetails = () => {
 
   return (
     <>
-      <AccountDetailsPathBar title="Deposit Account List" />
+      <AccountDetailsPathBar title="Savings Account List" />
       <Box
         w="320px"
         position="fixed"

@@ -2,6 +2,14 @@ mutation setDepositData($data: DepositInput!) {
   transaction {
     deposit(data: $data) {
       recordId
+      record {
+        transactionID
+        date
+        amount
+        rebate
+        paymentMode
+        depositedBy
+      }
       error {
         ...MutationError
       }

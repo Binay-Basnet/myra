@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
+import { Button, FormSection, GridItem, Icon } from '@myra-ui';
+
 import {
-  RootState,
-  useAppSelector,
   useDeleteCoopAccOperatorDataMutation,
   useGetCoOperativeAccountOperatorEditDataQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
-import { Button, FormSection, GridItem, Icon } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AddOperator } from '../../accordion-component/KymCoopAccountOperator';
@@ -46,13 +45,6 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
       );
     }
   }, [editValues]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetch();
-  }, [preference?.date]);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

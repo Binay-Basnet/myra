@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 import { Box, GridItem } from '@myra-ui';
 
@@ -61,7 +60,7 @@ export const KYMStatusReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Branch" />
+            <FormBranchSelect name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Member Registration Date Period" />
@@ -121,8 +120,7 @@ export const KYMStatusReport = () => {
               },
               {
                 header: 'Last KYM Update',
-                accessorFn: (row) => row?.lastKymUpdatedDate,
-                cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.lastKymUpdatedDate),
               },
 
               {

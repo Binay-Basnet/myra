@@ -28,7 +28,7 @@ type DayBookTable = {
 
 type ReportFilter = {
   branchId: string;
-  date: LocalizedDateFilter;
+  period: LocalizedDateFilter;
   filter: {
     user: string;
   };
@@ -40,8 +40,9 @@ export const DayBookReport = () => {
   const { data, isFetching } = useGetDayBookReportQuery(
     {
       data: {
+        period: filters?.period,
         user: filters?.filter?.user ? [filters?.filter?.user as string] : null,
-        date: filters?.date,
+        // date: filters?.date,
         branchId: filters?.branchId as string,
       },
     },
@@ -107,16 +108,16 @@ export const DayBookReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Trial Balance', link: '/reports/cbs/transactions/trail-sheet/new' },
+            { label: 'Day Book Report', link: '/reports/cbs/transactions/day-book/new' },
           ]}
         />
 
-        <Report.Inputs hideDate>
+        <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Branch" />
+            <FormBranchSelect name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange name="date" label="Date Period" />
+            <ReportDateRange label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

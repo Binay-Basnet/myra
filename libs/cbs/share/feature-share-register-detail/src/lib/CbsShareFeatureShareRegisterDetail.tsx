@@ -16,7 +16,7 @@ export const CbsShareFeatureShareRegisterDetail = () => {
   const tabQuery = router.query['tab'] as string;
   const { shareDetails } = useShareRegisterDetailHooks();
   return (
-    <>
+    <Box bg="gray.100">
       <ProductDetailPathBar
         name={shareDetails?.member?.name?.local ?? ''}
         title="Share Register List"
@@ -38,7 +38,7 @@ export const CbsShareFeatureShareRegisterDetail = () => {
         </Text>
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
       </Box>
-    </>
+    </Box>
   );
 };
 

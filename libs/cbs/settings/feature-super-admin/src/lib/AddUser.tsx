@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import omit from 'lodash/omit';
+
 import {
   asyncToast,
   Box,
@@ -11,7 +13,6 @@ import {
   Grid,
   Text,
 } from '@myra-ui';
-import omit from 'lodash/omit';
 
 import {
   MyraUserIdentificationInput,
@@ -82,7 +83,7 @@ export const AddUser = () => {
 
   const methods = useForm<UserFormInput>();
 
-  const { watch, getValues, reset, resetField } = methods;
+  const { watch, getValues, reset } = methods;
 
   const role = watch('role');
 
@@ -163,21 +164,6 @@ export const AddUser = () => {
     },
     { enabled: Boolean(id && router?.asPath?.includes('edit')), staleTime: 0 }
   );
-
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    if (router.asPath.includes('edit')) {
-      refetchUserData();
-    }
-
-    if (router.asPath.includes('add')) {
-      resetField('dob');
-      resetField('citizenship.date');
-      resetField('drivingLicense.date');
-      resetField('passport.date');
-    }
-  }, [preference?.date, router?.asPath]);
 
   useEffect(() => {
     const userData = userQueryData?.settings?.myraUser?.formState?.data;

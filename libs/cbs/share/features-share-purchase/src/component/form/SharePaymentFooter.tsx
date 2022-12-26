@@ -1,6 +1,7 @@
 import { IoChevronBackOutline } from 'react-icons/io5';
 
 import { Button, FormFooter } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 type FooterProps = {

@@ -7,8 +7,6 @@ import {
   DepositedBy,
   DepositPaymentType,
   ObjState,
-  RootState,
-  useAppSelector,
   useGetAvailableSlipsListQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -114,7 +112,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
     },
   ];
 
-  const { watch, resetField, setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   useEffect(() => {
     if (totalAmount) {
@@ -165,13 +163,6 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
   const totalCashPaid = (disableDenomination ? cashPaid : denominationTotal) ?? 0;
 
   const returnAmount = totalCashPaid - totalAmount ?? 0;
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    resetField('openingPayment.bankVoucher.depositedAt');
-  }, [preference?.date]);
 
   useEffect(() => {
     if (disableDenomination === undefined)

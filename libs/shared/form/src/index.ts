@@ -19,7 +19,6 @@ export * from './controllers/FormFileInput/FormFileInput';
 export * from './controllers/FormInput/FormInput';
 export * from './controllers/FormInvestmentAccountSelect/FormInvestmentAccountSelect';
 export * from './controllers/FormInvestmentEntrySelect/FormInvestmentEntrySelect';
-export * from './controllers/FormLocalDatePicker/FormLocalDatePicker';
 export * from './controllers/FormMap/FormMap';
 export * from './controllers/FormMemberSelect/FormMemberSelect';
 export * from './controllers/FormNumberInput/FormNumberInput';

@@ -81,6 +81,7 @@ export enum Report {
   TRANSACTION_CASH_LEDGER = 'Cash Ledger Report',
   TRANSACTION_VAULT_BALANCE = 'Vault Balance Report',
   TRANSACTION_DAY_BOOK_REPORT = 'Day Book Report',
+  TRANSACTION_SUSPICIOUS_TRANSACTION_REPORT = 'Suspicious Transaction Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -100,9 +101,9 @@ export enum Report {
   BB_USERWISE_TRANSACTION_REPORT = 'Userwise Transaction Report',
   BB_PROGRESS_REPORT = 'Progress Report',
 
-  BRANCH_WISE_FINANCIAL_REPORT = 'Branchwise financial Report',
+  BRANCH_WISE_FINANCIAL_REPORT = 'Service Centerwise financial Report',
   SERVICE_CENTER_LIST_REPORT = 'Service Center List Report',
-  BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Branchwise Target vs Achievement',
+  BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Service Centerwise Target vs Achievement',
 
   USER_LIST_REPORT = 'User List Report',
   SAVING_BALANCE_REPORT = 'Saving Balance [Individual]',
@@ -234,6 +235,11 @@ export const REPORTS = {
       id: '5.9.1',
       report: Report.THRESHOLD_TRANSACTION_REPORT,
       link: 'ttr',
+    },
+    {
+      id: '5.9.2',
+      report: Report.TRANSACTION_SUSPICIOUS_TRANSACTION_REPORT,
+      link: 'suspicious-transactions',
     },
     {
       id: '5.10',

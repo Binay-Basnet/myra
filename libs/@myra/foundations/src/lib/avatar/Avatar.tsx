@@ -1,3 +1,4 @@
+import React from 'react';
 import { Avatar as ChakraAvatar, AvatarProps as ChakraAvatarProps } from '@chakra-ui/react';
 
 const SIZE = {
@@ -23,4 +24,4 @@ export const Avatar = ({ size = 'sm', shape = 'circle', ...rest }: AvatarProps) 
   />
 );
 
-export default Avatar;
+export default React.memo(Avatar);

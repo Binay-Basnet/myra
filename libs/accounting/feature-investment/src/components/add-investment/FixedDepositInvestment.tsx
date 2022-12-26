@@ -5,8 +5,8 @@ import { FdInvestmentType } from '@coop/cbs/data-access';
 import {
   FormAmountInput,
   FormBankSelect,
+  FormDatePicker,
   FormInput,
-  FormLocalDatePicker,
   FormNumberInput,
   FormSelect,
   FormTextArea,
@@ -36,9 +36,9 @@ export const FixedDepositInvestment = () => (
 
     <FormInput name="fd.certificateNo" label="FD Certificate Number" />
 
-    <FormLocalDatePicker name="fd.startDate" label="FD Start Date" />
+    <FormDatePicker name="fd.startDate" label="FD Start Date" />
 
-    <FormLocalDatePicker name="fd.maturityDate" label="Maturity Date" />
+    <FormDatePicker name="fd.maturityDate" label="Maturity Date" />
 
     <GridItem colSpan={3}>
       <Box display="flex" flexDirection="column" gap="s12">

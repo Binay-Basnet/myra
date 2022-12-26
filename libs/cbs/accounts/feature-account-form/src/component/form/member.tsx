@@ -10,6 +10,7 @@ import { Avatar, Box, Grid, GridItem, Icon, Text } from '@myra-ui';
 
 import { useGetMemberIndividualDataQuery, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormSelect } from '@coop/shared/form';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -106,7 +107,7 @@ export const Member = () => {
                   </Text>
 
                   <Text color="neutralColorLight.Gray-60" fontWeight="Regular" fontSize="s3">
-                    {t['shareReturnMemberSince']}: {memberData?.dateJoined?.split(' ')[0]}
+                    {t['shareReturnMemberSince']}: {localizedDate(memberData?.dateJoined)}
                     {/* {data?.personalInformation?.dateOfBirth} */}
                   </Text>
 

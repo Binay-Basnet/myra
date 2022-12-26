@@ -11,7 +11,6 @@ import {
   addCooperativeDirectorError,
   addCooperativeError,
   KymCoopDirectorDetailsFormInput,
-  RootState,
   useAppSelector,
   useGetCoOperativeDirectorEditDataQuery,
   useSetCooPdirectorDataMutation,
@@ -95,13 +94,6 @@ export const useCooperativeBOD = ({ methods, directorId }: IUseCooperativeBODPro
       }
     }
   }, [editValues]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetch();
-  }, [preference?.date]);
 
   useEffect(() => {
     const subscription = watch(

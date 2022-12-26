@@ -7,8 +7,6 @@ import {
   DepositedBy,
   DepositPaymentType,
   ObjState,
-  RootState,
-  useAppSelector,
   useGetAvailableSlipsListQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -116,7 +114,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
     },
   ];
 
-  const { watch, resetField, setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   const accountId = watch('accountId');
 
@@ -154,9 +152,6 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
   const returnAmount = totalCashPaid - totalDeposit;
 
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
   const withdrawSlipAccountId = watch('withdrawSlip.accId');
 
   const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
@@ -172,11 +167,6 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
       })) ?? [],
     [availableSlipsListQueryData]
   );
-
-  useEffect(() => {
-    resetField('bankVoucher.depositedAt');
-    resetField('withdrawSlip.depositedAt');
-  }, [preference?.date]);
 
   useEffect(() => {
     if (watch('cash.disableDenomination') === undefined) setValue('cash.disableDenomination', true);

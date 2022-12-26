@@ -4,17 +4,16 @@ import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 
+import { Box, FormSection, Text } from '@myra-ui';
+
 import {
   Id_Type,
   KymIndIdentification,
-  RootState,
-  useAppSelector,
   useGetIndividualKymIdentificationListQuery,
   useGetNewIdMutation,
   useSetKymIndividualIdentificationDataMutation,
 } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput } from '@coop/shared/form';
-import { Box, FormSection, Text } from '@myra-ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface IPassportProps {
@@ -27,7 +26,7 @@ type PassportDataType =
       idNo: string;
       idType: string;
       place: Record<'en' | 'local' | 'np', string>;
-      date: string;
+      date: Record<'en' | 'local' | 'np', string>;
     }[]
   | null
   | undefined;
@@ -88,13 +87,6 @@ export const Passport = ({ setKymCurrentSection }: IPassportProps) => {
       }
     }
   }, [identificationListData]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetch();
-  }, [preference?.date]);
 
   useEffect(() => {
     const subscription = watch(

@@ -1,10 +1,10 @@
 import { ReactElement } from 'react';
 import { JournalVoucerDetailPage } from 'libs/accounting/feature-accounting-detail/src';
 
-import { AccountingLayout, AccountingSidebarLayout } from '@coop/accounting/ui-layouts';
+import { MainLayout } from '@myra-ui';
+
 import { DetailPathBar } from '@coop/cbs/settings/ui-layout';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { MainLayout } from '@myra-ui';
 
 // TODO ( Update this page when design arrives )
 const AccountingJournalVoucherView = () => (

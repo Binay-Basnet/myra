@@ -30,14 +30,9 @@ export const WithdrawList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const { data, isFetching } = useGetWithdrawListDataQuery(
-    {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    },
-    {
-      staleTime: 0,
-    }
-  );
+  const { data, isFetching } = useGetWithdrawListDataQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  });
 
   const rowData = useMemo(() => data?.transaction?.listWithdraw?.edges ?? [], [data]);
 

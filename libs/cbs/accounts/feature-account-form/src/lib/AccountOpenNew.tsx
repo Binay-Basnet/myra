@@ -611,7 +611,7 @@ export const AccountOpenNew = () => {
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
                   maritalStatus: memberDetailData?.maritalStatus,
-                  dateJoined: memberDetailData?.dateJoined,
+                  dateJoined: memberDetailData?.dateJoined?.en,
                   phoneNo: memberDetailData?.contact,
                   email: memberDetailData?.email,
                   address: memberDetailData?.address,

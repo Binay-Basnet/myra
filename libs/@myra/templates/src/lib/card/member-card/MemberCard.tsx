@@ -23,6 +23,7 @@ import { AccountQRModal } from '@myra-ui/components';
 import { Avatar, Box, Button, Icon } from '@myra-ui/foundations';
 
 import { amountConverter } from '@coop/shared/utils';
+// import { localizedDate } from '@coop/cbs/utils';
 
 /* eslint-disable-next-line */
 export interface MemberCardProps {
@@ -36,7 +37,7 @@ export interface MemberCardProps {
     gender?: string | undefined | null;
     age?: string | number | undefined | null;
     maritalStatus?: string;
-    dateJoined?: string | undefined | null;
+    dateJoined?: string | undefined | null | Record<'local' | 'en' | 'np', string>;
     branch?: string;
     phoneNo?: string | undefined | null;
     email?: string | undefined | null;
@@ -210,7 +211,9 @@ export const MemberCard = ({
                               Date Joined
                             </Text>
                             <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
-                              {memberDetails.dateJoined}
+                              {typeof memberDetails.dateJoined === 'string'
+                                ? memberDetails?.dateJoined
+                                : memberDetails?.dateJoined?.en}
                             </Text>
                           </Box>
                         )}
@@ -522,7 +525,7 @@ export const MemberCard = ({
                 <Button
                   variant="ghost"
                   onClick={() =>
-                    router.push(`/accounts/details/${accountInfo?.ID}?tab=transactions`)
+                    router.push(`/savings/details/${accountInfo?.ID}?tab=transactions`)
                   }
                 >
                   View Account Transactions

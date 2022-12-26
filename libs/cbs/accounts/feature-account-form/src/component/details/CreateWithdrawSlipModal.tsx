@@ -55,6 +55,8 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
 
   const count = watch('count');
 
+  const pickupMethod = watch('pickupMethod');
+
   const { data: availableRangeQueryData } = useGetAvailableRangeQuery(
     { count },
     { enabled: !!count }
@@ -126,9 +128,12 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
                   />
                 </GridItem>
 
-                <FormBranchSelect name="branchId" label="Service Center" />
-
-                <FormAgentSelect name="marketRepresentative" label="Market Representative" />
+                {pickupMethod === PickupMethod.MarketRepresentative && (
+                  <>
+                    <FormBranchSelect name="branchId" label="Service Center" />
+                    <FormAgentSelect name="marketRepresentative" label="Market Representative" />
+                  </>
+                )}
               </>
             )}
           </Grid>

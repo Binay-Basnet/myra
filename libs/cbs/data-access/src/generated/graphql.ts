@@ -47,6 +47,7 @@ export type AccountActivityEntry = {
   profilePic?: Maybe<Scalars['String']>;
   profilePicUrl?: Maybe<Scalars['String']>;
   state: TransactionState;
+  transactionCode?: Maybe<Scalars['String']>;
 };
 
 export type AccountActivityListConnection = {
@@ -191,6 +192,7 @@ export type AccountTransferEntry = {
   destAccountID: Scalars['String'];
   srcAccountID: Scalars['String'];
   state: TransactionState;
+  transactionCode?: Maybe<Scalars['String']>;
   transferType: TransferType;
 };
 
@@ -228,6 +230,7 @@ export type AccountTransferView = {
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   transferAmount?: Maybe<Scalars['String']>;
   transferType?: Maybe<TransferType>;
@@ -956,9 +959,12 @@ export type Bank = Base & {
 
 export type BankAccount = {
   accountNo?: Maybe<Scalars['String']>;
+  accountType?: Maybe<AccountingBankAccountType>;
   balance?: Maybe<Scalars['String']>;
   bankId?: Maybe<Scalars['String']>;
   bankName?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   displayName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
 };
@@ -1152,7 +1158,7 @@ export type BankDepositData = {
   amount: Scalars['String'];
   bankId: Scalars['String'];
   depositedBy: PaymentDepositedBy;
-  depositedDate: Scalars['String'];
+  depositedDate: Scalars['Localized'];
   voucherId: Scalars['String'];
 };
 
@@ -1293,7 +1299,7 @@ export type BranchFormData = {
   category?: Maybe<BranchCategory>;
   districtId?: Maybe<Scalars['Int']>;
   email?: Maybe<Scalars['String']>;
-  estDate?: Maybe<Scalars['String']>;
+  estDate?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   localGovernmentId?: Maybe<Scalars['Int']>;
   locality?: Maybe<Scalars['String']>;
@@ -1330,7 +1336,7 @@ export type BranchInput = {
   category?: InputMaybe<BranchCategory>;
   districtId?: InputMaybe<Scalars['Int']>;
   email?: InputMaybe<Scalars['String']>;
-  estDate?: InputMaybe<Scalars['String']>;
+  estDate?: InputMaybe<Scalars['Localized']>;
   localGovernmentId?: InputMaybe<Scalars['Int']>;
   locality?: InputMaybe<Scalars['String']>;
   location?: InputMaybe<LocationCoordinateInput>;
@@ -1815,7 +1821,7 @@ export enum ChequePickUpMethod {
 
 export type Citizenship = {
   inNepali?: Maybe<CitizenshipInNepali>;
-  issueDate?: Maybe<Scalars['String']>;
+  issueDate?: Maybe<Scalars['Localized']>;
   issuePlace?: Maybe<Scalars['String']>;
   number?: Maybe<Scalars['String']>;
 };
@@ -1989,13 +1995,13 @@ export type CoopEquityLiabilityDetails = {
 };
 
 export type CoopRelatedTraining = {
-  dateOfTraining?: InputMaybe<Scalars['String']>;
+  dateOfTraining?: InputMaybe<Scalars['Localized']>;
   subjectOfTraining?: InputMaybe<Scalars['String']>;
   trainingOrganization?: InputMaybe<Scalars['String']>;
 };
 
 export type CoopRelatedTrainingType = {
-  dateOfTraining?: Maybe<Scalars['String']>;
+  dateOfTraining?: Maybe<Scalars['Localized']>;
   subjectOfTraining?: Maybe<Scalars['String']>;
   trainingOrganization?: Maybe<Scalars['String']>;
 };
@@ -2206,7 +2212,7 @@ export type CoopUnionInstitutionInformationInput = {
   accountName?: InputMaybe<Scalars['String']>;
   accountNumber?: InputMaybe<Scalars['String']>;
   applicantContactNo?: InputMaybe<Scalars['String']>;
-  applicantDateOfMembership?: InputMaybe<Scalars['String']>;
+  applicantDateOfMembership?: InputMaybe<Scalars['Localized']>;
   applicantDesignationEn?: InputMaybe<Scalars['String']>;
   applicantDesignationNp?: InputMaybe<Scalars['String']>;
   applicantEmail?: InputMaybe<Scalars['String']>;
@@ -2223,7 +2229,7 @@ export type CoopUnionInstitutionInformationInput = {
   fax?: InputMaybe<Scalars['String']>;
   institutionType?: InputMaybe<Scalars['ID']>;
   issuingOffice?: InputMaybe<Scalars['String']>;
-  lastAgmDate?: InputMaybe<Scalars['String']>;
+  lastAgmDate?: InputMaybe<Scalars['Localized']>;
   nameOfBank?: InputMaybe<Scalars['ID']>;
   nameOfInstitutionEn?: InputMaybe<Scalars['String']>;
   nameOfInstitutionNp?: InputMaybe<Scalars['String']>;
@@ -2241,7 +2247,7 @@ export type CoopUnionInstitutionInformationInput = {
   phone?: InputMaybe<Scalars['String']>;
   postBoxNo?: InputMaybe<Scalars['String']>;
   regdAddress?: InputMaybe<KymAddressInput>;
-  regdDate?: InputMaybe<Scalars['String']>;
+  regdDate?: InputMaybe<Scalars['Localized']>;
   regdNo?: InputMaybe<Scalars['String']>;
   vatOrPan?: InputMaybe<Scalars['String']>;
   website?: InputMaybe<Scalars['String']>;
@@ -2269,7 +2275,7 @@ export type CoopUnionPersonnelDetails = {
   centralRepID?: Maybe<Scalars['ID']>;
   citizenshipNo?: Maybe<Scalars['String']>;
   cooperativeUnionId?: Maybe<Scalars['ID']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designationEn?: Maybe<Scalars['String']>;
   designationNp?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -2302,7 +2308,7 @@ export type CoopUnionPersonnelDetailsResultType = {
 export type CoopUnionPersonnelInput = {
   centralRepID?: InputMaybe<Scalars['ID']>;
   citizenshipNo?: InputMaybe<Scalars['String']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
   designationEn?: InputMaybe<Scalars['String']>;
   designationNp?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
@@ -2338,8 +2344,8 @@ export enum CoopUnionSection {
 export type CooperativeAccountOperatorDetails = {
   citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
-  dateofTrainig?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
+  dateofTrainig?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -2369,7 +2375,7 @@ export type CooperativeAddLastUpdated = {
 export type CooperativeBodDetails = {
   citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -2435,8 +2441,8 @@ export type CooperativeOrganizationInformation = {
   contactNumber?: Maybe<Scalars['String']>;
   cooperativeTypeId?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  lastAgmDate?: Maybe<Scalars['String']>;
-  lastAuditDate?: Maybe<Scalars['String']>;
+  lastAgmDate?: Maybe<Scalars['Localized']>;
+  lastAuditDate?: Maybe<Scalars['Localized']>;
   mainServiceProduct?: Maybe<Scalars['String']>;
   nameOfOrganization?: Maybe<Scalars['String']>;
   noOfFemaleEmloyee?: Maybe<Scalars['Int']>;
@@ -2448,7 +2454,7 @@ export type CooperativeOrganizationInformation = {
   oprLatitude?: Maybe<Scalars['String']>;
   oprLongitude?: Maybe<Scalars['String']>;
   regdAddress?: Maybe<Address>;
-  regdDate?: Maybe<Scalars['String']>;
+  regdDate?: Maybe<Scalars['Localized']>;
   regdLatitude?: Maybe<Scalars['String']>;
   regdLongitude?: Maybe<Scalars['String']>;
   regdNumber?: Maybe<Scalars['Int']>;
@@ -2483,7 +2489,7 @@ export type CooperativeUnionCentralRepresentativeDetails = {
   citizenshipOrPassportOrLicenseNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   crDecisionDocument?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -2569,7 +2575,7 @@ export type CooperativeUnionInstitutionInformation = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
   applicantContactNo?: Maybe<Scalars['String']>;
-  applicantDateOfMembership?: Maybe<Scalars['String']>;
+  applicantDateOfMembership?: Maybe<Scalars['Localized']>;
   applicantDesignationEn?: Maybe<Scalars['String']>;
   applicantDesignationNp?: Maybe<Scalars['String']>;
   applicantEmail?: Maybe<Scalars['String']>;
@@ -2586,7 +2592,7 @@ export type CooperativeUnionInstitutionInformation = {
   fax?: Maybe<Scalars['String']>;
   institutionType?: Maybe<Scalars['ID']>;
   issuingOffice?: Maybe<Scalars['String']>;
-  lastAgmDate?: Maybe<Scalars['String']>;
+  lastAgmDate?: Maybe<Scalars['Localized']>;
   nameOfBank?: Maybe<Scalars['ID']>;
   nameOfInstitutionEn?: Maybe<Scalars['String']>;
   nameOfInstitutionNp?: Maybe<Scalars['String']>;
@@ -2604,7 +2610,7 @@ export type CooperativeUnionInstitutionInformation = {
   phone?: Maybe<Scalars['String']>;
   postBoxNo?: Maybe<Scalars['String']>;
   regdAddress?: Maybe<KymAddress>;
-  regdDate?: Maybe<Scalars['String']>;
+  regdDate?: Maybe<Scalars['Localized']>;
   regdNo?: Maybe<Scalars['String']>;
   vatOrPan?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
@@ -2745,7 +2751,7 @@ export type DayBookReportData = {
 
 export type DayBookReportFilter = {
   branchId: Scalars['String'];
-  date?: InputMaybe<LocalizedDateFilter>;
+  period?: InputMaybe<LocalizedDateFilter>;
   user?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
 
@@ -2835,6 +2841,7 @@ export type DepositAccount = Base & {
   accountExpiryDate?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   accountOpenedDate?: Maybe<Scalars['String']>;
+  availableBalance?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
   closedAt?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
@@ -2886,7 +2893,7 @@ export type DepositAccountInstallmentResult = {
 export type DepositBankVoucher = {
   amount: Scalars['String'];
   bankId: Scalars['String'];
-  depositedAt: Scalars['String'];
+  depositedAt: Scalars['Localized'];
   depositedBy: Scalars['String'];
   voucherId: Scalars['String'];
 };
@@ -2917,6 +2924,7 @@ export type DepositInput = {
   depositedBy: DepositedBy;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
+  isSuspicious?: InputMaybe<Scalars['Boolean']>;
   memberId?: InputMaybe<Scalars['String']>;
   noOfInstallments?: InputMaybe<Scalars['Int']>;
   notes?: InputMaybe<Scalars['String']>;
@@ -2925,6 +2933,8 @@ export type DepositInput = {
   payment_type: DepositPaymentType;
   rebate?: InputMaybe<Scalars['String']>;
   sourceOfFund?: InputMaybe<Scalars['String']>;
+  suspicionRemarks?: InputMaybe<Scalars['String']>;
+  suspicionTopologies?: InputMaybe<Array<InputMaybe<SuspiciousTransactionTopology>>>;
   voucherId?: InputMaybe<Scalars['String']>;
   withdrawSlip?: InputMaybe<WithdrawSlip>;
 };
@@ -3475,12 +3485,28 @@ export enum DepositProductStatus {
   Inactive = 'INACTIVE'
 }
 
+export type DepositRecord = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositedBy?: Maybe<DepositedBy>;
+  fine?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentMode?: Maybe<DepositPaymentType>;
+  rebate?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+  transactionID?: Maybe<Scalars['ID']>;
+};
+
 export type DepositReport = {
   accountClosingReport?: Maybe<AccountClosingReportResult>;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
   interestStatementReport: InterestPostingReportResult;
   interestTaxReport: InterestTaxReportResult;
   savingStatementReport?: Maybe<ReportResult>;
+  suspiciousTransctionReport?: Maybe<SuspiciousTransactionReportResult>;
   thresholdTransactionReport: TtrReportResult;
 };
 
@@ -3510,6 +3536,11 @@ export type DepositReportSavingStatementReportArgs = {
 };
 
 
+export type DepositReportSuspiciousTransctionReportArgs = {
+  data?: InputMaybe<SuspiciousTransactionReportInput>;
+};
+
+
 export type DepositReportThresholdTransactionReportArgs = {
   data: TtrReportFilter;
 };
@@ -3517,6 +3548,7 @@ export type DepositReportThresholdTransactionReportArgs = {
 export type DepositResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
+  record?: Maybe<DepositRecord>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -3591,6 +3623,7 @@ export type DepositTransactionView = {
   totalDebit?: Maybe<Scalars['String']>;
   totalDepositedAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   voucherId?: Maybe<Scalars['String']>;
 };
@@ -3616,7 +3649,7 @@ export type DirectorAffiliatedFirms = {
 
 export type DirectorDetailsFormState = {
   citizenshipNo?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   firmDetails?: Maybe<AffiliatedDirectorDetailsFormState>;
@@ -3635,7 +3668,7 @@ export type DirectorDetailsFormState = {
 export type DirectorDetailsType = {
   affiliatedFirms?: Maybe<Array<Maybe<DirectorAffiliatedFirms>>>;
   citizenshipNo?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   documentPhotograph?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -3980,22 +4013,22 @@ export type ExternalLoanApplicationInput = {
   approvedAmount?: InputMaybe<Scalars['String']>;
   collateral?: InputMaybe<Array<InputMaybe<ExternalLoanCollateralInput>>>;
   documents?: InputMaybe<ExternalLoanApplicationDocumentInput>;
-  effectiveStartDate?: InputMaybe<Scalars['String']>;
+  effectiveStartDate?: InputMaybe<Scalars['Localized']>;
   fixDeposit?: InputMaybe<Scalars['String']>;
   installmentFrequency?: InputMaybe<InstallmentFrequency>;
   installmentType?: InputMaybe<LoanRepaymentScheme>;
   insurance?: InputMaybe<Scalars['Boolean']>;
   insuranceCompany?: InputMaybe<Scalars['String']>;
   insurancePremiumAmount?: InputMaybe<Scalars['String']>;
-  insuranceStartDate?: InputMaybe<Scalars['String']>;
+  insuranceStartDate?: InputMaybe<Scalars['Localized']>;
   insuranceValidUpto?: InputMaybe<Scalars['String']>;
   interestRate?: InputMaybe<Scalars['Float']>;
-  loanAppliedDate?: InputMaybe<Scalars['String']>;
-  loanApprovedDate?: InputMaybe<Scalars['String']>;
+  loanAppliedDate?: InputMaybe<Scalars['Localized']>;
+  loanApprovedDate?: InputMaybe<Scalars['Localized']>;
   loanCharges?: InputMaybe<Array<InputMaybe<ExternalLoanChargeInput>>>;
   loanName?: InputMaybe<Scalars['String']>;
   loanNumber?: InputMaybe<Scalars['String']>;
-  maturityDate?: InputMaybe<Scalars['String']>;
+  maturityDate?: InputMaybe<Scalars['Localized']>;
   nameOfOrganization?: InputMaybe<Scalars['String']>;
   nameOfRepresentative?: InputMaybe<Scalars['String']>;
   paymentMethod?: InputMaybe<ExternalLoanPaymentMethod>;
@@ -4078,7 +4111,7 @@ export type ExternalLoanPaymentFilter = {
 
 export type ExternalLoanPaymentInput = {
   amountPaid?: InputMaybe<Scalars['String']>;
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
   fine?: InputMaybe<Scalars['String']>;
   installmentAmount?: InputMaybe<Scalars['String']>;
   loanId?: InputMaybe<Scalars['String']>;
@@ -4969,6 +5002,7 @@ export type GlTransaction = {
   account: Scalars['String'];
   credit?: Maybe<Scalars['String']>;
   debit?: Maybe<Scalars['String']>;
+  serviceCenter?: Maybe<Scalars['String']>;
 };
 
 export enum GlobalPageAppName {
@@ -5332,7 +5366,7 @@ export type InstitutionOrganizationInformation = {
   accountNumber?: Maybe<Scalars['String']>;
   bank?: Maybe<Scalars['ID']>;
   branchOfficeAddress?: Maybe<KymAddress>;
-  dateOfLastAGM?: Maybe<Scalars['String']>;
+  dateOfLastAGM?: Maybe<Scalars['Localized']>;
   email?: Maybe<Scalars['String']>;
   fax?: Maybe<Scalars['String']>;
   institutionName?: Maybe<Scalars['String']>;
@@ -5346,7 +5380,7 @@ export type InstitutionOrganizationInformation = {
   postBoxNo?: Maybe<Scalars['String']>;
   registeredAddress?: Maybe<KymAddress>;
   registeredNumber?: Maybe<Scalars['String']>;
-  registrationDate?: Maybe<Scalars['String']>;
+  registrationDate?: Maybe<Scalars['Localized']>;
   sisterConcernDetails?: Maybe<Array<Maybe<SisterConcernDetailsType>>>;
   vatOrPanNo?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
@@ -5945,6 +5979,7 @@ export type JournalVoucherDetail = {
   status?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
 };
 
 export type JournalVoucherDetailResult = {
@@ -6120,7 +6155,7 @@ export type KymGeneralSettingsQuery = {
 
 export type KymIndBasicInformation = {
   age?: Maybe<Scalars['Int']>;
-  dateOfBirth?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
   educationQualificationId?: Maybe<Scalars['String']>;
   ethnicityId?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['Localized']>;
@@ -6160,7 +6195,7 @@ export type KymIndEstimatedTransactions = {
 
 export type KymIndFamilyMember = {
   additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
-  dateOfBirth?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
   familyMemberId?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['Localized']>;
   id: Scalars['String'];
@@ -6169,7 +6204,7 @@ export type KymIndFamilyMember = {
 
 export type KymIndFamilyMemberInput = {
   additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
-  dateOfBirth?: InputMaybe<Scalars['String']>;
+  dateOfBirth?: InputMaybe<Scalars['Localized']>;
   familyMemberId?: InputMaybe<Scalars['String']>;
   fullName?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
@@ -6213,7 +6248,7 @@ export type KymIndForeignEmployment = {
 
 export type KymIndIdentification = {
   additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   id: Scalars['String'];
   idNo?: Maybe<Scalars['String']>;
   idType: Scalars['String'];
@@ -6222,7 +6257,7 @@ export type KymIndIdentification = {
 
 export type KymIndIdentificationInput = {
   additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
   id: Scalars['String'];
   idNo?: InputMaybe<Scalars['String']>;
   idType: Scalars['String'];
@@ -6323,7 +6358,7 @@ export type KymIndOccupation = {
   additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
   address?: Maybe<Scalars['Localized']>;
   contact?: Maybe<Scalars['String']>;
-  establishedDate?: Maybe<Scalars['String']>;
+  establishedDate?: Maybe<Scalars['Localized']>;
   estimatedAnnualIncome?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   isOwner?: Maybe<Scalars['Boolean']>;
@@ -6337,7 +6372,7 @@ export type KymIndOccupationInput = {
   additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
   address?: InputMaybe<Scalars['String']>;
   contact?: InputMaybe<Scalars['String']>;
-  establishedDate?: InputMaybe<Scalars['String']>;
+  establishedDate?: InputMaybe<Scalars['Localized']>;
   estimatedAnnualIncome?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
   isOwner?: InputMaybe<Scalars['Boolean']>;
@@ -6438,7 +6473,7 @@ export type KymCoopAccountOperatorDetailsFormInput = {
   contactNumber?: InputMaybe<Scalars['String']>;
   coopRelatedTraining?: InputMaybe<Array<InputMaybe<CoopRelatedTraining>>>;
   cooperativeId?: InputMaybe<Scalars['ID']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
   designation?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   highestQualification?: InputMaybe<Scalars['String']>;
@@ -6476,7 +6511,7 @@ export type KymCoopDirectorDetailsFormInput = {
   citizenshipNo?: InputMaybe<Scalars['String']>;
   contactNumber?: InputMaybe<Scalars['String']>;
   cooperativeId?: InputMaybe<Scalars['ID']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
   designation?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   highestQualification?: InputMaybe<Scalars['String']>;
@@ -6512,7 +6547,7 @@ export type KymCoopMembershipDetails = {
 export type KymCoopUnionAccountOperatorDetails = {
   citizenshipOrPassportOrLicenseNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -6580,7 +6615,7 @@ export type KymCoopUnionAddSectionStatus = {
 export type KymCoopUnionBodDetails = {
   citizenshipOrPassportOrLicenseNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -6764,7 +6799,7 @@ export type KymCooperativeAccountOperatorDetailsFormState = {
   citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   coopRelatedTraining?: Maybe<Array<Maybe<CoopRelatedTrainingType>>>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -6779,8 +6814,8 @@ export type KymCooperativeAccountOperatorDetailsFormState = {
 export type KymCooperativeAccountOperatorDetailsInput = {
   citizenshipNo?: InputMaybe<Scalars['Int']>;
   contactNumber?: InputMaybe<Scalars['String']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
-  dateofTrainig?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
+  dateofTrainig?: InputMaybe<Scalars['Localized']>;
   designation?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   fullName?: InputMaybe<Scalars['String']>;
@@ -6846,7 +6881,7 @@ export type KymCooperativeAddSectionStatus = {
 export type KymCooperativeBodDetailsFormState = {
   citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
-  dateOfMembership?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Localized']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -6861,7 +6896,7 @@ export type KymCooperativeBodDetailsFormState = {
 export type KymCooperativeBodDetailsInput = {
   citizenshipNo?: InputMaybe<Scalars['Int']>;
   contactNumber?: InputMaybe<Scalars['String']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
   designation?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   fullName?: InputMaybe<Scalars['String']>;
@@ -6951,8 +6986,8 @@ export type KymCooperativeFormData = {
   hasTCAccepted?: Maybe<Scalars['Boolean']>;
   investments?: Maybe<Scalars['Float']>;
   isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
-  lastAgmDate?: Maybe<Scalars['String']>;
-  lastAuditDate?: Maybe<Scalars['String']>;
+  lastAgmDate?: Maybe<Scalars['Localized']>;
+  lastAuditDate?: Maybe<Scalars['Localized']>;
   loan?: Maybe<Scalars['Float']>;
   loanAccount?: Maybe<Scalars['Float']>;
   mainServiceProduct?: Maybe<Scalars['String']>;
@@ -6967,7 +7002,7 @@ export type KymCooperativeFormData = {
   operatingAddress?: Maybe<KymAddress>;
   otherNonCurrentAssets?: Maybe<Scalars['Float']>;
   permanentRepresentativeAddress?: Maybe<KymAddress>;
-  regdDate?: Maybe<Scalars['String']>;
+  regdDate?: Maybe<Scalars['Localized']>;
   regdNumber?: Maybe<Scalars['Int']>;
   regdOffice?: Maybe<Scalars['String']>;
   registeredAddress?: Maybe<KymAddress>;
@@ -6998,8 +7033,8 @@ export type KymCooperativeFormInput = {
   hasTCAccepted?: InputMaybe<Scalars['Boolean']>;
   investments?: InputMaybe<Scalars['Float']>;
   isPermanentAndTemporaryAddressSame?: InputMaybe<Scalars['Boolean']>;
-  lastAgmDate?: InputMaybe<Scalars['String']>;
-  lastAuditDate?: InputMaybe<Scalars['String']>;
+  lastAgmDate?: InputMaybe<Scalars['Localized']>;
+  lastAuditDate?: InputMaybe<Scalars['Localized']>;
   loan?: InputMaybe<Scalars['Float']>;
   loanAccount?: InputMaybe<Scalars['Float']>;
   mainServiceProduct?: InputMaybe<Scalars['String']>;
@@ -7014,7 +7049,7 @@ export type KymCooperativeFormInput = {
   operatingAddress?: InputMaybe<KymAddressInput>;
   otherNonCurrentAssets?: InputMaybe<Scalars['Float']>;
   permanentRepresentativeAddress?: InputMaybe<KymAddressInput>;
-  regdDate?: InputMaybe<Scalars['String']>;
+  regdDate?: InputMaybe<Scalars['Localized']>;
   regdNumber?: InputMaybe<Scalars['Int']>;
   regdOffice?: InputMaybe<Scalars['String']>;
   registeredAddress?: InputMaybe<KymAddressInput>;
@@ -7323,7 +7358,7 @@ export type KymIndMemberInput = {
   beneficialFullName?: InputMaybe<Scalars['String']>;
   beneficialRelationshipId?: InputMaybe<Scalars['String']>;
   convictedDetails?: InputMaybe<Scalars['String']>;
-  dateOfBirth?: InputMaybe<Scalars['String']>;
+  dateOfBirth?: InputMaybe<Scalars['Localized']>;
   declarationAgreement?: InputMaybe<Scalars['Boolean']>;
   educationQualificationId?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
@@ -7388,7 +7423,7 @@ export type KymIndMutationAddArgs = {
 
 export type KymIndPersonalInformation = {
   contact?: Maybe<Contact>;
-  dateOfBirth?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
   educationQualificationId?: Maybe<Scalars['ID']>;
   ethnicityId?: Maybe<Scalars['ID']>;
   familyDetails?: Maybe<Array<Maybe<KymFamilyDetailsType>>>;
@@ -7580,7 +7615,7 @@ export type KymInsDirectorDetailsStatus = {
 
 export type KymInsDirectorInput = {
   citizenshipNo?: InputMaybe<Scalars['String']>;
-  dateOfMembership?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Localized']>;
   designation?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   firmDetails?: InputMaybe<KymInsDirectorAffiliatedFirmInput>;
@@ -7611,7 +7646,7 @@ export type KymInsFormData = {
   bank?: Maybe<Scalars['ID']>;
   branchOfficeAddress?: Maybe<KymAddress>;
   companyStamp?: Maybe<Scalars['String']>;
-  dateOfLastAGM?: Maybe<Scalars['String']>;
+  dateOfLastAGM?: Maybe<Scalars['Localized']>;
   detailsOfDirectors?: Maybe<Array<Maybe<DirectorDetailsFormState>>>;
   documents?: Maybe<Array<Maybe<KymFieldData>>>;
   email?: Maybe<Scalars['String']>;
@@ -7632,7 +7667,7 @@ export type KymInsFormData = {
   postBoxNo?: Maybe<Scalars['String']>;
   registeredAddress?: Maybe<KymAddress>;
   registeredNumber?: Maybe<Scalars['String']>;
-  registrationDate?: Maybe<Scalars['String']>;
+  registrationDate?: Maybe<Scalars['Localized']>;
   sisterConcernDetails?: Maybe<Array<Maybe<SisterConcernDetailsFormState>>>;
   specialInstruction?: Maybe<Scalars['String']>;
   vatOrPanNo?: Maybe<Scalars['String']>;
@@ -7680,7 +7715,7 @@ export type KymInsInput = {
   bank?: InputMaybe<Scalars['ID']>;
   branchOfficeAddress?: InputMaybe<KymAddressInput>;
   companyStamp?: InputMaybe<Scalars['String']>;
-  dateOfLastAGM?: InputMaybe<Scalars['String']>;
+  dateOfLastAGM?: InputMaybe<Scalars['Localized']>;
   email?: InputMaybe<Scalars['String']>;
   expectedMonthlyTransaction?: InputMaybe<Scalars['String']>;
   expectedMonthlyTurnover?: InputMaybe<Scalars['String']>;
@@ -7699,7 +7734,7 @@ export type KymInsInput = {
   postBoxNo?: InputMaybe<Scalars['String']>;
   registeredAddress?: InputMaybe<KymAddressInput>;
   registeredNumber?: InputMaybe<Scalars['String']>;
-  registrationDate?: InputMaybe<Scalars['String']>;
+  registrationDate?: InputMaybe<Scalars['Localized']>;
   specialInstruction?: InputMaybe<Scalars['String']>;
   vatOrPanNo?: InputMaybe<Scalars['String']>;
   website?: InputMaybe<Scalars['String']>;
@@ -9071,9 +9106,12 @@ export type LoanRepaymentInput = {
   amountPaid: Scalars['String'];
   bankVoucher?: InputMaybe<LoanRepaymentBankVoucher>;
   cash?: InputMaybe<DepositCash>;
+  isSuspicious?: InputMaybe<Scalars['Boolean']>;
   loanAccountId: Scalars['ID'];
   memberId: Scalars['ID'];
   paymentMethod: LoanRepaymentMethod;
+  suspicionRemarks?: InputMaybe<Scalars['String']>;
+  suspicionTopologies?: InputMaybe<Array<InputMaybe<SuspiciousTransactionTopology>>>;
 };
 
 export enum LoanRepaymentMethod {
@@ -9082,10 +9120,26 @@ export enum LoanRepaymentMethod {
   Cash = 'CASH'
 }
 
+export type LoanRepaymentRecord = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  installmentNo?: Maybe<Scalars['String']>;
+  interestAmount?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentMethod?: Maybe<LoanRepaymentMethod>;
+  penaltyAmount?: Maybe<Scalars['String']>;
+  principalAmount?: Maybe<Scalars['String']>;
+  rebateAmount?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
+};
+
 export type LoanRepaymentResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<LoanAccountQuery>;
-  record?: Maybe<LoanAccount>;
+  record?: Maybe<LoanRepaymentRecord>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -9114,6 +9168,7 @@ export type LoanRepaymentView = {
   totalDebit?: Maybe<Scalars['String']>;
   totalRepaymentAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
 };
 
 export type LoanRepaymentViewResult = {
@@ -9359,14 +9414,14 @@ export type MeResult = {
 };
 
 export type Member = Base & {
-  activeDate?: Maybe<Scalars['String']>;
+  activeDate?: Maybe<Scalars['Localized']>;
   address?: Maybe<Address>;
   branch?: Maybe<Scalars['String']>;
   code: Scalars['String'];
   contact?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
-  dateJoined?: Maybe<Scalars['String']>;
+  dateJoined?: Maybe<Scalars['Localized']>;
   id: Scalars['ID'];
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -9432,7 +9487,7 @@ export type MemberAccountMinView = {
   interestRate?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
   productType?: Maybe<Scalars['String']>;
-  subscriptionDate?: Maybe<Scalars['String']>;
+  subscriptionDate?: Maybe<Scalars['Localized']>;
   totalBalance?: Maybe<Scalars['String']>;
 };
 
@@ -9750,7 +9805,7 @@ export type MemberOverviewShareView = {
 export type MemberPaymentView = {
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   installmentNo?: Maybe<Scalars['String']>;
   interestRate?: Maybe<Scalars['String']>;
   paymentType?: Maybe<Scalars['String']>;
@@ -9835,9 +9890,10 @@ export type MemberQueryTranslateArgs = {
 
 export type MemberRecentTransactionView = {
   amount?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   noOfShares?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   txnType?: Maybe<MemberRecentTransactionViewTxnType>;
 };
 
@@ -10163,7 +10219,7 @@ export type MyraUserEdge = {
 export type MyraUserFormStateData = {
   branch?: Maybe<Scalars['String']>;
   contactNo?: Maybe<Scalars['String']>;
-  dob?: Maybe<Scalars['String']>;
+  dob?: Maybe<Scalars['Localized']>;
   email?: Maybe<Scalars['String']>;
   empCode?: Maybe<Scalars['String']>;
   gender?: Maybe<UserGender>;
@@ -10187,7 +10243,7 @@ export type MyraUserFormStateResult = {
 };
 
 export type MyraUserIdentification = {
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   idNo?: Maybe<Scalars['String']>;
   idType?: Maybe<Scalars['String']>;
@@ -10195,7 +10251,7 @@ export type MyraUserIdentification = {
 };
 
 export type MyraUserIdentificationInput = {
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
   idNo?: InputMaybe<Scalars['String']>;
   idType?: InputMaybe<Scalars['String']>;
   place?: InputMaybe<Scalars['String']>;
@@ -10211,7 +10267,7 @@ export type MyraUserIdentificationResult = {
 export type MyraUserInput = {
   branch?: InputMaybe<Scalars['String']>;
   contactNo: Scalars['String'];
-  dob: Scalars['String'];
+  dob: Scalars['Localized'];
   email: Scalars['String'];
   empCode?: InputMaybe<Scalars['String']>;
   gender: UserGender;
@@ -10300,9 +10356,11 @@ export enum NatureOfTransaction {
   Ebanking = 'EBANKING',
   InterestBooking = 'INTEREST_BOOKING',
   InterestPosting = 'INTEREST_POSTING',
+  JournalVoucher = 'JOURNAL_VOUCHER',
   LoanDisbursment = 'LOAN_DISBURSMENT',
   LoanRepayment = 'LOAN_REPAYMENT',
   Membership = 'MEMBERSHIP',
+  OpeningBalance = 'OPENING_BALANCE',
   SharePurchase = 'SHARE_PURCHASE',
   ShareReturn = 'SHARE_RETURN',
   TellerTransfer = 'TELLER_TRANSFER',
@@ -10586,6 +10644,7 @@ export type OverviewView = {
   basicInformation?: Maybe<MemberBasicInfoView>;
   memberGraphs?: Maybe<MemberOverviewGraphs>;
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
+  pendingView?: Maybe<Array<Maybe<PendingOverview>>>;
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactionView>>>;
   statistics?: Maybe<MemberStatisticsView>;
 };
@@ -10708,6 +10767,11 @@ export type PenaltyTypeInput = {
   penaltyRate?: InputMaybe<Scalars['Float']>;
 };
 
+export type PendingOverview = {
+  account?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+};
+
 export type PendingRequestInfo = {
   loanApplicationRequest?: Maybe<Scalars['Int']>;
   loanDisbursementRequest?: Maybe<Scalars['Int']>;
@@ -10732,7 +10796,7 @@ export enum PeriodTypeEnum {
 
 export type PersonalInformation = {
   citizenship?: Maybe<Citizenship>;
-  dateOfBirth?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
   gender?: Maybe<Scalars['String']>;
   inNepali?: Maybe<PersonalInformationInNepali>;
   name?: Maybe<Name>;
@@ -11033,7 +11097,7 @@ export type ReportResult = {
 export type RequestApproveOrDeclineInput = {
   approve: Scalars['Boolean'];
   notifyMember?: InputMaybe<Scalars['Boolean']>;
-  purposedDate?: InputMaybe<Scalars['String']>;
+  purposedDate?: InputMaybe<Scalars['Localized']>;
   reasonForDeclination?: InputMaybe<Scalars['String']>;
   requestId: Scalars['String'];
 };
@@ -11753,6 +11817,7 @@ export type ShareDetailData = {
   totalShareAmount?: Maybe<Scalars['String']>;
   totalShareCount?: Maybe<Scalars['Int']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
 };
 
@@ -11987,13 +12052,17 @@ export type ShareRegister = {
   id?: Maybe<Scalars['ID']>;
   member?: Maybe<Member>;
   memberId?: Maybe<Scalars['String']>;
+  noOfShare?: Maybe<Scalars['String']>;
+  otherCharge?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<SharePaymentMode>;
   shareAmount?: Maybe<Scalars['String']>;
+  shareCertificateCharge?: Maybe<Scalars['String']>;
   startNumber: Scalars['Int'];
   status?: Maybe<Share_Status>;
   totalAmount?: Maybe<Scalars['Float']>;
-  transactionDate?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
   transactionDirection: Share_Transaction_Direction;
+  transactionId?: Maybe<Scalars['String']>;
   voucherNumber?: Maybe<Scalars['String']>;
 };
 
@@ -12004,7 +12073,7 @@ export type ShareRegisterConnection = {
 };
 
 export type ShareRegisterDetails = {
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   noOfShares?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
   txnAmount?: Maybe<Scalars['String']>;
@@ -12254,6 +12323,7 @@ export type ShareTransactionReportResult = {
   data?: Maybe<Array<Maybe<ShareTransactionReport>>>;
   error?: Maybe<QueryError>;
   footer?: Maybe<ShareTransactionFooter>;
+  openingValue?: Maybe<Scalars['String']>;
   totalShareIssued?: Maybe<Scalars['String']>;
 };
 
@@ -12268,7 +12338,7 @@ export type ShareTransactionVoucherPayment = {
   citizenshipDocument?: InputMaybe<Scalars['String']>;
   depositedBy: ShareVoucherDepositedBy;
   depositedByOtherName?: InputMaybe<Scalars['String']>;
-  depositedDate: Scalars['String'];
+  depositedDate: Scalars['Localized'];
   fileUpload?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
   sourceOfFund?: InputMaybe<Scalars['String']>;
@@ -12367,6 +12437,48 @@ export type SubscriptionMutationUpsertArgs = {
   fieldId: Scalars['String'];
   identifiers: Array<Scalars['String']>;
 };
+
+export type SuspiciousTransactionReport = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  product_name?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Boolean']>;
+  tranxType?: Maybe<NatureOfTransaction>;
+};
+
+export type SuspiciousTransactionReportInput = {
+  branchId: Scalars['String'];
+  filter?: InputMaybe<SuspiciousTransactionReportInputFilter>;
+  period: LocalizedDateFilter;
+};
+
+export type SuspiciousTransactionReportInputFilter = {
+  amount?: InputMaybe<MinMaxFilter>;
+  memberId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nature?: InputMaybe<Array<InputMaybe<NatureOfTransaction>>>;
+};
+
+export type SuspiciousTransactionReportResult = {
+  data?: Maybe<Array<Maybe<SuspiciousTransactionReport>>>;
+  error?: Maybe<QueryError>;
+};
+
+export enum SuspiciousTransactionTopology {
+  ChequeFraud = 'CHEQUE_FRAUD',
+  CorruptionGratuity = 'CORRUPTION_GRATUITY',
+  CounterfeitInstrument = 'COUNTERFEIT_INSTRUMENT',
+  DebitCreditOrOtherCardFraud = 'DEBIT_CREDIT_OR_OTHER_CARD_FRAUD',
+  FalseStatement = 'FALSE_STATEMENT',
+  IdentityTheft = 'IDENTITY_THEFT',
+  LoanFraud = 'LOAN_FRAUD',
+  MisuseOfPositionOrSelf = 'MISUSE_OF_POSITION_OR_SELF',
+  MysteriousDisapperanceBehaviour = 'MYSTERIOUS_DISAPPERANCE_BEHAVIOUR',
+  TaxEvasion = 'TAX_EVASION',
+  TerroristFinancing = 'TERRORIST_FINANCING'
+}
 
 export enum Transaction_Direction {
   Purchased = 'PURCHASED',
@@ -12768,11 +12880,25 @@ export enum TransactionTypeFilter {
 }
 
 export type TransferData = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  fine?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   payeeNumber?: Maybe<Scalars['String']>;
+  receiverAccountId?: Maybe<Scalars['String']>;
+  receiverAccountName?: Maybe<Scalars['String']>;
+  receiverMemberId?: Maybe<Scalars['String']>;
+  receiverMemberName?: Maybe<Scalars['Localized']>;
   remarks?: Maybe<Scalars['String']>;
+  senderAccountId?: Maybe<Scalars['String']>;
+  senderAccountName?: Maybe<Scalars['String']>;
+  senderMemberId?: Maybe<Scalars['String']>;
+  senderMemberName?: Maybe<Scalars['Localized']>;
+  totalAmount?: Maybe<Scalars['String']>;
   transactionAccount?: Maybe<Scalars['String']>;
   transactionMode?: Maybe<TransactionMode>;
+  transferType?: Maybe<TransferType>;
+  withdrawWith?: Maybe<WithdrawWith>;
 };
 
 export type TransferInput = {
@@ -13045,13 +13171,13 @@ export type ValuatorEdge = {
 export type ValuatorFormStateData = {
   academicQualification?: Maybe<Scalars['String']>;
   address?: Maybe<KymAddress>;
-  contractDate?: Maybe<Scalars['String']>;
+  contractDate?: Maybe<Scalars['Localized']>;
   documents?: Maybe<Array<Maybe<Scalars['String']>>>;
   email?: Maybe<Scalars['String']>;
   insurancePremium?: Maybe<Scalars['Float']>;
   mobileNo?: Maybe<Scalars['String']>;
   phoneNo?: Maybe<Scalars['String']>;
-  renewalDate?: Maybe<Scalars['String']>;
+  renewalDate?: Maybe<Scalars['Localized']>;
   valuationLicenseNo?: Maybe<Scalars['String']>;
   valuatorId?: Maybe<Scalars['String']>;
   valuatorName?: Maybe<Scalars['String']>;
@@ -13066,13 +13192,13 @@ export type ValuatorFormStateResult = {
 export type ValuatorInput = {
   academicQualification?: InputMaybe<Scalars['String']>;
   address?: InputMaybe<KymAddressInput>;
-  contractDate?: InputMaybe<Scalars['String']>;
+  contractDate?: InputMaybe<Scalars['Localized']>;
   documents?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   email?: InputMaybe<Scalars['String']>;
   insurancePremium?: InputMaybe<Scalars['Float']>;
   mobileNo?: InputMaybe<Scalars['String']>;
   phoneNo?: InputMaybe<Scalars['String']>;
-  renewalDate?: InputMaybe<Scalars['String']>;
+  renewalDate?: InputMaybe<Scalars['Localized']>;
   valuationLicenseNo?: InputMaybe<Scalars['String']>;
   valuatorId?: InputMaybe<Scalars['String']>;
   valuatorName?: InputMaybe<Scalars['String']>;
@@ -13138,7 +13264,7 @@ export type VaultBalanceReportData = {
 
 export type VaultBalanceReportFilter = {
   branchId: Scalars['String'];
-  date: LocalizedDateFilter;
+  period: LocalizedDateFilter;
 };
 
 export type VaultBalanceReportResult = {
@@ -13181,11 +13307,14 @@ export type WithdrawInput = {
   counterSlipNo?: InputMaybe<Scalars['String']>;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
+  isSuspicious?: InputMaybe<Scalars['Boolean']>;
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
   override?: InputMaybe<Scalars['Boolean']>;
   payment_type: WithdrawPaymentType;
   sourceOfFund?: InputMaybe<Scalars['String']>;
+  suspicionRemarks?: InputMaybe<Scalars['String']>;
+  suspicionTopologies?: InputMaybe<Array<InputMaybe<SuspiciousTransactionTopology>>>;
   withdrawSlipNo?: InputMaybe<Scalars['String']>;
   withdrawWith: WithdrawWith;
   withdrawnBy: WithdrawBy;
@@ -13208,9 +13337,25 @@ export type WithdrawPenaltyFormState = {
   penaltyRate?: Maybe<Scalars['Float']>;
 };
 
+export type WithdrawRecord = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  fine?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentMode?: Maybe<WithdrawPaymentType>;
+  totalAmount?: Maybe<Scalars['String']>;
+  transactionID?: Maybe<Scalars['ID']>;
+  withdrawWith?: Maybe<WithdrawWith>;
+  withdrawnBy?: Maybe<WithdrawBy>;
+};
+
 export type WithdrawResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
+  record?: Maybe<WithdrawRecord>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -13234,7 +13379,7 @@ export type WithdrawSlipDepositData = {
 
 export type WithdrawSlipIssueInput = {
   accountId: Scalars['ID'];
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Scalars['String']>;
   count: Scalars['Int'];
   marketRepresentative?: InputMaybe<Scalars['String']>;
   pickupMethod: PickupMethod;
@@ -13295,6 +13440,7 @@ export type WithdrawTransactionView = {
   totalDebit?: Maybe<Scalars['String']>;
   totalWithdrawnAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   withdrawAmount?: Maybe<Scalars['String']>;
   withdrawWith?: Maybe<WithdrawWith>;
@@ -14237,7 +14383,7 @@ export type SetDepositDataMutationVariables = Exact<{
 }>;
 
 
-export type SetDepositDataMutation = { transaction: { deposit: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type SetDepositDataMutation = { transaction: { deposit: { recordId?: string | null, record?: { transactionID?: string | null, date?: Record<"local"|"en"|"np",string> | null, amount?: string | null, rebate?: string | null, paymentMode?: DepositPaymentType | null, depositedBy?: DepositedBy | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
 
 export type SetBulkDepositDataMutationVariables = Exact<{
   data?: InputMaybe<BulkDepositInput>;
@@ -14297,7 +14443,7 @@ export type GetAccountMemberListQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, contact?: string | null, createdAt: string, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetAccountMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, contact?: string | null, createdAt: string, dateJoined?: Record<"local"|"en"|"np",string> | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetProductListQueryVariables = Exact<{
   memberId: Scalars['ID'];
@@ -14326,7 +14472,7 @@ export type GetAccountTableListQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountTableListQuery = { account: { list?: { totalCount: number, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ node?: { id: string, objState: ObjState, createdAt: string, accountName?: string | null, modifiedAt: string, installmentAmount?: string | null, balance?: string | null, accountOpenedDate?: string | null, lastTransactionDate?: string | null, accountExpiryDate?: string | null, closedAt?: string | null, overDrawnBalance?: string | null, guaranteedAmount?: string | null, interestAccured?: string | null, interestTax?: string | null, prematurePenalty?: string | null, createdBy: { id: string }, modifiedBy: { id: string }, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, product: { id: string, productCode: string, productName: string, nature: NatureOfDepositProduct, minimumBalance?: string | null, isMandatorySaving?: boolean | null, withdrawRestricted?: boolean | null, interest?: number | null, accountClosingCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null }, dues?: { fine?: string | null, totalDue?: string | null, dueInstallments?: number | null } | null } | null }> | null } | null } };
+export type GetAccountTableListQuery = { account: { list?: { totalCount: number, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ node?: { id: string, objState: ObjState, createdAt: string, accountName?: string | null, modifiedAt: string, installmentAmount?: string | null, balance?: string | null, availableBalance?: string | null, accountOpenedDate?: string | null, lastTransactionDate?: string | null, accountExpiryDate?: string | null, closedAt?: string | null, overDrawnBalance?: string | null, guaranteedAmount?: string | null, interestAccured?: string | null, interestTax?: string | null, prematurePenalty?: string | null, createdBy: { id: string }, modifiedBy: { id: string }, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: Record<"local"|"en"|"np",string> | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, product: { id: string, productCode: string, productName: string, nature: NatureOfDepositProduct, minimumBalance?: string | null, isMandatorySaving?: boolean | null, withdrawRestricted?: boolean | null, interest?: number | null, accountClosingCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null }, dues?: { fine?: string | null, totalDue?: string | null, dueInstallments?: number | null } | null } | null }> | null } | null } };
 
 export type GetAccountTableListMinimalQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
@@ -14403,7 +14549,7 @@ export type GetAccountTransactionListsQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountTransactionListsQuery = { account: { listTransactions?: { edges?: Array<{ node: { id: string, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, amount: string, currentBalance: string } } | null> | null, pageInfo?: { endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null, summary?: { totalDeposit?: string | null, totalWithdraw?: string | null, averageBalance?: string | null } | null } | null } };
+export type GetAccountTransactionListsQuery = { account: { listTransactions?: { edges?: Array<{ node: { id: string, transactionId?: string | null, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, transactionType?: string | null, amount: string, currentBalance: string } } | null> | null, pageInfo?: { endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null, summary?: { totalDeposit?: string | null, totalWithdraw?: string | null, averageBalance?: string | null } | null } | null } };
 
 export type GetBankAccountListQueryVariables = Exact<{
   filter?: InputMaybe<BankAccountFilter>;
@@ -14488,7 +14634,7 @@ export type GetJournalVoucherDetailQueryVariables = Exact<{
 }>;
 
 
-export type GetJournalVoucherDetailQuery = { accounting: { journalVoucher: { viewJournalVoucherDetail?: { data?: { id?: string | null, date?: Record<"local"|"en"|"np",string> | null, amount?: string | null, status?: string | null, reference?: string | null, note?: string | null, totalDebit?: string | null, totalCredit?: string | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } } };
+export type GetJournalVoucherDetailQuery = { accounting: { journalVoucher: { viewJournalVoucherDetail?: { data?: { id?: string | null, date?: Record<"local"|"en"|"np",string> | null, amount?: string | null, status?: string | null, reference?: string | null, note?: string | null, transactionCode?: string | null, totalDebit?: string | null, totalCredit?: string | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } } };
 
 export type GetSalesCustomerListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
@@ -14654,7 +14800,7 @@ export type GetCoOperativeKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetCoOperativeKymEditDataQuery = { members: { cooperative?: { formState?: { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null, regdOffice?: string | null, email?: string | null, website?: string | null, contactNumber?: string | null, noOfMaleMembers?: number | null, noOfFemaleMembers?: number | null, noOfOtherMembers?: number | null, lastAuditDate?: string | null, lastAgmDate?: string | null, representativeFullName?: string | null, representativeDesignatiton?: string | null, representativeEmail?: string | null, representativeContactNumber?: string | null, representativePanNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, cooperativeTypeId?: string | null, mainServiceProduct?: string | null, noOfMaleEmployee?: number | null, noOfFemaleEmployee?: number | null, totalEmployee?: number | null, shareCapital?: number | null, reserveAndSurplus?: number | null, savingDeposit?: number | null, loanAccount?: number | null, capitalGrant?: number | null, currentLiabilities?: number | null, nonCurrentLiabilities?: number | null, cashAndCashEquivalent?: number | null, bank?: number | null, investments?: number | null, loan?: number | null, nonCurrentAssets?: number | null, otherNonCurrentAssets?: number | null, totalAssets?: number | null, accountHoldersName?: string | null, hasTCAccepted?: boolean | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, permanentRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, sectionStatus?: { errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null, overallFormStatus?: { coopDetails?: { id?: string | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null } };
+export type GetCoOperativeKymEditDataQuery = { members: { cooperative?: { formState?: { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: Record<"local"|"en"|"np",string> | null, regdOffice?: string | null, email?: string | null, website?: string | null, contactNumber?: string | null, noOfMaleMembers?: number | null, noOfFemaleMembers?: number | null, noOfOtherMembers?: number | null, lastAuditDate?: Record<"local"|"en"|"np",string> | null, lastAgmDate?: Record<"local"|"en"|"np",string> | null, representativeFullName?: string | null, representativeDesignatiton?: string | null, representativeEmail?: string | null, representativeContactNumber?: string | null, representativePanNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, cooperativeTypeId?: string | null, mainServiceProduct?: string | null, noOfMaleEmployee?: number | null, noOfFemaleEmployee?: number | null, totalEmployee?: number | null, shareCapital?: number | null, reserveAndSurplus?: number | null, savingDeposit?: number | null, loanAccount?: number | null, capitalGrant?: number | null, currentLiabilities?: number | null, nonCurrentLiabilities?: number | null, cashAndCashEquivalent?: number | null, bank?: number | null, investments?: number | null, loan?: number | null, nonCurrentAssets?: number | null, otherNonCurrentAssets?: number | null, totalAssets?: number | null, accountHoldersName?: string | null, hasTCAccepted?: boolean | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, permanentRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, sectionStatus?: { errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null, overallFormStatus?: { coopDetails?: { id?: string | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null } };
 
 export type GetCoOperativeDirectorEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14662,7 +14808,7 @@ export type GetCoOperativeDirectorEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetCoOperativeDirectorEditDataQuery = { members: { cooperative?: { listDirectors?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null> | null, sectionStatus?: Array<{ errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } };
+export type GetCoOperativeDirectorEditDataQuery = { members: { cooperative?: { listDirectors?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: Record<"local"|"en"|"np",string> | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null> | null, sectionStatus?: Array<{ errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } };
 
 export type GetCoOperativeAccountOperatorEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14670,7 +14816,7 @@ export type GetCoOperativeAccountOperatorEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetCoOperativeAccountOperatorEditDataQuery = { members: { cooperative?: { listAccountOperators?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, coopRelatedTraining?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null, sectionStatus?: Array<{ errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } };
+export type GetCoOperativeAccountOperatorEditDataQuery = { members: { cooperative?: { listAccountOperators?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: Record<"local"|"en"|"np",string> | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, coopRelatedTraining?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: Record<"local"|"en"|"np",string> | null, trainingOrganization?: string | null } | null> | null } | null> | null, sectionStatus?: Array<{ errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } };
 
 export type GetKymCooperativeOverallFormStatusQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14686,7 +14832,7 @@ export type GetCooperativeUnionKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetCooperativeUnionKymEditDataQuery = { members: { cooperativeUnion?: { formState?: { formData?: { institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null, institutionType?: string | null, natureOfBusinessEn?: string | null, natureOfBusinessNp?: string | null, regdDate?: string | null, vatOrPan?: string | null, noOfBranches?: number | null, regdNo?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, contactEmail?: string | null, website?: string | null, postBoxNo?: string | null, noOfEmployee?: number | null, lastAgmDate?: string | null, nameOfBank?: string | null, accountNumber?: string | null, accountName?: string | null, applicantName?: string | null, applicantNameNp?: string | null, applicantDesignationEn?: string | null, applicantDesignationNp?: string | null, applicantEmail?: string | null, applicantContactNo?: string | null, applicantPanNo?: string | null, applicantDateOfMembership?: string | null, applicantHighestQualification?: string | null, applicantIsPermanentAndTemporaryAddrSame?: boolean | null, noOfMaleMemberCurrent?: number | null, noOfMaleMemberTarget?: number | null, noOfFemaleMemberCurrent?: number | null, noOfFemaleMemberTarget?: number | null, noOfInstitutionalMemberCurrent?: number | null, noOfInstitutionalMemberTarget?: number | null, regdAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, applicantPermanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, applicantTemporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, sectionStatus?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null } | null } | null } };
+export type GetCooperativeUnionKymEditDataQuery = { members: { cooperativeUnion?: { formState?: { formData?: { institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null, institutionType?: string | null, natureOfBusinessEn?: string | null, natureOfBusinessNp?: string | null, regdDate?: Record<"local"|"en"|"np",string> | null, vatOrPan?: string | null, noOfBranches?: number | null, regdNo?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, contactEmail?: string | null, website?: string | null, postBoxNo?: string | null, noOfEmployee?: number | null, lastAgmDate?: Record<"local"|"en"|"np",string> | null, nameOfBank?: string | null, accountNumber?: string | null, accountName?: string | null, applicantName?: string | null, applicantNameNp?: string | null, applicantDesignationEn?: string | null, applicantDesignationNp?: string | null, applicantEmail?: string | null, applicantContactNo?: string | null, applicantPanNo?: string | null, applicantDateOfMembership?: Record<"local"|"en"|"np",string> | null, applicantHighestQualification?: string | null, applicantIsPermanentAndTemporaryAddrSame?: boolean | null, noOfMaleMemberCurrent?: number | null, noOfMaleMemberTarget?: number | null, noOfFemaleMemberCurrent?: number | null, noOfFemaleMemberTarget?: number | null, noOfInstitutionalMemberCurrent?: number | null, noOfInstitutionalMemberTarget?: number | null, regdAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, applicantPermanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, applicantTemporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, sectionStatus?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetEconimicDetailsEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14702,7 +14848,7 @@ export type GetBoardOfDirectorsDetailsListQueryVariables = Exact<{
 }>;
 
 
-export type GetBoardOfDirectorsDetailsListQuery = { members: { cooperativeUnion?: { formState?: { formData?: { boardOfDirectorsDetails?: { data?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null, sectionStatus?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } | null } | null } };
+export type GetBoardOfDirectorsDetailsListQuery = { members: { cooperativeUnion?: { formState?: { formData?: { boardOfDirectorsDetails?: { data?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: Record<"local"|"en"|"np",string> | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: Record<"local"|"en"|"np",string> | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null, sectionStatus?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } | null } | null } };
 
 export type GetAccountOperatorDetailsListQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14710,7 +14856,7 @@ export type GetAccountOperatorDetailsListQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountOperatorDetailsListQuery = { members: { cooperativeUnion?: { formState?: { formData?: { accountOperatorsDetails?: { data?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null, sectionStatus?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } | null } | null } };
+export type GetAccountOperatorDetailsListQuery = { members: { cooperativeUnion?: { formState?: { formData?: { accountOperatorsDetails?: { data?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: Record<"local"|"en"|"np",string> | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: Record<"local"|"en"|"np",string> | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null, sectionStatus?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } | null } | null } };
 
 export type GetCentralRepresentativeDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14718,7 +14864,7 @@ export type GetCentralRepresentativeDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetCentralRepresentativeDetailsQuery = { members: { cooperativeUnion?: { formState?: { formData?: { centralRepresentativeDetails?: { data?: { id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, notAmongDirectors?: boolean | null, centralRepID?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null, sectionStatus?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null } | null } | null } };
+export type GetCentralRepresentativeDetailsQuery = { members: { cooperativeUnion?: { formState?: { formData?: { centralRepresentativeDetails?: { data?: { id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: Record<"local"|"en"|"np",string> | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, notAmongDirectors?: boolean | null, centralRepID?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: Record<"local"|"en"|"np",string> | null, trainingOrganization?: string | null } | null> | null } | null, sectionStatus?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetCoopUnionSectionStatusQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14764,7 +14910,7 @@ export type GetInstitutionKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetInstitutionKymEditDataQuery = { members: { institution?: { formState?: { data?: { lastUpdated?: { account: KymInsAccountSection } | { declaration: KymInsDeclarationSection } | { directorDetails: KymInsDirectorDetailsSection } | { information: KymInsInformationSection } | { transaction: KymInsTransactionSection } | null, sectionStatus?: { errors?: Record<string, Array<string>> | null, id?: string | null, sectionStatus?: { incomplete?: Array<string> | null, errors?: Array<string> | null } | null } | null, formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null, registrationDate?: string | null, vatOrPanNo?: string | null, noOfBranches?: number | null, registeredNumber?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, email?: string | null, website?: string | null, postBoxNo?: string | null, numberOfEmployee?: number | null, dateOfLastAGM?: string | null, bank?: string | null, accountNumber?: string | null, accountName?: string | null, natureOfTransaction?: string | null, annualTurnover?: number | null, initialDepositAmount?: number | null, expectedMonthlyTurnover?: string | null, expectedMonthlyTransaction?: string | null, accountType?: AccountOperationType | null, isCompanyStampCompulsory?: boolean | null, specialInstruction?: string | null, companyStamp?: string | null, accountHolderName?: string | null, accountHolderPhone?: string | null, accountHolderEmail?: string | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, accountHolderAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
+export type GetInstitutionKymEditDataQuery = { members: { institution?: { formState?: { data?: { lastUpdated?: { account: KymInsAccountSection } | { declaration: KymInsDeclarationSection } | { directorDetails: KymInsDirectorDetailsSection } | { information: KymInsInformationSection } | { transaction: KymInsTransactionSection } | null, sectionStatus?: { errors?: Record<string, Array<string>> | null, id?: string | null, sectionStatus?: { incomplete?: Array<string> | null, errors?: Array<string> | null } | null } | null, formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null, registrationDate?: Record<"local"|"en"|"np",string> | null, vatOrPanNo?: string | null, noOfBranches?: number | null, registeredNumber?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, email?: string | null, website?: string | null, postBoxNo?: string | null, numberOfEmployee?: number | null, dateOfLastAGM?: Record<"local"|"en"|"np",string> | null, bank?: string | null, accountNumber?: string | null, accountName?: string | null, natureOfTransaction?: string | null, annualTurnover?: number | null, initialDepositAmount?: number | null, expectedMonthlyTurnover?: string | null, expectedMonthlyTransaction?: string | null, accountType?: AccountOperationType | null, isCompanyStampCompulsory?: boolean | null, specialInstruction?: string | null, companyStamp?: string | null, accountHolderName?: string | null, accountHolderPhone?: string | null, accountHolderEmail?: string | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, accountHolderAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetInstitutionSisterDetailsEditListQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14780,7 +14926,7 @@ export type GetInsBoardDirectorEditListQueryVariables = Exact<{
 }>;
 
 
-export type GetInsBoardDirectorEditListQuery = { members: { institution?: { listDirectors?: { sectionStatus?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null, data?: Array<{ id?: string | null, name?: string | null, designation?: string | null, isTemporaryAndPermanentAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNo?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, isHeadOfOrganization?: boolean | null, isAffiliatedWithOtherFirms?: boolean | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, firmDetails?: { directorName?: string | null, institutionName?: string | null, address?: string | null, designation?: string | null, yearlyIncome?: number | null } | null } | null> | null } | null } | null } };
+export type GetInsBoardDirectorEditListQuery = { members: { institution?: { listDirectors?: { sectionStatus?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null, data?: Array<{ id?: string | null, name?: string | null, designation?: string | null, isTemporaryAndPermanentAddressSame?: boolean | null, dateOfMembership?: Record<"local"|"en"|"np",string> | null, highestQualification?: string | null, mobileNo?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, isHeadOfOrganization?: boolean | null, isAffiliatedWithOtherFirms?: boolean | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, firmDetails?: { directorName?: string | null, institutionName?: string | null, address?: string | null, designation?: string | null, yearlyIncome?: number | null } | null } | null> | null } | null } | null } };
 
 export type GetInsAccountOperatorEditListQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14936,7 +15082,7 @@ export type GetMemberLinkedAccountsQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberLinkedAccountsQuery = { members: { getAllAccounts?: { data?: { depositAccount?: Array<{ id: string, accountName?: string | null, balance?: string | null, interestAccured?: string | null, interestTax?: string | null, prematurePenalty?: string | null, lastTransactionDate?: string | null, accountOpenedDate?: string | null, installmentAmount?: string | null, accountExpiryDate?: string | null, overDrawnBalance?: string | null, guaranteedAmount?: string | null, member?: { name?: Record<"local"|"en"|"np",string> | null } | null, product: { productName: string, nature: NatureOfDepositProduct } } | null> | null } | null } | null } };
+export type GetMemberLinkedAccountsQuery = { members: { getAllAccounts?: { data?: { depositAccount?: Array<{ id: string, accountName?: string | null, balance?: string | null, availableBalance?: string | null, interestAccured?: string | null, interestTax?: string | null, prematurePenalty?: string | null, lastTransactionDate?: string | null, accountOpenedDate?: string | null, installmentAmount?: string | null, accountExpiryDate?: string | null, overDrawnBalance?: string | null, guaranteedAmount?: string | null, member?: { name?: Record<"local"|"en"|"np",string> | null } | null, product: { productName: string, nature: NatureOfDepositProduct } } | null> | null } | null } | null } };
 
 export type GetMultipleSubProductsQueryVariables = Exact<{
   productTypeIds?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
@@ -14958,7 +15104,7 @@ export type GetMemberListQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, branch?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null, contact?: string | null, createdAt: string, dateJoined?: string | null, activeDate?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { data?: { formData?: { maritalStatusId?: string | null, maritalStatus?: Record<"local"|"en"|"np",string> | null, basicInformation?: { genderId?: string | null, gender?: Record<"local"|"en"|"np",string> | null, age?: number | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null } | null } | null } | {} | null } | null } | null> | null, pageInfo?: PaginationFragment | null } } };
+export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, branch?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null, contact?: string | null, createdAt: string, dateJoined?: Record<"local"|"en"|"np",string> | null, activeDate?: Record<"local"|"en"|"np",string> | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { data?: { formData?: { maritalStatusId?: string | null, maritalStatus?: Record<"local"|"en"|"np",string> | null, basicInformation?: { genderId?: string | null, gender?: Record<"local"|"en"|"np",string> | null, age?: number | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null } | null } | null } | {} | null } | null } | null> | null, pageInfo?: PaginationFragment | null } } };
 
 export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -14985,7 +15131,7 @@ export type GetMemberIndividualDataQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { id?: string | null, institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null } | null } | null } | { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null } | null } | null } | { data?: { formData?: { maritalStatus?: Record<"local"|"en"|"np",string> | null, maritalStatusId?: string | null, basicInformation?: { dateOfBirth?: string | null, age?: number | null, gender?: Record<"local"|"en"|"np",string> | null } | null, contactDetails?: { email?: string | null } | null } | null } | null } | { data?: { formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null } | null } | null } | null } | null } } };
+export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: Record<"local"|"en"|"np",string> | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { id?: string | null, institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null } | null } | null } | { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: Record<"local"|"en"|"np",string> | null } | null } | null } | { data?: { formData?: { maritalStatus?: Record<"local"|"en"|"np",string> | null, maritalStatusId?: string | null, basicInformation?: { dateOfBirth?: Record<"local"|"en"|"np",string> | null, age?: number | null, gender?: Record<"local"|"en"|"np",string> | null } | null, contactDetails?: { email?: string | null } | null } | null } | null } | { data?: { formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null } | null } | null } | null } | null } } };
 
 export type GetIndividualKymEditDataQueryVariables = Exact<{
   id: Scalars['String'];
@@ -14993,7 +15139,7 @@ export type GetIndividualKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { sectionStatus?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null, data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, isFamilyAMember?: boolean | null, identificationSelection?: Array<string | null> | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null, otherCoopName?: Record<"local"|"en"|"np",string> | null, otherCoopBranchId?: string | null, otherCoopMemberId?: string | null } | null, introducers?: { firstIntroducerId?: string | null, secondIntroducerId?: string | null } | null, initialTransactionDetails?: { initialShare?: number | null, initialSaving?: string | null, initialLoan?: string | null, otherFinancialAmount?: string | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null, declarationAgreement?: boolean | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
+export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { sectionStatus?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null, data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, isFamilyAMember?: boolean | null, identificationSelection?: Array<string | null> | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: Record<"local"|"en"|"np",string> | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null, otherCoopName?: Record<"local"|"en"|"np",string> | null, otherCoopBranchId?: string | null, otherCoopMemberId?: string | null } | null, introducers?: { firstIntroducerId?: string | null, secondIntroducerId?: string | null } | null, initialTransactionDetails?: { initialShare?: number | null, initialSaving?: string | null, initialLoan?: string | null, otherFinancialAmount?: string | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null, declarationAgreement?: boolean | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetIndividualKymFamilyMembersListQueryVariables = Exact<{
   id: Scalars['String'];
@@ -15001,7 +15147,7 @@ export type GetIndividualKymFamilyMembersListQueryVariables = Exact<{
 }>;
 
 
-export type GetIndividualKymFamilyMembersListQuery = { members: { individual?: { listFamilyMember?: { data?: Array<{ id: string, relationshipId?: string | null, fullName?: Record<"local"|"en"|"np",string> | null, familyMemberId?: string | null, dateOfBirth?: string | null } | null> | null } | null } | null } };
+export type GetIndividualKymFamilyMembersListQuery = { members: { individual?: { listFamilyMember?: { data?: Array<{ id: string, relationshipId?: string | null, fullName?: Record<"local"|"en"|"np",string> | null, familyMemberId?: string | null, dateOfBirth?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } };
 
 export type GetIndividualKymFamilyOccupationListQueryVariables = Exact<{
   id: Scalars['String'];
@@ -15009,7 +15155,7 @@ export type GetIndividualKymFamilyOccupationListQueryVariables = Exact<{
 }>;
 
 
-export type GetIndividualKymFamilyOccupationListQuery = { members: { individual?: { listOccupation?: { data?: Array<{ id: string, occupationId?: string | null, orgName?: Record<"local"|"en"|"np",string> | null, panVatNo?: string | null, address?: Record<"local"|"en"|"np",string> | null, estimatedAnnualIncome?: string | null, establishedDate?: string | null, registrationNo?: string | null, contact?: string | null, isOwner?: boolean | null } | null> | null } | null } | null } };
+export type GetIndividualKymFamilyOccupationListQuery = { members: { individual?: { listOccupation?: { data?: Array<{ id: string, occupationId?: string | null, orgName?: Record<"local"|"en"|"np",string> | null, panVatNo?: string | null, address?: Record<"local"|"en"|"np",string> | null, estimatedAnnualIncome?: string | null, establishedDate?: Record<"local"|"en"|"np",string> | null, registrationNo?: string | null, contact?: string | null, isOwner?: boolean | null } | null> | null } | null } | null } };
 
 export type GetIndividualKymIncomeSourceListQueryVariables = Exact<{
   id: Scalars['String'];
@@ -15030,14 +15176,14 @@ export type GetIndividualKymIdentificationListQueryVariables = Exact<{
 }>;
 
 
-export type GetIndividualKymIdentificationListQuery = { members: { individual?: { listIdentification?: { data?: Array<{ id: string, idNo?: string | null, idType: string, place?: Record<"local"|"en"|"np",string> | null, date?: string | null } | null> | null } | null } | null } };
+export type GetIndividualKymIdentificationListQuery = { members: { individual?: { listIdentification?: { data?: Array<{ id: string, idNo?: string | null, idType: string, place?: Record<"local"|"en"|"np",string> | null, date?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } | null } };
 
 export type GetMemberDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetMemberDetailsQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, contact?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, share?: { summary?: { memberId?: string | null, count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } } | null } | null, profile?: { data?: { formData?: { basicInformation?: { gender?: Record<"local"|"en"|"np",string> | null, dateOfBirth?: string | null, age?: number | null } | null } | null } | null } | {} | null } | null } } };
+export type GetMemberDetailsQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, contact?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, share?: { summary?: { memberId?: string | null, count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } } | null } | null, profile?: { data?: { formData?: { basicInformation?: { gender?: Record<"local"|"en"|"np",string> | null, dateOfBirth?: Record<"local"|"en"|"np",string> | null, age?: number | null } | null } | null } | null } | {} | null } | null } } };
 
 export type GetOfficialUseQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -15096,14 +15242,14 @@ export type GetMemberDetailsOverviewQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberDetailsOverviewQuery = { members: { memberOverview?: { data?: { accounts?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null } | null> | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null, share?: { shareInfo?: { totalCount?: string | null, issuedCount?: string | null, returnedCount?: string | null, totalBalance?: string | null } | null, registerDetails?: Array<{ date?: string | null, title?: string | null, txnAmount?: string | null, txnType?: ShareTransactionType | null, noOfShares?: number | null } | null> | null, balanceDetails?: { totalCount: number, edges: Array<{ cursor: string, node: { id?: string | null, memberId?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: string | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, profilePic?: string | null, signaturepic?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null } | null, extraFee?: Array<{ name: string, value: number } | null> | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } | null, loan?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null, subscriptionDate?: string | null, interestEarned?: string | null, interestBooked?: string | null } | null> | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null, reports?: { list?: Array<{ code?: string | null, reportName?: string | null, category?: string | null } | null> | null } | null, overview?: { memberGraphs?: { deposit?: { periodType?: PeriodTypeEnum | null, data?: Array<{ time?: number | null, amount?: string | null } | null> | null } | null, withdraw?: { periodType?: PeriodTypeEnum | null, data?: Array<{ time?: number | null, amount?: string | null } | null> | null } | null } | null, statistics?: { totalShareValue?: string | null, accountBalance?: string | null, loanBalance?: string | null } | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null } | null> | null, recentTransactions?: Array<{ date?: string | null, title?: string | null, txnType?: MemberRecentTransactionViewTxnType | null, amount?: string | null, noOfShares?: number | null } | null> | null } | null, cheques?: Array<{ accountName?: string | null, issued?: number | null, used?: number | null, left?: number | null, cancelled?: number | null } | null> | null } | null } | null } };
+export type GetMemberDetailsOverviewQuery = { members: { memberOverview?: { data?: { accounts?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null } | null> | null, payments?: Array<{ date?: Record<"local"|"en"|"np",string> | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null, share?: { shareInfo?: { totalCount?: string | null, issuedCount?: string | null, returnedCount?: string | null, totalBalance?: string | null } | null, registerDetails?: Array<{ date?: Record<"local"|"en"|"np",string> | null, title?: string | null, txnAmount?: string | null, txnType?: ShareTransactionType | null, noOfShares?: number | null } | null> | null, balanceDetails?: { totalCount: number, edges: Array<{ cursor: string, node: { id?: string | null, memberId?: string | null, status?: Share_Status | null, transactionDate?: Record<"local"|"en"|"np",string> | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: string | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, signaturepic?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null } | null, extraFee?: Array<{ name: string, value: number } | null> | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } | null, loan?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null, subscriptionDate?: Record<"local"|"en"|"np",string> | null, interestEarned?: string | null, interestBooked?: string | null } | null> | null, payments?: Array<{ date?: Record<"local"|"en"|"np",string> | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null, reports?: { list?: Array<{ code?: string | null, reportName?: string | null, category?: string | null } | null> | null } | null, overview?: { memberGraphs?: { deposit?: { periodType?: PeriodTypeEnum | null, data?: Array<{ time?: number | null, amount?: string | null } | null> | null } | null, withdraw?: { periodType?: PeriodTypeEnum | null, data?: Array<{ time?: number | null, amount?: string | null } | null> | null } | null } | null, statistics?: { totalShareValue?: string | null, accountBalance?: string | null, loanBalance?: string | null } | null, payments?: Array<{ date?: Record<"local"|"en"|"np",string> | null, accountName?: string | null, paymentType?: string | null, amount?: string | null } | null> | null, recentTransactions?: Array<{ date?: Record<"local"|"en"|"np",string> | null, title?: string | null, txnType?: MemberRecentTransactionViewTxnType | null, amount?: string | null, noOfShares?: number | null } | null> | null } | null, cheques?: Array<{ accountName?: string | null, issued?: number | null, used?: number | null, left?: number | null, cancelled?: number | null } | null> | null } | null } | null } };
 
 export type GetMemberDetailsShareBalanceQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetMemberDetailsShareBalanceQuery = { share: { history?: { history?: Array<{ id?: string | null, memberId?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: string | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, objState: ObjState, createdAt: string } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null } | null } };
+export type GetMemberDetailsShareBalanceQuery = { share: { history?: { history?: Array<{ id?: string | null, memberId?: string | null, status?: Share_Status | null, transactionDate?: Record<"local"|"en"|"np",string> | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: string | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, objState: ObjState, createdAt: string } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null } | null } };
 
 export type GetMemberOverviewBasicDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -15173,7 +15319,7 @@ export type GetSavingStatementQueryVariables = Exact<{
 }>;
 
 
-export type GetSavingStatementQuery = { report: { depositReport: { savingStatementReport?: { memberId?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, dateJoined?: string | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { savingStatement?: Array<{ date?: Record<"local"|"en"|"np",string> | null, balanceAmount?: string | null, depositCr?: string | null, chequeOrVoucherNo?: string | null, particular?: string | null, withdrawDr?: string | null } | null> | null, totals?: { totalBalance?: string | null, totalWithdraw?: string | null, totalDeposit?: string | null } | null } | {} | null } | null } } };
+export type GetSavingStatementQuery = { report: { depositReport: { savingStatementReport?: { memberId?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, dateJoined?: Record<"local"|"en"|"np",string> | null, activeDate?: Record<"local"|"en"|"np",string> | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { savingStatement?: Array<{ date?: Record<"local"|"en"|"np",string> | null, balanceAmount?: string | null, depositCr?: string | null, chequeOrVoucherNo?: string | null, particular?: string | null, withdrawDr?: string | null } | null> | null, totals?: { totalBalance?: string | null, totalWithdraw?: string | null, totalDeposit?: string | null } | null } | {} | null } | null } } };
 
 export type GetInterestStatementReportQueryVariables = Exact<{
   data: InterestStatementFilter;
@@ -15181,6 +15327,13 @@ export type GetInterestStatementReportQueryVariables = Exact<{
 
 
 export type GetInterestStatementReportQuery = { report: { depositReport: { interestStatementReport: { data?: { memberId?: string | null, accountNo?: string | null, accountType?: NatureOfDepositProduct | null, currentInterestRate?: number | null, memberName?: Record<"local"|"en"|"np",string> | null, entries?: Array<{ date?: Record<"local"|"en"|"np",string> | null, amount?: string | null, balance?: string | null, days?: number | null, rate?: number | null, remarks?: string | null } | null> | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } } } };
+
+export type GetSuspiciousTransactionReportQueryVariables = Exact<{
+  data: SuspiciousTransactionReportInput;
+}>;
+
+
+export type GetSuspiciousTransactionReportQuery = { report: { depositReport: { suspiciousTransctionReport?: { data?: Array<{ id?: string | null, date?: Record<"local"|"en"|"np",string> | null, memberId?: string | null, memberName?: Record<"local"|"en"|"np",string> | null, amount?: string | null, product_name?: string | null, tranxType?: NatureOfTransaction | null, status?: boolean | null } | null> | null } | null } } };
 
 export type GetUserReportQueryVariables = Exact<{
   data?: InputMaybe<UserReportFilter>;
@@ -15292,7 +15445,7 @@ export type GetShareStatementQueryVariables = Exact<{
 }>;
 
 
-export type GetShareStatementQuery = { report: { shareReport: { shareStatementReport?: { member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, dateJoined?: string | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { shareStatement?: Array<{ date: Record<"local"|"en"|"np",string>, particular: string, noOfShares: number, returnAmountDr: number, purchaseAmountCr: number, balanceSheet: number } | null> | null, totals?: { totalShares?: number | null, totalDr?: number | null, totalCr?: number | null, totalBalanceSheet?: number | null } | null } | {} | null } | null } } };
+export type GetShareStatementQuery = { report: { shareReport: { shareStatementReport?: { member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, dateJoined?: Record<"local"|"en"|"np",string> | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { shareStatement?: Array<{ date: Record<"local"|"en"|"np",string>, particular: string, noOfShares: number, returnAmountDr: number, purchaseAmountCr: number, balanceSheet: number } | null> | null, totals?: { totalShares?: number | null, totalDr?: number | null, totalCr?: number | null, totalBalanceSheet?: number | null } | null } | {} | null } | null } } };
 
 export type GetShareRegisterReportQueryVariables = Exact<{
   data: SharePurchaseRegisterReportFilter;
@@ -15441,7 +15594,7 @@ export type GetBranchEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetBranchEditDataQuery = { settings: { general?: { branch?: { formState?: { data?: { branchCode?: string | null, name?: string | null, serviceCenterPhone?: string | null, category?: BranchCategory | null, estDate?: string | null, managerName?: string | null, provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: string | null, phoneNumber?: string | null, email?: string | null, abbsStatus?: boolean | null, receivableAccountId?: string | null, payableAccountId?: string | null, plTransferId?: string | null, tdsTransaferId?: string | null, branchStatus?: boolean | null, location?: { longitude?: number | null, latitude?: number | null } | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | null } | null } | null } | null } };
+export type GetBranchEditDataQuery = { settings: { general?: { branch?: { formState?: { data?: { branchCode?: string | null, name?: string | null, serviceCenterPhone?: string | null, category?: BranchCategory | null, estDate?: Record<"local"|"en"|"np",string> | null, managerName?: string | null, provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: string | null, phoneNumber?: string | null, email?: string | null, abbsStatus?: boolean | null, receivableAccountId?: string | null, payableAccountId?: string | null, plTransferId?: string | null, tdsTransaferId?: string | null, branchStatus?: boolean | null, location?: { longitude?: number | null, latitude?: number | null } | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | null } | null } | null } | null } };
 
 export type GetCoaListQueryVariables = Exact<{
   filter: ChartsOfAccountFilter;
@@ -15693,14 +15846,14 @@ export type GetSettingsUserEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetSettingsUserEditDataQuery = { settings: { myraUser?: { formState?: { data?: { name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, empCode?: string | null, isCoreEmployee?: boolean | null, role?: Roles | null, branch?: string | null, identificationSelection?: Array<string | null> | null, isTempAsPermanentAddressSame?: boolean | null, landlordName?: string | null, landlordContact?: string | null, identificationDetails?: Array<{ id?: string | null, idNo?: string | null, idType?: string | null, place?: string | null, date?: string | null } | null> | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, profilePicture?: Array<{ identifier?: string | null, url?: string | null } | null> | null } | null } | null } | null } };
+export type GetSettingsUserEditDataQuery = { settings: { myraUser?: { formState?: { data?: { name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: Record<"local"|"en"|"np",string> | null, empCode?: string | null, isCoreEmployee?: boolean | null, role?: Roles | null, branch?: string | null, identificationSelection?: Array<string | null> | null, isTempAsPermanentAddressSame?: boolean | null, landlordName?: string | null, landlordContact?: string | null, identificationDetails?: Array<{ id?: string | null, idNo?: string | null, idType?: string | null, place?: string | null, date?: Record<"local"|"en"|"np",string> | null } | null> | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, profilePicture?: Array<{ identifier?: string | null, url?: string | null } | null> | null } | null } | null } | null } };
 
 export type GetValuatorQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetValuatorQuery = { settings: { general?: { valuator?: { formState?: { data?: { valuatorName?: string | null, valuatorType?: ValuatorType | null, valuatorId?: string | null, academicQualification?: string | null, valuationLicenseNo?: string | null, renewalDate?: string | null, contractDate?: string | null, insurancePremium?: number | null, mobileNo?: string | null, phoneNo?: string | null, email?: string | null, documents?: Array<string | null> | null, address?: { localGovernmentId?: number | null, districtId?: number | null, provinceId?: number | null, houseNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, wardNo?: number | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } | null } | null } | null } };
+export type GetValuatorQuery = { settings: { general?: { valuator?: { formState?: { data?: { valuatorName?: string | null, valuatorType?: ValuatorType | null, valuatorId?: string | null, academicQualification?: string | null, valuationLicenseNo?: string | null, renewalDate?: Record<"local"|"en"|"np",string> | null, contractDate?: Record<"local"|"en"|"np",string> | null, insurancePremium?: number | null, mobileNo?: string | null, phoneNo?: string | null, email?: string | null, documents?: Array<string | null> | null, address?: { localGovernmentId?: number | null, districtId?: number | null, provinceId?: number | null, houseNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, wardNo?: number | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } | null } | null } | null } };
 
 export type GetValuatorListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
@@ -15728,14 +15881,14 @@ export type GetShareRegisterListQueryVariables = Exact<{
 }>;
 
 
-export type GetShareRegisterListQuery = { share: { register?: { totalCount: number, edges: Array<{ cursor: string, node: { id?: string | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, balance?: number | null, startNumber: number, shareAmount?: string | null, endNumber: number, credit?: number | null, debit?: number | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
+export type GetShareRegisterListQuery = { share: { register?: { totalCount: number, edges: Array<{ cursor: string, node: { id?: string | null, transactionDate?: Record<"local"|"en"|"np",string> | null, transactionDirection: Share_Transaction_Direction, balance?: number | null, startNumber: number, shareAmount?: string | null, endNumber: number, credit?: number | null, debit?: number | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
 
 export type GetShareHistoryQueryVariables = Exact<{
   memberId: Scalars['ID'];
 }>;
 
 
-export type GetShareHistoryQuery = { share: { history?: { history?: Array<{ id?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: string | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null, balance?: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } | null } | null } };
+export type GetShareHistoryQuery = { share: { history?: { history?: Array<{ id?: string | null, status?: Share_Status | null, transactionDate?: Record<"local"|"en"|"np",string> | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: string | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null, balance?: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } | null } | null } };
 
 export type GetShareChargesQueryVariables = Exact<{
   transactionType: Share_Transaction_Direction;
@@ -15750,7 +15903,7 @@ export type GetShareDetailQueryVariables = Exact<{
 }>;
 
 
-export type GetShareDetailQuery = { share: { shareDetail?: { data?: { id: string, totalShareCount?: number | null, totalShareAmount?: string | null, date?: Record<"local"|"en"|"np",string> | null, type?: string | null, noOfShare?: number | null, amount?: string | null, total?: string | null, status?: string | null, transactionBranch?: string | null, teller?: string | null, totalCredit?: string | null, totalDebit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, profilePicUrl?: string | null } | null, fromTo?: { start?: number | null, end?: number | null } | null, charges?: Array<{ name?: string | null, value?: string | null } | null> | null, paymentDetail?: { paymentMode?: SharePaymentMode | null, amount?: string | null, sourceOfFund?: string | null } | null, glTransactions?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type GetShareDetailQuery = { share: { shareDetail?: { data?: { id: string, totalShareCount?: number | null, totalShareAmount?: string | null, date?: Record<"local"|"en"|"np",string> | null, type?: string | null, noOfShare?: number | null, amount?: string | null, total?: string | null, status?: string | null, transactionBranch?: string | null, teller?: string | null, totalCredit?: string | null, totalDebit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, profilePicUrl?: string | null } | null, fromTo?: { start?: number | null, end?: number | null } | null, charges?: Array<{ name?: string | null, value?: string | null } | null> | null, paymentDetail?: { paymentMode?: SharePaymentMode | null, amount?: string | null, sourceOfFund?: string | null } | null, glTransactions?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } };
 
 export type GetDepositListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
@@ -15787,28 +15940,28 @@ export type GetTellerTransactionListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetTellerTransactionListDataQuery = { transaction: { listTellerTransaction: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, transferType: TellerTransferType, transferState: TellerActivityState, srcTeller?: Record<"local"|"en"|"np",string> | null, amount?: string | null, destTeller?: Record<"local"|"en"|"np",string> | null, date?: string | null, srcProfilePic?: string | null, destProfilePic?: string | null, srcProfilePicUrl?: string | null, destProfilePicUrl?: string | null, denomination?: Array<{ value: CashValue, quantity: number, amount?: string | null } | null> | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetTellerTransactionListDataQuery = { transaction: { listTellerTransaction: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, transferCode?: string | null, transferType: TellerTransferType, transferState: TellerActivityState, srcTeller?: Record<"local"|"en"|"np",string> | null, amount?: string | null, destTeller?: Record<"local"|"en"|"np",string> | null, date?: string | null, srcProfilePic?: string | null, destProfilePic?: string | null, srcProfilePicUrl?: string | null, destProfilePicUrl?: string | null, denomination?: Array<{ value: CashValue, quantity: number, amount?: string | null } | null> | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type TransactionDepositDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
 }>;
 
 
-export type TransactionDepositDetailQuery = { transaction: { viewDeposit?: { data?: { id: string, transactionDate?: string | null, accountName?: string | null, voucherId?: string | null, amount?: string | null, fine?: string | null, rebate?: string | null, totalDepositedAmount?: string | null, status?: ObjState | null, paymentMode?: DepositPaymentType | null, sourceOfFund?: string | null, depositedBy?: DepositedBy | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, code: string, objState: ObjState, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type TransactionDepositDetailQuery = { transaction: { viewDeposit?: { data?: { id: string, transactionCode?: string | null, transactionDate?: string | null, accountName?: string | null, voucherId?: string | null, amount?: string | null, fine?: string | null, rebate?: string | null, totalDepositedAmount?: string | null, status?: ObjState | null, paymentMode?: DepositPaymentType | null, sourceOfFund?: string | null, depositedBy?: DepositedBy | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, code: string, objState: ObjState, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } };
 
 export type TransactionWithdrawDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
 }>;
 
 
-export type TransactionWithdrawDetailQuery = { transaction: { viewWithdraw?: { data?: { id: string, transactionDate?: string | null, accountName?: string | null, chequeNo?: string | null, withdrawAmount?: string | null, withdrawWith?: WithdrawWith | null, fine?: string | null, totalWithdrawnAmount?: string | null, status?: ObjState | null, paymentMode?: WithdrawPaymentType | null, withdrawnBy?: WithdrawBy | null, marketRepId?: string | null, marketRepName?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type TransactionWithdrawDetailQuery = { transaction: { viewWithdraw?: { data?: { id: string, transactionDate?: string | null, transactionCode?: string | null, accountName?: string | null, chequeNo?: string | null, withdrawAmount?: string | null, withdrawWith?: WithdrawWith | null, fine?: string | null, totalWithdrawnAmount?: string | null, status?: ObjState | null, paymentMode?: WithdrawPaymentType | null, withdrawnBy?: WithdrawBy | null, marketRepId?: string | null, marketRepName?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } };
 
 export type TransactionAccountTransferDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
 }>;
 
 
-export type TransactionAccountTransferDetailQuery = { transaction: { viewAccountTransfer?: { data?: { id: string, transactionDate?: string | null, transferAmount?: string | null, transferType?: TransferType | null, withdrawnBy?: string | null, withdrawnSlipNo?: string | null, transactionBranch?: string | null, objState?: ObjState | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, sourceAccount?: { id: string, accountName?: string | null } | null, destinationAccount?: { id: string, accountName?: string | null } | null, recipientMember?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type TransactionAccountTransferDetailQuery = { transaction: { viewAccountTransfer?: { data?: { id: string, transactionCode?: string | null, transactionDate?: string | null, transferAmount?: string | null, transferType?: TransferType | null, withdrawnBy?: string | null, withdrawnSlipNo?: string | null, transactionBranch?: string | null, objState?: ObjState | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, sourceAccount?: { id: string, accountName?: string | null } | null, destinationAccount?: { id: string, accountName?: string | null } | null, recipientMember?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } };
 
 export type AgentTransactionDetailQueryVariables = Exact<{
   agentId: Scalars['ID'];
@@ -15830,7 +15983,7 @@ export type LoanRepaymentDetailQueryVariables = Exact<{
 }>;
 
 
-export type LoanRepaymentDetailQuery = { transaction: { viewLoanRepayment?: { data?: { repaymentId: string, loanSubType?: string | null, loanAccountId?: string | null, loanAccountName?: string | null, repaymentDate?: string | null, installmentNo?: string | null, installmentAmount?: string | null, fine?: string | null, totalRepaymentAmount?: string | null, objState: string, paymentMode?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, installmentDetails?: Array<{ installmentNo?: number | null, payment?: string | null, principalAmount?: string | null, interestAmount?: string | null } | null> | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type LoanRepaymentDetailQuery = { transaction: { viewLoanRepayment?: { data?: { repaymentId: string, transactionCode?: string | null, loanSubType?: string | null, loanAccountId?: string | null, loanAccountName?: string | null, repaymentDate?: string | null, installmentNo?: string | null, installmentAmount?: string | null, fine?: string | null, totalRepaymentAmount?: string | null, objState: string, paymentMode?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, installmentDetails?: Array<{ installmentNo?: number | null, payment?: string | null, principalAmount?: string | null, interestAmount?: string | null } | null> | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } };
 
 export type GetEodStatusQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -18871,6 +19024,14 @@ export const SetDepositDataDocument = `
   transaction {
     deposit(data: $data) {
       recordId
+      record {
+        transactionID
+        date
+        amount
+        rebate
+        paymentMode
+        depositedBy
+      }
       error {
         ...MutationError
       }
@@ -19345,6 +19506,7 @@ export const GetAccountTableListDocument = `
           }
           installmentAmount
           balance
+          availableBalance
           accountOpenedDate
           lastTransactionDate
           accountExpiryDate
@@ -19755,11 +19917,13 @@ export const GetAccountTransactionListsDocument = `
       edges {
         node {
           id
+          transactionId
           accountId
           name
           date
           month
           transactionDirection
+          transactionType
           amount
           currentBalance
         }
@@ -20221,10 +20385,12 @@ export const GetJournalVoucherDetailDocument = `
           status
           reference
           note
+          transactionCode
           glTransaction {
             account
             debit
             credit
+            serviceCenter
           }
           totalDebit
           totalCredit
@@ -23065,6 +23231,7 @@ export const GetMemberLinkedAccountsDocument = `
             name
           }
           balance
+          availableBalance
           interestAccured
           interestTax
           prematurePenalty
@@ -24989,6 +25156,7 @@ export const GetSavingStatementDocument = `
             localGovernment
           }
           dateJoined
+          activeDate
         }
         statement {
           ... on SavingStatementReport {
@@ -25071,6 +25239,38 @@ export const useGetInterestStatementReportQuery = <
     useQuery<GetInterestStatementReportQuery, TError, TData>(
       ['getInterestStatementReport', variables],
       useAxios<GetInterestStatementReportQuery, GetInterestStatementReportQueryVariables>(GetInterestStatementReportDocument).bind(null, variables),
+      options
+    );
+export const GetSuspiciousTransactionReportDocument = `
+    query getSuspiciousTransactionReport($data: SuspiciousTransactionReportInput!) {
+  report {
+    depositReport {
+      suspiciousTransctionReport(data: $data) {
+        data {
+          id
+          date
+          memberId
+          memberName
+          amount
+          product_name
+          tranxType
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSuspiciousTransactionReportQuery = <
+      TData = GetSuspiciousTransactionReportQuery,
+      TError = unknown
+    >(
+      variables: GetSuspiciousTransactionReportQueryVariables,
+      options?: UseQueryOptions<GetSuspiciousTransactionReportQuery, TError, TData>
+    ) =>
+    useQuery<GetSuspiciousTransactionReportQuery, TError, TData>(
+      ['getSuspiciousTransactionReport', variables],
+      useAxios<GetSuspiciousTransactionReportQuery, GetSuspiciousTransactionReportQueryVariables>(GetSuspiciousTransactionReportDocument).bind(null, variables),
       options
     );
 export const GetUserReportDocument = `
@@ -28989,6 +29189,7 @@ export const GetShareDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalCredit
         totalDebit
@@ -29156,6 +29357,7 @@ export const GetTellerTransactionListDataDocument = `
       edges {
         node {
           ID
+          transferCode
           transferType
           transferState
           srcTeller
@@ -29202,6 +29404,7 @@ export const TransactionDepositDetailDocument = `
     viewDeposit(transactionId: $transactionId) {
       data {
         id
+        transactionCode
         member {
           id
           code
@@ -29230,6 +29433,7 @@ export const TransactionDepositDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -29264,6 +29468,7 @@ export const TransactionWithdrawDetailDocument = `
           profilePicUrl
         }
         transactionDate
+        transactionCode
         accountName
         chequeNo
         withdrawAmount
@@ -29281,6 +29486,7 @@ export const TransactionWithdrawDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -29313,6 +29519,7 @@ export const TransactionAccountTransferDetailDocument = `
           profilePic
           profilePicUrl
         }
+        transactionCode
         transactionDate
         transferAmount
         sourceAccount {
@@ -29338,6 +29545,7 @@ export const TransactionAccountTransferDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
@@ -29428,6 +29636,7 @@ export const LoanRepaymentDetailDocument = `
           name
           profilePicUrl
         }
+        transactionCode
         loanSubType
         loanAccountId
         loanAccountName
@@ -29450,6 +29659,7 @@ export const LoanRepaymentDetailDocument = `
           account
           debit
           credit
+          serviceCenter
         }
         totalDebit
         totalCredit
