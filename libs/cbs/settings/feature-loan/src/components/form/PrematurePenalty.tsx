@@ -35,25 +35,14 @@ export const PrematurePenalty = () => {
     },
   ];
 
-  // const { data: coa } = useGetCoaListQuery({
-  //   filter: {
-  //     active: true,
-  //   },
-  // });
-
-  // const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
-
-  // const coaList = coaData?.map((item) => ({
-  //   label: item?.name?.en as string,
-  //   value: item?.id as string,
-  // }));
-
   return (
     <FormSection header="depositProductPrematuredPenaltySetup">
       <GridItem colSpan={3}>
         <BoxContainer>
           <Box display="flex" justifyContent="space-between">
-            <Text>{t['prematurePenaltyEnable']}</Text>
+            <Text fontSize="s2" fontWeight="Regular" color="gray.700">
+              {t['prematurePenaltyEnable']}
+            </Text>
             <FormSwitchTab name="isPrematurePenaltyApplicable" options={enableSwitch} />
           </Box>
 
@@ -68,12 +57,8 @@ export const PrematurePenalty = () => {
                 name="prematurePenaltySetup.noOfDays"
                 label={t['depositProductNumberofDays']}
               />
-              {/* <FormSelect
-        name="prematurePenaltySetup.penaltyLedgerMapping"
-        label={t['depositProductPenaltyLedgerMapping']}
-        options={coaList}
-      /> */}
               <FormInput
+                isRequired
                 name="prematurePenaltySetup.penaltyRate"
                 label={t['depositProductPenaltyRate']}
                 rightElement={

@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection, GridItem } from '@myra-ui';
+
 import { KymCooperativeFormInput, useAllAdministrationQuery } from '@coop/cbs/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -60,12 +61,14 @@ export const KymCoopOpAddress = (props: IProps) => {
       >
         <FormSection id="kymCoopAccOperatingAddress" header="kymCoopOperatingAddress">
           <FormSelect
+            isRequired
             name="operatingAddress.provinceId"
             label={t['kymCoopProvince']}
             options={province}
             id="operatingAddressCOOP"
           />
           <FormSelect
+            isRequired
             id="operatingAddressCOOP"
             name="operatingAddress.districtId"
             label={t['kymCoopDistrict']}
@@ -75,6 +78,7 @@ export const KymCoopOpAddress = (props: IProps) => {
             }))}
           />
           <FormSelect
+            isRequired
             id="operatingAddressCOOP"
             name="operatingAddress.localGovernmentId"
             label={t['kymCoopVDCLocalGov']}
@@ -85,6 +89,7 @@ export const KymCoopOpAddress = (props: IProps) => {
           />
 
           <FormSelect
+            isRequired
             id="operatingAddressCOOP"
             name="operatingAddress.wardNo"
             label={t['kymCoopWardNo']}

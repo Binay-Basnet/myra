@@ -31,6 +31,7 @@ export const LoanRepaymentSchemes = () => {
     <FormSection>
       <GridItem colSpan={1}>
         <FormSelect
+          isRequired
           name="interestMethod"
           label={t['loanProductInterestMethod']}
           options={interestMethodtList}

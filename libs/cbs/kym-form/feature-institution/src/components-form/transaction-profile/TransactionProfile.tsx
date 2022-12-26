@@ -1,12 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection, Grid, GridItem } from '@myra-ui';
+
 import {
   FormFieldSearchTerm,
   KymInsInput,
   useGetInstitutionKymOptionsQuery,
 } from '@coop/cbs/data-access';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { FormSection, Grid, GridItem } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
@@ -64,6 +65,7 @@ export const TransactionProfileInstitution = (props: IProps) => {
           <GridItem colSpan={3}>
             <Grid templateColumns="repeat(2, 1fr)">
               <FormRadioGroup
+                isRequired
                 name="expectedMonthlyTurnover"
                 label={t['kymInsExpectedMonthlyTurnover']}
                 options={getOption(monthlyTurnover)}
@@ -72,6 +74,7 @@ export const TransactionProfileInstitution = (props: IProps) => {
               />
 
               <FormRadioGroup
+                isRequired
                 name="expectedMonthlyTransaction"
                 label={t['kymInsExpectedMonthlyTransaction']}
                 options={getOption(monthlyTransaction)}

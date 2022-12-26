@@ -194,7 +194,11 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
                 label={t['depositPaymentBankName']}
                 options={bankList}
               /> */}
-              <FormBankSelect name="bankVoucher.bankId" label={t['depositPaymentBankName']} />
+              <FormBankSelect
+                isRequired
+                name="bankVoucher.bankId"
+                label={t['depositPaymentBankName']}
+              />
             </GridItem>
 
             <FormInput name="bankVoucher.voucherId" label={t['addDepositVoucherId']} />
@@ -206,6 +210,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
             />
 
             <FormDatePicker
+              isRequired
               name="bankVoucher.depositedAt"
               label={t['depositPaymentDepositedDate']}
               maxToday
@@ -229,12 +234,13 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
             {isDiffMember && (
               <GridItem colSpan={3}>
-                <FormMemberSelect name="withdrawSlip.memberId" label="Member" />
+                <FormMemberSelect isRequired name="withdrawSlip.memberId" label="Member" />
               </GridItem>
             )}
 
             <GridItem colSpan={2}>
               <FormAccountSelect
+                isRequired
                 name="withdrawSlip.accId"
                 memberId={isDiffMember ? dmemberId : memberId}
                 label="Account Name"
@@ -259,7 +265,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
         {selectedPaymentMode === DepositPaymentType.Cash && (
           <>
             <InputGroupContainer>
-              <FormAmountInput name="cash.cashPaid" label={t['depositPaymentCash']} />
+              <FormAmountInput isRequired name="cash.cashPaid" label={t['depositPaymentCash']} />
             </InputGroupContainer>
             <FormSwitch
               name="cash.disableDenomination"

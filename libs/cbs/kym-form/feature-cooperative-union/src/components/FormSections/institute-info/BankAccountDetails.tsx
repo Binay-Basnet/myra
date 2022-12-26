@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection } from '@myra-ui';
+
 import { CoopUnionInstitutionInformationInput, useGetBankListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
@@ -30,6 +31,7 @@ export const BankAccountDetails = ({ setSection }: IBankAccountDetailsProps) => 
       >
         <FormSection id="kymCoopUnionAccBankAccountDetails" header="kymCoopUnionBankAccountDetails">
           <FormSelect
+            isRequired
             name="nameOfBank"
             label={t['kymCoopUnionNameOfBank']}
             options={bankList?.bank?.bank?.list?.map((bank) => ({
@@ -37,9 +39,19 @@ export const BankAccountDetails = ({ setSection }: IBankAccountDetailsProps) => 
               value: bank?.id,
             }))}
           />
-          <FormInput type="text" name="accountNumber" label={t['kymCoopUnionAccountNumber']} />
+          <FormInput
+            isRequired
+            type="text"
+            name="accountNumber"
+            label={t['kymCoopUnionAccountNumber']}
+          />
 
-          <FormInput type="text" name="accountName" label={t['kymCoopUnionAccountName']} />
+          <FormInput
+            isRequired
+            type="text"
+            name="accountName"
+            label={t['kymCoopUnionAccountName']}
+          />
         </FormSection>
       </form>
     </FormProvider>

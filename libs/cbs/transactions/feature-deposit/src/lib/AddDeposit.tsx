@@ -387,10 +387,11 @@ export const AddDeposit = () => {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <FormMemberSelect name="memberId" label="Member" />
+                  <FormMemberSelect isRequired name="memberId" label="Member" />
 
                   {memberId && (
                     <FormAccountSelect
+                      isRequired
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
@@ -404,11 +405,12 @@ export const AddDeposit = () => {
                         selectedAccount?.product?.isMandatorySaving)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
-                          <FormInput name="voucherId" label="Deposit Slip No" />
+                          <FormInput isRequired name="voucherId" label="Deposit Slip No" />
 
                           <Box />
 
                           <FormInput
+                            isRequired
                             name="noOfInstallments"
                             label={t['addDepositNoOfInstallments']}
                           />
@@ -421,10 +423,14 @@ export const AddDeposit = () => {
                         </Grid>
 
                         <Box display="flex" flexDirection="column" gap="s4">
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
+                          <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70">
                             {t['addDepositPaymentRange']}
                           </Text>
-                          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
+                          <Text
+                            fontSize="s3"
+                            fontWeight="Regular"
+                            color="neutralColorLight.Gray-70"
+                          >
                             {`Payment made from ${firstMonth} to ${lastMonth}`}
                           </Text>
                         </Box>
@@ -468,9 +474,10 @@ export const AddDeposit = () => {
                         NatureOfDepositProduct.TermSavingOrFd) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
-                          <FormInput name="voucherId" label="Deposit Slip No" />
+                          <FormInput isRequired name="voucherId" label="Deposit Slip No" />
 
                           <FormAmountInput
+                            isRequired
                             type="number"
                             name="amount"
                             label={t['addDepositAmountToBeDeposited']}

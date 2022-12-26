@@ -32,6 +32,7 @@ interface IAccountSelectProps {
   isLinkedAccounts?: boolean;
   filterBy?: ObjState;
   excludeIds?: string[];
+  isRequired?: boolean;
 }
 
 export const FormAccountSelect = ({
@@ -42,6 +43,7 @@ export const FormAccountSelect = ({
   placeholder,
   filterBy,
   excludeIds,
+  isRequired,
 }: IAccountSelectProps) => {
   const { t } = useTranslation();
   const { data: accountListData, isFetching } = useGetAccountTableListQuery(
@@ -130,6 +132,7 @@ export const FormAccountSelect = ({
       render={({ field: { value, onChange } }) => (
         <AccountSelect
           label={label}
+          isRequired={isRequired}
           value={
             isLinkedAccounts
               ? linkedAccountsOptions?.find((option) => option.value === value)

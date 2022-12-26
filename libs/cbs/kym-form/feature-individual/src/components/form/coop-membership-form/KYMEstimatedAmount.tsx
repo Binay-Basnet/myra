@@ -1,12 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { Box, FormSection } from '@myra-ui';
+
 import {
   FormFieldSearchTerm,
   KymIndMemberInput,
   useGetIndividualKymOptionsQuery,
 } from '@coop/cbs/data-access';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Box, FormSection } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';
@@ -39,6 +40,7 @@ export const KYMEstimatedAmount = ({ setKymCurrentSection }: IKYMEstimatedAmount
           header="kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION"
         >
           <FormInput
+            isRequired
             type="number"
             name="estimatedAnnualTransactionAmount"
             label={t['kynIndEstimatedannualaccounttransaction']}
@@ -62,6 +64,7 @@ export const KYMEstimatedAmount = ({ setKymCurrentSection }: IKYMEstimatedAmount
 
         <Box p="s20" id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion">
           <FormRadioGroup
+            isRequired
             label={t['kynIndEstimatednoofAnnualTransaction']}
             id="estimatedAnnualTransactionFrequencyId"
             name="estimatedAnnualTransactionFrequencyId"
@@ -72,12 +75,14 @@ export const KYMEstimatedAmount = ({ setKymCurrentSection }: IKYMEstimatedAmount
 
         <FormSection>
           <FormInput
+            isRequired
             type="number"
             name="estimatedAnnualDepositAmount"
             label={t['kynIndEstimatedAnnualDeposit']}
             textAlign="right"
           />
           <FormInput
+            isRequired
             type="number"
             name="estimatedAnnualLoanAmount"
             label={t['kynIndEstimatedAnnualLoan']}

@@ -22,6 +22,7 @@ export const WithdrawPenalty = () => {
   return (
     <FormSection header="depositProductWithdrawPenaltySetup">
       <FormInput
+        isRequired
         name="withdrawPenalty.penaltyRate"
         label={t['depositProductPenaltyRate']}
         textAlign="right"

@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection } from '@myra-ui';
+
 import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { FormDatePicker, FormEmailInput, FormInput, FormPhoneNumber } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
@@ -26,11 +27,11 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
         }}
       >
         <FormSection id="kymCoopUnionAccContactDetails" header="kymCoopUnionContactDetails">
-          <FormPhoneNumber name="phone" label={t['kymCoopUnionPhone']} />
+          <FormPhoneNumber isRequired name="phone" label={t['kymCoopUnionPhone']} />
 
           <FormInput type="number" name="fax" label={t['kymCoopUnionFax']} />
 
-          <FormEmailInput name="contactEmail" label={t['kymCoopUnionEmail']} />
+          <FormEmailInput isRequired name="contactEmail" label={t['kymCoopUnionEmail']} />
 
           <FormInput type="text" name="website" label={t['kymCoopUnionWebsiteLinkAny']} />
 

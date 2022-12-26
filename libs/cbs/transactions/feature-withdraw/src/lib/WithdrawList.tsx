@@ -40,7 +40,7 @@ export const WithdrawList = () => {
     () => [
       {
         header: t['withdrawListTransactionId'],
-        accessorFn: (row) => row?.node?.ID,
+        accessorFn: (row) => row?.node?.transactionCode,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,

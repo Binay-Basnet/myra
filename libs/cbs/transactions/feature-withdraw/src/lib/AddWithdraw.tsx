@@ -343,6 +343,7 @@ export const AddWithdraw = () => {
 
                   {memberId && (
                     <FormAccountSelect
+                      isRequired
                       name="accountId"
                       label={t['addWithdrawSelectWithdrawAccount']}
                       memberId={memberId}
@@ -370,6 +371,7 @@ export const AddWithdraw = () => {
                       {withdrawn === WithdrawWith.WithdrawSlip && (
                         <InputGroupContainer>
                           <FormSelect
+                            isRequired
                             name="withdrawSlipNo"
                             label="Withdraw Slip No"
                             options={availableSlipListOptions}
@@ -379,11 +381,12 @@ export const AddWithdraw = () => {
 
                       {withdrawn === WithdrawWith.CounterSlip && (
                         <InputGroupContainer>
-                          <FormInput name="counterSlipNo" label="Counter Slip No" />
+                          <FormInput isRequired name="counterSlipNo" label="Counter Slip No" />
                         </InputGroupContainer>
                       )}
 
                       <FormAmountInput
+                        isRequired
                         type="number"
                         min={0}
                         name="amount"

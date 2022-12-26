@@ -29,7 +29,7 @@ export const Product = () => {
   return (
     <FormSection>
       <GridItem colSpan={2}>
-        <FormInput name="productName" label={t['depositProductProductName']} />
+        <FormInput isRequired name="productName" label={t['depositProductProductName']} />
       </GridItem>
       <FormSelect
         label={t['depositProductNatureofDepositProduct']}

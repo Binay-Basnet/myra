@@ -37,7 +37,7 @@ const queryClient = new QueryClient({
       retry: false,
       keepPreviousData: true,
       cacheTime: fiveMinutesInMs,
-      staleTime: fiveMinutesInMs,
+      staleTime: 0,
     },
   },
 });

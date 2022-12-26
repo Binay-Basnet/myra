@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import { Alert, Box } from '@myra-ui';
 
 import { FrequencyTenure, useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
@@ -59,10 +60,11 @@ export const Tenure = () => {
   return (
     <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" gap="s16" bg="neutralColorLight.Gray-0">
-        <SubHeadingText>{t['accountOpenTenure']} </SubHeadingText>
+        <SubHeadingText>{t['accountOpenTenure']} *</SubHeadingText>
         <Box gap="s8" display="flex" flexDirection="column" background="neutralColorLight.Gray-0">
           <Box w="290px">
             <FormInput
+              isRequired
               type="number"
               name="tenureNumber"
               rules={{

@@ -42,7 +42,7 @@ export const DepositList = () => {
     () => [
       {
         header: t['depositListTransactionId'],
-        accessorFn: (row) => row?.node?.ID,
+        accessorFn: (row) => row?.node?.transactionCode,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
@@ -72,7 +72,7 @@ export const DepositList = () => {
       {
         header: t['depositListAmount'],
 
-        accessorFn: (row) => amountConverter(row?.node?.amount),
+        accessorFn: (row) => amountConverter(row?.node?.amount as string),
         meta: {
           isNumeric: true,
         },

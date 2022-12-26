@@ -9,11 +9,12 @@ import { getRouterQuery } from '@coop/shared/utils';
 interface IFormAgentSelectProps {
   name: string;
   label: string;
+  isRequired?: boolean;
 }
 
 type OptionType = { label: string; value: string };
 
-export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
+export const FormAgentSelect = ({ name, label, isRequired }: IFormAgentSelectProps) => {
   const [agentId, setAgentId] = useState('');
 
   const { watch } = useFormContext();
@@ -51,6 +52,7 @@ export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
     <FormSelect
       name={name}
       label={label}
+      isRequired={isRequired}
       isLoading={isFetching}
       onInputChange={debounce((id) => {
         if (id) {

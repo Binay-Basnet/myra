@@ -63,6 +63,7 @@ export const PrematuredPenalty = () => {
             <FormInput name="prematurePenalty.noOfDays" label={t['depositProductNumberofDays']} />
 
             <FormInput
+              isRequired
               name="prematurePenalty.penaltyRate"
               label={t['depositProductPenaltyRate']}
               rightElement={

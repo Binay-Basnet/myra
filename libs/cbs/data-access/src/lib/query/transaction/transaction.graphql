@@ -5,6 +5,7 @@ query getDepositListData($filter: AccountTransactionFilter, $pagination: Paginat
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -35,6 +36,7 @@ query getWithdrawListData($filter: AccountTransactionFilter, $pagination: Pagina
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -62,6 +64,7 @@ query getAccountTransferListData($filter: AccountTransactionFilter, $pagination:
       edges {
         node {
           ID
+          transactionCode
           amount
           state
           transferType

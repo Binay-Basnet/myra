@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Alert, Box } from '@myra-ui';
+
 import { FrequencyTenure } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { SubHeadingText } from '@coop/shared/components';
 import { FormInput } from '@coop/shared/form';
-import { Alert, Box } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { useLoanProductContext } from '../hooks/useLoanProduct';
@@ -35,9 +35,9 @@ export const Tenure = () => {
   return (
     <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" gap="s16" bg="neutralColorLight.Gray-0">
-        <SubHeadingText>{t['accountOpenTenure']} </SubHeadingText>
         <Box w="290px">
           <FormInput
+            isRequired
             rules={{
               max: {
                 value: product?.maxTenureUnitNumber as number,

@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection, GridItem } from '@myra-ui';
+
 import { KymInsInput } from '@coop/cbs/data-access';
 import { FormAddress, FormInput } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
@@ -26,14 +27,15 @@ export const RegisteredDetailsInstitution = ({ setSection }: IProps) => {
         }}
       >
         <FormSection id="kymInsRegisteredDetails" header="kymInsRegisteredDetails">
-          {' '}
           <FormInput
+            isRequired
             id="registeredDetailsInstitution"
             name="registeredNumber"
             label={t['kymInsRegisteredNumber']}
           />
           <GridItem colSpan={2}>
             <FormInput
+              isRequired
               id="registeredDetailsInstitution"
               type="text"
               name="issuingOffice"

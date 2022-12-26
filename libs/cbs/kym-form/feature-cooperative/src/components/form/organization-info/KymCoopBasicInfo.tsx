@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection } from '@myra-ui';
+
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -27,10 +28,20 @@ export const KymCoopBasicInfo = (props: IProps) => {
         }}
       >
         <FormSection id="kymCoopAccBasicInformation" header="kymCoopBASICINFORMATION">
-          <FormInput type="text" name="nameOfOrganization" label={t['kymCoopNameofOrganization']} />
+          <FormInput
+            isRequired
+            type="text"
+            name="nameOfOrganization"
+            label={t['kymCoopNameofOrganization']}
+          />
           <FormInput type="number" name="regdNumber" label={t['kymCoopRegisrationNo']} />
 
-          <FormInput type="text" name="regdOffice" label={t['kymCoopRegistrationoffice']} />
+          <FormInput
+            isRequired
+            type="text"
+            name="regdOffice"
+            label={t['kymCoopRegistrationoffice']}
+          />
           <FormDatePicker name="regdDate" label={t['kymCoopRegistrationDate']} maxToday />
         </FormSection>
       </form>

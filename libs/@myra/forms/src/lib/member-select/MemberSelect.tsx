@@ -45,11 +45,12 @@ export const MemberSelect = ({
   label,
   options,
   value,
+  isRequired,
   ...rest
 }: MemberSelectProps) => (
   <Flex direction="column" gap="s4">
     <Text variant="formLabel" color="gray.700">
-      {label}
+      {isRequired ? `${label} *` : label}
     </Text>
     <ChakraSelect<Option, boolean, GroupBase<Option>>
       options={options}

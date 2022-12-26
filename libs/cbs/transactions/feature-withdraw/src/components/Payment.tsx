@@ -126,7 +126,11 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
         {selectedPaymentMode === WithdrawPaymentType.BankCheque && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
-              <FormBankSelect name="bankCheque.bankId" label={t['withdrawPaymentBankName']} />
+              <FormBankSelect
+                isRequired
+                name="bankCheque.bankId"
+                label={t['withdrawPaymentBankName']}
+              />
             </GridItem>
 
             <FormInput name="bankCheque.chequeNo" label={t['withdrawPaymentChequeNo']} />
@@ -143,6 +147,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
           <>
             <InputGroupContainer>
               <FormAmountInput
+                isRequired
                 type="number"
                 name="cash.cashPaid"
                 label={t['withdrawPaymentCash']}

@@ -16,7 +16,7 @@ export const DetailPageMemberCard = ({
   memberAge,
 }: DetailPageMemberCardProps) => (
   <Box h="94px" w="100%" px="s16" display="flex" alignItems="center" gap="s8">
-    <Avatar src={profilePicUrl as string} size="lg" name={name} />
+    <Avatar src={profilePicUrl as string} size="md" name={name} />
     <Box display="flex" flexDir="column">
       <Text fontSize="r1" fontWeight="500" color="primary.500" textTransform="capitalize">
         {name}

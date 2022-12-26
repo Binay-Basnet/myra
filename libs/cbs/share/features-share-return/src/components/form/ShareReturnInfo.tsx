@@ -79,6 +79,7 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
       <FormSection header="shareReturnShareInformation">
         <GridItem colSpan={3}>
           <FormNumberInput
+            isRequired
             id="noOfShares"
             name="noOfReturnedShares"
             label={t['shareReturnNoOfShares']}
