@@ -1491,6 +1491,7 @@ export type CoaAccount = {
   accountClass?: Maybe<Scalars['String']>;
   accountCode?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['Localized']>;
+  accountType?: Maybe<Scalars['String']>;
   parentGroup?: Maybe<Scalars['Localized']>;
 };
 
@@ -1520,6 +1521,40 @@ export enum CoaCategory {
   SystemDefined = 'SYSTEM_DEFINED',
   UserDefined = 'USER_DEFINED',
 }
+
+export type CoaDetailsData = {
+  meta?: Maybe<CoaDetailsMeta>;
+  overview?: Maybe<CoaDetailsMinOverview>;
+  recentTxns?: Maybe<Array<Maybe<CoaDetailsRecentTxns>>>;
+  totalNoOfTxns?: Maybe<Scalars['Int']>;
+};
+
+export type CoaDetailsMeta = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  accountType?: Maybe<Scalars['String']>;
+  createdDate?: Maybe<Scalars['Localized']>;
+};
+
+export type CoaDetailsMinOverview = {
+  closingBalance?: Maybe<Scalars['String']>;
+  cr?: Maybe<Scalars['String']>;
+  dr?: Maybe<Scalars['String']>;
+  openingBalance?: Maybe<Scalars['String']>;
+};
+
+export type CoaDetailsRecentTxns = {
+  date?: Maybe<Scalars['Localized']>;
+  particulars?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['String']>;
+  txnId?: Maybe<Scalars['String']>;
+  txnType?: Maybe<Scalars['String']>;
+};
+
+export type CoaDetailsResult = {
+  data?: Maybe<CoaDetailsData>;
+  error?: Maybe<QueryError>;
+};
 
 export type CoaFullView = {
   data?: Maybe<Array<Maybe<CoaView>>>;
@@ -1738,6 +1773,7 @@ export type ChartsOfAccountSettingsQuery = {
   accountsUnder?: Maybe<CoaMinimalResult>;
   accountsUnderLeaf?: Maybe<Array<Maybe<AccountsUnderLeafNode>>>;
   class?: Maybe<ChartsOfAccountClassResult>;
+  coaAccountDetails?: Maybe<CoaDetailsResult>;
   coaAccountList?: Maybe<CoaAccountListResult>;
   fullView: CoaFullView;
   search?: Maybe<CoaMinimalResult>;
@@ -1754,6 +1790,11 @@ export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
 export type ChartsOfAccountSettingsQueryAccountsUnderLeafArgs = {
   currentBranch?: InputMaybe<Scalars['Boolean']>;
   parentId: Array<InputMaybe<Scalars['String']>>;
+};
+
+export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
+  branchId?: InputMaybe<Scalars['String']>;
+  id: Scalars['String'];
 };
 
 export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
@@ -12442,10 +12483,12 @@ export type TransactionData = {
 
 export type TransactionInfo = {
   amount: Scalars['String'];
+  branchId: Scalars['String'];
+  branchName: Scalars['String'];
   date: Scalars['Localized'];
   id: Scalars['String'];
   narration: Scalars['String'];
-  transactionType: Scalars['String'];
+  transactionType: AllTransactionType;
 };
 
 export type TransactionListSummary = {
@@ -23853,7 +23896,7 @@ export type GetAllTransactionsListQuery = {
         cursor: string;
         node?: {
           id: string;
-          transactionType: string;
+          transactionType: AllTransactionType;
           narration: string;
           amount: string;
           date: Record<'local' | 'en' | 'np', string>;
@@ -23864,6 +23907,41 @@ export type GetAllTransactionsListQuery = {
         hasPreviousPage: boolean;
         startCursor?: string | null;
         endCursor?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAllTransactionsDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+  txnType?: InputMaybe<AllTransactionType>;
+}>;
+
+export type GetAllTransactionsDetailQuery = {
+  transaction: {
+    viewTransactionDetail?: {
+      data?: {
+        id: string;
+        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+        txnType?: AllTransactionType | null;
+        transactionMode?: string | null;
+        amount?: string | null;
+        branch?: string | null;
+        status?: string | null;
+        totalDebit?: string | null;
+        totalCredit?: string | null;
+        member?: {
+          id: string;
+          code: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          profilePicUrl?: string | null;
+        } | null;
+        glTransaction?: Array<{
+          account: string;
+          serviceCenter?: string | null;
+          debit?: string | null;
+          credit?: string | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -38738,6 +38816,51 @@ export const useGetAllTransactionsListQuery = <
     variables === undefined ? ['getAllTransactionsList'] : ['getAllTransactionsList', variables],
     useAxios<GetAllTransactionsListQuery, GetAllTransactionsListQueryVariables>(
       GetAllTransactionsListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllTransactionsDetailDocument = `
+    query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
+  transaction {
+    viewTransactionDetail(transactionId: $id, txnType: $txnType) {
+      data {
+        id
+        member {
+          id
+          code
+          name
+          profilePicUrl
+        }
+        transactionDate
+        txnType
+        transactionMode
+        amount
+        branch
+        status
+        glTransaction {
+          account
+          serviceCenter
+          debit
+          credit
+        }
+        totalDebit
+        totalCredit
+      }
+    }
+  }
+}
+    `;
+export const useGetAllTransactionsDetailQuery = <
+  TData = GetAllTransactionsDetailQuery,
+  TError = unknown
+>(
+  variables: GetAllTransactionsDetailQueryVariables,
+  options?: UseQueryOptions<GetAllTransactionsDetailQuery, TError, TData>
+) =>
+  useQuery<GetAllTransactionsDetailQuery, TError, TData>(
+    ['getAllTransactionsDetail', variables],
+    useAxios<GetAllTransactionsDetailQuery, GetAllTransactionsDetailQueryVariables>(
+      GetAllTransactionsDetailDocument
     ).bind(null, variables),
     options
   );

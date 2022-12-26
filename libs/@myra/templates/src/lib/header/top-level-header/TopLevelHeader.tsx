@@ -308,7 +308,7 @@ export const TopLevelHeader = () => {
                       borderRadius="br1"
                     >
                       <Text p="s10 s12" fontSize="s3" fontWeight="500" color="gray.0">
-                        Date: {currentDate}
+                        Date: {closingDate}
                       </Text>
                     </Box>
                   </PopoverTrigger>
@@ -322,13 +322,6 @@ export const TopLevelHeader = () => {
                       boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
                     }}
                   >
-                    {currentDate !== closingDate && (
-                      <PopoverBody>
-                        <Text fontSize="r1" fontWeight="400" color="danger.500">
-                          The transaction date is not same as the calendar date
-                        </Text>
-                      </PopoverBody>
-                    )}
                     <PopoverBody borderBottom="1px" borderColor="border.layout">
                       <Text fontSize="s3" fontWeight="500" color="gray.700">
                         Transaction Date
@@ -353,7 +346,6 @@ export const TopLevelHeader = () => {
                         w="100%"
                         // onClick={() => router.push('/day-close')}
                         onClick={closeDayFxn}
-                        disabled={closingDate !== currentDate}
                       >
                         Close Day
                       </Button>
