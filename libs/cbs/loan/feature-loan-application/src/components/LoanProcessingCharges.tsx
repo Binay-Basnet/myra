@@ -1,8 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 
-import { LoanAccountInput } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@myra-ui';
+
+import { LoanAccountInput } from '@coop/cbs/data-access';
+import { FormAmountInput } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 import { useLoanProductContext } from '../hooks/useLoanProduct';
 
@@ -63,8 +65,7 @@ export const LoanProcessingCharge = () => {
                 </Text>
               </Box>
               <Box w="250px">
-                <FormInput
-                  textAlign="right"
+                <FormAmountInput
                   name={`loanProcessingCharge.${index}.amount`}
                   defaultValue={val?.amount}
                 />
@@ -79,8 +80,10 @@ export const LoanProcessingCharge = () => {
 
           <Text fontSize="s3" fontWeight="600">
             {serviceCharge
-              ? serviceCharge?.reduce((a, b) => a + Number(b?.amount), 0)
-              : loanProcessingCharges?.reduce((a, b) => a + Number(b?.amount), 0)}
+              ? amountConverter(serviceCharge?.reduce((a, b) => a + Number(b?.amount), 0))
+              : amountConverter(
+                  loanProcessingCharges?.reduce((a, b) => a + Number(b?.amount), 0) ?? 0
+                )}
           </Text>
         </Box>
       </Box>

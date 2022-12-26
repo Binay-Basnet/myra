@@ -20405,6 +20405,29 @@ export type GetInterestStatementReportQuery = {
   };
 };
 
+export type GetSuspiciousTransactionReportQueryVariables = Exact<{
+  data: SuspiciousTransactionReportInput;
+}>;
+
+export type GetSuspiciousTransactionReportQuery = {
+  report: {
+    depositReport: {
+      suspiciousTransctionReport?: {
+        data?: Array<{
+          id?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          memberId?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          product_name?: string | null;
+          tranxType?: NatureOfTransaction | null;
+          status?: boolean | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
 export type GetUserReportQueryVariables = Exact<{
   data?: InputMaybe<UserReportFilter>;
 }>;
@@ -34069,6 +34092,40 @@ export const useGetInterestStatementReportQuery = <
     ['getInterestStatementReport', variables],
     useAxios<GetInterestStatementReportQuery, GetInterestStatementReportQueryVariables>(
       GetInterestStatementReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSuspiciousTransactionReportDocument = `
+    query getSuspiciousTransactionReport($data: SuspiciousTransactionReportInput!) {
+  report {
+    depositReport {
+      suspiciousTransctionReport(data: $data) {
+        data {
+          id
+          date
+          memberId
+          memberName
+          amount
+          product_name
+          tranxType
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSuspiciousTransactionReportQuery = <
+  TData = GetSuspiciousTransactionReportQuery,
+  TError = unknown
+>(
+  variables: GetSuspiciousTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetSuspiciousTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetSuspiciousTransactionReportQuery, TError, TData>(
+    ['getSuspiciousTransactionReport', variables],
+    useAxios<GetSuspiciousTransactionReportQuery, GetSuspiciousTransactionReportQueryVariables>(
+      GetSuspiciousTransactionReportDocument
     ).bind(null, variables),
     options
   );

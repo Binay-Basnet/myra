@@ -81,6 +81,7 @@ export enum Report {
   TRANSACTION_CASH_LEDGER = 'Cash Ledger Report',
   TRANSACTION_VAULT_BALANCE = 'Vault Balance Report',
   TRANSACTION_DAY_BOOK_REPORT = 'Day Book Report',
+  TRANSACTION_SUSPICIOUS_TRANSACTION_REPORT = 'Suspicious Transaction Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -234,6 +235,11 @@ export const REPORTS = {
       id: '5.9.1',
       report: Report.THRESHOLD_TRANSACTION_REPORT,
       link: 'ttr',
+    },
+    {
+      id: '5.9.2',
+      report: Report.TRANSACTION_SUSPICIOUS_TRANSACTION_REPORT,
+      link: 'suspicious-transactions',
     },
     {
       id: '5.10',
