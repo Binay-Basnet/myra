@@ -112,7 +112,7 @@ export const KYMCoopUnionFooter = () => {
                 !sectionStatus.bodDetails?.some((bod) => !!bod.errors) &&
                 !sectionStatus.accountOperatorDetails?.some((bod) => !!bod.errors)
               ) {
-                router.push(`/members/activation/${id}`);
+                router.push(`/members/translation/${router.query['id']}`);
               } else {
                 toast({
                   id: 'validation-error',
