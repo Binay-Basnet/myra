@@ -214,7 +214,7 @@ export const TrialSheetReport = () => {
                 fontWeight={600}
                 color="gray.700"
               >
-                Total Assets + Total Expenses
+                Total Assets + Total Expenses + Dr of Off Balance
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                 {data?.report?.transactionReport?.financial?.trialSheetReport?.data
@@ -234,7 +234,7 @@ export const TrialSheetReport = () => {
                 fontWeight={600}
                 color="gray.700"
               >
-                Total Liabilities + Total Income
+                Total Liabilities + Total Income + Cr of Off Balance
               </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                 {data?.report?.transactionReport?.financial?.trialSheetReport?.data
