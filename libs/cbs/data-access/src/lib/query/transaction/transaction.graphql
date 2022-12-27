@@ -353,6 +353,7 @@ query getAllTransactionsList($filter: AllTransactionFilter, $pagination: Paginat
           narration
           amount
           date
+          branchName
         }
         cursor
       }

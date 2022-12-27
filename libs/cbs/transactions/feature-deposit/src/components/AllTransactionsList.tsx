@@ -32,6 +32,10 @@ export const AllTransactionsList = () => {
         header: 'Narration',
         accessorFn: (row) => row?.node?.narration,
       },
+      {
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.branchName,
+      },
 
       {
         header: 'Amount',

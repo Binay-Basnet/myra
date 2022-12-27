@@ -75,17 +75,14 @@ export const UsersList = () => {
             </Text>
           </Box>
         ),
-
-        meta: {
-          width: '60%',
-        },
+      },
+      {
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.branch?.name,
       },
       {
         header: 'Contact No',
         accessorFn: (row) => row?.node?.contactNo,
-        meta: {
-          width: '30%',
-        },
       },
       {
         header: 'Role',
