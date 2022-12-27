@@ -8,11 +8,12 @@ import { getRouterQuery } from '@coop/shared/utils';
 interface IFormTellerSelectProps {
   name: string;
   label: string;
+  isRequired?: boolean;
 }
 
 type OptionType = { label: string; value: string };
 
-export const FormTellerSelect = ({ name, label }: IFormTellerSelectProps) => {
+export const FormTellerSelect = ({ name, label, isRequired }: IFormTellerSelectProps) => {
   const [tellerId, setTellerId] = useState('');
 
   const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery({
@@ -43,6 +44,7 @@ export const FormTellerSelect = ({ name, label }: IFormTellerSelectProps) => {
     <FormSelect
       name={name}
       label={label}
+      isRequired={isRequired}
       isLoading={isFetching}
       onInputChange={debounce((id) => {
         if (id) {

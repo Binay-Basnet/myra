@@ -158,12 +158,12 @@ export const AddVaultTransfer = () => {
                       options={transferTypeOptions}
                     />
 
-                    <FormInput name="teller" label="Teller Name" isDisabled />
+                    <FormInput isRequired name="teller" label="Teller Name" isDisabled />
                   </Grid>
 
                   <Box display="flex" flexDirection="column" gap="s16" py="s20">
                     <InputGroupContainer>
-                      <FormAmountInput name="amount" label="Cash Amount" />
+                      <FormAmountInput isRequired name="amount" label="Cash Amount" />
                     </InputGroupContainer>
 
                     <FormEditableTable<PaymentTableType>
@@ -220,7 +220,7 @@ export const AddVaultTransfer = () => {
                           Grand Total
                         </Text>
                         <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                          {denominationTotal}
+                          {denominationTotal as string}
                         </Text>
                       </Box>
                     </Box>

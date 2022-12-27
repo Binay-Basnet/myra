@@ -123,17 +123,21 @@ export const AddBlockWithdrawSlipRequest = () => {
               <Box minH="calc(100vh - 170px)">
                 <FormSection>
                   <GridItem colSpan={2}>
-                    <FormMemberSelect name="memberId" label="Member" />
+                    <FormMemberSelect isRequired name="memberId" label="Member" />
                   </GridItem>
 
-                  <FormAccountSelect name="accountId" label="Account" memberId={memberId} />
-
+                  <FormAccountSelect
+                    isRequired
+                    name="accountId"
+                    label="Account"
+                    memberId={memberId}
+                  />
                   <GridItem colSpan={3}>
                     <FormSwitchTab label="Withdraw Slip" options={blockModes} name="blockMode" />
                   </GridItem>
-
                   {blockMode === 'Number' && (
                     <FormSelect
+                      isRequired
                       name="slipNumber"
                       label="Withdraw Slip No"
                       options={availableSlipListOptions}

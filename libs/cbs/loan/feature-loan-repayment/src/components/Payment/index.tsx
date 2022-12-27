@@ -110,7 +110,7 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
             <GridItem colSpan={2}>
               <FormBankSelect isRequired name="bankVoucher.bank" label="Bank Name" />
             </GridItem>
-            <FormInput name="bankVoucher.voucher_no" label="Voucher Number" />
+            <FormInput isRequired name="bankVoucher.voucher_no" label="Voucher Number" />
             <FormInput name="bankVoucher.amount" value={loanTotal} isDisabled label="Amount" />
             {/* <FormInput
               name="amount"

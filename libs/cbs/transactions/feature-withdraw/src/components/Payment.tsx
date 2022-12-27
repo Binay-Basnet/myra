@@ -133,7 +133,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormInput name="bankCheque.chequeNo" label={t['withdrawPaymentChequeNo']} />
+            <FormInput isRequired name="bankCheque.chequeNo" label={t['withdrawPaymentChequeNo']} />
 
             <FormAmountInput
               type="number"

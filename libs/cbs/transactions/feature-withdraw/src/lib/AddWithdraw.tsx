@@ -339,7 +339,7 @@ export const AddWithdraw = () => {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <FormMemberSelect name="memberId" label={t['addWithdrawMember']} />
+                  <FormMemberSelect isRequired name="memberId" label={t['addWithdrawMember']} />
 
                   {memberId && (
                     <FormAccountSelect

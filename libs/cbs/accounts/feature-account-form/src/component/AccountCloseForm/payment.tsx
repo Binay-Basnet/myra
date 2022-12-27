@@ -99,6 +99,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
             <GridItem colSpan={2}>
               <FormAccountSelect
+                isRequired
                 name="accountTransfer.destination_account"
                 label="Destination Account"
                 memberId={memberId}
@@ -120,9 +121,14 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
         {selectedPaymentMode === AccountClosePaymentMode?.BankCheque && (
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
             <GridItem colSpan={2}>
-              <FormBankSelect name="bankCheque.bank" label="Bank Name" />
+              <FormBankSelect isRequired name="bankCheque.bank" label="Bank Name" />
             </GridItem>
-            <FormInput name="bankCheque.cheque_no" label="Cheque No" placeholder="Cheque No" />
+            <FormInput
+              isRequired
+              name="bankCheque.cheque_no"
+              label="Cheque No"
+              placeholder="Cheque No"
+            />
             <FormAmountInput name="bankCheque.amount" label="Amount" />
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
               <FormTextArea name="bankCheque.note" label="Note" />
@@ -133,7 +139,13 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
         {selectedPaymentMode === AccountClosePaymentMode.Cash && (
           <>
             <Grid templateColumns="repeat(2,1fr)" gap="s20">
-              <FormInput name="cash.cashPaid" type="number" label="Cash" textAlign="right" />
+              <FormInput
+                isRequired
+                name="cash.cashPaid"
+                type="number"
+                label="Cash"
+                textAlign="right"
+              />
             </Grid>
             <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />
             {!disableDenomination && (

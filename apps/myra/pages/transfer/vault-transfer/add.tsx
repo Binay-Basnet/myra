@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { AddVaultTransfer } from '@coop/cbs/transfer';
 import { MainLayout } from '@myra-ui';
+
+import { AddVaultTransfer } from '@coop/cbs/transfer';
 
 const Transfer = () => <AddVaultTransfer />;
 

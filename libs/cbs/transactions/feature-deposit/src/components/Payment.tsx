@@ -201,7 +201,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormInput name="bankVoucher.voucherId" label={t['addDepositVoucherId']} />
+            <FormInput isRequired name="bankVoucher.voucherId" label={t['addDepositVoucherId']} />
 
             <FormAmountInput
               type="number"
@@ -217,6 +217,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
             />
 
             <FormInput
+              isRequired
               type="text"
               name="bankVoucher.depositedBy"
               label={t['depositPaymentDepositedBy']}
@@ -250,6 +251,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
             </GridItem>
 
             <FormSelect
+              isRequired
               name="withdrawSlip.withdrawSlipNo"
               label="Withdraw Slip No."
               options={availableSlipListOptions}
