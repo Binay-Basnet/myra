@@ -101,6 +101,9 @@ export const COAListView = () => {
       data={rowData}
       columns={columns}
       isLoading={isFetching}
+      rowOnClick={(row) =>
+        router.push(`/settings/general/charts-of-accounts/detail/${row?.node?.accountCode}`)
+      }
       pagination={{
         total: accountList?.settings?.chartsOfAccount?.coaAccountList?.totalCount ?? 'Many',
         pageInfo: accountList?.settings?.chartsOfAccount?.coaAccountList?.pageInfo,

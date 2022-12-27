@@ -59,7 +59,7 @@ export const KymIndividualFooter = () => {
         if (response) {
           dispatch(setIndividualHasPressedNext(true));
           if (!sectionStatus) {
-            router.push(`/members/translation/${router.query['id']}`);
+            router.push(`/members/translation/${router.query['id']}?type=individual`);
           } else {
             toast({
               id: 'validation-error',

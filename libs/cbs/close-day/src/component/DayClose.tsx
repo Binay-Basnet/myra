@@ -43,6 +43,20 @@ export const DayClose = () => {
 
   const { data: eodStatusQueryData, refetch } = useGetEodStatusQuery();
 
+  const showAdditionalFields = useMemo(() => {
+    if (
+      Object.values(eodStatusQueryData?.transaction?.eodStatus?.states ?? {}).find(
+        (value) => value === EodState.Ongoing
+      )
+    ) {
+      return false;
+    }
+
+    return (
+      eodStatusQueryData?.transaction?.eodStatus?.states?.transactionDate !== EodState.Completed
+    );
+  }, [eodStatusQueryData]);
+
   const dayCloseList = useMemo(() => {
     const eodStatus = eodStatusQueryData?.transaction?.eodStatus?.states;
 
@@ -52,13 +66,13 @@ export const DayClose = () => {
       {
         title: 'dayCloseDailyInterestBooking',
         subTitle: 'dayCloseInterestBooking',
-        status: eodError?.interestBooking ? eodStatus?.interestBooking : EodState.Completed,
+        status: eodError ? eodStatus?.interestBooking : EodState.Completed,
         errors: eodError?.interestBooking,
       },
       {
         title: 'dayCloseCheckFrequency',
         subTitle: 'dayCloseImplementthedayend',
-        status: eodError?.interestPosting ? eodStatus?.interestPosting : EodState.Completed,
+        status: eodError ? eodStatus?.interestPosting : EodState.Completed,
         errors: eodError?.interestPosting,
       },
       {
@@ -69,33 +83,33 @@ export const DayClose = () => {
       {
         title: 'dayCloseCheckMaturity',
         subTitle: 'dayCloseCheckAccount',
-        status: eodError?.maturity ? eodStatus?.maturity : EodState.Completed,
+        status: eodError ? eodStatus?.maturity : EodState.Completed,
         errors: eodError?.maturity,
       },
       {
         title: 'Check Dormant',
         subTitle: 'Check if the account is dormant or not.',
-        status: eodError?.dormancy ? eodStatus?.dormancy : EodState.Completed,
+        status: eodError ? eodStatus?.dormancy : EodState.Completed,
         errors: eodError?.dormancy,
       },
       {
-        title: 'Cash in Hand',
+        title: 'Cash with Teller',
         subTitle:
-          'Check if the cash in hand at the start of day balances with the cash in hand at the end after all transactions have been completed.',
-        status: eodError?.cashInHand ? eodStatus?.cashInHand : EodState.Completed,
+          'Check if the cash with teller at the start of day balances with the cash with teller at the end after all transactions have been completed.',
+        status: eodError ? eodStatus?.cashInHand : EodState.Completed,
         errors: eodError?.cashInHand,
       },
       {
         title: 'dayCloseCashVault',
         subTitle: 'dayCloseCheckCashVault',
-        status: eodError?.cashInVault ? eodStatus?.cashInVault : EodState.Completed,
+        status: eodError ? eodStatus?.cashInVault : EodState.Completed,
         errors: eodError?.cashInVault,
       },
       {
         title: 'Loan Interest Booking',
         subTitle:
           'Interest booking should be done for all the loan accounts before closing the day.',
-        status: eodError?.loanInterestBooking ? eodStatus?.loanInterestBooking : EodState.Completed,
+        status: eodError ? eodStatus?.loanInterestBooking : EodState.Completed,
         errors: eodError?.loanInterestBooking,
       },
     ];
@@ -132,14 +146,6 @@ export const DayClose = () => {
 
     return statusText;
   };
-
-  const hasErrors = useMemo(
-    () =>
-      !!Object.values(eodStatusQueryData?.transaction?.eodStatus?.states ?? {}).find(
-        (value) => value === EodState.Ongoing
-      ),
-    [eodStatusQueryData]
-  );
 
   const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
 
@@ -231,7 +237,7 @@ export const DayClose = () => {
           </>
         ))}
 
-        {hasErrors && (
+        {showAdditionalFields && (
           <Box display="flex" flexDirection="column" gap="s48" py="s32">
             <Box>
               <Button variant="outline" onClick={reinitiateCloseDay}>

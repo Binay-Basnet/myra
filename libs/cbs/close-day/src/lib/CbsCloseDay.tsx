@@ -45,11 +45,13 @@ export const CbsCloseDay = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries(['getEndOfDayDateData']);
-        router.push('/');
+        queryClient.invalidateQueries(['getEODStatus']);
+        // router.push('/');
       },
       onError: () => {
         queryClient.invalidateQueries(['getEndOfDayDateData']);
-        router.push('/');
+        queryClient.invalidateQueries(['getEODStatus']);
+        // router.push('/');
       },
     });
   };
@@ -57,7 +59,7 @@ export const CbsCloseDay = () => {
   const isDayCloseDisabled = () => {
     if (!ignore) return true;
 
-    if (!eodStatus) return true;
+    if (!eodStatus?.states) return true;
 
     if (Object.values(eodStatus?.states ?? {}).find((value) => value === EodState.Ongoing))
       return true;
@@ -82,8 +84,18 @@ export const CbsCloseDay = () => {
           <Container minW="container.lg" height="fit-content" p="0">
             <FormFooter
               mainButtonLabel={t['dayCloseCloseDay']}
-              mainButtonHandler={handleDayClose}
-              isMainButtonDisabled={isDayCloseDisabled()}
+              mainButtonHandler={
+                eodStatusQueryData?.transaction?.eodStatus?.states?.transactionDate !==
+                EodState.Completed
+                  ? handleDayClose
+                  : () => router?.push('/')
+              }
+              isMainButtonDisabled={
+                eodStatusQueryData?.transaction?.eodStatus?.states?.transactionDate !==
+                EodState.Completed
+                  ? isDayCloseDisabled()
+                  : false
+              }
             />
           </Container>
         </Box>

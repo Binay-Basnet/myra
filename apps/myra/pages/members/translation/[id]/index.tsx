@@ -19,6 +19,7 @@ const Translation = () => {
 
   const router = useRouter();
   const id = String(router?.query?.id);
+  const isIndividual = router?.query?.type === 'individual';
   // const translatedData = useGetMemberTranslationQuery({ id });
   // const translationDataArray = translatedData?.data?.members?.translate.data;
 
@@ -116,38 +117,40 @@ const Translation = () => {
                 </Text>
 
                 <GroupContainer>
-                  <Box>
-                    <FormSwitchTab
-                      label="Is Member a Staff?"
-                      options={booleanList}
-                      name="isStaff"
-                    />
-                  </Box>
-
-                  <FormSwitchTab
-                    label="Name Check In Sanction List"
-                    options={booleanList}
-                    name="checkSanction"
-                  />
-
-                  <Box>
-                    <FormSwitchTab
-                      label="Name Check in Negative List"
-                      options={booleanList}
-                      name="checkNegative"
-                    />
-                  </Box>
-
-                  <Box>
-                    <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.gray-80">
-                      Risk Category
-                    </Text>
-                    <FormRadioGroup
-                      name="riskCategory"
-                      radioList={['Low Risk', 'Medium Risk', 'High Risk', 'PEP Risk']}
-                      labelFontSize="s3"
-                    />
-                  </Box>
+                  {isIndividual && (
+                    <>
+                      {' '}
+                      <Box>
+                        <FormSwitchTab
+                          label="Is Member a Staff?"
+                          options={booleanList}
+                          name="isStaff"
+                        />
+                      </Box>
+                      <FormSwitchTab
+                        label="Name Check In Sanction List"
+                        options={booleanList}
+                        name="checkSanction"
+                      />
+                      <Box>
+                        <FormSwitchTab
+                          label="Name Check in Negative List"
+                          options={booleanList}
+                          name="checkNegative"
+                        />
+                      </Box>
+                      <Box>
+                        <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.gray-80">
+                          Risk Category
+                        </Text>
+                        <FormRadioGroup
+                          name="riskCategory"
+                          radioList={['Low Risk', 'Medium Risk', 'High Risk', 'PEP Risk']}
+                          labelFontSize="s3"
+                        />
+                      </Box>
+                    </>
+                  )}
 
                   <FormSwitchTab
                     label="Above documents collected and verified with original?"

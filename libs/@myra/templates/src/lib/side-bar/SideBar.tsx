@@ -151,7 +151,7 @@ export const Sidebar = ({
           ))}
         </Box>
       </Box>
-      <Box w="100%" ml="260px">
+      <Box width="calc(100% - 260px)" ml="260px">
         <Box minHeight="calc(100vh - 110px)" width="100%" bg="white">
           {children}
         </Box>

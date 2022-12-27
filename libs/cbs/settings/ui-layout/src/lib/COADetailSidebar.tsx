@@ -26,7 +26,12 @@ export const COADetailSidebar = () => {
               </Text>
             </Box>
             <Box display="flex" alignItems="center" gap="s4">
-              <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
+              <Text
+                fontSize="s3"
+                fontWeight={400}
+                color="neutralColorLight.Gray-50"
+                wordBreak="break-all"
+              >
                 #{accountDetails?.meta?.accountId}
               </Text>
               <Icon

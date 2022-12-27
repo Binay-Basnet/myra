@@ -21,13 +21,11 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const { t } = useTranslation();
 
-  const methods = useForm<BranchInput>({});
+  const methods = useForm<BranchInput>({ defaultValues: { abbsStatus: true } });
 
   const { getValues, watch, reset, setError, clearErrors } = methods;
 
   const id = router?.query?.['id'];
-
-  const abbsStatus = watch('abbsStatus');
 
   const { data } = useAllAdministrationQuery();
 
@@ -269,7 +267,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                         name="abbsStatus"
                       />
 
-                      {abbsStatus && (
+                      {/* {abbsStatus && (
                         <Box p="s16" border="1px solid" borderColor="border.layout">
                           <InputGroupContainer>
                             <FormSelect
@@ -284,7 +282,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                             />
                           </InputGroupContainer>
                         </Box>
-                      )}
+                      )} */}
                     </Box>
 
                     <Box>
