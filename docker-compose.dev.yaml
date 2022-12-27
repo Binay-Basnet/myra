@@ -5,7 +5,7 @@ services:
     build:
       context: apps/ebanking
       dockerfile: Dockerfile
-    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/prod-ebanking:staging
+    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui-ebanking:dev
     container_name: ebanking-ui-staging
     ports:
       - 7000:3000
@@ -17,7 +17,7 @@ services:
     build:
       context: apps/myra
       dockerfile: Dockerfile
-    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/prod-myra:staging
+    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui:dev
     container_name: myra-ui-staging
     ports:
       - 3000:3000
@@ -29,7 +29,7 @@ services:
     build:
       context: apps/neosys-admin
       dockerfile: Dockerfile
-    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/prod-neosys:staging
+    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui-admin:dev
     container_name: admin-ui-staging
     ports:
       - 5000:3000
