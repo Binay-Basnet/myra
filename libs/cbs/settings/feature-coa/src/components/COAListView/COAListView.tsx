@@ -1,18 +1,18 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { TablePopover } from '@myra-ui';
+import { TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useAppSelector, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-const accountClass = {
-  EQUITY_AND_LIABILITIES: 'Equity and Liabilities',
-  ASSETS: 'Assets',
-  EXPENDITURE: 'Expenditure',
-  INCOME: 'Income',
-};
+// const accountClass = {
+//   EQUITY_AND_LIABILITIES: 'Equity and Liabilities',
+//   ASSETS: 'Assets',
+//   EXPENDITURE: 'Expenditure',
+//   INCOME: 'Income',
+// };
 
 export const COAListView = () => {
   const router = useRouter();
@@ -48,11 +48,11 @@ export const COAListView = () => {
         header: t['settingsCoaTableAccountClass'],
         accessorFn: (row) => row?.node?.accountClass,
         cell: (props) => (
-          <span>
+          <Text textTransform="capitalize">
             {props.getValue()
-              ? `${accountClass[props.getValue() as keyof typeof accountClass] as string}`
+              ? props?.row?.original?.node?.accountClass?.replace(/_/gi, ' ').toLowerCase()
               : '-'}
-          </span>
+          </Text>
         ),
         meta: {
           width: '200px',
