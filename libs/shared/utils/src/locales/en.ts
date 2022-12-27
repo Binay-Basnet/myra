@@ -3016,7 +3016,7 @@ const en: Record<string, string> = {
   shareTableShareAmount: 'Share Balance',
 
   // login
-  loginTitle: 'Digitizing and Connecting SACCOS',
+  loginTitle: 'Digitalizing and Connecting SACCOS',
   loginSubTitle: 'A simple, secure and shared digital platform that connects SACCOS to technology.',
   loginHeader: 'Welcome to Myra!',
   loginEmail: 'Email',

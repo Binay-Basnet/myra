@@ -1,7 +1,8 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
+
+import { MainLayout } from '@myra-ui';
 
 import { KYMCooperativeUnionPage } from '@coop/cbs/kym-form/cooperative-union';
-import { MainLayout } from '@myra-ui';
 
 const AddMember = () => <KYMCooperativeUnionPage />;
 
