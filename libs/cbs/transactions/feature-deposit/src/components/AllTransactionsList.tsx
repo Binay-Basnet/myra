@@ -56,7 +56,7 @@ export const AllTransactionsList = () => {
 
         meta: {
           isNumeric: true,
-          width: '20%',
+          width: '2%',
         },
       },
       {
