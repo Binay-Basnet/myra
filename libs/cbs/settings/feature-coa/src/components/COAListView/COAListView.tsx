@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -14,6 +15,8 @@ const accountClass = {
 };
 
 export const COAListView = () => {
+  const router = useRouter();
+
   const { t } = useTranslation();
   const branch = useAppSelector((state) => state?.auth?.user?.branch);
 
@@ -72,7 +75,17 @@ export const COAListView = () => {
         cell: (props) =>
           props?.row && (
             <TablePopover
-              items={[{ title: 'View Details' }, { title: 'Edit Account' }]}
+              items={[
+                {
+                  title: 'View Details',
+                  onClick: (row) => {
+                    router.push(
+                      `/settings/general/charts-of-accounts/detail/${row?.node?.accountCode}`
+                    );
+                  },
+                },
+                { title: 'Edit Account' },
+              ]}
               node={props.row.original}
             />
           ),
@@ -81,9 +94,5 @@ export const COAListView = () => {
     [t]
   );
 
-  return (
-    <>
-      <Table data={rowData} columns={columns} isLoading={isFetching} />{' '}
-    </>
-  );
+  return <Table data={rowData} columns={columns} isLoading={isFetching} />;
 };
