@@ -84,7 +84,10 @@ query getAccountTransferListData($filter: AccountTransactionFilter, $pagination:
 
 query getEndOfDayDateData {
   transaction {
-    endOfDayDate
+    endOfDayDate {
+      value
+      hasErrors
+    }
   }
 }
 
@@ -332,12 +335,25 @@ query loanRepaymentDetail($paymentId: ID!) {
 query getEODStatus {
   transaction {
     eodStatus {
-      interestBooking
-      interestPosting
-      transactionDate
-      maturity
-      dormancy
-      cashInVault
+      states {
+        interestBooking
+        interestPosting
+        transactionDate
+        maturity
+        dormancy
+        cashInHand
+        cashInVault
+        loanInterestBooking
+      }
+      errors {
+        interestBooking
+        interestPosting
+        maturity
+        dormancy
+        cashInHand
+        cashInVault
+        loanInterestBooking
+      }
     }
   }
 }
