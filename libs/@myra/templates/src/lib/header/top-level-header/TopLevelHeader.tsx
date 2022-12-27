@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { CgMenuGridO } from 'react-icons/cg';
@@ -24,6 +24,7 @@ import { Avatar, Box, Button, Divider, Grid, Icon, IconButton, Text } from '@myr
 
 import {
   DateType,
+  EodOption,
   Language,
   logout,
   RootState,
@@ -34,6 +35,7 @@ import {
   useSetEndOfDayDataMutation,
   useSetPreferenceMutation,
 } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 enum GetRoleSlug {
@@ -203,7 +205,13 @@ export const TopLevelHeader = () => {
 
   const { data: endOfDayData, refetch: refetchEndOfDay } = useGetEndOfDayDateDataQuery();
 
-  const closingDate = endOfDayData?.transaction?.endOfDayDate;
+  const { closingDate, hasEodErrors } = useMemo(
+    () => ({
+      closingDate: endOfDayData?.transaction?.endOfDayDate?.value,
+      hasEodErrors: endOfDayData?.transaction?.endOfDayDate?.hasErrors,
+    }),
+    [endOfDayData]
+  );
 
   const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
 
@@ -226,6 +234,22 @@ export const TopLevelHeader = () => {
     //     router.push('/day-close');
     //   },
     // });
+  };
+
+  const reinitiateCloseDay = () => {
+    closeDay({ option: EodOption.Reinitiate });
+
+    refetchEndOfDay();
+
+    router.push('/day-close');
+  };
+
+  const ignoreAndCloseDay = () => {
+    closeDay({ option: EodOption.CompleteWithError });
+
+    refetchEndOfDay();
+
+    router.push('/day-close');
   };
 
   return (
@@ -308,7 +332,7 @@ export const TopLevelHeader = () => {
                       borderRadius="br1"
                     >
                       <Text p="s10 s12" fontSize="s3" fontWeight="500" color="gray.0">
-                        Date: {closingDate}
+                        Date: {localizedDate(closingDate)}
                       </Text>
                     </Box>
                   </PopoverTrigger>
@@ -327,7 +351,7 @@ export const TopLevelHeader = () => {
                         Transaction Date
                       </Text>
                       <Text fontSize="s3" fontWeight="500" color="gray.800">
-                        {closingDate}
+                        {localizedDate(closingDate)}
                       </Text>
                     </PopoverBody>
                     <PopoverBody borderBottom="1px" borderColor="border.layout">
@@ -339,16 +363,39 @@ export const TopLevelHeader = () => {
                       </Text>
                     </PopoverBody>
                     <PopoverBody p="s8">
-                      <Button
-                        variant="solid"
-                        display="flex"
-                        justifyContent="center"
-                        w="100%"
-                        // onClick={() => router.push('/day-close')}
-                        onClick={closeDayFxn}
-                      >
-                        Close Day
-                      </Button>
+                      {hasEodErrors ? (
+                        <Box display="flex" flexDirection="column" gap="s8">
+                          <Button
+                            variant="ghost"
+                            display="flex"
+                            justifyContent="center"
+                            w="100%"
+                            onClick={reinitiateCloseDay}
+                          >
+                            Reinitiate
+                          </Button>
+                          <Button
+                            variant="solid"
+                            display="flex"
+                            justifyContent="center"
+                            w="100%"
+                            onClick={ignoreAndCloseDay}
+                          >
+                            Ignore and Close Day
+                          </Button>
+                        </Box>
+                      ) : (
+                        <Button
+                          variant="solid"
+                          display="flex"
+                          justifyContent="center"
+                          w="100%"
+                          // onClick={() => router.push('/day-close')}
+                          onClick={closeDayFxn}
+                        >
+                          Close Day
+                        </Button>
+                      )}
                     </PopoverBody>
                   </PopoverContent>
                 </>

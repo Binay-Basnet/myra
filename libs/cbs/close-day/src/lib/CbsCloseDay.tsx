@@ -1,6 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import {
   EodOption,
@@ -8,7 +10,6 @@ import {
   useGetEodStatusQuery,
   useSetEndOfDayDataMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { DayClose } from '../component/DayClose';
@@ -58,7 +59,8 @@ export const CbsCloseDay = () => {
 
     if (!eodStatus) return true;
 
-    if (Object.values(eodStatus).find((value) => value === EodState.Ongoing)) return true;
+    if (Object.values(eodStatus?.states ?? {}).find((value) => value === EodState.Ongoing))
+      return true;
 
     return false;
   };

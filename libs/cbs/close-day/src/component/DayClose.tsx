@@ -1,10 +1,17 @@
 import { useMemo } from 'react';
 import { IoCheckmarkDone, IoClose, IoRefreshOutline } from 'react-icons/io5';
 import { Spinner } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { EodState, useGetEodStatusQuery } from '@coop/cbs/data-access';
+import { Alert, asyncToast, Box, Button, Divider, Icon, Text } from '@myra-ui';
+
+import {
+  EodOption,
+  EodState,
+  useGetEodStatusQuery,
+  useSetEndOfDayDataMutation,
+} from '@coop/cbs/data-access';
 import { FormCheckbox } from '@coop/shared/form';
-import { Box, Button, Divider, Icon, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface INumberStatusProps {
@@ -32,41 +39,64 @@ export const NumberStatus = ({ number, active }: INumberStatusProps) => (
 export const DayClose = () => {
   const { t } = useTranslation();
 
+  const queryClient = useQueryClient();
+
   const { data: eodStatusQueryData, refetch } = useGetEodStatusQuery();
 
   const dayCloseList = useMemo(() => {
-    const eodStatus = eodStatusQueryData?.transaction?.eodStatus;
+    const eodStatus = eodStatusQueryData?.transaction?.eodStatus?.states;
+
+    const eodError = eodStatusQueryData?.transaction?.eodStatus?.errors;
 
     return [
       {
         title: 'dayCloseDailyInterestBooking',
         subTitle: 'dayCloseInterestBooking',
-        status: eodStatus?.interestBooking,
+        status: eodError?.interestBooking ? eodStatus?.interestBooking : EodState.Completed,
+        errors: eodError?.interestBooking,
       },
       {
         title: 'dayCloseCheckFrequency',
         subTitle: 'dayCloseImplementthedayend',
-        status: eodStatus?.interestPosting,
+        status: eodError?.interestPosting ? eodStatus?.interestPosting : EodState.Completed,
+        errors: eodError?.interestPosting,
       },
       {
         title: 'dayCloseTransactionDateProgress',
         subTitle: 'dayCloseChecktransactiondate',
-        status: eodStatus?.transactionDate,
+        status: eodStatus?.transactionDate ?? EodState.Completed,
       },
       {
         title: 'dayCloseCheckMaturity',
         subTitle: 'dayCloseCheckAccount',
-        status: eodStatus?.maturity,
+        status: eodError?.maturity ? eodStatus?.maturity : EodState.Completed,
+        errors: eodError?.maturity,
       },
       {
         title: 'Check Dormant',
         subTitle: 'Check if the account is dormant or not.',
-        status: eodStatus?.dormancy,
+        status: eodError?.dormancy ? eodStatus?.dormancy : EodState.Completed,
+        errors: eodError?.dormancy,
+      },
+      {
+        title: 'Cash in Hand',
+        subTitle:
+          'Check if the cash in hand at the start of day balances with the cash in hand at the end after all transactions have been completed.',
+        status: eodError?.cashInHand ? eodStatus?.cashInHand : EodState.Completed,
+        errors: eodError?.cashInHand,
       },
       {
         title: 'dayCloseCashVault',
         subTitle: 'dayCloseCheckCashVault',
-        status: eodStatus?.cashInVault,
+        status: eodError?.cashInVault ? eodStatus?.cashInVault : EodState.Completed,
+        errors: eodError?.cashInVault,
+      },
+      {
+        title: 'Loan Interest Booking',
+        subTitle:
+          'Interest booking should be done for all the loan accounts before closing the day.',
+        status: eodError?.loanInterestBooking ? eodStatus?.loanInterestBooking : EodState.Completed,
+        errors: eodError?.loanInterestBooking,
       },
     ];
   }, [eodStatusQueryData]);
@@ -103,10 +133,35 @@ export const DayClose = () => {
     return statusText;
   };
 
+  const hasErrors = useMemo(
+    () =>
+      !!Object.values(eodStatusQueryData?.transaction?.eodStatus?.states ?? {}).find(
+        (value) => value === EodState.Ongoing
+      ),
+    [eodStatusQueryData]
+  );
+
+  const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
+
+  const reinitiateCloseDay = () => {
+    asyncToast({
+      id: 'reinitiate-day-close',
+      msgs: {
+        loading: 'Reinitiating day close',
+        success: 'Day close reinitiated',
+      },
+      promise: closeDay({ option: EodOption.Reinitiate }),
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getEndOfDayDateData']);
+        queryClient.invalidateQueries(['getEODStatus']);
+      },
+    });
+  };
+
   return (
     <Box display="flex" flexDirection="column" py="s16">
       <Box display="flex" flexDirection="column">
-        <Box display="flex" py="s16" justifyContent="space-between">
+        <Box display="flex" py="s16" justifyContent="space-between" alignItems="center">
           <Text
             fontSize="r2"
             fontWeight="SemiBold"
@@ -116,10 +171,10 @@ export const DayClose = () => {
             {t['dayCloseInOrder']}
           </Text>
           <Button leftIcon={<IoRefreshOutline />} onClick={() => refetch()}>
-            {t['dayCloseReload']}{' '}
+            {t['dayCloseReload']}
           </Button>
         </Box>
-        {dayCloseList?.map(({ title, subTitle, status }, index) => (
+        {dayCloseList?.map(({ title, subTitle, status, errors }, index) => (
           <>
             <Box display="flex" gap="s16" py="s16" key={title}>
               <NumberStatus number={index + 1} active={status === EodState.Completed} />
@@ -156,31 +211,37 @@ export const DayClose = () => {
                   </Text>
                 </Box>
 
-                {/* {status === EodState.CompletedWithErrors && (
-                  <Alert status="error">
-                    <Text
-                      fontSize="r1"
-                      fontWeight="SemiBold"
-                      color="neutralColorLight.Gray-80"
-                      lineHeight="150%"
-                    >
-                      Lorem ipsum dolor sit amet, consectetur adipiscing alit.
-                    </Text>
-                  </Alert>
-                )} */}
+                {status === EodState.CompletedWithErrors &&
+                  errors?.length &&
+                  errors?.map((error) => (
+                    <Alert status="error" hideCloseIcon>
+                      <Text
+                        fontSize="r1"
+                        fontWeight="SemiBold"
+                        color="neutralColorLight.Gray-80"
+                        lineHeight="150%"
+                      >
+                        {error}
+                      </Text>
+                    </Alert>
+                  ))}
               </Box>
             </Box>
             <Divider />
           </>
         ))}
 
-        <Box display="flex" flexDirection="column" gap="s48" py="s32">
-          {/* <Box w="148px">
-            <Button variant="outline">{t['dayCloseReinitiateDayEnd']}</Button>
-          </Box> */}
+        {hasErrors && (
+          <Box display="flex" flexDirection="column" gap="s48" py="s32">
+            <Box>
+              <Button variant="outline" onClick={reinitiateCloseDay}>
+                {t['dayCloseReinitiateDayEnd']}
+              </Button>
+            </Box>
 
-          <FormCheckbox name="ignore" label={t['dayCloseIgnoreErrors']} />
-        </Box>
+            <FormCheckbox name="ignore" label={t['dayCloseIgnoreErrors']} />
+          </Box>
+        )}
       </Box>
     </Box>
   );
