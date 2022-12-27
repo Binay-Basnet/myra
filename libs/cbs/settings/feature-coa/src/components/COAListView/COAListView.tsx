@@ -94,5 +94,14 @@ export const COAListView = () => {
     [t]
   );
 
-  return <Table data={rowData} columns={columns} isLoading={isFetching} />;
+  return (
+    <Table
+      data={rowData}
+      columns={columns}
+      isLoading={isFetching}
+      rowOnClick={(row) =>
+        router.push(`/settings/general/charts-of-accounts/detail/${row?.node?.accountCode}`)
+      }
+    />
+  );
 };
