@@ -201,7 +201,7 @@ export const AddTellerTransfer = () => {
                           Grand Total
                         </Text>
                         <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                          {denominationTotal as string}
+                          {denominationTotal}
                         </Text>
                       </Box>
                     </Box>
