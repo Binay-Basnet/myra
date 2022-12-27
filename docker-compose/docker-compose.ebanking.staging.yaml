@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+  ebanking:
+    build:
+      context: .
+      dockerfile: apps/ebanking/Dockerfile
+    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/prod-ebanking:staging
+    container_name: ${EBANKING_CONTAINER_NAME}
+    env_file: .env
+    ports:
+      - ${EBANKING_PORT}:3000
+    restart: unless-stopped

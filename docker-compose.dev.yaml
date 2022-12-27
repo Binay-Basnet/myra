@@ -1,0 +1,42 @@
+version: '3.5'
+
+services:
+  ebanking:
+    build:
+      context: apps/ebanking
+      dockerfile: Dockerfile
+    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/prod-ebanking:staging
+    container_name: ebanking-ui-staging
+    ports:
+      - 7000:3000
+    restart: unless-stopped
+    networks:
+      - myra-frontend
+
+  myra:
+    build:
+      context: apps/myra
+      dockerfile: Dockerfile
+    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/prod-myra:staging
+    container_name: myra-ui-staging
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    networks:
+      - myra-frontend
+
+  neosys-admin:
+    build:
+      context: apps/neosys-admin
+      dockerfile: Dockerfile
+    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/prod-neosys:staging
+    container_name: admin-ui-staging
+    ports:
+      - 5000:3000
+    restart: unless-stopped
+    networks:
+      - myra-frontend
+
+networks:
+   myra-frontend:
+      driver: bridge
