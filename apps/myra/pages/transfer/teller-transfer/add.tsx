@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { AddTellerTransfer } from '@coop/cbs/transfer';
 import { MainLayout } from '@myra-ui';
+
+import { AddTellerTransfer } from '@coop/cbs/transfer';
 
 const Transfer = () => <AddTellerTransfer />;
 

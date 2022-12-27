@@ -139,12 +139,12 @@ export const AddTellerTransfer = () => {
                   <Grid templateColumns="repeat(2, 1fr)" gap="s20" alignItems="flex-end">
                     <FormInput name="srcTellerID" label="Sender" isDisabled />
 
-                    <FormTellerSelect name="destTellerID" label="Receiver" />
+                    <FormTellerSelect isRequired name="destTellerID" label="Receiver" />
                   </Grid>
 
                   <Box display="flex" flexDirection="column" gap="s16" py="s20">
                     <InputGroupContainer>
-                      <FormAmountInput name="amount" label="Cash Amount" />
+                      <FormAmountInput isRequired name="amount" label="Cash Amount" />
                     </InputGroupContainer>
 
                     <FormEditableTable<PaymentTableType>
@@ -201,7 +201,7 @@ export const AddTellerTransfer = () => {
                           Grand Total
                         </Text>
                         <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                          {denominationTotal}
+                          {denominationTotal as string}
                         </Text>
                       </Box>
                     </Box>

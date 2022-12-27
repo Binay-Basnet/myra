@@ -92,6 +92,13 @@ query getCoaAccountList($branchId: String, $pagination: Pagination) {
             parentGroup
           }
         }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
       }
     }
   }

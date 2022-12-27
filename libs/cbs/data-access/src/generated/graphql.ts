@@ -21875,6 +21875,7 @@ export type GetCoaAccountListQuery = {
   settings: {
     chartsOfAccount?: {
       coaAccountList?: {
+        totalCount: number;
         edges?: Array<{
           node?: {
             accountCode?: string | null;
@@ -21883,6 +21884,12 @@ export type GetCoaAccountListQuery = {
             parentGroup?: Record<'local' | 'en' | 'np', string> | null;
           } | null;
         } | null> | null;
+        pageInfo?: {
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+          startCursor?: string | null;
+          endCursor?: string | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -36121,6 +36128,13 @@ export const GetCoaAccountListDocument = `
             accountClass
             parentGroup
           }
+        }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
         }
       }
     }

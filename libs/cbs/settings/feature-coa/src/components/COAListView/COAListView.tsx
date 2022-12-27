@@ -22,7 +22,9 @@ export const COAListView = () => {
 
   const { data: accountList, isFetching } = useGetCoaAccountListQuery({
     branchId: branch?.id,
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: {
+      ...getRouterQuery({ type: ['PAGINATION'] }),
+    },
   });
 
   const accountListData = accountList?.settings?.chartsOfAccount?.coaAccountList?.edges;
@@ -94,5 +96,15 @@ export const COAListView = () => {
     [t]
   );
 
-  return <Table data={rowData} columns={columns} isLoading={isFetching} />;
+  return (
+    <Table
+      data={rowData}
+      columns={columns}
+      isLoading={isFetching}
+      pagination={{
+        total: accountList?.settings?.chartsOfAccount?.coaAccountList?.totalCount ?? 'Many',
+        pageInfo: accountList?.settings?.chartsOfAccount?.coaAccountList?.pageInfo,
+      }}
+    />
+  );
 };

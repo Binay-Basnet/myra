@@ -475,7 +475,7 @@ export const AccountOpenNew = () => {
                 p="s20"
                 w="100%"
               >
-                <FormMemberSelect name="memberId" label="Member" />
+                <FormMemberSelect isRequired name="memberId" label="Member" />
                 <FormSelect
                   name="productId"
                   label={t['accProductName']}

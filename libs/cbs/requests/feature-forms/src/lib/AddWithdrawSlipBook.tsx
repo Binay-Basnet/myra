@@ -122,12 +122,18 @@ export const AddWithdrawSlipBook = () => {
               <Box minH="calc(100vh - 170px)">
                 <FormSection templateColumns={2}>
                   <GridItem colSpan={2}>
-                    <FormMemberSelect name="memberId" label="Member" />
+                    <FormMemberSelect isRequired name="memberId" label="Member" />
                   </GridItem>
 
-                  <FormAccountSelect name="accountId" label="Account" memberId={memberId} />
+                  <FormAccountSelect
+                    isRequired
+                    name="accountId"
+                    label="Account"
+                    memberId={memberId}
+                  />
 
                   <FormSelect
+                    isRequired
                     name="count"
                     label="Total no of withdraw slip"
                     options={totalNumberOptions}
