@@ -1,7 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { FormAddress, FormDatePicker, FormInput, FormSwitch } from '@coop/shared/form';
 import { Box, FormSection, Text } from '@myra-ui';
+
+import { FormAddress, FormDatePicker, FormInput, FormSwitch } from '@coop/shared/form';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useDirector } from '../../hooks/useDirector';
@@ -32,12 +33,14 @@ export const DirectorTopPart = ({ setKymCurrentSection, directorId }: IAddDirect
         <Box display="flex" flexDirection="column">
           <FormSection>
             <FormInput
+              isRequired
               id="DirectorInstitutionId"
               type="text"
               name="name"
               label={t['kymInsFullName']}
             />
             <FormInput
+              isRequired
               id="DirectorInstitutionId"
               type="text"
               name="designation"
@@ -81,12 +84,14 @@ export const DirectorTopPart = ({ setKymCurrentSection, directorId }: IAddDirect
               label={t['kymInsHighestQualification']}
             />
             <FormInput
+              isRequired
               id="DirectorInstitutionId"
               type="string"
               name="mobileNo"
               label={t['kymInsMobileNo']}
             />
             <FormInput
+              isRequired
               id="DirectorInstitutionId"
               type="text"
               name="email"

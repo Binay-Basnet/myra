@@ -5,6 +5,7 @@ import { Avatar, Box, Icon, Text } from '@myra-ui';
 
 type MemberInfoProps = {
   memberId?: string | undefined | null;
+  memberCode?: string | undefined | null;
   name: string | undefined | null;
   profilePic: string;
   sourceAccount: string | undefined | null;
@@ -16,6 +17,7 @@ type MemberInfoProps = {
 export const MemberInfo = ({
   name,
   memberId,
+  memberCode,
   profilePic,
   detailPage,
   sourceAccount,
@@ -41,7 +43,7 @@ export const MemberInfo = ({
                 {name}
               </Text>
               <Text fontSize="s3" fontWeight="Regular" color="gray.800">
-                {memberId}
+                {memberCode}
               </Text>
             </Box>
           </Box>

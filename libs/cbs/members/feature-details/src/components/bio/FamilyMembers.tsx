@@ -15,11 +15,11 @@ export const MemberFamilyRelationsInfo = () => {
     memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'IndividualBio'
       ? memberBioData?.data?.members?.memberOverview?.data?.bio?.familyMembers
       : null;
+
   return (
-    <DetailsCard title="Family Details" bg="white" hasThreeRows>
+    <DetailsCard title="Family Members" bg="white" hasThreeRows>
       {bioDataInd?.map((item) => (
         <>
-          {' '}
           <DetailCardContent title="Relationship" subtitle={item?.relationship} />
           <DetailCardContent title="Full Name" subtitle={item?.fullName} />
           <DetailCardContent title="Date of Birth" subtitle={item?.dob?.local} />

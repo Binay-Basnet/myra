@@ -368,11 +368,9 @@ export const MemberKYMMainOccupation = ({
                 label={t['kymIndTypeofVisa']}
                 options={visaTypes}
               />
-              <FormInput
+              <FormAmountInput
                 bg="white"
                 control={control}
-                type="number"
-                textAlign="right"
                 name="foreignEstimatedAnnualIncome"
                 id="estimatedAnnualIncome"
                 label={t['kymIndEstimatedAnnualIncome']}

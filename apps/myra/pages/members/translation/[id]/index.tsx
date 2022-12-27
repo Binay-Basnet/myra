@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { debounce } from 'lodash';
@@ -24,8 +24,19 @@ const Translation = () => {
   // const translationDataArray = translatedData?.data?.members?.translate.data;
 
   const { mutateAsync } = useSetOfficialUseMutation();
-  const methods = useForm({});
-  const { watch, reset } = methods;
+  const methods = useForm({
+    defaultValues: {
+      isStaff: false,
+      checkSanction: false,
+      docCollectedAndVerified: false,
+      acceptableAddressDoc: false,
+      checkNegative: false,
+      riskCategory: 'Low Risk',
+    },
+  });
+  const { watch, reset, setValue } = methods;
+
+  const risk = watch('riskCategory');
 
   const booleanList = [
     {
@@ -63,9 +74,11 @@ const Translation = () => {
     const subscription = watch(
       debounce((data) => {
         if (id) {
-          mutateAsync({ ...data, id, riskCategory: riskCategoryOptions[data?.riskCategory] }).then(
-            () => refetch()
-          );
+          mutateAsync({
+            ...data,
+            id,
+            riskCategory: riskCategoryOptions[data?.riskCategory],
+          }).then(() => refetch());
         }
       }, 800)
     );
@@ -73,14 +86,19 @@ const Translation = () => {
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
 
+  useEffect(() => {
+    if (!risk) setValue('riskCategory', 'Low Risk');
+  }, [risk]);
+
   React.useEffect(() => {
     if (editValues) {
       const editValueData = editValues?.members?.officialUse?.record;
       const riskCategory = editValueData?.riskCategory;
 
       const riskOption = riskCategoryReverseOptions[riskCategory] ?? '';
+      if (riskOption === ' ') setValue('riskCategory', 'Low Risk');
 
-      reset({ ...editValueData, riskCategory: riskOption });
+      reset({ ...editValueData, riskCategory: riskOption as string });
     }
   }, [editValues]);
 
