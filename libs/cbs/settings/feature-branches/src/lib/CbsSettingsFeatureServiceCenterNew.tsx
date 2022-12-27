@@ -25,7 +25,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const { getValues, watch, reset, setError, clearErrors } = methods;
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const abbsStatus = watch('abbsStatus');
 
@@ -112,7 +112,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
       id: 'settings-save-service-center',
       msgs: { loading: 'Saving service center', success: 'Service center saved' },
       promise: setBranchData({
-        id,
+        id: id as string,
         data: getValues(),
       }),
       onSuccess: () => router.push('/settings/general/service-center'),
@@ -129,9 +129,14 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
     });
   };
 
-  const { data: editValues, refetch } = useGetBranchEditDataQuery({
-    id,
-  });
+  const { data: editValues } = useGetBranchEditDataQuery(
+    {
+      id: id as string,
+    },
+    {
+      enabled: !!id && router?.asPath?.includes('edit'),
+    }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -142,13 +147,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
         });
       }
     }
-  }, [editValues, id]);
-
-  useEffect(() => {
-    if (id) {
-      refetch();
-    }
-  }, [refetch]);
+  }, [editValues]);
 
   return (
     <>
