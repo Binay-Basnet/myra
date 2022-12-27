@@ -133,11 +133,21 @@ export const Citizenship = ({ setKymCurrentSection }: ICitizenshipProps) => {
           }}
         >
           <FormSection>
-            <FormInput type="text" name="idNo" label={t['kynIndCitizenshipNo']} />
+            <FormInput isRequired type="text" name="idNo" label={t['kynIndCitizenshipNo']} />
 
-            <FormInput type="text" name="place" label={t['kynIndCitizenshipIssuePlace']} />
+            <FormInput
+              isRequired
+              type="text"
+              name="place"
+              label={t['kynIndCitizenshipIssuePlace']}
+            />
 
-            <FormDatePicker name="date" label={t['kynIndCitizenshipIssueDate']} maxToday />
+            <FormDatePicker
+              isRequired
+              name="date"
+              label={t['kynIndCitizenshipIssueDate']}
+              maxToday
+            />
           </FormSection>
         </form>
       </FormProvider>

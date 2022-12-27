@@ -10,7 +10,8 @@ export const LoanDetailsSidebar = () => {
     <>
       <Box borderBottom="1px" borderBottomColor="border.layout">
         <DetailPageMemberCard
-          id={loanPreview?.member?.code as string}
+          id={loanPreview?.member?.id as string}
+          memberCode={loanPreview?.member?.code as string}
           name={loanPreview?.member?.name?.local as string}
           profilePicUrl={loanPreview?.member?.profilePicUrl as string}
         />
