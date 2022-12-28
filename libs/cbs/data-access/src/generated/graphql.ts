@@ -5916,6 +5916,7 @@ export type JournalVoucher = {
   date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   reference?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;
 };
 
@@ -12470,13 +12471,17 @@ export type TellerTransferActionResult = {
 
 export type TellerTransferInput = {
   amount?: InputMaybe<Scalars['String']>;
+  bankId?: InputMaybe<Scalars['String']>;
   branchPaymentMode?: InputMaybe<BranchPaymentMode>;
   denominations?: InputMaybe<Array<Denomination>>;
+  depositedBy?: InputMaybe<Scalars['String']>;
+  depositedDate?: InputMaybe<Scalars['Localized']>;
   destBranch?: InputMaybe<Scalars['String']>;
   destTellerID?: InputMaybe<Scalars['String']>;
   srcBranch?: InputMaybe<Scalars['String']>;
   srcTellerID?: InputMaybe<Scalars['String']>;
   transferType: TellerTransferType;
+  voucherId?: InputMaybe<Scalars['String']>;
 };
 
 export type TellerTransferResult = {
@@ -13348,6 +13353,20 @@ export type SetJournalVoucherDataMutation = {
     journalVoucher: {
       new?: {
         recordId?: string | null;
+        record?: {
+          transactionId?: string | null;
+          creatorId?: string | null;
+          creatorName?: string | null;
+          reference?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          paymentMode?: JournalVoucherPaymentMode | null;
+          entries?: Array<{
+            accountId: string;
+            drAmount?: string | null;
+            crAmount?: string | null;
+            description?: string | null;
+          } | null> | null;
+        } | null;
         error?:
           | MutationError_AuthorizationError_Fragment
           | MutationError_BadRequestError_Fragment
@@ -24385,6 +24404,20 @@ export const SetJournalVoucherDataDocument = `
     journalVoucher {
       new(data: $data) {
         recordId
+        record {
+          transactionId
+          creatorId
+          creatorName
+          reference
+          date
+          entries {
+            accountId
+            drAmount
+            crAmount
+            description
+          }
+          paymentMode
+        }
         error {
           ...MutationError
         }
