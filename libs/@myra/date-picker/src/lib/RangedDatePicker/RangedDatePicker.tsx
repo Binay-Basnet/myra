@@ -83,6 +83,7 @@ export const RangedDatePicker = ({
     showFiscalPeriod,
     showCustomPeriod,
     showTillDatePeriod,
+    tillDateStart,
     tillDate,
     onChange,
     setState,
