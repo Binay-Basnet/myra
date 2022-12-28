@@ -3849,7 +3849,7 @@ const en: Record<string, string> = {
   settingsDocumentsLoan: 'Loan',
   settingsDocumentsDeposit: 'Deposit',
   settingsDocumentsTransaction: 'Transaction',
-  accountClose: 'Closed Account',
+  accountClose: 'Closed Accounts',
   bankAccountCurrent: 'Current',
   bankAccountSaving: 'Saving',
 

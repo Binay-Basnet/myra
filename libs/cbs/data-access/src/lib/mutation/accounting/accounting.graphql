@@ -23,10 +23,8 @@ mutation setJournalVoucherData($data: JournalVoucherInput) {
           reference
           date
           entries {
-            accountId
-            drAmount
-            crAmount
-            description
+            name
+            value
           }
           paymentMode
         }

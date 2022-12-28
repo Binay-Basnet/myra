@@ -64,6 +64,7 @@ export const MemberKYMBasicInfo = ({ setKymCurrentSection }: IMemberKYMBasicInfo
             options={getFieldOption(genderFields)}
           />
           <FormDatePicker
+            isRequired
             name="dateOfBirth"
             label={t['kymIndDateofBirthBS']}
             maxDate={new Date()}
