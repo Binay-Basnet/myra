@@ -5956,6 +5956,11 @@ export type JournalVoucherEntry = {
   drAmount?: InputMaybe<Scalars['String']>;
 };
 
+export type JournalVoucherEntryDetails = {
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
 export type JournalVoucherEntryView = {
   accountId: Scalars['String'];
   crAmount?: Maybe<Scalars['String']>;
@@ -6007,7 +6012,8 @@ export type JournalVoucherRecord = {
   creatorId?: Maybe<Scalars['ID']>;
   creatorName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
-  entries?: Maybe<Array<Maybe<JournalVoucherEntryView>>>;
+  entries?: Maybe<Array<Maybe<JournalVoucherEntryDetails>>>;
+  note?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<JournalVoucherPaymentMode>;
   reference?: Maybe<Scalars['String']>;
   transactionId?: Maybe<Scalars['ID']>;
@@ -13360,12 +13366,7 @@ export type SetJournalVoucherDataMutation = {
           reference?: string | null;
           date?: Record<'local' | 'en' | 'np', string> | null;
           paymentMode?: JournalVoucherPaymentMode | null;
-          entries?: Array<{
-            accountId: string;
-            drAmount?: string | null;
-            crAmount?: string | null;
-            description?: string | null;
-          } | null> | null;
+          entries?: Array<{ name?: string | null; value?: string | null } | null> | null;
         } | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -24411,10 +24412,8 @@ export const SetJournalVoucherDataDocument = `
           reference
           date
           entries {
-            accountId
-            drAmount
-            crAmount
-            description
+            name
+            value
           }
           paymentMode
         }
