@@ -30,6 +30,7 @@ interface IPeriodsProps {
 
   onChange: (newDate: DateRange | undefined) => void;
   setState: React.Dispatch<React.SetStateAction<TDateState>>;
+  baseDate?: Date;
 }
 
 export const Periods = ({
@@ -48,6 +49,7 @@ export const Periods = ({
   tillDate,
   onChange,
   setState,
+  baseDate,
 }: IPeriodsProps) => {
   const { t } = useLocale(locale);
 
@@ -62,19 +64,19 @@ export const Periods = ({
               if (defaultPeriod.closePopover) {
                 onChange({
                   from: convertDate(
-                    getPeriodDate(defaultPeriod.lastDays, calendarType),
+                    getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate),
                     calendarType
                   ),
                   to: convertDate(
-                    getPeriodDate(defaultPeriod.lastDays, calendarType),
+                    getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate),
                     calendarType
                   ),
                 });
                 onToggle();
               } else {
-                setRangeStartDate(getPeriodDate(defaultPeriod.lastDays, calendarType));
-                setRangeEndDate(getPeriodDate(0, calendarType));
-                setHoveredDate(getPeriodDate(0, calendarType));
+                setRangeStartDate(getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate));
+                setRangeEndDate(getPeriodDate(0, calendarType, baseDate));
+                setHoveredDate(getPeriodDate(0, calendarType, baseDate));
               }
 
               setSelectedPeriod(defaultPeriod.key);

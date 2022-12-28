@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { RangedDatePicker } from '@myra-ui/date-picker';
 
-import { useAppSelector } from '@coop/cbs/data-access';
+import { useAppSelector, useGetEndOfDayDateDataQuery } from '@coop/cbs/data-access';
 
 interface IReportDateRange {
   label?: string;
@@ -13,7 +13,10 @@ interface IReportDateRange {
 export const ReportDateRange = ({ label = 'Select Period', name }: IReportDateRange) => {
   const { control } = useFormContext();
   const { locale } = useRouter();
+  const { data } = useGetEndOfDayDateDataQuery();
+
   const calendarType = useAppSelector((state) => state?.auth?.preference?.date);
+  const transactionDate = data?.transaction?.endOfDayDate?.value?.en;
 
   return (
     <Controller
@@ -23,6 +26,7 @@ export const ReportDateRange = ({ label = 'Select Period', name }: IReportDateRa
           locale={locale === 'ne' ? 'ne' : 'en'}
           calendarType={calendarType || 'AD'}
           value={value}
+          baseDate={new Date(transactionDate || '')}
           onChange={(newDate) =>
             onChange({
               from: {
