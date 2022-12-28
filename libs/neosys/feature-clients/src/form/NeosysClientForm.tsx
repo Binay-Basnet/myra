@@ -1,6 +1,8 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AddIcon } from '@chakra-ui/icons';
 
+import { Box, Button, FormSection, Grid, GridItem, Icon, SlugInput, Text } from '@myra-ui';
+
 import {
   AllModules,
   NatureOfCooperative,
@@ -12,12 +14,12 @@ import {
 import {
   FormAddress,
   FormCheckboxGroup,
+  FormDatePicker,
   FormFileInput,
   FormInput,
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
-import { Box, Button, FormSection, GridItem, Icon, SlugInput } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const NeosysClientForm = () => {
@@ -122,6 +124,56 @@ export const NeosysClientForm = () => {
       </FormSection>
 
       <WorkingArea />
+
+      <FormSection flexLayout header="Head Office Details">
+        <Grid gap={5} mb="s16" templateColumns="repeat(3,1fr)">
+          <GridItem colSpan={2}>
+            <FormInput name="headOfficeDetails.headOfficeName" label="Head Office Name" />
+          </GridItem>
+          <GridItem>
+            <FormInput name="headOfficeDetails.serviceCenterCode" label="Head Office Code" />
+          </GridItem>
+        </Grid>
+        <Grid gap={5} mb="s32" templateColumns="repeat(3,1fr)">
+          <GridItem>
+            <FormDatePicker
+              name="headOfficeDetails.establishedDate"
+              label="Established Date"
+              maxDate={new Date()}
+            />
+          </GridItem>
+          <GridItem>
+            <FormInput type="tel" name="headOfficeDetails.phoneNo" label="Phone no" />
+          </GridItem>
+          <GridItem>
+            <FormInput type="email" name="headOfficeDetails.emailAddress" label="Email Address" />
+          </GridItem>
+        </Grid>
+        <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80" mb="s16">
+          Head Office Address
+        </Text>
+        <Grid gap={5} mb="s32" templateColumns="repeat(3,1fr)">
+          <FormAddress name="headOfficeDetails.headOfficeAddress" />
+        </Grid>
+        <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80" mb={4}>
+          Head Office Manager
+        </Text>
+        <Grid gap={5} mb={6} templateColumns="repeat(3,1fr)">
+          <GridItem>
+            <FormDatePicker
+              name="headOfficeDetails.managerName"
+              label="Name"
+              maxDate={new Date()}
+            />
+          </GridItem>
+          <GridItem>
+            <FormInput type="tel" name="headOfficeDetails.managerContactNo" label="Contact no" />
+          </GridItem>
+          <GridItem>
+            <FormInput type="email" name="headOfficeDetails.managerEmail" label="Email" />
+          </GridItem>
+        </Grid>
+      </FormSection>
 
       <FormSection flexLayout header="neoClientLicense" subHeader="neoClientLicenseDetails">
         <FormSwitchTab
