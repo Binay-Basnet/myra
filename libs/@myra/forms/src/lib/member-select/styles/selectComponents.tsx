@@ -52,22 +52,22 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
     const { data } = props;
     return (
       <chakraComponents.Option {...props}>
-        <Box display="flex" p="s8" gap="s16">
+        <Box display="flex" gap="s16">
           <Box borderRadius="50%">
             <Avatar
               src={data.memberInfo?.profilePicUrl ?? ''}
-              size="lg"
+              size="md"
               name={data.memberInfo?.memberName}
             />
           </Box>
           <Box display="flex" flexDirection="column">
-            <Text fontWeight="Medium" fontSize="r1" color="neutralColorLight.Gray-80">
+            <Text fontWeight="Medium" fontSize="r2" color="neutralColorLight.Gray-80">
               {data.memberInfo?.memberName}
             </Text>
-            <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.Gray-80">
+            <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.Gray-60">
               {data.memberInfo?.code}
             </Text>
-            <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.Gray-80">
+            <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.Gray-70">
               {data.memberInfo?.gender ?? '-'} | {data.memberInfo?.age ?? '-'} |{' '}
               {data.memberInfo?.maritialStatus ?? '-'}
             </Text>

@@ -269,7 +269,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
         justifyContent="center"
         p="s16"
         ml="300px"
-        mr="150px"
+        mr="300px"
         flexGrow="1"
         overflowX="hidden"
         position="relative"

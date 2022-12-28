@@ -35,7 +35,8 @@ export const chakraDefaultStyles:
         : 'neutralColorLight.Gray-80',
     fontWeight: state.isSelected && !state.isMulti ? 600 : 400,
     bg: state.isFocused ? 'highlight.500' : 'none',
-    p: 's12',
+    p: 's8',
+
     // height: 's40',
     display: 'flex',
     alignItems: 'center',
