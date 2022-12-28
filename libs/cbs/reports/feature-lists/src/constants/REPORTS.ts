@@ -82,6 +82,7 @@ export enum Report {
   TRANSACTION_VAULT_BALANCE = 'Vault Balance Report',
   TRANSACTION_DAY_BOOK_REPORT = 'Day Book Report',
   TRANSACTION_SUSPICIOUS_TRANSACTION_REPORT = 'Suspicious Transaction Report',
+  TRANSACTION_BALANCE_SHEET_REPORT = 'Balance Sheet Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -400,6 +401,11 @@ export const REPORTS = {
       id: '7.1',
       report: Report.TRANSACTION_TRIAL_SHEET,
       link: 'trial-sheet',
+    },
+    {
+      id: '7.1.1',
+      report: Report.TRANSACTION_BALANCE_SHEET_REPORT,
+      link: 'balance-sheet',
     },
     {
       id: '7.21',

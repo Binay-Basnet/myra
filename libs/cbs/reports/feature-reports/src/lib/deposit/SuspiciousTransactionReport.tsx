@@ -76,7 +76,7 @@ export const SuspiousTransactionReport = () => {
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
-      report={ReportEnum.THRESHOLD_TRANSACTION_REPORT}
+      report={ReportEnum.TRANSACTION_SUSPICIOUS_TRANSACTION_REPORT}
     >
       <Report.Header>
         <Report.PageHeader

@@ -349,9 +349,12 @@ export const ShareReturnForm = () => {
                     successCardProps={(response) => {
                       const result = response?.share?.return?.record;
 
+                      const sum = result?.extraFee?.reduce((a, b) => a + Number(b?.value ?? 0), 0);
+                      const totalAmountCard = Number(sum) + Number(result?.shareAmount ?? 0);
+
                       return {
                         type: 'Share-Return',
-                        total: amountConverter(result?.totalAmount || 0) as string,
+                        total: String(amountConverter(totalAmountCard ?? '0')),
                         title: 'Share Return Successful',
                         details: {
                           'Transaction Id': (
@@ -361,12 +364,12 @@ export const ShareReturnForm = () => {
                           ),
                           Date: localizedDate(result?.transactionDate),
                           'No of Shares Returned': quantityConverter(result?.noOfShare || 0),
-                          'Return Charges': result?.otherCharge,
-
+                          'Withdraw Amount': quantityConverter(result?.shareAmount || 0),
                           'Payment Mode': result?.paymentMode,
                         },
                         subTitle:
                           'Share returned successfully. Details of the transaction is listed below.',
+                        ...result?.extraFee?.map((fee) => ({ [fee?.name as string]: fee?.value })),
                       };
                     }}
                     errorCardProps={{

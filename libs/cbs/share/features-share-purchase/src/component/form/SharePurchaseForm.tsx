@@ -349,10 +349,12 @@ export const SharePurchaseForm = () => {
                     promise={() => mutateAsync({ data: handleSubmit() })}
                     successCardProps={(response) => {
                       const result = response?.share?.purchase?.record;
+                      const sum = result?.extraFee?.reduce((a, b) => a + Number(b?.value ?? 0), 0);
+                      const totalAmountShare = Number(sum) + Number(result?.shareAmount ?? 0);
 
                       return {
                         type: 'Share-Purchase',
-                        total: amountConverter(result?.totalAmount || 0) as string,
+                        total: amountConverter(totalAmountShare || 0) as string,
                         title: 'Share Issue Successful',
                         details: {
                           'Transaction Id': (
@@ -362,6 +364,7 @@ export const SharePurchaseForm = () => {
                           ),
                           Date: localizedDate(result?.transactionDate),
                           'No of Shares ': quantityConverter(result?.noOfShare || 0),
+                          'Share Amount': amountConverter(result?.shareAmount || 0) as string,
                           'Share Certification Charge': amountConverter(
                             result?.shareCertificateCharge || 0
                           ) as string,
@@ -370,6 +373,7 @@ export const SharePurchaseForm = () => {
                         },
                         subTitle:
                           'Share issued successfully. Details of the transaction is listed below.',
+                        ...result?.extraFee?.map((fee) => ({ [fee?.name as string]: fee?.value })),
                       };
                     }}
                     errorCardProps={{
