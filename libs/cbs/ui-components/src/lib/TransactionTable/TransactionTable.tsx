@@ -32,7 +32,7 @@ export const TransactionTable = ({ data, hasIndex = false }: ITransactionTablePr
       },
       {
         header: 'Transaction ID',
-        accessorKey: 'id',
+        accessorKey: 'transactionId',
         cell: (props) =>
           props.getValue() ? (
             <Text fontWeight="500" fontSize="r1" color="primary.500">

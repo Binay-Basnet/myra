@@ -1,6 +1,7 @@
 export const spacing = {
   s0: '0px',
   s4: '4px',
+  s6: '6px',
   s8: '8px',
   s10: '10px',
   s12: '12px',

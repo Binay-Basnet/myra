@@ -82,9 +82,9 @@ const SIZE = {
   },
 };
 const PADDING = {
-  sm: 's4',
-  md: 's6',
-  lg: 's8',
+  sm: 's6',
+  md: 's8',
+  lg: 's10',
 };
 
 const ICON = {
@@ -121,7 +121,6 @@ export const Chips = forwardRef<HTMLButtonElement, ChipsProps>((props, ref) => {
           minHeight="20px"
           h={CHIPHEIGHT[size].height}
           ref={ref}
-          width="auto"
           px={PADDING[size]}
           variant="solid"
           bg={COLORS.bg[theme]}

@@ -1,3 +1,9 @@
-import { Text } from '@myra-ui';
+import { DetailsCard } from '@myra-ui';
 
-export const DocumentPage = () => <Text>test</Text>;
+import { DocumentComponent } from '../component';
+
+export const DocumentPage = () => (
+  <DetailsCard title="Personal Documents" bg="white">
+    <DocumentComponent keyText="1" value="https://bit.ly/sage-adebayo" />
+  </DetailsCard>
+);

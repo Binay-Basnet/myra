@@ -1,5 +1,6 @@
-import { SettingsLayout, SettingsUserLayout } from '@coop/cbs/settings/ui-layout';
 import { Box, WIPState } from '@myra-ui';
+
+import { SettingsLayout, SettingsUserLayout } from '@coop/cbs/settings/ui-layout';
 
 const ServiceCenterManager = () => (
   //   return <ServiceCenterManagerList />;

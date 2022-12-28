@@ -29,7 +29,7 @@ export const CbsLoanFeatureLoanAccountDetail = () => {
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <OverviewPage />}
         {tabQuery === 'collateral' && <CollateralPage />}
         {tabQuery === 'guarantee' && <GuaranteePage />}
-        {tabQuery === 'document' && <DocumentPage />}
+        {tabQuery === 'documents' && <DocumentPage />}
       </Box>
     </Box>
   );
