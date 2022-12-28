@@ -217,10 +217,13 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
                 <Box color="gray.600" fontSize="s2" fontWeight="500">
                   {detail[0]}
                 </Box>
-
-                <Box color="gray.700" fontSize="s2" fontWeight="600" textTransform="capitalize">
-                  {detail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
-                </Box>
+                {typeof detail[1] === 'string' ? (
+                  <Box color="gray.700" fontSize="s3" fontWeight="600" textTransform="capitalize">
+                    {detail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
+                  </Box>
+                ) : (
+                  detail[1]
+                )}
               </Box>
             ))}
           </Box>
