@@ -131,7 +131,7 @@ export const NeosysClientForm = () => {
             <FormInput name="headOfficeDetails.headOfficeName" label="Head Office Name" />
           </GridItem>
           <GridItem>
-            <FormInput name="headOfficeDetails.serviceCenterCode" label="Head Office Code" />
+            <FormInput name="headOfficeDetails.serviceCentreCode" label="Head Office Code" />
           </GridItem>
         </Grid>
         <Grid gap={5} mb="s32" templateColumns="repeat(3,1fr)">
