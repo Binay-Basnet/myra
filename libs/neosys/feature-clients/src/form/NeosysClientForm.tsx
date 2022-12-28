@@ -160,11 +160,7 @@ export const NeosysClientForm = () => {
         </Text>
         <Grid gap={5} mb={6} templateColumns="repeat(3,1fr)">
           <GridItem>
-            <FormDatePicker
-              name="headOfficeDetails.managerName"
-              label="Name"
-              maxDate={new Date()}
-            />
+            <FormInput name="headOfficeDetails.managerName" label="Name" />
           </GridItem>
           <GridItem>
             <FormInput type="tel" name="headOfficeDetails.managerContactNo" label="Contact no" />
