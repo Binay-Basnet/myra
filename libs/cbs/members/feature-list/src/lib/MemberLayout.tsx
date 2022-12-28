@@ -320,7 +320,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
           ))}
         </Box>
       </Box>
-      <Box w="100%" ml="260px">
+      <Box width="calc(100% - 260px)" ml="260px">
         <Box bg="white" minHeight="calc(100vh - 110px)" width="100%">
           {children}
         </Box>
