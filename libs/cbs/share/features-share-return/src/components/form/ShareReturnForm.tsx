@@ -350,7 +350,7 @@ export const ShareReturnForm = () => {
                       const result = response?.share?.return?.record;
 
                       const sum = result?.extraFee?.reduce((a, b) => a + Number(b?.value ?? 0), 0);
-                      const totalAmountCard = Number(sum) + Number(result?.shareAmount ?? 0);
+                      const totalAmountCard = Number(sum ?? 0) + Number(result?.shareAmount ?? 0);
 
                       const temp: Record<string, string> = {};
 

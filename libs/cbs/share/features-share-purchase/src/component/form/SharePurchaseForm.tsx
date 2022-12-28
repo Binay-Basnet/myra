@@ -350,7 +350,7 @@ export const SharePurchaseForm = () => {
                     successCardProps={(response) => {
                       const result = response?.share?.purchase?.record;
                       const sum = result?.extraFee?.reduce((a, b) => a + Number(b?.value ?? 0), 0);
-                      const totalAmountShare = Number(sum) + Number(result?.shareAmount ?? 0);
+                      const totalAmountShare = Number(sum ?? 0) + Number(result?.shareAmount ?? 0);
                       const temp: Record<string, string> = {};
 
                       result?.extraFee?.forEach((fee) => {
