@@ -97,12 +97,14 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
               <Box display="flex" flexDirection="column" gap="s48">
                 <FormSection>
                   <FormInput
+                    isRequired
                     id="accountOperatorCoop"
                     type="text"
                     name="nameEn"
                     label={t['kymCoopFullName']}
                   />
                   <FormInput
+                    isRequired
                     id="accountOperatorCoop"
                     type="text"
                     name="designation"
@@ -140,12 +142,14 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
                     label={t['kymCoopHighestQualification']}
                   />
                   <FormInput
+                    isRequired
                     id="accountOperatorCoop"
                     type="number"
                     name="contactNumber"
                     label={t['kymCoopMobileNo']}
                   />
                   <FormInput
+                    isRequired
                     id="accountOperatorCoop"
                     type="text"
                     name="email"

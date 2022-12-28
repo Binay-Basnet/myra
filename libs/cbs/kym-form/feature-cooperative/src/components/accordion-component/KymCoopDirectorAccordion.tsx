@@ -101,12 +101,14 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
               <Box display="flex" flexDirection="column">
                 <FormSection>
                   <FormInput
+                    isRequired
                     id="boardDirectorCoop"
                     type="text"
                     name="nameEn"
                     label={t['kymCoopFullName']}
                   />
                   <FormInput
+                    isRequired
                     id="boardDirectorCoop"
                     type="text"
                     name="designation"
@@ -146,12 +148,14 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
                     label={t['kymCoopHighestQualification']}
                   />
                   <FormInput
+                    isRequired
                     id="boardDirectorCoop"
                     type="number"
                     name="contactNumber"
                     label={t['kymCoopMobileNo']}
                   />
                   <FormInput
+                    isRequired
                     id="boardDirectorCoop"
                     type="text"
                     name="email"

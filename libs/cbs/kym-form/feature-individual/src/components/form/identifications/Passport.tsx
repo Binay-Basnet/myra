@@ -132,11 +132,11 @@ export const Passport = ({ setKymCurrentSection }: IPassportProps) => {
           }}
         >
           <FormSection>
-            <FormInput type="text" name="idNo" label={t['kymIndPassportNo']} />
+            <FormInput isRequired type="text" name="idNo" label={t['kymIndPassportNo']} />
 
-            <FormInput type="text" name="place" label={t['kymIndPassportIssuePlace']} />
+            <FormInput isRequired type="text" name="place" label={t['kymIndPassportIssuePlace']} />
 
-            <FormDatePicker name="date" label={t['kymIndPassportIssueDate']} maxToday />
+            <FormDatePicker isRequired name="date" label={t['kymIndPassportIssueDate']} maxToday />
           </FormSection>
         </form>
       </FormProvider>

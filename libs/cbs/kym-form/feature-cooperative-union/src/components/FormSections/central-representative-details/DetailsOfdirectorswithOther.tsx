@@ -240,12 +240,14 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                     <SectionContainer gap="s20">
                       <InputGroupContainer>
                         <FormInput
+                          isRequired
                           type="text"
                           name="fullName"
                           id="centralRepresentative.fullName"
                           label={t['kymCoopUnionDirFullName']}
                         />
                         <FormInput
+                          isRequired
                           type="text"
                           name="designationEn"
                           id="centralRepresentative.designationEn"
@@ -296,12 +298,14 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                           label={t['kymCoopUnionDirHighestQualification']}
                         />
                         <FormInput
+                          isRequired
                           type="number"
                           name="mobileNumber"
                           id="centralRepresentative.mobileNumber"
                           label={t['kymCoopUnionDirMobileNo']}
                         />
                         <FormInput
+                          isRequired
                           type="text"
                           name="email"
                           id="centralRepresentative.email"

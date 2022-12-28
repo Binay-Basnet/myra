@@ -97,6 +97,15 @@ export type Base = {
   objState: ObjState;
 };
 
+export enum BranchCategory {
+  BranchOffice = 'BRANCH_OFFICE',
+  ContactOffice = 'CONTACT_OFFICE',
+  ExtensionCounter = 'EXTENSION_COUNTER',
+  HeadOffice = 'HEAD_OFFICE',
+  RegionalOffice = 'REGIONAL_OFFICE',
+  ServiceCenter = 'SERVICE_CENTER',
+}
+
 export enum ComparatorType {
   EqualTo = 'EqualTo',
   GreaterThan = 'GreaterThan',
@@ -145,6 +154,18 @@ export type District = {
 
 export type Filter = {
   orConditions: Array<OrConditions>;
+};
+
+export type HeadOfficeDetailsInput = {
+  emailAddress?: InputMaybe<Scalars['String']>;
+  establishedDate?: InputMaybe<Scalars['Localized']>;
+  headOfficeAddress?: InputMaybe<OrganizationAddressDetailsInput>;
+  headOfficeName?: InputMaybe<Scalars['String']>;
+  managerContactNo?: InputMaybe<Scalars['String']>;
+  managerEmail?: InputMaybe<Scalars['String']>;
+  managerName?: InputMaybe<Scalars['String']>;
+  phoneNo?: InputMaybe<Scalars['String']>;
+  serviceCentreCode?: InputMaybe<Scalars['String']>;
 };
 
 export enum Id_Type {
@@ -445,6 +466,7 @@ export type OrganizationClientInput = {
   addressDetails?: InputMaybe<OrganizationAddressDetailsInput>;
   contactDetails?: InputMaybe<OrganizationContactDetailsInput>;
   documents?: InputMaybe<OrganizationClientDocumentsInput>;
+  headOfficeDetails?: InputMaybe<HeadOfficeDetailsInput>;
   license?: InputMaybe<OrganizationInstallmentLicense>;
   mainContactPerson?: InputMaybe<ContactPersonInput>;
   modules?: InputMaybe<Array<InputMaybe<AllModules>>>;

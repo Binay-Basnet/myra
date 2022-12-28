@@ -25,7 +25,7 @@ const COLORS = {
   bg: {
     neutral: 'gray.100',
     success: 'success.200',
-    info: 'info.200',
+    info: 'info.100',
     warning: 'warning.0',
     danger: 'danger.0',
   },
@@ -82,8 +82,8 @@ const SIZE = {
   },
 };
 const PADDING = {
-  sm: '2px',
-  md: 's4',
+  sm: 's4',
+  md: 's6',
   lg: 's8',
 };
 

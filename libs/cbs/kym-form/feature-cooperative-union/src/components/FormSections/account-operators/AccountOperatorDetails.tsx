@@ -133,6 +133,7 @@ const AddDirector = ({
                         label={t['kymCoopUnionOpFullName']}
                       />
                       <FormInput
+                        isRequired
                         type="text"
                         name="designationEn"
                         id="accountOperator.designationEn"

@@ -17,7 +17,12 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
       </GridItem>
 
       <GridItem colSpan={1}>
-        <FormInput type="text" name="bankVoucher.voucherId" label={t['sharePurchaseVoucherId']} />
+        <FormInput
+          isRequired
+          type="text"
+          name="bankVoucher.voucherId"
+          label={t['sharePurchaseVoucherId']}
+        />
       </GridItem>
 
       <GridItem colSpan={1}>

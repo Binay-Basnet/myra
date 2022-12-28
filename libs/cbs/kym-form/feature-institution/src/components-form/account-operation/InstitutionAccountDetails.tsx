@@ -109,18 +109,21 @@ const AddAccountDetails = ({ removeDirector, setKymCurrentSection, accountId }: 
               <Box display="flex" flexDirection="column">
                 <FormSection>
                   <FormInput
+                    isRequired
                     id="AccountOperatorInstitution"
                     type="text"
                     name="name"
                     label={t['kymInsFullName']}
                   />
                   <FormInput
+                    isRequired
                     id="AccountOperatorInstitution"
                     type="text"
                     name="contact"
                     label={t['kymInsContactNo']}
                   />
                   <FormInput
+                    isRequired
                     id="AccountOperatorInstitution"
                     type="text"
                     name="email"
@@ -177,6 +180,7 @@ const AddAccountDetails = ({ removeDirector, setKymCurrentSection, accountId }: 
                     gap="s20"
                   >
                     <FormSelect
+                      isRequired
                       id="AccountOperatorInstitution"
                       name="designation"
                       label={t['kymInsDesignation']}

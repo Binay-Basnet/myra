@@ -7,7 +7,7 @@ import {
   KymIndMemberInput,
   useGetIndividualKymOptionsQuery,
 } from '@coop/cbs/data-access';
-import { FormInput, FormRadioGroup } from '@coop/shared/form';
+import { FormAmountInput, FormRadioGroup } from '@coop/shared/form';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';
@@ -39,12 +39,10 @@ export const KYMEstimatedAmount = ({ setKymCurrentSection }: IKYMEstimatedAmount
           id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion"
           header="kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION"
         >
-          <FormInput
+          <FormAmountInput
             isRequired
-            type="number"
             name="estimatedAnnualTransactionAmount"
             label={t['kynIndEstimatedannualaccounttransaction']}
-            textAlign="right"
           />
         </FormSection>
 
@@ -74,19 +72,15 @@ export const KYMEstimatedAmount = ({ setKymCurrentSection }: IKYMEstimatedAmount
         </Box>
 
         <FormSection>
-          <FormInput
+          <FormAmountInput
             isRequired
-            type="number"
             name="estimatedAnnualDepositAmount"
             label={t['kynIndEstimatedAnnualDeposit']}
-            textAlign="right"
           />
-          <FormInput
+          <FormAmountInput
             isRequired
-            type="number"
             name="estimatedAnnualLoanAmount"
             label={t['kynIndEstimatedAnnualLoan']}
-            textAlign="right"
           />
         </FormSection>
       </form>

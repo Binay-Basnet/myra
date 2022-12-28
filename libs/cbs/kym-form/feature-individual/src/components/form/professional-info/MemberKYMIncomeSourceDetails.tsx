@@ -21,7 +21,7 @@ import {
   DynamicBoxGroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormRadioGroup } from '@coop/shared/form';
+import { FormAmountInput, FormInput, FormRadioGroup } from '@coop/shared/form';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';
@@ -140,13 +140,7 @@ const IncomeSource = ({
               />
             </GridItem>
             <GridItem colSpan={1}>
-              <FormInput
-                type="number"
-                textAlign="right"
-                bg="white"
-                name="amount"
-                label={t['kymIndAmount']}
-              />
+              <FormAmountInput bg="white" name="amount" label={t['kymIndAmount']} />
             </GridItem>
 
             {/* {familyIncomeData?.members?.individual?.options?.list?.data?.[0]?.options?.map(

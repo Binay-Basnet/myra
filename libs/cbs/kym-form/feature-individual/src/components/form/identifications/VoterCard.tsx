@@ -130,9 +130,14 @@ export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
           }}
         >
           <FormSection>
-            <FormInput type="text" name="idNo" label={t['kymIndVoterCardNo']} />
+            <FormInput isRequired type="text" name="idNo" label={t['kymIndVoterCardNo']} />
 
-            <FormInput type="text" name="place" label={t['kymIndVoterCardPollingStation']} />
+            <FormInput
+              isRequired
+              type="text"
+              name="place"
+              label={t['kymIndVoterCardPollingStation']}
+            />
           </FormSection>
         </form>
       </FormProvider>

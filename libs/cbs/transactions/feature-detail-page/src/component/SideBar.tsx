@@ -72,7 +72,8 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
       {detailPage === 'loanRepayment' && (
         <>
           <MemberInfo
-            memberId={summary?.code}
+            memberId={summary?.memberId}
+            memberCode={summary?.code}
             detailPage={detailPage}
             name={summary?.name}
             profilePic={summary?.profilePic ?? ''}

@@ -45,7 +45,7 @@ export const ShareRegisterTable = () => {
     () => [
       {
         header: t['shareRegisterDate'],
-        accessorFn: (row) => localizedDate(row?.node?.transactionDate),
+        accessorFn: (row) => localizedDate(row?.node.transactionDate),
       },
 
       {

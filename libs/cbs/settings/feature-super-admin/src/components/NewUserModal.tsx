@@ -44,7 +44,7 @@ const roleOptions = [
 ];
 
 export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModalProps) => {
-  const methods = useForm<MyraUserInput>();
+  const methods = useForm<MyraUserInput>({ defaultValues: { isCoreEmployee: false } });
 
   const { getValues, watch, reset } = methods;
 
@@ -92,7 +92,7 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
   const role = watch('role');
 
   const handleModalClose = () => {
-    reset();
+    reset({});
     onClose();
   };
 
