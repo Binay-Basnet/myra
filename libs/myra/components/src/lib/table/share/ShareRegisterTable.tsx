@@ -9,6 +9,7 @@ import {
   Share_Transaction_Direction,
   useGetShareRegisterListQuery,
 } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -44,7 +45,7 @@ export const ShareRegisterTable = () => {
     () => [
       {
         header: t['shareRegisterDate'],
-        accessorFn: (row) => row?.node.transactionDate,
+        accessorFn: (row) => localizedDate(row?.node?.transactionDate),
       },
 
       {
