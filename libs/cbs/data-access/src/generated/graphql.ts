@@ -250,6 +250,14 @@ export enum AccountTypeFilter {
   Loan = 'LOAN',
 }
 
+export type AccountWithdrawSlip = {
+  account?: Maybe<DepositLoanAccount>;
+  availableRange?: Maybe<SlipRange>;
+  id?: Maybe<Scalars['ID']>;
+  member?: Maybe<Member>;
+  noOfLeaves?: Maybe<Scalars['Int']>;
+};
+
 export type AccountWithdrawSlipMutationResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<WithdrawSlipQuery>;
@@ -264,6 +272,11 @@ export type AccountWithdrawSlipQueryResult = {
 export type AccountWithdrawSlipRangeQueryResult = {
   error?: Maybe<QueryError>;
   range?: Maybe<SlipRange>;
+};
+
+export type AccountWithdrawSlipResult = {
+  data?: Maybe<AccountWithdrawSlip>;
+  error?: Maybe<QueryError>;
 };
 
 export enum AccountingBankAccountType {
@@ -13237,6 +13250,7 @@ export type WithdrawSlipIssueInput = {
 export type WithdrawSlipMutation = {
   cancelSlip?: Maybe<AccountWithdrawSlipMutationResult>;
   issueNew?: Maybe<AccountWithdrawSlipMutationResult>;
+  printSlip?: Maybe<AccountWithdrawSlipMutationResult>;
 };
 
 export type WithdrawSlipMutationCancelSlipArgs = {
@@ -13250,14 +13264,28 @@ export type WithdrawSlipMutationIssueNewArgs = {
   data: WithdrawSlipIssueInput;
 };
 
+export type WithdrawSlipMutationPrintSlipArgs = {
+  data?: InputMaybe<WithdrawSlipPrintInput>;
+};
+
+export type WithdrawSlipPrintInput = {
+  noOfLeaves: Scalars['Int'];
+  requestID: Scalars['ID'];
+};
+
 export type WithdrawSlipQuery = {
   getAvailableRange?: Maybe<AccountWithdrawSlipRangeQueryResult>;
+  getWithdrawSlipData?: Maybe<AccountWithdrawSlipResult>;
   listAvailableSlips?: Maybe<AccountWithdrawSlipQueryResult>;
   listPastSlips?: Maybe<AccountWithdrawSlipQueryResult>;
 };
 
 export type WithdrawSlipQueryGetAvailableRangeArgs = {
   count: Scalars['Int'];
+};
+
+export type WithdrawSlipQueryGetWithdrawSlipDataArgs = {
+  requestID: Scalars['ID'];
 };
 
 export type WithdrawSlipQueryListAvailableSlipsArgs = {
@@ -13665,6 +13693,25 @@ export type SetIssueNewSlipMutationVariables = Exact<{
 export type SetIssueNewSlipMutation = {
   withdrawSlip: {
     issueNew?: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type PrintSlipMutationVariables = Exact<{
+  data?: InputMaybe<WithdrawSlipPrintInput>;
+}>;
+
+export type PrintSlipMutation = {
+  withdrawSlip: {
+    printSlip?: {
       recordId: string;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -24217,6 +24264,24 @@ export type GetAvailableRangeQuery = {
   withdrawSlip: { getAvailableRange?: { range?: { from: string; to: string } | null } | null };
 };
 
+export type GetWithdrawSlipDataQueryVariables = Exact<{
+  requestID: Scalars['ID'];
+}>;
+
+export type GetWithdrawSlipDataQuery = {
+  withdrawSlip: {
+    getWithdrawSlipData?: {
+      data?: {
+        id?: string | null;
+        noOfLeaves?: number | null;
+        member?: { id: string; name?: Record<'local' | 'en' | 'np', string> | null } | null;
+        account?: { id: string; accountName?: string | null } | null;
+        availableRange?: { from: string; to: string } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
   ... on BadRequestError {
@@ -24920,6 +24985,26 @@ export const useSetIssueNewSlipMutation = <TError = unknown, TContext = unknown>
   useMutation<SetIssueNewSlipMutation, TError, SetIssueNewSlipMutationVariables, TContext>(
     ['setIssueNewSlip'],
     useAxios<SetIssueNewSlipMutation, SetIssueNewSlipMutationVariables>(SetIssueNewSlipDocument),
+    options
+  );
+export const PrintSlipDocument = `
+    mutation printSlip($data: WithdrawSlipPrintInput) {
+  withdrawSlip {
+    printSlip(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const usePrintSlipMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<PrintSlipMutation, TError, PrintSlipMutationVariables, TContext>
+) =>
+  useMutation<PrintSlipMutation, TError, PrintSlipMutationVariables, TContext>(
+    ['printSlip'],
+    useAxios<PrintSlipMutation, PrintSlipMutationVariables>(PrintSlipDocument),
     options
   );
 export const SetAddMemberToAgentDataDocument = `
@@ -39378,6 +39463,41 @@ export const useGetAvailableRangeQuery = <TData = GetAvailableRangeQuery, TError
     ['getAvailableRange', variables],
     useAxios<GetAvailableRangeQuery, GetAvailableRangeQueryVariables>(
       GetAvailableRangeDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetWithdrawSlipDataDocument = `
+    query getWithdrawSlipData($requestID: ID!) {
+  withdrawSlip {
+    getWithdrawSlipData(requestID: $requestID) {
+      data {
+        id
+        member {
+          id
+          name
+        }
+        account {
+          id
+          accountName
+        }
+        noOfLeaves
+        availableRange {
+          from
+          to
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetWithdrawSlipDataQuery = <TData = GetWithdrawSlipDataQuery, TError = unknown>(
+  variables: GetWithdrawSlipDataQueryVariables,
+  options?: UseQueryOptions<GetWithdrawSlipDataQuery, TError, TData>
+) =>
+  useQuery<GetWithdrawSlipDataQuery, TError, TData>(
+    ['getWithdrawSlipData', variables],
+    useAxios<GetWithdrawSlipDataQuery, GetWithdrawSlipDataQueryVariables>(
+      GetWithdrawSlipDataDocument
     ).bind(null, variables),
     options
   );

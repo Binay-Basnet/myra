@@ -8,6 +8,7 @@ import {
   Alert,
   asyncToast,
   Box,
+  Button,
   Container,
   FormFooter,
   FormHeader,
@@ -109,6 +110,25 @@ export const AddWithdrawSlipBook = () => {
     });
   };
 
+  const handelSaveAndPrint = () => {
+    const data = getValues();
+
+    asyncToast({
+      id: 'issue-new-withdraw-slip-book',
+      msgs: {
+        loading: 'Issuing withdraw slip book',
+        success: 'Withdraw slip book issued',
+      },
+      promise: issueWithdrawSlip({
+        data: { ...omit(data, ['memberId']) },
+      }),
+      onSuccess: (res) => {
+        queryClient.invalidateQueries(['getAvailableSlipsList']);
+        router.push(`/withdraw/withdraw-slip-book/print/${res?.withdrawSlip?.issueNew?.recordId}`);
+      },
+    });
+  };
+
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -175,7 +195,19 @@ export const AddWithdrawSlipBook = () => {
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">
-            <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSave} />
+            <FormFooter
+              mainButtonLabel="Save"
+              mainButtonHandler={handleSave}
+              draftButton={
+                <Button
+                  // width="160px"
+                  variant="outline"
+                  onClick={handelSaveAndPrint}
+                >
+                  Save & Print
+                </Button>
+              }
+            />
           </Container>
         </Box>
       </Box>
