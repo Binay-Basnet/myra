@@ -27,6 +27,12 @@ mutation addShareReturn($data: ShareReturnInput!) {
         bankId
         voucherNumber
         accountId
+        memberId
+        member {
+          code
+          name
+        }
+
       }
       error {
         ...MutationError

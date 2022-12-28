@@ -534,6 +534,12 @@ export const AddWithdraw = () => {
                         },
                         subTitle:
                           'Amount withdrawn successfully. Details of the transaction is listed below.',
+                        meta: {
+                          memberId: result?.memberId,
+                          accountId: result?.accountId,
+                          accountName: result?.accountName,
+                          member: result?.memberName?.local,
+                        },
                       };
                     }}
                     errorCardProps={{

@@ -15588,7 +15588,9 @@ export type AddSharePurchaseMutation = {
         bankId?: string | null;
         voucherNumber?: string | null;
         accountId?: string | null;
+        memberId?: string | null;
         extraFee?: Array<{ name: string; value: number } | null> | null;
+        member?: { code: string; name?: Record<'local' | 'en' | 'np', string> | null } | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -15629,7 +15631,9 @@ export type AddShareReturnMutation = {
         bankId?: string | null;
         voucherNumber?: string | null;
         accountId?: string | null;
+        memberId?: string | null;
         extraFee?: Array<{ name: string; value: number } | null> | null;
+        member?: { code: string; name?: Record<'local' | 'en' | 'np', string> | null } | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -15657,6 +15661,10 @@ export type SetDepositDataMutation = {
         rebate?: string | null;
         paymentMode?: DepositPaymentType | null;
         depositedBy?: DepositedBy | null;
+        memberName?: Record<'local' | 'en' | 'np', string> | null;
+        memberId?: string | null;
+        accountId?: string | null;
+        accountName?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -15729,6 +15737,23 @@ export type SetAccountTransferDataMutation = {
   transaction: {
     transfer: {
       recordId?: string | null;
+      record?: {
+        totalAmount?: string | null;
+        amount?: string | null;
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        id?: string | null;
+        remarks?: string | null;
+        fine?: string | null;
+        payeeNumber?: string | null;
+        receiverAccountId?: string | null;
+        receiverAccountName?: string | null;
+        receiverMemberId?: string | null;
+        receiverMemberName?: Record<'local' | 'en' | 'np', string> | null;
+        senderAccountId?: string | null;
+        senderAccountName?: string | null;
+        senderMemberId?: string | null;
+        senderMemberName?: Record<'local' | 'en' | 'np', string> | null;
+      } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -28011,6 +28036,11 @@ export const AddSharePurchaseDocument = `
         bankId
         voucherNumber
         accountId
+        memberId
+        member {
+          code
+          name
+        }
       }
       error {
         ...MutationError
@@ -28061,6 +28091,11 @@ export const AddShareReturnDocument = `
         bankId
         voucherNumber
         accountId
+        memberId
+        member {
+          code
+          name
+        }
       }
       error {
         ...MutationError
@@ -28094,6 +28129,10 @@ export const SetDepositDataDocument = `
         rebate
         paymentMode
         depositedBy
+        memberName
+        memberId
+        accountId
+        accountName
       }
       error {
         ...MutationError
@@ -28186,6 +28225,23 @@ export const SetAccountTransferDataDocument = `
   transaction {
     transfer(data: $data) {
       recordId
+      record {
+        totalAmount
+        amount
+        date
+        id
+        remarks
+        fine
+        payeeNumber
+        receiverAccountId
+        receiverAccountName
+        receiverMemberId
+        receiverMemberName
+        senderAccountId
+        senderAccountName
+        senderMemberId
+        senderMemberName
+      }
       error {
         ...MutationError
       }

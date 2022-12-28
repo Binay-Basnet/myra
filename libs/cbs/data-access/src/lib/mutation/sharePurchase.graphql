@@ -27,6 +27,11 @@ mutation addSharePurchase($data: SharePurchaseInput!) {
         bankId
         voucherNumber
         accountId
+        memberId
+        member {
+          code
+          name
+        }
       }
       error {
         ...MutationError

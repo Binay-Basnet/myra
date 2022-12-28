@@ -9,6 +9,11 @@ mutation setDepositData($data: DepositInput!) {
         rebate
         paymentMode
         depositedBy
+
+        memberName
+        memberId
+        accountId
+        accountName
       }
       error {
         ...MutationError
@@ -57,6 +62,23 @@ mutation setAccountTransferData($data: TransferInput!) {
   transaction {
     transfer(data: $data) {
       recordId
+      record {
+        totalAmount
+        amount
+        date
+        id
+        remarks
+        fine
+        payeeNumber
+        receiverAccountId
+        receiverAccountName
+        receiverMemberId
+        receiverMemberName
+        senderAccountId
+        senderAccountName
+        senderMemberId
+        senderMemberName
+      }
       error {
         ...MutationError
       }

@@ -390,6 +390,12 @@ export const LoanRepayment = () => {
                       },
                       subTitle:
                         'Loan amount has been repayed successfully. Details of the transaction is listed below.',
+                      meta: {
+                        memberId: result?.memberId,
+                        member: result?.memberName?.local,
+                        accountId: result?.accountId,
+                        accountName: result?.accountName,
+                      },
                     };
                   }}
                   errorCardProps={{

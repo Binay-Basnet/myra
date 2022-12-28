@@ -377,6 +377,10 @@ export const SharePurchaseForm = () => {
                         },
                         subTitle:
                           'Share issued successfully. Details of the transaction is listed below.',
+                        meta: {
+                          memberId: result?.member?.code,
+                          member: result?.member?.name?.local,
+                        },
                       };
                     }}
                     errorCardProps={{

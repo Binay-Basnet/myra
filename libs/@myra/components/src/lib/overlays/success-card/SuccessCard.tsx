@@ -3,7 +3,7 @@ import { AiOutlinePlus, AiOutlinePrinter } from 'react-icons/ai';
 import ReactToPrint from 'react-to-print';
 import dayjs from 'dayjs';
 
-import { Avatar, Box, Button, Icon, Text } from '@myra-ui/foundations';
+import { Avatar, Box, Button, Divider, Icon, Text } from '@myra-ui/foundations';
 
 import { useAppSelector } from '@coop/cbs/data-access';
 import { formatAddress } from '@coop/cbs/utils';
@@ -15,6 +15,12 @@ export interface SuccessCardProps {
   total?: string;
   type: string;
   completeHandler?: () => void;
+  meta?: {
+    member?: string | null;
+    memberId?: string | null;
+    accountName?: string | null;
+    accountId?: string | null;
+  };
 }
 
 export const SuccessCard = ({
@@ -24,6 +30,7 @@ export const SuccessCard = ({
   total,
   type,
   completeHandler,
+  meta,
 }: SuccessCardProps) => {
   const componentRef = useRef<HTMLInputElement | null>(null);
 
@@ -102,7 +109,7 @@ export const SuccessCard = ({
         </Box>
       </Box>
 
-      <SuccessPrint total={total as string} details={details} ref={componentRef} />
+      <SuccessPrint meta={meta} total={total as string} details={details} ref={componentRef} />
     </Box>
   );
 };
@@ -121,12 +128,18 @@ const SuccessCheckmark = () => (
 );
 
 interface SuccessPrintProps {
+  meta?: {
+    member?: string | null;
+    memberId?: string | null;
+    accountName?: string | null;
+    accountId?: string | null;
+  };
   details: Record<string, React.ReactNode>;
   total: string;
 }
 
 const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
-  ({ details, total }, ref) => {
+  ({ details, total, meta }, ref) => {
     const user = useAppSelector((state) => state.auth.user);
 
     return (
@@ -136,7 +149,7 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
         bg="white"
         p="s32"
         flexDir="column"
-        gap="s32"
+        gap="s8"
         sx={{
           '@media print': {
             display: 'flex',
@@ -201,6 +214,40 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
               </Text>
             </Box>
           </Box>
+        </Box>
+
+        <Divider />
+        <Box
+          w="100%"
+          display="grid"
+          gridTemplateColumns="repeat(2, 1fr)"
+          rowGap="s4"
+          columnGap="s8"
+          pb="s24"
+        >
+          {meta?.member && (
+            <Text fontSize="s2" fontWeight="400" color="gray.700">
+              Member: {meta?.member}
+            </Text>
+          )}
+
+          {meta?.memberId && (
+            <Text fontSize="s2" fontWeight="400" color="gray.700">
+              Member Id: {meta?.memberId}
+            </Text>
+          )}
+
+          {meta?.accountName && (
+            <Text fontSize="s2" fontWeight="400" color="gray.700">
+              Account Name: {meta?.accountName}
+            </Text>
+          )}
+
+          {meta?.accountId && (
+            <Text fontSize="s2" fontWeight="400" color="gray.700">
+              Account Id: {meta?.accountId}
+            </Text>
+          )}
         </Box>
 
         <Box w="100%" bg="highlight.500" display="flex" flexDir="column" py="s8" px="s16">

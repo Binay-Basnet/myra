@@ -378,7 +378,12 @@ export const ShareReturnForm = () => {
                           // ...result?.extraFee?.map((fee) => ({
                           //   [String(fee?.name)]: fee?.value,
                           // })),
+
                           ...temp,
+                        },
+                        meta: {
+                          memberId: result?.member?.code,
+                          member: result?.member?.name?.local,
                         },
                         subTitle:
                           'Share returned successfully. Details of the transaction is listed below.',
