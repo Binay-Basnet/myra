@@ -382,51 +382,64 @@ export const TopLevelHeader = () => {
                       </Text>
                     </PopoverBody>
                     <PopoverBody p="s8">
-                      {user?.branch?.category === BranchCategory.HeadOffice ? (
-                        hasEodErrors ? (
-                          <Box display="flex" flexDirection="column" gap="s8">
-                            <Button
-                              variant="ghost"
-                              display="flex"
-                              justifyContent="center"
-                              w="100%"
-                              onClick={reinitiateCloseDay}
-                            >
-                              Reinitiate
-                            </Button>
-                            <Button
-                              variant="solid"
-                              display="flex"
-                              justifyContent="center"
-                              w="100%"
-                              onClick={ignoreAndCloseDay}
-                            >
-                              Ignore and Close Day
-                            </Button>
-                          </Box>
+                      <Box display="flex" flexDirection="column" gap="s8">
+                        {user?.branch?.category === BranchCategory.HeadOffice ? (
+                          hasEodErrors ? (
+                            <>
+                              <Button
+                                variant="outline"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                onClick={reinitiateCloseDay}
+                              >
+                                Reinitiate
+                              </Button>
+                              <Button
+                                variant="solid"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                onClick={ignoreAndCloseDay}
+                              >
+                                Ignore and Close Day
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              <Button
+                                variant="outline"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                onClick={handleBranchReadiness}
+                              >
+                                Branch Readiness
+                              </Button>
+                              <Button
+                                variant="solid"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                // onClick={() => router.push('/day-close')}
+                                onClick={closeDayFxn}
+                              >
+                                Close Day
+                              </Button>
+                            </>
+                          )
                         ) : (
                           <Button
                             variant="solid"
                             display="flex"
                             justifyContent="center"
                             w="100%"
-                            // onClick={() => router.push('/day-close')}
-                            onClick={closeDayFxn}
+                            onClick={handleBranchReadiness}
                           >
-                            Close Day
+                            Branch Readiness
                           </Button>
-                        )
-                      ) : (
-                        <Button
-                          variant="solid"
-                          display="flex"
-                          justifyContent="center"
-                          w="100%"
-                          onClick={handleBranchReadiness}
-                        >
-                          Branch Readiness
-                        </Button>
-                      )}
+                        )}
+                      </Box>
                     </PopoverBody>
                   </PopoverContent>
                 </>

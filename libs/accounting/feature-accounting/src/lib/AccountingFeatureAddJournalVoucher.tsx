@@ -1,3 +1,4 @@
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -140,6 +141,31 @@ export const AccountingFeatureAddJournalVoucher = () => {
                 promise={() => mutateAsync({ data: handleSave() })}
                 successCardProps={(response) => {
                   const result = response?.accounting?.journalVoucher?.new?.record;
+                  const temp: Record<string, React.ReactNode> = {};
+
+                  result?.entries?.forEach((fee) => {
+                    if (fee?.name && fee?.value) {
+                      temp[String(fee.name)] = fee?.value?.includes('Dr') ? (
+                        <Box display="flex" gap="s8">
+                          <Text fontSize="s3" fontWeight="600">
+                            {fee?.value?.split('.')[1]}
+                          </Text>
+                          <Text fontSize="s3" color="accent.700" fontWeight="600">
+                            DR
+                          </Text>
+                        </Box>
+                      ) : (
+                        <Box display="flex" gap="s8">
+                          <Text fontSize="s3" fontWeight="600">
+                            {fee?.value?.split('.')[1]}
+                          </Text>
+                          <Text fontSize="s3" color="accent.100" fontWeight="600">
+                            CR
+                          </Text>
+                        </Box>
+                      );
+                    }
+                  });
 
                   return {
                     type: 'New Jornal Voucher',
@@ -153,6 +179,8 @@ export const AccountingFeatureAddJournalVoucher = () => {
                       ),
                       Date: localizedDate(result?.date),
                       Refrence: result?.reference,
+                      ...temp,
+                      Note: result?.note,
                     },
                     subTitle:
                       'Journal Voucher entered successfully. Details of the entry is listed below.',
