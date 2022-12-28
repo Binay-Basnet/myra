@@ -12,7 +12,7 @@ privateAgent.interceptors.request.use(
   (config) => {
     config.headers = {
       ...config.headers,
-      Slug: 'neosys',
+      slug: 'neosys',
     };
     return config;
   },
