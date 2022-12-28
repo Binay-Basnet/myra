@@ -5,14 +5,6 @@ import { getSchemaPath } from '@coop/shared/utils';
 import { RootState, useAppSelector } from '../redux/store';
 import { useRefreshToken } from '../redux/useRefreshToken';
 
-export const getDatabaseSlug = () => {
-  if (typeof window === 'undefined') return 'neosys';
-
-  const slug = window.location.host.split('.')[0];
-  if (slug.includes('localhost')) return 'neosys';
-  return slug;
-};
-
 const privateAgent = axios.create();
 
 // Request interceptors for API calls
@@ -20,7 +12,7 @@ privateAgent.interceptors.request.use(
   (config) => {
     config.headers = {
       ...config.headers,
-      slug: getDatabaseSlug(),
+      slug: 'neosys',
     };
     return config;
   },
