@@ -352,6 +352,14 @@ export const ShareReturnForm = () => {
                       const sum = result?.extraFee?.reduce((a, b) => a + Number(b?.value ?? 0), 0);
                       const totalAmountCard = Number(sum) + Number(result?.shareAmount ?? 0);
 
+                      const temp: Record<string, string> = {};
+
+                      result?.extraFee?.forEach((fee) => {
+                        if (fee?.name && fee?.value) {
+                          temp[String(fee.name)] = String(fee.value);
+                        }
+                      });
+
                       return {
                         type: 'Share-Return',
                         total: String(amountConverter(totalAmountCard ?? '0')),
@@ -362,14 +370,18 @@ export const ShareReturnForm = () => {
                               {result?.transactionId}
                             </Text>
                           ),
+
                           Date: localizedDate(result?.transactionDate),
                           'No of Shares Returned': quantityConverter(result?.noOfShare || 0),
                           'Withdraw Amount': quantityConverter(result?.shareAmount || 0),
                           'Payment Mode': result?.paymentMode,
+                          // ...result?.extraFee?.map((fee) => ({
+                          //   [String(fee?.name)]: fee?.value,
+                          // })),
+                          ...temp,
                         },
                         subTitle:
                           'Share returned successfully. Details of the transaction is listed below.',
-                        ...result?.extraFee?.map((fee) => ({ [fee?.name as string]: fee?.value })),
                       };
                     }}
                     errorCardProps={{

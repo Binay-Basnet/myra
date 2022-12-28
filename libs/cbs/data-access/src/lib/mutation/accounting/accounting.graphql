@@ -16,6 +16,20 @@ mutation setJournalVoucherData($data: JournalVoucherInput) {
     journalVoucher {
       new(data: $data) {
         recordId
+        record {
+          transactionId
+          creatorId
+          creatorName
+          reference
+          date
+          entries {
+            accountId
+            drAmount
+            crAmount
+            description
+          }
+          paymentMode
+        }
         error {
           ...MutationError
         }

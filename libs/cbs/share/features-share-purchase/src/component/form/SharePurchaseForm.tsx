@@ -351,7 +351,13 @@ export const SharePurchaseForm = () => {
                       const result = response?.share?.purchase?.record;
                       const sum = result?.extraFee?.reduce((a, b) => a + Number(b?.value ?? 0), 0);
                       const totalAmountShare = Number(sum) + Number(result?.shareAmount ?? 0);
+                      const temp: Record<string, string> = {};
 
+                      result?.extraFee?.forEach((fee) => {
+                        if (fee?.name && fee?.value) {
+                          temp[String(fee.name)] = String(fee.value);
+                        }
+                      });
                       return {
                         type: 'Share-Purchase',
                         total: amountConverter(totalAmountShare || 0) as string,
@@ -365,15 +371,12 @@ export const SharePurchaseForm = () => {
                           Date: localizedDate(result?.transactionDate),
                           'No of Shares ': quantityConverter(result?.noOfShare || 0),
                           'Share Amount': amountConverter(result?.shareAmount || 0) as string,
-                          'Share Certification Charge': amountConverter(
-                            result?.shareCertificateCharge || 0
-                          ) as string,
-                          'Other Charges': amountConverter(result?.otherCharge || 0) as string,
+
                           'Payment Mode': result?.paymentMode,
+                          ...temp,
                         },
                         subTitle:
                           'Share issued successfully. Details of the transaction is listed below.',
-                        ...result?.extraFee?.map((fee) => ({ [fee?.name as string]: fee?.value })),
                       };
                     }}
                     errorCardProps={{
