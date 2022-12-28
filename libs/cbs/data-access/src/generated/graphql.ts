@@ -13367,6 +13367,7 @@ export type SetJournalVoucherDataMutation = {
           creatorName?: string | null;
           reference?: string | null;
           date?: Record<'local' | 'en' | 'np', string> | null;
+          note?: string | null;
           paymentMode?: JournalVoucherPaymentMode | null;
           entries?: Array<{ name?: string | null; value?: string | null } | null> | null;
         } | null;
@@ -24421,6 +24422,7 @@ export const SetJournalVoucherDataDocument = `
           creatorName
           reference
           date
+          note
           entries {
             name
             value
