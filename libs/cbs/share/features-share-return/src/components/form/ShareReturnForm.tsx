@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { IoChevronBackOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
-  asyncToast,
   Box,
+  Button,
   Container,
+  FormFooter,
   FormHeader,
   FormSection,
   Grid,
   GridItem,
+  ResponseDialog,
   ShareMemberCard,
+  Text,
 } from '@myra-ui';
 
 import {
@@ -26,11 +30,16 @@ import {
   useGetShareChargesQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormMemberSelect } from '@coop/shared/form';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  quantityConverter,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
-import { SharePaymentFooter } from './SharePaymentFooter';
 import { ShareReturnInfo } from './ShareReturnInfo';
 import { ShareReturnPayment } from './ShareReturnPayment';
 
@@ -187,22 +196,23 @@ export const ShareReturnForm = () => {
       updatedValues = omit({ ...updatedValues }, ['bankCheque', 'cash']);
     }
 
-    asyncToast({
-      id: 'share-return-id',
-      msgs: {
-        success: 'Share Returned',
-        loading: 'Returning Share',
-      },
-      onSuccess: () => {
-        if (redirectPath) {
-          queryClient.invalidateQueries(['getMemberInactiveCheck']);
-          router.push(String(redirectPath));
-        } else {
-          router.push('/share/register');
-        }
-      },
-      promise: mutateAsync({ data: updatedValues }),
-    });
+    // asyncToast({
+    //   id: 'share-return-id',
+    //   msgs: {
+    //     success: 'Share Returned',
+    //     loading: 'Returning Share',
+    //   },
+    //   onSuccess: () => {
+    //     if (redirectPath) {
+    //       queryClient.invalidateQueries(['getMemberInactiveCheck']);
+    //       router.push(String(redirectPath));
+    //     } else {
+    //       router.push('/share/register');
+    //     }
+    //   },
+    //   promise: mutateAsync({ data: updatedValues }),
+    // });
+    return updatedValues as ShareReturnInput;
   };
 
   useEffect(() => {
@@ -324,10 +334,59 @@ export const ShareReturnForm = () => {
               />
             )}
             {mode === 'sharePayment' && (
-              <SharePaymentFooter
-                previousButtonHandler={previousButtonHandler}
-                handleSubmit={handleSubmit}
-                isDisabled={disableSubmitButtonFxn(paymentModes)}
+              <FormFooter
+                mainButton={
+                  <ResponseDialog
+                    onSuccess={() => {
+                      if (redirectPath) {
+                        queryClient.invalidateQueries(['getMemberInactiveCheck']);
+                        router.push(String(redirectPath));
+                      } else {
+                        router.push('/share/register');
+                      }
+                    }}
+                    promise={() => mutateAsync({ data: handleSubmit() })}
+                    successCardProps={(response) => {
+                      const result = response?.share?.return?.record;
+
+                      return {
+                        type: 'Share-Return',
+                        total: amountConverter(result?.totalAmount || 0) as string,
+                        title: 'Share Return Successful',
+                        details: {
+                          'Transaction Id': (
+                            <Text fontSize="s3" color="primary.500" fontWeight="600">
+                              {result?.transactionId}
+                            </Text>
+                          ),
+                          Date: localizedDate(result?.transactionDate),
+                          'No of Shares Returned': quantityConverter(result?.noOfShare || 0),
+                          'Return Charges': result?.otherCharge,
+
+                          'Payment Mode': result?.paymentMode,
+                        },
+                        subTitle:
+                          'Share returned successfully. Details of the transaction is listed below.',
+                      };
+                    }}
+                    errorCardProps={{
+                      title: 'Share Return Failed',
+                    }}
+                  >
+                    <Button width="160px">{t['shareConfirmPayment']}</Button>
+                  </ResponseDialog>
+                }
+                status={
+                  <Button
+                    variant="outline"
+                    leftIcon={<IoChevronBackOutline />}
+                    onClick={previousButtonHandler}
+                  >
+                    {t['previous']}
+                  </Button>
+                }
+                mainButtonHandler={handleSubmit}
+                isMainButtonDisabled={disableSubmitButtonFxn(paymentModes)}
               />
             )}
           </Container>
