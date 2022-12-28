@@ -12551,6 +12551,7 @@ export type TransactionMutation = {
   bulkDeposit: BulkDepositResult;
   deposit: DepositResult;
   endOfDay?: Maybe<EodResult>;
+  readyBranchEOD?: Maybe<Array<Maybe<Scalars['String']>>>;
   tellerTransfer: TellerTransferResult;
   tellerTransferAction: TellerTransferActionResult;
   transfer: TransferResult;
