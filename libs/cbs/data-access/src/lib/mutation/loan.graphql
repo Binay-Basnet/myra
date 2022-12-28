@@ -37,6 +37,22 @@ mutation setLoanRepayment($data: LoanRepaymentInput) {
       error {
         ...MutationError
       }
+      record {
+        transactionId
+        accountId
+        accountName
+        memberId
+        memberName
+        date
+        installmentNo
+        principalAmount
+        interestAmount
+        penaltyAmount
+        rebateAmount
+        totalAmount
+        paymentMethod
+      }
+
       recordId
     }
   }

@@ -32,6 +32,20 @@ mutation setWithdrawData($data: WithdrawInput!) {
   transaction {
     withdraw(data: $data) {
       recordId
+      record {
+        transactionID
+        date
+        accountId
+        accountName
+        memberId
+        memberName
+        amount
+        fine
+        totalAmount
+        withdrawnBy
+        withdrawWith
+        paymentMode
+      }
       error {
         ...MutationError
       }
