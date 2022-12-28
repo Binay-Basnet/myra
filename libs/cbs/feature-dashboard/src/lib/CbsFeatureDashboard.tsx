@@ -15,7 +15,7 @@ export interface CbsFeatureDashboardProps {}
 export const CbsFeatureDashboard = () => (
   <Box
     // minWidth="container.sm"
-    maxW="container.xl"
+    maxW="container.lg"
     width="100%"
     display="flex"
     flexDirection="column"
