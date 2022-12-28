@@ -57,6 +57,16 @@ export const CbsCloseDay = () => {
   };
 
   const isDayCloseDisabled = () => {
+    if (!eodStatus?.states?.currentBranchesReady) {
+      return true;
+    }
+
+    if (
+      eodStatusQueryData?.transaction?.eodStatus?.states?.transactionDate !== EodState.Completed
+    ) {
+      return false;
+    }
+
     if (!ignore) return true;
 
     if (!eodStatus?.states) return true;
@@ -74,7 +84,7 @@ export const CbsCloseDay = () => {
           <FormHeader title={t['dayClose']} />
         </Container>
       </Box>
-      <Container bg="white" height="fit-content" pb="90px" minW="container.lg">
+      <Container bg="white" minHeight="calc(100vh - 110px)" pb="90px" minW="container.lg">
         <FormProvider {...methods}>
           <DayClose />
         </FormProvider>
@@ -90,12 +100,7 @@ export const CbsCloseDay = () => {
                   ? handleDayClose
                   : () => router?.push('/')
               }
-              isMainButtonDisabled={
-                eodStatusQueryData?.transaction?.eodStatus?.states?.transactionDate !==
-                EodState.Completed
-                  ? isDayCloseDisabled()
-                  : false
-              }
+              isMainButtonDisabled={isDayCloseDisabled()}
             />
           </Container>
         </Box>

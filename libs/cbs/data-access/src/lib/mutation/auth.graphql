@@ -20,6 +20,7 @@ mutation login($data: LoginInput!) {
             branch {
               id
               name
+              category
             }
             organization {
               basicDetails {

@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
-import { IoCheckmarkDone, IoClose, IoRefreshOutline } from 'react-icons/io5';
-import { Spinner } from '@chakra-ui/react';
+import { IoRefreshOutline } from 'react-icons/io5';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Alert, asyncToast, Box, Button, Divider, Icon, Text } from '@myra-ui';
+import { asyncToast, Box, Button, Text } from '@myra-ui';
 
 import {
   EodOption,
@@ -13,6 +12,8 @@ import {
 } from '@coop/cbs/data-access';
 import { FormCheckbox } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
+
+import { StatusList } from './StatusList';
 
 interface INumberStatusProps {
   active: boolean;
@@ -44,6 +45,10 @@ export const DayClose = () => {
   const { data: eodStatusQueryData, refetch } = useGetEodStatusQuery();
 
   const showAdditionalFields = useMemo(() => {
+    if (!eodStatusQueryData?.transaction?.eodStatus?.states?.currentBranchesReady) {
+      return false;
+    }
+
     if (
       Object.values(eodStatusQueryData?.transaction?.eodStatus?.states ?? {}).find(
         (value) => value === EodState.Ongoing
@@ -62,18 +67,34 @@ export const DayClose = () => {
 
     const eodError = eodStatusQueryData?.transaction?.eodStatus?.errors;
 
+    if (!eodStatus?.currentBranchesReady) {
+      return [
+        {
+          title: 'Branch Readiness',
+          subTitle: 'Check if all the branches have completed branch readiness or not.',
+          status: EodState.CompletedWithErrors,
+          errors: eodError?.readiness as string[],
+        },
+      ];
+    }
+
     return [
+      {
+        title: 'Branch Readiness',
+        subTitle: 'Check if all the branches have completed branch readiness or not.',
+        status: EodState.Completed,
+      },
       {
         title: 'dayCloseDailyInterestBooking',
         subTitle: 'dayCloseInterestBooking',
         status: eodError ? eodStatus?.interestBooking : EodState.Completed,
-        errors: eodError?.interestBooking,
+        errors: eodError?.interestBooking as string[],
       },
       {
         title: 'dayCloseCheckFrequency',
         subTitle: 'dayCloseImplementthedayend',
         status: eodError ? eodStatus?.interestPosting : EodState.Completed,
-        errors: eodError?.interestPosting,
+        errors: eodError?.interestPosting as string[],
       },
       {
         title: 'dayCloseTransactionDateProgress',
@@ -84,68 +105,42 @@ export const DayClose = () => {
         title: 'dayCloseCheckMaturity',
         subTitle: 'dayCloseCheckAccount',
         status: eodError ? eodStatus?.maturity : EodState.Completed,
-        errors: eodError?.maturity,
+        errors: eodError?.maturity as string[],
       },
       {
         title: 'Check Dormant',
         subTitle: 'Check if the account is dormant or not.',
         status: eodError ? eodStatus?.dormancy : EodState.Completed,
-        errors: eodError?.dormancy,
+        errors: eodError?.dormancy as string[],
+      },
+      {
+        title: 'Branch Readiness',
+        subTitle: 'Check if all the branches have completed branch readiness or not.',
+        status: eodError ? eodStatus?.cashInHand : EodState.Completed,
+        errors: eodError?.cashInHand as string[],
       },
       {
         title: 'Cash with Teller',
         subTitle:
           'Check if the cash with teller at the start of day balances with the cash with teller at the end after all transactions have been completed.',
         status: eodError ? eodStatus?.cashInHand : EodState.Completed,
-        errors: eodError?.cashInHand,
+        errors: eodError?.cashInHand as string[],
       },
       {
         title: 'dayCloseCashVault',
         subTitle: 'dayCloseCheckCashVault',
         status: eodError ? eodStatus?.cashInVault : EodState.Completed,
-        errors: eodError?.cashInVault,
+        errors: eodError?.cashInVault as string[],
       },
       {
         title: 'Loan Interest Booking',
         subTitle:
           'Interest booking should be done for all the loan accounts before closing the day.',
         status: eodError ? eodStatus?.loanInterestBooking : EodState.Completed,
-        errors: eodError?.loanInterestBooking,
+        errors: eodError?.loanInterestBooking as string[],
       },
     ];
   }, [eodStatusQueryData]);
-
-  const eodStatusIcon = (status: EodState | undefined | null) => {
-    switch (status) {
-      case EodState.Completed:
-        return <Icon color="primary.500" as={IoCheckmarkDone} />;
-      case EodState.CompletedWithErrors:
-        return <Icon color="danger.500" as={IoClose} />;
-      case EodState.Ongoing:
-        return <Spinner size="sm" />;
-      default:
-        return <Icon color="danger.500" as={IoClose} />;
-    }
-  };
-
-  const eodStatusText = (status: EodState | undefined | null) => {
-    let statusText = '';
-    switch (status) {
-      case EodState.Completed:
-        statusText = 'Completed';
-        break;
-      case EodState.CompletedWithErrors:
-        statusText = 'Not completed';
-        break;
-      case EodState.Ongoing:
-        statusText = 'Ongoing';
-        break;
-      default:
-        statusText = 'Not completed';
-    }
-
-    return statusText;
-  };
 
   const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
 
@@ -180,62 +175,8 @@ export const DayClose = () => {
             {t['dayCloseReload']}
           </Button>
         </Box>
-        {dayCloseList?.map(({ title, subTitle, status, errors }, index) => (
-          <>
-            <Box display="flex" gap="s16" py="s16" key={title}>
-              <NumberStatus number={index + 1} active={status === EodState.Completed} />
-              <Box display="flex" flexDirection="column" gap="s16">
-                <Box>
-                  <Text
-                    fontSize="r1"
-                    fontWeight="SemiBold"
-                    color="neutralColorLight.Gray-80"
-                    lineHeight="150%"
-                  >
-                    {t[title] ?? title}
-                  </Text>
-                  <Text
-                    fontSize="r1"
-                    fontWeight="Regular"
-                    color="neutralColorLight.Gray-80"
-                    lineHeight="150%"
-                  >
-                    {t[subTitle] ?? subTitle}
-                  </Text>
-                </Box>
 
-                <Box display="flex" alignItems="center" gap="s8">
-                  {eodStatusIcon(status)}
-
-                  <Text
-                    fontSize="s3"
-                    fontWeight="SemiBold"
-                    color="neutralColorLight.Gray-70"
-                    lineHeight="150%"
-                  >
-                    {eodStatusText(status)}
-                  </Text>
-                </Box>
-
-                {status === EodState.CompletedWithErrors &&
-                  errors?.length &&
-                  errors?.map((error) => (
-                    <Alert status="error" hideCloseIcon>
-                      <Text
-                        fontSize="r1"
-                        fontWeight="SemiBold"
-                        color="neutralColorLight.Gray-80"
-                        lineHeight="150%"
-                      >
-                        {error}
-                      </Text>
-                    </Alert>
-                  ))}
-              </Box>
-            </Box>
-            <Divider />
-          </>
-        ))}
+        <StatusList statusList={dayCloseList} />
 
         {showAdditionalFields && (
           <Box display="flex" flexDirection="column" gap="s48" py="s32">

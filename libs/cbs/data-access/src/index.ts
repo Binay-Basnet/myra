@@ -6,6 +6,7 @@ export * from './redux/slices/add-user-slice';
 export * from './redux/slices/auth-slice';
 export * from './redux/slices/coop-union-slice';
 export * from './redux/slices/cooperative-slice';
+export * from './redux/slices/day-end-slice';
 export * from './redux/slices/individual-slice';
 export * from './redux/slices/institution-slice';
 export * from './redux/slices/loan-settings-slice';

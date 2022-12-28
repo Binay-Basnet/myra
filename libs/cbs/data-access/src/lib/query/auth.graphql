@@ -13,6 +13,7 @@ query getMe {
           branch {
             id
             name
+            category
           }
           organization {
             basicDetails {

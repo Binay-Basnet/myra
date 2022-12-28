@@ -3788,6 +3788,7 @@ export type EodErrors = {
   interestPosting?: Maybe<Array<Maybe<Scalars['String']>>>;
   loanInterestBooking?: Maybe<Array<Maybe<Scalars['String']>>>;
   maturity?: Maybe<Array<Maybe<Scalars['String']>>>;
+  readiness?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export enum EodOption {
@@ -3814,6 +3815,7 @@ export enum EodState {
 export type EodStates = {
   cashInHand?: Maybe<EodState>;
   cashInVault?: Maybe<EodState>;
+  currentBranchesReady?: Maybe<Scalars['Boolean']>;
   dormancy?: Maybe<EodState>;
   interestBooking?: Maybe<EodState>;
   interestPosting?: Maybe<EodState>;
@@ -13753,7 +13755,7 @@ export type LoginMutation = {
             lastName: Record<'local' | 'en' | 'np', string>;
             role?: Roles | null;
             profilePic?: string | null;
-            branch?: { id: string; name?: string | null } | null;
+            branch?: { id: string; name?: string | null; category?: BranchCategory | null } | null;
             organization?: {
               basicDetails?: { name?: string | null; logo?: string | null } | null;
               contactDetails?: {
@@ -15817,6 +15819,12 @@ export type SetTellerTransferActionMutation = {
   };
 };
 
+export type ReadyBranchEodMutationVariables = Exact<{ [key: string]: never }>;
+
+export type ReadyBranchEodMutation = {
+  transaction: { readyBranchEOD?: Array<string | null> | null };
+};
+
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
@@ -17176,7 +17184,7 @@ export type GetMeQuery = {
           lastName: Record<'local' | 'en' | 'np', string>;
           role?: Roles | null;
           profilePic?: string | null;
-          branch?: { id: string; name?: string | null } | null;
+          branch?: { id: string; name?: string | null; category?: BranchCategory | null } | null;
           organization?: {
             basicDetails?: { name?: string | null; logo?: string | null } | null;
             contactDetails?: {
@@ -24054,6 +24062,7 @@ export type GetEodStatusQuery = {
   transaction: {
     eodStatus?: {
       states?: {
+        currentBranchesReady?: boolean | null;
         interestBooking?: EodState | null;
         interestPosting?: EodState | null;
         transactionDate?: EodState | null;
@@ -24064,6 +24073,7 @@ export type GetEodStatusQuery = {
         loanInterestBooking?: EodState | null;
       } | null;
       errors?: {
+        readiness?: Array<string | null> | null;
         interestBooking?: Array<string | null> | null;
         interestPosting?: Array<string | null> | null;
         maturity?: Array<string | null> | null;
@@ -25004,6 +25014,7 @@ export const LoginDocument = `
             branch {
               id
               name
+              category
             }
             organization {
               basicDetails {
@@ -28328,6 +28339,26 @@ export const useSetTellerTransferActionMutation = <TError = unknown, TContext = 
     ),
     options
   );
+export const ReadyBranchEodDocument = `
+    mutation readyBranchEOD {
+  transaction {
+    readyBranchEOD
+  }
+}
+    `;
+export const useReadyBranchEodMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ReadyBranchEodMutation,
+    TError,
+    ReadyBranchEodMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ReadyBranchEodMutation, TError, ReadyBranchEodMutationVariables, TContext>(
+    ['readyBranchEOD'],
+    useAxios<ReadyBranchEodMutation, ReadyBranchEodMutationVariables>(ReadyBranchEodDocument),
+    options
+  );
 export const GetAccountMemberListDocument = `
     query getAccountMemberList($objState: ObjState, $pagination: Pagination) {
   members {
@@ -30192,6 +30223,7 @@ export const GetMeDocument = `
           branch {
             id
             name
+            category
           }
           organization {
             basicDetails {
@@ -39098,6 +39130,7 @@ export const GetEodStatusDocument = `
   transaction {
     eodStatus {
       states {
+        currentBranchesReady
         interestBooking
         interestPosting
         transactionDate
@@ -39108,6 +39141,7 @@ export const GetEodStatusDocument = `
         loanInterestBooking
       }
       errors {
+        readiness
         interestBooking
         interestPosting
         maturity

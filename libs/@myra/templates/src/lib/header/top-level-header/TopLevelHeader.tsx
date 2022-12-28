@@ -23,6 +23,7 @@ import { SwitchTabs } from '@myra-ui/forms';
 import { Avatar, Box, Button, Divider, Grid, Icon, IconButton, Text } from '@myra-ui/foundations';
 
 import {
+  BranchCategory,
   DateType,
   EodOption,
   Language,
@@ -236,6 +237,24 @@ export const TopLevelHeader = () => {
     // });
   };
 
+  const handleBranchReadiness = () => {
+    router.push('/branch-readiness');
+    // readyBranch(
+    //   {},
+    //   {
+    //     onSuccess: (res) => {
+    //       if (res?.transaction?.readyBranchEOD?.length) {
+    //         dispatch(setBranchReadinessErrors({ errors: res.transaction.readyBranchEOD }));
+    //         router?.push('/branch-readiness');
+    //       } else {
+    //         dispatch(clearBranchReadinessErrors());
+    //         router?.push('/branch-readiness');
+    //       }
+    //     },
+    //   }
+    // );
+  };
+
   const reinitiateCloseDay = () => {
     closeDay({ option: EodOption.Reinitiate });
 
@@ -363,37 +382,49 @@ export const TopLevelHeader = () => {
                       </Text>
                     </PopoverBody>
                     <PopoverBody p="s8">
-                      {hasEodErrors ? (
-                        <Box display="flex" flexDirection="column" gap="s8">
-                          <Button
-                            variant="ghost"
-                            display="flex"
-                            justifyContent="center"
-                            w="100%"
-                            onClick={reinitiateCloseDay}
-                          >
-                            Reinitiate
-                          </Button>
+                      {user?.branch?.category === BranchCategory.HeadOffice ? (
+                        hasEodErrors ? (
+                          <Box display="flex" flexDirection="column" gap="s8">
+                            <Button
+                              variant="ghost"
+                              display="flex"
+                              justifyContent="center"
+                              w="100%"
+                              onClick={reinitiateCloseDay}
+                            >
+                              Reinitiate
+                            </Button>
+                            <Button
+                              variant="solid"
+                              display="flex"
+                              justifyContent="center"
+                              w="100%"
+                              onClick={ignoreAndCloseDay}
+                            >
+                              Ignore and Close Day
+                            </Button>
+                          </Box>
+                        ) : (
                           <Button
                             variant="solid"
                             display="flex"
                             justifyContent="center"
                             w="100%"
-                            onClick={ignoreAndCloseDay}
+                            // onClick={() => router.push('/day-close')}
+                            onClick={closeDayFxn}
                           >
-                            Ignore and Close Day
+                            Close Day
                           </Button>
-                        </Box>
+                        )
                       ) : (
                         <Button
                           variant="solid"
                           display="flex"
                           justifyContent="center"
                           w="100%"
-                          // onClick={() => router.push('/day-close')}
-                          onClick={closeDayFxn}
+                          onClick={handleBranchReadiness}
                         >
-                          Close Day
+                          Branch Readiness
                         </Button>
                       )}
                     </PopoverBody>

@@ -336,6 +336,7 @@ query getEODStatus {
   transaction {
     eodStatus {
       states {
+        currentBranchesReady
         interestBooking
         interestPosting
         transactionDate
@@ -346,6 +347,7 @@ query getEODStatus {
         loanInterestBooking
       }
       errors {
+        readiness
         interestBooking
         interestPosting
         maturity
