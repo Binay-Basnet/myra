@@ -256,7 +256,7 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
 
           {meta?.memberId && (
             <Text fontSize="s2" fontWeight="400" color="gray.700">
-              Member Id: {meta?.memberId}
+              Member Code: {meta?.memberId}
             </Text>
           )}
 
