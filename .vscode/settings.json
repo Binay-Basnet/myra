@@ -9,5 +9,11 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["svgs", "testid"]
+  "cSpell.words": [
+    "svgs",
+    "testid"
+  ],
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "dev"
+  ]
 }
