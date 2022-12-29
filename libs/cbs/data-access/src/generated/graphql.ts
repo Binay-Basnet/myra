@@ -1260,6 +1260,7 @@ export type BlockChequeRequestList = {
 export type Branch = {
   abbsTransaction?: Maybe<AbbsTransaction>;
   address?: Maybe<Address>;
+  branchBalance?: Maybe<Scalars['String']>;
   branchCode?: Maybe<Scalars['String']>;
   branchStatus?: Maybe<Scalars['Boolean']>;
   category?: Maybe<BranchCategory>;
@@ -12893,6 +12894,8 @@ export type User = Base & {
   organization?: Maybe<Organization>;
   profilePic?: Maybe<Scalars['String']>;
   role?: Maybe<Roles>;
+  userBalance?: Maybe<Scalars['String']>;
+  userLedger?: Maybe<Scalars['String']>;
   username: Scalars['String'];
 };
 

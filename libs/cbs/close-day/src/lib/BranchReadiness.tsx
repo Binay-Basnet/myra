@@ -1,8 +1,7 @@
 import { useEffect, useMemo } from 'react';
-import { IoRefreshOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Button, Container, FormFooter, FormHeader, Text } from '@myra-ui';
+import { Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
 
 import {
   clearBranchReadinessErrors,
@@ -71,9 +70,9 @@ export const BranchReadiness = () => {
                 In order to perform day end by the head office, branch readiness must be completed.
               </Text>
 
-              <Button leftIcon={<IoRefreshOutline />} onClick={() => readyBranch({})}>
+              {/* <Button leftIcon={<IoRefreshOutline />} onClick={() => readyBranch({})}>
                 Reload
-              </Button>
+              </Button> */}
             </Box>
 
             <StatusList statusList={statusList} />
