@@ -10,9 +10,9 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  // typescript: {
+  //   ignoreBuildErrors: true,
+  // },
   reactStrictMode: false,
 
   webpack: (config) => {
@@ -41,12 +41,12 @@ const nextConfig = {
   // },
   images: {
     domains: ['images.unsplash.com', 'cdn.raralabs.live'],
-    unoptimized: true,
+    // unoptimized: true,
   },
-  // i18n: {
-  //   locales: ['en', 'ne'],
-  //   defaultLocale: 'en',
-  // },
+  i18n: {
+    locales: ['en', 'ne'],
+    defaultLocale: 'en',
+  },
 };
 
 module.exports = withNx(nextConfig);
