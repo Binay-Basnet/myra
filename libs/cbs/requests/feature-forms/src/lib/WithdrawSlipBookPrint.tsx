@@ -23,7 +23,7 @@ import {
 } from '@coop/cbs/data-access';
 import { FormAccountSelect, FormMemberSelect, FormSelect, FormSwitchTab } from '@coop/shared/form';
 
-import { WithdrawSlipBookPrintCard } from '../component';
+import { WithdrawSlipBookPrintCard, WithdrawSlipBookPrintPreviewCard } from '../component';
 
 interface CustomWithdrawSlipIssueInput extends WithdrawSlipIssueInput {
   memberId: string;
@@ -171,7 +171,7 @@ export const WithdrawSlipBookPrint = () => {
     <>
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title="Create Withdraw Slip Book" />
+          <FormHeader title="Withdraw Slip Print" />
         </Box>
 
         <Box bg="white">
@@ -213,7 +213,7 @@ export const WithdrawSlipBookPrint = () => {
                 </FormSection>
 
                 <FormSection header="Print Preview" templateColumns={1} divider={false}>
-                  <WithdrawSlipBookPrintCard
+                  <WithdrawSlipBookPrintPreviewCard
                     {...getPrintCardSizes()}
                     details={{
                       branch: user?.branch?.name as string,
@@ -222,7 +222,6 @@ export const WithdrawSlipBookPrint = () => {
                       accountName: withdrawSlipData?.account?.accountName as string,
                       slipNumber: String(from),
                     }}
-                    ref={componentRef}
                   />
                 </FormSection>
               </Box>
@@ -246,6 +245,19 @@ export const WithdrawSlipBookPrint = () => {
           </Container>
         </Box>
       </Box>
+
+      <WithdrawSlipBookPrintCard
+        {...getPrintCardSizes()}
+        size={printSize}
+        details={{
+          branch: user?.branch?.name as string,
+          memberName: withdrawSlipData?.member?.name?.local as string,
+          accountNumber: withdrawSlipData?.account?.id as string,
+          accountName: withdrawSlipData?.account?.accountName as string,
+          slipNumber: String(from),
+        }}
+        ref={componentRef}
+      />
     </>
   );
 };
