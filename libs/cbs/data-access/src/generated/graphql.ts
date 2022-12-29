@@ -250,6 +250,14 @@ export enum AccountTypeFilter {
   Loan = 'LOAN',
 }
 
+export type AccountWithdrawSlip = {
+  account?: Maybe<DepositLoanAccount>;
+  availableRange?: Maybe<SlipRange>;
+  id?: Maybe<Scalars['ID']>;
+  member?: Maybe<Member>;
+  noOfLeaves?: Maybe<Scalars['Int']>;
+};
+
 export type AccountWithdrawSlipMutationResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<WithdrawSlipQuery>;
@@ -264,6 +272,11 @@ export type AccountWithdrawSlipQueryResult = {
 export type AccountWithdrawSlipRangeQueryResult = {
   error?: Maybe<QueryError>;
   range?: Maybe<SlipRange>;
+};
+
+export type AccountWithdrawSlipResult = {
+  data?: Maybe<AccountWithdrawSlip>;
+  error?: Maybe<QueryError>;
 };
 
 export enum AccountingBankAccountType {
@@ -1492,6 +1505,7 @@ export type CoaAccount = {
   accountCode?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['Localized']>;
   accountType?: Maybe<Scalars['String']>;
+  branch?: Maybe<Scalars['String']>;
   parentGroup?: Maybe<Scalars['Localized']>;
 };
 
@@ -8390,12 +8404,14 @@ export type LoanAgingStatementReport = {
   maturedAbove12Months?: Maybe<Scalars['String']>;
   memberNo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  nextPaymentDate?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<Scalars['String']>;
   phoneNo?: Maybe<Scalars['String']>;
   remainingInstallmentAmount?: Maybe<Scalars['String']>;
   remainingInterest?: Maybe<Scalars['String']>;
   remainingPenalty?: Maybe<Scalars['String']>;
   remainingPrincipal?: Maybe<Scalars['String']>;
+  tenure?: Maybe<Scalars['String']>;
   totalDueAmount?: Maybe<Scalars['String']>;
 };
 
@@ -13237,6 +13253,7 @@ export type WithdrawSlipIssueInput = {
 export type WithdrawSlipMutation = {
   cancelSlip?: Maybe<AccountWithdrawSlipMutationResult>;
   issueNew?: Maybe<AccountWithdrawSlipMutationResult>;
+  printSlip?: Maybe<AccountWithdrawSlipMutationResult>;
 };
 
 export type WithdrawSlipMutationCancelSlipArgs = {
@@ -13250,14 +13267,28 @@ export type WithdrawSlipMutationIssueNewArgs = {
   data: WithdrawSlipIssueInput;
 };
 
+export type WithdrawSlipMutationPrintSlipArgs = {
+  data?: InputMaybe<WithdrawSlipPrintInput>;
+};
+
+export type WithdrawSlipPrintInput = {
+  noOfLeaves: Scalars['Int'];
+  requestID: Scalars['ID'];
+};
+
 export type WithdrawSlipQuery = {
   getAvailableRange?: Maybe<AccountWithdrawSlipRangeQueryResult>;
+  getWithdrawSlipData?: Maybe<AccountWithdrawSlipResult>;
   listAvailableSlips?: Maybe<AccountWithdrawSlipQueryResult>;
   listPastSlips?: Maybe<AccountWithdrawSlipQueryResult>;
 };
 
 export type WithdrawSlipQueryGetAvailableRangeArgs = {
   count: Scalars['Int'];
+};
+
+export type WithdrawSlipQueryGetWithdrawSlipDataArgs = {
+  requestID: Scalars['ID'];
 };
 
 export type WithdrawSlipQueryListAvailableSlipsArgs = {

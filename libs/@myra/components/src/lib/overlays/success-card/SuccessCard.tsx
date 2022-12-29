@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { AiOutlinePlus, AiOutlinePrinter } from 'react-icons/ai';
 import ReactToPrint from 'react-to-print';
+import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 
 import { Avatar, Box, Button, Divider, Icon, Text } from '@myra-ui/foundations';
@@ -15,6 +16,8 @@ export interface SuccessCardProps {
   total?: string;
   type: string;
   completeHandler?: () => void;
+  newOpenHandler?: () => void;
+  closeModal?: () => void;
   meta?: {
     member?: string | null;
     memberId?: string | null;
@@ -30,8 +33,11 @@ export const SuccessCard = ({
   total,
   type,
   completeHandler,
+  newOpenHandler,
+  closeModal,
   meta,
 }: SuccessCardProps) => {
+  const router = useRouter();
   const componentRef = useRef<HTMLInputElement | null>(null);
 
   return (
@@ -102,7 +108,22 @@ export const SuccessCard = ({
         />
 
         <Box display="flex" gap="s8">
-          <Button variant="outline" leftIcon={<Icon as={AiOutlinePlus} />}>
+          <Button
+            variant="outline"
+            isDisabled
+            leftIcon={<Icon as={AiOutlinePlus} />}
+            onClick={() => {
+              if (newOpenHandler) {
+                newOpenHandler();
+              } else {
+                router.push(router.asPath).then(() => {
+                  if (closeModal) {
+                    closeModal();
+                  }
+                });
+              }
+            }}
+          >
             New {type}
           </Button>
           <Button onClick={completeHandler}>Done</Button>

@@ -168,7 +168,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
                   });
 
                   return {
-                    type: 'New Jornal Voucher',
+                    type: 'Journal Voucher',
 
                     title: 'Journal Voucher Entry Successful',
                     details: {

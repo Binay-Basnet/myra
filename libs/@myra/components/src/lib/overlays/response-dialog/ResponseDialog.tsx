@@ -99,6 +99,7 @@ export const ResponseDialog = <T extends Record<string, unknown>>({
         <ModalContent overflow="hidden" maxW="500px" borderRadius="br3">
           <SuccessCard
             {...successCardProps(finalResponse as T)}
+            closeModal={() => successModalProps.onToggle()}
             completeHandler={() => (onSuccess ? onSuccess(finalResponse as T) : null)}
           />
         </ModalContent>
