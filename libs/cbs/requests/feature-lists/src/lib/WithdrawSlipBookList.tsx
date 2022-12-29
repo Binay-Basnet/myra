@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { Box, DetailCardContent, DetailPageMemberCard, Grid, PageHeader, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
   ChequePickUpMethod,
@@ -88,37 +88,27 @@ export const WithdrawSlipBookList = () => {
         header: 'Issued Date',
         accessorFn: (row) => row?.node?.requestedDate,
       },
-      //   {
-      //     id: '_actions',
-      //     header: '',
-      //     cell: (props) =>
-      //       props.row.original?.node ? (
-      //         <TablePopover
-      //           items={[
-      //             {
-      //               title: 'View Details',
-      //               onClick: (row) => {
-      //                 router.push(
-      //                   {
-      //                     query: {
-      //                       id: row?.id,
-      //                       status: row?.approvalStatus === RequestStatus.Pending,
-      //                     },
-      //                   },
-      //                   undefined,
-      //                   { shallow: true }
-      //                 );
-      //                 modalProps.onToggle();
-      //               },
-      //             },
-      //           ]}
-      //           node={props.row.original?.node}
-      //         />
-      //       ) : null,
-      //     meta: {
-      //       width: '60px',
-      //     },
-      //   },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) =>
+          props.row.original?.node ? (
+            <TablePopover
+              items={[
+                {
+                  title: 'Print',
+                  onClick: (row) => {
+                    router.push(`/withdraw/withdraw-slip-book/print/${row?.id}`);
+                  },
+                },
+              ]}
+              node={props.row.original?.node}
+            />
+          ) : null,
+        meta: {
+          width: '60px',
+        },
+      },
     ],
     []
   );
