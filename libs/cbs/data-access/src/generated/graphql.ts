@@ -20819,6 +20819,8 @@ export type GetLoanAgingStatementReportQuery = {
             lastPrincipalPaidDate?: Record<'local' | 'en' | 'np', string> | null;
             lastInterestPaidDate?: Record<'local' | 'en' | 'np', string> | null;
             installmentLateDays?: number | null;
+            nextPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
+            tenure?: string | null;
           } | null> | null;
           summary?: {
             disbursePrincipalTotal?: string | null;
@@ -34819,6 +34821,8 @@ export const GetLoanAgingStatementReportDocument = `
             lastPrincipalPaidDate
             lastInterestPaidDate
             installmentLateDays
+            nextPaymentDate
+            tenure
           }
           summary {
             disbursePrincipalTotal
