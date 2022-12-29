@@ -188,12 +188,14 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormBankSelect
+                isRequired
                 name="openingPayment.bankVoucher.bankId"
                 label={t['depositPaymentBankName']}
               />
             </GridItem>
 
             <FormInput
+              isRequired
               name="openingPayment.bankVoucher.voucherId"
               label={t['addDepositVoucherId']}
             />
@@ -205,12 +207,14 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
             />
 
             <FormDatePicker
+              isRequired
               name="openingPayment.bankVoucher.depositedAt"
               label={t['depositPaymentDepositedDate']}
               maxToday
             />
 
             <FormInput
+              isRequired
               type="text"
               name="openingPayment.bankVoucher.depositedBy"
               label={t['depositPaymentDepositedBy']}
@@ -235,6 +239,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
 
             <GridItem colSpan={2}>
               <FormAccountSelect
+                isRequired
                 name="openingPayment.withdrawSlip.accId"
                 memberId={isDiffMember ? dmemberId : memberId}
                 label="Account Name"
@@ -243,12 +248,14 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
             </GridItem>
 
             <FormSelect
+              isRequired
               name="openingPayment.withdrawSlip.withdrawSlipNo"
               label="Withdraw Slip No"
               options={availableSlipListOptions}
             />
 
             <FormAmountInput
+              isRequired
               type="number"
               name="openingPayment.withdrawSlip.amount"
               label={t['depositPaymentAmount']}
@@ -260,6 +267,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
           <>
             <InputGroupContainer>
               <FormAmountInput
+                isRequired
                 type="number"
                 name="openingPayment.cash.cashPaid"
                 label={t['depositPaymentCash']}

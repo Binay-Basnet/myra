@@ -37,6 +37,7 @@ export const ProductDormantSetup = ({ dormantSetup }: IProductDormantSetup) => {
     ],
     []
   );
+  if (dormantSetup?.length === 0) return null;
 
   return (
     <DetailsCard title="Dormant Setup" hasTable>

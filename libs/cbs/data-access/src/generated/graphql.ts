@@ -250,6 +250,14 @@ export enum AccountTypeFilter {
   Loan = 'LOAN'
 }
 
+export type AccountWithdrawSlip = {
+  account?: Maybe<DepositLoanAccount>;
+  availableRange?: Maybe<SlipRange>;
+  id?: Maybe<Scalars['ID']>;
+  member?: Maybe<Member>;
+  noOfLeaves?: Maybe<Scalars['Int']>;
+};
+
 export type AccountWithdrawSlipMutationResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<WithdrawSlipQuery>;
@@ -264,6 +272,11 @@ export type AccountWithdrawSlipQueryResult = {
 export type AccountWithdrawSlipRangeQueryResult = {
   error?: Maybe<QueryError>;
   range?: Maybe<SlipRange>;
+};
+
+export type AccountWithdrawSlipResult = {
+  data?: Maybe<AccountWithdrawSlip>;
+  error?: Maybe<QueryError>;
 };
 
 export enum AccountingBankAccountType {
@@ -669,6 +682,44 @@ export type AgentTransactionViewResult = {
 
 export type AllTransactionFilter = {
   id?: InputMaybe<Scalars['ID']>;
+};
+
+export type AllTransactionResult = {
+  amount?: Maybe<Scalars['String']>;
+  branch?: Maybe<Scalars['String']>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  id: Scalars['ID'];
+  member?: Maybe<Member>;
+  status?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
+  transactionMode?: Maybe<Scalars['String']>;
+  txnType?: Maybe<AllTransactionType>;
+};
+
+export enum AllTransactionType {
+  AccountClose = 'ACCOUNT_CLOSE',
+  AlternateChannel = 'ALTERNATE_CHANNEL',
+  Deposit = 'DEPOSIT',
+  Ebanking = 'EBANKING',
+  InterestBooking = 'INTEREST_BOOKING',
+  InterestPosting = 'INTEREST_POSTING',
+  JournalVoucher = 'JOURNAL_VOUCHER',
+  LoanDisbursment = 'LOAN_DISBURSMENT',
+  LoanRepayment = 'LOAN_REPAYMENT',
+  Membership = 'MEMBERSHIP',
+  OpeningBalance = 'OPENING_BALANCE',
+  SharePurchase = 'SHARE_PURCHASE',
+  ShareReturn = 'SHARE_RETURN',
+  TellerTransfer = 'TELLER_TRANSFER',
+  Transfer = 'TRANSFER',
+  Withdraw = 'WITHDRAW'
+}
+
+export type AllTransactionViewResult = {
+  data?: Maybe<AllTransactionResult>;
+  error?: Maybe<QueryError>;
 };
 
 export type AllTransactionsConnection = {
@@ -1250,6 +1301,7 @@ export type BlockChequeRequestList = {
 export type Branch = {
   abbsTransaction?: Maybe<AbbsTransaction>;
   address?: Maybe<Address>;
+  branchBalance?: Maybe<Scalars['String']>;
   branchCode?: Maybe<Scalars['String']>;
   branchStatus?: Maybe<Scalars['Boolean']>;
   category?: Maybe<BranchCategory>;
@@ -1497,6 +1549,8 @@ export type CoaAccount = {
   accountClass?: Maybe<Scalars['String']>;
   accountCode?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['Localized']>;
+  accountType?: Maybe<Scalars['String']>;
+  branch?: Maybe<Scalars['String']>;
   parentGroup?: Maybe<Scalars['Localized']>;
 };
 
@@ -1526,6 +1580,40 @@ export enum CoaCategory {
   SystemDefined = 'SYSTEM_DEFINED',
   UserDefined = 'USER_DEFINED'
 }
+
+export type CoaDetailsData = {
+  meta?: Maybe<CoaDetailsMeta>;
+  overview?: Maybe<CoaDetailsMinOverview>;
+  recentTxns?: Maybe<Array<Maybe<CoaDetailsRecentTxns>>>;
+  totalNoOfTxns?: Maybe<Scalars['Int']>;
+};
+
+export type CoaDetailsMeta = {
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  accountType?: Maybe<Scalars['String']>;
+  createdDate?: Maybe<Scalars['Localized']>;
+};
+
+export type CoaDetailsMinOverview = {
+  closingBalance?: Maybe<Scalars['String']>;
+  cr?: Maybe<Scalars['String']>;
+  dr?: Maybe<Scalars['String']>;
+  openingBalance?: Maybe<Scalars['String']>;
+};
+
+export type CoaDetailsRecentTxns = {
+  date?: Maybe<Scalars['Localized']>;
+  particulars?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['String']>;
+  txnId?: Maybe<Scalars['String']>;
+  txnType?: Maybe<Scalars['String']>;
+};
+
+export type CoaDetailsResult = {
+  data?: Maybe<CoaDetailsData>;
+  error?: Maybe<QueryError>;
+};
 
 export type CoaFullView = {
   data?: Maybe<Array<Maybe<CoaView>>>;
@@ -1749,6 +1837,7 @@ export type ChartsOfAccountSettingsQuery = {
   accountsUnder?: Maybe<CoaMinimalResult>;
   accountsUnderLeaf?: Maybe<Array<Maybe<AccountsUnderLeafNode>>>;
   class?: Maybe<ChartsOfAccountClassResult>;
+  coaAccountDetails?: Maybe<CoaDetailsResult>;
   coaAccountList?: Maybe<CoaAccountListResult>;
   fullView: CoaFullView;
   search?: Maybe<CoaMinimalResult>;
@@ -1768,6 +1857,12 @@ export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
 export type ChartsOfAccountSettingsQueryAccountsUnderLeafArgs = {
   currentBranch?: InputMaybe<Scalars['Boolean']>;
   parentId: Array<InputMaybe<Scalars['String']>>;
+};
+
+
+export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
+  branchId?: InputMaybe<Scalars['String']>;
+  id: Scalars['String'];
 };
 
 
@@ -3791,6 +3886,22 @@ export type Dues = {
   totalDue?: Maybe<Scalars['String']>;
 };
 
+export type EodDate = {
+  hasErrors: Scalars['Boolean'];
+  value: Scalars['Localized'];
+};
+
+export type EodErrors = {
+  cashInHand?: Maybe<Array<Maybe<Scalars['String']>>>;
+  cashInVault?: Maybe<Array<Maybe<Scalars['String']>>>;
+  dormancy?: Maybe<Array<Maybe<Scalars['String']>>>;
+  interestBooking?: Maybe<Array<Maybe<Scalars['String']>>>;
+  interestPosting?: Maybe<Array<Maybe<Scalars['String']>>>;
+  loanInterestBooking?: Maybe<Array<Maybe<Scalars['String']>>>;
+  maturity?: Maybe<Array<Maybe<Scalars['String']>>>;
+  readiness?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
 export enum EodOption {
   CompleteWithError = 'COMPLETE_WITH_ERROR',
   Reinitiate = 'REINITIATE'
@@ -3802,13 +3913,8 @@ export type EodResult = {
 };
 
 export type EodSatusResult = {
-  cashInVault?: Maybe<EodState>;
-  dormancy?: Maybe<EodState>;
-  interestBooking?: Maybe<EodState>;
-  interestPosting?: Maybe<EodState>;
-  loanInterestBooking?: Maybe<EodState>;
-  maturity?: Maybe<EodState>;
-  transactionDate?: Maybe<EodState>;
+  errors?: Maybe<EodErrors>;
+  states?: Maybe<EodStates>;
 };
 
 export enum EodState {
@@ -3816,6 +3922,18 @@ export enum EodState {
   CompletedWithErrors = 'COMPLETED_WITH_ERRORS',
   Ongoing = 'ONGOING'
 }
+
+export type EodStates = {
+  cashInHand?: Maybe<EodState>;
+  cashInVault?: Maybe<EodState>;
+  currentBranchesReady?: Maybe<Scalars['Boolean']>;
+  dormancy?: Maybe<EodState>;
+  interestBooking?: Maybe<EodState>;
+  interestPosting?: Maybe<EodState>;
+  loanInterestBooking?: Maybe<EodState>;
+  maturity?: Maybe<EodState>;
+  transactionDate?: Maybe<EodState>;
+};
 
 export type EbankingRegistrationReportResult = {
   data?: Maybe<Array<Maybe<EbankingReportResult>>>;
@@ -5961,6 +6079,8 @@ export type JournalVoucher = {
   date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   reference?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
 };
 
 export type JournalVoucherConnection = {
@@ -5997,6 +6117,18 @@ export type JournalVoucherEntry = {
   crAmount?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   drAmount?: InputMaybe<Scalars['String']>;
+};
+
+export type JournalVoucherEntryDetails = {
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+export type JournalVoucherEntryView = {
+  accountId: Scalars['String'];
+  crAmount?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  drAmount?: Maybe<Scalars['String']>;
 };
 
 export type JournalVoucherFilter = {
@@ -6042,9 +6174,21 @@ export type JournalVoucherQueryViewJournalVoucherDetailArgs = {
   entryId: Scalars['ID'];
 };
 
+export type JournalVoucherRecord = {
+  creatorId?: Maybe<Scalars['ID']>;
+  creatorName?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  entries?: Maybe<Array<Maybe<JournalVoucherEntryDetails>>>;
+  note?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<JournalVoucherPaymentMode>;
+  reference?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['ID']>;
+};
+
 export type JournalVoucherResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<JournalVoucherQuery>;
+  record?: Maybe<JournalVoucherRecord>;
   recordId?: Maybe<Scalars['String']>;
 };
 
@@ -8449,12 +8593,14 @@ export type LoanAgingStatementReport = {
   maturedAbove12Months?: Maybe<Scalars['String']>;
   memberNo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  nextPaymentDate?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<Scalars['String']>;
   phoneNo?: Maybe<Scalars['String']>;
   remainingInstallmentAmount?: Maybe<Scalars['String']>;
   remainingInterest?: Maybe<Scalars['String']>;
   remainingPenalty?: Maybe<Scalars['String']>;
   remainingPrincipal?: Maybe<Scalars['String']>;
+  tenure?: Maybe<Scalars['String']>;
   totalDueAmount?: Maybe<Scalars['String']>;
 };
 
@@ -12613,13 +12759,17 @@ export type TellerTransferActionResult = {
 
 export type TellerTransferInput = {
   amount?: InputMaybe<Scalars['String']>;
+  bankId?: InputMaybe<Scalars['String']>;
   branchPaymentMode?: InputMaybe<BranchPaymentMode>;
   denominations?: InputMaybe<Array<Denomination>>;
+  depositedBy?: InputMaybe<Scalars['String']>;
+  depositedDate?: InputMaybe<Scalars['Localized']>;
   destBranch?: InputMaybe<Scalars['String']>;
   destTellerID?: InputMaybe<Scalars['String']>;
   srcBranch?: InputMaybe<Scalars['String']>;
   srcTellerID?: InputMaybe<Scalars['String']>;
   transferType: TellerTransferType;
+  voucherId?: InputMaybe<Scalars['String']>;
 };
 
 export type TellerTransferResult = {
@@ -12666,10 +12816,12 @@ export type TransactionData = {
 
 export type TransactionInfo = {
   amount: Scalars['String'];
+  branchId: Scalars['String'];
+  branchName: Scalars['String'];
   date: Scalars['Localized'];
   id: Scalars['String'];
   narration: Scalars['String'];
-  transactionType: Scalars['String'];
+  transactionType: AllTransactionType;
 };
 
 export type TransactionListSummary = {
@@ -12692,6 +12844,7 @@ export type TransactionMutation = {
   bulkDeposit: BulkDepositResult;
   deposit: DepositResult;
   endOfDay?: Maybe<EodResult>;
+  readyBranchEOD?: Maybe<Array<Maybe<Scalars['String']>>>;
   tellerTransfer: TellerTransferResult;
   tellerTransferAction: TellerTransferActionResult;
   transfer: TransferResult;
@@ -12768,7 +12921,7 @@ export type TransactionMyDayData = {
 export type TransactionQuery = {
   agentDetail?: Maybe<AgentRecord>;
   assignedMemberList: AssignedMembersListConnection;
-  endOfDayDate: Scalars['String'];
+  endOfDayDate: EodDate;
   eodStatus?: Maybe<EodSatusResult>;
   listAgent: AccountAgentListConnection;
   listAgentTask?: Maybe<AgentTodayListData>;
@@ -12781,6 +12934,7 @@ export type TransactionQuery = {
   viewAgentList?: Maybe<AgentTransactionViewResult>;
   viewDeposit?: Maybe<DepositTransactionViewResult>;
   viewLoanRepayment?: Maybe<LoanRepaymentViewResult>;
+  viewTransactionDetail?: Maybe<AllTransactionViewResult>;
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
 };
 
@@ -12855,6 +13009,12 @@ export type TransactionQueryViewDepositArgs = {
 
 export type TransactionQueryViewLoanRepaymentArgs = {
   paymentId: Scalars['ID'];
+};
+
+
+export type TransactionQueryViewTransactionDetailArgs = {
+  transactionId: Scalars['ID'];
+  txnType?: InputMaybe<AllTransactionType>;
 };
 
 
@@ -13022,6 +13182,8 @@ export type User = Base & {
   organization?: Maybe<Organization>;
   profilePic?: Maybe<Scalars['String']>;
   role?: Maybe<Roles>;
+  userBalance?: Maybe<Scalars['String']>;
+  userLedger?: Maybe<Scalars['String']>;
   username: Scalars['String'];
 };
 
@@ -13388,6 +13550,7 @@ export type WithdrawSlipIssueInput = {
 export type WithdrawSlipMutation = {
   cancelSlip?: Maybe<AccountWithdrawSlipMutationResult>;
   issueNew?: Maybe<AccountWithdrawSlipMutationResult>;
+  printSlip?: Maybe<AccountWithdrawSlipMutationResult>;
 };
 
 
@@ -13403,8 +13566,19 @@ export type WithdrawSlipMutationIssueNewArgs = {
   data: WithdrawSlipIssueInput;
 };
 
+
+export type WithdrawSlipMutationPrintSlipArgs = {
+  data?: InputMaybe<WithdrawSlipPrintInput>;
+};
+
+export type WithdrawSlipPrintInput = {
+  noOfLeaves: Scalars['Int'];
+  requestID: Scalars['ID'];
+};
+
 export type WithdrawSlipQuery = {
   getAvailableRange?: Maybe<AccountWithdrawSlipRangeQueryResult>;
+  getWithdrawSlipData?: Maybe<AccountWithdrawSlipResult>;
   listAvailableSlips?: Maybe<AccountWithdrawSlipQueryResult>;
   listPastSlips?: Maybe<AccountWithdrawSlipQueryResult>;
 };
@@ -13412,6 +13586,11 @@ export type WithdrawSlipQuery = {
 
 export type WithdrawSlipQueryGetAvailableRangeArgs = {
   count: Scalars['Int'];
+};
+
+
+export type WithdrawSlipQueryGetWithdrawSlipDataArgs = {
+  requestID: Scalars['ID'];
 };
 
 
@@ -13499,7 +13678,7 @@ export type SetJournalVoucherDataMutationVariables = Exact<{
 }>;
 
 
-export type SetJournalVoucherDataMutation = { accounting: { journalVoucher: { new?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } } };
+export type SetJournalVoucherDataMutation = { accounting: { journalVoucher: { new?: { recordId?: string | null, record?: { transactionId?: string | null, creatorId?: string | null, creatorName?: string | null, reference?: string | null, date?: Record<"local"|"en"|"np",string> | null, note?: string | null, paymentMode?: JournalVoucherPaymentMode | null, entries?: Array<{ name?: string | null, value?: string | null } | null> | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } } };
 
 export type SetExternalLoanMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -13611,6 +13790,13 @@ export type SetIssueNewSlipMutationVariables = Exact<{
 
 export type SetIssueNewSlipMutation = { withdrawSlip: { issueNew?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
 
+export type PrintSlipMutationVariables = Exact<{
+  data?: InputMaybe<WithdrawSlipPrintInput>;
+}>;
+
+
+export type PrintSlipMutation = { withdrawSlip: { printSlip?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+
 export type SetAddMemberToAgentDataMutationVariables = Exact<{
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
@@ -13641,7 +13827,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { auth: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, data: { user?: { id: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string>, role?: Roles | null, profilePic?: string | null, branch?: { id: string, name?: string | null } | null, organization?: { basicDetails?: { name?: string | null, logo?: string | null } | null, contactDetails?: { website?: string | null, phoneNumber?: string | null, email?: string | null } | null, address?: { district?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, registrationDetails?: { regdNo?: string | null, panOrVat?: string | null } | null } | null } | null, preference?: { language?: Language | null, languageCode?: string | null, date?: DateType | null } | null } } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type LoginMutation = { auth: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, data: { user?: { id: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string>, role?: Roles | null, profilePic?: string | null, userBalance?: string | null, branch?: { id: string, name?: string | null, category?: BranchCategory | null, branchBalance?: string | null } | null, organization?: { basicDetails?: { name?: string | null, logo?: string | null } | null, contactDetails?: { website?: string | null, phoneNumber?: string | null, email?: string | null } | null, address?: { district?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, registrationDetails?: { regdNo?: string | null, panOrVat?: string | null } | null } | null } | null, preference?: { language?: Language | null, languageCode?: string | null, date?: DateType | null } | null } } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
 
 export type RefreshMutationVariables = Exact<{
   refreshToken: Scalars['String'];
@@ -13823,7 +14009,7 @@ export type SetLoanRepaymentMutationVariables = Exact<{
 }>;
 
 
-export type SetLoanRepaymentMutation = { loanAccount: { repayment?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type SetLoanRepaymentMutation = { loanAccount: { repayment?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null, record?: { transactionId?: string | null, accountId?: string | null, accountName?: string | null, memberId?: string | null, memberName?: Record<"local"|"en"|"np",string> | null, date?: Record<"local"|"en"|"np",string> | null, installmentNo?: string | null, principalAmount?: string | null, interestAmount?: string | null, penaltyAmount?: string | null, rebateAmount?: string | null, totalAmount?: string | null, paymentMethod?: LoanRepaymentMethod | null } | null } | null } };
 
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
@@ -14369,21 +14555,21 @@ export type AddSharePurchaseMutationVariables = Exact<{
 }>;
 
 
-export type AddSharePurchaseMutation = { share: { purchase: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type AddSharePurchaseMutation = { share: { purchase: { recordId: string, record?: { id?: string | null, transactionId?: string | null, status?: Share_Status | null, transactionDate?: Record<"local"|"en"|"np",string> | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, noOfShare?: string | null, balance?: number | null, shareAmount?: string | null, shareCertificateCharge?: string | null, otherCharge?: string | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, memberId?: string | null, extraFee?: Array<{ name: string, value: number } | null> | null, member?: { code: string, name?: Record<"local"|"en"|"np",string> | null } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
 
 export type AddShareReturnMutationVariables = Exact<{
   data: ShareReturnInput;
 }>;
 
 
-export type AddShareReturnMutation = { share: { return: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type AddShareReturnMutation = { share: { return: { recordId: string, record?: { id?: string | null, transactionId?: string | null, status?: Share_Status | null, transactionDate?: Record<"local"|"en"|"np",string> | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, noOfShare?: string | null, balance?: number | null, shareAmount?: string | null, shareCertificateCharge?: string | null, otherCharge?: string | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, memberId?: string | null, extraFee?: Array<{ name: string, value: number } | null> | null, member?: { code: string, name?: Record<"local"|"en"|"np",string> | null } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
 
 export type SetDepositDataMutationVariables = Exact<{
   data: DepositInput;
 }>;
 
 
-export type SetDepositDataMutation = { transaction: { deposit: { recordId?: string | null, record?: { transactionID?: string | null, date?: Record<"local"|"en"|"np",string> | null, amount?: string | null, rebate?: string | null, paymentMode?: DepositPaymentType | null, depositedBy?: DepositedBy | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type SetDepositDataMutation = { transaction: { deposit: { recordId?: string | null, record?: { transactionID?: string | null, date?: Record<"local"|"en"|"np",string> | null, amount?: string | null, rebate?: string | null, paymentMode?: DepositPaymentType | null, depositedBy?: DepositedBy | null, memberName?: Record<"local"|"en"|"np",string> | null, memberId?: string | null, accountId?: string | null, accountName?: string | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
 
 export type SetBulkDepositDataMutationVariables = Exact<{
   data?: InputMaybe<BulkDepositInput>;
@@ -14397,14 +14583,14 @@ export type SetWithdrawDataMutationVariables = Exact<{
 }>;
 
 
-export type SetWithdrawDataMutation = { transaction: { withdraw: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type SetWithdrawDataMutation = { transaction: { withdraw: { recordId?: string | null, record?: { transactionID?: string | null, date?: Record<"local"|"en"|"np",string> | null, accountId?: string | null, accountName?: string | null, memberId?: string | null, memberName?: Record<"local"|"en"|"np",string> | null, amount?: string | null, fine?: string | null, totalAmount?: string | null, withdrawnBy?: WithdrawBy | null, withdrawWith?: WithdrawWith | null, paymentMode?: WithdrawPaymentType | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
 
 export type SetAccountTransferDataMutationVariables = Exact<{
   data: TransferInput;
 }>;
 
 
-export type SetAccountTransferDataMutation = { transaction: { transfer: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type SetAccountTransferDataMutation = { transaction: { transfer: { recordId?: string | null, record?: { totalAmount?: string | null, amount?: string | null, date?: Record<"local"|"en"|"np",string> | null, id?: string | null, remarks?: string | null, fine?: string | null, payeeNumber?: string | null, receiverAccountId?: string | null, receiverAccountName?: string | null, receiverMemberId?: string | null, receiverMemberName?: Record<"local"|"en"|"np",string> | null, senderAccountId?: string | null, senderAccountName?: string | null, senderMemberId?: string | null, senderMemberName?: Record<"local"|"en"|"np",string> | null, transactionMode?: TransactionMode | null, withdrawWith?: WithdrawWith | null, transferType?: TransferType | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
 
 export type SetAccountForgiveInstallmentDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -14436,6 +14622,11 @@ export type SetTellerTransferActionMutationVariables = Exact<{
 
 
 export type SetTellerTransferActionMutation = { transaction: { tellerTransferAction: { record?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+
+export type ReadyBranchEodMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ReadyBranchEodMutation = { transaction: { readyBranchEOD?: Array<string | null> | null } };
 
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
@@ -14749,7 +14940,7 @@ export type GetAgentTodayListDataQuery = { transaction: { listAgentTask?: { reco
 export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeQuery = { auth: { me: { data?: { user?: { id: string, username: string, email?: string | null, firstName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string>, role?: Roles | null, profilePic?: string | null, branch?: { id: string, name?: string | null } | null, organization?: { basicDetails?: { name?: string | null, logo?: string | null } | null, contactDetails?: { website?: string | null, phoneNumber?: string | null, email?: string | null } | null, address?: { district?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, registrationDetails?: { regdNo?: string | null, panOrVat?: string | null } | null } | null } | null, preference?: { language?: Language | null, languageCode?: string | null, date?: DateType | null } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } };
+export type GetMeQuery = { auth: { me: { data?: { user?: { id: string, username: string, email?: string | null, firstName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string>, role?: Roles | null, profilePic?: string | null, userBalance?: string | null, branch?: { id: string, name?: string | null, category?: BranchCategory | null, branchBalance?: string | null } | null, organization?: { basicDetails?: { name?: string | null, logo?: string | null } | null, contactDetails?: { website?: string | null, phoneNumber?: string | null, email?: string | null } | null, address?: { district?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, registrationDetails?: { regdNo?: string | null, panOrVat?: string | null } | null } | null } | null, preference?: { language?: Language | null, languageCode?: string | null, date?: DateType | null } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } };
 
 export type GetBankListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -15354,7 +15545,7 @@ export type GetLoanAgingStatementReportQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanAgingStatementReportQuery = { report: { loanReport: { loanAgingStatementReport?: { data?: { report?: Array<{ memberNo?: string | null, loanNo?: string | null, name?: string | null, address?: string | null, phoneNo?: string | null, loanType?: string | null, paymentMode?: string | null, issueDate?: Record<"local"|"en"|"np",string> | null, loanMaturityDate?: Record<"local"|"en"|"np",string> | null, disbursePrincipal?: string | null, remainingPrincipal?: string | null, installmentAmount?: string | null, remainingInstallmentAmount?: string | null, remainingInterest?: string | null, remainingPenalty?: string | null, totalDueAmount?: string | null, goodAmount?: string | null, matured1To30Days?: string | null, matured1To12Months?: string | null, maturedAbove12Months?: string | null, lastPrincipalPaidDate?: Record<"local"|"en"|"np",string> | null, lastInterestPaidDate?: Record<"local"|"en"|"np",string> | null, installmentLateDays?: number | null } | null> | null, summary?: { disbursePrincipalTotal?: string | null, remainingPrincipalTotal?: string | null, installmentAmountTotal?: string | null, remainingInstallmentAmountTotal?: string | null, remainingInterestTotal?: string | null, remainingPenaltyTotal?: string | null, dueAmountTotal?: string | null, goodAmountTotal?: string | null, matured1To30DaysTotal?: string | null, matured1To12MonthsTotal?: string | null, maturedAbove12MonthsTotal?: string | null } | null } | null } | null } } };
+export type GetLoanAgingStatementReportQuery = { report: { loanReport: { loanAgingStatementReport?: { data?: { report?: Array<{ memberNo?: string | null, loanNo?: string | null, name?: string | null, address?: string | null, phoneNo?: string | null, loanType?: string | null, paymentMode?: string | null, issueDate?: Record<"local"|"en"|"np",string> | null, loanMaturityDate?: Record<"local"|"en"|"np",string> | null, disbursePrincipal?: string | null, remainingPrincipal?: string | null, installmentAmount?: string | null, remainingInstallmentAmount?: string | null, remainingInterest?: string | null, remainingPenalty?: string | null, totalDueAmount?: string | null, goodAmount?: string | null, matured1To30Days?: string | null, matured1To12Months?: string | null, maturedAbove12Months?: string | null, lastPrincipalPaidDate?: Record<"local"|"en"|"np",string> | null, lastInterestPaidDate?: Record<"local"|"en"|"np",string> | null, installmentLateDays?: number | null, nextPaymentDate?: Record<"local"|"en"|"np",string> | null, tenure?: string | null } | null> | null, summary?: { disbursePrincipalTotal?: string | null, remainingPrincipalTotal?: string | null, installmentAmountTotal?: string | null, remainingInstallmentAmountTotal?: string | null, remainingInterestTotal?: string | null, remainingPenaltyTotal?: string | null, dueAmountTotal?: string | null, goodAmountTotal?: string | null, matured1To30DaysTotal?: string | null, matured1To12MonthsTotal?: string | null, maturedAbove12MonthsTotal?: string | null } | null } | null } | null } } };
 
 export type GetLoanStatementReportQueryVariables = Exact<{
   data: LoanStatementReportSettings;
@@ -15636,7 +15827,14 @@ export type GetCoaAccountListQueryVariables = Exact<{
 }>;
 
 
-export type GetCoaAccountListQuery = { settings: { chartsOfAccount?: { coaAccountList?: { edges?: Array<{ node?: { accountCode?: string | null, accountName?: Record<"local"|"en"|"np",string> | null, accountClass?: string | null, parentGroup?: Record<"local"|"en"|"np",string> | null } | null } | null> | null } | null } | null } };
+export type GetCoaAccountListQuery = { settings: { chartsOfAccount?: { coaAccountList?: { totalCount: number, edges?: Array<{ node?: { accountCode?: string | null, accountName?: Record<"local"|"en"|"np",string> | null, accountClass?: string | null, parentGroup?: Record<"local"|"en"|"np",string> | null, branch?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } | null } };
+
+export type GetCoaAccountDetailsQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetCoaAccountDetailsQuery = { settings: { chartsOfAccount?: { coaAccountDetails?: { data?: { totalNoOfTxns?: number | null, meta?: { accountName?: string | null, accountId?: string | null, accountType?: string | null, createdDate?: Record<"local"|"en"|"np",string> | null } | null, overview?: { openingBalance?: string | null, dr?: string | null, cr?: string | null, closingBalance?: string | null } | null, recentTxns?: Array<{ date?: Record<"local"|"en"|"np",string> | null, txnId?: string | null, txnType?: string | null, particulars?: string | null, total?: string | null } | null> | null } | null } | null } | null } };
 
 export type ListCbsShareCodesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -15839,7 +16037,7 @@ export type GetSettingsUserListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetSettingsUserListDataQuery = { settings: { myraUser?: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, role?: Roles | null, profilePicUrl?: string | null, branch?: { id: string } | null } | null }> | null, pageInfo: PaginationFragment } | null } | null } };
+export type GetSettingsUserListDataQuery = { settings: { myraUser?: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, role?: Roles | null, profilePicUrl?: string | null, branch?: { id: string, name?: string | null } | null } | null }> | null, pageInfo: PaginationFragment } | null } | null } };
 
 export type GetSettingsUserEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -15903,7 +16101,7 @@ export type GetShareDetailQueryVariables = Exact<{
 }>;
 
 
-export type GetShareDetailQuery = { share: { shareDetail?: { data?: { id: string, totalShareCount?: number | null, totalShareAmount?: string | null, date?: Record<"local"|"en"|"np",string> | null, type?: string | null, noOfShare?: number | null, amount?: string | null, total?: string | null, status?: string | null, transactionBranch?: string | null, teller?: string | null, totalCredit?: string | null, totalDebit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, profilePicUrl?: string | null } | null, fromTo?: { start?: number | null, end?: number | null } | null, charges?: Array<{ name?: string | null, value?: string | null } | null> | null, paymentDetail?: { paymentMode?: SharePaymentMode | null, amount?: string | null, sourceOfFund?: string | null } | null, glTransactions?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } };
+export type GetShareDetailQuery = { share: { shareDetail?: { data?: { id: string, totalShareCount?: number | null, totalShareAmount?: string | null, date?: Record<"local"|"en"|"np",string> | null, type?: string | null, noOfShare?: number | null, amount?: string | null, total?: string | null, status?: string | null, transactionCode?: string | null, transactionBranch?: string | null, teller?: string | null, totalCredit?: string | null, totalDebit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, profilePicUrl?: string | null } | null, fromTo?: { start?: number | null, end?: number | null } | null, charges?: Array<{ name?: string | null, value?: string | null } | null> | null, paymentDetail?: { paymentMode?: SharePaymentMode | null, amount?: string | null, sourceOfFund?: string | null } | null, glTransactions?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } };
 
 export type GetDepositListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
@@ -15911,7 +16109,7 @@ export type GetDepositListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetDepositListDataQuery = { transaction: { listDeposit: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, name?: Record<"local"|"en"|"np",string> | null, amount?: string | null, state: TransactionState, paymentMode?: string | null, processedBy?: string | null, date?: string | null, agentName?: string | null, agentId?: string | null, profilePicUrl?: string | null, agentPicUrl?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetDepositListDataQuery = { transaction: { listDeposit: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, transactionCode?: string | null, name?: Record<"local"|"en"|"np",string> | null, amount?: string | null, state: TransactionState, paymentMode?: string | null, processedBy?: string | null, date?: string | null, agentName?: string | null, agentId?: string | null, profilePicUrl?: string | null, agentPicUrl?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetWithdrawListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
@@ -15919,7 +16117,7 @@ export type GetWithdrawListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetWithdrawListDataQuery = { transaction: { listWithdraw: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, name?: Record<"local"|"en"|"np",string> | null, amount?: string | null, state: TransactionState, paymentMode?: string | null, processedBy?: string | null, date?: string | null, profilePicUrl?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetWithdrawListDataQuery = { transaction: { listWithdraw: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, transactionCode?: string | null, name?: Record<"local"|"en"|"np",string> | null, amount?: string | null, state: TransactionState, paymentMode?: string | null, processedBy?: string | null, date?: string | null, profilePicUrl?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetAccountTransferListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
@@ -15927,12 +16125,12 @@ export type GetAccountTransferListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountTransferListDataQuery = { transaction: { listTransfer: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, amount?: string | null, state: TransactionState, transferType: TransferType, date?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetAccountTransferListDataQuery = { transaction: { listTransfer: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, transactionCode?: string | null, amount?: string | null, state: TransactionState, transferType: TransferType, date?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetEndOfDayDateDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetEndOfDayDateDataQuery = { transaction: { endOfDayDate: string } };
+export type GetEndOfDayDateDataQuery = { transaction: { endOfDayDate: { value: Record<"local"|"en"|"np",string>, hasErrors: boolean } } };
 
 export type GetTellerTransactionListDataQueryVariables = Exact<{
   filter?: InputMaybe<TellerTransactionFilter>;
@@ -15988,7 +16186,7 @@ export type LoanRepaymentDetailQuery = { transaction: { viewLoanRepayment?: { da
 export type GetEodStatusQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetEodStatusQuery = { transaction: { eodStatus?: { interestBooking?: EodState | null, interestPosting?: EodState | null, transactionDate?: EodState | null, maturity?: EodState | null, dormancy?: EodState | null, cashInVault?: EodState | null } | null } };
+export type GetEodStatusQuery = { transaction: { eodStatus?: { states?: { currentBranchesReady?: boolean | null, interestBooking?: EodState | null, interestPosting?: EodState | null, transactionDate?: EodState | null, maturity?: EodState | null, dormancy?: EodState | null, cashInHand?: EodState | null, cashInVault?: EodState | null, loanInterestBooking?: EodState | null } | null, errors?: { readiness?: Array<string | null> | null, interestBooking?: Array<string | null> | null, interestPosting?: Array<string | null> | null, maturity?: Array<string | null> | null, dormancy?: Array<string | null> | null, cashInHand?: Array<string | null> | null, cashInVault?: Array<string | null> | null, loanInterestBooking?: Array<string | null> | null } | null } | null } };
 
 export type GetAllTransactionsListQueryVariables = Exact<{
   filter?: InputMaybe<AllTransactionFilter>;
@@ -15996,7 +16194,15 @@ export type GetAllTransactionsListQueryVariables = Exact<{
 }>;
 
 
-export type GetAllTransactionsListQuery = { transaction: { listAllTransactions?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, transactionType: string, narration: string, amount: string, date: Record<"local"|"en"|"np",string> } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
+export type GetAllTransactionsListQuery = { transaction: { listAllTransactions?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, transactionType: AllTransactionType, narration: string, amount: string, date: Record<"local"|"en"|"np",string>, branchName: string } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
+
+export type GetAllTransactionsDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+  txnType?: InputMaybe<AllTransactionType>;
+}>;
+
+
+export type GetAllTransactionsDetailQuery = { transaction: { viewTransactionDetail?: { data?: { id: string, transactionDate?: Record<"local"|"en"|"np",string> | null, txnType?: AllTransactionType | null, transactionMode?: string | null, amount?: string | null, branch?: string | null, status?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, serviceCenter?: string | null, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
 
 export type GetPastSlipsListQueryVariables = Exact<{
   accountId: Scalars['ID'];
@@ -16018,6 +16224,13 @@ export type GetAvailableRangeQueryVariables = Exact<{
 
 
 export type GetAvailableRangeQuery = { withdrawSlip: { getAvailableRange?: { range?: { from: string, to: string } | null } | null } };
+
+export type GetWithdrawSlipDataQueryVariables = Exact<{
+  requestID: Scalars['ID'];
+}>;
+
+
+export type GetWithdrawSlipDataQuery = { withdrawSlip: { getWithdrawSlipData?: { data?: { id?: string | null, noOfLeaves?: number | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, account?: { id: string, accountName?: string | null } | null, availableRange?: { from: string, to: string } | null } | null } | null } };
 
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
@@ -16239,6 +16452,19 @@ export const SetJournalVoucherDataDocument = `
     journalVoucher {
       new(data: $data) {
         recordId
+        record {
+          transactionId
+          creatorId
+          creatorName
+          reference
+          date
+          note
+          entries {
+            name
+            value
+          }
+          paymentMode
+        }
         error {
           ...MutationError
         }
@@ -16576,6 +16802,27 @@ export const useSetIssueNewSlipMutation = <
       useAxios<SetIssueNewSlipMutation, SetIssueNewSlipMutationVariables>(SetIssueNewSlipDocument),
       options
     );
+export const PrintSlipDocument = `
+    mutation printSlip($data: WithdrawSlipPrintInput) {
+  withdrawSlip {
+    printSlip(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const usePrintSlipMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<PrintSlipMutation, TError, PrintSlipMutationVariables, TContext>) =>
+    useMutation<PrintSlipMutation, TError, PrintSlipMutationVariables, TContext>(
+      ['printSlip'],
+      useAxios<PrintSlipMutation, PrintSlipMutationVariables>(PrintSlipDocument),
+      options
+    );
 export const SetAddMemberToAgentDataDocument = `
     mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput, $override: Boolean) {
   transaction {
@@ -16659,9 +16906,12 @@ export const LoginDocument = `
             lastName
             role
             profilePic
+            userBalance
             branch {
               id
               name
+              category
+              branchBalance
             }
             organization {
               basicDetails {
@@ -17207,6 +17457,21 @@ export const SetLoanRepaymentDocument = `
     repayment(data: $data) {
       error {
         ...MutationError
+      }
+      record {
+        transactionId
+        accountId
+        accountName
+        memberId
+        memberName
+        date
+        installmentNo
+        principalAmount
+        interestAmount
+        penaltyAmount
+        rebateAmount
+        totalAmount
+        paymentMethod
       }
       recordId
     }
@@ -18982,6 +19247,36 @@ export const AddSharePurchaseDocument = `
   share {
     purchase(data: $data) {
       recordId
+      record {
+        id
+        transactionId
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        noOfShare
+        balance
+        shareAmount
+        shareCertificateCharge
+        otherCharge
+        extraFee {
+          name
+          value
+        }
+        totalAmount
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
+        memberId
+        member {
+          code
+          name
+        }
+      }
       error {
         ...MutationError
       }
@@ -19003,6 +19298,36 @@ export const AddShareReturnDocument = `
   share {
     return(data: $data) {
       recordId
+      record {
+        id
+        transactionId
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        noOfShare
+        balance
+        shareAmount
+        shareCertificateCharge
+        otherCharge
+        extraFee {
+          name
+          value
+        }
+        totalAmount
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
+        memberId
+        member {
+          code
+          name
+        }
+      }
       error {
         ...MutationError
       }
@@ -19031,6 +19356,10 @@ export const SetDepositDataDocument = `
         rebate
         paymentMode
         depositedBy
+        memberName
+        memberId
+        accountId
+        accountName
       }
       error {
         ...MutationError
@@ -19074,6 +19403,20 @@ export const SetWithdrawDataDocument = `
   transaction {
     withdraw(data: $data) {
       recordId
+      record {
+        transactionID
+        date
+        accountId
+        accountName
+        memberId
+        memberName
+        amount
+        fine
+        totalAmount
+        withdrawnBy
+        withdrawWith
+        paymentMode
+      }
       error {
         ...MutationError
       }
@@ -19095,6 +19438,26 @@ export const SetAccountTransferDataDocument = `
   transaction {
     transfer(data: $data) {
       recordId
+      record {
+        totalAmount
+        amount
+        date
+        id
+        remarks
+        fine
+        payeeNumber
+        receiverAccountId
+        receiverAccountName
+        receiverMemberId
+        receiverMemberName
+        senderAccountId
+        senderAccountName
+        senderMemberId
+        senderMemberName
+        transactionMode
+        withdrawWith
+        transferType
+      }
       error {
         ...MutationError
       }
@@ -19197,6 +19560,22 @@ export const useSetTellerTransferActionMutation = <
     useMutation<SetTellerTransferActionMutation, TError, SetTellerTransferActionMutationVariables, TContext>(
       ['setTellerTransferAction'],
       useAxios<SetTellerTransferActionMutation, SetTellerTransferActionMutationVariables>(SetTellerTransferActionDocument),
+      options
+    );
+export const ReadyBranchEodDocument = `
+    mutation readyBranchEOD {
+  transaction {
+    readyBranchEOD
+  }
+}
+    `;
+export const useReadyBranchEodMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<ReadyBranchEodMutation, TError, ReadyBranchEodMutationVariables, TContext>) =>
+    useMutation<ReadyBranchEodMutation, TError, ReadyBranchEodMutationVariables, TContext>(
+      ['readyBranchEOD'],
+      useAxios<ReadyBranchEodMutation, ReadyBranchEodMutationVariables>(ReadyBranchEodDocument),
       options
     );
 export const GetAccountMemberListDocument = `
@@ -20995,9 +21374,12 @@ export const GetMeDocument = `
           lastName
           role
           profilePic
+          userBalance
           branch {
             id
             name
+            category
+            branchBalance
           }
           organization {
             basicDetails {
@@ -25374,6 +25756,8 @@ export const GetLoanAgingStatementReportDocument = `
             lastPrincipalPaidDate
             lastInterestPaidDate
             installmentLateDays
+            nextPaymentDate
+            tenure
           }
           summary {
             disbursePrincipalTotal
@@ -27013,7 +27397,15 @@ export const GetCoaAccountListDocument = `
             accountName
             accountClass
             parentGroup
+            branch
           }
+        }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
         }
       }
     }
@@ -27030,6 +27422,50 @@ export const useGetCoaAccountListQuery = <
     useQuery<GetCoaAccountListQuery, TError, TData>(
       variables === undefined ? ['getCoaAccountList'] : ['getCoaAccountList', variables],
       useAxios<GetCoaAccountListQuery, GetCoaAccountListQueryVariables>(GetCoaAccountListDocument).bind(null, variables),
+      options
+    );
+export const GetCoaAccountDetailsDocument = `
+    query getCOAAccountDetails($id: String!) {
+  settings {
+    chartsOfAccount {
+      coaAccountDetails(id: $id) {
+        data {
+          meta {
+            accountName
+            accountId
+            accountType
+            createdDate
+          }
+          overview {
+            openingBalance
+            dr
+            cr
+            closingBalance
+          }
+          totalNoOfTxns
+          recentTxns {
+            date
+            txnId
+            txnType
+            particulars
+            total
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoaAccountDetailsQuery = <
+      TData = GetCoaAccountDetailsQuery,
+      TError = unknown
+    >(
+      variables: GetCoaAccountDetailsQueryVariables,
+      options?: UseQueryOptions<GetCoaAccountDetailsQuery, TError, TData>
+    ) =>
+    useQuery<GetCoaAccountDetailsQuery, TError, TData>(
+      ['getCOAAccountDetails', variables],
+      useAxios<GetCoaAccountDetailsQuery, GetCoaAccountDetailsQueryVariables>(GetCoaAccountDetailsDocument).bind(null, variables),
       options
     );
 export const ListCbsShareCodesDocument = `
@@ -28757,6 +29193,7 @@ export const GetSettingsUserListDataDocument = `
             role
             branch {
               id
+              name
             }
             profilePicUrl
           }
@@ -29183,6 +29620,7 @@ export const GetShareDetailDocument = `
           amount
           sourceOfFund
         }
+        transactionCode
         transactionBranch
         teller
         glTransactions {
@@ -29218,6 +29656,7 @@ export const GetDepositListDataDocument = `
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -29261,6 +29700,7 @@ export const GetWithdrawListDataDocument = `
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -29301,6 +29741,7 @@ export const GetAccountTransferListDataDocument = `
       edges {
         node {
           ID
+          transactionCode
           amount
           state
           transferType
@@ -29333,7 +29774,10 @@ export const useGetAccountTransferListDataQuery = <
 export const GetEndOfDayDateDataDocument = `
     query getEndOfDayDateData {
   transaction {
-    endOfDayDate
+    endOfDayDate {
+      value
+      hasErrors
+    }
   }
 }
     `;
@@ -29684,12 +30128,27 @@ export const GetEodStatusDocument = `
     query getEODStatus {
   transaction {
     eodStatus {
-      interestBooking
-      interestPosting
-      transactionDate
-      maturity
-      dormancy
-      cashInVault
+      states {
+        currentBranchesReady
+        interestBooking
+        interestPosting
+        transactionDate
+        maturity
+        dormancy
+        cashInHand
+        cashInVault
+        loanInterestBooking
+      }
+      errors {
+        readiness
+        interestBooking
+        interestPosting
+        maturity
+        dormancy
+        cashInHand
+        cashInVault
+        loanInterestBooking
+      }
     }
   }
 }
@@ -29718,6 +30177,7 @@ export const GetAllTransactionsListDocument = `
           narration
           amount
           date
+          branchName
         }
         cursor
       }
@@ -29741,6 +30201,49 @@ export const useGetAllTransactionsListQuery = <
     useQuery<GetAllTransactionsListQuery, TError, TData>(
       variables === undefined ? ['getAllTransactionsList'] : ['getAllTransactionsList', variables],
       useAxios<GetAllTransactionsListQuery, GetAllTransactionsListQueryVariables>(GetAllTransactionsListDocument).bind(null, variables),
+      options
+    );
+export const GetAllTransactionsDetailDocument = `
+    query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
+  transaction {
+    viewTransactionDetail(transactionId: $id, txnType: $txnType) {
+      data {
+        id
+        member {
+          id
+          code
+          name
+          profilePicUrl
+        }
+        transactionDate
+        txnType
+        transactionMode
+        amount
+        branch
+        status
+        glTransaction {
+          account
+          serviceCenter
+          debit
+          credit
+        }
+        totalDebit
+        totalCredit
+      }
+    }
+  }
+}
+    `;
+export const useGetAllTransactionsDetailQuery = <
+      TData = GetAllTransactionsDetailQuery,
+      TError = unknown
+    >(
+      variables: GetAllTransactionsDetailQueryVariables,
+      options?: UseQueryOptions<GetAllTransactionsDetailQuery, TError, TData>
+    ) =>
+    useQuery<GetAllTransactionsDetailQuery, TError, TData>(
+      ['getAllTransactionsDetail', variables],
+      useAxios<GetAllTransactionsDetailQuery, GetAllTransactionsDetailQueryVariables>(GetAllTransactionsDetailDocument).bind(null, variables),
       options
     );
 export const GetPastSlipsListDocument = `
@@ -29815,5 +30318,41 @@ export const useGetAvailableRangeQuery = <
     useQuery<GetAvailableRangeQuery, TError, TData>(
       ['getAvailableRange', variables],
       useAxios<GetAvailableRangeQuery, GetAvailableRangeQueryVariables>(GetAvailableRangeDocument).bind(null, variables),
+      options
+    );
+export const GetWithdrawSlipDataDocument = `
+    query getWithdrawSlipData($requestID: ID!) {
+  withdrawSlip {
+    getWithdrawSlipData(requestID: $requestID) {
+      data {
+        id
+        member {
+          id
+          name
+        }
+        account {
+          id
+          accountName
+        }
+        noOfLeaves
+        availableRange {
+          from
+          to
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetWithdrawSlipDataQuery = <
+      TData = GetWithdrawSlipDataQuery,
+      TError = unknown
+    >(
+      variables: GetWithdrawSlipDataQueryVariables,
+      options?: UseQueryOptions<GetWithdrawSlipDataQuery, TError, TData>
+    ) =>
+    useQuery<GetWithdrawSlipDataQuery, TError, TData>(
+      ['getWithdrawSlipData', variables],
+      useAxios<GetWithdrawSlipDataQuery, GetWithdrawSlipDataQueryVariables>(GetWithdrawSlipDataDocument).bind(null, variables),
       options
     );

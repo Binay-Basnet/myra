@@ -22,6 +22,14 @@ export const KYMCoopUnionFooter = () => {
   const dispatch = useAppDispatch();
   const isFormDirty = useAppSelector((state) => state.coopUnion.isFormDirty);
 
+  const totalEquityCurrent = useAppSelector((state) => state.coopUnion.totalEquityCurrent);
+  const totalEquityTarget = useAppSelector((state) => state.coopUnion.totalEquityTarget);
+  const totalAssetsCurrent = useAppSelector((state) => state.coopUnion.totalAssetsCurrent);
+  const totalAssetsTarget = useAppSelector((state) => state.coopUnion.totalAssetsTarget);
+
+  const isCurrentEqual = totalEquityCurrent === totalAssetsCurrent;
+  const isTargetEqual = totalEquityTarget === totalAssetsTarget;
+
   const { refetch } = useGetCoopUnionSectionStatusQuery(
     { id },
     {
@@ -54,7 +62,7 @@ export const KYMCoopUnionFooter = () => {
               </Text>
             </Button>
           }
-          isMainButtonDisabled={!isFormDirty}
+          isMainButtonDisabled={!isFormDirty || !(isCurrentEqual && isTargetEqual)}
           mainButtonLabel={t['next']}
           mainButtonHandler={async () => {
             const response = await refetch();
@@ -112,7 +120,7 @@ export const KYMCoopUnionFooter = () => {
                 !sectionStatus.bodDetails?.some((bod) => !!bod.errors) &&
                 !sectionStatus.accountOperatorDetails?.some((bod) => !!bod.errors)
               ) {
-                router.push(`/members/activation/${id}`);
+                router.push(`/members/translation/${router.query['id']}`);
               } else {
                 toast({
                   id: 'validation-error',

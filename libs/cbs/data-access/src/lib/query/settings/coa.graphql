@@ -90,6 +90,45 @@ query getCoaAccountList($branchId: String, $pagination: Pagination) {
             accountName
             accountClass
             parentGroup
+            branch
+          }
+        }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+      }
+    }
+  }
+}
+
+query getCOAAccountDetails($id: String!) {
+  settings {
+    chartsOfAccount {
+      coaAccountDetails(id: $id) {
+        data {
+          meta {
+            accountName
+            accountId
+            accountType
+            createdDate
+          }
+          overview {
+            openingBalance
+            dr
+            cr
+            closingBalance
+          }
+          totalNoOfTxns
+          recentTxns {
+            date
+            txnId
+            txnType
+            particulars
+            total
           }
         }
       }

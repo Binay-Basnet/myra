@@ -40,6 +40,7 @@ export const Account = ({ totalAmount }: AmountType) => {
     <FormSection templateColumns={2}>
       <GridItem colSpan={2}>
         <FormAccountSelect
+          isRequired
           name="account.accountId"
           memberId={memberId}
           label={t['sharePurchaseSelectAccount']}

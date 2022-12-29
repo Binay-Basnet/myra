@@ -9,6 +9,11 @@ mutation setDepositData($data: DepositInput!) {
         rebate
         paymentMode
         depositedBy
+
+        memberName
+        memberId
+        accountId
+        accountName
       }
       error {
         ...MutationError
@@ -32,6 +37,20 @@ mutation setWithdrawData($data: WithdrawInput!) {
   transaction {
     withdraw(data: $data) {
       recordId
+      record {
+        transactionID
+        date
+        accountId
+        accountName
+        memberId
+        memberName
+        amount
+        fine
+        totalAmount
+        withdrawnBy
+        withdrawWith
+        paymentMode
+      }
       error {
         ...MutationError
       }
@@ -43,6 +62,26 @@ mutation setAccountTransferData($data: TransferInput!) {
   transaction {
     transfer(data: $data) {
       recordId
+      record {
+        totalAmount
+        amount
+        date
+        id
+        remarks
+        fine
+        payeeNumber
+        receiverAccountId
+        receiverAccountName
+        receiverMemberId
+        receiverMemberName
+        senderAccountId
+        senderAccountName
+        senderMemberId
+        senderMemberName
+        transactionMode
+        withdrawWith
+        transferType
+      }
       error {
         ...MutationError
       }
@@ -95,5 +134,11 @@ mutation setTellerTransferAction(
         ...MutationError
       }
     }
+  }
+}
+
+mutation readyBranchEOD {
+  transaction {
+    readyBranchEOD
   }
 }

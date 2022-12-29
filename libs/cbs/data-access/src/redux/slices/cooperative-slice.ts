@@ -25,12 +25,16 @@ interface CooperativeSlice {
       errors?: Record<string, string[]>;
     }[];
   };
+  totalEquity: number;
+  totalAssets: number;
 }
 
 // Define the initial state using that type
 const initialState: () => CooperativeSlice = () => ({
   hasPressedNext: false,
   isFormDirty: false,
+  totalEquity: 0,
+  totalAssets: 0,
   basic: {
     errors: {},
     incomplete: {},
@@ -59,6 +63,14 @@ export const cooperativeSlice = createSlice({
 
     setCooperativeHasPressedNext: (state, action: PayloadAction<boolean>) => {
       state.hasPressedNext = action.payload;
+    },
+
+    setCooperativeTotalEquity: (state, action: PayloadAction<number>) => {
+      state.totalEquity = action.payload;
+    },
+
+    setCooperativeTotalAssets: (state, action: PayloadAction<number>) => {
+      state.totalAssets = action.payload;
     },
 
     addSisterCoopError: (
@@ -108,6 +120,8 @@ export const {
   setCooperativeFormDirty,
   setCooperativeHasPressedNext,
   resetCooperative,
+  setCooperativeTotalAssets,
+  setCooperativeTotalEquity,
 } = cooperativeSlice.actions;
 
 export default cooperativeSlice.reducer;

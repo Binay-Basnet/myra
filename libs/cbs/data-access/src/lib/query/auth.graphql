@@ -10,9 +10,12 @@ query getMe {
           lastName
           role
           profilePic
+          userBalance
           branch {
             id
             name
+            category
+            branchBalance
           }
           organization {
             basicDetails {

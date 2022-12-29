@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { CgMenuGridO } from 'react-icons/cg';
@@ -23,7 +23,9 @@ import { SwitchTabs } from '@myra-ui/forms';
 import { Avatar, Box, Button, Divider, Grid, Icon, IconButton, Text } from '@myra-ui/foundations';
 
 import {
+  BranchCategory,
   DateType,
+  EodOption,
   Language,
   logout,
   RootState,
@@ -34,6 +36,7 @@ import {
   useSetEndOfDayDataMutation,
   useSetPreferenceMutation,
 } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 enum GetRoleSlug {
@@ -203,7 +206,13 @@ export const TopLevelHeader = () => {
 
   const { data: endOfDayData, refetch: refetchEndOfDay } = useGetEndOfDayDateDataQuery();
 
-  const closingDate = endOfDayData?.transaction?.endOfDayDate;
+  const { closingDate, hasEodErrors } = useMemo(
+    () => ({
+      closingDate: endOfDayData?.transaction?.endOfDayDate?.value,
+      hasEodErrors: endOfDayData?.transaction?.endOfDayDate?.hasErrors,
+    }),
+    [endOfDayData]
+  );
 
   const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
 
@@ -226,6 +235,40 @@ export const TopLevelHeader = () => {
     //     router.push('/day-close');
     //   },
     // });
+  };
+
+  const handleBranchReadiness = () => {
+    router.push('/branch-readiness');
+    // readyBranch(
+    //   {},
+    //   {
+    //     onSuccess: (res) => {
+    //       if (res?.transaction?.readyBranchEOD?.length) {
+    //         dispatch(setBranchReadinessErrors({ errors: res.transaction.readyBranchEOD }));
+    //         router?.push('/branch-readiness');
+    //       } else {
+    //         dispatch(clearBranchReadinessErrors());
+    //         router?.push('/branch-readiness');
+    //       }
+    //     },
+    //   }
+    // );
+  };
+
+  const reinitiateCloseDay = () => {
+    closeDay({ option: EodOption.Reinitiate });
+
+    refetchEndOfDay();
+
+    router.push('/day-close');
+  };
+
+  const ignoreAndCloseDay = () => {
+    closeDay({ option: EodOption.CompleteWithError });
+
+    refetchEndOfDay();
+
+    router.push('/day-close');
   };
 
   return (
@@ -308,7 +351,7 @@ export const TopLevelHeader = () => {
                       borderRadius="br1"
                     >
                       <Text p="s10 s12" fontSize="s3" fontWeight="500" color="gray.0">
-                        Date: {currentDate}
+                        Date: {localizedDate(closingDate)}
                       </Text>
                     </Box>
                   </PopoverTrigger>
@@ -322,19 +365,12 @@ export const TopLevelHeader = () => {
                       boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
                     }}
                   >
-                    {currentDate !== closingDate && (
-                      <PopoverBody>
-                        <Text fontSize="r1" fontWeight="400" color="danger.500">
-                          The transaction date is not same as the calendar date
-                        </Text>
-                      </PopoverBody>
-                    )}
                     <PopoverBody borderBottom="1px" borderColor="border.layout">
                       <Text fontSize="s3" fontWeight="500" color="gray.700">
                         Transaction Date
                       </Text>
                       <Text fontSize="s3" fontWeight="500" color="gray.800">
-                        {closingDate}
+                        {localizedDate(closingDate)}
                       </Text>
                     </PopoverBody>
                     <PopoverBody borderBottom="1px" borderColor="border.layout">
@@ -346,17 +382,64 @@ export const TopLevelHeader = () => {
                       </Text>
                     </PopoverBody>
                     <PopoverBody p="s8">
-                      <Button
-                        variant="solid"
-                        display="flex"
-                        justifyContent="center"
-                        w="100%"
-                        // onClick={() => router.push('/day-close')}
-                        onClick={closeDayFxn}
-                        disabled={closingDate !== currentDate}
-                      >
-                        Close Day
-                      </Button>
+                      <Box display="flex" flexDirection="column" gap="s8">
+                        {user?.branch?.category === BranchCategory.HeadOffice ? (
+                          hasEodErrors ? (
+                            <>
+                              <Button
+                                variant="outline"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                onClick={reinitiateCloseDay}
+                              >
+                                Reinitiate
+                              </Button>
+                              <Button
+                                variant="solid"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                onClick={ignoreAndCloseDay}
+                              >
+                                Ignore and Close Day
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              <Button
+                                variant="outline"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                onClick={handleBranchReadiness}
+                              >
+                                Branch Readiness
+                              </Button>
+                              <Button
+                                variant="solid"
+                                display="flex"
+                                justifyContent="center"
+                                w="100%"
+                                // onClick={() => router.push('/day-close')}
+                                onClick={closeDayFxn}
+                              >
+                                Close Day
+                              </Button>
+                            </>
+                          )
+                        ) : (
+                          <Button
+                            variant="solid"
+                            display="flex"
+                            justifyContent="center"
+                            w="100%"
+                            onClick={handleBranchReadiness}
+                          >
+                            Branch Readiness
+                          </Button>
+                        )}
+                      </Box>
                     </PopoverBody>
                   </PopoverContent>
                 </>

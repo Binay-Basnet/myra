@@ -68,7 +68,7 @@ export const LoanAgingStatementsReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 10,
+                    colspan: 11,
                   },
                 },
               },
@@ -136,6 +136,15 @@ export const LoanAgingStatementsReport = () => {
                 },
               },
               {
+                header: 'Tenure',
+                accessorKey: 'tenure',
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
                 header: 'Issue Date',
                 accessorFn: (row) => localizedDate(row?.issueDate),
                 meta: {
@@ -184,7 +193,7 @@ export const LoanAgingStatementsReport = () => {
                 },
               },
               {
-                header: 'Remaining Installment Amount',
+                header: 'Remaining (Due) Installment Amount',
                 accessorKey: 'remainingInstallmentAmount',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.remainingInstallmentAmountTotal || 0),
@@ -234,7 +243,7 @@ export const LoanAgingStatementsReport = () => {
                 },
               },
               {
-                header: 'Matured -1 to 30 Days',
+                header: 'Matured (Due)-1 to 30 Days',
                 accessorKey: 'matured1To30Days',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.matured1To30DaysTotal || 0),
@@ -244,7 +253,7 @@ export const LoanAgingStatementsReport = () => {
                 },
               },
               {
-                header: 'Matured -1 to 12 Month',
+                header: 'Matured (Due)-1 to 12 Month',
                 accessorKey: 'matured1To12Months',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.matured1To12MonthsTotal || 0),
@@ -254,7 +263,7 @@ export const LoanAgingStatementsReport = () => {
                 },
               },
               {
-                header: 'Matured - Above 12 Month',
+                header: 'Matured (Due)- Above 12 Month',
                 accessorKey: 'matured1To12Months',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.maturedAbove12MonthsTotal || 0),
@@ -275,6 +284,15 @@ export const LoanAgingStatementsReport = () => {
               {
                 header: 'Last Interest Paid Date',
                 accessorFn: (row) => localizedDate(row?.lastInterestPaidDate),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Next Installment Date',
+                accessorFn: (row) => localizedDate(row?.nextPaymentDate),
                 meta: {
                   Footer: {
                     display: 'none',

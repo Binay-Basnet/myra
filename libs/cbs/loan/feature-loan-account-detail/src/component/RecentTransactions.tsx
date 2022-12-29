@@ -39,7 +39,7 @@ export const RecentTransactions = () => {
       // },
       {
         header: 'Transaction ID',
-        accessorKey: 'id',
+        accessorKey: 'transactionId',
         cell: (props) =>
           props.getValue() ? (
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">

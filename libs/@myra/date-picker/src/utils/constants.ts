@@ -280,13 +280,15 @@ export const bsLast30Days = convertNepaliDate(
   new NepaliDate(dayjs(new Date()).subtract(30, 'day')?.toDate())
 );
 
-export const getPeriodDate = (numberOfDays: number, calendarType: 'AD' | 'BS') => {
+export const getPeriodDate = (
+  numberOfDays: number,
+  calendarType: 'AD' | 'BS',
+  baseDate: Date = new Date()
+) => {
   if (calendarType === 'AD') {
-    return convertDate(dayjs(new Date()).subtract(numberOfDays, 'day')?.toDate());
+    return convertDate(dayjs(baseDate).subtract(numberOfDays, 'day')?.toDate());
   }
-  return convertNepaliDate(
-    new NepaliDate(dayjs(new Date()).subtract(numberOfDays, 'day')?.toDate())
-  );
+  return convertNepaliDate(new NepaliDate(dayjs(baseDate).subtract(numberOfDays, 'day')?.toDate()));
 };
 
 export const DEFAULT_PERIODS = [

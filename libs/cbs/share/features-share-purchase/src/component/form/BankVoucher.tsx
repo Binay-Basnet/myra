@@ -13,11 +13,16 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={2}>
-        <FormBankSelect name="bankVoucher.bankId" label={t['sharePurchaseBankName']} />
+        <FormBankSelect isRequired name="bankVoucher.bankId" label={t['sharePurchaseBankName']} />
       </GridItem>
 
       <GridItem colSpan={1}>
-        <FormInput type="text" name="bankVoucher.voucherId" label={t['sharePurchaseVoucherId']} />
+        <FormInput
+          isRequired
+          type="text"
+          name="bankVoucher.voucherId"
+          label={t['sharePurchaseVoucherId']}
+        />
       </GridItem>
 
       <GridItem colSpan={1}>
@@ -32,6 +37,7 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
 
       <GridItem colSpan={1}>
         <FormDatePicker
+          isRequired
           name="bankVoucher.depositedDate"
           label={t['sharePurchaseDepositedDate']}
           maxToday

@@ -1,12 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { Box, FormSection } from '@myra-ui';
+
 import {
   FormFieldSearchTerm,
   KymIndMemberInput,
   useGetIndividualKymOptionsQuery,
 } from '@coop/cbs/data-access';
-import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Box, FormSection } from '@myra-ui';
+import { FormAmountInput, FormRadioGroup } from '@coop/shared/form';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';
@@ -38,11 +39,10 @@ export const KYMEstimatedAmount = ({ setKymCurrentSection }: IKYMEstimatedAmount
           id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion"
           header="kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION"
         >
-          <FormInput
-            type="number"
+          <FormAmountInput
+            isRequired
             name="estimatedAnnualTransactionAmount"
             label={t['kynIndEstimatedannualaccounttransaction']}
-            textAlign="right"
           />
         </FormSection>
 
@@ -62,6 +62,7 @@ export const KYMEstimatedAmount = ({ setKymCurrentSection }: IKYMEstimatedAmount
 
         <Box p="s20" id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion">
           <FormRadioGroup
+            isRequired
             label={t['kynIndEstimatednoofAnnualTransaction']}
             id="estimatedAnnualTransactionFrequencyId"
             name="estimatedAnnualTransactionFrequencyId"
@@ -71,17 +72,15 @@ export const KYMEstimatedAmount = ({ setKymCurrentSection }: IKYMEstimatedAmount
         </Box>
 
         <FormSection>
-          <FormInput
-            type="number"
+          <FormAmountInput
+            isRequired
             name="estimatedAnnualDepositAmount"
             label={t['kynIndEstimatedAnnualDeposit']}
-            textAlign="right"
           />
-          <FormInput
-            type="number"
+          <FormAmountInput
+            isRequired
             name="estimatedAnnualLoanAmount"
             label={t['kynIndEstimatedAnnualLoan']}
-            textAlign="right"
           />
         </FormSection>
       </form>

@@ -39,15 +39,25 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
           }}
         >
           <FormSection id="Current Member Details" header="kymCoopUnionApplicant" divider={false}>
-            {' '}
-            <FormInput type="text" name="applicantName" label={t['kymCoopUnionName']} />
+            <FormInput isRequired type="text" name="applicantName" label={t['kymCoopUnionName']} />
             <FormInput
+              isRequired
               type="text"
               name="applicantDesignationEn"
               label={t['kymCoopUnionDesignation']}
             />
-            <FormInput type="text" name="applicantEmail" label={t['kymCoopUnionEmailAddress']} />
-            <FormInput type="text" name="applicantContactNo" label={t['kymCoopUnionContactNo']} />
+            <FormInput
+              isRequired
+              type="text"
+              name="applicantEmail"
+              label={t['kymCoopUnionEmailAddress']}
+            />
+            <FormInput
+              isRequired
+              type="text"
+              name="applicantContactNo"
+              label={t['kymCoopUnionContactNo']}
+            />
             <FormInput type="text" name="applicantPanNo" label={t['kymCoopUnionPANNo']} />
           </FormSection>
 

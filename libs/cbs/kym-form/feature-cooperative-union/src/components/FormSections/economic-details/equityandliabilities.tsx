@@ -1,12 +1,16 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
+import { isNaN } from 'lodash';
 
-import { CoopUnionEconomicDetailsInput } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
 import {
-  getKymSectionCoOperativeUnion,
-  useTranslation,
-} from '@coop/shared/utils';
+  CoopUnionEconomicDetailsInput,
+  setCooperativeUnionTotalEquityCurrent,
+  setCooperativeUnionTotalEquityTarget,
+} from '@coop/cbs/data-access';
+import { FormInput } from '@coop/shared/form';
+import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCooperativeUnionEconomicDetails } from '../../../hooks';
 
@@ -16,6 +20,7 @@ interface IKymEquilitiesProps {
 
 export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const methods = useForm<CoopUnionEconomicDetailsInput>();
 
@@ -72,12 +77,8 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
   //   nonCurrentAssetsTarget,
   // ]);
 
-  const ShareCurrent = isNaN(watch('shareCapitalCurrent'))
-    ? 0
-    : watch('shareCapitalCurrent');
-  const ShareTarget = isNaN(watch('shareCapitalTarget'))
-    ? 0
-    : watch('shareCapitalTarget');
+  const ShareCurrent = isNaN(watch('shareCapitalCurrent')) ? 0 : watch('shareCapitalCurrent');
+  const ShareTarget = isNaN(watch('shareCapitalTarget')) ? 0 : watch('shareCapitalTarget');
   const reserveCurrent = isNaN(watch('reserveAndSurplusCurrent'))
     ? 0
     : watch('reserveAndSurplusCurrent');
@@ -90,34 +91,25 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
   const savingDepositTarget = isNaN(watch('savingDepositTarget'))
     ? 0
     : watch('savingDepositTarget');
-  const loanAccountCurrent = isNaN(watch('loanAccountCurrent'))
-    ? 0
-    : watch('loanAccountCurrent');
-  const loanAccountTarget = isNaN(watch('loanAccountTarget'))
-    ? 0
-    : watch('loanAccountTarget');
+  const loanAccountCurrent = isNaN(watch('loanAccountCurrent')) ? 0 : watch('loanAccountCurrent');
+  const loanAccountTarget = isNaN(watch('loanAccountTarget')) ? 0 : watch('loanAccountTarget');
   const capitalGrantCurrent = isNaN(watch('capitalGrantCurrent'))
     ? 0
     : watch('capitalGrantCurrent');
-  const capitalGrantTarget = isNaN(watch('capitalGrantTarget'))
-    ? 0
-    : watch('capitalGrantTarget');
+  const capitalGrantTarget = isNaN(watch('capitalGrantTarget')) ? 0 : watch('capitalGrantTarget');
   const currentLiabilitiesCurrent = isNaN(watch('currentLiabilitiesCurrent'))
     ? 0
     : watch('currentLiabilitiesCurrent');
   const currentLiabilitiesTarget = isNaN(watch('currentLiabilitiesTarget'))
     ? 0
     : watch('currentLiabilitiesTarget');
-  const nonCurrentLiabilitiesCurrent = isNaN(
-    watch('nonCurrentLiabilitiesCurrent')
-  )
+  const nonCurrentLiabilitiesCurrent = isNaN(watch('nonCurrentLiabilitiesCurrent'))
     ? 0
     : watch('nonCurrentLiabilitiesCurrent');
-  const nonCurrentLiabilitiesTarget = isNaN(
-    watch('nonCurrentLiabilitiesTarget')
-  )
+  const nonCurrentLiabilitiesTarget = isNaN(watch('nonCurrentLiabilitiesTarget'))
     ? 0
     : watch('nonCurrentLiabilitiesTarget');
+
   const totalequitycurrent =
     Number(ShareCurrent) +
     Number(reserveCurrent) +
@@ -136,6 +128,11 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
     Number(currentLiabilitiesTarget) +
     Number(nonCurrentLiabilitiesTarget);
 
+  useEffect(() => {
+    dispatch(setCooperativeUnionTotalEquityCurrent(totalequitycurrent));
+    dispatch(setCooperativeUnionTotalEquityTarget(totalequityTarget));
+  }, [dispatch, totalequitycurrent, totalequityTarget]);
+
   return (
     <FormProvider {...methods}>
       <form
@@ -149,46 +146,26 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
           display="flex"
           flexDirection="column"
           id="kymCoopUnionAccEquityandLiailibities"
-          scrollMarginTop={'200px'}
+          scrollMarginTop="200px"
           borderBottom="1px solid"
           pb="s20"
           borderBottomColor="border.layout"
         >
-          <Grid
-            columnGap={10}
-            alignItems="center"
-            px="s14"
-            templateColumns="repeat(3,1fr)"
-          >
+          <Grid columnGap={10} alignItems="center" px="s14" templateColumns="repeat(3,1fr)">
             <GridItem>
-              <Text
-                mb="s16"
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="SemiBold"
-              >
+              <Text mb="s16" color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="SemiBold">
                 {t['kymCoopUnionEqtEquityandLiailibities']}
               </Text>
             </GridItem>
 
             <GridItem>
-              <Text
-                mb="s16"
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="SemiBold"
-              >
+              <Text mb="s16" color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="SemiBold">
                 {t['kymCoopUnionEqtCurrent']}
               </Text>
             </GridItem>
 
             <GridItem>
-              <Text
-                mb="s16"
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="SemiBold"
-              >
+              <Text mb="s16" color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="SemiBold">
                 {t['kymCoopUnionEqtTargetfornextfiscalyear']}
               </Text>
             </GridItem>
@@ -196,235 +173,93 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
 
           <Divider />
 
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(3,1fr)"
-            gap="s40"
-          >
+          <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(3,1fr)" gap="s40">
             <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
+              <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
                 {t['kymCoopUnionEqtShareCapital']}
               </Text>
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="shareCapitalCurrent"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="shareCapitalCurrent" />
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="shareCapitalTarget"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="shareCapitalTarget" />
             </GridItem>
           </Grid>
           <Divider />
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(3,1fr)"
-            gap="s40"
-          >
+          <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(3,1fr)" gap="s40">
             <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
+              <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
                 {t['kymCoopUnionEqtReserveandSurplus']}
               </Text>
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="reserveAndSurplusCurrent"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="reserveAndSurplusCurrent" />
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="reserveAndSurplusTarget"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="reserveAndSurplusTarget" />
             </GridItem>
           </Grid>
           <Divider />
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(3,1fr)"
-            gap="s40"
-          >
+          <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(3,1fr)" gap="s40">
             <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
+              <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
                 {t['kymCoopUnionEqtSavingDeposit']}
               </Text>
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="savingDepositCurrent"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="savingDepositCurrent" />
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="savingDepositTarget"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="savingDepositTarget" />
             </GridItem>
           </Grid>
           <Divider />
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(3,1fr)"
-            gap="s40"
-          >
+          <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(3,1fr)" gap="s40">
             <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
+              <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
                 {t['kymCoopUnionEqtLoanAccount']}
               </Text>
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="loanAccountCurrent"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="loanAccountCurrent" />
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="loanAccountTarget"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="loanAccountTarget" />
             </GridItem>
           </Grid>
           <Divider />
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(3,1fr)"
-            gap="s40"
-          >
+          <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(3,1fr)" gap="s40">
             <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
+              <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
                 {t['kymCoopUnionEqtCapitalGrant']}
               </Text>
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="capitalGrantCurrent"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="capitalGrantCurrent" />
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="capitalGrantTarget"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="capitalGrantTarget" />
             </GridItem>
           </Grid>
           <Divider />
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(3,1fr)"
-            gap="s40"
-          >
+          <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(3,1fr)" gap="s40">
             <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
+              <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
                 {t['kymCoopUnionEqtCurrentLiabilitiesandpayable']}
               </Text>
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="currentLiabilitiesCurrent"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="currentLiabilitiesCurrent" />
             </GridItem>
             <GridItem>
-              <FormInput
-                textAlign="right"
-                type="number"
-                min={0}
-                name="currentLiabilitiesTarget"
-                __placeholder="0.00"
-              />
+              <FormInput textAlign="right" type="number" min={0} name="currentLiabilitiesTarget" />
             </GridItem>
           </Grid>
           <Divider />
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s12"
-            templateColumns="repeat(3,1fr)"
-            gap="s40"
-          >
+          <Grid alignItems="center" px="s8" py="s12" templateColumns="repeat(3,1fr)" gap="s40">
             <GridItem>
-              <Text
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="Regular"
-              >
+              <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
                 {t['kymCoopUnionEqtNoncurrentliabilities']}
               </Text>
             </GridItem>
@@ -434,7 +269,6 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="nonCurrentLiabilitiesCurrent"
-                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -443,33 +277,21 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="nonCurrentLiabilitiesTarget"
-                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
           <Divider />
           {/* .................................last part ............................... */}
-          <Grid
-            alignItems="center"
-            px="s8"
-            py="s16"
-            templateColumns="repeat(3,1fr)"
-            gap="s40"
-          >
+          <Grid alignItems="center" px="s8" py="s16" templateColumns="repeat(3,1fr)" gap="s40">
             <GridItem>
-              <Text
-                mb="s16"
-                color="neutralColorLight.Gray-80"
-                fontSize="s3"
-                fontWeight="SemiBold"
-              >
+              <Text mb="s16" color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="SemiBold">
                 {t['kymCoopUnionEqtTotal']}
               </Text>
             </GridItem>
 
             <GridItem>
               <FormInput
-                isDisabled={true}
+                isDisabled
                 bg="neutralColorLight.Gray-20"
                 border="1px solid"
                 borderColor="disabled.disabled"
@@ -477,12 +299,11 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="text"
                 name="totalEquityAndLiabilitiesCurrent"
                 value={totalequitycurrent}
-                __placeholder={t['kymCoopUnionEqtTotalassets']}
               />
             </GridItem>
             <GridItem>
               <FormInput
-                isDisabled={true}
+                isDisabled
                 bg="neutralColorLight.Gray-20"
                 border="1px solid"
                 borderColor="disabled.disabled"
@@ -490,7 +311,6 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="text"
                 name="totalEquityAndLiabilitiesTarget"
                 value={totalequityTarget}
-                __placeholder={t['kymCoopUnionEqtTotal']}
               />
             </GridItem>
           </Grid>

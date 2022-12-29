@@ -387,10 +387,11 @@ export const AddDeposit = () => {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <FormMemberSelect name="memberId" label="Member" />
+                  <FormMemberSelect isRequired name="memberId" label="Member" />
 
                   {memberId && (
                     <FormAccountSelect
+                      isRequired
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
@@ -404,11 +405,12 @@ export const AddDeposit = () => {
                         selectedAccount?.product?.isMandatorySaving)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
-                          <FormInput name="voucherId" label="Deposit Slip No" />
+                          <FormInput isRequired name="voucherId" label="Deposit Slip No" />
 
                           <Box />
 
                           <FormInput
+                            isRequired
                             name="noOfInstallments"
                             label={t['addDepositNoOfInstallments']}
                           />
@@ -420,45 +422,22 @@ export const AddDeposit = () => {
                           </Box>
                         </Grid>
 
+                        <SuspiciousTransaction />
+
                         <Box display="flex" flexDirection="column" gap="s4">
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
+                          <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70">
                             {t['addDepositPaymentRange']}
                           </Text>
-                          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
+                          <Text
+                            fontSize="s3"
+                            fontWeight="Regular"
+                            color="neutralColorLight.Gray-70"
+                          >
                             {`Payment made from ${firstMonth} to ${lastMonth}`}
                           </Text>
                         </Box>
                       </>
                     )}
-
-                  {/* {accountId &&
-                    selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd && (
-                      <>
-                        <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
-                          <FormInput name="voucherId" label="Deposit Slip No" />
-
-                          <FormAmountInput
-                            type="number"
-                            name="amount"
-                            min={0}
-                            label={t['addDepositAmountToBeDeposited']}
-                          />
-                        </Grid>
-
-                        <SuspiciousTransaction />
-
-                        <Box display="flex" flexDirection="column" gap="s4">
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
-                            {t['addDepositTotalAmountAfterDeposit']}
-                          </Text>
-                          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-                            {`${t['rs']} ${amountConverter(
-                              Number(selectedAccount?.balance ?? 0) + Number(totalDeposit)
-                            )}`}
-                          </Text>
-                        </Box>
-                      </>
-                    )} */}
 
                   {accountId &&
                     (selectedAccount?.product?.nature === NatureOfDepositProduct.Current ||
@@ -468,9 +447,10 @@ export const AddDeposit = () => {
                         NatureOfDepositProduct.TermSavingOrFd) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
-                          <FormInput name="voucherId" label="Deposit Slip No" />
+                          <FormInput isRequired name="voucherId" label="Deposit Slip No" />
 
                           <FormAmountInput
+                            isRequired
                             type="number"
                             name="amount"
                             label={t['addDepositAmountToBeDeposited']}
@@ -657,6 +637,12 @@ export const AddDeposit = () => {
                         },
                         subTitle:
                           'Amount deposited successfully. Details of the transaction is listed below.',
+                        meta: {
+                          memberId: result?.memberId,
+                          accountId: result?.accountId,
+                          accountName: result?.accountName,
+                          member: result?.memberName?.local,
+                        },
                       };
                     }}
                     errorCardProps={{

@@ -144,6 +144,7 @@ query getShareDetail($transactionID: ID!) {
           amount
           sourceOfFund
         }
+        transactionCode
         transactionBranch
         teller
         glTransactions {

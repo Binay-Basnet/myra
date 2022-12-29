@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { debounce } from 'lodash';
@@ -19,12 +19,24 @@ const Translation = () => {
 
   const router = useRouter();
   const id = String(router?.query?.id);
+  const isIndividual = router?.query?.type === 'individual';
   // const translatedData = useGetMemberTranslationQuery({ id });
   // const translationDataArray = translatedData?.data?.members?.translate.data;
 
   const { mutateAsync } = useSetOfficialUseMutation();
-  const methods = useForm({});
-  const { watch, reset } = methods;
+  const methods = useForm({
+    defaultValues: {
+      isStaff: false,
+      checkSanction: false,
+      docCollectedAndVerified: false,
+      acceptableAddressDoc: false,
+      checkNegative: false,
+      riskCategory: 'Low Risk',
+    },
+  });
+  const { watch, reset, setValue } = methods;
+
+  const risk = watch('riskCategory');
 
   const booleanList = [
     {
@@ -62,9 +74,11 @@ const Translation = () => {
     const subscription = watch(
       debounce((data) => {
         if (id) {
-          mutateAsync({ ...data, id, riskCategory: riskCategoryOptions[data?.riskCategory] }).then(
-            () => refetch()
-          );
+          mutateAsync({
+            ...data,
+            id,
+            riskCategory: riskCategoryOptions[data?.riskCategory],
+          }).then(() => refetch());
         }
       }, 800)
     );
@@ -72,14 +86,19 @@ const Translation = () => {
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
 
+  useEffect(() => {
+    if (!risk) setValue('riskCategory', 'Low Risk');
+  }, [risk]);
+
   React.useEffect(() => {
     if (editValues) {
       const editValueData = editValues?.members?.officialUse?.record;
       const riskCategory = editValueData?.riskCategory;
 
       const riskOption = riskCategoryReverseOptions[riskCategory] ?? '';
+      if (riskOption === ' ') setValue('riskCategory', 'Low Risk');
 
-      reset({ ...editValueData, riskCategory: riskOption });
+      reset({ ...editValueData, riskCategory: riskOption as string });
     }
   }, [editValues]);
 
@@ -98,38 +117,40 @@ const Translation = () => {
                 </Text>
 
                 <GroupContainer>
-                  <Box>
-                    <FormSwitchTab
-                      label="Is Member a Staff?"
-                      options={booleanList}
-                      name="isStaff"
-                    />
-                  </Box>
-
-                  <FormSwitchTab
-                    label="Name Check In Sanction List"
-                    options={booleanList}
-                    name="checkSanction"
-                  />
-
-                  <Box>
-                    <FormSwitchTab
-                      label="Name Check in Negative List"
-                      options={booleanList}
-                      name="checkNegative"
-                    />
-                  </Box>
-
-                  <Box>
-                    <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.gray-80">
-                      Risk Category
-                    </Text>
-                    <FormRadioGroup
-                      name="riskCategory"
-                      radioList={['Low Risk', 'Medium Risk', 'High Risk', 'PEP Risk']}
-                      labelFontSize="s3"
-                    />
-                  </Box>
+                  {isIndividual && (
+                    <>
+                      {' '}
+                      <Box>
+                        <FormSwitchTab
+                          label="Is Member a Staff?"
+                          options={booleanList}
+                          name="isStaff"
+                        />
+                      </Box>
+                      <FormSwitchTab
+                        label="Name Check In Sanction List"
+                        options={booleanList}
+                        name="checkSanction"
+                      />
+                      <Box>
+                        <FormSwitchTab
+                          label="Name Check in Negative List"
+                          options={booleanList}
+                          name="checkNegative"
+                        />
+                      </Box>
+                      <Box>
+                        <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.gray-80">
+                          Risk Category
+                        </Text>
+                        <FormRadioGroup
+                          name="riskCategory"
+                          radioList={['Low Risk', 'Medium Risk', 'High Risk', 'PEP Risk']}
+                          labelFontSize="s3"
+                        />
+                      </Box>
+                    </>
+                  )}
 
                   <FormSwitchTab
                     label="Above documents collected and verified with original?"

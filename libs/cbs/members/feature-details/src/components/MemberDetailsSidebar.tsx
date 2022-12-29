@@ -47,17 +47,10 @@ export const MemberDetailsSidebar = () => {
 
   return (
     <Box bg="white">
-      <Box
-        borderBottom="1px"
-        borderBottomColor="border.layout"
-        display="flex"
-        flexDirection="column"
-        gap="s16"
-        p="s16"
-      >
+      <Box borderBottom="1px" borderBottomColor="border.layout" display="flex" gap="s12" p="s16">
         <Avatar
-          h="288px"
-          w="288px"
+          h="72px"
+          w="72px"
           borderRadius="br2"
           src={
             memberInfo?.profilePic ??
@@ -76,58 +69,31 @@ export const MemberDetailsSidebar = () => {
               : (memberBasicCooperativeUnion?.memberName as string)
           }
         />
-        <Box display="flex" flexDirection="column" gap="s8">
-          <Box display="flex" alignItems="center" gap="s8">
-            <Text fontSize="l1" fontWeight="600">
-              {memberInfo?.memberName}
-              {memberBasicInstitution?.memberName}
-              {memberBasicCooperative?.memberName}
-              {memberBasicCooperativeUnion?.memberName}
-            </Text>
+        <Box display="flex" flexDirection="column" gap="s4">
+          <Box display="inline-block">
             {memberInfo?.isStaff && (
-              <Chips
-                variant="solid"
-                theme="info"
-                size="md"
-                type="label"
-                label="Staff"
-                minWidth="fit-content"
-              />
+              <Chips variant="outline" theme="info" size="md" type="label" label="Staff" />
             )}
             {memberBasicInstitution && (
-              <Chips
-                variant="solid"
-                theme="info"
-                size="md"
-                type="label"
-                label="Institute"
-                minWidth="fit-content"
-              />
+              <Chips variant="outline" theme="info" size="sm" type="label" label="Institute" />
             )}
             {memberBasicCooperative && (
-              <Chips
-                variant="solid"
-                theme="info"
-                size="md"
-                type="label"
-                label="Coop"
-                minWidth="fit-content"
-              />
+              <Chips variant="outline" theme="info" size="sm" type="label" label="Coop" />
             )}
             {memberBasicCooperativeUnion && (
-              <Chips
-                variant="solid"
-                theme="info"
-                size="md"
-                type="label"
-                label="Coop Union"
-                minWidth="fit-content"
-              />
+              <Chips variant="outline" theme="info" size="sm" type="label" label="Coop Union" />
             )}
           </Box>
+          <Text fontSize="r3" lineHeight="125%" fontWeight="600">
+            {memberInfo?.memberName}
+            {memberBasicInstitution?.memberName}
+            {memberBasicCooperative?.memberName}
+            {memberBasicCooperativeUnion?.memberName}
+          </Text>
+
           {memberInfo?.memberCode && (
             <Box display="flex" alignItems="center" gap="s4">
-              <Text fontSize="r1" fontWeight="600">
+              <Text fontSize="r1" color="primary.500" fontWeight="600">
                 {' '}
                 {memberInfo?.memberCode}
                 {memberBasicInstitution?.memberCode}
@@ -152,7 +118,7 @@ export const MemberDetailsSidebar = () => {
               />
             </Box>
           )}
-          <Text fontSize="r1" fontWeight="600">
+          <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="400">
             {' '}
             Member Since :{' '}
             {memberInfo?.memberJoined?.local ??

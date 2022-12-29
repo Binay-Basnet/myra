@@ -16,6 +16,7 @@ export const LinkedAccounts = () => {
         {t['loanProductLinkedAccounts']}
       </Text>
       <FormAccountSelect
+        isRequired
         name="linkedAccountId"
         label={t['loanProductListofallthesavingaccounts']}
         memberId={memberId as string}

@@ -113,6 +113,12 @@ export const TabMenu = ({ tabs = cbsTabs, routeIndex = 1 }: ITabMenuProps) => {
       background="secondary.700"
       alignItems="center"
       display="flex"
+      overflowX="scroll"
+      sx={{
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+      }}
     >
       <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
         <TabList border="none" height="100%" display="flex" gap="s8">
@@ -146,7 +152,12 @@ export const TabMenu = ({ tabs = cbsTabs, routeIndex = 1 }: ITabMenuProps) => {
                 >
                   <Icon as={icon} size="md" color={isActive ? 'primary.500' : 'primary.300'} />
 
-                  <Text fontSize="r1" lineHeight="0" fontWeight={isActive ? '600' : '500'}>
+                  <Text
+                    fontSize="r1"
+                    w="max-content"
+                    lineHeight="0"
+                    fontWeight={isActive ? '600' : '500'}
+                  >
                     {t[title] ?? title}
                   </Text>
                 </Tab>

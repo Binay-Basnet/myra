@@ -116,7 +116,7 @@ export const COAFullView = () => {
                     <IoChevronDownOutline fontSize="18px" />
                   )}
                 </AccordionButton>
-                <AccordionPanel display="flex" flexDir="column" gap="s16">
+                <AccordionPanel display="flex" flexDir="column" gap="s8">
                   {memberType.name.toLowerCase() === 'equity and liabilities' &&
                     coaLiabilitiesTree.map((account) => (
                       <Tree current={account} data={account.children} />

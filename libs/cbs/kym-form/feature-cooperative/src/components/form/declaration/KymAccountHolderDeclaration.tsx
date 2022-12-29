@@ -2,10 +2,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { GridItem } from '@chakra-ui/react';
 
+import { Box, FormSection } from '@myra-ui';
+
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { FormInput } from '@coop/shared/form';
-import { Box, FormSection } from '@myra-ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -36,6 +37,7 @@ export const KymAccountHolderDeclaration = (props: IProps) => {
             header="kymCoopAccountHolderDeclaration"
           >
             <FormInput
+              isRequired
               type="text"
               name="accountHoldersName"
               label={t['kymCoopAccountHolderName']}

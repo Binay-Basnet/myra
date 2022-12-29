@@ -12,9 +12,8 @@ import {
   useGetSettingsUserListDataQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect, FormSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type DayBookTable = {
@@ -40,7 +39,10 @@ export const DayBookReport = () => {
   const { data, isFetching } = useGetDayBookReportQuery(
     {
       data: {
-        period: filters?.period,
+        period: {
+          from: filters?.period?.from,
+          to: filters?.period?.from,
+        } as LocalizedDateFilter,
         user: filters?.filter?.user ? [filters?.filter?.user as string] : null,
         // date: filters?.date,
         branchId: filters?.branchId as string,
@@ -117,7 +119,7 @@ export const DayBookReport = () => {
             <FormBranchSelect name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange label="Date Period" />
+            <FormDatePicker name="period.from" label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

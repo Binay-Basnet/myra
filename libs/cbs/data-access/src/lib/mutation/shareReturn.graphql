@@ -2,6 +2,38 @@ mutation addShareReturn($data: ShareReturnInput!) {
   share {
     return(data: $data) {
       recordId
+      record {
+        id
+        transactionId
+
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        noOfShare
+        balance
+        shareAmount
+        shareCertificateCharge
+        otherCharge
+        extraFee {
+          name
+          value
+        }
+        totalAmount
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
+        memberId
+        member {
+          code
+          name
+        }
+
+      }
       error {
         ...MutationError
       }

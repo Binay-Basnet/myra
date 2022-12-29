@@ -3,13 +3,14 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
+import { FormSection } from '@myra-ui';
+
 import {
   KymIndMemberInput,
   useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
+import { FormAmountInput } from '@coop/shared/form';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 interface IKYMFinancialTransactionDetailsProps {
@@ -78,26 +79,15 @@ export const KYMFinancialTransactionDetails = ({
           header="kynIndFINANCIALTRANSACTIONDETAILS"
           subHeader="kynIndDetailsoftheamount"
         >
-          <FormInput
-            type="number"
-            name="initialShare"
-            textAlign="right"
-            label={t['kymIndFinancialShare']}
-          />
-          <FormInput
-            type="number"
-            name="initialSaving"
-            label={t['kymIndFinancialSavings']}
-            textAlign="right"
-          />
+          <FormAmountInput name="initialShare" label={t['kymIndFinancialShare']} />
+          <FormAmountInput name="initialSaving" label={t['kymIndFinancialSavings']} />
 
-          <FormInput type="number" name="initialLoan" label={t['kymIndLoan']} textAlign="right" />
+          <FormAmountInput name="initialLoan" label={t['kymIndLoan']} />
 
-          <FormInput
+          <FormAmountInput
             type="number"
             name="otherFinancialAmount"
             label={t['kymIndFinancialOther']}
-            textAlign="right"
           />
         </FormSection>
         {/* {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(

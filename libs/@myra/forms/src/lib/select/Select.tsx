@@ -38,6 +38,7 @@ export const Select = ({
   hasRadioOption,
   placeholder,
   name,
+  isRequired,
   ...rest
 }: SelectProps) => {
   const { t } = useTranslation();
@@ -52,8 +53,9 @@ export const Select = ({
   return (
     <Flex direction="column" gap="s4">
       <Text variant="formLabel" color="gray.700">
-        {label}
+        {isRequired ? `${label} *` : label}
       </Text>
+
       <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
         key={!isMulti ? `my_unique_select_key__${JSON.stringify(value)}` : 'isMulti'}
         id="select"

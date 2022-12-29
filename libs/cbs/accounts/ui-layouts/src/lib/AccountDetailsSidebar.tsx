@@ -1,4 +1,5 @@
 import { IoCopyOutline, IoQrCodeOutline } from 'react-icons/io5';
+import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { AccountQRModal, Box, DetailPageMemberCard, DetailPageTabs, Icon, Text } from '@myra-ui';
@@ -14,6 +15,7 @@ const accountTypes = {
 };
 
 export const AccountDetailsSidebar = () => {
+  const router = useRouter();
   const { accountDetails } = useAccountDetails();
 
   const { onClose: modalOnClose, isOpen, onToggle } = useDisclosure();
@@ -84,6 +86,10 @@ export const AccountDetailsSidebar = () => {
         borderBottomColor="border.layout"
         display="flex"
         flexDirection="column"
+        _hover={{
+          cursor: 'pointer',
+        }}
+        onClick={() => router.push(`/members/details?id=${accountDetails?.member?.id}`)}
       >
         <DetailPageMemberCard
           name={accountDetails?.member?.name?.local as string}

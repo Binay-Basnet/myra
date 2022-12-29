@@ -53,21 +53,24 @@ export const MemberKYMBasicInfo = ({ setKymCurrentSection }: IMemberKYMBasicInfo
         }}
       >
         <FormSection id="kymAccIndBasicInformation" header="kymIndBASICINFORMATION">
-          <FormInput type="text" name="firstName" label={t['kymIndFirstName']} />
+          <FormInput isRequired type="text" name="firstName" label={t['kymIndFirstName']} />
           <FormInput type="text" name="middleName" label={t['kymIndMiddleName']} />
-          <FormInput type="text" name="lastName" label={t['kymIndLastName']} />
+          <FormInput isRequired type="text" name="lastName" label={t['kymIndLastName']} />
           <FormSelect
+            isRequired
             name="genderId"
             label={t['kymIndGender']}
             isLoading={genderLoading}
             options={getFieldOption(genderFields)}
           />
           <FormDatePicker
+            isRequired
             name="dateOfBirth"
             label={t['kymIndDateofBirthBS']}
             maxDate={new Date()}
           />
           <FormSelect
+            isRequired
             name="ethnicityId"
             label={t['kymIndEthnicity']}
             isLoading={ethnicityLoading}
@@ -83,12 +86,14 @@ export const MemberKYMBasicInfo = ({ setKymCurrentSection }: IMemberKYMBasicInfo
           />
 
           <FormSelect
+            isRequired
             name="educationQualificationId"
             label={t['kymIndEducationalQualification']}
             isLoading={educationLoading}
             options={getFieldOption(educationFields)}
           />
           <FormSelect
+            isRequired
             name="religionId"
             label={t['kymIndReligion']}
             isLoading={religionLoading}

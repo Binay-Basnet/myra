@@ -14,11 +14,13 @@ export const AmountLimit = () => {
   return (
     <FormSection header="loanProductLoanAmountLimit">
       <FormAmountInput
+        isRequired
         type="number"
         name="minimumLoanAmount"
         label={t['loanProductMinimumAmount']}
       />
       <FormAmountInput
+        isRequired
         type="number"
         name="maxLoanAmount"
         label={t['loanProductMaximumAmount']}

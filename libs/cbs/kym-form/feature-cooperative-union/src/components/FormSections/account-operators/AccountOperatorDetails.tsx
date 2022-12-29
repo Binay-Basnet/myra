@@ -126,12 +126,14 @@ const AddDirector = ({
                   <Box display="flex" flexDirection="column" gap="s16">
                     <InputGroupContainer>
                       <FormInput
+                        isRequired
                         type="text"
                         name="fullName"
                         id="accountOperator.fullName"
                         label={t['kymCoopUnionOpFullName']}
                       />
                       <FormInput
+                        isRequired
                         type="text"
                         name="designationEn"
                         id="accountOperator.designationEn"
@@ -190,18 +192,21 @@ const AddDirector = ({
                       label={t['kymCoopUnionOpHighestQualification']}
                     />
                     <FormInput
+                      isRequired
                       type="number"
                       name="mobileNumber"
                       id="accountOperator.mobileNumber"
                       label={t['kymCoopUnionOpMobileNo']}
                     />
                     <FormInput
+                      isRequired
                       type="text"
                       name="email"
                       id="accountOperator.email"
                       label={t['kymCoopUnionOpEmail']}
                     />
                     <FormInput
+                      isRequired
                       type="string"
                       name="citizenshipNo"
                       id="accountOperator.citizenshipNo"
@@ -209,6 +214,7 @@ const AddDirector = ({
                     />
 
                     <FormInput
+                      isRequired
                       type="string"
                       name="panNo"
                       id="centralRepresentative.panNo"

@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { Skeleton } from '@chakra-ui/react';
-import { FormSection } from '@myra-ui';
 import debounce from 'lodash/debounce';
+
+import { FormSection } from '@myra-ui';
 
 import {
   FormFieldSearchTerm,
@@ -75,7 +76,7 @@ export const MemberKYMProfession = ({ setKymCurrentSection }: IMemberKYMProfessi
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection header="kymIndPROFESSION" flexLayout>
+        <FormSection isRequired header="kymIndPROFESSION" flexLayout>
           {occupationLoading ? (
             <Skeleton height="40px" />
           ) : (

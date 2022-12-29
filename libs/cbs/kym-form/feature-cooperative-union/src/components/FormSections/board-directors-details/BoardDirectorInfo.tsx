@@ -6,6 +6,18 @@ import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import {
+  Box,
+  Button,
+  Collapse,
+  FormSection,
+  Grid,
+  GridItem,
+  Icon,
+  IconButton,
+  Text,
+} from '@myra-ui';
+
+import {
   CoopUnionPersonnelInput,
   RootState,
   useAppSelector,
@@ -26,17 +38,6 @@ import {
   FormInput,
   FormSwitch,
 } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Collapse,
-  FormSection,
-  Grid,
-  GridItem,
-  Icon,
-  IconButton,
-  Text,
-} from '@myra-ui';
 import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { BoardOfDirectorRelatedTraining } from './TrainingRelatedToCooperatives';
@@ -125,12 +126,14 @@ const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDire
                   <Box display="flex" flexDirection="column" gap="s16">
                     <FormSection>
                       <FormInput
+                        isRequired
                         type="text"
                         name="fullName"
                         id="boardOfDirectors.fullName"
                         label={t['kymCoopUnionFullName']}
                       />
                       <FormInput
+                        isRequired
                         type="text"
                         name="designationEn"
                         id="boardOfDirectors.designationEn"
@@ -176,12 +179,14 @@ const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDire
                         label={t['kymCoopUnionHighestQualification']}
                       />
                       <FormInput
+                        isRequired
                         type="number"
                         name="mobileNumber"
                         id="boardOfDirectors.mobileNumber"
                         label={t['kymCoopUnionMobileNo']}
                       />
                       <FormEmailInput
+                        isRequired
                         type="text"
                         name="email"
                         id="boardOfDirectors.email"

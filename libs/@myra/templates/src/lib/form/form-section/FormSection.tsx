@@ -11,6 +11,7 @@ export interface FormSectionProps {
   subHeader?: string;
   flexLayout?: boolean;
   divider?: boolean;
+  isRequired?: boolean;
   templateColumns?: number;
   children?: React.ReactNode;
 }
@@ -20,6 +21,7 @@ export const FormSection = ({
   header,
   subHeader,
   flexLayout,
+  isRequired,
   divider = true,
   templateColumns,
   children,
@@ -35,7 +37,7 @@ export const FormSection = ({
       {header && (
         <Box p="s20" pb={0}>
           <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-            {t[header] ?? header}
+            {isRequired ? `${t[header]} *` ?? `${header} *` : t[header] ?? header}
           </Text>
         </Box>
       )}

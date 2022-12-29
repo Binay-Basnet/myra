@@ -218,20 +218,26 @@ export const AddUser = () => {
                 <FormSwitch name="isCoreEmployee" label="This user is a core employee" />
               </Box>
               <FormSection header="settingsUserAddUserBasicInformation" templateColumns={2}>
-                <FormInput type="text" name="name" label="Name" />
+                <FormInput isRequired type="text" name="name" label="Name" />
                 <FormInput type="text" name="empCode" label="Employee Code" />
 
-                <FormSelect name="gender" label="Gender" options={genderOptions} />
+                <FormSelect isRequired name="gender" label="Gender" options={genderOptions} />
 
                 {/* <FormInput type="date" name="dob" label="Date of Birth (BS)" /> */}
 
-                <FormDatePicker name="dob" label="Date of Birth" />
+                <FormDatePicker isRequired name="dob" label="Date of Birth" />
 
-                <FormPhoneNumber name="contactNo" label="Mobile No" />
+                <FormPhoneNumber isRequired name="contactNo" label="Mobile No" />
 
-                <FormEmailInput name="email" label="Email" />
+                <FormEmailInput isRequired name="email" label="Email" />
 
-                <FormSelect name="role" label="Role" options={roleOptions} isDisabled={isEdit} />
+                <FormSelect
+                  isRequired
+                  name="role"
+                  label="Role"
+                  options={roleOptions}
+                  isDisabled={isEdit}
+                />
 
                 <FormBranchSelect
                   name="branch"

@@ -17,9 +17,12 @@ mutation login($data: LoginInput!) {
             lastName
             role
             profilePic
+            userBalance
             branch {
               id
               name
+              category
+              branchBalance
             }
             organization {
               basicDetails {

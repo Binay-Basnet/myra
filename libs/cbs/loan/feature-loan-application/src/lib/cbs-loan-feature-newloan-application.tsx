@@ -17,6 +17,7 @@ import {
 
 import {
   LoanAccountInput,
+  LoanRepaymentScheme,
   NatureOfDepositProduct,
   useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
@@ -64,6 +65,9 @@ export const NewLoanApplication = () => {
 
   const methods = useForm<LoanAccountInput>({
     mode: 'onChange',
+    defaultValues: {
+      repaymentScheme: LoanRepaymentScheme.Epi,
+    },
   });
   const { watch, resetField, setValue } = methods;
 
@@ -264,7 +268,12 @@ export const NewLoanApplication = () => {
             <form>
               <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
                 <Box display="flex" flexDir="column" gap="s16">
-                  <FormMemberSelect name="memberId" label="Member Id" isDisabled={!!id} />
+                  <FormMemberSelect
+                    isRequired
+                    name="memberId"
+                    label="Member Id"
+                    isDisabled={!!id}
+                  />
                   {memberId && !loanLinkedData && !isLinkAccDataFetching && (
                     <Alert status="error"> Member does not have a Saving Account </Alert>
                   )}
@@ -332,6 +341,7 @@ export const NewLoanApplication = () => {
                       <FormInput name="loanAccountName" label="Loan Account Name" />
                       <Box w="50%">
                         <FormAmountInput
+                          isRequired
                           type="number"
                           name="appliedLoanAmount"
                           label="Applied Loan Amount"

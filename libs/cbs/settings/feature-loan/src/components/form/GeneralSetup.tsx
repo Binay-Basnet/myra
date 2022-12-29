@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { FormSection, GridItem } from '@myra-ui';
+
 import {
   NatureOfLoanProduct,
   useGetLoanProductSettingsQuery,
   useGetLoanProductSubTypeQuery,
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const GeneralSetup = () => {
@@ -59,12 +60,18 @@ export const GeneralSetup = () => {
   return (
     <FormSection header="loanProductGeneralSetup">
       <GridItem colSpan={2}>
-        <FormInput name="productName" label={t['loanProductProductName']} />
+        <FormInput isRequired name="productName" label={t['loanProductProductName']} />
       </GridItem>
 
-      <FormSelect name="productType" options={productTypes} label={t['loanProductProductType']} />
+      <FormSelect
+        isRequired
+        name="productType"
+        options={productTypes}
+        label={t['loanProductProductType']}
+      />
       <GridItem colSpan={2}>
         <FormSelect
+          isRequired
           name="productSubType"
           options={productSubTypes}
           label={t['loanProductProductSubtype']}
@@ -72,6 +79,7 @@ export const GeneralSetup = () => {
       </GridItem>
 
       <FormSelect
+        isRequired
         name="productNature"
         options={productNature}
         label={t['loanProductNatureLoanProduct']}

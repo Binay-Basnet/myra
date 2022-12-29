@@ -46,13 +46,5 @@ export const ReportTableComponent = ({ data }: ILoanPaymentScheduleTableProps) =
     []
   );
 
-  return (
-    <Table<typeof data[0]>
-      size="report"
-      isDetailPageTable
-      isStatic
-      data={data ?? []}
-      columns={columns}
-    />
-  );
+  return <Table<typeof data[0]> isDetailPageTable isStatic data={data ?? []} columns={columns} />;
 };

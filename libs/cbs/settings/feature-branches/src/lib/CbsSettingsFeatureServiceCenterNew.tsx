@@ -21,13 +21,11 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const { t } = useTranslation();
 
-  const methods = useForm<BranchInput>({});
+  const methods = useForm<BranchInput>({ defaultValues: { abbsStatus: true } });
 
   const { getValues, watch, reset, setError, clearErrors } = methods;
 
-  const id = String(router?.query?.['id']);
-
-  const abbsStatus = watch('abbsStatus');
+  const id = router?.query?.['id'];
 
   const { data } = useAllAdministrationQuery();
 
@@ -112,7 +110,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
       id: 'settings-save-service-center',
       msgs: { loading: 'Saving service center', success: 'Service center saved' },
       promise: setBranchData({
-        id,
+        id: id as string,
         data: getValues(),
       }),
       onSuccess: () => router.push('/settings/general/service-center'),
@@ -129,9 +127,14 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
     });
   };
 
-  const { data: editValues, refetch } = useGetBranchEditDataQuery({
-    id,
-  });
+  const { data: editValues } = useGetBranchEditDataQuery(
+    {
+      id: id as string,
+    },
+    {
+      enabled: !!id && router?.asPath?.includes('edit'),
+    }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -142,13 +145,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
         });
       }
     }
-  }, [editValues, id]);
-
-  useEffect(() => {
-    if (id) {
-      refetch();
-    }
-  }, [refetch]);
+  }, [editValues]);
 
   return (
     <>
@@ -166,27 +163,34 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                     <Box>
                       <InputGroupContainer>
                         <GridItem colSpan={2}>
-                          <FormInput name="name" label={t['serviceCenterFormName']} />
+                          <FormInput isRequired name="name" label={t['serviceCenterFormName']} />
                         </GridItem>
-                        <FormInput name="branchCode" label={t['serviceCenterCode']} />
+                        <FormInput isRequired name="branchCode" label={t['serviceCenterCode']} />
                       </InputGroupContainer>
 
                       <InputGroupContainer mt="s16">
                         <FormInput
+                          isRequired
                           type="text"
                           name="managerName"
                           label={t['serviceCenterManager']}
                         />
                         <FormSelect
+                          isRequired
                           label={t['serviceCenterCategory']}
                           name="category"
                           options={branchCategories}
                         />
-                        <FormDatePicker label={t['settingsBranchEstablishedDate']} name="estDate" />
+                        <FormDatePicker
+                          isRequired
+                          label={t['settingsBranchEstablishedDate']}
+                          name="estDate"
+                        />
                       </InputGroupContainer>
 
                       <InputGroupContainer mt="s16">
                         <FormInput
+                          isRequired
                           type="text"
                           name="serviceCenterPhone"
                           label={t['serviceCenterServiceCenterContactNumber']}
@@ -243,8 +247,12 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                         {t['serviceCenterManager']}
                       </Text>
                       <InputGroupContainer>
-                        <FormInput name="phoneNumber" label={t['settingsBranchPhoneNumber']} />
-                        <FormInput name="email" label={t['settingsBranchEmail']} />
+                        <FormInput
+                          isRequired
+                          name="phoneNumber"
+                          label={t['settingsBranchPhoneNumber']}
+                        />
+                        <FormInput isRequired name="email" label={t['settingsBranchEmail']} />
                       </InputGroupContainer>
                     </Box>
 
@@ -259,7 +267,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                         name="abbsStatus"
                       />
 
-                      {abbsStatus && (
+                      {/* {abbsStatus && (
                         <Box p="s16" border="1px solid" borderColor="border.layout">
                           <InputGroupContainer>
                             <FormSelect
@@ -274,7 +282,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                             />
                           </InputGroupContainer>
                         </Box>
-                      )}
+                      )} */}
                     </Box>
 
                     <Box>

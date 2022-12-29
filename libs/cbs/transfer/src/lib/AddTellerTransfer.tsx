@@ -3,7 +3,16 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader, Grid, Text } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Container,
+  FormFooter,
+  FormHeader,
+  FormSection,
+  GridItem,
+  Text,
+} from '@myra-ui';
 
 import {
   CashValue,
@@ -12,9 +21,10 @@ import {
   useAppSelector,
   useSetTellerTransferDataMutation,
 } from '@coop/cbs/data-access';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormAmountInput, FormEditableTable, FormInput, FormTellerSelect } from '@coop/shared/form';
 import { featureCode, useTranslation } from '@coop/shared/utils';
+
+import { BalanceCard } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddTellerTransferProps {}
@@ -125,28 +135,24 @@ export const AddTellerTransfer = () => {
         <Box bg="white">
           <FormProvider {...methods}>
             <form>
-              <Box minH="calc(100vh - 170px)">
-                <Box
-                  p="s20"
-                  pb="100px"
-                  width="100%"
-                  display="flex"
-                  flexDirection="column"
-                  gap="s20"
-                  borderRight="1px"
-                  borderColor="border.layout"
-                >
-                  <Grid templateColumns="repeat(2, 1fr)" gap="s20" alignItems="flex-end">
-                    <FormInput name="srcTellerID" label="Sender" isDisabled />
+              <Box minH="calc(100vh - 170px)" pb="s60">
+                <FormSection templateColumns={2}>
+                  <FormInput name="srcTellerID" label="Sender" isDisabled />
 
-                    <FormTellerSelect name="destTellerID" label="Receiver" />
-                  </Grid>
+                  <FormTellerSelect isRequired name="destTellerID" label="Receiver" />
+                </FormSection>
 
-                  <Box display="flex" flexDirection="column" gap="s16" py="s20">
-                    <InputGroupContainer>
-                      <FormAmountInput name="amount" label="Cash Amount" />
-                    </InputGroupContainer>
+                <FormSection templateColumns={3} divider={false}>
+                  <GridItem colSpan={3}>
+                    <BalanceCard
+                      label="Sender Teller Available Cash"
+                      balance={user?.userBalance ?? '0'}
+                    />
+                  </GridItem>
 
+                  <FormAmountInput isRequired name="amount" label="Cash Amount" />
+
+                  <GridItem colSpan={3} display="flex" flexDirection="column" gap="s4">
                     <FormEditableTable<PaymentTableType>
                       name="denominations"
                       columns={[
@@ -205,8 +211,8 @@ export const AddTellerTransfer = () => {
                         </Text>
                       </Box>
                     </Box>
-                  </Box>
-                </Box>
+                  </GridItem>
+                </FormSection>
               </Box>
             </form>
           </FormProvider>

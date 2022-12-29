@@ -404,7 +404,7 @@ export const CbsAccountClose = () => {
                 borderRight="1px solid"
                 borderColor="border.layout"
               >
-                <FormMemberSelect name="memberID" label="Member" />
+                <FormMemberSelect isRequired name="memberID" label="Member" />
 
                 {memberId && memberId !== 'undefined' && (
                   <FormAccountSelect
@@ -419,7 +419,7 @@ export const CbsAccountClose = () => {
                     <Divider />
                     <Box display="flex" flexDirection="column" gap="s4" pt="s16">
                       <Text fontSize="s3" fontWeight="600">
-                        Reason for closing
+                        Reason for closing *
                       </Text>
                       <Box display="flex" flexDirection="column" gap="s16">
                         <FormRadioGroup

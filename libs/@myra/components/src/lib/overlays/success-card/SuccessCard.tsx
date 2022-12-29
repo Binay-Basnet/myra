@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
 import { AiOutlinePlus, AiOutlinePrinter } from 'react-icons/ai';
 import ReactToPrint from 'react-to-print';
+import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 
-import { Avatar, Box, Button, Icon, Text } from '@myra-ui/foundations';
+import { Avatar, Box, Button, Divider, Icon, Text } from '@myra-ui/foundations';
 
 import { useAppSelector } from '@coop/cbs/data-access';
 import { formatAddress } from '@coop/cbs/utils';
@@ -15,6 +16,14 @@ export interface SuccessCardProps {
   total?: string;
   type: string;
   completeHandler?: () => void;
+  newOpenHandler?: () => void;
+  closeModal?: () => void;
+  meta?: {
+    member?: string | null;
+    memberId?: string | null;
+    accountName?: string | null;
+    accountId?: string | null;
+  };
 }
 
 export const SuccessCard = ({
@@ -24,7 +33,11 @@ export const SuccessCard = ({
   total,
   type,
   completeHandler,
+  newOpenHandler,
+  closeModal,
+  meta,
 }: SuccessCardProps) => {
+  const router = useRouter();
   const componentRef = useRef<HTMLInputElement | null>(null);
 
   return (
@@ -95,14 +108,31 @@ export const SuccessCard = ({
         />
 
         <Box display="flex" gap="s8">
-          <Button variant="outline" leftIcon={<Icon as={AiOutlinePlus} />}>
+          <Button
+            // TODO! WIP STATE
+            display="none"
+            variant="outline"
+            isDisabled
+            leftIcon={<Icon as={AiOutlinePlus} />}
+            onClick={() => {
+              if (newOpenHandler) {
+                newOpenHandler();
+              } else {
+                router.push(router.asPath).then(() => {
+                  if (closeModal) {
+                    closeModal();
+                  }
+                });
+              }
+            }}
+          >
             New {type}
           </Button>
           <Button onClick={completeHandler}>Done</Button>
         </Box>
       </Box>
 
-      <SuccessPrint total={total as string} details={details} ref={componentRef} />
+      <SuccessPrint meta={meta} total={total as string} details={details} ref={componentRef} />
     </Box>
   );
 };
@@ -121,12 +151,18 @@ const SuccessCheckmark = () => (
 );
 
 interface SuccessPrintProps {
+  meta?: {
+    member?: string | null;
+    memberId?: string | null;
+    accountName?: string | null;
+    accountId?: string | null;
+  };
   details: Record<string, React.ReactNode>;
   total: string;
 }
 
 const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
-  ({ details, total }, ref) => {
+  ({ details, total, meta }, ref) => {
     const user = useAppSelector((state) => state.auth.user);
 
     return (
@@ -136,20 +172,25 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
         bg="white"
         p="s32"
         flexDir="column"
-        gap="s32"
+        gap="s8"
         sx={{
           '@media print': {
             display: 'flex',
           },
+          '@page': {
+            size: 'A4 portrait',
+            margin: '0.2in',
+            marginLeft: '0.4in',
+          },
         }}
       >
-        <Box>
-          <Box px="s16" py="s16" display="flex" alignItems="center" justifyContent="space-between">
-            <Box display="flex" alignItems="center" gap="s16">
-              <Box position="relative" w="s60" h="s60">
+        <Box w="100%">
+          <Box display="flex" alignItems="center" justifyContent="space-between">
+            <Box display="flex" alignItems="flex-start" gap="s8">
+              <Box position="relative">
                 <Avatar
-                  w="s60"
-                  h="s60"
+                  w="s40"
+                  h="s40"
                   name={user?.organization?.basicDetails?.name as string}
                   src={user?.organization?.basicDetails?.logo as string}
                 />
@@ -159,7 +200,7 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
                 <Text fontSize="r2" fontWeight="500" color="gray.800" lineHeight="0.8">
                   {user?.organization?.basicDetails?.name}
                 </Text>
-                <Text fontSize="s1" fontWeight="400" color="gray.700">
+                <Text fontSize="s2" fontWeight="400" color="gray.700">
                   Contact: {user?.organization?.contactDetails?.phoneNumber} | Email:{' '}
                   {user?.organization?.contactDetails?.email ?? 'N/A'} | Website:{' '}
                   {user?.organization?.contactDetails?.website ?? 'N/A'}
@@ -168,49 +209,73 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
             </Box>
             <Box>
               <Box display="flex" gap="s4">
-                <Text fontSize="s1" color="gray.700">
+                <Text fontSize="s2" color="gray.700">
                   Address:
                 </Text>
-                <Text fontSize="s1" color="gray.700" fontWeight="500" whiteSpace="nowrap">
+                <Text fontSize="s2" color="gray.700" fontWeight="500" whiteSpace="nowrap">
                   {formatAddress(user?.organization?.address)}
                 </Text>
               </Box>
 
               <Box display="flex" gap="s4">
-                <Text fontSize="s1" color="gray.700">
+                <Text fontSize="s2" color="gray.700">
                   Regd No:
                 </Text>
-                <Text fontSize="s1" color="gray.700" fontWeight="500">
+                <Text fontSize="s2" color="gray.700" fontWeight="500">
                   {user?.organization?.registrationDetails?.regdNo ?? 'N/A'}
                 </Text>
               </Box>
 
               <Box display="flex" gap="s4">
-                <Text fontSize="s1" color="gray.700">
+                <Text fontSize="s2" color="gray.700">
                   Pan:
                 </Text>
-                <Text fontSize="s1" color="gray.700" fontWeight="500">
+                <Text fontSize="s2" color="gray.700" fontWeight="500">
                   {user?.organization?.registrationDetails?.panOrVat ?? 'N/A'}
                 </Text>
               </Box>
+              <Text fontSize="s2" color="gray.700" as="span">
+                Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
+              </Text>
             </Box>
-          </Box>
-
-          <Box
-            w="100%"
-            textAlign="right"
-            gap="s4"
-            py="s16"
-            borderBottom="2px"
-            borderBottomColor="#000"
-          >
-            <Text fontSize="s1" color="gray.700" as="span">
-              Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
-            </Text>
           </Box>
         </Box>
 
-        <Box bg="highlight.500" display="flex" flexDir="column" py="s8" px="s16">
+        <Divider />
+        <Box
+          w="100%"
+          display="grid"
+          gridTemplateColumns="repeat(2, 1fr)"
+          rowGap="s4"
+          columnGap="s8"
+          pb="s24"
+        >
+          {meta?.member && (
+            <Text fontSize="s2" fontWeight="400" color="gray.700">
+              Member: {meta?.member}
+            </Text>
+          )}
+
+          {meta?.memberId && (
+            <Text fontSize="s2" fontWeight="400" color="gray.700">
+              Member Code: {meta?.memberId}
+            </Text>
+          )}
+
+          {meta?.accountName && (
+            <Text fontSize="s2" fontWeight="400" color="gray.700">
+              Account Name: {meta?.accountName}
+            </Text>
+          )}
+
+          {meta?.accountId && (
+            <Text fontSize="s2" fontWeight="400" color="gray.700">
+              Account Id: {meta?.accountId}
+            </Text>
+          )}
+        </Box>
+
+        <Box w="100%" bg="highlight.500" display="flex" flexDir="column" py="s8" px="s16">
           <Box
             borderBottom={total ? '1px' : 'none'}
             borderBottomColor="border.layout"
@@ -221,13 +286,16 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
           >
             {Object.entries(details).map((detail) => (
               <Box display="flex" alignItems="center" justifyContent="space-between">
-                <Box color="gray.600" fontSize="s3" fontWeight="500">
+                <Box color="gray.600" fontSize="s2" fontWeight="500">
                   {detail[0]}
                 </Box>
-
-                <Box color="gray.700" fontSize="s3" fontWeight="600" textTransform="capitalize">
-                  {detail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
-                </Box>
+                {typeof detail[1] === 'string' ? (
+                  <Box color="gray.700" fontSize="s3" fontWeight="600" textTransform="capitalize">
+                    {detail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
+                  </Box>
+                ) : (
+                  detail[1]
+                )}
               </Box>
             ))}
           </Box>

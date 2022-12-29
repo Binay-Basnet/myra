@@ -44,19 +44,19 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
   ),
   Option: ({ data, ...props }) => (
     <chakraComponents.Option data={data} {...props}>
-      <Box display="flex" justifyContent="space-between" p="s12" width="100%" gap="s16">
+      <Box display="flex" justifyContent="space-between" width="100%" gap="s16">
         <Box display="flex" flexDirection="column" gap="s8">
-          <Box display="flex" flexDirection="column" gap="s4">
+          <Box display="flex" flexDirection="column" gap="s2">
             <Box display="flex" flexDirection="column">
               <Text fontSize="r1" fontWeight={600} color="primary.500">
                 {data.accountInfo.accountName}
               </Text>
-              <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-50">
+              <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
                 {data.accountInfo.accountId}
               </Text>
             </Box>
 
-            <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
+            <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
               {data.accountInfo.productName}
             </Text>
           </Box>
@@ -67,12 +67,12 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
         </Box>
 
         <Box display="flex" flexDirection="column" gap="s4" alignItems="flex-end">
-          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
+          <Text fontSize="s3" fontWeight={600} color="primary.500">
             {amountConverter(data.accountInfo.balance)}
           </Text>
 
           {data.accountInfo.fine !== '0' && (
-            <Text fontSize="s3" fontWeight={500} color="danger.500">
+            <Text fontSize="s3" fontWeight={600} color="danger.500">
               Fine: {amountConverter(data.accountInfo.fine || 0)}
             </Text>
           )}

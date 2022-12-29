@@ -1,9 +1,10 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import { OrganizationClientInput, useAddNewClientMutation } from '@coop/neosys-admin/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { NeosysClientForm } from '../form/NeosysClientForm';
@@ -88,6 +89,15 @@ export const NeosysFeatureClientsAdd = () => {
                   organizationLogo: formValues.organizationLogo[0],
                 },
               }),
+              onError: (error) => {
+                if (error.__typename === 'ValidationError') {
+                  Object.keys(error.validationErrorMsg).map((key) =>
+                    methods.setError(key as keyof OrganizationClientInput, {
+                      message: error.validationErrorMsg[key][0] as string,
+                    })
+                  );
+                }
+              },
             });
           }}
         />

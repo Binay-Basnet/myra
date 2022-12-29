@@ -128,7 +128,7 @@ export const NationalID = ({ setKymCurrentSection }: INationalIDProps) => {
           }}
         >
           <FormSection>
-            <FormInput type="text" name="idNo" label={t['kymIndNationalIDNo']} />
+            <FormInput isRequired type="text" name="idNo" label={t['kymIndNationalIDNo']} />
           </FormSection>
         </form>
       </FormProvider>

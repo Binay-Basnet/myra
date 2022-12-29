@@ -14,6 +14,7 @@ interface IFormDatePickerProps<T> extends InputProps {
   maxDate?: Date;
   minDate?: Date;
   maxToday?: boolean;
+  isRequired?: boolean;
 }
 
 export const FormDatePicker = <T,>({
@@ -22,6 +23,7 @@ export const FormDatePicker = <T,>({
   maxDate,
   minDate,
   maxToday,
+  isRequired,
   ...rest
 }: IFormDatePickerProps<T>) => {
   const router = useRouter();
@@ -56,6 +58,7 @@ export const FormDatePicker = <T,>({
               }
             }}
             value={value ? { ad: value.en } : undefined}
+            isRequired={isRequired}
             isInvalid={!!errors[name]?.message}
             calendarType={preference?.date || 'AD'}
             // value={value ? (preference?.date === 'AD' ? { ad: value } : { bs: value }) : undefined}

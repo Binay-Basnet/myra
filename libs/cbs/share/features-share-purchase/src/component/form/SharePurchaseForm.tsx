@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { IoChevronBackOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
-  asyncToast,
   Box,
+  Button,
   Container,
+  FormFooter,
   FormHeader,
   FormSection,
   Grid,
   GridItem,
+  ResponseDialog,
   ShareMemberCard,
+  Text,
 } from '@myra-ui';
 
 import {
@@ -26,11 +30,16 @@ import {
   useGetSettingsShareGeneralDataQuery,
   useGetShareChargesQuery,
 } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormMemberSelect } from '@coop/shared/form';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  quantityConverter,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
-import { SharePaymentFooter } from './SharePaymentFooter';
 import { SharePurchaseInfo } from './SharePurchaseInfo';
 import { SharePurchasePayment } from './SharePurchasePayment';
 
@@ -95,6 +104,8 @@ export const SharePurchaseForm = () => {
   const paymentModes = watch('paymentMode');
   const disableDenomination = watch('cash.disableDenomination');
   const bankSelected = watch('bankVoucher.bankId');
+  const accountSelected = watch('account.accountId');
+  const bankVoucherDateSelected = watch('bankVoucher.depositedDate');
 
   const { data: chargesData, isLoading } = useGetShareChargesQuery(
     {
@@ -128,20 +139,22 @@ export const SharePurchaseForm = () => {
 
   const previousButtonHandler = () => setMode('shareInfo');
 
-  // const disableSubmitButtonFxn = () => {
-  //   if (paymentModes === SharePaymentMode.Cash && !disableDenomination) {
-  //     return !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount));
-  //   }
-  //   if (SharePaymentMode.BankVoucherOrCheque && bankSelected === undefined) {
-  //     return true;
-  //   }
-  //   if (paymentModes === SharePaymentMode.Account && accountSelected === undefined) {
-  //     return true;
-  //   }
-  //   return false;
-  // };
-
-  // console.log('test', disableSubmitButtonFxn);
+  const disableSubmitButtonFxn = (paymentMode: SharePaymentMode) => {
+    if (paymentMode === SharePaymentMode.Cash && !disableDenomination) {
+      return !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount));
+    }
+    if (
+      (paymentModes === SharePaymentMode.BankVoucherOrCheque && bankSelected === undefined) ||
+      (paymentModes === SharePaymentMode.BankVoucherOrCheque &&
+        bankVoucherDateSelected === undefined)
+    ) {
+      return true;
+    }
+    if (paymentMode === SharePaymentMode.Account && accountSelected === undefined) {
+      return true;
+    }
+    return false;
+  };
 
   const handleSubmit = () => {
     const values = getValues();
@@ -192,22 +205,24 @@ export const SharePurchaseForm = () => {
       updatedValues = omit({ ...updatedValues }, ['bankVoucher', 'cash']);
     }
 
-    asyncToast({
-      id: 'share-purchase-id',
-      msgs: {
-        success: 'Share Purchased',
-        loading: 'Purchasing Share',
-      },
-      onSuccess: () => {
-        if (redirectPath) {
-          queryClient.invalidateQueries(['getMemberCheck']);
-          router.push(String(redirectPath));
-        } else {
-          router.push('/share/register');
-        }
-      },
-      promise: mutateAsync({ data: updatedValues }),
-    });
+    // asyncToast({
+    //   id: 'share-purchase-id',
+    //   msgs: {
+    //     success: 'Share Purchased',
+    //     loading: 'Purchasing Share',
+    //   },
+    //   onSuccess: () => {
+    //     if (redirectPath) {
+    //       queryClient.invalidateQueries(['getMemberCheck']);
+    //       router.push(String(redirectPath));
+    //     } else {
+    //       router.push('/share/register');
+    //     }
+    //   },
+    //   promise: mutateAsync({ data: updatedValues }),
+    // });
+
+    return updatedValues as SharePurchaseInput;
   };
 
   useEffect(() => {
@@ -315,16 +330,77 @@ export const SharePurchaseForm = () => {
               />
             )}
             {mode === 'sharePayment' && (
-              <SharePaymentFooter
-                previousButtonHandler={previousButtonHandler}
-                handleSubmit={handleSubmit}
-                // isDisabled={disableSubmitButtonFxn()}
-                isDisabled={
-                  paymentModes === SharePaymentMode.Cash && !disableDenomination
-                    ? !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount))
-                    : paymentModes === SharePaymentMode.BankVoucherOrCheque &&
-                      bankSelected === undefined
+              // <SharePaymentFooter
+              //   previousButtonHandler={previousButtonHandler}
+              //   handleSubmit={handleSubmit}
+              //   isDisabled={disableSubmitButtonFxn(paymentModes)}
+              // />
+              <FormFooter
+                mainButton={
+                  <ResponseDialog
+                    onSuccess={() => {
+                      if (redirectPath) {
+                        queryClient.invalidateQueries(['getMemberCheck']);
+                        router.push(String(redirectPath));
+                      } else {
+                        router.push('/share/register');
+                      }
+                    }}
+                    promise={() => mutateAsync({ data: handleSubmit() })}
+                    successCardProps={(response) => {
+                      const result = response?.share?.purchase?.record;
+                      const sum = result?.extraFee?.reduce((a, b) => a + Number(b?.value ?? 0), 0);
+                      const totalAmountShare = Number(sum ?? 0) + Number(result?.shareAmount ?? 0);
+                      const temp: Record<string, string> = {};
+
+                      result?.extraFee?.forEach((fee) => {
+                        if (fee?.name && fee?.value) {
+                          temp[String(fee.name)] = String(fee.value);
+                        }
+                      });
+                      return {
+                        type: 'Share Issue',
+                        total: amountConverter(totalAmountShare || 0) as string,
+                        title: 'Share Issue Successful',
+                        details: {
+                          'Transaction Id': (
+                            <Text fontSize="s3" color="primary.500" fontWeight="600">
+                              {result?.transactionId}
+                            </Text>
+                          ),
+                          Date: localizedDate(result?.transactionDate),
+                          'No of Shares ': quantityConverter(result?.noOfShare || 0),
+                          'Share Amount': amountConverter(result?.shareAmount || 0) as string,
+
+                          'Payment Mode': result?.paymentMode,
+                          ...temp,
+                        },
+                        subTitle:
+                          'Share issued successfully. Details of the transaction is listed below.',
+                        meta: {
+                          memberId: result?.member?.code,
+                          member: result?.member?.name?.local,
+                        },
+                      };
+                    }}
+                    errorCardProps={{
+                      title: 'Share Issue Failed',
+                    }}
+                  >
+                    <Button width="160px">{t['shareConfirmPayment']}</Button>
+                  </ResponseDialog>
                 }
+                status={
+                  <Button
+                    variant="outline"
+                    leftIcon={<IoChevronBackOutline />}
+                    onClick={previousButtonHandler}
+                  >
+                    {t['previous']}
+                  </Button>
+                }
+                mainButtonHandler={handleSubmit}
+                isMainButtonDisabled={disableSubmitButtonFxn(paymentModes)}
               />
             )}
           </Container>

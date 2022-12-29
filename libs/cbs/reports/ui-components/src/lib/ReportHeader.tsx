@@ -1,7 +1,9 @@
 import { Fragment, useState } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
+import { AiOutlinePrinter } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
 import { IoChevronForward, IoSaveOutline } from 'react-icons/io5';
+import ReactToPrint from 'react-to-print';
 import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -13,6 +15,8 @@ import {
   useGetNewIdMutation,
   useSaveNewReportMutation,
 } from '@coop/cbs/data-access';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { useReport } from '@coop/cbs/reports';
 
 type Path = {
   link?: string;
@@ -26,6 +30,7 @@ export interface PathBarProps {
 
 export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
   const router = useRouter();
+  const { printRef, data } = useReport();
   const { getValues: filters } = useFormContext<ShareStatementReportSettings>();
 
   const { register, getValues } = useForm<{ name: string }>();
@@ -88,6 +93,20 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
         {/*   <Icon as={ExportIcon} /> */}
         {/*   Export */}
         {/* </Button> */}
+
+        <ReactToPrint
+          trigger={() => (
+            <Button
+              isDisabled={!data?.length}
+              variant="ghost"
+              shade="neutral"
+              leftIcon={<Icon as={AiOutlinePrinter} />}
+            >
+              Print
+            </Button>
+          )}
+          content={() => printRef.current}
+        />
 
         <Button
           variant="ghost"

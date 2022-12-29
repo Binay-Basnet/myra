@@ -12,7 +12,8 @@ export const useShareRegisterDetailHooks = () => {
   const shareDetails = data?.share?.shareDetail?.data;
 
   const shareDetailsData = {
-    id: shareDetails?.id,
+    id: shareDetails?.transactionCode,
+    memberId: shareDetails?.member?.id,
     date: shareDetails?.date?.local,
     type: shareDetails?.type,
     fromTo: shareDetails?.fromTo,

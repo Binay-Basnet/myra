@@ -5,6 +5,7 @@ import addUserReducer from './slices/add-user-slice';
 import authReducer from './slices/auth-slice';
 import coopUnionReducer from './slices/coop-union-slice';
 import cooperativeReducer from './slices/cooperative-slice';
+import dayEndReducer from './slices/day-end-slice';
 import individualReducer from './slices/individual-slice';
 import institutionReducer from './slices/institution-slice';
 import loanSettingsReducer from './slices/loan-settings-slice';
@@ -18,6 +19,7 @@ export const store = configureStore({
     individual: individualReducer,
     institution: institutionReducer,
     cooperative: cooperativeReducer,
+    dayEnd: dayEndReducer,
   },
 });
 

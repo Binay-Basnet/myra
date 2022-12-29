@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import { Box } from '@chakra-ui/react';
+import dayjs from 'dayjs';
 
 import { PeriodWrapper } from './PeriodWrapper';
 import { en } from '../../../locale/en';
 import { useLocale } from '../../../locale/useLocale';
 import { CalendarBuilderDate, DateRange, Period, TDateState } from '../../../types/date';
-import { bsToday, getPeriodDate, today } from '../../../utils/constants';
+import { getPeriodDate } from '../../../utils/constants';
 import { convertDate, todayDate } from '../../../utils/functions';
 
 interface IPeriodsProps {
@@ -28,8 +29,10 @@ interface IPeriodsProps {
 
   tillDate: { year: number; month: string; day: string; dayOfWeek: number };
 
+  tillDateStart: Date;
   onChange: (newDate: DateRange | undefined) => void;
   setState: React.Dispatch<React.SetStateAction<TDateState>>;
+  baseDate?: Date;
 }
 
 export const Periods = ({
@@ -48,6 +51,8 @@ export const Periods = ({
   tillDate,
   onChange,
   setState,
+  baseDate,
+  tillDateStart,
 }: IPeriodsProps) => {
   const { t } = useLocale(locale);
 
@@ -62,19 +67,19 @@ export const Periods = ({
               if (defaultPeriod.closePopover) {
                 onChange({
                   from: convertDate(
-                    getPeriodDate(defaultPeriod.lastDays, calendarType),
+                    getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate),
                     calendarType
                   ),
                   to: convertDate(
-                    getPeriodDate(defaultPeriod.lastDays, calendarType),
+                    getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate),
                     calendarType
                   ),
                 });
                 onToggle();
               } else {
-                setRangeStartDate(getPeriodDate(defaultPeriod.lastDays, calendarType));
-                setRangeEndDate(getPeriodDate(0, calendarType));
-                setHoveredDate(getPeriodDate(0, calendarType));
+                setRangeStartDate(getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate));
+                setRangeEndDate(getPeriodDate(0, calendarType, baseDate));
+                setHoveredDate(getPeriodDate(0, calendarType, baseDate));
               }
 
               setSelectedPeriod(defaultPeriod.key);
@@ -113,14 +118,11 @@ export const Periods = ({
           title={t.tillDate}
           isSelected={selectedPeriod === 'TILL_DATE'}
           onClick={() => {
-            if (calendarType === 'AD') {
-              setRangeStartDate(tillDate);
-              setRangeEndDate(today);
-            } else {
-              setRangeStartDate(tillDate);
-              setRangeEndDate(bsToday);
-              setState(todayDate);
-            }
+            const numberOfDays = dayjs(baseDate).diff(tillDateStart, 'day');
+
+            setRangeStartDate(getPeriodDate(numberOfDays, calendarType, baseDate));
+            setRangeEndDate(getPeriodDate(0, calendarType, baseDate));
+            setHoveredDate(getPeriodDate(0, calendarType, baseDate));
 
             setSelectedPeriod('TILL_DATE');
           }}

@@ -32,3 +32,26 @@ query getAvailableRange($count: Int!) {
     }
   }
 }
+
+query getWithdrawSlipData($requestID: ID!) {
+  withdrawSlip {
+    getWithdrawSlipData(requestID: $requestID) {
+      data {
+        id
+        member {
+          id
+          name
+        }
+        account {
+          id
+          accountName
+        }
+        noOfLeaves
+        availableRange {
+          from
+          to
+        }
+      }
+    }
+  }
+}

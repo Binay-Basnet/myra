@@ -19,6 +19,7 @@ import {
 import { Column, Table } from '@myra-ui/table';
 
 import { useReport } from '@coop/cbs/reports';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { ReportOrganizationHeader } from '@coop/cbs/reports/components';
 
 export const ReportHeader = ({ children }: { children: React.ReactNode }) => (
@@ -34,7 +35,7 @@ export const ReportBody = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const ReportContent = ({ children }: { children: React.ReactNode }) => {
-  const { isFilterShown, data, isLoading, filters } = useReport();
+  const { isFilterShown, data, isLoading, filters, printRef } = useReport();
 
   if (isLoading) {
     return (
@@ -79,12 +80,26 @@ export const ReportContent = ({ children }: { children: React.ReactNode }) => {
   return (
     <Box display="flex" w="100%" justifyContent="center" overflowY="auto">
       <Box
+        ref={printRef}
         transition="all 0.1s ease-in-out"
         width={isFilterShown ? '100%' : 'clamp(860px, 80%, 75vw)'}
         bg="white"
         overflowY="auto"
         borderRadius="br2"
         h="100%"
+        sx={{
+          '@media print': {
+            display: 'flex',
+            flexDir: 'column',
+            overflowY: 'visible',
+            borderRadius: '0',
+          },
+          '@page': {
+            size: 'A4 portrait',
+            margin: '0.2in',
+            marginLeft: '0.4in',
+          },
+        }}
       >
         {children}
       </Box>

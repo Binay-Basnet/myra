@@ -1,18 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
   Alert,
-  asyncToast,
   Box,
   Button,
   Container,
   FormFooter,
   FormHeader,
   MemberCard,
+  ResponseDialog,
   Text,
 } from '@myra-ui';
 
@@ -31,6 +30,7 @@ import {
   WithdrawWith,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
+import { localizedDate } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAmountInput,
@@ -74,7 +74,7 @@ const cashOptions: Record<string, string> = {
 };
 
 export const AddWithdraw = () => {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const { t } = useTranslation();
 
@@ -225,44 +225,45 @@ export const AddWithdraw = () => {
           })) ?? [],
       };
 
-      asyncToast({
-        id: 'add-new-withdraw',
-        msgs: {
-          success: t['addWithdrawNewWithdrawAdded'],
-          loading: t['addWithdrawAddingNewWithdraw'],
-        },
-        onSuccess: () => {
-          if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
-            queryClient.invalidateQueries(['getAvailableSlipsList']);
-            queryClient.invalidateQueries(['getPastSlipsList']);
-          }
-          queryClient.invalidateQueries(['getWithdrawListData']);
-          router.push('/transactions/withdraw/list');
-        },
-        promise: mutateAsync({ data: filteredValues as WithdrawInput }),
-      });
+      // asyncToast({
+      //   id: 'add-new-withdraw',
+      //   msgs: {
+      //     success: t['addWithdrawNewWithdrawAdded'],
+      //     loading: t['addWithdrawAddingNewWithdraw'],
+      //   },
+      //   onSuccess: () => {
+      //     if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
+      //       queryClient.invalidateQueries(['getAvailableSlipsList']);
+      //       queryClient.invalidateQueries(['getPastSlipsList']);
+      //     }
+      //     queryClient.invalidateQueries(['getWithdrawListData']);
+      //     router.push('/transactions/withdraw/list');
+      //   },
+      //   promise: mutateAsync({ data: filteredValues as WithdrawInput }),
+      // });
     }
 
     if (values.payment_type === WithdrawPaymentType.BankCheque) {
       filteredValues = omit({ ...values }, ['cash', 'file', 'withdrawBy']);
 
-      asyncToast({
-        id: 'add-new-withdraw',
-        msgs: {
-          success: t['addWithdrawNewWithdrawAdded'],
-          loading: t['addWithdrawAddingNewWithdraw'],
-        },
-        onSuccess: () => {
-          if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
-            queryClient.invalidateQueries(['getAvailableSlipsList']);
-            queryClient.invalidateQueries(['getPastSlipsList']);
-          }
-          queryClient.invalidateQueries(['getWithdrawListData']);
-          router.push('/transactions/withdraw/list');
-        },
-        promise: mutateAsync({ data: filteredValues as WithdrawInput }),
-      });
+      // asyncToast({
+      //   id: 'add-new-withdraw',
+      //   msgs: {
+      //     success: t['addWithdrawNewWithdrawAdded'],
+      //     loading: t['addWithdrawAddingNewWithdraw'],
+      //   },
+      //   onSuccess: () => {
+      //     if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
+      //       queryClient.invalidateQueries(['getAvailableSlipsList']);
+      //       queryClient.invalidateQueries(['getPastSlipsList']);
+      //     }
+      //     queryClient.invalidateQueries(['getWithdrawListData']);
+      //     router.push('/transactions/withdraw/list');
+      //   },
+      //   promise: mutateAsync({ data: filteredValues as WithdrawInput }),
+      // });
     }
+    return filteredValues as WithdrawInput;
   };
   //  get redirect id from url
   const redirectMemberId = router.query['memberId'];
@@ -339,10 +340,11 @@ export const AddWithdraw = () => {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <FormMemberSelect name="memberId" label={t['addWithdrawMember']} />
+                  <FormMemberSelect isRequired name="memberId" label={t['addWithdrawMember']} />
 
                   {memberId && (
                     <FormAccountSelect
+                      isRequired
                       name="accountId"
                       label={t['addWithdrawSelectWithdrawAccount']}
                       memberId={memberId}
@@ -370,6 +372,7 @@ export const AddWithdraw = () => {
                       {withdrawn === WithdrawWith.WithdrawSlip && (
                         <InputGroupContainer>
                           <FormSelect
+                            isRequired
                             name="withdrawSlipNo"
                             label="Withdraw Slip No"
                             options={availableSlipListOptions}
@@ -379,11 +382,12 @@ export const AddWithdraw = () => {
 
                       {withdrawn === WithdrawWith.CounterSlip && (
                         <InputGroupContainer>
-                          <FormInput name="counterSlipNo" label="Counter Slip No" />
+                          <FormInput isRequired name="counterSlipNo" label="Counter Slip No" />
                         </InputGroupContainer>
                       )}
 
                       <FormAmountInput
+                        isRequired
                         type="number"
                         min={0}
                         name="amount"
@@ -501,6 +505,51 @@ export const AddWithdraw = () => {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">
             <FormFooter
+              mainButton={
+                mode === 1 ? (
+                  <ResponseDialog
+                    onSuccess={() => {
+                      router.push('/transactions/withdraw/list');
+                    }}
+                    promise={() => mutateAsync({ data: handleSubmit() })}
+                    successCardProps={(response) => {
+                      const result = response?.transaction?.withdraw?.record;
+
+                      return {
+                        type: 'Withdraw',
+                        total: amountConverter(result?.amount || 0) as string,
+                        title: 'Withdraw Successful',
+                        details: {
+                          'Transaction Id': (
+                            <Text fontSize="s3" color="primary.500" fontWeight="600">
+                              {result?.transactionID}
+                            </Text>
+                          ),
+                          Date: localizedDate(result?.date),
+                          'Withdraw Amount': amountConverter(result?.amount || 0),
+                          Fine: result?.fine,
+
+                          'Payment Mode': result?.paymentMode,
+                          'Withdrawn By': result?.withdrawnBy,
+                        },
+                        subTitle:
+                          'Amount withdrawn successfully. Details of the transaction is listed below.',
+                        meta: {
+                          memberId: result?.memberId,
+                          accountId: result?.accountId,
+                          accountName: result?.accountName,
+                          member: result?.memberName?.local,
+                        },
+                      };
+                    }}
+                    errorCardProps={{
+                      title: 'New Withdraw Failed',
+                    }}
+                  >
+                    <Button width="160px">{t['addWithdrawSubmit']}</Button>
+                  </ResponseDialog>
+                ) : undefined
+              }
               status={
                 mode === 0 ? (
                   <Box display="flex" gap="s32">

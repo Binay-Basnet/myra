@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { DeepPartial, FormProvider, useForm } from 'react-hook-form';
 
 import { Box } from '@myra-ui';
 
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { ReportHeader as ReportPageHeader, ReportOrganization } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 
@@ -30,6 +31,7 @@ interface IReportContext<
   filters: Q | null;
   defaultFilters: Partial<Q> | null;
   setFilters: React.Dispatch<React.SetStateAction<Q | null>>;
+  printRef: React.MutableRefObject<HTMLInputElement | null>;
 }
 
 interface IReportProps<
@@ -61,6 +63,8 @@ const Report = <T extends Record<string, unknown>, Q extends Record<string, unkn
   defaultFilters,
   setFilters,
 }: IReportProps<T, Q>) => {
+  const printRef = useRef<HTMLInputElement | null>(null);
+
   const methods = useForm({
     defaultValues: (defaultFilters ?? {}) as DeepPartial<Q>,
   });
@@ -77,8 +81,9 @@ const Report = <T extends Record<string, unknown>, Q extends Record<string, unkn
       filters,
       defaultFilters,
       setFilters,
+      printRef,
     }),
-    [report, data, isLoading, isFilterShown, filters, defaultFilters, setFilters]
+    [printRef, report, data, isLoading, isFilterShown, filters, defaultFilters, setFilters]
   );
 
   return (

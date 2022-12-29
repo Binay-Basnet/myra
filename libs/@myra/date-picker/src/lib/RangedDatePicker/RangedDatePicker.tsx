@@ -27,6 +27,7 @@ interface IRangeDatePickerProps {
   label: string;
 
   periods?: Period[];
+  baseDate?: Date;
   showFiscalPeriod?: boolean;
   showTillDatePeriod?: boolean;
   showCustomPeriod?: boolean;
@@ -43,6 +44,7 @@ export const RangedDatePicker = ({
   showFiscalPeriod = true,
   showTillDatePeriod = true,
   showCustomPeriod = true,
+  baseDate,
 }: IRangeDatePickerProps) => {
   const { isOpen, onClose, onToggle } = useDisclosure();
 
@@ -69,6 +71,7 @@ export const RangedDatePicker = ({
 
   const periodProps = {
     periods,
+    baseDate,
     locale,
     onToggle,
     calendarType,
@@ -80,6 +83,7 @@ export const RangedDatePicker = ({
     showFiscalPeriod,
     showCustomPeriod,
     showTillDatePeriod,
+    tillDateStart,
     tillDate,
     onChange,
     setState,

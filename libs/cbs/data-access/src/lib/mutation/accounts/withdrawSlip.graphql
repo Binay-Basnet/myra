@@ -8,3 +8,14 @@ mutation setIssueNewSlip($data: WithdrawSlipIssueInput!) {
     }
   }
 }
+
+mutation printSlip($data: WithdrawSlipPrintInput) {
+  withdrawSlip {
+    printSlip(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

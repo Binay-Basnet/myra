@@ -22,12 +22,20 @@ interface CoopUnionState {
   centralRepresentative: {
     errors: Record<string, string[]>;
   };
+  totalEquityCurrent: number;
+  totalEquityTarget: number;
+  totalAssetsCurrent: number;
+  totalAssetsTarget: number;
 }
 
 // Define the initial state using that type
 const initialState: () => CoopUnionState = () => ({
   hasPressedNext: false,
   isFormDirty: false,
+  totalEquityCurrent: 0,
+  totalEquityTarget: 0,
+  totalAssetsCurrent: 0,
+  totalAssetsTarget: 0,
   institutionInformation: {
     errors: {},
     incomplete: {},
@@ -59,6 +67,22 @@ export const coopUnionSLice = createSlice({
 
     setHasPressedNext: (state, action: PayloadAction<boolean>) => {
       state.hasPressedNext = action.payload;
+    },
+
+    setCooperativeUnionTotalEquityCurrent: (state, action: PayloadAction<number>) => {
+      state.totalEquityCurrent = action.payload;
+    },
+
+    setCooperativeUnionTotalEquityTarget: (state, action: PayloadAction<number>) => {
+      state.totalEquityTarget = action.payload;
+    },
+
+    setCooperativeUnionTotalAssetsCurrent: (state, action: PayloadAction<number>) => {
+      state.totalAssetsCurrent = action.payload;
+    },
+
+    setCooperativeUnionTotalAssetsTarget: (state, action: PayloadAction<number>) => {
+      state.totalAssetsTarget = action.payload;
     },
 
     addBodError: (
@@ -103,6 +127,10 @@ export const {
   addCentralRepError,
   setHasPressedNext,
   reset,
+  setCooperativeUnionTotalEquityCurrent,
+  setCooperativeUnionTotalEquityTarget,
+  setCooperativeUnionTotalAssetsCurrent,
+  setCooperativeUnionTotalAssetsTarget,
 } = coopUnionSLice.actions;
 
 export default coopUnionSLice.reducer;

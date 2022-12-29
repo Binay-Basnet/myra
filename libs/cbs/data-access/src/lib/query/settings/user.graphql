@@ -19,6 +19,7 @@ query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilt
             role
             branch {
               id
+              name
             }
             profilePicUrl
           }

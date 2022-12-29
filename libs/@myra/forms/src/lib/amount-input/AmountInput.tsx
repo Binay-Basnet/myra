@@ -11,13 +11,13 @@ export interface AmountInputProps extends InputProps {
 }
 
 export const AmountInput = (props: AmountInputProps) => {
-  const { label, value, errorText, ...rest } = props;
+  const { label, value, errorText, isRequired, ...rest } = props;
 
   return (
     <Box display="flex" flexDirection="column" gap="s4">
       {label && (
         <Text variant="formLabel" color="gray.700">
-          {label}
+          {isRequired ? `${label} *` : label}
         </Text>
       )}
       <InputGroup display="flex" flexDirection="column">

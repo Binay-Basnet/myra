@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { CloseButton } from '@chakra-ui/react';
 import debounce from 'lodash/debounce';
 
+import { Box, Button, FormSection, Icon, IconButton } from '@myra-ui';
+
 import { InputGroupContainer } from '@coop/accounting/ui-components';
 import {
   FormFieldSearchTerm,
@@ -19,7 +21,6 @@ import {
 } from '@coop/cbs/data-access';
 import { DynamicBoxContainer, DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, FormSection, Icon, IconButton } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';
@@ -178,6 +179,7 @@ const MemberMaritalStatus = ({ setKymCurrentSection }: IMemberMaritalStatusProps
       >
         <FormSection header="kymIndFAMILYDETAILS">
           <FormSelect
+            isRequired
             name="maritalStatusId"
             label={t['kymIndMartialStatus']}
             isLoading={maritalStatusLoading}

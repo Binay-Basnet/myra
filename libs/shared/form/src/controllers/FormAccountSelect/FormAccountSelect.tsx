@@ -1,6 +1,6 @@
 import { Controller } from 'react-hook-form';
 
-import { AccountSelect } from '@myra-ui/forms';
+import { AccountSelect, AccountSelectProps } from '@myra-ui/forms';
 
 import {
   NatureOfDepositProduct,
@@ -24,7 +24,7 @@ interface Option {
   };
 }
 
-interface IAccountSelectProps {
+interface IAccountSelectProps extends AccountSelectProps {
   name: string;
   label?: string;
   memberId: string;
@@ -32,6 +32,7 @@ interface IAccountSelectProps {
   isLinkedAccounts?: boolean;
   filterBy?: ObjState;
   excludeIds?: string[];
+  isRequired?: boolean;
 }
 
 export const FormAccountSelect = ({
@@ -42,6 +43,8 @@ export const FormAccountSelect = ({
   placeholder,
   filterBy,
   excludeIds,
+  isRequired,
+  ...rest
 }: IAccountSelectProps) => {
   const { t } = useTranslation();
   const { data: accountListData, isFetching } = useGetAccountTableListQuery(
@@ -130,6 +133,7 @@ export const FormAccountSelect = ({
       render={({ field: { value, onChange } }) => (
         <AccountSelect
           label={label}
+          isRequired={isRequired}
           value={
             isLinkedAccounts
               ? linkedAccountsOptions?.find((option) => option.value === value)
@@ -146,6 +150,7 @@ export const FormAccountSelect = ({
             }
           }}
           options={isLinkedAccounts ? linkedAccountsOptions : accountOptions}
+          {...rest}
         />
       )}
       name={name}

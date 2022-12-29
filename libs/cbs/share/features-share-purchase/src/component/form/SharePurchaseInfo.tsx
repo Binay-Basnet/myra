@@ -58,6 +58,7 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
       <FormSection header="sharePurchaseShareInformation">
         <GridItem colSpan={3}>
           <FormNumberInput
+            isRequired
             step={Number(multiplicityFactor)}
             id="noOfShares"
             name="shareCount"

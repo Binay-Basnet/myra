@@ -1,12 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection, Grid, GridItem } from '@myra-ui';
+
 import {
   FormFieldSearchTerm,
   KymInsInput,
   useGetInstitutionKymOptionsQuery,
 } from '@coop/cbs/data-access';
-import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { FormSection, Grid, GridItem } from '@myra-ui';
+import { FormAmountInput, FormInput, FormRadioGroup } from '@coop/shared/form';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
@@ -45,7 +46,6 @@ export const TransactionProfileInstitution = (props: IProps) => {
             id="institutionTransactionProfile"
             name="natureOfTransaction"
             label={t['kymInsNatureofTransaction']}
-            __placeholder={t['kymInsEnterNatureofTransaction']}
           />
           <FormInput
             id="institutionTransactionProfile"
@@ -54,16 +54,15 @@ export const TransactionProfileInstitution = (props: IProps) => {
             label={t['kymInsAnnualTurnover']}
             textAlign="right"
           />
-          <FormInput
+          <FormAmountInput
             id="institutionTransactionProfile"
-            type="number"
             name="initialDepositAmount"
             label={t['kymInsInitialDepositAmount']}
-            textAlign="right"
           />
           <GridItem colSpan={3}>
             <Grid templateColumns="repeat(2, 1fr)">
               <FormRadioGroup
+                isRequired
                 name="expectedMonthlyTurnover"
                 label={t['kymInsExpectedMonthlyTurnover']}
                 options={getOption(monthlyTurnover)}
@@ -72,6 +71,7 @@ export const TransactionProfileInstitution = (props: IProps) => {
               />
 
               <FormRadioGroup
+                isRequired
                 name="expectedMonthlyTransaction"
                 label={t['kymInsExpectedMonthlyTransaction']}
                 options={getOption(monthlyTransaction)}

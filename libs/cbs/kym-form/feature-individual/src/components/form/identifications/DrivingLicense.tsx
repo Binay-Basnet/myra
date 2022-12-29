@@ -136,11 +136,21 @@ export const DrivingLicense = ({ setKymCurrentSection }: IDrivingLicenseProps) =
           }}
         >
           <FormSection>
-            <FormInput type="text" name="idNo" label={t['kymIndDrivingLicenseNo']} />
+            <FormInput isRequired type="text" name="idNo" label={t['kymIndDrivingLicenseNo']} />
 
-            <FormInput type="text" name="place" label={t['kymIndDrivingLicenseIssuePlace']} />
+            <FormInput
+              isRequired
+              type="text"
+              name="place"
+              label={t['kymIndDrivingLicenseIssuePlace']}
+            />
 
-            <FormDatePicker name="date" label={t['kymIndDrivingLicenseIssueDate']} maxToday />
+            <FormDatePicker
+              isRequired
+              name="date"
+              label={t['kymIndDrivingLicenseIssueDate']}
+              maxToday
+            />
           </FormSection>
         </form>
       </FormProvider>

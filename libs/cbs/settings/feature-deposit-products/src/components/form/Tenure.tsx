@@ -37,18 +37,6 @@ export const Tenure = () => {
   const [rightElement, setRightElement] = useState('days');
   const minimumTenureUnit = watch('tenureUnit');
   const minTenureUnitNumber = watch('minTenureUnitNumber');
-  // const depositNature = watch('nature');
-
-  // const applicableSwitch = [
-  //   {
-  //     label: t['depositProductApplicable'],
-  //     value: true,
-  //   },
-  //   {
-  //     label: t['depositProductNotApplicable'],
-  //     value: false,
-  //   },
-  // ];
 
   const unitOptions = [
     {
@@ -76,16 +64,6 @@ export const Tenure = () => {
 
   return (
     <FormSection header="depositProductTenure">
-      {/* {(depositNature === NatureOfDepositProduct.Saving ||
-        depositNature === NatureOfDepositProduct.Current) && (
-        <GridItem colSpan={3}>
-          <Box display="flex" flexDirection="row" justifyContent="space-between">
-            <SubHeadingText>{t['depositProductTenure']}</SubHeadingText>
-            <FormSwitchTab name="isTenureApplicable" options={applicableSwitch} />
-          </Box>
-        </GridItem>
-      )} */}
-
       <GridItem colSpan={3}>
         <BoxContainer
           p="s16"
@@ -136,53 +114,6 @@ export const Tenure = () => {
           </Grid>
         </BoxContainer>
       </GridItem>
-
-      {/* {isTenureApplicable && (
-        <GridItem colSpan={3}>
-          <BoxContainer
-            p="s16"
-            border="1px solid"
-            borderColor="border.layout"
-            display="flex"
-            flexDirection="column"
-            justifyContent="space-between"
-            borderRadius="4px"
-          >
-            <Box display="flex" flexDirection="column" gap="s4">
-              <Text fontSize="s3" fontWeight="500">
-                {t['depositProductUnit']}
-              </Text>
-              <FormSwitchTab name="tenureUnit" options={unitOptions} />
-            </Box>
-
-            <Grid templateColumns="repeat(3,1fr)" gap="s20">
-              <GridItem colSpan={1}>
-                <FormInput
-                  name="minTenureUnitNumber"
-                  textAlign="right"
-                  label={t['depositProductMinimumTenure']}
-                  rightAddonText={inputRightElementText({
-                    rightElement: rightElement as FrequencyTenure,
-                    t,
-                  })}
-                />
-              </GridItem>
-
-              <GridItem colSpan={1}>
-                <FormInput
-                  name="maxTenureUnitNumber"
-                  textAlign="right"
-                  label={t['depositProductMaxinumTenure']}
-                  rightAddonText={inputRightElementText({
-                    rightElement: rightElement as FrequencyTenure,
-                    t,
-                  })}
-                />
-              </GridItem>
-            </Grid>
-          </BoxContainer>
-        </GridItem>
-      )} */}
     </FormSection>
   );
 };

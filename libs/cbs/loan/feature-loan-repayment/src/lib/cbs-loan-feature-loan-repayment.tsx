@@ -6,7 +6,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
-  asyncToast,
   Box,
   Button,
   Container,
@@ -15,6 +14,7 @@ import {
   Grid,
   MemberCard,
   Modal,
+  ResponseDialog,
   Text,
 } from '@myra-ui';
 
@@ -31,8 +31,9 @@ import {
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
-import { featureCode } from '@coop/shared/utils';
+import { amountConverter, featureCode } from '@coop/shared/utils';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
@@ -171,22 +172,23 @@ export const LoanRepayment = () => {
         account: omit({ ...filteredValues.account }, ['amount']) as LoanRepaymentAccountMode,
       };
     }
-    asyncToast({
-      id: 'share-settings-transfer-id',
-      msgs: {
-        success: 'Loan has been Repayed',
-        loading: 'Repaying Loan',
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries(['getLoanPreview']);
-        router.push('/loan/accounts');
-      },
-      promise: mutateAsync({
-        data: {
-          ...(filteredValues as LoanRepaymentInput),
-        },
-      }),
-    });
+    // asyncToast({
+    //   id: 'share-settings-transfer-id',
+    //   msgs: {
+    //     success: 'Loan has been Repayed',
+    //     loading: 'Repaying Loan',
+    //   },
+    //   onSuccess: () => {
+    //     queryClient.invalidateQueries(['getLoanPreview']);
+    //     router.push('/loan/accounts');
+    //   },
+    //   promise: mutateAsync({
+    //     data: {
+    //       ...(filteredValues as LoanRepaymentInput),
+    //     },
+    //   }),
+    // });
+    return filteredValues as LoanRepaymentInput;
   };
   const loanPreview = useGetLoanPreviewQuery(
     {
@@ -256,7 +258,7 @@ export const LoanRepayment = () => {
                 w="100%"
                 display={mode === '0' ? 'flex' : 'none'}
               >
-                <FormMemberSelect name="memberId" label="Member" />
+                <FormMemberSelect isRequired name="memberId" label="Member" />
                 {memberId && (
                   <FormSelect
                     name="loanAccountId"
@@ -299,7 +301,7 @@ export const LoanRepayment = () => {
                       />
                     </Modal>
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormAmountInput name="amountPaid" label="Amount to Pay" />
+                      <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
                     </Grid>
 
                     <SuspiciousTransaction />
@@ -357,6 +359,52 @@ export const LoanRepayment = () => {
           )}
           {mode === '1' && (
             <FormFooter
+              mainButton={
+                <ResponseDialog
+                  onSuccess={() => {
+                    queryClient.invalidateQueries(['getLoanPreview']);
+                    router.push('/loan/repayments');
+                  }}
+                  promise={() => mutateAsync({ data: handleSubmit() })}
+                  successCardProps={(response) => {
+                    const result = response?.loanAccount?.repayment?.record;
+
+                    return {
+                      type: 'Loan Repayment',
+                      total: amountConverter(result?.totalAmount || 0) as string,
+                      title: 'Loan Repaymet Successful',
+                      details: {
+                        'Loan Repayment Id': (
+                          <Text fontSize="s3" color="primary.500" fontWeight="600">
+                            {result?.transactionId}
+                          </Text>
+                        ),
+                        Date: localizedDate(result?.date),
+                        'Installment No': result?.installmentNo,
+                        'Principal Amount': result?.principalAmount,
+                        'Interest Amount': result?.interestAmount,
+                        'Penalty Amount': result?.penaltyAmount,
+                        'Rebate Amount': result?.rebateAmount,
+
+                        'Payment Mode': result?.paymentMethod,
+                      },
+                      subTitle:
+                        'Loan amount has been repayed successfully. Details of the transaction is listed below.',
+                      meta: {
+                        memberId: result?.memberId,
+                        member: result?.memberName?.local,
+                        accountId: result?.accountId,
+                        accountName: result?.accountName,
+                      },
+                    };
+                  }}
+                  errorCardProps={{
+                    title: 'Loan Repayment Failed',
+                  }}
+                >
+                  <Button width="160px">Confirm Payment</Button>
+                </ResponseDialog>
+              }
               status={<Button onClick={previousButtonHandler}> Previous</Button>}
               mainButtonLabel="Confirm Payment"
               mainButtonHandler={handleSubmit}

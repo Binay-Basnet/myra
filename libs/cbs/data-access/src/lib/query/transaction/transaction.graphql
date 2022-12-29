@@ -5,6 +5,7 @@ query getDepositListData($filter: AccountTransactionFilter, $pagination: Paginat
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -35,6 +36,7 @@ query getWithdrawListData($filter: AccountTransactionFilter, $pagination: Pagina
       edges {
         node {
           ID
+          transactionCode
           name
           amount
           state
@@ -62,6 +64,7 @@ query getAccountTransferListData($filter: AccountTransactionFilter, $pagination:
       edges {
         node {
           ID
+          transactionCode
           amount
           state
           transferType
@@ -81,7 +84,10 @@ query getAccountTransferListData($filter: AccountTransactionFilter, $pagination:
 
 query getEndOfDayDateData {
   transaction {
-    endOfDayDate
+    endOfDayDate {
+      value
+      hasErrors
+    }
   }
 }
 
@@ -329,12 +335,27 @@ query loanRepaymentDetail($paymentId: ID!) {
 query getEODStatus {
   transaction {
     eodStatus {
-      interestBooking
-      interestPosting
-      transactionDate
-      maturity
-      dormancy
-      cashInVault
+      states {
+        currentBranchesReady
+        interestBooking
+        interestPosting
+        transactionDate
+        maturity
+        dormancy
+        cashInHand
+        cashInVault
+        loanInterestBooking
+      }
+      errors {
+        readiness
+        interestBooking
+        interestPosting
+        maturity
+        dormancy
+        cashInHand
+        cashInVault
+        loanInterestBooking
+      }
     }
   }
 }
@@ -350,6 +371,7 @@ query getAllTransactionsList($filter: AllTransactionFilter, $pagination: Paginat
           narration
           amount
           date
+          branchName
         }
         cursor
       }
@@ -358,6 +380,36 @@ query getAllTransactionsList($filter: AllTransactionFilter, $pagination: Paginat
         hasPreviousPage
         startCursor
         endCursor
+      }
+    }
+  }
+}
+
+query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
+  transaction {
+    viewTransactionDetail(transactionId: $id, txnType: $txnType) {
+      data {
+        id
+        member {
+          id
+          code
+          name
+          profilePicUrl
+        }
+        transactionDate
+        txnType
+        transactionMode
+        amount
+        branch
+        status
+        glTransaction {
+          account
+          serviceCenter
+          debit
+          credit
+        }
+        totalDebit
+        totalCredit
       }
     }
   }
