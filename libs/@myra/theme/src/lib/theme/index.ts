@@ -23,6 +23,14 @@ export const theme = extendTheme({
       ':not(.chakra-dont-set-collapse) > .chakra-collapse': {
         overflow: 'initial !important',
       },
+      '@media print': {
+        thead: {
+          display: 'table-header-group',
+        },
+        tfoot: {
+          display: 'table-footer-group',
+        },
+      },
       a: {
         display: 'flex',
       },

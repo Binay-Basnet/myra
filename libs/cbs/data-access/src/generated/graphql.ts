@@ -13809,7 +13809,13 @@ export type LoginMutation = {
             lastName: Record<'local' | 'en' | 'np', string>;
             role?: Roles | null;
             profilePic?: string | null;
-            branch?: { id: string; name?: string | null; category?: BranchCategory | null } | null;
+            userBalance?: string | null;
+            branch?: {
+              id: string;
+              name?: string | null;
+              category?: BranchCategory | null;
+              branchBalance?: string | null;
+            } | null;
             organization?: {
               basicDetails?: { name?: string | null; logo?: string | null } | null;
               contactDetails?: {
@@ -15807,6 +15813,9 @@ export type SetAccountTransferDataMutation = {
         senderAccountName?: string | null;
         senderMemberId?: string | null;
         senderMemberName?: Record<'local' | 'en' | 'np', string> | null;
+        transactionMode?: TransactionMode | null;
+        withdrawWith?: WithdrawWith | null;
+        transferType?: TransferType | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -17263,7 +17272,13 @@ export type GetMeQuery = {
           lastName: Record<'local' | 'en' | 'np', string>;
           role?: Roles | null;
           profilePic?: string | null;
-          branch?: { id: string; name?: string | null; category?: BranchCategory | null } | null;
+          userBalance?: string | null;
+          branch?: {
+            id: string;
+            name?: string | null;
+            category?: BranchCategory | null;
+            branchBalance?: string | null;
+          } | null;
           organization?: {
             basicDetails?: { name?: string | null; logo?: string | null } | null;
             contactDetails?: {
@@ -25132,10 +25147,12 @@ export const LoginDocument = `
             lastName
             role
             profilePic
+            userBalance
             branch {
               id
               name
               category
+              branchBalance
             }
             organization {
               basicDetails {
@@ -28337,6 +28354,9 @@ export const SetAccountTransferDataDocument = `
         senderAccountName
         senderMemberId
         senderMemberName
+        transactionMode
+        withdrawWith
+        transferType
       }
       error {
         ...MutationError
@@ -30372,10 +30392,12 @@ export const GetMeDocument = `
           lastName
           role
           profilePic
+          userBalance
           branch {
             id
             name
             category
+            branchBalance
           }
           organization {
             basicDetails {

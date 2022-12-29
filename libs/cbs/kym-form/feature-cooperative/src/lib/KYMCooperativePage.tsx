@@ -61,6 +61,9 @@ export const KYMCooperativePage = () => {
     }
   );
   const isFormDirty = useAppSelector((state) => state.cooperative.isFormDirty);
+  const totalAssets = useAppSelector((state) => state.cooperative.totalAssets);
+  const totalEquity = useAppSelector((state) => state.cooperative.totalEquity);
+
   return (
     <>
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -168,7 +171,7 @@ export const KYMCooperativePage = () => {
               </Button>
             }
             mainButtonLabel={t['next']}
-            isMainButtonDisabled={!isFormDirty}
+            isMainButtonDisabled={!isFormDirty || !(totalAssets === totalEquity)}
             mainButtonHandler={async () => {
               const response = await refetch();
               const sectionStatus = response?.data?.members?.cooperative?.overallFormStatus;

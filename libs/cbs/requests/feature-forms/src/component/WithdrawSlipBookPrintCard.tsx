@@ -42,20 +42,16 @@ export const WithdrawSlipBookPrintCard = React.forwardRef<
     <Box
       // height={height}
       // width={width}
-      bg="layout.background"
+      bg="transparent"
       position="relative"
       ref={ref}
       display="none"
       sx={{
         '@media print': {
           display: 'block',
-          border: '1px solid red',
-          bg: 'yellow',
         },
         '@page': {
           size: getPrintProps(size),
-          border: '1px solid red',
-          bg: 'layout.background',
         },
       }}
     >

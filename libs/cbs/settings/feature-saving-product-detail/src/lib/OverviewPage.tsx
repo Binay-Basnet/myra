@@ -111,9 +111,7 @@ export const OverviewPage = () => {
 
           {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
             detailData?.nature === NatureOfDepositProduct.Saving) && (
-            <DetailsCard title="Ladder Rate " hasTable>
-              <ProductLadderRate ladderRate={detailData?.ladderRateData} />
-            </DetailsCard>
+            <ProductLadderRate ladderRate={detailData?.ladderRateData} />
           )}
 
           {(detailData?.nature === NatureOfDepositProduct.Current ||
