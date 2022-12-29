@@ -37,8 +37,6 @@ export const AlternativeChannels = () => {
     }
   }, [acChargesData]);
 
-  console.log(acChargesData);
-
   return (
     <>
       <FormProvider {...methods}>
