@@ -100,12 +100,28 @@ export const Table = <T extends Record<string, unknown>>({
       )}
 
       <TableContainer minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}>
-        <ChakraTable size={tableSize} variant={variant}>
-          <Thead>
+        <ChakraTable
+          sx={{
+            pageBreakInside: 'auto',
+          }}
+          size={tableSize}
+          variant={variant}
+        >
+          <Thead display="table-header-group">
             {table.getHeaderGroups().map((headerGroup) => (
-              <Tr key={headerGroup.id}>
+              <Tr
+                sx={{
+                  pageBreakInside: 'avoid',
+                  pageBreakAfter: 'auto',
+                }}
+                key={headerGroup.id}
+              >
                 {headerGroup.headers.map((header) => (
                   <Th
+                    sx={{
+                      pageBreakInside: 'avoid',
+                      pageBreakAfter: 'auto',
+                    }}
                     bg={isDetailPageTable ? 'highlight.500' : 'gray.0'}
                     key={header.id}
                     colSpan={header.colSpan}
@@ -202,6 +218,10 @@ export const Table = <T extends Record<string, unknown>>({
             {table.getRowModel().rows.map((row) => (
               <Tr
                 key={row.id}
+                sx={{
+                  pageBreakInside: 'avoid',
+                  pageBreakAfter: 'auto',
+                }}
                 _hover={isStatic ? {} : { bg: 'highlight.500' }}
                 bg={row.getIsSelected() ? 'primary.0' : 'white'}
                 cursor={rowOnClick ? 'pointer' : 'default'}
@@ -219,6 +239,10 @@ export const Table = <T extends Record<string, unknown>>({
                     // position={index === 0 ? 'sticky' : 'static'}
                     // top={0}
                     // left={0}
+                    sx={{
+                      pageBreakInside: 'avoid',
+                      pageBreakAfter: 'auto',
+                    }}
                     bg="white"
                   >
                     <Text
@@ -237,7 +261,7 @@ export const Table = <T extends Record<string, unknown>>({
           </Tbody>
 
           {showFooter && (
-            <Tfoot>
+            <Tfoot display="table-header-group">
               {table.getFooterGroups().map((footerGroup, index) => {
                 if (index !== 0) return null;
 
