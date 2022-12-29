@@ -1,8 +1,9 @@
+import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader, toast } from '@myra-ui';
 
 import {
   EodOption,
@@ -18,6 +19,7 @@ import { DayClose } from '../component/DayClose';
 export interface CbsCloseDayProps {}
 
 export const CbsCloseDay = () => {
+  const [stopFetch, setStopFetch] = React.useState(false);
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -32,7 +34,117 @@ export const CbsCloseDay = () => {
 
   const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
 
-  const { data: eodStatusQueryData } = useGetEodStatusQuery();
+  const { data: eodStatusQueryData } = useGetEodStatusQuery(
+    {},
+    {
+      onSuccess: async (res) => {
+        if (res?.transaction?.eodStatus?.states?.transactionDate === EodState.Completed) {
+          setStopFetch(true);
+          toast({ id: 'day-close-complete', type: 'success', message: 'Day closed successfully' });
+          router.push('/');
+        }
+      },
+      refetchInterval: stopFetch ? false : 2000,
+    }
+  );
+  const showAdditionalFields = useMemo(() => {
+    if (!eodStatusQueryData?.transaction?.eodStatus?.states?.currentBranchesReady) {
+      return false;
+    }
+
+    if (
+      Object.values(eodStatusQueryData?.transaction?.eodStatus?.states ?? {}).find(
+        (value) => value === EodState.Ongoing
+      )
+    ) {
+      return false;
+    }
+
+    return (
+      eodStatusQueryData?.transaction?.eodStatus?.states?.transactionDate !== EodState.Completed
+    );
+  }, [eodStatusQueryData]);
+
+  const dayCloseList = useMemo(() => {
+    const eodStatus = eodStatusQueryData?.transaction?.eodStatus?.states;
+
+    const eodError = eodStatusQueryData?.transaction?.eodStatus?.errors;
+
+    if (!eodStatus?.currentBranchesReady) {
+      return [
+        {
+          title: 'Branch Readiness',
+          subTitle: 'Check if all the branches have completed branch readiness or not.',
+          status: EodState.CompletedWithErrors,
+          errors: eodError?.readiness as string[],
+        },
+      ];
+    }
+
+    return [
+      {
+        title: 'Branch Readiness',
+        subTitle: 'Check if all the branches have completed branch readiness or not.',
+        status: EodState.Completed,
+      },
+      {
+        title: 'dayCloseDailyInterestBooking',
+        subTitle: 'dayCloseInterestBooking',
+        status: eodError ? eodStatus?.interestBooking : EodState.Completed,
+        errors: eodError?.interestBooking as string[],
+      },
+      {
+        title: 'dayCloseCheckFrequency',
+        subTitle: 'dayCloseImplementthedayend',
+        status: eodError ? eodStatus?.interestPosting : EodState.Completed,
+        errors: eodError?.interestPosting as string[],
+      },
+      {
+        title: 'dayCloseTransactionDateProgress',
+        subTitle: 'dayCloseChecktransactiondate',
+        status: eodStatus?.transactionDate ?? EodState.Completed,
+      },
+      {
+        title: 'dayCloseCheckMaturity',
+        subTitle: 'dayCloseCheckAccount',
+        status: eodError ? eodStatus?.maturity : EodState.Completed,
+        errors: eodError?.maturity as string[],
+      },
+      {
+        title: 'Check Dormant',
+        subTitle: 'Check if the account is dormant or not.',
+        status: eodError ? eodStatus?.dormancy : EodState.Completed,
+        errors: eodError?.dormancy as string[],
+      },
+      {
+        title: 'Branch Readiness',
+        subTitle: 'Check if all the branches have completed branch readiness or not.',
+        status: eodError ? eodStatus?.cashInHand : EodState.Completed,
+        errors: eodError?.cashInHand as string[],
+      },
+      {
+        title: 'Cash with Teller',
+        subTitle:
+          'Check if the cash with teller at the start of day balances with the cash with teller at the end after all transactions have been completed.',
+        status: eodError ? eodStatus?.cashInHand : EodState.Completed,
+        errors: eodError?.cashInHand as string[],
+      },
+      {
+        title: 'dayCloseCashVault',
+        subTitle: 'dayCloseCheckCashVault',
+        status: eodError ? eodStatus?.cashInVault : EodState.Completed,
+        errors: eodError?.cashInVault as string[],
+      },
+      {
+        title: 'Loan Interest Booking',
+        subTitle:
+          'Interest booking should be done for all the loan accounts before closing the day.',
+        status: eodError ? eodStatus?.loanInterestBooking : EodState.Completed,
+        errors: eodError?.loanInterestBooking as string[],
+      },
+    ];
+  }, [eodStatusQueryData]);
+
   const eodStatus = eodStatusQueryData?.transaction?.eodStatus;
 
   const handleDayClose = () => {
@@ -86,7 +198,7 @@ export const CbsCloseDay = () => {
       </Box>
       <Container bg="white" minHeight="calc(100vh - 110px)" pb="90px" minW="container.lg">
         <FormProvider {...methods}>
-          <DayClose />
+          <DayClose showAdditionalFields={showAdditionalFields} dayCloseList={dayCloseList} />
         </FormProvider>
       </Container>
       <Box position="relative" margin="0px auto">
