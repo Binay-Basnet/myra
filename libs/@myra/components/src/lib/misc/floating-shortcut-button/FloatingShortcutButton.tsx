@@ -36,10 +36,13 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Password Recovery',
-      'Share register detail page',
-      'New date picker',
-      'STR Transaction',
+      'Transactions print',
+      'Headoffice information to be filled from neosys portal and subsequent head office will be created automatically * added in required fields',
+      'COA - (Holding Account) Detail Page',
+      'All Transaction Detail Page',
+      'No validation with calendar date for day end (user will be able to close day anytime and multiple times',
+      'Branch Readiness implemented for each branch and Day End for all branch only through Head Branch',
+      'COA Account List',
       'Completed Reports:',
       '1. Mobile Banking Registration',
       '2. Mobile Banking Expiry',
@@ -71,6 +74,7 @@ const whatsNewData = {
       '28. Loan Ageing Report',
       '29. Daybook Report',
       '30. Pl Report',
+      '31. Balance Sheet',
     ],
   },
   bugsSquashed: {
