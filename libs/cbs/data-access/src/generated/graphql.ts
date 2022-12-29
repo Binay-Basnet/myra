@@ -1260,6 +1260,7 @@ export type BlockChequeRequestList = {
 export type Branch = {
   abbsTransaction?: Maybe<AbbsTransaction>;
   address?: Maybe<Address>;
+  branchBalance?: Maybe<Scalars['String']>;
   branchCode?: Maybe<Scalars['String']>;
   branchStatus?: Maybe<Scalars['Boolean']>;
   category?: Maybe<BranchCategory>;
@@ -12893,6 +12894,8 @@ export type User = Base & {
   organization?: Maybe<Organization>;
   profilePic?: Maybe<Scalars['String']>;
   role?: Maybe<Roles>;
+  userBalance?: Maybe<Scalars['String']>;
+  userLedger?: Maybe<Scalars['String']>;
   username: Scalars['String'];
 };
 
@@ -13806,7 +13809,13 @@ export type LoginMutation = {
             lastName: Record<'local' | 'en' | 'np', string>;
             role?: Roles | null;
             profilePic?: string | null;
-            branch?: { id: string; name?: string | null; category?: BranchCategory | null } | null;
+            userBalance?: string | null;
+            branch?: {
+              id: string;
+              name?: string | null;
+              category?: BranchCategory | null;
+              branchBalance?: string | null;
+            } | null;
             organization?: {
               basicDetails?: { name?: string | null; logo?: string | null } | null;
               contactDetails?: {
@@ -17263,7 +17272,13 @@ export type GetMeQuery = {
           lastName: Record<'local' | 'en' | 'np', string>;
           role?: Roles | null;
           profilePic?: string | null;
-          branch?: { id: string; name?: string | null; category?: BranchCategory | null } | null;
+          userBalance?: string | null;
+          branch?: {
+            id: string;
+            name?: string | null;
+            category?: BranchCategory | null;
+            branchBalance?: string | null;
+          } | null;
           organization?: {
             basicDetails?: { name?: string | null; logo?: string | null } | null;
             contactDetails?: {
@@ -25132,10 +25147,12 @@ export const LoginDocument = `
             lastName
             role
             profilePic
+            userBalance
             branch {
               id
               name
               category
+              branchBalance
             }
             organization {
               basicDetails {
@@ -30375,10 +30392,12 @@ export const GetMeDocument = `
           lastName
           role
           profilePic
+          userBalance
           branch {
             id
             name
             category
+            branchBalance
           }
           organization {
             basicDetails {
