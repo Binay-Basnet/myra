@@ -3,7 +3,16 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader, Grid, Text } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Container,
+  FormFooter,
+  FormHeader,
+  FormSection,
+  GridItem,
+  Text,
+} from '@myra-ui';
 
 import {
   CashValue,
@@ -12,9 +21,10 @@ import {
   useAppSelector,
   useSetTellerTransferDataMutation,
 } from '@coop/cbs/data-access';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormAmountInput, FormEditableTable, FormInput, FormSwitchTab } from '@coop/shared/form';
 import { featureCode, useTranslation } from '@coop/shared/utils';
+
+import { BalanceCard } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddVaultTransferProps {}
@@ -85,6 +95,8 @@ export const AddVaultTransfer = () => {
 
   const denominations = watch('denominations');
 
+  const transferType = watch('transferType');
+
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
@@ -132,40 +144,46 @@ export const AddVaultTransfer = () => {
           <FormHeader
             title={`New Vault Transfer - ${featureCode.newVaultTransfer}`}
             closeLink="/transfer/vault-transfer/list"
-            // buttonLabel={t['addDepositAddBulkDeposit']}
-            // buttonHandler={() => router.push('/transactions/deposit/add-bulk-deposit')}
           />
         </Box>
 
         <Box bg="white">
           <FormProvider {...methods}>
             <form>
-              <Box minH="calc(100vh - 170px)">
-                <Box
-                  p="s20"
-                  pb="100px"
-                  width="100%"
-                  display="flex"
-                  flexDirection="column"
-                  gap="s20"
-                  borderRight="1px"
-                  borderColor="border.layout"
-                >
-                  <Grid templateColumns="repeat(2, 1fr)" gap="s20" alignItems="flex-end">
+              <Box minH="calc(100vh - 170px)" pb="s60">
+                <FormSection templateColumns={1}>
+                  <FormInput isRequired name="teller" label="Teller Name" isDisabled />
+                </FormSection>
+
+                <FormSection header="Transfer Cash Details" templateColumns={3}>
+                  <GridItem colSpan={3}>
                     <FormSwitchTab
                       name="transferType"
                       label="Transfer Type"
                       options={transferTypeOptions}
                     />
+                  </GridItem>
 
-                    <FormInput isRequired name="teller" label="Teller Name" isDisabled />
-                  </Grid>
+                  {transferType && (
+                    <GridItem colSpan={3}>
+                      <BalanceCard
+                        label={
+                          transferType === TellerTransferType.VaultToCash
+                            ? 'Available Cash in Vault'
+                            : 'Available Cash with Teller'
+                        }
+                        balance={
+                          (transferType === TellerTransferType.VaultToCash
+                            ? user?.branch?.branchBalance
+                            : user?.userBalance) ?? '0'
+                        }
+                      />
+                    </GridItem>
+                  )}
 
-                  <Box display="flex" flexDirection="column" gap="s16" py="s20">
-                    <InputGroupContainer>
-                      <FormAmountInput isRequired name="amount" label="Cash Amount" />
-                    </InputGroupContainer>
+                  <FormAmountInput isRequired name="amount" label="Cash Amount" />
 
+                  <GridItem colSpan={3} display="flex" flexDirection="column" gap="s4">
                     <FormEditableTable<PaymentTableType>
                       name="denominations"
                       columns={[
@@ -224,8 +242,8 @@ export const AddVaultTransfer = () => {
                         </Text>
                       </Box>
                     </Box>
-                  </Box>
-                </Box>
+                  </GridItem>
+                </FormSection>
               </Box>
             </form>
           </FormProvider>

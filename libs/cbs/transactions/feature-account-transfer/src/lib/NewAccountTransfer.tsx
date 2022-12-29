@@ -4,7 +4,16 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader, MemberCard, Text } from '@myra-ui';
+import {
+  Box,
+  Button,
+  Container,
+  FormFooter,
+  FormHeader,
+  MemberCard,
+  ResponseDialog,
+  Text,
+} from '@myra-ui';
 
 import {
   NatureOfDepositProduct,
@@ -22,6 +31,7 @@ import {
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
+import { localizedDate, localizedText } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAmountInput,
@@ -156,21 +166,7 @@ export const NewAccountTransfer = () => {
   const handleSubmit = () => {
     const values = getValues();
 
-    asyncToast({
-      id: 'add-new-account-transfer',
-      msgs: {
-        success: t['newAccountTransferAccountTransferAdded'],
-        loading: t['newAccountTransferAddingAccountTransfer'],
-      },
-      onSuccess: () => {
-        if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
-          queryClient.invalidateQueries(['getAvailableSlipsList']);
-          queryClient.invalidateQueries(['getPastSlipsList']);
-        }
-        router.push('/transactions/account-transfer/list');
-      },
-      promise: mutateAsync({ data: omit(values, ['destMemberId']) }),
-    });
+    return omit(values, ['destMemberId']);
   };
   //  get redirect id from url
   const redirectMemberId = router.query['memberId'];
@@ -399,6 +395,52 @@ export const NewAccountTransfer = () => {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">
             <FormFooter
+              mainButton={
+                <ResponseDialog
+                  onSuccess={() => {
+                    if (methods.getValues().withdrawWith === WithdrawWith.WithdrawSlip) {
+                      queryClient.invalidateQueries(['getAvailableSlipsList']);
+                      queryClient.invalidateQueries(['getPastSlipsList']);
+                    }
+                    router.push('/transactions/account-transfer/list');
+                  }}
+                  promise={() => mutateAsync({ data: handleSubmit() })}
+                  successCardProps={(response) => {
+                    const result = response?.transaction?.transfer?.record;
+
+                    return {
+                      type: 'Account Transfer',
+                      total: amountConverter(result?.totalAmount || 0) as string,
+                      title: 'Account Transfer Successful',
+                      details: {
+                        'Transaction Id': (
+                          <Text fontSize="s3" color="primary.500" fontWeight="600">
+                            {result?.id}
+                          </Text>
+                        ),
+                        Date: localizedDate(result?.date),
+                        'Withdrawn By': result?.withdrawWith,
+                        'Transfer Type': result?.transferType,
+                        'Transfer Amount': amountConverter(result?.amount || 0) as string,
+                        Fine: String(amountConverter(result?.fine || 0)),
+                      },
+                      subTitle:
+                        'Amount transferred successfully. Details of the transaction is listed below',
+                      meta: {
+                        memberId: result?.senderMemberId,
+                        accountId: result?.senderAccountId,
+                        accountName: result?.senderAccountName,
+                        member: localizedText(result?.senderMemberName),
+                      },
+                    };
+                  }}
+                  errorCardProps={{
+                    title: 'New Deposit Failed',
+                  }}
+                >
+                  <Button width="160px">Add New Deposit</Button>
+                </ResponseDialog>
+              }
               status={
                 <Box display="flex" gap="s32">
                   <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">

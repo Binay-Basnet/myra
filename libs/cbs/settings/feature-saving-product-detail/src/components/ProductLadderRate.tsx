@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Column, Table } from '@myra-ui';
+import { Column, DetailsCard, Table } from '@myra-ui';
 
 interface IProductLadderRate {
   ladderRate:
@@ -47,6 +47,11 @@ export const ProductLadderRate = ({ ladderRate }: IProductLadderRate) => {
     ],
     []
   );
+  if (ladderRate?.length === 0) return null;
 
-  return <Table isDetailPageTable isStatic data={ladderRateListWithIndex} columns={columns} />;
+  return (
+    <DetailsCard title="Dormant Setup" hasTable>
+      <Table isDetailPageTable isStatic data={ladderRateListWithIndex} columns={columns} />
+    </DetailsCard>
+  );
 };
