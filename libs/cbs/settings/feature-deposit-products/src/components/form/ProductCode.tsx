@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { FormSection, Text } from '@myra-ui';
+import { Box, FormSection, Text } from '@myra-ui';
 
 import { FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
@@ -12,12 +12,13 @@ export const ProductCode = () => {
   const [codePrev, setCodePrev] = useState('1');
   const { watch } = methods;
 
+  const prefix = watch('productCode.prefix');
   const initialNo = watch('productCode.initialNo');
   const noOfDigits = watch('productCode.noOfDigits');
 
   useEffect(() => {
     setCodePrev(initialNo?.padStart(noOfDigits, 0));
-  }, [initialNo, noOfDigits]);
+  }, [prefix, initialNo, noOfDigits]);
 
   return (
     <FormSection header="depositProductProductCode" subHeader="depositProductAddprefixintial">
@@ -33,10 +34,21 @@ export const ProductCode = () => {
         label={t['depositProductNumberOfDigit']}
         name="productCode.noOfDigits"
       />
-      {codePrev && (
-        <Text fontSize="r1" color="grey.500" fontWeight="Regular">
-          Preview: {codePrev}
-        </Text>
+      {(prefix || codePrev) && (
+        <Box borderRadius="br2" px="s16" py="s8" bg="background.500" w="250px">
+          <Text
+            fontSize="s2"
+            fontWeight="Regular"
+            color="neutralColorLight.Gray-70"
+            lineHeight="150%"
+          >
+            {t['memberSettingssCorePreview']}
+          </Text>
+          <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-70">
+            {prefix}
+            {codePrev}
+          </Text>
+        </Box>
       )}
     </FormSection>
   );
