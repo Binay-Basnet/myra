@@ -97,7 +97,7 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
         <ReactToPrint
           trigger={() => (
             <Button
-              isDisabled={!data.length}
+              isDisabled={!data?.length}
               variant="ghost"
               shade="neutral"
               leftIcon={<Icon as={AiOutlinePrinter} />}

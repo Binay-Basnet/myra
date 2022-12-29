@@ -92,6 +92,12 @@ export const ReportContent = ({ children }: { children: React.ReactNode }) => {
             display: 'flex',
             flexDir: 'column',
             overflowY: 'visible',
+            borderRadius: '0',
+          },
+          '@page': {
+            size: 'A4 portrait',
+            margin: '0.2in',
+            marginLeft: '0.4in',
           },
         }}
       >

@@ -182,9 +182,10 @@ export const TrialSheetReport = () => {
             border="1px"
             mb="s16"
             mx="s16"
-            borderColor="border.element"
+            borderColor="border.layout"
+            fontSize="s3"
           >
-            <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.element">
+            <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.layout">
               <Box
                 display="flex"
                 alignItems="center"
@@ -192,19 +193,25 @@ export const TrialSheetReport = () => {
                 h="100%"
                 px="s12"
                 borderRight="1px"
-                borderRightColor="border.element"
-                fontSize="r1"
+                borderRightColor="border.layout"
                 fontWeight={600}
                 color="gray.700"
               >
                 Total Profit/Loss (Total Income - Total Expenses)
               </Box>
-              <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
+              <Box
+                whiteSpace="nowrap"
+                px="s12"
+                w="20%"
+                display="flex"
+                alignItems="center"
+                justifyContent="end"
+              >
                 {data?.report?.transactionReport?.financial?.trialSheetReport?.data
                   ?.totalProfitLoss ?? 0}
               </Box>
             </Box>
-            <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.element">
+            <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.layout">
               <Box
                 display="flex"
                 alignItems="center"
@@ -212,14 +219,20 @@ export const TrialSheetReport = () => {
                 h="100%"
                 px="s12"
                 borderRight="1px"
-                borderRightColor="border.element"
-                fontSize="r1"
+                borderRightColor="border.layout"
                 fontWeight={600}
                 color="gray.700"
               >
                 Total Assets + Total Expenses + Dr of Off Balance
               </Box>
-              <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
+              <Box
+                whiteSpace="nowrap"
+                px="s12"
+                w="20%"
+                display="flex"
+                alignItems="center"
+                justifyContent="end"
+              >
                 {data?.report?.transactionReport?.financial?.trialSheetReport?.data
                   ?.totalAssetExpense ?? 0}
               </Box>
@@ -232,14 +245,20 @@ export const TrialSheetReport = () => {
                 h="100%"
                 px="s12"
                 borderRight="1px"
-                borderRightColor="border.element"
-                fontSize="r1"
+                borderRightColor="border.layout"
                 fontWeight={600}
                 color="gray.700"
               >
                 Total Liabilities + Total Income + Cr of Off Balance
               </Box>
-              <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
+              <Box
+                whiteSpace="nowrap"
+                px="s12"
+                w="20%"
+                display="flex"
+                alignItems="center"
+                justifyContent="end"
+              >
                 {data?.report?.transactionReport?.financial?.trialSheetReport?.data
                   ?.totalLiablitiesIncome ?? 0}
               </Box>

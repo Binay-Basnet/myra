@@ -179,6 +179,8 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
           },
           '@page': {
             size: 'A4 portrait',
+            margin: '0.2in',
+            marginLeft: '0.4in',
           },
         }}
       >

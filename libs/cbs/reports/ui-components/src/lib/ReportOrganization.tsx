@@ -6,10 +6,10 @@ import { LocalizedDateFilter, useAppSelector } from '@coop/cbs/data-access';
 import { formatAddress, getLocalizedTodaysDate, localizedDate } from '@coop/cbs/utils';
 
 export const ReportOrganization = () => {
-  const { watch } = useFormContext();
+  const { getValues } = useFormContext();
   const user = useAppSelector((state) => state.auth.user);
 
-  const period = watch('period') as LocalizedDateFilter;
+  const period = getValues('period') as LocalizedDateFilter;
 
   return (
     <Box
@@ -50,21 +50,33 @@ export const ReportOrganization = () => {
         </Box>
       </Box>
       <Box display="flex" flexDir="column" alignItems="flex-end">
-        <Box display="flex" gap="s4">
-          <Text fontSize="r1" color="gray.700">
-            Statement from:
-          </Text>
+        {period?.to ? (
+          <Box display="flex" gap="s4">
+            <Text fontSize="r1" color="gray.700">
+              Statement from:
+            </Text>
 
-          <Text fontSize="r1" color="gray.700" fontWeight="500">
-            {localizedDate(period?.from)}
-          </Text>
-          <Text fontSize="r1" color="gray.700">
-            to
-          </Text>
-          <Text fontSize="r1" color="gray.700" fontWeight="500">
-            {localizedDate(period?.to)}
-          </Text>
-        </Box>
+            <Text fontSize="r1" color="gray.700" fontWeight="500">
+              {localizedDate(period?.from)}
+            </Text>
+            <Text fontSize="r1" color="gray.700">
+              to
+            </Text>
+            <Text fontSize="r1" color="gray.700" fontWeight="500">
+              {localizedDate(period?.to)}
+            </Text>
+          </Box>
+        ) : (
+          <Box display="flex" gap="s4">
+            <Text fontSize="r1" color="gray.700">
+              Statement at:
+            </Text>
+
+            <Text fontSize="r1" color="gray.700" fontWeight="500">
+              {localizedDate(period?.from)}
+            </Text>
+          </Box>
+        )}
 
         <Box display="flex" gap="s4">
           <Text fontSize="r1" color="gray.700">

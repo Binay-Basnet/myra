@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+
 import { asyncToast, Box, SettingsFooter, Text } from '@myra-ui';
 
 import {
@@ -36,6 +37,8 @@ export const AlternativeChannels = () => {
     }
   }, [acChargesData]);
 
+  console.log(acChargesData);
+
   return (
     <>
       <FormProvider {...methods}>
@@ -63,7 +66,7 @@ export const AlternativeChannels = () => {
                 cellWidth: 'auto',
                 searchOptions: [
                   {
-                    label: t['acMobileBanking'],
+                    label: t['acMBanking'],
                     value: AlternativeChannelServiceType.MobileBanking,
                   },
                   {
