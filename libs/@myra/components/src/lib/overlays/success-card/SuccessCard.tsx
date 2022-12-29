@@ -109,6 +109,8 @@ export const SuccessCard = ({
 
         <Box display="flex" gap="s8">
           <Button
+            // TODO! WIP STATE
+            display="none"
             variant="outline"
             isDisabled
             leftIcon={<Icon as={AiOutlinePlus} />}
