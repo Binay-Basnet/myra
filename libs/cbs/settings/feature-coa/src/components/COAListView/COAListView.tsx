@@ -45,6 +45,10 @@ export const COAListView = () => {
         },
       },
       {
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.branch,
+      },
+      {
         header: t['settingsCoaTableAccountClass'],
         accessorFn: (row) => row?.node?.accountClass,
         cell: (props) => (
