@@ -49,6 +49,8 @@ query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
             lastPrincipalPaidDate
             lastInterestPaidDate
             installmentLateDays
+            nextPaymentDate
+            tenure
           }
           summary {
             disbursePrincipalTotal
