@@ -1,5 +1,6 @@
-import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Text } from '@myra-ui';
+
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { useTranslation } from '@coop/shared/utils';
 
 import { KymAssestsAndtarget } from './assets';
@@ -7,11 +8,11 @@ import { KymEquilities } from './equityandliabilities';
 import { ExpenseDetails } from './expenseDetails';
 import { IncomeDetails } from './incomeDetails';
 
-interface economicDetailsProps {
+interface EconomicDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const EconomicDetails = (props: economicDetailsProps) => {
+export const EconomicDetails = (props: EconomicDetailsProps) => {
   const { t } = useTranslation();
   const { setSection } = props;
 

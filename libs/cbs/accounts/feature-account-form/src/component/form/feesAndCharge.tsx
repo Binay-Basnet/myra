@@ -77,7 +77,7 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
     {
       name: 'cheque',
       amount: chequeCharge?.find((d) => d?.serviceName === 'Cheque issue charge')?.amount,
-      isEnabled: isChequeEnabled || false,
+      isEnabled: (isChequeEnabled && chequeCharge?.length) || false,
       shouldFocus: true,
     },
     {
