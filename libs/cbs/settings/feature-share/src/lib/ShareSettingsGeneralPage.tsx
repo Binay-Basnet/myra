@@ -208,64 +208,6 @@ export const ShareSettingsGeneralPage = () => {
               </Box>
             </Box>
           </ShareSettingsCard> */}
-          <ShareSettingsCard
-            title={t['shareCertificateNumber']}
-            subtitle={t['shareCertificateNumberSubtitle']}
-          >
-            <Box display="flex" flexDir="column" width="100%" gap="s16">
-              <Box display="flex" alignItems="center" justifyContent="space-between">
-                <Text fontSize="r1" color="gray.800">
-                  {t['shareStartNumber']}
-                </Text>
-                <Box>
-                  <FormInput name="startNumber" size="sm" __placeholder="00001" />
-                </Box>
-              </Box>
-              <Box display="flex" alignItems="center" justifyContent="space-between">
-                <Text fontSize="r1" color="gray.800">
-                  {t['shareEndNumber']}
-                </Text>
-                <Box>
-                  <FormInput name="endNumber" size="sm" __placeholder="00001" />
-                </Box>
-              </Box>
-
-              <Box display="flex" alignItems="center" justifyContent="space-between">
-                <Text fontSize="r1" color="gray.800">
-                  {t['shareIncrementer']}
-                </Text>
-                <Box>
-                  <FormInput name="incrementor" size="sm" __placeholder="1" />
-                </Box>
-              </Box>
-              <Box display="flex" alignItems="center" justifyContent="space-between">
-                <Text fontSize="r1" color="gray.800">
-                  {t['shareNumberOfDigits']}
-                </Text>
-                <Box>
-                  <FormInput name="noOfDigits" size="sm" __placeholder="7" />
-                </Box>
-              </Box>
-            </Box>{' '}
-            <Box
-              mt="s16"
-              mx="-16px"
-              p="s16"
-              mb="-16px"
-              width="calc(100% + 32px)"
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              bg="background.500"
-            >
-              <Text p="s12" color="gray.800" fontSize="r1" fontWeight="500">
-                {t['sharePreview']}
-              </Text>
-              <Text p="s12" color="gray.800" fontSize="r1" fontWeight="400">
-                XYZ12346342
-              </Text>
-            </Box>
-          </ShareSettingsCard>
         </Box>
         <SettingsFooter handleSave={handleSubmit} handleDiscard={handleDiscard} />
       </form>
