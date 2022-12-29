@@ -140,8 +140,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.1.1</Text>
-          <Text fontSize="s3">December 23, 2022</Text>
+          <Text fontSize="r2">Version 1.1.2</Text>
+          <Text fontSize="s3">December 29, 2022</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
