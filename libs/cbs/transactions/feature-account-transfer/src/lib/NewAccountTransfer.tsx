@@ -411,7 +411,7 @@ export const NewAccountTransfer = () => {
                     return {
                       type: 'Account Transfer',
                       total: amountConverter(result?.totalAmount || 0) as string,
-                      title: 'Deposit Successful',
+                      title: 'Account Transfer Successful',
                       details: {
                         'Transaction Id': (
                           <Text fontSize="s3" color="primary.500" fontWeight="600">
