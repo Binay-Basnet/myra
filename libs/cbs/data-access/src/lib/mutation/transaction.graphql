@@ -78,6 +78,9 @@ mutation setAccountTransferData($data: TransferInput!) {
         senderAccountName
         senderMemberId
         senderMemberName
+        transactionMode
+        withdrawWith
+        transferType
       }
       error {
         ...MutationError

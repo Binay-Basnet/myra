@@ -15804,6 +15804,9 @@ export type SetAccountTransferDataMutation = {
         senderAccountName?: string | null;
         senderMemberId?: string | null;
         senderMemberName?: Record<'local' | 'en' | 'np', string> | null;
+        transactionMode?: TransactionMode | null;
+        withdrawWith?: WithdrawWith | null;
+        transferType?: TransferType | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -28334,6 +28337,9 @@ export const SetAccountTransferDataDocument = `
         senderAccountName
         senderMemberId
         senderMemberName
+        transactionMode
+        withdrawWith
+        transferType
       }
       error {
         ...MutationError
