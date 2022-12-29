@@ -422,6 +422,8 @@ export const AddDeposit = () => {
                           </Box>
                         </Grid>
 
+                        <SuspiciousTransaction />
+
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70">
                             {t['addDepositPaymentRange']}
@@ -436,35 +438,6 @@ export const AddDeposit = () => {
                         </Box>
                       </>
                     )}
-
-                  {/* {accountId &&
-                    selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd && (
-                      <>
-                        <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
-                          <FormInput name="voucherId" label="Deposit Slip No" />
-
-                          <FormAmountInput
-                            type="number"
-                            name="amount"
-                            min={0}
-                            label={t['addDepositAmountToBeDeposited']}
-                          />
-                        </Grid>
-
-                        <SuspiciousTransaction />
-
-                        <Box display="flex" flexDirection="column" gap="s4">
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
-                            {t['addDepositTotalAmountAfterDeposit']}
-                          </Text>
-                          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-                            {`${t['rs']} ${amountConverter(
-                              Number(selectedAccount?.balance ?? 0) + Number(totalDeposit)
-                            )}`}
-                          </Text>
-                        </Box>
-                      </>
-                    )} */}
 
                   {accountId &&
                     (selectedAccount?.product?.nature === NatureOfDepositProduct.Current ||
