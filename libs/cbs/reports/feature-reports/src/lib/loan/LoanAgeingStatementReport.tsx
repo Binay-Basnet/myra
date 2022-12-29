@@ -68,7 +68,7 @@ export const LoanAgingStatementsReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 10,
+                    colspan: 11,
                   },
                 },
               },
@@ -129,6 +129,15 @@ export const LoanAgingStatementsReport = () => {
               {
                 header: 'Payment Mode',
                 accessorKey: 'paymentMode',
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Tenure',
+                accessorKey: 'tenure',
                 meta: {
                   Footer: {
                     display: 'none',
@@ -275,6 +284,15 @@ export const LoanAgingStatementsReport = () => {
               {
                 header: 'Last Interest Paid Date',
                 accessorFn: (row) => localizedDate(row?.lastInterestPaidDate),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Next Installment Date',
+                accessorFn: (row) => localizedDate(row?.nextPaymentDate),
                 meta: {
                   Footer: {
                     display: 'none',

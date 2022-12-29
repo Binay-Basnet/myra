@@ -90,6 +90,7 @@ query getCoaAccountList($branchId: String, $pagination: Pagination) {
             accountName
             accountClass
             parentGroup
+            branch
           }
         }
         totalCount
