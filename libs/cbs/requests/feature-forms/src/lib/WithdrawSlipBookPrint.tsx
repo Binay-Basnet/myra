@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   Alert,
@@ -62,7 +63,7 @@ export const WithdrawSlipBookPrint = () => {
 
   const user = useAppSelector((state) => state?.auth?.user);
 
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const methods = useForm<CustomWithdrawSlipIssueInput>({
     defaultValues: { printSize: '7*3.5' },
@@ -88,9 +89,7 @@ export const WithdrawSlipBookPrint = () => {
   }, [withdrawSlipData]);
 
   const memberId = watch('memberId');
-
   const count = watch('count');
-
   const { from, to } = useMemo(
     () => ({
       from: withdrawSlipData?.availableRange?.from,
@@ -155,6 +154,7 @@ export const WithdrawSlipBookPrint = () => {
         promise: savePrintSlip({
           data: { requestID: slipId as string, noOfLeaves: data.count },
         }),
+        onSuccess: () => queryClient.invalidateQueries(['getWithdrawSlipData']),
       });
     },
   });
@@ -183,7 +183,7 @@ export const WithdrawSlipBookPrint = () => {
                 accountNumber: withdrawSlipData?.account?.id as string,
                 accountName: withdrawSlipData?.account?.accountName as string,
                 slipNumber: String(from),
-                from: parseInt(withdrawSlipData?.availableRange?.from || '0'),
+                from: parseInt(withdrawSlipData?.availableRange?.from || '0', 10),
               }}
               ref={componentRef}
             />
@@ -210,31 +210,45 @@ export const WithdrawSlipBookPrint = () => {
                     isDisabled
                   />
 
-                  {count && to && from && (
+                  {to && from && (
                     <GridItem colSpan={2}>
                       <Alert
                         status="info"
-                        title={`Withdraw Slip Start Number ${from} and Withdraw Slip End Number ${to}`}
+                        title={`Withdraw Slip from ${from} to ${to} will be printed.`}
                         hideCloseIcon
                       />
                     </GridItem>
                   )}
 
-                  <FormSwitchTab name="printSize" label="Slip Sizes" options={slipSizes} />
+                  {count && !(from && to) && (
+                    <GridItem colSpan={2}>
+                      <Alert
+                        status="error"
+                        title="All Withdraw Slips have been printed."
+                        hideCloseIcon
+                      />
+                    </GridItem>
+                  )}
+
+                  {count && from && to && (
+                    <FormSwitchTab name="printSize" label="Slip Sizes" options={slipSizes} />
+                  )}
                 </FormSection>
 
-                <FormSection header="Print Preview" templateColumns={1} divider={false}>
-                  <WithdrawSlipBookPrintPreviewCard
-                    {...getPrintCardSizes()}
-                    details={{
-                      branch: user?.branch?.name as string,
-                      memberName: withdrawSlipData?.member?.name?.local as string,
-                      accountNumber: withdrawSlipData?.account?.id as string,
-                      accountName: withdrawSlipData?.account?.accountName as string,
-                      slipNumber: String(from),
-                    }}
-                  />
-                </FormSection>
+                {count && from && to && (
+                  <FormSection header="Print Preview" templateColumns={1} divider={false}>
+                    <WithdrawSlipBookPrintPreviewCard
+                      {...getPrintCardSizes()}
+                      details={{
+                        branch: user?.branch?.name as string,
+                        memberName: withdrawSlipData?.member?.name?.local as string,
+                        accountNumber: withdrawSlipData?.account?.id as string,
+                        accountName: withdrawSlipData?.account?.accountName as string,
+                        slipNumber: String(from),
+                      }}
+                    />
+                  </FormSection>
+                )}
               </Box>
             </form>
           </FormProvider>
@@ -247,6 +261,7 @@ export const WithdrawSlipBookPrint = () => {
             <FormFooter
               mainButtonLabel="Print"
               mainButtonHandler={handleSave}
+              isMainButtonDisabled={!(from && to)}
               draftButton={
                 <Button variant="ghost" shade="danger" onClick={() => router.back()}>
                   Cancel

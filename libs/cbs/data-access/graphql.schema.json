@@ -110210,7 +110210,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Map",
               "ofType": null
             },
             "isDeprecated": false,
