@@ -10,6 +10,7 @@ import { asyncToast, Box, Button, ButtonProps, Grid, GridItem, Icon, Modal, Text
 
 import {
   CoaAccountSetup,
+  CoaCategory,
   CoaTypeOfTransaction,
   CoaTypesOfAccount,
   NewCoaGroupInput,
@@ -90,9 +91,28 @@ const LeafNode = ({ data }: ITestProps) => {
 
   return (
     <NodeWrapper>
-      <Box display="flex" gap="s8" ml="-3px" alignItems="center" cursor="pointer">
+      <Box
+        display="flex"
+        gap="s4"
+        ml="-3px"
+        alignItems="center"
+        cursor="pointer"
+        transition="all 0.1s ease-in-out"
+        _hover={{
+          px: 's4',
+          bg: 'highlight.500',
+        }}
+      >
         <Icon size="sm" as={MdOutlineCircle} color="gray.500" />
-        <Box display="flex" alignItems="center" gap="s8" role="group">
+        <Box
+          display="flex"
+          alignItems="center"
+          gap="s8"
+          py="s4"
+          w="100%"
+          role="group"
+          color={data?.category === CoaCategory.UserDefined ? 'info.500' : 'inherit'}
+        >
           <Text fontWeight="bold" fontSize="14px">
             {data.accountCode}
           </Text>
