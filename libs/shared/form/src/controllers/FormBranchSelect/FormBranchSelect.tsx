@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { debounce } from 'lodash';
 
+import { SelectProps } from '@myra-ui';
+
 import { Filter_Mode, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { SelectProps } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 interface IFormBranchSelectProps extends SelectProps {
   name: string;
   label: string;
+  showAll?: boolean;
 }
 
 export const FormBranchSelect = (props: IFormBranchSelectProps) => {

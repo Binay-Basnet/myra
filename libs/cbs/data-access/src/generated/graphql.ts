@@ -2845,7 +2845,7 @@ export type DayBookReportData = {
 };
 
 export type DayBookReportFilter = {
-  branchId: Scalars['String'];
+  branchId: Array<InputMaybe<Scalars['String']>>;
   period?: InputMaybe<LocalizedDateFilter>;
   user?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
@@ -5166,6 +5166,11 @@ export type GraphData = {
   amount?: Maybe<Scalars['String']>;
   time?: Maybe<Scalars['Int']>;
 };
+
+export enum GuaranteeStatus {
+  Active = 'ACTIVE',
+  Released = 'RELEASED'
+}
 
 export type HumanizeAuditLog = {
   extraData?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -8275,6 +8280,11 @@ export type LoanAccountConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type LoanAccountDetailsResult = {
+  guarantee?: Maybe<LoanAccountGuaranteeDetails>;
+  overView?: Maybe<LoanAccountOverview>;
+};
+
 export type LoanAccountDisbursement = {
   destinationAccount: Scalars['ID'];
   note?: InputMaybe<Scalars['String']>;
@@ -8339,12 +8349,23 @@ export type LoanAccountGracePeriodResult = {
   recordId: Scalars['ID'];
 };
 
+export type LoanAccountGuaranteeDetails = {
+  guaranteeList?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
+  noOfGuarantee: Scalars['Int'];
+  totalGuaranteeRelease: Scalars['String'];
+  totalGuaranteeValuation: Scalars['String'];
+};
+
 export type LoanAccountGurantee = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
+  guaranteeStatus?: Maybe<GuaranteeStatus>;
   guranteeAmount?: Maybe<Scalars['Amount']>;
   maxGuranteeAmountLimit?: Maybe<Scalars['Amount']>;
   memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['Amount']>;
 };
 
@@ -8428,6 +8449,22 @@ export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
 };
 
+export type LoanAccountOverview = {
+  additionalFeatures?: Maybe<LoanPreviewAdditionalFeatures>;
+  generalInformation?: Maybe<LoanGeneralInformation>;
+  loanSchedule?: Maybe<LoanInstallments>;
+  totalInterestPaid: Scalars['String'];
+  totalPrincipalPaid: Scalars['String'];
+  totalRemainingPrincipal: Scalars['String'];
+  transactions?: Maybe<EbankingTransactionConnection>;
+};
+
+
+export type LoanAccountOverviewTransactionsArgs = {
+  filter?: InputMaybe<EbankingTransactionFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
 export type LoanAccountPaymentScheduleResult = {
   data?: Maybe<LoanInstallments>;
   error?: Maybe<QueryError>;
@@ -8459,6 +8496,7 @@ export type LoanAccountQuery = {
   getProductCriteria?: Maybe<LoanProductCriteriaResult>;
   getProductList?: Maybe<LoanProductList>;
   list?: Maybe<LoanAccountConnection>;
+  loanAccountDetails?: Maybe<LoanAccountDetailsResult>;
   loanPreview?: Maybe<LoanAccountPreviewResult>;
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
   paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
@@ -8496,6 +8534,11 @@ export type LoanAccountQueryGetProductListArgs = {
 export type LoanAccountQueryListArgs = {
   filter?: InputMaybe<LoanAccountSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+
+export type LoanAccountQueryLoanAccountDetailsArgs = {
+  loanAccountId: Scalars['ID'];
 };
 
 
@@ -8695,6 +8738,27 @@ export type LoanFilters = {
   amountRange?: InputMaybe<SavingAmountRange>;
   service?: InputMaybe<SavingServiceType>;
   transactionType?: InputMaybe<SavingTransactionType>;
+};
+
+export type LoanGeneralInformation = {
+  accountId: Scalars['String'];
+  accountName: Scalars['String'];
+  accountOpenDate: Scalars['Localized'];
+  interestAccrued?: Maybe<Scalars['String']>;
+  interestEarned?: Maybe<Scalars['String']>;
+  interestGracePeriod?: Maybe<Scalars['Int']>;
+  interestRate: Scalars['Float'];
+  linkedAccountId?: Maybe<Scalars['String']>;
+  linkedAccountName?: Maybe<Scalars['String']>;
+  loanAccountOpenBranchId: Scalars['String'];
+  loanAccountOpenBranchName: Scalars['String'];
+  principalGracePeriod?: Maybe<Scalars['Int']>;
+  productId: Scalars['String'];
+  productName: Scalars['String'];
+  repaymentScheme: LoanRepaymentScheme;
+  sanctionedAmount: Scalars['String'];
+  tenure: Scalars['Int'];
+  tenureUnit: Scalars['String'];
 };
 
 export type LoanGeneralSettings = {
@@ -12828,6 +12892,8 @@ export type TransactionListSummary = {
   averageBalance?: Maybe<Scalars['String']>;
   expensesThisMonth?: Maybe<Scalars['String']>;
   totalDeposit?: Maybe<Scalars['String']>;
+  totalPrincipalPaid?: Maybe<Scalars['String']>;
+  totalRemainingPrincipal?: Maybe<Scalars['String']>;
   totalWithdraw?: Maybe<Scalars['String']>;
 };
 
@@ -13115,29 +13181,29 @@ export type TrialSheetFilter = {
 
 export type TrialSheetReportData = {
   assets?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
-  assetsTotal?: Maybe<Scalars['String']>;
+  assetsTotal?: Maybe<Scalars['Map']>;
   equityAndLiablities?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
-  equityAndLiablitiesTotal?: Maybe<Scalars['String']>;
-  expenseTotal?: Maybe<Scalars['String']>;
+  equityAndLiablitiesTotal?: Maybe<Scalars['Map']>;
+  expenseTotal?: Maybe<Scalars['Map']>;
   expenses?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
   income?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
-  incomeTotal?: Maybe<Scalars['String']>;
+  incomeTotal?: Maybe<Scalars['Map']>;
   offBalance?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
-  offBalanceTotal?: Maybe<Scalars['String']>;
+  offBalanceTotal?: Maybe<Scalars['Map']>;
   totalAssetExpense?: Maybe<Scalars['String']>;
   totalLiablitiesIncome?: Maybe<Scalars['String']>;
   totalProfitLoss?: Maybe<Scalars['String']>;
 };
 
 export type TrialSheetReportDataEntry = {
-  balance?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['Map']>;
   ledgerId?: Maybe<Scalars['String']>;
   ledgerName?: Maybe<Scalars['Localized']>;
   under?: Maybe<Scalars['String']>;
 };
 
 export type TrialSheetReportFilter = {
-  branchId: Scalars['String'];
+  branchId: Array<InputMaybe<Scalars['String']>>;
   filter?: InputMaybe<TrialSheetFilter>;
   period: LocalizedDateFilter;
 };
@@ -15664,7 +15730,7 @@ export type GetTrialSheetReportQueryVariables = Exact<{
 }>;
 
 
-export type GetTrialSheetReportQuery = { report: { transactionReport: { financial: { trialSheetReport: { data?: { equityAndLiablitiesTotal?: string | null, assetsTotal?: string | null, expenseTotal?: string | null, incomeTotal?: string | null, offBalanceTotal?: string | null, totalAssetExpense?: string | null, totalLiablitiesIncome?: string | null, totalProfitLoss?: string | null, equityAndLiablities?: Array<{ balance?: string | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, expenses?: Array<{ balance?: string | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, income?: Array<{ balance?: string | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, assets?: Array<{ balance?: string | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, offBalance?: Array<{ balance?: string | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null } | null } } } } };
+export type GetTrialSheetReportQuery = { report: { transactionReport: { financial: { trialSheetReport: { data?: { equityAndLiablitiesTotal?: Record<string, string> | null, assetsTotal?: Record<string, string> | null, expenseTotal?: Record<string, string> | null, incomeTotal?: Record<string, string> | null, offBalanceTotal?: Record<string, string> | null, totalAssetExpense?: string | null, totalLiablitiesIncome?: string | null, totalProfitLoss?: string | null, equityAndLiablities?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, expenses?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, income?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, assets?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, offBalance?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null } | null } } } } };
 
 export type GetTransactionTellerReportQueryVariables = Exact<{
   data: TellerReportFilter;

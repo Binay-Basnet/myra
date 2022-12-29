@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
-import { Box, ExpandedCell, ExpandedHeader, GridItem, Text } from '@myra-ui';
+import { Box, Column, ExpandedCell, ExpandedHeader, GridItem, Text } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
   TrialSheetReportDataEntry,
   TrialSheetReportFilter,
+  useGetBranchListQuery,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -14,7 +16,8 @@ import { localizedText } from '@coop/cbs/utils';
 import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
 
-type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter'> & {
+type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
+  branchId: { label: string; value: string }[];
   filter: {
     includeZero: 'include' | 'exclude';
   };
@@ -22,11 +25,15 @@ type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter'> & {
 
 export const TrialSheetReport = () => {
   const [filters, setFilters] = useState<TrialSheetReportFilters | null>(null);
+  const branchIDs =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : [];
 
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
       data: {
-        branchId: filters?.branchId as string,
+        branchId: branchIDs,
         period: {
           from: filters?.period?.from,
           to: filters?.period?.from,
@@ -84,7 +91,7 @@ export const TrialSheetReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
 
           <GridItem colSpan={1}>
@@ -285,52 +292,87 @@ export const TrialSheetReport = () => {
 interface ICOATableProps {
   data: TrialSheetReportDataEntry[];
   type: string;
-  total: string | null | undefined;
+  total: Record<string, string> | null | undefined;
 }
 
 export const COATable = ({ data, type, total }: ICOATableProps) => {
-  if (data?.length === 0) {
+  const { getValues } = useFormContext<TrialSheetReportFilters>();
+  const branchIDs = getValues()?.branchId?.map((a) => a.value);
+
+  const { data: branchListQueryData } = useGetBranchListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  if (data?.length === 0 && !branchListQueryData) {
     return null;
   }
 
-  const tree = arrayToTree(
-    data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
-    ''
-  );
+  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const headers = [
+    ...((branchList?.filter((a) => branchIDs.includes(a?.node?.id || ''))?.map((a) => a.node?.id) ||
+      []) as string[]),
+    branchIDs.length === 1 ? undefined : 'Total',
+  ]?.filter(Boolean);
 
-  return (
-    <Report.Table<TrialSheetReportDataEntry>
-      showFooter
-      data={tree}
-      columns={[
-        {
-          header: ({ table }) => <ExpandedHeader table={table} value={type} />,
-          accessorKey: 'ledgerName',
-          cell: (props) => (
-            <ExpandedCell
-              row={props.row}
-              value={` ${props.row.original.ledgerId} - ${localizedText(
-                props?.row?.original?.ledgerName
-              )}`}
-            />
-          ),
-          footer: () => <>Total {type}</>,
-          meta: {
-            width: '80%',
-          },
-        },
-        {
-          header: 'Balance',
-          accessorKey: 'balance',
-          cell: (props) => props.getValue() as string,
-          footer: () => total ?? 0,
+  const baseColumn: Column<TrialSheetReportDataEntry>[] = [
+    {
+      header: ({ table }) => <ExpandedHeader table={table} value={type} />,
+      accessorKey: 'ledgerName',
+      cell: (props) => (
+        <ExpandedCell
+          row={props.row}
+          value={` ${props.row.original.ledgerId} - ${localizedText(
+            props?.row?.original?.ledgerName
+          )}`}
+        />
+      ),
+      footer: () => <>Total {type}</>,
+      meta: {
+        width: '80%',
+      },
+    },
+  ];
+
+  const columns: Column<TrialSheetReportDataEntry>[] = [
+    ...baseColumn,
+    ...headers.map(
+      (header) =>
+        ({
+          header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
+          accessorKey: header,
+          cell: (props) => props.getValue() || ('0.00' as string),
+          footer: () => total?.[header || ''] || '0.00',
           meta: {
             isNumeric: true,
           },
-        },
-      ]}
-    />
+        } as Column<TrialSheetReportDataEntry>)
+    ),
+  ];
+
+  const coaData = data?.reduce((acc, curr) => {
+    const balance = curr?.balance;
+
+    curr = {
+      ledgerId: curr?.ledgerId,
+      ledgerName: curr?.ledgerName,
+      under: curr?.under,
+      ...balance,
+    };
+
+    acc.push(curr);
+
+    return acc;
+  }, [] as TrialSheetReportDataEntry[]);
+
+  const tree = arrayToTree(
+    coaData.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
+    ''
   );
+
+  return <Report.Table<TrialSheetReportDataEntry> showFooter data={tree} columns={columns} />;
 };
 
 export const sortCoa = (data: TrialSheetReportDataEntry[]) =>
