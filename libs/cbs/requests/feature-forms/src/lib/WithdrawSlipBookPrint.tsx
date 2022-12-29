@@ -143,28 +143,26 @@ export const WithdrawSlipBookPrint = () => {
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    onAfterPrint: () => {
+      const data = getValues();
+
+      asyncToast({
+        id: 'save-withdraw-slip-print-data',
+        msgs: {
+          loading: 'Saving print data',
+          success: 'Print data saved',
+        },
+        promise: savePrintSlip({
+          data: { requestID: slipId as string, noOfLeaves: data.count },
+        }),
+      });
+    },
   });
 
   const { mutateAsync: savePrintSlip } = usePrintSlipMutation();
 
   const handleSave = () => {
-    const data = getValues();
-
-    asyncToast({
-      id: 'save-withdraw-slip-print-data',
-      msgs: {
-        loading: 'Saving print data',
-        success: 'Print data saved',
-      },
-      promise: savePrintSlip({
-        data: { requestID: slipId as string, noOfLeaves: data.count },
-      }),
-      onSuccess: () => {
-        handlePrint();
-        // queryClient.invalidateQueries(['getAvailableSlipsList']);
-        // router.push('/withdraw/withdraw-slip-book/list');
-      },
-    });
+    handlePrint();
   };
 
   return (
@@ -176,6 +174,19 @@ export const WithdrawSlipBookPrint = () => {
 
         <Box bg="white">
           <FormProvider {...methods}>
+            <WithdrawSlipBookPrintCard
+              {...getPrintCardSizes()}
+              size={printSize}
+              details={{
+                branch: user?.branch?.name as string,
+                memberName: withdrawSlipData?.member?.name?.local as string,
+                accountNumber: withdrawSlipData?.account?.id as string,
+                accountName: withdrawSlipData?.account?.accountName as string,
+                slipNumber: String(from),
+                from: parseInt(withdrawSlipData?.availableRange?.from || '0'),
+              }}
+              ref={componentRef}
+            />
             <form>
               <Box minH="calc(100vh - 170px)" pb="s60">
                 <FormSection templateColumns={2}>
@@ -245,19 +256,6 @@ export const WithdrawSlipBookPrint = () => {
           </Container>
         </Box>
       </Box>
-
-      <WithdrawSlipBookPrintCard
-        {...getPrintCardSizes()}
-        size={printSize}
-        details={{
-          branch: user?.branch?.name as string,
-          memberName: withdrawSlipData?.member?.name?.local as string,
-          accountNumber: withdrawSlipData?.account?.id as string,
-          accountName: withdrawSlipData?.account?.accountName as string,
-          slipNumber: String(from),
-        }}
-        ref={componentRef}
-      />
     </>
   );
 };
