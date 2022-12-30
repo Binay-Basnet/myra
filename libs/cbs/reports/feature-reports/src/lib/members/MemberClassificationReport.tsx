@@ -1,22 +1,15 @@
-import React, { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useState } from 'react';
 
-import { Box, Divider, Loader } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { GridItem } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
-  MemberClassificationReportData,
   ReportEntry,
   useGetMemberClassificationReportQuery,
 } from '@coop/cbs/data-access';
-import {
-  MemberClassificationInputs,
-  ReportHeader,
-  ReportOrganization,
-  ReportOrganizationHeader,
-} from '@coop/cbs/reports/components';
-import { Report } from '@coop/cbs/reports/list';
+import { Report } from '@coop/cbs/reports';
+import { ReportDateRange } from '@coop/cbs/reports/components';
+import { Report as ReportEnum } from '@coop/cbs/reports/list';
 
 type ClassifyBy =
   | 'All'
@@ -52,25 +45,32 @@ type MemberClassificationFilter = {
 };
 
 export const MemberClassificationReport = () => {
-  const methods = useForm();
-  const [hasShownFilter, setHasShownFilter] = useState(false);
-  const [filter, setFilter] = useState<MemberClassificationFilter | null>(null);
+  const [filters, setFilters] = useState<MemberClassificationFilter | null>(null);
 
-  const { data: memberClassificationData, isLoading } = useGetMemberClassificationReportQuery(
-    { data: { period: filter?.period as LocalizedDateFilter } },
-    { enabled: !!filter }
+  const { data, isFetching } = useGetMemberClassificationReportQuery(
+    {
+      data: filters as MemberClassificationFilter,
+    },
+    { enabled: !!filters }
   );
-
-  const memberClassification = memberClassificationData?.report?.memberReport
-    ?.memberClassificationReport?.data as MemberClassificationReportData;
+  const memberData = data?.report?.memberReport?.memberClassificationReport?.data;
+  const genderWiseReport = memberData?.gender;
+  const ageReport = memberData?.age;
+  const occupationReport = memberData?.occupation;
 
   return (
-    <FormProvider {...methods}>
-      <Box bg="white" minH="calc(100vh - 110px)" w="100%" display="flex" flexDir="column">
-        <ReportHeader
-          hasSave={false}
+    <Report
+      defaultFilters={{}}
+      data={genderWiseReport as ReportEntry[]}
+      filters={filters}
+      setFilters={setFilters}
+      isLoading={isFetching}
+      report={ReportEnum.MEMBER_CLASSIFICATION_REPORT}
+    >
+      <Report.Header>
+        <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/reports/cbs/member-report' },
+            { label: 'Members Reports', link: '/reports/cbs/member-report' },
             {
               label: 'Member Classification Report',
               link: '/reports/cbs/members/classification/new',
@@ -78,143 +78,80 @@ export const MemberClassificationReport = () => {
           ]}
         />
 
-        <MemberClassificationInputs
-          hasShownFilter={hasShownFilter}
-          setFilter={setFilter}
-          setHasShownFilter={setHasShownFilter}
-        />
+        <Report.Inputs>
+          {/* <GridItem colSpan={3}>
+            <FormBranchSelect name="branchId" label="Service Center" />
+          </GridItem> */}
 
-        <Box display="flex" minH="calc(100vh - 260.5px)" w="100%" overflowX="auto">
-          <Box w="100%">
-            {(() => {
-              if (isLoading) {
-                return (
-                  <Box
-                    h="200px"
-                    w="100%"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Loader />
-                  </Box>
-                );
-              }
-
-              if (memberClassification) {
-                return (
-                  <Box display="flex" flexDir="column" w="100%">
-                    <ReportOrganizationHeader reportType={Report.MEMBER_CLASSIFICATION_REPORT} />
-                    <ReportOrganization />
-                    <Box px="s32" pb="s32">
-                      <Divider />
-                    </Box>
-
-                    <Box px="s32" display="flex" flexDir="column" gap="s16">
-                      {filter?.classificationBy.includes('All')
-                        ? ClassifyAll.map((c) => (
-                            <MemberClassificationTable
-                              type={c}
-                              data={
-                                memberClassification[
-                                  classificationKeys[
-                                    c as keyof typeof classificationKeys
-                                  ] as keyof MemberClassificationReportData
-                                ] as ReportEntry[]
-                              }
-                            />
-                          ))
-                        : filter?.classificationBy.map((classifyBy) =>
-                            classifyBy === 'Address Wise' ? null : (
-                              <MemberClassificationTable
-                                type={classifyBy}
-                                data={memberClassification.gender as ReportEntry[]}
-                              />
-                            )
-                          )}
-
-                      {(filter?.classificationBy.includes('Address Wise') ||
-                        filter?.classificationBy.includes('All')) && (
-                        <>
-                          <MemberClassificationTable
-                            type="Province Wise"
-                            data={memberClassification.address?.province as ReportEntry[]}
-                          />
-                          <MemberClassificationTable
-                            type="District Wise"
-                            data={memberClassification.address?.district as ReportEntry[]}
-                          />
-                        </>
-                      )}
-                    </Box>
-                  </Box>
-                );
-              }
-
-              return null;
-            })()}
-          </Box>
-        </Box>
-      </Box>
-    </FormProvider>
+          <GridItem colSpan={1}>
+            <GridItem colSpan={1}>
+              <ReportDateRange label="Date Period" />
+            </GridItem>
+          </GridItem>
+        </Report.Inputs>
+      </Report.Header>
+      <Report.Body>
+        <Report.Content>
+          <Report.OrganizationHeader />
+          <Report.Organization />
+          {genderWiseReport && <MemberTable data={genderWiseReport} />}
+        </Report.Content>
+      </Report.Body>
+    </Report>
   );
 };
 
-export const MemberClassificationTable = ({
-  data,
-  type,
-}: {
-  data: ReportEntry[] | undefined | null;
-  type: string;
-}) => {
-  const columns = React.useMemo<Column<ReportEntry>[]>(
-    () => [
-      {
-        header: `${type}`,
-        accessorKey: 'entryName',
-        footer: () => <Box textAlign="right">Total</Box>,
-        meta: {
-          width: '70%',
-        },
-      },
-      {
-        header: 'In Number',
-        accessorKey: 'inNumber',
-        cell: (props) => props.getValue() ?? 0,
-        footer: () => (
-          <Box textAlign="right">
-            {data?.reduce((acc, curr) => acc + Number(curr?.inNumber ?? 0), 0)}
-          </Box>
-        ),
+interface IMemberTableProps {
+  data: ({
+    entryName?: string | null | undefined;
+    inNumber?: number | null | undefined;
+    inPercent?: string | null | undefined;
+  } | null)[];
+  header?: string;
+  footer?: {
+    label: string;
+    data1: string | number | undefined;
+    data2: string | number | undefined;
+  };
+}
 
-        meta: {
-          isNumeric: true,
-        },
-      },
-      {
-        header: 'In Percentage',
-        cell: (props) => `${props.getValue()} %`,
-        accessorKey: 'inPercent',
-        footer: () => <Box textAlign="right">100 %</Box>,
-
-        meta: {
-          isNumeric: true,
-        },
-      },
-    ],
-    [type, JSON.stringify(data)]
-  );
-
-  if (!data || data.length === 0) return null;
+export const MemberTable = ({ data, header, footer }: IMemberTableProps) => {
+  if (data?.length === 0) {
+    return null;
+  }
+  const newData =
+    data?.map((val, index) => ({
+      index: Number(index) + 1,
+      entryName: val?.entryName,
+      inNumber: val?.inNumber,
+      inPercent: val?.inPercent,
+    })) || [];
 
   return (
-    <Table<ReportEntry>
-      isStatic
+    <Report.Table<ReportEntry & { index: number }>
+      data={newData}
       showFooter
-      size="report"
-      variant="report"
-      columns={columns}
-      data={data ?? []}
+      columns={[
+        {
+          header: 'S.No.',
+          accessorKey: 'index',
+        },
+        {
+          header: 'Gender wise',
+          accessorKey: 'entryName',
+          meta: {
+            width: '60px',
+          },
+        },
+        {
+          header: 'In Number',
+          accessorKey: 'inNumber',
+        },
+        {
+          header: 'In Percent',
+          accessorFn: (row) => row?.inPercent,
+        },
+      ]}
     />
   );
 };
