@@ -20967,7 +20967,19 @@ export type GetLoanStatementReportQuery = {
     loanReport: {
       loanStatementReport?: {
         memberId?: string | null;
-        member?: { name?: Record<'local' | 'en' | 'np', string> | null; code: string } | null;
+        member?: {
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+          address?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+        } | null;
         statement?:
           | {
               meta?: {
@@ -34993,6 +35005,18 @@ export const GetLoanStatementReportDocument = `
         member {
           name
           code
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
         }
         statement {
           ... on LoanStatementReport {
