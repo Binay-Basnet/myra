@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+
 import { MainLayout } from '@myra-ui';
 
 import { CBSAccountCloseList } from '@coop/cbs/accounts/account-form';

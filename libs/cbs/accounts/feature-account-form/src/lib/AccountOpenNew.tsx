@@ -24,12 +24,14 @@ import {
   DepositInput,
   DepositLoanAccountInput,
   DepositPaymentType,
+  Id_Type,
   NatureOfDepositProduct,
   useGetAccountOpenEditDataQuery,
   useGetAccountOpenMinorListQuery,
   useGetAccountOpenProductDetailsQuery,
   useGetDefaultAccountListQuery,
   useGetIndividualMemberDetails,
+  useGetNewIdMutation,
   useGetProductListQuery,
   useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
@@ -131,6 +133,13 @@ export const AccountOpenNew = () => {
   const [triggerQuery, setTriggerQuery] = useState(false);
   const [showCriteria, setShowCriteria] = useState(false);
   const [triggerProductQuery, setTriggerProductQuery] = useState(false);
+  const getNewId = useGetNewIdMutation({});
+  const [newId, setNewId] = useState('');
+
+  useEffect(() => {
+    getNewId?.mutateAsync({ idType: Id_Type?.Account }).then((res) => setNewId(res?.newId));
+  }, []);
+
   // const [mode, setMode] = useState<number>(0); // 0: form, 1: payment
 
   const methods = useForm<CustomDepositLoanAccountInput>({
@@ -150,7 +159,8 @@ export const AccountOpenNew = () => {
   const routerAction = router.query['action'];
   const redirectPath = router.query['redirect'];
 
-  const id = String(router?.query?.['id']);
+  const id = (router?.query?.['id'] as string) || newId;
+
   const { mutateAsync } = useSetAccountOpenDataMutation();
   const { mutate: mutateDocs } = useSetAccountDocumentDataMutation();
 
