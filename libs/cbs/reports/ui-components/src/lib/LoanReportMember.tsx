@@ -14,7 +14,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => {
   return (
     <Box p="s32" display="flex" justifyContent="space-between">
       <Box w="50%">
-        <Box w="70%">
+        <Box w="90%">
           <Grid templateColumns="repeat(2, 1fr)">
             <GridItem>
               <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
@@ -36,7 +36,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => {
                 <Text>{profile?.branch?.name}</Text>
                 <Text>{amountConverter(account?.approvedAmount ?? 0)}</Text>
                 <Text> {localizedDate(account?.issuedDate)}</Text>
-                <Text>2955</Text>
+                <Text>{member?.code}</Text>
               </Box>
             </GridItem>
           </Grid>

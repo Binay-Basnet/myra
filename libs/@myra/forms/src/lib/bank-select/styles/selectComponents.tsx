@@ -47,7 +47,7 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
         <Box display="flex" flexDirection="column" gap="s8">
           <Box display="flex" flexDirection="column" gap="s2">
             <Box display="flex" flexDirection="column">
-              <Text fontSize="r1" fontWeight={600} color="primary.500">
+              <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-80">
                 {data.bankInfo.displayName}
               </Text>
               <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">

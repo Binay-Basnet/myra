@@ -1,5 +1,6 @@
+import { Box, Text, VStack } from '@myra-ui';
+
 import { FormCheckbox } from '@coop/shared/form';
-import { Box, Divider, Text, VStack } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const TypeOfMember = () => {
@@ -11,11 +12,18 @@ export const TypeOfMember = () => {
       border="1px"
       spacing="0"
       alignItems="start"
-      divider={<Divider border="1px" borderColor="border.layout" />}
       borderColor="border.layout"
       borderRadius="br2"
     >
-      <Box display="flex" alignItems="center" px="s12" height="s60">
+      <Box
+        borderBottom="1px"
+        borderColor="border.layout"
+        w="100%"
+        display="flex"
+        alignItems="center"
+        px="s12"
+        height="s60"
+      >
         <Box display="flex" flexDir="column" gap="s4">
           <Text fontSize="r1" color="gray.800" fontWeight="SemiBold" lineHeight="16.25px">
             {t['settingsTypesOfNewMember']}

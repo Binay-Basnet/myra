@@ -29,7 +29,6 @@ export const LoanStatementReport = () => {
   const loanMember = data?.report?.loanReport?.loanStatementReport?.member;
   const loanAccountMeta =
     loanData && 'loanStatement' in loanData ? (loanData.meta as LoanAccReportDetails) : null;
-
   return (
     <Report
       defaultFilters={null}

@@ -92,18 +92,11 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
         <Input
           placeholder={placeholder ?? 'Search'}
           variant="outline"
-          h="50px"
-          ml="2px"
+          h="full"
           borderRadius={0}
           outline="none"
           border="none"
-          borderBottom="1px"
-          borderBottomColor="border.layout"
           color="gray.600"
-          _hover={{
-            border: 'solid 1px',
-            borderColor: 'gray.300',
-          }}
           _focus={{ border: 'solid 1px', borderColor: 'primary.300' }}
           _active={{ border: 'solid 1px', borderColor: 'primary.500' }}
           defaultValue={search && search}
