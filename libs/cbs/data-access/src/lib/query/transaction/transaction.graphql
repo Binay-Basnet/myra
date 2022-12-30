@@ -336,6 +336,7 @@ query getEODStatus {
   transaction {
     eodStatus {
       states {
+        headOfficeReady
         currentBranchesReady
         interestBooking
         interestPosting
