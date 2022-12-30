@@ -112,6 +112,13 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
+const accountTypes = {
+  [NatureOfDepositProduct.Saving]: 'Saving Account',
+  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+  [NatureOfDepositProduct.Current]: 'Current Account',
+};
+
 export const AccountOpenNew = () => {
   const queryClient = useQueryClient();
 
@@ -183,7 +190,9 @@ export const AccountOpenNew = () => {
       (previousValue, currentValue) => [
         ...previousValue,
         {
-          label: currentValue?.productName as string,
+          label: `${currentValue?.productName} [${
+            accountTypes[currentValue?.nature as NatureOfDepositProduct]
+          }]`,
           value: currentValue?.id as string,
         },
       ],
@@ -193,7 +202,9 @@ export const AccountOpenNew = () => {
       (previousValue, currentValue) => [
         ...previousValue,
         {
-          label: currentValue?.data?.productName as string,
+          label: `${currentValue?.data?.productName} [${
+            accountTypes[currentValue?.data?.nature as NatureOfDepositProduct]
+          }]`,
           value: currentValue?.data?.id as string,
         },
       ],

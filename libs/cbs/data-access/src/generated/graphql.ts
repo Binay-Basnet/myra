@@ -16053,10 +16053,14 @@ export type GetProductListQuery = {
     general?: {
       depositProduct?: {
         getProductList?: {
-          allowed?: Array<{ id: string; productName: string } | null> | null;
+          allowed?: Array<{
+            id: string;
+            productName: string;
+            nature: NatureOfDepositProduct;
+          } | null> | null;
           notAllowed?: Array<{
             error?: Array<string | null> | null;
-            data?: { id: string; productName: string } | null;
+            data?: { id: string; productName: string; nature: NatureOfDepositProduct } | null;
           } | null> | null;
         } | null;
       } | null;
@@ -28682,11 +28686,13 @@ export const GetProductListDocument = `
           allowed {
             id
             productName
+            nature
           }
           notAllowed {
             data {
               id
               productName
+              nature
             }
             error
           }
