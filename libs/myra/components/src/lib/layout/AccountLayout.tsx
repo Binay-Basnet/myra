@@ -47,11 +47,11 @@ const accountColumns = [
 const addButtoncolumns = [
   {
     title: 'newAccountOpen',
-    addLink: '/savings/account-open/add',
+    link: '/savings/account-open/add',
   },
   {
     title: 'accountClose',
-    addLink: '/savings/account-close/add',
+    link: '/savings/account-close/add',
   },
 ];
 
