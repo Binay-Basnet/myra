@@ -19,8 +19,8 @@ import {
 import { Column, Table } from '@myra-ui/table';
 
 import { useReport } from '@coop/cbs/reports';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { ReportOrganizationHeader } from '@coop/cbs/reports/components';
+
+import { ReportOrganizationHeader } from './ReportOrganizationHeader';
 
 export const ReportHeader = ({ children }: { children: React.ReactNode }) => (
   <Box position="sticky" bg="white" top="110px" zIndex="10">
@@ -91,7 +91,10 @@ export const ReportContent = ({ children }: { children: React.ReactNode }) => {
           '@media print': {
             display: 'flex',
             flexDir: 'column',
+            w: '100%',
+            h: '100%',
             overflowY: 'visible',
+            overflowX: 'visible',
             borderRadius: '0',
           },
           '@page': {

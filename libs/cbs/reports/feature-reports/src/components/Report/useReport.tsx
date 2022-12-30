@@ -3,8 +3,7 @@ import { DeepPartial, FormProvider, useForm } from 'react-hook-form';
 
 import { Box } from '@myra-ui';
 
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { ReportHeader as ReportPageHeader, ReportOrganization } from '@coop/cbs/reports/components';
+import { ReportOrganization } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 
 import {
@@ -18,6 +17,7 @@ import {
   ReportMeta,
   ReportTable,
 } from './Report';
+import { ReportHeader as ReportPageHeader } from './ReportHeader';
 
 interface IReportContext<
   T extends Record<string, unknown> | null,

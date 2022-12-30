@@ -10,13 +10,11 @@ import {
   ReportEntry,
   useGetMemberClassificationReportQuery,
 } from '@coop/cbs/data-access';
-import {
-  MemberClassificationInputs,
-  ReportHeader,
-  ReportOrganization,
-  ReportOrganizationHeader,
-} from '@coop/cbs/reports/components';
+import { MemberClassificationInputs, ReportOrganization } from '@coop/cbs/reports/components';
 import { Report } from '@coop/cbs/reports/list';
+
+import { ReportHeader } from '../../components/Report/ReportHeader';
+import { ReportOrganizationHeader } from '../../components/Report/ReportOrganizationHeader';
 
 type ClassifyBy =
   | 'All'
