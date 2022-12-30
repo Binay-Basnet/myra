@@ -283,7 +283,7 @@ export const ShareReturnForm = () => {
                   >
                     <Box w="100%">
                       <FormSection>
-                        <GridItem colSpan={2}>
+                        <GridItem colSpan={3}>
                           <FormMemberSelect
                             allMembers={false}
                             name="memberId"
