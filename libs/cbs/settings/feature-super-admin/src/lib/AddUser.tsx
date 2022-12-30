@@ -225,7 +225,7 @@ export const AddUser = () => {
 
                 {/* <FormInput type="date" name="dob" label="Date of Birth (BS)" /> */}
 
-                <FormDatePicker isRequired name="dob" label="Date of Birth" />
+                <FormDatePicker isRequired name="dob" label="Date of Birth" maxToday />
 
                 <FormPhoneNumber isRequired name="contactNo" label="Mobile No" />
 
