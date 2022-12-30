@@ -33,6 +33,7 @@ import {
   useAppDispatch,
   useAppSelector,
   useGetEndOfDayDateDataQuery,
+  useGetEodStatusQuery,
   useSetEndOfDayDataMutation,
   useSetPreferenceMutation,
 } from '@coop/cbs/data-access';
@@ -121,6 +122,8 @@ export const TopLevelHeader = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { mutateAsync } = useSetPreferenceMutation();
+  const { data: eodStatusQueryData, refetch } = useGetEodStatusQuery({});
+  const isHeadOfficeReady = eodStatusQueryData?.transaction?.eodStatus?.states?.headOfficeReady;
 
   const user = useAppSelector((state) => state?.auth?.user);
   const userId = user?.id;
@@ -239,6 +242,7 @@ export const TopLevelHeader = () => {
 
   const handleBranchReadiness = () => {
     router.push('/branch-readiness');
+    refetch();
     // readyBranch(
     //   {},
     //   {
@@ -416,16 +420,18 @@ export const TopLevelHeader = () => {
                               >
                                 Branch Readiness
                               </Button>
-                              <Button
-                                variant="solid"
-                                display="flex"
-                                justifyContent="center"
-                                w="100%"
-                                // onClick={() => router.push('/day-close')}
-                                onClick={closeDayFxn}
-                              >
-                                Close Day
-                              </Button>
+                              {isHeadOfficeReady && (
+                                <Button
+                                  variant="solid"
+                                  display="flex"
+                                  justifyContent="center"
+                                  w="100%"
+                                  // onClick={() => router.push('/day-close')}
+                                  onClick={closeDayFxn}
+                                >
+                                  Close Day
+                                </Button>
+                              )}
                             </>
                           )
                         ) : (

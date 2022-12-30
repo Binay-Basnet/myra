@@ -3832,6 +3832,7 @@ export type EodStates = {
   cashInVault?: Maybe<EodState>;
   currentBranchesReady?: Maybe<Scalars['Boolean']>;
   dormancy?: Maybe<EodState>;
+  headOfficeReady?: Maybe<Scalars['Boolean']>;
   interestBooking?: Maybe<EodState>;
   interestPosting?: Maybe<EodState>;
   loanInterestBooking?: Maybe<EodState>;
@@ -20971,7 +20972,19 @@ export type GetLoanStatementReportQuery = {
     loanReport: {
       loanStatementReport?: {
         memberId?: string | null;
-        member?: { name?: Record<'local' | 'en' | 'np', string> | null; code: string } | null;
+        member?: {
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+          address?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+        } | null;
         statement?:
           | {
               meta?: {
@@ -21867,6 +21880,7 @@ export type GetGlobalSearchQuery = {
         edges?: Array<{
           cursor: string;
           node?: {
+            id?: string | null;
             fullCode?: string | null;
             hasParam?: boolean | null;
             iconType?: GlobalPagesIconType | null;
@@ -24262,6 +24276,7 @@ export type GetEodStatusQuery = {
   transaction: {
     eodStatus?: {
       states?: {
+        headOfficeReady?: boolean | null;
         currentBranchesReady?: boolean | null;
         interestBooking?: EodState | null;
         interestPosting?: EodState | null;
@@ -34999,6 +35014,18 @@ export const GetLoanStatementReportDocument = `
         member {
           name
           code
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
         }
         statement {
           ... on LoanStatementReport {
@@ -36175,6 +36202,7 @@ export const GetGlobalSearchDocument = `
           cursor
           node {
             ... on GlobalPagesResultNode {
+              id
               fullCode
               hasParam
               iconType
@@ -39413,6 +39441,7 @@ export const GetEodStatusDocument = `
   transaction {
     eodStatus {
       states {
+        headOfficeReady
         currentBranchesReady
         interestBooking
         interestPosting
