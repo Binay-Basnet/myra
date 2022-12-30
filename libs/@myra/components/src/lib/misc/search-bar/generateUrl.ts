@@ -8,7 +8,7 @@ const APP_CODES: Record<string, string> = {
 // type AppNameType = typeof APP_CODES[AppCodeType];
 // type AppType = `${AppCodeType}-${AppNameType}`;
 
-const CBS_MENU_CODES: Record<string, string> = {
+export const CBS_MENU_CODES: Record<string, string> = {
   '00': 'members',
   '01': 'share',
   '02': 'savings',
@@ -136,6 +136,25 @@ export const getPageUrl = (code: string) => {
   }
 
   return '';
+};
+
+export const getSubtitle = (code: string) => {
+  const appCode = code[0];
+  const menuCode = `${code[1]}${code[2]}`;
+
+  if (parseInt(appCode, 10) === 1) {
+    return CBS_MENU_CODES[menuCode];
+  }
+  return SETTINGS_MENU_CODES[menuCode];
+};
+
+export const getAppName = (code: string) => {
+  const appCode = code[0];
+
+  if (parseInt(appCode, 10) === 1) {
+    return 'Core Banking System';
+  }
+  return 'Settings';
 };
 
 // console.log(pages.map((page) => getPageUrl(String(page))));

@@ -30,7 +30,7 @@ import { Icon } from '@myra-ui/foundations';
 import { Filter_Mode, useGetGlobalSearchQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { useDebounce } from '@coop/shared/utils';
 
-import { getPageUrl } from './generateUrl';
+import { getAppName, getPageUrl, getSubtitle } from './generateUrl';
 import { useSearchNavigate } from './useSearchNavigate';
 import Loader from '../loader/Loader';
 
@@ -179,6 +179,7 @@ export const SearchBar = () => {
         onSubmit={async (e) => {
           e.preventDefault();
 
+          // TODO
           const formSearch = globalSearch?.find((search) => search?.node?.fullCode === inputSearch);
 
           if (formSearch) {
@@ -366,9 +367,9 @@ export const SearchBar = () => {
                   globalSearch?.map((basic, index) => (
                     <Fragment key={basic?.node?.url}>
                       <BasicSearchCard
-                        subtitle="Member"
+                        subtitle={getSubtitle(basic?.node?.fullCode as string)}
                         type={basic?.node?.iconType as string}
-                        app="Core Banking System"
+                        app={getAppName(basic?.node?.fullCode as string)}
                         link={basic?.node?.url as string}
                         title={basic?.node?.page as string}
                         isSelected={focusState === index}
@@ -386,7 +387,7 @@ export const SearchBar = () => {
                             .then(() => {
                               const currentSearch = {
                                 title: basic?.node?.page,
-                                link: basic?.node?.url,
+                                link: url,
                                 hasParams: basic?.node?.hasParam,
                               };
 
@@ -516,7 +517,7 @@ export const BasicSearchCard = ({
             {title} ({fullCode})
           </Text>
 
-          <Text fontSize="r1" color="gray.500">
+          <Text textTransform="capitalize" fontSize="r1" color="gray.500">
             {subtitle}
           </Text>
         </Box>
