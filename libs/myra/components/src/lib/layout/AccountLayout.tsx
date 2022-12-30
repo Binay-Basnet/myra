@@ -40,8 +40,7 @@ const accountColumns = [
   {
     title: 'accountClose',
     link: '/savings/account-close',
-    addLinkId: '/savings/account-close',
-    idType: Id_Type?.Account,
+    addLink: '/savings/account-close/add',
   },
 ];
 
@@ -52,7 +51,7 @@ const addButtoncolumns = [
   },
   {
     title: 'accountClose',
-    linkId: '/savings/account-close/add',
+    addLink: '/savings/account-close/add',
   },
 ];
 
