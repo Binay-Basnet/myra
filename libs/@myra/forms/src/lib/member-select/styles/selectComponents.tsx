@@ -52,27 +52,52 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
     const { data } = props;
     return (
       <chakraComponents.Option {...props}>
-        <Box display="flex" gap="s16">
-          <Box borderRadius="50%">
-            <Avatar
-              src={data.memberInfo?.profilePicUrl ?? ''}
-              size="md"
-              name={data.memberInfo?.memberName}
-            />
+        <Box display="flex" justifyContent="space-between" width="100%">
+          <Box gap="s16" display="flex">
+            <Box borderRadius="50%">
+              <Avatar
+                src={data.memberInfo?.profilePicUrl ?? ''}
+                size="md"
+                name={data.memberInfo?.memberName}
+              />
+            </Box>
+            <Box display="flex" gap="s4" flexDirection="column">
+              <Text
+                lineHeight="100%"
+                fontWeight="Medium"
+                fontSize="r2"
+                color="neutralColorLight.Gray-80"
+              >
+                {data.memberInfo?.memberName}
+              </Text>
+
+              <Text
+                lineHeight="100%"
+                fontWeight="Regular"
+                fontSize="s3"
+                color="neutralColorLight.Gray-70"
+              >
+                {data.memberInfo?.gender ?? '-'} | {data.memberInfo?.age ?? '-'} |{' '}
+                {data.memberInfo?.maritialStatus ?? '-'}
+              </Text>
+              <Text
+                lineHeight="100%"
+                fontWeight="Regular"
+                fontSize="s3"
+                color="neutralColorLight.Gray-60"
+              >
+                {data.memberInfo?.address}
+              </Text>
+            </Box>
           </Box>
-          <Box display="flex" flexDirection="column">
-            <Text fontWeight="Medium" fontSize="r2" color="neutralColorLight.Gray-80">
-              {data.memberInfo?.memberName}
-            </Text>
-            <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.Gray-60">
+          <Box>
+            <Text
+              lineHeight="100%"
+              fontWeight="Regular"
+              fontSize="s3"
+              color="neutralColorLight.Gray-60"
+            >
               {data.memberInfo?.code}
-            </Text>
-            <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.Gray-70">
-              {data.memberInfo?.gender ?? '-'} | {data.memberInfo?.age ?? '-'} |{' '}
-              {data.memberInfo?.maritialStatus ?? '-'}
-            </Text>
-            <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.Gray-60">
-              {data.memberInfo?.address}
             </Text>
           </Box>
         </Box>
