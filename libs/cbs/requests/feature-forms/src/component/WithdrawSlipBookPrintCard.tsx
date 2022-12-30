@@ -55,7 +55,8 @@ export const WithdrawSlipBookPrintCard = React.forwardRef<
           key={number}
           display="none"
           position="relative"
-          bg="transparent"
+          bg="white"
+          opacity="0.9"
           sx={{
             pageBreakAfter: number && number % 2 === 0 ? 'always' : 'avoid',
             '@media print': {
