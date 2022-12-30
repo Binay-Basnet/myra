@@ -8,10 +8,8 @@ import { Column, Table, TablePopover } from '@myra-ui/table';
 import {
   AccountTypeFilter,
   DepositProductStatus,
-  Id_Type,
   LoanProductInactiveData,
   useGetLoanProductListQuery,
-  useGetNewIdMutation,
   useSetLoanProductInactiveMutation,
   useSetProductActiveMutation,
 } from '@coop/cbs/data-access';
@@ -33,12 +31,8 @@ export const SettingsLoanProduct = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
-
-  const newId = useGetNewIdMutation();
   const onSubmit = () => {
-    newId
-      .mutateAsync({ idType: Id_Type.Loanproduct })
-      .then((res) => router.push(`/settings/general/loan-products/add/${res?.newId}`));
+    router.push(`/settings/general/loan-products/add`);
   };
 
   return (

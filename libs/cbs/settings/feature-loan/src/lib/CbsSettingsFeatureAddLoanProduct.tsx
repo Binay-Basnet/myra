@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
@@ -9,12 +9,14 @@ import {
   Collateral,
   CriteriaSection,
   FrequencyTenure,
+  Id_Type,
   LoanProductInput,
   LoanProductInstallment,
   LoanRepaymentScheme,
   PenaltyType,
   useGetLoanGeneralSettingsQuery,
   useGetLoanProductEditDataQuery,
+  useGetNewIdMutation,
   useSetLoanProductMutation,
 } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
@@ -46,7 +48,14 @@ import {
 export const SettingsLoanProductForm = () => {
   const router = useRouter();
   const { t } = useTranslation();
-  const id = String(router?.query?.['id']);
+  const [newId, setNewId] = useState('');
+  const { mutateAsync: getId } = useGetNewIdMutation();
+  useEffect(() => {
+    getId({ idType: Id_Type.Loanproduct }).then((res) => setNewId(res?.newId as string));
+  }, []);
+
+  const id = (router?.query?.['id'] as string) || newId;
+
   const { mutateAsync } = useSetLoanProductMutation();
 
   type SelectOption = {
