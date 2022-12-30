@@ -132,6 +132,8 @@ export const AddVaultTransfer = () => {
       promise: setVaultTransfer({ data: filteredValues as TellerTransferInput }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getTellerTransactionListData']);
+        queryClient.invalidateQueries(['getMe']);
+
         router.push('/transfer/vault-transfer/list');
       },
     });
