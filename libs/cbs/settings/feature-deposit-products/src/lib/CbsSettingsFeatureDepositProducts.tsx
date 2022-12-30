@@ -9,10 +9,8 @@ import {
   AccountTypeFilter,
   DepositProductInactiveData,
   DepositProductStatus,
-  Id_Type,
   NatureOfDepositProduct,
   useGetDepositProductSettingsListQuery,
-  useGetNewIdMutation,
   useSetDepositProductInactiveMutation,
   useSetProductActiveMutation,
 } from '@coop/cbs/data-access';
@@ -37,13 +35,10 @@ type DepositTableProps = {
 
 export const SettingsDepositProducts = () => {
   const router = useRouter();
-  const newId = useGetNewIdMutation();
   const { t } = useTranslation();
 
   const onSubmit = () => {
-    newId
-      .mutateAsync({ idType: Id_Type.Depositproduct })
-      .then((res) => router.push(`/settings/general/deposit-products/add/${res?.newId}`));
+    router.push(`/settings/general/deposit-products/add`);
   };
   return (
     <>
