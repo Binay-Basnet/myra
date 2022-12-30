@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { Alert, Box, Text } from '@myra-ui';
+
 import { InterestAuthority, useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Alert, Box, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const radioGroupdata = [
@@ -21,7 +22,6 @@ const radioGroupdata = [
 export const Interest = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const routerAction = router.query['action'];
 
   const [triggerQuery, setTriggerQuery] = useState(false);
   const { watch, setValue } = useFormContext();
@@ -50,7 +50,7 @@ export const Interest = () => {
   // }, [valueInput, setValue]);
 
   useEffect(() => {
-    if (routerAction === 'add') {
+    if (router.pathname.includes('add')) {
       setValue('interestRate', defaultRate);
     }
   }, [defaultRate]);

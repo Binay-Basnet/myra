@@ -156,10 +156,11 @@ export const AccountOpenNew = () => {
   const { getValues, watch, reset, setValue } = methods;
   const memberId = watch('memberId');
   const router = useRouter();
-  const routerAction = router.query['action'];
   const redirectPath = router.query['redirect'];
 
-  const id = (router?.query?.['id'] as string) || newId;
+  const routeId = router?.query?.['id'] as string;
+
+  const id = routeId || newId;
 
   const { mutateAsync } = useSetAccountOpenDataMutation();
   const { mutate: mutateDocs } = useSetAccountDocumentDataMutation();
@@ -429,11 +430,14 @@ export const AccountOpenNew = () => {
       }
     });
   };
-  const { data: editValues, refetch } = useGetAccountOpenEditDataQuery({
-    id,
-  });
+  const { data: editValues, refetch } = useGetAccountOpenEditDataQuery(
+    {
+      id: routeId,
+    },
+    { enabled: !!routeId }
+  );
   useEffect(() => {
-    if (editValues) {
+    if (editValues && routeId) {
       const editValueData = editValues?.account?.formState?.data;
       if (editValueData) {
         reset({
@@ -444,13 +448,14 @@ export const AccountOpenNew = () => {
   }, [editValues, id]);
 
   useEffect(() => {
-    if (id) {
+    if (routeId) {
       refetch();
     }
   }, [refetch]);
 
   useEffect(() => {
-    if (routerAction === 'add' || routerAction === 'edit') {
+    if (router.pathname.includes('add')) {
+      // if (routerAction === 'add' || routerAction === 'edit') {
       setValue('accountName', defaultAccountName);
     }
   }, [defaultAccountName]);
