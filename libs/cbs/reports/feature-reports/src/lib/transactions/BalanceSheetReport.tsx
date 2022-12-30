@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, ExpandedCell, ExpandedHeader, GridItem, Text } from '@myra-ui';
+import { Box, GridItem, Text } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
@@ -8,14 +8,13 @@ import {
   TrialSheetReportFilter,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
-import { Report } from '@coop/cbs/reports';
+import { COATable, Report, sortCoa } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedText } from '@coop/cbs/utils';
-import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 
-type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter'> & {
+type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
+  branchId: { label: string; value: string }[];
   filter: {
     includeZero: 'include' | 'exclude';
   };
@@ -24,10 +23,15 @@ type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter'> & {
 export const BalanceSheetReport = () => {
   const [filters, setFilters] = useState<TrialSheetReportFilters | null>(null);
 
+  const branchIDs =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : [];
+
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
       data: {
-        branchId: filters?.branchId as string,
+        branchId: branchIDs,
         period: filters?.period as LocalizedDateFilter,
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
@@ -69,7 +73,7 @@ export const BalanceSheetReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Date Period" />
@@ -128,64 +132,3 @@ export const BalanceSheetReport = () => {
     </Report>
   );
 };
-
-interface ICOATableProps {
-  data: TrialSheetReportDataEntry[];
-  type: string;
-  total: string | null | undefined;
-}
-
-const COATable = ({ data, type, total }: ICOATableProps) => {
-  if (data?.length === 0) {
-    return null;
-  }
-
-  const tree = arrayToTree(
-    data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
-    ''
-  );
-
-  return (
-    <Report.Table<TrialSheetReportDataEntry>
-      showFooter
-      data={tree}
-      columns={[
-        {
-          header: ({ table }) => <ExpandedHeader table={table} value={type} />,
-          accessorKey: 'ledgerName',
-          cell: (props) => (
-            <ExpandedCell
-              row={props.row}
-              value={` ${props.row.original.ledgerId} - ${localizedText(
-                props?.row?.original?.ledgerName
-              )}`}
-            />
-          ),
-          footer: () => <>Total {type}</>,
-          meta: {
-            width: '80%',
-          },
-        },
-        {
-          header: 'Balance',
-          accessorKey: 'balance',
-          cell: (props) => props.getValue() as string,
-          footer: () => total ?? 0,
-          meta: {
-            isNumeric: true,
-          },
-        },
-      ]}
-    />
-  );
-};
-
-const sortCoa = (data: TrialSheetReportDataEntry[]) =>
-  data?.sort((a, b) =>
-    Number(
-      a?.ledgerId?.localeCompare(b?.ledgerId as string, undefined, {
-        numeric: true,
-        sensitivity: 'base',
-      })
-    )
-  );

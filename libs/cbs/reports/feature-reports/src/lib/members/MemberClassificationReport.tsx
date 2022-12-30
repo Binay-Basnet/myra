@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { GridItem } from '@myra-ui';
 
 import {
-  LocalizedDateFilter,
+  MemberClassificationFilter,
   ReportEntry,
   useGetMemberClassificationReportQuery,
 } from '@coop/cbs/data-access';
@@ -11,38 +11,38 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 
-type ClassifyBy =
-  | 'All'
-  | 'Gender Wise'
-  | 'Age Wise'
-  | 'Occupation Wise'
-  | 'Education Level Wise'
-  | 'Income Level Wise'
-  | 'Address Wise'
-  | 'Member Category Wise';
+// type ClassifyBy =
+//   | 'All'
+//   | 'Gender Wise'
+//   | 'Age Wise'
+//   | 'Occupation Wise'
+//   | 'Education Level Wise'
+//   | 'Income Level Wise'
+//   | 'Address Wise'
+//   | 'Member Category Wise';
 
-const ClassifyAll = [
-  'Gender Wise',
-  'Age Wise',
-  'Occupation Wise',
-  'Member Category Wise',
-  'Education Level Wise',
-  'Income Level Wise',
-];
+// const ClassifyAll = [
+//   'Gender Wise',
+//   'Age Wise',
+//   'Occupation Wise',
+//   'Member Category Wise',
+//   'Education Level Wise',
+//   'Income Level Wise',
+// ];
 
-const classificationKeys = {
-  'Gender Wise': 'gender',
-  'Age Wise': 'age',
-  'Occupation Wise': 'occupation',
-  'Member Category Wise': 'memberCategory',
-  'Education Level Wise': 'education',
-  'Income Level Wise': 'income',
-};
+// const classificationKeys = {
+//   'Gender Wise': 'gender',
+//   'Age Wise': 'age',
+//   'Occupation Wise': 'occupation',
+//   'Member Category Wise': 'memberCategory',
+//   'Education Level Wise': 'education',
+//   'Income Level Wise': 'income',
+// };
 
-type MemberClassificationFilter = {
-  classificationBy: ClassifyBy[];
-  period: LocalizedDateFilter;
-};
+// type MemberClassificationFilter = {
+//   classificationBy: ClassifyBy[];
+//   period: LocalizedDateFilter;
+// };
 
 export const MemberClassificationReport = () => {
   const [filters, setFilters] = useState<MemberClassificationFilter | null>(null);
@@ -57,6 +57,9 @@ export const MemberClassificationReport = () => {
   const genderWiseReport = memberData?.gender;
   const ageReport = memberData?.age;
   const occupationReport = memberData?.occupation;
+  const memberTypeReport = memberData?.memberCategory;
+  const addressWiseReport = memberData?.address?.province;
+  const districtWiseReport = memberData?.address?.district;
 
   return (
     <Report
@@ -94,7 +97,12 @@ export const MemberClassificationReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
-          {genderWiseReport && <MemberTable data={genderWiseReport} />}
+          {genderWiseReport && <MemberTable data={genderWiseReport} header="Genderwise" />}
+          {ageReport && <MemberTable data={ageReport} header="Agewise" />}
+          {occupationReport && <MemberTable data={occupationReport} header="Occupation wise" />}
+          {memberTypeReport && <MemberTable data={memberTypeReport} header="Member Typewise" />}
+          {addressWiseReport && <MemberTable data={addressWiseReport} header="Addresswise" />}
+          {districtWiseReport && <MemberTable data={districtWiseReport} header="Disctrictwise" />}
         </Report.Content>
       </Report.Body>
     </Report>
@@ -107,15 +115,10 @@ interface IMemberTableProps {
     inNumber?: number | null | undefined;
     inPercent?: string | null | undefined;
   } | null)[];
-  header?: string;
-  footer?: {
-    label: string;
-    data1: string | number | undefined;
-    data2: string | number | undefined;
-  };
+  header: string;
 }
 
-export const MemberTable = ({ data, header, footer }: IMemberTableProps) => {
+export const MemberTable = ({ data, header }: IMemberTableProps) => {
   if (data?.length === 0) {
     return null;
   }
@@ -137,7 +140,7 @@ export const MemberTable = ({ data, header, footer }: IMemberTableProps) => {
           accessorKey: 'index',
         },
         {
-          header: 'Gender wise',
+          header: () => header,
           accessorKey: 'entryName',
           meta: {
             width: '60px',

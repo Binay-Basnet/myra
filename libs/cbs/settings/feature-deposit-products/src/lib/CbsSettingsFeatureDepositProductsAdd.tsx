@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -10,10 +10,12 @@ import {
   DepositProductInput,
   Frequency,
   FrequencyTenure,
+  Id_Type,
   KymMemberTypesEnum,
   NatureOfDepositProduct,
   ServiceType,
   useGetDepositProductSettingsEditDataQuery,
+  useGetNewIdMutation,
   useSetDepositProductMutation,
 } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
@@ -75,7 +77,13 @@ type DepositForm = Omit<
 export const SettingsDepositProductsAdd = () => {
   const router = useRouter();
   const { t } = useTranslation();
-  const id = String(router?.query?.['id']);
+  const [newId, setNewId] = useState('');
+  const { mutateAsync: getId } = useGetNewIdMutation();
+  useEffect(() => {
+    getId({ idType: Id_Type.Depositproduct }).then((res) => setNewId(res?.newId as string));
+  }, []);
+
+  const id = (router?.query?.['id'] as string) || newId;
 
   const { mutateAsync } = useSetDepositProductMutation();
 

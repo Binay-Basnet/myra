@@ -1,12 +1,24 @@
 import { useMemo } from 'react';
+import { Controller } from 'react-hook-form';
 
-import { SelectProps } from '@myra-ui';
+import { BankSelect, BankSelectProps } from '@myra-ui/forms';
 
-import { useGetBankAccountListQuery } from '@coop/cbs/data-access';
-import { FormSelect } from '@coop/shared/form';
+import { AccountingBankAccountType, useGetBankAccountListQuery } from '@coop/cbs/data-access';
 import { getRouterQuery } from '@coop/shared/utils';
 
-interface IFormBankSelectProps extends SelectProps {
+interface Option {
+  label?: string;
+  value: string;
+  bankInfo: {
+    bankName: string;
+    accountNo: string;
+    displayName: string;
+    accountType: AccountingBankAccountType;
+    balance: string;
+  };
+}
+
+interface IFormBankSelectProps extends BankSelectProps {
   name: string;
   label?: string;
 }
@@ -21,14 +33,39 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
   const bankOptions = useMemo(
     () =>
       bankAccountListQueryData?.accounting?.bankAccounts?.list?.edges?.map((item) => ({
-        label: item?.node?.displayName as string,
         value: item?.node?.id as string,
+        bankInfo: {
+          bankName: item?.node?.bankName as string,
+          accountNo: item?.node?.accountNo as string,
+          displayName: item?.node?.displayName as string,
+          accountType: item?.node?.accountType?.replace(/_/gi, ' ').toLowerCase() ?? '',
+          balance: item?.node?.balance as string,
+        },
       })),
     [bankAccountListQueryData]
   );
 
   return (
-    <FormSelect name={name} label={label} isLoading={isFetching} options={bankOptions} {...rest} />
+    <Controller
+      render={({ field: { value, onChange } }) => (
+        <BankSelect
+          label={label}
+          value={bankOptions?.find((option) => option.value === value)}
+          isLoading={isFetching}
+          onChange={(newValue: Option | Option[]) => {
+            if (Array.isArray(newValue)) {
+              onChange(newValue);
+            } else {
+              const { value: newVal } = newValue as Option;
+              onChange(newVal);
+            }
+          }}
+          options={bankOptions}
+          {...rest}
+        />
+      )}
+      name={name}
+    />
   );
 };
 

@@ -64,8 +64,15 @@ export const Select = ({
         onMenuClose={() => {
           if (isMulti) {
             setSortedOptions((prev) =>
-              (prev as Array<Option>)?.sort((optionA) => {
-                if ((value as Array<Option>)?.find((v) => optionA.value === v.value)) {
+              (prev as Array<Option>)?.sort((optionA, optionB) => {
+                if (optionA.value === 'ALL') return 1;
+                if (optionB.value === 'ALL') return -1;
+
+                if (
+                  (value as Array<Option>)?.find((v) =>
+                    optionA.value === 'ALL' ? true : optionA.value === v.value
+                  )
+                ) {
                   return -1;
                 }
                 return 1;
