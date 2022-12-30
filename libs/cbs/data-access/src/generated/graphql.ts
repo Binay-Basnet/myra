@@ -5015,13 +5015,22 @@ export enum GlobalPagesIconType {
 }
 
 export type GlobalPagesResultNode = {
-  appName?: Maybe<GlobalPageAppName>;
+  actionCode?: Maybe<Scalars['String']>;
+  appCode?: Maybe<Scalars['String']>;
   fullCode?: Maybe<Scalars['String']>;
   hasParam?: Maybe<Scalars['Boolean']>;
   iconType?: Maybe<GlobalPagesIconType>;
-  menuName?: Maybe<GlobalPageMenuName>;
+  id?: Maybe<Scalars['String']>;
+  menuCode?: Maybe<Scalars['String']>;
   page?: Maybe<Scalars['String']>;
+  pageCode?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
+};
+
+export type GlobalPagesResultNodeV2 = {
+  action?: Maybe<Scalars['Any']>;
+  id?: Maybe<Scalars['String']>;
+  table?: Maybe<Scalars['String']>;
 };
 
 export enum GracePeriod {
@@ -10933,6 +10942,7 @@ export type Query = {
   requests: RequestsQuery;
   routesAndCodes: RoutesAndCodesQuery;
   search: SearchQuery;
+  search_v2: SearchQueryV2;
   settings: SettingsQuery;
   share: ShareQuery;
   transaction: TransactionQuery;
@@ -11567,6 +11577,11 @@ export type SearchListEdges = {
   node?: Maybe<SearchResultNode>;
 };
 
+export type SearchPagination = {
+  page: Scalars['Int'];
+  size?: InputMaybe<Scalars['Int']>;
+};
+
 export type SearchQuery = {
   globalPages: SearchQueryResult;
 };
@@ -11585,6 +11600,25 @@ export type SearchQueryResultData = {
   edges?: Maybe<Array<Maybe<SearchListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
+};
+
+export type SearchQueryResultDataV2 = {
+  edges?: Maybe<Array<Maybe<GlobalPagesResultNodeV2>>>;
+  pageInfo?: Maybe<PageInfo>;
+};
+
+export type SearchQueryResultV2 = {
+  data?: Maybe<SearchQueryResultDataV2>;
+  error?: Maybe<QueryError>;
+};
+
+export type SearchQueryV2 = {
+  globalPages: SearchQueryResultV2;
+};
+
+export type SearchQueryV2GlobalPagesArgs = {
+  pagination?: InputMaybe<SearchPagination>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export type SearchResultNode = GlobalPagesResultNode;
