@@ -13,7 +13,8 @@ import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 
-type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter'> & {
+type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
+  branchId: { label: string; value: string }[];
   filter: {
     includeZero: 'include' | 'exclude';
   };
@@ -21,11 +22,15 @@ type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter'> & {
 
 export const ProfitAndLossReport = () => {
   const [filters, setFilters] = useState<TrialSheetReportFilters | null>(null);
+  const branchIDs =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : [];
 
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
       data: {
-        branchId: filters?.branchId as string,
+        branchId: branchIDs,
         period: filters?.period as LocalizedDateFilter,
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
@@ -67,7 +72,7 @@ export const ProfitAndLossReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Date Period" />

@@ -3,7 +3,6 @@ export * from './lib/InterestStatementInputs';
 export * from './lib/LoanReportInputs';
 export * from './lib/LoanReportMember';
 export * from './lib/MemberClassificationInputs';
-export * from './lib/ReportHeader';
 export * from './lib/ReportMember';
 export * from './lib/ReportOrganization';
 export * from './lib/SavingReportInputs';

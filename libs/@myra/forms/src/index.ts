@@ -1,6 +1,7 @@
 export * from './lib/account-input/AccountInput';
 export * from './lib/account-select/AccountSelect';
 export * from './lib/amount-input/AmountInput';
+export * from './lib/bank-select/BankSelect';
 export * from './lib/checkbox/Checkbox';
 export * from './lib/checkbox/indeterminate-checkbox/IndeterminateCheckbox';
 export * from './lib/checkbox-group/CheckboxGroup';
