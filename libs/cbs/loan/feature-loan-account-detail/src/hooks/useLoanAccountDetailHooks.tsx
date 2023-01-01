@@ -1,0 +1,156 @@
+import { useMemo } from 'react';
+import { useRouter } from 'next/router';
+
+import {
+  EbankingTransaction,
+  useGetLoanAccountCollateralDetailsQuery,
+  useGetLoanAccountDetailsQuery,
+  useGetLoanAccountGuaranteeDetailsQuery,
+} from '@coop/cbs/data-access';
+import { amountConverter, getRouterQuery } from '@coop/shared/utils';
+
+export const useLoanAccountDetailHooks = () => {
+  const router = useRouter();
+
+  const { id } = router.query;
+
+  const { data: loanAccountDetailsQueryData } = useGetLoanAccountDetailsQuery({
+    loanAccountId: id as string,
+    paginate: getRouterQuery({ type: ['PAGINATION'] }),
+  });
+
+  const { data: loanAccountGuaranteeDetailsData } = useGetLoanAccountGuaranteeDetailsQuery({
+    loanAccountId: id as string,
+  });
+
+  const { data: loanAccountCollateralDetailsData } = useGetLoanAccountCollateralDetailsQuery({
+    loanAccountId: id as string,
+  });
+
+  const gauranteeData = loanAccountGuaranteeDetailsData?.loanAccount?.loanAccountDetails?.guarantee;
+  const collatData = loanAccountCollateralDetailsData?.loanAccount?.loanAccountDetails?.collateral;
+  const overviewData = loanAccountDetailsQueryData?.loanAccount?.loanAccountDetails?.overView;
+  const generalInfo = overviewData?.generalInformation;
+  const additionalInfo = overviewData?.additionalFeatures;
+  const txnListInfo = overviewData?.transactions?.edges;
+  const paymentsListInfo = overviewData?.loanSchedule;
+  const gauranteeListInfo = gauranteeData?.guaranteeList;
+  const collatListInfo = collatData?.collateralList;
+
+  const generalInfoCardData = [
+    { label: 'Account Name', value: generalInfo?.accountName ?? 'N/A' },
+    { label: 'Product Name', value: generalInfo?.productName ?? 'N/A' },
+    { label: 'Account Open Date', value: generalInfo?.accountOpenDate?.local ?? 'N/A' },
+    { label: 'Loan Account Open Branch', value: generalInfo?.loanAccountOpenBranchName ?? 'N/A' },
+    { label: 'Payment Scheme', value: generalInfo?.repaymentScheme ?? 'N/A' },
+    { label: 'Interest Rate', value: generalInfo?.interestRate ?? 'N/A' },
+    { label: 'Interest Accrued', value: generalInfo?.interestAccrued ?? 'N/A' },
+    { label: 'Sanctioned Amount', value: generalInfo?.sanctionedAmount ?? 'N/A' },
+    { label: 'Interest Grace Period', value: generalInfo?.interestGracePeriod ?? 'N/A' },
+    { label: 'Principal Grace Period', value: generalInfo?.principalGracePeriod ?? 'N/A' },
+    { label: 'Tenure', value: generalInfo?.tenure ?? 'N/A' },
+    { label: 'Linked Account', value: generalInfo?.linkedAccountName ?? 'N/A' },
+  ];
+
+  const accountSummary = [
+    {
+      title: 'Total Principal Paid',
+      value: amountConverter(overviewData?.totalPrincipalPaid ?? 0),
+    },
+    {
+      title: 'Total Interest Paid',
+      value: amountConverter(overviewData?.totalInterestPaid ?? 0),
+    },
+    {
+      title: 'Remaining Principal Amount',
+      value: amountConverter(overviewData?.totalRemainingPrincipal ?? 0),
+    },
+  ];
+
+  const additionalFeatures = [
+    {
+      label: 'Allow Partial Installment',
+      value: additionalInfo?.allowPartialInstallment ? 'Yes' : 'No',
+    },
+    {
+      label: 'Is Monthly Interest Compulsory',
+      value: additionalInfo?.isMonthlyInterestCompulsory ? 'Yes' : 'No',
+    },
+    { label: 'Insurance', value: additionalInfo?.insurance ? 'Yes' : 'No' },
+    { label: 'Collateral', value: additionalInfo?.collateral ? 'Yes' : 'No' },
+    { label: 'Staff Profuct', value: additionalInfo?.staffProduct ? 'Yes' : 'No' },
+    {
+      label: 'Support Multiple Account',
+      value: additionalInfo?.supportMultipleAccount ? 'Yes' : 'No',
+    },
+    {
+      label: 'Loan Schedule Change Override',
+      value: additionalInfo?.loanScheduleChangeOverride ? 'Yes' : 'No',
+    },
+    { label: 'Override Interest', value: additionalInfo?.overrideInterest ? 'Yes' : 'No' },
+  ];
+
+  const guaranteeSummary = [
+    {
+      title: 'No of Guarantee',
+      value: amountConverter(gauranteeData?.noOfGuarantee ?? 0),
+    },
+    {
+      title: 'Total Guarantee Value',
+      value: amountConverter(gauranteeData?.totalGuaranteeValuation ?? 0),
+    },
+    {
+      title: 'Total Guarantee Release',
+      value: amountConverter(gauranteeData?.totalGuaranteeRelease ?? 0),
+    },
+  ];
+
+  const transactionList = useMemo(
+    () => txnListInfo?.map((item) => item?.node as EbankingTransaction) ?? [],
+    [txnListInfo]
+  );
+
+  const paymentList = useMemo(
+    () =>
+      paymentsListInfo?.installments?.map((installment) => ({
+        installmentNo: installment?.installmentNo,
+        installmentDate: installment?.installmentDate,
+        payment: installment?.payment,
+        principal: installment?.principal ?? '0',
+        interest: installment?.interest ?? '0',
+        remainingPrincipal: installment?.remainingPrincipal,
+        paid: installment?.paid,
+      })) ?? [],
+    [paymentsListInfo]
+  );
+
+  const collateralSummary = [
+    {
+      title: 'No of Collateral',
+      value: amountConverter(collatData?.noOfCollateral ?? 0),
+    },
+    {
+      title: 'Total Collateral Value',
+      value: amountConverter(collatData?.totalCollateralValuation ?? 0),
+    },
+    {
+      title: 'Total Collateral Release',
+      value: amountConverter(collatData?.totalCollateralRelease ?? 0),
+    },
+  ];
+
+  return {
+    overviewData,
+    generalInfo,
+    generalInfoCardData,
+    transactionList,
+    gauranteeData,
+    accountSummary,
+    additionalFeatures,
+    paymentList,
+    guaranteeSummary,
+    gauranteeListInfo,
+    collateralSummary,
+    collatListInfo,
+  };
+};

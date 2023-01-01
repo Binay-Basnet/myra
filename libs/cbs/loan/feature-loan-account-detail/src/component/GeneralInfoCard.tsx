@@ -2,7 +2,7 @@ import { Box, DetailsCard, Text } from '@myra-ui';
 
 interface IGeneralInfoCardProps {
   title: string;
-  items: { label: string; value: string | null | undefined }[];
+  items: { label: string; value: number | string | null | undefined }[];
 }
 
 export const GeneralInfoCard = ({ title, items }: IGeneralInfoCardProps) => (

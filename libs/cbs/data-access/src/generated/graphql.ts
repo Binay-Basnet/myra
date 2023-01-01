@@ -3721,6 +3721,11 @@ export type Document = {
   signature?: Maybe<Scalars['String']>;
 };
 
+export type DocumentInfo = {
+  id: Scalars['String'];
+  url: Scalars['String'];
+};
+
 export type DocumentMutation = {
   KYMUpsert: DocumentMutationResult;
   Subscription: SubscriptionMutation;
@@ -8037,15 +8042,17 @@ export type LoanAccount = {
 };
 
 export type LoanAccountCollateral = {
+  allDocuments?: Maybe<Array<Scalars['String']>>;
   area?: Maybe<Scalars['Float']>;
   buildingType?: Maybe<BuildingType>;
   collateralDescription?: Maybe<Scalars['String']>;
-  collateralFiles?: Maybe<Array<Maybe<Scalars['String']>>>;
+  collateralFiles?: Maybe<Array<Scalars['String']>>;
   collateralType?: Maybe<Scalars['String']>;
   collaterallValuation?: Maybe<Scalars['Amount']>;
   constructionType?: Maybe<ConstructionType>;
   description?: Maybe<Scalars['String']>;
   documentName?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<DocumentInfo>>>;
   dvMinAmount?: Maybe<Scalars['String']>;
   fmvMaxAmount?: Maybe<Scalars['Amount']>;
   kittaNo?: Maybe<Scalars['Int']>;
@@ -8055,7 +8062,7 @@ export type LoanAccountCollateral = {
   relation?: Maybe<Scalars['String']>;
   sheetNo?: Maybe<Scalars['Int']>;
   valuationAmount?: Maybe<Scalars['String']>;
-  valuationFiles?: Maybe<Array<Maybe<Scalars['String']>>>;
+  valuationFiles?: Maybe<Array<Scalars['String']>>;
   valuationMethod?: Maybe<ValuationMethod>;
   valuationPercent?: Maybe<Scalars['Float']>;
   valuatorId?: Maybe<Scalars['String']>;
@@ -8102,6 +8109,13 @@ export type LoanAccountCollateralData = {
   vehicleType?: InputMaybe<Scalars['String']>;
 };
 
+export type LoanAccountCollateralDetails = {
+  collateralList?: Maybe<Array<Maybe<LoanAccountCollateral>>>;
+  noOfCollateral: Scalars['Int'];
+  totalCollateralRelease: Scalars['String'];
+  totalCollateralValuation: Scalars['String'];
+};
+
 export type LoanAccountCollateralResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<LoanAccountQuery>;
@@ -8116,6 +8130,7 @@ export type LoanAccountConnection = {
 };
 
 export type LoanAccountDetailsResult = {
+  collateral?: Maybe<LoanAccountCollateralDetails>;
   guarantee?: Maybe<LoanAccountGuaranteeDetails>;
   overView?: Maybe<LoanAccountOverview>;
 };
@@ -19027,8 +19042,8 @@ export type GetLoanApplicationDetailsQuery = {
           valuationPercent?: number | null;
           collaterallValuation?: any | null;
           collateralDescription?: string | null;
-          collateralFiles?: Array<string | null> | null;
-          valuationFiles?: Array<string | null> | null;
+          collateralFiles?: Array<string> | null;
+          valuationFiles?: Array<string> | null;
           vehicleName?: string | null;
           vehicleModelNo?: string | null;
           vehicleRegistrationNo?: string | null;
@@ -19289,6 +19304,164 @@ export type GetLoanProductsFromSubTypeQuery = {
         productType?: {
           loanProducts?: Array<{ id: string; productName: string } | null> | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanAccountDetailsQueryVariables = Exact<{
+  loanAccountId: Scalars['ID'];
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<EbankingTransactionFilter>;
+}>;
+
+export type GetLoanAccountDetailsQuery = {
+  loanAccount: {
+    loanAccountDetails?: {
+      overView?: {
+        totalPrincipalPaid: string;
+        totalInterestPaid: string;
+        totalRemainingPrincipal: string;
+        generalInformation?: {
+          accountId: string;
+          accountName: string;
+          productId: string;
+          productName: string;
+          accountOpenDate: Record<'local' | 'en' | 'np', string>;
+          loanAccountOpenBranchId: string;
+          loanAccountOpenBranchName: string;
+          repaymentScheme: LoanRepaymentScheme;
+          interestRate: number;
+          interestAccrued?: string | null;
+          interestEarned?: string | null;
+          sanctionedAmount: string;
+          principalGracePeriod?: number | null;
+          interestGracePeriod?: number | null;
+          tenure: number;
+          tenureUnit: string;
+          linkedAccountId?: string | null;
+          linkedAccountName?: string | null;
+        } | null;
+        loanSchedule?: {
+          total: string;
+          totalInterest?: string | null;
+          totalPrincipal?: string | null;
+          installments?: Array<{
+            installmentNo: number;
+            installmentDate: string;
+            principal: string;
+            interest: string;
+            payment: string;
+            remainingPrincipal: string;
+            paid: boolean;
+          } | null> | null;
+        } | null;
+        transactions?: {
+          totalCount?: number | null;
+          edges?: Array<{
+            node: {
+              id: string;
+              transactionId?: string | null;
+              accountId?: string | null;
+              name: string;
+              date: Record<'local' | 'en' | 'np', string>;
+              month: Record<'local' | 'en' | 'np', string>;
+              transactionDirection: EbankingTransactionDirection;
+              transactionType?: string | null;
+              amount: string;
+              currentBalance: string;
+            };
+          } | null> | null;
+          pageInfo?: { startCursor?: string | null; endCursor?: string | null } | null;
+        } | null;
+        additionalFeatures?: {
+          allowPartialInstallment?: boolean | null;
+          insurance?: boolean | null;
+          staffProduct?: boolean | null;
+          loanScheduleChangeOverride?: boolean | null;
+          isMonthlyInterestCompulsory?: boolean | null;
+          collateral?: boolean | null;
+          supportMultipleAccount?: boolean | null;
+          overrideInterest?: boolean | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanAccountGuaranteeDetailsQueryVariables = Exact<{
+  loanAccountId: Scalars['ID'];
+}>;
+
+export type GetLoanAccountGuaranteeDetailsQuery = {
+  loanAccount: {
+    loanAccountDetails?: {
+      guarantee?: {
+        noOfGuarantee: number;
+        totalGuaranteeValuation: string;
+        totalGuaranteeRelease: string;
+        guaranteeList?: Array<{
+          guaranteeStatus?: GuaranteeStatus | null;
+          memberId?: string | null;
+          memberName?: string | null;
+          accountId?: string | null;
+          accountName?: string | null;
+          productId?: string | null;
+          productName?: string | null;
+          maxGuranteeAmountLimit?: any | null;
+          guranteeAmount?: any | null;
+          totalAmount?: any | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanAccountCollateralDetailsQueryVariables = Exact<{
+  loanAccountId: Scalars['ID'];
+}>;
+
+export type GetLoanAccountCollateralDetailsQuery = {
+  loanAccount: {
+    loanAccountDetails?: {
+      collateral?: {
+        noOfCollateral: number;
+        totalCollateralValuation: string;
+        totalCollateralRelease: string;
+        collateralList?: Array<{
+          collateralType?: string | null;
+          ownerName?: string | null;
+          relation?: string | null;
+          sheetNo?: number | null;
+          plotNo?: number | null;
+          kittaNo?: number | null;
+          area?: number | null;
+          buildingType?: BuildingType | null;
+          constructionType?: ConstructionType | null;
+          valuatorId?: string | null;
+          noOfStorey?: number | null;
+          fmvMaxAmount?: any | null;
+          dvMinAmount?: string | null;
+          valuationMethod?: ValuationMethod | null;
+          valuationPercent?: number | null;
+          collaterallValuation?: any | null;
+          collateralDescription?: string | null;
+          collateralFiles?: Array<string> | null;
+          valuationFiles?: Array<string> | null;
+          vehicleName?: string | null;
+          vehicleModelNo?: string | null;
+          vehicleRegistrationNo?: string | null;
+          vehicleNo?: string | null;
+          vehicleSeatCapacity?: number | null;
+          vehicleCapacity?: string | null;
+          vehicleType?: string | null;
+          vehicleFuelType?: string | null;
+          documentName?: string | null;
+          valuationAmount?: string | null;
+          description?: string | null;
+          allDocuments?: Array<string> | null;
+          documents?: Array<{ id: string; url: string } | null> | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -32881,6 +33054,198 @@ export const useGetLoanProductsFromSubTypeQuery = <
       : ['getLoanProductsFromSubType', variables],
     useAxios<GetLoanProductsFromSubTypeQuery, GetLoanProductsFromSubTypeQueryVariables>(
       GetLoanProductsFromSubTypeDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanAccountDetailsDocument = `
+    query getLoanAccountDetails($loanAccountId: ID!, $paginate: Pagination, $filter: EbankingTransactionFilter) {
+  loanAccount {
+    loanAccountDetails(loanAccountId: $loanAccountId) {
+      overView {
+        totalPrincipalPaid
+        totalInterestPaid
+        totalRemainingPrincipal
+        generalInformation {
+          accountId
+          accountName
+          productId
+          productName
+          accountOpenDate
+          loanAccountOpenBranchId
+          loanAccountOpenBranchName
+          repaymentScheme
+          interestRate
+          interestAccrued
+          interestEarned
+          sanctionedAmount
+          principalGracePeriod
+          interestGracePeriod
+          tenure
+          tenureUnit
+          linkedAccountId
+          linkedAccountName
+        }
+        loanSchedule {
+          installments {
+            installmentNo
+            installmentDate
+            principal
+            interest
+            payment
+            remainingPrincipal
+            paid
+          }
+          total
+          totalInterest
+          totalPrincipal
+        }
+        transactions(filter: $filter, paginate: $paginate) {
+          edges {
+            node {
+              id
+              transactionId
+              accountId
+              name
+              date
+              month
+              transactionDirection
+              transactionType
+              amount
+              currentBalance
+            }
+          }
+          totalCount
+          pageInfo {
+            startCursor
+            endCursor
+          }
+        }
+        additionalFeatures {
+          allowPartialInstallment
+          insurance
+          staffProduct
+          loanScheduleChangeOverride
+          isMonthlyInterestCompulsory
+          collateral
+          supportMultipleAccount
+          overrideInterest
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanAccountDetailsQuery = <TData = GetLoanAccountDetailsQuery, TError = unknown>(
+  variables: GetLoanAccountDetailsQueryVariables,
+  options?: UseQueryOptions<GetLoanAccountDetailsQuery, TError, TData>
+) =>
+  useQuery<GetLoanAccountDetailsQuery, TError, TData>(
+    ['getLoanAccountDetails', variables],
+    useAxios<GetLoanAccountDetailsQuery, GetLoanAccountDetailsQueryVariables>(
+      GetLoanAccountDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanAccountGuaranteeDetailsDocument = `
+    query getLoanAccountGuaranteeDetails($loanAccountId: ID!) {
+  loanAccount {
+    loanAccountDetails(loanAccountId: $loanAccountId) {
+      guarantee {
+        noOfGuarantee
+        totalGuaranteeValuation
+        totalGuaranteeRelease
+        guaranteeList {
+          guaranteeStatus
+          memberId
+          memberName
+          accountId
+          accountName
+          productId
+          productName
+          maxGuranteeAmountLimit
+          guranteeAmount
+          totalAmount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanAccountGuaranteeDetailsQuery = <
+  TData = GetLoanAccountGuaranteeDetailsQuery,
+  TError = unknown
+>(
+  variables: GetLoanAccountGuaranteeDetailsQueryVariables,
+  options?: UseQueryOptions<GetLoanAccountGuaranteeDetailsQuery, TError, TData>
+) =>
+  useQuery<GetLoanAccountGuaranteeDetailsQuery, TError, TData>(
+    ['getLoanAccountGuaranteeDetails', variables],
+    useAxios<GetLoanAccountGuaranteeDetailsQuery, GetLoanAccountGuaranteeDetailsQueryVariables>(
+      GetLoanAccountGuaranteeDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanAccountCollateralDetailsDocument = `
+    query getLoanAccountCollateralDetails($loanAccountId: ID!) {
+  loanAccount {
+    loanAccountDetails(loanAccountId: $loanAccountId) {
+      collateral {
+        noOfCollateral
+        totalCollateralValuation
+        totalCollateralRelease
+        collateralList {
+          collateralType
+          ownerName
+          relation
+          sheetNo
+          plotNo
+          kittaNo
+          area
+          buildingType
+          constructionType
+          valuatorId
+          noOfStorey
+          fmvMaxAmount
+          dvMinAmount
+          valuationMethod
+          valuationPercent
+          collaterallValuation
+          collateralDescription
+          collateralFiles
+          valuationFiles
+          vehicleName
+          vehicleModelNo
+          vehicleRegistrationNo
+          vehicleNo
+          vehicleSeatCapacity
+          vehicleCapacity
+          vehicleType
+          vehicleFuelType
+          documentName
+          valuationAmount
+          description
+          allDocuments
+          documents {
+            id
+            url
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanAccountCollateralDetailsQuery = <
+  TData = GetLoanAccountCollateralDetailsQuery,
+  TError = unknown
+>(
+  variables: GetLoanAccountCollateralDetailsQueryVariables,
+  options?: UseQueryOptions<GetLoanAccountCollateralDetailsQuery, TError, TData>
+) =>
+  useQuery<GetLoanAccountCollateralDetailsQuery, TError, TData>(
+    ['getLoanAccountCollateralDetails', variables],
+    useAxios<GetLoanAccountCollateralDetailsQuery, GetLoanAccountCollateralDetailsQueryVariables>(
+      GetLoanAccountCollateralDetailsDocument
     ).bind(null, variables),
     options
   );

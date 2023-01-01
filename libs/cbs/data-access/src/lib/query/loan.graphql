@@ -579,3 +579,157 @@ query getLoanProductsFromSubType($subTypeIds: [String]) {
     }
   }
 }
+
+query getLoanAccountDetails(
+  $loanAccountId: ID!
+  $paginate: Pagination
+  $filter: EbankingTransactionFilter
+) {
+  loanAccount {
+    loanAccountDetails(loanAccountId: $loanAccountId) {
+      overView {
+        totalPrincipalPaid
+        totalInterestPaid
+        totalRemainingPrincipal
+        generalInformation {
+          accountId
+          accountName
+          productId
+          productName
+          accountOpenDate
+          loanAccountOpenBranchId
+          loanAccountOpenBranchName
+          repaymentScheme
+          interestRate
+          interestAccrued
+          interestEarned
+          sanctionedAmount
+          principalGracePeriod
+          interestGracePeriod
+          tenure
+          tenureUnit
+          linkedAccountId
+          linkedAccountName
+        }
+        loanSchedule {
+          installments {
+            installmentNo
+            installmentDate
+            principal
+            interest
+            payment
+            remainingPrincipal
+            paid
+          }
+          total
+          totalInterest
+          totalPrincipal
+        }
+        transactions(filter: $filter, paginate: $paginate) {
+          edges {
+            node {
+              id
+              transactionId
+              accountId
+              name
+              date
+              month
+              transactionDirection
+              transactionType
+              amount
+              currentBalance
+            }
+          }
+          totalCount
+          pageInfo {
+            startCursor
+            endCursor
+          }
+        }
+        additionalFeatures {
+          allowPartialInstallment
+          insurance
+          staffProduct
+          loanScheduleChangeOverride
+          isMonthlyInterestCompulsory
+          collateral
+          supportMultipleAccount
+          overrideInterest
+        }
+      }
+    }
+  }
+}
+
+query getLoanAccountGuaranteeDetails($loanAccountId: ID!) {
+  loanAccount {
+    loanAccountDetails(loanAccountId: $loanAccountId) {
+      guarantee {
+        noOfGuarantee
+        totalGuaranteeValuation
+        totalGuaranteeRelease
+        guaranteeList {
+          guaranteeStatus
+          memberId
+          memberName
+          accountId
+          accountName
+          productId
+          productName
+          maxGuranteeAmountLimit
+          guranteeAmount
+          totalAmount
+        }
+      }
+    }
+  }
+}
+
+query getLoanAccountCollateralDetails($loanAccountId: ID!) {
+  loanAccount {
+    loanAccountDetails(loanAccountId: $loanAccountId) {
+      collateral {
+        noOfCollateral
+        totalCollateralValuation
+        totalCollateralRelease
+        collateralList {
+          collateralType
+          ownerName
+          relation
+          sheetNo
+          plotNo
+          kittaNo
+          area
+          buildingType
+          constructionType
+          valuatorId
+          noOfStorey
+          fmvMaxAmount
+          dvMinAmount
+          valuationMethod
+          valuationPercent
+          collaterallValuation
+          collateralDescription
+          collateralFiles
+          valuationFiles
+          vehicleName
+          vehicleModelNo
+          vehicleRegistrationNo
+          vehicleNo
+          vehicleSeatCapacity
+          vehicleCapacity
+          vehicleType
+          vehicleFuelType
+          documentName
+          valuationAmount
+          description
+          allDocuments
+          documents {
+            id
+            url
+          }
+        }
+      }
+    }
+  }
+}
