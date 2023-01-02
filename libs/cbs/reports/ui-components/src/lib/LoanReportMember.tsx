@@ -29,14 +29,14 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => {
 
             <GridItem>
               <Box display="flex" flexDir="column" fontSize="r1" fontWeight="500" color="gray.700">
-                <Text textTransform="capitalize">
+                <Text noOfLines={1} textTransform="capitalize">
                   {member?.name?.local === '' ? '-' : member?.name?.local}
                 </Text>
-                <Text>{formatAddress(member?.address)}</Text>
-                <Text>{profile?.branch?.name}</Text>
-                <Text>{amountConverter(account?.approvedAmount ?? 0)}</Text>
-                <Text> {localizedDate(account?.issuedDate)}</Text>
-                <Text>{member?.code}</Text>
+                <Text noOfLines={1}>{formatAddress(member?.address)}</Text>
+                <Text noOfLines={1}>{profile?.branch?.name}</Text>
+                <Text noOfLines={1}>{amountConverter(account?.approvedAmount ?? 0)}</Text>
+                <Text noOfLines={1}> {localizedDate(account?.issuedDate)}</Text>
+                <Text noOfLines={1}>{member?.code}</Text>
               </Box>
             </GridItem>
           </Grid>
@@ -44,7 +44,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => {
       </Box>
 
       <Box w="50%">
-        <Box w="70%">
+        <Box w="100%">
           <Grid templateColumns="repeat(2, 1fr)">
             <GridItem>
               <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
@@ -59,11 +59,11 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => {
 
             <GridItem>
               <Box display="flex" flexDir="column" fontSize="r1" color="gray.700" fontWeight="500">
-                <Text>{account?.interestRate ?? 0}%</Text>
-                <Text>{account?.accountNo}</Text>
-                <Text>{account?.loanType}</Text>
-                <Text>{account?.loanSubtype}</Text>
-                <Text>{account?.installment}</Text>
+                <Text noOfLines={1}>{account?.interestRate ?? 0}%</Text>
+                <Text noOfLines={1}>{account?.accountNo}</Text>
+                <Text noOfLines={1}>{account?.loanType}</Text>
+                <Text noOfLines={1}>{account?.loanSubtype}</Text>
+                <Text noOfLines={1}>{account?.installment}</Text>
                 <Text>0</Text>
               </Box>
             </GridItem>

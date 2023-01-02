@@ -23,6 +23,7 @@ export const CBS_MENU_CODES: Record<string, string> = {
 
 const SETTINGS_MENU_CODES: Record<string, string> = {
   '00': 'general',
+  '01': 'users',
 };
 
 const CODES: Record<string, Record<string, Record<string, string>>> = {
@@ -92,6 +93,9 @@ const CODES: Record<string, Record<string, Record<string, string>>> = {
       '07': 'deposit-products',
       '09': 'loan-products',
     },
+    '01': {
+      '01': 'super-admin',
+    },
   },
 };
 
@@ -112,31 +116,35 @@ const ACTIONS_CODES: Record<string, string> = {
 // console.log(pages);
 
 export const getPageUrl = (code: string) => {
-  const appCode = code[0];
-  const menuCode = `${code[1]}${code[2]}`;
-  const pageCode = `${code[3]}${code[4]}`;
-  const actionCode = code[5];
+  try {
+    const appCode = code[0];
+    const menuCode = `${code[1]}${code[2]}`;
+    const pageCode = `${code[3]}${code[4]}`;
+    const actionCode = code[5];
 
-  if (parseInt(appCode, 10) === 1) {
-    const menuLink = CODES[appCode][menuCode][pageCode];
+    if (parseInt(appCode, 10) === 1) {
+      const menuLink = CODES[appCode][menuCode][pageCode];
 
-    if (menuLink) {
-      // return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
-      return `/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
+      if (menuLink) {
+        // return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
+        return `/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
+      }
+      // return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
+      return `/${CBS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
     }
-    // return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
-    return `/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
-  }
-  if (parseInt(appCode, 10) === 9) {
-    const menuLink = CODES[appCode][menuCode][pageCode];
+    if (parseInt(appCode, 10) === 9) {
+      const menuLink = CODES[appCode][menuCode][pageCode];
 
-    if (menuLink) {
-      return `/${APP_CODES[appCode]}/${SETTINGS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
+      if (menuLink) {
+        return `/${APP_CODES[appCode]}/${SETTINGS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
+      }
+      return `/${APP_CODES[appCode]}/${SETTINGS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
     }
-    return `/${APP_CODES[appCode]}/${SETTINGS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
-  }
 
-  return '';
+    return '';
+  } catch (e) {
+    return '/';
+  }
 };
 
 export const getSubtitle = (code: string) => {

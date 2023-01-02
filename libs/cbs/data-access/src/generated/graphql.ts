@@ -1494,6 +1494,7 @@ export type CbsCodeMangementResult = {
 
 export enum CbsCodeType {
   BranchTransfer = 'BRANCH_TRANSFER',
+  CashInTransit = 'CASH_IN_TRANSIT',
   ShareCertificate = 'SHARE_CERTIFICATE',
   TellerTransfer = 'TELLER_TRANSFER',
   VaultTransfer = 'VAULT_TRANSFER',
@@ -1690,6 +1691,11 @@ export type CashReport = {
 export type CashReportCashLedgerReportArgs = {
   data?: InputMaybe<CashLedgerReportFilterData>;
 };
+
+export enum CashTransferMode {
+  Collected = 'COLLECTED',
+  Deliver = 'DELIVER',
+}
 
 export enum CashValue {
   Cash_1 = 'CASH_1',
@@ -5031,12 +5037,6 @@ export type GlobalPagesResultNode = {
   page?: Maybe<Scalars['String']>;
   pageCode?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
-};
-
-export type GlobalPagesResultNodeV2 = {
-  action?: Maybe<Scalars['Any']>;
-  id?: Maybe<Scalars['String']>;
-  table?: Maybe<Scalars['String']>;
 };
 
 export enum GracePeriod {
@@ -10167,6 +10167,7 @@ export type Mutation = {
   profitToFundManagement: FundManagementMutation;
   report: ReportMutation;
   requests: RequestsMutation;
+  search: SearchMutation;
   seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
@@ -10393,6 +10394,7 @@ export type NewCoaGroupInput = {
   accountCode?: InputMaybe<Scalars['String']>;
   accountSetup?: InputMaybe<CoaAccountSetup>;
   allowedBalance?: InputMaybe<CoaTypeOfTransaction>;
+  category?: InputMaybe<CoaCategory>;
   groupName?: InputMaybe<Scalars['String']>;
   typeOfTransaction?: InputMaybe<CoaTypeOfTransaction>;
   underAccountCode?: InputMaybe<Scalars['String']>;
@@ -10958,7 +10960,6 @@ export type Query = {
   requests: RequestsQuery;
   routesAndCodes: RoutesAndCodesQuery;
   search: SearchQuery;
-  search_v2: SearchQueryV2;
   settings: SettingsQuery;
   share: ShareQuery;
   transaction: TransactionQuery;
@@ -11593,9 +11594,12 @@ export type SearchListEdges = {
   node?: Maybe<SearchResultNode>;
 };
 
-export type SearchPagination = {
-  page: Scalars['Int'];
-  size?: InputMaybe<Scalars['Int']>;
+export type SearchMutation = {
+  indexData?: Maybe<Scalars['String']>;
+};
+
+export type SearchMutationIndexDataArgs = {
+  tableName: Array<Scalars['String']>;
 };
 
 export type SearchQuery = {
@@ -11616,25 +11620,6 @@ export type SearchQueryResultData = {
   edges?: Maybe<Array<Maybe<SearchListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
-};
-
-export type SearchQueryResultDataV2 = {
-  edges?: Maybe<Array<Maybe<GlobalPagesResultNodeV2>>>;
-  pageInfo?: Maybe<PageInfo>;
-};
-
-export type SearchQueryResultV2 = {
-  data?: Maybe<SearchQueryResultDataV2>;
-  error?: Maybe<QueryError>;
-};
-
-export type SearchQueryV2 = {
-  globalPages: SearchQueryResultV2;
-};
-
-export type SearchQueryV2GlobalPagesArgs = {
-  pagination?: InputMaybe<SearchPagination>;
-  query?: InputMaybe<Scalars['String']>;
 };
 
 export type SearchResultNode = GlobalPagesResultNode;
@@ -12608,17 +12593,14 @@ export type TellerTransferActionResult = {
 
 export type TellerTransferInput = {
   amount?: InputMaybe<Scalars['String']>;
-  bankId?: InputMaybe<Scalars['String']>;
-  branchPaymentMode?: InputMaybe<BranchPaymentMode>;
+  collectorName?: InputMaybe<Scalars['String']>;
   denominations?: InputMaybe<Array<Denomination>>;
-  depositedBy?: InputMaybe<Scalars['String']>;
-  depositedDate?: InputMaybe<Scalars['Localized']>;
   destBranch?: InputMaybe<Scalars['String']>;
   destTellerID?: InputMaybe<Scalars['String']>;
   srcBranch?: InputMaybe<Scalars['String']>;
   srcTellerID?: InputMaybe<Scalars['String']>;
+  transferMode?: InputMaybe<CashTransferMode>;
   transferType: TellerTransferType;
-  voucherId?: InputMaybe<Scalars['String']>;
 };
 
 export type TellerTransferResult = {
@@ -12629,6 +12611,7 @@ export type TellerTransferResult = {
 
 export enum TellerTransferType {
   BranchTransfer = 'BRANCH_TRANSFER',
+  CashInTransit = 'CASH_IN_TRANSIT',
   CashToVault = 'CASH_TO_VAULT',
   TellerTransfer = 'TELLER_TRANSFER',
   VaultToCash = 'VAULT_TO_CASH',
@@ -14277,6 +14260,10 @@ export type AddProfitToFundManagementDataMutation = {
     } | null;
   };
 };
+
+export type SearchIndexingMutationVariables = Exact<{ [key: string]: never }>;
+
+export type SearchIndexingMutation = { search: { indexData?: string | null } };
 
 export type SendLoanApplicationForApprovalMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -26040,6 +26027,26 @@ export const useAddProfitToFundManagementDataMutation = <TError = unknown, TCont
     useAxios<AddProfitToFundManagementDataMutation, AddProfitToFundManagementDataMutationVariables>(
       AddProfitToFundManagementDataDocument
     ),
+    options
+  );
+export const SearchIndexingDocument = `
+    mutation searchIndexing {
+  search {
+    indexData(tableName: ["all"])
+  }
+}
+    `;
+export const useSearchIndexingMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SearchIndexingMutation,
+    TError,
+    SearchIndexingMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SearchIndexingMutation, TError, SearchIndexingMutationVariables, TContext>(
+    ['searchIndexing'],
+    useAxios<SearchIndexingMutation, SearchIndexingMutationVariables>(SearchIndexingDocument),
     options
   );
 export const SendLoanApplicationForApprovalDocument = `

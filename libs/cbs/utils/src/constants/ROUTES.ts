@@ -43,7 +43,7 @@ export const ROUTES = {
   CBS_TRANS_ALL_TRANSACTION_LIST: '/cbs/transactions/all-transaction/list',
 
   CBS_TRANSFER_VAULT_ADD: '/cbs/transfers/vault-transfer/add',
-  CBS_TRANSFER_TELLER_ADD: '/cbs/transfers/teller-transfer/add',
+  CBS_TRANSFER_TELLER_ADD: '/cbs/transfers/tellSer-transfer/add',
   CBS_TRANSFER_VAULT_LIST: '/cbs/transfers/vault-transfer/list',
   CBS_TRANSFER_TELLER_LIST: '/cbs/transfers/teller-transfer/list',
   CBS_TRANSFER_BRANCH_LIST: '/cbs/transfers/branch-transfer/list',

@@ -106,13 +106,13 @@ export const useLoanAccountDetailHooks = () => {
   ];
 
   const transactionList = useMemo(
-    () => txnListInfo?.map((item) => item?.node as EbankingTransaction) ?? [],
+    () => txnListInfo?.slice(0, 10)?.map((item) => item?.node as EbankingTransaction) ?? [],
     [txnListInfo]
   );
 
   const paymentList = useMemo(
     () =>
-      paymentsListInfo?.installments?.map((installment) => ({
+      paymentsListInfo?.installments?.slice(0, 10)?.map((installment) => ({
         installmentNo: installment?.installmentNo,
         installmentDate: installment?.installmentDate,
         payment: installment?.payment,
