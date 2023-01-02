@@ -92,9 +92,13 @@ export const ROUTES = {
   CBS_TRANS_DEPOSIT_DETAILS: '/cbs/transactions/deposit/details',
   CBS_TRANS_WITHDRAW_DETAILS: '/cbs/transactions/withdraw/details',
   CBS_TRANS_JOURNAL_VOUCHER_DETAILS: '/cbs/transactions/journal-vouchers/details',
+  CBS_TRANS_LOAN_PAYMENT_DETAILS: '/cbs/transactions/loan-payment/details',
 
   CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_LIST:
     '/cbs/others/market-representative-transaction/list',
   CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_ADD:
     '/cbs/others/market-representative-transaction/add',
+  CBS_OTHERS_MARKET_REPRESENTATIVE_TRANS_DETAILS:
+    '/cbs/others/market-representative-transaction/details',
+  CBS_OTHERS_MARKET_REPRESENTATIVE_DETAILS: '/cbs/others/market-representative/details',
 } as const;

@@ -1,13 +1,15 @@
 import { useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { asyncToast, Box, Button, FormFooter, Modal } from '@myra-ui';
 
 import { LoanApproveOrCancel, useApproveLoanAccountMutation } from '@coop/cbs/data-access';
 import { CBSLoanDetails, LoanDetailsHeader } from '@coop/cbs/loan/details';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormTextArea } from '@coop/shared/form';
-import { asyncToast, Box, Button, Modal, FormFooter } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { useLoanDetails } from '../hooks/useLoanDetails';
@@ -33,7 +35,7 @@ export const CBSLoanApprove = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries(['getLoanList']);
-        router.replace('/loan/applications');
+        router.replace(ROUTES.CBS_LOAN_APPLICATIONS_LIST);
       },
       promise: mutateAsync({ id: id as string, action: LoanApproveOrCancel.Approve }),
     });
@@ -47,7 +49,7 @@ export const CBSLoanApprove = () => {
         loading: 'Declining Loan !!',
       },
       onSuccess: () => {
-        router.replace('/loan/declined');
+        router.replace(ROUTES.CBS_LOAN_DECLINED_LIST);
       },
       promise: mutateAsync({
         id: id as string,

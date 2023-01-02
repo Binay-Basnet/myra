@@ -88,7 +88,7 @@ export const CBSLoanRepaymentList = () => {
                 {
                   title: t['transDetailViewDetail'],
                   onClick: (row) => {
-                    router.push(`/cbs/transactions/loan-payment/view?id=${row?.id}`);
+                    router.push(`${ROUTES.CBS_TRANS_LOAN_PAYMENT_DETAILS}?id=${row?.id}`);
                   },
                 },
                 {
@@ -119,7 +119,7 @@ export const CBSLoanRepaymentList = () => {
         data={rowData}
         columns={columns}
         rowOnClick={(row) => {
-          router.push(`/${getUrl(router.pathname, 2)}/view?id=${row?.node?.id}`);
+          router.push(`/${getUrl(router.pathname, 3)}/details?id=${row?.node?.id}`);
         }}
         pagination={{
           total: data?.loanAccount?.repaymentList?.totalCount ?? 'Many',
