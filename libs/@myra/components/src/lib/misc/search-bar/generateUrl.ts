@@ -60,7 +60,7 @@ const CODES: Record<string, Record<string, Record<string, string>>> = {
       '04': 'market-representative-transaction',
       '05': 'journal-vouchers',
       '06': 'market-representative',
-      '07': 'all-transaction',
+      '07': 'all-transactions',
     },
     '05': {
       '01': 'vault-transfer',

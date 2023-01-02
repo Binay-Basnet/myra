@@ -40,7 +40,7 @@ export const ROUTES = {
     '/cbs/transactions/market-representative-transaction/list',
   CBS_TRANS_MARKET_REPRESENTATIVE_LIST: '/cbs/transactions/market-representative/list',
   CBS_TRANS_JOURNAL_VOUCHER_LIST: '/cbs/transactions/journal-vouchers/list',
-  CBS_TRANS_ALL_TRANSACTION_LIST: '/cbs/transactions/all-transaction/list',
+  CBS_TRANS_ALL_TRANSACTION_LIST: '/cbs/transactions/all-transactions/list',
 
   CBS_TRANSFER_VAULT_ADD: '/cbs/transfers/vault-transfer/add',
   CBS_TRANSFER_TELLER_ADD: '/cbs/transfers/teller-transfer/add',
@@ -77,4 +77,12 @@ export const ROUTES = {
   CBS_LOAN_DISBURSE: '/cbs/loan/applications/disburse',
   CBS_LOAN_APPROVE: '/cbs/loan/applications/approve',
   CBS_LOAN_DECLINED_DETAILS: '/cbs/loan/declined/details',
+  CBS_TRANS_LOAN_PAYMENT_LIST: '/cbs/transactions/loan-payment/list',
+  CBS_TRANS_LOAN_PAYMENT_ADD: '/cbs/transactions/loan-payment/add',
+  CBS_TRANS_ALL_TRANSACTIONS_DETAILS: '/cbs/transactions/all-transactions/details',
+  CBS_TRANS_ACCOUNT_TRANSFER_DETAILS: '/cbs/transactions/account-transfer/details',
+  CBS_TRANS_BULK_DEPOSIT_ADD: '/cbs/transactions/bulk-deposit/add',
+  CBS_TRANS_DEPOSIT_DETAILS: '/cbs/transactions/deposit/details',
+  CBS_TRANS_WITHDRAW_DETAILS: '/cbs/transactions/withdraw/details',
+  CBS_TRANS_JORNAL_VOUCHER_DETAILS: '/cbs/transactions/journal-vouchers/details',
 } as const;

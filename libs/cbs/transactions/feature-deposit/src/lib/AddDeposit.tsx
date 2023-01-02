@@ -34,7 +34,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
 import { amountConverter, decimalAdjust, featureCode, useTranslation } from '@coop/shared/utils';
 
@@ -369,7 +369,7 @@ export const AddDeposit = () => {
           <FormHeader
             title={`${t['addDepositNewDeposit']} - ${featureCode?.newDeposit}`}
             buttonLabel={t['addDepositAddBulkDeposit']}
-            buttonHandler={() => router.push('/transactions/deposit/add-bulk-deposit')}
+            buttonHandler={() => router.push(ROUTES.CBS_TRANS_BULK_DEPOSIT_ADD)}
           />
         </Box>
 
@@ -613,7 +613,7 @@ export const AddDeposit = () => {
                         queryClient.invalidateQueries(['getPastSlipsList']);
                       }
                       queryClient.invalidateQueries(['getDepositListData']);
-                      router.push('/transactions/deposit/list');
+                      router.push(ROUTES.CBS_TRANS_DEPOSIT_LIST);
                     }}
                     promise={() => mutateAsync({ data: handleSubmit() })}
                     successCardProps={(response) => {
