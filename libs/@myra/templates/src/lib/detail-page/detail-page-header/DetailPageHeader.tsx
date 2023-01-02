@@ -20,6 +20,7 @@ export interface DetailPageHeaderProps {
     profilePicUrl?: string | undefined | null;
   };
   closeLink?: string;
+  backLink?: string;
 }
 
 // const OptionsIcon = () => (
@@ -39,7 +40,7 @@ export interface DetailPageHeaderProps {
 //   </svg>
 // );
 
-export const DetailPageHeader = ({ title, member, closeLink }: DetailPageHeaderProps) => {
+export const DetailPageHeader = ({ title, member, closeLink, backLink }: DetailPageHeaderProps) => {
   const router = useRouter();
 
   return (
@@ -56,7 +57,17 @@ export const DetailPageHeader = ({ title, member, closeLink }: DetailPageHeaderP
       justifyContent="space-between"
     >
       <Box display="flex" alignItems="center" gap="s10">
-        <Text fontSize="r2" fontWeight="500" color="gray.700">
+        <Text
+          fontSize="r2"
+          fontWeight="500"
+          color="gray.700"
+          cursor={backLink ? 'pointer' : 'default'}
+          onClick={() => {
+            if (backLink) {
+              router.push(backLink);
+            }
+          }}
+        >
           {title}
         </Text>
         <Icon as={IoChevronForwardOutline} size="md" />

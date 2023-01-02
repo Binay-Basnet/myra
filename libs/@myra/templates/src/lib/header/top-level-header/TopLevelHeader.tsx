@@ -274,7 +274,7 @@ export const TopLevelHeader = () => {
 
     router.push('/day-close');
   };
-
+  /* eslint-disable no-nested-ternary */
   return (
     <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
       <Box
