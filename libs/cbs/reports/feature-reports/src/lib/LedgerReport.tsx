@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { GridItem } from '@myra-ui';
 
@@ -10,7 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormCOASelect } from '@coop/shared/form';
+import { FormBranchSelect, FormCOASelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 export const LedgerReport = () => {
@@ -18,7 +19,10 @@ export const LedgerReport = () => {
 
   const { data, isFetching } = useGetLedgerReportQuery(
     {
-      data: filters as GeneralLedgerFilter,
+      data: {
+        ledgerId: filters?.ledgerId,
+        period: filters?.period,
+      } as GeneralLedgerFilter,
     },
     { enabled: !!filters }
   );
@@ -43,15 +47,7 @@ export const LedgerReport = () => {
             },
           ]}
         />
-        <Report.Inputs>
-          <GridItem colSpan={3}>
-            <FormCOASelect name="ledgerId" label="Ledger Name" />
-          </GridItem>
-
-          <GridItem colSpan={1}>
-            <ReportDateRange />
-          </GridItem>
-        </Report.Inputs>
+        <LedgerReportInputs />
       </Report.Header>
 
       <Report.Body>
@@ -75,7 +71,7 @@ export const LedgerReport = () => {
               {
                 header: 'Dr.',
                 accessorFn: (row) => row?.debit,
-                cell: (props) => amountConverter(props.getValue() as string),
+                cell: (props) => amountConverter(props.getValue() as string) || '-',
                 meta: {
                   isNumeric: true,
                 },
@@ -83,7 +79,7 @@ export const LedgerReport = () => {
               {
                 header: 'Cr. ',
                 accessorFn: (row) => row?.credit,
-                cell: (props) => amountConverter(props.getValue() as string),
+                cell: (props) => amountConverter(props.getValue() as string) || '-',
 
                 meta: {
                   isNumeric: true,
@@ -103,5 +99,27 @@ export const LedgerReport = () => {
         </Report.Content>
       </Report.Body>
     </Report>
+  );
+};
+
+const LedgerReportInputs = () => {
+  const { watch } = useFormContext();
+
+  const branchId = watch('branchId') as string;
+
+  return (
+    <Report.Inputs>
+      <GridItem colSpan={1}>
+        <FormBranchSelect name="branchId" label="Branch" />
+      </GridItem>
+
+      <GridItem colSpan={2}>
+        <FormCOASelect branchId={branchId} name="ledgerId" label="Ledger Name" />
+      </GridItem>
+
+      <GridItem colSpan={1}>
+        <ReportDateRange />
+      </GridItem>
+    </Report.Inputs>
   );
 };
