@@ -5,6 +5,8 @@ export const ROUTES = {
   CBS_MEMBER_COOP_UNION_ADD: '/cbs/members/coop_union/add',
   CBS_MEMBER_LIST: '/cbs/members/list',
   CBS_MEMBER_DETAILS: '/cbs/members/details',
+  CBS_MEMBER_ACTIVATION: '/cbs/members/activation',
+  CBS_MEMBER_INACTIVATION: '/cbs/members/inactivation',
 
   CBS_SHARE_ISSUE_ADD: '/cbs/share/issue/add',
   CBS_SHARE_RETURN_ADD: '/cbs/share/return/add',
@@ -53,7 +55,7 @@ export const ROUTES = {
   CBS_REQUESTS_LOAN_LIST: '/cbs/requests/loan/list',
   CBS_WITHDRAW_SLIP_LIST: '/cbs/withdraw/withdraw-slip/list',
   CBS_WITHDRAW_SLIP_BOOK_ADD: '/cbs/withdraw/withdraw-slip-book/add',
-  CB_WITHDRAW_SLIP_BOOK_LIST: '/cbs/withdraw/withdraw-slip-book/list',
+  CBS_WITHDRAW_SLIP_BOOK_LIST: '/cbs/withdraw/withdraw-slip-book/list',
   CBS_WITHDRAW_SLIP_ADD: '/cbs/withdraw/withdraw-slip/add',
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_LIST: '/cbs/withdraw/block-withdraw-slip-requests/list',
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD: '/cbs/withdraw/block-withdraw-slip-requests/add',
@@ -63,19 +65,61 @@ export const ROUTES = {
 
   CBS_OTHERS_FUND_MANAGEMENT_ADD: '/cbs/others/fund-management/add',
   CBS_OTHERS_SHARE_DIVIDEND_POSTING_LIST: '/cbs/others/share-dividend-posting/list',
-
   CBS_OTHERS_FUND_MANAGEMENT_LIST: '/cbs/others/fund-management/list',
   CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD: '/cbs/others/share-dividend-posting/add',
 
-  SETTINGS_GENERAL_MEMBERS: '/settings/general/members',
-  SETTINGS_GENERAL_COA_DETAILS: '/settings/general/charts-of-accounts/details',
-  SETTINGS_GENERAL_DP_DETAILS: '/settings/general/deposit-products/details',
+  /* SETTINGS APP & NOT INDEXED BY GLOBAL SEARCH */
+
+  SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges',
+
+  SETTINGS_GENERAL_AUDIT_LOG: '/settings/general/audit-log',
+
+  SETTINGS_GENERAL_COA: '/settings/general/coa/list',
+  SETTINGS_GENERAL_COA_DETAILS: '/settings/general/coa/details',
+
+  SETTINGS_GENERAL_CODE_MANAGEMENT_ACCOUNTING: '/settings/general/code-management/accounting',
+  SETTINGS_GENERAL_CODE_MANAGEMENT_CBS: '/settings/general/code-management/core-banking-system',
+  SETTINGS_GENERAL_CODE_MANAGEMENT_INVENTORY: '/settings/general/code-management/inventory',
+
+  SETTINGS_GENERAL_SAVINGS_TDS: '/settings/general/savings/tds',
+  SETTINGS_GENERAL_SP_LIST: '/settings/general/saving-products/list',
+  SETTINGS_GENERAL_SP_ADD: '/settings/general/saving-products/add',
+  SETTINGS_GENERAL_SP_DETAILS: '/settings/general/deposit-products/details',
+
+  SETTINGS_GENERAL_LOAN: '/settings/general/loan',
+  SETTINGS_GENERAL_LOAN_PRODUCT_TYPE: '/settings/general/loan/product-type',
+  SETTINGS_GENERAL_LOAN_VALUATOR: '/settings/general/loan/valuator/list',
+  SETTINGS_GENERAL_LOAN_VALUATOR_ADD: '/settings/general/loan/valuator/add',
+  SETTINGS_GENERAL_LOAN_VALUATOR_EDIT: '/settings/general/loan/valuator/edit',
+
+  SETTINGS_GENERAL_LP_LIST: '/settings/general/loan-products/list',
+  SETTINGS_GENERAL_LP_ADD: '/settings/general/loan-products/add',
   SETTINGS_GENERAL_LP_DETAILS: '/settings/general/loan-products/details',
+
+  SETTINGS_GENERAL_INDEXING: '/settings/general/indexing',
+
+  SETTINGS_GENERAL_MEMBERS: '/settings/general/members',
+  SETTINGS_GENERAL_MEMBERS_KYM_IND: '/settings/general/members/kym-individual',
+  SETTINGS_GENERAL_MEMBERS_KYM_INS: '/settings/general/members/kym-institutional',
+  SETTINGS_GENERAL_MEMBERS_KYM_COOP: '/settings/general/members/kym-cooperative',
+  SETTINGS_GENERAL_MEMBERS_KYM_COOP_UNION: '/settings/general/members/kym-cooperative-union',
+
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST: '/settings/general/service-center/list',
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD: '/settings/general/service-center/add',
+  SETTINGS_GENERAL_SERVICE_CENTER_LIST_EDIT: '/settings/general/service-center/edit',
+
+  SETTINGS_GENERAL_SHARE: '/settings/general/share',
+  SETTINGS_GENERAL_SHARE_BONUS: '/settings/general/share/bonus',
+  SETTINGS_GENERAL_SHARE_DIVIDEND: '/settings/general/share/dividend',
+  SETTINGS_GENERAL_SHARE_FEE: '/settings/general/share/fee-and-charges',
+  SETTINGS_GENERAL_SHARE_ISSUES: '/settings/general/share/issues',
+  SETTINGS_GENERAL_SHARE_RETURNS: '/settings/general/share/returns',
+  SETTINGS_GENERAL_SHARE_TRANSFER: '/settings/general/share/transfer',
+
+  /* NOT INDEXED BY GLOBAL SEARCH */
 
   CBS_ACCOUNT_OPEN_EDIT: '/cbs/savings/account-close/edit',
   CBS_LOAN_APPLICATION_DETAILS: '/cbs/loan/applications/details',
-  CBS_MEMBER_ACTIVATION: '/cbs/members/activation',
-  CBS_MEMBER_INACTIVATION: '/cbs/members/inactivation',
 
   CBS_OTHERS_MARKET_REPRESENTATIVE_LIST: '/cbs/others/market-representative/list',
 
