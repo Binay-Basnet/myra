@@ -6,7 +6,6 @@ import { SelectProps } from '@myra-ui';
 
 import { Filter_Mode, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
 
 interface IFormBranchSelectProps extends SelectProps {
   name: string;
@@ -26,7 +25,8 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
   const { data: branchListQueryData, isFetching } = useGetBranchListQuery(
     {
       paginate: {
-        ...getRouterQuery({ type: ['PAGINATION'] }),
+        first: -1,
+        after: '',
         order: null,
       },
       filter: {

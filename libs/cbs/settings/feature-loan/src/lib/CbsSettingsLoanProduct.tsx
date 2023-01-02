@@ -14,7 +14,7 @@ import {
   useSetProductActiveMutation,
 } from '@coop/cbs/data-access';
 import { FormTextArea } from '@coop/shared/form';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 const LOAN_TAB_ITEMS = [
   {
@@ -181,6 +181,11 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
               items={[
                 {
                   title: 'loanProductViewDetails',
+                  onClick: () => {
+                    router.push(
+                      `/${getUrl(router.pathname, 2)}/view?id=${props?.row?.original?.node?.id}`
+                    );
+                  },
                 },
               ]}
             />
@@ -244,9 +249,13 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
         isLoading={isLoading}
         data={rowData}
         columns={columns}
-        rowOnClick={(row) =>
-          router.push(`/settings/general/loan-products/view?id=${row?.node?.id}`)
-        }
+        rowOnClick={(row) => {
+          if (router.pathname.includes('settings')) {
+            router.push(`/${getUrl(router.pathname, 3)}/view?id=${row?.node?.id}`);
+          } else {
+            router.push(`/${getUrl(router.pathname, 2)}/view?id=${row?.node?.id}`);
+          }
+        }}
         pagination={{
           total: data?.settings?.general?.loanProducts?.list?.totalCount ?? 'Many',
           pageInfo: data?.settings?.general?.loanProducts?.list?.pageInfo,

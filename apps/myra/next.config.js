@@ -40,7 +40,12 @@ const nextConfig = {
   //   svgr: false,
   // },
   images: {
-    domains: ['images.unsplash.com', 'cdn.raralabs.live'],
+    domains: [
+      'images.unsplash.com',
+      'cdn.raralabs.live',
+      'minio.migration.myraerp.com',
+      'minio.staging.myraerp.com',
+    ],
     // unoptimized: true,
   },
   i18n: {

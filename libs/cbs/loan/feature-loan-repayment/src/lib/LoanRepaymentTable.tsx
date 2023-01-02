@@ -5,6 +5,13 @@ import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
+import {
+  amountConverter,
+  featureCode,
+  getRouterQuery,
+  getUrl,
+  useTranslation,
+} from '@coop/shared/utils';
 import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -112,7 +119,9 @@ export const CBSLoanRepaymentList = () => {
         isLoading={isLoading}
         data={rowData}
         columns={columns}
-        rowOnClick={(row) => router.push(`/cbs/transactions/loan-payment/view?id=${row?.node?.id}`)}
+        rowOnClick={(row) => {
+          router.push(`/${getUrl(router.pathname, 2)}/view?id=${row?.node?.id}`);
+        }}
         pagination={{
           total: data?.loanAccount?.repaymentList?.totalCount ?? 'Many',
           pageInfo: data?.loanAccount?.repaymentList?.pageInfo,

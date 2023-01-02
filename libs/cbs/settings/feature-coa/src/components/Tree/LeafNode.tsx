@@ -245,7 +245,6 @@ export const AddGroup = ({ clickedAccount, setClickedAccount, data }: IAddGroupP
               label="Under"
               options={underAccounts}
             />
-
             <FormSelect
               id="type"
               name="accountClass"
@@ -270,9 +269,7 @@ export const AddGroup = ({ clickedAccount, setClickedAccount, data }: IAddGroupP
                 },
               ]}
             />
-
             <FormInput isDisabled name="accountCode" label="Account Code" />
-
             <GridItem colSpan={2}>
               <FormSwitchTab
                 options={[
@@ -284,7 +281,6 @@ export const AddGroup = ({ clickedAccount, setClickedAccount, data }: IAddGroupP
                 label="Type of Transaction"
               />
             </GridItem>
-
             <GridItem colSpan={2}>
               <FormSwitchTab
                 options={[
@@ -378,7 +374,7 @@ export const ConfigureGroup = ({
               onToggle();
             },
             promise: configureGroup({
-              data: { ...methods.getValues() },
+              data: { ...methods.getValues(), category: clickedAccount?.category },
             }),
           });
         }}

@@ -33,7 +33,7 @@ export const ProductCode = () => {
             color="neutralColorLight.Gray-70"
             lineHeight="150%"
           >
-            {t['memberSettingssCorePreview']}
+            Account Code Preview
           </Text>
           <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-70">
             {prefix}
