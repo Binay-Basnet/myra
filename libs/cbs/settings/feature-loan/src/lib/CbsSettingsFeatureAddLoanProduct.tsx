@@ -29,7 +29,6 @@ import {
   GeneralSetup,
   GridItems,
   InstallmentFrequency,
-  InsuranceApplicable,
   Interest,
   LoanProcessing,
   LoanRepayment,
@@ -467,7 +466,7 @@ export const SettingsLoanProductForm = () => {
             <NewQuestions />
             <InstallmentFrequency />
             <Interest />
-            <InsuranceApplicable />
+            {/* <InsuranceApplicable /> */}
             <LoanProcessing />
             <CollateralForm />
             <AllowGaurantee />
