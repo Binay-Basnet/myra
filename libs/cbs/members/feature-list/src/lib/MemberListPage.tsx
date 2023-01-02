@@ -11,7 +11,7 @@ import {
   useDeleteDraftMutation,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
-import { formatTableAddress, localizedDate } from '@coop/cbs/utils';
+import { formatTableAddress, localizedDate, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
@@ -189,15 +189,16 @@ export const MemberListPage = () => {
                             : t['memberListTableMakeInactive'],
                         onClick: (node) => {
                           objState === 'VALIDATED'
-                            ? router.push(`/cbs/members/activation/${node?.id}`)
-                            : router.push(`/cbs/members/inactivation/${node?.id}`);
+                            ? router.push(`${ROUTES.CBS_MEMBER_ACTIVATION}/${node?.id}`)
+                            : router.push(`${ROUTES.CBS_MEMBER_INACTIVATION}/${node?.id}`);
                         },
                       },
                     ]
                   : [
                       {
                         title: t['memberListTableViewMemberProfile'],
-                        onClick: (node) => router.push(`/cbs/members/details?id=${node?.id}`),
+                        onClick: (node) =>
+                          router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${node?.id}`),
                       },
                       {
                         title: t['memberListTableEditMember'],
@@ -216,8 +217,8 @@ export const MemberListPage = () => {
                             : t['memberListTableMakeInactive'],
                         onClick: (node) => {
                           objState === 'VALIDATED'
-                            ? router.push(`/cbs/members/activation/${node?.id}`)
-                            : router.push(`/cbs/members/inactivation/${node?.id}`);
+                            ? router.push(`${ROUTES.CBS_MEMBER_ACTIVATION}/${node?.id}`)
+                            : router.push(`${ROUTES.CBS_MEMBER_INACTIVATION}/${node?.id}`);
                         },
                       },
                     ]
@@ -264,7 +265,7 @@ export const MemberListPage = () => {
         rowOnClick={(row) => {
           queryClient.invalidateQueries(['getMemberDetailsOverview']);
           if (objState !== 'VALIDATED' && objState !== 'DRAFT') {
-            router.push(`/cbs/members/details?id=${row?.node?.id}`);
+            router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${row?.node?.id}`);
           }
         }}
         isLoading={isFetching}

@@ -4,15 +4,6 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
 import {
-  AccountTypeFilter,
-  NatureOfDepositProduct,
-  useGetAccountInactiveCheckQuery,
-  useGetMemberAccountsQuery,
-  useGetMemberInactiveCheckQuery,
-  useGetNewIdMutation,
-  useInactivateMemberMutation,
-} from '@coop/cbs/data-access';
-import {
   asyncToast,
   Box,
   Button,
@@ -24,6 +15,17 @@ import {
   Text,
   VStack,
 } from '@myra-ui';
+
+import {
+  AccountTypeFilter,
+  NatureOfDepositProduct,
+  useGetAccountInactiveCheckQuery,
+  useGetMemberAccountsQuery,
+  useGetMemberInactiveCheckQuery,
+  useGetNewIdMutation,
+  useInactivateMemberMutation,
+} from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 
 import { NumberStatus } from './CbsMembersFeatureActivations';
 
@@ -136,7 +138,9 @@ export const CbsMemberFeatureInactivations = () => {
                   {...(!isAllAccountsClosed ? { shade: 'neutral', disabled: true } : {})}
                   leftIcon={<Icon as={AiOutlinePlus} />}
                   onClick={() =>
-                    router.push(`/share/share-return?redirect=${router.asPath}&memberId=${id}`)
+                    router.push(
+                      `${ROUTES.CBS_SHARE_RETURN_ADD}?redirect=${router.asPath}&memberId=${id}`
+                    )
                   }
                 >
                   Share Return
@@ -158,7 +162,7 @@ export const CbsMemberFeatureInactivations = () => {
                 success: 'Member Inactivated',
               },
               onSuccess: () => {
-                router.push('/members/list');
+                router.push(ROUTES.CBS_MEMBER_LIST);
                 queryClient.invalidateQueries(['getMemberList']);
               },
             });
@@ -235,11 +239,9 @@ const AccountRow = ({ account, index }: AccountRowProps) => {
           </Box>
         ) : (
           <Box
-            onClick={async () => {
-              const response = await mutateAsync({});
-
+            onClick={() => {
               router.push(
-                `/savings/account-close/add/${response?.newId}?redirect=${router.asPath}&memberId=${memberId}&accountId=${account?.id}`
+                `${ROUTES.CBS_ACCOUNT_CLOSE_ADD}?redirect=${router.asPath}&memberId=${memberId}&accountId=${account?.id}`
               );
             }}
           >

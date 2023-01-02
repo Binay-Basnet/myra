@@ -72,8 +72,9 @@ const CODES: Record<string, Record<string, Record<string, string>>> = {
       '02': 'withdraw-via-collector',
       '03': 'loan',
     },
+    // TODO
     '07': {
-      '01': 'withdraw-slip',
+      '01': 'withdraw-slip-book',
       '02': 'block-withdraw-slip-requests',
     },
     '08': {

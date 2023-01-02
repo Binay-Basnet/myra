@@ -1,5 +1,5 @@
 export const ROUTES = {
-  MEMBER_IND_ADD: '/cbs/members/individual/add',
+  CBS_MEMBER_IND_ADD: '/cbs/members/individual/add',
   CBS_MEMBER_INS_ADD: '/cbs/members/institution/add',
   CBS_MEMBER_COOP_ADD: '/cbs/members/coop/add',
   CBS_MEMBER_COOP_UNION_ADD: '/cbs/members/coop_union/add',
@@ -12,7 +12,7 @@ export const ROUTES = {
   CBS_SHARE_REGISTER: '/cbs/share/register/list',
 
   CBS_ACCOUNT_OPEN_ADD: '/cbs/savings/account-open/add',
-  CBS_ACCOUNT_OPEN_CLOSE: '/cbs/savings/account-close/add',
+  CBS_ACCOUNT_CLOSE_ADD: '/cbs/savings/account-close/add',
   CBS_ACCOUNT_LIST: '/cbs/savings/accounts/list',
   CBS_ACCOUNT_SAVING_PRODUCT: '/cbs/savings/products/list',
   CBS_ACCOUNT_CLOSE_LIST: '/cbs/savings/account-close/list',
@@ -51,7 +51,9 @@ export const ROUTES = {
   CBS_REQUESTS_MEMBER_LIST: '/cbs/requests/member/list',
   CBS_REQUESTS_WITHDRAW_VIA_COLLECTOR_LIST: '/cbs/requests/withdraw-via-collector/list',
   CBS_REQUESTS_LOAN_LIST: '/cbs/requests/loan/list',
-  CBS_BLOCK_WITHDRAW_SLIP_LIST: '/cbs/withdraw/withdraw-slip/list',
+  CBS_WITHDRAW_SLIP_LIST: '/cbs/withdraw/withdraw-slip/list',
+  CBS_WITHDRAW_SLIP_BOOK_ADD: '/cbs/withdraw/withdraw-slip-book/add',
+  CB_WITHDRAW_SLIP_BOOK_LIST: '/cbs/withdraw/withdraw-slip-book/list',
   CBS_WITHDRAW_SLIP_ADD: '/cbs/withdraw/withdraw-slip/add',
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_LIST: '/cbs/withdraw/block-withdraw-slip-requests/list',
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD: '/cbs/withdraw/block-withdraw-slip-requests/add',
@@ -65,7 +67,13 @@ export const ROUTES = {
   CBS_OTHERS_FUND_MANAGEMENT_LIST: '/cbs/others/fund-management/list',
   CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD: '/cbs/others/share-dividend-posting/add',
 
+  SETTINGS_GENERAL_MEMBERS: '/settings/general/members',
   SETTINGS_GENERAL_COA_DETAILS: '/settings/general/charts-of-accounts/details',
   SETTINGS_GENERAL_DP_DETAILS: '/settings/general/deposit-products/details',
   SETTINGS_GENERAL_LP_DETAILS: '/settings/general/loan-products/details',
+
+  CBS_ACCOUNT_OPEN_EDIT: '/cbs/savings/account-close/edit',
+  CBS_LOAN_APPLICATION_DETAILS: '/cbs/loan/applications/details',
+  CBS_MEMBER_ACTIVATION: '/cbs/members/activation',
+  CBS_MEMBER_INACTIVATION: '/cbs/members/inactivation',
 } as const;

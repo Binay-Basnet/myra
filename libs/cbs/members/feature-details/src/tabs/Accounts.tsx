@@ -11,6 +11,7 @@ import {
   useGetMemberDetailsOverviewQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 import { AccountList, UpcomingPaymentTable } from '../components';
@@ -21,11 +22,11 @@ export const Accounts = () => {
   const links = [
     {
       title: 'Account Open',
-      link: `/savings/account-open`,
+      link: ROUTES.CBS_ACCOUNT_OPEN_ADD,
     },
     {
       title: 'Account Close',
-      link: `/savings/account-close`,
+      link: ROUTES.CBS_ACCOUNT_CLOSE_ADD,
     },
   ];
   const memberDetails = useGetMemberDetailsOverviewQuery({

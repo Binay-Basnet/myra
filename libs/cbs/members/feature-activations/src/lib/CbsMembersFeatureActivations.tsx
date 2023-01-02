@@ -14,6 +14,7 @@ import {
   useGetMemberCheckQuery,
   useGetMemberIndividualDataQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 
 import { MembershipPayment } from '../components/MembershipPayment';
 
@@ -140,7 +141,9 @@ export const CbsMembersFeatureActivate = () => {
                       {...(!hasPaidMemberFee ? { shade: 'neutral', disabled: true } : {})}
                       leftIcon={<Icon as={AiOutlinePlus} />}
                       onClick={() =>
-                        router.push(`/share/share-issue?redirect=${router.asPath}&memberId=${id}`)
+                        router.push(
+                          `${ROUTES.CBS_SHARE_ISSUE_ADD}?redirect=${router.asPath}&memberId=${id}`
+                        )
                       }
                     >
                       New Share Issue
@@ -232,7 +235,7 @@ export const CbsMembersFeatureActivate = () => {
             mainButtonLabel="Done"
             mainButtonHandler={() => {
               queryClient.invalidateQueries(['getMemberList']);
-              router.push('/members/list');
+              router.push(ROUTES.CBS_MEMBER_LIST);
             }}
           />
         </Box>
@@ -338,7 +341,9 @@ export const AccountRow = ({ account, index }: AccountRowProps) => {
         ) : (
           <Box
             onClick={() =>
-              router.push(`/savings/account-open/edit/${account?.id}?redirect=${router.asPath}`)
+              router.push(
+                `${ROUTES.CBS_ACCOUNT_OPEN_EDIT}/${account?.id}?redirect=${router.asPath}`
+              )
             }
           >
             <Button variant="ghost">Update Details</Button>
