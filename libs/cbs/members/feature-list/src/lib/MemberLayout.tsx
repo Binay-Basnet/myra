@@ -27,25 +27,25 @@ interface IMemberPageLayout {
 const memberColumns = [
   {
     title: 'memberList',
-    link: '/members/list',
+    link: '/cbs/members/list',
   },
 ];
 
 const settingsColumn = [
   {
     label: 'memberLayoutMemberSettings',
-    navigate: '/settings/general/members',
+    navigate: '/cbs/settings/general/members',
   },
   // {
   //   label: 'memberLayoutKymSettings',
-  //   navigate: '/settings/general/members/kym-individual',
+  //   navigate: '/cbs/settings/general/members/kym-individual',
   // },
 ];
 
 const reportColumn = [
   {
     label: 'memberLayoutMemberClassification',
-    navigate: '/reports/cbs/members/classification/new',
+    navigate: '/cbs/reports/cbs/members/classification/new',
   },
   // {
   //   label: 'memberLayoutMemberLedger',
@@ -55,15 +55,15 @@ const reportColumn = [
   // },
   {
     label: 'memberLayoutActiveInactiveMemberReport',
-    navigate: '/reports/cbs/members/activations/new',
+    navigate: '/cbs/reports/cbs/members/activations/new',
   },
   // {
   //   label: 'memberLayoutInactiveMemberReport',
-  //   navigate: '/reports/cbs/members/activations/new',
+  //   navigate: '/cbs/reports/cbs/members/activations/new',
   // },
   {
     label: 'memberLayoutKymStatusReport',
-    navigate: '/reports/cbs/members/kym-status/new',
+    navigate: '/cbs/reports/cbs/members/kym-status/new',
   },
 ];
 
@@ -147,21 +147,21 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
     if (item === 'INDIVIDUAL') {
       newId
         .mutateAsync({ idType: Id_Type.Kymindividual })
-        .then((res) => router.push(`/members/individual/add/${res?.newId}`));
+        .then((res) => router.push(`/cbs/members/individual/add/${res?.newId}`));
     } else if (item === 'INSTITUTION') {
       newId
         .mutateAsync({ idType: Id_Type.Kyminstitutions })
-        .then((res) => router.push(`/members/institution/add/${res?.newId}`));
+        .then((res) => router.push(`/cbs/members/institution/add/${res?.newId}`));
     } else if (item === 'COOPERATIVE') {
       newId
         .mutateAsync({ idType: Id_Type.Kymcooperative })
-        .then((res) => router.push(`/members/coop/add/${res?.newId}`));
+        .then((res) => router.push(`/cbs/members/coop/add/${res?.newId}`));
     } else {
       newId
         .mutateAsync({
           idType: Id_Type.Kymcooperativeunion,
         })
-        .then((res) => router.push(`/members/coop_union/add/${res?.newId}`));
+        .then((res) => router.push(`/cbs/members/coop_union/add/${res?.newId}`));
     }
   };
 

@@ -20,64 +20,64 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'members',
     icon: IoPerson,
-    link: '/members/list',
+    link: '/cbs/members/list',
     match: ['members'],
   },
   {
     title: 'share',
     icon: IoCubeOutline,
-    link: '/share/balance',
+    link: '/cbs/share/balance',
     match: ['share'],
   },
   {
     title: 'savings',
     icon: ImStack,
-    link: '/savings/list',
+    link: '/cbs/savings/list',
     match: ['savings'],
   },
 
   {
     title: 'loan',
     icon: BsArrowLeftRight,
-    link: '/loan/applications',
+    link: '/cbs/loan/applications',
     match: ['loan'],
   },
 
   {
     title: 'transactions',
     icon: IoIosList,
-    link: '/transactions/deposit/list',
+    link: '/cbs/transactions/deposit/list',
     match: ['transactions'],
   },
   {
     title: 'transfer',
     icon: AiOutlineSend,
-    link: '/transfer/vault-transfer/list',
+    link: '/cbs/transfer/vault-transfer/list',
     match: ['transfer'],
   },
 
   {
     title: 'requests',
     icon: IoMailUnreadOutline,
-    link: '/requests/member',
+    link: '/cbs/requests/member',
     match: ['requests'],
   },
   {
     title: 'withdrawSlip',
     icon: TbMailForward,
-    link: '/withdraw/withdraw-slip-book/list',
+    link: '/cbs/withdraw/withdraw-slip-book/list',
     match: ['withdraw'],
   },
   {
     title: 'reports',
     icon: BsFileText,
-    link: '/reports/cbs/organizations',
+    link: '/cbs/reports/cbs/organizations',
     match: ['reports'],
   },
   {
     title: 'others',
     icon: IoPrismOutline,
-    link: '/others/market-representative/list',
+    link: '/cbs/others/market-representative/list',
     match: ['others'],
   },
 ];
@@ -91,11 +91,11 @@ interface ITabMenuProps {
     match: string[];
   }[];
 
-  // Route Index is the index of the router?.asPath.split('/') that needs to be matched
+  // Route Index is the index of the router?.asPath.split('/cbs/') that needs to be matched
   routeIndex?: number;
 }
 
-export const TabMenu = ({ tabs = cbsTabs, routeIndex = 1 }: ITabMenuProps) => {
+export const TabMenu = ({ tabs = cbsTabs, routeIndex = 2 }: ITabMenuProps) => {
   const router = useRouter();
   const { t } = useTranslation();
 

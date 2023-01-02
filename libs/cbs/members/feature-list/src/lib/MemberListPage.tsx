@@ -156,7 +156,7 @@ export const MemberListPage = () => {
                         title: t['memberListTableEditMember'],
                         onClick: (node) => {
                           router.push(
-                            `/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
+                            `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
                               node?.id
                             }`
                           );
@@ -176,7 +176,7 @@ export const MemberListPage = () => {
                         title: t['memberListTableEditMember'],
                         onClick: (node) => {
                           router.push(
-                            `/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
+                            `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
                               node?.id
                             }`
                           );
@@ -189,21 +189,21 @@ export const MemberListPage = () => {
                             : t['memberListTableMakeInactive'],
                         onClick: (node) => {
                           objState === 'VALIDATED'
-                            ? router.push(`/members/activation/${node?.id}`)
-                            : router.push(`/members/inactivation/${node?.id}`);
+                            ? router.push(`/cbs/members/activation/${node?.id}`)
+                            : router.push(`/cbs/members/inactivation/${node?.id}`);
                         },
                       },
                     ]
                   : [
                       {
                         title: t['memberListTableViewMemberProfile'],
-                        onClick: (node) => router.push(`/members/details?id=${node?.id}`),
+                        onClick: (node) => router.push(`/cbs/members/details?id=${node?.id}`),
                       },
                       {
                         title: t['memberListTableEditMember'],
                         onClick: (node) => {
                           router.push(
-                            `/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
+                            `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
                               node?.id
                             }`
                           );
@@ -216,8 +216,8 @@ export const MemberListPage = () => {
                             : t['memberListTableMakeInactive'],
                         onClick: (node) => {
                           objState === 'VALIDATED'
-                            ? router.push(`/members/activation/${node?.id}`)
-                            : router.push(`/members/inactivation/${node?.id}`);
+                            ? router.push(`/cbs/members/activation/${node?.id}`)
+                            : router.push(`/cbs/members/inactivation/${node?.id}`);
                         },
                       },
                     ]
@@ -264,7 +264,7 @@ export const MemberListPage = () => {
         rowOnClick={(row) => {
           queryClient.invalidateQueries(['getMemberDetailsOverview']);
           if (objState !== 'VALIDATED' && objState !== 'DRAFT') {
-            router.push(`/members/details?id=${row?.node?.id}`);
+            router.push(`/cbs/members/details?id=${row?.node?.id}`);
           }
         }}
         isLoading={isFetching}

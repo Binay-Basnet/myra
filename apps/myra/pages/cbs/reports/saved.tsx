@@ -1,8 +1,9 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
+
+import { MainLayout } from '@myra-ui';
 
 import { ReportMainLayout } from '@coop/cbs/reports/layout';
 import { SavedReportList } from '@coop/cbs/reports/list';
-import { MainLayout } from '@myra-ui';
 
 const ReportsSaved = () => <SavedReportList />;
 

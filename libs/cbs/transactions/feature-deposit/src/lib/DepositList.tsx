@@ -103,7 +103,7 @@ export const DepositList = () => {
                 {
                   title: t['transDetailViewDetail'],
                   onClick: (row) => {
-                    router.push(`/transactions/deposit/view?id=${row?.ID}`);
+                    router.push(`/cbs/transactions/deposit/details?id=${row?.ID}`);
                   },
                 },
               ]}
@@ -129,7 +129,7 @@ export const DepositList = () => {
         getRowId={(row) => String(row?.node?.ID)}
         isLoading={isFetching}
         columns={columns}
-        rowOnClick={(row) => router.push(`/transactions/deposit/view?id=${row?.node?.ID}`)}
+        rowOnClick={(row) => router.push(`/cbs/transactions/deposit/details?id=${row?.node?.ID}`)}
         pagination={{
           total: data?.transaction?.listDeposit?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listDeposit?.pageInfo,
