@@ -29,6 +29,7 @@ import {
   useSetDisburseLoanMutation,
 } from '@coop/cbs/data-access';
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormBankSelect,
@@ -117,7 +118,7 @@ export const CBSLoanDisburseSuccess = () => {
       <Box position="sticky" bottom="0">
         <FormFooter
           mainButtonLabel="Done"
-          mainButtonHandler={() => router.push('/loan/accounts')}
+          mainButtonHandler={() => router.push(ROUTES.CBS_LOAN_ACCOUNTS_LIST)}
         />
       </Box>
     </Container>

@@ -9,7 +9,7 @@ import {
   Share_Transaction_Direction,
   useGetShareRegisterListQuery,
 } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -142,7 +142,9 @@ export const ShareRegisterTable = () => {
         isLoading={isFetching}
         data={rowData ?? []}
         columns={columns}
-        rowOnClick={(row) => router.push(`/share/register/view?id=${row?.node?.id}`)}
+        rowOnClick={(row) =>
+          router.push(`${ROUTES.CBS_SHARE_REGISTER_DETAILS}?id=${row?.node?.id}`)
+        }
         pagination={{
           total: data?.share?.register?.totalCount ?? 'Many',
           pageInfo: data?.share?.register?.pageInfo,

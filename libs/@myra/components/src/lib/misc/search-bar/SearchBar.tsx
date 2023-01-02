@@ -383,9 +383,8 @@ export const SearchBar = () => {
                           const response = basic?.node?.hasParam ? await getNewId({}) : null;
 
                           const url = basic?.node?.id
-                            ? basic?.node?.url ||
-                              `${getPageUrl(basic?.node?.fullCode || '')}?id=${basic?.node?.id}`
-                            : basic?.node?.url || getPageUrl(basic?.node?.fullCode || '');
+                            ? `${getPageUrl(basic?.node?.fullCode || '')}?id=${basic?.node?.id}`
+                            : getPageUrl(basic?.node?.fullCode || '');
                           router
                             .push(`${url}${response ? `/${response?.newId}` : ''}` as string)
                             .then(() => {

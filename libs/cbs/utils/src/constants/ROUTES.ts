@@ -68,4 +68,13 @@ export const ROUTES = {
   SETTINGS_GENERAL_COA_DETAILS: '/settings/general/charts-of-accounts/details',
   SETTINGS_GENERAL_DP_DETAILS: '/settings/general/deposit-products/details',
   SETTINGS_GENERAL_LP_DETAILS: '/settings/general/loan-products/details',
+
+  CBS_OTHERS_MARKET_REPRESENTATIVE_LIST: '/cbs/others/market-representative/list',
+
+  CBS_SHARE_REGISTER_DETAILS: '/cbs/share/register/details',
+  CBS_LOAN_APPLICATION_DETAILS: '/cbs/loan/applications/details',
+  CBS_LOAN_ACCOUNTS_DETAILS: '/cbs/loan/accounts/details',
+  CBS_LOAN_DISBURSE: '/cbs/loan/applications/disburse',
+  CBS_LOAN_APPROVE: '/cbs/loan/applications/approve',
+  CBS_LOAN_DECLINED_DETAILS: '/cbs/loan/declined/details',
 } as const;

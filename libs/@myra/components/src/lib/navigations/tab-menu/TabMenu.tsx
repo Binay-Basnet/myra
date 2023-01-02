@@ -11,6 +11,7 @@ import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 
 import { Icon } from '@myra-ui/foundations';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { en, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -20,52 +21,52 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'members',
     icon: IoPerson,
-    link: '/cbs/members/list',
+    link: ROUTES.CBS_MEMBER_LIST,
     match: ['members'],
   },
   {
     title: 'share',
     icon: IoCubeOutline,
-    link: '/cbs/share/balance',
+    link: ROUTES.CBS_SHARE_BALANCE,
     match: ['share'],
   },
   {
     title: 'savings',
     icon: ImStack,
-    link: '/cbs/savings/list',
+    link: ROUTES.CBS_ACCOUNT_LIST,
     match: ['savings'],
   },
 
   {
     title: 'loan',
     icon: BsArrowLeftRight,
-    link: '/cbs/loan/applications',
+    link: ROUTES.CBS_LOAN_APPLICATIONS_LIST,
     match: ['loan'],
   },
 
   {
     title: 'transactions',
     icon: IoIosList,
-    link: '/cbs/transactions/deposit/list',
+    link: ROUTES.CBS_TRANS_DEPOSIT_LIST,
     match: ['transactions'],
   },
   {
     title: 'transfer',
     icon: AiOutlineSend,
-    link: '/cbs/transfer/vault-transfer/list',
+    link: ROUTES.CBS_TRANSFER_VAULT_LIST,
     match: ['transfer'],
   },
 
   {
     title: 'requests',
     icon: IoMailUnreadOutline,
-    link: '/cbs/requests/member',
+    link: ROUTES.CBS_REQUESTS_MEMBER_LIST,
     match: ['requests'],
   },
   {
     title: 'withdrawSlip',
     icon: TbMailForward,
-    link: '/cbs/withdraw/withdraw-slip-book/list',
+    link: ROUTES.CBS_BLOCK_WITHDRAW_SLIP_LIST,
     match: ['withdraw'],
   },
   {
@@ -77,7 +78,7 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'others',
     icon: IoPrismOutline,
-    link: '/cbs/others/market-representative/list',
+    link: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_LIST,
     match: ['others'],
   },
 ];

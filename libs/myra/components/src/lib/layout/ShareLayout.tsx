@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Sidebar } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
+
 interface IMemberPageLayout {
   children: React.ReactNode;
 }
@@ -9,11 +11,11 @@ interface IMemberPageLayout {
 const shareColumns = [
   {
     title: 'shareBalance',
-    link: '/share/balance',
+    link: ROUTES.CBS_SHARE_BALANCE,
   },
   {
     title: 'shareRegister',
-    link: '/share/register',
+    link: ROUTES.CBS_SHARE_REGISTER,
   },
 ];
 
@@ -27,26 +29,26 @@ const settingsColumn = [
 const reportColumn = [
   {
     label: 'shareLayoutRegisterReport',
-    navigate: '/reports/cbs/share/register/new',
+    navigate: '/cbs/reports/cbs/share/register/new',
   },
   {
     label: 'shareLayoutStateReport',
-    navigate: '/reports/cbs/share/statement/new',
+    navigate: '/cbs/reports/cbs/share/statement/new',
   },
   {
     label: 'shareLayoutTransactionReport',
-    navigate: '/reports/cbs/share/transaction/new',
+    navigate: '/cbs/reports/cbs/share/transaction/new',
   },
 ];
 
 const addButtoncolumns = [
   {
     title: 'shareLayoutSharePurchase',
-    link: '/share/share-issue',
+    link: ROUTES.CBS_SHARE_ISSUE_ADD,
   },
   {
     title: 'shareLayoutShareReturn',
-    link: '/share/share-return',
+    link: ROUTES.CBS_SHARE_RETURN_ADD,
   },
 ];
 
