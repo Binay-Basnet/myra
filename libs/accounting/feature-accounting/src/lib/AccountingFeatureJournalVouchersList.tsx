@@ -108,7 +108,7 @@ export const AccountingFeatureJournalVouchersList = () => {
         columns={columns}
         rowOnClick={(row) =>
           router?.pathname?.includes('transactions')
-            ? router.push(`/${ROUTES.CBS_TRANS_JORNAL_VOUCHER_DETAILS}?id=${row?.node?.id}`)
+            ? router.push(`/${ROUTES.CBS_TRANS_JOURNAL_VOUCHER_DETAILS}?id=${row?.node?.id}`)
             : router.push(`/${baseRoute}/journal-vouchers/view?id=${row?.node?.id}`)
         }
         pagination={{

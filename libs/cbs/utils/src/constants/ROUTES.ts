@@ -91,5 +91,5 @@ export const ROUTES = {
   CBS_TRANS_BULK_DEPOSIT_ADD: '/cbs/transactions/bulk-deposit/add',
   CBS_TRANS_DEPOSIT_DETAILS: '/cbs/transactions/deposit/details',
   CBS_TRANS_WITHDRAW_DETAILS: '/cbs/transactions/withdraw/details',
-  CBS_TRANS_JORNAL_VOUCHER_DETAILS: '/cbs/transactions/journal-vouchers/details',
+  CBS_TRANS_JOURNAL_VOUCHER_DETAILS: '/cbs/transactions/journal-vouchers/details',
 } as const;
