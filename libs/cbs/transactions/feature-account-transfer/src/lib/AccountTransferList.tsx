@@ -6,6 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { TransferType, useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -87,7 +88,7 @@ export const AccountTransferList = () => {
                 {
                   title: t['transDetailViewDetail'],
                   onClick: (row) => {
-                    router.push(`/transactions/account-transfer/view?id=${row?.ID}`);
+                    router.push(`${ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_DETAILS}?id=${row?.ID}`);
                   },
                 },
               ]}
@@ -107,7 +108,7 @@ export const AccountTransferList = () => {
         heading={`${t['accountTransferListAccountTransferList']} - ${featureCode?.accountTransferList}`}
         // tabItems={tabList}
         buttonLabel={t['accountTransferListNewAccountTransfer']}
-        buttonHandler={() => router.push('/transactions/account-transfer/add')}
+        buttonHandler={() => router.push(ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_ADD)}
       />
 
       <Table
@@ -115,7 +116,9 @@ export const AccountTransferList = () => {
         getRowId={(row) => String(row?.node?.ID)}
         isLoading={isFetching}
         columns={columns}
-        rowOnClick={(row) => router.push(`/transactions/account-transfer/view?id=${row?.node?.ID}`)}
+        rowOnClick={(row) =>
+          router.push(`${ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_DETAILS}?id=${row?.node?.ID}`)
+        }
         pagination={{
           total: data?.transaction?.listTransfer?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listTransfer?.pageInfo,

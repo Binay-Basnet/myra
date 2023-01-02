@@ -60,7 +60,7 @@ const CODES: Record<string, Record<string, Record<string, string>>> = {
       '04': 'market-representative-transaction',
       '05': 'journal-vouchers',
       '06': 'market-representative',
-      '07': 'all-transaction',
+      '07': 'all-transactions',
     },
     '05': {
       '01': 'vault-transfer',
@@ -122,11 +122,11 @@ export const getPageUrl = (code: string) => {
     const menuLink = CODES[appCode][menuCode][pageCode];
 
     if (menuLink) {
-      // return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
-      return `/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
+      return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
+      // return `/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
     }
-    // return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
-    return `/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
+    return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
+    // return `/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
   }
   if (parseInt(appCode, 10) === 9) {
     const menuLink = CODES[appCode][menuCode][pageCode];

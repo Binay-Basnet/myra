@@ -5,6 +5,7 @@ import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 
 interface ILoanTable {
   data: GetLoanListQuery | undefined;
@@ -94,7 +95,8 @@ export const LoanTable = ({ data, isLoading, type, viewLink, isDisbured }: ILoan
                   : [
                       {
                         title: 'Edit',
-                        onClick: (row) => router.push(`/loan/apply?id=${row.id}`),
+                        onClick: (row) =>
+                          router.push(`${ROUTES.CBS_LOAN_APPLICATION_DETAILS}?id=${row.id}`),
                       },
                       {
                         title: 'View Loan Application',
@@ -104,8 +106,8 @@ export const LoanTable = ({ data, isLoading, type, viewLink, isDisbured }: ILoan
                         title: type === LoanObjState.Approved ? 'Disburse Loan' : 'Approve Loan',
                         onClick: (row) => {
                           type === LoanObjState.Approved
-                            ? router.push(`/loan/applications/disburse?id=${row?.id}`)
-                            : router.push(`/loan/applications/approve?id=${row?.id}`);
+                            ? router.push(`${ROUTES.CBS_LOAN_DISBURSE}?id=${row?.id}`)
+                            : router.push(`${ROUTES.CBS_LOAN_APPROVE}?id=${row?.id}`);
                         },
                       },
                     ]

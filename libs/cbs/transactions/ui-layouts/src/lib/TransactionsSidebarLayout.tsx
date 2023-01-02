@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Sidebar } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 interface ITransactionsSidebarLayoutProps {
@@ -11,49 +12,49 @@ interface ITransactionsSidebarLayoutProps {
 const transactionSidebarColumns = [
   {
     title: 'transactionsSidebarDeposit',
-    link: '/cbs/transactions/deposit/list',
+    link: ROUTES.CBS_TRANS_DEPOSIT_LIST,
     name: 'deposit',
-    addLink: '/cbs/transactions/deposit/add',
+    addLink: ROUTES.CBS_TRANS_DEPOSIT_ADD,
   },
   {
     title: 'transactionsSidebarWithdraw',
-    link: '/cbs/transactions/withdraw/list',
+    link: ROUTES.CBS_TRANS_WITHDRAW_LIST,
     name: 'withdraw',
-    addLink: '/cbs/transactions/withdraw/add',
+    addLink: ROUTES.CBS_TRANS_WITHDRAW_ADD,
   },
   {
     title: 'transactionsSidebarAccountTransfer',
-    link: '/cbs/transactions/account-transfer/list',
+    link: ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_LIST,
     name: 'account-transfer',
-    addLink: '/cbs/transactions/account-transfer/add',
+    addLink: ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_ADD,
   },
   {
     title: 'transactionsSidebarLoanPayment',
-    link: '/cbs/transactions/loan-payment/list',
+    link: ROUTES.CBS_TRANS_LOAN_PAYMENT_LIST,
     name: 'loan-payment',
-    addLink: '/cbs/transactions/loan-payment/add',
+    addLink: ROUTES.CBS_TRANS_LOAN_PAYMENT_ADD,
   },
   {
     title: 'transactionsSidebarAgentTransaction',
-    link: '/cbs/transactions/market-representative-transaction/list',
+    link: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_LIST,
     name: 'agent-transaction',
-    addLink: '/cbs/transactions/market-representative-transaction/add',
+    addLink: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
   },
   {
     title: 'transactionsSidebarAgentList',
-    link: '/cbs/transactions/market-representative/list',
+    link: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_LIST,
     name: 'agent-list',
     // addLink: '/cbs/transactions/agent/add',
   },
   {
     title: 'transactionsSidebarJournalVoucher',
-    link: '/cbs/transactions/journal-vouchers/list',
+    link: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_LIST,
     name: 'journal-voucher',
-    addLink: '/cbs/transactions/journal-vouchers/add',
+    addLink: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD,
   },
   {
     title: 'transactionsSidebarAllTransactions',
-    link: '/cbs/transactions/all-transactions/list',
+    link: ROUTES.CBS_TRANS_ALL_TRANSACTION_LIST,
     name: 'all-transactions',
   },
 ];
@@ -61,19 +62,19 @@ const transactionSidebarColumns = [
 const dropdownButtons = [
   {
     title: 'transactionSidebarNewDeposit',
-    link: '/cbs/transactions/deposit/add',
+    link: ROUTES.CBS_TRANS_DEPOSIT_ADD,
   },
   {
     title: 'transactionSidebarNewWithdraw',
-    link: '/cbs/transactions/withdraw/add',
+    link: ROUTES.CBS_TRANS_WITHDRAW_ADD,
   },
   {
     title: 'transactionSidebarNewAccountTransfer',
-    link: '/cbs/transactions/account-transfer/add',
+    link: ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_ADD,
   },
   {
     title: 'transactionSidebarNewLoanPayment',
-    link: '/cbs/loan/repayments/add',
+    link: ROUTES.CBS_TRANS_LOAN_PAYMENT_ADD,
   },
   // {
   //   title: 'New Agent',
@@ -81,11 +82,11 @@ const dropdownButtons = [
   // },
   {
     title: 'transactionSidebarNewMarketRepresentativeTransaction',
-    link: '/cbs/transactions/market-representative-transaction/add',
+    link: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
   },
   {
     title: 'New Journal Voucher',
-    link: '/cbs/transactions/journal-vouchers/add',
+    link: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD,
   },
 ];
 
@@ -127,7 +128,7 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
     <Sidebar
       applicationName={t['corebankingSystems']}
       featureName={t['transactions']}
-      featureLink="/transactions/deposit/list"
+      featureLink={ROUTES.CBS_TRANS_DEPOSIT_LIST}
       mainButtonLabel={t['transactionSidebarNewTransaction']}
       tabColumns={transactionSidebarColumns}
       addButtonList={dropdownButtons}

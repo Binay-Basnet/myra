@@ -31,7 +31,7 @@ import {
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter, featureCode } from '@coop/shared/utils';
 
@@ -363,7 +363,7 @@ export const LoanRepayment = () => {
                 <ResponseDialog
                   onSuccess={() => {
                     queryClient.invalidateQueries(['getLoanPreview']);
-                    router.push('/loan/repayments');
+                    router.push(ROUTES.CBS_LOAN_REPAYMENTS_LIST);
                   }}
                   promise={() => mutateAsync({ data: handleSubmit() })}
                   successCardProps={(response) => {

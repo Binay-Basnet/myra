@@ -30,7 +30,7 @@ import {
   WithdrawWith,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAmountInput,
@@ -509,7 +509,7 @@ export const AddWithdraw = () => {
                 mode === 1 ? (
                   <ResponseDialog
                     onSuccess={() => {
-                      router.push('/transactions/withdraw/list');
+                      router.push(ROUTES.CBS_TRANS_WITHDRAW_LIST);
                     }}
                     promise={() => mutateAsync({ data: handleSubmit() })}
                     successCardProps={(response) => {

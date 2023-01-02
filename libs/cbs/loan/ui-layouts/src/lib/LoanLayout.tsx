@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Sidebar } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAccountPageLayoutProps {
@@ -11,32 +12,32 @@ interface IAccountPageLayoutProps {
 const accountColumns = [
   {
     title: 'Loan Applications',
-    link: '/loan/applications',
-    addLink: '/loan/apply',
+    link: ROUTES.CBS_LOAN_APPLICATIONS_LIST,
+    addLink: ROUTES.CBS_LOAN_APPLICATIONS_ADD,
   },
   {
     title: 'Loan Accounts',
-    link: '/loan/accounts',
+    link: ROUTES.CBS_LOAN_ACCOUNTS_LIST,
   },
   {
     title: 'Loan Repayment',
-    link: '/loan/repayments',
-    addLink: '/loan/repayments/add',
+    link: ROUTES.CBS_LOAN_REPAYMENTS_LIST,
+    addLink: ROUTES.CBS_LOAN_REPAYMENTS_ADD,
   },
   {
     title: 'Loan Products',
-    link: '/loan/products',
+    link: ROUTES.CBS_LOAN_PRODUCTS_LIST,
   },
-  { title: 'Declined Loan', link: '/loan/declined' },
+  { title: 'Declined Loan', link: ROUTES.CBS_LOAN_DECLINED_LIST },
 ];
 const addButtoncolumns = [
   {
     title: 'New Loan Application',
-    link: '/loan/apply',
+    link: ROUTES.CBS_LOAN_APPLICATIONS_ADD,
   },
   {
     title: 'Loan Repayment',
-    link: '/loan/repayments/add',
+    link: ROUTES.CBS_LOAN_REPAYMENTS_ADD,
   },
 ];
 
@@ -54,11 +55,11 @@ const settingsColumn = [
 const reportColumn = [
   {
     label: 'loanLayoutStatementReport',
-    navigate: '/reports/cbs/loan/statement/new',
+    navigate: '/cbs/reports/cbs/loan/statement/new',
   },
   {
     label: 'loanLayoutAgeingReport',
-    navigate: '/reports/cbs/loan/ageing/new',
+    navigate: '/cbs/reports/cbs/loan/ageing/new',
   },
 ];
 

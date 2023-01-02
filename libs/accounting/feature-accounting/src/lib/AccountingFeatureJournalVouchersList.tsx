@@ -10,6 +10,7 @@ import {
   useAppSelector,
   useGetJournalVoucherListQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -32,7 +33,7 @@ export const AccountingFeatureJournalVouchersList = () => {
   const rowData = useMemo(() => data?.accounting?.journalVoucher?.list?.edges ?? [], [data]);
 
   const baseRoute = router?.pathname?.includes('transactions')
-    ? 'transactions'
+    ? 'transactions/journal-vouchers'
     : 'accounting/accounting';
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -105,7 +106,11 @@ export const AccountingFeatureJournalVouchersList = () => {
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
-        rowOnClick={(row) => router.push(`/${baseRoute}/journal-vouchers/view?id=${row?.node?.id}`)}
+        rowOnClick={(row) =>
+          router?.pathname?.includes('transactions')
+            ? router.push(`/${ROUTES.CBS_TRANS_JORNAL_VOUCHER_DETAILS}?id=${row?.node?.id}`)
+            : router.push(`/${baseRoute}/journal-vouchers/view?id=${row?.node?.id}`)
+        }
         pagination={{
           total: data?.accounting?.journalVoucher?.list?.totalCount ?? 'Many',
           pageInfo: data?.accounting?.journalVoucher?.list?.pageInfo,
