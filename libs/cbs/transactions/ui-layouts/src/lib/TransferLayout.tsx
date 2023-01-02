@@ -21,6 +21,12 @@ const transactionSidebarColumns = [
     name: 'teller-transfer',
     addLink: '/transfer/teller-transfer/add',
   },
+  {
+    title: 'Service Center Cash Transfer',
+    link: '/transfer/cash-transfer/list',
+    name: 'cash-transfer',
+    addLink: '/transfer/cash-transfer/add',
+  },
   // {
   //   title: 'transferBranchTransfer',
   //   link: '/transfer/branch-transfer',

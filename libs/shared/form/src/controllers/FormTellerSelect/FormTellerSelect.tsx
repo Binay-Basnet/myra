@@ -9,11 +9,17 @@ interface IFormTellerSelectProps {
   name: string;
   label: string;
   isRequired?: boolean;
+  excludeIds?: string[];
 }
 
 type OptionType = { label: string; value: string };
 
-export const FormTellerSelect = ({ name, label, isRequired }: IFormTellerSelectProps) => {
+export const FormTellerSelect = ({
+  name,
+  label,
+  isRequired,
+  excludeIds,
+}: IFormTellerSelectProps) => {
   const [tellerId, setTellerId] = useState('');
 
   const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery({
@@ -29,16 +35,17 @@ export const FormTellerSelect = ({ name, label, isRequired }: IFormTellerSelectP
 
   const agentList = agentListQueryData?.settings?.myraUser?.list?.edges;
 
-  const agentOptions = agentList?.reduce(
-    (prevVal, curVal) => [
+  const agentOptions = agentList?.reduce((prevVal, curVal) => {
+    if (excludeIds?.includes(curVal?.node?.id as string)) return prevVal;
+
+    return [
       ...prevVal,
       {
         label: `${curVal?.node?.name} [ID:${curVal?.node?.id}]`,
         value: curVal?.node?.id as string,
       },
-    ],
-    [] as OptionType[]
-  );
+    ];
+  }, [] as OptionType[]);
 
   return (
     <FormSelect

@@ -159,11 +159,13 @@ export const UsersList = () => {
         searchPlaceholder="Search Users"
       />
 
-      <NewUserModal
-        isOpen={isAddUserModalOpen}
-        onClose={handleAddUserModalClose}
-        refetchUserList={refetchUserList}
-      />
+      {isAddUserModalOpen && (
+        <NewUserModal
+          isOpen={isAddUserModalOpen}
+          onClose={handleAddUserModalClose}
+          refetchUserList={refetchUserList}
+        />
+      )}
     </>
   );
 };

@@ -1,7 +1,5 @@
 import { Box, Grid, Text } from '@myra-ui';
 
-import { amountConverter } from '@coop/shared/utils';
-
 type StatsProps = {
   statsData: {
     title: string;
@@ -22,7 +20,7 @@ export const Statistics = ({ statsData }: StatsProps) => (
           lineHeight="140%"
           color="neutralColorLight.Gray-70"
         >
-          Rs. {amountConverter(summary.value)}
+          Rs. {summary.value}
         </Text>
       </Box>
     ))}

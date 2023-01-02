@@ -1,22 +1,29 @@
-import { useSearchCoaQuery } from '@coop/cbs/data-access';
-import { FormSelect } from '@coop/shared/form';
 import { SelectProps } from '@myra-ui';
+
+import { useGetCoaAccountListQuery } from '@coop/cbs/data-access';
+import { FormSelect } from '@coop/shared/form';
 
 interface IFormBranchSelectProps extends SelectProps {
   name: string;
   label: string;
+  branchId: string;
 }
 
 export const FormCOASelect = (props: IFormBranchSelectProps) => {
-  const { name, label, ...rest } = props;
+  const { name, label, branchId, ...rest } = props;
 
   // const { watch } = useFormContext();
 
   // const [coaName, setCOAName] = useState('');
 
-  const { data: branchListQueryData, isFetching } = useSearchCoaQuery(
+  const { data: branchListQueryData, isFetching } = useGetCoaAccountListQuery(
     {
-      coaName: '',
+      branchId,
+
+      pagination: {
+        after: '',
+        first: -1,
+      },
     },
     {
       staleTime: 0,
@@ -24,11 +31,11 @@ export const FormCOASelect = (props: IFormBranchSelectProps) => {
     }
   );
 
-  const coaList = branchListQueryData?.settings?.general?.chartsOfAccount?.search?.data;
+  const coaList = branchListQueryData?.settings?.chartsOfAccount?.coaAccountList?.edges;
 
   const coaOptions = coaList?.map((coa) => ({
-    label: `${coa?.accountCode} - ${coa?.name?.local}` as string,
-    value: coa?.id as string,
+    label: `${coa?.node?.accountName?.local}` as string,
+    value: coa?.node?.accountCode as string,
   }));
 
   // const coa = watch(name);

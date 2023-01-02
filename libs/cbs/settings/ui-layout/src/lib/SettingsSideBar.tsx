@@ -67,6 +67,10 @@ const otherTabList: TabList[] = [
     title: 'settingsAlternativeChannel',
     to: '/settings/general/alternative-channels/charges',
   },
+  {
+    title: 'Indexing',
+    to: '/settings/general/indexing',
+  },
   // {
   //   title: 'settingsDocuments',
   //   to: '/settings/general/documents',
