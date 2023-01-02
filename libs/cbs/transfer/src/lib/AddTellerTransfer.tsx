@@ -139,7 +139,12 @@ export const AddTellerTransfer = () => {
                 <FormSection templateColumns={2}>
                   <FormInput name="srcTellerID" label="Sender" isDisabled />
 
-                  <FormTellerSelect isRequired name="destTellerID" label="Receiver" />
+                  <FormTellerSelect
+                    isRequired
+                    name="destTellerID"
+                    label="Receiver"
+                    excludeIds={[user?.id as string]}
+                  />
                 </FormSection>
 
                 <FormSection templateColumns={3} divider={false}>
