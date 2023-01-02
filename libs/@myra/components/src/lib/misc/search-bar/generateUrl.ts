@@ -108,11 +108,10 @@ const ACTIONS_CODES: Record<string, string> = {
 //   105020, 105030, 106010, 106020, 106030, 107011, 107021, 107010, 107020, 107020, 108010, 108020,
 //   109011, 109021, 109010, 109020, 100002, 102002, 103032, 900022, 900072, 900092,
 // ];
-//
+
 // console.log(pages);
 
 export const getPageUrl = (code: string) => {
-  // console.log(code);
   const appCode = code[0];
   const menuCode = `${code[1]}${code[2]}`;
   const pageCode = `${code[3]}${code[4]}`;
@@ -122,9 +121,9 @@ export const getPageUrl = (code: string) => {
     const menuLink = CODES[appCode][menuCode][pageCode];
 
     if (menuLink) {
-      return `/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
+      return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
     }
-    return `/${CBS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
+    return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
   }
   if (parseInt(appCode, 10) === 9) {
     const menuLink = CODES[appCode][menuCode][pageCode];
@@ -157,7 +156,13 @@ export const getAppName = (code: string) => {
   return 'Settings';
 };
 
-// console.log(pages.map((page) => getPageUrl(String(page))));
+// console.log(
+//   JSON.stringify(
+//     pages.map((page) => getPageUrl(String(page))),
+//     null,
+//     2
+//   )
+// );
 // console.log(getPageUrl('102002'));
 // 100000 => Member list
 // 100011 - 100041 => Member Adds
