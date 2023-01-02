@@ -1,0 +1,5 @@
+mutation searchIndexing {
+  search {
+    indexData(tableName: ["all"])
+  }
+}

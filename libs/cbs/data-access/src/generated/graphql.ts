@@ -14261,6 +14261,10 @@ export type AddProfitToFundManagementDataMutation = {
   };
 };
 
+export type SearchIndexingMutationVariables = Exact<{ [key: string]: never }>;
+
+export type SearchIndexingMutation = { search: { indexData?: string | null } };
+
 export type SendLoanApplicationForApprovalMutationVariables = Exact<{
   id: Scalars['ID'];
   data: LoanAccountInput;
@@ -26023,6 +26027,26 @@ export const useAddProfitToFundManagementDataMutation = <TError = unknown, TCont
     useAxios<AddProfitToFundManagementDataMutation, AddProfitToFundManagementDataMutationVariables>(
       AddProfitToFundManagementDataDocument
     ),
+    options
+  );
+export const SearchIndexingDocument = `
+    mutation searchIndexing {
+  search {
+    indexData(tableName: ["all"])
+  }
+}
+    `;
+export const useSearchIndexingMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SearchIndexingMutation,
+    TError,
+    SearchIndexingMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SearchIndexingMutation, TError, SearchIndexingMutationVariables, TContext>(
+    ['searchIndexing'],
+    useAxios<SearchIndexingMutation, SearchIndexingMutationVariables>(SearchIndexingDocument),
     options
   );
 export const SendLoanApplicationForApprovalDocument = `
