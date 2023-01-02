@@ -11,49 +11,49 @@ interface ITransactionsSidebarLayoutProps {
 const transactionSidebarColumns = [
   {
     title: 'transactionsSidebarDeposit',
-    link: '/transactions/deposit/list',
+    link: '/cbs/transactions/deposit/list',
     name: 'deposit',
-    addLink: '/transactions/deposit/add',
+    addLink: '/cbs/transactions/deposit/add',
   },
   {
     title: 'transactionsSidebarWithdraw',
-    link: '/transactions/withdraw/list',
+    link: '/cbs/transactions/withdraw/list',
     name: 'withdraw',
-    addLink: '/transactions/withdraw/add',
+    addLink: '/cbs/transactions/withdraw/add',
   },
   {
     title: 'transactionsSidebarAccountTransfer',
-    link: '/transactions/account-transfer/list',
+    link: '/cbs/transactions/account-transfer/list',
     name: 'account-transfer',
-    addLink: '/transactions/account-transfer/add',
+    addLink: '/cbs/transactions/account-transfer/add',
   },
   {
     title: 'transactionsSidebarLoanPayment',
-    link: '/transactions/loan-payment/list',
+    link: '/cbs/transactions/loan-payment/list',
     name: 'loan-payment',
-    addLink: '/transactions/loan-payment/add',
+    addLink: '/cbs/transactions/loan-payment/add',
   },
   {
     title: 'transactionsSidebarAgentTransaction',
-    link: '/transactions/market-representative-transaction/list',
+    link: '/cbs/transactions/market-representative-transaction/list',
     name: 'agent-transaction',
-    addLink: '/transactions/market-representative-transaction/add',
+    addLink: '/cbs/transactions/market-representative-transaction/add',
   },
   {
     title: 'transactionsSidebarAgentList',
-    link: '/transactions/market-representative/list',
+    link: '/cbs/transactions/market-representative/list',
     name: 'agent-list',
-    // addLink: '/transactions/agent/add',
+    // addLink: '/cbs/transactions/agent/add',
   },
   {
     title: 'transactionsSidebarJournalVoucher',
-    link: '/transactions/journal-vouchers/list',
+    link: '/cbs/transactions/journal-vouchers/list',
     name: 'journal-voucher',
-    addLink: '/transactions/journal-vouchers/add',
+    addLink: '/cbs/transactions/journal-vouchers/add',
   },
   {
     title: 'transactionsSidebarAllTransactions',
-    link: '/transactions/all-transactions/list',
+    link: '/cbs/transactions/all-transactions/list',
     name: 'all-transactions',
   },
 ];
@@ -61,62 +61,62 @@ const transactionSidebarColumns = [
 const dropdownButtons = [
   {
     title: 'transactionSidebarNewDeposit',
-    link: '/transactions/deposit/add',
+    link: '/cbs/transactions/deposit/add',
   },
   {
     title: 'transactionSidebarNewWithdraw',
-    link: '/transactions/withdraw/add',
+    link: '/cbs/transactions/withdraw/add',
   },
   {
     title: 'transactionSidebarNewAccountTransfer',
-    link: '/transactions/account-transfer/add',
+    link: '/cbs/transactions/account-transfer/add',
   },
   {
     title: 'transactionSidebarNewLoanPayment',
-    link: '/loan/repayments/add',
+    link: '/cbs/loan/repayments/add',
   },
   // {
   //   title: 'New Agent',
-  //   link: '/transactions/agent/add',
+  //   link: '/cbs/transactions/agent/add',
   // },
   {
     title: 'transactionSidebarNewMarketRepresentativeTransaction',
-    link: '/transactions/market-representative-transaction/add',
+    link: '/cbs/transactions/market-representative-transaction/add',
   },
   {
     title: 'New Journal Voucher',
-    link: '/transactions/journal-vouchers/add',
+    link: '/cbs/transactions/journal-vouchers/add',
   },
 ];
 
 const reportColumn = [
   {
     label: 'transactionLayoutBalanceSheet',
-    navigate: '/reports/cbs/transactions/trial-sheet/new',
+    navigate: '/cbs/reports/cbs/transactions/trial-sheet/new',
   },
   // {
   //   label: 'transactionLayoutIncomeStatement',
-  //   navigate: '/settings/general/members/kym-individual',
+  //   navigate: '/cbs/settings/general/members/kym-individual',
   // },
   {
     label: 'transactionLayoutCashFlowStament',
-    navigate: '/reports/cbs/transactions/cash-ledger/new',
+    navigate: '/cbs/reports/cbs/transactions/cash-ledger/new',
   },
   // {
   //   label: 'transactionLayoutChangeOfEquity',
-  //   navigate: '/settings/general/members/kym-individual',
+  //   navigate: '/cbs/settings/general/members/kym-individual',
   // },
   // {
   //   label: 'transactionLayoutAppropriationOfProfit',
-  //   navigate: '/settings/general/members/kym-individual',
+  //   navigate: '/cbs/settings/general/members/kym-individual',
   // },
   // {
   //   label: 'transactionLayoutBankGLBalance',
-  //   navigate: '/settings/general/members/kym-individual',
+  //   navigate: '/cbs/settings/general/members/kym-individual',
   // },
   {
     label: 'transactionLayoutBankGLStatement',
-    navigate: '/reports/cbs/transactions/bank-gl-statement/new',
+    navigate: '/cbs/reports/cbs/transactions/bank-gl-statement/new',
   },
 ];
 
