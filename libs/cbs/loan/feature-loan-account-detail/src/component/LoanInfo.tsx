@@ -1,11 +1,13 @@
 import { IoCopyOutline, IoQrCodeOutline } from 'react-icons/io5';
+import { useDisclosure } from '@chakra-ui/react';
 
-import { Avatar, Box, Icon, Text } from '@myra-ui';
+import { AccountQRModal, Avatar, Box, Icon, Text } from '@myra-ui';
 
 import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
 
 export const LoanInfo = () => {
   const { generalInfo } = useLoanAccountDetailHooks();
+  const { onClose: modalOnClose, isOpen, onToggle } = useDisclosure();
   return (
     <Box>
       <Box
@@ -23,7 +25,14 @@ export const LoanInfo = () => {
                 {generalInfo?.accountName}
               </Text>
 
-              <Icon size="md" as={IoQrCodeOutline} />
+              <Icon
+                size="md"
+                as={IoQrCodeOutline}
+                color="gray.500"
+                _hover={{ color: 'gray.800' }}
+                cursor="pointer"
+                onClick={onToggle}
+              />
             </Box>
 
             <Box display="flex" gap="s10">
@@ -77,6 +86,16 @@ export const LoanInfo = () => {
           Ram Kumar Pandey
         </Text>
       </Box>
+      <AccountQRModal
+        account={{
+          name: 'Ram Kumar Pandey',
+          accountNo: generalInfo?.accountId as string,
+          phoneNo: '98547889993' ?? 'N/A',
+          accountName: generalInfo?.accountName as string,
+        }}
+        open={isOpen}
+        onClose={modalOnClose}
+      />
     </Box>
   );
 };
