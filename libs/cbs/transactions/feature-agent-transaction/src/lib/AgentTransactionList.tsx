@@ -104,7 +104,7 @@ export const AgentTransactionList = () => {
                   title: t['transDetailViewDetail'],
                   onClick: (row) => {
                     router.push(
-                      `/${getUrl(router.pathname, 2)}/view?id=${row?.agentId}&date=${row?.date}`
+                      `/${getUrl(router.pathname, 3)}/details?id=${row?.agentId}&date=${row?.date}`
                     );
                   },
                 },
