@@ -71,6 +71,8 @@ export const TellerTransferApproveModal = ({
       }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getTellerTransactionListData']);
+        queryClient.invalidateQueries(['getMe']);
+
         onToggle();
         methods.reset();
         methods.setValue('declineReason', '');

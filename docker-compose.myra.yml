@@ -11,5 +11,4 @@ services:
     ports:
       - ${MYRA_PORT}:3000
     restart: unless-stopped
-
 # TRIGGGER HERE

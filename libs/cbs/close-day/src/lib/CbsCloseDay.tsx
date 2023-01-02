@@ -38,8 +38,12 @@ export const CbsCloseDay = () => {
     {},
     {
       onSuccess: async (res) => {
-        if (res?.transaction?.eodStatus?.states?.transactionDate === EodState.Completed) {
+        if (
+          res?.transaction?.eodStatus?.states?.transactionDate === EodState.Completed &&
+          !res?.transaction?.eodStatus?.states?.headOfficeReady
+        ) {
           setStopFetch(true);
+
           toast({ id: 'day-close-complete', type: 'success', message: 'Day closed successfully' });
           router.push('/');
         }

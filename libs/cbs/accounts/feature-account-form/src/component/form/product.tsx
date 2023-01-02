@@ -19,6 +19,13 @@ import { useTranslation } from '@coop/shared/utils';
 
 type OptionType = { label: string; value: string };
 
+const accountTypes = {
+  [NatureOfDepositProduct.Saving]: 'Saving Account',
+  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+  [NatureOfDepositProduct.Current]: 'Current Account',
+};
+
 export const Product = () => {
   const { data: genderFields } = useGetSettingsOptionsFieldsQuery({
     searchTerm: FormFieldSearchTerm.Gender,
@@ -126,7 +133,12 @@ export const Product = () => {
     ...(data?.settings?.general?.depositProduct?.getProductList?.allowed?.reduce(
       (prevVal, curVal) => [
         ...prevVal,
-        { label: curVal?.productName as string, value: curVal?.id as string },
+        {
+          label: `${curVal?.productName} [${
+            accountTypes[curVal?.nature as NatureOfDepositProduct]
+          }]`,
+          value: curVal?.id as string,
+        },
       ],
       [] as OptionType[]
     ) ?? []),
@@ -134,7 +146,9 @@ export const Product = () => {
       (prevVal, curVal) => [
         ...prevVal,
         {
-          label: curVal?.data?.productName as string,
+          label: `${curVal?.data?.productName} [${
+            accountTypes[curVal?.data?.nature as NatureOfDepositProduct]
+          }]`,
           value: curVal?.data?.id as string,
           disabled: true,
         },

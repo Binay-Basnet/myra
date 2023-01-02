@@ -228,6 +228,7 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                       name="accountPayment.destinationAccount"
                       label="Destination Account"
                       memberId={memberId}
+                      isDisabled
                       isLinkedAccounts
                     />
                   </GridItem>

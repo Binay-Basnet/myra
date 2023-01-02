@@ -13,8 +13,7 @@ const accountColumns = [
   {
     title: 'accountList',
     link: '/savings/list',
-    addLinkId: '/savings/account-open',
-    idType: Id_Type?.Account,
+    addLink: '/savings/account-open/add',
   },
   {
     title: 'transactionsSidebarDeposit',
@@ -41,19 +40,18 @@ const accountColumns = [
   {
     title: 'accountClose',
     link: '/savings/account-close',
-    addLinkId: '/savings/account-close',
-    idType: Id_Type?.Account,
+    addLink: '/savings/account-close/add',
   },
 ];
 
 const addButtoncolumns = [
   {
     title: 'newAccountOpen',
-    linkId: '/savings/account-open',
+    link: '/savings/account-open/add',
   },
   {
     title: 'accountClose',
-    linkId: '/savings/account-close',
+    link: '/savings/account-close/add',
   },
 ];
 

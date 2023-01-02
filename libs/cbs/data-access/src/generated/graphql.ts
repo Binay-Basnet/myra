@@ -2787,7 +2787,7 @@ export type DayBookReportData = {
 };
 
 export type DayBookReportFilter = {
-  branchId: Scalars['String'];
+  branchId: Array<InputMaybe<Scalars['String']>>;
   period?: InputMaybe<LocalizedDateFilter>;
   user?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
@@ -3832,6 +3832,7 @@ export type EodStates = {
   cashInVault?: Maybe<EodState>;
   currentBranchesReady?: Maybe<Scalars['Boolean']>;
   dormancy?: Maybe<EodState>;
+  headOfficeReady?: Maybe<Scalars['Boolean']>;
   interestBooking?: Maybe<EodState>;
   interestPosting?: Maybe<EodState>;
   loanInterestBooking?: Maybe<EodState>;
@@ -5015,13 +5016,22 @@ export enum GlobalPagesIconType {
 }
 
 export type GlobalPagesResultNode = {
-  appName?: Maybe<GlobalPageAppName>;
+  actionCode?: Maybe<Scalars['String']>;
+  appCode?: Maybe<Scalars['String']>;
   fullCode?: Maybe<Scalars['String']>;
   hasParam?: Maybe<Scalars['Boolean']>;
   iconType?: Maybe<GlobalPagesIconType>;
-  menuName?: Maybe<GlobalPageMenuName>;
+  id?: Maybe<Scalars['String']>;
+  menuCode?: Maybe<Scalars['String']>;
   page?: Maybe<Scalars['String']>;
+  pageCode?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
+};
+
+export type GlobalPagesResultNodeV2 = {
+  action?: Maybe<Scalars['Any']>;
+  id?: Maybe<Scalars['String']>;
+  table?: Maybe<Scalars['String']>;
 };
 
 export enum GracePeriod {
@@ -5033,6 +5043,11 @@ export type GraphData = {
   amount?: Maybe<Scalars['String']>;
   time?: Maybe<Scalars['Int']>;
 };
+
+export enum GuaranteeStatus {
+  Active = 'ACTIVE',
+  Released = 'RELEASED',
+}
 
 export type HumanizeAuditLog = {
   extraData?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -8100,6 +8115,11 @@ export type LoanAccountConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type LoanAccountDetailsResult = {
+  guarantee?: Maybe<LoanAccountGuaranteeDetails>;
+  overView?: Maybe<LoanAccountOverview>;
+};
+
 export type LoanAccountDisbursement = {
   destinationAccount: Scalars['ID'];
   note?: InputMaybe<Scalars['String']>;
@@ -8164,12 +8184,23 @@ export type LoanAccountGracePeriodResult = {
   recordId: Scalars['ID'];
 };
 
+export type LoanAccountGuaranteeDetails = {
+  guaranteeList?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
+  noOfGuarantee: Scalars['Int'];
+  totalGuaranteeRelease: Scalars['String'];
+  totalGuaranteeValuation: Scalars['String'];
+};
+
 export type LoanAccountGurantee = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
+  guaranteeStatus?: Maybe<GuaranteeStatus>;
   guranteeAmount?: Maybe<Scalars['Amount']>;
   maxGuranteeAmountLimit?: Maybe<Scalars['Amount']>;
   memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['Amount']>;
 };
 
@@ -8249,6 +8280,21 @@ export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
 };
 
+export type LoanAccountOverview = {
+  additionalFeatures?: Maybe<LoanPreviewAdditionalFeatures>;
+  generalInformation?: Maybe<LoanGeneralInformation>;
+  loanSchedule?: Maybe<LoanInstallments>;
+  totalInterestPaid: Scalars['String'];
+  totalPrincipalPaid: Scalars['String'];
+  totalRemainingPrincipal: Scalars['String'];
+  transactions?: Maybe<EbankingTransactionConnection>;
+};
+
+export type LoanAccountOverviewTransactionsArgs = {
+  filter?: InputMaybe<EbankingTransactionFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
 export type LoanAccountPaymentScheduleResult = {
   data?: Maybe<LoanInstallments>;
   error?: Maybe<QueryError>;
@@ -8280,6 +8326,7 @@ export type LoanAccountQuery = {
   getProductCriteria?: Maybe<LoanProductCriteriaResult>;
   getProductList?: Maybe<LoanProductList>;
   list?: Maybe<LoanAccountConnection>;
+  loanAccountDetails?: Maybe<LoanAccountDetailsResult>;
   loanPreview?: Maybe<LoanAccountPreviewResult>;
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
   paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
@@ -8312,6 +8359,10 @@ export type LoanAccountQueryGetProductListArgs = {
 export type LoanAccountQueryListArgs = {
   filter?: InputMaybe<LoanAccountSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type LoanAccountQueryLoanAccountDetailsArgs = {
+  loanAccountId: Scalars['ID'];
 };
 
 export type LoanAccountQueryLoanPreviewArgs = {
@@ -8507,6 +8558,27 @@ export type LoanFilters = {
   amountRange?: InputMaybe<SavingAmountRange>;
   service?: InputMaybe<SavingServiceType>;
   transactionType?: InputMaybe<SavingTransactionType>;
+};
+
+export type LoanGeneralInformation = {
+  accountId: Scalars['String'];
+  accountName: Scalars['String'];
+  accountOpenDate: Scalars['Localized'];
+  interestAccrued?: Maybe<Scalars['String']>;
+  interestEarned?: Maybe<Scalars['String']>;
+  interestGracePeriod?: Maybe<Scalars['Int']>;
+  interestRate: Scalars['Float'];
+  linkedAccountId?: Maybe<Scalars['String']>;
+  linkedAccountName?: Maybe<Scalars['String']>;
+  loanAccountOpenBranchId: Scalars['String'];
+  loanAccountOpenBranchName: Scalars['String'];
+  principalGracePeriod?: Maybe<Scalars['Int']>;
+  productId: Scalars['String'];
+  productName: Scalars['String'];
+  repaymentScheme: LoanRepaymentScheme;
+  sanctionedAmount: Scalars['String'];
+  tenure: Scalars['Int'];
+  tenureUnit: Scalars['String'];
 };
 
 export type LoanGeneralSettings = {
@@ -10871,6 +10943,7 @@ export type Query = {
   requests: RequestsQuery;
   routesAndCodes: RoutesAndCodesQuery;
   search: SearchQuery;
+  search_v2: SearchQueryV2;
   settings: SettingsQuery;
   share: ShareQuery;
   transaction: TransactionQuery;
@@ -11505,6 +11578,11 @@ export type SearchListEdges = {
   node?: Maybe<SearchResultNode>;
 };
 
+export type SearchPagination = {
+  page: Scalars['Int'];
+  size?: InputMaybe<Scalars['Int']>;
+};
+
 export type SearchQuery = {
   globalPages: SearchQueryResult;
 };
@@ -11523,6 +11601,25 @@ export type SearchQueryResultData = {
   edges?: Maybe<Array<Maybe<SearchListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
+};
+
+export type SearchQueryResultDataV2 = {
+  edges?: Maybe<Array<Maybe<GlobalPagesResultNodeV2>>>;
+  pageInfo?: Maybe<PageInfo>;
+};
+
+export type SearchQueryResultV2 = {
+  data?: Maybe<SearchQueryResultDataV2>;
+  error?: Maybe<QueryError>;
+};
+
+export type SearchQueryV2 = {
+  globalPages: SearchQueryResultV2;
+};
+
+export type SearchQueryV2GlobalPagesArgs = {
+  pagination?: InputMaybe<SearchPagination>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export type SearchResultNode = GlobalPagesResultNode;
@@ -12565,6 +12662,8 @@ export type TransactionListSummary = {
   averageBalance?: Maybe<Scalars['String']>;
   expensesThisMonth?: Maybe<Scalars['String']>;
   totalDeposit?: Maybe<Scalars['String']>;
+  totalPrincipalPaid?: Maybe<Scalars['String']>;
+  totalRemainingPrincipal?: Maybe<Scalars['String']>;
   totalWithdraw?: Maybe<Scalars['String']>;
 };
 
@@ -12827,15 +12926,15 @@ export type TrialSheetFilter = {
 
 export type TrialSheetReportData = {
   assets?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
-  assetsTotal?: Maybe<Scalars['String']>;
+  assetsTotal?: Maybe<Scalars['Map']>;
   equityAndLiablities?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
-  equityAndLiablitiesTotal?: Maybe<Scalars['String']>;
-  expenseTotal?: Maybe<Scalars['String']>;
+  equityAndLiablitiesTotal?: Maybe<Scalars['Map']>;
+  expenseTotal?: Maybe<Scalars['Map']>;
   expenses?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
   income?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
-  incomeTotal?: Maybe<Scalars['String']>;
+  incomeTotal?: Maybe<Scalars['Map']>;
   offBalance?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
-  offBalanceTotal?: Maybe<Scalars['String']>;
+  offBalanceTotal?: Maybe<Scalars['Map']>;
   totalAssetExpense?: Maybe<Scalars['String']>;
   totalLiablitiesIncome?: Maybe<Scalars['String']>;
   totalProfitLoss?: Maybe<Scalars['String']>;
@@ -12849,7 +12948,7 @@ export type TrialSheetReportDataEntry = {
 };
 
 export type TrialSheetReportFilter = {
-  branchId: Scalars['String'];
+  branchId: Array<InputMaybe<Scalars['String']>>;
   filter?: InputMaybe<TrialSheetFilter>;
   period: LocalizedDateFilter;
 };
@@ -15955,10 +16054,14 @@ export type GetProductListQuery = {
     general?: {
       depositProduct?: {
         getProductList?: {
-          allowed?: Array<{ id: string; productName: string } | null> | null;
+          allowed?: Array<{
+            id: string;
+            productName: string;
+            nature: NatureOfDepositProduct;
+          } | null> | null;
           notAllowed?: Array<{
             error?: Array<string | null> | null;
-            data?: { id: string; productName: string } | null;
+            data?: { id: string; productName: string; nature: NatureOfDepositProduct } | null;
           } | null> | null;
         } | null;
       } | null;
@@ -16522,6 +16625,7 @@ export type GetBankAccountListQuery = {
             bankId?: string | null;
             bankName?: string | null;
             displayName?: string | null;
+            accountType?: AccountingBankAccountType | null;
             accountNo?: string | null;
             balance?: string | null;
           } | null;
@@ -20868,7 +20972,19 @@ export type GetLoanStatementReportQuery = {
     loanReport: {
       loanStatementReport?: {
         memberId?: string | null;
-        member?: { name?: Record<'local' | 'en' | 'np', string> | null; code: string } | null;
+        member?: {
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+          address?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+        } | null;
         statement?:
           | {
               meta?: {
@@ -21371,11 +21487,11 @@ export type GetTrialSheetReportQuery = {
       financial: {
         trialSheetReport: {
           data?: {
-            equityAndLiablitiesTotal?: string | null;
-            assetsTotal?: string | null;
-            expenseTotal?: string | null;
-            incomeTotal?: string | null;
-            offBalanceTotal?: string | null;
+            equityAndLiablitiesTotal?: Record<string, string> | null;
+            assetsTotal?: Record<string, string> | null;
+            expenseTotal?: Record<string, string> | null;
+            incomeTotal?: Record<string, string> | null;
+            offBalanceTotal?: Record<string, string> | null;
             totalAssetExpense?: string | null;
             totalLiablitiesIncome?: string | null;
             totalProfitLoss?: string | null;
@@ -21764,6 +21880,7 @@ export type GetGlobalSearchQuery = {
         edges?: Array<{
           cursor: string;
           node?: {
+            id?: string | null;
             fullCode?: string | null;
             hasParam?: boolean | null;
             iconType?: GlobalPagesIconType | null;
@@ -24159,6 +24276,7 @@ export type GetEodStatusQuery = {
   transaction: {
     eodStatus?: {
       states?: {
+        headOfficeReady?: boolean | null;
         currentBranchesReady?: boolean | null;
         interestBooking?: EodState | null;
         interestPosting?: EodState | null;
@@ -28583,11 +28701,13 @@ export const GetProductListDocument = `
           allowed {
             id
             productName
+            nature
           }
           notAllowed {
             data {
               id
               productName
+              nature
             }
             error
           }
@@ -29316,6 +29436,7 @@ export const GetBankAccountListDocument = `
             bankId
             bankName
             displayName
+            accountType
             accountNo
             balance
           }
@@ -34893,6 +35014,18 @@ export const GetLoanStatementReportDocument = `
         member {
           name
           code
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
         }
         statement {
           ... on LoanStatementReport {
@@ -36069,6 +36202,7 @@ export const GetGlobalSearchDocument = `
           cursor
           node {
             ... on GlobalPagesResultNode {
+              id
               fullCode
               hasParam
               iconType
@@ -39307,6 +39441,7 @@ export const GetEodStatusDocument = `
   transaction {
     eodStatus {
       states {
+        headOfficeReady
         currentBranchesReady
         interestBooking
         interestPosting

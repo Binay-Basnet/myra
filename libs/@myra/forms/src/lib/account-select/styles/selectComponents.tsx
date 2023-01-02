@@ -48,22 +48,22 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
         <Box display="flex" flexDirection="column" gap="s8">
           <Box display="flex" flexDirection="column" gap="s2">
             <Box display="flex" flexDirection="column">
-              <Text fontSize="r1" fontWeight={600} color="primary.500">
+              <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
                 {data.accountInfo.accountName}
               </Text>
               <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
                 {data.accountInfo.accountId}
               </Text>
             </Box>
-
-            <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-              {data.accountInfo.productName}
-            </Text>
+            <Box display="flex" gap="s4">
+              <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
+                {data.accountInfo.productName}
+              </Text>
+              <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
+                [{data.accountInfo.accountType}]
+              </Text>
+            </Box>
           </Box>
-
-          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-60">
-            {data.accountInfo.accountType}
-          </Text>
         </Box>
 
         <Box display="flex" flexDirection="column" gap="s4" alignItems="flex-end">

@@ -30,6 +30,7 @@ import { Icon } from '@myra-ui/foundations';
 import { Filter_Mode, useGetGlobalSearchQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { useDebounce } from '@coop/shared/utils';
 
+import { getAppName, getPageUrl, getSubtitle } from './generateUrl';
 import { useSearchNavigate } from './useSearchNavigate';
 import Loader from '../loader/Loader';
 
@@ -152,7 +153,9 @@ export const SearchBar = () => {
     }
     if (searchAction === 'SIMPLE') {
       return globalSearch?.map((s) => ({
-        link: s?.node?.url,
+        link: s?.node?.id
+          ? s?.node?.url || `${getPageUrl(s?.node?.fullCode || '')}?id=${s?.node?.id}`
+          : s?.node?.url || getPageUrl(s?.node?.fullCode || ''),
         hasParam: Boolean(s?.node?.hasParam),
       }));
     }
@@ -176,6 +179,7 @@ export const SearchBar = () => {
         onSubmit={async (e) => {
           e.preventDefault();
 
+          // TODO
           const formSearch = globalSearch?.find((search) => search?.node?.fullCode === inputSearch);
 
           if (formSearch) {
@@ -363,9 +367,9 @@ export const SearchBar = () => {
                   globalSearch?.map((basic, index) => (
                     <Fragment key={basic?.node?.url}>
                       <BasicSearchCard
-                        subtitle="Member"
+                        subtitle={getSubtitle(basic?.node?.fullCode as string)}
                         type={basic?.node?.iconType as string}
-                        app="Core Banking System"
+                        app={getAppName(basic?.node?.fullCode as string)}
                         link={basic?.node?.url as string}
                         title={basic?.node?.page as string}
                         isSelected={focusState === index}
@@ -374,16 +378,16 @@ export const SearchBar = () => {
                         onClick={async () => {
                           const response = basic?.node?.hasParam ? await getNewId({}) : null;
 
+                          const url = basic?.node?.id
+                            ? basic?.node?.url ||
+                              `${getPageUrl(basic?.node?.fullCode || '')}?id=${basic?.node?.id}`
+                            : basic?.node?.url || getPageUrl(basic?.node?.fullCode || '');
                           router
-                            .push(
-                              `${basic?.node?.url}${
-                                response ? `/${response?.newId}` : ''
-                              }` as string
-                            )
+                            .push(`${url}${response ? `/${response?.newId}` : ''}` as string)
                             .then(() => {
                               const currentSearch = {
                                 title: basic?.node?.page,
-                                link: basic?.node?.url,
+                                link: url,
                                 hasParams: basic?.node?.hasParam,
                               };
 
@@ -506,14 +510,14 @@ export const BasicSearchCard = ({
       role="group"
     >
       <Box display="flex" alignItems="center" color="gray.600" gap="s16">
-        <Icon as={ICONS[type]} />
+        {ICONS[type] && <Icon as={ICONS[type]} />}
 
         <Box display="flex" flexDir="column">
           <Text fontSize="r1" fontWeight="500">
             {title} ({fullCode})
           </Text>
 
-          <Text fontSize="r1" color="gray.500">
+          <Text textTransform="capitalize" fontSize="r1" color="gray.500">
             {subtitle}
           </Text>
         </Box>

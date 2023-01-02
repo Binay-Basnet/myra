@@ -5,9 +5,10 @@ import { get } from 'lodash';
 
 import { Select, SelectProps } from '@myra-ui';
 
-interface IFormSelectProps<T> extends SelectProps {
+interface IFormSelectProps<T extends Record<string, unknown>> extends SelectProps {
   control?: Control<T>;
   name?: string;
+  showAll?: boolean;
   rules?: UseControllerProps['rules'];
 }
 
@@ -16,7 +17,7 @@ interface Option {
   value: string;
 }
 
-export const FormSelect = <T,>(props: IFormSelectProps<T>) => {
+export const FormSelect = <T extends Record<string, unknown>>(props: IFormSelectProps<T>) => {
   const { name, ...rest } = props;
 
   const methods = useFormContext();
@@ -35,18 +36,23 @@ export const FormSelect = <T,>(props: IFormSelectProps<T>) => {
   );
 };
 
-interface FormControlProps<T> extends IFormSelectProps<T> {
+interface FormControlProps<T extends Record<string, unknown>> extends IFormSelectProps<T> {
   errors: any;
   field: ControllerRenderProps<FieldValues, string>;
 }
 
-const FormControl = <T,>({
+const FormControl = <T extends Record<string, unknown>>({
   name,
-  options,
+  options: selectOptions,
   errors,
   field: { onChange, value },
+  showAll,
   ...rest
 }: FormControlProps<T>) => {
+  const options = showAll
+    ? [{ label: 'All', value: 'ALL' }, ...(selectOptions || [])]
+    : selectOptions;
+
   const foundValue = options?.find((option) => option.value === value);
 
   const methods = useFormContext();

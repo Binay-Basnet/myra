@@ -24,12 +24,14 @@ import {
   DepositInput,
   DepositLoanAccountInput,
   DepositPaymentType,
+  Id_Type,
   NatureOfDepositProduct,
   useGetAccountOpenEditDataQuery,
   useGetAccountOpenMinorListQuery,
   useGetAccountOpenProductDetailsQuery,
   useGetDefaultAccountListQuery,
   useGetIndividualMemberDetails,
+  useGetNewIdMutation,
   useGetProductListQuery,
   useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
@@ -110,6 +112,13 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
+const accountTypes = {
+  [NatureOfDepositProduct.Saving]: 'Saving Account',
+  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+  [NatureOfDepositProduct.Current]: 'Current Account',
+};
+
 export const AccountOpenNew = () => {
   const queryClient = useQueryClient();
 
@@ -131,6 +140,13 @@ export const AccountOpenNew = () => {
   const [triggerQuery, setTriggerQuery] = useState(false);
   const [showCriteria, setShowCriteria] = useState(false);
   const [triggerProductQuery, setTriggerProductQuery] = useState(false);
+  const getNewId = useGetNewIdMutation({});
+  const [newId, setNewId] = useState('');
+
+  useEffect(() => {
+    getNewId?.mutateAsync({ idType: Id_Type?.Account }).then((res) => setNewId(res?.newId));
+  }, []);
+
   // const [mode, setMode] = useState<number>(0); // 0: form, 1: payment
 
   const methods = useForm<CustomDepositLoanAccountInput>({
@@ -147,10 +163,12 @@ export const AccountOpenNew = () => {
   const { getValues, watch, reset, setValue } = methods;
   const memberId = watch('memberId');
   const router = useRouter();
-  const routerAction = router.query['action'];
   const redirectPath = router.query['redirect'];
 
-  const id = String(router?.query?.['id']);
+  const routeId = router?.query?.['id'] as string;
+
+  const id = routeId || newId;
+
   const { mutateAsync } = useSetAccountOpenDataMutation();
   const { mutate: mutateDocs } = useSetAccountDocumentDataMutation();
 
@@ -172,7 +190,9 @@ export const AccountOpenNew = () => {
       (previousValue, currentValue) => [
         ...previousValue,
         {
-          label: currentValue?.productName as string,
+          label: `${currentValue?.productName} [${
+            accountTypes[currentValue?.nature as NatureOfDepositProduct]
+          }]`,
           value: currentValue?.id as string,
         },
       ],
@@ -182,7 +202,9 @@ export const AccountOpenNew = () => {
       (previousValue, currentValue) => [
         ...previousValue,
         {
-          label: currentValue?.data?.productName as string,
+          label: `${currentValue?.data?.productName} [${
+            accountTypes[currentValue?.data?.nature as NatureOfDepositProduct]
+          }]`,
           value: currentValue?.data?.id as string,
         },
       ],
@@ -419,11 +441,14 @@ export const AccountOpenNew = () => {
       }
     });
   };
-  const { data: editValues, refetch } = useGetAccountOpenEditDataQuery({
-    id,
-  });
+  const { data: editValues, refetch } = useGetAccountOpenEditDataQuery(
+    {
+      id: routeId,
+    },
+    { enabled: !!routeId }
+  );
   useEffect(() => {
-    if (editValues) {
+    if (editValues && routeId) {
       const editValueData = editValues?.account?.formState?.data;
       if (editValueData) {
         reset({
@@ -434,13 +459,14 @@ export const AccountOpenNew = () => {
   }, [editValues, id]);
 
   useEffect(() => {
-    if (id) {
+    if (routeId) {
       refetch();
     }
   }, [refetch]);
 
   useEffect(() => {
-    if (routerAction === 'add' || routerAction === 'edit') {
+    if (router.pathname.includes('add')) {
+      // if (routerAction === 'add' || routerAction === 'edit') {
       setValue('accountName', defaultAccountName);
     }
   }, [defaultAccountName]);

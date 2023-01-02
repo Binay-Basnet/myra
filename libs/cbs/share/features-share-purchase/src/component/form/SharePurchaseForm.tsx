@@ -276,7 +276,7 @@ export const SharePurchaseForm = () => {
                   >
                     <Box w="100%">
                       <FormSection>
-                        <GridItem colSpan={2}>
+                        <GridItem colSpan={3}>
                           <FormMemberSelect
                             allMembers={
                               redirectPath && redirectPath.includes('/members/activation/')
