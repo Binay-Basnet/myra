@@ -66,7 +66,7 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'withdrawSlip',
     icon: TbMailForward,
-    link: ROUTES.CBS_BLOCK_WITHDRAW_SLIP_LIST,
+    link: ROUTES.CBS_WITHDRAW_SLIP_LIST,
     match: ['withdraw'],
   },
   {
