@@ -16665,6 +16665,7 @@ export type GetAccountDetailsDataQuery = {
         accountId?: string | null;
         installmentAmount?: string | null;
         accountName?: string | null;
+        accountTenure?: string | null;
         productName?: string | null;
         accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
         accountType?: NatureOfDepositProduct | null;
@@ -29675,6 +29676,7 @@ export const GetAccountDetailsDataDocument = `
         }
         installmentAmount
         accountName
+        accountTenure
         productName
         accountOpenDate
         accountType
