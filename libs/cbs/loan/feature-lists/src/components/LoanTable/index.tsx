@@ -25,7 +25,7 @@ export const LoanTable = ({ data, isLoading, type, viewLink, isDisbured }: ILoan
   const columns = useMemo<Column<LoanAccountEdge>[]>(
     () => [
       {
-        header: 'Loan Application Id',
+        header: 'Loan Account ID',
         accessorFn: (row) => row?.node?.id,
       },
 

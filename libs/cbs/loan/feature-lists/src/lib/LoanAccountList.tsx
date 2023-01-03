@@ -23,7 +23,7 @@ export const LoanAccountList = () => {
         data={data}
         isLoading={isFetching}
         type={LoanObjState.Disbursed}
-        viewLink="/loan/applications/view"
+        viewLink="/loan/accounts/view"
         isDisbured
       />
     </>

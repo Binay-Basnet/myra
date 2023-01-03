@@ -81,10 +81,11 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
         userData: { ...formData },
       })
     );
+    router.push(`/settings/users/super-admin/add`);
 
-    newIdMutate({ idType: Id_Type.Myrauser }).then((res) => {
-      router.push(`/settings/users/super-admin/add/${res.newId}`);
-    });
+    // newIdMutate({ idType: Id_Type.Myrauser }).then((res) => {
+    //   router.push(`/settings/users/super-admin/add/${res.newId}`);
+    // });
 
     handleModalClose();
   };

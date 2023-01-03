@@ -508,6 +508,7 @@ query getAccountDetailsData($id: ID!) {
         }
         installmentAmount
         accountName
+        accountTenure
         productName
         accountOpenDate
         accountType

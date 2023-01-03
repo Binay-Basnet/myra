@@ -1,42 +1,32 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
-import { Button, Column, DetailsCard, Table, Text } from '@myra-ui';
+import { Column, DetailsCard, Table, Text } from '@myra-ui';
 
-import {
-  EbankingTransactionDirection,
-  useAccountDetails,
-  useGetAccountTransactionList,
-} from '@coop/cbs/data-access';
+import { EbankingTransaction, EbankingTransactionDirection } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
-export const RecentTransactions = () => {
-  const router = useRouter();
+type CustomTransactionItem = EbankingTransaction & {
+  index?: string | number;
+};
 
-  const { accountDetails } = useAccountDetails();
+interface ITransactionTableProps {
+  txnList: CustomTransactionItem[];
+}
 
-  const { transactionList } = useGetAccountTransactionList({
-    accountId: accountDetails?.accountId,
-  });
-
+export const RecentTransactions = ({ txnList }: ITransactionTableProps) => {
   const transactionListWithIndex =
-    transactionList?.map((trans, index) => ({
+    txnList?.map((trans, index) => ({
       index: index + 1,
       ...trans,
     })) ?? [];
 
-  const columns = useMemo<Column<typeof transactionListWithIndex[0]>[]>(
+  const columns = useMemo<Column<CustomTransactionItem>[]>(
     () => [
       {
         header: 'SN',
         accessorKey: 'index',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
       },
-      // {
-      //   header: 'Date',
-      //   accessorKey: 'date',
-      //   cell: (props) => (props.getValue() ? `${props.getValue()}` : 'N/A'),
-      // },
       {
         header: 'Transaction ID',
         accessorKey: 'transactionId',
@@ -51,15 +41,12 @@ export const RecentTransactions = () => {
       },
       {
         header: 'Type',
-        accessorKey: 'transactionDirection',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="Medium" fontSize="s3" lineHeight="17px">
-              {props.getValue() as string}
-            </Text>
-          ) : (
-            'N/A'
-          ),
+        accessorKey: 'transactionType',
+        cell: (props) => (
+          <Text fontWeight="Medium" fontSize="s3" lineHeight="17px" textTransform="capitalize">
+            {props.row?.original?.transactionType?.replace(/_/gi, ' ')?.toLowerCase()}
+          </Text>
+        ),
       },
 
       {
@@ -79,12 +66,12 @@ export const RecentTransactions = () => {
               fontWeight="500"
               fontSize="r1"
               color={
-                props.row?.original?.transactionDirection === EbankingTransactionDirection.Incoming
+                props?.row?.original?.transactionDirection === EbankingTransactionDirection.Incoming
                   ? 'primary.500'
                   : 'danger.500'
               }
             >
-              {amountConverter(props.getValue() as string)}
+              {amountConverter(props?.getValue() as string)}
             </Text>
           ) : (
             'N/A'
@@ -103,16 +90,16 @@ export const RecentTransactions = () => {
       title="Recent Transactions"
       bg="white"
       hasTable
-      leftBtn={
-        <Button
-          variant="ghost"
-          onClick={() =>
-            router.push(`/savings/details/${accountDetails?.accountId}?tab=transactions`)
-          }
-        >
-          View all transactions
-        </Button>
-      }
+      // leftBtn={
+      //   <Button
+      //     variant="ghost"
+      //     onClick={() =>
+      //       router.push(`/savings/details/${accountDetails?.accountId}?tab=transactions`)
+      //     }
+      //   >
+      //     View all transactions
+      //   </Button>
+      // }
     >
       <Table isDetailPageTable isStatic data={transactionListWithIndex} columns={columns} />
     </DetailsCard>

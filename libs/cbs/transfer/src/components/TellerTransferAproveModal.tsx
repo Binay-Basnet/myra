@@ -210,6 +210,7 @@ export const TellerTransferApproveModal = ({
               size="report"
               isStatic
               showFooter
+              isLoading={!denominationData?.length}
             />
           </GridItem>
         </Grid>

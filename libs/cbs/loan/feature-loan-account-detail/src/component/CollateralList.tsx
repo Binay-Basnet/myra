@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { IoTrash } from 'react-icons/io5';
 
 import {
@@ -9,63 +11,78 @@ import {
   Box,
   Button,
   Chips,
-  DetailsCard,
   Divider,
+  Grid,
   IconButton,
+  Modal,
   Text,
 } from '@myra-ui';
 
-import { AccordianListCardComponent } from './AccordianCard';
+import { LoanAccountCollateral } from '@coop/cbs/data-access';
 
-export const CollateralList = () => {
-  const collatDetail = [
+import { AccordianListCardComponent } from './AccordianCard';
+import { DocumentComponent } from './DocumentsCard';
+
+type CollateralProps = {
+  collatDataList: LoanAccountCollateral | null;
+};
+
+export const CollateralList = ({ collatDataList }: CollateralProps) => {
+  const methods = useForm();
+  const [openModal, setOpenModal] = useState(false);
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const collatLandDetail = [
     {
       label: 'Owner Name',
-      value: 'Godatta Prasad',
+      value: collatDataList?.ownerName,
     },
     {
       label: 'Relation with Owner',
-      value: 'Son',
+      value: collatDataList?.relation,
     },
     {
       label: 'Sheet No.',
-      value: '123',
+      value: collatDataList?.sheetNo,
     },
     {
       label: 'Kitta No.',
-      value: '242343',
+      value: collatDataList?.kittaNo,
     },
     {
       label: 'Area',
-      value: '53721 sq. ft ',
+      value: collatDataList?.area,
     },
     {
       label: 'Valuation Method',
-      value: 'Godatta Prasad',
+      value: collatDataList?.valuationMethod,
     },
     {
       label: 'Valuation Percent',
-      value: 'Godatta Prasad',
+      value: collatDataList?.valuationPercent,
     },
     {
       label: 'Valuator',
-      value: 'Godatta Prasad',
+      value: collatDataList?.valuatorId,
     },
     {
       label: 'FMV (Mximum Amount)',
-      value: 'Godatta Prasad',
+      value: collatDataList?.fmvMaxAmount,
     },
     {
       label: 'DV (Minimum Amount)',
-      value: 'Godatta Prasad',
+      value: collatDataList?.dvMinAmount,
     },
     {
       label: 'Collateral Valuation',
-      value: 'Godatta Prasad',
+      value: collatDataList?.collaterallValuation,
     },
   ];
   return (
-    <DetailsCard title="Collateral List (3)" bg="white" hasTable>
+    <>
       <Accordion defaultIndex={[0]} display="flex" flexDirection="column" gap="s16" allowToggle>
         <AccordionItem key={1}>
           <AccordionButton>
@@ -81,26 +98,30 @@ export const CollateralList = () => {
               <Box display="flex" flexDirection="column" gap="s4" textAlign="left">
                 <Box display="flex" gap="s8" alignItems="center">
                   <Text fontSize="r1" color="gray.800" lineHeight="150%" fontWeight="SemiBold">
-                    Kalanki Land
+                    {collatDataList?.valuationMethod}
                   </Text>
                   <Chips variant="solid" type="label" size="sm" theme="success" label="Active" />
                 </Box>
                 <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
-                  Land
+                  {collatDataList?.description}
                 </Text>
+                <Chips variant="solid" type="label" size="sm" theme="success" label="Active" />
               </Box>
+              <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
+                {collatDataList?.description}
+              </Text>
             </Box>
             <AccordionIcon />
           </AccordionButton>
           <AccordionPanel>
-            <AccordianListCardComponent accordionCardDetails={collatDetail} />
-            {/* <Grid templateColumns="repeat(2,1fr)" gap="s20">
-                {item?.docs?.map((docs) => (
-                  <DocumentComponent keyText={docs?.key} value={docs?.value} />
-                ))}
-              </Grid> */}
+            <AccordianListCardComponent accordionCardDetails={collatLandDetail} />
+            <Grid templateColumns="repeat(2,1fr)" gap="s20">
+              {collatDataList?.documents?.map((docs) => (
+                <DocumentComponent keyText={docs?.id} value={docs?.url} />
+              ))}
+            </Grid>
             <Divider />
-            <Box display="flex" w="50px" gap="s16" p="s16">
+            <Box display="flex" w="50px" gap="s16" p="s16" onClick={() => setOpenModal(true)}>
               <IconButton
                 colorScheme="transparent"
                 aria-label="Release"
@@ -115,6 +136,23 @@ export const CollateralList = () => {
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-    </DetailsCard>
+
+      <Modal
+        open={openModal}
+        onClose={onCloseModal}
+        primaryButtonLabel="Confirm"
+        secondaryButtonLabel="Cancel"
+        secondaryButtonHandler={onCloseModal}
+        title="Release Collateral"
+      >
+        <FormProvider {...methods}>
+          <Box display="flex" flexDir="column" gap="s16">
+            <Text fontSize="r1" color="gray.800" lineHeight="20px" fontWeight="Regular">
+              Your collateral will be realesed. Do you want to confirm?
+            </Text>
+          </Box>
+        </FormProvider>
+      </Modal>
+    </>
   );
 };

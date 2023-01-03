@@ -6,7 +6,6 @@ import { SelectProps } from '@myra-ui';
 
 import { Filter_Mode, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
 
 interface IFormBranchSelectProps extends SelectProps {
   name: string;
@@ -15,29 +14,27 @@ interface IFormBranchSelectProps extends SelectProps {
 }
 
 export const FormBranchSelect = (props: IFormBranchSelectProps) => {
-  const { name, label, ...rest } = props;
+  const { name, label, showAll, ...rest } = props;
 
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   const [branchId, setBranchId] = useState('');
-
-  // const [trigger, setTrigger] = useState(false);
 
   const { data: branchListQueryData, isFetching } = useGetBranchListQuery(
     {
       paginate: {
-        ...getRouterQuery({ type: ['PAGINATION'] }),
+        first: -1,
+        after: '',
         order: null,
       },
       filter: {
-        query: branchId,
-        id: branchId,
+        query: branchId?.length === 0 ? null : branchId,
+        id: branchId?.length === 0 ? null : branchId,
         filterMode: Filter_Mode.Or,
       },
     },
     {
       staleTime: 0,
-      // enabled: trigger,
     }
   );
 
@@ -48,12 +45,11 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
     value: branch?.node?.id as string,
   }));
 
-  const branch = watch('branch');
+  const branch = watch(name);
 
   useEffect(() => {
     if (branch && !branchOptions?.length) {
       setBranchId(branch);
-      // setTrigger(true);
     }
   }, [branch, branchOptions]);
 
@@ -68,7 +64,7 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
           // setTrigger(true);
         }
       }, 800)}
-      options={branchOptions}
+      options={showAll ? [{ label: 'All', value: 'ALL' }, ...(branchOptions || [])] : branchOptions}
       {...rest}
     />
   );

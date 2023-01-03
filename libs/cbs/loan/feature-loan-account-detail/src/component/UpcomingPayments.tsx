@@ -3,64 +3,59 @@ import { useMemo } from 'react';
 import { DetailsCard, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import {
-  DateType,
-  useAccountDetails,
-  useAppSelector,
-  useGetInstallmentsListDataQuery,
-} from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
-export const UpcomingPayments = () => {
-  const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
+type CustomPaymentItem = {
+  index?: string | number;
+  installmentNo: number | undefined;
+  installmentDate: string | undefined;
+  payment: string | undefined;
+  principal: string | undefined;
+  interest: string | undefined;
+  remainingPrincipal: string | undefined;
+  paid: boolean | undefined;
+};
 
-  const { accountDetails } = useAccountDetails();
+interface IPaymentProps {
+  paymentList: CustomPaymentItem[];
+}
 
-  const { data: installmentsListQueryData } = useGetInstallmentsListDataQuery(
-    { id: accountDetails?.accountId as string, fromN: 1, toN: 6 },
-    {
-      enabled: !!accountDetails?.accountId,
-    }
-  );
+export const UpcomingPayments = ({ paymentList }: IPaymentProps) => {
+  const paymentListWithIndex =
+    paymentList?.map((payment, index) => ({
+      index: index + 1,
+      ...payment,
+    })) ?? [];
 
-  const data = useMemo(
-    () =>
-      installmentsListQueryData?.account?.getInstallments?.data?.map((installment) => ({
-        installmentNo: installment?.number,
-        date: preferenceDate === DateType.Bs ? installment?.dueDate?.np : installment?.dueDate?.en,
-        installmentAmount: accountDetails?.installmentAmount,
-        fine: installment?.fine ?? 0,
-        rebate: installment?.rebate ?? 0,
-        total: Number(accountDetails?.installmentAmount) + Number(installment?.fine ?? 0),
-      })) ?? [],
-    [installmentsListQueryData]
-  );
-
-  const columns = useMemo<Column<typeof data[0]>[]>(
+  const columns = useMemo<Column<CustomPaymentItem>[]>(
     () => [
+      {
+        header: 'Sn',
+        accessorKey: 'index',
+      },
+      {
+        header: 'Date',
+        accessorKey: 'installmentDate',
+      },
       {
         header: 'Installment No.',
         accessorKey: 'installmentNo',
       },
       {
-        header: 'Date',
-        accessorKey: 'date',
-      },
-      {
         header: 'Installment Amount',
-        accessorKey: 'installmentAmount',
+        accessorKey: 'payment',
       },
       {
-        header: 'Fine',
-        accessorKey: 'fine',
+        header: 'Principal',
+        accessorKey: 'principal',
       },
       {
-        header: 'Rebate',
-        accessorKey: 'rebate',
+        header: 'Interest',
+        accessorKey: 'interest',
       },
       {
-        header: 'Total',
-        accessorKey: 'total',
+        header: 'Remaining Principal',
+        accessorKey: 'remainingPrincipal',
         cell: (props) =>
           props.getValue() ? (
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
@@ -80,7 +75,7 @@ export const UpcomingPayments = () => {
         isDetailPageTable
         isStatic
         showFooter
-        data={data}
+        data={paymentListWithIndex}
         columns={columns}
         noDataTitle="upcoming payment"
       />

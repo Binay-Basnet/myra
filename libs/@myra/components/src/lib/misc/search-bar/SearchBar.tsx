@@ -125,7 +125,7 @@ export const SearchBar = () => {
   const { data: globalSearchData, isInitialLoading } = useGetGlobalSearchQuery(
     {
       filter: { filterMode: Filter_Mode.Or, query: debouncedValue, page: debouncedValue },
-      pagination: { after: '', first: 4 },
+      pagination: { after: '', first: -1 },
     },
     {
       enabled: searchAction === 'SIMPLE',
@@ -178,35 +178,35 @@ export const SearchBar = () => {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-
-          // TODO
           const formSearch = globalSearch?.find((search) => search?.node?.fullCode === inputSearch);
 
           if (formSearch) {
             const response = formSearch?.node?.hasParam ? await getNewId({}) : null;
 
-            router
-              .push(`${formSearch?.node?.url}${response ? `/${response?.newId}` : ''}` as string)
-              .then(() => {
-                const currentSearch = {
-                  title: formSearch?.node?.page,
-                  link: formSearch?.node?.url,
-                  hasParams: formSearch?.node?.hasParam,
-                };
+            const url = `${getPageUrl(formSearch?.node?.fullCode || '')}${
+              response ? `/${response?.newId}` : ''
+            }`;
 
-                if (recentSearches && recentSearches?.length !== 0) {
-                  localStorage.setItem(
-                    'recent-search',
-                    JSON.stringify([...recentSearches, currentSearch])
-                  );
-                } else {
-                  localStorage.setItem('recent-search', JSON.stringify([currentSearch]));
-                }
+            router.push(url).then(() => {
+              const currentSearch = {
+                title: formSearch?.node?.page,
+                link: url,
+                hasParams: formSearch?.node?.hasParam,
+              };
 
-                setSearchAction('EMPTY');
-                searchBarRef?.current?.blur();
-                setInputSearch('');
-              });
+              if (recentSearches && recentSearches?.length !== 0) {
+                localStorage.setItem(
+                  'recent-search',
+                  JSON.stringify([...recentSearches, currentSearch])
+                );
+              } else {
+                localStorage.setItem('recent-search', JSON.stringify([currentSearch]));
+              }
+
+              setSearchAction('EMPTY');
+              searchBarRef?.current?.blur();
+              setInputSearch('');
+            });
           }
         }}
       >
@@ -370,7 +370,11 @@ export const SearchBar = () => {
                         subtitle={getSubtitle(basic?.node?.fullCode as string)}
                         type={basic?.node?.iconType as string}
                         app={getAppName(basic?.node?.fullCode as string)}
-                        link={basic?.node?.url as string}
+                        link={
+                          basic?.node?.id
+                            ? `${getPageUrl(basic?.node?.fullCode || '')}?id=${basic?.node?.id}`
+                            : (getPageUrl(basic?.node?.fullCode || '') as string)
+                        }
                         title={basic?.node?.page as string}
                         isSelected={focusState === index}
                         hasParam={basic?.node?.hasParam as boolean}
@@ -548,8 +552,9 @@ export const BasicSearchCard = ({
         gap="s4"
         alignItems="center"
         _groupHover={{ display: 'flex' }}
-        as="button"
-        onClick={async () => {
+        onClick={async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           const response = hasParam ? await getNewId({}) : null;
 
           window.open(`${link}${response ? `/${response?.newId}` : ''}` as string);

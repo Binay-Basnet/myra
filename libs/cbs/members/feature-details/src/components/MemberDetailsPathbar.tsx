@@ -50,6 +50,7 @@ export const MemberDetailsPathBar = ({ title }: PathBarProps) => {
     <Box position="sticky" top="110px" w="100%" zIndex={10}>
       <DetailPageHeader
         title={title}
+        backLink="/members/list"
         member={{
           name: memberInfo?.memberName
             ? (memberInfo?.memberName as string)

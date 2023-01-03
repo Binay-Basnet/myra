@@ -1,5 +1,4 @@
 export * from './AccordianCard';
-export * from './BalanceChart';
 export * from './CollateralTable';
 export * from './DocumentsCard';
 export * from './GeneralInfoCard';

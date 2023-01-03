@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { IoTrash } from 'react-icons/io5';
 
 import {
@@ -9,43 +11,50 @@ import {
   Box,
   Button,
   Chips,
-  DetailsCard,
   Divider,
   IconButton,
+  Modal,
   Text,
 } from '@myra-ui';
 
+import { GuaranteeStatus, LoanAccountGurantee } from '@coop/cbs/data-access';
+import { FormTextArea } from '@coop/shared/form';
+
 import { AccordianListCardComponent } from './AccordianCard';
 
-export const GuaranteeList = () => {
-  const guaranteeDetail = [
+type GauranteeProps = {
+  gauranteeList: LoanAccountGurantee | null | undefined;
+};
+
+export const GuaranteeList = ({ gauranteeList }: GauranteeProps) => {
+  const methods = useForm();
+  const [openModal, setOpenModal] = useState(false);
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const gauranteeListDetails = [
     {
       label: 'Member Name',
-      value: 'Godatta Prasad',
+      value: gauranteeList?.memberName,
     },
     {
       label: 'Account Name',
-      value: 'Gold Saving Account',
+      value: gauranteeList?.accountName,
     },
     {
-      label: 'Available Balance',
-      value: '12,000.00',
-    },
-    {
-      label: 'Maximum Collateral Amount Available',
-      value: '26,000.00',
+      label: 'Maximum Guarantee Amount Available',
+      value: gauranteeList?.maxGuranteeAmountLimit,
     },
     {
       label: 'Total Gurantee Amount',
-      value: '12,000.00',
-    },
-    {
-      label: 'Gurantee Amount',
-      value: '15,000.00',
+      value: gauranteeList?.totalAmount,
     },
   ];
+
   return (
-    <DetailsCard title="Guarantee List (3)" bg="white" hasTable>
+    <>
       <Accordion defaultIndex={[0]} display="flex" flexDirection="column" gap="s16" allowToggle>
         <AccordionItem key={1}>
           <AccordionButton>
@@ -60,24 +69,33 @@ export const GuaranteeList = () => {
               <Box display="flex" flexDirection="column" gap="s4" textAlign="left">
                 <Box display="flex" gap="s8" alignItems="center">
                   <Text fontSize="r1" color="gray.800" lineHeight="150%" fontWeight="SemiBold">
-                    Gold Saving Account
+                    {gauranteeList?.accountName}
                   </Text>
-                  <Chips variant="solid" type="label" size="sm" theme="success" label="Active" />
+                  <Chips
+                    variant="solid"
+                    type="label"
+                    size="sm"
+                    theme={
+                      gauranteeList?.guaranteeStatus === GuaranteeStatus.Active
+                        ? 'success'
+                        : 'warning'
+                    }
+                    label={gauranteeList?.guaranteeStatus as string}
+                  />
                 </Box>
                 <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
-                  Recurring Product
+                  {gauranteeList?.productName}
                 </Text>
+                <Chips variant="solid" type="label" size="sm" theme="success" label="Active" />
               </Box>
+              <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
+                {gauranteeList?.productName}
+              </Text>
             </Box>
             <AccordionIcon />
           </AccordionButton>
           <AccordionPanel>
-            <AccordianListCardComponent columns={3} accordionCardDetails={guaranteeDetail} />
-            {/* <Grid templateColumns="repeat(2,1fr)" gap="s20">
-                {item?.docs?.map((docs) => (
-                  <DocumentComponent keyText={docs?.key} value={docs?.value} />
-                ))}
-              </Grid> */}
+            <AccordianListCardComponent columns={3} accordionCardDetails={gauranteeListDetails} />
             <Divider />
             <Box display="flex" w="50px" gap="s16" p="s16">
               <IconButton
@@ -86,6 +104,7 @@ export const GuaranteeList = () => {
                 icon={<IoTrash />}
                 color="danger.500"
                 size="sm"
+                onClick={() => setOpenModal(true)}
               />
               <Button color="danger.500" variant="link">
                 Release
@@ -94,6 +113,25 @@ export const GuaranteeList = () => {
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-    </DetailsCard>
+
+      <Modal
+        open={openModal}
+        onClose={onCloseModal}
+        primaryButtonLabel="Done"
+        secondaryButtonLabel="Undo"
+        title="Do you sure want to Decline ?"
+      >
+        <FormProvider {...methods}>
+          <Box display="flex" flexDir="column" gap="s8">
+            <FormTextArea
+              rules={{ required: { value: true, message: 'This field is required' } }}
+              h="100px"
+              name="reasonForDeclination"
+              label="Reason for Declination"
+            />
+          </Box>
+        </FormProvider>
+      </Modal>
+    </>
   );
 };

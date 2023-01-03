@@ -1,9 +1,19 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 import pickBy from 'lodash/pickBy';
+
+import {
+  asyncToast,
+  Box,
+  Container,
+  FormFooter,
+  FormHeader,
+  FormSection,
+  GridItem,
+} from '@myra-ui';
 
 import {
   InstallmentFrequency,
@@ -15,15 +25,6 @@ import {
   useSetInvestmentEntryDataMutation,
 } from '@coop/cbs/data-access';
 import { FormInvestmentAccountSelect, FormSelect } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
 
 import { FixedDepositInvestment, SavingsDepositsInvestment, ShareInvestment } from '../components';
 
@@ -154,7 +155,7 @@ export const AddInvestment = () => {
     if (values.investmentType === InvestmentType.Share) {
       filteredValues = {
         ...omit({ ...values }, ['saving', 'fd']),
-        share: values.share,
+        share: { ...values.share, purchaseAmount: String(values?.share?.purchaseAmount) },
       };
     }
 
