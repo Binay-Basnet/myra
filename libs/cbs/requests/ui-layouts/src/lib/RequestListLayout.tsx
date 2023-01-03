@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Sidebar } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAccountPageLayoutProps {
@@ -11,15 +12,15 @@ interface IAccountPageLayoutProps {
 const accountColumns = [
   {
     title: 'Member Request',
-    link: '/requests/member',
+    link: ROUTES.CBS_REQUESTS_MEMBER_LIST,
   },
   {
     title: 'Withdraw Request',
-    link: '/requests/withdraw-via-collector',
+    link: ROUTES.CBS_REQUESTS_WITHDRAW_VIA_COLLECTOR_LIST,
   },
   {
     title: 'Loan Request',
-    link: '/requests/loan',
+    link: ROUTES.CBS_REQUESTS_LOAN_LIST,
   },
 ];
 
@@ -29,7 +30,7 @@ export const RequestListLayout = ({ children }: IAccountPageLayoutProps) => {
     <Sidebar
       applicationName={t['corebankingSystems']}
       featureName="Request"
-      featureLink="/requests/member"
+      featureLink={ROUTES.CBS_REQUESTS_MEMBER_LIST}
       tabColumns={accountColumns}
       children={children}
     />

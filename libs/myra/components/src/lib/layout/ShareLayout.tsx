@@ -22,22 +22,22 @@ const shareColumns = [
 const settingsColumn = [
   {
     label: 'shareLayoutShareSettings',
-    navigate: '/settings/general/share',
+    navigate: ROUTES.SETTINGS_GENERAL_SHARE,
   },
 ];
 
 const reportColumn = [
   {
     label: 'shareLayoutRegisterReport',
-    navigate: '/cbs/reports/cbs/share/register/new',
+    navigate: '/reports/cbs/share/register/new',
   },
   {
     label: 'shareLayoutStateReport',
-    navigate: '/cbs/reports/cbs/share/statement/new',
+    navigate: '/reports/cbs/share/statement/new',
   },
   {
     label: 'shareLayoutTransactionReport',
-    navigate: '/cbs/reports/cbs/share/transaction/new',
+    navigate: '/reports/cbs/share/transaction/new',
   },
 ];
 
@@ -56,7 +56,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => (
   <Sidebar
     applicationName="Core Banking System"
     featureName="Share"
-    featureLink="/share/balance"
+    featureLink={ROUTES.CBS_SHARE_BALANCE}
     mainButtonLabel="New"
     tabColumns={shareColumns}
     addButtonList={addButtoncolumns}

@@ -70,7 +70,7 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
     <Sidebar
       applicationName={t['corebankingSystems']}
       featureName={t['kymIndFinancialLoan']}
-      featureLink="/loan/applications"
+      featureLink={ROUTES.CBS_LOAN_APPLICATIONS_LIST}
       mainButtonLabel={t['loanLayoutTopButton']}
       tabColumns={accountColumns}
       addButtonList={addButtoncolumns}

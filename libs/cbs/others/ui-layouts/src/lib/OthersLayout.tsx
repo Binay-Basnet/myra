@@ -57,7 +57,7 @@ export const OthersPageLayout = ({ children }: IOthersPageLayoutProps) => {
     <Sidebar
       applicationName={t['corebankingSystems']}
       featureName="Others"
-      featureLink="/others/fund-management/list"
+      featureLink={ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_LIST}
       mainButtonLabel={t['newTransfer']}
       addButtonList={dropdownButtons}
       tabColumns={othersColumns}

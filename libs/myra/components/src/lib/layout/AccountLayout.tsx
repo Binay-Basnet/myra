@@ -3,6 +3,7 @@ import React from 'react';
 import { Sidebar } from '@myra-ui';
 
 import { Id_Type } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAccountPageLayoutProps {
@@ -12,46 +13,47 @@ interface IAccountPageLayoutProps {
 const accountColumns = [
   {
     title: 'accountList',
-    link: '/savings/list',
-    addLink: '/savings/account-open/add',
+    link: ROUTES.CBS_ACCOUNT_LIST,
+    name: 'account-open',
+    addLink: ROUTES.CBS_ACCOUNT_OPEN_ADD,
   },
   {
     title: 'transactionsSidebarDeposit',
-    link: '/savings/deposit/list',
+    link: ROUTES.CBS_ACCOUNT_DEPOSIT_LIST,
     name: 'deposit',
-    addLink: '/savings/deposit/add',
+    addLink: ROUTES.CBS_ACCOUNT_DEPOSIT_ADD,
   },
   {
     title: 'transactionsSidebarWithdraw',
-    link: '/savings/withdraw/list',
+    link: ROUTES.CBS_ACCOUNT_WITHDRAW_LIST,
     name: 'withdraw',
-    addLink: '/savings/withdraw/add',
+    addLink: ROUTES.CBS_ACCOUNT_WITHDRAW_ADD,
   },
   {
     title: 'transactionsSidebarAccountTransfer',
-    link: '/savings/account-transfer/list',
+    link: ROUTES.CBS_ACCOUNT_TRANSFER_LIST,
     name: 'account-transfer',
-    addLink: '/savings/account-transfer/add',
+    addLink: ROUTES.CBS_ACCOUNT_TRANSFER_ADD,
   },
   {
     title: 'savingProducts',
-    link: '/savings/products',
+    link: ROUTES.CBS_ACCOUNT_SAVING_PRODUCT,
   },
   {
     title: 'accountClose',
-    link: '/savings/account-close',
-    addLink: '/savings/account-close/add',
+    link: ROUTES.CBS_ACCOUNT_CLOSE_LIST,
+    addLink: ROUTES.CBS_ACCOUNT_CLOSE_ADD,
   },
 ];
 
 const addButtoncolumns = [
   {
     title: 'newAccountOpen',
-    link: '/savings/account-open/add',
+    link: ROUTES.CBS_ACCOUNT_OPEN_ADD,
   },
   {
     title: 'accountClose',
-    link: '/savings/account-close/add',
+    link: ROUTES.CBS_ACCOUNT_CLOSE_ADD,
   },
 ];
 
@@ -87,7 +89,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
     <Sidebar
       applicationName={t['corebankingSystems']}
       featureName={t['savings']}
-      featureLink="/savings/list"
+      featureLink={ROUTES.CBS_ACCOUNT_LIST}
       hasActionURL
       mainButtonLabel={t['accountLayoutNewAccount']}
       idType={Id_Type.Account}

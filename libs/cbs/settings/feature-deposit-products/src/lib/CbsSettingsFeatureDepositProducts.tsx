@@ -172,7 +172,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                   title: 'loanProductViewDetails',
                   onClick: () => {
                     router.push(
-                      `/${getUrl(router.pathname, 2)}/view?id=${props?.row?.original?.node?.id}`
+                      `/${getUrl(router.pathname, 2)}/details?id=${props?.row?.original?.node?.id}`
                     );
                   },
                 },
@@ -262,7 +262,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
           if (router.pathname.includes('settings')) {
             router.push(`/${getUrl(router.pathname, 3)}/view?id=${row?.node?.id}`);
           } else {
-            router.push(`/${getUrl(router.pathname, 2)}/view?id=${row?.node?.id}`);
+            router.push(`/${getUrl(router.pathname, 3)}/details?id=${row?.node?.id}`);
           }
         }}
         pagination={{

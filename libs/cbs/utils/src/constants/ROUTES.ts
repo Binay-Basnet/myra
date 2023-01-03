@@ -15,10 +15,10 @@ export const ROUTES = {
 
   CBS_ACCOUNT_OPEN_ADD: '/cbs/savings/account-open/add',
   CBS_ACCOUNT_CLOSE_ADD: '/cbs/savings/account-close/add',
-  CBS_ACCOUNT_LIST: '/cbs/savings/accounts/list',
+  CBS_ACCOUNT_LIST: '/cbs/savings/account-open/list',
   CBS_ACCOUNT_SAVING_PRODUCT: '/cbs/savings/products/list',
   CBS_ACCOUNT_CLOSE_LIST: '/cbs/savings/account-close/list',
-  CBS_SAVING_DETAILS: '/cbs/saving/details',
+  CBS_ACCOUNT_SAVING_DETAILS: '/cbs/savings/account-open/details',
 
   CBS_LOAN_APPLICATIONS_LIST: '/cbs/loan/applications/list',
   CBS_LOAN_APPLICATIONS_ADD: '/cbs/loan/applications/add',
@@ -49,6 +49,10 @@ export const ROUTES = {
   CBS_TRANSFER_VAULT_LIST: '/cbs/transfers/vault-transfer/list',
   CBS_TRANSFER_TELLER_LIST: '/cbs/transfers/teller-transfer/list',
   CBS_TRANSFER_BRANCH_LIST: '/cbs/transfers/branch-transfer/list',
+  CBS_TRANSFER_CASH_TRANSFER_ADD: '/cbs/transfers/cash-transfer/add',
+  CBS_TRANSFER_CASH_TRANSFER_LIST: '/cbs/transfers/cash-transfer/list',
+  CBS_TRANSFER_BRANCH_TRANSFER_LIST: '/cbs/transfers/brancg-transfer/list',
+  CBS_TRANSFER_BRANCH_TRANSFER_ADD: '/cbs/transfers/brancg-transfer/add',
 
   CBS_REQUESTS_MEMBER_LIST: '/cbs/requests/member/list',
   CBS_REQUESTS_WITHDRAW_VIA_COLLECTOR_LIST: '/cbs/requests/withdraw-via-collector/list',
@@ -118,7 +122,7 @@ export const ROUTES = {
 
   /* NOT INDEXED BY GLOBAL SEARCH */
 
-  CBS_ACCOUNT_OPEN_EDIT: '/cbs/savings/account-close/edit',
+  CBS_ACCOUNT_OPEN_EDIT: '/cbs/savings/account-open/edit',
   CBS_LOAN_APPLICATION_DETAILS: '/cbs/loan/applications/details',
 
   CBS_OTHERS_MARKET_REPRESENTATIVE_LIST: '/cbs/others/market-representative/list',
@@ -145,4 +149,10 @@ export const ROUTES = {
   CBS_OTHERS_MARKET_REPRESENTATIVE_TRANS_DETAILS:
     '/cbs/others/market-representative-transaction/details',
   CBS_OTHERS_MARKET_REPRESENTATIVE_DETAILS: '/cbs/others/market-representative/details',
+  CBS_ACCOUNT_DEPOSIT_LIST: '/cbs/savings/deposit/list',
+  CBS_ACCOUNT_DEPOSIT_ADD: '/cbs/savings/deposit/add',
+  CBS_ACCOUNT_WITHDRAW_LIST: '/cbs/savings/withdraw/list',
+  CBS_ACCOUNT_WITHDRAW_ADD: '/cbs/savings/withdraw/add',
+  CBS_ACCOUNT_TRANSFER_LIST: '/cbs/savings/account-transfer/list',
+  CBS_ACCOUNT_TRANSFER_ADD: '/cbs/savings/account-transfer/add',
 } as const;
