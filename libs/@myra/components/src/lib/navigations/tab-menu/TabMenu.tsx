@@ -54,7 +54,7 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
     title: 'transfer',
     icon: AiOutlineSend,
     link: ROUTES.CBS_TRANSFER_VAULT_LIST,
-    match: ['transfer'],
+    match: ['transfers'],
   },
 
   {
@@ -66,7 +66,7 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'withdrawSlip',
     icon: TbMailForward,
-    link: ROUTES.CBS_WITHDRAW_SLIP_LIST,
+    link: ROUTES.CBS_WITHDRAW_SLIP_BOOK_LIST,
     match: ['withdraw'],
   },
   {

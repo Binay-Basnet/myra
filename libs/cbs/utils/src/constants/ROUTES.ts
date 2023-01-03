@@ -155,4 +155,5 @@ export const ROUTES = {
   CBS_ACCOUNT_WITHDRAW_ADD: '/cbs/savings/withdraw/add',
   CBS_ACCOUNT_TRANSFER_LIST: '/cbs/savings/account-transfer/list',
   CBS_ACCOUNT_TRANSFER_ADD: '/cbs/savings/account-transfer/add',
+  CBS_WITHDRAW_SLIP_BOOK_PRINT: '/cbs/withdraw/withdraw-slip-book/print',
 } as const;
