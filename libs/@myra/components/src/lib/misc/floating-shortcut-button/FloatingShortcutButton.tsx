@@ -37,12 +37,16 @@ const whatsNewData = {
     title: 'New Features',
     data: [
       'Transactions print',
+      'Report print',
+      'Withdraw-slip print',
       'Headoffice information to be filled from neosys portal and subsequent head office will be created automatically * added in required fields',
       'COA - (Holding Account) Detail Page',
       'All Transaction Detail Page',
       'No validation with calendar date for day end (user will be able to close day anytime and multiple times',
       'Branch Readiness implemented for each branch and Day End for all branch only through Head Branch',
       'COA Account List',
+      'Service Center Cash Transfer',
+      'Loan account detail page(member name is static)',
       'Completed Reports:',
       '1. Mobile Banking Registration',
       '2. Mobile Banking Expiry',
@@ -75,6 +79,7 @@ const whatsNewData = {
       '29. Daybook Report',
       '30. Pl Report',
       '31. Balance Sheet',
+      '32. STR Report(detail page is being worked on)',
     ],
   },
   bugsSquashed: {
@@ -144,8 +149,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.1.2</Text>
-          <Text fontSize="s3">December 29, 2022</Text>
+          <Text fontSize="r2">Version 1.1.3</Text>
+          <Text fontSize="s3">January 3, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
