@@ -1,7 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
-import axios from 'axios';
+
+import { privateAgent } from '@coop/neosys-admin/data-access';
 
 import { logout, saveToken } from './slices/auth-slice';
 
@@ -42,7 +43,7 @@ export const useRefreshToken = (url: string) => {
     const refreshToken = localStorage.getItem('refreshToken');
     // eslint-disable-next-line prefer-promise-reject-errors
     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
-    return axios
+    return privateAgent
       .post<RefreshTokenResponse>(url, {
         query: `mutation {
   neosys {
