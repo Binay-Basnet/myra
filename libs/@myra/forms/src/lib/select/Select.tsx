@@ -66,13 +66,9 @@ export const Select = ({
             setSortedOptions((prev) =>
               (prev as Array<Option>)?.sort((optionA, optionB) => {
                 if (optionA.value === 'ALL') return 1;
-                if (optionB.value === 'ALL') return -1;
+                if (optionB.value === 'ALL') return 1;
 
-                if (
-                  (value as Array<Option>)?.find((v) =>
-                    optionA.value === 'ALL' ? true : optionA.value === v.value
-                  )
-                ) {
+                if ((value as Array<Option>)?.find((v) => optionA.value === v.value)) {
                   return -1;
                 }
                 return 1;

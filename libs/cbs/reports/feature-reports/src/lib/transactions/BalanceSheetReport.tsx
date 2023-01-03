@@ -36,6 +36,7 @@ export const BalanceSheetReport = () => {
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
         },
+        injectProfit: true,
       },
     },
     { enabled: !!filters }
@@ -73,7 +74,7 @@ export const BalanceSheetReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect showAll isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Date Period" />

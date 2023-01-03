@@ -6,6 +6,7 @@ import {
   LocalizedDateFilter,
   TrialSheetReportDataEntry,
   TrialSheetReportFilter,
+  useGetBranchListQuery,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
 import { COATable, Report, sortCoa } from '@coop/cbs/reports';
@@ -27,10 +28,29 @@ export const ProfitAndLossReport = () => {
       ? filters?.branchId?.map((t) => t.value)
       : [];
 
+  const { data: branchListQueryData } = useGetBranchListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const headers = branchIDs?.includes('ALL')
+    ? ['Total']
+    : [
+        ...((branchList
+          ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
+          ?.map((a) => a.node?.id) || []) as string[]),
+        branchIDs.length === 1 ? undefined : 'Total',
+      ]?.filter(Boolean) || [];
+
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
       data: {
-        branchId: branchIDs,
+        branchId: branchIDs?.includes('ALL')
+          ? (branchList?.map((b) => b?.node?.id as string) as string[])
+          : branchIDs,
         period: filters?.period as LocalizedDateFilter,
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
@@ -72,7 +92,7 @@ export const ProfitAndLossReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect showAll isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Date Period" />
@@ -122,7 +142,7 @@ export const ProfitAndLossReport = () => {
             border="1px"
             mb="s16"
             mx="s16"
-            borderColor="border.element"
+            borderColor="border.layout"
           >
             <Box h="40px" display="flex">
               <Box
@@ -132,17 +152,30 @@ export const ProfitAndLossReport = () => {
                 h="100%"
                 px="s12"
                 borderRight="1px"
-                borderRightColor="border.element"
+                borderRightColor="border.layout"
                 fontSize="r1"
                 fontWeight={600}
                 color="gray.700"
               >
                 Total Profit/Loss (Total Income - Total Expenses)
               </Box>
-              <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
-                {data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                  ?.totalProfitLoss ?? 0}
-              </Box>
+              {headers.map((d, index) => (
+                <Box
+                  whiteSpace="nowrap"
+                  px="s12"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="end"
+                  borderRight={index !== headers.length - 1 ? '1px' : '0'}
+                  borderRightColor="border.layout"
+                  key={d}
+                  w="20%"
+                  textAlign="right"
+                >
+                  {data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.totalProfitLoss?.[d || ''] || '0.00'}
+                </Box>
+              ))}
             </Box>
           </Box>
         </Report.Content>
