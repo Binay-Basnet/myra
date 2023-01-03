@@ -88,7 +88,6 @@ export const LedgerReport = () => {
               {
                 header: 'Balance',
                 accessorFn: (row) => row?.balance,
-                cell: (props) => amountConverter(props.getValue() as string),
 
                 meta: {
                   isNumeric: true,
