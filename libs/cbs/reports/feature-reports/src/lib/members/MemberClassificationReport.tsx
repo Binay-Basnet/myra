@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
-import { GridItem } from '@myra-ui';
+import { Box, GridItem } from '@myra-ui';
 
 import {
+  GetMemberClassificationReportQuery,
   MemberClassificationFilter,
   ReportEntry,
   useGetMemberClassificationReportQuery,
@@ -10,6 +12,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { FormSelect } from '@coop/shared/form';
 
 // type ClassifyBy =
 //   | 'All'
@@ -44,22 +47,34 @@ import { Report as ReportEnum } from '@coop/cbs/reports/list';
 //   period: LocalizedDateFilter;
 // };
 
+const options = [
+  { label: 'All', value: 'all' },
+  {
+    label: 'Gender Wise',
+    value: 'gender',
+  },
+  { label: 'Age Wise', value: 'age' },
+  { label: 'Occupation Wise', value: 'occupation' },
+  { label: 'Education Level Wise', value: 'education' },
+  { label: 'Income Level Wise', value: 'income' },
+  { label: 'Province Wise', value: 'province' },
+  { label: 'District Wise', value: 'district' },
+  { label: 'Member Category Wise', value: 'memberCategory' },
+];
+
 export const MemberClassificationReport = () => {
   const [filters, setFilters] = useState<MemberClassificationFilter | null>(null);
 
   const { data, isFetching } = useGetMemberClassificationReportQuery(
     {
-      data: filters as MemberClassificationFilter,
+      data: {
+        period: filters?.period,
+      } as MemberClassificationFilter,
     },
     { enabled: !!filters }
   );
   const memberData = data?.report?.memberReport?.memberClassificationReport?.data;
   const genderWiseReport = memberData?.gender;
-  const ageReport = memberData?.age;
-  const occupationReport = memberData?.occupation;
-  const memberTypeReport = memberData?.memberCategory;
-  const addressWiseReport = memberData?.address?.province;
-  const districtWiseReport = memberData?.address?.district;
 
   return (
     <Report
@@ -82,14 +97,12 @@ export const MemberClassificationReport = () => {
         />
 
         <Report.Inputs>
-          {/* <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
-          </GridItem> */}
+          <GridItem colSpan={2}>
+            <FormSelect name="classifyBy" label="Classify By" isMulti options={options} />
+          </GridItem>
 
-          <GridItem colSpan={1}>
-            <GridItem colSpan={1}>
-              <ReportDateRange label="Date Period" />
-            </GridItem>
+          <GridItem colSpan={2}>
+            <ReportDateRange label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -97,15 +110,65 @@ export const MemberClassificationReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
-          {genderWiseReport && <MemberTable data={genderWiseReport} header="Genderwise" />}
-          {ageReport && <MemberTable data={ageReport} header="Agewise" />}
-          {occupationReport && <MemberTable data={occupationReport} header="Occupation wise" />}
-          {memberTypeReport && <MemberTable data={memberTypeReport} header="Member Typewise" />}
-          {addressWiseReport && <MemberTable data={addressWiseReport} header="Addresswise" />}
-          {districtWiseReport && <MemberTable data={districtWiseReport} header="Disctrictwise" />}
+
+          <MemberClassificationTables data={data} />
         </Report.Content>
       </Report.Body>
     </Report>
+  );
+};
+
+interface IMemberClassificationTableProps {
+  data: GetMemberClassificationReportQuery | undefined;
+}
+
+const MemberClassificationTables = ({ data }: IMemberClassificationTableProps) => {
+  const memberData = data?.report?.memberReport?.memberClassificationReport?.data;
+
+  const gender = memberData?.gender || [];
+  const age = memberData?.age || [] || [];
+  const occupation = memberData?.occupation || [];
+  const education = memberData?.education || [];
+  const income = memberData?.income || [];
+  const memberCategory = memberData?.memberCategory || [];
+  const province = memberData?.address?.province || [];
+  const district = memberData?.address?.district || [];
+
+  const report = {
+    gender,
+    age,
+    occupation,
+    education,
+    income,
+    memberCategory,
+    province,
+    district,
+  };
+
+  const { watch } = useFormContext();
+  const classifyBy = watch('classifyBy') as { label: string; value: string }[];
+
+  if (classifyBy.some((c) => c.value === 'all')) {
+    return (
+      <Box>
+        {options
+          ?.filter((o) => o.value !== 'all')
+          ?.map((classify) => (
+            <MemberTable
+              data={report[classify.value as keyof typeof report]}
+              header={classify.label}
+            />
+          ))}
+      </Box>
+    );
+  }
+
+  return (
+    <Box>
+      {classifyBy?.map((classify) => (
+        <MemberTable data={report[classify.value as keyof typeof report]} header={classify.label} />
+      ))}
+    </Box>
   );
 };
 
@@ -138,21 +201,38 @@ export const MemberTable = ({ data, header }: IMemberTableProps) => {
         {
           header: 'S.No.',
           accessorKey: 'index',
+          footer: () => <Box textAlign="right"> Total Member</Box>,
+          meta: {
+            Footer: {
+              colspan: 2,
+            },
+          },
         },
         {
           header: () => header,
           accessorKey: 'entryName',
           meta: {
-            width: '60px',
+            width: '80%',
+            Footer: {
+              display: 'none',
+            },
           },
         },
         {
           header: 'In Number',
           accessorKey: 'inNumber',
+          footer: String(newData?.reduce((acc, curr) => (acc += curr.inNumber || 0), 0)),
+          meta: {
+            isNumeric: true,
+          },
         },
         {
           header: 'In Percent',
           accessorFn: (row) => row?.inPercent,
+          footer: '100',
+          meta: {
+            isNumeric: true,
+          },
         },
       ]}
     />
