@@ -30,7 +30,7 @@ query getMemberClassificationReport($data: MemberClassificationFilter!) {
           }
           income {
             entryName
-            inPercent
+            inNumber
             inPercent
           }
           address {
