@@ -4,8 +4,8 @@ import { useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
-type ServiceCenterTableProps = {
-  serviceCenter: string;
+export type ServiceCenterTableProps = {
+  branchId: string;
   dr: string;
   cr: string;
 };
@@ -32,11 +32,11 @@ export const ServiceCenterTable = () => {
     >
       <GridItem colSpan={3}>
         <FormEditableTable<ServiceCenterTableProps>
-          name="dormantSetup"
+          name="branchEntries"
           debug={false}
           columns={[
             {
-              accessor: 'serviceCenter',
+              accessor: 'branchId',
               header: 'Service Center',
               fieldType: 'select',
               cellWidth: 'auto',
@@ -45,13 +45,11 @@ export const ServiceCenterTable = () => {
             {
               accessor: 'dr',
               header: 'DR',
-              fieldType: 'number',
               isNumeric: true,
             },
             {
               accessor: 'cr',
               header: 'CR',
-              fieldType: 'number',
               isNumeric: true,
             },
           ]}

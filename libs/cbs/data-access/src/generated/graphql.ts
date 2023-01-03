@@ -1520,6 +1520,7 @@ export type CoaAccount = {
   accountName?: Maybe<Scalars['Localized']>;
   accountType?: Maybe<Scalars['String']>;
   branch?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   parentGroup?: Maybe<Scalars['Localized']>;
 };
 
@@ -15752,6 +15753,25 @@ export type SetSettingsShareTransferMutation = {
   };
 };
 
+export type SetServiceCenterCashTransferMutationVariables = Exact<{
+  data: ServiceCentreCashTransferInput;
+}>;
+
+export type SetServiceCenterCashTransferMutation = {
+  transaction: {
+    serviceCentreCashTransfer: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
 export type SetSettingsUserDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<MyraUserInput>;
@@ -28434,6 +28454,38 @@ export const useSetSettingsShareTransferMutation = <TError = unknown, TContext =
     ['setSettingsShareTransfer'],
     useAxios<SetSettingsShareTransferMutation, SetSettingsShareTransferMutationVariables>(
       SetSettingsShareTransferDocument
+    ),
+    options
+  );
+export const SetServiceCenterCashTransferDocument = `
+    mutation setServiceCenterCashTransfer($data: ServiceCentreCashTransferInput!) {
+  transaction {
+    serviceCentreCashTransfer(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetServiceCenterCashTransferMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetServiceCenterCashTransferMutation,
+    TError,
+    SetServiceCenterCashTransferMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetServiceCenterCashTransferMutation,
+    TError,
+    SetServiceCenterCashTransferMutationVariables,
+    TContext
+  >(
+    ['setServiceCenterCashTransfer'],
+    useAxios<SetServiceCenterCashTransferMutation, SetServiceCenterCashTransferMutationVariables>(
+      SetServiceCenterCashTransferDocument
     ),
     options
   );
