@@ -16,7 +16,7 @@ interface IFormBranchSelectProps extends SelectProps {
 export const FormBranchSelect = (props: IFormBranchSelectProps) => {
   const { name, label, showAll, ...rest } = props;
 
-  const { watch, setValue } = useFormContext();
+  const { watch } = useFormContext();
 
   const [branchId, setBranchId] = useState('');
 

@@ -6,6 +6,7 @@ import {
   LocalizedDateFilter,
   TrialSheetReportDataEntry,
   TrialSheetReportFilter,
+  useGetBranchListQuery,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
 import { COATable, Report, sortCoa } from '@coop/cbs/reports';
@@ -28,10 +29,21 @@ export const BalanceSheetReport = () => {
       ? filters?.branchId?.map((t) => t.value)
       : [];
 
+  const { data: branchListQueryData } = useGetBranchListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
       data: {
-        branchId: branchIDs,
+        branchId: branchIDs?.includes('ALL')
+          ? (branchList?.map((b) => b?.node?.id as string) as string[])
+          : branchIDs,
         period: filters?.period as LocalizedDateFilter,
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
