@@ -223,6 +223,7 @@ export type AccountTransferView = {
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
+  note?: Maybe<Scalars['String']>;
   objState?: Maybe<ObjState>;
   recipientMember?: Maybe<Member>;
   sourceAccount?: Maybe<DepositLoanAccount>;
@@ -498,6 +499,16 @@ export type AccountsUnderLeafNode = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type AccountwiseTransactionDetail = {
+  accountNo?: Maybe<Scalars['ID']>;
+  closingBalance?: Maybe<Scalars['String']>;
+  crTransactionAmount?: Maybe<Scalars['String']>;
+  crTransactionNo?: Maybe<Scalars['String']>;
+  drTransactionAmount?: Maybe<Scalars['String']>;
+  drTransactionNo?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['String']>;
+};
+
 export type ActiveInactiveMemberReport = {
   branchDetails?: Maybe<Branch>;
   branchID: Scalars['ID'];
@@ -690,6 +701,7 @@ export type AllTransactionResult = {
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
+  note?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
@@ -1552,6 +1564,7 @@ export type CoaAccount = {
   accountName?: Maybe<Scalars['Localized']>;
   accountType?: Maybe<Scalars['String']>;
   branch?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   parentGroup?: Maybe<Scalars['Localized']>;
 };
 
@@ -2001,6 +2014,14 @@ export type CollateralListInputData = {
   id: Scalars['ID'];
   isDeleted?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
+};
+
+export type CombinedAccountDetail = {
+  accountOpenDate?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['ID']>;
+  nameOfDirector?: Maybe<Scalars['String']>;
+  natureOfAccount?: Maybe<Scalars['String']>;
+  natureOfOwnership?: Maybe<Scalars['String']>;
 };
 
 export enum ComparatorType {
@@ -3728,6 +3749,7 @@ export type DepositTransactionView = {
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
+  note?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<DepositPaymentType>;
   rebate?: Maybe<Scalars['String']>;
   sourceOfFund?: Maybe<Scalars['String']>;
@@ -5315,6 +5337,7 @@ export type IndividualBio = {
   email?: Maybe<Scalars['String']>;
   familyMembers?: Maybe<Array<Maybe<IndFamilyMemberDetails>>>;
   gender?: Maybe<Scalars['Localized']>;
+  identificationDetail?: Maybe<Array<Maybe<KymIndIdentification>>>;
   maritalStatus?: Maybe<Scalars['Localized']>;
   memberCode?: Maybe<Scalars['String']>;
   memberJoined?: Maybe<Scalars['Localized']>;
@@ -8122,7 +8145,7 @@ export type KymStatusReport = {
   memberId?: Maybe<Scalars['ID']>;
   memberName?: Maybe<Scalars['String']>;
   regDate?: Maybe<Scalars['Localized']>;
-  riskCategory?: Maybe<Scalars['String']>;
+  riskCategory?: Maybe<RiskCategoryFilter>;
 };
 
 export type KymStatusReportFilter = {
@@ -8222,6 +8245,8 @@ export type LoanAccount = {
   product: LoanProduct;
   productSubType: LoanSettingsProductSubTypeData;
   productType: Scalars['ID'];
+  remainingBalance?: Maybe<Scalars['String']>;
+  remainingInterestTillDate?: Maybe<Scalars['String']>;
   repaymentScheme?: Maybe<LoanRepaymentScheme>;
   tenure?: Maybe<Scalars['Int']>;
   tenureType?: Maybe<FrequencyTenure>;
@@ -9407,6 +9432,7 @@ export type LoanRepaymentView = {
   loanAccountName?: Maybe<Scalars['String']>;
   loanSubType?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
+  note?: Maybe<Scalars['String']>;
   objState: Scalars['String'];
   paymentMode?: Maybe<Scalars['String']>;
   repaymentDate?: Maybe<Scalars['String']>;
@@ -9702,6 +9728,7 @@ export type MemberAccountDetails = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   accountOpenDate?: Maybe<Scalars['Localized']>;
+  accountTenure?: Maybe<Scalars['String']>;
   accountType?: Maybe<NatureOfDepositProduct>;
   allowLoan?: Maybe<Scalars['Boolean']>;
   allowPartialInstallment?: Maybe<Scalars['Boolean']>;
@@ -11499,6 +11526,29 @@ export enum Share_Transaction_Direction {
   Return = 'RETURN'
 }
 
+export type StrDetailData = {
+  bio?: Maybe<MemberOverviewBio>;
+  deposits?: Maybe<Array<Maybe<TransactionDetail>>>;
+  loanAccount?: Maybe<Array<Maybe<LoanAccount>>>;
+  memberType?: Maybe<KymMemberTypesEnum>;
+  savingAccounts?: Maybe<Array<Maybe<DepositAccount>>>;
+  strAccountDetails?: Maybe<CombinedAccountDetail>;
+  strReason?: Maybe<Scalars['String']>;
+  strTopology?: Maybe<Scalars['String']>;
+  transactionDetails?: Maybe<Array<Maybe<AccountwiseTransactionDetail>>>;
+  withdraw?: Maybe<Array<Maybe<TransactionDetail>>>;
+};
+
+export type StrTransactionActionResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type StrTransactionDetailQuery = {
+  data?: Maybe<StrDetailData>;
+  error?: Maybe<QueryError>;
+};
+
 export type SaleProduct = {
   amount: Scalars['String'];
   name: Scalars['String'];
@@ -12077,6 +12127,7 @@ export type ShareDetailData = {
   id: Scalars['ID'];
   member?: Maybe<Member>;
   noOfShare?: Maybe<Scalars['Int']>;
+  note?: Maybe<Scalars['String']>;
   paymentDetail?: Maybe<SharePaymentDetail>;
   status?: Maybe<Scalars['String']>;
   teller?: Maybe<Scalars['String']>;
@@ -12689,6 +12740,12 @@ export type StatementReportInput = {
   reportType?: InputMaybe<Scalars['String']>;
 };
 
+export type StrTransactionActionInput = {
+  declineReason?: InputMaybe<Scalars['String']>;
+  isAccepted: Scalars['Boolean'];
+  transactionId: Scalars['ID'];
+};
+
 export type SubscriptionMutation = {
   ReferenceKYM: DocumentMutationResult;
   Upsert: DocumentMutationResult;
@@ -12935,6 +12992,14 @@ export type TransactionData = {
   todayValue?: Maybe<Scalars['String']>;
 };
 
+export type TransactionDetail = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositer?: Maybe<Scalars['String']>;
+  remarks?: Maybe<Scalars['String']>;
+  transactionCode?: Maybe<Scalars['String']>;
+};
+
 export type TransactionInfo = {
   amount: Scalars['String'];
   branchId: Scalars['String'];
@@ -12969,6 +13034,7 @@ export type TransactionMutation = {
   endOfDay?: Maybe<EodResult>;
   readyBranchEOD?: Maybe<Array<Maybe<Scalars['String']>>>;
   serviceCentreCashTransfer: ServiceCentreCashTransferResult;
+  strTransactionAction?: Maybe<StrTransactionActionResult>;
   tellerTransfer: TellerTransferResult;
   tellerTransferAction: TellerTransferActionResult;
   transfer: TransferResult;
@@ -13012,6 +13078,11 @@ export type TransactionMutationEndOfDayArgs = {
 
 export type TransactionMutationServiceCentreCashTransferArgs = {
   data: ServiceCentreCashTransferInput;
+};
+
+
+export type TransactionMutationStrTransactionActionArgs = {
+  data: StrTransactionActionInput;
 };
 
 
@@ -13059,6 +13130,7 @@ export type TransactionQuery = {
   listTellerTransaction: TellerActivityListConnection;
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
+  strTransactionDetail?: Maybe<StrTransactionDetailQuery>;
   viewAccountTransfer?: Maybe<AccountTransferViewResult>;
   viewAgentList?: Maybe<AgentTransactionViewResult>;
   viewDeposit?: Maybe<DepositTransactionViewResult>;
@@ -13117,6 +13189,11 @@ export type TransactionQueryListTransferArgs = {
 export type TransactionQueryListWithdrawArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+
+export type TransactionQueryStrTransactionDetailArgs = {
+  transactionId: Scalars['ID'];
 };
 
 
@@ -13253,9 +13330,9 @@ export type TrialSheetReportData = {
   incomeTotal?: Maybe<Scalars['Map']>;
   offBalance?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
   offBalanceTotal?: Maybe<Scalars['Map']>;
-  totalAssetExpense?: Maybe<Scalars['String']>;
-  totalLiablitiesIncome?: Maybe<Scalars['String']>;
-  totalProfitLoss?: Maybe<Scalars['String']>;
+  totalAssetExpense?: Maybe<Scalars['Map']>;
+  totalLiablitiesIncome?: Maybe<Scalars['Map']>;
+  totalProfitLoss?: Maybe<Scalars['Map']>;
 };
 
 export type TrialSheetReportDataEntry = {
@@ -13268,6 +13345,7 @@ export type TrialSheetReportDataEntry = {
 export type TrialSheetReportFilter = {
   branchId: Array<InputMaybe<Scalars['String']>>;
   filter?: InputMaybe<TrialSheetFilter>;
+  injectProfit?: InputMaybe<Scalars['Boolean']>;
   period: LocalizedDateFilter;
 };
 
@@ -13741,6 +13819,7 @@ export type WithdrawTransactionView = {
   marketRepId?: Maybe<Scalars['String']>;
   marketRepName?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
+  note?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<WithdrawPaymentType>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
@@ -15730,7 +15809,7 @@ export type GetKymStatusReportQueryVariables = Exact<{
 }>;
 
 
-export type GetKymStatusReportQuery = { report: { memberReport: { kymStatusReport?: { Summary?: Record<string, string> | null, data?: Array<{ memberName?: string | null, memberId?: string | null, contact?: string | null, regDate?: Record<"local"|"en"|"np",string> | null, riskCategory?: string | null, lastKymUpdatedDate?: Record<"local"|"en"|"np",string> | null, kymExpireDays?: string | null, kymStatus?: string | null, address?: AddressFragment | null } | null> | null } | null } } };
+export type GetKymStatusReportQuery = { report: { memberReport: { kymStatusReport?: { Summary?: Record<string, string> | null, data?: Array<{ memberName?: string | null, memberId?: string | null, contact?: string | null, regDate?: Record<"local"|"en"|"np",string> | null, riskCategory?: RiskCategoryFilter | null, lastKymUpdatedDate?: Record<"local"|"en"|"np",string> | null, kymExpireDays?: string | null, kymStatus?: string | null, address?: AddressFragment | null } | null> | null } | null } } };
 
 export type GetMemberRegistrationReportQueryVariables = Exact<{
   data?: InputMaybe<MemberRegistrationReportData>;
@@ -15821,7 +15900,7 @@ export type GetTrialSheetReportQueryVariables = Exact<{
 }>;
 
 
-export type GetTrialSheetReportQuery = { report: { transactionReport: { financial: { trialSheetReport: { data?: { equityAndLiablitiesTotal?: Record<string, string> | null, assetsTotal?: Record<string, string> | null, expenseTotal?: Record<string, string> | null, incomeTotal?: Record<string, string> | null, offBalanceTotal?: Record<string, string> | null, totalAssetExpense?: string | null, totalLiablitiesIncome?: string | null, totalProfitLoss?: string | null, equityAndLiablities?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, expenses?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, income?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, assets?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, offBalance?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null } | null } } } } };
+export type GetTrialSheetReportQuery = { report: { transactionReport: { financial: { trialSheetReport: { data?: { equityAndLiablitiesTotal?: Record<string, string> | null, assetsTotal?: Record<string, string> | null, expenseTotal?: Record<string, string> | null, incomeTotal?: Record<string, string> | null, offBalanceTotal?: Record<string, string> | null, totalAssetExpense?: Record<string, string> | null, totalLiablitiesIncome?: Record<string, string> | null, totalProfitLoss?: Record<string, string> | null, equityAndLiablities?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, expenses?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, income?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, assets?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null, offBalance?: Array<{ balance?: Record<string, string> | null, ledgerId?: string | null, ledgerName?: Record<"local"|"en"|"np",string> | null, under?: string | null } | null> | null } | null } } } } };
 
 export type GetTransactionTellerReportQueryVariables = Exact<{
   data: TellerReportFilter;
