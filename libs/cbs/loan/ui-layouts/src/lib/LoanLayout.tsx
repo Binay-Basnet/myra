@@ -55,11 +55,11 @@ const settingsColumn = [
 const reportColumn = [
   {
     label: 'loanLayoutStatementReport',
-    navigate: '/cbs/reports/cbs/loan/statement/new',
+    navigate: '/reports/cbs/loan/statement/new',
   },
   {
     label: 'loanLayoutAgeingReport',
-    navigate: '/cbs/reports/cbs/loan/ageing/new',
+    navigate: '/reports/cbs/loan/ageing/new',
   },
 ];
 

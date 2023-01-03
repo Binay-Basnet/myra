@@ -30,7 +30,7 @@ import {
   useGetShareChargesQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { FormMemberSelect } from '@coop/shared/form';
 import {
   amountConverter,
@@ -342,7 +342,7 @@ export const ShareReturnForm = () => {
                         queryClient.invalidateQueries(['getMemberInactiveCheck']);
                         router.push(String(redirectPath));
                       } else {
-                        router.push('/share/register');
+                        router.push(ROUTES.CBS_SHARE_REGISTER);
                       }
                     }}
                     promise={() => mutateAsync({ data: handleSubmit() })}

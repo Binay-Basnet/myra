@@ -93,7 +93,7 @@ const dropdownButtons = [
 const reportColumn = [
   {
     label: 'transactionLayoutBalanceSheet',
-    navigate: '/cbs/reports/cbs/transactions/trial-sheet/new',
+    navigate: '/reports/cbs/transactions/trial-sheet/new',
   },
   // {
   //   label: 'transactionLayoutIncomeStatement',
@@ -101,7 +101,7 @@ const reportColumn = [
   // },
   {
     label: 'transactionLayoutCashFlowStament',
-    navigate: '/cbs/reports/cbs/transactions/cash-ledger/new',
+    navigate: '/reports/cbs/transactions/cash-ledger/new',
   },
   // {
   //   label: 'transactionLayoutChangeOfEquity',
@@ -117,7 +117,7 @@ const reportColumn = [
   // },
   {
     label: 'transactionLayoutBankGLStatement',
-    navigate: '/cbs/reports/cbs/transactions/bank-gl-statement/new',
+    navigate: '/reports/cbs/transactions/bank-gl-statement/new',
   },
 ];
 
