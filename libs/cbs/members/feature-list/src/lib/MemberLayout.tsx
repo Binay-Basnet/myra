@@ -46,7 +46,7 @@ const settingsColumn = [
 const reportColumn = [
   {
     label: 'memberLayoutMemberClassification',
-    navigate: '/cbs/reports/cbs/members/classification/new',
+    navigate: '/reports/cbs/members/classification/new',
   },
   // {
   //   label: 'memberLayoutMemberLedger',
@@ -56,7 +56,7 @@ const reportColumn = [
   // },
   {
     label: 'memberLayoutActiveInactiveMemberReport',
-    navigate: '/cbs/reports/cbs/members/activations/new',
+    navigate: '/reports/cbs/members/activations/new',
   },
   // {
   //   label: 'memberLayoutInactiveMemberReport',
@@ -64,7 +64,7 @@ const reportColumn = [
   // },
   {
     label: 'memberLayoutKymStatusReport',
-    navigate: '/cbs/reports/cbs/members/kym-status/new',
+    navigate: '/reports/cbs/members/kym-status/new',
   },
 ];
 
