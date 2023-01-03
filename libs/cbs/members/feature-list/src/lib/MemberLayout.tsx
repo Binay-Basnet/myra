@@ -34,8 +34,8 @@ const memberColumns = [
 
 const settingsColumn = [
   {
-    label: ROUTES.SETTINGS_GENERAL_MEMBERS,
-    navigate: '/cbs/settings/general/members',
+    label: 'memberLayoutMemberSettings',
+    navigate: ROUTES.SETTINGS_GENERAL_MEMBERS,
   },
   // {
   //   label: 'memberLayoutKymSettings',
