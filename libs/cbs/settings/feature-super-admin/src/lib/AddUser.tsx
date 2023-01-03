@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
@@ -15,11 +15,13 @@ import {
 } from '@myra-ui';
 
 import {
+  Id_Type,
   MyraUserIdentificationInput,
   MyraUserInput,
   Roles,
   RootState,
   useAppSelector,
+  useGetNewIdMutation,
   useGetSettingsUserEditDataQuery,
   UserGender,
   useSetSettingsUserDataMutation,
@@ -74,8 +76,16 @@ type UserFormInput = MyraUserInput & {
 
 export const AddUser = () => {
   const router = useRouter();
+  const [newId, setNewId] = useState('');
+  const { mutateAsync: newIdMutate } = useGetNewIdMutation();
 
-  const id = router?.query?.['id'];
+  useEffect(() => {
+    if (router?.query?.['id']) {
+      newIdMutate({ idType: Id_Type.Myrauser }).then((res) => setNewId(res?.newId));
+    }
+  }, []);
+
+  const id = router?.query?.['id'] || newId;
 
   const isEdit = router?.asPath?.includes('edit');
 

@@ -14739,6 +14739,13 @@ export type SetSettingsShareTransferMutationVariables = Exact<{
 
 export type SetSettingsShareTransferMutation = { settings: { general?: { share?: { add?: { transfer?: { bonus?: { taxPayer?: TaxPayerOptions | null, taxRate?: number | null, accountMapping?: string | null } | null } | null } | null } | null } | null } };
 
+export type SetServiceCenterCashTransferMutationVariables = Exact<{
+  data: ServiceCentreCashTransferInput;
+}>;
+
+
+export type SetServiceCenterCashTransferMutation = { transaction: { serviceCentreCashTransfer: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+
 export type SetSettingsUserDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<MyraUserInput>;
@@ -14945,7 +14952,7 @@ export type GetAccountDetailsDataQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountDetailsDataQuery = { account: { accountDetails?: { data?: { accountId?: string | null, installmentAmount?: string | null, accountName?: string | null, productName?: string | null, accountOpenDate?: Record<"local"|"en"|"np",string> | null, accountType?: NatureOfDepositProduct | null, defaultAccountType?: DefaultAccountType | null, accountBalance?: string | null, totalDepositBalance?: string | null, interestAccrued?: string | null, interestEarned?: string | null, guaranteedAmount?: string | null, accountBranch?: string | null, alternativeChannel?: boolean | null, allowLoan?: boolean | null, withdrawRestricted?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, allowPartialInstallment?: boolean | null, monthlyInterestCompulsory?: boolean | null, isForMinors?: boolean | null, autoOpen?: boolean | null, isMandatory?: boolean | null, interestRate?: number | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, contact?: string | null } | null } | null } | null } };
+export type GetAccountDetailsDataQuery = { account: { accountDetails?: { data?: { accountId?: string | null, installmentAmount?: string | null, accountName?: string | null, accountTenure?: string | null, productName?: string | null, accountOpenDate?: Record<"local"|"en"|"np",string> | null, accountType?: NatureOfDepositProduct | null, defaultAccountType?: DefaultAccountType | null, accountBalance?: string | null, totalDepositBalance?: string | null, interestAccrued?: string | null, interestEarned?: string | null, guaranteedAmount?: string | null, accountBranch?: string | null, alternativeChannel?: boolean | null, allowLoan?: boolean | null, withdrawRestricted?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, allowPartialInstallment?: boolean | null, monthlyInterestCompulsory?: boolean | null, isForMinors?: boolean | null, autoOpen?: boolean | null, isMandatory?: boolean | null, interestRate?: number | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, contact?: string | null } | null } | null } | null } };
 
 export type GetAccountTransactionListsQueryVariables = Exact<{
   filter: AccountsTransactionFilter;
@@ -19418,6 +19425,27 @@ export const useSetSettingsShareTransferMutation = <
       useAxios<SetSettingsShareTransferMutation, SetSettingsShareTransferMutationVariables>(SetSettingsShareTransferDocument),
       options
     );
+export const SetServiceCenterCashTransferDocument = `
+    mutation setServiceCenterCashTransfer($data: ServiceCentreCashTransferInput!) {
+  transaction {
+    serviceCentreCashTransfer(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetServiceCenterCashTransferMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetServiceCenterCashTransferMutation, TError, SetServiceCenterCashTransferMutationVariables, TContext>) =>
+    useMutation<SetServiceCenterCashTransferMutation, TError, SetServiceCenterCashTransferMutationVariables, TContext>(
+      ['setServiceCenterCashTransfer'],
+      useAxios<SetServiceCenterCashTransferMutation, SetServiceCenterCashTransferMutationVariables>(SetServiceCenterCashTransferDocument),
+      options
+    );
 export const SetSettingsUserDataDocument = `
     mutation setSettingsUserData($id: ID!, $data: MyraUserInput) {
   settings {
@@ -20503,6 +20531,7 @@ export const GetAccountDetailsDataDocument = `
         }
         installmentAmount
         accountName
+        accountTenure
         productName
         accountOpenDate
         accountType
