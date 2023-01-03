@@ -172,7 +172,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                   title: 'loanProductViewDetails',
                   onClick: () => {
                     router.push(
-                      `/${getUrl(router.pathname, 2)}/details?id=${props?.row?.original?.node?.id}`
+                      `/${getUrl(router.pathname, 3)}/details?id=${props?.row?.original?.node?.id}`
                     );
                   },
                 },
