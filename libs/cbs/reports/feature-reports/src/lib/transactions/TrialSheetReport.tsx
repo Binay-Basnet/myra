@@ -38,21 +38,20 @@ export const TrialSheetReport = () => {
   });
 
   const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
-  const headers = branchIDs?.includes('ALL')
-    ? ['Total']
-    : [
-        ...((branchList
-          ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
-          ?.map((a) => a.node?.id) || []) as string[]),
-        branchIDs.length === 1 ? undefined : 'Total',
-      ]?.filter(Boolean) || [];
+  const headers =
+    branchIDs?.length === branchList?.length
+      ? ['Total']
+      : [
+          ...((branchList
+            ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
+            ?.map((a) => a.node?.id) || []) as string[]),
+          branchIDs.length === 1 ? undefined : 'Total',
+        ]?.filter(Boolean) || [];
 
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
       data: {
-        branchId: branchIDs?.includes('ALL')
-          ? (branchList?.map((b) => b?.node?.id as string) as string[])
-          : branchIDs,
+        branchId: branchIDs,
         period: {
           from: filters?.period?.from,
           to: filters?.period?.from,
@@ -110,7 +109,7 @@ export const TrialSheetReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect showAll isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
 
           <GridItem colSpan={1}>
@@ -355,14 +354,15 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
   }
 
   const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
-  const headers = branchIDs?.includes('ALL')
-    ? ['Total']
-    : [
-        ...((branchList
-          ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
-          ?.map((a) => a.node?.id) || []) as string[]),
-        branchIDs.length === 1 ? undefined : 'Total',
-      ]?.filter(Boolean);
+  const headers =
+    branchIDs?.length === branchList?.length
+      ? ['Total']
+      : [
+          ...((branchList
+            ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
+            ?.map((a) => a.node?.id) || []) as string[]),
+          branchIDs.length === 1 ? undefined : 'Total',
+        ]?.filter(Boolean);
 
   const baseColumn: Column<TrialSheetReportDataEntry>[] = [
     {

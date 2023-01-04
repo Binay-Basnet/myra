@@ -10218,6 +10218,7 @@ export type MemberReportKymStatusReportArgs = {
 
 
 export type MemberReportMemberClassificationReportArgs = {
+  branch?: InputMaybe<Scalars['String']>;
   data: MemberClassificationFilter;
 };
 

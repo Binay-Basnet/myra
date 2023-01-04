@@ -78,7 +78,7 @@ const FormControl = <T extends Record<string, unknown>>({
       value={rest.isMulti ? filteredValue : foundValue}
       inputId={name}
       {...rest}
-      onChange={(newValue: Option | Option[]) => {
+      onChange={(newValue) => {
         if (errors[name as string]?.type === 'required') {
           clearErrors(name);
         }
