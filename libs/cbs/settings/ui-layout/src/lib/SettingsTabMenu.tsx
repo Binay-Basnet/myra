@@ -6,18 +6,19 @@ import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 
 import { Icon } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 const demoTabs: { title: string; icon: IconType; link: string }[] = [
   {
     title: 'settingsTabMenuGeneral',
     icon: IoGridOutline,
-    link: '/settings/general/organization',
+    link: ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST,
   },
   {
     title: 'settingsTabMenuUsers',
     icon: IoPerson,
-    link: '/settings/users/super-admin',
+    link: ROUTES.SETTINGS_USERS_LIST,
   },
   // {
   //   title: 'settingsTabMenuImport',

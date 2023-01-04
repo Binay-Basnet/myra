@@ -75,9 +75,9 @@ export const ROUTES = {
 
   /* SETTINGS APP & NOT INDEXED BY GLOBAL SEARCH */
 
-  SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges',
+  SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
 
-  SETTINGS_GENERAL_AUDIT_LOG: '/settings/general/audit-log',
+  SETTINGS_GENERAL_AUDIT_LOG: '/settings/general/audit-log/list',
 
   SETTINGS_GENERAL_COA: '/settings/general/coa/list',
   SETTINGS_GENERAL_COA_DETAILS: '/settings/general/coa/details',
@@ -86,13 +86,13 @@ export const ROUTES = {
   SETTINGS_GENERAL_CODE_MANAGEMENT_CBS: '/settings/general/code-management/core-banking-system',
   SETTINGS_GENERAL_CODE_MANAGEMENT_INVENTORY: '/settings/general/code-management/inventory',
 
-  SETTINGS_GENERAL_SAVINGS_TDS: '/settings/general/savings/tds',
+  SETTINGS_GENERAL_SAVINGS_TDS: '/settings/general/savings/tds/configure',
   SETTINGS_GENERAL_SP_LIST: '/settings/general/saving-products/list',
   SETTINGS_GENERAL_SP_ADD: '/settings/general/saving-products/add',
   SETTINGS_GENERAL_SP_DETAILS: '/settings/general/deposit-products/details',
 
-  SETTINGS_GENERAL_LOAN: '/settings/general/loan',
-  SETTINGS_GENERAL_LOAN_PRODUCT_TYPE: '/settings/general/loan/product-type',
+  SETTINGS_GENERAL_LOAN: '/settings/general/loan/configure',
+  SETTINGS_GENERAL_LOAN_PRODUCT_TYPE: '/settings/general/loan/product-type/configure',
   SETTINGS_GENERAL_LOAN_VALUATOR: '/settings/general/loan/valuator/list',
   SETTINGS_GENERAL_LOAN_VALUATOR_ADD: '/settings/general/loan/valuator/add',
   SETTINGS_GENERAL_LOAN_VALUATOR_EDIT: '/settings/general/loan/valuator/edit',
@@ -103,23 +103,24 @@ export const ROUTES = {
 
   SETTINGS_GENERAL_INDEXING: '/settings/general/indexing',
 
-  SETTINGS_GENERAL_MEMBERS: '/settings/general/members',
-  SETTINGS_GENERAL_MEMBERS_KYM_IND: '/settings/general/members/kym-individual',
-  SETTINGS_GENERAL_MEMBERS_KYM_INS: '/settings/general/members/kym-institutional',
-  SETTINGS_GENERAL_MEMBERS_KYM_COOP: '/settings/general/members/kym-cooperative',
-  SETTINGS_GENERAL_MEMBERS_KYM_COOP_UNION: '/settings/general/members/kym-cooperative-union',
+  SETTINGS_GENERAL_MEMBERS: '/settings/general/members/configure',
+  SETTINGS_GENERAL_MEMBERS_KYM_IND: '/settings/general/members/kym-individual/configure',
+  SETTINGS_GENERAL_MEMBERS_KYM_INS: '/settings/general/members/kym-institutional/configure',
+  SETTINGS_GENERAL_MEMBERS_KYM_COOP: '/settings/general/members/kym-cooperative/configure',
+  SETTINGS_GENERAL_MEMBERS_KYM_COOP_UNION:
+    '/settings/general/members/kym-cooperative-union/configure',
 
   SETTINGS_GENERAL_SERVICE_CENTER_LIST: '/settings/general/service-center/list',
   SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD: '/settings/general/service-center/add',
   SETTINGS_GENERAL_SERVICE_CENTER_LIST_EDIT: '/settings/general/service-center/edit',
 
-  SETTINGS_GENERAL_SHARE: '/settings/general/share',
-  SETTINGS_GENERAL_SHARE_BONUS: '/settings/general/share/bonus',
-  SETTINGS_GENERAL_SHARE_DIVIDEND: '/settings/general/share/dividend',
-  SETTINGS_GENERAL_SHARE_FEE: '/settings/general/share/fee-and-charges',
-  SETTINGS_GENERAL_SHARE_ISSUES: '/settings/general/share/issues',
-  SETTINGS_GENERAL_SHARE_RETURNS: '/settings/general/share/returns',
-  SETTINGS_GENERAL_SHARE_TRANSFER: '/settings/general/share/transfer',
+  SETTINGS_GENERAL_SHARE: '/settings/general/share/configure',
+  SETTINGS_GENERAL_SHARE_ISSUES: '/settings/general/share/issues/configure',
+  SETTINGS_GENERAL_SHARE_RETURNS: '/settings/general/share/returns/configure',
+  SETTINGS_GENERAL_SHARE_TRANSFER: '/settings/general/share/transfer/configure',
+  SETTINGS_USERS_LIST: '/settings/users/super-admin/list',
+  SETTINGS_USERS_ADD: '/settings/users/super-admin/add',
+  SETTINGS_USERS_EDIT: '/settings/users/super-admin/edit',
 
   /* NOT INDEXED BY GLOBAL SEARCH */
 

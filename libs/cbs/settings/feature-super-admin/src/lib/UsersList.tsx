@@ -6,6 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
+import { ROUTES } from '@coop/cbs/utils';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -108,7 +109,7 @@ export const UsersList = () => {
               {
                 title: 'settingsUserUserListEdit',
                 onClick: () => {
-                  router.push(`/settings/users/super-admin/edit/${props?.row?.original?.node?.id}`);
+                  router.push(`${ROUTES.SETTINGS_USERS_EDIT}?id=${props?.row?.original?.node?.id}`);
                 },
               },
             ]}
