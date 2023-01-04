@@ -2,11 +2,11 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface VaultTransferListProps {}
@@ -80,19 +80,28 @@ export const VaultTransferList = () => {
         header: 'Transfer Date',
         accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
-      //   accessorKey: 'actions',
-      //   cell: (cell) => {
-      //     const member = cell?.row?.original?.node;
-      //     const memberData = { id: member?.ID };
-      //     return <PopoverComponent items={[]} member={memberData} />;
-      //   },
-      //   meta: {
-      //     width: '60px',
-      //   },
-      // },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) => (
+          <TablePopover
+            node={props?.row?.original?.node}
+            items={[
+              {
+                title: 'loanProductViewDetails',
+                onClick: () => {
+                  router.push(
+                    `/${getUrl(router.pathname, 2)}/view?id=${props?.row?.original?.node?.ID}`
+                  );
+                },
+              },
+            ]}
+          />
+        ),
+        meta: {
+          width: '50px',
+        },
+      },
     ],
     [t]
   );
