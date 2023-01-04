@@ -7,13 +7,13 @@ import { Box, Grid, Icon, Text } from '@myra-ui';
 import {
   CooperativeBasicMinInfo,
   CooperativeUnionBasicMinInfo,
-  Id_Type,
   IndividualBasicMinInfo,
   InstitutionBasicMinInfo,
   useGetMemberDetailsOverviewQuery,
   useGetMemberOverviewBasicDetailsQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 import {
@@ -34,35 +34,35 @@ export const Overview = () => {
   const links = [
     {
       title: 'New Deposit',
-      link: `/transactions/deposit/add?memberId=${id}`,
+      link: `${ROUTES.CBS_TRANS_DEPOSIT_ADD}?memberId=${id}`,
     },
     {
       title: 'New Withdraw',
-      link: `/transactions/withdraw/add?memberId=${id}`,
+      link: `${ROUTES.CBS_TRANS_WITHDRAW_ADD}?memberId=${id}`,
     },
     {
       title: 'Account Transfer',
-      link: `/savings/account-transfer/add?memberId=${id}`,
+      link: `${ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_ADD}?memberId=${id}`,
     },
     {
       title: 'New Account',
-      link: `/savings/account-open`,
+      link: `${ROUTES.CBS_ACCOUNT_OPEN_ADD}?memberId=${id}`,
     },
     {
       title: 'New Share Issue',
-      link: `/share/share-issue?memberId=${id}`,
+      link: `${ROUTES.CBS_SHARE_ISSUE_ADD}?memberId=${id}`,
     },
     {
       title: 'Share Return',
-      link: `/share/share-return?memberId=${id}`,
+      link: `${ROUTES.CBS_SHARE_ISSUE_ADD}?memberId=${id}`,
     },
     {
       title: 'New Loan Application',
-      link: `/loan/apply?memberId=${id}`,
+      link: `${ROUTES.CBS_LOAN_APPLICATIONS_ADD}?memberId=${id}`,
     },
     {
       title: 'Loan Payment',
-      link: `/loan/repayments/add?memberId=${id}`,
+      link: `${ROUTES.CBS_LOAN_REPAYMENTS_ADD}?memberId=${id}`,
     },
     {
       title: 'Edit KYM',
@@ -154,31 +154,7 @@ export const Overview = () => {
         <Grid templateColumns="repeat(3,1fr)" gap="s16">
           {links?.map((item) => (
             <Box key={`${item.link}${item.title}`}>
-              {item.title === 'New Account' && (
-                <Box
-                  display="flex"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  bg="white"
-                  borderRadius="br2"
-                  gap="s12"
-                  h="58px"
-                  pl="s16"
-                  cursor="pointer"
-                  onClick={() =>
-                    newId
-                      .mutateAsync({ idType: Id_Type.Account })
-                      .then((res) => router.push(`${item.link}/add/${res?.newId}?memberId=${id}`))
-                  }
-                >
-                  <Icon as={IoAddOutline} />
-
-                  <Text fontWeight="500" fontSize="s3">
-                    {item.title}
-                  </Text>
-                </Box>
-              )}
-              {item.title === 'Edit KYM' && (
+              {item.title === 'Edit KYM' ? (
                 <Box
                   display="flex"
                   justifyContent="flex-start"
@@ -190,7 +166,7 @@ export const Overview = () => {
                   pl="s16"
                   cursor="pointer"
                   onClick={() => {
-                    router.push(`/members/${memberType}/edit/${router.query['id'] as string}`);
+                    router.push(`/cbs/members/${memberType}/edit/${router.query['id'] as string}`);
                   }}
                 >
                   <Icon as={IoCreateOutline} />
@@ -199,8 +175,7 @@ export const Overview = () => {
                     Edit KYM
                   </Text>
                 </Box>
-              )}
-              {item.title !== 'New Account' && item.title !== 'Edit KYM' && (
+              ) : (
                 <Box
                   display="flex"
                   justifyContent="flex-start"

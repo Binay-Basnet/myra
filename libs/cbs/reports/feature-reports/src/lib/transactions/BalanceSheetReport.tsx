@@ -9,9 +9,8 @@ import {
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
 import { COATable, Report, sortCoa } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
+import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
   branchId: { label: string; value: string }[];
@@ -32,7 +31,10 @@ export const BalanceSheetReport = () => {
     {
       data: {
         branchId: branchIDs,
-        period: filters?.period as LocalizedDateFilter,
+        period: {
+          from: filters?.period?.from,
+          to: filters?.period?.from,
+        } as LocalizedDateFilter,
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
         },
@@ -74,10 +76,10 @@ export const BalanceSheetReport = () => {
 
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect showAll isMulti name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange label="Date Period" />
+            <FormDatePicker name="period.from" label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

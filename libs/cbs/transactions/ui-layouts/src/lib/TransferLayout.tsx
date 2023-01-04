@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Sidebar } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 interface ITransactionsSidebarLayoutProps {
@@ -11,43 +12,47 @@ interface ITransactionsSidebarLayoutProps {
 const transactionSidebarColumns = [
   {
     title: 'transferVaultTransfer',
-    link: '/transfer/vault-transfer/list',
+    link: ROUTES.CBS_TRANSFER_VAULT_LIST,
     name: 'vault-transfer',
-    addLink: '/transfer/vault-transfer/add',
+    addLink: ROUTES.CBS_TRANSFER_VAULT_ADD,
   },
   {
     title: 'transferTellerTransfer',
-    link: '/transfer/teller-transfer/list',
+    link: ROUTES.CBS_TRANSFER_TELLER_LIST,
     name: 'teller-transfer',
-    addLink: '/transfer/teller-transfer/add',
-  },
-  {
-    title: 'Service Center Cash Transfer',
-    link: '/transfer/cash-transfer/list',
-    name: 'cash-transfer',
-    addLink: '/transfer/cash-transfer/add',
+    addLink: ROUTES.CBS_TRANSFER_TELLER_ADD,
   },
   // {
-  //   title: 'transferBranchTransfer',
-  //   link: '/transfer/branch-transfer',
-  //   name: 'branch-transfer',
-  //   // addLink: '/transactions/account-transfer/add',
+  //   title: 'Service Center Cash Transfer',
+  //   link: ROUTES.CBS_TRANSFER_CASH_TRANSFER_LIST,
+  //   name: 'cash-transfer',
+  //   addLink: ROUTES.CBS_TRANSFER_CASH_TRANSFER_ADD,
   // },
+  {
+    title: 'transferBranchTransfer',
+    link: ROUTES.CBS_TRANSFER_BRANCH_TRANSFER_LIST,
+    name: 'branch-transfer',
+    addLink: ROUTES.CBS_TRANSFER_BRANCH_TRANSFER_ADD,
+  },
 ];
 
 const dropdownButtons = [
   {
     title: 'transferVaultTransfer',
-    link: '/transfer/vault-transfer/add',
+    link: ROUTES.CBS_TRANSFER_VAULT_ADD,
   },
   {
     title: 'transferTellerTransfer',
-    link: '/transfer/teller-transfer/add',
+    link: ROUTES.CBS_TRANSFER_TELLER_ADD,
   },
-  // {
-  //   label: 'transferBranchTransfer',
-  //   link: '/transactions/account-transfer/add',
-  // },
+  {
+    title: 'transCashTransitTransfer',
+    link: '/transfer/cash-transit-transfer/add',
+  },
+  {
+    title: 'transServiceCenterTransfer',
+    link: '/transfer/cash-transfer/add',
+  },
 ];
 
 const reportColumn = [
@@ -68,7 +73,7 @@ export const TransferLayout = ({ children }: ITransactionsSidebarLayoutProps) =>
     <Sidebar
       applicationName={t['corebankingSystems']}
       featureName={t['navbarTransfer']}
-      featureLink="/transfer/vault-transfer/list"
+      featureLink={ROUTES.CBS_TRANSFER_VAULT_LIST}
       mainButtonLabel={t['newTransfer']}
       tabColumns={transactionSidebarColumns}
       addButtonList={dropdownButtons}

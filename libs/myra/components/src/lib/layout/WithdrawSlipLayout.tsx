@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Sidebar } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IMemberPageLayout {
@@ -11,28 +12,28 @@ interface IMemberPageLayout {
 const shareColumns = [
   {
     title: 'Withdraw Slip Book',
-    link: '/withdraw/withdraw-slip-book/list',
-    addLink: '/withdraw/withdraw-slip-book/add',
+    link: ROUTES.CBS_WITHDRAW_SLIP_BOOK_LIST,
+    addLink: ROUTES.CBS_WITHDRAW_SLIP_BOOK_ADD,
   },
   {
     title: 'withdrawSlipRequests',
-    link: '/withdraw/cheque-book',
+    link: ROUTES.CBS_WITHDRAW_SLIP_LIST,
   },
   {
     title: 'withdrawSlipBlockRequests',
-    link: '/withdraw/block-withdraw-slip-requests/list',
-    addLink: '/withdraw/block-withdraw-slip-requests/add',
+    link: ROUTES.CBS_BLOCK_WITHDRAW_SLIP_REQUEST_LIST,
+    addLink: ROUTES.CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD,
   },
 ];
 
 const addButtoncolumns = [
   {
     title: 'Withraw Slip Book',
-    link: '/withdraw/withdraw-slip-book/add',
+    link: ROUTES.CBS_WITHDRAW_SLIP_BOOK_ADD,
   },
   {
     title: 'Block Withdraw Slip Requests',
-    link: '/withdraw/block-withdraw-slip-requests/add',
+    link: ROUTES.CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD,
   },
 ];
 

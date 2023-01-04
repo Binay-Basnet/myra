@@ -4,6 +4,7 @@ export * from './InstallmentDetails';
 export * from './LoanRepaymentDetails';
 export * from './MarketRepresentative';
 export * from './MemberInfo';
+export * from './Note';
 export * from './OtherDetails';
 export * from './PaymentDetails';
 export * from './SideBar';

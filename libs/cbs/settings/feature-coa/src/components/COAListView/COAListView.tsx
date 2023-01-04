@@ -5,6 +5,7 @@ import { TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useAppSelector, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const accountClass = {
@@ -86,7 +87,7 @@ export const COAListView = () => {
                   title: 'View Details',
                   onClick: (row) => {
                     router.push(
-                      `/settings/general/charts-of-accounts/detail/${row?.node?.accountCode}`
+                      `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${row?.node?.accountCode}`
                     );
                   },
                 },
@@ -106,7 +107,7 @@ export const COAListView = () => {
       columns={columns}
       isLoading={isFetching}
       rowOnClick={(row) =>
-        router.push(`/settings/general/charts-of-accounts/detail/${row?.node?.accountCode}`)
+        router.push(`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${row?.node?.accountCode}`)
       }
       pagination={{
         total: accountList?.settings?.chartsOfAccount?.coaAccountList?.totalCount ?? 'Many',

@@ -2,6 +2,7 @@ import { Box, Text } from '@chakra-ui/react';
 
 import { Divider } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 import { VerticalSideBarForSettings } from '../components/VerticalSideBarForSettings';
@@ -18,58 +19,58 @@ const orgTabList: TabList[] = [
   // },
   {
     title: 'serviceCenterSettings',
-    to: '/settings/general/service-center',
+    to: ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST,
   },
   {
     title: 'settingsSideBarChartsOfAccounts',
-    to: '/settings/general/charts-of-accounts',
+    to: ROUTES.SETTINGS_GENERAL_COA,
   },
   {
     title: 'settingsAuditLog',
-    to: '/settings/general/audit-log',
+    to: ROUTES.SETTINGS_GENERAL_AUDIT_LOG,
   },
 ];
 
 const tabList: TabList[] = [
   {
     title: 'settingsSideBarMembers',
-    to: '/settings/general/members',
+    to: ROUTES.SETTINGS_GENERAL_MEMBERS,
   },
   {
     title: 'settingsSideBarShare',
-    to: '/settings/general/share',
+    to: ROUTES.SETTINGS_GENERAL_SHARE,
   },
   {
     title: 'settingsSideBarDeposit',
-    to: '/settings/general/deposit/tds',
+    to: ROUTES.SETTINGS_GENERAL_SAVINGS_TDS,
   },
   {
     title: 'settingsSideBarDepositProducts',
-    to: '/settings/general/deposit-products',
+    to: ROUTES.SETTINGS_GENERAL_SP_LIST,
   },
   {
     title: 'settingsSideBarLoan',
-    to: '/settings/general/loan',
+    to: ROUTES.SETTINGS_GENERAL_LOAN,
   },
 
   {
     title: 'settingsSideBarLoanProducts',
-    to: '/settings/general/loan-products',
+    to: ROUTES.SETTINGS_GENERAL_LP_LIST,
   },
 ];
 
 const otherTabList: TabList[] = [
   {
     title: 'Code Management',
-    to: '/settings/general/code-management/core-banking-system',
+    to: ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS,
   },
   {
     title: 'settingsAlternativeChannel',
-    to: '/settings/general/alternative-channels/charges',
+    to: ROUTES.SETTINGS_GENERAL_ALTERNATIVE_CHANNELS,
   },
   {
     title: 'Indexing',
-    to: '/settings/general/indexing',
+    to: ROUTES.SETTINGS_GENERAL_INDEXING,
   },
   // {
   //   title: 'settingsDocuments',

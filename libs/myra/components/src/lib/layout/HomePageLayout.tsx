@@ -15,12 +15,12 @@ const myraAppn = [
   {
     title: 'corebankingSystems',
     img: '/cbs.svg',
-    link: '/members/list',
+    link: '/cbs/members/list',
   },
   {
     title: 'memberAndShareManagement',
     img: '/memberandshare.svg',
-    link: '/members/list',
+    link: '/cbs/members/list',
   },
   {
     title: 'accountingSystem',
@@ -43,18 +43,18 @@ const notSubscribed = [
   {
     title: 'mobileApp',
     img: '/fct.svg',
-    link: '/members/list',
+    link: '/cbs/members/list',
   },
   {
     title: 'documentManagement',
     img: '/enj.svg',
-    link: '/members/list',
+    link: '/cbs/members/list',
   },
 
   {
     title: 'complainceManagement',
     img: '/bnty.svg',
-    link: '/members/list',
+    link: '/cbs/members/list',
   },
 ];
 
@@ -62,23 +62,23 @@ const comingSoon = [
   {
     title: 'businessProcessManagement',
     img: '/rvn.svg',
-    link: '/members/list',
+    link: '/cbs/members/list',
   },
   {
     title: 'assetsAndInventoryManagement',
     img: '/tern.svg',
-    link: '/members/list',
+    link: '/cbs/members/list',
   },
   {
     title: 'fixedAssetManagement',
     img: '/zcl.svg',
-    link: '/members/list',
+    link: '/cbs/members/list',
   },
 
   {
     title: 'hrTrainingAndCapacityManagement',
     img: '/btcd.svg',
-    link: '/members/list',
+    link: '/cbs/members/list',
   },
 ];
 

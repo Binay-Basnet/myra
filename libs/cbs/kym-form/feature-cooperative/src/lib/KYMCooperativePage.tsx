@@ -25,6 +25,7 @@ import {
   useGetKymCooperativeOverallFormStatusQuery,
 } from '@coop/cbs/data-access';
 import { useDispatch } from 'react-redux';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   KymAccountHolderDeclaration,
   KymCoopAccountOperatorDetail,
@@ -207,7 +208,7 @@ export const KYMCooperativePage = () => {
               if (response) {
                 dispatch(setCooperativeHasPressedNext(true));
                 if (!basicErrors) {
-                  router.push(`/members/translation/${router.query['id']}`);
+                  router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}`);
                 } else {
                   toast({
                     id: 'validation-error',

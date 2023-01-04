@@ -50,17 +50,19 @@ export const Pagination = ({ pageInfo, total, pageSizeOptions }: PaginationProps
               menuPlacement="top"
               isSearchable={false}
               value={{ label: pageSize, value: pageSize }}
-              onChange={(newValue: { value?: string | number }) => {
-                router.push({
-                  query: {
-                    ...router.query,
-                    paginate: qs.stringify({
-                      page: 1,
-                      after: '',
-                      first: newValue?.value,
-                    }),
-                  },
-                });
+              onChange={(newValue) => {
+                if (newValue && 'value' in newValue) {
+                  router.push({
+                    query: {
+                      ...router.query,
+                      paginate: qs.stringify({
+                        page: 1,
+                        after: '',
+                        first: newValue?.value,
+                      }),
+                    },
+                  });
+                }
               }}
               options={pageSizeOptions?.map((size) => ({
                 label: String(size),

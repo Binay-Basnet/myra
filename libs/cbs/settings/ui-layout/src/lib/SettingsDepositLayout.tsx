@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Box } from '@myra-ui';
+
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
@@ -10,7 +12,7 @@ const tabList = [
   {
     // title: 'TDS',
     title: 'settingsDepositTds',
-    to: '/settings/general/deposit/tds',
+    to: ROUTES.SETTINGS_GENERAL_SAVINGS_TDS,
   },
   // {
   //   // title: 'IRO Setup',

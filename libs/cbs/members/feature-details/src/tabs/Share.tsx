@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 
 import { Box, Grid, Icon, Text } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
+
 import { ShareInfo, ShareRegister, ShareTable } from '../components';
 
 export const MemberShareInfo = () => {
@@ -12,15 +14,15 @@ export const MemberShareInfo = () => {
   const links = [
     {
       title: 'New Share Issue',
-      link: `/share/share-issue?memberId=${id}`,
+      link: `${ROUTES.CBS_SHARE_ISSUE_ADD}?memberId=${id}`,
     },
     {
       title: 'New Share Return',
-      link: `/share/share-return?memberId=${id}`,
+      link: `${ROUTES.CBS_SHARE_RETURN_ADD}?memberId=${id}`,
     },
     {
       title: 'Share Register',
-      link: `/share/register`,
+      link: `${ROUTES.CBS_SHARE_REGISTER}`,
     },
   ];
   return (

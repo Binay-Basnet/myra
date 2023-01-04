@@ -6,6 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -95,7 +96,7 @@ export const WithdrawList = () => {
                 {
                   title: t['transDetailViewDetail'],
                   onClick: (row) => {
-                    router.push(`/transactions/withdraw/view?id=${row?.ID}`);
+                    router.push(`${ROUTES.CBS_TRANS_WITHDRAW_DETAILS}?id=${row?.ID}`);
                   },
                 },
               ]}
@@ -121,7 +122,9 @@ export const WithdrawList = () => {
         getRowId={(row) => String(row?.node?.ID)}
         isLoading={isFetching}
         columns={columns}
-        rowOnClick={(row) => router.push(`/transactions/withdraw/view?id=${row?.node?.ID}`)}
+        rowOnClick={(row) =>
+          router.push(`${ROUTES.CBS_TRANS_WITHDRAW_DETAILS}?id=${row?.node?.ID}`)
+        }
         pagination={{
           total: data?.transaction?.listWithdraw?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listWithdraw?.pageInfo,

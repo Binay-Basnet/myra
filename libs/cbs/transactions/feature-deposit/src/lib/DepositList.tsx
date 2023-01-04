@@ -6,6 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -103,7 +104,7 @@ export const DepositList = () => {
                 {
                   title: t['transDetailViewDetail'],
                   onClick: (row) => {
-                    router.push(`/transactions/deposit/view?id=${row?.ID}`);
+                    router.push(`${ROUTES.CBS_TRANS_DEPOSIT_DETAILS}?id=${row?.ID}`);
                   },
                 },
               ]}
@@ -129,7 +130,7 @@ export const DepositList = () => {
         getRowId={(row) => String(row?.node?.ID)}
         isLoading={isFetching}
         columns={columns}
-        rowOnClick={(row) => router.push(`/transactions/deposit/view?id=${row?.node?.ID}`)}
+        rowOnClick={(row) => router.push(`${ROUTES.CBS_TRANS_DEPOSIT_DETAILS}?id=${row?.node?.ID}`)}
         pagination={{
           total: data?.transaction?.listDeposit?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listDeposit?.pageInfo,

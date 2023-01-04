@@ -37,7 +37,7 @@ import {
   useSetEndOfDayDataMutation,
   useSetPreferenceMutation,
 } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 enum GetRoleSlug {
@@ -461,7 +461,7 @@ export const TopLevelHeader = () => {
               color="white"
               borderRadius="br1"
               _hover={{ backgroundColor: 'secondary.900' }}
-              onClick={() => router.push('/settings/general/service-center')}
+              onClick={() => router.push(ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST)}
               ref={settingShortcut}
             />
 

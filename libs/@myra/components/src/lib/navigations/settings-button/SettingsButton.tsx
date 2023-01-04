@@ -15,12 +15,12 @@ export const SettingsButton = (props: SettingsButtonProps) => {
   return (
     <Button
       onClick={onClick}
-      variant="ghost"
-      color="#37474F"
+      variant="link"
+      color="gray.700"
       height="s48"
       width="full"
       justifyContent="start"
-      leftIcon={<Icon as={icon} size="md" color="primary.500" />}
+      leftIcon={<Icon as={icon} size="md" color="gray.700" />}
       whiteSpace="break-spaces"
       lineHeight={1.5}
       textAlign="left"

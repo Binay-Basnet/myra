@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import { HStack, Input } from '@chakra-ui/react';
 
@@ -46,8 +46,12 @@ export const AmountFilter = ({ placeholder, value, onChange }: IAmountFilterProp
   return (
     <Box display="flex" flexDir="column" gap="s16" color="gray.700">
       <Select
-        onChange={(newValue: { value: SetStateAction<AmountConditions> }) =>
-          setAmountCondition(newValue.value)
+        onChange={(newValue) =>
+          setAmountCondition(
+            newValue && 'value' in newValue
+              ? (newValue.value as AmountConditions)
+              : AmountConditions.amt_between
+          )
         }
         value={options.find((option) => option.value === amountCondition)}
         options={options}

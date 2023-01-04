@@ -57,7 +57,8 @@ export const useTransactionDetailHooks = () => {
       staleTime: 0,
       enabled:
         !!id &&
-        (router?.asPath?.includes('/agent/') || router?.asPath?.includes('/agent-transaction/')),
+        (router?.asPath?.includes('/market-representative/') ||
+          router?.asPath?.includes('/market-representative-transaction/')),
     }
   );
 

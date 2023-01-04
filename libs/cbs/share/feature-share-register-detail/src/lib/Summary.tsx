@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 
 import { Avatar, Box, Text } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
+
 import { useShareRegisterDetailHooks } from '../hooks/useShareRegisterDetailHooks';
 
 export const Summary = () => {
@@ -50,7 +52,7 @@ export const Summary = () => {
         _hover={{
           cursor: 'pointer',
         }}
-        onClick={() => router.push(`/members/details?id=${shareDetails?.member?.id}`)}
+        onClick={() => router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${shareDetails?.member?.id}`)}
       >
         <Avatar src={shareDetails?.member?.profilePicUrl as string} h="s32" w="s32" />
         <Text color="primary.500" fontWeight="Medium" fontSize="r1" lineHeight="150%">

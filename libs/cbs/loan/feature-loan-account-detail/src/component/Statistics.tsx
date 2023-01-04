@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash';
+
 import { Box, Grid, Text } from '@myra-ui';
 
 type StatsProps = {
@@ -20,7 +22,7 @@ export const Statistics = ({ statsData }: StatsProps) => (
           lineHeight="140%"
           color="neutralColorLight.Gray-70"
         >
-          Rs. {summary.value}
+          Rs. {!isEmpty(summary.value) ? summary.value : '0'}
         </Text>
       </Box>
     ))}

@@ -13,6 +13,7 @@ import {
   UserGender,
   useSetSettingsUserDataMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormBranchSelect,
   FormDatePicker,
@@ -83,9 +84,9 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
     );
     router.push(`/settings/users/super-admin/add`);
 
-    // newIdMutate({ idType: Id_Type.Myrauser }).then((res) => {
-    //   router.push(`/settings/users/super-admin/add/${res.newId}`);
-    // });
+    newIdMutate({ idType: Id_Type.Myrauser }).then((res) => {
+      router.push(`${ROUTES.SETTINGS_USERS_ADD}?id=${res.newId}`);
+    });
 
     handleModalClose();
   };

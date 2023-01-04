@@ -14,6 +14,7 @@ import {
   useSetDepositProductInactiveMutation,
   useSetProductActiveMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormTextArea } from '@coop/shared/form';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
@@ -38,7 +39,7 @@ export const SettingsDepositProducts = () => {
   const { t } = useTranslation();
 
   const onSubmit = () => {
-    router.push(`/settings/general/deposit-products/add`);
+    router.push(ROUTES.SETTINGS_GENERAL_SP_ADD);
   };
   return (
     <>
@@ -172,7 +173,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                   title: 'loanProductViewDetails',
                   onClick: () => {
                     router.push(
-                      `/${getUrl(router.pathname, 2)}/view?id=${props?.row?.original?.node?.id}`
+                      `/${getUrl(router.pathname, 3)}/details?id=${props?.row?.original?.node?.id}`
                     );
                   },
                 },
@@ -260,9 +261,9 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         getRowId={(row) => String(row?.node?.id)}
         rowOnClick={(row) => {
           if (router.pathname.includes('settings')) {
-            router.push(`/${getUrl(router.pathname, 3)}/view?id=${row?.node?.id}`);
+            router.push(`/${getUrl(router.pathname, 3)}/details?id=${row?.node?.id}`);
           } else {
-            router.push(`/${getUrl(router.pathname, 2)}/view?id=${row?.node?.id}`);
+            router.push(`/${getUrl(router.pathname, 3)}/details?id=${row?.node?.id}`);
           }
         }}
         pagination={{

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Box } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
@@ -10,7 +11,7 @@ import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMe
 const tabList = [
   {
     title: 'settingsShareGeneral',
-    to: '/settings/general/share',
+    to: ROUTES.SETTINGS_GENERAL_SHARE,
   },
   // {
   //   title: 'settingsShareBonus',
@@ -23,15 +24,15 @@ const tabList = [
   // },
   {
     title: 'settingsShareIssues',
-    to: '/settings/general/share/issues',
+    to: ROUTES.SETTINGS_GENERAL_SHARE_ISSUES,
   },
   {
     title: 'settingsShareReturn',
-    to: '/settings/general/share/return',
+    to: ROUTES.SETTINGS_GENERAL_SHARE_RETURNS,
   },
   {
     title: 'settingsShareTransfer',
-    to: '/settings/general/share/transfer',
+    to: ROUTES.SETTINGS_GENERAL_SHARE_TRANSFER,
   },
 ];
 

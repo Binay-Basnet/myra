@@ -11,6 +11,7 @@ import {
   TellerTransferType,
   useGetTellerTransactionListDataQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { TellerTransferApproveModal } from '../components';
@@ -135,7 +136,7 @@ export const TellerTransferList = () => {
         // tabItems={tabList}
         button
         buttonTitle="Teller Transfer"
-        onClick={() => router.push('/transfer/teller-transfer/add')}
+        onClick={() => router.push(ROUTES.CBS_TRANSFER_TELLER_ADD)}
       />
 
       <Table

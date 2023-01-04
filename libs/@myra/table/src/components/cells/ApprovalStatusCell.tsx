@@ -21,7 +21,6 @@ export const ApprovalStatusCell = ({ status, variant }: IApprovalStatusCellProps
         return 'yellow.500';
     }
   };
-
   return (
     <Box display="flex" alignItems="center" gap="s8">
       <Box w="s10" h="s10" rounded="100%" bg={getStatusColor(variant)} />

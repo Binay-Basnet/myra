@@ -1,7 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { DividendDistributionCondition, DividendTransferTreatment } from '@coop/cbs/data-access';
 import { Box, Container, FormFooter, FormHeader } from '@myra-ui';
+
+import { DividendDistributionCondition, DividendTransferTreatment } from '@coop/cbs/data-access';
 
 import {
   AccountTransfer,
@@ -31,7 +32,7 @@ export const NewShareDividendPosting = () => {
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title="Share Dividend Posting"
-            closeLink="/others/share-dividend-posting/list"
+            // closeLink="/others/share-dividend-posting/list"
           />
         </Box>
 

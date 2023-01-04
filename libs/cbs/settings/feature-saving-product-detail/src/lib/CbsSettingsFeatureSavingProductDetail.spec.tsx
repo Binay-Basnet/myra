@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import CbsSettingsFeatureSavingProductDetail from './CbsSettingsFeatureSavingProductDetail';
+import { CbsSettingsSavingsDetailPage } from './CbsSettingsSavingsDetailPage';
 
 describe('CbsSettingsFeatureSavingProductDetail', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<CbsSettingsFeatureSavingProductDetail />);
+    const { baseElement } = render(<CbsSettingsSavingsDetailPage />);
     expect(baseElement).toBeTruthy();
   });
 });

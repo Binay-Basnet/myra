@@ -5,7 +5,7 @@ import { getSchemaPath } from '@coop/shared/utils';
 import { RootState, useAppSelector } from '../redux/store';
 import { useRefreshToken } from '../redux/useRefreshToken';
 
-const privateAgent = axios.create();
+export const privateAgent = axios.create();
 
 // Request interceptors for API calls
 privateAgent.interceptors.request.use(

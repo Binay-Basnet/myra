@@ -31,7 +31,7 @@ import {
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
-import { localizedDate, localizedText } from '@coop/cbs/utils';
+import { localizedDate, localizedText, ROUTES } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAmountInput,
@@ -402,7 +402,7 @@ export const NewAccountTransfer = () => {
                       queryClient.invalidateQueries(['getAvailableSlipsList']);
                       queryClient.invalidateQueries(['getPastSlipsList']);
                     }
-                    router.push('/transactions/account-transfer/list');
+                    router.push(ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_LIST);
                   }}
                   promise={() => mutateAsync({ data: handleSubmit() })}
                   successCardProps={(response) => {

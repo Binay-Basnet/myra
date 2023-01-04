@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 
 import { Avatar, Box, Icon, Text } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
+
 type MemberInfoProps = {
   memberId?: string | undefined | null;
   memberCode?: string | undefined | null;
@@ -35,7 +37,7 @@ export const MemberInfo = ({
             _hover={{
               cursor: 'pointer',
             }}
-            onClick={() => router.push(`/members/details?id=${memberId}`)}
+            onClick={() => router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${memberId}`)}
           >
             <Avatar src={profilePic} size="md" name="test" />
             <Box display="flex" flexDir="column">

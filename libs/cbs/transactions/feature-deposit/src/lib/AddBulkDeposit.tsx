@@ -23,6 +23,7 @@ import {
   useGetIndividualMemberDetails,
   useSetBulkDepositDataMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormMemberSelect } from '@coop/shared/form';
 
 import { BulkDepositAccountsSummary, BulkDepositAccountsTable, Payment } from '../components';
@@ -152,7 +153,7 @@ export const AddBulkDeposit = () => {
       promise: mutateAsync({ data: filteredValues as BulkDepositInput }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getDepositListData']);
-        router.push('/transactions/deposit/list');
+        router.push(ROUTES.CBS_TRANS_DEPOSIT_LIST);
       },
     });
   };
@@ -165,9 +166,9 @@ export const AddBulkDeposit = () => {
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title="New Bulk Deposit"
-            closeLink="/transactions/deposit/list"
+            closeLink={ROUTES.CBS_TRANS_DEPOSIT_LIST}
             buttonLabel="Add Deposit"
-            buttonHandler={() => router.push('/transactions/deposit/add')}
+            buttonHandler={() => router.push(ROUTES.CBS_TRANS_DEPOSIT_ADD)}
           />
         </Box>
 

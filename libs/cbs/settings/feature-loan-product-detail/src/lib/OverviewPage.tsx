@@ -43,7 +43,7 @@ export const OverviewPage = () => {
         <SideBar />
       </Box>
 
-      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+      <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
         <Box display="flex" flexDirection="column" gap="s16">
           {detailData?.objState === ObjState.Inactive && <AlertEnable id={id as string} />}
           <Overview noOfAccounts={detailData?.noOfaccount} noOfMembers={detailData?.noOfMember} />

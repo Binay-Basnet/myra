@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Box } from '@myra-ui';
+
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
@@ -9,7 +11,7 @@ import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMe
 const tabList = [
   {
     title: 'acFeeAndCharges',
-    to: '/settings/general/alternative-channels/charges',
+    to: ROUTES.SETTINGS_GENERAL_ALTERNATIVE_CHANNELS,
   },
 ];
 

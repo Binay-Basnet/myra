@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Sidebar } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
+
 interface IMemberPageLayout {
   children: React.ReactNode;
 }
@@ -9,18 +11,18 @@ interface IMemberPageLayout {
 const shareColumns = [
   {
     title: 'shareBalance',
-    link: '/share/balance',
+    link: ROUTES.CBS_SHARE_BALANCE,
   },
   {
     title: 'shareRegister',
-    link: '/share/register',
+    link: ROUTES.CBS_SHARE_REGISTER,
   },
 ];
 
 const settingsColumn = [
   {
     label: 'shareLayoutShareSettings',
-    navigate: '/settings/general/share',
+    navigate: ROUTES.SETTINGS_GENERAL_SHARE,
   },
 ];
 
@@ -42,11 +44,11 @@ const reportColumn = [
 const addButtoncolumns = [
   {
     title: 'shareLayoutSharePurchase',
-    link: '/share/share-issue',
+    link: ROUTES.CBS_SHARE_ISSUE_ADD,
   },
   {
     title: 'shareLayoutShareReturn',
-    link: '/share/share-return',
+    link: ROUTES.CBS_SHARE_RETURN_ADD,
   },
 ];
 
@@ -54,7 +56,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => (
   <Sidebar
     applicationName="Core Banking System"
     featureName="Share"
-    featureLink="/share/balance"
+    featureLink={ROUTES.CBS_SHARE_BALANCE}
     mainButtonLabel="New"
     tabColumns={shareColumns}
     addButtonList={addButtoncolumns}

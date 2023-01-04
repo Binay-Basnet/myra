@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { PageHeader } from '@myra-ui';
 
 import { LoanObjState, ObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { LoanTable } from '../components/LoanTable';
@@ -36,7 +37,7 @@ export const LoanList = () => {
       />
       <LoanTable
         data={data}
-        viewLink="/loan/applications/view"
+        viewLink={ROUTES.CBS_LOAN_APPLICATION_DETAILS}
         isLoading={isFetching}
         type={(router.query['objState'] ?? ObjState.Approved) as LoanObjState}
       />
