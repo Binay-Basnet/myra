@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
-import { Box, GridItem } from '@myra-ui';
+import { Box, Button, GridItem } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
@@ -36,6 +37,8 @@ type Filter = {
 };
 
 export const SuspiousTransactionReport = () => {
+  const router = useRouter();
+
   const [filters, setFilters] = useState<Filter | null>(null);
 
   const memberIds =
@@ -107,7 +110,18 @@ export const SuspiousTransactionReport = () => {
             columns={[
               {
                 header: 'Transaction Id',
-                accessorKey: 'id',
+                cell: (props) => (
+                  <Button
+                    variant="link"
+                    onClick={() =>
+                      router.push(
+                        `/reports/cbs/savings/suspicious-transactions/details?id=${props?.row?.original?.id}`
+                      )
+                    }
+                  >
+                    {props?.row?.original?.id}
+                  </Button>
+                ),
               },
               {
                 header: 'Transaction Date',

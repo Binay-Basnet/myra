@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { Text as ChakraText, TextProps as ChakraProps } from '@chakra-ui/react';
 
 type Variant =
@@ -92,7 +93,7 @@ const defaultConfig = {
   default: {},
 };
 
-export const Text = (props: TextProps) => {
+export const Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
   const { children, variant, ...rest } = props;
 
   if (variant === 'link') {
@@ -112,10 +113,10 @@ export const Text = (props: TextProps) => {
   }
 
   return (
-    <ChakraText {...rest} {...defaultConfig[variant || 'default']}>
+    <ChakraText {...rest} {...defaultConfig[variant || 'default']} ref={ref}>
       {children}
     </ChakraText>
   );
-};
+});
 
 export default Text;
