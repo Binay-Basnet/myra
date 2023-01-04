@@ -40,7 +40,7 @@ export const WithdrawList = () => {
               router.push(`${ROUTES.CBS_TRANS_WITHDRAW_DETAILS}?id=${props?.row?.original?.id}`)
             }
           >
-            {props?.row?.original?.id}
+            {props?.getValue() as string}
           </Button>
         ),
       },

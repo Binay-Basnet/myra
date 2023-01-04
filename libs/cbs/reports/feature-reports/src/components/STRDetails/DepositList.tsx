@@ -37,7 +37,7 @@ export const DepositList = () => {
           <Button
             variant="link"
             onClick={() =>
-              router.push(`${ROUTES.CBS_TRANS_DEPOSIT_DETAILS}?id=${props.getValue() as string}`)
+              router.push(`${ROUTES.CBS_TRANS_DEPOSIT_DETAILS}?id=${props?.row?.original?.id}`)
             }
           >
             {props.getValue() as string}
