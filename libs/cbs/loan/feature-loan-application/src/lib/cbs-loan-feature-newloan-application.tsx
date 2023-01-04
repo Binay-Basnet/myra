@@ -27,6 +27,7 @@ import {
   useGetNewIdMutation,
   useSendLoanApplicationForApprovalMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAmountInput,
   FormInput,
@@ -174,7 +175,7 @@ export const NewLoanApplication = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries(['getLoanList']);
-        router.push('/loan/applications?objState=SUBMITTED');
+        router.push(`${ROUTES.CBS_LOAN_APPLICATIONS_LIST}?objState=SUBMITTED`);
       },
     });
   }, [id]);

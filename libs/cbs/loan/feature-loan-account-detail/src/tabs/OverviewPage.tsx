@@ -1,5 +1,7 @@
 import { DetailPageQuickLinks } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
+
 import {
   GeneralInfoCard,
   RecentTransactions,
@@ -16,7 +18,7 @@ export const OverviewPage = () => {
   const links = [
     {
       title: 'Loan Repayment',
-      link: `/loan/repayments/add`,
+      link: ROUTES.CBS_LOAN_REPAYMENTS_ADD,
     },
   ];
 

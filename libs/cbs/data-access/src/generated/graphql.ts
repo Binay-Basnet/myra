@@ -15010,6 +15010,13 @@ export type ReadyBranchEodMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type ReadyBranchEodMutation = { transaction: { readyBranchEOD?: Array<string | null> | null } };
 
+export type SetStrTransactionActionMutationVariables = Exact<{
+  data: StrTransactionActionInput;
+}>;
+
+
+export type SetStrTransactionActionMutation = { transaction: { strTransactionAction?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
@@ -16608,6 +16615,13 @@ export type GetAllTransactionsDetailQueryVariables = Exact<{
 
 
 export type GetAllTransactionsDetailQuery = { transaction: { viewTransactionDetail?: { data?: { id: string, transactionDate?: Record<"local"|"en"|"np",string> | null, txnType?: AllTransactionType | null, transactionMode?: string | null, amount?: string | null, branch?: string | null, status?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, serviceCenter?: string | null, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+
+export type GetStrTransactionDetailQueryVariables = Exact<{
+  transactionId: Scalars['ID'];
+}>;
+
+
+export type GetStrTransactionDetailQuery = { transaction: { strTransactionDetail?: { data?: { memberType?: KymMemberTypesEnum | null, strStatus?: boolean | null, strReason?: string | null, strTopology?: string | null, bio?: { memberName?: string | null, profilePic?: string | null, memberCode?: string | null, memberJoined?: Record<"local"|"en"|"np",string> | null, dob?: Record<"local"|"en"|"np",string> | null, gender?: Record<"local"|"en"|"np",string> | null, mobile?: string | null, email?: string | null, currentAddress?: Record<"local"|"en"|"np",string> | null, permanentAddress?: Record<"local"|"en"|"np",string> | null, maritalStatus?: Record<"local"|"en"|"np",string> | null, profession?: string | null, nationality?: string | null, familyMembers?: Array<{ relationship?: string | null, fullName?: string | null, dob?: Record<"local"|"en"|"np",string> | null } | null> | null, identificationDetail?: Array<{ id: string, idNo?: string | null, idType: string, place?: Record<"local"|"en"|"np",string> | null, date?: Record<"local"|"en"|"np",string> | null, additionalFields?: Array<{ id?: string | null, fieldId?: string | null, value?: Record<"local"|"en"|"np",string> | null } | null> | null } | null> | null, docs?: Array<{ key?: string | null, value?: string | null } | null> | null } | null, strAccountDetails?: { id?: string | null, natureOfAccount?: string | null, natureOfOwnership?: string | null, nameOfDirector?: string | null, accountOpenDate?: Record<"local"|"en"|"np",string> | null } | null, savingAccounts?: Array<{ id: string, accountName?: string | null, balance?: string | null, product: { nature: NatureOfDepositProduct } } | null> | null, transactionDetails?: Array<{ accountNo?: string | null, year?: string | null, drTransactionNo?: string | null, drTransactionAmount?: string | null, crTransactionNo?: string | null, crTransactionAmount?: string | null, closingBalance?: string | null } | null> | null, deposits?: Array<{ id?: string | null, date?: Record<"local"|"en"|"np",string> | null, transactionCode?: string | null, depositer?: string | null, amount?: string | null, remarks?: string | null } | null> | null, withdraw?: Array<{ id?: string | null, date?: Record<"local"|"en"|"np",string> | null, transactionCode?: string | null, depositer?: string | null, amount?: string | null, remarks?: string | null } | null> | null, loanAccount?: Array<{ id: string, LoanAccountName?: string | null, totalSanctionedAmount?: string | null, remainingBalance?: string | null, remainingInterestTillDate?: string | null, product: { id: string, productName: string } } | null> | null } | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
 
 export type GetTransferDetailQueryVariables = Exact<{
   transferID: Scalars['ID'];
@@ -20046,6 +20060,27 @@ export const useReadyBranchEodMutation = <
     useMutation<ReadyBranchEodMutation, TError, ReadyBranchEodMutationVariables, TContext>(
       ['readyBranchEOD'],
       useAxios<ReadyBranchEodMutation, ReadyBranchEodMutationVariables>(ReadyBranchEodDocument),
+      options
+    );
+export const SetStrTransactionActionDocument = `
+    mutation setSTRTransactionAction($data: StrTransactionActionInput!) {
+  transaction {
+    strTransactionAction(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetStrTransactionActionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetStrTransactionActionMutation, TError, SetStrTransactionActionMutationVariables, TContext>) =>
+    useMutation<SetStrTransactionActionMutation, TError, SetStrTransactionActionMutationVariables, TContext>(
+      ['setSTRTransactionAction'],
+      useAxios<SetStrTransactionActionMutation, SetStrTransactionActionMutationVariables>(SetStrTransactionActionDocument),
       options
     );
 export const GetAccountMemberListDocument = `
@@ -30928,6 +30963,122 @@ export const useGetAllTransactionsDetailQuery = <
     useQuery<GetAllTransactionsDetailQuery, TError, TData>(
       ['getAllTransactionsDetail', variables],
       useAxios<GetAllTransactionsDetailQuery, GetAllTransactionsDetailQueryVariables>(GetAllTransactionsDetailDocument).bind(null, variables),
+      options
+    );
+export const GetStrTransactionDetailDocument = `
+    query getSTRTransactionDetail($transactionId: ID!) {
+  transaction {
+    strTransactionDetail(transactionId: $transactionId) {
+      data {
+        memberType
+        strStatus
+        bio {
+          memberName
+          profilePic
+          memberCode
+          memberJoined
+          dob
+          gender
+          mobile
+          email
+          currentAddress
+          permanentAddress
+          maritalStatus
+          profession
+          nationality
+          familyMembers {
+            relationship
+            fullName
+            dob
+          }
+          identificationDetail {
+            id
+            idNo
+            idType
+            place
+            date
+            additionalFields {
+              id
+              fieldId
+              value
+            }
+          }
+          docs {
+            key
+            value
+          }
+        }
+        strAccountDetails {
+          id
+          natureOfAccount
+          natureOfOwnership
+          nameOfDirector
+          accountOpenDate
+        }
+        savingAccounts {
+          id
+          accountName
+          product {
+            nature
+          }
+          balance
+        }
+        transactionDetails {
+          accountNo
+          year
+          drTransactionNo
+          drTransactionAmount
+          crTransactionNo
+          crTransactionAmount
+          closingBalance
+        }
+        deposits {
+          id
+          date
+          transactionCode
+          depositer
+          amount
+          remarks
+        }
+        withdraw {
+          id
+          date
+          transactionCode
+          depositer
+          amount
+          remarks
+        }
+        loanAccount {
+          id
+          LoanAccountName
+          product {
+            id
+            productName
+          }
+          totalSanctionedAmount
+          remainingBalance
+          remainingInterestTillDate
+        }
+        strReason
+        strTopology
+      }
+      error {
+        ...QueryError
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetStrTransactionDetailQuery = <
+      TData = GetStrTransactionDetailQuery,
+      TError = unknown
+    >(
+      variables: GetStrTransactionDetailQueryVariables,
+      options?: UseQueryOptions<GetStrTransactionDetailQuery, TError, TData>
+    ) =>
+    useQuery<GetStrTransactionDetailQuery, TError, TData>(
+      ['getSTRTransactionDetail', variables],
+      useAxios<GetStrTransactionDetailQuery, GetStrTransactionDetailQueryVariables>(GetStrTransactionDetailDocument).bind(null, variables),
       options
     );
 export const GetTransferDetailDocument = `

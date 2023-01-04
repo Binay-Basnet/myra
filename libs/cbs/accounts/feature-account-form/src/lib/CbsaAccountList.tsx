@@ -5,6 +5,7 @@ import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { Filter_Mode, ObjState, useGetAccountTableListMinimalQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const ACCOUNT_TAB_ITEMS = [
@@ -99,11 +100,12 @@ export const CBSAccountList = () => {
               items={[
                 {
                   title: 'View Details',
-                  onClick: (row) => router.push(`/savings/details/${row['id']}`),
+                  onClick: (row) =>
+                    router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${row['id']}`),
                 },
                 {
                   title: 'depositProductEdit',
-                  onClick: (row) => router.push(`/savings/account-open/edit/${row['id']}`),
+                  onClick: (row) => router.push(`${ROUTES.CBS_ACCOUNT_OPEN_EDIT}?id=${row['id']}`),
                 },
               ]}
               node={props?.row?.original?.node}
@@ -113,7 +115,8 @@ export const CBSAccountList = () => {
               items={[
                 {
                   title: 'View Details',
-                  onClick: (row) => router.push(`/savings/details/${row['id']}`),
+                  onClick: (row) =>
+                    router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${row['id']}`),
                 },
               ]}
               node={props?.row?.original?.node}
@@ -141,7 +144,7 @@ export const CBSAccountList = () => {
         data={rowData}
         columns={columns}
         rowOnClick={(row) => {
-          router.push(`/savings/details/${row?.node?.id}`);
+          router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${row?.node?.id}`);
         }}
         pagination={{
           total: data?.account?.list?.totalCount ?? 'Many',

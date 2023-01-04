@@ -142,3 +142,14 @@ mutation readyBranchEOD {
     readyBranchEOD
   }
 }
+
+mutation setSTRTransactionAction($data: StrTransactionActionInput!) {
+  transaction {
+    strTransactionAction(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

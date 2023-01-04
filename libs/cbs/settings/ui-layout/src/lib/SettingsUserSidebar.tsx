@@ -1,5 +1,7 @@
 import { Box, Divider, Text } from '@chakra-ui/react';
 
+import { ROUTES } from '@coop/cbs/utils';
+
 import { VerticalSideBarForSettings } from '../components/VerticalSideBarForSettings';
 
 type TabList = {
@@ -10,7 +12,7 @@ type TabList = {
 const tabList: TabList[] = [
   {
     title: 'settingsUserSidebarSuperAdmin',
-    to: '/settings/users/super-admin',
+    to: ROUTES.SETTINGS_USERS_LIST,
   },
   // {
   //   title: 'settingsUserSidebarBranchManager',

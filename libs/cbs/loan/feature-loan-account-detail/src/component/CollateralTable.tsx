@@ -109,7 +109,7 @@ export const CollateralTable = () => {
         <Button
           variant="ghost"
           onClick={() =>
-            router.push(`/savings/details/${accountDetails?.accountId}?tab=transactions`)
+            router.push(`/cbs/savings/details/${accountDetails?.accountId}?tab=transactions`)
           }
         >
           View all transactions

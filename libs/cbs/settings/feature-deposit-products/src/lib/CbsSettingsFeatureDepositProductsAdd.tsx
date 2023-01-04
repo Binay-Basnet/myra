@@ -18,6 +18,7 @@ import {
   useGetNewIdMutation,
   useSetDepositProductMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -304,7 +305,7 @@ export const SettingsDepositProductsAdd = () => {
         success: 'New Product Added',
         loading: 'Adding New Deposit',
       },
-      onSuccess: () => router.push('/settings/general/deposit-products'),
+      onSuccess: () => router.push(ROUTES.SETTINGS_GENERAL_SP_LIST),
       promise: mutateAsync({ id, data: updatedData as DepositProductInput }),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {

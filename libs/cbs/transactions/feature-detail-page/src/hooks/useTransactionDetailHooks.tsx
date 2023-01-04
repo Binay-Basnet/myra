@@ -57,7 +57,8 @@ export const useTransactionDetailHooks = () => {
       staleTime: 0,
       enabled:
         !!id &&
-        (router?.asPath?.includes('/agent/') || router?.asPath?.includes('/agent-transaction/')),
+        (router?.asPath?.includes('/market-representative/') ||
+          router?.asPath?.includes('/market-representative-transaction/')),
     }
   );
 
@@ -66,7 +67,12 @@ export const useTransactionDetailHooks = () => {
   // loan repayment detail
   const { data: loanRepaymentDetail } = useLoanRepaymentDetailQuery(
     { paymentId: id as string },
-    { staleTime: 0, enabled: !!id && router?.asPath?.includes('/repayments/') }
+    {
+      staleTime: 0,
+      enabled:
+        !!id &&
+        (router?.asPath?.includes('/loan-payment/') || router?.asPath?.includes('/repayments/')),
+    }
   );
 
   const { data: allTransactionsDetails } = useGetAllTransactionsDetailQuery(

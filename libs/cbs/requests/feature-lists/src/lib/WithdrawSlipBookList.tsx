@@ -11,6 +11,7 @@ import {
   RequestType,
   useGetChequeBookRequestsQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
@@ -98,7 +99,7 @@ export const WithdrawSlipBookList = () => {
                 {
                   title: 'Print',
                   onClick: (row) => {
-                    router.push(`/withdraw/withdraw-slip-book/print/${row?.id}`);
+                    router.push(`${ROUTES.CBS_WITHDRAW_SLIP_BOOK_PRINT}?id=${row?.id}`);
                   },
                 },
               ]}

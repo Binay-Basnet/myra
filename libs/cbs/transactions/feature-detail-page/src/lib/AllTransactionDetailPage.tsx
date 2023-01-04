@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Box, Icon, IconButton, PathBar } from '@myra-ui';
 
-import { AllTransactionType, useGetAllTransactionsDetailQuery } from '@coop/cbs/data-access';
+import { useGetAllTransactionsDetailQuery } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 import { GlTransaction } from '../component';
@@ -11,10 +11,10 @@ import { GlTransaction } from '../component';
 export const AllTransactionDetailPage = () => {
   const router = useRouter();
 
-  const { id, txnType } = router.query;
+  const { id } = router.query;
 
   const { data: allTransactionsDetails } = useGetAllTransactionsDetailQuery(
-    { id: id as string, txnType: txnType as AllTransactionType },
+    { id: id as string },
     { staleTime: 0, enabled: !!id && router?.asPath?.includes('/all-transactions/') }
   );
   const allTransactionsData = allTransactionsDetails?.transaction?.viewTransactionDetail?.data;

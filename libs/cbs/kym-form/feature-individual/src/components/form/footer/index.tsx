@@ -10,6 +10,7 @@ import {
   useAppSelector,
   useGetKymFormStatusQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KymIndividualFooter = () => {
@@ -36,7 +37,7 @@ export const KymIndividualFooter = () => {
         </Box>
       }
       draftButton={
-        <Button type="submit" variant="ghost" onClick={() => router.push('/members/list')}>
+        <Button type="submit" variant="ghost" onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}>
           <Icon as={BiSave} color="primary.500" />
           <Text alignSelf="center" color="primary.500" fontWeight="Medium" fontSize="s2" ml="5px">
             {t['saveDraft']}
@@ -59,7 +60,7 @@ export const KymIndividualFooter = () => {
         if (response) {
           dispatch(setIndividualHasPressedNext(true));
           if (!sectionStatus) {
-            router.push(`/members/translation/${router.query['id']}?type=individual`);
+            router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}?type=individual`);
           } else {
             toast({
               id: 'validation-error',

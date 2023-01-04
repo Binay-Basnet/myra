@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Sidebar } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 interface ITransactionsSidebarLayoutProps {
@@ -11,49 +12,49 @@ interface ITransactionsSidebarLayoutProps {
 const transactionSidebarColumns = [
   {
     title: 'transactionsSidebarDeposit',
-    link: '/transactions/deposit/list',
+    link: ROUTES.CBS_TRANS_DEPOSIT_LIST,
     name: 'deposit',
-    addLink: '/transactions/deposit/add',
+    addLink: ROUTES.CBS_TRANS_DEPOSIT_ADD,
   },
   {
     title: 'transactionsSidebarWithdraw',
-    link: '/transactions/withdraw/list',
+    link: ROUTES.CBS_TRANS_WITHDRAW_LIST,
     name: 'withdraw',
-    addLink: '/transactions/withdraw/add',
+    addLink: ROUTES.CBS_TRANS_WITHDRAW_ADD,
   },
   {
     title: 'transactionsSidebarAccountTransfer',
-    link: '/transactions/account-transfer/list',
+    link: ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_LIST,
     name: 'account-transfer',
-    addLink: '/transactions/account-transfer/add',
+    addLink: ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_ADD,
   },
   {
     title: 'transactionsSidebarLoanPayment',
-    link: '/transactions/loan-payment/list',
+    link: ROUTES.CBS_TRANS_LOAN_PAYMENT_LIST,
     name: 'loan-payment',
-    addLink: '/transactions/loan-payment/add',
+    addLink: ROUTES.CBS_TRANS_LOAN_PAYMENT_ADD,
   },
   {
     title: 'transactionsSidebarAgentTransaction',
-    link: '/transactions/market-representative-transaction/list',
+    link: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_LIST,
     name: 'agent-transaction',
-    addLink: '/transactions/market-representative-transaction/add',
+    addLink: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
   },
   {
     title: 'transactionsSidebarAgentList',
-    link: '/transactions/market-representative/list',
+    link: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_LIST,
     name: 'agent-list',
-    // addLink: '/transactions/agent/add',
+    // addLink: '/cbs/transactions/agent/add',
   },
   {
     title: 'transactionsSidebarJournalVoucher',
-    link: '/transactions/journal-vouchers/list',
+    link: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_LIST,
     name: 'journal-voucher',
-    addLink: '/transactions/journal-vouchers/add',
+    addLink: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD,
   },
   {
     title: 'transactionsSidebarAllTransactions',
-    link: '/transactions/all-transactions/list',
+    link: ROUTES.CBS_TRANS_ALL_TRANSACTION_LIST,
     name: 'all-transactions',
   },
 ];
@@ -61,31 +62,31 @@ const transactionSidebarColumns = [
 const dropdownButtons = [
   {
     title: 'transactionSidebarNewDeposit',
-    link: '/transactions/deposit/add',
+    link: ROUTES.CBS_TRANS_DEPOSIT_ADD,
   },
   {
     title: 'transactionSidebarNewWithdraw',
-    link: '/transactions/withdraw/add',
+    link: ROUTES.CBS_TRANS_WITHDRAW_ADD,
   },
   {
     title: 'transactionSidebarNewAccountTransfer',
-    link: '/transactions/account-transfer/add',
+    link: ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_ADD,
   },
   {
     title: 'transactionSidebarNewLoanPayment',
-    link: '/loan/repayments/add',
+    link: ROUTES.CBS_TRANS_LOAN_PAYMENT_ADD,
   },
   // {
   //   title: 'New Agent',
-  //   link: '/transactions/agent/add',
+  //   link: '/cbs/transactions/agent/add',
   // },
   {
     title: 'transactionSidebarNewMarketRepresentativeTransaction',
-    link: '/transactions/market-representative-transaction/add',
+    link: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
   },
   {
     title: 'New Journal Voucher',
-    link: '/transactions/journal-vouchers/add',
+    link: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD,
   },
 ];
 
@@ -96,7 +97,7 @@ const reportColumn = [
   },
   // {
   //   label: 'transactionLayoutIncomeStatement',
-  //   navigate: '/settings/general/members/kym-individual',
+  //   navigate: '/cbs/settings/general/members/kym-individual',
   // },
   {
     label: 'transactionLayoutCashFlowStament',
@@ -104,15 +105,15 @@ const reportColumn = [
   },
   // {
   //   label: 'transactionLayoutChangeOfEquity',
-  //   navigate: '/settings/general/members/kym-individual',
+  //   navigate: '/cbs/settings/general/members/kym-individual',
   // },
   // {
   //   label: 'transactionLayoutAppropriationOfProfit',
-  //   navigate: '/settings/general/members/kym-individual',
+  //   navigate: '/cbs/settings/general/members/kym-individual',
   // },
   // {
   //   label: 'transactionLayoutBankGLBalance',
-  //   navigate: '/settings/general/members/kym-individual',
+  //   navigate: '/cbs/settings/general/members/kym-individual',
   // },
   {
     label: 'transactionLayoutBankGLStatement',
@@ -127,7 +128,7 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
     <Sidebar
       applicationName={t['corebankingSystems']}
       featureName={t['transactions']}
-      featureLink="/transactions/deposit/list"
+      featureLink={ROUTES.CBS_TRANS_DEPOSIT_LIST}
       mainButtonLabel={t['transactionSidebarNewTransaction']}
       tabColumns={transactionSidebarColumns}
       addButtonList={dropdownButtons}

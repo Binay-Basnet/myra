@@ -25,6 +25,7 @@ import {
   useGetKymCooperativeOverallFormStatusQuery,
 } from '@coop/cbs/data-access';
 import { useDispatch } from 'react-redux';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   KymAccountHolderDeclaration,
   KymCoopAccountOperatorDetail,
@@ -157,7 +158,11 @@ export const KYMCooperativePage = () => {
               </Box>
             }
             draftButton={
-              <Button type="submit" variant="ghost" onClick={() => router.push('/members/list')}>
+              <Button
+                type="submit"
+                variant="ghost"
+                onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}
+              >
                 <Icon as={BiSave} color="primary.500" />
                 <Text
                   alignSelf="center"
@@ -207,7 +212,7 @@ export const KYMCooperativePage = () => {
               if (response) {
                 dispatch(setCooperativeHasPressedNext(true));
                 if (!basicErrors) {
-                  router.push(`/members/translation/${router.query['id']}`);
+                  router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}`);
                 } else {
                   toast({
                     id: 'validation-error',

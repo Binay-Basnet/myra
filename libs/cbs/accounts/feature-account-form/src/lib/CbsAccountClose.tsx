@@ -32,6 +32,7 @@ import {
   useGetIndividualMemberDetails,
   useSetAccountCloseDataMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAmountInput,
@@ -291,7 +292,7 @@ export const CbsAccountClose = () => {
                     router.push(String(redirectPath));
                     queryClient.invalidateQueries(['getAccountInactiveCheck']);
                   } else {
-                    router.push('/savings/account-close');
+                    router.push(ROUTES.CBS_ACCOUNT_CLOSE_LIST);
                   }
                 }
               }

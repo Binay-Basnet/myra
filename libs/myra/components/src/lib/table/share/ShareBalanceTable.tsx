@@ -7,6 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 import { Filter_Mode, useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { ROUTES } from '@coop/cbs/utils';
 
 export const ShareBalanceTable = () => {
   const router = useRouter();
@@ -86,7 +87,9 @@ export const ShareBalanceTable = () => {
         isLoading={isFetching}
         data={rowData ?? []}
         columns={columns}
-        rowOnClick={(row) => router.push(`/members/details?id=${row?.node?.member?.id}&tab=share`)}
+        rowOnClick={(row) =>
+          router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${row?.node?.member?.id}&tab=share`)
+        }
         pagination={{
           total: data?.share?.balance?.totalCount as number,
           pageInfo: data?.share?.balance?.pageInfo,

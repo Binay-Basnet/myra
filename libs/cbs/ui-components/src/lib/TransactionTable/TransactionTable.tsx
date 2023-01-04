@@ -23,8 +23,8 @@ export const TransactionTable = ({ data, hasIndex = false }: ITransactionTablePr
       })) ?? []
     : data;
 
-  const columns = useMemo<Column<CustomTransactionItem>[]>(
-    () => [
+  const columns = useMemo<Column<CustomTransactionItem>[]>(() => {
+    let tempColumns: Column<CustomTransactionItem>[] = [
       {
         header: 'Date',
         accessorKey: 'date',
@@ -84,20 +84,21 @@ export const TransactionTable = ({ data, hasIndex = false }: ITransactionTablePr
           width: '33%',
         },
       },
-    ],
-    []
-  );
+    ];
 
-  const transactionColumns: Column<CustomTransactionItem>[] = hasIndex
-    ? [
+    if (hasIndex) {
+      tempColumns = [
         {
           header: 'SN',
           accessorKey: 'index',
           cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
         },
-        ...columns,
-      ]
-    : columns;
+        ...tempColumns,
+      ];
+    }
 
-  return <Table isDetailPageTable isStatic data={transactionList} columns={transactionColumns} />;
+    return tempColumns;
+  }, [hasIndex]);
+
+  return <Table isDetailPageTable isStatic data={transactionList} columns={columns} />;
 };

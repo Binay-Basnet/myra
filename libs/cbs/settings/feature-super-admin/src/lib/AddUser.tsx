@@ -27,6 +27,7 @@ import {
   useSetSettingsUserDataMutation,
 } from '@coop/cbs/data-access';
 import { GroupContainer, InputGroupContainer } from '@coop/cbs/settings/ui-containers';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAddress,
   FormBranchSelect,
@@ -163,7 +164,7 @@ export const AddUser = () => {
         success: router.asPath.includes('edit') ? 'User Updated' : 'New User Created',
         loading: router.asPath.includes('edit') ? 'Updating User' : 'Creating New User',
       },
-      onSuccess: () => router.push('/settings/users/super-admin'),
+      onSuccess: () => router.push(ROUTES.SETTINGS_USERS_LIST),
       promise: mutateAsync({ id: id as string, data: formValues }),
     });
   };
@@ -217,7 +218,7 @@ export const AddUser = () => {
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={isEdit ? 'Edit User' : 'Add User'}
-            closeLink="/settings/users/super-admin"
+            closeLink={ROUTES.SETTINGS_USERS_LIST}
           />
         </Box>
 

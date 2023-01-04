@@ -5,6 +5,7 @@ import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -112,7 +113,7 @@ export const VaultTransferList = () => {
         // tabItems={tabList}
         button
         buttonTitle="Vault Transfer"
-        onClick={() => router.push('/transfer/vault-transfer/add')}
+        onClick={() => router.push(ROUTES.CBS_TRANSFER_VAULT_ADD)}
       />
 
       <Table

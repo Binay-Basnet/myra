@@ -5,6 +5,7 @@ import { Button, DetailsCard } from '@myra-ui';
 
 import { TransactionTable } from '@coop/cbs/components';
 import { EbankingTransaction, useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const RecentTransactions = () => {
@@ -35,8 +36,9 @@ export const RecentTransactions = () => {
       hasTable
       leftBtn={
         <Button
-          variant="link"
-          onClick={() => router.push(`/members/details?id=${id}&tab=transactions`)}
+          variant="ghost"
+          size="md"
+          onClick={() => router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${id}&tab=transactions`)}
         >
           View All Transactions
         </Button>

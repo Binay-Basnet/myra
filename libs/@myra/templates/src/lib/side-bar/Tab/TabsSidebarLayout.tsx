@@ -15,7 +15,7 @@ const TabCol = chakra(Tab, {
     maxHeight: '56px',
     fontSize: '14px',
     fontWeight: '500',
-
+    lineHeight: '1.25',
     width: '100%',
     display: 'flex',
     justifyContent: 'flex-start',

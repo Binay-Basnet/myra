@@ -13,6 +13,7 @@ import {
   useAppSelector,
   useGetCoopUnionSectionStatusQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KYMCoopUnionFooter = () => {
@@ -49,7 +50,11 @@ export const KYMCoopUnionFooter = () => {
             </Box>
           }
           draftButton={
-            <Button type="submit" variant="ghost" onClick={() => router.push('/members/list')}>
+            <Button
+              type="submit"
+              variant="ghost"
+              onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}
+            >
               <Icon as={BiSave} color="primary.500" />
               <Text
                 alignSelf="center"
@@ -120,7 +125,7 @@ export const KYMCoopUnionFooter = () => {
                 !sectionStatus.bodDetails?.some((bod) => !!bod.errors) &&
                 !sectionStatus.accountOperatorDetails?.some((bod) => !!bod.errors)
               ) {
-                router.push(`/members/translation/${router.query['id']}`);
+                router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}`);
               } else {
                 toast({
                   id: 'validation-error',

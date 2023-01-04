@@ -10,6 +10,7 @@ import {
   useAccountDetails,
   useGetAccountTransactionListsQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { TabHeader } from '../details';
@@ -46,7 +47,11 @@ export const Transactions = () => {
             size="md"
             justifyContent="start"
             leftIcon={<AddIcon />}
-            onClick={() => router.push('/transactions/deposit/add')}
+            onClick={() =>
+              router.push(
+                `${ROUTES.CBS_TRANS_DEPOSIT_ADD}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`
+              )
+            }
           >
             New Deposit
           </Button>

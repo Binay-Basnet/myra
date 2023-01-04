@@ -4,6 +4,7 @@ import { useDisclosure } from '@chakra-ui/react';
 
 import { AccountQRModal, Box, Divider, Icon, IconButton, Text } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { copyToClipboard } from '@coop/shared/utils';
 
 interface IAccountCardProps {
@@ -43,7 +44,9 @@ export const LoanAccountCard = ({
                   fontSize="r1"
                   color="primary.500"
                   cursor="pointer"
-                  onClick={() => router.push(`/loan/accounts/view?id=${accountNumber}`)}
+                  onClick={() =>
+                    router.push(`${ROUTES.CBS_LOAN_APPLICATION_DETAILS}?id=${accountNumber}`)
+                  }
                 >
                   {accountName}
                 </Text>

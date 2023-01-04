@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
-import { useGetAgentDetailDataQuery } from '@coop/cbs/data-access';
 import { Avatar, Divider, Icon, toast } from '@myra-ui';
+
+import { useGetAgentDetailDataQuery } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {
@@ -77,7 +78,7 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
         <Box display="flex" gap="s16">
           <Avatar
             name={agentDetailQueryData?.transaction?.agentDetail?.data?.name ?? 'Agent'}
-            size="lg"
+            size="md"
             src={agentDetailQueryData?.transaction?.agentDetail?.data?.profilePicUrl ?? ''}
           />
 

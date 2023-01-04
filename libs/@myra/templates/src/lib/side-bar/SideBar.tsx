@@ -75,6 +75,17 @@ export const Sidebar = ({
           '&::-webkit-scrollbar': {
             display: 'none',
           },
+          '&:hover::-webkit-scrollbar': {
+            width: '8px',
+            height: '8px',
+            backgroundColor: '#f5f5f5',
+
+            display: 'block',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'gray.300',
+            borderRadius: '8px',
+          },
         }}
         width="260px"
         height="calc(100vh - 110px)"

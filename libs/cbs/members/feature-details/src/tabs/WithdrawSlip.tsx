@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 
 import { Box, Button, Icon, Text } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
+
 import { ChequeTable } from '../components';
 
 export const WithdrawSlip = () => {
@@ -15,7 +17,7 @@ export const WithdrawSlip = () => {
         </Text>
         <Button
           leftIcon={<Icon as={IoAdd} />}
-          onClick={() => router.push('/withdraw/withdraw-slip-book/add')}
+          onClick={() => router.push(ROUTES.CBS_WITHDRAW_SLIP_BOOK_ADD)}
         >
           New Withdraw Slip
         </Button>

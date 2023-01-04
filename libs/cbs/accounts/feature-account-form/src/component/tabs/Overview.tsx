@@ -1,6 +1,7 @@
 import { DetailPageQuickLinks } from '@myra-ui';
 
 import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 
 import {
   AccountStatistics,
@@ -33,15 +34,15 @@ export const Overview = () => {
   const links = [
     {
       title: 'New Deposit',
-      link: `/transactions/deposit/add?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`,
+      link: `${ROUTES.CBS_TRANS_DEPOSIT_ADD}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`,
     },
     {
       title: 'New Withdraw',
-      link: `/transactions/withdraw/add?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`,
+      link: `${ROUTES.CBS_TRANS_WITHDRAW_ADD}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`,
     },
     {
       title: 'New Account Transfer',
-      link: `/transactions/account-transfer/add?memberId=${accountDetails?.member?.id}&srcAccountId=${accountDetails?.accountId}`,
+      link: `${ROUTES.CBS_ACCOUNT_TRANSFER_ADD}?memberId=${accountDetails?.member?.id}&srcAccountId=${accountDetails?.accountId}`,
     },
   ];
 
