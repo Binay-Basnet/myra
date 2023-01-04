@@ -72,7 +72,7 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'reports',
     icon: BsFileText,
-    link: '/cbs/reports/cbs/organizations',
+    link: ROUTES.CBS_REPORT_LIST,
     match: ['reports'],
   },
   {

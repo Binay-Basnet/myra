@@ -22,6 +22,7 @@ import {
 import { AccountQRModal } from '@myra-ui/components';
 import { Avatar, Box, Button, Icon } from '@myra-ui/foundations';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 // import { localizedDate } from '@coop/cbs/utils';
 
@@ -266,7 +267,9 @@ export const MemberCard = ({
                       <Box display="flex" gap="s8">
                         <Button
                           onClick={() =>
-                            router.push(`/members/details?id=${memberDetails?.memberID}`)
+                            router.push(
+                              `${ROUTES.CBS_MEMBER_DETAILS}?id=${memberDetails?.memberID}`
+                            )
                           }
                         >
                           View Profile
@@ -525,7 +528,9 @@ export const MemberCard = ({
                 <Button
                   variant="ghost"
                   onClick={() =>
-                    router.push(`/savings/details/${accountInfo?.ID}?tab=transactions`)
+                    router.push(
+                      `${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${accountInfo?.ID}&tab=transactions`
+                    )
                   }
                 >
                   View Account Transactions

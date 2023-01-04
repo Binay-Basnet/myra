@@ -38,6 +38,7 @@ import {
   FormSwitch,
 } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
+import { ROUTES } from '@coop/cbs/utils';
 
 /* eslint-disable-next-line */
 export interface AddUserProps {}
@@ -207,7 +208,7 @@ export const AddUser = () => {
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={isEdit ? 'Edit User' : 'Add User'}
-            closeLink="/settings/users/super-admin"
+            closeLink={ROUTES.SETTINGS_USERS_LIST}
           />
         </Box>
 

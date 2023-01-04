@@ -5344,6 +5344,7 @@ export type IndividualBio = {
   memberName?: Maybe<Scalars['String']>;
   mobile?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<Scalars['Localized']>;
+  profession?: Maybe<Scalars['String']>;
   profilePic?: Maybe<Scalars['String']>;
 };
 
@@ -11528,13 +11529,14 @@ export enum Share_Transaction_Direction {
 }
 
 export type StrDetailData = {
-  bio?: Maybe<MemberOverviewBio>;
+  bio?: Maybe<IndividualBio>;
   deposits?: Maybe<Array<Maybe<TransactionDetail>>>;
   loanAccount?: Maybe<Array<Maybe<LoanAccount>>>;
   memberType?: Maybe<KymMemberTypesEnum>;
   savingAccounts?: Maybe<Array<Maybe<DepositAccount>>>;
   strAccountDetails?: Maybe<CombinedAccountDetail>;
   strReason?: Maybe<Scalars['String']>;
+  strStatus?: Maybe<Scalars['Boolean']>;
   strTopology?: Maybe<Scalars['String']>;
   transactionDetails?: Maybe<Array<Maybe<AccountwiseTransactionDetail>>>;
   withdraw?: Maybe<Array<Maybe<TransactionDetail>>>;

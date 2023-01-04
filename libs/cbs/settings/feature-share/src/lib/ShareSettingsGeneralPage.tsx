@@ -10,6 +10,7 @@ import {
   useGetSettingsShareGeneralDataQuery,
   useSetSettingsShareGeneralMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormCheckbox, FormCheckboxGroup, FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -64,7 +65,7 @@ export const ShareSettingsGeneralPage = () => {
         success: 'Saved',
         loading: 'Saving Changes ',
       },
-      onSuccess: () => router.push('/settings/general/share'),
+      onSuccess: () => router.push(ROUTES.SETTINGS_GENERAL_SHARE),
       promise: mutateAsync(
         {
           data: {

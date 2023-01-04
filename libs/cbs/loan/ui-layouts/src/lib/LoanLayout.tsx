@@ -44,11 +44,11 @@ const addButtoncolumns = [
 const settingsColumn = [
   {
     label: 'loanLayoutSettings',
-    navigate: '/settings/general/loan',
+    navigate: ROUTES.SETTINGS_GENERAL_LOAN,
   },
   {
     label: 'loanLayoutProductsSettings',
-    navigate: '/settings/general/loan-products',
+    navigate: ROUTES.SETTINGS_GENERAL_LP_LIST,
   },
 ];
 

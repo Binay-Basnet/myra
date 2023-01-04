@@ -18,6 +18,7 @@ import {
   useCancelWithdrawSlipRequestMutation,
   useGetAvailableSlipsListQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormMemberSelect,
@@ -105,7 +106,7 @@ export const AddBlockWithdrawSlipRequest = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['getAvailableSlipsList']);
         queryClient.invalidateQueries(['getPastSlipsList']);
-        router.push('/withdraw/block-withdraw-slip-requests/list');
+        router.push(ROUTES.CBS_BLOCK_WITHDRAW_SLIP_REQUEST_LIST);
       },
     });
   };

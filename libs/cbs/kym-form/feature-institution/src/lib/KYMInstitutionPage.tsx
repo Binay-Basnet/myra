@@ -16,6 +16,7 @@ import {
 } from '@coop/cbs/data-access';
 import { AccorrdianAddInstitution } from '@coop/cbs/kym-form/formElements';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -199,7 +200,7 @@ export const KYMInstitutionPage = () => {
               if (response) {
                 dispatch(setInstitutionHasPressedNext(true));
                 if (!basicErrors) {
-                  router.push(`/members/translation/${router.query['id']}`);
+                  router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}`);
                 } else {
                   toast({
                     id: 'validation-error',

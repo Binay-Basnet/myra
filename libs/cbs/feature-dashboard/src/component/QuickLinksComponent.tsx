@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { Box, Grid, GridItem, Modal, QuickLinks, Text } from '@myra-ui';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 export const QuickLinksComponent = () => {
@@ -25,58 +26,55 @@ export const QuickLinksComponent = () => {
       onclick: () =>
         newId
           .mutateAsync({ idType: Id_Type.Kymindividual })
-          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
+          .then((res) => router.push(`${ROUTES.CBS_MEMBER_IND_ADD}/${res?.newId}`)),
     },
     {
       id: 'b',
       text: 'Add New Deposit',
       icon: ImStack,
-      onclick: () => router.push('/savings/deposit/add'),
+      onclick: () => router.push(ROUTES.CBS_TRANS_DEPOSIT_ADD),
     },
     {
       id: 'c',
       text: 'Add New Withdraw',
       icon: BsArrowLeftRight,
-      onclick: () => router.push('/savings/withdraw/add'),
+      onclick: () => router.push(ROUTES.CBS_TRANS_WITHDRAW_ADD),
     },
     {
       id: 'd',
       text: 'Add Journal Voucher',
       icon: AiOutlineUnorderedList,
-      onclick: () => router.push('/transactions/journal-vouchers/add'),
+      onclick: () => router.push(ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD),
     },
     {
       id: 'e',
       text: 'New Share Issue',
       icon: IoCubeOutline,
-      onclick: () => router.push('/share/share-issue'),
+      onclick: () => router.push(ROUTES.CBS_SHARE_ISSUE_ADD),
     },
     {
       id: 'f',
       text: 'Share Return',
       icon: IoCubeOutline,
-      onclick: () => router.push('/share/share-return'),
+      onclick: () => router.push(ROUTES.CBS_SHARE_RETURN_ADD),
     },
     {
       id: 'g',
       text: 'New Saving Account',
       icon: ImStack,
-      onclick: () =>
-        newId
-          .mutateAsync({ idType: Id_Type.Kymindividual })
-          .then((res) => router.push(`/savings/account-open/add/${res?.newId}`)),
+      onclick: () => router.push(ROUTES.CBS_ACCOUNT_OPEN_ADD),
     },
     {
       id: 'h',
       text: 'New Loan Account',
       icon: BsArrowLeftRight,
-      onclick: () => router.push('/loan/apply'),
+      onclick: () => router.push(ROUTES.CBS_LOAN_APPLICATIONS_ADD),
     },
     {
       id: 'i',
       text: 'Reports',
       icon: BsFileText,
-      onclick: () => router.push('/reports/cbs/organizations'),
+      onclick: () => router.push(ROUTES.CBS_REPORT_LIST),
     },
   ];
 

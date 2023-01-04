@@ -60,11 +60,11 @@ const addButtoncolumns = [
 const settingsColumn = [
   {
     label: 'savingsDepositSettings',
-    navigate: '/settings/general/deposit/tds',
+    navigate: ROUTES.SETTINGS_GENERAL_SAVINGS_TDS,
   },
   {
     label: 'savingsProductSettings',
-    navigate: '/settings/general/deposit-products',
+    navigate: ROUTES.SETTINGS_GENERAL_SP_LIST,
   },
 ];
 
