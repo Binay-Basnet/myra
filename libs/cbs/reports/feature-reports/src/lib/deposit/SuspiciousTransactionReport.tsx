@@ -162,6 +162,8 @@ export const SuspiousTransactionReport = () => {
               {
                 header: 'Status',
                 accessorKey: 'status',
+                accessorFn: (row) =>
+                  row?.status !== null ? (row?.status ? 'Accepted' : 'Declined') : 'Pending',
               },
             ]}
           />
