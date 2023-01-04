@@ -10,11 +10,10 @@ import { FormSelect } from '@coop/shared/form';
 interface IFormBranchSelectProps extends SelectProps {
   name: string;
   label: string;
-  showAll?: boolean;
 }
 
 export const FormBranchSelect = (props: IFormBranchSelectProps) => {
-  const { name, label, showAll, ...rest } = props;
+  const { name, label, ...rest } = props;
 
   const { watch } = useFormContext();
 
@@ -64,7 +63,7 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
           // setTrigger(true);
         }
       }, 800)}
-      options={showAll ? [{ label: 'All', value: 'ALL' }, ...(branchOptions || [])] : branchOptions}
+      options={branchOptions}
       {...rest}
     />
   );

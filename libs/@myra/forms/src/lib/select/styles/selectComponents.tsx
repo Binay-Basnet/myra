@@ -19,6 +19,8 @@ export const getComponents: (
           Array.isArray(value) ? (
             (value as Option[]).length === 0 || !value ? (
               props.selectProps.placeholder
+            ) : value[0].value === '<SELECT_ALL>' ? (
+              <Text color="gray.900">All items selected</Text>
             ) : (
               <Text color="gray.900">{`${(value as Option[]).length} items selected`}</Text>
             )
