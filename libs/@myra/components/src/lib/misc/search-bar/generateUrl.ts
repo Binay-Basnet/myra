@@ -43,7 +43,7 @@ const CODES: Record<string, Record<string, Record<string, string>>> = {
     '02': {
       '01': 'account-open',
       '02': 'account-close',
-      '03': 'accounts',
+      '03': 'account-open',
       '04': 'products',
     },
     '03': {
