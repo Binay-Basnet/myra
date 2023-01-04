@@ -88,7 +88,7 @@ export const CBSLoanRepaymentList = () => {
                 {
                   title: t['transDetailViewDetail'],
                   onClick: (row) => {
-                    router.push(`${ROUTES.CBS_TRANS_LOAN_PAYMENT_DETAILS}?id=${row?.id}`);
+                    router.push(`${ROUTES.CBS_LOAN_REPAYMENT_DETAILS}?id=${row?.id}`);
                   },
                 },
                 {

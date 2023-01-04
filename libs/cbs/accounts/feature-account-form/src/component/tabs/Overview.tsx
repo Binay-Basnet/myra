@@ -1,6 +1,7 @@
 import { DetailPageQuickLinks } from '@myra-ui';
 
 import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 
 import {
   AccountStatistics,
@@ -10,7 +11,6 @@ import {
   TabHeader,
   UpcomingInstallments,
 } from '../details';
-import { ROUTES } from '@coop/cbs/utils';
 // import {
 //   MemberBasicInformation,
 //   MemberStatistics,
