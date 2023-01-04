@@ -119,6 +119,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_SHARE_TRANSFER: '/settings/general/share/transfer/configure',
   SETTINGS_USERS_LIST: '/settings/users/super-admin/list',
   SETTINGS_USERS_ADD: '/settings/users/super-admin/add',
+  SETTINGS_USERS_EDIT: '/settings/users/super-admin/edit',
 
   /* NOT INDEXED BY GLOBAL SEARCH */
 

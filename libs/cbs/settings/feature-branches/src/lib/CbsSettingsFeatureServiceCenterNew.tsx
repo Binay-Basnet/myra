@@ -13,6 +13,7 @@ import {
   useSetBranchDataMutation,
 } from '@coop/cbs/data-access';
 import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -113,7 +114,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
         id: id as string,
         data: getValues(),
       }),
-      onSuccess: () => router.push('/settings/general/service-center'),
+      onSuccess: () => router.push(ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
           clearErrors();
