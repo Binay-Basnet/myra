@@ -76,11 +76,7 @@ export const AllTransactionsList = () => {
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
-        rowOnClick={(row) =>
-          router.push(
-            `/transactions/all-transactions/view?id=${row?.node?.id}&txnType=${row?.node?.transactionType}`
-          )
-        }
+        rowOnClick={(row) => router.push(`/transactions/all-transactions/view?id=${row?.node?.id}`)}
         pagination={{
           total: data?.transaction?.listAllTransactions?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listAllTransactions?.pageInfo,
