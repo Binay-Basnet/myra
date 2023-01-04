@@ -1,1 +1,2 @@
-export * from './lib/CbsTransferFeatureDetailPage';
+export * from './lib/TellerTransferDetailPage';
+export * from './lib/VaultTransferDetailPage';

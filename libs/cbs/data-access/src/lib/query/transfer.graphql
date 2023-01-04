@@ -1,0 +1,30 @@
+query getTransferDetail($transferID: ID!) {
+  transaction {
+    transferDetail(transferID: $transferID) {
+      data {
+        ID
+        transferCode
+        transferType
+        transferState
+        srcTeller
+        amount
+        totalBalance
+        destTeller
+        date
+        srcBranch
+        destBranch
+        srcProfilePic
+        srcProfilePicUrl
+        glTransaction {
+          account
+          serviceCenter
+          debit
+          credit
+        }
+        totalCredit
+        totalDebit
+        note
+      }
+    }
+  }
+}

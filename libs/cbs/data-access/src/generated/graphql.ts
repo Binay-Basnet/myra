@@ -1012,6 +1012,7 @@ export type BadRequestError = {
 export type Bank = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
+  date?: Maybe<Scalars['Localized']>;
   id: Scalars['ID'];
   logo?: Maybe<Scalars['String']>;
   modifiedAt: Scalars['Time'];
@@ -1070,8 +1071,7 @@ export type BankAccountQueryListArgs = {
 export type BankAddResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<BankDataQuery>;
-  record: Bank;
-  recordId: Scalars['ID'];
+  record?: Maybe<Array<Maybe<Bank>>>;
 };
 
 export type BankBranch = Base & {
@@ -1181,14 +1181,13 @@ export type BankChequePaymentForAlternativeChannel = {
 };
 
 export type BankDataMutation = {
-  add: BankAddResult;
+  add?: Maybe<BankAddResult>;
   delete: BankDeleteResult;
 };
 
 
 export type BankDataMutationAddArgs = {
-  data?: InputMaybe<BankInput>;
-  id: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<BankInput>>>;
 };
 
 
@@ -1698,6 +1697,99 @@ export type CashInHandData = {
   fromVault?: Maybe<Scalars['String']>;
   percent?: Maybe<Scalars['String']>;
   todayValue?: Maybe<Scalars['String']>;
+};
+
+export type CashInTransitActionResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type CashInTransitConnection = {
+  edges?: Maybe<Array<Maybe<CashInTransitEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type CashInTransitEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<CashInTransitInfo>;
+};
+
+export type CashInTransitFilter = {
+  id?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<RequestStatus>;
+};
+
+export type CashInTransitInfo = {
+  approvalStatus: RequestStatus;
+  cashAmount: Scalars['String'];
+  denomination?: Maybe<Array<Maybe<DenominationValue>>>;
+  id: Scalars['String'];
+  receiverServiceCentreId: Scalars['String'];
+  receiverServiceCentreName: Scalars['String'];
+  senderServiceCentreId: Scalars['String'];
+  senderServiceCentreName: Scalars['String'];
+  transferDate: Scalars['Localized'];
+};
+
+export type CashInTransitInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  collectorName?: InputMaybe<Scalars['String']>;
+  denomination?: InputMaybe<Denomination>;
+  receiverServiceCentre?: InputMaybe<Scalars['String']>;
+  senderServiceCentre?: InputMaybe<Scalars['String']>;
+  senderTeller?: InputMaybe<Scalars['String']>;
+  transferMode?: InputMaybe<CashTransferMode>;
+};
+
+export type CashInTransitMutation = {
+  approve?: Maybe<CashInTransitActionResult>;
+  new?: Maybe<CashInTransitResult>;
+};
+
+
+export type CashInTransitMutationApproveArgs = {
+  requestId: Scalars['String'];
+};
+
+
+export type CashInTransitMutationNewArgs = {
+  data?: InputMaybe<CashInTransitInput>;
+};
+
+export type CashInTransitResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export enum CashInTransitTransferType {
+  Received = 'RECEIVED',
+  Sent = 'SENT'
+}
+
+export type CashInTransitView = {
+  ID: Scalars['ID'];
+  amount?: Maybe<Scalars['String']>;
+  collectorName?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  destBranch?: Maybe<Scalars['String']>;
+  destTeller?: Maybe<Scalars['Localized']>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  note?: Maybe<Scalars['String']>;
+  srcBranch?: Maybe<Scalars['String']>;
+  srcProfilePic?: Maybe<Scalars['String']>;
+  srcProfilePicUrl?: Maybe<Scalars['String']>;
+  srcTeller?: Maybe<Scalars['Localized']>;
+  totalBalance?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+  transferMode?: Maybe<CashTransferMode>;
+  transitStatus?: Maybe<RequestStatus>;
+};
+
+export type CashInTransitViewResult = {
+  data?: Maybe<CashInTransitView>;
+  error?: Maybe<QueryError>;
 };
 
 export type CashLedgerReport = {
@@ -5343,6 +5435,7 @@ export type IndividualBio = {
   memberJoined?: Maybe<Scalars['Localized']>;
   memberName?: Maybe<Scalars['String']>;
   mobile?: Maybe<Scalars['String']>;
+  nationality?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<Scalars['Localized']>;
   profession?: Maybe<Scalars['String']>;
   profilePic?: Maybe<Scalars['String']>;
@@ -8228,8 +8321,10 @@ export type LoanAccReportDetails = {
 
 export type LoanAccount = {
   LoanAccountName?: Maybe<Scalars['String']>;
+  appliedDate?: Maybe<Scalars['Localized']>;
   appliedLoanAmount: Scalars['String'];
   approvedDate?: Maybe<Scalars['String']>;
+  closedDate?: Maybe<Scalars['Localized']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
   id: Scalars['ID'];
@@ -8346,6 +8441,8 @@ export type LoanAccountConnection = {
 export type LoanAccountDetailsResult = {
   collateral?: Maybe<LoanAccountCollateralDetails>;
   guarantee?: Maybe<LoanAccountGuaranteeDetails>;
+  loanAccountId?: Maybe<Scalars['String']>;
+  memberInfo?: Maybe<MemberOverview>;
   overView?: Maybe<LoanAccountOverview>;
 };
 
@@ -10034,6 +10131,14 @@ export type MemberOtherData = {
   totalMember?: Maybe<Scalars['String']>;
   typeOfInstitution?: Maybe<Scalars['String']>;
   workingArea?: Maybe<Scalars['String']>;
+};
+
+export type MemberOverview = {
+  memberCode: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  profilePicId?: Maybe<Scalars['String']>;
+  profilePicUrl?: Maybe<Scalars['String']>;
 };
 
 export type MemberOverviewAccountsView = {
@@ -13019,6 +13124,7 @@ export type TransactionDetail = {
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   depositer?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
   remarks?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
 };
@@ -13053,6 +13159,7 @@ export type TransactionMutation = {
   agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
   bulkDeposit: BulkDepositResult;
+  cashInTransit?: Maybe<CashInTransitMutation>;
   deposit: DepositResult;
   endOfDay?: Maybe<EodResult>;
   readyBranchEOD?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -13144,6 +13251,8 @@ export type TransactionMyDayData = {
 export type TransactionQuery = {
   agentDetail?: Maybe<AgentRecord>;
   assignedMemberList: AssignedMembersListConnection;
+  cashInTransit: CashInTransitConnection;
+  cashInTransitDetail?: Maybe<CashInTransitViewResult>;
   endOfDayDate: EodDate;
   eodStatus?: Maybe<EodSatusResult>;
   listAgent: AccountAgentListConnection;
@@ -13172,6 +13281,18 @@ export type TransactionQueryAgentDetailArgs = {
 export type TransactionQueryAssignedMemberListArgs = {
   filter?: InputMaybe<AssignedMemberListFiler>;
   pagination?: InputMaybe<Pagination>;
+};
+
+
+export type TransactionQueryCashInTransitArgs = {
+  filter?: InputMaybe<CashInTransitFilter>;
+  pagination?: InputMaybe<Pagination>;
+  transferType: CashInTransitTransferType;
+};
+
+
+export type TransactionQueryCashInTransitDetailArgs = {
+  transitID: Scalars['ID'];
 };
 
 
@@ -16487,6 +16608,13 @@ export type GetAllTransactionsDetailQueryVariables = Exact<{
 
 
 export type GetAllTransactionsDetailQuery = { transaction: { viewTransactionDetail?: { data?: { id: string, transactionDate?: Record<"local"|"en"|"np",string> | null, txnType?: AllTransactionType | null, transactionMode?: string | null, amount?: string | null, branch?: string | null, status?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, serviceCenter?: string | null, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+
+export type GetTransferDetailQueryVariables = Exact<{
+  transferID: Scalars['ID'];
+}>;
+
+
+export type GetTransferDetailQuery = { transaction: { transferDetail?: { data?: { ID: string, transferCode?: string | null, transferType: TellerTransferType, transferState?: TellerActivityState | null, srcTeller?: Record<"local"|"en"|"np",string> | null, amount?: string | null, totalBalance?: string | null, destTeller?: Record<"local"|"en"|"np",string> | null, date?: Record<"local"|"en"|"np",string> | null, srcBranch?: Record<"local"|"en"|"np",string> | null, destBranch?: Record<"local"|"en"|"np",string> | null, srcProfilePic?: string | null, srcProfilePicUrl?: string | null, totalCredit?: string | null, totalDebit?: string | null, note?: string | null, glTransaction?: Array<{ account: string, serviceCenter?: string | null, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
 
 export type GetPastSlipsListQueryVariables = Exact<{
   accountId: Scalars['ID'];
@@ -30800,6 +30928,50 @@ export const useGetAllTransactionsDetailQuery = <
     useQuery<GetAllTransactionsDetailQuery, TError, TData>(
       ['getAllTransactionsDetail', variables],
       useAxios<GetAllTransactionsDetailQuery, GetAllTransactionsDetailQueryVariables>(GetAllTransactionsDetailDocument).bind(null, variables),
+      options
+    );
+export const GetTransferDetailDocument = `
+    query getTransferDetail($transferID: ID!) {
+  transaction {
+    transferDetail(transferID: $transferID) {
+      data {
+        ID
+        transferCode
+        transferType
+        transferState
+        srcTeller
+        amount
+        totalBalance
+        destTeller
+        date
+        srcBranch
+        destBranch
+        srcProfilePic
+        srcProfilePicUrl
+        glTransaction {
+          account
+          serviceCenter
+          debit
+          credit
+        }
+        totalCredit
+        totalDebit
+        note
+      }
+    }
+  }
+}
+    `;
+export const useGetTransferDetailQuery = <
+      TData = GetTransferDetailQuery,
+      TError = unknown
+    >(
+      variables: GetTransferDetailQueryVariables,
+      options?: UseQueryOptions<GetTransferDetailQuery, TError, TData>
+    ) =>
+    useQuery<GetTransferDetailQuery, TError, TData>(
+      ['getTransferDetail', variables],
+      useAxios<GetTransferDetailQuery, GetTransferDetailQueryVariables>(GetTransferDetailDocument).bind(null, variables),
       options
     );
 export const GetPastSlipsListDocument = `

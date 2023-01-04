@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
-import { ApprovalStatusCell, Column, Table } from '@myra-ui/table';
+import { ApprovalStatusCell, Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
   TellerActivityEntry,
@@ -11,7 +11,7 @@ import {
   TellerTransferType,
   useGetTellerTransactionListDataQuery,
 } from '@coop/cbs/data-access';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 import { TellerTransferApproveModal } from '../components';
 
@@ -119,6 +119,28 @@ export const TellerTransferList = () => {
       {
         header: 'Transfer Date',
         accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+      },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) => (
+          <TablePopover
+            node={props?.row?.original?.node}
+            items={[
+              {
+                title: 'loanProductViewDetails',
+                onClick: () => {
+                  router.push(
+                    `/${getUrl(router.pathname, 2)}/view?id=${props?.row?.original?.node?.ID}`
+                  );
+                },
+              },
+            ]}
+          />
+        ),
+        meta: {
+          width: '50px',
+        },
       },
     ],
     [t]
