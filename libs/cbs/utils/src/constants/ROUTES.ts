@@ -45,7 +45,7 @@ export const ROUTES = {
   CBS_TRANS_ALL_TRANSACTION_LIST: '/cbs/transactions/all-transactions/list',
 
   CBS_TRANSFER_VAULT_ADD: '/cbs/transfers/vault-transfer/add',
-  CBS_TRANSFER_TELLER_ADD: '/cbs/transfers/tellSer-transfer/add',
+  CBS_TRANSFER_TELLER_ADD: '/cbs/transfers/teller-transfer/add',
   CBS_TRANSFER_VAULT_LIST: '/cbs/transfers/vault-transfer/list',
   CBS_TRANSFER_TELLER_LIST: '/cbs/transfers/teller-transfer/list',
   CBS_TRANSFER_BRANCH_LIST: '/cbs/transfers/branch-transfer/list',
@@ -64,8 +64,8 @@ export const ROUTES = {
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_LIST: '/cbs/withdraw/block-withdraw-slip-requests/list',
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD: '/cbs/withdraw/block-withdraw-slip-requests/add',
 
-  CBS_REPORT_LIST: '/cbs/reports/cbs/list',
-  CBS_REPORT_SAVED: '/cbs/reports/saved/list',
+  CBS_REPORT_LIST: '/reports/cbs/list',
+  CBS_REPORT_SAVED: '/reports/saved/list',
 
   CBS_OTHERS_FUND_MANAGEMENT_ADD: '/cbs/others/fund-management/add',
   CBS_OTHERS_SHARE_DIVIDEND_POSTING_LIST: '/cbs/others/share-dividend-posting/list',

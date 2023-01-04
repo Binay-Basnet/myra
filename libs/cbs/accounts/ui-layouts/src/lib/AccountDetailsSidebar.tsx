@@ -6,6 +6,7 @@ import { AccountQRModal, Box, DetailPageMemberCard, DetailPageTabs, Icon, Text }
 
 import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
 import { amountConverter, copyToClipboard } from '@coop/shared/utils';
+import { ROUTES } from '@coop/cbs/utils';
 
 const accountTypes = {
   [NatureOfDepositProduct.Saving]: 'Saving Account',
@@ -89,7 +90,7 @@ export const AccountDetailsSidebar = () => {
         _hover={{
           cursor: 'pointer',
         }}
-        onClick={() => router.push(`/members/details?id=${accountDetails?.member?.id}`)}
+        onClick={() => router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${accountDetails?.member?.id}`)}
       >
         <DetailPageMemberCard
           name={accountDetails?.member?.name?.local as string}

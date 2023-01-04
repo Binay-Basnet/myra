@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { Box, Grid, Icon, Text } from '@myra-ui';
 
 import {
-  Id_Type,
   NatureOfDepositProduct,
   ObjState,
   useGetAccountTableListMinimalQuery,
@@ -111,11 +110,7 @@ export const Accounts = () => {
                 h="58px"
                 pl="s16"
                 cursor="pointer"
-                onClick={() =>
-                  newId
-                    .mutateAsync({ idType: Id_Type.Account })
-                    .then((res) => router.push(`${item.link}/add/${res?.newId}?memberId=${id}`))
-                }
+                onClick={() => router.push(`${item.link}?memberId=${id}`)}
               >
                 <Icon as={IoAddOutline} />
 
