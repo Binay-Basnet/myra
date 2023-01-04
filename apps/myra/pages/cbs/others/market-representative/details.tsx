@@ -1,16 +1,12 @@
 import { ReactElement } from 'react';
 
-import { Box, MainLayout, WIPState } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
 import { OthersPageLayout } from '@coop/cbs/others/ui-layouts';
+import { AgentDetails } from '@coop/cbs/transactions/agent';
 import { AgentDetailPageLayout } from '@coop/cbs/transactions/ui-layouts';
 
-const TransactionAgentDocuments = () => (
-  <Box display="flex" justifyContent="center" alignItems="center">
-    <WIPState />
-  </Box>
-);
-
+const TransactionAgentDocuments = () => <AgentDetails />;
 TransactionAgentDocuments.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>

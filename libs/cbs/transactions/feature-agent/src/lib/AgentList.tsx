@@ -100,7 +100,7 @@ export const AgentList = () => {
                 title: 'transactionsAgentListViewDetail',
                 onClick: () => {
                   router.push(
-                    `/${getUrl(router.pathname, 3)}/${cell?.row?.original?.node?.id}/overview`
+                    `/${getUrl(router.pathname, 3)}/details?id=${cell?.row?.original?.node?.id}`
                   );
                 },
               },

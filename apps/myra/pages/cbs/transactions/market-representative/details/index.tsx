@@ -1,19 +1,15 @@
 import { ReactElement } from 'react';
 
-import { Box, MainLayout, WIPState } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
+import { AgentDetails } from '@coop/cbs/transactions/agent';
 import {
   AgentDetailPageLayout,
   TransactionsSidebarLayout,
 } from '@coop/cbs/transactions/ui-layouts';
 
-const TransactionAgentTasks = () => (
-  <Box display="flex" justifyContent="center" alignItems="center">
-    <WIPState />
-  </Box>
-);
-
-TransactionAgentTasks.getLayout = function getLayout(page: ReactElement) {
+const TransactionAgentDocuments = () => <AgentDetails />;
+TransactionAgentDocuments.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
       <TransactionsSidebarLayout>
@@ -22,4 +18,4 @@ TransactionAgentTasks.getLayout = function getLayout(page: ReactElement) {
     </MainLayout>
   );
 };
-export default TransactionAgentTasks;
+export default TransactionAgentDocuments;
