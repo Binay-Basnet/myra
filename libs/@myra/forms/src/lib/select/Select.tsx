@@ -1,12 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useRef } from 'react';
 import { Flex } from '@chakra-ui/react';
-import { GroupBase, Props, Select as ChakraSelect } from 'chakra-react-select';
+import {
+  ActionMeta,
+  GroupBase,
+  MultiValue,
+  Props,
+  Select as ChakraSelect,
+  SingleValue,
+} from 'chakra-react-select';
 
 import { Text } from '@myra-ui/foundations';
 
 import { useTranslation } from '@coop/shared/utils';
 
-import { getComponents, Option } from './styles/selectComponents';
+import { getComponents } from './styles/selectComponents';
 import { getChakraDefaultStyles } from './styles/selectStyles';
 
 interface SelectOption {
@@ -16,39 +23,53 @@ interface SelectOption {
 }
 
 export interface SelectProps
-  extends Omit<Props<SelectOption, boolean, GroupBase<SelectOption>>, 'size' | 'onChange'> {
+  extends Omit<Props<SelectOption, boolean, GroupBase<SelectOption>>, 'size'> {
   options?: SelectOption[] | undefined;
   helperText?: string;
   errorText?: string;
   label?: string;
   // size?: 'sm' | 'default';
-  onChange?: ((newValue: SelectOption) => void) | any;
+  onChange?: (
+    newValue: MultiValue<SelectOption> | SingleValue<SelectOption>,
+    actionMeta: ActionMeta<SingleValue<SelectOption> | MultiValue<SelectOption>>
+  ) => void;
   hasRadioOption?: boolean;
   __placeholder?: string;
 }
+
+const selectAllOption = {
+  value: '<SELECT_ALL>',
+  label: 'All',
+};
 
 export const Select = ({
   // size,
   errorText,
   helperText,
-  isMulti,
+  isMulti = false,
   label,
-  options,
+  options = [],
   value,
   hasRadioOption,
   placeholder,
   name,
   isRequired,
+  onChange,
   ...rest
 }: SelectProps) => {
   const { t } = useTranslation();
-  const [sortedOptions, setSortedOptions] = useState(options ?? []);
 
-  useEffect(() => {
-    if (isMulti) {
-      setSortedOptions(options ?? []);
-    }
-  }, [JSON.stringify(options)]);
+  const {
+    isOptionSelected,
+    getOptions,
+    getValue,
+    onChange: multiOnChange,
+  } = useMulti({
+    value: value as [],
+    isMulti,
+    onChange,
+    options,
+  });
 
   return (
     <Flex direction="column" gap="s4">
@@ -61,34 +82,17 @@ export const Select = ({
         id="select"
         data-testid={name}
         instanceId="select"
-        onMenuClose={() => {
-          if (isMulti) {
-            setSortedOptions((prev) =>
-              (prev as Array<Option>)?.sort((optionA, optionB) => {
-                if (optionA.value === 'ALL') return 1;
-                if (optionB.value === 'ALL') return -1;
-
-                if (
-                  (value as Array<Option>)?.find((v) =>
-                    optionA.value === 'ALL' ? true : optionA.value === v.value
-                  )
-                ) {
-                  return -1;
-                }
-                return 1;
-              })
-            );
-          }
-        }}
+        isOptionSelected={isOptionSelected}
         placeholder={placeholder ?? t['select']}
-        options={isMulti ? sortedOptions : options}
-        value={value}
+        options={getOptions()}
+        value={getValue()}
         controlShouldRenderValue={!isMulti}
         closeMenuOnSelect={!isMulti}
         isMulti={isMulti}
         hideSelectedOptions={false}
         isOptionDisabled={(option) => !!option.disabled}
         isClearable={false}
+        onChange={multiOnChange}
         chakraStyles={getChakraDefaultStyles(!!errorText)}
         components={getComponents(hasRadioOption)}
         {...rest}
@@ -108,3 +112,67 @@ export const Select = ({
 };
 
 export default Select;
+
+interface IUseMultiProps {
+  isMulti: boolean;
+  value: MultiValue<SelectOption> | undefined;
+  options: SelectOption[];
+  onChange?: (
+    newValue: MultiValue<SelectOption> | SingleValue<SelectOption>,
+    actionMeta: ActionMeta<SingleValue<SelectOption> | MultiValue<SelectOption>>
+  ) => void;
+}
+
+const useMulti = ({ isMulti, value, options, onChange: propOnChange }: IUseMultiProps) => {
+  const valueRef = useRef(value);
+  valueRef.current = value;
+
+  if (!isMulti || !propOnChange) {
+    return {
+      isOptionSelected: undefined,
+      getOptions: () => options,
+      getValue: () => value,
+      onChange: propOnChange,
+    };
+  }
+
+  const valueRefCurrent = valueRef?.current;
+
+  const isSelectAllSelected = () => valueRefCurrent?.length === options?.length;
+
+  const isOptionSelected = (option: SelectOption) =>
+    valueRef?.current?.some(({ value: newValue }) => newValue === option.value) ||
+    isSelectAllSelected();
+
+  const getOptions = () => [selectAllOption, ...options];
+  const getValue = () => (isSelectAllSelected() ? [selectAllOption] : value);
+
+  const onChange = (
+    newValue: MultiValue<SelectOption> | SingleValue<SelectOption>,
+    actionMeta: ActionMeta<SelectOption>
+  ) => {
+    const { action, option, removedValue } = actionMeta;
+    if (action === 'select-option' && option?.value === selectAllOption.value) {
+      propOnChange(options, actionMeta);
+    } else if (
+      (action === 'deselect-option' && option?.value === selectAllOption.value) ||
+      (action === 'remove-value' && removedValue.value === selectAllOption.value)
+    ) {
+      propOnChange([], actionMeta);
+    } else if (actionMeta.action === 'deselect-option' && isSelectAllSelected()) {
+      propOnChange(
+        options.filter(({ value: optionValue }) => optionValue !== option?.value),
+        actionMeta
+      );
+    } else {
+      propOnChange(newValue || [], actionMeta);
+    }
+  };
+
+  return {
+    isOptionSelected,
+    getOptions,
+    getValue,
+    onChange,
+  };
+};

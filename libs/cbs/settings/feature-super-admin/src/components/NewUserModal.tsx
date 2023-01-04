@@ -82,6 +82,7 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
         userData: { ...formData },
       })
     );
+    router.push(`/settings/users/super-admin/add`);
 
     newIdMutate({ idType: Id_Type.Myrauser }).then((res) => {
       router.push(`${ROUTES.SETTINGS_USERS_ADD}?id=${res.newId}`);

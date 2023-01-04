@@ -3199,7 +3199,7 @@ const en: Record<string, string> = {
   transactionsAgentListViewDetail: 'View Detail',
 
   memberInfo: 'Member Info',
-  proceedToPayment: 'Proceed to Payment',
+  proceedToPayment: 'Proceed Transactions',
   sharePurchaseNewShareIssue: 'New Share Issue',
   sharePurchaseShareIssue: 'Share Issue',
   sharePurchaseBankName: 'Bank Name',
@@ -3362,7 +3362,7 @@ const en: Record<string, string> = {
   addDepositTotalDeposit: 'Total Deposit',
   addDepositTotalDepositAmount: 'Total Deposit Amount',
   addDepositPrevious: 'Previous',
-  addDepositProceedPayment: 'Proceed to Payment',
+  addDepositProceedPayment: 'Proceed Transactions',
   addDepositSubmit: 'Submit',
 
   // installment modal
@@ -3422,7 +3422,7 @@ const en: Record<string, string> = {
   addWithdrawTotalWithdraw: 'Total Withdraw',
   addWithdrawTotalWithdrawAmount: 'Total Withdraw Amount',
   addWithdrawPrevious: 'Previous',
-  addWithdrawProceedToPayment: 'Proceed to Payment',
+  addWithdrawProceedToPayment: 'Proceed Transactions',
   addWithdrawSubmit: 'Submit',
 
   // withdraw payment
@@ -3855,6 +3855,8 @@ const en: Record<string, string> = {
 
   transactionLayoutBalanceSheet: 'Trial Balance',
   transDetailAmountDeposited: 'Deposit Amount',
+  transCashTransitTransfer: 'Cash in Transit Transfer',
+  transServiceCenterTransfer: 'Service Center Cash Transfer',
 };
 
 export default en;

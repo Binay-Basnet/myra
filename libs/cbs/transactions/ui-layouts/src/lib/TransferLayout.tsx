@@ -45,10 +45,14 @@ const dropdownButtons = [
     title: 'transferTellerTransfer',
     link: ROUTES.CBS_TRANSFER_TELLER_ADD,
   },
-  // {
-  //   label: 'transferBranchTransfer',
-  //   link: '/transactions/account-transfer/add',
-  // },
+  {
+    title: 'transCashTransitTransfer',
+    link: '/transfer/cash-transit-transfer/add',
+  },
+  {
+    title: 'transServiceCenterTransfer',
+    link: '/transfer/cash-transfer/add',
+  },
 ];
 
 const reportColumn = [

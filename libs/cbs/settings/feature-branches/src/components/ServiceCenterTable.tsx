@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Id_Type, useGetBranchListQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
+import { useGetBranchListQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
@@ -12,7 +12,6 @@ import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils'
 export const SettingsServiceCenterTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const newId = useGetNewIdMutation();
 
   const { data, isFetching } = useGetBranchListQuery(
     {
@@ -89,13 +88,7 @@ export const SettingsServiceCenterTable = () => {
       <SettingsPageHeader
         heading={`${t['serviceCenterSettings']} - ${featureCode?.settingsServiceCenter}`}
         buttonLabel={t['serviceCenterNew']}
-        buttonHandler={() =>
-          newId
-            .mutateAsync({ idType: Id_Type.Branch })
-            .then((res) =>
-              router.push(`${ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD}?id=${res?.newId}`)
-            )
-        }
+        buttonHandler={() => router.push(`${ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD}`)}
       />
 
       <Table

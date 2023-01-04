@@ -6,30 +6,15 @@ import { useGetCoaAccountsUnderLeafListQuery } from '@coop/cbs/data-access';
 import { COASelectModal } from '@coop/shared/components';
 import { FormEditableTable } from '@coop/shared/form';
 
-type LedgerTableProps = {
-  ledger: string;
-  account: string;
+export type LedgerTableProps = {
+  ledgerId: string;
+  accountId: string;
   dr: string;
   cr: string;
 };
 export const LedgerTable = () => {
   const [parentId, setParentId] = useState<string>('');
-
-  //   const { watch } = useFormContext<LedgerTableProps>();
-
-  //   const { crTotal, drTotal } = useMemo(() => {
-  //     let tempCR = 0;
-  //     let tempDR = 0;
-
-  //     entries?.forEach((entry) => {
-  //       tempCR += Number(entry?.crAmount ?? 0);
-  //       tempDR += Number(entry?.drAmount ?? 0);
-  //     });
-
-  //     return { crTotal: tempCR, drTotal: tempDR };
-  //   }, [entries]);
-
-  const { refetch } = useGetCoaAccountsUnderLeafListQuery({ parentId });
+  const { refetch } = useGetCoaAccountsUnderLeafListQuery({ parentId, currentBranch: true });
 
   const getAccountsList = async (pId: string) =>
     new Promise<{ label: string; value: string }[]>((resolve) => {
@@ -45,30 +30,24 @@ export const LedgerTable = () => {
       });
     });
 
-  //   const tableSummaryColumns: TableOverviewColumnType[] = [
-  //     { label: 'Total', width: 'auto', isNumeric: true },
-  //     { label: String(drTotal), width: 'lg', isNumeric: true },
-  //     { label: String(crTotal), width: 'lg', isNumeric: true },
-  //   ];
   return (
-    //   console.log({ branchListQueryData });
     <FormSection header="My Ledger" subHeader="Select Source Ledger & account." templateColumns={1}>
       <GridItem colSpan={3}>
         <FormEditableTable<LedgerTableProps>
-          name="dormantSetup"
+          name="selfEntries"
           debug={false}
           columns={[
             {
-              accessor: 'account',
+              accessor: 'accountId',
               header: 'Account',
               fieldType: 'modal',
               cellWidth: 'auto',
               modal: COASelectModal,
             },
             {
-              accessor: 'ledger',
+              accessor: 'ledgerId',
               header: 'Ledger',
-              loadOptions: (row) => getAccountsList(row?.ledger),
+              loadOptions: (row) => getAccountsList(row?.accountId),
               fieldType: 'select',
               cellWidth: 'auto',
             },

@@ -4,7 +4,7 @@ import { Box, Text } from '@myra-ui';
 
 import { useGetJournalVoucherDetailQuery } from '@coop/cbs/data-access';
 
-import { GlTransaction, SideBar, TransactionDetails } from '../components/journalVoucher';
+import { GlTransaction, Note, SideBar, TransactionDetails } from '../components/journalVoucher';
 
 /* eslint-disable-next-line */
 export interface JournalVoucerDetailPageProps {}
@@ -47,6 +47,7 @@ export const JournalVoucerDetailPage = () => {
           Overview
         </Text>
         <TransactionDetails detailData={detailData} />
+        <Note note={voucherData?.note} />
         <GlTransaction
           data={voucherData?.glTransaction}
           totalDebit={voucherData?.totalDebit ?? '-'}

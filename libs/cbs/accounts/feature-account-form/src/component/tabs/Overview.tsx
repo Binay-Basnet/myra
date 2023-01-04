@@ -86,6 +86,7 @@ export const Overview = () => {
           : `${accountDetails?.interestRate} %`,
     },
     { label: 'Guarantee Amount', value: accountDetails?.guaranteedAmount ?? '0' },
+    { label: 'Tenure', value: accountDetails?.accountTenure ?? '-' },
   ];
 
   const additionalFeatures = [

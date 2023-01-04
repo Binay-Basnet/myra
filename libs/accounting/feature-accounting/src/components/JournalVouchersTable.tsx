@@ -37,7 +37,7 @@ export const JournalVouchersTable = () => {
     return { crTotal: tempCR, drTotal: tempDR };
   }, [entries]);
 
-  const { refetch } = useGetCoaAccountsUnderLeafListQuery({ parentId });
+  const { refetch } = useGetCoaAccountsUnderLeafListQuery({ parentId, currentBranch: true });
 
   const getAccountsList = async (pId: string) =>
     new Promise<{ label: string; value: string }[]>((resolve) => {

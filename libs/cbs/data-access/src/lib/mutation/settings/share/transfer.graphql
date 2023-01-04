@@ -15,3 +15,25 @@ mutation setSettingsShareTransfer($data: ShareTransferSettingsInput) {
     }
   }
 }
+
+mutation setServiceCenterCashTransfer($data: ServiceCentreCashTransferInput!) {
+  transaction {
+    serviceCentreCashTransfer(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation setCashInTransitTransfer($data: TellerTransferInput!) {
+  transaction {
+    tellerTransfer(data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

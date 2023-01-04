@@ -17,7 +17,7 @@ import {
   useGetBankListQuery,
   useSetBankAccountsMutation,
 } from '@coop/cbs/data-access';
-import { FormAmountInput, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
+import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -119,11 +119,11 @@ export const AccountingFeatureAddBankAccount = () => {
                   label={t['accountingBankAccountAddAccountType']}
                   options={accountTypeList}
                 />
-                <FormAmountInput
+                {/* <FormAmountInput
                   name="openingBalance"
                   textAlign="right"
                   label={t['accountingBankAccountAddOpeningBalance']}
-                />
+                /> */}
 
                 <GridItem colSpan={3}>
                   <FormTextArea

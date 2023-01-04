@@ -102,4 +102,10 @@ I know its weird. But I didn't find any other way. will be looking into solution
 2. Rule of 3 if used for more than 2 then create a lib else create it where it is used
 3. Try not to use "any" as a type.
 4. Keep components shared by all apps in shared library.
-5. keep graphql and api related stuff in data-access librrary.
+5. keep graphql and api related stuff in data-access library.
+
+// Rules for Routing:
+
+1.  page url should always ends with add , or list or configure and edit.
+2.  use routes from ROUTES object located in cbs/utils to use route throughout the application. Add any new route to the ROUTE object.
+3.  Also, if possible don't make nested routes more than 4 deep.

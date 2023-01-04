@@ -6,12 +6,12 @@ import {
   LocalizedDateFilter,
   TrialSheetReportDataEntry,
   TrialSheetReportFilter,
+  useGetBranchListQuery,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
 import { COATable, Report, sortCoa } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
+import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
   branchId: { label: string; value: string }[];
@@ -27,11 +27,32 @@ export const ProfitAndLossReport = () => {
       ? filters?.branchId?.map((t) => t.value)
       : [];
 
+  const { data: branchListQueryData } = useGetBranchListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const headers =
+    branchIDs?.length === branchList?.length
+      ? ['Total']
+      : [
+          ...((branchList
+            ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
+            ?.map((a) => a.node?.id) || []) as string[]),
+          branchIDs.length === 1 ? undefined : 'Total',
+        ]?.filter(Boolean) || [];
+
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
       data: {
         branchId: branchIDs,
-        period: filters?.period as LocalizedDateFilter,
+        period: {
+          from: filters?.period?.from,
+          to: filters?.period?.from,
+        } as LocalizedDateFilter,
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
         },
@@ -75,7 +96,7 @@ export const ProfitAndLossReport = () => {
             <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange label="Date Period" />
+            <FormDatePicker name="period.from" label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -122,7 +143,7 @@ export const ProfitAndLossReport = () => {
             border="1px"
             mb="s16"
             mx="s16"
-            borderColor="border.element"
+            borderColor="border.layout"
           >
             <Box h="40px" display="flex">
               <Box
@@ -132,17 +153,30 @@ export const ProfitAndLossReport = () => {
                 h="100%"
                 px="s12"
                 borderRight="1px"
-                borderRightColor="border.element"
+                borderRightColor="border.layout"
                 fontSize="r1"
                 fontWeight={600}
                 color="gray.700"
               >
                 Total Profit/Loss (Total Income - Total Expenses)
               </Box>
-              <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
-                {data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                  ?.totalProfitLoss ?? 0}
-              </Box>
+              {headers.map((d, index) => (
+                <Box
+                  whiteSpace="nowrap"
+                  px="s12"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="end"
+                  borderRight={index !== headers.length - 1 ? '1px' : '0'}
+                  borderRightColor="border.layout"
+                  key={d}
+                  w="20%"
+                  textAlign="right"
+                >
+                  {data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.totalProfitLoss?.[d || ''] || '0.00'}
+                </Box>
+              ))}
             </Box>
           </Box>
         </Report.Content>

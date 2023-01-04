@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -7,9 +7,11 @@ import { asyncToast, Box, Container, FormFooter, FormHeader, GridItem, Text } fr
 import {
   BranchCategory,
   BranchInput,
+  Id_Type,
   useAllAdministrationQuery,
   useGetBranchEditDataQuery,
   useGetCoaListQuery,
+  useGetNewIdMutation,
   useSetBranchDataMutation,
 } from '@coop/cbs/data-access';
 import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
@@ -19,6 +21,14 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const CbsSettingsFeatureServiceCenterNew = () => {
   const router = useRouter();
+  const [newId, setNewId] = useState('');
+  const { mutateAsync: getNewId } = useGetNewIdMutation();
+
+  useEffect(() => {
+    if (!router?.query?.['id']) {
+      getNewId({ idType: Id_Type.Branch }).then((res) => setNewId(res?.newId));
+    }
+  }, []);
 
   const { t } = useTranslation();
 
@@ -26,7 +36,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const { getValues, watch, reset, setError, clearErrors } = methods;
 
-  const id = router?.query?.['id'];
+  const id = router?.query?.['id'] || newId;
 
   const { data } = useAllAdministrationQuery();
 

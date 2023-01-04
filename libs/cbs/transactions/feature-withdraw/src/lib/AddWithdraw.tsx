@@ -15,7 +15,6 @@ import {
   Text,
 } from '@myra-ui';
 
-import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   CashValue,
   NatureOfDepositProduct,
@@ -394,7 +393,7 @@ export const AddWithdraw = () => {
                         label={t['addWithdrawWithdrawAmount']}
                       />
 
-                      <SuspiciousTransaction />
+                      {/* <SuspiciousTransaction /> */}
 
                       <Box
                         bg="background.500"
