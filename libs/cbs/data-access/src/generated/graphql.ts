@@ -8414,6 +8414,8 @@ export type LoanAccountConnection = {
 export type LoanAccountDetailsResult = {
   collateral?: Maybe<LoanAccountCollateralDetails>;
   guarantee?: Maybe<LoanAccountGuaranteeDetails>;
+  loanAccountId?: Maybe<Scalars['String']>;
+  memberInfo?: Maybe<MemberOverview>;
   overView?: Maybe<LoanAccountOverview>;
 };
 
@@ -10102,6 +10104,14 @@ export type MemberOtherData = {
   totalMember?: Maybe<Scalars['String']>;
   typeOfInstitution?: Maybe<Scalars['String']>;
   workingArea?: Maybe<Scalars['String']>;
+};
+
+export type MemberOverview = {
+  memberCode: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  profilePicId?: Maybe<Scalars['String']>;
+  profilePicUrl?: Maybe<Scalars['String']>;
 };
 
 export type MemberOverviewAccountsView = {

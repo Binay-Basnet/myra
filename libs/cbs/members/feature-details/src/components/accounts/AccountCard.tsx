@@ -52,7 +52,9 @@ export const AccountCard = ({
                   fontSize="r1"
                   color="primary.500"
                   cursor="pointer"
-                  onClick={() => router.push(`${ROUTES.CBS_SAVING_DETAILS}/${accountNumber}`)}
+                  onClick={() =>
+                    router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}/${accountNumber}`)
+                  }
                 >
                   {accountName}
                 </Text>
