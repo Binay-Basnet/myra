@@ -67,7 +67,7 @@ export const useTransactionDetailHooks = () => {
   // loan repayment detail
   const { data: loanRepaymentDetail } = useLoanRepaymentDetailQuery(
     { paymentId: id as string },
-    { staleTime: 0, enabled: !!id && router?.asPath?.includes('/repayments/') }
+    { staleTime: 0, enabled: !!id && router?.asPath?.includes('/loan-payment/') }
   );
 
   const { data: allTransactionsDetails } = useGetAllTransactionsDetailQuery(
