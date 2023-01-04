@@ -6,12 +6,12 @@ import {
   LocalizedDateFilter,
   TrialSheetReportDataEntry,
   TrialSheetReportFilter,
+  useGetBranchListQuery,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
 import { COATable, Report, sortCoa } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
+import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
   branchId: { label: string; value: string }[];
@@ -28,11 +28,25 @@ export const BalanceSheetReport = () => {
       ? filters?.branchId?.map((t) => t.value)
       : [];
 
+  const { data: branchListQueryData } = useGetBranchListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
       data: {
-        branchId: branchIDs,
-        period: filters?.period as LocalizedDateFilter,
+        branchId: branchIDs?.includes('ALL')
+          ? (branchList?.map((b) => b?.node?.id as string) as string[])
+          : branchIDs,
+        period: {
+          from: filters?.period?.from,
+          to: filters?.period?.from,
+        } as LocalizedDateFilter,
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
         },
@@ -77,7 +91,7 @@ export const BalanceSheetReport = () => {
             <FormBranchSelect showAll isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange label="Date Period" />
+            <FormDatePicker name="period.from" label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

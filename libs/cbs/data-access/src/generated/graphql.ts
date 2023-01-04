@@ -12963,6 +12963,26 @@ export enum TellerTransferType {
   VaultToCash = 'VAULT_TO_CASH'
 }
 
+export type TellerTransferView = {
+  ID: Scalars['ID'];
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  destBranch?: Maybe<Scalars['Localized']>;
+  destTeller?: Maybe<Scalars['Localized']>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  note?: Maybe<Scalars['String']>;
+  srcBranch?: Maybe<Scalars['Localized']>;
+  srcProfilePic?: Maybe<Scalars['String']>;
+  srcProfilePicUrl?: Maybe<Scalars['String']>;
+  srcTeller?: Maybe<Scalars['Localized']>;
+  totalBalance?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+  transferCode?: Maybe<Scalars['String']>;
+  transferState?: Maybe<TellerActivityState>;
+  transferType: TellerTransferType;
+};
+
 export enum TellerType {
   All = 'ALL',
   HeadTeller = 'HEAD_TELLER',
@@ -13131,6 +13151,7 @@ export type TransactionQuery = {
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
   strTransactionDetail?: Maybe<StrTransactionDetailQuery>;
+  transferDetail?: Maybe<TransferDetailViewResult>;
   viewAccountTransfer?: Maybe<AccountTransferViewResult>;
   viewAgentList?: Maybe<AgentTransactionViewResult>;
   viewDeposit?: Maybe<DepositTransactionViewResult>;
@@ -13194,6 +13215,11 @@ export type TransactionQueryListWithdrawArgs = {
 
 export type TransactionQueryStrTransactionDetailArgs = {
   transactionId: Scalars['ID'];
+};
+
+
+export type TransactionQueryTransferDetailArgs = {
+  transferID: Scalars['ID'];
 };
 
 
@@ -13265,6 +13291,11 @@ export type TransferData = {
   transactionMode?: Maybe<TransactionMode>;
   transferType?: Maybe<TransferType>;
   withdrawWith?: Maybe<WithdrawWith>;
+};
+
+export type TransferDetailViewResult = {
+  data?: Maybe<TellerTransferView>;
+  error?: Maybe<QueryError>;
 };
 
 export type TransferInput = {
@@ -15802,7 +15833,7 @@ export type GetMemberClassificationReportQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberClassificationReportQuery = { report: { memberReport: { memberClassificationReport: { data?: { gender?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, age?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, occupation?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, education?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, memberCategory?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, income?: Array<{ entryName?: string | null, inPercent?: string | null } | null> | null, address?: { province?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, district?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null } | null } | null } } } };
+export type GetMemberClassificationReportQuery = { report: { memberReport: { memberClassificationReport: { data?: { gender?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, age?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, occupation?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, education?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, memberCategory?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, income?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, address?: { province?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, district?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null } | null } | null } } } };
 
 export type GetActiveInactiveMemberReportQueryVariables = Exact<{
   data?: InputMaybe<ActiveInactiveMemberReportData>;
@@ -26360,7 +26391,7 @@ export const GetMemberClassificationReportDocument = `
           }
           income {
             entryName
-            inPercent
+            inNumber
             inPercent
           }
           address {
