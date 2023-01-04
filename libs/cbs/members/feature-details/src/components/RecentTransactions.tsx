@@ -36,7 +36,8 @@ export const RecentTransactions = () => {
       hasTable
       leftBtn={
         <Button
-          variant="link"
+          variant="ghost"
+          size="md"
           onClick={() => router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${id}&tab=transactions`)}
         >
           View All Transactions
