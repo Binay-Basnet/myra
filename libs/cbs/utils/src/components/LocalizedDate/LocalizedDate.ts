@@ -10,8 +10,8 @@ interface ILocalizedTextProps {
 export const LocalizedDate = ({ date }: ILocalizedTextProps) => localizedDate(date);
 
 export const localizedDate = (date: Record<'local' | 'en' | 'np', string> | null | undefined) => {
+  if (date?.local === null) return '-';
   const dateType = store.getState().auth?.preference?.date || DateType.Ad;
-
   if (dateType === DateType.Bs) {
     return dayjs(date?.np || date?.local).format('YYYY-MM-DD');
   }
