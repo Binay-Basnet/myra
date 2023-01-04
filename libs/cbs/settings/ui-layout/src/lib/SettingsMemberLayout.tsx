@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Box } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
@@ -9,23 +11,23 @@ import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMe
 const tabList = [
   {
     title: 'settingsSideGeneral',
-    to: '/settings/general/members',
+    to: ROUTES.SETTINGS_GENERAL_MEMBERS,
   },
   {
     title: 'settingsSideIndividual',
-    to: '/settings/general/members/kym-individual',
+    to: ROUTES.SETTINGS_GENERAL_MEMBERS_KYM_IND,
   },
   {
     title: 'settingsSideInstitutional',
-    to: '/settings/general/members/kym-institutional',
+    to: ROUTES.SETTINGS_GENERAL_MEMBERS_KYM_INS,
   },
   {
     title: 'settingsSideCoop',
-    to: '/settings/general/members/kym-cooperative',
+    to: ROUTES.SETTINGS_GENERAL_MEMBERS_KYM_COOP,
   },
   {
     title: 'settingsSideCoopUnion',
-    to: '/settings/general/members/kym-cooperative-union',
+    to: ROUTES.SETTINGS_GENERAL_MEMBERS_KYM_COOP_UNION,
   },
 ];
 

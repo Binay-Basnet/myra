@@ -12,6 +12,7 @@ import {
   ValuatorType,
 } from '@coop/cbs/data-access';
 import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAddress,
   FormDatePicker,
@@ -33,7 +34,7 @@ export const CbsSettingsFeatureValuatorAdd = () => {
 
   const { data: editValues } = useGetValuatorQuery(
     { id: router.query['id'] as string },
-    { enabled: !!router.query['id'] && router.query['action'] === 'edit' }
+    { enabled: !!router.query['id'] && router.pathname.includes('edit') }
   );
 
   const editData = editValues?.settings?.general?.valuator?.formState?.data;
@@ -55,7 +56,7 @@ export const CbsSettingsFeatureValuatorAdd = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['getValuatorList']);
         queryClient.invalidateQueries(['getValuator']);
-        router.push('/settings/general/loan/valuator');
+        router.push(ROUTES.SETTINGS_GENERAL_LOAN_VALUATOR);
       },
       onError: (error) => {
         if (error.__typename === 'ValidationError') {

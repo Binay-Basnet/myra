@@ -6,6 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { Id_Type, useGetBranchListQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const SettingsServiceCenterTable = () => {
@@ -69,7 +70,8 @@ export const SettingsServiceCenterTable = () => {
             items={[
               {
                 title: t['depositProductEdit'],
-                onClick: (node) => router.push(`/settings/general/service-center/edit/${node?.id}`),
+                onClick: (node) =>
+                  router.push(`${ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST_EDIT}?id=${node?.id}`),
               },
             ]}
           />
@@ -90,7 +92,9 @@ export const SettingsServiceCenterTable = () => {
         buttonHandler={() =>
           newId
             .mutateAsync({ idType: Id_Type.Branch })
-            .then((res) => router.push(`/settings/general/service-center/add/${res?.newId}`))
+            .then((res) =>
+              router.push(`${ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD}?id=${res?.newId}`)
+            )
         }
       />
 
