@@ -21,6 +21,7 @@ import {
   useAppSelector,
   useSetTellerTransferDataMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormAmountInput, FormEditableTable, FormInput, FormSwitchTab } from '@coop/shared/form';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
@@ -134,7 +135,7 @@ export const AddVaultTransfer = () => {
         queryClient.invalidateQueries(['getTellerTransactionListData']);
         queryClient.invalidateQueries(['getMe']);
 
-        router.push('/transfer/vault-transfer/list');
+        router.push(ROUTES.CBS_TRANSFER_VAULT_LIST);
       },
     });
   };
@@ -143,10 +144,7 @@ export const AddVaultTransfer = () => {
     <>
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title={`New Vault Transfer - ${featureCode.newVaultTransfer}`}
-            closeLink="/transfer/vault-transfer/list"
-          />
+          <FormHeader title={`New Vault Transfer - ${featureCode.newVaultTransfer}`} />
         </Box>
 
         <Box bg="white">

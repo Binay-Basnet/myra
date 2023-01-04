@@ -7,6 +7,7 @@ export const ROUTES = {
   CBS_MEMBER_DETAILS: '/cbs/members/details',
   CBS_MEMBER_ACTIVATION: '/cbs/members/activation',
   CBS_MEMBER_INACTIVATION: '/cbs/members/inactivation',
+  CBS_MEMBER_TRANSLATION: '/cbs/members/translation',
 
   CBS_SHARE_ISSUE_ADD: '/cbs/share/issue/add',
   CBS_SHARE_RETURN_ADD: '/cbs/share/return/add',
@@ -64,8 +65,8 @@ export const ROUTES = {
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_LIST: '/cbs/withdraw/block-withdraw-slip-requests/list',
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD: '/cbs/withdraw/block-withdraw-slip-requests/add',
 
-  CBS_REPORT_LIST: '/reports/cbs/list',
-  CBS_REPORT_SAVED: '/reports/saved/list',
+  CBS_REPORT_LIST: '/reports/cbs/organizations',
+  CBS_REPORT_SAVED: '/reports/saved',
 
   CBS_OTHERS_FUND_MANAGEMENT_ADD: '/cbs/others/fund-management/add',
   CBS_OTHERS_SHARE_DIVIDEND_POSTING_LIST: '/cbs/others/share-dividend-posting/list',

@@ -245,7 +245,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
             {t['corebankingSystems']}
           </Text>
 
-          <Link href="/members/list">
+          <Link href={ROUTES.CBS_MEMBER_LIST}>
             <Text lineHeight="125%" fontSize="l1" fontWeight="600" color="gray.800">
               {t['memberLayout']}
             </Text>

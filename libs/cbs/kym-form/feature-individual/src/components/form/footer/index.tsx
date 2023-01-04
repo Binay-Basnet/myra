@@ -10,6 +10,7 @@ import {
   useAppSelector,
   useGetKymFormStatusQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KymIndividualFooter = () => {
@@ -59,7 +60,7 @@ export const KymIndividualFooter = () => {
         if (response) {
           dispatch(setIndividualHasPressedNext(true));
           if (!sectionStatus) {
-            router.push(`/members/translation/${router.query['id']}?type=individual`);
+            router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}?type=individual`);
           } else {
             toast({
               id: 'validation-error',

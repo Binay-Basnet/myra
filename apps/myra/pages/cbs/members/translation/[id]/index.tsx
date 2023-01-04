@@ -11,6 +11,7 @@ import {
   useSetOfficialUseMutation,
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormRadioGroup, FormSwitchTab } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -243,7 +244,7 @@ const Translation = () => {
               //   </Button>
               // }
               mainButtonLabel={t['complete']}
-              mainButtonHandler={() => router.push(`/members/activation/${id}`)}
+              mainButtonHandler={() => router.push(`${ROUTES.CBS_MEMBER_ACTIVATION}/${id}`)}
             />
           </Container>
         </Box>

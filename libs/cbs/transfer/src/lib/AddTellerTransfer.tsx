@@ -21,6 +21,7 @@ import {
   useAppSelector,
   useSetTellerTransferDataMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormAmountInput, FormEditableTable, FormInput, FormTellerSelect } from '@coop/shared/form';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
@@ -115,7 +116,7 @@ export const AddTellerTransfer = () => {
       promise: setVaultTransfer({ data: filteredValues as TellerTransferInput }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getTellerTransactionListData']);
-        router.push('/transfer/teller-transfer/list');
+        router.push(ROUTES.CBS_TRANSFER_TELLER_LIST);
       },
     });
   };
@@ -126,7 +127,6 @@ export const AddTellerTransfer = () => {
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={`New Teller Transfer - ${featureCode.newTellerTransfer}`}
-            closeLink="/transfer/vault-transfer/list"
             // buttonLabel={t['addDepositAddBulkDeposit']}
             // buttonHandler={() => router.push('/transactions/deposit/add-bulk-deposit')}
           />
