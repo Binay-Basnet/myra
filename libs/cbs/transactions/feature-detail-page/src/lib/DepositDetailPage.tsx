@@ -9,6 +9,7 @@ import {
   SideBar,
   TransactionDetails,
 } from '../component';
+import { Note } from '../component/Note';
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
 
 export const DepositDetailPage = () => {
@@ -50,6 +51,9 @@ export const DepositDetailPage = () => {
           branch={depositDetailData?.transactionBranch as string}
           teller={depositDetailData?.teller as string}
         />
+
+        <Note note={depositDetailData?.note} />
+
         <GlTransaction
           totalDebit={String(amountConverter(depositDetailData?.totalDebit ?? 0))}
           totalCredit={String(amountConverter(depositDetailData?.totalCredit ?? 0))}

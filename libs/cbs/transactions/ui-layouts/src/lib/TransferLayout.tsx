@@ -22,17 +22,17 @@ const transactionSidebarColumns = [
     addLink: '/transfer/teller-transfer/add',
   },
   {
-    title: 'Service Center Cash Transfer',
+    title: 'transCashTransitTransfer',
+    link: '/transfer/cash-transit-transfer/list',
+    name: 'cash-transit-transfer',
+    addLink: '/transfer/cash-transit-transfer/add',
+  },
+  {
+    title: 'transServiceCenterTransfer',
     link: '/transfer/cash-transfer/list',
     name: 'cash-transfer',
     addLink: '/transfer/cash-transfer/add',
   },
-  // {
-  //   title: 'transferBranchTransfer',
-  //   link: '/transfer/branch-transfer',
-  //   name: 'branch-transfer',
-  //   // addLink: '/transactions/account-transfer/add',
-  // },
 ];
 
 const dropdownButtons = [
@@ -44,10 +44,14 @@ const dropdownButtons = [
     title: 'transferTellerTransfer',
     link: '/transfer/teller-transfer/add',
   },
-  // {
-  //   label: 'transferBranchTransfer',
-  //   link: '/transactions/account-transfer/add',
-  // },
+  {
+    title: 'transCashTransitTransfer',
+    link: '/transfer/cash-transit-transfer/add',
+  },
+  {
+    title: 'transServiceCenterTransfer',
+    link: '/transfer/cash-transfer/add',
+  },
 ];
 
 const reportColumn = [

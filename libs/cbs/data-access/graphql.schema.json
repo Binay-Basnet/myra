@@ -44581,6 +44581,18 @@
             "deprecationReason": null
           },
           {
+            "name": "profession",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "profilePic",
             "description": null,
             "args": [],
@@ -96825,8 +96837,8 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "UNION",
-              "name": "MemberOverviewBio",
+              "kind": "OBJECT",
+              "name": "IndividualBio",
               "ofType": null
             },
             "isDeprecated": false,
@@ -96911,6 +96923,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "strStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
               "ofType": null
             },
             "isDeprecated": false,

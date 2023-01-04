@@ -6,6 +6,7 @@ import { amountConverter, useTranslation } from '@coop/shared/utils';
 import {
   GlTransaction,
   MarketRepresentative,
+  Note,
   OtherDetails,
   PaymentDetails,
   SideBar,
@@ -56,6 +57,9 @@ export const WithdrawDetailPage = () => {
           branch={withdrawDetailData?.transactionBranch as string}
           teller={withdrawDetailData?.teller as string}
         />
+
+        <Note note={withdrawDetailData?.note} />
+
         <GlTransaction
           totalDebit={String(amountConverter(withdrawDetailData?.totalDebit ?? 0))}
           totalCredit={String(amountConverter(withdrawDetailData?.totalCredit ?? 0))}

@@ -1,6 +1,7 @@
 import {
   FeesAndCharges,
   GlTransaction,
+  Note,
   OtherDetails,
   PaymentDetails,
   ShareDetails,
@@ -15,6 +16,7 @@ export const Overview = () => {
       <FeesAndCharges charges={shareDetails?.charges} />
       <PaymentDetails paymentData={shareDetails?.paymentDetail} />
       <OtherDetails txnBranch={shareDetails?.transactionBranch} teller={shareDetails?.teller} />
+      <Note note={shareDetails?.note} />
       <GlTransaction
         tableData={shareDetails?.glTransactions}
         totalDebit={shareDetails?.totalDebit ?? '0'}

@@ -5211,6 +5211,7 @@ export type IndividualBio = {
   memberName?: Maybe<Scalars['String']>;
   mobile?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<Scalars['Localized']>;
+  profession?: Maybe<Scalars['String']>;
   profilePic?: Maybe<Scalars['String']>;
 };
 
@@ -11279,13 +11280,14 @@ export enum Share_Transaction_Direction {
 }
 
 export type StrDetailData = {
-  bio?: Maybe<MemberOverviewBio>;
+  bio?: Maybe<IndividualBio>;
   deposits?: Maybe<Array<Maybe<TransactionDetail>>>;
   loanAccount?: Maybe<Array<Maybe<LoanAccount>>>;
   memberType?: Maybe<KymMemberTypesEnum>;
   savingAccounts?: Maybe<Array<Maybe<DepositAccount>>>;
   strAccountDetails?: Maybe<CombinedAccountDetail>;
   strReason?: Maybe<Scalars['String']>;
+  strStatus?: Maybe<Scalars['Boolean']>;
   strTopology?: Maybe<Scalars['String']>;
   transactionDetails?: Maybe<Array<Maybe<AccountwiseTransactionDetail>>>;
   withdraw?: Maybe<Array<Maybe<TransactionDetail>>>;
@@ -15792,6 +15794,25 @@ export type SetServiceCenterCashTransferMutation = {
   transaction: {
     serviceCentreCashTransfer: {
       recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type SetCashInTransitTransferMutationVariables = Exact<{
+  data: TellerTransferInput;
+}>;
+
+export type SetCashInTransitTransferMutation = {
+  transaction: {
+    tellerTransfer: {
+      record?: string | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -24196,6 +24217,7 @@ export type GetShareDetailQuery = {
         teller?: string | null;
         totalCredit?: string | null;
         totalDebit?: string | null;
+        note?: string | null;
         member?: {
           id: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
@@ -24352,6 +24374,8 @@ export type GetTellerTransactionListDataQuery = {
           destProfilePic?: string | null;
           srcProfilePicUrl?: string | null;
           destProfilePicUrl?: string | null;
+          destBranch?: Record<'local' | 'en' | 'np', string> | null;
+          srcBranch?: Record<'local' | 'en' | 'np', string> | null;
           denomination?: Array<{
             value: CashValue;
             quantity: number;
@@ -24394,6 +24418,7 @@ export type TransactionDepositDetailQuery = {
         teller?: string | null;
         totalDebit?: string | null;
         totalCredit?: string | null;
+        note?: string | null;
         member?: {
           id: string;
           code: string;
@@ -24441,6 +24466,7 @@ export type TransactionWithdrawDetailQuery = {
         teller?: string | null;
         totalDebit?: string | null;
         totalCredit?: string | null;
+        note?: string | null;
         member?: {
           id: string;
           code: string;
@@ -24479,6 +24505,7 @@ export type TransactionAccountTransferDetailQuery = {
         teller?: string | null;
         totalDebit?: string | null;
         totalCredit?: string | null;
+        note?: string | null;
         member?: {
           id: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
@@ -24567,6 +24594,7 @@ export type LoanRepaymentDetailQuery = {
         teller?: string | null;
         totalDebit?: string | null;
         totalCredit?: string | null;
+        note?: string | null;
         member?: {
           id: string;
           code: string;
@@ -28522,6 +28550,38 @@ export const useSetServiceCenterCashTransferMutation = <TError = unknown, TConte
     ['setServiceCenterCashTransfer'],
     useAxios<SetServiceCenterCashTransferMutation, SetServiceCenterCashTransferMutationVariables>(
       SetServiceCenterCashTransferDocument
+    ),
+    options
+  );
+export const SetCashInTransitTransferDocument = `
+    mutation setCashInTransitTransfer($data: TellerTransferInput!) {
+  transaction {
+    tellerTransfer(data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetCashInTransitTransferMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetCashInTransitTransferMutation,
+    TError,
+    SetCashInTransitTransferMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetCashInTransitTransferMutation,
+    TError,
+    SetCashInTransitTransferMutationVariables,
+    TContext
+  >(
+    ['setCashInTransitTransfer'],
+    useAxios<SetCashInTransitTransferMutation, SetCashInTransitTransferMutationVariables>(
+      SetCashInTransitTransferDocument
     ),
     options
   );
@@ -39496,6 +39556,7 @@ export const GetShareDetailDocument = `
         }
         totalCredit
         totalDebit
+        note
       }
     }
   }
@@ -39678,6 +39739,8 @@ export const GetTellerTransactionListDataDocument = `
           destProfilePic
           srcProfilePicUrl
           destProfilePicUrl
+          destBranch
+          srcBranch
           denomination {
             value
             quantity
@@ -39751,6 +39814,7 @@ export const TransactionDepositDetailDocument = `
         }
         totalDebit
         totalCredit
+        note
       }
     }
   }
@@ -39806,6 +39870,7 @@ export const TransactionWithdrawDetailDocument = `
         }
         totalDebit
         totalCredit
+        note
       }
     }
   }
@@ -39867,6 +39932,7 @@ export const TransactionAccountTransferDetailDocument = `
         }
         totalDebit
         totalCredit
+        note
       }
     }
   }
@@ -39985,6 +40051,7 @@ export const LoanRepaymentDetailDocument = `
         }
         totalDebit
         totalCredit
+        note
       }
     }
   }

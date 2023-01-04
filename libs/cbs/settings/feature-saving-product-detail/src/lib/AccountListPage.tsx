@@ -77,7 +77,7 @@ export const AccountListPage = () => {
       >
         <SideBar />
       </Box>
-      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+      <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
         <Box display="flex" justifyContent="space-between" w="100%">
           <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
             Account List
@@ -98,6 +98,8 @@ export const AccountListPage = () => {
             Add Account
           </Button>
         </Box>
+      </Box>
+      <Box bg="background.500" ml="320px" p="s16">
         <Table
           isLoading={isLoading}
           data={rowData}

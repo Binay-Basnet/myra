@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 import { IoAdd } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Button, Column, Icon, Table, Text } from '@myra-ui';
+import { Box, Button, Icon, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { Id_Type, useGetLoanAccountListQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { getRouterQuery } from '@coop/shared/utils';
@@ -77,7 +78,7 @@ export const AccountListPage = () => {
       >
         <SideBar />
       </Box>
-      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+      <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
         <Box display="flex" justifyContent="space-between" w="100%">
           <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
             Account List
@@ -98,6 +99,8 @@ export const AccountListPage = () => {
             Add Account
           </Button>
         </Box>
+      </Box>
+      <Box bg="background.500" ml="320px" p="s16">
         <Table
           isLoading={isLoading}
           data={rowData}
