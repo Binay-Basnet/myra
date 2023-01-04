@@ -22,6 +22,7 @@ import {
   useSetIssueNewSlipMutation,
   WithdrawSlipIssueInput,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAgentSelect,
@@ -105,7 +106,7 @@ export const AddWithdrawSlipBook = () => {
       }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getAvailableSlipsList']);
-        router.push('/withdraw/withdraw-slip-book/list');
+        router.push(ROUTES.CBS_WITHDRAW_SLIP_BOOK_LIST);
       },
     });
   };
@@ -124,7 +125,9 @@ export const AddWithdrawSlipBook = () => {
       }),
       onSuccess: (res) => {
         queryClient.invalidateQueries(['getAvailableSlipsList']);
-        router.push(`/withdraw/withdraw-slip-book/print/${res?.withdrawSlip?.issueNew?.recordId}`);
+        router.push(
+          `${ROUTES.CBS_WITHDRAW_SLIP_BOOK_PRINT}?id=${res?.withdrawSlip?.issueNew?.recordId}`
+        );
       },
     });
   };

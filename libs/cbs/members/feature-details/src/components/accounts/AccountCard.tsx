@@ -5,6 +5,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import { AccountQRModal, Box, Divider, Icon, IconButton, Text } from '@myra-ui';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter, copyToClipboard } from '@coop/shared/utils';
 
 interface IAccountCardProps {
@@ -51,7 +52,7 @@ export const AccountCard = ({
                   fontSize="r1"
                   color="primary.500"
                   cursor="pointer"
-                  onClick={() => router.push(`/savings/details/${accountNumber}`)}
+                  onClick={() => router.push(`${ROUTES.CBS_SAVING_DETAILS}/${accountNumber}`)}
                 >
                   {accountName}
                 </Text>

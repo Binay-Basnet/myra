@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+
+import { asyncToast, Box, SettingsFooter, toast } from '@myra-ui';
 
 import {
   ShareTransferType,
   useGetSettingsShareTransferDataQuery,
   useSetSettingsShareTransferMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormCheckbox, FormSelect } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -39,7 +41,7 @@ export const ShareSettingsTransfer = () => {
         success: 'Saved',
         loading: 'Saving Changes ',
       },
-      onSuccess: () => router.push('/settings/general/share/transfer'),
+      onSuccess: () => router.push(ROUTES.SETTINGS_GENERAL_SHARE_TRANSFER),
       promise: mutateAsync(
         {
           data: {

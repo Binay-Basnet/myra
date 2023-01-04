@@ -19,6 +19,7 @@ import {
   useGetNewIdMutation,
   useSetLoanProductMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -345,7 +346,7 @@ export const SettingsLoanProductForm = () => {
         success: 'New Product Added',
         loading: 'Adding New Loan Product',
       },
-      onSuccess: () => router.push('/settings/general/loan-products'),
+      onSuccess: () => router.push(ROUTES.SETTINGS_GENERAL_LP_LIST),
       promise: mutateAsync({ id, data: updatedData as LoanProductInput }),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {

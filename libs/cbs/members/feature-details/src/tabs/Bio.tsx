@@ -106,7 +106,7 @@ export const Bio = () => {
             pl="s16"
             cursor="pointer"
             onClick={() => {
-              router.push(`/members/${memberType}/edit/${router.query['id'] as string}`);
+              router.push(`/cbs/members/${memberType}/edit/${router.query['id'] as string}`);
             }}
           >
             <Icon as={IoCreateOutline} />

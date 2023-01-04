@@ -4,13 +4,13 @@ import { useRouter } from 'next/router';
 import { Box, Grid, Icon, Text } from '@myra-ui';
 
 import {
-  Id_Type,
   NatureOfDepositProduct,
   ObjState,
   useGetAccountTableListMinimalQuery,
   useGetMemberDetailsOverviewQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 import { AccountList, UpcomingPaymentTable } from '../components';
@@ -21,11 +21,11 @@ export const Accounts = () => {
   const links = [
     {
       title: 'Account Open',
-      link: `/savings/account-open`,
+      link: ROUTES.CBS_ACCOUNT_OPEN_ADD,
     },
     {
       title: 'Account Close',
-      link: `/savings/account-close`,
+      link: ROUTES.CBS_ACCOUNT_CLOSE_ADD,
     },
   ];
   const memberDetails = useGetMemberDetailsOverviewQuery({
@@ -110,11 +110,7 @@ export const Accounts = () => {
                 h="58px"
                 pl="s16"
                 cursor="pointer"
-                onClick={() =>
-                  newId
-                    .mutateAsync({ idType: Id_Type.Account })
-                    .then((res) => router.push(`${item.link}/add/${res?.newId}?memberId=${id}`))
-                }
+                onClick={() => router.push(`${item.link}?memberId=${id}`)}
               >
                 <Icon as={IoAddOutline} />
 

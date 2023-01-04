@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import {
   GetLoanListQuery,
   LoanAccountEdge,
@@ -8,8 +11,7 @@ import {
   ObjState,
   useGetLoanListQuery,
 } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
-import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
+import { ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const LoanAccountList = () => {
@@ -121,7 +123,8 @@ const LoanTable = ({ data, isLoading, type, viewLink }: ILoanTable) => {
                   : [
                       {
                         title: 'Edit',
-                        onClick: (row) => router.push(`/loan/apply?id=${row.id}`),
+                        onClick: (row) =>
+                          router.push(`${ROUTES.CBS_LOAN_APPLICATIONS_ADD}?id=${row.id}`),
                       },
                       {
                         title: 'View Loan Application',
@@ -130,7 +133,7 @@ const LoanTable = ({ data, isLoading, type, viewLink }: ILoanTable) => {
                       {
                         title: 'View Loan Details',
                         onClick: (row) => {
-                          router.push(`/loan/applications/view?id=${row?.id}`);
+                          router.push(`${ROUTES.CBS_LOAN_APPLICATION_DETAILS}?id=${row?.id}`);
                         },
                       },
                     ]

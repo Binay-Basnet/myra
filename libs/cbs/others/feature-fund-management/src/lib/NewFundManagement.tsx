@@ -60,7 +60,7 @@ export const NewFundManagement = () => {
         success: 'Added profit to fund management',
       },
       promise: addProfitToFundManagement({ data: filteredValues as FundManagementInput }),
-      onSuccess: () => router.push('/others/fund-management/list'),
+      onSuccess: () => router.back(),
     });
   };
 
@@ -70,7 +70,7 @@ export const NewFundManagement = () => {
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={`New Profit to Fund Management - ${featureCode?.newProfitFundManagement}`}
-            closeLink="/others/fund-management/list"
+            // closeLink="/others/fund-management/list"
           />
         </Box>
 

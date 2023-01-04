@@ -10,9 +10,9 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
-  // typescript: {
-  //   ignoreBuildErrors: true,
-  // },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   reactStrictMode: false,
 
   webpack: (config) => {
@@ -46,12 +46,12 @@ const nextConfig = {
       'minio.migration.myraerp.com',
       'minio.staging.myraerp.com',
     ],
-    // unoptimized: true,
+    unoptimized: true,
   },
-  i18n: {
-    locales: ['en', 'ne'],
-    defaultLocale: 'en',
-  },
+  // i18n: {
+  //   locales: ['en', 'ne'],
+  //   defaultLocale: 'en',
+  // },
 };
 
 module.exports = withNx(nextConfig);

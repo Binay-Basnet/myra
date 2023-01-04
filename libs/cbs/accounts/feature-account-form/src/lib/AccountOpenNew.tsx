@@ -36,6 +36,7 @@ import {
   useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAgentSelect,
   FormAmountInput,
@@ -416,7 +417,7 @@ export const AccountOpenNew = () => {
           router.push(String(redirectPath));
           queryClient.invalidateQueries(['getAccountCheck']);
         } else {
-          router.push('/savings/list');
+          router.push(ROUTES.CBS_ACCOUNT_LIST);
         }
       },
       promise: mutateAsync({ id, data: updatedData as DepositLoanAccountInput }),

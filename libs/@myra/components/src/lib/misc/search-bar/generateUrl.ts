@@ -43,7 +43,7 @@ const CODES: Record<string, Record<string, Record<string, string>>> = {
     '02': {
       '01': 'account-open',
       '02': 'account-close',
-      '03': 'accounts',
+      '03': 'account-open',
       '04': 'products',
     },
     '03': {
@@ -61,7 +61,7 @@ const CODES: Record<string, Record<string, Record<string, string>>> = {
       '04': 'market-representative-transaction',
       '05': 'journal-vouchers',
       '06': 'market-representative',
-      '07': 'all-transaction',
+      '07': 'all-transactions',
     },
     '05': {
       '01': 'vault-transfer',
@@ -73,8 +73,9 @@ const CODES: Record<string, Record<string, Record<string, string>>> = {
       '02': 'withdraw-via-collector',
       '03': 'loan',
     },
+    // TODO
     '07': {
-      '01': 'withdraw-slip',
+      '01': 'withdraw-slip-book',
       '02': 'block-withdraw-slip-requests',
     },
     '08': {
@@ -89,9 +90,26 @@ const CODES: Record<string, Record<string, Record<string, string>>> = {
 
   '9': {
     '00': {
-      '02': 'charts-of-accounts',
-      '07': 'deposit-products',
-      '09': 'loan-products',
+      '01': 'service-center',
+      '02': 'coa',
+      '03': 'audit-log',
+      '04': 'members',
+      '05': 'members/kym-individual',
+      '06': 'members/kym-institution',
+      '07': 'members/kym-cooperative',
+      '08': 'members/kym-cooperative-union',
+      '09': 'share',
+      '10': 'share/issues',
+      '11': 'share/returns',
+      '12': 'transfer',
+      '13': 'savings/tds',
+      '14': 'saving-products',
+      '15': 'loan',
+      '16': 'loan/product-type',
+      '17': 'loan/valuator',
+      '18': 'loan-products',
+      '20': 'code-management',
+      '22': 'alternative-channels/charges',
     },
     '01': {
       '01': 'super-admin',
@@ -126,11 +144,11 @@ export const getPageUrl = (code: string) => {
       const menuLink = CODES[appCode][menuCode][pageCode];
 
       if (menuLink) {
-        // return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
-        return `/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
+        return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
+        // return `/${CBS_MENU_CODES[menuCode]}/${menuLink}/${ACTIONS_CODES[actionCode]}`;
       }
-      // return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
-      return `/${CBS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
+      return `/${APP_CODES[appCode]}/${CBS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
+      // return `/${CBS_MENU_CODES[menuCode]}/${ACTIONS_CODES[actionCode]}`;
     }
     if (parseInt(appCode, 10) === 9) {
       const menuLink = CODES[appCode][menuCode][pageCode];

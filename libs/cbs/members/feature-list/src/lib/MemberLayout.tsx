@@ -17,6 +17,7 @@ import {
   useGetGeneralMemberSettingsDataQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { TabColumn } from '@coop/myra/components';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
@@ -27,18 +28,18 @@ interface IMemberPageLayout {
 const memberColumns = [
   {
     title: 'memberList',
-    link: '/members/list',
+    link: ROUTES.CBS_MEMBER_LIST,
   },
 ];
 
 const settingsColumn = [
   {
     label: 'memberLayoutMemberSettings',
-    navigate: '/settings/general/members',
+    navigate: ROUTES.SETTINGS_GENERAL_MEMBERS,
   },
   // {
   //   label: 'memberLayoutKymSettings',
-  //   navigate: '/settings/general/members/kym-individual',
+  //   navigate: '/cbs/settings/general/members/kym-individual',
   // },
 ];
 
@@ -59,7 +60,7 @@ const reportColumn = [
   },
   // {
   //   label: 'memberLayoutInactiveMemberReport',
-  //   navigate: '/reports/cbs/members/activations/new',
+  //   navigate: '/cbs/reports/cbs/members/activations/new',
   // },
   {
     label: 'memberLayoutKymStatusReport',
@@ -147,21 +148,21 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
     if (item === 'INDIVIDUAL') {
       newId
         .mutateAsync({ idType: Id_Type.Kymindividual })
-        .then((res) => router.push(`/members/individual/add/${res?.newId}`));
+        .then((res) => router.push(`${ROUTES.CBS_MEMBER_IND_ADD}/${res?.newId}`));
     } else if (item === 'INSTITUTION') {
       newId
         .mutateAsync({ idType: Id_Type.Kyminstitutions })
-        .then((res) => router.push(`/members/institution/add/${res?.newId}`));
+        .then((res) => router.push(`${ROUTES.CBS_MEMBER_INS_ADD}/${res?.newId}`));
     } else if (item === 'COOPERATIVE') {
       newId
         .mutateAsync({ idType: Id_Type.Kymcooperative })
-        .then((res) => router.push(`/members/coop/add/${res?.newId}`));
+        .then((res) => router.push(`${ROUTES.CBS_MEMBER_COOP_ADD}/${res?.newId}`));
     } else {
       newId
         .mutateAsync({
           idType: Id_Type.Kymcooperativeunion,
         })
-        .then((res) => router.push(`/members/coop_union/add/${res?.newId}`));
+        .then((res) => router.push(`${ROUTES.CBS_MEMBER_COOP_UNION_ADD}/${res?.newId}`));
     }
   };
 
@@ -244,7 +245,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
             {t['corebankingSystems']}
           </Text>
 
-          <Link href="/members/list">
+          <Link href={ROUTES.CBS_MEMBER_LIST}>
             <Text lineHeight="125%" fontSize="l1" fontWeight="600" color="gray.800">
               {t['memberLayout']}
             </Text>

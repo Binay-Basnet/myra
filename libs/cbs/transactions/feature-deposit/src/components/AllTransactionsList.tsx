@@ -6,6 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useGetAllTransactionsListQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -76,7 +77,11 @@ export const AllTransactionsList = () => {
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
-        rowOnClick={(row) => router.push(`/transactions/all-transactions/view?id=${row?.node?.id}`)}
+        rowOnClick={(row) =>
+          router.push(
+            `${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${row?.node?.id}&txnType=${row?.node?.transactionType}`
+          )
+        }
         pagination={{
           total: data?.transaction?.listAllTransactions?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listAllTransactions?.pageInfo,

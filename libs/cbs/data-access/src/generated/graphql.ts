@@ -1012,6 +1012,7 @@ export type BadRequestError = {
 export type Bank = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
+  date?: Maybe<Scalars['Localized']>;
   id: Scalars['ID'];
   logo?: Maybe<Scalars['String']>;
   modifiedAt: Scalars['Time'];
@@ -1070,8 +1071,7 @@ export type BankAccountQueryListArgs = {
 export type BankAddResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<BankDataQuery>;
-  record: Bank;
-  recordId: Scalars['ID'];
+  record?: Maybe<Array<Maybe<Bank>>>;
 };
 
 export type BankBranch = Base & {
@@ -1181,14 +1181,13 @@ export type BankChequePaymentForAlternativeChannel = {
 };
 
 export type BankDataMutation = {
-  add: BankAddResult;
+  add?: Maybe<BankAddResult>;
   delete: BankDeleteResult;
 };
 
 
 export type BankDataMutationAddArgs = {
-  data?: InputMaybe<BankInput>;
-  id: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<BankInput>>>;
 };
 
 
@@ -1699,6 +1698,74 @@ export type CashInHandData = {
   percent?: Maybe<Scalars['String']>;
   todayValue?: Maybe<Scalars['String']>;
 };
+
+export type CashInTransitActionResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type CashInTransitConnection = {
+  edges?: Maybe<Array<Maybe<CashInTransitEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type CashInTransitEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<CashInTransitInfo>;
+};
+
+export type CashInTransitFilter = {
+  id?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<RequestStatus>;
+};
+
+export type CashInTransitInfo = {
+  approvalStatus: RequestStatus;
+  cashAmount: Scalars['String'];
+  denomination?: Maybe<Array<Maybe<DenominationValue>>>;
+  id: Scalars['String'];
+  receiverServiceCentreId: Scalars['String'];
+  receiverServiceCentreName: Scalars['String'];
+  senderServiceCentreId: Scalars['String'];
+  senderServiceCentreName: Scalars['String'];
+  transferDate: Scalars['Localized'];
+};
+
+export type CashInTransitInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  collectorName?: InputMaybe<Scalars['String']>;
+  denomination?: InputMaybe<Denomination>;
+  receiverServiceCentre?: InputMaybe<Scalars['String']>;
+  senderServiceCentre?: InputMaybe<Scalars['String']>;
+  senderTeller?: InputMaybe<Scalars['String']>;
+  transferMode?: InputMaybe<CashTransferMode>;
+};
+
+export type CashInTransitMutation = {
+  approve?: Maybe<CashInTransitActionResult>;
+  new?: Maybe<CashInTransitResult>;
+};
+
+
+export type CashInTransitMutationApproveArgs = {
+  requestId: Scalars['String'];
+};
+
+
+export type CashInTransitMutationNewArgs = {
+  data?: InputMaybe<CashInTransitInput>;
+};
+
+export type CashInTransitResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export enum CashInTransitTransferType {
+  Received = 'RECEIVED',
+  Sent = 'SENT'
+}
 
 export type CashLedgerReport = {
   balance?: Maybe<Scalars['String']>;
@@ -5343,6 +5410,7 @@ export type IndividualBio = {
   memberJoined?: Maybe<Scalars['Localized']>;
   memberName?: Maybe<Scalars['String']>;
   mobile?: Maybe<Scalars['String']>;
+  nationality?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<Scalars['Localized']>;
   profession?: Maybe<Scalars['String']>;
   profilePic?: Maybe<Scalars['String']>;
@@ -13019,6 +13087,7 @@ export type TransactionDetail = {
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   depositer?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
   remarks?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
 };
@@ -13053,6 +13122,7 @@ export type TransactionMutation = {
   agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
   bulkDeposit: BulkDepositResult;
+  cashInTransit?: Maybe<CashInTransitMutation>;
   deposit: DepositResult;
   endOfDay?: Maybe<EodResult>;
   readyBranchEOD?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -13144,6 +13214,7 @@ export type TransactionMyDayData = {
 export type TransactionQuery = {
   agentDetail?: Maybe<AgentRecord>;
   assignedMemberList: AssignedMembersListConnection;
+  cashInTransit: CashInTransitConnection;
   endOfDayDate: EodDate;
   eodStatus?: Maybe<EodSatusResult>;
   listAgent: AccountAgentListConnection;
@@ -13172,6 +13243,13 @@ export type TransactionQueryAgentDetailArgs = {
 export type TransactionQueryAssignedMemberListArgs = {
   filter?: InputMaybe<AssignedMemberListFiler>;
   pagination?: InputMaybe<Pagination>;
+};
+
+
+export type TransactionQueryCashInTransitArgs = {
+  filter?: InputMaybe<CashInTransitFilter>;
+  pagination?: InputMaybe<Pagination>;
+  transferType: CashInTransitTransferType;
 };
 
 

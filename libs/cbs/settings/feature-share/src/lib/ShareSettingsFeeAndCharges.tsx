@@ -10,6 +10,7 @@ import {
   useGetSettingsShareIssueChargesDataQuery,
   useSetSettingsShareIssueChargesMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { COASelectModal } from '@coop/shared/components';
 import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
@@ -73,7 +74,7 @@ export const ShareSettingsFeeAndCharges = () => {
         success: 'Saved',
         loading: 'Saving Changes ',
       },
-      onSuccess: () => router.push('/settings/general/share/issues'),
+      onSuccess: () => router.push(ROUTES.SETTINGS_GENERAL_SHARE_ISSUES),
       promise: mutateAsync(
         {
           data: {

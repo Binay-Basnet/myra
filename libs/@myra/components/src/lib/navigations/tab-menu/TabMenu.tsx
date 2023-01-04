@@ -11,6 +11,7 @@ import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 
 import { Icon } from '@myra-ui/foundations';
 
+import { ROUTES } from '@coop/cbs/utils';
 import { en, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -20,64 +21,64 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'members',
     icon: IoPerson,
-    link: '/members/list',
+    link: ROUTES.CBS_MEMBER_LIST,
     match: ['members'],
   },
   {
     title: 'share',
     icon: IoCubeOutline,
-    link: '/share/balance',
+    link: ROUTES.CBS_SHARE_BALANCE,
     match: ['share'],
   },
   {
     title: 'savings',
     icon: ImStack,
-    link: '/savings/list',
+    link: ROUTES.CBS_ACCOUNT_LIST,
     match: ['savings'],
   },
 
   {
     title: 'loan',
     icon: BsArrowLeftRight,
-    link: '/loan/applications',
+    link: ROUTES.CBS_LOAN_APPLICATIONS_LIST,
     match: ['loan'],
   },
 
   {
     title: 'transactions',
     icon: IoIosList,
-    link: '/transactions/deposit/list',
+    link: ROUTES.CBS_TRANS_DEPOSIT_LIST,
     match: ['transactions'],
   },
   {
     title: 'transfer',
     icon: AiOutlineSend,
-    link: '/transfer/vault-transfer/list',
-    match: ['transfer'],
+    link: ROUTES.CBS_TRANSFER_VAULT_LIST,
+    match: ['transfers'],
   },
 
   {
     title: 'requests',
     icon: IoMailUnreadOutline,
-    link: '/requests/member',
+    link: ROUTES.CBS_REQUESTS_MEMBER_LIST,
     match: ['requests'],
   },
   {
     title: 'withdrawSlip',
     icon: TbMailForward,
-    link: '/withdraw/withdraw-slip-book/list',
+    link: ROUTES.CBS_WITHDRAW_SLIP_BOOK_LIST,
     match: ['withdraw'],
   },
   {
     title: 'reports',
     icon: BsFileText,
-    link: '/reports/cbs/organizations',
+    link: ROUTES.CBS_REPORT_LIST,
     match: ['reports'],
   },
   {
     title: 'others',
     icon: IoPrismOutline,
-    link: '/others/market-representative/list',
+    link: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_LIST,
     match: ['others'],
   },
 ];
@@ -91,11 +92,11 @@ interface ITabMenuProps {
     match: string[];
   }[];
 
-  // Route Index is the index of the router?.asPath.split('/') that needs to be matched
+  // Route Index is the index of the router?.asPath.split('/cbs/') that needs to be matched
   routeIndex?: number;
 }
 
-export const TabMenu = ({ tabs = cbsTabs, routeIndex = 1 }: ITabMenuProps) => {
+export const TabMenu = ({ tabs = cbsTabs, routeIndex = 2 }: ITabMenuProps) => {
   const router = useRouter();
   const { t } = useTranslation();
 

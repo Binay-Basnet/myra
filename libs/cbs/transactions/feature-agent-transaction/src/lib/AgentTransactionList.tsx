@@ -104,7 +104,7 @@ export const AgentTransactionList = () => {
                   title: t['transDetailViewDetail'],
                   onClick: (row) => {
                     router.push(
-                      `/${getUrl(router.pathname, 2)}/view?id=${row?.agentId}&date=${row?.date}`
+                      `/${getUrl(router.pathname, 3)}/details?id=${row?.agentId}&date=${row?.date}`
                     );
                   },
                 },
@@ -132,7 +132,9 @@ export const AgentTransactionList = () => {
         columns={columns}
         rowOnClick={(row) =>
           router.push(
-            `/${getUrl(router.pathname, 2)}/view?id=${row?.node?.agentId}&date=${row?.node?.date}`
+            `/${getUrl(router.pathname, 3)}/details?id=${row?.node?.agentId}&date=${
+              row?.node?.date
+            }`
           )
         }
         noDataTitle="Market Representative Transaction"

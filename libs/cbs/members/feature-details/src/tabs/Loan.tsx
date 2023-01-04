@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 
 import { Box, Grid, Icon, Text } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
+
 import { LoanAccountList, LoanPaymentTable } from '../components';
 
 export const Loan = () => {
@@ -12,16 +14,16 @@ export const Loan = () => {
   const links = [
     {
       title: 'New Loan Application',
-      link: `/loan/apply?memberId=${id}`,
+      link: `${ROUTES.CBS_LOAN_APPLICATIONS_ADD}?memberId=${id}`,
     },
     {
       title: 'Loan Repayment',
-      link: `/loan/repayments/add?memberId=${id}`,
+      link: `${ROUTES.CBS_LOAN_REPAYMENTS_ADD}?memberId=${id}`,
     },
-    {
-      title: 'Payment Schedules',
-      link: `/loan?memberId=${id}`,
-    },
+    // {
+    //   title: 'Payment Schedules',
+    //   link: `/loan?memberId=${id}`,
+    // },
   ];
   return (
     <>

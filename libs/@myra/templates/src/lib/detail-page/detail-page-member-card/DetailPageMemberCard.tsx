@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, Text } from '@myra-ui/foundations';
+import { ROUTES } from '@coop/cbs/utils';
 
 export interface DetailPageMemberCardProps {
   id?: string;
@@ -29,7 +30,7 @@ export const DetailPageMemberCard = ({
       alignItems="center"
       gap="s8"
       _hover={{ cursor: 'pointer' }}
-      onClick={() => router.push(`/members/details?id=${id}`)}
+      onClick={() => router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${id}`)}
     >
       <Avatar src={profilePicUrl as string} size="md" name={name} />
       <Box display="flex" flexDir="column">

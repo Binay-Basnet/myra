@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Box } from '@myra-ui';
+
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
@@ -9,7 +11,7 @@ import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMe
 const tabList = [
   {
     title: 'settingsLoanGeneral',
-    to: '/settings/general/loan',
+    to: ROUTES.SETTINGS_GENERAL_LOAN,
   },
   // {
   //   title: 'settingsInsuranceGeneral',
@@ -17,11 +19,11 @@ const tabList = [
   // },
   {
     title: 'settingsProductTypeGeneral',
-    to: '/settings/general/loan/product-type',
+    to: ROUTES.SETTINGS_GENERAL_LOAN_PRODUCT_TYPE,
   },
   {
     title: 'settingsSideBarValuator',
-    to: '/settings/general/loan/valuator',
+    to: ROUTES.SETTINGS_GENERAL_LOAN_VALUATOR,
   },
 ];
 
