@@ -89,7 +89,7 @@ export const Sidebar = ({
         }}
         width="260px"
         height="calc(100vh - 110px)"
-        overflowY="scroll"
+        overflowY="auto"
         position="fixed"
       >
         <Box
