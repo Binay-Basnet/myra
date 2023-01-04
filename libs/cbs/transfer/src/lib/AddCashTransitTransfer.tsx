@@ -32,6 +32,10 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
+type CustomTellerTransferInput = Omit<TellerTransferInput, 'denominations'> & {
+  denominations: { value?: string; quantity?: number; amount?: string }[];
+};
+
 export const AddCashTransitTransfer = () => {
   const router = useRouter();
 
@@ -43,7 +47,7 @@ export const AddCashTransitTransfer = () => {
 
   const { mutateAsync } = useSetCashInTransitTransferMutation();
 
-  const methods = useForm<TellerTransferInput>({
+  const methods = useForm<CustomTellerTransferInput>({
     defaultValues: {
       transferType: TellerTransferType.CashInTransit,
       transferMode: CashTransferMode.Collected,
