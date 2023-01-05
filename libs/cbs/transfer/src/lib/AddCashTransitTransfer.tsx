@@ -7,32 +7,33 @@ import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 import {
   CashInTransitInput,
   CashTransferMode,
+  CashValue,
   useAppSelector,
   useSetCashInTransitTransferMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { featureCode } from '@coop/shared/utils';
 
-import { CashTransitInfo, TransferMode } from '../components';
+import { CashTransitInfo, Denomination, TransferMode } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddCashTransitTransferProps {}
 
-// const cashOptions: Record<string, string> = {
-//   '1000': CashValue.Cash_1000,
-//   '500': CashValue.Cash_500,
-//   '100': CashValue.Cash_100,
-//   '50': CashValue.Cash_50,
-//   '25': CashValue.Cash_25,
-//   '20': CashValue.Cash_20,
-//   '10': CashValue.Cash_10,
-//   '5': CashValue.Cash_5,
-//   '2': CashValue.Cash_2,
-//   '1': CashValue.Cash_1,
-// };
+const cashOptions: Record<string, string> = {
+  '1000': CashValue.Cash_1000,
+  '500': CashValue.Cash_500,
+  '100': CashValue.Cash_100,
+  '50': CashValue.Cash_50,
+  '25': CashValue.Cash_25,
+  '20': CashValue.Cash_20,
+  '10': CashValue.Cash_10,
+  '5': CashValue.Cash_5,
+  '2': CashValue.Cash_2,
+  '1': CashValue.Cash_1,
+};
 
-type CustomTellerTransferInput = Omit<CashInTransitInput, 'denominations'> & {
-  denominations: { value?: string; quantity?: number; amount?: string }[];
+type CustomTellerTransferInput = Omit<CashInTransitInput, 'denomination'> & {
+  denomination: { value?: string; quantity?: number; amount?: string }[];
 };
 
 export const AddCashTransitTransfer = () => {
@@ -54,17 +55,17 @@ export const AddCashTransitTransfer = () => {
     },
   });
 
-  const { getValues } = methods;
+  const { watch, getValues } = methods;
 
-  // const amount = watch('amount');
+  const amount = watch('amount');
 
-  // const denominations = watch('denomination');
+  const denominations = watch('denomination');
 
-  // const denominationTotal =
-  //   denominations?.reduce(
-  //     (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
-  //     0 as number
-  //   ) ?? 0;
+  const denominationTotal =
+    denominations?.reduce(
+      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
+      0 as number
+    ) ?? 0;
 
   const handleSubmit = () => {
     const values = getValues();
@@ -72,11 +73,11 @@ export const AddCashTransitTransfer = () => {
       ...values,
       senderTeller: user?.id,
       senderServiceCentre: branchData?.id,
-      // denomination:
-      //   values?.denomination?.map(({ value, quantity }) => ({
-      //     value: cashOptions[value as string],
-      //     quantity,
-      //   })) ?? [],
+      denomination:
+        values?.denomination?.map(({ value, quantity }) => ({
+          value: cashOptions[value as string],
+          quantity,
+        })) ?? [],
     };
 
     asyncToast({
@@ -111,7 +112,7 @@ export const AddCashTransitTransfer = () => {
               <Box minH="calc(100vh - 170px)" pb="s60">
                 <CashTransitInfo />
                 <TransferMode />
-                {/* <Denomination availableCash={user?.userBalance} /> */}
+                <Denomination availableCash={user?.userBalance} />
               </Box>
             </form>
           </FormProvider>
@@ -124,7 +125,7 @@ export const AddCashTransitTransfer = () => {
             <FormFooter
               mainButtonLabel="Done"
               mainButtonHandler={handleSubmit}
-              // isMainButtonDisabled={Number(denominationTotal) !== Number(amount)}
+              isMainButtonDisabled={Number(denominationTotal) !== Number(amount)}
             />
           </Container>
         </Box>

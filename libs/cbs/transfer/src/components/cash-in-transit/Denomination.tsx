@@ -29,7 +29,7 @@ export const Denomination = ({ availableCash }: DenominationProps) => {
   const method = useFormContext();
   const { watch } = method;
 
-  const denominations = watch('denominations');
+  const denominations = watch('denomination');
   const amount = watch('amount');
 
   const denominationTotal =
