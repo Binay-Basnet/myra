@@ -1,12 +1,13 @@
-import { useGetDashboardInfoQuery } from '@coop/cbs/data-access';
 import { Box, DetailCardStats, Grid, GridItem, Text } from '@myra-ui';
+
+import { useGetDashboardInfoQuery } from '@coop/cbs/data-access';
 
 export const MyCoop = () => {
   const { data } = useGetDashboardInfoQuery();
   const myCoopData = data?.dashboard?.dashboardInfo?.data?.coopInfo;
 
   return (
-    <Box display="flex" flexDir="column" gap="s16">
+    <Box display="flex" flexDir="column" gap="s8">
       <Box display="flex">
         <Text fontSize="s3" color="gray.600" fontWeight="600" textTransform="uppercase">
           My COOP

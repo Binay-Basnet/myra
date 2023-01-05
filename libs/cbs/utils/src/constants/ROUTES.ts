@@ -89,7 +89,8 @@ export const ROUTES = {
   SETTINGS_GENERAL_COA_DETAILS: '/settings/general/coa/details',
 
   SETTINGS_GENERAL_CODE_MANAGEMENT_ACCOUNTING: '/settings/general/code-management/accounting',
-  SETTINGS_GENERAL_CODE_MANAGEMENT_CBS: '/settings/general/code-management/core-banking-system',
+  SETTINGS_GENERAL_CODE_MANAGEMENT_CBS:
+    '/settings/general/code-management/core-banking-system/configure',
   SETTINGS_GENERAL_CODE_MANAGEMENT_INVENTORY: '/settings/general/code-management/inventory',
 
   SETTINGS_GENERAL_SAVINGS_TDS: '/settings/general/savings/tds/configure',
