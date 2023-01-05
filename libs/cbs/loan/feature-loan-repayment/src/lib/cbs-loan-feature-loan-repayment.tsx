@@ -375,7 +375,7 @@ export const LoanRepayment = () => {
                     return {
                       type: 'Loan Repayment',
                       total: amountConverter(result?.totalAmount || 0) as string,
-                      title: 'Loan Repaymet Successful',
+                      title: 'Loan Repayment Successful',
                       details: {
                         'Loan Repayment Id': (
                           <Text fontSize="s3" color="primary.500" fontWeight="600">
