@@ -29,6 +29,7 @@ const accountColumns = [
     link: ROUTES.CBS_LOAN_PRODUCTS_LIST,
   },
   { title: 'Declined Loan', link: ROUTES.CBS_LOAN_DECLINED_LIST },
+  { title: 'Closed Accounts', link: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS },
 ];
 const addButtoncolumns = [
   {

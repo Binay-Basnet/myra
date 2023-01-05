@@ -234,6 +234,9 @@ query getLoanList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
           }
           LoanAccountName
           createdAt
+          closedDate
+          appliedDate
+          approvedDate
         }
       }
       pageInfo {

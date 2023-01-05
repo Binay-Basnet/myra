@@ -15,6 +15,7 @@ import {
 import { Box, Container, FormHeader, Text } from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { AccorrdianAddMember } from '@coop/cbs/kym-form/formElements';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   KYMBasiccoopDetails,
   KYMDeclaration,
@@ -93,7 +94,7 @@ export const KYMIndividualPage = () => {
 
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
-          <FormHeader title={t['membersFormAddNewMembers']} closeLink="/members/list" />
+          <FormHeader title={t['membersFormAddNewMembers']} closeLink={ROUTES.CBS_MEMBER_LIST} />
         </Container>
       </Box>
 
