@@ -99,6 +99,7 @@ query getMemberIndividualData($id: ID!) {
       data {
         id
         code
+        type
         name
         profilePicUrl
         profilePic

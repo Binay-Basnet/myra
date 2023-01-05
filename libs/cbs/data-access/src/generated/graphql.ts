@@ -15734,7 +15734,7 @@ export type GetMemberIndividualDataQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: Record<"local"|"en"|"np",string> | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { id?: string | null, institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null } | null } | null } | { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: Record<"local"|"en"|"np",string> | null } | null } | null } | { data?: { formData?: { maritalStatus?: Record<"local"|"en"|"np",string> | null, maritalStatusId?: string | null, basicInformation?: { dateOfBirth?: Record<"local"|"en"|"np",string> | null, age?: number | null, gender?: Record<"local"|"en"|"np",string> | null } | null, contactDetails?: { email?: string | null } | null } | null } | null } | { data?: { formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null } | null } | null } | null } | null } } };
+export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: Record<"local"|"en"|"np",string> | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { id?: string | null, institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null } | null } | null } | { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: Record<"local"|"en"|"np",string> | null } | null } | null } | { data?: { formData?: { maritalStatus?: Record<"local"|"en"|"np",string> | null, maritalStatusId?: string | null, basicInformation?: { dateOfBirth?: Record<"local"|"en"|"np",string> | null, age?: number | null, gender?: Record<"local"|"en"|"np",string> | null } | null, contactDetails?: { email?: string | null } | null } | null } | null } | { data?: { formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null } | null } | null } | null } | null } } };
 
 export type GetIndividualKymEditDataQueryVariables = Exact<{
   id: Scalars['String'];
@@ -24552,6 +24552,7 @@ export const GetMemberIndividualDataDocument = `
       data {
         id
         code
+        type
         name
         profilePicUrl
         profilePic
