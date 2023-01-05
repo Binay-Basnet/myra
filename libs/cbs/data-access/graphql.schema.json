@@ -84337,6 +84337,18 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "branch",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "period",
             "description": null,
             "type": {
@@ -87027,18 +87039,6 @@
             "name": "memberClassificationReport",
             "description": null,
             "args": [
-              {
-                "name": "branch",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
               {
                 "name": "data",
                 "description": null,
