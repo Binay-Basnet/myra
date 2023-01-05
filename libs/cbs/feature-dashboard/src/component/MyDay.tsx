@@ -1,5 +1,6 @@
-import { useGetDashboardDayInfoQuery } from '@coop/cbs/data-access';
 import { Box, DetailCardStats, Grid, GridItem, Text } from '@myra-ui';
+
+import { useGetDashboardDayInfoQuery } from '@coop/cbs/data-access';
 
 export const MyDay = () => {
   const { data } = useGetDashboardDayInfoQuery();
@@ -27,7 +28,7 @@ export const MyDay = () => {
   // };
 
   return (
-    <Box display="flex" flexDir="column" gap="s16">
+    <Box display="flex" flexDir="column" gap="s8">
       <Box display="flex">
         <Text fontSize="s3" color="gray.600" fontWeight="600" textTransform="uppercase">
           My Day
