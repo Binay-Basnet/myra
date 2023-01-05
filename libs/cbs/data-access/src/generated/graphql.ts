@@ -9950,6 +9950,7 @@ export type MemberChequeDetails = {
 };
 
 export type MemberClassificationFilter = {
+  branch?: InputMaybe<Scalars['String']>;
   period: LocalizedDateFilter;
 };
 
@@ -10324,7 +10325,6 @@ export type MemberReportKymStatusReportArgs = {
 
 
 export type MemberReportMemberClassificationReportArgs = {
-  branch?: InputMaybe<Scalars['String']>;
   data: MemberClassificationFilter;
 };
 

@@ -12,7 +12,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 
 // type ClassifyBy =
 //   | 'All'
@@ -48,7 +48,6 @@ import { FormSelect } from '@coop/shared/form';
 // };
 
 const options = [
-  { label: 'All', value: 'all' },
   {
     label: 'Gender Wise',
     value: 'gender',
@@ -69,6 +68,7 @@ export const MemberClassificationReport = () => {
     {
       data: {
         period: filters?.period,
+        branch: filters?.branch,
       } as MemberClassificationFilter,
     },
     { enabled: !!filters }
@@ -97,8 +97,12 @@ export const MemberClassificationReport = () => {
         />
 
         <Report.Inputs>
-          <GridItem colSpan={2}>
+          <GridItem colSpan={1}>
             <FormSelect name="classifyBy" label="Classify By" isMulti options={options} />
+          </GridItem>
+
+          <GridItem colSpan={1}>
+            <FormBranchSelect name="branch" label="Select Branch" />
           </GridItem>
 
           <GridItem colSpan={2}>
@@ -147,21 +151,6 @@ const MemberClassificationTables = ({ data }: IMemberClassificationTableProps) =
 
   const { watch } = useFormContext();
   const classifyBy = watch('classifyBy') as { label: string; value: string }[];
-
-  if (classifyBy.some((c) => c.value === 'all')) {
-    return (
-      <Box>
-        {options
-          ?.filter((o) => o.value !== 'all')
-          ?.map((classify) => (
-            <MemberTable
-              data={report[classify.value as keyof typeof report]}
-              header={classify.label}
-            />
-          ))}
-      </Box>
-    );
-  }
 
   return (
     <Box>
