@@ -4,21 +4,14 @@ import { useRouter } from 'next/router';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import {
-  DateType,
-  RootState,
-  useAppSelector,
-  useGetJournalVoucherListQuery,
-} from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { useGetJournalVoucherListQuery } from '@coop/cbs/data-access';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureJournalVouchersListProps {}
 
 export const AccountingFeatureJournalVouchersList = () => {
-  const preferenceDate = useAppSelector((state: RootState) => state?.auth?.preference?.date);
-
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -39,12 +32,11 @@ export const AccountingFeatureJournalVouchersList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Entry Id',
-        accessorFn: (row) => row?.node?.id,
+        header: 'Transaction Code',
+        accessorFn: (row) => row?.node?.transactionCode,
       },
       {
-        accessorFn: (row) =>
-          preferenceDate === DateType.Bs ? row?.node?.date?.np : row?.node?.date?.en,
+        accessorFn: (row) => localizedDate(row?.node?.transactionDate),
         header: 'Date',
 
         // meta: {
