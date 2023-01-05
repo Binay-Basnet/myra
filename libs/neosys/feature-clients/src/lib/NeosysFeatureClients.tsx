@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { asyncToast, Avatar, Box, PageHeader, TablePopover, Text, toast } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useCreateDbMutation, useGetClientsListQuery } from '@coop/neosys-admin/data-access';
-import { useTranslation } from '@coop/shared/utils';
+import { getUrl, useTranslation } from '@coop/shared/utils';
 
 export const CLIENTS_TAB_ITEMS = [
   {
@@ -27,6 +28,7 @@ export const ClientsListPage = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const { mutateAsync } = useCreateDbMutation();
+  const router = useRouter();
 
   // const router = useRouter();
   const { data, isFetching } = useGetClientsListQuery();
@@ -132,6 +134,9 @@ export const ClientsListPage = () => {
         isLoading={isFetching}
         columns={columns}
         noDataTitle={t['member']}
+        rowOnClick={(row) => {
+          router.push(`/${getUrl(router.pathname, 1)}/view?id=${row?.id}`);
+        }}
         // pagination={{
         //   total: data?.members?.list?.totalCount ?? 'Many',
         //   pageInfo: data?.members?.list?.pageInfo,
