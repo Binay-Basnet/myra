@@ -29,7 +29,7 @@ export const Denomination = ({ availableCash }: DenominationProps) => {
   const method = useFormContext();
   const { watch } = method;
 
-  const denominations = watch('denominations');
+  const denominations = watch('denomination');
   const amount = watch('amount');
 
   const denominationTotal =
@@ -69,7 +69,7 @@ export const Denomination = ({ availableCash }: DenominationProps) => {
 
       <GridItem colSpan={3} display="flex" flexDirection="column" gap="s4">
         <FormEditableTable<PaymentTableType>
-          name="denominations"
+          name="denomination"
           columns={[
             {
               accessor: 'value',

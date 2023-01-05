@@ -5,26 +5,51 @@ import { GridItem } from '@myra-ui';
 import {
   BankGlDataEntry,
   BankGlStatementFilter,
+  LocalizedDateFilter,
+  MinMaxFilter,
   NatureOfBankTransaction,
+  useGetBankAccountListQuery,
   useGetBankGlStatementReportQuery,
-  useGetCoaAccountsUnderListQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
-import { amountConverter, featureCode } from '@coop/shared/utils';
+import { amountConverter } from '@coop/shared/utils';
+
+type Filters = Omit<BankGlStatementFilter, 'filter'> & {
+  filter: {
+    amount?: MinMaxFilter;
+    bank?: { label: string; value: string }[];
+    natureOfTransactions: NatureOfBankTransaction;
+  };
+};
 
 export const BankGLStatementReport = () => {
-  const [filters, setFilters] = useState<BankGlStatementFilter | null>(null);
+  const [filters, setFilters] = useState<Filters | null>(null);
 
-  const { data: bankListData } = useGetCoaAccountsUnderListQuery({
-    accountCode: featureCode.accountCode,
+  const bankIds =
+    filters?.filter?.bank && filters?.filter?.bank.length !== 0
+      ? filters?.filter?.bank?.map((t) => t.value)
+      : [];
+  const { data: bankListData } = useGetBankAccountListQuery({
+    pagination: { after: '', first: -1 },
   });
   const { data, isFetching } = useGetBankGlStatementReportQuery(
     {
-      data: filters as BankGlStatementFilter,
+      data: {
+        branchId: filters?.branchId as string,
+        period: filters?.period as LocalizedDateFilter,
+        filter: {
+          bank: bankIds,
+          amount:
+            filters?.filter?.amount?.max && filters?.filter?.amount?.min
+              ? filters?.filter?.amount
+              : null,
+          natureOfTransactions: filters?.filter?.natureOfTransactions,
+        },
+      },
     },
     { enabled: !!filters }
   );
@@ -124,7 +149,7 @@ export const BankGLStatementReport = () => {
         <Report.Filters>
           <Report.Filter title="Type of Transaction">
             <FormRadioGroup
-              name="filter.type"
+              name="filter.natureOfTransactions"
               options={[
                 { label: 'All', value: NatureOfBankTransaction.All },
                 { label: 'Deposit', value: NatureOfBankTransaction.Deposit },
@@ -134,18 +159,16 @@ export const BankGLStatementReport = () => {
             />
           </Report.Filter>
           <Report.Filter title="Balance Range">
-            <FormAmountFilter name="amount" />
+            <FormAmountFilter name="filter.amount" />
           </Report.Filter>
           <Report.Filter title="Bank">
             <FormSelect
               isMulti
-              options={bankListData?.settings?.chartsOfAccount?.accountsUnder?.data?.map(
-                (bank) => ({
-                  label: bank?.name?.local as string,
-                  value: bank?.id as string,
-                })
-              )}
-              name="bank"
+              options={bankListData?.accounting?.bankAccounts?.list?.edges?.map((bank) => ({
+                label: bank?.node?.bankName as string,
+                value: bank?.node?.id as string,
+              }))}
+              name="filter.bank"
             />
           </Report.Filter>
         </Report.Filters>

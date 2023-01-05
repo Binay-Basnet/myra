@@ -1,0 +1,66 @@
+query getTransferDetail($transferID: ID!) {
+  transaction {
+    transferDetail(transferID: $transferID) {
+      data {
+        ID
+        transferCode
+        transferType
+        transferState
+        srcTeller
+        amount
+        totalBalance
+        destTeller
+        date
+        srcBranch
+        destBranch
+        srcProfilePic
+        srcProfilePicUrl
+        glTransaction {
+          account
+          serviceCenter
+          debit
+          credit
+        }
+        totalCredit
+        totalDebit
+        note
+      }
+    }
+  }
+}
+
+query getCashInTransitList(
+  $transferType: CashInTransitTransferType!
+  $filter: CashInTransitFilter
+  $pagination: Pagination
+) {
+  transaction {
+    cashInTransit(transferType: $transferType, filter: $filter, pagination: $pagination) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          id
+          senderServiceCentreId
+          senderServiceCentreName
+          receiverServiceCentreId
+          receiverServiceCentreName
+          approvalStatus
+          cashAmount
+          transferDate
+          denomination {
+            value
+            quantity
+            amount
+          }
+        }
+      }
+    }
+  }
+}

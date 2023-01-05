@@ -26,6 +26,7 @@ import {
   DepositInput,
   DepositPaymentType,
   InstallmentState,
+  KymMemberTypesEnum,
   NatureOfDepositProduct,
   ObjState,
   useAppSelector,
@@ -422,7 +423,9 @@ export const AddDeposit = () => {
                           </Box>
                         </Grid>
 
-                        <SuspiciousTransaction />
+                        {memberDetailData?.type === KymMemberTypesEnum.Individual && (
+                          <SuspiciousTransaction />
+                        )}
 
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70">
@@ -457,7 +460,9 @@ export const AddDeposit = () => {
                           />
                         </Grid>
 
-                        <SuspiciousTransaction />
+                        {memberDetailData?.type === KymMemberTypesEnum.Individual && (
+                          <SuspiciousTransaction />
+                        )}
 
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">

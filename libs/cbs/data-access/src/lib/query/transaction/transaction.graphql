@@ -421,3 +421,106 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
     }
   }
 }
+
+query getSTRTransactionDetail($transactionId: ID!) {
+  transaction {
+    strTransactionDetail(transactionId: $transactionId) {
+      data {
+        memberType
+        strStatus
+        bio {
+          memberName
+          profilePic
+          memberCode
+          memberJoined
+          dob
+          gender
+          mobile
+          email
+          currentAddress
+          permanentAddress
+          maritalStatus
+          profession
+          nationality
+          familyMembers {
+            relationship
+            fullName
+            dob
+          }
+          identificationDetail {
+            id
+            idNo
+            idType
+            place
+            date
+            additionalFields {
+              id
+              fieldId
+              value
+            }
+          }
+          docs {
+            key
+            value
+          }
+        }
+        strAccountDetails {
+          id
+          natureOfAccount
+          natureOfOwnership
+          nameOfDirector
+          accountOpenDate
+        }
+        savingAccounts {
+          id
+          accountName
+          product {
+            nature
+          }
+          balance
+        }
+        transactionDetails {
+          accountNo
+          year
+          drTransactionNo
+          drTransactionAmount
+          crTransactionNo
+          crTransactionAmount
+          closingBalance
+        }
+        deposits {
+          id
+          date
+          transactionCode
+          depositer
+          amount
+          remarks
+        }
+        withdraw {
+          id
+          date
+          transactionCode
+          depositer
+          amount
+          remarks
+        }
+        loanAccount {
+          id
+          LoanAccountName
+          product {
+            id
+            productName
+          }
+          totalSanctionedAmount
+          remainingBalance
+          remainingInterestTillDate
+        }
+        strReason
+        strTopology
+      }
+      error {
+        ...QueryError
+      }
+    }
+  }
+}

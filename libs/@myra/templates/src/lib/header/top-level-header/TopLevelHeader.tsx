@@ -499,7 +499,7 @@ export const TopLevelHeader = () => {
                   >
                     <PopoverBody p={0}>
                       <Box display="flex-column" gridTemplateColumns="repeat(3,1fr)" gap="s8">
-                        <AppSwitcherIconWrapper onClick={() => router.push('/members/list')}>
+                        <AppSwitcherIconWrapper onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}>
                           <Image width={32} height={32} src="/cbs.svg" alt="Core Banking System" />
                           <AppSwitcherText>{t['corebankingSystems']}</AppSwitcherText>
                         </AppSwitcherIconWrapper>
@@ -512,7 +512,7 @@ export const TopLevelHeader = () => {
                           />
                           <AppSwitcherText> {t['inventoryManagement']}</AppSwitcherText>
                         </AppSwitcherIconWrapper>
-                        <AppSwitcherIconWrapper onClick={() => router.push('/members/list')}>
+                        <AppSwitcherIconWrapper onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}>
                           <Image
                             height={32}
                             width={32}
@@ -545,7 +545,7 @@ export const TopLevelHeader = () => {
                       <Divider my="s8" />
                       <Box>
                         <AppSwitcherIconWrapper
-                          onClick={() => router.push('/settings/general/audit-log')}
+                          onClick={() => router.push(ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST)}
                         >
                           <Image width={32} height={32} src="/settings.svg" alt="Settings" />
                           <AppSwitcherText>{t['settings']}</AppSwitcherText>

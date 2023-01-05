@@ -5,13 +5,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import {
+  CashInTransitInput,
   CashTransferMode,
   CashValue,
-  TellerTransferInput,
-  TellerTransferType,
   useAppSelector,
   useSetCashInTransitTransferMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode } from '@coop/shared/utils';
 
 import { CashTransitInfo, Denomination, TransferMode } from '../components';
@@ -32,8 +32,8 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
-type CustomTellerTransferInput = Omit<TellerTransferInput, 'denominations'> & {
-  denominations: { value?: string; quantity?: number; amount?: string }[];
+type CustomTellerTransferInput = Omit<CashInTransitInput, 'denomination'> & {
+  denomination: { value?: string; quantity?: number; amount?: string }[];
 };
 
 export const AddCashTransitTransfer = () => {
@@ -49,10 +49,9 @@ export const AddCashTransitTransfer = () => {
 
   const methods = useForm<CustomTellerTransferInput>({
     defaultValues: {
-      transferType: TellerTransferType.CashInTransit,
       transferMode: CashTransferMode.Collected,
-      srcTellerID: [user?.firstName?.local, user?.lastName?.local].join(' '),
-      srcBranch: branchData?.name,
+      senderTeller: [user?.firstName?.local, user?.lastName?.local].join(' '),
+      senderServiceCentre: branchData?.name,
     },
   });
 
@@ -60,7 +59,7 @@ export const AddCashTransitTransfer = () => {
 
   const amount = watch('amount');
 
-  const denominations = watch('denominations');
+  const denominations = watch('denomination');
 
   const denominationTotal =
     denominations?.reduce(
@@ -72,10 +71,10 @@ export const AddCashTransitTransfer = () => {
     const values = getValues();
     const updatedData = {
       ...values,
-      srcTellerID: user?.id,
-      srcBranch: branchData?.id,
-      denominations:
-        values?.denominations?.map(({ value, quantity }) => ({
+      senderTeller: user?.id,
+      senderServiceCentre: branchData?.id,
+      denomination:
+        values?.denomination?.map(({ value, quantity }) => ({
           value: cashOptions[value as string],
           quantity,
         })) ?? [],
@@ -87,12 +86,12 @@ export const AddCashTransitTransfer = () => {
         loading: 'Adding Cash In Transit Transfer',
         success: 'Cash In Transit Transfer Added',
       },
-      promise: mutateAsync({ data: updatedData as TellerTransferInput }),
+      promise: mutateAsync({ data: updatedData as CashInTransitInput }),
       onSuccess: () => {
-        queryClient.invalidateQueries(['getTellerTransactionListData']);
+        queryClient.invalidateQueries(['getCashInTransitList']);
         queryClient.invalidateQueries(['getMe']);
 
-        router.push('/transfer/cash-transit-transfer/list');
+        router.push(ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST);
       },
     });
   };
@@ -103,7 +102,7 @@ export const AddCashTransitTransfer = () => {
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={`New Cash in Transit - ${featureCode.newVaultTransfer}`}
-            closeLink="/transfer/cash-transit-transfer/list"
+            closeLink={ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST}
           />
         </Box>
 

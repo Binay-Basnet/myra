@@ -44,9 +44,9 @@ export const PathBar = ({ paths, button }: PathBarProps) => {
               fontSize="r1"
               color="gray.800"
               fontWeight="500"
-              cursor="pointer"
+              cursor={path.link ? 'pointer' : 'auto'}
               onClick={() => {
-                router.push(path.link);
+                path.link && router.push(path.link);
               }}
             >
               {path.label}

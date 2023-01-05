@@ -167,6 +167,10 @@ export const AddWithdraw = () => {
       return 0;
     }
 
+    if (!selectedAccount?.product?.withdrawRestricted) {
+      return 0;
+    }
+
     const withdrawPenalty = selectedAccount?.product?.withdrawPenalty;
 
     let tempFine = 0;

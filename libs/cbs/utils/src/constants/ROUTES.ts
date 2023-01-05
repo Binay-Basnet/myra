@@ -54,8 +54,12 @@ export const ROUTES = {
   CBS_TRANSFER_BRANCH_LIST: '/cbs/transfers/branch-transfer/list',
   CBS_TRANSFER_CASH_TRANSFER_ADD: '/cbs/transfers/cash-transfer/add',
   CBS_TRANSFER_CASH_TRANSFER_LIST: '/cbs/transfers/cash-transfer/list',
-  CBS_TRANSFER_BRANCH_TRANSFER_LIST: '/cbs/transfers/brancg-transfer/list',
-  CBS_TRANSFER_BRANCH_TRANSFER_ADD: '/cbs/transfers/brancg-transfer/add',
+  CBS_TRANSFER_BRANCH_TRANSFER_LIST: '/cbs/transfers/branch-transfer/list',
+  CBS_TRANSFER_BRANCH_TRANSFER_ADD: '/cbs/transfers/branch-transfer/add',
+  CBS_TRANSFER_SERVICE_TRANSFER_LIST: '/cbs/transfers/service-transfer/list',
+  CBS_TRANSFER_SERVICE_TRANSFER_ADD: '/cbs/transfers/service-transfer/add',
+  CBS_TRANSFER_CASH_IN_TRANSIT_ADD: '/cbs/transfers/cash-transit-transfer/add',
+  CBS_TRANSFER_CASH_IN_TRANSIT_LIST: '/cbs/transfers/cash-transit-transfer/list',
 
   CBS_REQUESTS_MEMBER_LIST: '/cbs/requests/member/list',
   CBS_REQUESTS_WITHDRAW_VIA_COLLECTOR_LIST: '/cbs/requests/withdraw-via-collector/list',
@@ -160,4 +164,7 @@ export const ROUTES = {
   CBS_ACCOUNT_TRANSFER_LIST: '/cbs/savings/account-transfer/list',
   CBS_ACCOUNT_TRANSFER_ADD: '/cbs/savings/account-transfer/add',
   CBS_WITHDRAW_SLIP_BOOK_PRINT: '/cbs/withdraw/withdraw-slip-book/print',
+
+  CBS_LOAN_CLOSED_ACCOUNTS: '/cbs/loan/closed-accounts/list',
+  CBS_LOAN_APPLICATIONS_EDIT: '/cbs/loan/applications/edit',
 } as const;

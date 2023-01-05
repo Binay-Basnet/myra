@@ -5,7 +5,7 @@ import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 
 interface ILoanTable {
   data: GetLoanListQuery | undefined;
@@ -13,9 +13,17 @@ interface ILoanTable {
   type: LoanObjState;
   viewLink: string;
   isDisbured?: boolean;
+  isClosed?: boolean;
 }
 
-export const LoanTable = ({ data, isLoading, type, viewLink, isDisbured }: ILoanTable) => {
+export const LoanTable = ({
+  data,
+  isLoading,
+  type,
+  viewLink,
+  isDisbured,
+  isClosed,
+}: ILoanTable) => {
   const router = useRouter();
 
   const rowData = useMemo<LoanAccountEdge[]>(
@@ -73,9 +81,17 @@ export const LoanTable = ({ data, isLoading, type, viewLink, isDisbured }: ILoan
       },
       {
         id: 'loan Account Creation Date id',
-        header: () => (isDisbured ? 'Account Opened Date' : 'Loan Applied Date'),
+        header: () =>
+          isDisbured
+            ? 'Account Opened Date'
+            : isClosed
+            ? 'Account Closed Date'
+            : 'Loan Applied Date',
         accessorFn: (row) => row?.node?.createdAt,
-        cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
+        cell: (props) =>
+          isClosed
+            ? localizedDate(props.row?.original?.node?.closedDate)
+            : localizedDate(props?.row?.original?.node?.appliedDate),
       },
       {
         id: '_actions',
@@ -85,10 +101,15 @@ export const LoanTable = ({ data, isLoading, type, viewLink, isDisbured }: ILoan
             <TablePopover
               node={props.row.original.node}
               items={
-                type === LoanObjState.Cancelled || type === LoanObjState.Disbursed
+                type === LoanObjState.Cancelled ||
+                type === LoanObjState.Disbursed ||
+                type === LoanObjState.Completed
                   ? [
                       {
-                        title: 'View Loan Application',
+                        title:
+                          type === LoanObjState.Disbursed || type === LoanObjState.Completed
+                            ? 'View Loan Details'
+                            : 'View Loan Application',
                         onClick: (row) => router.push(`${viewLink}?id=${row.id}`),
                       },
                     ]
@@ -96,7 +117,7 @@ export const LoanTable = ({ data, isLoading, type, viewLink, isDisbured }: ILoan
                       {
                         title: 'Edit',
                         onClick: (row) =>
-                          router.push(`${ROUTES.CBS_LOAN_APPLICATION_DETAILS}?id=${row.id}`),
+                          router.push(`${ROUTES.CBS_LOAN_APPLICATIONS_EDIT}?id=${row.id}`),
                       },
                       {
                         title: 'View Loan Application',
@@ -130,7 +151,7 @@ export const LoanTable = ({ data, isLoading, type, viewLink, isDisbured }: ILoan
       rowOnClick={(row) => router.push(`${viewLink}?id=${row?.node?.id}`)}
       pagination={{
         total: data?.loanAccount?.list?.totalCount ?? 'Many',
-        pageInfo: data?.loanAccount.list?.pageInfo,
+        pageInfo: data?.loanAccount?.list?.pageInfo,
       }}
     />
   );

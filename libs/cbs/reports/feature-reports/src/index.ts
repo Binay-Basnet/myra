@@ -4,6 +4,7 @@ export * from './lib/deposit/AccountOpeningReport';
 export * from './lib/deposit/InterestPostingReport';
 export * from './lib/deposit/InterestTaxReport';
 export * from './lib/deposit/SavingStatementReport';
+export * from './lib/deposit/STRDetail';
 export * from './lib/deposit/SuspiciousTransactionReport';
 export * from './lib/deposit/TTRReport';
 export * from './lib/LedgerReport';

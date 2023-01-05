@@ -45,6 +45,7 @@ export const NeosysFeatureClientsAdd = () => {
       ],
     },
   });
+  const { clearErrors } = methods;
 
   const { mutateAsync } = useAddNewClientMutation();
 
@@ -91,6 +92,7 @@ export const NeosysFeatureClientsAdd = () => {
               }),
               onError: (error) => {
                 if (error.__typename === 'ValidationError') {
+                  clearErrors();
                   Object.keys(error.validationErrorMsg).map((key) =>
                     methods.setError(key as keyof OrganizationClientInput, {
                       message: error.validationErrorMsg[key][0] as string,

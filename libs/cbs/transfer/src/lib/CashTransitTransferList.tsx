@@ -2,88 +2,76 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { Box, PageHeader, Text } from '@myra-ui';
+import { PageHeader } from '@myra-ui';
 import { ApprovalStatusCell, Column, Table } from '@myra-ui/table';
 
 import {
-  TellerActivityEntry,
-  TellerActivityState,
-  TellerTransferType,
-  useGetTellerTransactionListDataQuery,
+  CashInTransitTransferType,
+  RequestStatus,
+  useGetCashInTransitListQuery,
 } from '@coop/cbs/data-access';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
-
-import { TellerTransferApproveModal } from '../components';
 
 /* eslint-disable-next-line */
 export interface CashTransitTransferProps {}
 
-const tellerActivityVariant: Record<TellerActivityState, 'success' | 'failure' | 'pending'> = {
-  [TellerActivityState.Approved]: 'success',
-  [TellerActivityState.Pending]: 'pending',
-  [TellerActivityState.Cancelled]: 'failure',
+const tellerActivityVariant: Record<RequestStatus, 'success' | 'failure' | 'pending'> = {
+  [RequestStatus.Approved]: 'success',
+  [RequestStatus.Pending]: 'pending',
+  [RequestStatus.Declined]: 'failure',
 };
+
+const CASH_IN_TRANSIT_TAB_ITEMS = [
+  {
+    title: 'Sent',
+    key: CashInTransitTransferType.Sent,
+  },
+  {
+    title: 'Received',
+    key: CashInTransitTransferType.Received,
+  },
+];
 
 export const CashTransitTransferList = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const modalProps = useDisclosure();
 
-  const { data, isFetching } = useGetTellerTransactionListDataQuery(
+  const { data, isFetching } = useGetCashInTransitListQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
-      filter: {
-        type: [TellerTransferType.CashInTransit],
-      },
+      transferType: (router.query['objState'] ??
+        CashInTransitTransferType.Sent) as CashInTransitTransferType,
     },
     {
       staleTime: 0,
     }
   );
 
-  const rowData = useMemo(() => data?.transaction?.listTellerTransaction?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.transaction?.cashInTransit?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         header: 'ID',
-        accessorFn: (row) => row?.node?.transferCode,
+        accessorFn: (row) => row?.node?.id,
       },
       {
-        accessorFn: (row) =>
-          row?.node?.transferType === TellerTransferType.VaultToCash
-            ? row?.node?.destTeller?.local
-            : row?.node?.srcTeller?.local,
         header: 'Sender Service Center',
-        cell: (props) => (
-          <Box display="flex" alignItems="center" gap="s12">
-            <Text
-              fontSize="s3"
-              textTransform="capitalize"
-              textOverflow="ellipsis"
-              overflow="hidden"
-            >
-              {props.getValue() as string}
-            </Text>
-          </Box>
-        ),
+        accessorFn: (row) => row?.node?.senderServiceCentreName,
       },
       {
         header: 'Receiver Service Center',
-
-        accessorFn: (row) => row?.node?.destBranch?.local,
-        meta: {
-          isNumeric: true,
-        },
+        accessorFn: (row) => row?.node?.receiverServiceCentreName,
       },
       {
         header: 'Approval Status',
-        accessorFn: (row) => row?.node?.transferState,
+        accessorFn: (row) => row?.node?.approvalStatus,
         cell: (props) => (
           <ApprovalStatusCell
-            status={props.row.original?.node?.transferState as string}
+            status={props.row.original?.node?.approvalStatus as string}
             variant={
-              tellerActivityVariant[props.row.original?.node?.transferState as TellerActivityState]
+              tellerActivityVariant[props.row.original?.node?.approvalStatus as RequestStatus]
             }
           />
         ),
@@ -91,14 +79,14 @@ export const CashTransitTransferList = () => {
       {
         header: 'Cash Amount',
 
-        accessorFn: (row) => row?.node?.amount,
+        accessorFn: (row) => row?.node?.cashAmount,
         meta: {
           isNumeric: true,
         },
       },
       {
         header: 'Transfer Date',
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => row?.node?.transferDate?.local?.split(' ')[0] ?? 'N/A',
       },
       // {
       //   id: '_actions',
@@ -117,32 +105,32 @@ export const CashTransitTransferList = () => {
     [t]
   );
 
-  const selectedTransfer = rowData?.find(
-    (transfer) => transfer?.node?.ID === router.query['id']
-  )?.node;
+  // const selectedTransfer = rowData?.find(
+  //   (transfer) => transfer?.node?.id === router.query['id']
+  // )?.node;
 
   return (
     <>
       <PageHeader
         heading={`Cash in Transit Transfer - ${featureCode.vaultTransferList}`}
-        // tabItems={tabList}
+        tabItems={CASH_IN_TRANSIT_TAB_ITEMS}
       />
 
       <Table
         data={rowData}
-        getRowId={(row) => String(row?.node?.ID)}
+        getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.transaction?.listTellerTransaction?.totalCount ?? 'Many',
-          pageInfo: data?.transaction?.listTellerTransaction?.pageInfo,
+          total: data?.transaction?.cashInTransit?.totalCount ?? 'Many',
+          pageInfo: data?.transaction?.cashInTransit?.pageInfo,
         }}
         noDataTitle="cash in transit transfer list"
         rowOnClick={(row) => {
           router.push(
             {
               query: {
-                id: row?.node?.ID,
+                id: row?.node?.id,
               },
             },
             undefined,
@@ -152,10 +140,10 @@ export const CashTransitTransferList = () => {
         }}
       />
 
-      <TellerTransferApproveModal
+      {/* <TellerTransferApproveModal
         transfer={selectedTransfer as TellerActivityEntry}
         approveModal={modalProps}
-      />
+      /> */}
     </>
   );
 };

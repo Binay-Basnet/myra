@@ -267,6 +267,10 @@ export const SearchBar = () => {
 
             {searchAction === 'SIMPLE' || searchAction === 'USER' ? (
               <InputRightElement
+                onClick={() => {
+                  setInputSearch('');
+                  setSearchAction('FOCUS');
+                }}
                 cursor="pointer"
                 onMouseDown={(e) => e.preventDefault()}
                 color="gray.800"

@@ -9,6 +9,7 @@ import {
   ServiceCentreCashTransferInput,
   useSetServiceCenterCashTransferMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode } from '@coop/shared/utils';
 
 import { CashTransferTotalCard, LedgerTable, ServiceCenterTable } from '../components';
@@ -49,7 +50,7 @@ export const AddCashTransfer = () => {
       },
       promise: mutateAsync({ data: updatedData as ServiceCentreCashTransferInput }),
       onSuccess: () => {
-        router.push('/transfer/cash-transfer/list');
+        router.push(ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_LIST);
       },
     });
   };
@@ -60,7 +61,7 @@ export const AddCashTransfer = () => {
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={`Service Center Cash Transfer - ${featureCode.newVaultTransfer}`}
-            closeLink="/transfer/cash-transfer/list"
+            closeLink={ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_LIST}
           />
         </Box>
 

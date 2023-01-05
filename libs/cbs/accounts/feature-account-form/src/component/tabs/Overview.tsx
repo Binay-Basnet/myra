@@ -103,7 +103,7 @@ export const Overview = () => {
       label: 'Support Multiple Account',
       value: accountDetails?.supportMultiple ? 'Yes' : 'No',
     },
-    { label: 'Insurance', value: accountDetails?.allowLoan ? 'Yes' : 'No' },
+    // { label: 'Insurance', value: accountDetails?.allowLoan ? 'Yes' : 'No' },
     { label: 'ATM Facility', value: accountDetails?.atmFacility ? 'Yes' : 'No' },
   ];
 
