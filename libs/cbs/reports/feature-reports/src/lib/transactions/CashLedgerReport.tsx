@@ -11,10 +11,9 @@ import {
   useGetSettingsUserListDataQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate } from '@coop/cbs/utils';
-import { FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormDatePicker, FormRadioGroup, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type Filter = {
@@ -46,7 +45,10 @@ export const CashLedgersReport = () => {
     {
       data: {
         branchId: filters?.branchId as string,
-        period: filters?.period as LocalizedDateFilter,
+        period: {
+          from: filters?.period?.from,
+          to: filters?.period?.from,
+        } as LocalizedDateFilter,
         filter: {
           ...filters?.filter,
           userIds: UserIds,
@@ -85,7 +87,7 @@ export const CashLedgersReport = () => {
             <FormBranchSelect name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange label="Date Period" />
+            <FormDatePicker name="period.from" label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
