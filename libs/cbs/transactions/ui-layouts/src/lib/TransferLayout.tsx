@@ -28,12 +28,12 @@ const transactionSidebarColumns = [
   //   name: 'cash-transfer',
   //   addLink: ROUTES.CBS_TRANSFER_CASH_TRANSFER_ADD,
   // },
-  {
-    title: 'transferBranchTransfer',
-    link: ROUTES.CBS_TRANSFER_BRANCH_TRANSFER_LIST,
-    name: 'branch-transfer',
-    addLink: ROUTES.CBS_TRANSFER_BRANCH_TRANSFER_ADD,
-  },
+  // {
+  //   title: 'transferBranchTransfer',
+  //   link: ROUTES.CBS_TRANSFER_BRANCH_TRANSFER_LIST,
+  //   name: 'branch-transfer',
+  //   addLink: ROUTES.CBS_TRANSFER_BRANCH_TRANSFER_ADD,
+  // },
 ];
 
 const dropdownButtons = [
@@ -49,10 +49,10 @@ const dropdownButtons = [
     title: 'transCashTransitTransfer',
     link: ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_ADD,
   },
-  {
-    title: 'transServiceCenterTransfer',
-    link: ROUTES.CBS_TRANSFER_SERVICE_CENTER_ADD,
-  },
+  // {
+  //   title: 'transServiceCenterTransfer',
+  //   link: '/transfer/cash-transfer/add',
+  // },
 ];
 
 const reportColumn = [
