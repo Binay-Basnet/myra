@@ -27,12 +27,27 @@ mutation setServiceCenterCashTransfer($data: ServiceCentreCashTransferInput!) {
   }
 }
 
-mutation setCashInTransitTransfer($data: TellerTransferInput!) {
+mutation setCashInTransitTransfer($data: CashInTransitInput!) {
   transaction {
-    tellerTransfer(data: $data) {
-      record
-      error {
-        ...MutationError
+    cashInTransit {
+      new(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation approveCashInTransitTransfer($requestId: String!) {
+  transaction {
+    cashInTransit {
+      approve(requestId: $requestId) {
+        recordId
+        error {
+          ...MutationError
+        }
       }
     }
   }

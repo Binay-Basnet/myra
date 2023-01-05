@@ -21,9 +21,13 @@ export const CashTransitInfo = () => {
 
   return (
     <FormSection templateColumns={2}>
-      <FormInput label="Sender Service Center" name="srcBranch" isDisabled />
-      <FormSelect label="Receiver Service Center" name="destBranch" options={branchList} />
-      <FormInput label="Sender Service Center Teller" name="srcTellerID" isDisabled />
+      <FormInput label="Sender Service Center" name="senderServiceCentre" isDisabled />
+      <FormSelect
+        label="Receiver Service Center"
+        name="receiverServiceCentre"
+        options={branchList}
+      />
+      <FormInput label="Sender Service Center Teller" name="senderTeller" isDisabled />
     </FormSection>
   );
 };

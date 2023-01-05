@@ -6,6 +6,7 @@ import {
   useGetLoanAccountCollateralDetailsQuery,
   useGetLoanAccountDetailsQuery,
   useGetLoanAccountGuaranteeDetailsQuery,
+  useGetLoanAccountMemberDetailsQuery,
 } from '@coop/cbs/data-access';
 import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 
@@ -24,6 +25,10 @@ export const useLoanAccountDetailHooks = () => {
   });
 
   const { data: loanAccountCollateralDetailsData } = useGetLoanAccountCollateralDetailsQuery({
+    loanAccountId: id as string,
+  });
+
+  const { data: loanAccountMemberDetailsData } = useGetLoanAccountMemberDetailsQuery({
     loanAccountId: id as string,
   });
 
@@ -139,6 +144,8 @@ export const useLoanAccountDetailHooks = () => {
     },
   ];
 
+  const memberDetails = loanAccountMemberDetailsData?.loanAccount?.loanAccountDetails?.memberInfo;
+
   return {
     overviewData,
     generalInfo,
@@ -152,5 +159,6 @@ export const useLoanAccountDetailHooks = () => {
     gauranteeListInfo,
     collateralSummary,
     collatListInfo,
+    memberDetails,
   };
 };
