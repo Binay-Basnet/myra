@@ -14902,11 +14902,18 @@ export type SetServiceCenterCashTransferMutationVariables = Exact<{
 export type SetServiceCenterCashTransferMutation = { transaction: { serviceCentreCashTransfer: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
 
 export type SetCashInTransitTransferMutationVariables = Exact<{
-  data: TellerTransferInput;
+  data: CashInTransitInput;
 }>;
 
 
-export type SetCashInTransitTransferMutation = { transaction: { tellerTransfer: { record?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type SetCashInTransitTransferMutation = { transaction: { cashInTransit?: { new?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
+
+export type ApproveCashInTransitTransferMutationVariables = Exact<{
+  requestId: Scalars['String'];
+}>;
+
+
+export type ApproveCashInTransitTransferMutation = { transaction: { cashInTransit?: { approve?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
 
 export type SetSettingsUserDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -15700,6 +15707,13 @@ export type GetLoanAccountCollateralDetailsQueryVariables = Exact<{
 
 
 export type GetLoanAccountCollateralDetailsQuery = { loanAccount: { loanAccountDetails?: { collateral?: { noOfCollateral: number, totalCollateralValuation: string, totalCollateralRelease: string, collateralList?: Array<{ collateralType?: string | null, ownerName?: string | null, relation?: string | null, sheetNo?: number | null, plotNo?: number | null, kittaNo?: number | null, area?: number | null, buildingType?: BuildingType | null, constructionType?: ConstructionType | null, valuatorId?: string | null, noOfStorey?: number | null, fmvMaxAmount?: any | null, dvMinAmount?: string | null, valuationMethod?: ValuationMethod | null, valuationPercent?: number | null, collaterallValuation?: any | null, collateralDescription?: string | null, collateralFiles?: Array<string> | null, valuationFiles?: Array<string> | null, vehicleName?: string | null, vehicleModelNo?: string | null, vehicleRegistrationNo?: string | null, vehicleNo?: string | null, vehicleSeatCapacity?: number | null, vehicleCapacity?: string | null, vehicleType?: string | null, vehicleFuelType?: string | null, documentName?: string | null, valuationAmount?: string | null, description?: string | null, allDocuments?: Array<string> | null, documents?: Array<{ id: string, url: string } | null> | null } | null> | null } | null } | null } };
+
+export type GetLoanAccountMemberDetailsQueryVariables = Exact<{
+  loanAccountId: Scalars['ID'];
+}>;
+
+
+export type GetLoanAccountMemberDetailsQuery = { loanAccount: { loanAccountDetails?: { memberInfo?: { memberId: string, memberCode: string, memberName: Record<"local"|"en"|"np",string>, profilePicId?: string | null, profilePicUrl?: string | null } | null } | null } };
 
 export type GetMemberListQueryVariables = Exact<{
   pagination: Pagination;
@@ -16629,6 +16643,15 @@ export type GetTransferDetailQueryVariables = Exact<{
 
 
 export type GetTransferDetailQuery = { transaction: { transferDetail?: { data?: { ID: string, transferCode?: string | null, transferType: TellerTransferType, transferState?: TellerActivityState | null, srcTeller?: Record<"local"|"en"|"np",string> | null, amount?: string | null, totalBalance?: string | null, destTeller?: Record<"local"|"en"|"np",string> | null, date?: Record<"local"|"en"|"np",string> | null, srcBranch?: Record<"local"|"en"|"np",string> | null, destBranch?: Record<"local"|"en"|"np",string> | null, srcProfilePic?: string | null, srcProfilePicUrl?: string | null, totalCredit?: string | null, totalDebit?: string | null, note?: string | null, glTransaction?: Array<{ account: string, serviceCenter?: string | null, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+
+export type GetCashInTransitListQueryVariables = Exact<{
+  transferType: CashInTransitTransferType;
+  filter?: InputMaybe<CashInTransitFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+
+export type GetCashInTransitListQuery = { transaction: { cashInTransit: { totalCount?: number | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ cursor?: string | null, node?: { id: string, senderServiceCentreId: string, senderServiceCentreName: string, receiverServiceCentreId: string, receiverServiceCentreName: string, approvalStatus: RequestStatus, cashAmount: string, transferDate: Record<"local"|"en"|"np",string>, denomination?: Array<{ value: CashValue, quantity: number, amount?: string | null } | null> | null } | null } | null> | null } } };
 
 export type GetPastSlipsListQueryVariables = Exact<{
   accountId: Scalars['ID'];
@@ -19630,12 +19653,14 @@ export const useSetServiceCenterCashTransferMutation = <
       options
     );
 export const SetCashInTransitTransferDocument = `
-    mutation setCashInTransitTransfer($data: TellerTransferInput!) {
+    mutation setCashInTransitTransfer($data: CashInTransitInput!) {
   transaction {
-    tellerTransfer(data: $data) {
-      record
-      error {
-        ...MutationError
+    cashInTransit {
+      new(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
       }
     }
   }
@@ -19648,6 +19673,29 @@ export const useSetCashInTransitTransferMutation = <
     useMutation<SetCashInTransitTransferMutation, TError, SetCashInTransitTransferMutationVariables, TContext>(
       ['setCashInTransitTransfer'],
       useAxios<SetCashInTransitTransferMutation, SetCashInTransitTransferMutationVariables>(SetCashInTransitTransferDocument),
+      options
+    );
+export const ApproveCashInTransitTransferDocument = `
+    mutation approveCashInTransitTransfer($requestId: String!) {
+  transaction {
+    cashInTransit {
+      approve(requestId: $requestId) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useApproveCashInTransitTransferMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<ApproveCashInTransitTransferMutation, TError, ApproveCashInTransitTransferMutationVariables, TContext>) =>
+    useMutation<ApproveCashInTransitTransferMutation, TError, ApproveCashInTransitTransferMutationVariables, TContext>(
+      ['approveCashInTransitTransfer'],
+      useAxios<ApproveCashInTransitTransferMutation, ApproveCashInTransitTransferMutationVariables>(ApproveCashInTransitTransferDocument),
       options
     );
 export const SetSettingsUserDataDocument = `
@@ -24397,6 +24445,33 @@ export const useGetLoanAccountCollateralDetailsQuery = <
     useQuery<GetLoanAccountCollateralDetailsQuery, TError, TData>(
       ['getLoanAccountCollateralDetails', variables],
       useAxios<GetLoanAccountCollateralDetailsQuery, GetLoanAccountCollateralDetailsQueryVariables>(GetLoanAccountCollateralDetailsDocument).bind(null, variables),
+      options
+    );
+export const GetLoanAccountMemberDetailsDocument = `
+    query getLoanAccountMemberDetails($loanAccountId: ID!) {
+  loanAccount {
+    loanAccountDetails(loanAccountId: $loanAccountId) {
+      memberInfo {
+        memberId
+        memberCode
+        memberName
+        profilePicId
+        profilePicUrl
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanAccountMemberDetailsQuery = <
+      TData = GetLoanAccountMemberDetailsQuery,
+      TError = unknown
+    >(
+      variables: GetLoanAccountMemberDetailsQueryVariables,
+      options?: UseQueryOptions<GetLoanAccountMemberDetailsQuery, TError, TData>
+    ) =>
+    useQuery<GetLoanAccountMemberDetailsQuery, TError, TData>(
+      ['getLoanAccountMemberDetails', variables],
+      useAxios<GetLoanAccountMemberDetailsQuery, GetLoanAccountMemberDetailsQueryVariables>(GetLoanAccountMemberDetailsDocument).bind(null, variables),
       options
     );
 export const GetMemberListDocument = `
@@ -31124,6 +31199,55 @@ export const useGetTransferDetailQuery = <
     useQuery<GetTransferDetailQuery, TError, TData>(
       ['getTransferDetail', variables],
       useAxios<GetTransferDetailQuery, GetTransferDetailQueryVariables>(GetTransferDetailDocument).bind(null, variables),
+      options
+    );
+export const GetCashInTransitListDocument = `
+    query getCashInTransitList($transferType: CashInTransitTransferType!, $filter: CashInTransitFilter, $pagination: Pagination) {
+  transaction {
+    cashInTransit(
+      transferType: $transferType
+      filter: $filter
+      pagination: $pagination
+    ) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          id
+          senderServiceCentreId
+          senderServiceCentreName
+          receiverServiceCentreId
+          receiverServiceCentreName
+          approvalStatus
+          cashAmount
+          transferDate
+          denomination {
+            value
+            quantity
+            amount
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCashInTransitListQuery = <
+      TData = GetCashInTransitListQuery,
+      TError = unknown
+    >(
+      variables: GetCashInTransitListQueryVariables,
+      options?: UseQueryOptions<GetCashInTransitListQuery, TError, TData>
+    ) =>
+    useQuery<GetCashInTransitListQuery, TError, TData>(
+      ['getCashInTransitList', variables],
+      useAxios<GetCashInTransitListQuery, GetCashInTransitListQueryVariables>(GetCashInTransitListDocument).bind(null, variables),
       options
     );
 export const GetPastSlipsListDocument = `

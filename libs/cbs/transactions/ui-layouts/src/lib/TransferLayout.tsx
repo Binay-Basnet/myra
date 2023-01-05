@@ -22,18 +22,18 @@ const transactionSidebarColumns = [
     name: 'teller-transfer',
     addLink: ROUTES.CBS_TRANSFER_TELLER_ADD,
   },
-  // {
-  //   title: 'Service Center Cash Transfer',
-  //   link: ROUTES.CBS_TRANSFER_CASH_TRANSFER_LIST,
-  //   name: 'cash-transfer',
-  //   addLink: ROUTES.CBS_TRANSFER_CASH_TRANSFER_ADD,
-  // },
-  // {
-  //   title: 'transferBranchTransfer',
-  //   link: ROUTES.CBS_TRANSFER_BRANCH_TRANSFER_LIST,
-  //   name: 'branch-transfer',
-  //   addLink: ROUTES.CBS_TRANSFER_BRANCH_TRANSFER_ADD,
-  // },
+  {
+    title: 'Cash in Transit Transfer',
+    link: ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST,
+    name: 'cash-in-transfer',
+    addLink: ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_ADD,
+  },
+  {
+    title: 'Service Center Cash Transfer',
+    link: ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_LIST,
+    name: 'service-transfer',
+    addLink: ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_ADD,
+  },
 ];
 
 const dropdownButtons = [
@@ -49,10 +49,10 @@ const dropdownButtons = [
     title: 'transCashTransitTransfer',
     link: ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_ADD,
   },
-  // {
-  //   title: 'transServiceCenterTransfer',
-  //   link: '/transfer/cash-transfer/add',
-  // },
+  {
+    title: 'transServiceCenterTransfer',
+    link: ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_ADD,
+  },
 ];
 
 const reportColumn = [
