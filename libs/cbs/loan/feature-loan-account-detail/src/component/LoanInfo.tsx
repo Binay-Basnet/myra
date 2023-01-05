@@ -1,7 +1,7 @@
 import { IoCopyOutline, IoQrCodeOutline } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { AccountQRModal, Avatar, Box, Icon, Text } from '@myra-ui';
+import { AccountQRModal, Box, Icon, Text } from '@myra-ui';
 
 import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
 
@@ -73,7 +73,7 @@ export const LoanInfo = () => {
           {generalInfo?.accountOpenDate?.local}
         </Text>
       </Box>
-      <Box
+      {/* <Box
         p="s16"
         display="flex"
         alignItems="center"
@@ -85,7 +85,7 @@ export const LoanInfo = () => {
         <Text fontSize="r1" fontWeight="Medium" color="primary.500" lineHeight="150%">
           {memberDetails?.memberName?.local}
         </Text>
-      </Box>
+      </Box> */}
       <AccountQRModal
         account={{
           name: memberDetails?.memberName?.local ?? 'N/A',

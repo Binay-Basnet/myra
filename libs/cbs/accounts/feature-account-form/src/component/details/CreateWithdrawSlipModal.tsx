@@ -110,6 +110,14 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
               options={totalNumberOptions}
             />
 
+            <GridItem colSpan={2}>
+              <Alert
+                status="warning"
+                title="If new withdraw slip is created, existing active withdraw slips will be blocked and new withdraw slip will be created."
+                hideCloseIcon
+              />
+            </GridItem>
+
             {count && from && to && (
               <>
                 <GridItem colSpan={2}>
