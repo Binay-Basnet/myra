@@ -1,6 +1,6 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
-import { ObjState, TransferType } from '@coop/cbs/data-access';
+import { ObjState, TransferType, WithdrawWith } from '@coop/cbs/data-access';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
@@ -79,7 +79,11 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
             subtitle={withdrawDetailData?.withdrawWith?.replace(/_/g, ' ')}
           />
           <DetailCardContent
-            title={t['transDetailChequeNo']}
+            title={
+              withdrawDetailData?.withdrawWith === WithdrawWith.WithdrawSlip
+                ? 'Withdraw Slip No.'
+                : 'Counter Slip No.'
+            }
             subtitle={withdrawDetailData?.chequeNo}
           />
           <DetailCardContent
