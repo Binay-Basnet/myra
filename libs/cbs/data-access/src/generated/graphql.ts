@@ -15619,7 +15619,7 @@ export type GetLoanListQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanListQuery = { loanAccount: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, LoanAccountName?: string | null, createdAt: string, member: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null }, product: { productName: string } } | null }> | null, pageInfo?: { endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } | null } };
+export type GetLoanListQuery = { loanAccount: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, LoanAccountName?: string | null, createdAt: string, closedDate?: Record<"local"|"en"|"np",string> | null, appliedDate?: Record<"local"|"en"|"np",string> | null, approvedDate?: string | null, member: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null }, product: { productName: string } } | null }> | null, pageInfo?: { endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } | null } };
 
 export type GetLoanInstallmentsQueryVariables = Exact<{
   productId: Scalars['ID'];
@@ -23805,6 +23805,9 @@ export const GetLoanListDocument = `
           }
           LoanAccountName
           createdAt
+          closedDate
+          appliedDate
+          approvedDate
         }
       }
       pageInfo {
