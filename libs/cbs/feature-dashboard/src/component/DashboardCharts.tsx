@@ -4,7 +4,7 @@ import { AgeCharts } from './AgeCharts';
 import { TypeCharts } from './TypeCharts';
 
 export const DashboardCharts = () => (
-  <Box bg="white" display="flex" flexDirection="column" gap="s16" p="s12">
+  <Box bg="white" display="flex" flexDirection="column" gap="s16" borderRadius="br2" p="s12">
     <Text fontSize="r2" fontWeight="SemiBold">
       Member Categorization Info
     </Text>

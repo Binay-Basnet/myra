@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
+
 import { DetailsCard } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { useGetDashboardInfoQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
 
 export const DashboardTable = () => {
   const { data } = useGetDashboardInfoQuery();
@@ -46,7 +47,7 @@ export const DashboardTable = () => {
         header: 'Request Type',
         accessorKey: 'requestType',
         meta: {
-          width: '1000px',
+          width: 'auto',
         },
       },
       {
