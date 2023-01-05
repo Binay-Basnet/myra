@@ -108,8 +108,8 @@ const CODES: Record<string, Record<string, Record<string, string>>> = {
       '16': 'loan/product-type',
       '17': 'loan/valuator',
       '18': 'loan-products',
-      '20': 'code-management',
-      '22': 'alternative-channels/charges',
+      '20': 'code-management/core-banking-system',
+      '21': 'alternative-channels/charges',
     },
     '01': {
       '01': 'super-admin',
@@ -121,6 +121,7 @@ const ACTIONS_CODES: Record<string, string> = {
   '0': 'list',
   '1': 'add', // Rename Add to New
   '2': 'details',
+  '3': 'configure',
 };
 
 // const pages = [
