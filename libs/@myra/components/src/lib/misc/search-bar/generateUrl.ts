@@ -50,7 +50,7 @@ const CODES: Record<string, Record<string, Record<string, string>>> = {
       '01': 'applications',
       '02': 'repayments',
       '03': 'accounts',
-      '04': 'repayments',
+      '04': 'accounts',
       '05': 'products',
       '06': 'declined',
     },
