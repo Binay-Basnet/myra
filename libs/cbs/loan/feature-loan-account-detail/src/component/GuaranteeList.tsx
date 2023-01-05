@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IoTrash } from 'react-icons/io5';
 
 import {
   Accordion,
@@ -9,10 +8,7 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Button,
   Chips,
-  Divider,
-  IconButton,
   Modal,
   Text,
 } from '@myra-ui';
@@ -96,7 +92,7 @@ export const GuaranteeList = ({ gauranteeList }: GauranteeProps) => {
           </AccordionButton>
           <AccordionPanel>
             <AccordianListCardComponent columns={3} accordionCardDetails={gauranteeListDetails} />
-            <Divider />
+            {/* <Divider />
             <Box display="flex" w="50px" gap="s16" p="s16">
               <IconButton
                 colorScheme="transparent"
@@ -109,7 +105,7 @@ export const GuaranteeList = ({ gauranteeList }: GauranteeProps) => {
               <Button color="danger.500" variant="link">
                 Release
               </Button>
-            </Box>
+            </Box> */}
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

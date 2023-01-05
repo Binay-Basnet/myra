@@ -1,12 +1,12 @@
 import { IoCopyOutline, IoQrCodeOutline } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { AccountQRModal, Avatar, Box, Icon, Text } from '@myra-ui';
+import { AccountQRModal, Box, Icon, Text } from '@myra-ui';
 
 import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
 
 export const LoanInfo = () => {
-  const { generalInfo } = useLoanAccountDetailHooks();
+  const { generalInfo, memberDetails } = useLoanAccountDetailHooks();
   const { onClose: modalOnClose, isOpen, onToggle } = useDisclosure();
   return (
     <Box>
@@ -46,7 +46,7 @@ export const LoanInfo = () => {
             </Text>
           </Box>
 
-          <Box display="flex" justifyContent="space-between">
+          {/* <Box display="flex" justifyContent="space-between">
             <Text fontSize="s3" fontWeight="Medium" color="gray.500" lineHeight="140%">
               Business Loan
             </Text>
@@ -54,7 +54,7 @@ export const LoanInfo = () => {
             <Text fontSize="r2" fontWeight="Medium" color="gray.800" lineHeight="140%">
               8,42,000.00
             </Text>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
 
@@ -73,7 +73,7 @@ export const LoanInfo = () => {
           {generalInfo?.accountOpenDate?.local}
         </Text>
       </Box>
-      <Box
+      {/* <Box
         p="s16"
         display="flex"
         alignItems="center"
@@ -81,14 +81,14 @@ export const LoanInfo = () => {
         borderBottom="1px"
         borderBottomColor="border.layout"
       >
-        <Avatar src="https://bit.ly/sage-adebayo" size="sm" />
+        <Avatar src={memberDetails?.profilePicUrl as string} size="sm" />
         <Text fontSize="r1" fontWeight="Medium" color="primary.500" lineHeight="150%">
-          Ram Kumar Pandey
+          {memberDetails?.memberName?.local}
         </Text>
-      </Box>
+      </Box> */}
       <AccountQRModal
         account={{
-          name: 'Ram Kumar Pandey',
+          name: memberDetails?.memberName?.local ?? 'N/A',
           accountNo: generalInfo?.accountId as string,
           phoneNo: '98547889993' ?? 'N/A',
           accountName: generalInfo?.accountName as string,

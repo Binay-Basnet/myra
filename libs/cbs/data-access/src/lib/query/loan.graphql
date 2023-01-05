@@ -234,6 +234,9 @@ query getLoanList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
           }
           LoanAccountName
           createdAt
+          closedDate
+          appliedDate
+          approvedDate
         }
       }
       pageInfo {
@@ -729,6 +732,20 @@ query getLoanAccountCollateralDetails($loanAccountId: ID!) {
             url
           }
         }
+      }
+    }
+  }
+}
+
+query getLoanAccountMemberDetails($loanAccountId: ID!) {
+  loanAccount {
+    loanAccountDetails(loanAccountId: $loanAccountId) {
+      memberInfo {
+        memberId
+        memberCode
+        memberName
+        profilePicId
+        profilePicUrl
       }
     }
   }

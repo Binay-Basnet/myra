@@ -5,34 +5,32 @@ import { useQueryClient } from '@tanstack/react-query';
 import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import {
+  CashInTransitInput,
   CashTransferMode,
-  CashValue,
-  TellerTransferInput,
-  TellerTransferType,
   useAppSelector,
   useSetCashInTransitTransferMutation,
 } from '@coop/cbs/data-access';
 import { featureCode } from '@coop/shared/utils';
 
-import { CashTransitInfo, Denomination, TransferMode } from '../components';
+import { CashTransitInfo, TransferMode } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddCashTransitTransferProps {}
 
-const cashOptions: Record<string, string> = {
-  '1000': CashValue.Cash_1000,
-  '500': CashValue.Cash_500,
-  '100': CashValue.Cash_100,
-  '50': CashValue.Cash_50,
-  '25': CashValue.Cash_25,
-  '20': CashValue.Cash_20,
-  '10': CashValue.Cash_10,
-  '5': CashValue.Cash_5,
-  '2': CashValue.Cash_2,
-  '1': CashValue.Cash_1,
-};
+// const cashOptions: Record<string, string> = {
+//   '1000': CashValue.Cash_1000,
+//   '500': CashValue.Cash_500,
+//   '100': CashValue.Cash_100,
+//   '50': CashValue.Cash_50,
+//   '25': CashValue.Cash_25,
+//   '20': CashValue.Cash_20,
+//   '10': CashValue.Cash_10,
+//   '5': CashValue.Cash_5,
+//   '2': CashValue.Cash_2,
+//   '1': CashValue.Cash_1,
+// };
 
-type CustomTellerTransferInput = Omit<TellerTransferInput, 'denominations'> & {
+type CustomTellerTransferInput = Omit<CashInTransitInput, 'denominations'> & {
   denominations: { value?: string; quantity?: number; amount?: string }[];
 };
 
@@ -49,36 +47,35 @@ export const AddCashTransitTransfer = () => {
 
   const methods = useForm<CustomTellerTransferInput>({
     defaultValues: {
-      transferType: TellerTransferType.CashInTransit,
       transferMode: CashTransferMode.Collected,
-      srcTellerID: [user?.firstName?.local, user?.lastName?.local].join(' '),
-      srcBranch: branchData?.name,
+      senderTeller: [user?.firstName?.local, user?.lastName?.local].join(' '),
+      senderServiceCentre: branchData?.name,
     },
   });
 
-  const { watch, getValues } = methods;
+  const { getValues } = methods;
 
-  const amount = watch('amount');
+  // const amount = watch('amount');
 
-  const denominations = watch('denominations');
+  // const denominations = watch('denomination');
 
-  const denominationTotal =
-    denominations?.reduce(
-      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
-      0 as number
-    ) ?? 0;
+  // const denominationTotal =
+  //   denominations?.reduce(
+  //     (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
+  //     0 as number
+  //   ) ?? 0;
 
   const handleSubmit = () => {
     const values = getValues();
     const updatedData = {
       ...values,
-      srcTellerID: user?.id,
-      srcBranch: branchData?.id,
-      denominations:
-        values?.denominations?.map(({ value, quantity }) => ({
-          value: cashOptions[value as string],
-          quantity,
-        })) ?? [],
+      senderTeller: user?.id,
+      senderServiceCentre: branchData?.id,
+      // denomination:
+      //   values?.denomination?.map(({ value, quantity }) => ({
+      //     value: cashOptions[value as string],
+      //     quantity,
+      //   })) ?? [],
     };
 
     asyncToast({
@@ -87,7 +84,7 @@ export const AddCashTransitTransfer = () => {
         loading: 'Adding Cash In Transit Transfer',
         success: 'Cash In Transit Transfer Added',
       },
-      promise: mutateAsync({ data: updatedData as TellerTransferInput }),
+      promise: mutateAsync({ data: updatedData as CashInTransitInput }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getTellerTransactionListData']);
         queryClient.invalidateQueries(['getMe']);
@@ -113,7 +110,7 @@ export const AddCashTransitTransfer = () => {
               <Box minH="calc(100vh - 170px)" pb="s60">
                 <CashTransitInfo />
                 <TransferMode />
-                <Denomination availableCash={user?.userBalance} />
+                {/* <Denomination availableCash={user?.userBalance} /> */}
               </Box>
             </form>
           </FormProvider>
@@ -126,7 +123,7 @@ export const AddCashTransitTransfer = () => {
             <FormFooter
               mainButtonLabel="Done"
               mainButtonHandler={handleSubmit}
-              isMainButtonDisabled={Number(denominationTotal) !== Number(amount)}
+              // isMainButtonDisabled={Number(denominationTotal) !== Number(amount)}
             />
           </Container>
         </Box>

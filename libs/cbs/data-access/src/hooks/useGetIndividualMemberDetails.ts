@@ -49,6 +49,7 @@ export const useGetIndividualMemberDetails = ({
     return {
       id: memberData.id,
       code: memberData.code,
+      type: memberData?.type,
       name: memberData.name?.local,
       contact: memberData.contact,
       email: memberData.profile?.data?.formData?.contactDetails?.email,

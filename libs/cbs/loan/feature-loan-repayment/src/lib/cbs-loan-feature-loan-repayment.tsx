@@ -21,6 +21,7 @@ import {
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   CashValue,
+  KymMemberTypesEnum,
   LoanInstallment,
   LoanRepaymentAccountMode,
   LoanRepaymentBankVoucher,
@@ -304,7 +305,9 @@ export const LoanRepayment = () => {
                       <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
                     </Grid>
 
-                    <SuspiciousTransaction />
+                    {memberDetailData?.type === KymMemberTypesEnum.Individual && (
+                      <SuspiciousTransaction />
+                    )}
 
                     <Box mt="s20">
                       <InstallmentData loanAccountId={loanAccountId} />

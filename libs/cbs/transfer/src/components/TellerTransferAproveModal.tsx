@@ -15,6 +15,7 @@ import {
   TransferRequestAction,
   useSetTellerTransferActionMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormTextArea } from '@coop/shared/form';
 
 interface ITellerTransferApproveModalProps {
@@ -191,7 +192,7 @@ export const TellerTransferApproveModal = ({
         }}
         isSecondaryDanger
         onClose={() => {
-          router.replace('/transfer/teller-transfer/list', undefined, { shallow: true });
+          router.replace(ROUTES.CBS_TRANSFER_TELLER_LIST, undefined, { shallow: true });
           onClose();
         }}
         title="Teller Transfer"
