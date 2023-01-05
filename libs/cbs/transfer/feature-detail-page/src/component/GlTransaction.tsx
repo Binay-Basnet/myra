@@ -46,7 +46,7 @@ export const GlTransactionTable = ({ data, totalAmount }: GlTransactionDetailPro
       },
       {
         header: 'credit',
-        footer: totalAmount ?? 0,
+        footer: `${totalAmount || 0}`,
         accessorFn: (row) => amountConverter(row?.credit ?? 0),
       },
     ],
