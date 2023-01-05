@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  myra:
+    build:
+      context: .
+      dockerfile: apps/myra/Dockerfile
+    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui:dev
+    container_name: ${MYRA_CONTAINER_NAME}
+    env_file: .env
+    ports:
+      - ${MYRA_PORT}:3000
+    restart: unless-stopped
+# TRIGGGER HERE
