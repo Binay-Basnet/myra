@@ -1735,7 +1735,7 @@ export type CashInTransitInfo = {
 export type CashInTransitInput = {
   amount?: InputMaybe<Scalars['String']>;
   collectorName?: InputMaybe<Scalars['String']>;
-  denomination?: InputMaybe<Denomination>;
+  denomination?: InputMaybe<Array<InputMaybe<Denomination>>>;
   receiverServiceCentre?: InputMaybe<Scalars['String']>;
   senderServiceCentre?: InputMaybe<Scalars['String']>;
   senderTeller?: InputMaybe<Scalars['String']>;

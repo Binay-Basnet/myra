@@ -28,7 +28,6 @@ export const ProductDocuments = ({
         </Box>
       </Box>
     )}
-
     {institutionDocuments?.length !== 0 && (
       <Box display="flex" flexDir="column" gap="s4" fontSize="r1" textTransform="capitalize">
         <Text color="gray.800" fontWeight="Medium">

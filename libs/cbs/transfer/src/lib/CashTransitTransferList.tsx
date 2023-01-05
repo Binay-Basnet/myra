@@ -21,6 +21,17 @@ const tellerActivityVariant: Record<RequestStatus, 'success' | 'failure' | 'pend
   [RequestStatus.Declined]: 'failure',
 };
 
+const CASH_IN_TRANSIT_TAB_ITEMS = [
+  {
+    title: 'Sent',
+    key: CashInTransitTransferType.Sent,
+  },
+  {
+    title: 'Received',
+    key: CashInTransitTransferType.Received,
+  },
+];
+
 export const CashTransitTransferList = () => {
   const router = useRouter();
   const { t } = useTranslation();
@@ -29,7 +40,8 @@ export const CashTransitTransferList = () => {
   const { data, isFetching } = useGetCashInTransitListQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
-      transferType: CashInTransitTransferType.Sent,
+      transferType: (router.query['objState'] ??
+        CashInTransitTransferType.Sent) as CashInTransitTransferType,
     },
     {
       staleTime: 0,
@@ -101,7 +113,7 @@ export const CashTransitTransferList = () => {
     <>
       <PageHeader
         heading={`Cash in Transit Transfer - ${featureCode.vaultTransferList}`}
-        // tabItems={tabList}
+        tabItems={CASH_IN_TRANSIT_TAB_ITEMS}
       />
 
       <Table

@@ -1,4 +1,6 @@
-import { DetailCardContent, DetailsCard } from '@myra-ui';
+import { Box, Chips, DetailCardContent, DetailsCard } from '@myra-ui';
+
+import { TellerActivityState } from '@coop/cbs/data-access';
 
 type TxnProps = {
   status: string | null | undefined;
@@ -10,6 +12,20 @@ export const TxnDetails = ({ status, list }: TxnProps) => (
     {list?.map((item) => (
       <DetailCardContent title={item?.label} subtitle={item?.value} />
     ))}
-    <DetailCardContent title="Status" status={status === 'Complete'} />
+    <DetailCardContent title="Status">
+      <Box w="100px">
+        {status === TellerActivityState.Approved && (
+          <Chips variant="solid" theme="success" size="md" type="label" label="Complete" />
+        )}
+
+        {status === TellerActivityState.Pending && (
+          <Chips variant="solid" theme="warning" size="md" type="label" label="Pending" />
+        )}
+
+        {status === TellerActivityState.Cancelled && (
+          <Chips variant="solid" theme="danger" size="md" type="label" label="Cancelled" />
+        )}
+      </Box>
+    </DetailCardContent>
   </DetailsCard>
 );

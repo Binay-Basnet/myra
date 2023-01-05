@@ -132,7 +132,7 @@ export const TellerTransferList = () => {
                 title: 'loanProductViewDetails',
                 onClick: () => {
                   router.push(
-                    `/${getUrl(router.pathname, 2)}/view?id=${props?.row?.original?.node?.ID}`
+                    `/${getUrl(router.pathname, 3)}/view?id=${props?.row?.original?.node?.ID}`
                   );
                 },
               },

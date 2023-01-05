@@ -10,6 +10,7 @@ import {
   useAppSelector,
   useSetCashInTransitTransferMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode } from '@coop/shared/utils';
 
 import { CashTransitInfo, TransferMode } from '../components';
@@ -86,10 +87,10 @@ export const AddCashTransitTransfer = () => {
       },
       promise: mutateAsync({ data: updatedData as CashInTransitInput }),
       onSuccess: () => {
-        queryClient.invalidateQueries(['getTellerTransactionListData']);
+        queryClient.invalidateQueries(['getCashInTransitList']);
         queryClient.invalidateQueries(['getMe']);
 
-        router.push('/transfer/cash-transit-transfer/list');
+        router.push(ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST);
       },
     });
   };
@@ -100,7 +101,7 @@ export const AddCashTransitTransfer = () => {
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={`New Cash in Transit - ${featureCode.newVaultTransfer}`}
-            closeLink="/transfer/cash-transit-transfer/list"
+            closeLink={ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST}
           />
         </Box>
 

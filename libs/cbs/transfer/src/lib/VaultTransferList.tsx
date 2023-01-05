@@ -50,7 +50,7 @@ export const VaultTransferList = () => {
               src={
                 props?.row?.original?.node?.transferType === TellerTransferType.VaultToCash
                   ? props?.row?.original?.node?.destProfilePicUrl
-                  : props?.row?.original?.node?.srcProfilePicUrl ?? ''
+                  : props?.row?.original?.node?.srcProfilePicUrl ?? ' '
               }
             />
             <Text
@@ -91,7 +91,7 @@ export const VaultTransferList = () => {
                 title: 'loanProductViewDetails',
                 onClick: () => {
                   router.push(
-                    `/${getUrl(router.pathname, 2)}/view?id=${props?.row?.original?.node?.ID}`
+                    `/${getUrl(router.pathname, 3)}/view?id=${props?.row?.original?.node?.ID}`
                   );
                 },
               },
