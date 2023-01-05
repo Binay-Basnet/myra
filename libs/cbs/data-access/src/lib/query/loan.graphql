@@ -733,3 +733,17 @@ query getLoanAccountCollateralDetails($loanAccountId: ID!) {
     }
   }
 }
+
+query getLoanAccountMemberDetails($loanAccountId: ID!) {
+  loanAccount {
+    loanAccountDetails(loanAccountId: $loanAccountId) {
+      memberInfo {
+        memberId
+        memberCode
+        memberName
+        profilePicId
+        profilePicUrl
+      }
+    }
+  }
+}

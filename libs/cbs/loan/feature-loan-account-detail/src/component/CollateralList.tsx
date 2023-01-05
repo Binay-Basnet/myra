@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IoTrash } from 'react-icons/io5';
 
 import {
   Accordion,
@@ -9,11 +8,8 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Button,
   Chips,
-  Divider,
   Grid,
-  IconButton,
   Modal,
   Text,
 } from '@myra-ui';
@@ -105,7 +101,6 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
                 <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
                   {collatDataList?.description}
                 </Text>
-                <Chips variant="solid" type="label" size="sm" theme="success" label="Active" />
               </Box>
               <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
                 {collatDataList?.description}
@@ -120,8 +115,8 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
                 <DocumentComponent keyText={docs?.id} value={docs?.url} />
               ))}
             </Grid>
-            <Divider />
-            <Box display="flex" w="50px" gap="s16" p="s16" onClick={() => setOpenModal(true)}>
+            {/* <Divider />
+           <Box display="flex" w="50px" gap="s16" p="s16" onClick={() => setOpenModal(true)}>
               <IconButton
                 colorScheme="transparent"
                 aria-label="Release"
@@ -132,7 +127,7 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
               <Button color="danger.500" variant="link">
                 Release
               </Button>
-            </Box>
+            </Box> */}
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
