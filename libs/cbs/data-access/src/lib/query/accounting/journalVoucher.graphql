@@ -6,7 +6,8 @@ query getJournalVoucherList($pagination: Pagination, $filter: JournalVoucherFilt
         edges {
           node {
             id
-            date
+            transactionDate
+            transactionCode
             reference
             amount
           }
