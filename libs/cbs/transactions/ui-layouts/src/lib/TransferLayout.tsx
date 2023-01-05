@@ -47,11 +47,11 @@ const dropdownButtons = [
   },
   {
     title: 'transCashTransitTransfer',
-    link: '/transfer/cash-transit-transfer/add',
+    link: ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_ADD,
   },
   {
     title: 'transServiceCenterTransfer',
-    link: '/transfer/cash-transfer/add',
+    link: ROUTES.CBS_TRANSFER_SERVICE_CENTER_ADD,
   },
 ];
 
