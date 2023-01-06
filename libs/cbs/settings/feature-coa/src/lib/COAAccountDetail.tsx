@@ -7,7 +7,7 @@ import { COADetailSidebar, ProductDetailPathBar } from '@coop/cbs/settings/ui-la
 import { Overview } from '../components/detail-tabs';
 import { useCOAAccountDetails } from '../hooks';
 
-export const COADetailPage = () => {
+export const COAAccountDetail = () => {
   const router = useRouter();
 
   const tabQuery = router.query['tab'] as string;
