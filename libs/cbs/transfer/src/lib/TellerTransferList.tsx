@@ -175,6 +175,7 @@ export const TellerTransferList = () => {
           router.push(
             {
               query: {
+                ...router.query,
                 id: row?.node?.ID,
               },
             },
