@@ -18,7 +18,7 @@ import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 
 const riskCategory = [
   { label: 'All', value: RiskCategoryFilter.All },
-  { label: 'General Risk', value: RiskCategoryFilter.Low },
+  { label: 'Low Risk', value: RiskCategoryFilter.Low },
   { label: 'Medium Risk', value: RiskCategoryFilter.Medium },
   { label: 'High Risk', value: RiskCategoryFilter.High },
 ];

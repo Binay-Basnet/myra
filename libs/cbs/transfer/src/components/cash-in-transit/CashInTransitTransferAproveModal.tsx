@@ -9,17 +9,18 @@ import { asyncToast, Box, DetailCardContent, Grid, GridItem, Modal } from '@myra
 import { Column, Table } from '@myra-ui/table';
 
 import {
+  CashInTransitInfo,
+  CashInTransitTransferType,
   CashValue,
   DenominationValue,
-  TellerActivityEntry,
-  TellerActivityState,
-  TransferRequestAction,
-  useSetTellerTransferActionMutation,
+  RequestStatus,
+  useApproveCashInTransitTransferMutation,
+  useAppSelector,
 } from '@coop/cbs/data-access';
 import { FormTextArea } from '@coop/shared/form';
 
-interface ITellerTransferApproveModalProps {
-  transfer: TellerActivityEntry;
+interface ICashInTransitTransferAproveModalProps {
+  transfer: CashInTransitInfo;
   approveModal: ReturnType<typeof useDisclosure>;
 }
 
@@ -36,22 +37,25 @@ const cashOptions: Record<CashValue, string> = {
   [CashValue.Cash_1]: '1x',
 };
 
-export const TellerTransferApproveModal = ({
+export const CashInTransitTransferAproveModal = ({
   approveModal,
   transfer,
-}: ITellerTransferApproveModalProps) => {
+}: ICashInTransitTransferAproveModalProps) => {
   const queryClient = useQueryClient();
-
   const router = useRouter();
+
+  const { objState } = router.query;
+
   const methods = useForm({
     defaultValues: {
       declineReason: '',
     },
   });
+  const user = useAppSelector((state) => state.auth?.user);
 
   const { isOpen, onClose, onToggle } = approveModal;
 
-  const { mutateAsync: approveOrDecline } = useSetTellerTransferActionMutation();
+  const { mutateAsync: approveOrDecline } = useApproveCashInTransitTransferMutation();
 
   const {
     isOpen: declineIsOpen,
@@ -61,17 +65,17 @@ export const TellerTransferApproveModal = ({
 
   const handleApprove = () => {
     asyncToast({
-      id: 'approve-teller-transfer-request',
+      id: 'approve-cash-in-transit-transfer-request',
       msgs: {
         loading: 'Approving Request',
         success: 'Request Approved !',
       },
       promise: approveOrDecline({
         requestId: router.query['id'] as string,
-        action: TransferRequestAction.Approve,
+        // action: TransferRequestAction.Approve,
       }),
       onSuccess: () => {
-        queryClient.invalidateQueries(['getTellerTransactionListData']);
+        queryClient.invalidateQueries(['getCashInTransitList']);
         queryClient.invalidateQueries(['getMe']);
 
         onToggle();
@@ -83,14 +87,14 @@ export const TellerTransferApproveModal = ({
 
   const handleDecline = () => {
     asyncToast({
-      id: 'decline-teller-transfer-request',
+      id: 'decline-cash-in-transit-transfer-request',
       msgs: {
         loading: 'Declining Request',
         success: 'Request Declined !',
       },
       promise: approveOrDecline({
         requestId: router.query['id'] as string,
-        action: TransferRequestAction.Decline,
+        // action: TransferRequestAction.Decline,
         ...methods.getValues(),
       }),
       onSuccess: () => {
@@ -179,18 +183,24 @@ export const TellerTransferApproveModal = ({
       <Modal
         width="2xl"
         primaryButtonLabel={
-          transfer?.transferState === TellerActivityState.Pending ? 'Approve' : undefined
+          objState === CashInTransitTransferType.Received &&
+          transfer?.approvalStatus === RequestStatus.Pending
+            ? 'Approve'
+            : undefined
         }
         primaryButtonHandler={handleApprove}
-        secondaryButtonLabel={
-          transfer?.transferState === TellerActivityState.Pending ? 'Decline' : undefined
-        }
-        secondaryButtonVariant="outline"
-        secondaryButtonHandler={() => {
-          onToggle();
-          declineIsOnToggle();
-        }}
-        isSecondaryDanger
+        // secondaryButtonLabel={
+        //   objState === CashInTransitTransferType.Received &&
+        //   transfer?.approvalStatus === RequestStatus.Pending
+        //     ? 'Decline'
+        //     : undefined
+        // }
+        // secondaryButtonVariant="outline"
+        // secondaryButtonHandler={() => {
+        //   onToggle();
+        //   declineIsOnToggle();
+        // }}
+        // isSecondaryDanger
         onClose={() => {
           router.push(
             {
@@ -203,13 +213,24 @@ export const TellerTransferApproveModal = ({
           );
           onClose();
         }}
-        title="Teller Transfer"
+        title="Service Center Transfer Request"
         open={isOpen}
       >
         <Grid templateColumns="repeat(2, 1fr)" gap="s20">
-          <DetailCardContent title="Sender Teller" subtitle={transfer?.srcTeller?.local} />
-          <DetailCardContent title="Reciever Teller" subtitle={transfer?.destTeller?.local} />
-          <DetailCardContent title="Amount" subtitle={transfer?.amount} />
+          <DetailCardContent title="Sender Teller" subtitle={transfer?.senderTellerName} />
+          <DetailCardContent
+            title="Reciever Teller"
+            subtitle={`${user?.firstName?.local} ${user?.lastName?.local}`}
+          />
+          <DetailCardContent
+            title="Sender Service Center"
+            subtitle={transfer?.senderServiceCentreName}
+          />
+          <DetailCardContent
+            title="Receiver Service Center"
+            subtitle={transfer?.receiverServiceCentreName}
+          />
+          <DetailCardContent title="Amount" subtitle={transfer?.cashAmount} />
 
           <GridItem colSpan={2}>
             <Table
