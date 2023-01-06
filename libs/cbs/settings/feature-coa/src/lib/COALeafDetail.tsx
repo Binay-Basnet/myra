@@ -1,7 +1,7 @@
 import { IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Icon, IconButton, PathBar, WIPState } from '@myra-ui';
+import { Box, Icon, IconButton, PathBar } from '@myra-ui';
 
 import { COALeafDetailSidebar } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
@@ -61,13 +61,6 @@ export const COALeafDetail = () => {
       >
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <LeafNodeOverview />}
         {tabQuery === 'ledger' && <LedgerTab />}
-
-        {tabQuery &&
-          !['undefined', 'overview', 'transactions', 'withdraw slip'].includes(tabQuery) && (
-            <Box h="calc(100vh - 110px)">
-              <WIPState />
-            </Box>
-          )}
 
         {/* {tabQuery === 'accounts' && <Account />}
         {tabQuery === 'activity' && <Activity />}
