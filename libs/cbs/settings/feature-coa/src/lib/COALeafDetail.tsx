@@ -18,28 +18,30 @@ export const COALeafDetail = () => {
 
   return (
     <>
-      <PathBar
-        paths={[
-          { label: 'Charts of Accounts', link: ROUTES.SETTINGS_GENERAL_COA },
-          { label: leafNodeData?.accountType ?? '', link: '' },
-        ]}
-        button={
-          <IconButton
-            variant="ghost"
-            aria-label="close"
-            color="gray.500"
-            height="40px"
-            icon={<Icon as={IoClose} size="lg" />}
-            onClick={() => {
-              router.push(ROUTES.SETTINGS_GENERAL_COA, {
-                query: {
-                  ...router.query,
-                },
-              });
-            }}
-          />
-        }
-      />
+      <Box position="sticky" bg="white" top="110px" zIndex="10" width="100%">
+        <PathBar
+          paths={[
+            { label: 'Charts of Accounts', link: ROUTES.SETTINGS_GENERAL_COA },
+            { label: leafNodeData?.accountType ?? '', link: '' },
+          ]}
+          button={
+            <IconButton
+              variant="ghost"
+              aria-label="close"
+              color="gray.500"
+              height="40px"
+              icon={<Icon as={IoClose} size="lg" />}
+              onClick={() => {
+                router.push(ROUTES.SETTINGS_GENERAL_COA, {
+                  query: {
+                    ...router.query,
+                  },
+                });
+              }}
+            />
+          }
+        />
+      </Box>
       <Box
         w="320px"
         position="fixed"
