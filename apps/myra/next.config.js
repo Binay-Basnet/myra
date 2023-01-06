@@ -44,7 +44,7 @@ const nextConfig = {
       'images.unsplash.com',
       'cdn.raralabs.live',
       'minio.migration.myraerp.com',
-      'minio.staging.myraerp.com',
+      'minio.myraerp.com',
     ],
     // unoptimized: true,
   },
