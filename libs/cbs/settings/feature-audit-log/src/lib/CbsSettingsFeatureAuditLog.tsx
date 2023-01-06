@@ -1,9 +1,10 @@
 import { VscTriangleDown } from 'react-icons/vsc';
 import dayjs from 'dayjs';
 
+import { Box, Icon, SelectPopout, Text } from '@myra-ui';
+
 import { useGetAuditLogListQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
-import { Box, Icon, SelectPopout, Text } from '@myra-ui';
 
 import { AUDIT_LOG_ICONS } from '../../constants/AUDIT_LOG_ICONS';
 

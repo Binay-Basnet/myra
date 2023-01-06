@@ -135,3 +135,29 @@ query getCOAAccountDetails($id: String!) {
     }
   }
 }
+
+query getCOALeafNodeDetails($id: ID!) {
+  settings {
+    chartsOfAccount {
+      coaLeafNodeDetails(id: $id) {
+        data {
+          id
+          accountName
+          accountType
+          date
+          noOfAccounts
+          drAmount
+          crAmount
+          closingBalance
+          ledgers {
+            accountCode
+            date
+            ledgerName
+            serviceCenter
+            balance
+          }
+        }
+      }
+    }
+  }
+}

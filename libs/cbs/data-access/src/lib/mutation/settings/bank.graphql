@@ -1,0 +1,14 @@
+mutation setBankList($data: [BankInput]) {
+  bank {
+    bank {
+      add(data: $data) {
+        record {
+          id
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { MdOutlineCircle } from 'react-icons/md';
+import { useRouter } from 'next/router';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,6 +20,7 @@ import {
   useDeleteCoaMutation,
   useGetCoaFullViewQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormInput, FormRadioGroup, FormSelect, FormSwitchTab } from '@coop/shared/form';
 
 import NodeWrapper from './NodeWrapper';
@@ -63,6 +65,8 @@ interface ITestProps {
 }
 
 const LeafNode = ({ data }: ITestProps) => {
+  const router = useRouter();
+
   const methods = useForm<NewCoaGroupInput>();
 
   const [clickedAccount, setClickedAccount] = useState<CoaTree | null>(null);
@@ -116,7 +120,13 @@ const LeafNode = ({ data }: ITestProps) => {
           <Text fontWeight="bold" fontSize="14px">
             {data.accountCode}
           </Text>
-          <Text fontWeight="400" fontSize="14px">
+          <Text
+            fontWeight="400"
+            fontSize="14px"
+            onClick={() =>
+              router.push(`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${data.accountCode}`)
+            }
+          >
             {data.name?.local}
           </Text>
 
@@ -448,12 +458,18 @@ export const ConfigureGroup = ({
 };
 
 interface IAddAccountProps {
-  data: CoaTree;
+  data?: CoaTree;
   clickedAccount: CoaTree | null;
-  setClickedAccount: React.Dispatch<React.SetStateAction<CoaTree | null>>;
+  setClickedAccount?: React.Dispatch<React.SetStateAction<CoaTree | null>>;
+  isGrouped?: boolean;
 }
 
-export const AddAccount = ({ data, clickedAccount, setClickedAccount }: IAddAccountProps) => {
+export const AddAccount = ({
+  data,
+  clickedAccount,
+  setClickedAccount,
+  isGrouped = true,
+}: IAddAccountProps) => {
   const methods = useForm<{ accountSetup: CoaAccountSetup; parentAccountCode: string }>();
   const queryClient = useQueryClient();
   const { isOpen, onClose, onToggle } = useDisclosure();
@@ -464,10 +480,11 @@ export const AddAccount = ({ data, clickedAccount, setClickedAccount }: IAddAcco
     <>
       <LeafNodeButton
         onClick={() => {
-          setClickedAccount(data);
+          setClickedAccount && data && setClickedAccount(data);
           onToggle();
         }}
         leftIcon={<Icon as={AddIcon} w="14px" h="14px" />}
+        display={isGrouped ? 'none' : 'flex'}
       >
         Add Account
       </LeafNodeButton>

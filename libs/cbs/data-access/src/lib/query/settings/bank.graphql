@@ -1,0 +1,13 @@
+query getBankTableList($filter: BankSearchFilter) {
+  bank {
+    bank {
+      list(filter: $filter) {
+        id
+        objState
+        name
+        date
+        logo
+      }
+    }
+  }
+}

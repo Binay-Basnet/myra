@@ -150,6 +150,7 @@
       "@coop/settings/alternative-channels": [
         "libs/cbs/settings/feature-alternative-channels/src/index.ts"
       ],
+      "@coop/settings/bank": ["libs/cbs/settings/feature-bank/src/index.ts"],
       "@coop/settings/saving-product": [
         "libs/cbs/settings/feature-saving-product-detail/src/index.ts"
       ],

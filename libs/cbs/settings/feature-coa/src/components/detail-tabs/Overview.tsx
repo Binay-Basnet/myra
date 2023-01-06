@@ -1,6 +1,6 @@
 import { Box, Text } from '@myra-ui';
 
-import { quantityConverter } from '@coop/shared/utils';
+import { amountConverter, quantityConverter } from '@coop/shared/utils';
 
 import { BalanceCard, RecentTransactions } from '../details';
 import { useCOAAccountDetails } from '../../hooks';
@@ -8,13 +8,32 @@ import { useCOAAccountDetails } from '../../hooks';
 export const Overview = () => {
   const { accountDetails } = useCOAAccountDetails();
 
+  const accountSummary = [
+    {
+      title: 'Opening Balance',
+      value: amountConverter(accountDetails?.overview?.openingBalance ?? 0),
+    },
+    {
+      title: 'Transactions (Dr.)',
+      value: amountConverter(accountDetails?.overview?.dr ?? 0),
+    },
+    {
+      title: 'Transactions (Cr.)',
+      value: amountConverter(accountDetails?.overview?.cr ?? 0),
+    },
+    {
+      title: 'Closing Balance',
+      value: amountConverter(accountDetails?.overview?.closingBalance ?? 0),
+    },
+  ];
+
   return (
     <>
       <Text fontSize="r3" fontWeight="600" color="gray.800">
         Overview
       </Text>
 
-      <BalanceCard />
+      <BalanceCard summary={accountSummary} />
 
       <Box display="flex" justifyContent="space-between" bg="white" p="s16">
         <Box display="flex" gap="s4" alignItems="center">

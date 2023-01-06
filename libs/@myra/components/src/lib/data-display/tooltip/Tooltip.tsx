@@ -12,7 +12,7 @@ export interface TooltipProps extends Omit<ChakraTooltipProps, 'children'> {
 export const Tooltip = forwardRef<HTMLInputElement, TooltipProps>((props, ref) => {
   const { children, title, ...rest } = props;
   return (
-    <ChakraTooltip label={title} {...rest} ref={ref}>
+    <ChakraTooltip label={title} placement="top" {...rest} ref={ref}>
       {children || (
         <Text textOverflow="ellipsis" overflow="hidden">
           {title}
