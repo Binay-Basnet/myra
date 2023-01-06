@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { asyncToast, Box, SettingsFooter, Text } from '@myra-ui';
+import { asyncToast, Box, Button, Text } from '@myra-ui';
 
 import { BankInput, useGetBankTableListQuery, useSetBankListMutation } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BankTable } from '../component/BankTable';
 
@@ -13,6 +14,7 @@ export interface CbsSettingsFeatureBankProps {}
 
 export const CbsSettingsFeatureBank = () => {
   const methods = useForm();
+  const { t } = useTranslation();
 
   const { getValues, reset } = methods;
 
@@ -57,8 +59,7 @@ export const CbsSettingsFeatureBank = () => {
   return (
     <>
       <SettingsPageHeader heading="Bank List" />
-
-      <Box display="flex" flexDirection="column" p="s16" gap="s16" width="full">
+      <Box display="flex" flexDirection="column" p="s16" gap="s16" mb="70px">
         <Text fontWeight="Regular" fontSize="s2" color="gray.600" lineHeight="125%">
           Default Lists of all commercial banks in Nepal. If your bank is not in the list, you can
           add them.
@@ -66,7 +67,23 @@ export const CbsSettingsFeatureBank = () => {
         <FormProvider {...methods}>
           <BankTable />
         </FormProvider>
-        <SettingsFooter handleSave={onSubmit} />
+        <Box
+          p="s16"
+          display="flex"
+          position="fixed"
+          bottom={0}
+          right={0}
+          borderTop="1px solid"
+          borderColor="gray.100"
+          w="calc(100vw - 260px)"
+          justifyContent="flex-end"
+          bg="gray.0"
+          gap={2}
+          zIndex={12}
+        >
+          <Button variant="ghost">{t['discardChanges']}</Button>
+          <Button onClick={onSubmit}>{t['saveChanges']}</Button>
+        </Box>
       </Box>
     </>
   );

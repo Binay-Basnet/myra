@@ -10131,11 +10131,6 @@ export type MemberReportExportActiveInactiveMemberReportArgs = {
   data?: InputMaybe<ActiveInactiveMemberReportData>;
 };
 
-export type MemberReportExportActiveInactiveMemberReportArgs = {
-  data?: InputMaybe<ActiveInactiveMemberReportData>;
-};
-
-
 export type MemberReportKymStatusReportArgs = {
   data?: InputMaybe<KymStatusReportFilter>;
 };
