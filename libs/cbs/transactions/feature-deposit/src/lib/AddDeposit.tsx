@@ -567,7 +567,7 @@ export const AddDeposit = () => {
                                 ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
                               ID: selectedAccount?.id,
-                              currentBalance: selectedAccount?.balance ?? '0',
+                              currentBalance: selectedAccount?.availableBalance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                               interestAccured: selectedAccount?.interestAccured ?? '0',
                               guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',

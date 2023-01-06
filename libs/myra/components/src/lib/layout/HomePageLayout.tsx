@@ -101,7 +101,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
         justifyContent="flex-start"
         height="calc(100vh - 60px)"
         px="s16"
-        py="s16"
+        py="s24"
         gap="s32"
         overflowY="auto"
       >
@@ -267,7 +267,8 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
       <Box
         display="flex"
         justifyContent="center"
-        p="s16"
+        py="s24"
+        px="s16"
         ml="300px"
         mr="300px"
         flexGrow="1"

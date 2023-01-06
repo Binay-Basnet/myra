@@ -60,6 +60,8 @@ export const ROUTES = {
   CBS_TRANSFER_SERVICE_TRANSFER_ADD: '/cbs/transfers/service-transfer/add',
   CBS_TRANSFER_CASH_IN_TRANSIT_ADD: '/cbs/transfers/cash-transit-transfer/add',
   CBS_TRANSFER_CASH_IN_TRANSIT_LIST: '/cbs/transfers/cash-transit-transfer/list',
+  CBS_TRANSFER_CASH_IN_TRANSIT_LIST_RECIEVED:
+    '/cbs/transfers/cash-transit-transfer/list?objState=RECEIVED',
 
   CBS_REQUESTS_MEMBER_LIST: '/cbs/requests/member/list',
   CBS_REQUESTS_WITHDRAW_VIA_COLLECTOR_LIST: '/cbs/requests/withdraw-via-collector/list',

@@ -336,7 +336,7 @@ export const NewAccountTransfer = () => {
                                 ? accountTypes[sourceAccount?.product?.nature]
                                 : '',
                               ID: sourceAccount?.id,
-                              currentBalance: sourceAccount?.balance ?? '0',
+                              currentBalance: sourceAccount?.availableBalance ?? '0',
                               minimumBalance: sourceAccount?.product?.minimumBalance ?? '0',
                               interestAccured: sourceAccount?.interestAccured ?? '0',
                               guaranteeBalance: sourceAccount?.guaranteedAmount ?? '0',

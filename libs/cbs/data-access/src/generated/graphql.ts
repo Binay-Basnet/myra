@@ -16689,7 +16689,7 @@ export type GetCashInTransitListQueryVariables = Exact<{
 }>;
 
 
-export type GetCashInTransitListQuery = { transaction: { cashInTransit: { totalCount?: number | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ cursor?: string | null, node?: { id: string, senderServiceCentreId: string, senderServiceCentreName: string, receiverServiceCentreId: string, receiverServiceCentreName: string, approvalStatus: RequestStatus, cashAmount: string, transferDate: Record<"local"|"en"|"np",string>, denomination?: Array<{ value: CashValue, quantity: number, amount?: string | null } | null> | null } | null } | null> | null } } };
+export type GetCashInTransitListQuery = { transaction: { cashInTransit: { totalCount?: number | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ cursor?: string | null, node?: { id: string, senderServiceCentreId: string, senderServiceCentreName: string, receiverServiceCentreId: string, receiverServiceCentreName: string, senderTellerName: string, senderTellerId: string, approvalStatus: RequestStatus, cashAmount: string, transferDate: Record<"local"|"en"|"np",string>, denomination?: Array<{ value: CashValue, quantity: number, amount?: string | null } | null> | null } | null } | null> | null } } };
 
 export type GetPastSlipsListQueryVariables = Exact<{
   accountId: Scalars['ID'];
@@ -31266,6 +31266,8 @@ export const GetCashInTransitListDocument = `
           senderServiceCentreName
           receiverServiceCentreId
           receiverServiceCentreName
+          senderTellerName
+          senderTellerId
           approvalStatus
           cashAmount
           transferDate

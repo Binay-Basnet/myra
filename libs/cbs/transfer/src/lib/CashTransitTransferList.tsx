@@ -6,11 +6,14 @@ import { PageHeader } from '@myra-ui';
 import { ApprovalStatusCell, Column, Table } from '@myra-ui/table';
 
 import {
+  CashInTransitInfo,
   CashInTransitTransferType,
   RequestStatus,
   useGetCashInTransitListQuery,
 } from '@coop/cbs/data-access';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+
+import { CashInTransitTransferAproveModal } from '../components/cash-in-transit/CashInTransitTransferAproveModal';
 
 /* eslint-disable-next-line */
 export interface CashTransitTransferProps {}
@@ -105,9 +108,9 @@ export const CashTransitTransferList = () => {
     [t]
   );
 
-  // const selectedTransfer = rowData?.find(
-  //   (transfer) => transfer?.node?.id === router.query['id']
-  // )?.node;
+  const selectedTransfer = rowData?.find(
+    (transfer) => transfer?.node?.id === router.query['id']
+  )?.node;
 
   return (
     <>
@@ -130,6 +133,7 @@ export const CashTransitTransferList = () => {
           router.push(
             {
               query: {
+                ...router.query,
                 id: row?.node?.id,
               },
             },
@@ -140,10 +144,10 @@ export const CashTransitTransferList = () => {
         }}
       />
 
-      {/* <TellerTransferApproveModal
-        transfer={selectedTransfer as TellerActivityEntry}
+      <CashInTransitTransferAproveModal
+        transfer={selectedTransfer as CashInTransitInfo}
         approveModal={modalProps}
-      /> */}
+      />
     </>
   );
 };
