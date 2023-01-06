@@ -1633,6 +1633,23 @@ export type CoaFullView = {
   error?: Maybe<QueryError>;
 };
 
+export type CoaLeafNodeDetailView = {
+  data?: Maybe<CoaLeafNodeDetails>;
+  error?: Maybe<QueryError>;
+};
+
+export type CoaLeafNodeDetails = {
+  accountName?: Maybe<Scalars['Localized']>;
+  accountType?: Maybe<Scalars['String']>;
+  closingBalance?: Maybe<Scalars['String']>;
+  crAmount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  drAmount?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  ledgers?: Maybe<Array<Maybe<LedgerList>>>;
+  noOfAccounts?: Maybe<Scalars['String']>;
+};
+
 export type CoaMinimal = {
   accountCode: Scalars['String'];
   id: Scalars['ID'];
@@ -1729,6 +1746,8 @@ export type CashInTransitInfo = {
   receiverServiceCentreName: Scalars['String'];
   senderServiceCentreId: Scalars['String'];
   senderServiceCentreName: Scalars['String'];
+  senderTellerId: Scalars['String'];
+  senderTellerName: Scalars['String'];
   transferDate: Scalars['Localized'];
 };
 
@@ -1963,6 +1982,7 @@ export type ChartsOfAccountSettingsQuery = {
   class?: Maybe<ChartsOfAccountClassResult>;
   coaAccountDetails?: Maybe<CoaDetailsResult>;
   coaAccountList?: Maybe<CoaAccountListResult>;
+  coaLeafNodeDetails?: Maybe<CoaLeafNodeDetailView>;
   fullView: CoaFullView;
   search?: Maybe<CoaMinimalResult>;
 };
@@ -1993,6 +2013,11 @@ export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
 export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
   branchId?: InputMaybe<Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
+};
+
+
+export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -8272,6 +8297,13 @@ export enum Language {
   Nepali = 'NEPALI'
 }
 
+export type LedgerList = {
+  balance?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  ledgerName?: Maybe<Scalars['String']>;
+  serviceCenter?: Maybe<Scalars['String']>;
+};
+
 export type LedgerMapping = {
   interestAccuredDaily?: InputMaybe<Scalars['String']>;
   interestIncome?: InputMaybe<Scalars['String']>;
@@ -10308,6 +10340,7 @@ export type MemberRegistrationReportResult = {
 
 export type MemberReport = {
   activeInactiveMemberReport?: Maybe<ReportResult>;
+  exportActiveInactiveMemberReport: Scalars['String'];
   kymStatusReport?: Maybe<KymStatusReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   memberRegistrationReport?: Maybe<MemberRegistrationReportResult>;
@@ -10315,6 +10348,11 @@ export type MemberReport = {
 
 
 export type MemberReportActiveInactiveMemberReportArgs = {
+  data?: InputMaybe<ActiveInactiveMemberReportData>;
+};
+
+
+export type MemberReportExportActiveInactiveMemberReportArgs = {
   data?: InputMaybe<ActiveInactiveMemberReportData>;
 };
 

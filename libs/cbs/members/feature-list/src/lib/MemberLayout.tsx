@@ -254,6 +254,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
 
         <Box p="s16">
           <Button
+            data-testid="new-member"
             width="full"
             size="md"
             justifyContent="start"
