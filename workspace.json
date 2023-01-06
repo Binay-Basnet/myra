@@ -65,6 +65,7 @@
     "cbs-settings--feature-loan": "libs/cbs/settings/feature-loan",
     "cbs-settings-feature-alternative-channels": "libs/cbs/settings/feature-alternative-channels",
     "cbs-settings-feature-audit-log": "libs/cbs/settings/feature-audit-log",
+    "cbs-settings-feature-bank": "libs/cbs/settings/feature-bank",
     "cbs-settings-feature-branches": "libs/cbs/settings/feature-branches",
     "cbs-settings-feature-coa": "libs/cbs/settings/feature-coa",
     "cbs-settings-feature-code-management": "libs/cbs/settings/feature-code-management",

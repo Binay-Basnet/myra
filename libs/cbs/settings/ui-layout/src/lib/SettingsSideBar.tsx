@@ -13,10 +13,6 @@ type TabList = {
 };
 
 const orgTabList: TabList[] = [
-  // {
-  //   title: 'settingsSideBarOrganization',
-  //   to: '/settings/general/organization',
-  // },
   {
     title: 'serviceCenterSettings',
     to: ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST,
@@ -28,6 +24,10 @@ const orgTabList: TabList[] = [
   {
     title: 'settingsAuditLog',
     to: ROUTES.SETTINGS_GENERAL_AUDIT_LOG,
+  },
+  {
+    title: 'bank',
+    to: ROUTES.SETTINGS_GENERAL_BANK,
   },
 ];
 
