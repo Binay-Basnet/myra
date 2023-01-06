@@ -51,6 +51,8 @@ query getCashInTransitList(
           senderServiceCentreName
           receiverServiceCentreId
           receiverServiceCentreName
+          senderTellerName
+          senderTellerId
           approvalStatus
           cashAmount
           transferDate
