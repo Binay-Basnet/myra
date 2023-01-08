@@ -26,6 +26,16 @@ export type Scalars = {
   Time: string;
 };
 
+export type Address = {
+  coordinates?: Maybe<Coordinate>;
+  district?: Maybe<Scalars['Localized']>;
+  houseNo?: Maybe<Scalars['String']>;
+  localGovernment?: Maybe<Scalars['Localized']>;
+  locality?: Maybe<Scalars['Localized']>;
+  state?: Maybe<Scalars['Localized']>;
+  wardNo?: Maybe<Scalars['String']>;
+};
+
 export type AdministrationQuery = {
   all: Array<Province>;
   districts: Array<Result>;
@@ -106,6 +116,35 @@ export enum BranchCategory {
   ServiceCenter = 'SERVICE_CENTER',
 }
 
+export type ClientEnvironment = {
+  description?: Maybe<Scalars['String']>;
+  environmentName: Scalars['String'];
+  environmentSlug: Scalars['String'];
+  id: Scalars['ID'];
+  isForProduction?: Maybe<Scalars['Boolean']>;
+  otpToken?: Maybe<Scalars['String']>;
+};
+
+export type ClientEnvironmentMutation = {
+  createDB?: Maybe<DbCreateResult>;
+  delete: DeleteClientEnvironmentResult;
+  new: NewClientEnvironmentResult;
+};
+
+export type ClientEnvironmentMutationCreateDbArgs = {
+  clientId: Scalars['ID'];
+  environmentId: Scalars['ID'];
+};
+
+export type ClientEnvironmentMutationDeleteArgs = {
+  environmentId: Scalars['String'];
+};
+
+export type ClientEnvironmentMutationNewArgs = {
+  clientId: Scalars['ID'];
+  data: NewClientEnvironmentInput;
+};
+
 export enum ComparatorType {
   EqualTo = 'EqualTo',
   GreaterThan = 'GreaterThan',
@@ -143,6 +182,12 @@ export type CoordinateInput = {
 export type DbCreateResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type DeleteClientEnvironmentResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<NeosysClientQuery>;
+  success: Scalars['Boolean'];
 };
 
 export type District = {
@@ -279,6 +324,17 @@ export type NeosysAuthTokenResult = {
   token?: Maybe<NeosysAuthToken>;
 };
 
+export type NeosysClientDetails = {
+  address?: Maybe<Address>;
+  clientId: Scalars['String'];
+  environments?: Maybe<Array<Maybe<ClientEnvironment>>>;
+  logoId?: Maybe<Scalars['String']>;
+  logoUrl?: Maybe<Scalars['String']>;
+  organizationCode: Scalars['String'];
+  organizationName: Scalars['String'];
+  organizationType?: Maybe<OrganizationType>;
+};
+
 export type NeosysClientFilter = {
   dateFrom?: InputMaybe<Scalars['String']>;
   dateTo?: InputMaybe<Scalars['String']>;
@@ -301,6 +357,7 @@ export type NeosysClientMinimalInfo = {
 export type NeosysClientMutation = {
   add?: Maybe<OrganizationClientAddResult>;
   createDB?: Maybe<DbCreateResult>;
+  environment?: Maybe<ClientEnvironmentMutation>;
 };
 
 export type NeosysClientMutationAddArgs = {
@@ -312,7 +369,12 @@ export type NeosysClientMutationCreateDbArgs = {
 };
 
 export type NeosysClientQuery = {
+  details?: Maybe<NeosysClientDetails>;
   list?: Maybe<Array<Maybe<NeosysClientMinimalInfo>>>;
+};
+
+export type NeosysClientQueryDetailsArgs = {
+  clientId: Scalars['ID'];
 };
 
 export type NeosysClientQueryListArgs = {
@@ -363,6 +425,19 @@ export type NeosysUser = Base & {
   modifiedBy: Identity;
   objState: ObjState;
   username: Scalars['String'];
+};
+
+export type NewClientEnvironmentInput = {
+  description?: InputMaybe<Scalars['String']>;
+  environmentName?: InputMaybe<Scalars['String']>;
+  isForProduction?: InputMaybe<Scalars['Boolean']>;
+  otpToken?: InputMaybe<Scalars['String']>;
+};
+
+export type NewClientEnvironmentResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<NeosysClientQuery>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type NotFoundError = {
@@ -692,6 +767,53 @@ export type CreateDbMutation = {
   };
 };
 
+export type SetEnvironementMutationVariables = Exact<{
+  clientId: Scalars['ID'];
+  data: NewClientEnvironmentInput;
+}>;
+
+export type SetEnvironementMutation = {
+  neosys: {
+    client?: {
+      environment?: {
+        new: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteEnvironementMutationVariables = Exact<{
+  environmentId: Scalars['String'];
+}>;
+
+export type DeleteEnvironementMutation = {
+  neosys: {
+    client?: {
+      environment?: {
+        delete: {
+          success: boolean;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
 
 export type AllAdministrationQuery = {
@@ -761,6 +883,27 @@ export type GetClientsListQuery = {
         dateJoined?: string | null;
         dbCreated?: boolean | null;
       } | null> | null;
+    } | null;
+  };
+};
+
+export type GetClientDetailsQueryVariables = Exact<{
+  clientId: Scalars['ID'];
+}>;
+
+export type GetClientDetailsQuery = {
+  neosys: {
+    client?: {
+      details?: {
+        environments?: Array<{
+          id: string;
+          environmentName: string;
+          environmentSlug: string;
+          otpToken?: string | null;
+          description?: string | null;
+          isForProduction?: boolean | null;
+        } | null> | null;
+      } | null;
     } | null;
   };
 };
@@ -1007,6 +1150,66 @@ export const useCreateDbMutation = <TError = unknown, TContext = unknown>(
     useAxios<CreateDbMutation, CreateDbMutationVariables>(CreateDbDocument),
     options
   );
+export const SetEnvironementDocument = `
+    mutation setEnvironement($clientId: ID!, $data: NewClientEnvironmentInput!) {
+  neosys {
+    client {
+      environment {
+        new(clientId: $clientId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEnvironementMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEnvironementMutation,
+    TError,
+    SetEnvironementMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEnvironementMutation, TError, SetEnvironementMutationVariables, TContext>(
+    ['setEnvironement'],
+    useAxios<SetEnvironementMutation, SetEnvironementMutationVariables>(SetEnvironementDocument),
+    options
+  );
+export const DeleteEnvironementDocument = `
+    mutation deleteEnvironement($environmentId: String!) {
+  neosys {
+    client {
+      environment {
+        delete(environmentId: $environmentId) {
+          success
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteEnvironementMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteEnvironementMutation,
+    TError,
+    DeleteEnvironementMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteEnvironementMutation, TError, DeleteEnvironementMutationVariables, TContext>(
+    ['deleteEnvironement'],
+    useAxios<DeleteEnvironementMutation, DeleteEnvironementMutationVariables>(
+      DeleteEnvironementDocument
+    ),
+    options
+  );
 export const AllAdministrationDocument = `
     query allAdministration {
   administration {
@@ -1156,6 +1359,36 @@ export const useGetClientsListQuery = <TData = GetClientsListQuery, TError = unk
   useQuery<GetClientsListQuery, TError, TData>(
     variables === undefined ? ['getClientsList'] : ['getClientsList', variables],
     useAxios<GetClientsListQuery, GetClientsListQueryVariables>(GetClientsListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetClientDetailsDocument = `
+    query getClientDetails($clientId: ID!) {
+  neosys {
+    client {
+      details(clientId: $clientId) {
+        environments {
+          id
+          environmentName
+          environmentSlug
+          otpToken
+          description
+          isForProduction
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetClientDetailsQuery = <TData = GetClientDetailsQuery, TError = unknown>(
+  variables: GetClientDetailsQueryVariables,
+  options?: UseQueryOptions<GetClientDetailsQuery, TError, TData>
+) =>
+  useQuery<GetClientDetailsQuery, TError, TData>(
+    ['getClientDetails', variables],
+    useAxios<GetClientDetailsQuery, GetClientDetailsQueryVariables>(GetClientDetailsDocument).bind(
       null,
       variables
     ),

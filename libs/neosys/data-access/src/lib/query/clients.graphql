@@ -16,3 +16,20 @@ query getClientsList {
     }
   }
 }
+
+query getClientDetails($clientId: ID!) {
+  neosys {
+    client {
+      details(clientId: $clientId) {
+        environments {
+          id
+          environmentName
+          environmentSlug
+          otpToken
+          description
+          isForProduction
+        }
+      }
+    }
+  }
+}

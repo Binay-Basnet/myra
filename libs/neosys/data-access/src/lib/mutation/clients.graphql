@@ -24,3 +24,33 @@ mutation createDB($saccosID: ID!) {
     }
   }
 }
+
+mutation setEnvironement($clientId: ID!, $data: NewClientEnvironmentInput!) {
+  neosys {
+    client {
+      environment {
+        new(clientId: $clientId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation deleteEnvironement($environmentId: String!) {
+  neosys {
+    client {
+      environment {
+        delete(environmentId: $environmentId) {
+          success
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
