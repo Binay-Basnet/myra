@@ -5,39 +5,12 @@ import { useRouter } from 'next/router';
 
 import { Avatar, Box, Collapse, Icon, Text, TopLevelHeader } from '@myra-ui';
 
+import { useLink } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 export interface HomePageLayoutProps {
   children: React.ReactNode;
 }
-
-const myraAppn = [
-  {
-    title: 'corebankingSystems',
-    img: '/cbs.svg',
-    link: '/cbs/members/list',
-  },
-  {
-    title: 'memberAndShareManagement',
-    img: '/memberandshare.svg',
-    link: '/cbs/members/list',
-  },
-  {
-    title: 'accountingSystem',
-    img: '/accounting.svg',
-    link: '/accounting/sales/list',
-  },
-  {
-    title: 'alternativeChannelsAndCrossConnectivity',
-    img: '/tnt.svg',
-    link: '/alternative-channels/users/mBanking',
-  },
-  {
-    title: 'inventoryManagement',
-    img: '/inventory.svg',
-    link: '/inventory/register',
-  },
-];
 
 const notSubscribed = [
   {
@@ -88,6 +61,36 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
   const { children } = props;
   const router = useRouter();
 
+  const { link: cbsLink } = useLink();
+
+  const myraAppn = [
+    {
+      title: 'corebankingSystems',
+      img: '/cbs.svg',
+      link: cbsLink,
+    },
+    {
+      title: 'memberAndShareManagement',
+      img: '/memberandshare.svg',
+      link: '/cbs/members/list',
+    },
+    {
+      title: 'accountingSystem',
+      img: '/accounting.svg',
+      link: '/accounting/sales/list',
+    },
+    {
+      title: 'alternativeChannelsAndCrossConnectivity',
+      img: '/tnt.svg',
+      link: '/alternative-channels/users/mBanking',
+    },
+    {
+      title: 'inventoryManagement',
+      img: '/inventory.svg',
+      link: '/inventory/register',
+    },
+  ];
+
   return (
     <Box>
       <Box position="fixed" top={0} width="100%" zIndex={11}>
@@ -126,7 +129,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                 alignItems="center"
                 cursor="pointer"
                 _hover={{ bg: 'gray.200' }}
-                onClick={() => router.push(item.link)}
+                onClick={() => router?.push(item?.link)}
               >
                 <Box flexShrink={0} display="flex" justifyContent="center" alignItems="center">
                   <Image width="32" height="32" src={item.img} alt={t[item.title]} />

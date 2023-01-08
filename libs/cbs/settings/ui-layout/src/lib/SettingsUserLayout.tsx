@@ -1,5 +1,8 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
+
+import { MenuContainer, PageContainer, Scrollable } from '@myra-ui/templates';
+
+import { Can } from '@coop/cbs/utils';
 
 import { SettingsUserSideBar } from './SettingsUserSidebar';
 
@@ -8,10 +11,12 @@ interface ISettingsUserLayoutProps {
 }
 
 export const SettingsUserLayout = ({ children }: ISettingsUserLayoutProps) => (
-  <Box display="flex" flexDirection="row">
-    <SettingsUserSideBar />
-    <Box width="100%" ml="260px" bg="white" minHeight="calc(100vh - 110px)">
-      {children}
-    </Box>
-  </Box>
+  <Can I="SHOW_IN_MENU" a="SETTINGS_USERS" showError isErrorCentered>
+    <MenuContainer>
+      <SettingsUserSideBar />
+      <PageContainer>
+        <Scrollable>{children}</Scrollable>
+      </PageContainer>
+    </MenuContainer>
+  </Can>
 );

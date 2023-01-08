@@ -110,7 +110,7 @@ export const CBSLoanRepaymentList = () => {
 
   return (
     <>
-      <Box position="sticky" top="110px" zIndex={3}>
+      <Box position="sticky" top="0" zIndex={3}>
         <PageHeader heading={`Loan Repayment - ${featureCode.loanRepayment} `} />
       </Box>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import {
@@ -9,6 +9,8 @@ import {
   useGetMeQuery,
   useRefreshToken,
 } from '@coop/cbs/data-access';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { AbilityContext, permissions, updateAbility } from '@coop/cbs/utils';
 import { getSchemaPath, useReplace } from '@coop/shared/utils';
 
 const url = getSchemaPath();
@@ -19,6 +21,8 @@ export const useInit = () => {
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const dispatch = useAppDispatch();
   const replace = useReplace();
+
+  const ability = useContext(AbilityContext);
 
   const getMe = useGetMeQuery(
     {},
@@ -54,6 +58,8 @@ export const useInit = () => {
   useEffect(() => {
     if (hasDataReturned) {
       if (userData) {
+        updateAbility(ability, permissions[userData.role || 'SUPER_ADMIN']);
+
         dispatch(authenticate({ user: userData }));
         preference && dispatch(setPreference({ preference }));
         setIsLoading(false);

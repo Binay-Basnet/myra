@@ -133,7 +133,7 @@ export const ShareRegisterTable = () => {
 
   return (
     <>
-      <Box position="sticky" top="110px" zIndex={3}>
+      <Box position="sticky" top="0" zIndex={3}>
         <TableListPageHeader
           heading={`${t['shareRegisterTable']} - ${featureCode?.shareRegister}`}
         />

@@ -108,7 +108,7 @@ const Translation = () => {
       <FormProvider {...methods}>
         <form>
           <Container height="fit-content" minW="container.xl" p="0" background="white" pb="110px">
-            <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+            <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
               <FormHeader title={t['membersFormAddNewMembers']} />
             </Box>
             <Box p="s20" mt={1}>

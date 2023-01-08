@@ -252,7 +252,7 @@ export const MemberListPage = () => {
   const onCancel = () => {};
   return (
     <>
-      <Box position="sticky" top="110px" zIndex={3}>
+      <Box position="sticky" top="0" zIndex={3}>
         <PageHeader
           heading={`${t['memberLayoutMembers']} - ${featureCode?.memberList}`}
           tabItems={MEMBER_TAB_ITEMS}

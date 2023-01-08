@@ -1,81 +1,95 @@
 import { Box, Text } from '@chakra-ui/react';
 
-import { Divider } from '@myra-ui';
+import { Divider, TabColumn } from '@myra-ui';
 
-import { ROUTES } from '@coop/cbs/utils';
+import { AclKey, ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
-import { VerticalSideBarForSettings } from '../components/VerticalSideBarForSettings';
-
 type TabList = {
-  title: string;
-  to: string;
+  label: string;
+  route: string;
+  aclKey: AclKey;
 };
 
 const orgTabList: TabList[] = [
   {
-    title: 'serviceCenterSettings',
-    to: ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST,
+    label: 'serviceCenterSettings',
+    aclKey: 'SETTINGS_SERVICE_CENTER',
+    route: ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST,
   },
   {
-    title: 'settingsSideBarChartsOfAccounts',
-    to: ROUTES.SETTINGS_GENERAL_COA,
+    label: 'settingsSideBarChartsOfAccounts',
+    aclKey: 'SETTINGS_COA',
+    route: ROUTES.SETTINGS_GENERAL_COA,
   },
   {
-    title: 'settingsAuditLog',
-    to: ROUTES.SETTINGS_GENERAL_AUDIT_LOG,
+    label: 'settingsAuditLog',
+    aclKey: 'SETTINGS_AUDIT_LOG',
+    route: ROUTES.SETTINGS_GENERAL_AUDIT_LOG,
   },
   {
-    title: 'bank',
-    to: ROUTES.SETTINGS_GENERAL_BANK,
+    label: 'bank',
+    aclKey: 'SETTINGS_BANK',
+    route: ROUTES.SETTINGS_GENERAL_BANK,
   },
 ];
 
 const tabList: TabList[] = [
   {
-    title: 'settingsSideBarMembers',
-    to: ROUTES.SETTINGS_GENERAL_MEMBERS,
+    label: 'settingsSideBarMembers',
+    aclKey: 'SETTINGS_MEMBER',
+
+    route: ROUTES.SETTINGS_GENERAL_MEMBERS,
   },
   {
-    title: 'settingsSideBarShare',
-    to: ROUTES.SETTINGS_GENERAL_SHARE,
+    label: 'settingsSideBarShare',
+    aclKey: 'SETTINGS_SHARE',
+
+    route: ROUTES.SETTINGS_GENERAL_SHARE,
   },
   {
-    title: 'settingsSideBarDeposit',
-    to: ROUTES.SETTINGS_GENERAL_SAVINGS_TDS,
+    label: 'settingsSideBarDeposit',
+    aclKey: 'SETTINGS_SAVING_PARAMETERS',
+
+    route: ROUTES.SETTINGS_GENERAL_SAVINGS_TDS,
   },
   {
-    title: 'settingsSideBarDepositProducts',
-    to: ROUTES.SETTINGS_GENERAL_SP_LIST,
+    label: 'settingsSideBarDepositProducts',
+    aclKey: 'SETTINGS_SAVING_PRODUCTS',
+
+    route: ROUTES.SETTINGS_GENERAL_SP_LIST,
   },
   {
-    title: 'settingsSideBarLoan',
-    to: ROUTES.SETTINGS_GENERAL_LOAN,
+    label: 'settingsSideBarLoan',
+    aclKey: 'SETTINGS_LOAN_PARAMETERS',
+
+    route: ROUTES.SETTINGS_GENERAL_LOAN,
   },
 
   {
-    title: 'settingsSideBarLoanProducts',
-    to: ROUTES.SETTINGS_GENERAL_LP_LIST,
+    label: 'settingsSideBarLoanProducts',
+    aclKey: 'SETTINGS_LOAN_PRODUCTS',
+
+    route: ROUTES.SETTINGS_GENERAL_LP_LIST,
   },
 ];
 
 const otherTabList: TabList[] = [
   {
-    title: 'Code Management',
-    to: ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS,
+    label: 'Code Management',
+    aclKey: 'SETTINGS_CODE_MANAGEMENT',
+    route: ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS,
   },
   {
-    title: 'settingsAlternativeChannel',
-    to: ROUTES.SETTINGS_GENERAL_ALTERNATIVE_CHANNELS,
+    label: 'settingsAlternativeChannel',
+    aclKey: 'SETTINGS_ALTERNATIVE_CHANNELS',
+    route: ROUTES.SETTINGS_GENERAL_ALTERNATIVE_CHANNELS,
   },
   {
-    title: 'Indexing',
-    to: ROUTES.SETTINGS_GENERAL_INDEXING,
+    label: 'Indexing',
+    route: ROUTES.SETTINGS_GENERAL_INDEXING,
+    aclKey: 'SETTINGS_INDEXING',
   },
-  // {
-  //   title: 'settingsDocuments',
-  //   to: '/settings/general/documents',
-  // },
 ];
 
 export const SettingSideBar = () => {
@@ -91,7 +105,6 @@ export const SettingSideBar = () => {
         width="260px"
         height="calc(100vh - 110px)"
         overflowY="auto"
-        position="fixed"
       >
         <Box height="50px" py="s12" px="s16">
           <Text fontSize="l1" fontWeight="600" color="gray.800">
@@ -99,11 +112,11 @@ export const SettingSideBar = () => {
           </Text>
         </Box>
         <Box p="s16">
-          <VerticalSideBarForSettings tablinks={orgTabList} />
+          <TabColumn list={orgTabList} />
           <Divider my="s16" />
-          <VerticalSideBarForSettings tablinks={tabList} />
+          <TabColumn list={tabList} />
           <Divider my="s16" />
-          <VerticalSideBarForSettings tablinks={otherTabList} />
+          <TabColumn list={otherTabList} />
         </Box>
       </Box>
     </Box>

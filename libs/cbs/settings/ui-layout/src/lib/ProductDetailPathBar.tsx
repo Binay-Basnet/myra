@@ -36,7 +36,7 @@ export const ProductDetailPathBar = ({
   const router = useRouter();
 
   return (
-    <Box position="sticky" top="110px" zIndex={10}>
+    <Box position="sticky" top="0" zIndex={10}>
       <Box
         h="50px"
         bg="white"

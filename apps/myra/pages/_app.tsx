@@ -15,6 +15,7 @@ import { store, useInit } from '@coop/cbs/data-access';
 
 import '@raralabs/web-feedback/dist/css/style.css';
 import './app.css';
+import { buildEmptyPermissions, AbilityContext } from '@coop/cbs/utils';
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -67,17 +68,23 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   );
 };
 
-const CustomApp = (props: AppPropsWithLayout) => (
-  <Provider store={store}>
-    {/* <AuthProvider> */}
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
-        <MainApp {...props} />
-      </ChakraProvider>
-      <ReactQueryDevtools position="bottom-right" />
-    </QueryClientProvider>
-    {/* </AuthProvider> */}
-  </Provider>
-);
+const ability = buildEmptyPermissions();
+
+const CustomApp = (props: AppPropsWithLayout) => {
+  return (
+    <Provider store={store}>
+      {/* <AuthProvider> */}
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={theme}>
+          <AbilityContext.Provider value={ability}>
+            <MainApp {...props} />
+          </AbilityContext.Provider>
+        </ChakraProvider>
+        <ReactQueryDevtools position="bottom-right" />
+      </QueryClientProvider>
+      {/* </AuthProvider> */}
+    </Provider>
+  );
+};
 
 export default CustomApp;

@@ -17,7 +17,6 @@ export const AccountingPageHeader = ({
     bg="white"
     zIndex="10"
     w="100%"
-    top="110px"
     position="sticky"
     borderBottom="1px solid "
     borderColor="border.layout"

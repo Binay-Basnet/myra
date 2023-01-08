@@ -3,5 +3,7 @@ export * from './lib/detail-page';
 export * from './lib/form';
 export * from './lib/header';
 export * from './lib/layout';
+export * from './lib/layout/containers/Container';
 export * from './lib/others';
-export * from './lib/side-bar/SideBar';
+export * from './lib/side-bar/AppSidebar';
+export * from './lib/side-bar/Tab/TabsSidebarLayout';

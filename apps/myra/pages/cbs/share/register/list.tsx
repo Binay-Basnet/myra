@@ -2,10 +2,14 @@ import { ReactElement } from 'react';
 
 import { MainLayout } from '@myra-ui';
 
+import { Can } from '@coop/cbs/utils';
 import { SharePageLayout, ShareRegisterTable } from '@coop/myra/components';
 
-// TODO ( Update this page when design arrives )
-const ShareRegister = () => <ShareRegisterTable />;
+const ShareRegister = () => (
+  <Can I="SHOW_IN_MENU" a="CBS_SHARE_SHARE_REGISTER" showError>
+    <ShareRegisterTable />
+  </Can>
+);
 
 ShareRegister.getLayout = function getLayout(page: ReactElement) {
   return (

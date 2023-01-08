@@ -114,7 +114,7 @@ export const AddBlockWithdrawSlipRequest = () => {
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader title="Block Withdraw Slip Book" />
         </Box>
 

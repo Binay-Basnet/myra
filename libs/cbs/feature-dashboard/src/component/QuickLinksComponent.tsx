@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { Box, Grid, GridItem, Modal, QuickLinks, Text } from '@myra-ui';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { AclKey, Can, ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 export const QuickLinksComponent = () => {
@@ -23,6 +23,7 @@ export const QuickLinksComponent = () => {
       id: 'a',
       text: 'Add New Member',
       icon: IoMdPersonAdd,
+      permissionKey: 'CBS_MEMBERS_MEMBER',
       onclick: () =>
         newId
           .mutateAsync({ idType: Id_Type.Kymindividual })
@@ -31,48 +32,58 @@ export const QuickLinksComponent = () => {
     {
       id: 'b',
       text: 'Add New Deposit',
+      permissionKey: 'CBS_TRANSACTIONS_DEPOSIT',
       icon: ImStack,
       onclick: () => router.push(ROUTES.CBS_TRANS_DEPOSIT_ADD),
     },
     {
       id: 'c',
       text: 'Add New Withdraw',
+      permissionKey: 'CBS_TRANSACTIONS_WITHDRAW',
       icon: BsArrowLeftRight,
       onclick: () => router.push(ROUTES.CBS_TRANS_WITHDRAW_ADD),
     },
     {
       id: 'd',
       text: 'Add Journal Voucher',
+      permissionKey: 'CBS_TRANSACTIONS_JOURNAL_VOUCHER',
+
       icon: AiOutlineUnorderedList,
       onclick: () => router.push(ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD),
     },
     {
       id: 'e',
       text: 'New Share Issue',
+      permissionKey: 'CBS_SHARE_SHARE_ISSUE',
+
       icon: IoCubeOutline,
       onclick: () => router.push(ROUTES.CBS_SHARE_ISSUE_ADD),
     },
     {
       id: 'f',
       text: 'Share Return',
+      permissionKey: 'CBS_SHARE_SHARE_RETURN',
       icon: IoCubeOutline,
       onclick: () => router.push(ROUTES.CBS_SHARE_RETURN_ADD),
     },
     {
       id: 'g',
       text: 'New Saving Account',
+      permissionKey: 'CBS_SAVINGS_SAVING_ACCOUNT',
       icon: ImStack,
       onclick: () => router.push(ROUTES.CBS_ACCOUNT_OPEN_ADD),
     },
     {
       id: 'h',
       text: 'New Loan Account',
+      permissionKey: 'CBS_LOAN_LOAN_APPLICATION',
       icon: BsArrowLeftRight,
       onclick: () => router.push(ROUTES.CBS_LOAN_APPLICATIONS_ADD),
     },
     {
       id: 'i',
       text: 'Reports',
+      permissionKey: 'CBS_REPORTS',
       icon: BsFileText,
       onclick: () => router.push(ROUTES.CBS_REPORT_LIST),
     },
@@ -125,9 +136,11 @@ export const QuickLinksComponent = () => {
 
       <Grid templateColumns="repeat(3,1fr)" columnGap="s8" rowGap="s8">
         {quickLinksList?.map((item) => (
-          <GridItem key={item?.text}>
-            <QuickLinks icon={item.icon} text={item.text} onclick={item.onclick} />
-          </GridItem>
+          <Can I="CREATE" a={item?.permissionKey as AclKey}>
+            <GridItem key={item?.text}>
+              <QuickLinks icon={item.icon} text={item.text} onclick={item.onclick} />
+            </GridItem>
+          </Can>
         ))}
       </Grid>
 

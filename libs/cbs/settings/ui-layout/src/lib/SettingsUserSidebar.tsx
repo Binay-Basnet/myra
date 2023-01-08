@@ -41,7 +41,6 @@ const otherTabList: TabList[] = [
 
 export const SettingsUserSideBar = () => (
   <Box
-    position="fixed"
     w="240px"
     display="flex"
     flexDirection="column"

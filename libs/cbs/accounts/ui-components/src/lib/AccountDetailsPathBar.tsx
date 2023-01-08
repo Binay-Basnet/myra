@@ -9,7 +9,7 @@ export const AccountDetailsPathBar = ({ title }: PathBarProps) => {
   const { accountDetails } = useAccountDetails();
 
   return (
-    <Box position="sticky" top="110px" zIndex={10}>
+    <Box position="sticky" top="0" zIndex={10}>
       <DetailPageHeader
         title={title}
         member={{

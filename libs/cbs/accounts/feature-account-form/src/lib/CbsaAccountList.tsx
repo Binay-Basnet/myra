@@ -132,7 +132,7 @@ export const CBSAccountList = () => {
 
   return (
     <>
-      <Box position="sticky" top="110px" zIndex={3}>
+      <Box position="sticky" top="0px" zIndex={3}>
         <PageHeader
           heading={`Saving Accounts - ${featureCode?.accountList}`}
           tabItems={ACCOUNT_TAB_ITEMS}

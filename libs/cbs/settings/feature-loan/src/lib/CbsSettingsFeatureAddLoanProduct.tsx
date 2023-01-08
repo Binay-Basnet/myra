@@ -435,7 +435,7 @@ export const SettingsLoanProductForm = () => {
 
   return (
     <>
-      <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.lg" height="fit-content" paddingInline="0">
           <FormHeader title={t['loanProductAddLoanProduct']} />
         </Container>

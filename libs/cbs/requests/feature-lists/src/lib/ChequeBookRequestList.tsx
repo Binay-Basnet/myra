@@ -134,7 +134,7 @@ export const ChequeBookRequestList = () => {
 
   return (
     <Box display="flex" flexDir="column">
-      <Box position="sticky" top="110px" zIndex={3}>
+      <Box position="sticky" top="0" zIndex={3}>
         <PageHeader heading={`Withdraw Slip List - ${featureCode?.withdrawSlipRequest}`} />
       </Box>
 

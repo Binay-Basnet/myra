@@ -1,7 +1,9 @@
 import React from 'react';
 import { AiOutlineCloudDownload, AiOutlineUser } from 'react-icons/ai';
 
-import { Box, TabMenu, TopLevelHeader } from '@myra-ui';
+import { MainLayoutContainer, Scrollable, TabMenu, TopLevelHeader } from '@myra-ui';
+
+import { ROUTES } from '@coop/cbs/utils';
 
 export interface ACMainLayoutProps {
   children: React.ReactNode;
@@ -10,29 +12,32 @@ export interface ACMainLayoutProps {
 export const ACMainLayout = (props: ACMainLayoutProps) => {
   const { children } = props;
   return (
-    <div>
-      <Box position="fixed" top={0} width="100%" zIndex={11}>
-        <TopLevelHeader />
-        <TabMenu
-          routeIndex={2}
-          tabs={[
-            {
-              title: 'acUsers',
-              icon: AiOutlineUser,
-              link: '/alternative-channels/users/mBanking',
-              match: ['users'],
-            },
-            {
-              title: 'acDownload',
-              icon: AiOutlineCloudDownload,
-              link: '/alternative-channels/downloads/forms',
-              match: ['downloads'],
-            },
-          ]}
-        />
-      </Box>
-      <Box mt="110px">{children}</Box>
-    </div>
+    <MainLayoutContainer>
+      <TopLevelHeader />
+      <TabMenu
+        routeIndex={2}
+        module="ALTERNATIVE_CHANNELS"
+        tabs={[
+          {
+            title: 'acUsers',
+            icon: AiOutlineUser,
+            link: ROUTES.ALTERNATIVE_CHANNELS_MBANKING_USERS,
+            aclKey: 'ALTERNATIVE_CHANNELS_USERS',
+            match: ['users'],
+            navMenu: 'USERS',
+          },
+          {
+            title: 'acDownload',
+            icon: AiOutlineCloudDownload,
+            link: ROUTES.ALTERNATIVE_CHANNELS_MBANKING_USERS,
+            aclKey: 'ALTERNATIVE_CHANNELS_DOWNLOADS',
+            match: ['downloads'],
+            navMenu: 'DOWNLOADS',
+          },
+        ]}
+      />
+      <Scrollable>{children}</Scrollable>
+    </MainLayoutContainer>
   );
 };
 
