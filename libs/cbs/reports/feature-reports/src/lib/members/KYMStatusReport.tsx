@@ -13,7 +13,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { formatTableAddress, localizedDate } from '@coop/cbs/utils';
+import { formatTableAddress, localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 
 const riskCategory = [
@@ -84,6 +84,13 @@ export const KYMStatusReport = () => {
               {
                 header: 'Member ID',
                 accessorKey: 'memberId',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.memberId as string}
+                    type="member"
+                    label={props?.row?.original?.memberCode as string}
+                  />
+                ),
               },
               {
                 header: 'Member Name',

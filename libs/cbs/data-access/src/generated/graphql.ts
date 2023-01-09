@@ -21788,6 +21788,7 @@ export type GetActiveInactiveMemberReportQuery = {
               } | null;
               reportStatement?: Array<{
                 memberId?: string | null;
+                memberCode?: string | null;
                 memberName?: string | null;
                 district?: string | null;
                 wardNo?: string | null;
@@ -21822,6 +21823,7 @@ export type GetKymStatusReportQuery = {
         data?: Array<{
           memberName?: string | null;
           memberId?: string | null;
+          memberCode?: string | null;
           contact?: string | null;
           regDate?: Record<'local' | 'en' | 'np', string> | null;
           riskCategory?: RiskCategoryFilter | null;
@@ -21904,6 +21906,7 @@ export type GetMBankingRegistrationReportQuery = {
       mbankingRegistrationReport?: {
         data?: Array<{
           memberId?: string | null;
+          memberCode?: string | null;
           memberName?: string | null;
           mobileNo?: string | null;
           branchCode?: string | null;
@@ -21927,6 +21930,7 @@ export type GetMBankingExpiryReportQuery = {
       mbankingRegistrationReport?: {
         data?: Array<{
           memberId?: string | null;
+          memberCode?: string | null;
           memberName?: string | null;
           mobileNo?: string | null;
           branchCode?: string | null;
@@ -36490,6 +36494,7 @@ export const GetActiveInactiveMemberReportDocument = `
             }
             reportStatement {
               memberId
+              memberCode
               memberName
               district
               wardNo
@@ -36539,6 +36544,7 @@ export const GetKymStatusReportDocument = `
           }
           memberName
           memberId
+          memberCode
           contact
           regDate
           riskCategory
@@ -36645,6 +36651,7 @@ export const GetMBankingRegistrationReportDocument = `
       mbankingRegistrationReport(data: $data) {
         data {
           memberId
+          memberCode
           memberName
           mobileNo
           branchCode
@@ -36681,6 +36688,7 @@ export const GetMBankingExpiryReportDocument = `
       mbankingRegistrationReport(data: $data) {
         data {
           memberId
+          memberCode
           memberName
           mobileNo
           branchCode
