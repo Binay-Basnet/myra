@@ -1,4 +1,4 @@
-import React, { Ref, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -26,8 +26,9 @@ import { TableSearch, TableSelectionBar } from '../components';
 import { useTable } from '../hooks/useTable';
 import { Column, TableProps } from '../types/Table';
 
-export const Table = <T extends Record<string, unknown>>(
-  props: TableProps<T> & { ref: Ref<HTMLTableElement> }
+const TableWithoutRef = <T extends Record<string, unknown>>(
+  props: TableProps<T>,
+  ref: React.ForwardedRef<HTMLTableElement>
 ) => {
   const {
     columns,
@@ -46,7 +47,6 @@ export const Table = <T extends Record<string, unknown>>(
     enableSorting,
     manualSorting = true,
     getSubRows,
-    ref,
   } = props;
 
   const router = useRouter();
@@ -305,5 +305,9 @@ export const Table = <T extends Record<string, unknown>>(
     </>
   );
 };
+
+export const Table = React.forwardRef(TableWithoutRef) as <T extends Record<string, unknown>>(
+  props: TableProps<T> & { ref?: React.ForwardedRef<HTMLTableElement> }
+) => ReturnType<typeof TableWithoutRef>;
 
 export default Table;
