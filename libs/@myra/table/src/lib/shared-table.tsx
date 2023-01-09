@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Ref, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -26,24 +26,29 @@ import { TableSearch, TableSelectionBar } from '../components';
 import { useTable } from '../hooks/useTable';
 import { Column, TableProps } from '../types/Table';
 
-export const Table = <T extends Record<string, unknown>>({
-  columns,
-  data,
-  pagination,
-  isStatic = false,
-  isDetailPageTable = false,
-  searchPlaceholder,
-  size = 'default',
-  isLoading,
-  noDataTitle,
-  getRowId,
-  variant = 'simple',
-  showFooter,
-  rowOnClick,
-  enableSorting,
-  manualSorting = true,
-  getSubRows,
-}: TableProps<T>) => {
+export const Table = <T extends Record<string, unknown>>(
+  props: TableProps<T> & { ref: Ref<HTMLTableElement> }
+) => {
+  const {
+    columns,
+    data,
+    pagination,
+    isStatic = false,
+    isDetailPageTable = false,
+    searchPlaceholder,
+    size = 'default',
+    isLoading,
+    noDataTitle,
+    getRowId,
+    variant = 'simple',
+    showFooter,
+    rowOnClick,
+    enableSorting,
+    manualSorting = true,
+    getSubRows,
+    ref,
+  } = props;
+
   const router = useRouter();
   const sortQuery = router?.query['sort'] as string;
 
@@ -106,6 +111,7 @@ export const Table = <T extends Record<string, unknown>>({
           }}
           size={tableSize}
           variant={variant}
+          ref={ref}
         >
           <Thead display="table-header-group">
             {table.getHeaderGroups().map((headerGroup) => (

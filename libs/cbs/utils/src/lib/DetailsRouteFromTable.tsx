@@ -1,7 +1,5 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { useRouter } from 'next/router';
-
-import { Button } from '@myra-ui';
+import { Button } from '@chakra-ui/react';
 
 import { ROUTES } from '../constants/ROUTES';
 
