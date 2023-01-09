@@ -95,7 +95,7 @@ const otherTabList: TabList[] = [
 export const SettingSideBar = () => {
   const { t } = useTranslation();
   return (
-    <Box height="100%">
+    <Box position="sticky">
       <Box
         sx={{
           '&::-webkit-scrollbar': {

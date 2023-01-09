@@ -306,6 +306,7 @@ export const SearchBar = () => {
             flexDirection="column"
             gap="s8"
             maxH="400px"
+            zIndex="11"
           >
             {isInitialLoading && (
               <Box>

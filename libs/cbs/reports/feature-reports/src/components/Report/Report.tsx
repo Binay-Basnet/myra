@@ -23,7 +23,7 @@ import { useReport } from '@coop/cbs/reports';
 import { ReportOrganizationHeader } from './ReportOrganizationHeader';
 
 export const ReportHeader = ({ children }: { children: React.ReactNode }) => (
-  <Box position="sticky" bg="white" top="110px" zIndex="10">
+  <Box position="sticky" bg="white" top="0px" zIndex="10">
     {children}
   </Box>
 );

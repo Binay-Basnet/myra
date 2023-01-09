@@ -6,14 +6,9 @@ import { MemberListPage as MemberList, MemberPagesLayout } from '@coop/cbs/membe
 import { Can } from '@coop/cbs/utils';
 
 const MemberListPage = () => (
-  <>
-    <Can I="VIEW" a="CBS_MEMBERS_MEMBER">
-      <MemberList />
-    </Can>
-    <Can not I="VIEW" a="CBS_MEMBERS_MEMBER">
-      Fuck you
-    </Can>
-  </>
+  <Can I="SHOW_IN_MENU" a="CBS_MEMBERS_MEMBER" showError isErrorCentered>
+    <MemberList />
+  </Can>
 );
 
 MemberListPage.getLayout = function getLayout(page: ReactElement) {

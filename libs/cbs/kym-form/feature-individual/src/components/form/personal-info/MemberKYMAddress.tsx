@@ -131,18 +131,8 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
           header="kymIndINCASERESIDINGINRENTEDHOUSE"
           id="kymAccIndIncaseofresidinginRentedHouse"
         >
-          <FormInput
-            type="text"
-            name="landlordName"
-            label={t['kymIndLandlordName']}
-            __placeholder={t['kymIndLandlordName']}
-          />
-          <FormInput
-            type="number"
-            name="landlordContact"
-            label={t['kymIndContactNo']}
-            __placeholder={t['kymIndContactNo']}
-          />
+          <FormInput type="text" name="landlordName" label={t['kymIndLandlordName']} />
+          <FormInput type="number" name="landlordContact" label={t['kymIndContactNo']} />
         </FormSection>
       </form>
     </FormProvider>

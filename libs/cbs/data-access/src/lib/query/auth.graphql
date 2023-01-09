@@ -46,6 +46,13 @@ query getMe {
           languageCode
           date
         }
+
+        permission {
+          myPermission
+        }
+
+
+
       }
       error {
         ...MutationError

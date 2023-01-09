@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { debounce } from 'lodash';
+
 import { SelectProps } from '@myra-ui';
 
 import { useGetCoaAccountListQuery } from '@coop/cbs/data-access';
@@ -12,9 +16,9 @@ interface IFormBranchSelectProps extends SelectProps {
 export const FormCOASelect = (props: IFormBranchSelectProps) => {
   const { name, label, branchId, ...rest } = props;
 
-  // const { watch } = useFormContext();
+  const { watch } = useFormContext();
 
-  // const [coaName, setCOAName] = useState('');
+  const [coaName, setCOAName] = useState('');
 
   const { data: branchListQueryData, isFetching } = useGetCoaAccountListQuery(
     {
@@ -22,7 +26,11 @@ export const FormCOASelect = (props: IFormBranchSelectProps) => {
 
       pagination: {
         after: '',
-        first: -1,
+        first: 20,
+      },
+      filter: {
+        name: coaName,
+        ledgerId: coaName,
       },
     },
     {
@@ -38,25 +46,25 @@ export const FormCOASelect = (props: IFormBranchSelectProps) => {
     value: coa?.node?.accountCode as string,
   }));
 
-  // const coa = watch(name);
-  //
-  // useEffect(() => {
-  //   if (coa && !coaOptions?.length) {
-  //     setCOAName(coa);
-  //     // setTrigger(true);
-  //   }
-  // }, [coa, coaOptions]);
+  const coa = watch(name);
+
+  useEffect(() => {
+    if (coa && !coaOptions?.length) {
+      setCOAName(coa);
+      // setTrigger(true);
+    }
+  }, [coa, coaOptions]);
 
   return (
     <FormSelect
       name={name}
       label={label}
       isLoading={isFetching}
-      // onInputChange={debounce((name) => {
-      //   if (name) {
-      //     setCOAName(name);
-      //   }
-      // }, 800)}
+      onInputChange={debounce((newCoaName) => {
+        if (newCoaName) {
+          setCOAName(newCoaName);
+        }
+      }, 800)}
       options={coaOptions}
       {...rest}
     />

@@ -26,24 +26,29 @@ import { TableSearch, TableSelectionBar } from '../components';
 import { useTable } from '../hooks/useTable';
 import { Column, TableProps } from '../types/Table';
 
-export const Table = <T extends Record<string, unknown>>({
-  columns,
-  data,
-  pagination,
-  isStatic = false,
-  isDetailPageTable = false,
-  searchPlaceholder,
-  size = 'default',
-  isLoading,
-  noDataTitle,
-  getRowId,
-  variant = 'simple',
-  showFooter,
-  rowOnClick,
-  enableSorting,
-  manualSorting = true,
-  getSubRows,
-}: TableProps<T>) => {
+const TableWithoutRef = <T extends Record<string, unknown>>(
+  props: TableProps<T>,
+  ref: React.ForwardedRef<HTMLTableElement>
+) => {
+  const {
+    columns,
+    data,
+    pagination,
+    isStatic = false,
+    isDetailPageTable = false,
+    searchPlaceholder,
+    size = 'default',
+    isLoading,
+    noDataTitle,
+    getRowId,
+    variant = 'simple',
+    showFooter,
+    rowOnClick,
+    enableSorting,
+    manualSorting = true,
+    getSubRows,
+  } = props;
+
   const router = useRouter();
   const sortQuery = router?.query['sort'] as string;
 
@@ -106,6 +111,7 @@ export const Table = <T extends Record<string, unknown>>({
           }}
           size={tableSize}
           variant={variant}
+          ref={ref}
         >
           <Thead display="table-header-group">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -299,5 +305,9 @@ export const Table = <T extends Record<string, unknown>>({
     </>
   );
 };
+
+export const Table = React.forwardRef(TableWithoutRef) as <T extends Record<string, unknown>>(
+  props: TableProps<T> & { ref?: React.ForwardedRef<HTMLTableElement> }
+) => ReturnType<typeof TableWithoutRef>;
 
 export default Table;

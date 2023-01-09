@@ -3,7 +3,6 @@ export * from './lib/COADetailSidebar';
 export * from './lib/COALeafDetailSidebar';
 export * from './lib/DetailPathBar';
 export * from './lib/ProductDetailPathBar';
-export * from './lib/SavingDetailPageSidebarLayout';
 export * from './lib/SettingsAlternativeChannelLayout';
 export * from './lib/SettingsCodeManagementLayout';
 export * from './lib/SettingsDepositLayout';

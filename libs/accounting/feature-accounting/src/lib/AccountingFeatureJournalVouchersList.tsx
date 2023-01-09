@@ -32,7 +32,7 @@ export const AccountingFeatureJournalVouchersList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Transaction Code',
+        header: 'Transaction Id',
         accessorFn: (row) => row?.node?.transactionCode,
       },
       {

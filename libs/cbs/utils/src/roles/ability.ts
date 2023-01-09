@@ -24,7 +24,7 @@ export function buildEmptyPermissions(): AppAbilityType {
 
 export function updateAbility(
   ability: AppAbilityType,
-  permissions: Partial<Record<Subjects, string>> = roles.SUPERADMIN
+  permissions: Partial<Record<Subjects, string>> = roles['SUPERADMIN']
 ) {
   const { can, rules } = new AbilityBuilder(AppAbility);
 

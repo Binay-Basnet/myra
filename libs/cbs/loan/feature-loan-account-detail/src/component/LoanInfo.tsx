@@ -90,7 +90,7 @@ export const LoanInfo = () => {
         account={{
           name: memberDetails?.memberName?.local ?? 'N/A',
           accountNo: generalInfo?.accountId as string,
-          phoneNo: '98547889993' ?? 'N/A',
+          phoneNo: memberDetails?.memberPhoneNo ?? 'N/A',
           accountName: generalInfo?.accountName as string,
         }}
         open={isOpen}
