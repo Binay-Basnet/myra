@@ -4,6 +4,7 @@ query getMBankingRegistrationReport($data: EbankingReportFilter) {
       mbankingRegistrationReport(data: $data) {
         data {
           memberId
+          memberCode
           memberName
           mobileNo
           branchCode
@@ -23,6 +24,7 @@ query getMBankingExpiryReport($data: EbankingReportFilter) {
       mbankingRegistrationReport(data: $data) {
         data {
           memberId
+          memberCode
           memberName
           mobileNo
           branchCode

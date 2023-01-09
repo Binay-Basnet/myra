@@ -515,6 +515,7 @@ export type ActiveInactiveMemberStatement = {
   district?: Maybe<Scalars['String']>;
   dob?: Maybe<Scalars['Localized']>;
   gender?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
   memberRegistrationDate?: Maybe<Scalars['Localized']>;
@@ -1589,6 +1590,23 @@ export type CoaFullView = {
   error?: Maybe<QueryError>;
 };
 
+export type CoaLeafNodeDetailView = {
+  data?: Maybe<CoaLeafNodeDetails>;
+  error?: Maybe<QueryError>;
+};
+
+export type CoaLeafNodeDetails = {
+  accountName?: Maybe<Scalars['Localized']>;
+  accountType?: Maybe<Scalars['String']>;
+  closingBalance?: Maybe<Scalars['String']>;
+  crAmount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  drAmount?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  ledgers?: Maybe<Array<Maybe<LedgerList>>>;
+  noOfAccounts?: Maybe<Scalars['String']>;
+};
+
 export type CoaMinimal = {
   accountCode: Scalars['String'];
   id: Scalars['ID'];
@@ -1914,6 +1932,7 @@ export type ChartsOfAccountSettingsQuery = {
   class?: Maybe<ChartsOfAccountClassResult>;
   coaAccountDetails?: Maybe<CoaDetailsResult>;
   coaAccountList?: Maybe<CoaAccountListResult>;
+  coaLeafNodeDetails?: Maybe<CoaLeafNodeDetailView>;
   fullView: CoaFullView;
   search?: Maybe<CoaMinimalResult>;
 };
@@ -1939,6 +1958,10 @@ export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
 export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
   branchId?: InputMaybe<Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
+  id: Scalars['ID'];
 };
 
 export type ChartsOfAccountSettingsQuerySearchArgs = {
@@ -3991,6 +4014,7 @@ export type EbankingReportFilter = {
 export type EbankingReportResult = {
   branchCode?: Maybe<Scalars['String']>;
   expDate?: Maybe<Scalars['Localized']>;
+  memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['ID']>;
   memberName?: Maybe<Scalars['String']>;
   mobileNo?: Maybe<Scalars['String']>;
@@ -8064,6 +8088,7 @@ export type KymStatusReport = {
   kymExpireDays?: Maybe<Scalars['String']>;
   kymStatus?: Maybe<Scalars['String']>;
   lastKymUpdatedDate?: Maybe<Scalars['Localized']>;
+  memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['ID']>;
   memberName?: Maybe<Scalars['String']>;
   regDate?: Maybe<Scalars['Localized']>;
@@ -8099,6 +8124,14 @@ export enum Language {
   English = 'ENGLISH',
   Nepali = 'NEPALI',
 }
+
+export type LedgerList = {
+  accountCode?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  ledgerName?: Maybe<Scalars['String']>;
+  serviceCenter?: Maybe<Scalars['String']>;
+};
 
 export type LedgerMapping = {
   interestAccuredDaily?: InputMaybe<Scalars['String']>;
@@ -9551,6 +9584,7 @@ export type MBankingTransactionData = {
   destAccount?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   initiatorName?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
   narration?: Maybe<Scalars['String']>;
   phoneNo?: Maybe<Scalars['String']>;
   srcAccount?: Maybe<Scalars['String']>;
@@ -10083,12 +10117,17 @@ export type MemberRegistrationReportResult = {
 
 export type MemberReport = {
   activeInactiveMemberReport?: Maybe<ReportResult>;
+  exportActiveInactiveMemberReport: Scalars['String'];
   kymStatusReport?: Maybe<KymStatusReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   memberRegistrationReport?: Maybe<MemberRegistrationReportResult>;
 };
 
 export type MemberReportActiveInactiveMemberReportArgs = {
+  data?: InputMaybe<ActiveInactiveMemberReportData>;
+};
+
+export type MemberReportExportActiveInactiveMemberReportArgs = {
   data?: InputMaybe<ActiveInactiveMemberReportData>;
 };
 
@@ -21611,6 +21650,7 @@ export type GetActiveInactiveMemberReportQuery = {
               } | null;
               reportStatement?: Array<{
                 memberId?: string | null;
+                memberCode?: string | null;
                 memberName?: string | null;
                 district?: string | null;
                 wardNo?: string | null;
@@ -21645,6 +21685,7 @@ export type GetKymStatusReportQuery = {
         data?: Array<{
           memberName?: string | null;
           memberId?: string | null;
+          memberCode?: string | null;
           contact?: string | null;
           regDate?: Record<'local' | 'en' | 'np', string> | null;
           riskCategory?: RiskCategoryFilter | null;
@@ -21727,6 +21768,7 @@ export type GetMBankingRegistrationReportQuery = {
       mbankingRegistrationReport?: {
         data?: Array<{
           memberId?: string | null;
+          memberCode?: string | null;
           memberName?: string | null;
           mobileNo?: string | null;
           branchCode?: string | null;
@@ -21750,6 +21792,7 @@ export type GetMBankingExpiryReportQuery = {
       mbankingRegistrationReport?: {
         data?: Array<{
           memberId?: string | null;
+          memberCode?: string | null;
           memberName?: string | null;
           mobileNo?: string | null;
           branchCode?: string | null;
@@ -36239,6 +36282,7 @@ export const GetActiveInactiveMemberReportDocument = `
             }
             reportStatement {
               memberId
+              memberCode
               memberName
               district
               wardNo
@@ -36288,6 +36332,7 @@ export const GetKymStatusReportDocument = `
           }
           memberName
           memberId
+          memberCode
           contact
           regDate
           riskCategory
@@ -36394,6 +36439,7 @@ export const GetMBankingRegistrationReportDocument = `
       mbankingRegistrationReport(data: $data) {
         data {
           memberId
+          memberCode
           memberName
           mobileNo
           branchCode
@@ -36430,6 +36476,7 @@ export const GetMBankingExpiryReportDocument = `
       mbankingRegistrationReport(data: $data) {
         data {
           memberId
+          memberCode
           memberName
           mobileNo
           branchCode
