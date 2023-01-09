@@ -13710,6 +13710,7 @@ export type User = Base & {
 };
 
 export type UserData = {
+  permission?: Maybe<PermissionQuery>;
   preference?: Maybe<UserPreference>;
   user?: Maybe<User>;
 };
@@ -16164,14 +16165,14 @@ export type GetActiveInactiveMemberReportQueryVariables = Exact<{
 }>;
 
 
-export type GetActiveInactiveMemberReportQuery = { report: { memberReport: { activeInactiveMemberReport?: { statement?: { summary?: { activeTotal?: number | null, inactiveTotal?: number | null, totalMember?: number | null } | null, reportStatement?: Array<{ memberId?: string | null, memberName?: string | null, district?: string | null, wardNo?: string | null, address?: string | null, dob?: Record<"local"|"en"|"np",string> | null, age?: number | null, contactNo?: string | null, gender?: string | null, pan?: string | null, occupation?: string | null, memberRegistrationDate?: Record<"local"|"en"|"np",string> | null, status?: MemberStatus | null, memberType?: KymMemberTypesEnum | null } | null> | null } | {} | null } | null } } };
+export type GetActiveInactiveMemberReportQuery = { report: { memberReport: { activeInactiveMemberReport?: { statement?: { summary?: { activeTotal?: number | null, inactiveTotal?: number | null, totalMember?: number | null } | null, reportStatement?: Array<{ memberId?: string | null, memberCode?: string | null, memberName?: string | null, district?: string | null, wardNo?: string | null, address?: string | null, dob?: Record<"local"|"en"|"np",string> | null, age?: number | null, contactNo?: string | null, gender?: string | null, pan?: string | null, occupation?: string | null, memberRegistrationDate?: Record<"local"|"en"|"np",string> | null, status?: MemberStatus | null, memberType?: KymMemberTypesEnum | null } | null> | null } | {} | null } | null } } };
 
 export type GetKymStatusReportQueryVariables = Exact<{
   data?: InputMaybe<KymStatusReportFilter>;
 }>;
 
 
-export type GetKymStatusReportQuery = { report: { memberReport: { kymStatusReport?: { Summary?: Record<string, string> | null, data?: Array<{ memberName?: string | null, memberId?: string | null, contact?: string | null, regDate?: Record<"local"|"en"|"np",string> | null, riskCategory?: RiskCategoryFilter | null, lastKymUpdatedDate?: Record<"local"|"en"|"np",string> | null, kymExpireDays?: string | null, kymStatus?: string | null, address?: AddressFragment | null } | null> | null } | null } } };
+export type GetKymStatusReportQuery = { report: { memberReport: { kymStatusReport?: { Summary?: Record<string, string> | null, data?: Array<{ memberName?: string | null, memberId?: string | null, memberCode?: string | null, contact?: string | null, regDate?: Record<"local"|"en"|"np",string> | null, riskCategory?: RiskCategoryFilter | null, lastKymUpdatedDate?: Record<"local"|"en"|"np",string> | null, kymExpireDays?: string | null, kymStatus?: string | null, address?: AddressFragment | null } | null> | null } | null } } };
 
 export type GetMemberRegistrationReportQueryVariables = Exact<{
   data?: InputMaybe<MemberRegistrationReportData>;
@@ -16185,14 +16186,14 @@ export type GetMBankingRegistrationReportQueryVariables = Exact<{
 }>;
 
 
-export type GetMBankingRegistrationReportQuery = { report: { mobileBankingReport: { mbankingRegistrationReport?: { data?: Array<{ memberId?: string | null, memberName?: string | null, mobileNo?: string | null, branchCode?: string | null, regDate?: Record<"local"|"en"|"np",string> | null, expDate?: Record<"local"|"en"|"np",string> | null, status?: string | null, registeredBy?: string | null } | null> | null } | null } } };
+export type GetMBankingRegistrationReportQuery = { report: { mobileBankingReport: { mbankingRegistrationReport?: { data?: Array<{ memberId?: string | null, memberCode?: string | null, memberName?: string | null, mobileNo?: string | null, branchCode?: string | null, regDate?: Record<"local"|"en"|"np",string> | null, expDate?: Record<"local"|"en"|"np",string> | null, status?: string | null, registeredBy?: string | null } | null> | null } | null } } };
 
 export type GetMBankingExpiryReportQueryVariables = Exact<{
   data?: InputMaybe<EbankingReportFilter>;
 }>;
 
 
-export type GetMBankingExpiryReportQuery = { report: { mobileBankingReport: { mbankingRegistrationReport?: { data?: Array<{ memberId?: string | null, memberName?: string | null, mobileNo?: string | null, branchCode?: string | null, regDate?: Record<"local"|"en"|"np",string> | null, expDate?: Record<"local"|"en"|"np",string> | null, status?: string | null, registeredBy?: string | null } | null> | null } | null } } };
+export type GetMBankingExpiryReportQuery = { report: { mobileBankingReport: { mbankingRegistrationReport?: { data?: Array<{ memberId?: string | null, memberCode?: string | null, memberName?: string | null, mobileNo?: string | null, branchCode?: string | null, regDate?: Record<"local"|"en"|"np",string> | null, expDate?: Record<"local"|"en"|"np",string> | null, status?: string | null, registeredBy?: string | null } | null> | null } | null } } };
 
 export type GetMbTransactionReportQueryVariables = Exact<{
   data?: InputMaybe<MBankingTransactionFilter>;
@@ -26943,6 +26944,7 @@ export const GetActiveInactiveMemberReportDocument = `
             }
             reportStatement {
               memberId
+              memberCode
               memberName
               district
               wardNo
@@ -26988,6 +26990,7 @@ export const GetKymStatusReportDocument = `
           }
           memberName
           memberId
+          memberCode
           contact
           regDate
           riskCategory
@@ -27091,6 +27094,7 @@ export const GetMBankingRegistrationReportDocument = `
       mbankingRegistrationReport(data: $data) {
         data {
           memberId
+          memberCode
           memberName
           mobileNo
           branchCode
@@ -27123,6 +27127,7 @@ export const GetMBankingExpiryReportDocument = `
       mbankingRegistrationReport(data: $data) {
         data {
           memberId
+          memberCode
           memberName
           mobileNo
           branchCode
