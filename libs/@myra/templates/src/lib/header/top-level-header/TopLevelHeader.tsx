@@ -361,95 +361,98 @@ export const TopLevelHeader = () => {
                       </Text>
                     </Box>
                   </PopoverTrigger>
-                  <PopoverContent
-                    bg="gray.0"
-                    w="260px"
-                    border="none"
-                    boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
-                    outline="none"
-                    _focus={{
-                      boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
-                    }}
-                  >
-                    <PopoverBody borderBottom="1px" borderColor="border.layout">
-                      <Text fontSize="s3" fontWeight="500" color="gray.700">
-                        Transaction Date
-                      </Text>
-                      <Text fontSize="s3" fontWeight="500" color="gray.800">
-                        {localizedDate(closingDate)}
-                      </Text>
-                    </PopoverBody>
-                    <PopoverBody borderBottom="1px" borderColor="border.layout">
-                      <Text fontSize="s3" fontWeight="500" color="gray.700">
-                        Calender Date
-                      </Text>
-                      <Text fontSize="s3" fontWeight="500" color="gray.800">
-                        {currentDate}
-                      </Text>
-                    </PopoverBody>
-                    <PopoverBody p="s8">
-                      <Box display="flex" flexDirection="column" gap="s8">
-                        {user?.branch?.category === BranchCategory.HeadOffice ? (
-                          hasEodErrors ? (
-                            <>
-                              <Button
-                                variant="outline"
-                                display="flex"
-                                justifyContent="center"
-                                w="100%"
-                                onClick={reinitiateCloseDay}
-                              >
-                                Reinitiate
-                              </Button>
-                              <Button
-                                variant="solid"
-                                display="flex"
-                                justifyContent="center"
-                                w="100%"
-                                onClick={ignoreAndCloseDay}
-                              >
-                                Ignore and Close Day
-                              </Button>
-                            </>
-                          ) : (
-                            <>
-                              <Button
-                                variant="outline"
-                                display="flex"
-                                justifyContent="center"
-                                w="100%"
-                                onClick={handleBranchReadiness}
-                              >
-                                Branch Readiness
-                              </Button>
-                              {isHeadOfficeReady && (
+                  <Box zIndex={15}>
+                    <PopoverContent
+                      bg="gray.0"
+                      w="260px"
+                      border="none"
+                      boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
+                      outline="none"
+                      _focus={{
+                        boxShadow:
+                          '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
+                      }}
+                    >
+                      <PopoverBody borderBottom="1px" borderColor="border.layout">
+                        <Text fontSize="s3" fontWeight="500" color="gray.700">
+                          Transaction Date
+                        </Text>
+                        <Text fontSize="s3" fontWeight="500" color="gray.800">
+                          {localizedDate(closingDate)}
+                        </Text>
+                      </PopoverBody>
+                      <PopoverBody borderBottom="1px" borderColor="border.layout">
+                        <Text fontSize="s3" fontWeight="500" color="gray.700">
+                          Calender Date
+                        </Text>
+                        <Text fontSize="s3" fontWeight="500" color="gray.800">
+                          {currentDate}
+                        </Text>
+                      </PopoverBody>
+                      <PopoverBody p="s8">
+                        <Box display="flex" flexDirection="column" gap="s8">
+                          {user?.branch?.category === BranchCategory.HeadOffice ? (
+                            hasEodErrors ? (
+                              <>
+                                <Button
+                                  variant="outline"
+                                  display="flex"
+                                  justifyContent="center"
+                                  w="100%"
+                                  onClick={reinitiateCloseDay}
+                                >
+                                  Reinitiate
+                                </Button>
                                 <Button
                                   variant="solid"
                                   display="flex"
                                   justifyContent="center"
                                   w="100%"
-                                  // onClick={() => router.push('/day-close')}
-                                  onClick={closeDayFxn}
+                                  onClick={ignoreAndCloseDay}
                                 >
-                                  Close Day
+                                  Ignore and Close Day
                                 </Button>
-                              )}
-                            </>
-                          )
-                        ) : (
-                          <Button
-                            variant="solid"
-                            display="flex"
-                            justifyContent="center"
-                            w="100%"
-                            onClick={handleBranchReadiness}
-                          >
-                            Branch Readiness
-                          </Button>
-                        )}
-                      </Box>
-                    </PopoverBody>
-                  </PopoverContent>
+                              </>
+                            ) : (
+                              <>
+                                <Button
+                                  variant="outline"
+                                  display="flex"
+                                  justifyContent="center"
+                                  w="100%"
+                                  onClick={handleBranchReadiness}
+                                >
+                                  Branch Readiness
+                                </Button>
+                                {isHeadOfficeReady && (
+                                  <Button
+                                    variant="solid"
+                                    display="flex"
+                                    justifyContent="center"
+                                    w="100%"
+                                    // onClick={() => router.push('/day-close')}
+                                    onClick={closeDayFxn}
+                                  >
+                                    Close Day
+                                  </Button>
+                                )}
+                              </>
+                            )
+                          ) : (
+                            <Button
+                              variant="solid"
+                              display="flex"
+                              justifyContent="center"
+                              w="100%"
+                              onClick={handleBranchReadiness}
+                            >
+                              Branch Readiness
+                            </Button>
+                          )}
+                        </Box>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Box>
                 </>
               )}
             </Popover>
@@ -484,77 +487,96 @@ export const TopLevelHeader = () => {
                     />
                   </PopoverTrigger>
 
-                  <PopoverContent
-                    bg="gray.0"
-                    w="370px"
-                    h="auto"
-                    px="s16"
-                    py="s16"
-                    border="none"
-                    boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
-                    outline="none"
-                    _focus={{
-                      boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
-                    }}
-                    color="white"
-                    zIndex="10"
-                  >
-                    <PopoverBody p={0}>
-                      <Box display="flex-column" gridTemplateColumns="repeat(3,1fr)" gap="s8">
-                        <AppSwitcherIconWrapper onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}>
-                          <Image width={32} height={32} src="/cbs.svg" alt="Core Banking System" />
-                          <AppSwitcherText>{t['corebankingSystems']}</AppSwitcherText>
-                        </AppSwitcherIconWrapper>
-                        <AppSwitcherIconWrapper onClick={() => router.push('/inventory/register')}>
-                          <Image
-                            width={32}
-                            height={32}
-                            src="/inventory.svg"
-                            alt="Inventory System"
-                          />
-                          <AppSwitcherText> {t['inventoryManagement']}</AppSwitcherText>
-                        </AppSwitcherIconWrapper>
-                        <AppSwitcherIconWrapper onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}>
-                          <Image
-                            height={32}
-                            width={32}
-                            src="/memberandshare.svg"
-                            alt="Fixed Asset Management"
-                          />
-                          <AppSwitcherText> {t['memberAndShareManagement']}</AppSwitcherText>
-                        </AppSwitcherIconWrapper>
-                        <AppSwitcherIconWrapper
-                          onClick={() => router.push('/accounting/sales/list')}
-                        >
-                          <Image
-                            width={32}
-                            height={32}
-                            src="/accounting.svg"
-                            alt="Accounting System"
-                          />
-                          <AppSwitcherText> {t['accountingSystem']}</AppSwitcherText>
-                        </AppSwitcherIconWrapper>
+                  <Box zIndex={15}>
+                    <PopoverContent
+                      bg="gray.0"
+                      w="370px"
+                      h="auto"
+                      px="s16"
+                      py="s16"
+                      border="none"
+                      boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
+                      outline="none"
+                      _focus={{
+                        boxShadow:
+                          '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
+                      }}
+                      color="white"
+                      zIndex="15"
+                    >
+                      <PopoverBody p={0}>
+                        <Box display="flex-column" gridTemplateColumns="repeat(3,1fr)" gap="s8">
+                          <AppSwitcherIconWrapper
+                            onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}
+                          >
+                            <Image
+                              width={32}
+                              height={32}
+                              src="/cbs.svg"
+                              alt="Core Banking System"
+                            />
+                            <AppSwitcherText>{t['corebankingSystems']}</AppSwitcherText>
+                          </AppSwitcherIconWrapper>
+                          <AppSwitcherIconWrapper
+                            onClick={() => router.push('/inventory/register')}
+                          >
+                            <Image
+                              width={32}
+                              height={32}
+                              src="/inventory.svg"
+                              alt="Inventory System"
+                            />
+                            <AppSwitcherText> {t['inventoryManagement']}</AppSwitcherText>
+                          </AppSwitcherIconWrapper>
+                          <AppSwitcherIconWrapper
+                            onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}
+                          >
+                            <Image
+                              height={32}
+                              width={32}
+                              src="/memberandshare.svg"
+                              alt="Fixed Asset Management"
+                            />
+                            <AppSwitcherText> {t['memberAndShareManagement']}</AppSwitcherText>
+                          </AppSwitcherIconWrapper>
+                          <AppSwitcherIconWrapper
+                            onClick={() => router.push('/accounting/sales/list')}
+                          >
+                            <Image
+                              width={32}
+                              height={32}
+                              src="/accounting.svg"
+                              alt="Accounting System"
+                            />
+                            <AppSwitcherText> {t['accountingSystem']}</AppSwitcherText>
+                          </AppSwitcherIconWrapper>
 
-                        <AppSwitcherIconWrapper
-                          onClick={() => router.push('/alternative-channels/users/mBanking')}
-                        >
-                          <Image width={32} height={32} src="/tnt.svg" alt="Alternativer channel" />
-                          <AppSwitcherText>
-                            {t['alternativeChannelsAndCrossConnectivity']}
-                          </AppSwitcherText>
-                        </AppSwitcherIconWrapper>
-                      </Box>
-                      <Divider my="s8" />
-                      <Box>
-                        <AppSwitcherIconWrapper
-                          onClick={() => router.push(ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST)}
-                        >
-                          <Image width={32} height={32} src="/settings.svg" alt="Settings" />
-                          <AppSwitcherText>{t['settings']}</AppSwitcherText>
-                        </AppSwitcherIconWrapper>
-                      </Box>
-                    </PopoverBody>
-                  </PopoverContent>
+                          <AppSwitcherIconWrapper
+                            onClick={() => router.push('/alternative-channels/users/mBanking')}
+                          >
+                            <Image
+                              width={32}
+                              height={32}
+                              src="/tnt.svg"
+                              alt="Alternativer channel"
+                            />
+                            <AppSwitcherText>
+                              {t['alternativeChannelsAndCrossConnectivity']}
+                            </AppSwitcherText>
+                          </AppSwitcherIconWrapper>
+                        </Box>
+                        <Divider my="s8" />
+                        <Box>
+                          <AppSwitcherIconWrapper
+                            onClick={() => router.push(ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST)}
+                          >
+                            <Image width={32} height={32} src="/settings.svg" alt="Settings" />
+                            <AppSwitcherText>{t['settings']}</AppSwitcherText>
+                          </AppSwitcherIconWrapper>
+                        </Box>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Box>
                 </>
               )}
             </Popover>
@@ -588,47 +610,50 @@ export const TopLevelHeader = () => {
                       <Avatar src={'/avatar.png'} size="sm" />
                     </Box> */}
                   </PopoverTrigger>
-                  <PopoverContent
-                    bg="gray.0"
-                    w="260px"
-                    border="none"
-                    boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
-                    outline="none"
-                    _focus={{
-                      boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
-                    }}
-                    color="white"
-                  >
-                    <PopoverBody p="0">
-                      <Box display="flex" flexDirection="column">
-                        <Box
-                          px="s12"
-                          py="s16"
-                          display="flex"
-                          flexDirection="row"
-                          alignItems="center"
-                          borderBottom="1px solid"
-                          borderColor="border.layout"
-                          zIndex="2000"
-                        >
-                          <Avatar src={user?.profilePic || ''} w="s32" h="s32" />
-                          <Box
-                            ml="14px"
-                            display="flex"
-                            flexDirection="column"
-                            justifyContent="space-between"
-                          >
-                            <Text fontWeight="SemiBold" fontSize="s2" color="primary.500">
-                              {user?.firstName?.local} {user?.lastName?.local}
-                            </Text>
-                            <Text fontWeight="Regular" fontSize="s2" color="gray.600">
-                              {GetRoleSlug[user?.role || 'USER']}
-                            </Text>
-                          </Box>
-                        </Box>
 
-                        <Box p="s8" borderBottom="1px solid " borderColor="border.layout">
-                          {/* <Select
+                  <Box zIndex={15}>
+                    <PopoverContent
+                      bg="gray.0"
+                      w="260px"
+                      border="none"
+                      boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
+                      outline="none"
+                      _focus={{
+                        boxShadow:
+                          '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
+                      }}
+                      color="white"
+                    >
+                      <PopoverBody p="0">
+                        <Box display="flex" flexDirection="column">
+                          <Box
+                            px="s12"
+                            py="s16"
+                            display="flex"
+                            flexDirection="row"
+                            alignItems="center"
+                            borderBottom="1px solid"
+                            borderColor="border.layout"
+                            zIndex="2000"
+                          >
+                            <Avatar src={user?.profilePic || ''} w="s32" h="s32" />
+                            <Box
+                              ml="14px"
+                              display="flex"
+                              flexDirection="column"
+                              justifyContent="space-between"
+                            >
+                              <Text fontWeight="SemiBold" fontSize="s2" color="primary.500">
+                                {user?.firstName?.local} {user?.lastName?.local}
+                              </Text>
+                              <Text fontWeight="Regular" fontSize="s2" color="gray.600">
+                                {GetRoleSlug[user?.role || 'USER']}
+                              </Text>
+                            </Box>
+                          </Box>
+
+                          <Box p="s8" borderBottom="1px solid " borderColor="border.layout">
+                            {/* <Select
                             label="Branch"
                             __placeholder="Lalitpur"
                             options={[
@@ -646,185 +671,187 @@ export const TopLevelHeader = () => {
                               },
                             ]}
                           /> */}
-                          <Box>
-                            <Text fontSize="s3" color="black" fontWeight="medium">
-                              Branch
-                            </Text>
-                            <Text fontWeight="Regular" fontSize="s3" color="black">
-                              {user?.branch?.name || '-'}
-                            </Text>
+                            <Box>
+                              <Text fontSize="s3" color="black" fontWeight="medium">
+                                Branch
+                              </Text>
+                              <Text fontWeight="Regular" fontSize="s3" color="black">
+                                {user?.branch?.name || '-'}
+                              </Text>
+                            </Box>
                           </Box>
-                        </Box>
 
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          justifyContent="space-between"
-                          p="s8"
-                          borderBottom="1px solid "
-                          borderColor="border.layout"
-                        >
-                          <Text
-                            mb="4px"
-                            fontWeight="Medium"
-                            fontSize="s3"
-                            color="neutralColorLight.Gray-80"
+                          <Box
+                            display="flex"
+                            flexDirection="column"
+                            justifyContent="space-between"
+                            p="s8"
+                            borderBottom="1px solid "
+                            borderColor="border.layout"
                           >
-                            Language
-                          </Text>
-                          <SwitchTabs
-                            value={router?.locale}
-                            options={languageList}
-                            onChange={(value) => {
-                              asyncToast({
-                                id: 'update-language-preference',
-                                promise: mutateAsync({
-                                  id: userId || '',
-                                  data: {
-                                    language: value === 'en' ? Language?.English : Language?.Nepali,
+                            <Text
+                              mb="4px"
+                              fontWeight="Medium"
+                              fontSize="s3"
+                              color="neutralColorLight.Gray-80"
+                            >
+                              Language
+                            </Text>
+                            <SwitchTabs
+                              value={router?.locale}
+                              options={languageList}
+                              onChange={(value) => {
+                                asyncToast({
+                                  id: 'update-language-preference',
+                                  promise: mutateAsync({
+                                    id: userId || '',
+                                    data: {
+                                      language:
+                                        value === 'en' ? Language?.English : Language?.Nepali,
+                                    },
+                                  }),
+                                  msgs: {
+                                    loading: 'Updating Language Preference',
+                                    success: 'Updated Language Preference',
                                   },
-                                }),
-                                msgs: {
-                                  loading: 'Updating Language Preference',
-                                  success: 'Updated Language Preference',
-                                },
-                                onSuccess: (res) => {
-                                  res?.user?.preference?.update?.record &&
+                                  onSuccess: (res) => {
+                                    res?.user?.preference?.update?.record &&
+                                      dispatch(
+                                        setPreference({
+                                          preference: res?.user?.preference?.update?.record,
+                                        })
+                                      );
+
+                                    router.push(`/${router.asPath}`, undefined, {
+                                      locale: value,
+                                    });
+                                  },
+                                });
+                              }}
+                            />
+                          </Box>
+
+                          <Box
+                            display="flex"
+                            flexDirection="column"
+                            justifyContent="space-between"
+                            p="s8"
+                            borderBottom="1px solid "
+                            borderColor="border.layout"
+                          >
+                            <Text
+                              mb="4px"
+                              fontWeight="Medium"
+                              fontSize="s3"
+                              color="neutralColorLight.Gray-80"
+                            >
+                              Calendar
+                            </Text>
+                            <SwitchTabs
+                              value={preference?.date ?? DateType.Ad}
+                              options={calendarList}
+                              onChange={(value) => {
+                                asyncToast({
+                                  id: 'update-calendar-preference',
+                                  promise: mutateAsync({
+                                    id: userId || '',
+                                    data: {
+                                      date: value === DateType.Ad ? DateType.Ad : DateType.Bs,
+                                    },
+                                  }),
+                                  msgs: {
+                                    loading: 'Updating Calendar Preference',
+                                    success: 'Updated Calendar Preference',
+                                  },
+                                  onSuccess: (res) =>
+                                    res?.user?.preference?.update?.record &&
                                     dispatch(
                                       setPreference({
                                         preference: res?.user?.preference?.update?.record,
                                       })
-                                    );
-
-                                  router.push(`/${router.asPath}`, undefined, {
-                                    locale: value,
-                                  });
-                                },
-                              });
-                            }}
-                          />
-                        </Box>
-
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          justifyContent="space-between"
-                          p="s8"
-                          borderBottom="1px solid "
-                          borderColor="border.layout"
-                        >
-                          <Text
-                            mb="4px"
-                            fontWeight="Medium"
-                            fontSize="s3"
-                            color="neutralColorLight.Gray-80"
-                          >
-                            Calendar
-                          </Text>
-                          <SwitchTabs
-                            value={preference?.date ?? DateType.Ad}
-                            options={calendarList}
-                            onChange={(value) => {
-                              asyncToast({
-                                id: 'update-calendar-preference',
-                                promise: mutateAsync({
-                                  id: userId || '',
-                                  data: {
-                                    date: value === DateType.Ad ? DateType.Ad : DateType.Bs,
-                                  },
-                                }),
-                                msgs: {
-                                  loading: 'Updating Calendar Preference',
-                                  success: 'Updated Calendar Preference',
-                                },
-                                onSuccess: (res) =>
-                                  res?.user?.preference?.update?.record &&
-                                  dispatch(
-                                    setPreference({
-                                      preference: res?.user?.preference?.update?.record,
-                                    })
-                                  ),
-                              });
-                            }}
-                          />
-                        </Box>
-
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          justifyContent="space-between"
-                          py="s8"
-                          px="s8"
-                        >
-                          <Box
-                            _hover={{
-                              bg: 'background.500',
-                              borderRadius: 'br2',
-                            }}
-                            h="40px"
-                            px="s16"
-                            display="flex"
-                            alignItems="center"
-                          >
-                            <Text
-                              textAlign="start"
-                              fontWeight="Regular"
-                              fontSize="r1"
-                              color="neutralColorLight.Gray-80"
-                            >
-                              Profile Settings
-                            </Text>
+                                    ),
+                                });
+                              }}
+                            />
                           </Box>
 
                           <Box
-                            _hover={{
-                              bg: 'background.500',
-                              borderRadius: 'br2',
-                            }}
-                            h="40px"
-                            px="s16"
                             display="flex"
-                            alignItems="center"
-                            cursor="pointer"
-                            onClick={() => router.push('/change-password')}
+                            flexDirection="column"
+                            justifyContent="space-between"
+                            py="s8"
+                            px="s8"
                           >
-                            <Text
-                              textAlign="start"
-                              fontWeight="Regular"
-                              fontSize="r1"
-                              color="neutralColorLight.Gray-80"
+                            <Box
+                              _hover={{
+                                bg: 'background.500',
+                                borderRadius: 'br2',
+                              }}
+                              h="40px"
+                              px="s16"
+                              display="flex"
+                              alignItems="center"
                             >
-                              Change Password
-                            </Text>
-                          </Box>
+                              <Text
+                                textAlign="start"
+                                fontWeight="Regular"
+                                fontSize="r1"
+                                color="neutralColorLight.Gray-80"
+                              >
+                                Profile Settings
+                              </Text>
+                            </Box>
 
-                          <Box
-                            _hover={{
-                              bg: 'background.500',
-                              borderRadius: 'br2',
-                            }}
-                            h="40px"
-                            px="s16"
-                            display="flex"
-                            alignItems="center"
-                            cursor="pointer"
-                            onClick={() => {
-                              dispatch(logout());
-                              router.push('/login').then(() => queryClient.clear());
-                            }}
-                          >
-                            <Text
-                              fontWeight="Regular"
-                              fontSize="r1"
-                              color="neutralColorLight.Gray-80"
+                            <Box
+                              _hover={{
+                                bg: 'background.500',
+                                borderRadius: 'br2',
+                              }}
+                              h="40px"
+                              px="s16"
+                              display="flex"
+                              alignItems="center"
+                              cursor="pointer"
+                              onClick={() => router.push('/change-password')}
                             >
-                              Logout
-                            </Text>
+                              <Text
+                                textAlign="start"
+                                fontWeight="Regular"
+                                fontSize="r1"
+                                color="neutralColorLight.Gray-80"
+                              >
+                                Change Password
+                              </Text>
+                            </Box>
+
+                            <Box
+                              _hover={{
+                                bg: 'background.500',
+                                borderRadius: 'br2',
+                              }}
+                              h="40px"
+                              px="s16"
+                              display="flex"
+                              alignItems="center"
+                              cursor="pointer"
+                              onClick={() => {
+                                dispatch(logout());
+                                router.push('/login').then(() => queryClient.clear());
+                              }}
+                            >
+                              <Text
+                                fontWeight="Regular"
+                                fontSize="r1"
+                                color="neutralColorLight.Gray-80"
+                              >
+                                Logout
+                              </Text>
+                            </Box>
                           </Box>
                         </Box>
-                      </Box>
-                    </PopoverBody>
-                  </PopoverContent>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Box>
                 </>
               )}
             </Popover>

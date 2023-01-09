@@ -18,7 +18,7 @@ export const COALeafDetail = () => {
 
   return (
     <>
-      <Box position="sticky" bg="white" top="110px" zIndex="10" width="100%">
+      <Box position="sticky" bg="white" top="0" zIndex="10" width="100%">
         <PathBar
           paths={[
             { label: 'Charts of Accounts', link: ROUTES.SETTINGS_GENERAL_COA },
