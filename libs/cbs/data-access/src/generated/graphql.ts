@@ -1662,6 +1662,11 @@ export type CoaLeafNodeDetails = {
   noOfAccounts?: Maybe<Scalars['String']>;
 };
 
+export type CoaListFilter = {
+  ledgerId?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export type CoaMinimal = {
   accountCode: Scalars['String'];
   id: Scalars['ID'];
@@ -1760,6 +1765,7 @@ export type CashInTransitInfo = {
   senderServiceCentreName: Scalars['String'];
   senderTellerId: Scalars['String'];
   senderTellerName: Scalars['String'];
+  transactionCode: Scalars['String'];
   transferDate: Scalars['Localized'];
 };
 
@@ -2024,6 +2030,7 @@ export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
 
 export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
   branchId?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<CoaListFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -8660,6 +8667,7 @@ export type LoanAccountMutationRepaymentArgs = {
 export type LoanAccountOverview = {
   additionalFeatures?: Maybe<LoanPreviewAdditionalFeatures>;
   generalInformation?: Maybe<LoanGeneralInformation>;
+  isClosed: Scalars['Boolean'];
   loanSchedule?: Maybe<LoanInstallments>;
   totalInterestPaid: Scalars['String'];
   totalPrincipalPaid: Scalars['String'];
@@ -10186,6 +10194,7 @@ export type MemberOverview = {
   memberCode: Scalars['String'];
   memberId: Scalars['String'];
   memberName: Scalars['Localized'];
+  memberPhoneNo: Scalars['String'];
   profilePicId?: Maybe<Scalars['String']>;
   profilePicUrl?: Maybe<Scalars['String']>;
 };
