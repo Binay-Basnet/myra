@@ -166,8 +166,8 @@ export const WithdrawSlipBookList = () => {
             title="Account Name"
             children={
               <RedirectButton
-                link={`${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${selectedRequest?.accountNumber}`}
-                label={selectedRequest?.agentName as string}
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedRequest?.accountNumber}`}
+                label={selectedRequest?.accountType as string}
               />
             }
           />
