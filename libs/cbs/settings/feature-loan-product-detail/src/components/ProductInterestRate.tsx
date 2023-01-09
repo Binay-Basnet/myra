@@ -11,24 +11,31 @@ export const ProductInterestRate = ({
     <Box px="s16" fontSize="r1">
       <ul>
         <li>
-          Minimum Rate: <b>{`${interestRate?.minRate} %` ?? 'N/A'}</b>
+          Minimum Rate:&nbsp;
+          <b>{interestRate?.minRate !== null ? `${interestRate?.minRate} %` : 'N/A'}</b>
         </li>
         <li>
-          Maximum Rate: <b>{`${interestRate?.maxRate} %` ?? 'N/A'}</b>
+          Maximum Rate:&nbsp;
+          <b>{interestRate?.maxRate !== null ? `${interestRate?.maxRate} %` : 'N/A'}</b>
         </li>
 
         <li>
-          Default Rate: <b>{`${interestRate?.defaultRate} %` ?? 'N/A'}</b>
+          Default Rate:&nbsp;
+          <b>{interestRate?.defaultRate !== null ? `${interestRate?.defaultRate} %` : 'N/A'}</b>
         </li>
       </ul>
     </Box>
     <Box px="s16" fontSize="r1" textTransform="capitalize">
       <ul>
         <li>
-          CEO Authentication: <b>{`${interestRate?.ceoAuthority} %` ?? 'N/A'}</b>
+          CEO Authentication:&nbsp;
+          <b>{interestRate?.ceoAuthority !== null ? `${interestRate?.ceoAuthority} %` : 'N/A'}</b>
         </li>
         <li>
-          Board Authentication: <b>{`${interestRate?.boardAuthority} %` ?? 'N/A'}</b>
+          Board Authentication:&nbsp;
+          <b>
+            {interestRate?.boardAuthority !== null ? `${interestRate?.boardAuthority} %` : 'N/A'}
+          </b>
         </li>
       </ul>
     </Box>

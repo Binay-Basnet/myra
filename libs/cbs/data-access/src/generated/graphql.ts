@@ -15895,7 +15895,7 @@ export type GetLoanAccountMemberDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanAccountMemberDetailsQuery = { loanAccount: { loanAccountDetails?: { memberInfo?: { memberId: string, memberCode: string, memberName: Record<"local"|"en"|"np",string>, profilePicId?: string | null, profilePicUrl?: string | null } | null } | null } };
+export type GetLoanAccountMemberDetailsQuery = { loanAccount: { loanAccountDetails?: { memberInfo?: { memberId: string, memberCode: string, memberName: Record<"local"|"en"|"np",string>, memberPhoneNo: string, profilePicId?: string | null, profilePicUrl?: string | null } | null } | null } };
 
 export type GetMemberListQueryVariables = Exact<{
   pagination: Pagination;
@@ -16848,7 +16848,14 @@ export type GetCashInTransitListQueryVariables = Exact<{
 }>;
 
 
-export type GetCashInTransitListQuery = { transaction: { cashInTransit: { totalCount?: number | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ cursor?: string | null, node?: { id: string, senderServiceCentreId: string, senderServiceCentreName: string, receiverServiceCentreId: string, receiverServiceCentreName: string, senderTellerName: string, senderTellerId: string, approvalStatus: RequestStatus, cashAmount: string, transferDate: Record<"local"|"en"|"np",string>, denomination?: Array<{ value: CashValue, quantity: number, amount?: string | null } | null> | null } | null } | null> | null } } };
+export type GetCashInTransitListQuery = { transaction: { cashInTransit: { totalCount?: number | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ cursor?: string | null, node?: { id: string, transactionCode: string, senderServiceCentreId: string, senderServiceCentreName: string, receiverServiceCentreId: string, receiverServiceCentreName: string, senderTellerName: string, senderTellerId: string, approvalStatus: RequestStatus, cashAmount: string, transferDate: Record<"local"|"en"|"np",string>, denomination?: Array<{ value: CashValue, quantity: number, amount?: string | null } | null> | null } | null } | null> | null } } };
+
+export type GetCashInTransitDetailQueryVariables = Exact<{
+  transitID: Scalars['ID'];
+}>;
+
+
+export type GetCashInTransitDetailQuery = { transaction: { cashInTransitDetail?: { data?: { ID: string, transitStatus?: RequestStatus | null, srcTeller?: Record<"local"|"en"|"np",string> | null, amount?: string | null, totalBalance?: string | null, transferMode?: CashTransferMode | null, collectorName?: string | null, destTeller?: Record<"local"|"en"|"np",string> | null, date?: Record<"local"|"en"|"np",string> | null, srcBranch?: string | null, destBranch?: string | null, srcProfilePic?: string | null, srcProfilePicUrl?: string | null, totalCredit?: string | null, totalDebit?: string | null, note?: string | null, glTransaction?: Array<{ account: string, serviceCenter?: string | null, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
 
 export type GetPastSlipsListQueryVariables = Exact<{
   accountId: Scalars['ID'];
@@ -24704,6 +24711,7 @@ export const GetLoanAccountMemberDetailsDocument = `
         memberId
         memberCode
         memberName
+        memberPhoneNo
         profilePicId
         profilePicUrl
       }
@@ -31539,6 +31547,7 @@ export const GetCashInTransitListDocument = `
         cursor
         node {
           id
+          transactionCode
           senderServiceCentreId
           senderServiceCentreName
           receiverServiceCentreId
@@ -31569,6 +31578,50 @@ export const useGetCashInTransitListQuery = <
     useQuery<GetCashInTransitListQuery, TError, TData>(
       ['getCashInTransitList', variables],
       useAxios<GetCashInTransitListQuery, GetCashInTransitListQueryVariables>(GetCashInTransitListDocument).bind(null, variables),
+      options
+    );
+export const GetCashInTransitDetailDocument = `
+    query getCashInTransitDetail($transitID: ID!) {
+  transaction {
+    cashInTransitDetail(transitID: $transitID) {
+      data {
+        ID
+        transitStatus
+        srcTeller
+        amount
+        totalBalance
+        transferMode
+        collectorName
+        destTeller
+        date
+        srcBranch
+        destBranch
+        srcProfilePic
+        srcProfilePicUrl
+        glTransaction {
+          account
+          serviceCenter
+          debit
+          credit
+        }
+        totalCredit
+        totalDebit
+        note
+      }
+    }
+  }
+}
+    `;
+export const useGetCashInTransitDetailQuery = <
+      TData = GetCashInTransitDetailQuery,
+      TError = unknown
+    >(
+      variables: GetCashInTransitDetailQueryVariables,
+      options?: UseQueryOptions<GetCashInTransitDetailQuery, TError, TData>
+    ) =>
+    useQuery<GetCashInTransitDetailQuery, TError, TData>(
+      ['getCashInTransitDetail', variables],
+      useAxios<GetCashInTransitDetailQuery, GetCashInTransitDetailQueryVariables>(GetCashInTransitDetailDocument).bind(null, variables),
       options
     );
 export const GetPastSlipsListDocument = `

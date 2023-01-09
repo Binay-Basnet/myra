@@ -15,8 +15,10 @@ import {
   Text,
 } from '@myra-ui';
 
+import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   CashValue,
+  KymMemberTypesEnum,
   NatureOfDepositProduct,
   ObjState,
   useGetAccountTableListQuery,
@@ -397,7 +399,9 @@ export const AddWithdraw = () => {
                         label={t['addWithdrawWithdrawAmount']}
                       />
 
-                      {/* <SuspiciousTransaction /> */}
+                      {memberDetailData?.type === KymMemberTypesEnum.Individual && (
+                        <SuspiciousTransaction />
+                      )}
 
                       <Box
                         bg="background.500"

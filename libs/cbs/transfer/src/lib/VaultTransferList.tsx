@@ -88,7 +88,7 @@ export const VaultTransferList = () => {
             node={props?.row?.original?.node}
             items={[
               {
-                title: 'loanProductViewDetails',
+                title: 'viewDetails',
                 onClick: () => {
                   router.push(
                     `/${getUrl(router.pathname, 3)}/view?id=${props?.row?.original?.node?.ID}`
