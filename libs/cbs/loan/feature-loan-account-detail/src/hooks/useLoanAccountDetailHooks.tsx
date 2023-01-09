@@ -56,6 +56,7 @@ export const useLoanAccountDetailHooks = () => {
     { label: 'Tenure', value: `${generalInfo?.tenure} ${generalInfo?.tenureUnit}` ?? 'N/A' },
     { label: 'Linked Account', value: generalInfo?.linkedAccountName ?? 'N/A' },
   ];
+  const productId = generalInfo?.productId;
 
   const accountSummary = [
     {
@@ -158,6 +159,7 @@ export const useLoanAccountDetailHooks = () => {
     guaranteeSummary,
     gauranteeListInfo,
     collateralSummary,
+    productId,
     collatListInfo,
     memberDetails,
   };

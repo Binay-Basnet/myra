@@ -13409,6 +13409,7 @@ export type User = Base & {
 };
 
 export type UserData = {
+  permission?: Maybe<PermissionQuery>;
   preference?: Maybe<UserPreference>;
   user?: Maybe<User>;
 };
@@ -17932,6 +17933,15 @@ export type GetMeQuery = {
         | MutationError_ServerError_Fragment
         | null;
     };
+  };
+};
+
+export type GetMyPermissionsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetMyPermissionsQuery = {
+  permission: {
+    myPermission?: Record<string, string> | null;
+    menuPermission?: Array<string | null> | null;
   };
 };
 
@@ -31680,6 +31690,26 @@ export const useGetMeQuery = <TData = GetMeQuery, TError = unknown>(
   useQuery<GetMeQuery, TError, TData>(
     variables === undefined ? ['getMe'] : ['getMe', variables],
     useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
+    options
+  );
+export const GetMyPermissionsDocument = `
+    query getMyPermissions {
+  permission {
+    myPermission
+    menuPermission
+  }
+}
+    `;
+export const useGetMyPermissionsQuery = <TData = GetMyPermissionsQuery, TError = unknown>(
+  variables?: GetMyPermissionsQueryVariables,
+  options?: UseQueryOptions<GetMyPermissionsQuery, TError, TData>
+) =>
+  useQuery<GetMyPermissionsQuery, TError, TData>(
+    variables === undefined ? ['getMyPermissions'] : ['getMyPermissions', variables],
+    useAxios<GetMyPermissionsQuery, GetMyPermissionsQueryVariables>(GetMyPermissionsDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetBankListDocument = `

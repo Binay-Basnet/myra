@@ -12,8 +12,14 @@ import {
 import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
 
 export const OverviewPage = () => {
-  const { generalInfoCardData, transactionList, accountSummary, additionalFeatures, paymentList } =
-    useLoanAccountDetailHooks();
+  const {
+    generalInfoCardData,
+    transactionList,
+    accountSummary,
+    additionalFeatures,
+    paymentList,
+    productId,
+  } = useLoanAccountDetailHooks();
 
   const links = [
     {
@@ -30,7 +36,11 @@ export const OverviewPage = () => {
 
       <Statistics statsData={accountSummary} />
 
-      <GeneralInfoCard title="General Information" items={generalInfoCardData} />
+      <GeneralInfoCard
+        title="General Information"
+        items={generalInfoCardData}
+        productId={productId}
+      />
 
       <UpcomingPayments paymentList={paymentList} />
 

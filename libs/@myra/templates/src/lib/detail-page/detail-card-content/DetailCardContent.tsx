@@ -1,5 +1,6 @@
 import React from 'react';
 
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { Chips } from '@myra-ui/components';
 import { Box, Text } from '@myra-ui/foundations';
 
@@ -18,10 +19,12 @@ export const DetailCardContent = ({
   status,
   children,
 }: DetailCardContentProps) => (
-  <Box display="flex" flexDirection="column" gap="s4" bg={bg}>
-    <Text fontWeight="500" fontSize="s3" color="gray.700">
-      {title ?? 'N/A'}
-    </Text>
+  <Box display="flex" flexDirection="column" alignItems="start" gap="s4" bg={bg}>
+    {title && (
+      <Text fontWeight="500" fontSize="s3" color="gray.700">
+        {title ?? 'N/A'}
+      </Text>
+    )}
     {subtitle !== undefined && (
       <Text fontWeight="600" fontSize="r1" color="gray.900">
         {subtitle ?? 'N/A'}

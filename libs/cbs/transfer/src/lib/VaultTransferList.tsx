@@ -121,6 +121,7 @@ export const VaultTransferList = () => {
         getRowId={(row) => String(row?.node?.ID)}
         isLoading={isFetching}
         columns={columns}
+        rowOnClick={(row) => router.push(`/${getUrl(router.pathname, 3)}/view?id=${row?.node?.ID}`)}
         pagination={{
           total: data?.transaction?.listTellerTransaction?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listTellerTransaction?.pageInfo,

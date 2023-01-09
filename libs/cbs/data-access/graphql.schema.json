@@ -115085,6 +115085,18 @@
         "description": null,
         "fields": [
           {
+            "name": "permission",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PermissionQuery",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "preference",
             "description": null,
             "args": [],
