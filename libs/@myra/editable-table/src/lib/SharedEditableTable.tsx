@@ -705,8 +705,10 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
           : column.accessorFn
           ? column.accessorFn(data)
             ? String(column.accessorFn(data))
-            : ''
-          : String(data[column.accessor] ? data[column.accessor] : '')
+            : undefined
+          : data[column.accessor]
+          ? String(data[column.accessor])
+          : undefined
       }
     >
       {column.fieldType === 'modal' ? (

@@ -16439,6 +16439,7 @@ export type GetCoaAccountsUnderLeafListQuery = { settings: { chartsOfAccount?: {
 export type GetCoaAccountListQueryVariables = Exact<{
   branchId?: InputMaybe<Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<CoaListFilter>;
 }>;
 
 
@@ -28453,10 +28454,10 @@ export const useGetCoaAccountsUnderLeafListQuery = <
       options
     );
 export const GetCoaAccountListDocument = `
-    query getCoaAccountList($branchId: String, $pagination: Pagination) {
+    query getCoaAccountList($branchId: String, $pagination: Pagination, $filter: COAListFilter) {
   settings {
     chartsOfAccount {
-      coaAccountList(branchId: $branchId, pagination: $pagination) {
+      coaAccountList(branchId: $branchId, pagination: $pagination, filter: $filter) {
         edges {
           node {
             accountCode
