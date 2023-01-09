@@ -15504,7 +15504,7 @@ export type GetAgentTodayListDataQuery = { transaction: { listAgentTask?: { reco
 export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeQuery = { auth: { me: { data?: { user?: { id: string, username: string, email?: string | null, firstName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string>, role?: Roles | null, profilePic?: string | null, userBalance?: string | null, branch?: { id: string, name?: string | null, category?: BranchCategory | null, branchBalance?: string | null } | null, organization?: { basicDetails?: { name?: string | null, logo?: string | null } | null, contactDetails?: { website?: string | null, phoneNumber?: string | null, email?: string | null } | null, address?: { district?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, registrationDetails?: { regdNo?: string | null, panOrVat?: string | null } | null } | null } | null, preference?: { language?: Language | null, languageCode?: string | null, date?: DateType | null } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } };
+export type GetMeQuery = { auth: { me: { data?: { user?: { id: string, username: string, email?: string | null, firstName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string>, role?: Roles | null, profilePic?: string | null, userBalance?: string | null, branch?: { id: string, name?: string | null, category?: BranchCategory | null, branchBalance?: string | null } | null, organization?: { basicDetails?: { name?: string | null, logo?: string | null } | null, contactDetails?: { website?: string | null, phoneNumber?: string | null, email?: string | null } | null, address?: { district?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, registrationDetails?: { regdNo?: string | null, panOrVat?: string | null } | null } | null } | null, preference?: { language?: Language | null, languageCode?: string | null, date?: DateType | null } | null, permission?: { myPermission?: Record<string, string> | null } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } };
 
 export type GetMyPermissionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -22179,6 +22179,9 @@ export const GetMeDocument = `
           language
           languageCode
           date
+        }
+        permission {
+          myPermission
         }
       }
       error {

@@ -521,7 +521,7 @@ export const CBS: NavType = {
       ],
       forms: [
         {
-          label: 'Withraw Slip Book',
+          label: 'Withdraw Slip Book',
           route: ROUTES.CBS_WITHDRAW_SLIP_BOOK_ADD,
           aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE',
         },

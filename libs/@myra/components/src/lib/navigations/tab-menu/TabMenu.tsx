@@ -88,7 +88,7 @@ const cbsTabs: {
     link: ROUTES.CBS_WITHDRAW_SLIP_BOOK_LIST,
     match: ['withdraw'],
     aclKey: 'CBS_WITHDRAWSLIP',
-    navMenu: 'REQUESTS',
+    navMenu: 'WITHDRAW_SLIP',
   },
   {
     title: 'reports',
