@@ -1,5 +1,7 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+
 type ShareDetailProps = {
   shareDetails:
     | {
@@ -24,7 +26,15 @@ type ShareDetailProps = {
 
 export const ShareDetails = ({ shareDetails }: ShareDetailProps) => (
   <DetailsCard title="Share Details" hasThreeRows>
-    <DetailCardContent title="ID" subtitle={shareDetails?.id} />
+    <DetailCardContent
+      title="ID"
+      children={
+        <RedirectButton
+          link={`${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${shareDetails?.id}`}
+          label={shareDetails?.id as string}
+        />
+      }
+    />
     <DetailCardContent title="Date" subtitle={shareDetails?.date} />
     <DetailCardContent title="Type" subtitle={shareDetails?.type} />
     <DetailCardContent
@@ -34,6 +44,6 @@ export const ShareDetails = ({ shareDetails }: ShareDetailProps) => (
     <DetailCardContent title="No of Share" subtitle={shareDetails?.noOfShare} />
     <DetailCardContent title="Share Amount" subtitle={shareDetails?.amount} />
     <DetailCardContent title="Total" subtitle={shareDetails?.total} />
-    <DetailCardContent title="Status" subtitle={shareDetails?.status} />
+    <DetailCardContent title="Status" status={shareDetails?.status === 'Complete'} />
   </DetailsCard>
 );

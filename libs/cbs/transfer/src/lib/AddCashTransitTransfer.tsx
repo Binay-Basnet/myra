@@ -90,7 +90,6 @@ export const AddCashTransitTransfer = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['getCashInTransitList']);
         queryClient.invalidateQueries(['getMe']);
-
         router.push(ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST);
       },
     });

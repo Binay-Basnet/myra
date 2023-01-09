@@ -1,5 +1,7 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 
 export const LoanGeneralInformation = () => {
@@ -14,7 +16,12 @@ export const LoanGeneralInformation = () => {
       />
       <DetailCardContent
         title="Loan Product"
-        subtitle={loanPreview?.generalInformation?.loanProduct}
+        children={
+          <RedirectButton
+            link={`${ROUTES.SETTINGS_GENERAL_LP_DETAILS}?id=${loanPreview?.productId}`}
+            label={loanPreview?.generalInformation?.loanProduct as string}
+          />
+        }
       />
       <DetailCardContent
         title="Nature of Loan Product"

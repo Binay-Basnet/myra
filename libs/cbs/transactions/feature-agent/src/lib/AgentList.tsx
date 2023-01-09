@@ -128,6 +128,9 @@ export const AgentList = () => {
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
+        rowOnClick={(row) =>
+          router.push(`/${getUrl(router.pathname, 3)}/details?id=${row?.node?.id}`)
+        }
         noDataTitle={t['agentListMarketRepresentative']}
         pagination={{
           total: data?.transaction?.listAgent?.totalCount ?? 'Many',

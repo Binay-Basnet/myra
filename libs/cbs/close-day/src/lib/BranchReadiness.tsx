@@ -52,7 +52,7 @@ export const BranchReadiness = () => {
 
   return (
     <>
-      <Box bg="gray.100" width="100%" position="sticky" top={110} zIndex={10}>
+      <Box bg="gray.100" width="100%" position="sticky" top={0} zIndex={10}>
         <Container minW="container.lg" height="fit-content" paddingInline="0">
           <FormHeader title="Branch Readiness" />
         </Container>

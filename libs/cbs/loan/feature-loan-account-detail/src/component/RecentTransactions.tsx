@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { Column, DetailsCard, Table, Text } from '@myra-ui';
 
 import { EbankingTransaction, EbankingTransactionDirection } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 type CustomTransactionItem = EbankingTransaction & {
@@ -30,14 +31,12 @@ export const RecentTransactions = ({ txnList }: ITransactionTableProps) => {
       {
         header: 'Transaction ID',
         accessorKey: 'transactionId',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-              #{props.getValue() as string}
-            </Text>
-          ) : (
-            'N/A'
-          ),
+        cell: (props) => (
+          <RedirectButton
+            link={`${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${props.getValue()}`}
+            label={props.getValue() as string}
+          />
+        ),
       },
       {
         header: 'Type',

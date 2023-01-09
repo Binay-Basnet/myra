@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { Box, Text } from '@myra-ui';
+import { Box } from '@myra-ui';
 
 import { ProductDetailPathBar } from '@coop/cbs/settings/ui-layout';
 
@@ -33,9 +33,6 @@ export const CbsShareFeatureShareRegisterDetail = () => {
       </Box>
 
       <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
-        <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
-          Overview
-        </Text>
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
       </Box>
     </Box>

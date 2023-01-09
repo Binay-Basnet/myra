@@ -5,6 +5,7 @@ import {
   OtherDetails,
   PaymentDetails,
   ShareDetails,
+  TabHeader,
 } from '../components';
 import { useShareRegisterDetailHooks } from '../hooks/useShareRegisterDetailHooks';
 
@@ -12,6 +13,7 @@ export const Overview = () => {
   const { shareDetails, shareDetailsData } = useShareRegisterDetailHooks();
   return (
     <>
+      <TabHeader heading="Overview" />
       <ShareDetails shareDetails={shareDetailsData} />
       <FeesAndCharges charges={shareDetails?.charges} />
       <PaymentDetails paymentData={shareDetails?.paymentDetail} />

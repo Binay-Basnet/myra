@@ -11,7 +11,7 @@ import {
   RequestType,
   useGetChequeBookRequestsQuery,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
@@ -162,7 +162,15 @@ export const WithdrawSlipBookList = () => {
           />
         </Box>
         <Grid templateColumns="repeat(3, 1fr)" gap="s20" p="s16">
-          <DetailCardContent title="Account Name" subtitle={selectedRequest?.accountType} />
+          <DetailCardContent
+            title="Account Name"
+            children={
+              <RedirectButton
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedRequest?.accountNumber}`}
+                label={selectedRequest?.accountType as string}
+              />
+            }
+          />
           <DetailCardContent title="Account Number" subtitle={selectedRequest?.accountNumber} />
           <DetailCardContent title="Branch" subtitle={selectedRequest?.branchName} />
           <DetailCardContent

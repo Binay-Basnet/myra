@@ -22,7 +22,7 @@ export const ChequeTable = () => {
       left: data?.left,
     })) || [];
   return (
-    <DetailsCard hasTable bg="white" title="Reports List">
+    <DetailsCard hasTable bg="white" title="Issued Withdraw Slip List">
       <ReportTableComponent data={memberListData} />
     </DetailsCard>
   );

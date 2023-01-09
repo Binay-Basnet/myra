@@ -1,14 +1,26 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePrinter } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
 import { IoChevronForward, IoSaveOutline } from 'react-icons/io5';
 import ReactToPrint from 'react-to-print';
 import { useRouter } from 'next/router';
-import { IconButton } from '@chakra-ui/react';
+import { IconButton, Popover, PopoverBody, PopoverContent, PopoverTrigger } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
+import { utils, writeFileXLSX } from 'xlsx';
 
-import { asyncToast, Box, Button, Icon, Input, Modal, Text } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  Icon,
+  Input,
+  Modal,
+  OptionsIcon,
+  Text,
+} from '@myra-ui';
 
 import {
   ShareStatementReportSettings,
@@ -30,7 +42,8 @@ export interface PathBarProps {
 
 export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
   const router = useRouter();
-  const { printRef, data } = useReport();
+  const { printRef, data, report } = useReport();
+
   const { getValues: filters } = useFormContext<ShareStatementReportSettings>();
 
   const { register, getValues } = useForm<{ name: string }>();
@@ -47,6 +60,19 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
   const onCloseModal = () => {
     setOpenModal(false);
   };
+
+  const exportTableToExcel = useCallback(() => {
+    const tables = document?.getElementsByTagName('TABLE');
+
+    const wb = utils.book_new();
+
+    Array.prototype.slice.call(tables)?.forEach((table) => {
+      const ws = utils.table_to_sheet(table);
+      utils.book_append_sheet(wb, ws);
+    });
+
+    writeFileXLSX(wb, `${report}.xlsx`);
+  }, []);
 
   return (
     <Box
@@ -118,6 +144,40 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
           <Icon as={IoSaveOutline} />
           Save Report
         </Button>
+
+        <Popover placement="bottom-end">
+          <PopoverTrigger>
+            <Box display="flex" alignItems="center" justifyContent="center">
+              <Button
+                variant="ghost"
+                colorScheme="gray"
+                color="gray.600"
+                fontSize="r1"
+                display="flex"
+                alignItems="center"
+                gap="s8"
+              >
+                <Icon as={OptionsIcon} size="sm" />
+                <span>Options</span>
+              </Button>
+            </Box>
+          </PopoverTrigger>
+          <PopoverContent minWidth="180px" w="180px" color="white" boxShadow="E2">
+            <PopoverBody px="0" py="0">
+              <Grid>
+                <GridItem px="s16" py="s8" _hover={{ bg: 'gray.100' }} cursor="pointer">
+                  <Text
+                    variant="bodyRegular"
+                    color="neutralColorLight.Gray-80"
+                    onClick={exportTableToExcel}
+                  >
+                    Export Visible
+                  </Text>
+                </GridItem>
+              </Grid>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
 
         <IconButton
           variant="ghost"

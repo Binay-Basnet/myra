@@ -751,3 +751,17 @@ query getLoanAccountMemberDetails($loanAccountId: ID!) {
     }
   }
 }
+
+query getLoanAccountLedgersList($id: ID!) {
+  account {
+    listAccountLedgers(id: $id) {
+      data {
+        ledgerId
+        ledgerName
+        accountType
+        balance
+        balanceType
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
 import { ObjState, TransferType, WithdrawWith } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
@@ -116,7 +117,12 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailSourceAccount']}
-            subtitle={accountTransferDetailData?.sourceAccount?.accountName}
+            children={
+              <RedirectButton
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${accountTransferDetailData?.sourceAccount?.id}`}
+                label={accountTransferDetailData?.sourceAccount?.accountName as string}
+              />
+            }
           />
           <DetailCardContent
             title={t['transDetailTransferType']}
@@ -132,7 +138,12 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailReceipentAccount']}
-            subtitle={accountTransferDetailData?.destinationAccount?.id}
+            children={
+              <RedirectButton
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${accountTransferDetailData?.destinationAccount?.id}`}
+                label={accountTransferDetailData?.destinationAccount?.accountName as string}
+              />
+            }
           />
           <DetailCardContent
             title={t['transDetailWithdrawBy']}
