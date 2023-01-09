@@ -86839,6 +86839,18 @@
             "deprecationReason": null
           },
           {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "installmentNo",
             "description": null,
             "args": [],
@@ -96707,6 +96719,12 @@
             "deprecationReason": null
           },
           {
+            "name": "ALTERNATIVE_CHANNELS_DOWNLOADS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ALTERNATIVE_CHANNELS_E_BANKING_REGISTRATION",
             "description": null,
             "isDeprecated": false,
@@ -96720,6 +96738,42 @@
           },
           {
             "name": "ALTERNATIVE_CHANNELS_SMS_REGISTRATION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ALTERNATIVE_CHANNELS_USERS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "APP_ACCOUNTING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "APP_ALTERNATIVE_CHANNEL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "APP_CBS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "APP_INVENTORY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "APP_MEMBER_SHARE",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -96845,6 +96899,72 @@
             "deprecationReason": null
           },
           {
+            "name": "CBS_REPORTS_ATM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_BRANCHLESS_BANKING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_LOAN",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_MEMBER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_MOBILE_BANKING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_ORGANIZATION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_OTHER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_SAVINGS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_SERVICE_CENTER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_SHARE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_TRANSACTION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CBS_REQUESTS_LOAN_REQUESTS",
             "description": null,
             "isDeprecated": false,
@@ -96941,6 +97061,12 @@
             "deprecationReason": null
           },
           {
+            "name": "CBS_TRANSACTIONS_ALL_TRANSACTIONS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CBS_TRANSACTIONS_BULK_ACCOUNT_TRANSFER",
             "description": null,
             "isDeprecated": false,
@@ -97001,7 +97127,13 @@
             "deprecationReason": null
           },
           {
-            "name": "CBS_TRANSFERS_BRANCH_TRANSFER",
+            "name": "CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -97019,6 +97151,12 @@
             "deprecationReason": null
           },
           {
+            "name": "CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE",
             "description": null,
             "isDeprecated": false,
@@ -97031,13 +97169,49 @@
             "deprecationReason": null
           },
           {
+            "name": "SETTINGS_ALTERNATIVE_CHANNELS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SETTINGS_AUDIT_LOG",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SETTINGS_BANK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "SETTINGS_COA",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
+            "name": "SETTINGS_CODE_MANAGEMENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "SETTINGS_DOCUMENT_MANAGEMENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SETTINGS_GENERAL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SETTINGS_INDEXING",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -97098,6 +97272,12 @@
           },
           {
             "name": "SETTINGS_SHARE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SETTINGS_USERS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

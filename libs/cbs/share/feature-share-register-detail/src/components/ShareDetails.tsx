@@ -44,6 +44,6 @@ export const ShareDetails = ({ shareDetails }: ShareDetailProps) => (
     <DetailCardContent title="No of Share" subtitle={shareDetails?.noOfShare} />
     <DetailCardContent title="Share Amount" subtitle={shareDetails?.amount} />
     <DetailCardContent title="Total" subtitle={shareDetails?.total} />
-    <DetailCardContent title="Status" subtitle={shareDetails?.status} />
+    <DetailCardContent title="Status" status={shareDetails?.status === 'Complete'} />
   </DetailsCard>
 );

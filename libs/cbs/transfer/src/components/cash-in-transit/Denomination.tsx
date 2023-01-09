@@ -40,7 +40,8 @@ export const Denomination = ({ availableCash }: DenominationProps) => {
 
   const returnTotal = denominationTotal - amount;
 
-  const availableBalance = Number(availableCash?.split(' ')[1])?.toFixed(0) ?? 0;
+  const availableBalance =
+    Number(availableCash) === 0 ? 0 : Number(availableCash?.split(' ')[1])?.toFixed(0);
 
   return (
     <FormSection>
@@ -62,7 +63,7 @@ export const Denomination = ({ availableCash }: DenominationProps) => {
         rules={{
           max: {
             value: availableBalance,
-            message: 'Cash should be less than available balance',
+            message: 'Insufficient balance',
           },
         }}
       />
@@ -117,26 +118,26 @@ export const Denomination = ({ availableCash }: DenominationProps) => {
           borderRadius="br2"
         >
           <Box display="flex" justifyContent="space-between">
-            <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+            <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-60">
               Total
             </Text>
-            <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+            <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-60">
               {denominationTotal.toFixed(2)}
             </Text>
           </Box>
           <Box display="flex" justifyContent="space-between">
-            <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+            <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-60">
               Return
             </Text>
-            <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+            <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-60">
               {returnTotal ? returnTotal.toFixed(2) : 0.0}
             </Text>
           </Box>
           <Box display="flex" justifyContent="space-between">
-            <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+            <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-60">
               Grand Total
             </Text>
-            <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+            <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-60">
               {amount ? Number(amount).toFixed(2) : 0.0}
             </Text>
           </Box>
