@@ -430,6 +430,11 @@ export const CBS: NavType = {
           aclKey: 'CBS_TRANSFERS_TELLER_TRANSFER',
         },
         {
+          label: 'transCashTransitTransfer',
+          route: ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_ADD,
+          aclKey: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
+        },
+        {
           label: 'transServiceCenterTransfer',
           route: ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_ADD,
           aclKey: 'CBS_TRANSFERS_BRANCH_TRANSFER',

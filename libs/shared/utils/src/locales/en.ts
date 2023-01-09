@@ -3857,6 +3857,7 @@ const en: Record<string, string> = {
   transDetailAmountDeposited: 'Deposit Amount',
   transCashTransitTransfer: 'Cash in Transit Transfer',
   transServiceCenterTransfer: 'Service Center Cash Transfer',
+  viewDetails: 'View Details',
 };
 
 export default en;

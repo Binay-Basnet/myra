@@ -23,7 +23,7 @@ export const JournalVoucerDetailPage = () => {
   };
 
   const sidebarDetailData = {
-    id: voucherData?.id,
+    id: voucherData?.transactionCode,
     date: voucherData?.date?.local,
     status: voucherData?.status,
     amount: voucherData?.amount,

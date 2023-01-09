@@ -744,6 +744,7 @@ query getLoanAccountMemberDetails($loanAccountId: ID!) {
         memberId
         memberCode
         memberName
+        memberPhoneNo
         profilePicId
         profilePicUrl
       }

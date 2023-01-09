@@ -242,13 +242,7 @@ export const AddUser = () => {
 
                 <FormEmailInput isRequired name="email" label="Email" />
 
-                <FormSelect
-                  isRequired
-                  name="role"
-                  label="Role"
-                  options={roleOptions}
-                  isDisabled={isEdit}
-                />
+                <FormSelect isRequired name="role" label="Role" options={roleOptions} />
 
                 <FormBranchSelect
                   name="branch"
