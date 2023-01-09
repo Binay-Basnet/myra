@@ -22,16 +22,22 @@ export const Scrollable = ({ children }: IContainer) => (
   <Box
     sx={{
       '&::-webkit-scrollbar': {
-        display: 'none',
+        width: '12px',
+        height: '8px',
+        backgroundColor: 'transparent',
       },
       '&:hover::-webkit-scrollbar': {
-        width: '8px',
+        width: '12px',
         height: '8px',
         backgroundColor: '#f5f5f5',
 
         display: 'block',
       },
       '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'transparent',
+        borderRadius: '8px',
+      },
+      '&:hover::-webkit-scrollbar-thumb': {
         backgroundColor: 'gray.300',
         borderRadius: '8px',
       },

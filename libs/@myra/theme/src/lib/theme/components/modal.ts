@@ -24,19 +24,16 @@ const baseStyleDialogContainer: SystemStyleFunction = (props) => {
   };
 };
 
-const baseStyleDialog: SystemStyleFunction = (props) => {
-  const { scrollBehavior } = props;
-
-  return {
-    borderRadius: 'md',
-    bg: mode('white', 'gray.700')(props),
-    color: 'inherit',
-    my: '3.75rem',
-    zIndex: 'modal',
-    maxH: scrollBehavior === 'inside' ? 'calc(100% - 7.5rem)' : undefined,
-    boxShadow: mode('lg', 'dark-lg')(props),
-  };
-};
+const baseStyleDialog: SystemStyleFunction = (props) => ({
+  borderRadius: 'md',
+  bg: mode('white', 'gray.700')(props),
+  color: 'inherit',
+  my: '3.75rem',
+  zIndex: 'modal',
+  maxHeight: '80vh',
+  height: 'auto',
+  boxShadow: 'lg',
+});
 
 const baseStyleHeader: SystemStyleObject = {
   px: 's16',
@@ -45,6 +42,7 @@ const baseStyleHeader: SystemStyleObject = {
   fontWeight: 'semibold',
   flex: 'none',
   height: '50px',
+
   display: 'flex',
   alignItems: 'center',
 };
@@ -61,6 +59,7 @@ const baseStyleBody: SystemStyleFunction = (props) => {
     px: 's16',
     py: 2,
     flex: 1,
+    overflowY: 'auto',
     overflow: scrollBehavior === 'inside' ? 'auto' : undefined,
   };
 };
