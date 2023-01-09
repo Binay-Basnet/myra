@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 
+import { Box, Text } from '@myra-ui';
+
 import {
   NatureOfDepositProduct,
   useGetAccountOpenProductDetailsQuery,
 } from '@coop/cbs/data-access';
-import { Box, Text } from '@myra-ui';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 
 interface ProductProps {
   productId: string;
@@ -26,10 +28,19 @@ export const ProductCard = ({ productId }: ProductProps) => {
   }, [productId]);
   return (
     <Box border="1px solid" borderColor="border.layout" borderRadius="br2">
-      <Box w="100%" p="s16" display="flex" flexDirection="column" gap="s4" bg="gray.100">
-        <Text fontWeight="500" fontSize="r1" color="#006837">
-          {productData?.productName}
-        </Text>
+      <Box
+        w="100%"
+        p="s16"
+        display="flex"
+        flexDirection="column"
+        gap="s4"
+        bg="gray.100"
+        alignItems="start"
+      >
+        <RedirectButton
+          link={`${ROUTES.SETTINGS_GENERAL_SAVING_PRODUCTS_DETAILS}?id=${productId}`}
+          label={productData?.productName as string}
+        />
         <Text fontWeight="Medium" fontSize="s3">
           {
             poductDetails?.data?.settings?.general?.depositProduct?.formState?.data?.productCode

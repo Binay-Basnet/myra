@@ -6,6 +6,7 @@ import { Box, Button, Icon, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { Id_Type, useGetLoanAccountListQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
@@ -34,6 +35,12 @@ export const AccountListPage = () => {
       {
         header: 'Account No',
         accessorFn: (row) => row?.node?.id,
+        cell: (props) => (
+          <RedirectButton
+            link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props?.row?.original?.node?.id}`}
+            label={props?.row?.original?.node?.id as string}
+          />
+        ),
       },
 
       {

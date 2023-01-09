@@ -6,6 +6,7 @@ import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@m
 import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, RequestType, useGetBlockChequeListQuery } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
@@ -157,10 +158,16 @@ export const BlockWithdrawSlipRequestsList = () => {
               {selectedRequest?.memberId}
             </Text>
           </DetailCardContent>
-          <DetailCardContent title="Account" subtitle={String(selectedRequest?.accountType)}>
-            <Text fontWeight="600" fontSize="r1" textTransform="capitalize" color="gray.800">
-              {selectedRequest?.accountNumber}
-            </Text>
+          <DetailCardContent title="Account">
+            <>
+              <RedirectButton
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedRequest?.accountNumber}`}
+                label={selectedRequest?.accountType as string}
+              />
+              <Text fontWeight="600" fontSize="r1" textTransform="capitalize" color="gray.800">
+                {selectedRequest?.accountNumber}
+              </Text>
+            </>
           </DetailCardContent>
           <DetailCardContent title="Cheque Number" subtitle={selectedRequest?.chequeNumber} />
         </Grid>

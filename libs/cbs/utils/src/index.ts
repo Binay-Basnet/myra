@@ -6,6 +6,7 @@ export * from './lib/DetailsRouteFromTable';
 export * from './lib/formatAddress';
 export * from './lib/formatTableAddress';
 export * from './lib/getLocalizedTodaysDate';
+export * from './lib/RedirectButton';
 export * from './roles/ability';
 export * from './roles/Can';
 export * from './roles/permissions';
