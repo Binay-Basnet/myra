@@ -126,11 +126,12 @@ export type AmountLimitFormState = {
   minAmount?: Maybe<Scalars['Amount']>;
 };
 
-export enum Arrange {
-  Asc = 'ASC',
-  Desc = 'DESC',
-}
+export const Arrange = {
+  Asc: 'ASC',
+  Desc: 'DESC',
+} as const;
 
+export type Arrange = typeof Arrange[keyof typeof Arrange];
 export type AuthToken = {
   access: Scalars['String'];
   refresh: Scalars['String'];
@@ -177,14 +178,15 @@ export type Branch = {
   tdsTransaferId?: Maybe<Scalars['String']>;
 };
 
-export enum BranchCategory {
-  BranchOffice = 'BRANCH_OFFICE',
-  ContactOffice = 'CONTACT_OFFICE',
-  HeadOffice = 'HEAD_OFFICE',
-  RegionalOffice = 'REGIONAL_OFFICE',
-  ServiceCenter = 'SERVICE_CENTER',
-}
+export const BranchCategory = {
+  BranchOffice: 'BRANCH_OFFICE',
+  ContactOffice: 'CONTACT_OFFICE',
+  HeadOffice: 'HEAD_OFFICE',
+  RegionalOffice: 'REGIONAL_OFFICE',
+  ServiceCenter: 'SERVICE_CENTER',
+} as const;
 
+export type BranchCategory = typeof BranchCategory[keyof typeof BranchCategory];
 export type BranchFormData = {
   abbsStatus?: Maybe<Scalars['Boolean']>;
   branchCode?: Maybe<Scalars['String']>;
@@ -240,12 +242,13 @@ export type CollateralFormState = {
   type?: Maybe<Scalars['String']>;
 };
 
-export enum ComparatorType {
-  EqualTo = 'EqualTo',
-  GreaterThan = 'GreaterThan',
-  LessThan = 'LessThan',
-}
+export const ComparatorType = {
+  EqualTo: 'EqualTo',
+  GreaterThan: 'GreaterThan',
+  LessThan: 'LessThan',
+} as const;
 
+export type ComparatorType = typeof ComparatorType[keyof typeof ComparatorType];
 export type Condition = {
   column: Scalars['String'];
   comparator: ComparatorType;
@@ -282,36 +285,39 @@ export type CoordinateInput = {
   longitude?: InputMaybe<Scalars['Float']>;
 };
 
-export enum CriteriaSection {
-  Age = 'AGE',
-  CooperativeType = 'COOPERATIVE_TYPE',
-  EducationQualification = 'EDUCATION_QUALIFICATION',
-  Ethnicity = 'ETHNICITY',
-  ForeignEmployment = 'FOREIGN_EMPLOYMENT',
-  Gender = 'GENDER',
-  MaritalStatus = 'MARITAL_STATUS',
-  NatureOfBusinessCoopunion = 'NATURE_OF_BUSINESS_COOPUNION',
-  NatureOfBusinessInstitutions = 'NATURE_OF_BUSINESS_INSTITUTIONS',
-  OccupationDetails = 'OCCUPATION_DETAILS',
-}
+export const CriteriaSection = {
+  Age: 'AGE',
+  CooperativeType: 'COOPERATIVE_TYPE',
+  EducationQualification: 'EDUCATION_QUALIFICATION',
+  Ethnicity: 'ETHNICITY',
+  ForeignEmployment: 'FOREIGN_EMPLOYMENT',
+  Gender: 'GENDER',
+  MaritalStatus: 'MARITAL_STATUS',
+  NatureOfBusinessCoopunion: 'NATURE_OF_BUSINESS_COOPUNION',
+  NatureOfBusinessInstitutions: 'NATURE_OF_BUSINESS_INSTITUTIONS',
+  OccupationDetails: 'OCCUPATION_DETAILS',
+} as const;
 
+export type CriteriaSection = typeof CriteriaSection[keyof typeof CriteriaSection];
 export type DateFilter = {
   from?: InputMaybe<Scalars['String']>;
   to?: InputMaybe<Scalars['String']>;
 };
 
-export enum DefaultAccountType {
-  Current = 'CURRENT',
-  Saving = 'SAVING',
-}
+export const DefaultAccountType = {
+  Current: 'CURRENT',
+  Saving: 'SAVING',
+} as const;
 
-export enum DepositFrequency {
-  HalfYearly = 'HALF_YEARLY',
-  Monthly = 'MONTHLY',
-  Quarterly = 'QUARTERLY',
-  Yearly = 'YEARLY',
-}
+export type DefaultAccountType = typeof DefaultAccountType[keyof typeof DefaultAccountType];
+export const DepositFrequency = {
+  HalfYearly: 'HALF_YEARLY',
+  Monthly: 'MONTHLY',
+  Quarterly: 'QUARTERLY',
+  Yearly: 'YEARLY',
+} as const;
 
+export type DepositFrequency = typeof DepositFrequency[keyof typeof DepositFrequency];
 export type DepositProduct = Base & {
   accountClosingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   createdAt: Scalars['Time'];
@@ -454,11 +460,12 @@ export type DepositProductMinimal = {
   productName: Scalars['String'];
 };
 
-export enum DepositProductStatus {
-  Active = 'ACTIVE',
-  Inactive = 'INACTIVE',
-}
+export const DepositProductStatus = {
+  Active: 'ACTIVE',
+  Inactive: 'INACTIVE',
+} as const;
 
+export type DepositProductStatus = typeof DepositProductStatus[keyof typeof DepositProductStatus];
 export type District = {
   id: Scalars['Int'];
   municipalities: Array<Municipality>;
@@ -499,12 +506,14 @@ export type EBankingAccountQueryGetArgs = {
   id: Scalars['ID'];
 };
 
-export enum EBankingActiveLoanStatus {
-  Pending = 'Pending',
-  Processing = 'Processing',
-  Scheduled = 'Scheduled',
-}
+export const EBankingActiveLoanStatus = {
+  Pending: 'Pending',
+  Processing: 'Processing',
+  Scheduled: 'Scheduled',
+} as const;
 
+export type EBankingActiveLoanStatus =
+  typeof EBankingActiveLoanStatus[keyof typeof EBankingActiveLoanStatus];
 export type EBankingAnnouncementQuery = {
   list: Array<Maybe<EBankingAppAnnouncement>>;
 };
@@ -672,11 +681,13 @@ export type EBankingChequeRequestInput = {
   type: EBankingChequeRequestType;
 };
 
-export enum EBankingChequeRequestType {
-  SelfPickup = 'Self_Pickup',
-  ThroughAgent = 'Through_agent',
-}
+export const EBankingChequeRequestType = {
+  SelfPickup: 'Self_Pickup',
+  ThroughAgent: 'Through_agent',
+} as const;
 
+export type EBankingChequeRequestType =
+  typeof EBankingChequeRequestType[keyof typeof EBankingChequeRequestType];
 export type EBankingChequeResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<EBankingCooperativeServiceQuery>;
@@ -877,12 +888,14 @@ export type EBankingRegisterComplaintInput = {
   proposedSolution?: InputMaybe<Scalars['String']>;
 };
 
-export enum EBankingServiceStatus {
-  Active = 'Active',
-  Completed = 'Completed',
-  Declined = 'Declined',
-}
+export const EBankingServiceStatus = {
+  Active: 'Active',
+  Completed: 'Completed',
+  Declined: 'Declined',
+} as const;
 
+export type EBankingServiceStatus =
+  typeof EBankingServiceStatus[keyof typeof EBankingServiceStatus];
 export type EBankingShareQuery = {
   history?: Maybe<Array<Maybe<EbankingShareHistory>>>;
   summary?: Maybe<EbankingShare>;
@@ -892,11 +905,12 @@ export type EBankingShareQueryHistoryArgs = {
   filter?: InputMaybe<EbankingShareFilter>;
 };
 
-export enum EBankingTokenType {
-  Cooperative = 'COOPERATIVE',
-  Myra = 'MYRA',
-}
+export const EBankingTokenType = {
+  Cooperative: 'COOPERATIVE',
+  Myra: 'MYRA',
+} as const;
 
+export type EBankingTokenType = typeof EBankingTokenType[keyof typeof EBankingTokenType];
 export type EBankingTransactionQuery = {
   monthly: Array<Maybe<MonthlyTransactions>>;
   recent?: Maybe<EbankingTransactionConnection>;
@@ -972,11 +986,12 @@ export type EbankingAccountTransferResult = {
   success: Scalars['Boolean'];
 };
 
-export enum EbankingAccountType {
-  Loan = 'LOAN',
-  Saving = 'SAVING',
-}
+export const EbankingAccountType = {
+  Loan: 'LOAN',
+  Saving: 'SAVING',
+} as const;
 
+export type EbankingAccountType = typeof EbankingAccountType[keyof typeof EbankingAccountType];
 export type EbankingAuthQuery = {
   meCooperativeUser?: Maybe<MeCooperativeUserResult>;
   meMyraUser?: Maybe<MeMyraUserResult>;
@@ -1134,12 +1149,14 @@ export type EbankingSendMoneyResult = {
   success: Scalars['Boolean'];
 };
 
-export enum EbankingServiceRequestType {
-  ChequeBlockRequest = 'CHEQUE_BLOCK_REQUEST',
-  ChequeRequest = 'CHEQUE_REQUEST',
-  WithdrawViaCollector = 'WITHDRAW_VIA_COLLECTOR',
-}
+export const EbankingServiceRequestType = {
+  ChequeBlockRequest: 'CHEQUE_BLOCK_REQUEST',
+  ChequeRequest: 'CHEQUE_REQUEST',
+  WithdrawViaCollector: 'WITHDRAW_VIA_COLLECTOR',
+} as const;
 
+export type EbankingServiceRequestType =
+  typeof EbankingServiceRequestType[keyof typeof EbankingServiceRequestType];
 export type EbankingSetDefaultAccountResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<EBankingQuery>;
@@ -1197,16 +1214,20 @@ export type EbankingTransactionConnection = {
   totalCount?: Maybe<Scalars['Int']>;
 };
 
-export enum EbankingTransactionCrOrDr {
-  Credit = 'CREDIT',
-  Debit = 'DEBIT',
-}
+export const EbankingTransactionCrOrDr = {
+  Credit: 'CREDIT',
+  Debit: 'DEBIT',
+} as const;
 
-export enum EbankingTransactionDirection {
-  Incoming = 'INCOMING',
-  Outgoing = 'OUTGOING',
-}
+export type EbankingTransactionCrOrDr =
+  typeof EbankingTransactionCrOrDr[keyof typeof EbankingTransactionCrOrDr];
+export const EbankingTransactionDirection = {
+  Incoming: 'INCOMING',
+  Outgoing: 'OUTGOING',
+} as const;
 
+export type EbankingTransactionDirection =
+  typeof EbankingTransactionDirection[keyof typeof EbankingTransactionDirection];
 export type EbankingTransactionEdge = {
   cursor: Scalars['String'];
   node: EbankingTransaction;
@@ -1218,13 +1239,15 @@ export type EbankingTransactionFilter = {
   transactionDirection?: InputMaybe<EbankingTransactionCrOrDr>;
 };
 
-export enum EbankingTransactionType {
-  Deposit = 'DEPOSIT',
-  SharePurchase = 'SHARE_PURCHASE',
-  Transfer = 'TRANSFER',
-  Withdraw = 'WITHDRAW',
-}
+export const EbankingTransactionType = {
+  Deposit: 'DEPOSIT',
+  SharePurchase: 'SHARE_PURCHASE',
+  Transfer: 'TRANSFER',
+  Withdraw: 'WITHDRAW',
+} as const;
 
+export type EbankingTransactionType =
+  typeof EbankingTransactionType[keyof typeof EbankingTransactionType];
 export type EbankingUser = {
   cooperatives?: Maybe<Array<Maybe<CooperativeInformation>>>;
   dob?: Maybe<Scalars['String']>;
@@ -1252,76 +1275,79 @@ export type Filter = {
   orConditions: Array<OrConditions>;
 };
 
-export enum Frequency {
-  Daily = 'DAILY',
-  Monthly = 'MONTHLY',
-  Weekly = 'WEEKLY',
-  Yearly = 'YEARLY',
-}
+export const Frequency = {
+  Daily: 'DAILY',
+  Monthly: 'MONTHLY',
+  Weekly: 'WEEKLY',
+  Yearly: 'YEARLY',
+} as const;
 
-export enum FrequencyTenure {
-  Day = 'DAY',
-  Month = 'MONTH',
-  Week = 'WEEK',
-  Year = 'YEAR',
-}
+export type Frequency = typeof Frequency[keyof typeof Frequency];
+export const FrequencyTenure = {
+  Day: 'DAY',
+  Month: 'MONTH',
+  Week: 'WEEK',
+  Year: 'YEAR',
+} as const;
 
+export type FrequencyTenure = typeof FrequencyTenure[keyof typeof FrequencyTenure];
 export type GenderOption = {
   id?: Maybe<Scalars['String']>;
   nameEn?: Maybe<Scalars['String']>;
   nameNp?: Maybe<Scalars['String']>;
 };
 
-export enum Id_Type {
-  Account = 'ACCOUNT',
-  Address = 'ADDRESS',
-  Bank = 'BANK',
-  Bankbranch = 'BANKBRANCH',
-  Branch = 'BRANCH',
-  Chartsofaccount = 'CHARTSOFACCOUNT',
-  Customfield = 'CUSTOMFIELD',
-  Declaration = 'DECLARATION',
-  Depositiro = 'DEPOSITIRO',
-  Depositproduct = 'DEPOSITPRODUCT',
-  Depositproductcriteria = 'DEPOSITPRODUCTCRITERIA',
-  Deposittds = 'DEPOSITTDS',
-  Document = 'DOCUMENT',
-  Documentreference = 'DOCUMENTREFERENCE',
-  Dynamicentry = 'DYNAMICENTRY',
-  Formfield = 'FORMFIELD',
-  Formoption = 'FORMOPTION',
-  Formsection = 'FORMSECTION',
-  Kymaccountoperatordetails = 'KYMACCOUNTOPERATORDETAILS',
-  Kymcoopaccountoperatordetails = 'KYMCOOPACCOUNTOPERATORDETAILS',
-  Kymcoopdirectordetails = 'KYMCOOPDIRECTORDETAILS',
-  Kymcooperative = 'KYMCOOPERATIVE',
-  Kymcooperativeunion = 'KYMCOOPERATIVEUNION',
-  Kymcooperativeunionpers = 'KYMCOOPERATIVEUNIONPERS',
-  Kymdocument = 'KYMDOCUMENT',
-  Kymfield = 'KYMFIELD',
-  Kymfieldoption = 'KYMFIELDOPTION',
-  Kymidentification = 'KYMIDENTIFICATION',
-  Kymindividual = 'KYMINDIVIDUAL',
-  Kymindividualfamilymembers = 'KYMINDIVIDUALFAMILYMEMBERS',
-  Kymindividualincomesource = 'KYMINDIVIDUALINCOMESOURCE',
-  Kymindividualoccupation = 'KYMINDIVIDUALOCCUPATION',
-  Kyminstitutions = 'KYMINSTITUTIONS',
-  Kymsisterconcerndetails = 'KYMSISTERCONCERNDETAILS',
-  Loanproduct = 'LOANPRODUCT',
-  Loanproductcriteria = 'LOANPRODUCTCRITERIA',
-  Member = 'MEMBER',
-  Myrauser = 'MYRAUSER',
-  Myrauseridetification = 'MYRAUSERIDETIFICATION',
-  Organization = 'ORGANIZATION',
-  Productdocument = 'PRODUCTDOCUMENT',
-  Sharebalance = 'SHAREBALANCE',
-  Shareextracharges = 'SHAREEXTRACHARGES',
-  Sharenumbers = 'SHARENUMBERS',
-  Shareregister = 'SHAREREGISTER',
-  User = 'USER',
-  Userpreference = 'USERPREFERENCE',
-}
+export const Id_Type = {
+  Account: 'ACCOUNT',
+  Address: 'ADDRESS',
+  Bank: 'BANK',
+  Bankbranch: 'BANKBRANCH',
+  Branch: 'BRANCH',
+  Chartsofaccount: 'CHARTSOFACCOUNT',
+  Customfield: 'CUSTOMFIELD',
+  Declaration: 'DECLARATION',
+  Depositiro: 'DEPOSITIRO',
+  Depositproduct: 'DEPOSITPRODUCT',
+  Depositproductcriteria: 'DEPOSITPRODUCTCRITERIA',
+  Deposittds: 'DEPOSITTDS',
+  Document: 'DOCUMENT',
+  Documentreference: 'DOCUMENTREFERENCE',
+  Dynamicentry: 'DYNAMICENTRY',
+  Formfield: 'FORMFIELD',
+  Formoption: 'FORMOPTION',
+  Formsection: 'FORMSECTION',
+  Kymaccountoperatordetails: 'KYMACCOUNTOPERATORDETAILS',
+  Kymcoopaccountoperatordetails: 'KYMCOOPACCOUNTOPERATORDETAILS',
+  Kymcoopdirectordetails: 'KYMCOOPDIRECTORDETAILS',
+  Kymcooperative: 'KYMCOOPERATIVE',
+  Kymcooperativeunion: 'KYMCOOPERATIVEUNION',
+  Kymcooperativeunionpers: 'KYMCOOPERATIVEUNIONPERS',
+  Kymdocument: 'KYMDOCUMENT',
+  Kymfield: 'KYMFIELD',
+  Kymfieldoption: 'KYMFIELDOPTION',
+  Kymidentification: 'KYMIDENTIFICATION',
+  Kymindividual: 'KYMINDIVIDUAL',
+  Kymindividualfamilymembers: 'KYMINDIVIDUALFAMILYMEMBERS',
+  Kymindividualincomesource: 'KYMINDIVIDUALINCOMESOURCE',
+  Kymindividualoccupation: 'KYMINDIVIDUALOCCUPATION',
+  Kyminstitutions: 'KYMINSTITUTIONS',
+  Kymsisterconcerndetails: 'KYMSISTERCONCERNDETAILS',
+  Loanproduct: 'LOANPRODUCT',
+  Loanproductcriteria: 'LOANPRODUCTCRITERIA',
+  Member: 'MEMBER',
+  Myrauser: 'MYRAUSER',
+  Myrauseridetification: 'MYRAUSERIDETIFICATION',
+  Organization: 'ORGANIZATION',
+  Productdocument: 'PRODUCTDOCUMENT',
+  Sharebalance: 'SHAREBALANCE',
+  Shareextracharges: 'SHAREEXTRACHARGES',
+  Sharenumbers: 'SHARENUMBERS',
+  Shareregister: 'SHAREREGISTER',
+  User: 'USER',
+  Userpreference: 'USERPREFERENCE',
+} as const;
 
+export type Id_Type = typeof Id_Type[keyof typeof Id_Type];
 export type Identity = {
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -1329,29 +1355,34 @@ export type Identity = {
   username: Scalars['String'];
 };
 
-export enum IdetificationType {
-  Citizenship = 'CITIZENSHIP',
-  DrivingLicense = 'DRIVING_LICENSE',
-  NationalId = 'NATIONAL_ID',
-  Passport = 'PASSPORT',
-  VoterCard = 'VOTER_CARD',
-}
+export const IdetificationType = {
+  Citizenship: 'CITIZENSHIP',
+  DrivingLicense: 'DRIVING_LICENSE',
+  NationalId: 'NATIONAL_ID',
+  Passport: 'PASSPORT',
+  VoterCard: 'VOTER_CARD',
+} as const;
 
-export enum IndividualRequiredDocument {
-  Fingerprint = 'FINGERPRINT',
-  Form = 'FORM',
-  NomineeDocument = 'NOMINEE_DOCUMENT',
-  Photo = 'PHOTO',
-  Signature = 'SIGNATURE',
-}
+export type IdetificationType = typeof IdetificationType[keyof typeof IdetificationType];
+export const IndividualRequiredDocument = {
+  Fingerprint: 'FINGERPRINT',
+  Form: 'FORM',
+  NomineeDocument: 'NOMINEE_DOCUMENT',
+  Photo: 'PHOTO',
+  Signature: 'SIGNATURE',
+} as const;
 
-export enum InstitutionRequiredDocument {
-  Decision = 'DECISION',
-  Registered = 'REGISTERED',
-  Signature = 'SIGNATURE',
-  TaxClearance = 'TAX_CLEARANCE',
-}
+export type IndividualRequiredDocument =
+  typeof IndividualRequiredDocument[keyof typeof IndividualRequiredDocument];
+export const InstitutionRequiredDocument = {
+  Decision: 'DECISION',
+  Registered: 'REGISTERED',
+  Signature: 'SIGNATURE',
+  TaxClearance: 'TAX_CLEARANCE',
+} as const;
 
+export type InstitutionRequiredDocument =
+  typeof InstitutionRequiredDocument[keyof typeof InstitutionRequiredDocument];
 export type Insurance = {
   amount?: Maybe<Scalars['Amount']>;
   rate?: Maybe<Scalars['Float']>;
@@ -1368,11 +1399,12 @@ export type InterestFormState = {
   minRate?: Maybe<Scalars['Float']>;
 };
 
-export enum InterestMethod {
-  Diminishing = 'DIMINISHING',
-  Flat = 'FLAT',
-}
+export const InterestMethod = {
+  Diminishing: 'DIMINISHING',
+  Flat: 'FLAT',
+} as const;
 
+export type InterestMethod = typeof InterestMethod[keyof typeof InterestMethod];
 export type InterestRateType = {
   boardAuthority?: Maybe<Scalars['Float']>;
   ceoAuthority?: Maybe<Scalars['Float']>;
@@ -1401,13 +1433,14 @@ export type KymAddressInput = {
   wardNo?: InputMaybe<Scalars['Int']>;
 };
 
-export enum KymMemberTypesEnum {
-  Cooperative = 'COOPERATIVE',
-  CooperativeUnion = 'COOPERATIVE_UNION',
-  Individual = 'INDIVIDUAL',
-  Institution = 'INSTITUTION',
-}
+export const KymMemberTypesEnum = {
+  Cooperative: 'COOPERATIVE',
+  CooperativeUnion: 'COOPERATIVE_UNION',
+  Individual: 'INDIVIDUAL',
+  Institution: 'INSTITUTION',
+} as const;
 
+export type KymMemberTypesEnum = typeof KymMemberTypesEnum[keyof typeof KymMemberTypesEnum];
 export type LadderRateFormState = {
   amount: Scalars['Amount'];
   rate: Scalars['Float'];
@@ -1420,11 +1453,12 @@ export type LedgerMappingFormState = {
   principal?: Maybe<Scalars['String']>;
 };
 
-export enum LoanInterestMethod {
-  Diminishing = 'DIMINISHING',
-  Straight = 'STRAIGHT',
-}
+export const LoanInterestMethod = {
+  Diminishing: 'DIMINISHING',
+  Straight: 'STRAIGHT',
+} as const;
 
+export type LoanInterestMethod = typeof LoanInterestMethod[keyof typeof LoanInterestMethod];
 export type LoanProduct = Base & {
   allowGurantee?: Maybe<Scalars['Boolean']>;
   allowPartialInstallment?: Maybe<Scalars['Boolean']>;
@@ -1529,15 +1563,17 @@ export type LoanProductEdge = {
   node: LoanProduct;
 };
 
-export enum LoanProductInstallment {
-  Daily = 'DAILY',
-  HalfYearly = 'HALF_YEARLY',
-  Monthly = 'MONTHLY',
-  Quarterly = 'QUARTERLY',
-  Weekly = 'WEEKLY',
-  Yearly = 'YEARLY',
-}
+export const LoanProductInstallment = {
+  Daily: 'DAILY',
+  HalfYearly: 'HALF_YEARLY',
+  Monthly: 'MONTHLY',
+  Quarterly: 'QUARTERLY',
+  Weekly: 'WEEKLY',
+  Yearly: 'YEARLY',
+} as const;
 
+export type LoanProductInstallment =
+  typeof LoanProductInstallment[keyof typeof LoanProductInstallment];
 export type LoanProductLists = {
   data?: Maybe<Array<Maybe<LoanProductMinimal>>>;
   error?: Maybe<QueryError>;
@@ -1554,19 +1590,22 @@ export type LoanProductSearchFilter = {
   query?: InputMaybe<Scalars['String']>;
 };
 
-export enum LoanRepaymentScheme {
-  Emi = 'EMI',
-  Epi = 'EPI',
-  Flat = 'FLAT',
-}
+export const LoanRepaymentScheme = {
+  Emi: 'EMI',
+  Epi: 'EPI',
+  Flat: 'FLAT',
+} as const;
 
-export enum LoanRequiredDocuments {
-  Citizenship = 'CITIZENSHIP',
-  Form = 'FORM',
-  LoanChangeDocument = 'LOAN_CHANGE_DOCUMENT',
-  PolicyDocument = 'POLICY_DOCUMENT',
-}
+export type LoanRepaymentScheme = typeof LoanRepaymentScheme[keyof typeof LoanRepaymentScheme];
+export const LoanRequiredDocuments = {
+  Citizenship: 'CITIZENSHIP',
+  Form: 'FORM',
+  LoanChangeDocument: 'LOAN_CHANGE_DOCUMENT',
+  PolicyDocument: 'POLICY_DOCUMENT',
+} as const;
 
+export type LoanRequiredDocuments =
+  typeof LoanRequiredDocuments[keyof typeof LoanRequiredDocuments];
 export type LoanSettingsProductSubTypeData = {
   id?: Maybe<Scalars['ID']>;
   productSubType?: Maybe<Scalars['String']>;
@@ -1717,18 +1756,21 @@ export type MyraUserIdentification = {
   place?: Maybe<Scalars['String']>;
 };
 
-export enum NatureOfDepositProduct {
-  Current = 'CURRENT',
-  RecurringSaving = 'RECURRING_SAVING',
-  Saving = 'SAVING',
-  TermSavingOrFd = 'TERM_SAVING_OR_FD',
-}
+export const NatureOfDepositProduct = {
+  Current: 'CURRENT',
+  RecurringSaving: 'RECURRING_SAVING',
+  Saving: 'SAVING',
+  TermSavingOrFd: 'TERM_SAVING_OR_FD',
+} as const;
 
-export enum NatureOfLoanProduct {
-  Progressive = 'PROGRESSIVE',
-  Unprogressive = 'UNPROGRESSIVE',
-}
+export type NatureOfDepositProduct =
+  typeof NatureOfDepositProduct[keyof typeof NatureOfDepositProduct];
+export const NatureOfLoanProduct = {
+  Progressive: 'PROGRESSIVE',
+  Unprogressive: 'UNPROGRESSIVE',
+} as const;
 
+export type NatureOfLoanProduct = typeof NatureOfLoanProduct[keyof typeof NatureOfLoanProduct];
 export type NeosysClientMinimalInfo = {
   clientName?: Maybe<Scalars['String']>;
   dateJoined?: Maybe<Scalars['String']>;
@@ -1751,16 +1793,17 @@ export type NotificationFilter = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
-export enum ObjState {
-  Active = 'ACTIVE',
-  Approved = 'APPROVED',
-  Dormant = 'DORMANT',
-  Draft = 'DRAFT',
-  Inactive = 'INACTIVE',
-  Submitted = 'SUBMITTED',
-  Validated = 'VALIDATED',
-}
+export const ObjState = {
+  Active: 'ACTIVE',
+  Approved: 'APPROVED',
+  Dormant: 'DORMANT',
+  Draft: 'DRAFT',
+  Inactive: 'INACTIVE',
+  Submitted: 'SUBMITTED',
+  Validated: 'VALIDATED',
+} as const;
 
+export type ObjState = typeof ObjState[keyof typeof ObjState];
 export type OrConditions = {
   andConditions: Array<Condition>;
 };
@@ -1770,11 +1813,12 @@ export type Order = {
   column: Scalars['String'];
 };
 
-export enum OtpFor {
-  ResetPassword = 'RESET_PASSWORD',
-  SignUp = 'SIGN_UP',
-}
+export const OtpFor = {
+  ResetPassword: 'RESET_PASSWORD',
+  SignUp: 'SIGN_UP',
+} as const;
 
+export type OtpFor = typeof OtpFor[keyof typeof OtpFor];
 export type PageInfo = {
   endCursor?: Maybe<Scalars['Cursor']>;
   hasNextPage: Scalars['Boolean'];
@@ -1804,11 +1848,12 @@ export type PenaltyFormState = {
   penaltyRate?: Maybe<Scalars['Float']>;
 };
 
-export enum PenaltyRateType {
-  FlatRate = 'FLAT_RATE',
-  RelativeRate = 'RELATIVE_RATE',
-}
+export const PenaltyRateType = {
+  FlatRate: 'FLAT_RATE',
+  RelativeRate: 'RELATIVE_RATE',
+} as const;
 
+export type PenaltyRateType = typeof PenaltyRateType[keyof typeof PenaltyRateType];
 export type PenaltyRebate = {
   penalty?: Maybe<PenaltyFormState>;
   prematurePenalty?: Maybe<PrematurePenaltyFormState>;
@@ -1821,21 +1866,24 @@ export type PenaltyRebateResult = {
   error?: Maybe<QueryError>;
 };
 
-export enum PenaltyType {
-  PenalInterest = 'PenalInterest',
-  RemainingPrincipal = 'RemainingPrincipal',
-}
+export const PenaltyType = {
+  PenalInterest: 'PenalInterest',
+  RemainingPrincipal: 'RemainingPrincipal',
+} as const;
 
+export type PenaltyType = typeof PenaltyType[keyof typeof PenaltyType];
 export type PictureData = {
   identifier?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
 };
 
-export enum PrematurePenaltyDateType {
-  EffectiveDaysFromStart = 'EFFECTIVE_DAYS_FROM_START',
-  RemainingDaysToGetMatured = 'REMAINING_DAYS_TO_GET_MATURED',
-}
+export const PrematurePenaltyDateType = {
+  EffectiveDaysFromStart: 'EFFECTIVE_DAYS_FROM_START',
+  RemainingDaysToGetMatured: 'REMAINING_DAYS_TO_GET_MATURED',
+} as const;
 
+export type PrematurePenaltyDateType =
+  typeof PrematurePenaltyDateType[keyof typeof PrematurePenaltyDateType];
 export type PrematurePenaltyFormState = {
   noOfDays?: Maybe<Scalars['Int']>;
   penaltyAmount?: Maybe<Scalars['Amount']>;
@@ -1917,13 +1965,14 @@ export type Province = {
   nameNp: Scalars['String'];
 };
 
-export enum PurposeOfTransaction {
-  BillSharing = 'BILL_SHARING',
-  FamilyExpenses = 'FAMILY_EXPENSES',
-  LendOrBorrow = 'LEND_OR_BORROW',
-  PersonalUse = 'PERSONAL_USE',
-}
+export const PurposeOfTransaction = {
+  BillSharing: 'BILL_SHARING',
+  FamilyExpenses: 'FAMILY_EXPENSES',
+  LendOrBorrow: 'LEND_OR_BORROW',
+  PersonalUse: 'PERSONAL_USE',
+} as const;
 
+export type PurposeOfTransaction = typeof PurposeOfTransaction[keyof typeof PurposeOfTransaction];
 export type Query = {
   administration: AdministrationQuery;
   eBanking: EBankingQuery;
@@ -1956,25 +2005,27 @@ export type RecentTransactionFilter = {
   limit: Scalars['Int'];
 };
 
-export enum RequestSource {
-  Ebanking = 'EBANKING',
-  MobileBanking = 'MOBILE_BANKING',
-}
+export const RequestSource = {
+  Ebanking: 'EBANKING',
+  MobileBanking: 'MOBILE_BANKING',
+} as const;
 
+export type RequestSource = typeof RequestSource[keyof typeof RequestSource];
 export type Result = {
   id: Scalars['Int'];
   name: Scalars['String'];
   nameNp: Scalars['String'];
 };
 
-export enum Roles {
-  Agent = 'AGENT',
-  BranchManager = 'BRANCH_MANAGER',
-  HeadTeller = 'HEAD_TELLER',
-  Superadmin = 'SUPERADMIN',
-  Teller = 'TELLER',
-}
+export const Roles = {
+  Agent: 'AGENT',
+  BranchManager: 'BRANCH_MANAGER',
+  HeadTeller: 'HEAD_TELLER',
+  Superadmin: 'SUPERADMIN',
+  Teller: 'TELLER',
+} as const;
 
+export type Roles = typeof Roles[keyof typeof Roles];
 export type ServerError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -1994,17 +2045,20 @@ export type Services = {
   service_id: Scalars['String'];
 };
 
-export enum Transaction_Direction {
-  Purchased = 'PURCHASED',
-  Sold = 'SOLD',
-}
+export const Transaction_Direction = {
+  Purchased: 'PURCHASED',
+  Sold: 'SOLD',
+} as const;
 
-export enum TextFormat {
-  Email = 'EMAIL',
-  IPv4 = 'IPv4',
-  IPv6 = 'IPv6',
-}
+export type Transaction_Direction =
+  typeof Transaction_Direction[keyof typeof Transaction_Direction];
+export const TextFormat = {
+  Email: 'EMAIL',
+  IPv4: 'IPv4',
+  IPv6: 'IPv6',
+} as const;
 
+export type TextFormat = typeof TextFormat[keyof typeof TextFormat];
 export type TransactionFilter = {
   fromDate?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
@@ -2018,6 +2072,8 @@ export type TransactionListSummary = {
   averageBalance?: Maybe<Scalars['String']>;
   expensesThisMonth?: Maybe<Scalars['String']>;
   totalDeposit?: Maybe<Scalars['String']>;
+  totalPrincipalPaid?: Maybe<Scalars['String']>;
+  totalRemainingPrincipal?: Maybe<Scalars['String']>;
   totalWithdraw?: Maybe<Scalars['String']>;
 };
 
@@ -2027,17 +2083,19 @@ export type TranslateInput = {
   translatedValue?: InputMaybe<Scalars['String']>;
 };
 
-export enum UserGender {
-  Female = 'FEMALE',
-  Male = 'MALE',
-  Other = 'OTHER',
-}
+export const UserGender = {
+  Female: 'FEMALE',
+  Male: 'MALE',
+  Other: 'OTHER',
+} as const;
 
-export enum UserType {
-  Human = 'HUMAN',
-  System = 'SYSTEM',
-}
+export type UserGender = typeof UserGender[keyof typeof UserGender];
+export const UserType = {
+  Human: 'HUMAN',
+  System: 'SYSTEM',
+} as const;
 
+export type UserType = typeof UserType[keyof typeof UserType];
 export type UtilityPayemntMutation = {
   post?: Maybe<UtilityPaymentResult>;
 };

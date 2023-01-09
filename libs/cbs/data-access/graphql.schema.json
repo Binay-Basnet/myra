@@ -877,6 +877,116 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "AccountLedgerDetails",
+        "description": null,
+        "fields": [
+          {
+            "name": "accountType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "balance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "balanceType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ledgerId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ledgerName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AccountLedgerListResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AccountLedgerDetails",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "AccountListFilter",
         "description": null,
@@ -29217,6 +29327,35 @@
             "type": {
               "kind": "OBJECT",
               "name": "DepositLoanAccountConnection",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "listAccountLedgers",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AccountLedgerListResult",
               "ofType": null
             },
             "isDeprecated": false,
@@ -86700,6 +86839,18 @@
             "deprecationReason": null
           },
           {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "installmentNo",
             "description": null,
             "args": [],
@@ -96436,6 +96587,36 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "ACCOUNTING_ACCOUNTING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNTING_INVESTMENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNTING_LOAN",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNTING_PURCHASE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNTING_SALES",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ACCOUNTING_SYSTEM_ACCOUNTING_BANK_ACCOUNTS",
             "description": null,
             "isDeprecated": false,
@@ -96443,6 +96624,12 @@
           },
           {
             "name": "ACCOUNTING_SYSTEM_ACCOUNTING_BANK_TRANSACTIONS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNTING_SYSTEM_ACCOUNTING_CASH_TRANSFER",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -96568,6 +96755,12 @@
             "deprecationReason": null
           },
           {
+            "name": "ALTERNATIVE_CHANNELS_DOWNLOADS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ALTERNATIVE_CHANNELS_E_BANKING_REGISTRATION",
             "description": null,
             "isDeprecated": false,
@@ -96586,7 +96779,49 @@
             "deprecationReason": null
           },
           {
+            "name": "ALTERNATIVE_CHANNELS_USERS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "APP_ACCOUNTING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "APP_ALTERNATIVE_CHANNEL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "APP_CBS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "APP_INVENTORY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "APP_MEMBER_SHARE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CBB_MEMBERS_MEMBER_FEE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_LOAN",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -96706,6 +96941,90 @@
             "deprecationReason": null
           },
           {
+            "name": "CBS_OTHERS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_ATM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_BRANCHLESS_BANKING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_LOAN",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_MEMBER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_MOBILE_BANKING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_ORGANIZATION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_OTHER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_SAVINGS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_SERVICE_CENTER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_SHARE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REPORTS_TRANSACTION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_REQUESTS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CBS_REQUESTS_LOAN_REQUESTS",
             "description": null,
             "isDeprecated": false,
@@ -96719,6 +97038,12 @@
           },
           {
             "name": "CBS_REQUESTS_WITHDRAW_REQUEST",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_SAVINGS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -96766,6 +97091,12 @@
             "deprecationReason": null
           },
           {
+            "name": "CBS_SHARE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CBS_SHARE_SHARE_BALANCE",
             "description": null,
             "isDeprecated": false,
@@ -96796,7 +97127,19 @@
             "deprecationReason": null
           },
           {
+            "name": "CBS_TRANSACTIONS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CBS_TRANSACTIONS_ACCOUNT_TRANSFER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_TRANSACTIONS_ALL_TRANSACTIONS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -96862,7 +97205,25 @@
             "deprecationReason": null
           },
           {
-            "name": "CBS_TRANSFERS_BRANCH_TRANSFER",
+            "name": "CBS_TRANSFERS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_TRANSFERS_SERVICE_CENTER_TRANSFER",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -96880,6 +97241,18 @@
             "deprecationReason": null
           },
           {
+            "name": "CBS_WITHDRAW_SLIPS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE",
             "description": null,
             "isDeprecated": false,
@@ -96892,13 +97265,49 @@
             "deprecationReason": null
           },
           {
+            "name": "SETTINGS_ALTERNATIVE_CHANNELS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SETTINGS_AUDIT_LOG",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SETTINGS_BANK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "SETTINGS_COA",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
+            "name": "SETTINGS_CODE_MANAGEMENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "SETTINGS_DOCUMENT_MANAGEMENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SETTINGS_GENERAL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SETTINGS_INDEXING",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -96959,6 +97368,12 @@
           },
           {
             "name": "SETTINGS_SHARE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SETTINGS_USERS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

@@ -40,6 +40,7 @@ const config: CodegenConfig = {
           Date: 'string',
           Localized: 'Record<"local"|"en"|"np",string>',
         },
+        enumsAsConst: true,
         skipTypename: true,
         inlineFragmentTypes: 'combine',
         fetcher: {

@@ -1,6 +1,5 @@
 import { Ability, AbilityBuilder, AbilityClass } from '@casl/ability';
 
-import { permissions as roles } from './permissions';
 import { Actions, Subjects } from './types';
 
 export type AppAbilityType = Ability<[Actions, Subjects]>;
@@ -24,7 +23,7 @@ export function buildEmptyPermissions(): AppAbilityType {
 
 export function updateAbility(
   ability: AppAbilityType,
-  permissions: Partial<Record<Subjects, string>> = roles['SUPERADMIN']
+  permissions: Partial<Record<string, string>>
 ) {
   const { can, rules } = new AbilityBuilder(AppAbility);
 

@@ -437,7 +437,7 @@ export const CBS: NavType = {
         {
           label: 'transServiceCenterTransfer',
           route: ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_ADD,
-          aclKey: 'CBS_TRANSFERS_BRANCH_TRANSFER',
+          aclKey: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
         },
       ],
       pages: [
@@ -462,7 +462,7 @@ export const CBS: NavType = {
         {
           label: 'Service Center Cash Transfer',
           route: ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_LIST,
-          aclKey: 'CBS_TRANSFERS_BRANCH_TRANSFER',
+          aclKey: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
           addRoute: ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_ADD,
         },
       ],
@@ -504,7 +504,7 @@ export const CBS: NavType = {
 
     WITHDRAW_SLIP: {
       label: 'Withdraw Slip',
-      aclKey: 'CBS_WITHDRAWSLIP',
+      aclKey: 'CBS_WITHDRAW_SLIPS',
       pages: [
         {
           label: 'Withdraw Slip Book',
@@ -520,7 +520,7 @@ export const CBS: NavType = {
         {
           label: 'withdrawSlipBlockRequests',
           route: ROUTES.CBS_BLOCK_WITHDRAW_SLIP_REQUEST_LIST,
-          aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK_REQUESTS',
+          aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK',
           addRoute: ROUTES.CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD,
         },
       ],
@@ -533,7 +533,7 @@ export const CBS: NavType = {
         {
           label: 'Block Withdraw Slip Requests',
           route: ROUTES.CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD,
-          aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK_REQUESTS',
+          aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK',
         },
       ],
     },

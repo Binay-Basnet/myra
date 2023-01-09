@@ -67,27 +67,29 @@ export type AdministrativeAddress = {
   wardNo: Scalars['Int'];
 };
 
-export enum AllModules {
-  AccountingSystem = 'ACCOUNTING_SYSTEM',
-  AlternativeChannels = 'ALTERNATIVE_CHANNELS',
-  BusinessIntelligenceAndReporting = 'BUSINESS_INTELLIGENCE_AND_REPORTING',
-  BusinessProcessManagement = 'BUSINESS_PROCESS_MANAGEMENT',
-  CapacityAndTrainingManagement = 'CAPACITY_AND_TRAINING_MANAGEMENT',
-  ComplianceManagement = 'COMPLIANCE_MANAGEMENT',
-  CoreBankingSystem = 'CORE_BANKING_SYSTEM',
-  DocumentManagement = 'DOCUMENT_MANAGEMENT',
-  FixedAssetManagement = 'FIXED_ASSET_MANAGEMENT',
-  HrManagement = 'HR_MANAGEMENT',
-  InventoryManagement = 'INVENTORY_MANAGEMENT',
-  MemberAndShareManagement = 'MEMBER_AND_SHARE_MANAGEMENT',
-  QualityAssuranceForNefscun = 'QUALITY_ASSURANCE_FOR_NEFSCUN',
-}
+export const AllModules = {
+  AccountingSystem: 'ACCOUNTING_SYSTEM',
+  AlternativeChannels: 'ALTERNATIVE_CHANNELS',
+  BusinessIntelligenceAndReporting: 'BUSINESS_INTELLIGENCE_AND_REPORTING',
+  BusinessProcessManagement: 'BUSINESS_PROCESS_MANAGEMENT',
+  CapacityAndTrainingManagement: 'CAPACITY_AND_TRAINING_MANAGEMENT',
+  ComplianceManagement: 'COMPLIANCE_MANAGEMENT',
+  CoreBankingSystem: 'CORE_BANKING_SYSTEM',
+  DocumentManagement: 'DOCUMENT_MANAGEMENT',
+  FixedAssetManagement: 'FIXED_ASSET_MANAGEMENT',
+  HrManagement: 'HR_MANAGEMENT',
+  InventoryManagement: 'INVENTORY_MANAGEMENT',
+  MemberAndShareManagement: 'MEMBER_AND_SHARE_MANAGEMENT',
+  QualityAssuranceForNefscun: 'QUALITY_ASSURANCE_FOR_NEFSCUN',
+} as const;
 
-export enum Arrange {
-  Asc = 'ASC',
-  Desc = 'DESC',
-}
+export type AllModules = typeof AllModules[keyof typeof AllModules];
+export const Arrange = {
+  Asc: 'ASC',
+  Desc: 'DESC',
+} as const;
 
+export type Arrange = typeof Arrange[keyof typeof Arrange];
 export type AuthorizationError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -107,15 +109,16 @@ export type Base = {
   objState: ObjState;
 };
 
-export enum BranchCategory {
-  BranchOffice = 'BRANCH_OFFICE',
-  ContactOffice = 'CONTACT_OFFICE',
-  ExtensionCounter = 'EXTENSION_COUNTER',
-  HeadOffice = 'HEAD_OFFICE',
-  RegionalOffice = 'REGIONAL_OFFICE',
-  ServiceCenter = 'SERVICE_CENTER',
-}
+export const BranchCategory = {
+  BranchOffice: 'BRANCH_OFFICE',
+  ContactOffice: 'CONTACT_OFFICE',
+  ExtensionCounter: 'EXTENSION_COUNTER',
+  HeadOffice: 'HEAD_OFFICE',
+  RegionalOffice: 'REGIONAL_OFFICE',
+  ServiceCenter: 'SERVICE_CENTER',
+} as const;
 
+export type BranchCategory = typeof BranchCategory[keyof typeof BranchCategory];
 export type ClientEnvironment = {
   description?: Maybe<Scalars['String']>;
   environmentName: Scalars['String'];
@@ -145,12 +148,13 @@ export type ClientEnvironmentMutationNewArgs = {
   data: NewClientEnvironmentInput;
 };
 
-export enum ComparatorType {
-  EqualTo = 'EqualTo',
-  GreaterThan = 'GreaterThan',
-  LessThan = 'LessThan',
-}
+export const ComparatorType = {
+  EqualTo: 'EqualTo',
+  GreaterThan: 'GreaterThan',
+  LessThan: 'LessThan',
+} as const;
 
+export type ComparatorType = typeof ComparatorType[keyof typeof ComparatorType];
 export type Condition = {
   column: Scalars['String'];
   comparator: ComparatorType;
@@ -213,56 +217,57 @@ export type HeadOfficeDetailsInput = {
   serviceCentreCode?: InputMaybe<Scalars['String']>;
 };
 
-export enum Id_Type {
-  Account = 'ACCOUNT',
-  Address = 'ADDRESS',
-  Bank = 'BANK',
-  Bankbranch = 'BANKBRANCH',
-  Branch = 'BRANCH',
-  Chartsofaccount = 'CHARTSOFACCOUNT',
-  Customfield = 'CUSTOMFIELD',
-  Declaration = 'DECLARATION',
-  Depositiro = 'DEPOSITIRO',
-  Depositproduct = 'DEPOSITPRODUCT',
-  Depositproductcriteria = 'DEPOSITPRODUCTCRITERIA',
-  Deposittds = 'DEPOSITTDS',
-  Document = 'DOCUMENT',
-  Documentreference = 'DOCUMENTREFERENCE',
-  Dynamicentry = 'DYNAMICENTRY',
-  Formfield = 'FORMFIELD',
-  Formoption = 'FORMOPTION',
-  Formsection = 'FORMSECTION',
-  Kymaccountoperatordetails = 'KYMACCOUNTOPERATORDETAILS',
-  Kymcoopaccountoperatordetails = 'KYMCOOPACCOUNTOPERATORDETAILS',
-  Kymcoopdirectordetails = 'KYMCOOPDIRECTORDETAILS',
-  Kymcooperative = 'KYMCOOPERATIVE',
-  Kymcooperativeunion = 'KYMCOOPERATIVEUNION',
-  Kymcooperativeunionpers = 'KYMCOOPERATIVEUNIONPERS',
-  Kymdocument = 'KYMDOCUMENT',
-  Kymfield = 'KYMFIELD',
-  Kymfieldoption = 'KYMFIELDOPTION',
-  Kymidentification = 'KYMIDENTIFICATION',
-  Kymindividual = 'KYMINDIVIDUAL',
-  Kymindividualfamilymembers = 'KYMINDIVIDUALFAMILYMEMBERS',
-  Kymindividualincomesource = 'KYMINDIVIDUALINCOMESOURCE',
-  Kymindividualoccupation = 'KYMINDIVIDUALOCCUPATION',
-  Kyminstitutions = 'KYMINSTITUTIONS',
-  Kymsisterconcerndetails = 'KYMSISTERCONCERNDETAILS',
-  Loanproduct = 'LOANPRODUCT',
-  Loanproductcriteria = 'LOANPRODUCTCRITERIA',
-  Member = 'MEMBER',
-  Myrauser = 'MYRAUSER',
-  Myrauseridetification = 'MYRAUSERIDETIFICATION',
-  Organization = 'ORGANIZATION',
-  Productdocument = 'PRODUCTDOCUMENT',
-  Sharebalance = 'SHAREBALANCE',
-  Shareextracharges = 'SHAREEXTRACHARGES',
-  Sharenumbers = 'SHARENUMBERS',
-  Shareregister = 'SHAREREGISTER',
-  User = 'USER',
-  Userpreference = 'USERPREFERENCE',
-}
+export const Id_Type = {
+  Account: 'ACCOUNT',
+  Address: 'ADDRESS',
+  Bank: 'BANK',
+  Bankbranch: 'BANKBRANCH',
+  Branch: 'BRANCH',
+  Chartsofaccount: 'CHARTSOFACCOUNT',
+  Customfield: 'CUSTOMFIELD',
+  Declaration: 'DECLARATION',
+  Depositiro: 'DEPOSITIRO',
+  Depositproduct: 'DEPOSITPRODUCT',
+  Depositproductcriteria: 'DEPOSITPRODUCTCRITERIA',
+  Deposittds: 'DEPOSITTDS',
+  Document: 'DOCUMENT',
+  Documentreference: 'DOCUMENTREFERENCE',
+  Dynamicentry: 'DYNAMICENTRY',
+  Formfield: 'FORMFIELD',
+  Formoption: 'FORMOPTION',
+  Formsection: 'FORMSECTION',
+  Kymaccountoperatordetails: 'KYMACCOUNTOPERATORDETAILS',
+  Kymcoopaccountoperatordetails: 'KYMCOOPACCOUNTOPERATORDETAILS',
+  Kymcoopdirectordetails: 'KYMCOOPDIRECTORDETAILS',
+  Kymcooperative: 'KYMCOOPERATIVE',
+  Kymcooperativeunion: 'KYMCOOPERATIVEUNION',
+  Kymcooperativeunionpers: 'KYMCOOPERATIVEUNIONPERS',
+  Kymdocument: 'KYMDOCUMENT',
+  Kymfield: 'KYMFIELD',
+  Kymfieldoption: 'KYMFIELDOPTION',
+  Kymidentification: 'KYMIDENTIFICATION',
+  Kymindividual: 'KYMINDIVIDUAL',
+  Kymindividualfamilymembers: 'KYMINDIVIDUALFAMILYMEMBERS',
+  Kymindividualincomesource: 'KYMINDIVIDUALINCOMESOURCE',
+  Kymindividualoccupation: 'KYMINDIVIDUALOCCUPATION',
+  Kyminstitutions: 'KYMINSTITUTIONS',
+  Kymsisterconcerndetails: 'KYMSISTERCONCERNDETAILS',
+  Loanproduct: 'LOANPRODUCT',
+  Loanproductcriteria: 'LOANPRODUCTCRITERIA',
+  Member: 'MEMBER',
+  Myrauser: 'MYRAUSER',
+  Myrauseridetification: 'MYRAUSERIDETIFICATION',
+  Organization: 'ORGANIZATION',
+  Productdocument: 'PRODUCTDOCUMENT',
+  Sharebalance: 'SHAREBALANCE',
+  Shareextracharges: 'SHAREEXTRACHARGES',
+  Sharenumbers: 'SHARENUMBERS',
+  Shareregister: 'SHAREREGISTER',
+  User: 'USER',
+  Userpreference: 'USERPREFERENCE',
+} as const;
 
+export type Id_Type = typeof Id_Type[keyof typeof Id_Type];
 export type Identity = {
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -289,14 +294,15 @@ export type MutationError =
   | ServerError
   | ValidationError;
 
-export enum NatureOfCooperative {
-  AgricultureCooperative = 'AGRICULTURE_COOPERATIVE',
-  HealthCooperative = 'HEALTH_COOPERATIVE',
-  MultipurposeCooperative = 'MULTIPURPOSE_COOPERATIVE',
-  Others = 'OTHERS',
-  SavingAndCredit = 'SAVING_AND_CREDIT',
-}
+export const NatureOfCooperative = {
+  AgricultureCooperative: 'AGRICULTURE_COOPERATIVE',
+  HealthCooperative: 'HEALTH_COOPERATIVE',
+  MultipurposeCooperative: 'MULTIPURPOSE_COOPERATIVE',
+  Others: 'OTHERS',
+  SavingAndCredit: 'SAVING_AND_CREDIT',
+} as const;
 
+export type NatureOfCooperative = typeof NatureOfCooperative[keyof typeof NatureOfCooperative];
 export type NeosysAuthMutation = {
   login?: Maybe<NeosysLoginResult>;
   token?: Maybe<NeosysAuthTokenResult>;
@@ -445,16 +451,17 @@ export type NotFoundError = {
   message: Scalars['String'];
 };
 
-export enum ObjState {
-  Active = 'ACTIVE',
-  Approved = 'APPROVED',
-  Dormant = 'DORMANT',
-  Draft = 'DRAFT',
-  Inactive = 'INACTIVE',
-  Submitted = 'SUBMITTED',
-  Validated = 'VALIDATED',
-}
+export const ObjState = {
+  Active: 'ACTIVE',
+  Approved: 'APPROVED',
+  Dormant: 'DORMANT',
+  Draft: 'DRAFT',
+  Inactive: 'INACTIVE',
+  Submitted: 'SUBMITTED',
+  Validated: 'VALIDATED',
+} as const;
 
+export type ObjState = typeof ObjState[keyof typeof ObjState];
 export type OrConditions = {
   andConditions: Array<Condition>;
 };
@@ -571,12 +578,14 @@ export type OrganizationContactDetailsInput = {
   website?: InputMaybe<Scalars['String']>;
 };
 
-export enum OrganizationInstallmentLicense {
-  Basic = 'BASIC',
-  Professional = 'PROFESSIONAL',
-  Standard = 'STANDARD',
-}
+export const OrganizationInstallmentLicense = {
+  Basic: 'BASIC',
+  Professional: 'PROFESSIONAL',
+  Standard: 'STANDARD',
+} as const;
 
+export type OrganizationInstallmentLicense =
+  typeof OrganizationInstallmentLicense[keyof typeof OrganizationInstallmentLicense];
 export type OrganizationRegistrationDetails = {
   panOrVat?: Maybe<Scalars['String']>;
   regdAddress?: Maybe<Scalars['String']>;
@@ -592,18 +601,21 @@ export type OrganizationRegistrationDetailsInput = {
   registeredOffice?: InputMaybe<Scalars['String']>;
 };
 
-export enum OrganizationSecuritySetup {
-  PureSass = 'PURE_SASS',
-  Vpn = 'VPN',
-}
+export const OrganizationSecuritySetup = {
+  PureSass: 'PURE_SASS',
+  Vpn: 'VPN',
+} as const;
 
-export enum OrganizationType {
-  CooperativeUnion = 'COOPERATIVE_UNION',
-  DistrictUnion = 'DISTRICT_UNION',
-  Preliminary = 'PRELIMINARY',
-  ProvinceUnion = 'PROVINCE_UNION',
-}
+export type OrganizationSecuritySetup =
+  typeof OrganizationSecuritySetup[keyof typeof OrganizationSecuritySetup];
+export const OrganizationType = {
+  CooperativeUnion: 'COOPERATIVE_UNION',
+  DistrictUnion: 'DISTRICT_UNION',
+  Preliminary: 'PRELIMINARY',
+  ProvinceUnion: 'PROVINCE_UNION',
+} as const;
 
+export type OrganizationType = typeof OrganizationType[keyof typeof OrganizationType];
 export type PageInfo = {
   endCursor?: Maybe<Scalars['Cursor']>;
   hasNextPage: Scalars['Boolean'];
@@ -658,22 +670,26 @@ export type ServerError = {
   message: Scalars['String'];
 };
 
-export enum Transaction_Direction {
-  Purchased = 'PURCHASED',
-  Sold = 'SOLD',
-}
+export const Transaction_Direction = {
+  Purchased: 'PURCHASED',
+  Sold: 'SOLD',
+} as const;
 
-export enum TextFormat {
-  Email = 'EMAIL',
-  IPv4 = 'IPv4',
-  IPv6 = 'IPv6',
-}
+export type Transaction_Direction =
+  typeof Transaction_Direction[keyof typeof Transaction_Direction];
+export const TextFormat = {
+  Email: 'EMAIL',
+  IPv4: 'IPv4',
+  IPv6: 'IPv6',
+} as const;
 
-export enum UserType {
-  Human = 'HUMAN',
-  System = 'SYSTEM',
-}
+export type TextFormat = typeof TextFormat[keyof typeof TextFormat];
+export const UserType = {
+  Human: 'HUMAN',
+  System: 'SYSTEM',
+} as const;
 
+export type UserType = typeof UserType[keyof typeof UserType];
 export type ValidationError = {
   code: Scalars['Int'];
   message: Scalars['InvalidData'];

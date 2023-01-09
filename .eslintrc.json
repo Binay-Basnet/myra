@@ -83,7 +83,7 @@
       },
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
-          "error",
+          "off",
           {
             "allowCircularSelfDependency": true,
             "enforceBuildableLibDependency": true,

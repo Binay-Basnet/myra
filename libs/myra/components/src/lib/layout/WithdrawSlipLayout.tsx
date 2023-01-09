@@ -9,7 +9,7 @@ interface IMemberPageLayout {
 }
 
 export const WithdrawSlipLayout = ({ children }: IMemberPageLayout) => (
-  <Can I="SHOW_IN_MENU" a="CBS_WITHDRAWSLIP" showError isErrorCentered>
+  <Can I="SHOW_IN_MENU" a="CBS_WITHDRAW_SLIPS" showError isErrorCentered>
     <MenuContainer>
       <AppSidebar menu="WITHDRAW_SLIP" />
       <PageContainer>

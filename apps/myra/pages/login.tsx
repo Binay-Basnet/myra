@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
@@ -15,14 +14,13 @@ import {
 } from '@myra-ui';
 
 import { login, setPreference, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
-import { AbilityContext, permissions, updateAbility } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 export const Login = () => {
   const { t } = useTranslation();
   const { mutateAsync, isLoading } = useLoginMutation();
   const dispatch = useAppDispatch();
-  const ability = useContext(AbilityContext);
+  // const ability = useContext(AbilityContext);
 
   const { replace } = useRouter();
 
@@ -45,8 +43,6 @@ export const Login = () => {
         dispatch(login({ user, token: accessToken }));
         dispatch(setPreference({ preference: res?.auth?.login?.record?.data?.preference }));
         localStorage.setItem('refreshToken', refreshToken);
-
-        updateAbility(ability, permissions[user.role]);
 
         replace('/');
       },

@@ -9,8 +9,7 @@ import {
   useGetMeQuery,
   useRefreshToken,
 } from '@coop/cbs/data-access';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { AbilityContext, permissions, updateAbility } from '@coop/cbs/utils';
+import { AbilityContext, updateAbility } from '@coop/cbs/utils';
 import { getSchemaPath, useReplace } from '@coop/shared/utils';
 
 const url = getSchemaPath();
@@ -36,6 +35,7 @@ export const useInit = () => {
   const hasDataReturned = getMe?.data?.auth;
   const userData = getMe?.data?.auth?.me?.data?.user;
   const preference = getMe?.data?.auth?.me?.data?.preference;
+  const permissions = getMe?.data?.auth?.me?.data?.permission?.myPermission;
   const hasData = getMe?.data?.auth?.me?.data;
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export const useInit = () => {
   useEffect(() => {
     if (hasDataReturned) {
       if (userData) {
-        updateAbility(ability, permissions[userData.role || 'SUPER_ADMIN']);
+        updateAbility(ability, permissions as Partial<Record<string, string>>);
 
         dispatch(authenticate({ user: userData }));
         preference && dispatch(setPreference({ preference }));

@@ -87,7 +87,7 @@ const cbsTabs: {
     icon: TbMailForward,
     link: ROUTES.CBS_WITHDRAW_SLIP_BOOK_LIST,
     match: ['withdraw'],
-    aclKey: 'CBS_WITHDRAWSLIP',
+    aclKey: 'CBS_WITHDRAW_SLIPS',
     navMenu: 'WITHDRAW_SLIP',
   },
   {

@@ -39,6 +39,7 @@ const config: CodegenConfig = {
           Date: 'string',
           Localized: 'Record<"local"|"en"|"np",string>',
         },
+        enumsAsConst: true,
         skipTypename: true,
       },
     },
@@ -71,6 +72,7 @@ const config: CodegenConfig = {
           Localized: 'Record<"local"|"en"|"np",string>',
         },
         skipTypename: true,
+        enumsAsConst: true,
         inlineFragmentTypes: 'combine',
         fetcher: {
           func: './axiosHelper#useAxios',

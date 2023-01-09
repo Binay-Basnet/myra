@@ -42,6 +42,7 @@ const config: CodegenConfig = {
         },
         skipTypename: true,
         inlineFragmentTypes: 'combine',
+        enumsAsConst: true,
         fetcher: {
           func: './axiosHelper#useAxios',
           isReactHook: true,

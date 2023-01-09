@@ -24,7 +24,7 @@ export const NewShareDividendPosting = () => {
 
   const { watch } = methods;
 
-  const dividendTransferTreatment = watch('dividendTransferTreatment');
+  const dividendTransferTreatment = watch('dividendTransferTreatment') as DividendTransferTreatment;
 
   return (
     <>
