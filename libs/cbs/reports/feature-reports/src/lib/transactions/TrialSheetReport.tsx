@@ -30,24 +30,6 @@ export const TrialSheetReport = () => {
       ? filters?.branchId?.map((t) => t.value)
       : [];
 
-  const { data: branchListQueryData } = useGetBranchListQuery({
-    paginate: {
-      after: '',
-      first: -1,
-    },
-  });
-
-  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
-  const headers =
-    branchIDs?.length === branchList?.length
-      ? ['Total']
-      : [
-          ...((branchList
-            ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
-            ?.map((a) => a.node?.id) || []) as string[]),
-          branchIDs.length === 1 ? undefined : 'Total',
-        ]?.filter(Boolean) || [];
-
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
       data: {
@@ -200,120 +182,16 @@ export const TrialSheetReport = () => {
             </Box>
           )}
 
-          <Box
-            display="flex"
-            flexDir="column"
-            borderRadius="br2"
-            border="1px"
-            mb="s16"
-            mx="s16"
-            borderColor="border.layout"
-            fontSize="s3"
-          >
-            <Box
-              h="40px"
-              display="flex"
-              justifyContent="space-between"
-              borderBottom="1px"
-              borderBottomColor="border.layout"
-            >
-              <Box
-                display="flex"
-                alignItems="center"
-                h="100%"
-                px="s12"
-                borderRight="1px"
-                borderRightColor="border.layout"
-                w="80%"
-                fontWeight={600}
-                color="gray.700"
-              >
-                Total Profit/Loss (Total Income - Total Expenses)
-              </Box>
-              {headers.map((d, index) => (
-                <Box
-                  whiteSpace="nowrap"
-                  px="s12"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="end"
-                  borderRight={index !== headers.length - 1 ? '1px' : '0'}
-                  borderRightColor="border.layout"
-                  key={d}
-                  w="20%"
-                  textAlign="right"
-                >
-                  {data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.totalProfitLoss?.[d || ''] || '0.00'}
-                </Box>
-              ))}
-            </Box>
-            <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.layout">
-              <Box
-                display="flex"
-                alignItems="center"
-                h="100%"
-                px="s12"
-                borderRight="1px"
-                w="80%"
-                borderRightColor="border.layout"
-                fontWeight={600}
-                color="gray.700"
-              >
-                Total Assets + Total Expenses + Dr of Off Balance
-              </Box>
-
-              {headers.map((d, index) => (
-                <Box
-                  whiteSpace="nowrap"
-                  px="s12"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="end"
-                  borderRight={index !== headers.length - 1 ? '1px' : '0'}
-                  borderRightColor="border.layout"
-                  textAlign="right"
-                  w="20%"
-                  key={d}
-                >
-                  {data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.totalAssetExpense?.[d || ''] || '0.00'}
-                </Box>
-              ))}
-            </Box>
-            <Box h="40px" display="flex">
-              <Box
-                display="flex"
-                alignItems="center"
-                h="100%"
-                px="s12"
-                w="80%"
-                borderRight="1px"
-                borderRightColor="border.layout"
-                fontWeight={600}
-                color="gray.700"
-              >
-                Total Liabilities + Total Income + Cr of Off Balance
-              </Box>
-              {headers.map((d, index) => (
-                <Box
-                  whiteSpace="nowrap"
-                  px="s12"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="end"
-                  borderRight={index !== headers.length - 1 ? '1px' : '0'}
-                  borderRightColor="border.layout"
-                  key={d}
-                  w="20%"
-                  textAlign="right"
-                >
-                  {data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.totalLiablitiesIncome?.[d || ''] || '0.00'}
-                </Box>
-              ))}
-            </Box>
-          </Box>
+          <CoaTotalTable
+            totals={[
+              data?.report?.transactionReport?.financial?.trialSheetReport?.data?.totalProfitLoss ||
+                {},
+              data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                ?.totalAssetExpense || {},
+              data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                ?.totalLiablitiesIncome || {},
+            ]}
+          />
         </Report.Content>
         <Report.Filters>
           <Report.Filter title="Zero Balance">
@@ -330,6 +208,80 @@ export const TrialSheetReport = () => {
       </Report.Body>
     </Report>
   );
+};
+
+interface ICoaTotalTableProps {
+  totals: Record<string, string>[];
+}
+
+export const CoaTotalTable = ({ totals }: ICoaTotalTableProps) => {
+  const { getValues } = useFormContext<TrialSheetReportFilters>();
+  const branchIDs = getValues()?.branchId?.map((a) => a.value);
+
+  const { data: branchListQueryData } = useGetBranchListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const headers =
+    branchIDs?.length === branchList?.length
+      ? ['Total']
+      : [
+          ...((branchList
+            ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
+            ?.map((a) => a.node?.id) || []) as string[]),
+          branchIDs.length === 1 ? undefined : 'Total',
+        ]?.filter(Boolean);
+
+  const particularData: Record<string, string>[] = [
+    {
+      particular: 'Total Profit/Loss (Total Income - Total Expenses)',
+    },
+    {
+      particular: 'Total Assets + Total Expenses + Dr of Off Balance',
+    },
+    {
+      particular: 'Total Liabilities + Total Income + Cr of Off Balance',
+    },
+  ];
+
+  const data = particularData?.map((d, index) => ({
+    ...d,
+    ...totals[index],
+  }));
+
+  const baseColumn: Column<typeof data[0]>[] = [
+    {
+      header: 'Particulars',
+      accessorKey: 'particular',
+      cell: (props) => <Box fontWeight="600">{props.getValue() as string}</Box>,
+      meta: {
+        width: '80%',
+      },
+    },
+  ];
+
+  const columns: Column<typeof data[0]>[] = [
+    ...baseColumn,
+    ...headers.map(
+      (header) =>
+        ({
+          header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
+          accessorKey: header,
+          cell: (props) => (
+            <Box fontWeight="600">{(props.getValue() as string) || ('0.00' as string)}</Box>
+          ),
+          meta: {
+            isNumeric: true,
+          },
+        } as Column<typeof data[0]>)
+    ),
+  ];
+
+  return <Report.Table data={data} columns={columns} />;
 };
 
 interface ICOATableProps {

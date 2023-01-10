@@ -81,6 +81,7 @@ export const NewLoanApplication = () => {
     useGetIndividualMemberDetails({ memberId: String(memberId) });
 
   const { data: loanTypeData } = useGetLoanProductTypesQuery();
+
   const { data: loanSubTypeData } = useGetLoanProductSubTypeQuery(
     { productTypeId: loanType },
     { enabled: !!loanType }

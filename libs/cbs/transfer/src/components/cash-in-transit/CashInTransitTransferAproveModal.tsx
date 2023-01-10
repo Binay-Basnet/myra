@@ -71,7 +71,7 @@ export const CashInTransitTransferAproveModal = ({
         success: 'Request Approved !',
       },
       promise: approveOrDecline({
-        requestId: router.query['id'] as string,
+        requestId: router.query['code'] as string,
         // action: TransferRequestAction.Approve,
       }),
       onSuccess: () => {
@@ -93,7 +93,7 @@ export const CashInTransitTransferAproveModal = ({
         success: 'Request Declined !',
       },
       promise: approveOrDecline({
-        requestId: router.query['id'] as string,
+        requestId: router.query['transactionCode'] as string,
         // action: TransferRequestAction.Decline,
         ...methods.getValues(),
       }),

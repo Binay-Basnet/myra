@@ -1,8 +1,11 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
-import { Column, DetailsCard, Table } from '@myra-ui';
+import { Box, Button, Column, DetailsCard, Table, Text, Tooltip } from '@myra-ui';
 
 import { AccountLedgerDetails } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 import { TabHeader } from '../component';
 import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
@@ -12,6 +15,7 @@ type CustomTransactionItem = AccountLedgerDetails & {
 };
 
 export const LedgerPage = () => {
+  const router = useRouter();
   const { ledgerList } = useLoanAccountDetailHooks();
 
   const rowData = useMemo(() => ledgerList ?? [], [ledgerList]);
@@ -30,14 +34,30 @@ export const LedgerPage = () => {
       },
       {
         header: 'Ledger Name',
-        accessorFn: (row) => row?.ledgerName,
-        meta: {
-          width: '500px',
-        },
+        meta: { width: '80%' },
+        cell: (props) => (
+          <Box gap="s4">
+            <Button
+              variant="link"
+              onClick={() =>
+                router.push(
+                  `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props?.row?.original?.ledgerId}`
+                )
+              }
+            >
+              <Tooltip title={props?.row?.original?.ledgerName as string} />
+            </Button>
+          </Box>
+        ),
       },
       {
         header: 'Balance',
-        accessorFn: (row) => row?.balance,
+        cell: (props) => (
+          <Text fontWeight="Regular" fontSize="r1" lineHeight="17px" color="gray.800">
+            {props?.row?.original?.balanceType}&nbsp;
+            {amountConverter(props?.row?.original?.balance ?? 0)}
+          </Text>
+        ),
       },
     ],
     [ledgerList]

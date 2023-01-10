@@ -1,6 +1,6 @@
 import { FormSection, GridItem } from '@myra-ui';
 
-import { useGetBranchListQuery } from '@coop/cbs/data-access';
+import { useAppSelector, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
@@ -10,6 +10,7 @@ export type ServiceCenterTableProps = {
   cr: string;
 };
 export const ServiceCenterTable = () => {
+  const user = useAppSelector((state) => state.auth?.user);
   const { data: branchListQueryData } = useGetBranchListQuery({
     paginate: {
       ...getRouterQuery({ type: ['PAGINATION'] }),
@@ -17,7 +18,9 @@ export const ServiceCenterTable = () => {
     },
   });
 
-  const serviceCenterList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const serviceCenterList = branchListQueryData?.settings?.general?.branch?.list?.edges?.filter(
+    (item) => user?.branch?.id !== item?.node?.id
+  );
 
   const serviceCenterOptions = serviceCenterList?.map((serviceCenter) => ({
     label: `${serviceCenter?.node?.name} [${serviceCenter?.node?.branchCode}]` as string,
