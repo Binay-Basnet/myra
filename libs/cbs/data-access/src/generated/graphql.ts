@@ -15558,6 +15558,13 @@ export type GetAccountTransactionListsQueryVariables = Exact<{
 
 export type GetAccountTransactionListsQuery = { account: { listTransactions?: { edges?: Array<{ node: { id: string, transactionId?: string | null, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, transactionType?: string | null, amount: string, currentBalance: string } } | null> | null, pageInfo?: { endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null, summary?: { totalDeposit?: string | null, totalWithdraw?: string | null, averageBalance?: string | null } | null } | null } };
 
+export type GetAccountLedgersListQueryVariables = Exact<{
+  accountId: Scalars['ID'];
+}>;
+
+
+export type GetAccountLedgersListQuery = { account: { listAccountLedgers?: { data?: Array<{ ledgerId?: string | null, ledgerName?: string | null, accountType?: string | null, balance?: string | null, balanceType?: string | null } | null> | null } | null } };
+
 export type GetBankAccountListQueryVariables = Exact<{
   filter?: InputMaybe<BankAccountFilter>;
   pagination?: InputMaybe<Pagination>;
@@ -21367,6 +21374,33 @@ export const useGetAccountTransactionListsQuery = <
     useQuery<GetAccountTransactionListsQuery, TError, TData>(
       ['getAccountTransactionLists', variables],
       useAxios<GetAccountTransactionListsQuery, GetAccountTransactionListsQueryVariables>(GetAccountTransactionListsDocument).bind(null, variables),
+      options
+    );
+export const GetAccountLedgersListDocument = `
+    query getAccountLedgersList($accountId: ID!) {
+  account {
+    listAccountLedgers(id: $accountId) {
+      data {
+        ledgerId
+        ledgerName
+        accountType
+        balance
+        balanceType
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountLedgersListQuery = <
+      TData = GetAccountLedgersListQuery,
+      TError = unknown
+    >(
+      variables: GetAccountLedgersListQueryVariables,
+      options?: UseQueryOptions<GetAccountLedgersListQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountLedgersListQuery, TError, TData>(
+      ['getAccountLedgersList', variables],
+      useAxios<GetAccountLedgersListQuery, GetAccountLedgersListQueryVariables>(GetAccountLedgersListDocument).bind(null, variables),
       options
     );
 export const GetBankAccountListDocument = `
