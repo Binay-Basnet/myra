@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePrinter } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
@@ -7,7 +7,6 @@ import ReactToPrint from 'react-to-print';
 import { useRouter } from 'next/router';
 import { IconButton, Popover, PopoverBody, PopoverContent, PopoverTrigger } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { utils, writeFileXLSX } from 'xlsx';
 
 import {
   asyncToast,
@@ -29,6 +28,7 @@ import {
 } from '@coop/cbs/data-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { useReport } from '@coop/cbs/reports';
+import { exportVisibleTableToExcel } from '@coop/cbs/utils';
 
 type Path = {
   link?: string;
@@ -60,19 +60,6 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
   const onCloseModal = () => {
     setOpenModal(false);
   };
-
-  const exportTableToExcel = useCallback(() => {
-    const tables = document?.getElementsByTagName('TABLE');
-
-    const wb = utils.book_new();
-
-    Array.prototype.slice.call(tables)?.forEach((table) => {
-      const ws = utils.table_to_sheet(table);
-      utils.book_append_sheet(wb, ws);
-    });
-
-    writeFileXLSX(wb, `${report}.xlsx`);
-  }, []);
 
   return (
     <Box
@@ -165,12 +152,14 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
           <PopoverContent minWidth="180px" w="180px" color="white" boxShadow="E2">
             <PopoverBody px="0" py="0">
               <Grid>
-                <GridItem px="s16" py="s8" _hover={{ bg: 'gray.100' }} cursor="pointer">
-                  <Text
-                    variant="bodyRegular"
-                    color="neutralColorLight.Gray-80"
-                    onClick={exportTableToExcel}
-                  >
+                <GridItem
+                  px="s16"
+                  py="s8"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
+                  onClick={() => exportVisibleTableToExcel(report)}
+                >
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
                     Export Visible
                   </Text>
                 </GridItem>
