@@ -26,7 +26,6 @@ import {
   BranchCategory,
   DateType,
   EodOption,
-  Language,
   logout,
   RootState,
   setPreference,
@@ -54,10 +53,10 @@ export interface TopLevelHeaderProps {
   imageSrc?: string;
 }
 
-const languageList = [
-  { label: 'EN', value: 'en' },
-  { label: 'ने', value: 'ne' },
-];
+// const languageList = [
+//   { label: 'EN', value: 'en' },
+//   { label: 'ने', value: 'ne' },
+// ];
 
 const calendarList = [
   { label: 'AD', value: DateType.Ad },
@@ -681,7 +680,7 @@ export const TopLevelHeader = () => {
                             </Box>
                           </Box>
 
-                          <Box
+                          {/* <Box
                             display="flex"
                             flexDirection="column"
                             justifyContent="space-between"
@@ -733,7 +732,7 @@ export const TopLevelHeader = () => {
                                 });
                               }}
                             />
-                          </Box>
+                          </Box> */}
 
                           <Box
                             display="flex"

@@ -2960,6 +2960,16 @@ export type CustomPeriodType = {
   to: Scalars['String'];
 };
 
+export type CustomSlipSize = {
+  height?: Maybe<Scalars['Float']>;
+  width?: Maybe<Scalars['Float']>;
+};
+
+export type CustomSlipSizeInput = {
+  height?: InputMaybe<Scalars['Float']>;
+  width?: InputMaybe<Scalars['Float']>;
+};
+
 export const CustomerPayment = {
   BankTransfer: 'BANK_TRANSFER',
   Cash: 'CASH',
@@ -5243,6 +5253,7 @@ export type GeneralSettingsMutation = {
   loan?: Maybe<LoanSettingsMutation>;
   loanProducts?: Maybe<LoanProductsMutation>;
   organization?: Maybe<OrganizationSettingsMutation>;
+  printPreference?: Maybe<PrintPreferenceMutation>;
   share?: Maybe<ShareSettingsMutation>;
   valuator?: Maybe<ValuatorSettingsMutation>;
 };
@@ -5258,6 +5269,7 @@ export type GeneralSettingsQuery = {
   loan?: Maybe<LoanSettingsQuery>;
   loanProducts?: Maybe<LoanProductsQuery>;
   organization?: Maybe<OrganizationSettingsQuery>;
+  printPreference?: Maybe<PrintPreferenceQuery>;
   share?: Maybe<ShareSettingsQuery>;
   valuator?: Maybe<ValuatorSettingsQuery>;
 };
@@ -11319,6 +11331,42 @@ export type PreviousYearFundDistribution = {
   percent?: Maybe<Scalars['Float']>;
 };
 
+export type PrintPreference = {
+  slipElements?: Maybe<SlipElements>;
+  slipSize?: Maybe<SlipSize>;
+};
+
+export type PrintPreferenceData = {
+  data?: Maybe<PrintPreference>;
+  error?: Maybe<QueryError>;
+};
+
+export type PrintPreferenceInput = {
+  blockOne?: InputMaybe<SlipElementMeasurementInput>;
+  blockThree?: InputMaybe<SlipElementMeasurementInput>;
+  blockTwo?: InputMaybe<SlipElementMeasurementInput>;
+  slipSizeCustom?: InputMaybe<CustomSlipSizeInput>;
+  slipSizeStandard?: InputMaybe<SlipSizeStandard>;
+};
+
+export type PrintPreferenceMutation = {
+  add?: Maybe<PrintPreferenceResult>;
+};
+
+export type PrintPreferenceMutationAddArgs = {
+  data?: InputMaybe<PrintPreferenceInput>;
+};
+
+export type PrintPreferenceQuery = {
+  get?: Maybe<PrintPreferenceData>;
+};
+
+export type PrintPreferenceResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<PrintPreferenceQuery>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type ProductActivateResult = {
   error?: Maybe<MutationError>;
   recordId: Scalars['ID'];
@@ -12991,6 +13039,22 @@ export type SisterConcernDetailsType = {
   phone?: Maybe<Scalars['String']>;
 };
 
+export type SlipElementMeasurement = {
+  left?: Maybe<Scalars['Float']>;
+  top?: Maybe<Scalars['Float']>;
+};
+
+export type SlipElementMeasurementInput = {
+  left?: InputMaybe<Scalars['Float']>;
+  top?: InputMaybe<Scalars['Float']>;
+};
+
+export type SlipElements = {
+  blockOne?: Maybe<SlipElementMeasurement>;
+  blockThree?: Maybe<SlipElementMeasurement>;
+  blockTwo?: Maybe<SlipElementMeasurement>;
+};
+
 export type SlipEntry = {
   date?: Maybe<Scalars['Localized']>;
   slipNumber: Scalars['String'];
@@ -13007,6 +13071,19 @@ export type SlipRangeInput = {
   to: Scalars['Int'];
 };
 
+export type SlipSize = {
+  slipSizeCustom?: Maybe<CustomSlipSize>;
+  slipSizeStandard?: Maybe<SlipSizeStandard>;
+};
+
+export const SlipSizeStandard = {
+  Custom: 'CUSTOM',
+  Width_7Point5Height_3Point5: 'WIDTH_7POINT5_HEIGHT_3POINT5',
+  Width_7Height_3Point5: 'WIDTH_7_HEIGHT_3POINT5',
+  Width_9Height_3: 'WIDTH_9_HEIGHT_3',
+} as const;
+
+export type SlipSizeStandard = typeof SlipSizeStandard[keyof typeof SlipSizeStandard];
 export const SlipState = {
   Cancelled: 'CANCELLED',
   Issued: 'ISSUED',
@@ -17370,6 +17447,7 @@ export type GetAccountDetailsDataQuery = {
     accountDetails?: {
       data?: {
         accountId?: string | null;
+        objState?: ObjState | null;
         installmentAmount?: string | null;
         accountName?: string | null;
         accountTenure?: string | null;
@@ -30849,6 +30927,7 @@ export const GetAccountDetailsDataDocument = `
     accountDetails(id: $id) {
       data {
         accountId
+        objState
         member {
           id
           name
