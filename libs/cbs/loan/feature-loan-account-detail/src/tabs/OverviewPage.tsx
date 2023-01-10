@@ -1,4 +1,4 @@
-import { DetailPageQuickLinks } from '@myra-ui';
+import { Alert, DetailPageQuickLinks } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
 
@@ -19,6 +19,7 @@ export const OverviewPage = () => {
     additionalFeatures,
     paymentList,
     productId,
+    isClosed,
   } = useLoanAccountDetailHooks();
 
   const links = [
@@ -32,7 +33,8 @@ export const OverviewPage = () => {
     <>
       <TabHeader heading="Overview" />
 
-      <DetailPageQuickLinks links={links} />
+      {!isClosed && <DetailPageQuickLinks links={links} />}
+      {isClosed && <Alert status="error" subtitle="This Account is Closed" />}
 
       <Statistics statsData={accountSummary} />
 
@@ -42,9 +44,9 @@ export const OverviewPage = () => {
         productId={productId}
       />
 
-      <UpcomingPayments paymentList={paymentList} />
+      {!isClosed && <UpcomingPayments paymentList={paymentList} />}
 
-      <RecentTransactions txnList={transactionList} />
+      <RecentTransactions txnList={transactionList} isClosed={isClosed} />
 
       <GeneralInfoCard title="Additional Features" items={additionalFeatures} />
     </>

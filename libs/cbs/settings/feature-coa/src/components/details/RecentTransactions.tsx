@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
-import { Button, DetailsCard, Text } from '@myra-ui';
+import { Button, DetailsCard } from '@myra-ui';
 import { BalanceAmountCell, Column, Table } from '@myra-ui/table';
 
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 
 import { useCOAAccountDetails } from '../../hooks';
 
@@ -35,14 +35,12 @@ export const RecentTransactions = () => {
       {
         header: 'Transaction ID',
         accessorKey: 'txnId',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="500" fontSize="r1" color="primary.500">
-              #{props.getValue() as string}
-            </Text>
-          ) : (
-            'N/A'
-          ),
+        cell: (props) => (
+          <RedirectButton
+            link={`${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${props.getValue()}`}
+            label={props.getValue() ? (`#${props.getValue()}` as string) : 'N/A'}
+          />
+        ),
       },
       {
         header: 'Particulars',
