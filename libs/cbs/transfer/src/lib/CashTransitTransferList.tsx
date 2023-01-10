@@ -159,6 +159,7 @@ export const CashTransitTransferList = () => {
               query: {
                 ...router.query,
                 id: row?.node?.id,
+                code: row?.node?.transactionCode,
               },
             },
             undefined,
