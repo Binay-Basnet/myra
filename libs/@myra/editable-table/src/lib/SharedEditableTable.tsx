@@ -707,7 +707,7 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
             ? String(column.accessorFn(data))
             : undefined
           : data[column.accessor]
-          ? String(data[column.accessor])
+          ? (data[column.accessor] as string)
           : undefined
       }
     >
@@ -824,8 +824,9 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
           _focus={{ boxShadow: 'none' }}
           _focusWithin={{ boxShadow: 'none' }}
           border="none"
+          onWheel={(e) => e.currentTarget.blur()}
           borderRadius="0"
-          value={String(data[column.accessor] ?? '')}
+          value={String(data[column.accessor])}
           onChange={(e) => {
             dispatch({
               type: EditableTableActionKind.EDIT,
