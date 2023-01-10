@@ -82,16 +82,18 @@ export const NeosysFeatureClientView = () => {
                 {
                   title: 'Create Database',
                   onClick: async (node) => {
-                    setUpEnvironmentDatabaseMutation({ environmentId: node?.id, clientId }).then(
-                      () => {
-                        refetch();
-                        toast({
-                          id: 'create-database-environment',
-                          type: 'success',
-                          message: 'Environement database setup successfully',
-                        });
-                      }
-                    );
+                    await asyncToast({
+                      id: 'create-db',
+                      msgs: {
+                        success: 'Db Created Successfully',
+                        loading: 'Creating New DB for this environment',
+                      },
+                      onSuccess: () => refetch(),
+                      promise: setUpEnvironmentDatabaseMutation({
+                        clientId,
+                        environmentId: node?.id,
+                      }),
+                    });
                   },
                 },
               ]}
