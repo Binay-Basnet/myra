@@ -44,7 +44,7 @@ export const OverviewPage = () => {
         productId={productId}
       />
 
-      <UpcomingPayments paymentList={paymentList} />
+      {!isClosed && <UpcomingPayments paymentList={paymentList} />}
 
       <RecentTransactions txnList={transactionList} isClosed={isClosed} />
 
