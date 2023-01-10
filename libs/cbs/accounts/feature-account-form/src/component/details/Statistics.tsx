@@ -1,18 +1,19 @@
 import { Box, Grid, Text } from '@myra-ui';
 
-import { useAccountDetails } from '@coop/cbs/data-access';
+import { ObjState, useAccountDetails } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 export const AccountStatistics = () => {
   const { accountDetails } = useAccountDetails();
+  const isClosed = accountDetails?.objState === ObjState?.Inactive;
 
   const accountSummary = [
     {
-      title: 'Available Balance',
+      title: isClosed ? 'Closing Balance' : 'Available Balance',
       value: amountConverter(accountDetails?.accountBalance ?? 0),
     },
     {
-      title: 'Actual Balance',
+      title: isClosed ? 'Total Deposit Balance' : 'Actual Balance',
       value: amountConverter(accountDetails?.totalDepositBalance ?? 0),
     },
   ];
