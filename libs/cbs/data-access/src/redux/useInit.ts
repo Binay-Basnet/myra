@@ -6,6 +6,7 @@ import {
   logout,
   setPreference,
   useAppDispatch,
+  useAppSelector,
   useGetMeQuery,
   useRefreshToken,
 } from '@coop/cbs/data-access';
@@ -29,6 +30,8 @@ export const useInit = () => {
       enabled: triggerQuery,
     }
   );
+
+  const isLoggedIn = useAppSelector((state) => state.auth.isLogged);
 
   const refreshToken = useRefreshToken(url ?? '');
 
@@ -72,7 +75,13 @@ export const useInit = () => {
         replace('/login').then(() => setIsLoading(false));
       }
     }
-  }, [dispatch, hasDataReturned, hasData, userData, replace]);
+  }, [dispatch, hasDataReturned, hasData, userData, replace, isLoggedIn]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      setTriggerQuery(true);
+    }
+  }, [isLoggedIn]);
 
   return { isLoading };
 };

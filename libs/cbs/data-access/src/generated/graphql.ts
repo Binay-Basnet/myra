@@ -14227,6 +14227,7 @@ export type WithdrawBankCheque = {
 
 export const WithdrawBy = {
   Agent: 'AGENT',
+  Other: 'OTHER',
   Self: 'SELF'
 } as const;
 
@@ -14243,6 +14244,7 @@ export type WithdrawInput = {
   isSuspicious?: InputMaybe<Scalars['Boolean']>;
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
+  otherWithdrawerName?: InputMaybe<Scalars['String']>;
   override?: InputMaybe<Scalars['Boolean']>;
   payment_type: WithdrawPaymentType;
   sourceOfFund?: InputMaybe<Scalars['String']>;

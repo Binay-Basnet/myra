@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 
 import { Avatar, Box, Collapse, Icon, Text, TopLevelHeader } from '@myra-ui';
 
-import { useLink } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 export interface HomePageLayoutProps {
@@ -55,41 +54,39 @@ const comingSoon = [
   },
 ];
 
+const myraAppn = [
+  {
+    title: 'corebankingSystems',
+    img: '/cbs.svg',
+    link: '/cbs/members/list',
+  },
+  {
+    title: 'memberAndShareManagement',
+    img: '/memberandshare.svg',
+    link: '/cbs/members/list',
+  },
+  {
+    title: 'accountingSystem',
+    img: '/accounting.svg',
+    link: '/accounting/sales/list',
+  },
+  {
+    title: 'alternativeChannelsAndCrossConnectivity',
+    img: '/tnt.svg',
+    link: '/alternative-channels/users/mBanking',
+  },
+  {
+    title: 'inventoryManagement',
+    img: '/inventory.svg',
+    link: '/inventory/register',
+  },
+];
+
 export const HomePageLayout = (props: HomePageLayoutProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const { t } = useTranslation();
   const { children } = props;
   const router = useRouter();
-
-  const { link: cbsLink } = useLink();
-
-  const myraAppn = [
-    {
-      title: 'corebankingSystems',
-      img: '/cbs.svg',
-      link: cbsLink,
-    },
-    {
-      title: 'memberAndShareManagement',
-      img: '/memberandshare.svg',
-      link: '/cbs/members/list',
-    },
-    {
-      title: 'accountingSystem',
-      img: '/accounting.svg',
-      link: '/accounting/sales/list',
-    },
-    {
-      title: 'alternativeChannelsAndCrossConnectivity',
-      img: '/tnt.svg',
-      link: '/alternative-channels/users/mBanking',
-    },
-    {
-      title: 'inventoryManagement',
-      img: '/inventory.svg',
-      link: '/inventory/register',
-    },
-  ];
 
   return (
     <Box>
