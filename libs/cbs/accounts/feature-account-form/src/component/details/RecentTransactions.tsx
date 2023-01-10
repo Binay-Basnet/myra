@@ -11,7 +11,11 @@ import {
 } from '@coop/cbs/data-access';
 import { getRouterQuery } from '@coop/shared/utils';
 
-export const RecentTransactions = () => {
+interface IProps {
+  isClosed?: boolean;
+}
+
+export const RecentTransactions = ({ isClosed }: IProps) => {
   const router = useRouter();
 
   const { accountDetails } = useAccountDetails();
@@ -36,7 +40,7 @@ export const RecentTransactions = () => {
 
   return (
     <DetailsCard
-      title="Recent Transactions"
+      title={isClosed ? 'Past Transactions' : 'Recent Transactions'}
       bg="white"
       hasTable
       leftBtn={

@@ -500,6 +500,7 @@ query getAccountDetailsData($id: ID!) {
     accountDetails(id: $id) {
       data {
         accountId
+        objState
         member {
           id
           name

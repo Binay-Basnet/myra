@@ -17370,6 +17370,7 @@ export type GetAccountDetailsDataQuery = {
     accountDetails?: {
       data?: {
         accountId?: string | null;
+        objState?: ObjState | null;
         installmentAmount?: string | null;
         accountName?: string | null;
         accountTenure?: string | null;
@@ -30849,6 +30850,7 @@ export const GetAccountDetailsDataDocument = `
     accountDetails(id: $id) {
       data {
         accountId
+        objState
         member {
           id
           name
