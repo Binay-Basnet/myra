@@ -1,10 +1,11 @@
 import { FormSection } from '@myra-ui';
 
-import { useGetBranchListQuery } from '@coop/cbs/data-access';
+import { useAppSelector, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const CashTransitInfo = () => {
+  const user = useAppSelector((state) => state.auth?.user);
   const { data } = useGetBranchListQuery({
     paginate: {
       ...getRouterQuery({ type: ['PAGINATION'] }),
@@ -12,7 +13,9 @@ export const CashTransitInfo = () => {
     },
   });
 
-  const branchListData = data?.settings?.general?.branch?.list?.edges;
+  const branchListData = data?.settings?.general?.branch?.list?.edges?.filter(
+    (item) => user?.branch?.id !== item?.node?.id
+  );
 
   const branchList = branchListData?.map((item) => ({
     label: `${item?.node?.name}[${item?.node?.branchCode}]` as string,

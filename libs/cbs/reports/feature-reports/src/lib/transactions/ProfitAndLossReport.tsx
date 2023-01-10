@@ -6,10 +6,9 @@ import {
   LocalizedDateFilter,
   TrialSheetReportDataEntry,
   TrialSheetReportFilter,
-  useGetBranchListQuery,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
-import { COATable, Report, sortCoa } from '@coop/cbs/reports';
+import { COATable, CoaTotalTable, Report, sortCoa } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
 
@@ -26,24 +25,6 @@ export const ProfitAndLossReport = () => {
     filters?.branchId && filters?.branchId.length !== 0
       ? filters?.branchId?.map((t) => t.value)
       : [];
-
-  const { data: branchListQueryData } = useGetBranchListQuery({
-    paginate: {
-      after: '',
-      first: -1,
-    },
-  });
-
-  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
-  const headers =
-    branchIDs?.length === branchList?.length
-      ? ['Total']
-      : [
-          ...((branchList
-            ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
-            ?.map((a) => a.node?.id) || []) as string[]),
-          branchIDs.length === 1 ? undefined : 'Total',
-        ]?.filter(Boolean) || [];
 
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
@@ -136,49 +117,12 @@ export const ProfitAndLossReport = () => {
             </Box>
           )}
 
-          <Box
-            display="flex"
-            flexDir="column"
-            borderRadius="br2"
-            border="1px"
-            mb="s16"
-            mx="s16"
-            borderColor="border.layout"
-          >
-            <Box h="40px" display="flex">
-              <Box
-                display="flex"
-                alignItems="center"
-                w="80%"
-                h="100%"
-                px="s12"
-                borderRight="1px"
-                borderRightColor="border.layout"
-                fontSize="r1"
-                fontWeight={600}
-                color="gray.700"
-              >
-                Total Profit/Loss (Total Income - Total Expenses)
-              </Box>
-              {headers.map((d, index) => (
-                <Box
-                  whiteSpace="nowrap"
-                  px="s12"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="end"
-                  borderRight={index !== headers.length - 1 ? '1px' : '0'}
-                  borderRightColor="border.layout"
-                  key={d}
-                  w="20%"
-                  textAlign="right"
-                >
-                  {data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.totalProfitLoss?.[d || ''] || '0.00'}
-                </Box>
-              ))}
-            </Box>
-          </Box>
+          <CoaTotalTable
+            totals={[
+              data?.report?.transactionReport?.financial?.trialSheetReport?.data?.totalProfitLoss ||
+                {},
+            ]}
+          />
         </Report.Content>
         <Report.Filters>
           <Report.Filter title="Zero Balance">

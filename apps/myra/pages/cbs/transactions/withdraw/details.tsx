@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+
 import { MainLayout } from '@myra-ui';
 
 import { WithdrawDetailPage } from '@coop/cbs/transactions/feature-detail-page';

@@ -13,6 +13,7 @@ import {
   Table,
   TablePopover,
   Text,
+  toast,
 } from '@myra-ui';
 
 import {
@@ -20,6 +21,7 @@ import {
   useDeleteEnvironementMutation,
   useGetClientDetailsQuery,
   useSetEnvironementMutation,
+  useSetUpEnvironmentDatabaseMutation,
 } from '@coop/neosys-admin/data-access';
 import { FormCheckbox, FormInput, FormTextArea } from '@coop/shared/form';
 
@@ -31,6 +33,7 @@ export const NeosysFeatureClientView = () => {
 
   const { mutateAsync: setEnvironmentMutation } = useSetEnvironementMutation();
   const { mutateAsync: deleteEnvironmentMutation } = useDeleteEnvironementMutation();
+  const { mutateAsync: setUpEnvironmentDatabaseMutation } = useSetUpEnvironmentDatabaseMutation();
 
   const methods = useForm();
   const { getValues, reset, clearErrors, setError } = methods;
@@ -56,7 +59,7 @@ export const NeosysFeatureClientView = () => {
       },
       {
         id: '_actions',
-        header: 'Action',
+        header: 'Actions',
         accessorKey: 'actions',
         cell: (cell) =>
           cell.row.original ? (
@@ -68,6 +71,28 @@ export const NeosysFeatureClientView = () => {
                   onClick: async (node) => {
                     deleteEnvironmentMutation({ environmentId: node?.id }).then(() => {
                       refetch();
+                      toast({
+                        id: 'delete-environement',
+                        type: 'success',
+                        message: 'Environement deleted successfully',
+                      });
+                    });
+                  },
+                },
+                {
+                  title: 'Create Database',
+                  onClick: async (node) => {
+                    await asyncToast({
+                      id: 'create-db',
+                      msgs: {
+                        success: 'Db Created Successfully',
+                        loading: 'Creating New DB for this environment',
+                      },
+                      onSuccess: () => refetch(),
+                      promise: setUpEnvironmentDatabaseMutation({
+                        clientId,
+                        environmentId: node?.id,
+                      }),
                     });
                   },
                 },
@@ -118,7 +143,7 @@ export const NeosysFeatureClientView = () => {
   return (
     <Box p="s8" display="flex" flexDirection="column" gap={2}>
       <Box display="flex" justifyContent="space-between">
-        <Text fontSize="r2">MYRA Validation</Text>
+        <Text fontSize="r2">{data?.neosys?.client?.details?.organizationName}</Text>
         <Button onClick={handleModalOpen}>Create Environment</Button>
       </Box>
       <Box borderTop="1px" borderColor="gray.200">

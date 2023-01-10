@@ -11,6 +11,7 @@ query getBankAccountList($filter: BankAccountFilter, $pagination: Pagination) {
             accountType
             accountNo
             balance
+            branchName
           }
         }
       }

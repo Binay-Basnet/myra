@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Avatar, Box, PageHeader, TablePopover, Text, toast } from '@myra-ui';
+import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useCreateDbMutation, useGetClientsListQuery } from '@coop/neosys-admin/data-access';
+import { useGetClientsListQuery } from '@coop/neosys-admin/data-access';
 import { getUrl, useTranslation } from '@coop/shared/utils';
 
 export const CLIENTS_TAB_ITEMS = [
@@ -26,8 +25,8 @@ export const CLIENTS_TAB_ITEMS = [
 
 export const ClientsListPage = () => {
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
-  const { mutateAsync } = useCreateDbMutation();
+  // const queryClient = useQueryClient();
+  // const { mutateAsync } = useCreateDbMutation();
   const router = useRouter();
 
   // const router = useRouter();
@@ -90,26 +89,32 @@ export const ClientsListPage = () => {
             <TablePopover
               node={cell.row.original}
               items={[
+                // {
+                //   title: 'Create Database',
+                //   onClick: async (node) => {
+                //     if (node.dbCreated) {
+                //       toast({
+                //         id: 'create-db',
+                //         type: 'error',
+                //         message: 'Database has already been created!!',
+                //       });
+                //     } else {
+                //       await asyncToast({
+                //         id: 'create-db',
+                //         msgs: {
+                //           success: 'Db Created Successfully',
+                //           loading: 'Creating New DB for this Saccos',
+                //         },
+                //         onSuccess: () => queryClient.invalidateQueries(['getClientsList']),
+                //         promise: mutateAsync({ saccosID: node.id as string }),
+                //       });
+                //     }
+                //   },
+                // },
                 {
-                  title: 'Create Database',
+                  title: 'View Details',
                   onClick: async (node) => {
-                    if (node.dbCreated) {
-                      toast({
-                        id: 'create-db',
-                        type: 'error',
-                        message: 'Database has already been created!!',
-                      });
-                    } else {
-                      await asyncToast({
-                        id: 'create-db',
-                        msgs: {
-                          success: 'Db Created Successfully',
-                          loading: 'Creating New DB for this Saccos',
-                        },
-                        onSuccess: () => queryClient.invalidateQueries(['getClientsList']),
-                        promise: mutateAsync({ saccosID: node.id as string }),
-                      });
-                    }
+                    router.push(`clients/view?id=${node?.id}`);
                   },
                 },
               ]}
