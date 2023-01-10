@@ -2,9 +2,10 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { ObjState, useGetAccountTableListMinimalQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const CBSAccountCloseList = () => {
@@ -72,19 +73,22 @@ export const CBSAccountCloseList = () => {
         accessorFn: (row) => row?.node?.createdAt,
         cell: (props) => <span>{props?.row?.original?.node?.closedAt?.split('T')[0]} </span>,
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
-      //   cell: (props) => (
-      //     <ActionPopoverComponent
-      //       items={popoverTitle}
-      //       id={props?.row?.original?.node?.id as string}
-      //     />
-      //   ),
-      //   meta: {
-      //     width: '50px',
-      //   },
-      // },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) => (
+          <TablePopover
+            items={[
+              {
+                title: 'View Details',
+                onClick: (row) =>
+                  router.push(`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${row['id']}`),
+              },
+            ]}
+            node={props?.row?.original?.node}
+          />
+        ),
+      },
     ],
     [t]
   );

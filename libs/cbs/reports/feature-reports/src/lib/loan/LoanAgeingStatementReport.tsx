@@ -14,7 +14,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -43,8 +43,8 @@ export const LoanAgingStatementsReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Other Reports', link: '/reports/cbs/others' },
-            { label: 'Loan Aging Report', link: '/reports/cbs/others/loan-ageing/new' },
+            { label: 'Loan Reports', link: '/reports/cbs/loan' },
+            { label: 'Loan Ageing Statement Report', link: '/reports/cbs/loan/ageing/new' },
           ]}
         />
         <Report.Inputs hideDate>
@@ -75,6 +75,7 @@ export const LoanAgingStatementsReport = () => {
               {
                 header: 'Member No',
                 accessorKey: 'memberNo',
+
                 meta: {
                   Footer: {
                     display: 'none',
@@ -84,6 +85,13 @@ export const LoanAgingStatementsReport = () => {
               {
                 header: 'Loan No',
                 accessorKey: 'loanNo',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.loanNo as string}
+                    type="loan"
+                    label={props?.row?.original?.loanNo as string}
+                  />
+                ),
                 meta: {
                   Footer: {
                     display: 'none',

@@ -16,7 +16,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -169,6 +169,13 @@ export const ShareTransactionsReport = () => {
                   {
                     header: 'Member ID',
                     accessorKey: 'memberCode',
+                    cell: (props) => (
+                      <RouteToDetailsPage
+                        id={props?.row?.original?.memberId as string}
+                        type="member"
+                        label={props?.row?.original?.memberCode as string}
+                      />
+                    ),
                     meta: {
                       Footer: {
                         display: 'none',
