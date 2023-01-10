@@ -101,6 +101,9 @@ export const CBSAccountCloseList = () => {
         isLoading={isLoading}
         data={rowData}
         columns={columns}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${row?.node?.id}`);
+        }}
         pagination={{
           total: data?.account?.list?.totalCount ?? 'Many',
           pageInfo: data?.account?.list?.pageInfo,
