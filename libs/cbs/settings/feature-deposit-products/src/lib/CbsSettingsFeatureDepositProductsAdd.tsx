@@ -36,7 +36,6 @@ import {
   LadderRate,
   MandatoryProduct,
   Penalty,
-  PostingFrequency,
   PrematuredPenalty,
   Product,
   ProductCode,
@@ -417,7 +416,7 @@ export const SettingsDepositProductsAdd = () => {
               {depositNature !== NatureOfDepositProduct.Current && (
                 <>
                   <Interest />
-                  <PostingFrequency />
+                  {/* <PostingFrequency /> */}
                 </>
               )}
 

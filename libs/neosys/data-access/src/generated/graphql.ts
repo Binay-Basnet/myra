@@ -830,6 +830,30 @@ export type DeleteEnvironementMutation = {
   };
 };
 
+export type SetUpEnvironmentDatabaseMutationVariables = Exact<{
+  environmentId: Scalars['ID'];
+  clientId: Scalars['ID'];
+}>;
+
+export type SetUpEnvironmentDatabaseMutation = {
+  neosys: {
+    client?: {
+      environment?: {
+        createDB?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
 
 export type AllAdministrationQuery = {
@@ -911,6 +935,7 @@ export type GetClientDetailsQuery = {
   neosys: {
     client?: {
       details?: {
+        organizationName: string;
         environments?: Array<{
           id: string;
           environmentName: string;
@@ -1226,6 +1251,42 @@ export const useDeleteEnvironementMutation = <TError = unknown, TContext = unkno
     ),
     options
   );
+export const SetUpEnvironmentDatabaseDocument = `
+    mutation setUpEnvironmentDatabase($environmentId: ID!, $clientId: ID!) {
+  neosys {
+    client {
+      environment {
+        createDB(environmentId: $environmentId, clientId: $clientId) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetUpEnvironmentDatabaseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetUpEnvironmentDatabaseMutation,
+    TError,
+    SetUpEnvironmentDatabaseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetUpEnvironmentDatabaseMutation,
+    TError,
+    SetUpEnvironmentDatabaseMutationVariables,
+    TContext
+  >(
+    ['setUpEnvironmentDatabase'],
+    useAxios<SetUpEnvironmentDatabaseMutation, SetUpEnvironmentDatabaseMutationVariables>(
+      SetUpEnvironmentDatabaseDocument
+    ),
+    options
+  );
 export const AllAdministrationDocument = `
     query allAdministration {
   administration {
@@ -1385,6 +1446,7 @@ export const GetClientDetailsDocument = `
   neosys {
     client {
       details(clientId: $clientId) {
+        organizationName
         environments {
           id
           environmentName

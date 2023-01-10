@@ -1,10 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+
 import { TablePopover } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetBankAccountListQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const AccountingFeatureBankAccountsList = () => {
@@ -21,29 +22,25 @@ export const AccountingFeatureBankAccountsList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['bankAccountsCode'],
-        accessorFn: (row) => row?.node?.id,
+        header: t['bankAccountsAccountNo'],
+        accessorFn: (row) => row?.node?.accountNo,
+      },
+      {
+        accessorFn: (row) => row?.node?.displayName,
+        header: 'Account Name',
       },
       {
         accessorFn: (row) => row?.node?.bankName,
         header: t['bankAccountsBankName'],
-        meta: {
-          width: '60%',
-        },
       },
       {
-        header: t['bankAccountsAccountNo'],
-        accessorFn: (row) => row?.node?.accountNo,
-        meta: {
-          width: '30%',
-        },
+        accessorFn: (row) => row?.node?.branchName,
+        header: 'Service Center',
       },
+
       {
         header: t['bankAccountsBankBalance'],
         accessorFn: (row) => row?.node?.balance,
-        meta: {
-          width: '30%',
-        },
       },
       {
         id: '_actions',
@@ -59,9 +56,6 @@ export const AccountingFeatureBankAccountsList = () => {
               ]}
             />
           ),
-        meta: {
-          width: '50px',
-        },
       },
     ],
     [t]
