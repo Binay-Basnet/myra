@@ -16,6 +16,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -120,6 +121,13 @@ export const SavingBalanceReport = () => {
               {
                 header: 'Member COde',
                 accessorKey: 'memberCode',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.memberId as string}
+                    type="member"
+                    label={props?.row?.original?.memberCode as string}
+                  />
+                ),
                 meta: {
                   Footer: {
                     display: 'none',
