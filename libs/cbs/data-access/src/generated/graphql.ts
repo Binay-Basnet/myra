@@ -17459,6 +17459,7 @@ export type GetBankAccountListQuery = {
             accountType?: AccountingBankAccountType | null;
             accountNo?: string | null;
             balance?: string | null;
+            branchName?: string | null;
           } | null;
         } | null> | null;
       } | null;
@@ -30934,6 +30935,7 @@ export const GetBankAccountListDocument = `
             accountType
             accountNo
             balance
+            branchName
           }
         }
       }
