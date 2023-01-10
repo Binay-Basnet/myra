@@ -591,6 +591,7 @@ query getLoanAccountDetails(
   loanAccount {
     loanAccountDetails(loanAccountId: $loanAccountId) {
       overView {
+        isClosed
         totalPrincipalPaid
         totalInterestPaid
         totalRemainingPrincipal

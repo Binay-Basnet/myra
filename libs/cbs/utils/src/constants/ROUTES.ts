@@ -255,6 +255,7 @@ export const ROUTES = {
   INVENTORY_WAREHOUSE: '/inventory/warehouse/list',
 
   SETTINGS_GENERAL_SAVING_PRODUCTS_DETAILS: '/settings/general/saving-products/details',
+  CBS_LOAN_ACCOUNT_CLOSED_DETAILS: '/cbs/loan/closed-accounts/details',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

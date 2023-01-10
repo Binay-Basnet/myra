@@ -568,3 +568,17 @@ query getAccountTransactionLists($filter: AccountsTransactionFilter!, $paginatio
     }
   }
 }
+
+query getAccountLedgersList($accountId: ID!) {
+  account {
+    listAccountLedgers(id: $accountId) {
+      data {
+        ledgerId
+        ledgerName
+        accountType
+        balance
+        balanceType
+      }
+    }
+  }
+}

@@ -17441,6 +17441,24 @@ export type GetAccountTransactionListsQuery = {
   };
 };
 
+export type GetAccountLedgersListQueryVariables = Exact<{
+  accountId: Scalars['ID'];
+}>;
+
+export type GetAccountLedgersListQuery = {
+  account: {
+    listAccountLedgers?: {
+      data?: Array<{
+        ledgerId?: string | null;
+        ledgerName?: string | null;
+        accountType?: string | null;
+        balance?: string | null;
+        balanceType?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
 export type GetBankAccountListQueryVariables = Exact<{
   filter?: InputMaybe<BankAccountFilter>;
   pagination?: InputMaybe<Pagination>;
@@ -20150,6 +20168,7 @@ export type GetLoanAccountDetailsQuery = {
   loanAccount: {
     loanAccountDetails?: {
       overView?: {
+        isClosed: boolean;
         totalPrincipalPaid: string;
         totalInterestPaid: string;
         totalRemainingPrincipal: string;
@@ -30921,6 +30940,32 @@ export const useGetAccountTransactionListsQuery = <
     ).bind(null, variables),
     options
   );
+export const GetAccountLedgersListDocument = `
+    query getAccountLedgersList($accountId: ID!) {
+  account {
+    listAccountLedgers(id: $accountId) {
+      data {
+        ledgerId
+        ledgerName
+        accountType
+        balance
+        balanceType
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountLedgersListQuery = <TData = GetAccountLedgersListQuery, TError = unknown>(
+  variables: GetAccountLedgersListQueryVariables,
+  options?: UseQueryOptions<GetAccountLedgersListQuery, TError, TData>
+) =>
+  useQuery<GetAccountLedgersListQuery, TError, TData>(
+    ['getAccountLedgersList', variables],
+    useAxios<GetAccountLedgersListQuery, GetAccountLedgersListQueryVariables>(
+      GetAccountLedgersListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetBankAccountListDocument = `
     query getBankAccountList($filter: BankAccountFilter, $pagination: Pagination) {
   accounting {
@@ -34413,6 +34458,7 @@ export const GetLoanAccountDetailsDocument = `
   loanAccount {
     loanAccountDetails(loanAccountId: $loanAccountId) {
       overView {
+        isClosed
         totalPrincipalPaid
         totalInterestPaid
         totalRemainingPrincipal

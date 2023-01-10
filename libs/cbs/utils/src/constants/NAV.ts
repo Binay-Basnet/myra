@@ -1087,7 +1087,7 @@ export const useLink = (app: ModuleType = 'CBS') => {
     return true;
   });
 
-  return { link: linkArr[0] || '/404' };
+  return { link: linkArr[0] || '/' };
 };
 
 export const useMenuLink = (menu: MenuType, app: ModuleType = 'CBS') => {
