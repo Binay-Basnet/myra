@@ -1,4 +1,5 @@
 import { createContext, ReactNode } from 'react';
+import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { BoundCanProps, createContextualCan } from '@casl/react';
 
@@ -53,6 +54,14 @@ const Error = ({ isCentered = false }: IErrorProps) => {
     >
       <Box display="flex" flexDir="column" alignItems={isCentered ? 'center' : 'start'} gap="s16">
         <Box display="flex" flexDir="column" alignItems={isCentered ? 'center' : 'start'} gap="s4">
+          <Image
+            src="/401.svg"
+            width="100"
+            height="100"
+            objectFit="contain"
+            objectPosition="center"
+          />
+
           <Text fontSize="r2" color="gray.500" fontWeight="600">
             Error Code: 401
           </Text>
@@ -62,8 +71,8 @@ const Error = ({ isCentered = false }: IErrorProps) => {
             alignItems={isCentered ? 'center' : 'start'}
             gap="s8"
           >
-            <Text fontSize="36px" fontWeight="600" color="gray.700">
-              Forbidden Resource
+            <Text fontSize="36px" lineHeight="100%" fontWeight="600" color="gray.700">
+              Unauthorized Access
             </Text>
             <Text
               w="70ch"
@@ -72,14 +81,22 @@ const Error = ({ isCentered = false }: IErrorProps) => {
               color="gray.600"
               textAlign={isCentered ? 'center' : 'left'}
             >
-              Sorry, you are not authorized to access this resource. Please make sure you are logged
-              in with the correct credentials or contact the website administrator for assistance.
+              You do not have permissions to access this resource.
+              <br />
+              <Box display="inline">
+                If you need assistance, please contact branch admin or website administrator.
+              </Box>
             </Text>
           </Box>
         </Box>
-        <Button variant="outline" shade="neutral" onClick={() => router.push(ROUTES.HOME)}>
-          Get back to home page
-        </Button>
+        <Box display="flex" gap="s16">
+          <Button variant="solid" shade="primary" onClick={() => router.back()}>
+            Go Back
+          </Button>
+          <Button variant="outline" shade="neutral" onClick={() => router.push(ROUTES.HOME)}>
+            Get back to home page
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
