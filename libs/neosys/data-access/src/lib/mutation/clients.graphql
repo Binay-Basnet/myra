@@ -54,3 +54,18 @@ mutation deleteEnvironement($environmentId: String!) {
     }
   }
 }
+
+mutation setUpEnvironmentDatabase($environmentId: ID!, $clientId: ID!) {
+  neosys {
+    client {
+      environment {
+        createDB(environmentId: $environmentId, clientId: $clientId) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
