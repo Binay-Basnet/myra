@@ -96,6 +96,7 @@ export const NeosysFeatureClientView = () => {
       onSuccess: () => {
         reset({ environmentName: '', otpToken: '', description: '', isForProduction: false });
         setIsModalOpen(false);
+        refetch();
       },
       promise: setEnvironmentMutation({
         clientId,

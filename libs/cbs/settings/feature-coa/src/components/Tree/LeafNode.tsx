@@ -503,6 +503,7 @@ export const AddAccount = ({
             },
             onSuccess: () => {
               queryClient.refetchQueries(['getCoaFullView']);
+              queryClient.invalidateQueries(['getCOALeafNodeDetails']);
               onToggle();
             },
             promise: addNewAccount({
