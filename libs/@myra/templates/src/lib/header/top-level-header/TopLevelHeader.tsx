@@ -711,8 +711,12 @@ export const TopLevelHeader = () => {
                                     },
                                   }),
                                   msgs: {
-                                    loading: 'Updating Language Preference',
-                                    success: 'Updated Language Preference',
+                                    loading: `Updating Language to ${
+                                      value === 'en' ? 'English' : 'Nepali'
+                                    }`,
+                                    success: `Updated Language to ${
+                                      value === 'en' ? 'English' : 'Nepali'
+                                    }`,
                                   },
                                   onSuccess: (res) => {
                                     res?.user?.preference?.update?.record &&
@@ -760,8 +764,12 @@ export const TopLevelHeader = () => {
                                     },
                                   }),
                                   msgs: {
-                                    loading: 'Updating Calendar Preference',
-                                    success: 'Updated Calendar Preference',
+                                    loading: `Updating Calendar to ${
+                                      value === DateType.Ad ? 'AD' : 'BS'
+                                    }`,
+                                    success: `Updated Calendar to ${
+                                      value === DateType.Ad ? 'AD' : 'BS'
+                                    }`,
                                   },
                                   onSuccess: (res) =>
                                     res?.user?.preference?.update?.record &&
