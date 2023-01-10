@@ -1,6 +1,6 @@
-import { DetailPageQuickLinks } from '@myra-ui';
+import { Alert, DetailPageQuickLinks } from '@myra-ui';
 
-import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
+import { NatureOfDepositProduct, ObjState, useAccountDetails } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 
 import {
@@ -30,6 +30,7 @@ const accountTypes = {
 export const Overview = () => {
   const { accountDetails } = useAccountDetails();
   const isTermSaving = accountDetails?.accountType === 'TERM_SAVING_OR_FD';
+  const isClosed = accountDetails?.objState === ObjState?.Inactive;
 
   const links = [
     {
@@ -110,8 +111,9 @@ export const Overview = () => {
   return (
     <>
       <TabHeader heading="Overview" />
+      {isClosed && <Alert status="error" subtitle="This Account has been Closed" hideCloseIcon />}
 
-      {!isTermSaving && <DetailPageQuickLinks links={links} />}
+      {!isTermSaving && !isClosed && <DetailPageQuickLinks links={links} />}
 
       <AccountStatistics />
 
@@ -119,11 +121,12 @@ export const Overview = () => {
 
       <BalanceChart />
 
-      <RecentTransactions />
+      <RecentTransactions isClosed={isClosed} />
 
       {(accountDetails?.accountType === NatureOfDepositProduct.RecurringSaving ||
         (accountDetails?.accountType === NatureOfDepositProduct.Saving &&
-          accountDetails?.isMandatory)) && <UpcomingInstallments />}
+          accountDetails?.isMandatory &&
+          !isClosed)) && <UpcomingInstallments />}
 
       <GeneralInfoCard title="Additional Features" items={additionalFeatures} />
 

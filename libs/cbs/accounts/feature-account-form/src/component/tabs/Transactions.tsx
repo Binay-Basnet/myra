@@ -7,6 +7,7 @@ import { Button, DetailsCard } from '@myra-ui';
 import { TransactionTable } from '@coop/cbs/components';
 import {
   EbankingTransaction,
+  ObjState,
   useAccountDetails,
   useGetAccountTransactionListsQuery,
 } from '@coop/cbs/data-access';
@@ -19,7 +20,7 @@ export const Transactions = () => {
   const router = useRouter();
 
   const { accountDetails } = useAccountDetails();
-
+  const isClosed = accountDetails?.objState === ObjState?.Inactive;
   const { data: transactionListQueryData } = useGetAccountTransactionListsQuery(
     {
       filter: { accountIds: [accountDetails?.accountId as string] },
@@ -47,6 +48,7 @@ export const Transactions = () => {
             size="md"
             justifyContent="start"
             leftIcon={<AddIcon />}
+            isDisabled={isClosed}
             onClick={() =>
               router.push(
                 `${ROUTES.CBS_TRANS_DEPOSIT_ADD}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`
@@ -59,7 +61,7 @@ export const Transactions = () => {
       />
 
       <DetailsCard
-        title="Recent Transactions"
+        title={isClosed ? 'Past Transactions' : 'Recent Transactions'}
         bg="white"
         hasTable
         // leftBtn={
