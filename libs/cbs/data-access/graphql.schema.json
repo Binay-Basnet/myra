@@ -84116,6 +84116,18 @@
             "deprecationReason": null
           },
           {
+            "name": "objState",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "ObjState",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "productName",
             "description": null,
             "args": [],
