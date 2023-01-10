@@ -122,7 +122,7 @@ export const SearchBar = () => {
   const recentSearch = recentSearches?.reverse().slice(0, 4);
 
   const { mutateAsync: getNewId } = useGetNewIdMutation();
-  const { data: globalSearchData, isInitialLoading } = useGetGlobalSearchQuery(
+  const { data: globalSearchData, isFetching } = useGetGlobalSearchQuery(
     {
       filter: { filterMode: Filter_Mode.Or, query: debouncedValue, page: debouncedValue },
       pagination: { after: '', first: -1 },
@@ -308,11 +308,6 @@ export const SearchBar = () => {
             maxH="400px"
             zIndex="11"
           >
-            {isInitialLoading && (
-              <Box>
-                <Loader height={80} />
-              </Box>
-            )}
             {searchAction === 'FOCUS' && (
               <>
                 {recentSearch && recentSearch?.length !== 0 && (
@@ -322,7 +317,11 @@ export const SearchBar = () => {
                 )}
 
                 <Box overflowY="auto">
-                  {recentSearch && recentSearch?.length === 0 ? (
+                  {isFetching ? (
+                    <Box>
+                      <Loader height={80} />
+                    </Box>
+                  ) : recentSearch && recentSearch?.length === 0 ? (
                     <NoResultFound title="No Recent Search!" />
                   ) : (
                     recentSearch.map((recent, index) => (
@@ -366,7 +365,11 @@ export const SearchBar = () => {
             )}
             {searchAction === 'SIMPLE' && (
               <Box overflowY="auto">
-                {globalSearch?.length === 0 ? (
+                {isFetching ? (
+                  <Box>
+                    <Loader height={80} />
+                  </Box>
+                ) : globalSearch?.length === 0 ? (
                   <NoResultFound />
                 ) : (
                   globalSearch?.map((basic, index) => (
