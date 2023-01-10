@@ -9870,6 +9870,7 @@ export type MemberAccountDetails = {
   isMandatory?: Maybe<Scalars['Boolean']>;
   member?: Maybe<Member>;
   monthlyInterestCompulsory?: Maybe<Scalars['Boolean']>;
+  objState?: Maybe<ObjState>;
   productName?: Maybe<Scalars['String']>;
   staffProduct?: Maybe<Scalars['Boolean']>;
   supportMultiple?: Maybe<Scalars['Boolean']>;
