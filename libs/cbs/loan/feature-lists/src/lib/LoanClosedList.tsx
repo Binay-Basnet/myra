@@ -24,7 +24,7 @@ export const ClosedLoanList = () => {
         data={data}
         isLoading={isFetching}
         type={LoanObjState.Completed}
-        viewLink={ROUTES.CBS_LOAN_ACCOUNTS_DETAILS}
+        viewLink={ROUTES.CBS_LOAN_ACCOUNT_CLOSED_DETAILS}
         isClosed
       />
     </>

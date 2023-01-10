@@ -20149,6 +20149,7 @@ export type GetLoanAccountDetailsQuery = {
   loanAccount: {
     loanAccountDetails?: {
       overView?: {
+        isClosed: boolean;
         totalPrincipalPaid: string;
         totalInterestPaid: string;
         totalRemainingPrincipal: string;
@@ -34411,6 +34412,7 @@ export const GetLoanAccountDetailsDocument = `
   loanAccount {
     loanAccountDetails(loanAccountId: $loanAccountId) {
       overView {
+        isClosed
         totalPrincipalPaid
         totalInterestPaid
         totalRemainingPrincipal

@@ -45,6 +45,7 @@ export const useLoanAccountDetailHooks = () => {
   const gauranteeListInfo = gauranteeData?.guaranteeList;
   const collatListInfo = collatData?.collateralList;
   const ledgerList = loanAccountLedgersData?.account?.listAccountLedgers?.data;
+  const isClosed = overviewData?.isClosed;
 
   const generalInfoCardData = [
     { label: 'Account Name', value: generalInfo?.accountName ?? 'N/A' },
@@ -164,6 +165,7 @@ export const useLoanAccountDetailHooks = () => {
     gauranteeListInfo,
     collateralSummary,
     productId,
+    isClosed,
     collatListInfo,
     memberDetails,
     ledgerList,
