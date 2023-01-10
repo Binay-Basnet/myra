@@ -11,7 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -68,6 +68,13 @@ export const AccountCloseReport = () => {
               {
                 header: 'Member Id',
                 accessorKey: 'memberId',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.memberId as string}
+                    type="member"
+                    label={props?.row?.original?.memberCode as string}
+                  />
+                ),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -77,6 +84,13 @@ export const AccountCloseReport = () => {
               {
                 header: 'Account Number',
                 accessorKey: 'accountNumber',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.accountNumber as string}
+                    type="account-close"
+                    label={props?.row?.original?.accountNumber as string}
+                  />
+                ),
               },
               {
                 header: 'Account Name',

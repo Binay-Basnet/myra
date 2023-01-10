@@ -14,7 +14,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportMember, SavingReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormAmountFilter, FormRadioGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -105,6 +105,13 @@ export const SavingStatementReport = () => {
               {
                 header: 'Transaction ID',
                 accessorKey: 'chequeOrVoucherNo',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.chequeOrVoucherNo as string}
+                    type="transactions"
+                    label={props?.row?.original?.chequeOrVoucherNo as string}
+                  />
+                ),
                 meta: {
                   isNumeric: true,
                   Footer: {
