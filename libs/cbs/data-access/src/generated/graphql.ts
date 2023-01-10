@@ -3,6 +3,7 @@
 //You can update the queries or mutations in *.graphql to generate any new changes.
 import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 import { useAxios } from './axiosHelper';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
