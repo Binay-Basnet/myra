@@ -57,7 +57,7 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
                 </Text>
               ) : (
                 <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
-                  {t['transDetailDeposit']} -&nbsp;
+                  Withdraw -&nbsp;
                   {summary.method === 'AGENT' ? agentSlug[summary.method] : summary.method}
                 </Text>
               )}
