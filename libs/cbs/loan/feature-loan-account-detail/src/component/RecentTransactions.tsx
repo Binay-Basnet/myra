@@ -12,9 +12,10 @@ type CustomTransactionItem = EbankingTransaction & {
 
 interface ITransactionTableProps {
   txnList: CustomTransactionItem[];
+  isClosed?: boolean;
 }
 
-export const RecentTransactions = ({ txnList }: ITransactionTableProps) => {
+export const RecentTransactions = ({ txnList, isClosed }: ITransactionTableProps) => {
   const transactionListWithIndex =
     txnList?.map((trans, index) => ({
       index: index + 1,
@@ -86,7 +87,7 @@ export const RecentTransactions = ({ txnList }: ITransactionTableProps) => {
 
   return (
     <DetailsCard
-      title="Recent Transactions"
+      title={isClosed ? 'Past Transactions' : 'Recent Transactions'}
       bg="white"
       hasTable
       // leftBtn={
