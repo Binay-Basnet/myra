@@ -299,7 +299,7 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
         <Pagination
           total={pagination.total}
           pageInfo={pagination.pageInfo}
-          pageSizeOptions={[10, 20, 50, 100]}
+          pageSizeOptions={[100, 300, 500, 1000]}
         />
       )}
     </>

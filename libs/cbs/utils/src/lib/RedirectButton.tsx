@@ -1,10 +1,11 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
+import { ReactNode } from 'react';
 import { useRouter } from 'next/router';
 
 import { Button } from '@myra-ui';
 
 interface IProps {
-  label?: string;
+  label?: string | ReactNode;
   link: string;
 }
 

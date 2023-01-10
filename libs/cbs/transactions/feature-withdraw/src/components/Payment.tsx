@@ -79,6 +79,10 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
       label: t['withdrawPaymentMarketRepresentative'],
       value: WithdrawBy.Agent,
     },
+    {
+      label: 'Other',
+      value: WithdrawBy.Other,
+    },
   ];
 
   const { watch, setValue } = useFormContext();
@@ -265,6 +269,12 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
         {withdrawnBy === WithdrawBy.Agent && (
           <InputGroupContainer>
             <FormAgentSelect name="agentId" label={t['withdrawPaymentMarketRepresentative']} />
+          </InputGroupContainer>
+        )}
+
+        {withdrawnBy === WithdrawBy.Other && (
+          <InputGroupContainer>
+            <FormInput name="otherWithdrawerName" label="Name" />
           </InputGroupContainer>
         )}
       </BoxContainer>

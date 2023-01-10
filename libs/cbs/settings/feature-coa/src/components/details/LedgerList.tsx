@@ -1,11 +1,10 @@
 import { ReactNode, useMemo } from 'react';
-import { useRouter } from 'next/router';
 
-import { Box, Button, DetailsCard, Tooltip } from '@myra-ui';
+import { DetailsCard, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { LedgerList } from '@coop/cbs/data-access';
-import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 
 interface ILedgerListsProps {
   ledgers: LedgerList[];
@@ -13,8 +12,6 @@ interface ILedgerListsProps {
 }
 
 export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
-  const router = useRouter();
-
   const ledgersList = useMemo(
     () =>
       ledgers?.map((ledger, index) => ({
@@ -39,18 +36,10 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
       {
         header: 'Ledger Name',
         cell: (props) => (
-          <Box display="flex" flexDirection="column" gap="s4">
-            <Button
-              variant="link"
-              onClick={() =>
-                router.push(
-                  `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props?.row?.original?.accountCode}`
-                )
-              }
-            >
-              <Tooltip title={props?.row?.original?.ledgerName as string} />
-            </Button>
-          </Box>
+          <RedirectButton
+            label={<Tooltip title={props?.row?.original?.ledgerName as string} />}
+            link={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props?.row?.original?.accountCode}`}
+          />
         ),
       },
       {
