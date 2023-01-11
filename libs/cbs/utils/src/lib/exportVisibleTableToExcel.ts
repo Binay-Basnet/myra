@@ -5,29 +5,29 @@ export const exportVisibleTableToExcel = (fileName: string) => {
 
   const wb = utils.book_new();
 
-  Array.prototype.slice.call(tables)?.forEach((table, index) => {
+  Array.prototype.slice.call(tables)?.forEach((table) => {
     const ws = utils.table_to_sheet(table);
 
-    const tableHeads = tables[index]?.querySelectorAll('th > div');
+    // const tableHeads = tables[index]?.querySelectorAll('th > div');
 
-    const columnIndexToHide: number[] = [];
+    // const columnIndexToHide: number[] = [];
 
-    Array.prototype.slice.call(tableHeads)?.forEach((th, thIndex) => {
-      if (tableHeads[thIndex]?.textContent === '') {
-        columnIndexToHide.push(thIndex);
-      }
-    });
+    // Array.prototype.slice.call(tableHeads)?.forEach((th, thIndex) => {
+    //   if (tableHeads[thIndex]?.textContent === '') {
+    //     columnIndexToHide.push(thIndex);
+    //   }
+    // });
 
-    ws['!cols'] = [];
+    // ws['!cols'] = [];
 
-    columnIndexToHide.forEach((hideIndex) => {
-      if (ws['cols']) {
-        ws['!cols'][hideIndex] = { hidden: true };
-      }
-    });
+    // columnIndexToHide.forEach((hideIndex) => {
+    //   if (ws['cols']) {
+    //     ws['!cols'][hideIndex] = { hidden: true };
+    //   }
+    // });
 
     utils.book_append_sheet(wb, ws);
   });
 
-  writeFileXLSX(wb, `${fileName}.xlsx`);
+  writeFileXLSX(wb, `${fileName} - ${new Date().toISOString()}.xlsx`);
 };
