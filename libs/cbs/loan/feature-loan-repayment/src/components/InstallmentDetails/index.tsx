@@ -38,26 +38,26 @@ export const InstallmentData = ({ loanAccountId }: IProps) => {
                 {amountConverter(data?.principal as string)}{' '}
               </Text>
             </Box>
-            {data?.interestAmount && data.interestAmount !== '0' && (
-              <Box display="flex" justifyContent="space-between">
-                <Text fontWeight="400" fontSize="s3">
-                  Interest Amount{' '}
-                </Text>
-                <Text fontWeight="600" fontSize="s3">
-                  {amountConverter(data?.interestAmount as string)}{' '}
-                </Text>
-              </Box>
-            )}
-            {data?.fine && data.fine !== '0' && (
-              <Box display="flex" justifyContent="space-between">
-                <Text fontWeight="400" fontSize="s3">
-                  Fine{' '}
-                </Text>
-                <Text fontWeight="600" fontSize="s3">
-                  {amountConverter(data?.fine as string)}{' '}
-                </Text>
-              </Box>
-            )}
+            {/* {data?.interestAmount && data.interestAmount !== '0' && ( */}
+            <Box display="flex" justifyContent="space-between">
+              <Text fontWeight="400" fontSize="s3">
+                Interest Amount{' '}
+              </Text>
+              <Text fontWeight="600" fontSize="s3">
+                {amountConverter(data?.interestAmount ?? 0)}{' '}
+              </Text>
+            </Box>
+            {/* )} */}
+            {/* {data?.fine && data.fine !== '0' && ( */}
+            <Box display="flex" justifyContent="space-between">
+              <Text fontWeight="400" fontSize="s3">
+                Fine{' '}
+              </Text>
+              <Text fontWeight="600" fontSize="s3">
+                {amountConverter(data?.fine ?? 0)}{' '}
+              </Text>
+            </Box>
+            {/* )} */}
           </Box>
         ))}
 
