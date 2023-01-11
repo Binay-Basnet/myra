@@ -16381,6 +16381,52 @@ export type UpdateDeclarationMutation = {
   };
 };
 
+export type SetWithdrawSlipPrintPreferenceMutationVariables = Exact<{
+  data?: InputMaybe<PrintPreferenceInput>;
+}>;
+
+export type SetWithdrawSlipPrintPreferenceMutation = {
+  settings: {
+    general?: {
+      printPreference?: {
+        add?: {
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetWithdrawSlipPrintPreferenceQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetWithdrawSlipPrintPreferenceQuery = {
+  settings: {
+    general?: {
+      printPreference?: {
+        get?: {
+          data?: {
+            slipSize?: {
+              slipSizeStandard?: SlipSizeStandard | null;
+              slipSizeCustom?: { height?: number | null; width?: number | null } | null;
+            } | null;
+            slipElements?: {
+              blockOne?: { top?: number | null; left?: number | null } | null;
+              blockTwo?: { top?: number | null; left?: number | null } | null;
+              blockThree?: { top?: number | null; left?: number | null } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetSettingsShareBonusMutationVariables = Exact<{
   data?: InputMaybe<ShareBonusSettingsInput>;
 }>;
@@ -29453,6 +29499,93 @@ export const useUpdateDeclarationMutation = <TError = unknown, TContext = unknow
     useAxios<UpdateDeclarationMutation, UpdateDeclarationMutationVariables>(
       UpdateDeclarationDocument
     ),
+    options
+  );
+export const SetWithdrawSlipPrintPreferenceDocument = `
+    mutation setWithdrawSlipPrintPreference($data: PrintPreferenceInput) {
+  settings {
+    general {
+      printPreference {
+        add(data: $data) {
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetWithdrawSlipPrintPreferenceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetWithdrawSlipPrintPreferenceMutation,
+    TError,
+    SetWithdrawSlipPrintPreferenceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetWithdrawSlipPrintPreferenceMutation,
+    TError,
+    SetWithdrawSlipPrintPreferenceMutationVariables,
+    TContext
+  >(
+    ['setWithdrawSlipPrintPreference'],
+    useAxios<
+      SetWithdrawSlipPrintPreferenceMutation,
+      SetWithdrawSlipPrintPreferenceMutationVariables
+    >(SetWithdrawSlipPrintPreferenceDocument),
+    options
+  );
+export const GetWithdrawSlipPrintPreferenceDocument = `
+    query getWithdrawSlipPrintPreference {
+  settings {
+    general {
+      printPreference {
+        get {
+          data {
+            slipSize {
+              slipSizeStandard
+              slipSizeCustom {
+                height
+                width
+              }
+            }
+            slipElements {
+              blockOne {
+                top
+                left
+              }
+              blockTwo {
+                top
+                left
+              }
+              blockThree {
+                top
+                left
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetWithdrawSlipPrintPreferenceQuery = <
+  TData = GetWithdrawSlipPrintPreferenceQuery,
+  TError = unknown
+>(
+  variables?: GetWithdrawSlipPrintPreferenceQueryVariables,
+  options?: UseQueryOptions<GetWithdrawSlipPrintPreferenceQuery, TError, TData>
+) =>
+  useQuery<GetWithdrawSlipPrintPreferenceQuery, TError, TData>(
+    variables === undefined
+      ? ['getWithdrawSlipPrintPreference']
+      : ['getWithdrawSlipPrintPreference', variables],
+    useAxios<GetWithdrawSlipPrintPreferenceQuery, GetWithdrawSlipPrintPreferenceQueryVariables>(
+      GetWithdrawSlipPrintPreferenceDocument
+    ).bind(null, variables),
     options
   );
 export const SetSettingsShareBonusDocument = `

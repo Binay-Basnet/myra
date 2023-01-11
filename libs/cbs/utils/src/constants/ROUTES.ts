@@ -258,6 +258,8 @@ export const ROUTES = {
   SETTINGS_GENERAL_SAVING_PRODUCTS_DETAILS: '/settings/general/saving-products/details',
   CBS_LOAN_ACCOUNT_CLOSED_DETAILS: '/cbs/loan/closed-accounts/details',
   CBS_ACCOUNT_CLOSED_DETAILS: '/cbs/savings/account-close/details',
+
+  SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/general/print-preference/withdraw-slip',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

@@ -76,6 +76,7 @@
     "cbs-settings-feature-loan-products": "libs/cbs/settings/feature-loan-products",
     "cbs-settings-feature-members": "libs/cbs/settings/feature-members",
     "cbs-settings-feature-organization": "libs/cbs/settings/feature-organization",
+    "cbs-settings-feature-print-preference": "libs/cbs/settings/feature-print-preference",
     "cbs-settings-feature-saving-product-detail": "libs/cbs/settings/feature-saving-product-detail",
     "cbs-settings-feature-share": "libs/cbs/settings/feature-share",
     "cbs-settings-feature-super-admin": "libs/cbs/settings/feature-super-admin",

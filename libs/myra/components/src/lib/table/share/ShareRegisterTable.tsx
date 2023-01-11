@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
   Filter_Mode,
@@ -10,7 +10,7 @@ import {
   useGetShareRegisterListQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
+import { TableListPageHeader } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareRegisterTable = () => {
@@ -38,8 +38,6 @@ export const ShareRegisterTable = () => {
   }, [router]);
 
   const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
-
-  const popoverTitle = ['shareRegisterTableViewDetail', 'shareRegisterTableViewMemberProfile'];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -122,7 +120,29 @@ export const ShareRegisterTable = () => {
       {
         id: '_actions',
         header: '',
-        cell: () => <PopoverComponent title={popoverTitle} />,
+        cell: (props) => (
+          <TablePopover
+            node={props?.row?.original.node}
+            items={[
+              {
+                title: t['shareRegisterTableViewDetail'],
+                aclKey: 'CBS_SHARE_SHARE_REGISTER',
+                action: 'VIEW',
+                onClick: (node) => {
+                  router.push(`${ROUTES.CBS_SHARE_REGISTER_DETAILS}?id=${node?.id}`);
+                },
+              },
+              {
+                title: t['shareRegisterTableViewMemberProfile'],
+                aclKey: 'CBS_MEMBERS_MEMBER_DETAIL',
+                action: 'VIEW',
+                onClick: (node) => {
+                  router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${node?.member?.id}&tab=share`);
+                },
+              },
+            ]}
+          />
+        ),
         meta: {
           width: '60px',
         },
