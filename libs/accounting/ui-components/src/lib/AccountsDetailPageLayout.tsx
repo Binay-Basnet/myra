@@ -50,7 +50,7 @@ export const AccountsDetailPageLayout = ({ children }: AccountsDetailLayout) => 
 
   return (
     <>
-      <Box bg="white" zIndex="10" ml="s20" top="110px" position="sticky">
+      <Box bg="white" zIndex="10" ml="s20" top="0" position="sticky">
         <PathBar
           paths={[
             {

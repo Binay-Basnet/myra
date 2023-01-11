@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { TransferType, useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -47,7 +47,7 @@ export const AccountTransferList = () => {
     () => [
       {
         header: t['accountTransferListDate'],
-        accessorFn: (row) => row?.node?.date ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
         header: t['accountTransferListTransactionId'],

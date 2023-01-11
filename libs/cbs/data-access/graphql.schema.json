@@ -213,7 +213,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Localized",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1608,7 +1608,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Localized",
               "ofType": null
             },
             "isDeprecated": false,
@@ -97726,6 +97726,12 @@
             "deprecationReason": null
           },
           {
+            "name": "SETTINGS_PRINT_PREFERENCE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "SETTINGS_SAVING_PARAMETERS",
             "description": null,
             "isDeprecated": false,
@@ -111624,7 +111630,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Localized",
               "ofType": null
             },
             "isDeprecated": false,

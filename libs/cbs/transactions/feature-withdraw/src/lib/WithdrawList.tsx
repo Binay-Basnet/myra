@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -83,7 +83,7 @@ export const WithdrawList = () => {
 
       {
         header: t['withdrawListWithdrawnDate'],
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
         id: '_actions',

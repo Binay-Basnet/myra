@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -20,7 +20,7 @@ import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@c
 //   },
 // ];
 
-const depositedBy = {
+const depositedBy: Record<DepositedBy, string> = {
   [DepositedBy.Agent]: 'Market Representative',
   [DepositedBy.Self]: 'Self',
   [DepositedBy.Other]: 'Other',
@@ -85,12 +85,13 @@ export const DepositList = () => {
       },
       {
         header: t['depositListDepositedBy'],
-        accessorFn: (row) => (row?.node?.processedBy ? depositedBy[row?.node?.processedBy] : ''),
+        accessorFn: (row) =>
+          row?.node?.processedBy ? depositedBy[row?.node?.processedBy as DepositedBy] : '',
       },
 
       {
         header: t['depositListDepositDate'],
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
 
       {

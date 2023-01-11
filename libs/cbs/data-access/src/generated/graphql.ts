@@ -52,7 +52,7 @@ export type AccountActivityEntry = {
   agentPic?: Maybe<Scalars['String']>;
   agentPicUrl?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   name?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<Scalars['String']>;
   processedBy?: Maybe<Scalars['String']>;
@@ -219,7 +219,7 @@ export type AccountTransactionFilter = {
 export type AccountTransferEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   destAccountID: Scalars['String'];
   srcAccountID: Scalars['String'];
   state: TransactionState;
@@ -11576,6 +11576,7 @@ export const Resource = {
   SettingsLoanProducts: 'SETTINGS_LOAN_PRODUCTS',
   SettingsMember: 'SETTINGS_MEMBER',
   SettingsOrganizationProfile: 'SETTINGS_ORGANIZATION_PROFILE',
+  SettingsPrintPreference: 'SETTINGS_PRINT_PREFERENCE',
   SettingsSavingParameters: 'SETTINGS_SAVING_PARAMETERS',
   SettingsSavingProducts: 'SETTINGS_SAVING_PRODUCTS',
   SettingsServiceCenter: 'SETTINGS_SERVICE_CENTER',
@@ -13222,7 +13223,7 @@ export type TaxPayerOptions = typeof TaxPayerOptions[keyof typeof TaxPayerOption
 export type TellerActivityEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   denomination?: Maybe<Array<Maybe<DenominationValue>>>;
   destBranch?: Maybe<Scalars['Localized']>;
   destProfilePic?: Maybe<Scalars['String']>;
@@ -25121,7 +25122,7 @@ export type GetDepositListDataQuery = {
           state: TransactionState;
           paymentMode?: string | null;
           processedBy?: string | null;
-          date?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
           agentName?: string | null;
           agentId?: string | null;
           profilePicUrl?: string | null;
@@ -25157,7 +25158,7 @@ export type GetWithdrawListDataQuery = {
           state: TransactionState;
           paymentMode?: string | null;
           processedBy?: string | null;
-          date?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
           profilePicUrl?: string | null;
         } | null;
       } | null> | null;
@@ -25188,7 +25189,7 @@ export type GetAccountTransferListDataQuery = {
           amount?: string | null;
           state: TransactionState;
           transferType: TransferType;
-          date?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -25228,7 +25229,7 @@ export type GetTellerTransactionListDataQuery = {
           srcTeller?: Record<'local' | 'en' | 'np', string> | null;
           amount?: string | null;
           destTeller?: Record<'local' | 'en' | 'np', string> | null;
-          date?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
           srcProfilePic?: string | null;
           destProfilePic?: string | null;
           srcProfilePicUrl?: string | null;
