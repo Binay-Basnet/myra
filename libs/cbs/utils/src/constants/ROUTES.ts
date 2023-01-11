@@ -48,6 +48,7 @@ export const ROUTES = {
   CBS_TRANS_MARKET_REPRESENTATIVE_LIST: '/cbs/transactions/market-representative/list',
   CBS_TRANS_JOURNAL_VOUCHER_LIST: '/cbs/transactions/journal-vouchers/list',
   CBS_TRANS_ALL_TRANSACTION_LIST: '/cbs/transactions/all-transactions/list',
+  CBS_TRANS_ALL_LEDGERS_LIST: '/cbs/transactions/all-ledgers/list',
 
   CBS_TRANSFER_VAULT_ADD: '/cbs/transfers/vault-transfer/add',
   CBS_TRANSFER_TELLER_ADD: '/cbs/transfers/teller-transfer/add',

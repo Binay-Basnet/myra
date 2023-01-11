@@ -1962,6 +1962,7 @@ export type ChartsOfAccountMutation = {
   addAccount?: Maybe<CoaAddAccountResult>;
   delete: AddChartsOfAccountResult;
   newGroup: NewCoaGroupResult;
+  updateMoneyLedger?: Maybe<MoneyLedgerResult>;
 };
 
 export type ChartsOfAccountMutationAddArgs = {
@@ -1979,6 +1980,11 @@ export type ChartsOfAccountMutationDeleteArgs = {
 
 export type ChartsOfAccountMutationNewGroupArgs = {
   data: NewCoaGroupInput;
+};
+
+export type ChartsOfAccountMutationUpdateMoneyLedgerArgs = {
+  id: Scalars['ID'];
+  status: Scalars['Boolean'];
 };
 
 export type ChartsOfAccountResult = {
@@ -8322,6 +8328,7 @@ export type LedgerList = {
   date?: Maybe<Scalars['Localized']>;
   ledgerName?: Maybe<Scalars['String']>;
   serviceCenter?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Boolean']>;
 };
 
 export type LedgerMapping = {
@@ -10504,6 +10511,11 @@ export type MobileBankingReportMBankingTransactionReportArgs = {
 
 export type MobileBankingReportMbankingRegistrationReportArgs = {
   data?: InputMaybe<EbankingReportFilter>;
+};
+
+export type MoneyLedgerResult = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['ID'];
 };
 
 export type MonthlyDividendRate = {

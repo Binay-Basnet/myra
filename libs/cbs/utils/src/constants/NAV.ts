@@ -396,6 +396,11 @@ export const CBS: NavType = {
           route: ROUTES.CBS_TRANS_ALL_TRANSACTION_LIST,
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
+        {
+          label: 'All Ledgers',
+          route: ROUTES.CBS_TRANS_ALL_LEDGERS_LIST,
+          aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
+        },
       ],
       reportPages: [
         {
