@@ -61,6 +61,7 @@ export const ProductPrematurePenalty = ({ penaltyData }: IProductPrematurePenalt
     ],
     []
   );
+  if (penaltyDataArray?.length === 0) return null;
 
   return (
     <DetailsCard title="Premature Penalty Setup" hasTable>

@@ -39,6 +39,7 @@ export const ProductLimits = ({ limits }: IProductLimits) => {
     ],
     []
   );
+  if (limits?.length === 0) return null;
 
   return (
     <DetailsCard title="Limits" hasTable>

@@ -82,11 +82,7 @@ export const GuaranteeList = ({ gauranteeList }: GauranteeProps) => {
                 <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
                   {gauranteeList?.productName}
                 </Text>
-                <Chips variant="solid" type="label" size="sm" theme="success" label="Active" />
               </Box>
-              <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
-                {gauranteeList?.productName}
-              </Text>
             </Box>
             <AccordionIcon />
           </AccordionButton>

@@ -61,6 +61,7 @@ export const OverviewPage = () => {
           />
           <ProductCriteria criteria={criteriaData} memberType={detailData?.typeOfMember} />
           <ProductDocuments requiredDocuments={detailData?.requiredDocuments} />
+
           <ProductLimits limits={productLimits} />
 
           <ProductRebate rebateData={detailData?.rebate} />
