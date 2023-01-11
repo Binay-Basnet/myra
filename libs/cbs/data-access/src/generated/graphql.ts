@@ -14945,6 +14945,32 @@ export type AddAccountInCoaMutation = {
   };
 };
 
+export type UpdateLedgerStatusMutationVariables = Exact<{
+  id: Scalars['ID'];
+  status: Scalars['Boolean'];
+}>;
+
+export type UpdateLedgerStatusMutation = {
+  settings: {
+    general?: {
+      chartsOfAccount?: {
+        account?: {
+          updateMoneyLedger?: {
+            recordId: string;
+            error?:
+              | MutationError_AuthorizationError_Fragment
+              | MutationError_BadRequestError_Fragment
+              | MutationError_NotFoundError_Fragment
+              | MutationError_ServerError_Fragment
+              | MutationError_ValidationError_Fragment
+              | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetCooperativeDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymCooperativeFormInput;
@@ -23453,6 +23479,7 @@ export type GetCoaLeafNodeDetailsQuery = {
             ledgerName?: string | null;
             serviceCenter?: string | null;
             balance?: string | null;
+            status?: boolean | null;
           } | null> | null;
         } | null;
       } | null;
@@ -26962,6 +26989,39 @@ export const useAddAccountInCoaMutation = <TError = unknown, TContext = unknown>
   useMutation<AddAccountInCoaMutation, TError, AddAccountInCoaMutationVariables, TContext>(
     ['addAccountInCOA'],
     useAxios<AddAccountInCoaMutation, AddAccountInCoaMutationVariables>(AddAccountInCoaDocument),
+    options
+  );
+export const UpdateLedgerStatusDocument = `
+    mutation updateLedgerStatus($id: ID!, $status: Boolean!) {
+  settings {
+    general {
+      chartsOfAccount {
+        account {
+          updateMoneyLedger(id: $id, status: $status) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLedgerStatusMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLedgerStatusMutation,
+    TError,
+    UpdateLedgerStatusMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpdateLedgerStatusMutation, TError, UpdateLedgerStatusMutationVariables, TContext>(
+    ['updateLedgerStatus'],
+    useAxios<UpdateLedgerStatusMutation, UpdateLedgerStatusMutationVariables>(
+      UpdateLedgerStatusDocument
+    ),
     options
   );
 export const SetCooperativeDataDocument = `
@@ -38695,6 +38755,7 @@ export const GetCoaLeafNodeDetailsDocument = `
             ledgerName
             serviceCenter
             balance
+            status
           }
         }
       }

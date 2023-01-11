@@ -1,163 +1,164 @@
 query getCOAList($filter: ChartsOfAccountFilter!) {
-    settings {
-        general {
-            chartsOfAccount {
-                accounts(filter: $filter) {
-                    data {
-                        id
-                        name
-                        under
-                        accountClass
-                        accountCode
-                        currency
-                        accountType
-                        openingBalance
-                    }
-                }
-            }
+  settings {
+    general {
+      chartsOfAccount {
+        accounts(filter: $filter) {
+          data {
+            id
+            name
+            under
+            accountClass
+            accountCode
+            currency
+            accountType
+            openingBalance
+          }
         }
+      }
     }
+  }
 }
 
 query getCoaFullView {
-    settings {
-        chartsOfAccount {
-            fullView {
-                data {
-                    id
-                    name
-                    under
-                    accountType
-                    accountClass
-                    accountCode
-                    category
-                    allowedBalance
-                    transactionAllowed
-                }
-            }
+  settings {
+    chartsOfAccount {
+      fullView {
+        data {
+          id
+          name
+          under
+          accountType
+          accountClass
+          accountCode
+          category
+          allowedBalance
+          transactionAllowed
         }
+      }
     }
+  }
 }
 
 query searchCOA($coaName: String!) {
-    settings {
-        general {
-            chartsOfAccount {
-                search(name: $coaName) {
-                    data {
-                        id
-                        name
-                        accountCode
-                    }
-                }
-            }
+  settings {
+    general {
+      chartsOfAccount {
+        search(name: $coaName) {
+          data {
+            id
+            name
+            accountCode
+          }
         }
+      }
     }
+  }
 }
 
 query getCOAAccountsUnderList($accountCode: [String]) {
-    settings {
-        chartsOfAccount {
-            accountsUnder(accountCode: $accountCode) {
-                data {
-                    id
-                    accountCode
-                    name
-                }
-            }
+  settings {
+    chartsOfAccount {
+      accountsUnder(accountCode: $accountCode) {
+        data {
+          id
+          accountCode
+          name
         }
+      }
     }
+  }
 }
 
 query getCOAAccountsUnderLeafList($parentId: [String]!, $currentBranch: Boolean) {
-    settings {
-        chartsOfAccount {
-            accountsUnderLeaf(parentId: $parentId, currentBranch: $currentBranch) {
-                accountId
-                name
-            }
-        }
+  settings {
+    chartsOfAccount {
+      accountsUnderLeaf(parentId: $parentId, currentBranch: $currentBranch) {
+        accountId
+        name
+      }
     }
+  }
 }
 
 query getCoaAccountList($branchId: String, $pagination: Pagination, $filter: COAListFilter) {
-    settings {
-        chartsOfAccount {
-            coaAccountList(branchId: $branchId, pagination: $pagination, filter: $filter) {
-                edges {
-                    node {
-                        accountCode
-                        accountName
-                        accountClass
-                        parentGroup
-                        branch
-                    }
-                }
-                totalCount
-                pageInfo {
-                    hasNextPage
-                    hasPreviousPage
-                    startCursor
-                    endCursor
-                }
-            }
+  settings {
+    chartsOfAccount {
+      coaAccountList(branchId: $branchId, pagination: $pagination, filter: $filter) {
+        edges {
+          node {
+            accountCode
+            accountName
+            accountClass
+            parentGroup
+            branch
+          }
         }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+      }
     }
+  }
 }
 
 query getCOAAccountDetails($id: String!) {
-    settings {
-        chartsOfAccount {
-            coaAccountDetails(id: $id) {
-                data {
-                    meta {
-                        accountName
-                        accountId
-                        accountType
-                        createdDate
-                    }
-                    overview {
-                        openingBalance
-                        dr
-                        cr
-                        closingBalance
-                    }
-                    totalNoOfTxns
-                    recentTxns {
-                        date
-                        txnId
-                        txnType
-                        particulars
-                        total
-                    }
-                }
-            }
+  settings {
+    chartsOfAccount {
+      coaAccountDetails(id: $id) {
+        data {
+          meta {
+            accountName
+            accountId
+            accountType
+            createdDate
+          }
+          overview {
+            openingBalance
+            dr
+            cr
+            closingBalance
+          }
+          totalNoOfTxns
+          recentTxns {
+            date
+            txnId
+            txnType
+            particulars
+            total
+          }
         }
+      }
     }
+  }
 }
 
 query getCOALeafNodeDetails($id: ID!) {
-    settings {
-        chartsOfAccount {
-            coaLeafNodeDetails(id: $id) {
-                data {
-                    id
-                    accountName
-                    accountType
-                    date
-                    noOfAccounts
-                    drAmount
-                    crAmount
-                    closingBalance
-                    ledgers {
-                        accountCode
-                        date
-                        ledgerName
-                        serviceCenter
-                        balance
-                    }
-                }
-            }
+  settings {
+    chartsOfAccount {
+      coaLeafNodeDetails(id: $id) {
+        data {
+          id
+          accountName
+          accountType
+          date
+          noOfAccounts
+          drAmount
+          crAmount
+          closingBalance
+          ledgers {
+            accountCode
+            date
+            ledgerName
+            serviceCenter
+            balance
+            status
+          }
         }
+      }
     }
+  }
 }
