@@ -617,7 +617,7 @@ export const CbsAccountClose = () => {
               </Box>
             </Box>
             {memberId && memberId !== 'undefined' && (
-              <Box position="sticky" top="170px" right="0" maxH="500px">
+              <Box position="sticky" top="0" right="0" maxH="500px">
                 <MemberCard
                   memberDetails={{
                     name: memberDetailData?.name,

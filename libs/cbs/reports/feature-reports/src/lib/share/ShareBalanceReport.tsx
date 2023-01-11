@@ -69,7 +69,7 @@ export const ShareBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 8,
+                    colspan: 7,
                   },
                 },
               },

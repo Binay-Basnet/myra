@@ -230,16 +230,23 @@ export const CbsMembersFeatureActivate = () => {
              * */}
           </Box>
         </Box>
-        <Box position="sticky" bottom={0} zIndex="11">
-          <FormFooter
-            mainButtonLabel="Done"
-            mainButtonHandler={() => {
-              queryClient.invalidateQueries(['getMemberList']);
-              router.push(ROUTES.CBS_MEMBER_LIST);
-            }}
-          />
-        </Box>
       </Container>
+
+      <Box position="relative" margin="0px auto" display={mode === 'details' ? 'block' : 'none'}>
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+          <Container minW="container.lg" height="fit-content" p="0">
+            <Box position="sticky" bottom={0} zIndex="11">
+              <FormFooter
+                mainButtonLabel="Done"
+                mainButtonHandler={() => {
+                  queryClient.invalidateQueries(['getMemberList']);
+                  router.push(ROUTES.CBS_MEMBER_LIST);
+                }}
+              />
+            </Box>
+          </Container>
+        </Box>
+      </Box>
     </>
   );
 };
