@@ -10,6 +10,11 @@ export const exportVisibleTableToExcel = (fileName: string) => {
 
     // const tableHeads = tables[index]?.querySelectorAll('th > div');
 
+    // ws['!cols'] = [];
+
+    // Array.prototype.slice.call(tableHeads)?.forEach((th, thIndex) => {
+    //   if (tableHeads[thIndex]?.textContent === '') {
+    //     ws['!cols'][thIndex] = { hidden: true };
     // const columnIndexToHide: number[] = [];
 
     // Array.prototype.slice.call(tableHeads)?.forEach((th, thIndex) => {

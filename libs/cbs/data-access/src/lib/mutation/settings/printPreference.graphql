@@ -1,0 +1,47 @@
+mutation setWithdrawSlipPrintPreference($data: PrintPreferenceInput) {
+  settings {
+    general {
+      printPreference {
+        add(data: $data) {
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getWithdrawSlipPrintPreference {
+  settings {
+    general {
+      printPreference {
+        get {
+          data {
+            slipSize {
+              slipSizeStandard
+              slipSizeCustom {
+                height
+                width
+              }
+            }
+            slipElements {
+              blockOne {
+                top
+                left
+              }
+              blockTwo {
+                top
+                left
+              }
+              blockThree {
+                top
+                left
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

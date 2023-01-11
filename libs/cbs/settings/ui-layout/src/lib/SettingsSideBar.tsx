@@ -32,6 +32,11 @@ const orgTabList: TabList[] = [
     aclKey: 'SETTINGS_BANK',
     route: ROUTES.SETTINGS_GENERAL_BANK,
   },
+  {
+    label: 'Print Preference',
+    aclKey: 'SETTINGS_PRINT_PREFERENCE',
+    route: ROUTES.SETTINGS_GENERAL_PRINT_PREFERENCE,
+  },
 ];
 
 const tabList: TabList[] = [
@@ -69,7 +74,6 @@ const tabList: TabList[] = [
   {
     label: 'settingsSideBarLoanProducts',
     aclKey: 'SETTINGS_LOAN_PRODUCTS',
-
     route: ROUTES.SETTINGS_GENERAL_LP_LIST,
   },
 ];
