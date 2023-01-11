@@ -68,7 +68,7 @@ const myraAppn = [
   {
     title: 'accountingSystem',
     img: '/accounting.svg',
-    link: '/accounting/sales/list',
+    link: '/accounting/sales/sales-entry/list',
   },
   {
     title: 'alternativeChannelsAndCrossConnectivity',
