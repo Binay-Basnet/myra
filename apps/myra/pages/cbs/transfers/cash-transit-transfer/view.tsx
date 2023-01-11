@@ -1,10 +1,10 @@
 import { ReactElement } from 'react';
+import { TransferDetailsHeader } from 'libs/cbs/transfer/feature-detail-page/src/component';
 
 import { MainLayout } from '@myra-ui';
 
 import { TransferLayout } from '@coop/cbs/transactions/ui-layouts';
 import { CashTransitTransferDetailPage } from '@coop/cbs/transfer/detail';
-import { TransferDetailsHeader } from 'libs/cbs/transfer/feature-detail-page/src/component';
 
 const CashTransferDetail = () => (
   <>

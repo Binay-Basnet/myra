@@ -23,7 +23,7 @@ export const ProductDocuments = ({
         </Text>
         <Box ml="s20" as="ul">
           {individualDocuments?.map((document) => (
-            <li>{document?.toLowerCase()}</li>
+            <li>{document?.replace(/_/g, ' ')?.toLowerCase()}</li>
           ))}
         </Box>
       </Box>

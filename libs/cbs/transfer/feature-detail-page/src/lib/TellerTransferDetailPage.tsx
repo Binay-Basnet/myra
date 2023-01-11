@@ -27,7 +27,7 @@ export const TellerTransferDetailPage = () => {
       >
         <SideBar sidebarData={sidebarData} />
       </Box>
-      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+      <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && (
           <OverviewPage data={transferDetailData} summary={tellerTxnSummary} />
         )}

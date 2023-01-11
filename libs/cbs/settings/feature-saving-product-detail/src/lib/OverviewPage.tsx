@@ -67,10 +67,14 @@ export const OverviewPage = () => {
             }}
           />
           <ProductCriteria criteria={criteriaData} memberType={detailData?.typeOfMember} />
-          <ProductDocuments
-            individualDocuments={detailData?.individualDocuments}
-            institutionDocuments={detailData?.institutionDocuments}
-          />
+          {detailData?.individualDocuments ||
+            (detailData?.institutionDocuments && (
+              <ProductDocuments
+                individualDocuments={detailData?.individualDocuments}
+                institutionDocuments={detailData?.institutionDocuments}
+              />
+            ))}
+
           <ProductServiceCharge serviceCharge={detailData?.serviceCharge} />
           <AccountCloseCharge accountCloseCharge={detailData?.accountCloseCharge} />
           <ProductLimits limits={productLimits} />
