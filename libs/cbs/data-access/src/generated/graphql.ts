@@ -44,6 +44,28 @@ export type AbbsTransaction = {
   receivableAccountId?: Maybe<Scalars['String']>;
 };
 
+export type AccessLog = {
+  bytesReceived?: Maybe<Scalars['Int']>;
+  bytesSent?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['String']>;
+  elapsedTime?: Maybe<Scalars['String']>;
+  header?: Maybe<Scalars['Any']>;
+  id?: Maybe<Scalars['String']>;
+  ip?: Maybe<Scalars['String']>;
+  requestBody?: Maybe<Scalars['Any']>;
+  responseBody?: Maybe<Scalars['Any']>;
+  statusCode?: Maybe<Scalars['Int']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+export type AccessLogQuery = {
+  raw: RawAccessLog;
+};
+
+export type AccessLogQueryRawArgs = {
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type AccountActivityEntry = {
   ID: Scalars['ID'];
   accountId?: Maybe<Scalars['String']>;
@@ -283,6 +305,13 @@ export const AccountTypeFilter = {
 } as const;
 
 export type AccountTypeFilter = typeof AccountTypeFilter[keyof typeof AccountTypeFilter];
+export const AccountTypes = {
+  Holding: 'HOLDING',
+  Loan: 'LOAN',
+  Savings: 'SAVINGS',
+} as const;
+
+export type AccountTypes = typeof AccountTypes[keyof typeof AccountTypes];
 export type AccountWithdrawSlip = {
   account?: Maybe<DepositLoanAccount>;
   availableRange?: Maybe<SlipRange>;
@@ -703,6 +732,40 @@ export type AgentTransactionViewResult = {
   error?: Maybe<QueryError>;
 };
 
+export type AllAccount = {
+  accountID: Scalars['ID'];
+  accountName?: Maybe<Scalars['String']>;
+  accountOpenDate?: Maybe<Scalars['Localized']>;
+  accountType?: Maybe<AccountTypes>;
+  member?: Maybe<Member>;
+  productName?: Maybe<Scalars['String']>;
+};
+
+export type AllAccountConnection = {
+  edges?: Maybe<Array<AllAccountEdge>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AllAccountEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AllAccount>;
+};
+
+export type AllAccountsFilter = {
+  accountType?: InputMaybe<AccountTypes>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type AllAccountsQuery = {
+  list?: Maybe<AllAccountConnection>;
+};
+
+export type AllAccountsQueryListArgs = {
+  filter?: InputMaybe<AllAccountsFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
 export type AllTransactionFilter = {
   id?: InputMaybe<Scalars['ID']>;
 };
@@ -952,6 +1015,7 @@ export type AssignedMemberView = {
   account?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   member?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
 };
 
 export type AssignedMembersListConnection = {
@@ -3867,6 +3931,7 @@ export type DepositTdsResult = {
 };
 
 export type DepositTransactionView = {
+  accountId?: Maybe<Scalars['ID']>;
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   depositedBy?: Maybe<DepositedBy>;
@@ -9892,6 +9957,7 @@ export type MemberAccountDetails = {
   member?: Maybe<Member>;
   monthlyInterestCompulsory?: Maybe<Scalars['Boolean']>;
   objState?: Maybe<ObjState>;
+  productId?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
   staffProduct?: Maybe<Scalars['Boolean']>;
   supportMultiple?: Maybe<Scalars['Boolean']>;
@@ -11424,9 +11490,11 @@ export type QuarterlyDividendRateInput = {
 };
 
 export type Query = {
+  accessLog: AccessLogQuery;
   account: DepositLoanAccountQuery;
   accounting: AccountingQuery;
   administration: AdministrationQuery;
+  allAccounts: AllAccountsQuery;
   alternativeChannel: AlternativeChannelQuery;
   auditLog: AuditLogQuery;
   auth: AuthQuery;
@@ -11599,6 +11667,11 @@ export const Resource = {
 } as const;
 
 export type Resource = typeof Resource[keyof typeof Resource];
+export type RawAccessLog = {
+  data?: Maybe<Array<Maybe<AccessLog>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type RawAuditLog = {
   data?: Maybe<Array<Maybe<AuditLog>>>;
   error?: Maybe<QueryError>;
@@ -14218,6 +14291,7 @@ export type WithdrawSlipQueryListPastSlipsArgs = {
 };
 
 export type WithdrawTransactionView = {
+  accountId?: Maybe<Scalars['ID']>;
   accountName?: Maybe<Scalars['String']>;
   chequeNo?: Maybe<Scalars['String']>;
   fine?: Maybe<Scalars['String']>;
