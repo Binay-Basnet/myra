@@ -539,7 +539,7 @@ export const TopLevelHeader = () => {
                             <AppSwitcherText> {t['memberAndShareManagement']}</AppSwitcherText>
                           </AppSwitcherIconWrapper>
                           <AppSwitcherIconWrapper
-                            onClick={() => router.push('/accounting/sales/list')}
+                            onClick={() => router.push('/accounting/sales/sales-entry/list')}
                           >
                             <Image
                               width={32}

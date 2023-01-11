@@ -1,25 +1,33 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import pickBy from 'lodash/pickBy';
+
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import {
   SalesSaleEntryInput,
+  useGetNewIdMutation,
   useGetSalesSaleEntryFormStateDataQuery,
   useSetSalesSaleEntryDataMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { EntryTable, SalesBox, SalesDetails } from '../components/form-components/salesEntry';
 
 export const NewSalesForm = () => {
   const { t } = useTranslation();
+  const [newId, setNewId] = useState('');
 
   const router = useRouter();
 
-  const id = router?.query?.['id'];
+  const getNewId = useGetNewIdMutation({});
+  useEffect(() => {
+    getNewId?.mutateAsync({}).then((res) => setNewId(res?.newId));
+  }, []);
+
+  const id = router?.query?.['id'] || newId;
 
   const queryClient = useQueryClient();
 

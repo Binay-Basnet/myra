@@ -21795,6 +21795,7 @@ export type GetAccountOpeningReportQuery = {
         data?: Array<{
           accountName?: string | null;
           accountNumber?: string | null;
+          memberCode?: string | null;
           memberId?: string | null;
           openedBy?: string | null;
           openingDate?: Record<'local' | 'en' | 'np', string> | null;
@@ -36490,6 +36491,7 @@ export const GetAccountOpeningReportDocument = `
         data {
           accountName
           accountNumber
+          memberCode
           memberId
           openedBy
           openingDate

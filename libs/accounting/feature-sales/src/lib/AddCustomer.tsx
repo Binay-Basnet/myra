@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import pickBy from 'lodash/pickBy';
+
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import {
   SalesCustomerInput,
+  useGetNewIdMutation,
   useGetSalesCustomerFormStateDataQuery,
   useSetSalesCustomerDataMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import { AdditionalDetail, CustomerDetail } from '../components/form-components/customer';
 
 export const AddCustomer = () => {
   const router = useRouter();
+  const [newId, setNewId] = useState('');
 
-  const id = router?.query?.['id'];
+  const getNewId = useGetNewIdMutation({});
+  useEffect(() => {
+    getNewId?.mutateAsync({}).then((res) => setNewId(res?.newId));
+  }, []);
+
+  const id = router?.query?.['id'] || newId;
 
   const queryClient = useQueryClient();
 
