@@ -163,7 +163,7 @@ export const CashLedgersReport = () => {
                       },
                     },
                     {
-                      header: 'Cash Recieved Cr.',
+                      header: 'Cash Payment Cr.',
                       cell: (props) => amountConverter(props.getValue() as string),
                       accessorKey: 'cashCr',
                       meta: {
@@ -270,7 +270,7 @@ export const CashLedgersReport = () => {
                       },
                     },
                     {
-                      header: 'Cash Recieved Cr.',
+                      header: 'Cash Payment Cr.',
                       accessorKey: 'cashCr',
                       cell: (props) => amountConverter(props.getValue() as string),
 
