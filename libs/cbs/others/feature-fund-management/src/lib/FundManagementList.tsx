@@ -5,6 +5,7 @@ import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -80,7 +81,7 @@ export const FundManagementList = () => {
 
       {
         header: t['depositListDepositDate'],
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
         header: t['depositListAmount'],

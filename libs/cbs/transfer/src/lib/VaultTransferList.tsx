@@ -5,7 +5,7 @@ import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -49,7 +49,7 @@ export const VaultTransferList = () => {
               size="sm"
               src={
                 props?.row?.original?.node?.transferType === TellerTransferType.VaultToCash
-                  ? props?.row?.original?.node?.destProfilePicUrl
+                  ? props?.row?.original?.node?.destProfilePicUrl ?? ''
                   : props?.row?.original?.node?.srcProfilePicUrl ?? ' '
               }
             />
@@ -78,7 +78,7 @@ export const VaultTransferList = () => {
       },
       {
         header: 'Transfer Date',
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
         id: '_actions',

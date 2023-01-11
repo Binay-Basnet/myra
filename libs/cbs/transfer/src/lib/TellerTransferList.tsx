@@ -11,7 +11,7 @@ import {
   TellerTransferType,
   useGetTellerTransactionListDataQuery,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 import { TellerTransferApproveModal } from '../components';
@@ -119,7 +119,7 @@ export const TellerTransferList = () => {
       },
       {
         header: 'Transfer Date',
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
         id: '_actions',

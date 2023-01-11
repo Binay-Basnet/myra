@@ -11,6 +11,7 @@ import {
   RequestStatus,
   useGetCashInTransitListQuery,
 } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 import { CashInTransitTransferAproveModal } from '../components/cash-in-transit/CashInTransitTransferAproveModal';
@@ -104,7 +105,7 @@ export const CashTransitTransferList = () => {
       },
       {
         header: 'Transfer Date',
-        accessorFn: (row) => row?.node?.transferDate?.local?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.transferDate),
       },
       {
         id: '_actions',

@@ -4,6 +4,7 @@ import { Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -62,7 +63,7 @@ export const CashTransferList = () => {
       },
       {
         header: 'Approval Status',
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
         header: 'Cash Amount',
@@ -74,7 +75,7 @@ export const CashTransferList = () => {
       },
       {
         header: 'Transfer Date',
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
         id: '_actions',
