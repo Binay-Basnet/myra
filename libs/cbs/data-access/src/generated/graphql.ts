@@ -1636,6 +1636,15 @@ export type CoaAccount = {
   parentGroup?: Maybe<Scalars['Localized']>;
 };
 
+export const CoaAccountClass = {
+  Assets: 'ASSETS',
+  EquityAndLiabilities: 'EQUITY_AND_LIABILITIES',
+  Expenditure: 'EXPENDITURE',
+  Income: 'INCOME',
+  OffBalanceSheet: 'OFF_BALANCE_SHEET',
+} as const;
+
+export type CoaAccountClass = typeof CoaAccountClass[keyof typeof CoaAccountClass];
 export type CoaAccountListEdges = {
   cursor: Scalars['Cursor'];
   node?: Maybe<CoaAccount>;
@@ -10882,7 +10891,7 @@ export type NewBankAccountResult = {
 };
 
 export type NewCoaGroupInput = {
-  accountClass?: InputMaybe<Scalars['String']>;
+  accountClass?: InputMaybe<CoaAccountClass>;
   accountCode?: InputMaybe<Scalars['String']>;
   accountSetup?: InputMaybe<CoaAccountSetup>;
   allowedBalance?: InputMaybe<CoaTypeOfTransaction>;
