@@ -49,7 +49,7 @@ export const AllAccountsList = () => {
   return (
     <Table
       data={rowData}
-      getRowId={(row) => String(row?.node?.accountID)}
+      getRowId={(row) => String(row?.node?.ID)}
       isLoading={isFetching}
       columns={columns}
       pagination={{

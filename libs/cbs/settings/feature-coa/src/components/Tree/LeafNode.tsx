@@ -10,10 +10,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { asyncToast, Box, Button, ButtonProps, Grid, GridItem, Icon, Modal, Text } from '@myra-ui';
 
 import {
+  CoaAccountClass,
   CoaAccountSetup,
   CoaCategory,
   CoaTypeOfTransaction,
   CoaTypesOfAccount,
+  InputMaybe,
   NewCoaGroupInput,
   useAddAccountInCoaMutation,
   useAddGroupMutation,
@@ -86,7 +88,7 @@ const LeafNode = ({ data }: ITestProps) => {
   useEffect(() => {
     methods.reset({
       underAccountCode: clickedAccount?.under,
-      accountClass: clickedAccount?.accountClass,
+      accountClass: clickedAccount?.accountClass as CoaAccountClass,
       accountCode: newCode,
       typeOfTransaction: CoaTypeOfTransaction.Debit,
       allowedBalance: CoaTypeOfTransaction.Debit,
@@ -203,7 +205,7 @@ export const AddGroup = ({ clickedAccount, setClickedAccount, data }: IAddGroupP
   useEffect(() => {
     methods.reset({
       underAccountCode: clickedAccount?.id,
-      accountClass: clickedAccount?.accountClass,
+      accountClass: clickedAccount?.accountClass as InputMaybe<CoaAccountClass> | undefined,
       accountCode: newCode,
       typeOfTransaction: CoaTypeOfTransaction.Debit,
       allowedBalance: CoaTypeOfTransaction.Debit,
@@ -348,7 +350,7 @@ export const ConfigureGroup = ({
     methods.reset({
       groupName: clickedAccount?.name?.en,
       underAccountCode: clickedAccount?.under,
-      accountClass: clickedAccount?.accountClass,
+      accountClass: clickedAccount?.accountClass as InputMaybe<CoaAccountClass> | undefined,
       accountCode: clickedAccount?.id,
       typeOfTransaction: clickedAccount?.transactionAllowed,
       allowedBalance: clickedAccount?.allowedBalance,
