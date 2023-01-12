@@ -401,6 +401,11 @@ export const CBS: NavType = {
           route: ROUTES.CBS_TRANS_ALL_LEDGERS_LIST,
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
+        {
+          label: 'All Accounts',
+          route: ROUTES.CBS_TRANS_ALL_ACCOUNTS_LIST,
+          aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
+        },
       ],
       reportPages: [
         {

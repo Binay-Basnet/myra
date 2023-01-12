@@ -583,3 +583,27 @@ query getAccountLedgersList($accountId: ID!) {
     }
   }
 }
+
+query getAllAccounts($paginate: Pagination, $filter: AllAccountsFilter) {
+  allAccounts {
+    list(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          accountID
+          member {
+            name
+          }
+          accountName
+          productName
+          accountType
+          accountOpenDate
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}

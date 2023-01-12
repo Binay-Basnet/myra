@@ -17699,6 +17699,31 @@ export type GetAccountLedgersListQuery = {
   };
 };
 
+export type GetAllAccountsQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<AllAccountsFilter>;
+}>;
+
+export type GetAllAccountsQuery = {
+  allAccounts: {
+    list?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          accountID: string;
+          accountName?: string | null;
+          productName?: string | null;
+          accountType?: AccountTypes | null;
+          accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
+          member?: { name?: Record<'local' | 'en' | 'np', string> | null } | null;
+        } | null;
+      }> | null;
+      pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
 export type GetBankAccountListQueryVariables = Exact<{
   filter?: InputMaybe<BankAccountFilter>;
   pagination?: InputMaybe<Pagination>;
@@ -31328,6 +31353,43 @@ export const useGetAccountLedgersListQuery = <TData = GetAccountLedgersListQuery
     useAxios<GetAccountLedgersListQuery, GetAccountLedgersListQueryVariables>(
       GetAccountLedgersListDocument
     ).bind(null, variables),
+    options
+  );
+export const GetAllAccountsDocument = `
+    query getAllAccounts($paginate: Pagination, $filter: AllAccountsFilter) {
+  allAccounts {
+    list(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          accountID
+          member {
+            name
+          }
+          accountName
+          productName
+          accountType
+          accountOpenDate
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetAllAccountsQuery = <TData = GetAllAccountsQuery, TError = unknown>(
+  variables?: GetAllAccountsQueryVariables,
+  options?: UseQueryOptions<GetAllAccountsQuery, TError, TData>
+) =>
+  useQuery<GetAllAccountsQuery, TError, TData>(
+    variables === undefined ? ['getAllAccounts'] : ['getAllAccounts', variables],
+    useAxios<GetAllAccountsQuery, GetAllAccountsQueryVariables>(GetAllAccountsDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetBankAccountListDocument = `

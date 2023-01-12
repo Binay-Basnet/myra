@@ -88,6 +88,7 @@
     "cbs-transactions-feature-account-transfer": "libs/cbs/transactions/feature-account-transfer",
     "cbs-transactions-feature-agent": "libs/cbs/transactions/feature-agent",
     "cbs-transactions-feature-agent-transaction": "libs/cbs/transactions/feature-agent-transaction",
+    "cbs-transactions-feature-all-accounts": "libs/cbs/transactions/feature-all-accounts",
     "cbs-transactions-feature-deposit": "libs/cbs/transactions/feature-deposit",
     "cbs-transactions-feature-detail-page": "libs/cbs/transactions/feature-detail-page",
     "cbs-transactions-feature-loan-payment": "libs/cbs/transactions/feature-loan-payment",
