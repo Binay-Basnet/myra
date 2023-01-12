@@ -159,7 +159,7 @@ export const WithdrawSlipBookPrint = () => {
     accountPosition: selectedPrintPreference?.blockTwo,
     slipNumberPosition: selectedPrintPreference?.blockThree,
     details: {
-      branch: user?.branch?.name as string,
+      branch: user?.currentBranch?.name as string,
       memberName: withdrawSlipData?.member?.name?.local as string,
       accountNumber: withdrawSlipData?.account?.id as string,
       accountName: withdrawSlipData?.account?.accountName as string,

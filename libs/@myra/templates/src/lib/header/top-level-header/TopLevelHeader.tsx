@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { CgMenuGridO } from 'react-icons/cg';
@@ -19,15 +19,19 @@ import {
   SearchBar,
   ShortcutTab,
 } from '@myra-ui/components';
-import { SwitchTabs } from '@myra-ui/forms';
+import { Select, SwitchTabs } from '@myra-ui/forms';
 import { Avatar, Box, Button, Divider, Grid, Icon, IconButton, Text } from '@myra-ui/foundations';
 
 import {
+  authenticate,
   BranchCategory,
+  BranchMinimal,
   DateType,
   EodOption,
   logout,
+  RoleInfo,
   RootState,
+  saveToken,
   setPreference,
   useAppDispatch,
   useAppSelector,
@@ -35,18 +39,32 @@ import {
   useGetEodStatusQuery,
   useSetEndOfDayDataMutation,
   useSetPreferenceMutation,
+  useSwitchRoleMutation,
 } from '@coop/cbs/data-access';
-import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { AbilityContext, localizedDate, ROUTES, updateAbility } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
-enum GetRoleSlug {
-  AGENT = 'Market Representative',
-  BRANCH_MANAGER = 'Branch Manager',
-  HEAD_TELLER = 'Head Teller',
-  SUPERADMIN = 'Super Admin',
-  TELLER = 'Teller',
-  USER = 'User',
-}
+// const ROLE_SLUG: Record<string, string> = {
+//   SUPERADMIN: 'Super Admin',
+//   BRANCH_MANAGER: 'Branch Manager',
+//   TELLER: 'Teller',
+//   AGENT: 'Market Representative',
+//   ACCOUNTANT: 'Accountant',
+//   HEAD_TELLER: 'Head Teller',
+//   CUSTOMER_SERVICE_REPRESENTATIVE: 'Customer Service Representative',
+//   NOT_DEFINED_ROLE: 'Undefined Role',
+// } as const;
+
+// enum GetRoleSlug {
+//   AGENT = 'Market Representative',
+//   BRANCH_MANAGER = 'Branch Manager',
+//   HEAD_TELLER = 'Head Teller',
+//   SUPERADMIN = 'Super Admin',
+//   TELLER = 'Teller',
+//   USER = 'User',
+//
+//
+// }
 
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
@@ -120,12 +138,19 @@ export const TopLevelHeader = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useAppDispatch();
+
   const { mutateAsync } = useSetPreferenceMutation();
   const { data: eodStatusQueryData, refetch } = useGetEodStatusQuery({});
+
+  const { mutateAsync: switchRole } = useSwitchRoleMutation();
+
   const isHeadOfficeReady = eodStatusQueryData?.transaction?.eodStatus?.states?.headOfficeReady;
 
+  const auth = useAppSelector((state) => state?.auth);
   const user = useAppSelector((state) => state?.auth?.user);
   const userId = user?.id;
+
+  const ability = useContext(AbilityContext);
 
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
@@ -273,6 +298,57 @@ export const TopLevelHeader = () => {
 
     router.push('/day-close');
   };
+
+  const switchRoleOrBranch = async (
+    label: string,
+    value: string,
+    type: 'BRANCH' | 'ROLE' = 'BRANCH'
+  ) => {
+    await asyncToast({
+      id: 'new-role',
+      msgs: {
+        loading: `Switching to ${label}`,
+        success: `Switched to ${label}`,
+      },
+      promise: switchRole({
+        role: type === 'ROLE' ? value : undefined,
+        branch: type === 'BRANCH' ? value : undefined,
+      }),
+      onSuccess: (response) => {
+        const tokens = response?.auth?.switchRole?.data?.token;
+        const me = response?.auth?.switchRole?.data?.me;
+
+        if (tokens?.access && tokens?.refresh) {
+          dispatch(
+            saveToken({
+              accessToken: tokens?.access,
+              refreshToken: tokens?.refresh,
+            })
+          );
+        }
+
+        if (
+          me?.user &&
+          me?.permission?.myPermission &&
+          me?.preference &&
+          me?.rolesList &&
+          me?.branches
+        ) {
+          dispatch(
+            authenticate({
+              user: me?.user,
+              permissions: me?.permission?.myPermission,
+              preference: me?.preference,
+              availableRoles: me?.rolesList as RoleInfo[],
+              availableBranches: me?.branches as BranchMinimal[],
+            })
+          );
+          updateAbility(ability, me?.permission?.myPermission);
+        }
+      },
+    });
+  };
+
   /* eslint-disable no-nested-ternary */
   return (
     <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
@@ -390,7 +466,7 @@ export const TopLevelHeader = () => {
                       </PopoverBody>
                       <PopoverBody p="s8">
                         <Box display="flex" flexDirection="column" gap="s8">
-                          {user?.branch?.category === BranchCategory.HeadOffice ? (
+                          {user?.currentBranch?.category === BranchCategory.HeadOffice ? (
                             hasEodErrors ? (
                               <>
                                 <Button
@@ -645,39 +721,63 @@ export const TopLevelHeader = () => {
                               <Text fontWeight="SemiBold" fontSize="s2" color="primary.500">
                                 {user?.firstName?.local} {user?.lastName?.local}
                               </Text>
-                              <Text fontWeight="Regular" fontSize="s2" color="gray.600">
-                                {GetRoleSlug[user?.role || 'USER']}
-                              </Text>
+                              {user?.currentRole && (
+                                <Text fontWeight="Regular" fontSize="s2" color="gray.600">
+                                  {user?.currentRole.name}
+                                </Text>
+                              )}
                             </Box>
                           </Box>
 
                           <Box p="s8" borderBottom="1px solid " borderColor="border.layout">
-                            {/* <Select
-                            label="Branch"
-                            __placeholder="Lalitpur"
-                            options={[
-                              {
-                                label: 'Lalitpur',
-                                value: 'lalitpur',
-                              },
-                              {
-                                label: 'Option 2',
-                                value: 'option-2',
-                              },
-                              {
-                                label: 'Option 3',
-                                value: 'option-3',
-                              },
-                            ]}
-                          /> */}
-                            <Box>
-                              <Text fontSize="s3" color="black" fontWeight="medium">
-                                Branch
-                              </Text>
-                              <Text fontWeight="Regular" fontSize="s3" color="black">
-                                {user?.branch?.name || '-'}
-                              </Text>
-                            </Box>
+                            {user?.currentBranch && (
+                              <Select
+                                value={{
+                                  label: user?.currentBranch?.name || 'Branch',
+                                  value: user?.currentBranch?.id as string,
+                                }}
+                                label="Branch"
+                                options={auth.availableBranches?.map((branch) => ({
+                                  label: branch.name,
+                                  value: branch.id,
+                                }))}
+                                onChange={async (newValue) => {
+                                  if (newValue && 'label' in newValue) {
+                                    await switchRoleOrBranch(
+                                      String(newValue.label),
+                                      String(newValue.value)
+                                    );
+                                    router.reload();
+                                  }
+                                }}
+                              />
+                            )}
+                          </Box>
+
+                          <Box p="s8" borderBottom="1px solid " borderColor="border.layout">
+                            {user?.currentRole && (
+                              <Select
+                                value={{
+                                  label: user?.currentRole?.name,
+                                  value: user?.currentRole?.id as string,
+                                }}
+                                label="Role"
+                                options={auth.availableRoles?.map((role) => ({
+                                  label: role.name.slice(0, 30),
+                                  value: role.id,
+                                }))}
+                                onChange={async (newValue) => {
+                                  if (newValue && 'label' in newValue) {
+                                    await switchRoleOrBranch(
+                                      String(newValue.label),
+                                      String(newValue.value),
+                                      'ROLE'
+                                    );
+                                    router.reload();
+                                  }
+                                }}
+                              />
+                            )}
                           </Box>
 
                           {/* <Box

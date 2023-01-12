@@ -174,7 +174,7 @@ export const AddVaultTransfer = () => {
                         }
                         balance={
                           (transferType === TellerTransferType.VaultToCash
-                            ? user?.branch?.branchBalance
+                            ? user?.currentBranch?.branchBalance
                             : user?.userBalance) ?? '0'
                         }
                       />

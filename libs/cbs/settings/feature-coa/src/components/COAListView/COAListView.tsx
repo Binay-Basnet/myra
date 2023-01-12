@@ -18,7 +18,7 @@ export const COAListView = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
-  const branch = useAppSelector((state) => state?.auth?.user?.branch);
+  const branch = useAppSelector((state) => state?.auth?.user?.currentBranch);
 
   const { data: accountList, isFetching } = useGetCoaAccountListQuery({
     branchId: branch?.id,

@@ -4,9 +4,8 @@ import { useRouter } from 'next/router';
 import {
   authenticate,
   logout,
-  setPreference,
+  RoleInfo,
   useAppDispatch,
-  useAppSelector,
   useGetMeQuery,
   useRefreshToken,
 } from '@coop/cbs/data-access';
@@ -31,15 +30,21 @@ export const useInit = () => {
     }
   );
 
-  const isLoggedIn = useAppSelector((state) => state.auth.isLogged);
+  // const isLoggedIn = useAppSelector((state) => state.auth.isLogged);
 
   const refreshToken = useRefreshToken(url ?? '');
 
   const hasDataReturned = getMe?.data?.auth;
-  const userData = getMe?.data?.auth?.me?.data?.user;
-  const preference = getMe?.data?.auth?.me?.data?.preference;
-  const permissions = getMe?.data?.auth?.me?.data?.permission?.myPermission;
   const hasData = getMe?.data?.auth?.me?.data;
+
+  const loginRecord = getMe?.data?.auth?.me;
+  const loginData = loginRecord?.data;
+
+  const userData = loginData?.user;
+  const preference = loginData?.preference;
+  const permissions = loginData?.permission?.myPermission;
+  const availableRoles = loginData?.rolesList;
+  const availableBranches = loginData?.branches;
 
   useEffect(() => {
     refreshToken()
@@ -60,11 +65,19 @@ export const useInit = () => {
 
   useEffect(() => {
     if (hasDataReturned) {
-      if (userData) {
+      if (userData && preference && permissions && availableRoles && availableBranches) {
         updateAbility(ability, permissions as Partial<Record<string, string>>);
 
-        dispatch(authenticate({ user: userData }));
-        preference && dispatch(setPreference({ preference }));
+        dispatch(
+          authenticate({
+            user: userData,
+            permissions,
+            preference,
+            availableRoles: availableRoles as RoleInfo[],
+            availableBranches: availableBranches as RoleInfo[],
+          })
+        );
+
         setIsLoading(false);
       } else {
         if (route?.pathname.includes('password-recovery')) {
@@ -75,13 +88,13 @@ export const useInit = () => {
         replace('/login').then(() => setIsLoading(false));
       }
     }
-  }, [dispatch, hasDataReturned, hasData, userData, replace, isLoggedIn]);
+  }, [dispatch, hasDataReturned, hasData, userData, replace]);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      setTriggerQuery(true);
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     setTriggerQuery(true);
+  //   }
+  // }, [isLoggedIn]);
 
   return { isLoading };
 };

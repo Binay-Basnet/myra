@@ -8,50 +8,24 @@ mutation login($data: LoginInput!) {
           refresh
         }
         data {
-          user {
+          branches {
             id
-            objState
-            username
-            firstName
-            middleName
-            lastName
-            role
-            profilePic
-            userBalance
-            branch {
-              id
-              name
-              category
-              branchBalance
-            }
-            organization {
-              basicDetails {
-                name
-                logo
-              }
-              contactDetails {
-                website
-                phoneNumber
-                email
-              }
-              address {
-                district
-                wardNo
-                state
-                locality
-                localGovernment
-                houseNo
-              }
-              registrationDetails {
-                regdNo
-                panOrVat
-              }
-            }
+            name
+          }
+          rolesList {
+            id
+            name
+          }
+          permission {
+            myPermission
           }
           preference {
             language
             languageCode
             date
+          }
+          user {
+            ...User
           }
         }
       }
@@ -107,6 +81,40 @@ mutation setNewPassword($token: String!, $newPassword: String!) {
         recordID
         error {
           ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation switchRole($role: String, $branch: String) {
+  auth {
+    switchRole(role: $role, branchId: $branch) {
+      data {
+        token {
+          access
+          refresh
+        }
+        me {
+          branches {
+            id
+            name
+          }
+          rolesList {
+            id
+            name
+          }
+          permission {
+            myPermission
+          }
+          preference {
+            language
+            languageCode
+            date
+          }
+          user {
+            ...User
+          }
         }
       }
     }

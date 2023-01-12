@@ -43,7 +43,7 @@ export const AddCashTransitTransfer = () => {
 
   const user = useAppSelector((state) => state.auth?.user);
 
-  const branchData = user?.branch;
+  const branchData = user?.currentBranch;
 
   const { mutateAsync } = useSetCashInTransitTransferMutation();
 

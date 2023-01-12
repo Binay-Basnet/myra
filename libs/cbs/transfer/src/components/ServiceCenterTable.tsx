@@ -19,7 +19,7 @@ export const ServiceCenterTable = () => {
   });
 
   const serviceCenterList = branchListQueryData?.settings?.general?.branch?.list?.edges?.filter(
-    (item) => user?.branch?.id !== item?.node?.id
+    (item) => user?.currentBranch?.id !== item?.node?.id
   );
 
   const serviceCenterOptions = serviceCenterList?.map((serviceCenter) => ({

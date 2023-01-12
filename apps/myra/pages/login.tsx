@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
@@ -13,13 +14,16 @@ import {
   Text,
 } from '@myra-ui';
 
-import { login, setPreference, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
+import { authenticate, saveToken, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
+import { AbilityContext, updateAbility } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 export const Login = () => {
   const { t } = useTranslation();
   const { mutateAsync, isLoading } = useLoginMutation();
   const dispatch = useAppDispatch();
+  const ability = useContext(AbilityContext);
+
   // const ability = useContext(AbilityContext);
 
   const { replace } = useRouter();
@@ -37,13 +41,33 @@ export const Login = () => {
         if (!res?.auth?.login?.recordId) {
           return;
         }
-        const accessToken = res?.auth?.login?.record?.token?.access;
-        const refreshToken = res?.auth?.login?.record?.token?.refresh;
-        const user = res?.auth?.login?.record?.data?.user;
-        dispatch(login({ user, token: accessToken }));
-        dispatch(setPreference({ preference: res?.auth?.login?.record?.data?.preference }));
-        localStorage.setItem('refreshToken', refreshToken);
 
+        const loginRecord = res?.auth?.login?.record;
+        const loginData = loginRecord?.data;
+
+        // const accessToken = res?.auth?.login?.record?.token?.access;
+        // const refreshToken = res?.auth?.login?.record?.token?.refresh;
+        // const permissions = res?.auth?.login?.record?.data?.permission?.myPermission || {};
+
+        dispatch(
+          saveToken({
+            accessToken: loginRecord?.token?.access,
+            refreshToken: loginRecord?.token?.refresh,
+          })
+        );
+        dispatch(
+          authenticate({
+            user: loginData.user,
+            permissions: loginData?.permission?.myPermission,
+            preference: loginData?.preference,
+            availableRoles: loginData?.rolesList,
+            availableBranches: loginData?.branches,
+          })
+        );
+
+        // dispatch(setPreference({ preference: res?.auth?.login?.record?.data?.preference }));
+
+        updateAbility(ability, loginData?.permission?.myPermission);
         replace('/');
       },
       promise: mutateAsync({ data }),

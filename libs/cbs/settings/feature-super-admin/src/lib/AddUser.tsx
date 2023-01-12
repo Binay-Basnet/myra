@@ -18,11 +18,11 @@ import {
   Id_Type,
   MyraUserIdentificationInput,
   MyraUserInput,
-  Roles,
   RootState,
   useAppSelector,
   useGetNewIdMutation,
   useGetSettingsUserEditDataQuery,
+  useGetUserRolesQuery,
   UserGender,
   useSetSettingsUserDataMutation,
 } from '@coop/cbs/data-access';
@@ -51,14 +51,6 @@ const genderOptions = [
   { label: 'Other', value: UserGender.Other },
 ];
 
-const roleOptions = [
-  { label: 'Market Representative', value: Roles.Agent },
-  { label: 'Service Center Manager', value: Roles.BranchManager },
-  { label: 'Head Teller', value: Roles.HeadTeller },
-  { label: 'Teller', value: Roles.Teller },
-  { label: 'Super Admin', value: Roles.Superadmin },
-];
-
 const identificationOptions = [
   { value: 'citizenship', label: 'Citizenship' },
   { value: 'drivingLicense', label: 'Driving License' },
@@ -67,7 +59,9 @@ const identificationOptions = [
   { value: 'nationalId', label: 'National ID' },
 ];
 
-type UserFormInput = MyraUserInput & {
+type UserFormInput = Omit<MyraUserInput, 'branch' | 'role'> & {
+  branch: { label: string; value: string }[];
+  role: { label: string; value: string }[];
   citizenship?: MyraUserIdentificationInput;
   drivingLicense?: MyraUserIdentificationInput;
   passport?: MyraUserIdentificationInput;
@@ -79,6 +73,8 @@ export const AddUser = () => {
   const router = useRouter();
   const [newId, setNewId] = useState('');
   const { mutateAsync: newIdMutate } = useGetNewIdMutation();
+
+  const { data: userRoles } = useGetUserRolesQuery();
 
   useEffect(() => {
     if (router?.query?.['id']) {
@@ -96,8 +92,6 @@ export const AddUser = () => {
 
   const { watch, getValues, reset } = methods;
 
-  const role = watch('role');
-
   const identificationValues = watch('identificationSelection');
 
   const isPermanentAndTemporaryAddressSame = watch('isTempAsPermanentAddressSame');
@@ -105,7 +99,9 @@ export const AddUser = () => {
   const addUser = useAppSelector((state: RootState) => state?.addUser);
 
   useEffect(() => {
-    reset({ ...addUser.userData });
+    reset({
+      ...addUser.userData,
+    });
   }, [addUser]);
 
   const { mutateAsync } = useSetSettingsUserDataMutation();
@@ -165,7 +161,14 @@ export const AddUser = () => {
         loading: router.asPath.includes('edit') ? 'Updating User' : 'Creating New User',
       },
       onSuccess: () => router.push(ROUTES.SETTINGS_USERS_LIST),
-      promise: mutateAsync({ id: id as string, data: formValues }),
+      promise: mutateAsync({
+        id: id as string,
+        data: {
+          ...formValues,
+          role: formValues.role.map((r) => r.value),
+          branch: formValues.branch.map((r) => r.value),
+        },
+      }),
     });
   };
 
@@ -194,6 +197,8 @@ export const AddUser = () => {
 
       reset({
         ...formData,
+        branch: userData?.branch as unknown as { label: string; value: string }[],
+        role: userData?.role as unknown as { label: string; value: string }[],
         permanentAddress: {
           ...userData?.permanentAddress,
           locality: userData?.permanentAddress?.locality?.local,
@@ -242,13 +247,18 @@ export const AddUser = () => {
 
                 <FormEmailInput isRequired name="email" label="Email" />
 
-                <FormSelect isRequired name="role" label="Role" options={roleOptions} />
-
-                <FormBranchSelect
-                  name="branch"
-                  label="Service Center"
-                  isDisabled={role === Roles.Superadmin}
+                <FormSelect
+                  isRequired
+                  isMulti
+                  name="role"
+                  label="Role"
+                  options={userRoles?.settings?.allRoles?.map((option) => ({
+                    label: option?.name as string,
+                    value: option?.id as string,
+                  }))}
                 />
+
+                <FormBranchSelect isMulti name="branch" label="Service Center" />
               </FormSection>
 
               <Box borderBottom="1px solid" borderBottomColor="border.layout">

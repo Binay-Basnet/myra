@@ -229,7 +229,7 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
             <Box display="flex" alignItems="start" justifyContent="space-between">
               <Box display="flex" flexDir="column">
                 <Text fontSize="s2" color="gray.700" as="span">
-                  Branch: {user?.branch?.name}
+                  Branch: {user?.currentBranch?.name}
                 </Text>
                 <Text fontSize="s2" color="gray.700" as="span">
                   Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
