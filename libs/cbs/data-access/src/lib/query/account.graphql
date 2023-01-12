@@ -590,7 +590,7 @@ query getAllAccounts($paginate: Pagination, $filter: AllAccountsFilter) {
       totalCount
       edges {
         node {
-          accountID
+          ID
           member {
             name
           }

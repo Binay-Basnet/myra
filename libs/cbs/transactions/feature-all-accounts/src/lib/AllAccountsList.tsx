@@ -20,7 +20,7 @@ export const AllAccountsList = () => {
     () => [
       {
         header: 'Account Id',
-        accessorFn: (row) => row?.node?.accountID,
+        accessorFn: (row) => row?.node?.ID,
       },
       {
         header: 'Member',

@@ -733,7 +733,7 @@ export type AgentTransactionViewResult = {
 };
 
 export type AllAccount = {
-  accountID: Scalars['ID'];
+  ID: Scalars['ID'];
   accountName?: Maybe<Scalars['String']>;
   accountOpenDate?: Maybe<Scalars['Localized']>;
   accountType?: Maybe<AccountTypes>;
@@ -1636,6 +1636,15 @@ export type CoaAccount = {
   parentGroup?: Maybe<Scalars['Localized']>;
 };
 
+export const CoaAccountClass = {
+  Assets: 'ASSETS',
+  EquityAndLiabilities: 'EQUITY_AND_LIABILITIES',
+  Expenditure: 'EXPENDITURE',
+  Income: 'INCOME',
+  OffBalanceSheet: 'OFF_BALANCE_SHEET',
+} as const;
+
+export type CoaAccountClass = typeof CoaAccountClass[keyof typeof CoaAccountClass];
 export type CoaAccountListEdges = {
   cursor: Scalars['Cursor'];
   node?: Maybe<CoaAccount>;
@@ -10882,7 +10891,7 @@ export type NewBankAccountResult = {
 };
 
 export type NewCoaGroupInput = {
-  accountClass?: InputMaybe<Scalars['String']>;
+  accountClass?: InputMaybe<CoaAccountClass>;
   accountCode?: InputMaybe<Scalars['String']>;
   accountSetup?: InputMaybe<CoaAccountSetup>;
   allowedBalance?: InputMaybe<CoaTypeOfTransaction>;
@@ -17701,7 +17710,7 @@ export type GetAllAccountsQuery = {
       edges?: Array<{
         cursor: string;
         node?: {
-          accountID: string;
+          ID: string;
           accountName?: string | null;
           productName?: string | null;
           accountType?: AccountTypes | null;
@@ -31349,7 +31358,7 @@ export const GetAllAccountsDocument = `
       totalCount
       edges {
         node {
-          accountID
+          ID
           member {
             name
           }
