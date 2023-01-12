@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import omit from 'lodash/omit';
 
 import { asyncToast, Box, SettingsFooter, Text } from '@myra-ui';
 
@@ -36,10 +37,12 @@ export const WithdrawSlipPrintPreference = () => {
 
   useEffect(() => {
     if (printPreferenceData) {
+      const activePrintPreference = printPreferenceData?.find(
+        (preference) => preference?.isSlipStandardActive
+      );
+
       methods.reset({
-        slipSizeStandard: printPreferenceData.slipSize?.slipSizeStandard,
-        slipSizeCustom: printPreferenceData.slipSize?.slipSizeCustom,
-        ...printPreferenceData.slipElements,
+        ...omit(activePrintPreference, ['isSlipStandardActive']),
       });
     }
   }, [isFetching, methods, printPreferenceData]);

@@ -18,27 +18,28 @@ query getWithdrawSlipPrintPreference {
       printPreference {
         get {
           data {
-            slipSize {
-              slipSizeStandard
-              slipSizeCustom {
-                height
-                width
-              }
+            #slipSize {
+            isSlipStandardActive
+            slipSizeStandard
+            slipSizeCustom {
+              height
+              width
             }
-            slipElements {
-              blockOne {
-                top
-                left
-              }
-              blockTwo {
-                top
-                left
-              }
-              blockThree {
-                top
-                left
-              }
+            #}
+            #slipElements {
+            blockOne {
+              top
+              left
             }
+            blockTwo {
+              top
+              left
+            }
+            blockThree {
+              top
+              left
+            }
+            #}
           }
         }
       }
