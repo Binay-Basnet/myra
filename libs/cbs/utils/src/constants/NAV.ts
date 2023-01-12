@@ -90,12 +90,12 @@ export const CBS: NavType = {
         {
           label: 'memberLayoutActiveInactiveMemberReport',
           aclKey: 'CBS_REPORTS',
-          route: ROUTES.CBS_REPORTS_MEMBER_CLASSIFICATION,
+          route: ROUTES.CBS_REPORTS_MEMBER_ACTIVE_INACTIVE,
         },
         {
           label: 'memberLayoutKymStatusReport',
           aclKey: 'CBS_REPORTS',
-          route: ROUTES.CBS_REPORTS_MEMBER_CLASSIFICATION,
+          route: ROUTES.CBS_REPORTS_KYM_STATUS,
         },
       ],
     },

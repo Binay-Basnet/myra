@@ -9660,6 +9660,7 @@ export type LoanRepaymentView = {
   note?: Maybe<Scalars['String']>;
   objState: Scalars['String'];
   paymentMode?: Maybe<Scalars['String']>;
+  rebate?: Maybe<Scalars['String']>;
   repaymentDate?: Maybe<Scalars['String']>;
   repaymentId: Scalars['ID'];
   teller?: Maybe<Scalars['String']>;
