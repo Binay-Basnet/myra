@@ -40,12 +40,16 @@ export const WithdrawList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: t['withdrawListWithdrawnDate'],
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+      {
         header: t['withdrawListTransactionId'],
         accessorFn: (row) => row?.node?.transactionCode,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: t['withdrawListTransactionName'],
+        header: 'Member',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
@@ -69,10 +73,6 @@ export const WithdrawList = () => {
         },
       },
       {
-        header: t['withdrawListAmount'],
-        accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
-      },
-      {
         header: t['withdrawListPaymentMode'],
         accessorFn: (row) => row?.node?.paymentMode,
       },
@@ -80,11 +80,11 @@ export const WithdrawList = () => {
         header: t['withdrawListWithdrawBy'],
         accessorFn: (row) => row?.node?.name?.local,
       },
-
       {
-        header: t['withdrawListWithdrawnDate'],
-        accessorFn: (row) => localizedDate(row?.node?.date),
+        header: t['withdrawListAmount'],
+        accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
       },
+
       {
         id: '_actions',
         header: '',

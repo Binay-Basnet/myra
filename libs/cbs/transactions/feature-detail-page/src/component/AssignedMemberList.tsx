@@ -46,6 +46,8 @@ export const AssignedMemberList = ({ data }: AssignedMemberListProps) => {
     ],
     []
   );
+
+  if (data?.length === 0) return null;
   return (
     <DetailsCard title={t['transDetailAssignedMemberList']} hasTable>
       <Table showFooter isStatic isLoading={false} data={rowData ?? []} columns={columns} />

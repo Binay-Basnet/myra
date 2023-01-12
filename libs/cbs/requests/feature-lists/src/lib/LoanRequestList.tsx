@@ -23,12 +23,16 @@ export const LoanRequestList = () => {
   const columns = React.useMemo<Column<typeof loanRequests[0]>[]>(
     () => [
       {
+        header: 'Last Modified Date',
+        accessorFn: (row) => row?.node?.lastModifiedDate,
+      },
+      {
         header: 'Request ID',
         accessorFn: (row) => row?.node?.id,
       },
 
       {
-        header: 'Requested By',
+        header: 'Member',
         accessorFn: (row) => row?.node?.memberId,
         cell: (props) => (
           <Box display="flex" flexDir="column" gap="s4">
@@ -45,7 +49,7 @@ export const LoanRequestList = () => {
         },
       },
       {
-        header: 'Loan Amount',
+        header: 'Applied Amount',
         accessorFn: (row) => row?.node?.loanAmount,
         cell: (props) => amountConverter(props.getValue() as string),
       },
@@ -55,10 +59,6 @@ export const LoanRequestList = () => {
         cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
       },
 
-      {
-        header: 'Last Modified Date',
-        accessorFn: (row) => row?.node?.lastModifiedDate,
-      },
       {
         id: '_actions',
         header: '',

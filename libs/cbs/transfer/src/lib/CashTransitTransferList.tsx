@@ -57,11 +57,15 @@ export const CashTransitTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'ID',
+        header: 'Transfer Date',
+        accessorFn: (row) => localizedDate(row?.node?.transferDate),
+      },
+      {
+        header: 'Transfer ID',
         accessorFn: (row) => row?.node?.transactionCode,
       },
       {
-        header: 'Sender Service Center',
+        header: 'Sender',
         accessorFn: (row) => row?.node?.senderServiceCentreName,
         cell: (props) => (
           <Box display="flex" flexDirection="column" gap="s4">
@@ -97,16 +101,13 @@ export const CashTransitTransferList = () => {
         ),
       },
       {
-        header: 'Cash Amount',
+        header: 'Amount',
         accessorFn: (row) => row?.node?.cashAmount,
         meta: {
           isNumeric: true,
         },
       },
-      {
-        header: 'Transfer Date',
-        accessorFn: (row) => localizedDate(row?.node?.transferDate),
-      },
+
       {
         id: '_actions',
         header: '',

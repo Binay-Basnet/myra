@@ -589,6 +589,7 @@ export const AddDeposit = () => {
                             }
                           : null
                       }
+                      redirectUrl={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedAccount?.id}`}
                     />
                   </Box>
                 )}

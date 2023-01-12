@@ -44,7 +44,11 @@ export const TellerTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Teller Transfer Code',
+        header: 'Transfer Date',
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+      {
+        header: 'Transfer Code',
         accessorFn: (row) => row?.node?.transferCode,
       },
       {
@@ -110,17 +114,14 @@ export const TellerTransferList = () => {
         ),
       },
       {
-        header: 'Cash Amount',
+        header: 'Amount',
 
         accessorFn: (row) => row?.node?.amount,
         meta: {
           isNumeric: true,
         },
       },
-      {
-        header: 'Transfer Date',
-        accessorFn: (row) => localizedDate(row?.node?.date),
-      },
+
       {
         id: '_actions',
         header: '',

@@ -11,7 +11,7 @@ export const LoanRepaymentDetails = () => {
   return (
     <DetailsCard title={t['transDetailLoanRepaymentDetails']} hasThreeRows>
       <DetailCardContent
-        title={t['transDetailLoanRepaymentID']}
+        title="Transaction ID"
         subtitle={loanRepaymentDetailData?.transactionCode}
       />
       <DetailCardContent

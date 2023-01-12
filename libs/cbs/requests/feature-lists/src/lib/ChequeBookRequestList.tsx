@@ -46,12 +46,16 @@ export const ChequeBookRequestList = () => {
   const columns = React.useMemo<Column<typeof chequeBookRequests[0]>[]>(
     () => [
       {
+        header: 'Requested Date',
+        accessorFn: (row) => row?.node?.requestedDate,
+      },
+      {
         header: 'Request ID',
         accessorFn: (row) => row?.node?.id,
       },
 
       {
-        header: 'Requested By',
+        header: 'Member',
         accessorFn: (row) => row?.node?.memberName,
         cell: (props) => (
           <Box display="flex" flexDir="column" gap="s4">
@@ -90,10 +94,6 @@ export const ChequeBookRequestList = () => {
         cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
       },
 
-      {
-        header: 'Requested Date',
-        accessorFn: (row) => row?.node?.requestedDate,
-      },
       {
         id: '_actions',
         header: '',

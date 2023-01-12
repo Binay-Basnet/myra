@@ -101,6 +101,10 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: t['loanProductsCreatedDate'],
+        accessorFn: (row) => row?.node.createdDate,
+      },
+      {
         header: t['loanProductsProductCode'],
         accessorFn: (row) => row?.node.productCodeString,
       },
@@ -136,10 +140,7 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
         accessorFn: (row) => row?.node.interest?.defaultRate,
         cell: (props) => <span>{props?.row?.original?.node?.interest?.defaultRate} %</span>,
       },
-      {
-        header: t['loanProductsCreatedDate'],
-        accessorFn: (row) => row?.node.createdDate,
-      },
+
       {
         id: '_actions',
         header: '',

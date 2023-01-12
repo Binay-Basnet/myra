@@ -33,10 +33,23 @@ export const CBSLoanRepaymentList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: 'Payment Date',
+        accessorFn: (row) => row?.node?.paymentDate,
+        cell: (props) => <span>{props?.row?.original?.node?.paymentDate?.split('T')[0]} </span>,
+      },
+      {
         header: 'Member Code',
         accessorFn: (row) => row?.node?.memberCode,
       },
 
+      {
+        header: 'Account Name',
+        accessorFn: (row) => row?.node?.loanAccountName,
+      },
+      {
+        header: 'Product Name',
+        accessorFn: (row) => row?.node?.loanProductName,
+      },
       {
         header: 'Member Name',
         accessorFn: (row) => row?.node?.memberName?.local,
@@ -59,24 +72,11 @@ export const CBSLoanRepaymentList = () => {
           </Box>
         ),
       },
-
-      {
-        header: 'Account Name',
-        accessorFn: (row) => row?.node?.loanAccountName,
-      },
-      {
-        header: 'Product Name',
-        accessorFn: (row) => row?.node?.loanProductName,
-      },
       {
         header: 'Amount',
         accessorFn: (row) => amountConverter(row?.node?.amount ?? 0),
       },
-      {
-        header: 'Payment Date',
-        accessorFn: (row) => row?.node?.paymentDate,
-        cell: (props) => <span>{props?.row?.original?.node?.paymentDate?.split('T')[0]} </span>,
-      },
+
       {
         id: '_actions',
         header: '',

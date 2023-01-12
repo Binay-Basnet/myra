@@ -52,8 +52,22 @@ export const CBSAccountList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Account Id',
+        header: 'Account Open Date',
+        accessorFn: (row) => row?.node?.createdAt,
+        cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
+      },
+      {
+        header: 'Account ID',
         accessorFn: (row) => row?.node?.id,
+      },
+
+      {
+        header: 'Account Name',
+        accessorFn: (row) => row?.node?.accountName,
+      },
+      {
+        header: 'Product Name',
+        accessorFn: (row) => row?.node?.product?.productName,
       },
       {
         header: 'Member Name',
@@ -76,20 +90,6 @@ export const CBSAccountList = () => {
             </Text>
           </Box>
         ),
-      },
-
-      {
-        header: 'Account Name',
-        accessorFn: (row) => row?.node?.accountName,
-      },
-      {
-        header: 'Product Name',
-        accessorFn: (row) => row?.node?.product?.productName,
-      },
-      {
-        header: 'Account Open Date',
-        accessorFn: (row) => row?.node?.createdAt,
-        cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
       },
       {
         id: '_actions',

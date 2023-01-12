@@ -255,7 +255,7 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
   ];
 
   return (
-    <>
+    <Box mt="s20">
       <Accordion defaultIndex={[0]} display="flex" flexDirection="column" gap="s16" allowToggle>
         <AccordionItem key={1}>
           <AccordionButton>
@@ -344,6 +344,6 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
           </Box>
         </FormProvider>
       </Modal>
-    </>
+    </Box>
   );
 };

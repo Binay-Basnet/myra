@@ -349,7 +349,7 @@ export const AccountRow = ({ account, index }: AccountRowProps) => {
           <Box
             onClick={() =>
               router.push(
-                `${ROUTES.CBS_ACCOUNT_OPEN_EDIT}/${account?.id}?redirect=${router.asPath}`
+                `${ROUTES.CBS_ACCOUNT_OPEN_EDIT}?id=${account?.id}?redirect=${router.asPath}`
               )
             }
           >

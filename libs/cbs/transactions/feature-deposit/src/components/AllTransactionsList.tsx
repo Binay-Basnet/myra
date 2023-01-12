@@ -25,7 +25,11 @@ export const AllTransactionsList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['depositListTransactionId'],
+        header: 'Date',
+        accessorFn: (row) => row?.node?.date?.local?.split(' ')[0] ?? 'N/A',
+      },
+      {
+        header: 'Txn ID',
         accessorFn: (row) => row?.node?.id,
       },
       {
@@ -38,13 +42,13 @@ export const AllTransactionsList = () => {
           </Box>
         ),
       },
-      {
-        header: 'Narration',
-        accessorFn: (row) => row?.node?.narration,
-        meta: {
-          width: '20%',
-        },
-      },
+      // {
+      //   header: 'Narration',
+      //   accessorFn: (row) => row?.node?.narration,
+      //   meta: {
+      //     width: '20%',
+      //   },
+      // },
       {
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branchName,
@@ -59,10 +63,6 @@ export const AllTransactionsList = () => {
           isNumeric: true,
           width: '2%',
         },
-      },
-      {
-        header: 'Date',
-        accessorFn: (row) => row?.node?.date?.local?.split(' ')[0] ?? 'N/A',
       },
     ],
     [t]

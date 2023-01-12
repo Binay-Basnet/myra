@@ -55,13 +55,13 @@ export const AgentTransactionList = () => {
     () => [
       {
         header: 'Date',
-        accessorFn: (row) => row?.node?.date,
+        accessorFn: (row) => row?.node?.date?.local,
         // meta: {
         //   width: '20%',
         // },
       },
       {
-        header: 'Transaction ID',
+        header: 'MR Transaction ID',
         accessorFn: (row) => row?.node?.ID,
       },
       {
@@ -133,7 +133,7 @@ export const AgentTransactionList = () => {
         rowOnClick={(row) =>
           router.push(
             `/${getUrl(router.pathname, 3)}/details?id=${row?.node?.agentId}&date=${
-              row?.node?.date
+              row?.node?.date?.local
             }`
           )
         }

@@ -33,7 +33,11 @@ export const VaultTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Vault Transfer Code',
+        header: 'Transfer Date',
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+      {
+        header: 'Transfer Code',
         accessorFn: (row) => row?.node?.transferCode,
       },
       {
@@ -65,7 +69,7 @@ export const VaultTransferList = () => {
         ),
 
         meta: {
-          width: 'auto',
+          width: '20%',
         },
       },
       {
@@ -76,10 +80,7 @@ export const VaultTransferList = () => {
           isNumeric: true,
         },
       },
-      {
-        header: 'Transfer Date',
-        accessorFn: (row) => localizedDate(row?.node?.date),
-      },
+
       {
         id: '_actions',
         header: '',
@@ -98,9 +99,6 @@ export const VaultTransferList = () => {
             ]}
           />
         ),
-        meta: {
-          width: '50px',
-        },
       },
     ],
     [t]

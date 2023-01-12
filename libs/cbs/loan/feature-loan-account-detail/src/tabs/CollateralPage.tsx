@@ -11,7 +11,7 @@ export const CollateralPage = () => {
     <>
       <TabHeader heading="Collateral" />
       <Statistics statsData={collateralSummary} />
-      <DetailsCard title={`Collateral List ${collatListInfo?.length} `} hasTable>
+      <DetailsCard title={`Collateral List (${collatListInfo?.length}) `} hasTable>
         {collatListInfo && collatListInfo?.map((item) => <CollateralList collatDataList={item} />)}
       </DetailsCard>
     </>

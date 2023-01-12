@@ -96,6 +96,10 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: t['depositCreatedDate'],
+        accessorFn: (row) => row?.node?.createdDate,
+      },
+      {
         header: t['depositProductCode'],
         accessorFn: (row) => row?.node?.productCode,
       },
@@ -125,10 +129,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         accessorFn: (row) => row?.node?.interest,
         cell: (props) => <span>{props?.row?.original?.node?.interest} %</span>,
       },
-      {
-        header: t['depositCreatedDate'],
-        accessorFn: (row) => row?.node?.createdDate,
-      },
+
       {
         id: '_actions',
         header: '',

@@ -37,10 +37,6 @@ export const SidebarInfo = ({ sidebarData }: SidebarProps) => (
               </Text>
             )}
           </Box>
-
-          <Text fontSize="r1" fontWeight="SemiBold" color="gray.800" lineHeight="150%">
-            {sidebarData?.amount}
-          </Text>
         </Box>
       </Box>
     </Box>

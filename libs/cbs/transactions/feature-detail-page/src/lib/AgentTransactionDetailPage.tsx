@@ -30,7 +30,7 @@ export const AgentTransactionDetailPage = () => {
         <SideBar detailPage="agentTransaction" summary={summary} />
       </Box>
 
-      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+      <Box minH="100vh" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
         <Text color="gray.800" fontWeight="SemiBold" fontSize="r3">
           {t['transDetailOverview']}
         </Text>

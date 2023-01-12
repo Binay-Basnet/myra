@@ -32,23 +32,12 @@ export const AccountingFeatureJournalVouchersList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Transaction Id',
-        accessorFn: (row) => row?.node?.transactionCode,
-      },
-      {
         accessorFn: (row) => localizedDate(row?.node?.transactionDate),
         header: 'Date',
-
-        // meta: {
-        //   width: '60%',
-        // },
       },
       {
-        header: 'Reference',
-        accessorFn: (row) => row?.node?.reference,
-        // meta: {
-        //   width: '30%',
-        // },
+        header: 'Txn ID',
+        accessorFn: (row) => row?.node?.transactionCode,
       },
       {
         header: 'Amount',

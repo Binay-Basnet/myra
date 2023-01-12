@@ -25,15 +25,25 @@ export const MemberRequestPage = () => {
   const columns = React.useMemo<Column<typeof memberRequests[0]>[]>(
     () => [
       {
-        header: 'ID',
+        header: 'Requested Date',
+        accessorFn: (row) => localizedDate(row?.node?.requestedDate),
+        cell: (props) => localizedDate(props?.row?.original?.node?.requestedDate),
+      },
+      {
+        header: 'Request ID',
         accessorFn: (row) => row?.node?.id,
       },
       {
-        header: 'Name',
+        header: 'Member',
         accessorFn: (row) => `${row?.node?.firstName} ${row?.node?.lastName}`,
         meta: {
           width: '60%',
         },
+      },
+
+      {
+        header: 'Contact Number',
+        accessorFn: (row) => row?.node?.phoneNumber,
       },
       {
         header: 'Approval Status',
@@ -42,15 +52,7 @@ export const MemberRequestPage = () => {
           <ApprovalStatusItem status={props.row.original?.node?.status as RequestStatus} />
         ),
       },
-      {
-        header: 'Contact Number',
-        accessorFn: (row) => row?.node?.phoneNumber,
-      },
-      {
-        header: 'Requested Date',
-        accessorFn: (row) => localizedDate(row?.node?.requestedDate),
-        cell: (props) => localizedDate(props?.row?.original?.node?.requestedDate),
-      },
+
       {
         id: '_actions',
         header: '',

@@ -42,12 +42,16 @@ export const DepositList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: t['depositListDepositDate'],
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+      {
         header: t['depositListTransactionId'],
         accessorFn: (row) => row?.node?.transactionCode,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: t['depositListName'],
+        header: 'Member',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
@@ -71,15 +75,6 @@ export const DepositList = () => {
         },
       },
       {
-        header: t['depositListAmount'],
-
-        accessorFn: (row) => amountConverter(row?.node?.amount as string),
-        meta: {
-          isNumeric: true,
-        },
-      },
-
-      {
         header: t['depositListPaymentMode'],
         accessorFn: (row) => row?.node?.paymentMode,
       },
@@ -88,10 +83,13 @@ export const DepositList = () => {
         accessorFn: (row) =>
           row?.node?.processedBy ? depositedBy[row?.node?.processedBy as DepositedBy] : '',
       },
-
       {
-        header: t['depositListDepositDate'],
-        accessorFn: (row) => localizedDate(row?.node?.date),
+        header: t['depositListAmount'],
+
+        accessorFn: (row) => amountConverter(row?.node?.amount as string),
+        meta: {
+          isNumeric: true,
+        },
       },
 
       {

@@ -22,7 +22,7 @@ import {
 import { AccountQRModal } from '@myra-ui/components';
 import { Avatar, Box, Button, Icon } from '@myra-ui/foundations';
 
-import { ROUTES } from '@coop/cbs/utils';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 // import { localizedDate } from '@coop/cbs/utils';
 
@@ -69,6 +69,7 @@ export interface MemberCardProps {
     | undefined
     | null;
   cardBg?: string;
+  redirectUrl?: string;
 }
 
 export const MemberCard = ({
@@ -80,6 +81,7 @@ export const MemberCard = ({
   showSignaturePreview = false,
   citizenshipPath,
   accountInfo,
+  redirectUrl,
   cardBg = 'white',
 }: MemberCardProps) => {
   const router = useRouter();
@@ -353,9 +355,10 @@ export const MemberCard = ({
                 <Box display="flex" flexDirection="column" gap="s4">
                   <Box display="flex" flexDirection="column">
                     <Box display="flex" justifyContent="space-between" alignItems="center">
-                      <Text fontSize="r1" fontWeight={600} color="primary.500">
-                        {accountInfo.name}
-                      </Text>
+                      <RedirectButton link={redirectUrl ?? ' '} label={accountInfo.name} />
+                      {/* <Text fontSize="r1" fontWeight={600} color="primary.500">
+                       {accountInfo.name}
+                    </Text> */}
 
                       <Icon
                         as={IoQrCodeOutline}

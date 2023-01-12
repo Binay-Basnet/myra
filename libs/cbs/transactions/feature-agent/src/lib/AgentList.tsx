@@ -50,19 +50,12 @@ export const AgentList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['agentListPhoneNo'],
-        accessorFn: (row) => row?.node?.phoneNo,
-        // meta: {
-        //   width: '20%',
-        // },
-      },
-      {
         header: t['agentListMarketRepresentativeId'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.agentName,
-        header: t['agentListMarketRepresentativeName'],
+        header: 'Name',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
@@ -85,6 +78,14 @@ export const AgentList = () => {
           width: '60%',
         },
       },
+      {
+        header: 'Contact No',
+        accessorFn: (row) => row?.node?.phoneNo,
+        // meta: {
+        //   width: '20%',
+        // },
+      },
+
       {
         header: t['agentListMemberAssigned'],
         accessorFn: (row) => row?.node?.assignedMember,

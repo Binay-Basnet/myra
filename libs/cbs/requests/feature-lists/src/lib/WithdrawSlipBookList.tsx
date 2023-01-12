@@ -38,6 +38,10 @@ export const WithdrawSlipBookList = () => {
   const columns = React.useMemo<Column<typeof chequeBookRequests[0]>[]>(
     () => [
       {
+        header: 'Issued Date',
+        accessorFn: (row) => row?.node?.requestedDate,
+      },
+      {
         header: 'ID',
         accessorFn: (row) => row?.node?.id,
       },
@@ -55,9 +59,6 @@ export const WithdrawSlipBookList = () => {
             </Text>
           </Box>
         ),
-        meta: {
-          width: '60%',
-        },
       },
       {
         header: 'Account',
@@ -77,18 +78,15 @@ export const WithdrawSlipBookList = () => {
         },
       },
       {
-        header: 'Status',
-        accessorFn: (row) => row?.node?.approvalStatus,
-        cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
-      },
-      {
         header: 'No of Leaves',
         accessorFn: (row) => row?.node?.numberOfLeaves,
       },
       {
-        header: 'Issued Date',
-        accessorFn: (row) => row?.node?.requestedDate,
+        header: 'Approval Status',
+        accessorFn: (row) => row?.node?.approvalStatus,
+        cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
       },
+
       {
         id: '_actions',
         header: '',
