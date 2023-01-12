@@ -82,11 +82,17 @@ export const useRefreshToken = (url: string) => {
         }`,
       })
       .then((res) => {
-        if (res.data.data.auth?.token?.token) {
-          const accessToken = res.data?.data?.auth?.token?.token?.access;
-          localStorage.setItem('refreshToken', res.data?.data?.auth?.token?.token?.refresh);
-          dispatch(saveToken(accessToken));
-          return accessToken;
+        const tokens = res.data?.data?.auth?.token?.token;
+
+        if (tokens) {
+          dispatch(
+            saveToken({
+              accessToken: tokens.access,
+              refreshToken: tokens.refresh,
+            })
+          );
+
+          return tokens.access;
         }
         replace('/login');
         throw new Error('Credentials are Expired!!');

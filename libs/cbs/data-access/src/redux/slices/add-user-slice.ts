@@ -8,13 +8,13 @@ enum UserGender {
   Other = 'OTHER',
 }
 
-enum Roles {
-  Agent = 'AGENT',
-  BranchManager = 'BRANCH_MANAGER',
-  HeadTeller = 'HEAD_TELLER',
-  Superadmin = 'SUPERADMIN',
-  Teller = 'TELLER',
-}
+// enum Roles {
+//   Agent = 'AGENT',
+//   BranchManager = 'BRANCH_MANAGER',
+//   HeadTeller = 'HEAD_TELLER',
+//   Superadmin = 'SUPERADMIN',
+//   Teller = 'TELLER',
+// }
 
 // Define a type for the slice state
 interface AddUserState {
@@ -26,8 +26,8 @@ interface AddUserState {
       | undefined;
     contactNo: string;
     email: string;
-    role: Roles;
-    branch: string;
+    role: { label: string; value: string }[];
+    branch: { label: string; value: string }[];
   };
 }
 
@@ -39,8 +39,8 @@ const initialState: AddUserState = {
     dob: undefined,
     contactNo: '',
     email: '',
-    role: Roles.Agent,
-    branch: '',
+    role: [],
+    branch: [],
   },
 };
 

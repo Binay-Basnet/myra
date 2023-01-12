@@ -16,7 +16,10 @@ query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilt
             contactNo
             gender
             dob
-            role
+            role {
+              id
+              name
+            }
             branch {
               id
               name
@@ -88,6 +91,15 @@ query getSettingsUserEditData($id: ID!) {
           }
         }
       }
+    }
+  }
+}
+
+query getUserRoles {
+  settings {
+    allRoles {
+      id
+      name
     }
   }
 }

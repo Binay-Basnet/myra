@@ -14,7 +14,7 @@ export const CashTransitInfo = () => {
   });
 
   const branchListData = data?.settings?.general?.branch?.list?.edges?.filter(
-    (item) => user?.branch?.id !== item?.node?.id
+    (item) => user?.currentBranch?.id !== item?.node?.id
   );
 
   const branchList = branchListData?.map((item) => ({

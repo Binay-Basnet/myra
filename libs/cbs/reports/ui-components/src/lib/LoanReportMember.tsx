@@ -33,7 +33,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => {
                   {member?.name?.local === '' ? '-' : member?.name?.local}
                 </Text>
                 <Text noOfLines={1}>{formatAddress(member?.address)}</Text>
-                <Text noOfLines={1}>{profile?.branch?.name}</Text>
+                <Text noOfLines={1}>{profile?.currentBranch?.name}</Text>
                 <Text noOfLines={1}>{amountConverter(account?.approvedAmount ?? 0)}</Text>
                 <Text noOfLines={1}> {localizedDate(account?.issuedDate)}</Text>
                 <Text noOfLines={1}>{member?.code}</Text>

@@ -29,7 +29,7 @@ export const useAxios = <TData, TVariables>(
   const auth = useAppSelector((state: RootState) => state?.auth);
 
   const refreshToken = useRefreshToken(url);
-  const accessToken = auth.token;
+  const { accessToken } = auth;
 
   return async (variables?: TVariables, config?: AxiosRequestConfig<TData>) => {
     if (accessToken) {
