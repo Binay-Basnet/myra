@@ -4,8 +4,13 @@ import {
   SettingsLayout,
   SettingsShareLayout,
 } from '@coop/cbs/settings/ui-layout';
+import { Can } from '@coop/cbs/utils';
 
-const ShareGeneral = () => <ShareSettingsGeneralPage />;
+const ShareGeneral = () => (
+  <Can I="SHOW_IN_MENU" a="SETTINGS_SHARE" showError isErrorCentered>
+    <ShareSettingsGeneralPage />
+  </Can>
+);
 
 export default ShareGeneral;
 

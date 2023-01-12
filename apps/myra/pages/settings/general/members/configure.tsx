@@ -4,8 +4,13 @@ import {
   SettingsLayout,
   SettingsMemberLayout,
 } from '@coop/cbs/settings/ui-layout';
+import { Can } from '@coop/cbs/utils';
 
-const Members = () => <CbsSettingsFeatureMembers />;
+const Members = () => (
+  <Can I="SHOW_IN_MENU" a="SETTINGS_KYM_SETTING" showError isErrorCentered>
+    <CbsSettingsFeatureMembers />
+  </Can>
+);
 
 export default Members;
 Members.getLayout = function getLayout(page) {
