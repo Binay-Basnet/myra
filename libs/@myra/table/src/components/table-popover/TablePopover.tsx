@@ -44,7 +44,7 @@ export const TablePopover = <T extends Record<string, unknown>>({
           <Box display="flex" flexDirection="column" alignItems="start">
             {items.map((item) =>
               item?.aclKey && item?.action ? (
-                <Can a={item?.aclKey} I={item?.action} showError isErrorCentered>
+                <Can a={item?.aclKey} I={item?.action}>
                   <Box
                     px="s16"
                     py="s10"
