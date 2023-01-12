@@ -17606,6 +17606,7 @@ export type GetAccountDetailsDataQuery = {
       data?: {
         accountId?: string | null;
         objState?: ObjState | null;
+        productId?: string | null;
         installmentAmount?: string | null;
         accountName?: string | null;
         accountTenure?: string | null;
@@ -25448,6 +25449,7 @@ export type TransactionDepositDetailQuery = {
         id: string;
         transactionCode?: string | null;
         transactionDate?: string | null;
+        accountId?: string | null;
         accountName?: string | null;
         voucherId?: string | null;
         amount?: string | null;
@@ -25495,6 +25497,7 @@ export type TransactionWithdrawDetailQuery = {
         id: string;
         transactionDate?: string | null;
         transactionCode?: string | null;
+        accountId?: string | null;
         accountName?: string | null;
         chequeNo?: string | null;
         withdrawAmount?: string | null;
@@ -25587,6 +25590,7 @@ export type AgentTransactionDetailQuery = {
         status: string;
         totalAmount?: string | null;
         assignedMember?: Array<{
+          transactionId?: string | null;
           member?: string | null;
           account?: string | null;
           amount?: string | null;
@@ -31236,6 +31240,7 @@ export const GetAccountDetailsDataDocument = `
           profilePicUrl
           contact
         }
+        productId
         installmentAmount
         accountName
         accountTenure
@@ -41485,6 +41490,7 @@ export const TransactionDepositDetailDocument = `
           profilePicUrl
         }
         transactionDate
+        accountId
         accountName
         voucherId
         amount
@@ -41540,6 +41546,7 @@ export const TransactionWithdrawDetailDocument = `
         }
         transactionDate
         transactionCode
+        accountId
         accountName
         chequeNo
         withdrawAmount
@@ -41653,6 +41660,7 @@ export const AgentTransactionDetailDocument = `
         status
         totalAmount
         assignedMember {
+          transactionId
           member
           account
           amount

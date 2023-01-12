@@ -147,6 +147,7 @@ query transactionDepositDetail($transactionId: ID!) {
           profilePicUrl
         }
         transactionDate
+        accountId
         accountName
         voucherId
         amount
@@ -187,6 +188,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
         }
         transactionDate
         transactionCode
+        accountId
         accountName
         chequeNo
         withdrawAmount
@@ -271,6 +273,7 @@ query agentTransactionDetail($agentId: ID!, $date: String!) {
         status
         totalAmount
         assignedMember {
+          transactionId
           member
           account
           amount

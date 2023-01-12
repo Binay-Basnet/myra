@@ -16,6 +16,7 @@ export const ShareTable = () => {
 
   const memberListData =
     memberReportsDetails?.map((data) => ({
+      id: data?.id,
       date: data?.transactionDate,
       type: data?.transactionDirection,
       toFrom: `${data?.startNumber} - ${data?.endNumber}`,

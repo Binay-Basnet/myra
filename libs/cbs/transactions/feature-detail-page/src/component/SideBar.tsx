@@ -19,6 +19,7 @@ type SidebarProps = {
     sourceAccount?: string | undefined | null;
     destinationName?: string | undefined | null;
     destinationAccount?: string | undefined | null;
+    recipientMember?: string | undefined | null;
     loanAccountName?: string | undefined | null;
     loanSubtype?: string | undefined | null;
     loanAccId?: string | undefined | null;
@@ -46,6 +47,7 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
             sourceAccount={summary?.sourceAccount ?? ''}
             destinationName={summary?.destinationName ?? ' '}
             destinationAccount={summary?.destinationAccount ?? ''}
+            recipientMemberId={summary?.recipientMember ?? ''}
           />
         </>
       )}
