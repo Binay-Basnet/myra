@@ -102,6 +102,8 @@ export const AgentTransactionList = () => {
               items={[
                 {
                   title: t['transDetailViewDetail'],
+                  aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(
                       `/${getUrl(router.pathname, 3)}/details?id=${row?.agentId}&date=${row?.date}`

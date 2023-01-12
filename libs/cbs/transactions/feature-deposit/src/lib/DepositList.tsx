@@ -102,6 +102,8 @@ export const DepositList = () => {
               items={[
                 {
                   title: t['transDetailViewDetail'],
+                  aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_TRANS_DEPOSIT_DETAILS}?id=${row?.ID}`);
                   },
