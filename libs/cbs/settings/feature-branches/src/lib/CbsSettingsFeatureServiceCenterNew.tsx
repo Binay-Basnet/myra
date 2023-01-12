@@ -337,7 +337,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
               status={
                 <Box display="flex" gap="s8">
                   <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
-                    Press Save Account to save form
+                    Press Save Service Center to save form
                   </Text>
                 </Box>
               }
