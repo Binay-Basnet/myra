@@ -63,7 +63,12 @@ export const WithdrawSlipBookPrint = () => {
   const queryClient = useQueryClient();
 
   const { data: printPreferenceData } = useGetWithdrawSlipPrintPreferenceQuery();
-  const printPreference = printPreferenceData?.settings?.general?.printPreference?.get?.data;
+  const printPreferenceList = printPreferenceData?.settings?.general?.printPreference?.get?.data;
+
+  const selectedPrintPreference = useMemo(
+    () => printPreferenceList?.find((preference) => preference?.isSlipStandardActive),
+    [printPreferenceList]
+  );
 
   const methods = useForm<CustomWithdrawSlipIssueInput>({
     defaultValues: { printSize: '7*3.5' },
@@ -112,8 +117,8 @@ export const WithdrawSlipBookPrint = () => {
       width: 7,
     },
     [SlipSizeStandard.Custom]: {
-      height: printPreference?.slipSize?.slipSizeCustom?.height || 0,
-      width: printPreference?.slipSize?.slipSizeCustom?.width || 0,
+      height: selectedPrintPreference?.slipSizeCustom?.height || 0,
+      width: selectedPrintPreference?.slipSizeCustom?.width || 0,
     },
   };
 
@@ -144,15 +149,15 @@ export const WithdrawSlipBookPrint = () => {
     handlePrint();
   };
 
-  const slipHeight = slipDimensions[printPreference?.slipSize?.slipSizeStandard || 'CUSTOM'].height;
-  const slipWidth = slipDimensions[printPreference?.slipSize?.slipSizeStandard || 'CUSTOM'].width;
+  const slipHeight = slipDimensions[selectedPrintPreference?.slipSizeStandard || 'CUSTOM'].height;
+  const slipWidth = slipDimensions[selectedPrintPreference?.slipSizeStandard || 'CUSTOM'].width;
 
   const printProps = {
     height: slipHeight,
     width: slipWidth,
-    branchPosition: printPreference?.slipElements?.blockOne,
-    accountPosition: printPreference?.slipElements?.blockTwo,
-    slipNumberPosition: printPreference?.slipElements?.blockThree,
+    branchPosition: selectedPrintPreference?.blockOne,
+    accountPosition: selectedPrintPreference?.blockTwo,
+    slipNumberPosition: selectedPrintPreference?.blockThree,
     details: {
       branch: user?.branch?.name as string,
       memberName: withdrawSlipData?.member?.name?.local as string,

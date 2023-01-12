@@ -11410,12 +11410,16 @@ export type PreviousYearFundDistribution = {
 };
 
 export type PrintPreference = {
-  slipElements?: Maybe<SlipElements>;
-  slipSize?: Maybe<SlipSize>;
+  blockOne?: Maybe<SlipElementMeasurement>;
+  blockThree?: Maybe<SlipElementMeasurement>;
+  blockTwo?: Maybe<SlipElementMeasurement>;
+  isSlipStandardActive?: Maybe<Scalars['Boolean']>;
+  slipSizeCustom?: Maybe<CustomSlipSize>;
+  slipSizeStandard: SlipSizeStandard;
 };
 
 export type PrintPreferenceData = {
-  data?: Maybe<PrintPreference>;
+  data?: Maybe<Array<Maybe<PrintPreference>>>;
   error?: Maybe<QueryError>;
 };
 
@@ -11424,7 +11428,7 @@ export type PrintPreferenceInput = {
   blockThree?: InputMaybe<SlipElementMeasurementInput>;
   blockTwo?: InputMaybe<SlipElementMeasurementInput>;
   slipSizeCustom?: InputMaybe<CustomSlipSizeInput>;
-  slipSizeStandard?: InputMaybe<SlipSizeStandard>;
+  slipSizeStandard: SlipSizeStandard;
 };
 
 export type PrintPreferenceMutation = {
@@ -13135,12 +13139,6 @@ export type SlipElementMeasurementInput = {
   top?: InputMaybe<Scalars['Float']>;
 };
 
-export type SlipElements = {
-  blockOne?: Maybe<SlipElementMeasurement>;
-  blockThree?: Maybe<SlipElementMeasurement>;
-  blockTwo?: Maybe<SlipElementMeasurement>;
-};
-
 export type SlipEntry = {
   date?: Maybe<Scalars['Localized']>;
   slipNumber: Scalars['String'];
@@ -13155,11 +13153,6 @@ export type SlipRange = {
 export type SlipRangeInput = {
   from: Scalars['Int'];
   to: Scalars['Int'];
-};
-
-export type SlipSize = {
-  slipSizeCustom?: Maybe<CustomSlipSize>;
-  slipSizeStandard?: Maybe<SlipSizeStandard>;
 };
 
 export const SlipSizeStandard = {
@@ -16484,17 +16477,14 @@ export type GetWithdrawSlipPrintPreferenceQuery = {
     general?: {
       printPreference?: {
         get?: {
-          data?: {
-            slipSize?: {
-              slipSizeStandard?: SlipSizeStandard | null;
-              slipSizeCustom?: { height?: number | null; width?: number | null } | null;
-            } | null;
-            slipElements?: {
-              blockOne?: { top?: number | null; left?: number | null } | null;
-              blockTwo?: { top?: number | null; left?: number | null } | null;
-              blockThree?: { top?: number | null; left?: number | null } | null;
-            } | null;
-          } | null;
+          data?: Array<{
+            isSlipStandardActive?: boolean | null;
+            slipSizeStandard: SlipSizeStandard;
+            slipSizeCustom?: { height?: number | null; width?: number | null } | null;
+            blockOne?: { top?: number | null; left?: number | null } | null;
+            blockTwo?: { top?: number | null; left?: number | null } | null;
+            blockThree?: { top?: number | null; left?: number | null } | null;
+          } | null> | null;
         } | null;
       } | null;
     } | null;
@@ -29618,26 +29608,23 @@ export const GetWithdrawSlipPrintPreferenceDocument = `
       printPreference {
         get {
           data {
-            slipSize {
-              slipSizeStandard
-              slipSizeCustom {
-                height
-                width
-              }
+            isSlipStandardActive
+            slipSizeStandard
+            slipSizeCustom {
+              height
+              width
             }
-            slipElements {
-              blockOne {
-                top
-                left
-              }
-              blockTwo {
-                top
-                left
-              }
-              blockThree {
-                top
-                left
-              }
+            blockOne {
+              top
+              left
+            }
+            blockTwo {
+              top
+              left
+            }
+            blockThree {
+              top
+              left
             }
           }
         }
