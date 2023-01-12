@@ -12,14 +12,7 @@ interface IProps {
 export const RedirectButton = ({ label, link }: IProps) => {
   const router = useRouter();
   return (
-    <Button
-      display="flex"
-      flexWrap="wrap"
-      px="0"
-      minW="0"
-      variant="link"
-      onClick={() => router.push(link)}
-    >
+    <Button px="0" minW="0" variant="link" onClick={() => router.push(link)}>
       {label}
     </Button>
   );

@@ -19,7 +19,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-import { AccountQRModal } from '@myra-ui/components';
+import { AccountQRModal, Tooltip } from '@myra-ui/components';
 import { Avatar, Box, Button, Icon } from '@myra-ui/foundations';
 
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
@@ -355,10 +355,10 @@ export const MemberCard = ({
                 <Box display="flex" flexDirection="column" gap="s4">
                   <Box display="flex" flexDirection="column">
                     <Box display="flex" justifyContent="space-between" alignItems="center">
-                      <RedirectButton link={redirectUrl ?? ' '} label={accountInfo.name} />
-                      {/* <Text fontSize="r1" fontWeight={600} color="primary.500">
-                       {accountInfo.name}
-                    </Text> */}
+                      <RedirectButton
+                        link={redirectUrl ?? ' '}
+                        label={<Tooltip title={accountInfo?.name as string} />}
+                      />
 
                       <Icon
                         as={IoQrCodeOutline}
