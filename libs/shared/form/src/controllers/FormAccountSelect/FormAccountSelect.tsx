@@ -84,8 +84,12 @@ export const FormAccountSelect = ({
   const linkedAccounts = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
 
   const linkedAccountsOptions: Option[] =
-    linkedAccounts?.reduce(
-      (prevVal, curVal) => [
+    linkedAccounts?.reduce((prevVal, curVal) => {
+      if (excludeIds?.includes(curVal?.id as string) || !curVal) {
+        return prevVal;
+      }
+
+      return [
         ...prevVal,
         {
           label: `${curVal?.product?.productName} (ID:${curVal?.id})`,
@@ -99,9 +103,8 @@ export const FormAccountSelect = ({
             productName: curVal?.product?.productName,
           },
         } as Option,
-      ],
-      [] as Option[]
-    ) ?? [];
+      ];
+    }, [] as Option[]) ?? [];
 
   const accountOptions: Option[] =
     accountsList?.reduce((prevVal, curVal) => {

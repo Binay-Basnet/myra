@@ -224,6 +224,7 @@ query transactionAccountTransferDetail($transactionId: ID!) {
         member {
           id
           name
+          code
           profilePic
           profilePicUrl
         }
@@ -316,6 +317,7 @@ query loanRepaymentDetail($paymentId: ID!) {
         installmentNo
         installmentAmount
         fine
+        rebate
         totalRepaymentAmount
         objState
         installmentDetails {

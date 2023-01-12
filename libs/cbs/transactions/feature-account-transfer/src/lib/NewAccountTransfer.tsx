@@ -252,6 +252,7 @@ export const NewAccountTransfer = () => {
                             <FormMemberSelect
                               name="destMemberId"
                               label={t['newAccountTransferReceipentMember']}
+                              excludeIds={[memberId]}
                             />
 
                             <FormAccountSelect

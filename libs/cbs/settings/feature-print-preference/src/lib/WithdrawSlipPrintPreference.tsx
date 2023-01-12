@@ -18,6 +18,9 @@ import {
 
 export const WithdrawSlipPrintPreference = () => {
   const methods = useForm<PrintPreferenceInput>();
+
+  const { watch, reset } = methods;
+
   const { data, isFetching } = useGetWithdrawSlipPrintPreferenceQuery();
 
   const printPreferenceData = data?.settings?.general?.printPreference?.get?.data;
@@ -46,6 +49,20 @@ export const WithdrawSlipPrintPreference = () => {
       });
     }
   }, [isFetching, methods, printPreferenceData]);
+
+  const slipSizeStandard = watch('slipSizeStandard');
+
+  useEffect(() => {
+    const slipSizes = printPreferenceData?.find(
+      (preference) => preference?.slipSizeStandard === slipSizeStandard
+    );
+
+    if (slipSizes) {
+      reset({
+        ...omit(slipSizes, ['isSlipStandardActive']),
+      });
+    }
+  }, [slipSizeStandard, printPreferenceData]);
 
   return (
     <Box display="flex" flexDirection="row" h="fit-content">

@@ -10,6 +10,7 @@ import {
   useTransactionDepositDetailQuery,
   useTransactionWithdrawDetailQuery,
 } from '@coop/cbs/data-access';
+import { localizedText } from '@coop/cbs/utils';
 
 export const useTransactionDetailHooks = () => {
   const router = useRouter();
@@ -92,12 +93,17 @@ export const useTransactionDetailHooks = () => {
     loanRepaymentDetailData,
     allTransactionsData,
     memberDetail: {
+      ...depositDetailData?.member,
+      ...withdrawDetailData?.member,
+      ...accountTransferDetailData?.member,
+      ...agentDetailData,
+      ...loanRepaymentDetailData?.member,
       name:
-        depositDetailData?.member?.name?.local ??
-        withdrawDetailData?.member?.name?.local ??
-        accountTransferDetailData?.member?.name?.local ??
+        localizedText(depositDetailData?.member?.name) ??
+        localizedText(withdrawDetailData?.member?.name) ??
+        localizedText(accountTransferDetailData?.member?.name) ??
         agentDetailData?.name ??
-        loanRepaymentDetailData?.member?.name?.local,
+        localizedText(loanRepaymentDetailData?.member?.name),
       profilePicUrl:
         depositDetailData?.member?.profilePicUrl ??
         withdrawDetailData?.member?.profilePicUrl ??

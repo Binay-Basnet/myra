@@ -179,7 +179,7 @@ interface SuccessPrintProps {
   showSignatures?: boolean;
 }
 
-const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
+export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
   ({ details, total, meta, showSignatures }, ref) => {
     const user = useAppSelector((state) => state.auth.user);
 

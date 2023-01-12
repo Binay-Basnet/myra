@@ -1059,6 +1059,21 @@ export type AuditLog = {
   userId?: Maybe<Scalars['String']>;
 };
 
+export const AuditLogActions = {
+  All: 'ALL',
+  Create: 'CREATE',
+  Delete: 'DELETE',
+  Read: 'READ',
+  Update: 'UPDATE'
+} as const;
+
+export type AuditLogActions = typeof AuditLogActions[keyof typeof AuditLogActions];
+export type AuditLogFilters = {
+  action?: InputMaybe<Array<InputMaybe<AuditLogActions>>>;
+  time?: InputMaybe<LocalizedDateFilter>;
+  users?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+};
+
 export type AuditLogHumanizeResult = {
   data?: Maybe<Array<Maybe<HumanizeAuditLog>>>;
   error?: Maybe<QueryError>;
@@ -1067,6 +1082,11 @@ export type AuditLogHumanizeResult = {
 export type AuditLogQuery = {
   humanize?: Maybe<AuditLogResult>;
   raw?: Maybe<AuditLogResult>;
+};
+
+
+export type AuditLogQueryHumanizeArgs = {
+  filter?: InputMaybe<AuditLogFilters>;
 };
 
 export type AuditLogResult = AuditLogHumanizeResult | RawAuditLog;
@@ -17280,7 +17300,7 @@ export type TransactionAccountTransferDetailQueryVariables = Exact<{
 }>;
 
 
-export type TransactionAccountTransferDetailQuery = { transaction: { viewAccountTransfer?: { data?: { id: string, transactionCode?: string | null, transactionDate?: string | null, transferAmount?: string | null, transferType?: TransferType | null, withdrawnBy?: string | null, withdrawnSlipNo?: string | null, transactionBranch?: string | null, objState?: ObjState | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, note?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, sourceAccount?: { id: string, accountName?: string | null } | null, destinationAccount?: { id: string, accountName?: string | null } | null, recipientMember?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } };
+export type TransactionAccountTransferDetailQuery = { transaction: { viewAccountTransfer?: { data?: { id: string, transactionCode?: string | null, transactionDate?: string | null, transferAmount?: string | null, transferType?: TransferType | null, withdrawnBy?: string | null, withdrawnSlipNo?: string | null, transactionBranch?: string | null, objState?: ObjState | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, note?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, profilePic?: string | null, profilePicUrl?: string | null } | null, sourceAccount?: { id: string, accountName?: string | null } | null, destinationAccount?: { id: string, accountName?: string | null } | null, recipientMember?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } };
 
 export type AgentTransactionDetailQueryVariables = Exact<{
   agentId: Scalars['ID'];
@@ -17302,7 +17322,7 @@ export type LoanRepaymentDetailQueryVariables = Exact<{
 }>;
 
 
-export type LoanRepaymentDetailQuery = { transaction: { viewLoanRepayment?: { data?: { repaymentId: string, transactionCode?: string | null, loanSubType?: string | null, loanAccountId?: string | null, loanAccountName?: string | null, repaymentDate?: string | null, installmentNo?: string | null, installmentAmount?: string | null, fine?: string | null, totalRepaymentAmount?: string | null, objState: string, paymentMode?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, note?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, installmentDetails?: Array<{ installmentNo?: number | null, payment?: string | null, principalAmount?: string | null, interestAmount?: string | null } | null> | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } };
+export type LoanRepaymentDetailQuery = { transaction: { viewLoanRepayment?: { data?: { repaymentId: string, transactionCode?: string | null, loanSubType?: string | null, loanAccountId?: string | null, loanAccountName?: string | null, repaymentDate?: string | null, installmentNo?: string | null, installmentAmount?: string | null, fine?: string | null, rebate?: string | null, totalRepaymentAmount?: string | null, objState: string, paymentMode?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, note?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, installmentDetails?: Array<{ installmentNo?: number | null, payment?: string | null, principalAmount?: string | null, interestAmount?: string | null } | null> | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null } | null> | null } | null } | null } };
 
 export type GetEodStatusQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -31817,6 +31837,7 @@ export const TransactionAccountTransferDetailDocument = `
         member {
           id
           name
+          code
           profilePic
           profilePicUrl
         }
@@ -31947,6 +31968,7 @@ export const LoanRepaymentDetailDocument = `
         installmentNo
         installmentAmount
         fine
+        rebate
         totalRepaymentAmount
         objState
         installmentDetails {
