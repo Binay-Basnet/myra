@@ -43,7 +43,16 @@ export const SuccessCard = ({
   const componentRef = useRef<HTMLInputElement | null>(null);
 
   return (
-    <Box bg="white" p="s24" display="flex" flexDir="column" gap="s32" maxW="500px" boxShadow="E2">
+    <Box
+      bg="white"
+      p="s24"
+      display="flex"
+      flexDir="column"
+      gap="s32"
+      maxW="500px"
+      boxShadow="E2"
+      overflowY="auto"
+    >
       <Box display="flex" flexDir="column" alignItems="center" gap="s16">
         <SuccessCheckmark />
 
