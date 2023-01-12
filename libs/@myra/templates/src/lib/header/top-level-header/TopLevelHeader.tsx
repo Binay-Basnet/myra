@@ -732,6 +732,7 @@ export const TopLevelHeader = () => {
                           <Box p="s8" borderBottom="1px solid " borderColor="border.layout">
                             {user?.currentBranch && (
                               <Select
+                                menuPosition="absolute"
                                 value={{
                                   label: user?.currentBranch?.name || 'Branch',
                                   value: user?.currentBranch?.id as string,
@@ -757,6 +758,7 @@ export const TopLevelHeader = () => {
                           <Box p="s8" borderBottom="1px solid " borderColor="border.layout">
                             {user?.currentRole && (
                               <Select
+                                menuPosition="absolute"
                                 value={{
                                   label: user?.currentRole?.name,
                                   value: user?.currentRole?.id as string,
