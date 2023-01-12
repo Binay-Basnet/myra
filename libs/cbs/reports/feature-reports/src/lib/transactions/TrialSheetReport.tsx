@@ -85,7 +85,7 @@ export const TrialSheetReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Trial Balance', link: '/reports/cbs/transactions/trail-sheet/new' },
+            { label: 'Trial Balance', link: '/reports/cbs/transactions/trial-sheet/new' },
           ]}
         />
 

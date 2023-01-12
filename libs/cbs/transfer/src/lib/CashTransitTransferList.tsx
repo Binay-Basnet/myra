@@ -117,6 +117,8 @@ export const CashTransitTransferList = () => {
             items={[
               {
                 title: 'viewDetails',
+                aclKey: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
+                action: 'VIEW',
                 onClick: () => {
                   router.push(
                     `/${getUrl(router.pathname, 3)}/view?id=${props?.row?.original?.node?.id}`

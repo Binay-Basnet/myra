@@ -2,10 +2,9 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 // const MEMBER_TAB_ITEMS = [
@@ -95,10 +94,12 @@ export const AgentList = () => {
         header: '',
         accessorKey: 'actions',
         cell: (cell) => (
-          <ActionPopoverComponent
+          <TablePopover
             items={[
               {
                 title: 'transactionsAgentListViewDetail',
+                aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
+                action: 'VIEW',
                 onClick: () => {
                   router.push(
                     `/${getUrl(router.pathname, 3)}/details?id=${cell?.row?.original?.node?.id}`
@@ -106,7 +107,7 @@ export const AgentList = () => {
                 },
               },
             ]}
-            id={cell?.row?.original?.node?.id as string}
+            node={cell?.row?.original?.node}
           />
         ),
         meta: {

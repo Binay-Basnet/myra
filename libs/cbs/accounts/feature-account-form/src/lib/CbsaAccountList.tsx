@@ -100,11 +100,15 @@ export const CBSAccountList = () => {
               items={[
                 {
                   title: 'View Details',
+                  aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT',
+                  action: 'VIEW',
                   onClick: (row) =>
                     router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${row['id']}`),
                 },
                 {
                   title: 'depositProductEdit',
+                  aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT',
+                  action: 'UPDATE',
                   onClick: (row) => router.push(`${ROUTES.CBS_ACCOUNT_OPEN_EDIT}?id=${row['id']}`),
                 },
               ]}
@@ -115,6 +119,8 @@ export const CBSAccountList = () => {
               items={[
                 {
                   title: 'View Details',
+                  aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT',
+                  action: 'VIEW',
                   onClick: (row) =>
                     router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${row['id']}`),
                 },

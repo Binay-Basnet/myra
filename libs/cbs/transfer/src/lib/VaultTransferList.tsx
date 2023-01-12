@@ -90,6 +90,8 @@ export const VaultTransferList = () => {
             items={[
               {
                 title: 'viewDetails',
+                aclKey: 'CBS_TRANSFERS_VAULT_TRANSFER',
+                action: 'VIEW',
                 onClick: () => {
                   router.push(
                     `/${getUrl(router.pathname, 3)}/view?id=${props?.row?.original?.node?.ID}`

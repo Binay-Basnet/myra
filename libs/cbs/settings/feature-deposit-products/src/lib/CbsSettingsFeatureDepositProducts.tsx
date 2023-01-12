@@ -157,6 +157,8 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                 items={[
                   {
                     title: 'loanProductMakeInactive',
+                    aclKey: 'SETTINGS_GENERAL',
+                    action: 'VIEW',
                     onClick: (row) => {
                       onOpenModal();
                       setID(row?.id);
