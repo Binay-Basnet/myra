@@ -87,6 +87,8 @@ export const AccountTransferList = () => {
               items={[
                 {
                   title: t['transDetailViewDetail'],
+                  aclKey: 'CBS_TRANSACTIONS_ACCOUNT_TRANSFER',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_DETAILS}?id=${row?.ID}`);
                   },

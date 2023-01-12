@@ -87,12 +87,16 @@ export const CBSLoanRepaymentList = () => {
               items={[
                 {
                   title: t['transDetailViewDetail'],
+                  aclKey: 'CBS_TRANSACTIONS_LOAN_REPAYMENT',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_LOAN_REPAYMENT_DETAILS}?id=${row?.id}`);
                   },
                 },
                 {
                   title: t['LoanApplicationView'],
+                  aclKey: 'CBS_LOAN_LOAN_APPLICATION',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_LOAN_APPLICATION_DETAILS}?id=${row?.loanAccountId}`);
                   },

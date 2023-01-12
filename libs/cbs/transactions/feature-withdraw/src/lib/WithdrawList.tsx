@@ -95,6 +95,8 @@ export const WithdrawList = () => {
               items={[
                 {
                   title: t['transDetailViewDetail'],
+                  aclKey: 'CBS_TRANSACTIONS_WITHDRAW',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_TRANS_WITHDRAW_DETAILS}?id=${row?.ID}`);
                   },

@@ -81,6 +81,8 @@ export const CBSAccountCloseList = () => {
             items={[
               {
                 title: 'View Details',
+                aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT_CLOSE',
+                action: 'VIEW',
                 onClick: (row) =>
                   router.push(`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${row['id']}`),
               },

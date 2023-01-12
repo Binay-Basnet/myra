@@ -85,6 +85,8 @@ export const BlockWithdrawSlipRequestsList = () => {
               items={[
                 {
                   title: 'View Details',
+                  aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(
                       {

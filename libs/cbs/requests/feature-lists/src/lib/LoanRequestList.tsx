@@ -68,6 +68,8 @@ export const LoanRequestList = () => {
               items={[
                 {
                   title: 'View Details',
+                  aclKey: 'CBS_REQUESTS_LOAN_REQUESTS',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(
                       {

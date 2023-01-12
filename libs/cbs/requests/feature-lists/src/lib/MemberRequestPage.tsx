@@ -59,6 +59,8 @@ export const MemberRequestPage = () => {
             items={[
               {
                 title: 'View Details',
+                aclKey: 'CBS_REQUESTS_MEMBER_REQUESTS',
+                action: 'VIEW',
                 onClick: () => {
                   router.push(
                     {

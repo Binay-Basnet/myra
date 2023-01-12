@@ -84,6 +84,8 @@ export const COAListView = () => {
               items={[
                 {
                   title: 'View Details',
+                  aclKey: 'SETTINGS_COA',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(
                       `/${getUrl(router.pathname, 3)}/details?id=${row?.node?.accountCode}`
