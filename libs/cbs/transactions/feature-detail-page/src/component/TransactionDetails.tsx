@@ -34,7 +34,12 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailAccount']}
-            subtitle={depositDetailData?.accountName}
+            children={
+              <RedirectButton
+                label={depositDetailData?.accountName}
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${depositDetailData?.accountId}`}
+              />
+            }
           />
           <DetailCardContent
             title={t['transDetailVoucherID']}
@@ -73,7 +78,12 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailAccount']}
-            subtitle={withdrawDetailData?.accountName}
+            children={
+              <RedirectButton
+                label={withdrawDetailData?.accountName}
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${withdrawDetailData?.accountId}`}
+              />
+            }
           />
           <DetailCardContent
             title={t['transDetailWithdrawBy']}

@@ -31,7 +31,6 @@ export const LoanRepaymentDetailPage = () => {
     repaymentDate: loanRepaymentDetailData?.repaymentDate,
     //  interestRate: loanRepaymentDetailData?.transactionDate,
   };
-
   return (
     <Box bg="gray.100">
       <Box

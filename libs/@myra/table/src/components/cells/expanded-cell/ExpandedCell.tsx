@@ -7,7 +7,7 @@ import { Box, Icon, Text } from '@myra-ui/foundations';
 
 interface ExpandedCellProps<T extends Record<string, unknown>> {
   row: Row<T>;
-  value: string;
+  value: React.ReactNode;
 }
 
 export const ExpandedCell = <T extends Record<string, unknown>>({
@@ -27,7 +27,7 @@ export const ExpandedCell = <T extends Record<string, unknown>>({
 
 interface ExpandedHeaderProps<T extends Record<string, unknown>> {
   table: Table<T>;
-  value: string;
+  value: React.ReactNode;
 }
 
 export const ExpandedHeader = <T extends Record<string, unknown>>({
@@ -49,7 +49,7 @@ interface ITableExpandedProps {
   toggleExpand: () => void;
   isExpanded: boolean;
   depth?: number;
-  value: string;
+  value: React.ReactNode;
 }
 
 const TableExpanded = ({
@@ -83,6 +83,7 @@ const TableExpanded = ({
         />
       </Box>
     ) : null}
+
     <Text fontSize="s3" color="gray.700">
       {value as string}
     </Text>

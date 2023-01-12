@@ -3,6 +3,7 @@ import { IoCopyOutline } from 'react-icons/io5';
 import { Box, Chips, Icon, Text } from '@myra-ui';
 
 import { TransferType } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type SummaryProps = {
@@ -105,9 +106,13 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
         <Box display="flex" w="100%" flexDirection="column" gap="s16">
           <Box display="flex" justifyContent="space-between">
             <Box display="flex" flexDirection="column">
-              <Text fontSize="s3" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
+              <RedirectButton
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${summary?.loanAccId}`}
+                label={summary.loanAccountName}
+              />
+              {/* <Text fontSize="s3" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
                 {summary.loanAccountName}
-              </Text>
+              </Text> */}
               <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-70">
                 {summary.loanSubtype}
               </Text>

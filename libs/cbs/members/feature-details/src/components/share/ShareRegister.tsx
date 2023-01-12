@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Box, Chips, Text } from '@myra-ui';
 
 import { ShareTransactionType, useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 
 export const ShareRegister = () => {
   const router = useRouter();
@@ -32,6 +32,10 @@ export const ShareRegister = () => {
               alignItems="center"
               borderBottomColor="border.layout"
               key={`${items?.date}${items?.title}${items?.noOfShares}`}
+              style={{
+                cursor: 'pointer',
+              }}
+              onClick={() => router.push(`${ROUTES.CBS_SHARE_REGISTER_DETAILS}?id=123`)}
             >
               <Box display="flex" flexDirection="column" gap="s4">
                 <Text fontSize="s3" fontWeight="500">
@@ -53,7 +57,6 @@ export const ShareRegister = () => {
                     {items?.txnType === ShareTransactionType?.Return ? '-' : '+'}
                   </Text>
                   <Text fontSize="s3" fontWeight="400">
-                    {' '}
                     {items?.txnAmount}
                   </Text>
                 </Box>

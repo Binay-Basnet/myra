@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, Text } from '@myra-ui/foundations';
+
 import { ROUTES } from '@coop/cbs/utils';
 
 export interface DetailPageMemberCardProps {

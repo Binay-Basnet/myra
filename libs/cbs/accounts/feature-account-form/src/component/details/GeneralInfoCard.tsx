@@ -1,15 +1,76 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
+import { DefaultAccountType, NatureOfDepositProduct } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+
 interface IGeneralInfoCardProps {
   title: string;
-  items: { label: string; value: string | null | undefined }[];
+  data: {
+    accountName: string | null | undefined;
+    productName: string | null | undefined;
+    productId: string | null | undefined;
+    accountOpenDate: string | null | undefined;
+    defaultAccountType: DefaultAccountType | null | undefined;
+    accountType: string | null | undefined;
+    interestAccrued: string | null | undefined;
+    interestEarned: string | null | undefined;
+    interestRate: number | null | undefined;
+    guaranteedAmount: string | null | undefined;
+    accountTenure: string | null | undefined;
+    isMandatory: boolean | null | undefined;
+  };
+  accountTypes: {
+    SAVING: string;
+    RECURRING_SAVING: string;
+    TERM_SAVING_OR_FD: string;
+    CURRENT: string;
+  };
 }
 
-export const GeneralInfoCard = ({ title, items }: IGeneralInfoCardProps) => (
+export const GeneralInfoCard = ({ title, data, accountTypes }: IGeneralInfoCardProps) => (
   <DetailsCard title={title} bg="white" hasThreeRows>
-    {items.map(
-      (item) => item.value && <DetailCardContent title={item.label} subtitle={item.value} />
-    )}
+    <DetailCardContent title="Account Name" subtitle={data.accountName} />
+    <DetailCardContent
+      title="Product Name"
+      children={
+        <RedirectButton
+          label={data?.productName}
+          link={`${ROUTES.CBS_ACCOUNT_SAVING_PRODUCT_DETAILS}?id=${data?.productId}`}
+        />
+      }
+    />
+    <DetailCardContent title="Account Open Date" subtitle={data.accountOpenDate} />
+    <DetailCardContent
+      title="Default Amount Deposit Account Type"
+      subtitle={
+        data?.accountType === NatureOfDepositProduct.RecurringSaving ||
+        (data?.accountType === NatureOfDepositProduct?.Current && data?.isMandatory)
+          ? data?.defaultAccountType
+            ? accountTypes[data?.defaultAccountType]
+            : '-'
+          : ''
+      }
+    />
+    <DetailCardContent
+      title="Interest Accrued"
+      subtitle={
+        data?.accountType === NatureOfDepositProduct.Current ? null : data?.interestAccrued ?? '0'
+      }
+    />
+    <DetailCardContent
+      title="Interest Earned"
+      subtitle={
+        data?.accountType === NatureOfDepositProduct.Current ? null : data?.interestEarned ?? '0'
+      }
+    />
+    <DetailCardContent
+      title="Interest Rate"
+      subtitle={
+        data?.accountType === NatureOfDepositProduct.Current ? null : `${data?.interestRate} %`
+      }
+    />
+    <DetailCardContent title="Guarantee Amount" subtitle={data?.guaranteedAmount ?? '0'} />
+    <DetailCardContent title="Tenure" subtitle={data?.accountTenure ?? '-'} />
   </DetailsCard>
 );
 

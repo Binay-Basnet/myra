@@ -20,6 +20,7 @@ export const ROUTES = {
   CBS_ACCOUNT_CLOSE_ADD: '/cbs/savings/account-close/add',
   CBS_ACCOUNT_LIST: '/cbs/savings/account-open/list',
   CBS_ACCOUNT_SAVING_PRODUCT: '/cbs/savings/products/list',
+  CBS_ACCOUNT_SAVING_PRODUCT_DETAILS: '/cbs/savings/products/details',
   CBS_ACCOUNT_CLOSE_LIST: '/cbs/savings/account-close/list',
   CBS_ACCOUNT_SAVING_DETAILS: '/cbs/savings/account-open/details',
 
