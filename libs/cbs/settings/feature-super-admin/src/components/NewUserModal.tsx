@@ -124,6 +124,7 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
             <FormSelect
               isMulti
               isRequired
+              menuPosition="fixed"
               name="role"
               label="Role"
               options={userRoles?.settings?.allRoles?.map((userRole) => ({
@@ -131,7 +132,7 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
                 value: userRole?.id as string,
               }))}
             />
-            <FormBranchSelect isMulti name="branch" label="Service Center" />
+            <FormBranchSelect menuPosition="fixed" isMulti name="branch" label="Service Center" />
           </Box>
         </form>
       </FormProvider>

@@ -112,6 +112,7 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
           <Grid templateColumns="repeat(2, 1fr)" gap="s16">
             <FormSelect
               name="count"
+              menuPosition="fixed"
               label="Total no of withdraw slip"
               options={totalNumberOptions}
             />

@@ -16,12 +16,11 @@ export const getChakraDefaultStyles: (
     mt: '0',
     maxHeight: '200px',
     boxShadow: 'E1',
-    zIndex: '20',
+    zIndex: '5',
   }),
   menuList: (provided) => ({
     ...provided,
     width: '100%',
-
     maxHeight: '200px',
     paddingY: '0',
     minWidth: 'none',
