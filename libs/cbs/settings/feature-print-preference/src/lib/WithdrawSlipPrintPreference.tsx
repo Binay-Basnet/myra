@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import omit from 'lodash/omit';
 
 import { asyncToast, Box, SettingsFooter, Text } from '@myra-ui';
 
@@ -21,11 +20,13 @@ export const WithdrawSlipPrintPreference = () => {
 
   const { watch, reset } = methods;
 
-  const { data, isFetching } = useGetWithdrawSlipPrintPreferenceQuery();
+  const { data, refetch } = useGetWithdrawSlipPrintPreferenceQuery();
 
   const printPreferenceData = data?.settings?.general?.printPreference?.get?.data;
 
-  const { mutateAsync } = useSetWithdrawSlipPrintPreferenceMutation();
+  const { mutateAsync } = useSetWithdrawSlipPrintPreferenceMutation({
+    onSuccess: () => refetch(),
+  });
 
   const onSubmit = async () => {
     await asyncToast({
@@ -38,31 +39,37 @@ export const WithdrawSlipPrintPreference = () => {
     });
   };
 
-  useEffect(() => {
-    if (printPreferenceData) {
-      const activePrintPreference = printPreferenceData?.find(
-        (preference) => preference?.isSlipStandardActive
-      );
-
-      methods.reset({
-        ...omit(activePrintPreference, ['isSlipStandardActive']),
-      });
-    }
-  }, [isFetching, methods, printPreferenceData]);
-
   const slipSizeStandard = watch('slipSizeStandard');
 
   useEffect(() => {
-    const slipSizes = printPreferenceData?.find(
-      (preference) => preference?.slipSizeStandard === slipSizeStandard
-    );
+    if (printPreferenceData) {
+      const activePrintPreference = slipSizeStandard
+        ? printPreferenceData?.find(
+            (preference) => preference?.slipSizeStandard === slipSizeStandard
+          )
+        : printPreferenceData?.find((preference) => preference?.isSlipStandardActive);
 
-    if (slipSizes) {
       reset({
-        ...omit(slipSizes, ['isSlipStandardActive']),
+        slipSizeStandard: activePrintPreference?.slipSizeStandard,
+        slipSizeCustom: {
+          height: activePrintPreference?.slipSizeCustom?.height ?? 0,
+          width: activePrintPreference?.slipSizeCustom?.width ?? 0,
+        },
+        blockOne: {
+          top: activePrintPreference?.blockOne?.top ?? 0,
+          left: activePrintPreference?.blockOne?.left ?? 0,
+        },
+        blockTwo: {
+          top: activePrintPreference?.blockTwo?.top ?? 0,
+          left: activePrintPreference?.blockTwo?.left ?? 0,
+        },
+        blockThree: {
+          top: activePrintPreference?.blockThree?.top ?? 0,
+          left: activePrintPreference?.blockThree?.left ?? 0,
+        },
       });
     }
-  }, [slipSizeStandard, printPreferenceData]);
+  }, [printPreferenceData, slipSizeStandard]);
 
   return (
     <Box display="flex" flexDirection="row" h="fit-content">
