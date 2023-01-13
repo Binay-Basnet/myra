@@ -36,10 +36,11 @@ const ChartsOfAccounts = () => {
           // buttonHandler={() => router.push('/settings/general/charts-of-accounts/add-new-account')}
         />
         <Box>
-          {(router.query['objState'] === 'full-view' || !router.query['objState']) && (
-            <COAFullView />
+          {(router.query['objState'] === 'full-view' ||
+            (!router.query['objState'] && !router.query['search'])) && <COAFullView />}
+          {(router.query['objState'] === 'account-list' || router.query['search']) && (
+            <COAListView />
           )}
-          {router.query['objState'] === 'account-list' && <COAListView />}
         </Box>
       </Box>
     </Can>

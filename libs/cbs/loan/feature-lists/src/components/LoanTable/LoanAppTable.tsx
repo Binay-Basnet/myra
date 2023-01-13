@@ -21,7 +21,6 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
     () => (data?.loanAccount?.list?.edges as LoanAccountEdge[]) ?? [],
     [data]
   );
-
   const columns = useMemo<Column<LoanAccountEdge>[]>(
     () => [
       {

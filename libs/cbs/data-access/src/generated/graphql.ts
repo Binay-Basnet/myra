@@ -10833,6 +10833,7 @@ export type MyraUserMutationAddArgs = {
 export type MyraUserQuery = {
   formState?: Maybe<MyraUserFormStateResult>;
   list?: Maybe<MyraUserConnection>;
+  tellers?: Maybe<Array<Maybe<TellerInfo>>>;
 };
 
 export type MyraUserQueryFormStateArgs = {
@@ -13418,6 +13419,11 @@ export type TellerDataHolder = {
 export type TellerFilter = {
   tellerId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   tellerType?: InputMaybe<TellerType>;
+};
+
+export type TellerInfo = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type TellerReportData = {
@@ -20124,6 +20130,8 @@ export type GetLoanListQuery = {
         cursor: string;
         node?: {
           id: string;
+          appliedLoanAmount: string;
+          totalSanctionedAmount?: string | null;
           LoanAccountName?: string | null;
           createdAt: string;
           closedDate?: Record<'local' | 'en' | 'np', string> | null;
@@ -34540,6 +34548,8 @@ export const GetLoanListDocument = `
         cursor
         node {
           id
+          appliedLoanAmount
+          totalSanctionedAmount
           member {
             id
             name

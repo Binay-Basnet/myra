@@ -5,7 +5,7 @@ import { Summary } from './Summary';
 type SidebarType = {
   sidebarData: {
     id: string | null | undefined;
-    date: string | null | undefined;
+    date: Record<'local' | 'en' | 'np', string> | null | undefined;
     status: string | null | undefined;
     amount: string | null | undefined;
   };

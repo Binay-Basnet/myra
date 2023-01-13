@@ -58,7 +58,7 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
             {depositDetailData?.transactionCode}
           </Text>
         ),
-        Date: depositDetailData?.transactionDate,
+        Date: localizedDate(depositDetailData?.transactionDate),
         'Deposit Amount': depositDetailData?.amount,
         Rebate: depositDetailData?.rebate ?? '0',
         'Payment Mode': depositDetailData?.paymentMode,
@@ -79,7 +79,7 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
             {withdrawDetailData?.transactionCode}
           </Text>
         ),
-        Date: withdrawDetailData?.transactionDate,
+        Date: localizedDate(withdrawDetailData?.transactionDate),
         'Withdraw Amount': withdrawDetailData?.withdrawAmount,
         Fine: withdrawDetailData?.fine ?? '0',
         'Payment Mode': withdrawDetailData?.paymentMode,
@@ -100,7 +100,7 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
             {accountTransferDetailData?.transactionCode}
           </Text>
         ),
-        Date: accountTransferDetailData?.transactionDate,
+        Date: localizedDate(accountTransferDetailData?.transactionDate),
         'Withdrawn By': accountTransferDetailData?.withdrawnBy,
         'Transfer Type': accountTransferDetailData?.transferType,
         'Transfer Amount': accountTransferDetailData?.transferAmount,
@@ -125,7 +125,7 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
             {loanRepaymentDetailData?.transactionCode}
           </Text>
         ),
-        Date: loanRepaymentDetailData?.repaymentDate,
+        Date: localizedDate(loanRepaymentDetailData?.repaymentDate),
         'Installment No': loanRepaymentDetailData?.installmentNo,
         'Principal Amount': loanRepaymentDetailData?.totalRepaymentAmount,
         'Interest Amount': totalInterestAmount,

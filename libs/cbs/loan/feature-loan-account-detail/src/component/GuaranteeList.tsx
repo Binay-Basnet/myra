@@ -50,7 +50,7 @@ export const GuaranteeList = ({ gauranteeList }: GauranteeProps) => {
   ];
 
   return (
-    <Box mt="s20">
+    <Box>
       <Accordion defaultIndex={[0]} display="flex" flexDirection="column" gap="s16" allowToggle>
         <AccordionItem key={1}>
           <AccordionButton>
