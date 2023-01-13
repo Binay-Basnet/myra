@@ -83,7 +83,7 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
     {
       name: 'atm',
       amount: aTMCharge?.find((d) => d?.serviceName === 'Atm charge')?.amount,
-      isEnabled: isATMenabled || false,
+      isEnabled: (isATMenabled && aTMCharge?.length) || false,
       shouldFocus: true,
     },
   ];
