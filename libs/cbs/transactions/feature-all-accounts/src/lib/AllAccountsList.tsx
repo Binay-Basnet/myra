@@ -61,7 +61,7 @@ export const AllAccountsList = () => {
       searchPlaceholder="Search all accounts"
       rowOnClick={(row) => {
         router.push(
-          `${ROUTES.CBS_TRANS_ALL_ACCOUNTS_DETAILS}?id=${row?.node?.ID}&&?type=${row?.node?.accountType}`
+          `${ROUTES.CBS_TRANS_ALL_ACCOUNTS_DETAILS}?id=${row?.node?.ID}&type=${row?.node?.accountType}`
         );
       }}
     />

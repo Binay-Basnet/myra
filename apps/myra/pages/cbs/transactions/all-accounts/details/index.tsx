@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box, MainLayout } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
 import { AccountDetails } from '@coop/cbs/accounts/account-form';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
@@ -12,11 +12,7 @@ const AllAccountsDetails = () => {
   const accountType = router?.query['type'];
 
   if (accountType === 'SAVINGS') {
-    return (
-      <Box>
-        <AccountDetails />
-      </Box>
-    );
+    return <AccountDetails />;
   }
   return <CbsLoanFeatureLoanAccountDetail />;
 };
