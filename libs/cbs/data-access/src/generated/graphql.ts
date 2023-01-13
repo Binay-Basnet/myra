@@ -23425,7 +23425,9 @@ export type GetAcFeeCoaQuery = {
   };
 };
 
-export type GetAuditLogListQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAuditLogListQueryVariables = Exact<{
+  filter?: InputMaybe<AuditLogFilters>;
+}>;
 
 export type GetAuditLogListQuery = {
   auditLog: {
@@ -26109,6 +26111,36 @@ export type GetCashInTransitDetailQuery = {
           credit?: string | null;
         } | null> | null;
       } | null;
+    } | null;
+  };
+};
+
+export type GetServiceCenterTransferListQueryVariables = Exact<{
+  filter?: InputMaybe<ServiceCenterTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetServiceCenterTransferListQuery = {
+  transaction: {
+    listServiceCenterCashTransfer?: {
+      totalCount: number;
+      pageInfo?: {
+        startCursor?: string | null;
+        endCursor?: string | null;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+      } | null;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id?: string | null;
+          sender?: string | null;
+          senderId?: string | null;
+          receiver?: string | null;
+          amount?: string | null;
+          transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+      } | null> | null;
     } | null;
   };
 };
@@ -38808,9 +38840,9 @@ export const useGetAcFeeCoaQuery = <TData = GetAcFeeCoaQuery, TError = unknown>(
     options
   );
 export const GetAuditLogListDocument = `
-    query getAuditLogList {
+    query getAuditLogList($filter: AuditLogFilters) {
   auditLog {
-    humanize {
+    humanize(filter: $filter) {
       __typename
       ... on AuditLogHumanizeResult {
         data {
@@ -42397,6 +42429,48 @@ export const useGetCashInTransitDetailQuery = <
     ['getCashInTransitDetail', variables],
     useAxios<GetCashInTransitDetailQuery, GetCashInTransitDetailQueryVariables>(
       GetCashInTransitDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetServiceCenterTransferListDocument = `
+    query getServiceCenterTransferList($filter: ServiceCenterTransactionFilter, $pagination: Pagination) {
+  transaction {
+    listServiceCenterCashTransfer(filter: $filter, pagination: $pagination) {
+      totalCount
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
+      }
+      edges {
+        node {
+          id
+          sender
+          senderId
+          receiver
+          amount
+          transactionDate
+        }
+        cursor
+      }
+    }
+  }
+}
+    `;
+export const useGetServiceCenterTransferListQuery = <
+  TData = GetServiceCenterTransferListQuery,
+  TError = unknown
+>(
+  variables?: GetServiceCenterTransferListQueryVariables,
+  options?: UseQueryOptions<GetServiceCenterTransferListQuery, TError, TData>
+) =>
+  useQuery<GetServiceCenterTransferListQuery, TError, TData>(
+    variables === undefined
+      ? ['getServiceCenterTransferList']
+      : ['getServiceCenterTransferList', variables],
+    useAxios<GetServiceCenterTransferListQuery, GetServiceCenterTransferListQueryVariables>(
+      GetServiceCenterTransferListDocument
     ).bind(null, variables),
     options
   );

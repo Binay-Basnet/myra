@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box } from '@myra-ui';
+import { Box, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetAllTransactionsListQuery } from '@coop/cbs/data-access';
@@ -42,13 +42,14 @@ export const AllTransactionsList = () => {
           </Box>
         ),
       },
-      // {
-      //   header: 'Narration',
-      //   accessorFn: (row) => row?.node?.narration,
-      //   meta: {
-      //     width: '20%',
-      //   },
-      // },
+      {
+        header: 'Note',
+        accessorFn: (row) => row?.node?.narration,
+        cell: (props) => <Tooltip title={props?.row?.original?.node?.narration as string} />,
+        meta: {
+          width: '20%',
+        },
+      },
       {
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branchName,

@@ -92,7 +92,7 @@ export const SelectPopout = ({ optionType, options, popoverBtn, ...rest }: TSele
               Option: ({ children, ...props }) => (
                 <chakraComponents.Option {...props}>
                   {optionType === 'member' && 'id' in props.data ? (
-                    <Box display="flex" alignItems="center" p="s8" gap="s16">
+                    <Box w="auto" display="flex" alignItems="center" py="s8" px="s16" gap="s16">
                       <Box borderRadius="full">
                         <Avatar src={props.data.url} size="md" name={props.data.name} />
                       </Box>

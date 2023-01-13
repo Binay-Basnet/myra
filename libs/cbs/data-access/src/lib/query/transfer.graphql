@@ -98,3 +98,31 @@ query getCashInTransitDetail($transitID: ID!) {
     }
   }
 }
+
+query getServiceCenterTransferList(
+  $filter: ServiceCenterTransactionFilter
+  $pagination: Pagination
+) {
+  transaction {
+    listServiceCenterCashTransfer(filter: $filter, pagination: $pagination) {
+      totalCount
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
+      }
+      edges {
+        node {
+          id
+          sender
+          senderId
+          receiver
+          amount
+          transactionDate
+        }
+        cursor
+      }
+    }
+  }
+}

@@ -19,15 +19,15 @@ interface IGeneralInfoCardProps {
     accountTenure: string | null | undefined;
     isMandatory: boolean | null | undefined;
   };
-  accountTypes: {
-    SAVING: string;
-    RECURRING_SAVING: string;
-    TERM_SAVING_OR_FD: string;
-    CURRENT: string;
-  };
+  // accountTypes?: {
+  //   SAVING: string;
+  //   RECURRING_SAVING: string;
+  //   TERM_SAVING_OR_FD: string;
+  //   CURRENT: string;
+  // };
 }
 
-export const GeneralInfoCard = ({ title, data, accountTypes }: IGeneralInfoCardProps) => (
+export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => (
   <DetailsCard title={title} bg="white" hasThreeRows>
     <DetailCardContent title="Account Name" subtitle={data.accountName} />
     <DetailCardContent
@@ -40,17 +40,15 @@ export const GeneralInfoCard = ({ title, data, accountTypes }: IGeneralInfoCardP
       }
     />
     <DetailCardContent title="Account Open Date" subtitle={data.accountOpenDate} />
-    <DetailCardContent
-      title="Default Amount Deposit Account Type"
-      subtitle={
-        data?.accountType === NatureOfDepositProduct.RecurringSaving ||
-        (data?.accountType === NatureOfDepositProduct?.Current && data?.isMandatory)
-          ? data?.defaultAccountType
-            ? accountTypes[data?.defaultAccountType]
-            : '-'
-          : ''
-      }
-    />
+    {/* {accountDetails?.accountType === NatureOfDepositProduct?.Current && (
+      <DetailCardContent
+        title="Default Amount Deposit Account"
+        subtitle={
+          data?.nomineeAccount 
+        }
+      />
+    )} */}
+
     <DetailCardContent
       title="Interest Accrued"
       subtitle={

@@ -21,12 +21,12 @@ import {
 
 // const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const accountTypes = {
-  [NatureOfDepositProduct.Saving]: 'Saving Account',
-  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-  [NatureOfDepositProduct.Current]: 'Current Account',
-};
+// const accountTypes = {
+//   [NatureOfDepositProduct.Saving]: 'Saving Account',
+//   [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+//   [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+//   [NatureOfDepositProduct.Current]: 'Current Account',
+// };
 
 export const Overview = () => {
   const { accountDetails } = useAccountDetails();
@@ -92,7 +92,7 @@ export const Overview = () => {
       <GeneralInfoCard
         title="General Information"
         data={generalInfoData}
-        accountTypes={accountTypes}
+        // accountTypes={accountTypes}
       />
 
       <BalanceChart />
