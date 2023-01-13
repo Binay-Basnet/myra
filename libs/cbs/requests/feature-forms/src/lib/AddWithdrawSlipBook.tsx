@@ -153,6 +153,7 @@ export const AddWithdrawSlipBook = () => {
                     name="accountId"
                     label="Account"
                     memberId={memberId}
+                    filterBy="ACTIVE"
                   />
 
                   <FormSelect

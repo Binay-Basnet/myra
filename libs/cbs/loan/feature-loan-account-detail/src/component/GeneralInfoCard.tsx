@@ -24,7 +24,7 @@ export const GeneralInfoCard = ({ title, items, productId }: IGeneralInfoCardPro
         )}
         {item?.label === 'Product Name' && (
           <DetailCardContent
-            title="ID"
+            title="Product Name"
             children={
               <RedirectButton
                 link={`${ROUTES.SETTINGS_GENERAL_LP_DETAILS}?id=${productId}`}
