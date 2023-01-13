@@ -121,7 +121,7 @@ export const WithdrawSlipBookList = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader heading="Withdraw Slip List" />
+        <PageHeader heading="Withdraw Slip Book" />
       </Box>
 
       <Table
