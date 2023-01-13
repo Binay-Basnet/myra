@@ -75,3 +75,21 @@ fragment User on User {
     }
   }
 }
+
+query getUserAndBranchBalance {
+  auth {
+    me {
+      data {
+        user {
+          userBalance
+          currentBranch {
+            branchBalance
+          }
+        }
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

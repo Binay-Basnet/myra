@@ -37,13 +37,15 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
     content: () => componentRef.current,
   });
 
-  const { accountId, accountName, total, details } = useMemo(() => {
+  const { accountId, accountName, total, details, showSignatures } = useMemo(() => {
     let tempAccountName = '';
     let tempAccountId = '';
 
     let tempDetails = {};
 
     let tempTotal = '';
+
+    let tempShowSignatures = false;
 
     if (router?.asPath?.includes('/deposit/')) {
       tempAccountName = depositDetailData?.accountName as string;
@@ -182,6 +184,8 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
       };
 
       tempTotal = loanRepaymentDetailData?.totalRepaymentAmount as string;
+
+      tempShowSignatures = true;
     }
 
     return {
@@ -189,6 +193,7 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
       accountName: tempAccountName,
       total: tempTotal,
       details: tempDetails,
+      showSignatures: tempShowSignatures,
     };
   }, [
     depositDetailData,
@@ -204,6 +209,7 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
     router?.asPath?.includes('/withdraw/') ||
     router?.asPath?.includes('/account-transfer/') ||
     router?.asPath?.includes('/repayments/') ||
+    router?.asPath?.includes('/loan-payment/') ||
     router?.asPath?.includes('/journal-vouchers/')
       ? [{ label: 'Print Voucher', handler: handlePrint }]
       : [];
@@ -230,6 +236,7 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
         }}
         total={total}
         details={details}
+        showSignatures={showSignatures}
         ref={componentRef}
       />
     </>

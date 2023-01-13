@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,6 +20,7 @@ import {
   TellerTransferInput,
   TellerTransferType,
   useAppSelector,
+  useGetUserAndBranchBalanceQuery,
   useSetTellerTransferDataMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -80,6 +82,16 @@ export const AddVaultTransfer = () => {
   const queryClient = useQueryClient();
 
   const user = useAppSelector((state) => state.auth?.user);
+
+  const { data: balanceQueryData } = useGetUserAndBranchBalanceQuery();
+
+  const { userBalance, branchBalance } = useMemo(
+    () => ({
+      userBalance: balanceQueryData?.auth?.me?.data?.user?.userBalance,
+      branchBalance: balanceQueryData?.auth?.me?.data?.user?.currentBranch?.branchBalance,
+    }),
+    [balanceQueryData]
+  );
 
   const { mutateAsync: setVaultTransfer } = useSetTellerTransferDataMutation();
 
@@ -174,8 +186,8 @@ export const AddVaultTransfer = () => {
                         }
                         balance={
                           (transferType === TellerTransferType.VaultToCash
-                            ? user?.currentBranch?.branchBalance
-                            : user?.userBalance) ?? '0'
+                            ? branchBalance
+                            : userBalance) ?? '0'
                         }
                       />
                     </GridItem>

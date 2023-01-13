@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
@@ -9,6 +10,7 @@ import {
   CashTransferMode,
   CashValue,
   useAppSelector,
+  useGetUserAndBranchBalanceQuery,
   useSetCashInTransitTransferMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -42,6 +44,13 @@ export const AddCashTransitTransfer = () => {
   const queryClient = useQueryClient();
 
   const user = useAppSelector((state) => state.auth?.user);
+
+  const { data: balanceQueryData } = useGetUserAndBranchBalanceQuery();
+
+  const userBalance = useMemo(
+    () => balanceQueryData?.auth?.me?.data?.user?.userBalance,
+    [balanceQueryData]
+  );
 
   const branchData = user?.currentBranch;
 
@@ -111,7 +120,7 @@ export const AddCashTransitTransfer = () => {
               <Box minH="calc(100vh - 170px)" pb="s60">
                 <CashTransitInfo />
                 <TransferMode />
-                <Denomination availableCash={user?.userBalance} />
+                <Denomination availableCash={userBalance} />
               </Box>
             </form>
           </FormProvider>
