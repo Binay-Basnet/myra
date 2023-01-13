@@ -9,6 +9,7 @@ import {
   AccountTypeFilter,
   DepositProductInactiveData,
   DepositProductStatus,
+  Filter_Mode,
   NatureOfDepositProduct,
   useGetDepositProductSettingsListQuery,
   useSetDepositProductInactiveMutation,
@@ -76,6 +77,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
 
   const methods = useForm<DepositProductInactiveData>();
   const { resetField } = methods;
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isLoading, refetch } = useGetDepositProductSettingsListQuery(
     {
@@ -84,11 +86,17 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         order: null,
       },
       filter: {
+        id: searchTerm,
+        productName: searchTerm,
+        nature: searchTerm,
+        productCode: searchTerm,
         objState: (router.query['objState'] ?? DepositProductStatus.Active) as DepositProductStatus,
+        filterMode: Filter_Mode.Or,
       },
     },
     {
       staleTime: 0,
+      enabled: searchTerm !== 'undefined',
     }
   );
   const rowData = useMemo(() => data?.settings?.general?.depositProduct?.list?.edges ?? [], [data]);
@@ -189,7 +197,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         },
       },
     ],
-    [t, router]
+    [t, router, rowData]
   );
 
   const makeInactive = useCallback(async () => {

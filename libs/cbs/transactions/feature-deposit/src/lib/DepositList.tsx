@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
+import { DepositedBy, Filter_Mode, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
@@ -32,10 +32,25 @@ export interface DepositListProps {}
 export const DepositList = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
 
-  const { data, isFetching } = useGetDepositListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-  });
+  const { data, isFetching } = useGetDepositListDataQuery(
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        id: searchTerm,
+        memberId: searchTerm,
+        memberName: searchTerm,
+        transactionId: searchTerm,
+        depositedBy: searchTerm,
+        filterMode: Filter_Mode.Or,
+      },
+    },
+
+    {
+      enabled: searchTerm !== 'undefined',
+    }
+  );
 
   const rowData = useMemo(() => data?.transaction?.listDeposit?.edges ?? [], [data]);
 
@@ -116,7 +131,7 @@ export const DepositList = () => {
         },
       },
     ],
-    [t]
+    [t, rowData]
   );
 
   return (
