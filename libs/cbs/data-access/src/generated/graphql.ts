@@ -231,11 +231,14 @@ export type AccountOperatorDetailsType = {
 
 export type AccountTransactionFilter = {
   depositedBy?: InputMaybe<Scalars['String']>;
+  filterMode?: InputMaybe<Filter_Mode>;
   from?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   memberId?: InputMaybe<Scalars['String']>;
+  memberName?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
   to?: InputMaybe<Scalars['String']>;
+  transactionId?: InputMaybe<Scalars['String']>;
 };
 
 export type AccountTransferEntry = {
@@ -3782,8 +3785,12 @@ export type DepositProductResult = {
 };
 
 export type DepositProductSearchFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
+  nature?: InputMaybe<Scalars['String']>;
   objState?: InputMaybe<DepositProductStatus>;
+  productCode?: InputMaybe<Scalars['String']>;
+  productName?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
 };
 
@@ -9460,8 +9467,12 @@ export type LoanProductMinimal = {
 };
 
 export type LoanProductSearchFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
   objState?: InputMaybe<DepositProductStatus>;
+  productCode?: InputMaybe<Scalars['String']>;
+  productName?: InputMaybe<Scalars['String']>;
+  productSubType?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
 };
 

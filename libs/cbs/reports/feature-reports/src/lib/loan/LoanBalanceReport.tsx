@@ -45,7 +45,7 @@ export const LoanBalanceReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Loan Reports', link: '/reports/cbs/loan' },
-            { label: 'Loan Balance Report', link: '/reports/cbs/loan/balance/new' },
+            { label: 'Loan Balance Report', link: '/reports/cbs/loan/loan-balance/new' },
           ]}
         />
         <Report.Inputs>

@@ -11,6 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormCOASelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -60,6 +61,13 @@ export const LedgerReport = () => {
               {
                 header: 'ID',
                 accessorFn: (row) => row?.id,
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.id as string}
+                    type="transactions"
+                    label={props?.row?.original?.id as string}
+                  />
+                ),
               },
               {
                 header: 'Account',
