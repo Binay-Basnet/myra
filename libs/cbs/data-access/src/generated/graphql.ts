@@ -3230,9 +3230,9 @@ export type DenominationValue = {
 };
 
 export type DepositAccount = Base & {
-  accountExpiryDate?: Maybe<Scalars['String']>;
+  accountExpiryDate?: Maybe<Scalars['Localized']>;
   accountName?: Maybe<Scalars['String']>;
-  accountOpenedDate?: Maybe<Scalars['String']>;
+  accountOpenedDate?: Maybe<Scalars['Localized']>;
   availableBalance?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
   closedAt?: Maybe<Scalars['String']>;
@@ -3244,7 +3244,7 @@ export type DepositAccount = Base & {
   installmentAmount?: Maybe<Scalars['String']>;
   interestAccured?: Maybe<Scalars['String']>;
   interestTax?: Maybe<Scalars['String']>;
-  lastTransactionDate?: Maybe<Scalars['String']>;
+  lastTransactionDate?: Maybe<Scalars['Localized']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -12465,6 +12465,31 @@ export type ServiceCenter = {
   serviceCenterCode?: Maybe<Scalars['String']>;
 };
 
+export type ServiceCenterActivityDetails = {
+  amount?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  receiver?: Maybe<Scalars['String']>;
+  sender?: Maybe<Scalars['String']>;
+  senderId?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
+};
+
+export type ServiceCenterActivityListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<ServiceCenterActivityDetails>;
+};
+
+export type ServiceCenterTransactionFilter = {
+  serviceCenter?: InputMaybe<Scalars['String']>;
+  transactionId?: InputMaybe<Scalars['String']>;
+};
+
+export type ServiceCentreCashTransferActivity = {
+  edges?: Maybe<Array<Maybe<ServiceCenterActivityListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
 export type ServiceCentreCashTransferInput = {
   branchEntries?: InputMaybe<Array<InputMaybe<CashTransferServiceCentreEntry>>>;
   selfEntries?: InputMaybe<Array<InputMaybe<CashTransferSelfEntry>>>;
@@ -13669,6 +13694,7 @@ export type TransactionQuery = {
   listAgentTask?: Maybe<AgentTodayListData>;
   listAllTransactions?: Maybe<AllTransactionsConnection>;
   listDeposit: AccountActivityListConnection;
+  listServiceCenterCashTransfer?: Maybe<ServiceCentreCashTransferActivity>;
   listTellerTransaction: TellerActivityListConnection;
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
@@ -13717,6 +13743,11 @@ export type TransactionQueryListAllTransactionsArgs = {
 
 export type TransactionQueryListDepositArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListServiceCenterCashTransferArgs = {
+  filter?: InputMaybe<ServiceCenterTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -14274,6 +14305,7 @@ export type WithdrawRecord = {
   paymentMode?: Maybe<WithdrawPaymentType>;
   totalAmount?: Maybe<Scalars['String']>;
   transactionID?: Maybe<Scalars['ID']>;
+  withdrawOther?: Maybe<Scalars['String']>;
   withdrawWith?: Maybe<WithdrawWith>;
   withdrawnBy?: Maybe<WithdrawBy>;
 };
@@ -17395,9 +17427,9 @@ export type GetAccountTableListQuery = {
           installmentAmount?: string | null;
           balance?: string | null;
           availableBalance?: string | null;
-          accountOpenedDate?: string | null;
-          lastTransactionDate?: string | null;
-          accountExpiryDate?: string | null;
+          accountOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
+          lastTransactionDate?: Record<'local' | 'en' | 'np', string> | null;
+          accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
           closedAt?: string | null;
           overDrawnBalance?: string | null;
           guaranteedAmount?: string | null;
@@ -17476,8 +17508,8 @@ export type GetAccountTableListMinimalQuery = {
           createdAt: string;
           accountName?: string | null;
           balance?: string | null;
-          accountOpenedDate?: string | null;
-          accountExpiryDate?: string | null;
+          accountOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
+          accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
           closedAt?: string | null;
           member?: {
             id: string;
@@ -20461,10 +20493,10 @@ export type GetMemberLinkedAccountsQuery = {
           interestAccured?: string | null;
           interestTax?: string | null;
           prematurePenalty?: string | null;
-          lastTransactionDate?: string | null;
-          accountOpenedDate?: string | null;
+          lastTransactionDate?: Record<'local' | 'en' | 'np', string> | null;
+          accountOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
           installmentAmount?: string | null;
-          accountExpiryDate?: string | null;
+          accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
           overDrawnBalance?: string | null;
           guaranteedAmount?: string | null;
           member?: { name?: Record<'local' | 'en' | 'np', string> | null } | null;
@@ -23393,7 +23425,9 @@ export type GetAcFeeCoaQuery = {
   };
 };
 
-export type GetAuditLogListQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAuditLogListQueryVariables = Exact<{
+  filter?: InputMaybe<AuditLogFilters>;
+}>;
 
 export type GetAuditLogListQuery = {
   auditLog: {
@@ -24815,10 +24849,10 @@ export type GetSavingsAccountListQuery = {
               interestAccured?: string | null;
               interestTax?: string | null;
               prematurePenalty?: string | null;
-              lastTransactionDate?: string | null;
-              accountOpenedDate?: string | null;
+              lastTransactionDate?: Record<'local' | 'en' | 'np', string> | null;
+              accountOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
               installmentAmount?: string | null;
-              accountExpiryDate?: string | null;
+              accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
               overDrawnBalance?: string | null;
               guaranteedAmount?: string | null;
               member?: {
@@ -26077,6 +26111,36 @@ export type GetCashInTransitDetailQuery = {
           credit?: string | null;
         } | null> | null;
       } | null;
+    } | null;
+  };
+};
+
+export type GetServiceCenterTransferListQueryVariables = Exact<{
+  filter?: InputMaybe<ServiceCenterTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetServiceCenterTransferListQuery = {
+  transaction: {
+    listServiceCenterCashTransfer?: {
+      totalCount: number;
+      pageInfo?: {
+        startCursor?: string | null;
+        endCursor?: string | null;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+      } | null;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id?: string | null;
+          sender?: string | null;
+          senderId?: string | null;
+          receiver?: string | null;
+          amount?: string | null;
+          transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+      } | null> | null;
     } | null;
   };
 };
@@ -38776,9 +38840,9 @@ export const useGetAcFeeCoaQuery = <TData = GetAcFeeCoaQuery, TError = unknown>(
     options
   );
 export const GetAuditLogListDocument = `
-    query getAuditLogList {
+    query getAuditLogList($filter: AuditLogFilters) {
   auditLog {
-    humanize {
+    humanize(filter: $filter) {
       __typename
       ... on AuditLogHumanizeResult {
         data {
@@ -42365,6 +42429,48 @@ export const useGetCashInTransitDetailQuery = <
     ['getCashInTransitDetail', variables],
     useAxios<GetCashInTransitDetailQuery, GetCashInTransitDetailQueryVariables>(
       GetCashInTransitDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetServiceCenterTransferListDocument = `
+    query getServiceCenterTransferList($filter: ServiceCenterTransactionFilter, $pagination: Pagination) {
+  transaction {
+    listServiceCenterCashTransfer(filter: $filter, pagination: $pagination) {
+      totalCount
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
+      }
+      edges {
+        node {
+          id
+          sender
+          senderId
+          receiver
+          amount
+          transactionDate
+        }
+        cursor
+      }
+    }
+  }
+}
+    `;
+export const useGetServiceCenterTransferListQuery = <
+  TData = GetServiceCenterTransferListQuery,
+  TError = unknown
+>(
+  variables?: GetServiceCenterTransferListQueryVariables,
+  options?: UseQueryOptions<GetServiceCenterTransferListQuery, TError, TData>
+) =>
+  useQuery<GetServiceCenterTransferListQuery, TError, TData>(
+    variables === undefined
+      ? ['getServiceCenterTransferList']
+      : ['getServiceCenterTransferList', variables],
+    useAxios<GetServiceCenterTransferListQuery, GetServiceCenterTransferListQueryVariables>(
+      GetServiceCenterTransferListDocument
     ).bind(null, variables),
     options
   );

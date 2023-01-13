@@ -482,9 +482,11 @@ export const AddWithdraw = () => {
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: selectedAccount?.dues?.fine ?? '0',
                               // branch: 'Kumaripati',
-                              openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
-                              expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
-                              lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
+                              openDate: localizedDate(selectedAccount?.accountOpenedDate) ?? 'N/A',
+                              expiryDate:
+                                localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
+                              lastTransactionDate:
+                                localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
                               productName: selectedAccount?.product?.productName,
                               installmentAmount:
                                 selectedAccount?.product?.nature ===

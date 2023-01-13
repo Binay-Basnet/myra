@@ -32,7 +32,7 @@ import {
   useGetIndividualMemberDetails,
   useSetAccountCloseDataMutation,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAmountInput,
@@ -651,9 +651,10 @@ export const CbsAccountClose = () => {
                           overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                           fine: selectedAccount?.dues?.fine ?? 0,
                           // branch: 'Kumaripati',
-                          openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
-                          expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
-                          lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
+                          openDate: localizedDate(selectedAccount?.accountOpenedDate) ?? 'N/A',
+                          expiryDate: localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
+                          lastTransactionDate:
+                            localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
                           productName: selectedAccount?.product?.productName,
                           installmentAmount:
                             selectedAccount?.product?.nature ===
