@@ -6,5 +6,5 @@ export const getSchemaPath = () => {
     return schemaPathFromLocalStorage;
   }
 
-  return process.env['NX_SCHEMA_PATH'];
+  return `${process.env['NX_SCHEMA_PATH']}/query`;
 };

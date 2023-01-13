@@ -5,8 +5,10 @@ import { getDatabaseSlug, getSchemaPath } from '@coop/shared/utils';
 
 import { RootState, useAppSelector } from '../redux/store';
 
+export const axiosAgent = axios.create();
+
 // Request interceptors for API calls
-axios.interceptors.request.use(
+axiosAgent.interceptors.request.use(
   (config) => {
     config.headers = {
       ...config.headers,
@@ -48,7 +50,7 @@ export const useAxios = <TData, TVariables>(
         };
       }
     }
-    return axios
+    return axiosAgent
       .post<{ data: TData }>(url, { query, variables }, config)
       .then(
         (
@@ -93,7 +95,7 @@ export const useAxios = <TData, TVariables>(
               }
             }
 
-            return axios.post<{ data: TData }>(url, { query, variables }, config).then(
+            return axiosAgent.post<{ data: TData }>(url, { query, variables }, config).then(
               (
                 res: AxiosResponse<{
                   data: TData;

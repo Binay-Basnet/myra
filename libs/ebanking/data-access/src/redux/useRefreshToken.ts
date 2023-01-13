@@ -3,13 +3,17 @@ import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
 import axios from 'axios';
 
-import { EBankingTokenType } from '@coop/ebanking/data-access';
+import { EBankingTokenType, store } from '@coop/ebanking/data-access';
 
-import { saveCoopToken, saveToken } from './slices/auth-slice';
+import { saveToken } from './slices/auth-slice';
 
 interface IToken {
   access: string;
   refresh: string;
+}
+
+interface RefreshTokenREST {
+  token: IToken;
 }
 
 interface RefreshTokenResponse {
@@ -43,12 +47,27 @@ privateAgent.interceptors.request.use(
   (config) => {
     config.headers = {
       ...config.headers,
-      Slug: localStorage.getItem('db') || 'neosys',
+      Authorization: `Bearer ${store.getState().auth.token}` as string,
+      Slug: 'neosys',
     };
     return config;
   },
   (error) => Promise.reject(error)
 );
+
+const axiosAgent = axios.create({});
+// Request interceptors for API calls
+axiosAgent.interceptors.request.use(
+  (config) => {
+    config.headers = {
+      ...config.headers,
+      Slug: 'neosys',
+    };
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 export const useRefreshToken = (url: string, type: EBankingTokenType = EBankingTokenType.Myra) => {
   const replace = useReplace();
   const dispatch = useDispatch();
@@ -61,12 +80,33 @@ export const useRefreshToken = (url: string, type: EBankingTokenType = EBankingT
     // eslint-disable-next-line prefer-promise-reject-errors
     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
 
+    if (type === EBankingTokenType.Myra) {
+      return axiosAgent
+        .post<RefreshTokenREST>(`${process.env['NX_SCHEMA_PATH']}/ebanking/reset-token`, {
+          refreshToken,
+        })
+        .then((res) => {
+          if (res?.data?.token) {
+            const accessToken = res.data?.token?.access;
+
+            localStorage.setItem('master-refreshToken', res.data?.token?.refresh);
+            dispatch(saveToken(accessToken));
+
+            return accessToken;
+          }
+          replace('/login');
+          throw new Error('Credentials are Expired!!');
+        });
+    }
+
     return privateAgent
       .post<RefreshTokenResponse>(url, {
         query: `mutation {
   eBanking {
     auth {
-      getNewToken(refreshToken: "${refreshToken}", tokenFor: ${type} ) {
+      getNewToken(refreshToken: "${refreshToken}", tokenFor: ${type}, slug: ${localStorage.getItem(
+          'db'
+        )} ) {
         token {
           refresh
           access
@@ -107,29 +147,17 @@ export const useRefreshToken = (url: string, type: EBankingTokenType = EBankingT
         if (res.data.data?.eBanking?.auth?.getNewToken?.token) {
           const accessToken = res.data?.data?.eBanking.auth?.getNewToken?.token?.access;
 
-          if (type === EBankingTokenType.Myra) {
-            localStorage.setItem(
-              'master-refreshToken',
-              res.data?.data?.eBanking.auth?.getNewToken?.token?.refresh
-            );
-            dispatch(saveToken(accessToken));
-          } else {
-            localStorage.setItem(
-              'coop-refreshToken',
-              res.data?.data?.eBanking.auth?.getNewToken?.token?.refresh
-            );
-            dispatch(saveCoopToken(accessToken));
-          }
+          localStorage.setItem(
+            'master-refreshToken',
+            res.data?.data?.eBanking.auth?.getNewToken?.token?.refresh
+          );
+          dispatch(saveToken(accessToken));
 
           return accessToken;
         }
-        if (type === EBankingTokenType.Myra) {
-          replace('/login');
-          throw new Error('Credentials are Expired!!');
-        } else {
-          replace('/login/coop');
-          throw new Error('Credentials are Expired!!');
-        }
+
+        replace('/login/coop');
+        throw new Error('Credentials are Expired!!');
       });
   }, [dispatch, replace, url]);
 

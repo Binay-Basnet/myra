@@ -945,7 +945,7 @@ export const TopLevelHeader = () => {
                               cursor="pointer"
                               onClick={() => {
                                 dispatch(logout());
-                                router.push('/login').then(() => queryClient.clear());
+                                router.replace('/login').then(() => queryClient.clear());
                               }}
                             >
                               <Text

@@ -6,6 +6,7 @@ import {
   logout,
   RoleInfo,
   useAppDispatch,
+  useAppSelector,
   useGetMeQuery,
   useRefreshToken,
 } from '@coop/cbs/data-access';
@@ -30,7 +31,7 @@ export const useInit = () => {
     }
   );
 
-  // const isLoggedIn = useAppSelector((state) => state.auth.isLogged);
+  const isLoggedIn = useAppSelector((state) => state.auth.isLogged);
 
   const refreshToken = useRefreshToken(url ?? '');
 
@@ -47,21 +48,25 @@ export const useInit = () => {
   const availableBranches = loginData?.branches;
 
   useEffect(() => {
-    refreshToken()
-      .then((res) => {
-        if (res) {
-          setTriggerQuery(true);
-        }
-      })
-      .catch(() => {
-        if (route?.pathname.includes('password-recovery')) {
-          setIsLoading(false);
-          return;
-        }
-        dispatch(logout());
-        replace('/login').then(() => setIsLoading(false));
-      });
-  }, [dispatch, refreshToken, replace]);
+    if (!route.pathname.includes('login') && !isLoggedIn) {
+      refreshToken()
+        .then((res) => {
+          if (res) {
+            setTriggerQuery(true);
+          }
+        })
+        .catch(() => {
+          if (route?.pathname.includes('password-recovery')) {
+            setIsLoading(false);
+            return;
+          }
+          dispatch(logout());
+          replace('/login').then(() => setIsLoading(false));
+        });
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch, refreshToken, replace, route]);
 
   useEffect(() => {
     if (hasDataReturned) {

@@ -1,4 +1,5 @@
 export * from './generated/coop/graphql';
+export { axiosAgent } from './generated/myra/axiosHelper';
 export {
   useCheckAccountMutation,
   useEBankingLoginMutation,

@@ -5,7 +5,7 @@ import { getSchemaPath } from '@coop/shared/utils';
 
 import { RootState, useAppSelector } from '../../redux/store';
 
-const axiosAgent = axios.create();
+export const axiosAgent = axios.create();
 
 // Request interceptors for API calls
 axiosAgent.interceptors.request.use(
