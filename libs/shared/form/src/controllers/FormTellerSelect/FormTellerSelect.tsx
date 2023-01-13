@@ -1,9 +1,5 @@
-import { useState } from 'react';
-import { debounce } from 'lodash';
-
-import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
+import { useGetTellerListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
 
 interface IFormTellerSelectProps {
   name: string;
@@ -20,29 +16,20 @@ export const FormTellerSelect = ({
   isRequired,
   excludeIds,
 }: IFormTellerSelectProps) => {
-  const [tellerId, setTellerId] = useState('');
+  // const [tellerId, setTellerId] = useState('');
 
-  const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery({
-    paginate: {
-      ...getRouterQuery({ type: ['PAGINATION'] }),
-      first: 10,
-    },
-    filter: {
-      query: tellerId,
-      role: [Roles.Teller, Roles.HeadTeller],
-    },
-  });
+  const { data: agentListQueryData, isFetching } = useGetTellerListQuery();
 
-  const agentList = agentListQueryData?.settings?.myraUser?.list?.edges;
+  const agentList = agentListQueryData?.settings?.myraUser?.tellers;
 
   const agentOptions = agentList?.reduce((prevVal, curVal) => {
-    if (excludeIds?.includes(curVal?.node?.id as string)) return prevVal;
+    if (excludeIds?.includes(curVal?.id as string)) return prevVal;
 
     return [
       ...prevVal,
       {
-        label: `${curVal?.node?.name} [ID:${curVal?.node?.id}]`,
-        value: curVal?.node?.id as string,
+        label: `${curVal?.name} [ID:${curVal?.id}]`,
+        value: curVal?.id as string,
       },
     ];
   }, [] as OptionType[]);
@@ -53,11 +40,11 @@ export const FormTellerSelect = ({
       label={label}
       isRequired={isRequired}
       isLoading={isFetching}
-      onInputChange={debounce((id) => {
-        if (id) {
-          setTellerId(id);
-        }
-      }, 800)}
+      // onInputChange={debounce((id) => {
+      //   if (id) {
+      //     setTellerId(id);
+      //   }
+      // }, 800)}
       options={agentOptions}
     />
   );

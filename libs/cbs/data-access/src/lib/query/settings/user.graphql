@@ -103,3 +103,14 @@ query getUserRoles {
     }
   }
 }
+
+query getTellerList {
+  settings {
+    myraUser {
+      tellers {
+        id
+        name
+      }
+    }
+  }
+}
