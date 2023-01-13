@@ -43,11 +43,19 @@ mutation AddGroup($data: NewCoaGroupInput!) {
   }
 }
 
-mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!) {
+mutation addAccountInCOA(
+  $accountSetup: COAAccountSetup!
+  $parentAccountCode: String!
+  $openForBranches: [ID]
+) {
   settings {
     chartsOfAccount {
       account {
-        addAccount(accountSetup: $accountSetup, parentAccountCode: $parentAccountCode) {
+        addAccount(
+          accountSetup: $accountSetup
+          parentAccountCode: $parentAccountCode
+          openForBranches: $openForBranches
+        ) {
           success
           error {
             ...MutationError
