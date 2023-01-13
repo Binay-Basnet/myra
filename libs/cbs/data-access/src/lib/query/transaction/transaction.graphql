@@ -413,6 +413,7 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
         transactionMode
         amount
         branch
+        note
         status
         glTransaction {
           account
