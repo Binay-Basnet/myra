@@ -95,7 +95,6 @@ export const Select = ({
         onChange={multiOnChange}
         chakraStyles={getChakraDefaultStyles(!!errorText)}
         components={getComponents(hasRadioOption)}
-        menuPosition="fixed"
         {...rest}
       />
 
