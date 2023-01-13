@@ -73,7 +73,7 @@ export const AppSidebar = ({ module = 'CBS', menu, forms }: ISidebarProps) => {
               fontWeight="600"
               color="gray.800"
             >
-              {menu.toLowerCase()}
+              {menu.toLowerCase()?.replace(/_/g, ' ')}
             </Text>
           </Link>
         </Box>
