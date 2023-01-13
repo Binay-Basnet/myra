@@ -10,7 +10,6 @@ import {
   Id_Type,
   useAllAdministrationQuery,
   useGetBranchEditDataQuery,
-  useGetCoaListQuery,
   useGetNewIdMutation,
   useSetBranchDataMutation,
 } from '@coop/cbs/data-access';
@@ -76,18 +75,18 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
     { label: t['settingsBranchStatusInactive'], value: false },
   ];
 
-  const { data: coa } = useGetCoaListQuery({
-    filter: {
-      active: true,
-    },
-  });
+  // const { data: coa } = useGetCoaListQuery({
+  //   filter: {
+  //     active: true,
+  //   },
+  // });
 
-  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+  // const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => ({
-    label: item?.name?.en as string,
-    value: item?.id as string,
-  }));
+  // const coaList = coaData?.map((item) => ({
+  //   label: item?.name?.en as string,
+  //   value: item?.id as string,
+  // }));
 
   const branchCategories = [
     {
@@ -296,7 +295,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                       )} */}
                     </Box>
 
-                    <Box>
+                    {/* <Box>
                       <InputGroupContainer>
                         <FormSelect
                           label={t['settinsBranchPLTransfer']}
@@ -309,7 +308,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                           options={coaList}
                         />
                       </InputGroupContainer>
-                    </Box>
+                    </Box> */}
 
                     <Box display="flex" justifyContent="space-between">
                       <Box display="flex" flexDirection="column">
