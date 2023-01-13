@@ -72,7 +72,7 @@ export const AddCashTransitTransfer = () => {
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
+      (accumulator: number, { amount: currAmount }) => accumulator + Number(currAmount),
       0 as number
     ) ?? 0;
 
@@ -98,7 +98,7 @@ export const AddCashTransitTransfer = () => {
       promise: mutateAsync({ data: updatedData as CashInTransitInput }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getCashInTransitList']);
-        queryClient.invalidateQueries(['getMe']);
+        // queryClient.invalidateQueries(['getMe']);
         router.push(ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST);
       },
     });

@@ -76,7 +76,7 @@ export const CashInTransitTransferAproveModal = ({
       }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getCashInTransitList']);
-        queryClient.invalidateQueries(['getMe']);
+        // queryClient.invalidateQueries(['getMe']);
 
         onToggle();
         methods.reset();

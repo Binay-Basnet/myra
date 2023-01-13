@@ -25102,6 +25102,16 @@ export type GetUserRolesQuery = {
   settings: { allRoles?: Array<{ id: string; name: string } | null> | null };
 };
 
+export type GetTellerListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetTellerListQuery = {
+  settings: {
+    myraUser?: {
+      tellers?: Array<{ id?: string | null; name?: string | null } | null> | null;
+    } | null;
+  };
+};
+
 export type GetValuatorQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -41078,6 +41088,30 @@ export const useGetUserRolesQuery = <TData = GetUserRolesQuery, TError = unknown
   useQuery<GetUserRolesQuery, TError, TData>(
     variables === undefined ? ['getUserRoles'] : ['getUserRoles', variables],
     useAxios<GetUserRolesQuery, GetUserRolesQueryVariables>(GetUserRolesDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetTellerListDocument = `
+    query getTellerList {
+  settings {
+    myraUser {
+      tellers {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export const useGetTellerListQuery = <TData = GetTellerListQuery, TError = unknown>(
+  variables?: GetTellerListQueryVariables,
+  options?: UseQueryOptions<GetTellerListQuery, TError, TData>
+) =>
+  useQuery<GetTellerListQuery, TError, TData>(
+    variables === undefined ? ['getTellerList'] : ['getTellerList', variables],
+    useAxios<GetTellerListQuery, GetTellerListQueryVariables>(GetTellerListDocument).bind(
       null,
       variables
     ),

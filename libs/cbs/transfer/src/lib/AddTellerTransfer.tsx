@@ -98,7 +98,7 @@ export const AddTellerTransfer = () => {
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
+      (accumulator: number, { amount: currAmount }) => accumulator + Number(currAmount),
       0 as number
     ) ?? 0;
 
