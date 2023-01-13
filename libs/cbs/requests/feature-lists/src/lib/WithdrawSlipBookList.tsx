@@ -96,8 +96,8 @@ export const WithdrawSlipBookList = () => {
               items={[
                 {
                   title: 'Print',
-                  aclKey: 'CBS_WITHDRAW_SLIPS',
-                  action: 'VIEW',
+                  // aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE',
+                  // action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_WITHDRAW_SLIP_BOOK_PRINT}?id=${row?.id}`);
                   },
