@@ -118,6 +118,7 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
           onChange={debounce((e) => {
             router.push({
               query: {
+                objState: router.query['objState'],
                 search: e.target.value,
               },
             });
