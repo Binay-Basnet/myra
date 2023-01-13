@@ -9,6 +9,7 @@ import {
   useAccountDetails,
   useGetAccountTransactionListsQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
 interface IProps {
@@ -47,7 +48,9 @@ export const RecentTransactions = ({ isClosed }: IProps) => {
         <Button
           variant="ghost"
           onClick={() =>
-            router.push(`/savings/details/${accountDetails?.accountId}?tab=transactions`)
+            router.push(
+              `${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${accountDetails?.accountId}&tab=transactions`
+            )
           }
         >
           View all transactions
