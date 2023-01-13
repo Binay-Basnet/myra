@@ -1,10 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 
-import { useGetCoaListQuery } from '@coop/cbs/data-access';
+import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
+
 import { InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import { SubHeadingText, SubText } from '@coop/shared/components';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
+import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer } from '../formui';
@@ -25,18 +25,18 @@ export const Rebate = () => {
     },
   ];
 
-  const { data: coa } = useGetCoaListQuery({
-    filter: {
-      active: true,
-    },
-  });
+  // const { data: coa } = useGetCoaListQuery({
+  //   filter: {
+  //     active: true,
+  //   },
+  // });
 
-  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+  // const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => ({
-    label: item?.name?.en as string,
-    value: item?.id as string,
-  }));
+  // const coaList = coaData?.map((item) => ({
+  //   label: item?.name?.en as string,
+  //   value: item?.id as string,
+  // }));
 
   return (
     <FormSection>
@@ -73,12 +73,12 @@ export const Rebate = () => {
                   type="number"
                   label={t['loanProductRebateAmount']}
                 />
-
+                {/* 
                 <FormSelect
                   name="rebate.rebateLedgerMapping"
                   label={t['loanProductloanLedgerMapping']}
                   options={coaList}
-                />
+                /> */}
                 <GridItem colSpan={3}>
                   <Alert status="warning">
                     <Text fontWeight="Medium" fontSize="r1">
