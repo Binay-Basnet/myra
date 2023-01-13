@@ -190,7 +190,11 @@ interface IAddGroupProps {
 
 export const AddGroup = ({ clickedAccount, setClickedAccount, data }: IAddGroupProps) => {
   const queryClient = useQueryClient();
-  const methods = useForm<NewCoaGroupInput>();
+  const methods = useForm<
+    Omit<NewCoaGroupInput, 'openForBranches'> & {
+      openForBranches: { label: string; value: string }[];
+    }
+  >();
   const { watch, reset } = methods;
   const { isOpen, onClose, onToggle } = useDisclosure();
 
