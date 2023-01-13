@@ -19,16 +19,15 @@ export const CBSSettingsAuditLog = () => {
   // const arrayId = memberId && memberId?.map((item) => item?.id);
   // const actionEnums = actions && actions?.map((item) => item?.value);
 
-  const { data } = useGetAuditLogListQuery(
-    {
-      filter: {
-        users: ['1234'],
-        action: ['ALL'],
-        // time,
-      },
-    },
-    { staleTime: 0 }
-  );
+  const { data } = useGetAuditLogListQuery();
+  // {
+  //   filter: {
+  //     users: ['1234'],
+  //     action: ['ALL'],
+  //     time,
+  //   },
+  // },
+  // { staleTime: 0 }
 
   const humanizedAuditLog =
     data?.auditLog?.humanize?.__typename === 'AuditLogHumanizeResult' &&
