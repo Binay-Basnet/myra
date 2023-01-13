@@ -1,15 +1,17 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetAllAccountsQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AllAccountsListProps {}
 
 export const AllAccountsList = () => {
+  const router = useRouter();
   const { data, isFetching } = useGetAllAccountsQuery({
     paginate: getRouterQuery({ type: ['PAGINATION'] }),
   });
@@ -57,6 +59,11 @@ export const AllAccountsList = () => {
         pageInfo: data?.allAccounts?.list?.pageInfo,
       }}
       searchPlaceholder="Search all accounts"
+      rowOnClick={(row) => {
+        router.push(
+          `${ROUTES.CBS_TRANS_ALL_ACCOUNTS_DETAILS}?id=${row?.node?.ID}&&?type=${row?.node?.accountType}`
+        );
+      }}
     />
   );
 };

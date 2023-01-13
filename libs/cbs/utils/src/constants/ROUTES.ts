@@ -156,6 +156,7 @@ export const ROUTES = {
   CBS_TRANS_WITHDRAW_DETAILS: '/cbs/transactions/withdraw/details',
   CBS_TRANS_JOURNAL_VOUCHER_DETAILS: '/cbs/transactions/journal-vouchers/details',
   CBS_TRANS_LOAN_PAYMENT_DETAILS: '/cbs/transactions/loan-payment/details',
+  CBS_TRANS_ALL_ACCOUNTS_DETAILS: '/cbs/transactions/all-accounts/details',
 
   CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_LIST:
     '/cbs/others/market-representative-transaction/list',
