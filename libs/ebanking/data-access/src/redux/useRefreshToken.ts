@@ -104,9 +104,9 @@ export const useRefreshToken = (url: string, type: EBankingTokenType = EBankingT
         query: `mutation {
   eBanking {
     auth {
-      getNewToken(refreshToken: "${refreshToken}", tokenFor: ${type}, slug: ${localStorage.getItem(
+      getNewToken(refreshToken: "${refreshToken}", tokenFor: ${type}, slug: "${localStorage.getItem(
           'db'
-        )} ) {
+        )}" ) {
         token {
           refresh
           access

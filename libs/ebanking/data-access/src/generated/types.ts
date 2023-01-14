@@ -604,6 +604,7 @@ export type EBankingAuthMutationCheckAccountArgs = {
 
 export type EBankingAuthMutationGetNewTokenArgs = {
   refreshToken: Scalars['String'];
+  slug?: InputMaybe<Scalars['String']>;
   tokenFor: EBankingTokenType;
 };
 
