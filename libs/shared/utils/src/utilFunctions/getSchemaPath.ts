@@ -17,5 +17,5 @@ export const getLoginSchemaPath = () => {
     return schemaPathFromLocalStorage;
   }
 
-  return `${process.env['NX_SCHEMA_PATH']}/erp/login`;
+  return `${process.env['NX_SCHEMA_PATH']}`;
 };
