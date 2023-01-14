@@ -2,6 +2,8 @@ import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
 
+import { getAPIUrl } from '@coop/shared/utils';
+
 import { saveToken } from './slices/auth-slice';
 import { axiosAgent } from '../generated/axiosHelper';
 
@@ -27,6 +29,8 @@ function useReplace() {
   return replace;
 }
 
+const schemaPath = getAPIUrl();
+
 export const useRefreshToken = (url: string) => {
   const replace = useReplace();
   const dispatch = useDispatch();
@@ -36,7 +40,7 @@ export const useRefreshToken = (url: string) => {
     // eslint-disable-next-line prefer-promise-reject-errors
     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
     return axiosAgent
-      .post<RefreshTokenResponse>(`${process.env['NX_SCHEMA_PATH']}/erp/reset-token`, {
+      .post<RefreshTokenResponse>(`${schemaPath}/erp/reset-token`, {
         refreshToken,
       })
       .then((res) => {

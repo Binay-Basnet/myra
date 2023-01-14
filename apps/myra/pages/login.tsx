@@ -4,7 +4,6 @@ import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import * as process from 'process';
 
 import {
   Box,
@@ -28,7 +27,7 @@ import {
   User,
 } from '@coop/cbs/data-access';
 import { AbilityContext, updateAbility } from '@coop/cbs/utils';
-import { useTranslation } from '@coop/shared/utils';
+import { getAPIUrl, useTranslation } from '@coop/shared/utils';
 
 type LoginResponse = {
   recordId?: string;
@@ -54,11 +53,10 @@ type LoginBody = {
   username: string;
 };
 
+const schemaPath = getAPIUrl();
+
 const login = async (body: LoginBody) => {
-  const response = await axiosAgent.post<LoginResponse>(
-    `${process.env['NX_SCHEMA_PATH']}/erp/login`,
-    body
-  );
+  const response = await axiosAgent.post<LoginResponse>(`${schemaPath}/erp/login`, body);
 
   return response?.data;
 };
