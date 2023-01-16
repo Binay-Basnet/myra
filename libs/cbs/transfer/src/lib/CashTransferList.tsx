@@ -13,9 +13,6 @@ export const CashTransferList = () => {
   const { data, isFetching } = useGetServiceCenterTransferListQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
-      // filter: {
-      //   type: [TellerTransferType.VaultToCash, TellerTransferType.CashToVault],
-      // },
     },
     {
       staleTime: 0,
@@ -46,10 +43,6 @@ export const CashTransferList = () => {
           width: '20%',
         },
       },
-      // {
-      //   header: 'Approval Status',
-      //   accessorFn: (row) => localizedDate(row?.node?.date),
-      // },
       {
         header: 'Cash Amount',
 

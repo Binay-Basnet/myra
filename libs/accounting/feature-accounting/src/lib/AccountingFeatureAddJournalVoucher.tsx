@@ -90,7 +90,6 @@ export const AccountingFeatureAddJournalVoucher = () => {
                   label={t['accountingJournalVoucherAddDueDate']}
                 />
                 <FormInput
-                  isRequired
                   name="reference"
                   type="text"
                   label={t['accountingJournalVoucherAddReference']}

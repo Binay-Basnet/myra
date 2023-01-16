@@ -56,6 +56,7 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
         detailPage === 'deposit' ||
         detailPage === 'agentTransaction') && (
         <>
+          <Summary detailPage={detailPage} summary={summary} />
           <MemberInfo
             memberId={
               detailPage === 'agentTransaction' ? (id as string) : (summary?.memberId as string)
@@ -67,12 +68,12 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
             destinationName={summary?.destinationName ?? ' '}
             destinationAccount={summary?.destinationAccount ?? ''}
           />
-          <Summary detailPage={detailPage} summary={summary} />
         </>
       )}
 
       {detailPage === 'loanRepayment' && (
         <>
+          <Summary detailPage={detailPage} summary={summary} />
           <MemberInfo
             memberId={summary?.memberId}
             memberCode={summary?.code}
@@ -83,7 +84,6 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
             destinationName={summary?.destinationName ?? ' '}
             destinationAccount={summary?.destinationAccount ?? ''}
           />
-          <Summary detailPage={detailPage} summary={summary} />
         </>
       )}
       <DetailPageTabs

@@ -8511,6 +8511,7 @@ export type LoanAccount = {
   createdAt: Scalars['Time'];
   createdBy: Identity;
   id: Scalars['ID'];
+  installmentFrequency?: Maybe<Scalars['String']>;
   intrestRate?: Maybe<Scalars['Float']>;
   isBoardAuthority?: Maybe<Scalars['Boolean']>;
   isCeoAuthority?: Maybe<Scalars['Boolean']>;

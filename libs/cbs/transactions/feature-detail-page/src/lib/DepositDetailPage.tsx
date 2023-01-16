@@ -52,7 +52,7 @@ export const DepositDetailPage = () => {
           teller={depositDetailData?.teller as string}
         />
 
-        <Note note={depositDetailData?.note} />
+        {depositDetailData?.note && <Note note={depositDetailData?.note} />}
 
         <GlTransaction
           totalDebit={String(amountConverter(depositDetailData?.totalDebit ?? 0))}
