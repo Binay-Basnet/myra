@@ -1,8 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
-import { OtpFor, useResendOtpMutation, useVerifyOtpMutation } from '@coop/ebanking/data-access';
-import { asyncToast, Box, Button, Input, Text } from '@myra-ui';
+import { Box, Button, Input, Text, toast } from '@myra-ui';
+
+import { axiosAgent, OtpFor } from '@coop/ebanking/data-access';
+import { getAPIUrl } from '@coop/shared/utils';
 
 import { AuthContainer } from '../components/AuthContainer';
 import { SignUpStatus } from '../types/SignUpStatus';
@@ -10,6 +14,41 @@ import { SignUpStatus } from '../types/SignUpStatus';
 interface IOTPPageProps {
   setStatus: Dispatch<SetStateAction<SignUpStatus>>;
 }
+
+export type OtpResponse = {
+  success?: boolean;
+};
+
+export type ResendOtpResponse = {
+  success?: boolean;
+};
+
+type OtpverifyBody = {
+  mobile: string;
+  otp: string;
+};
+
+type OtpResendBody = {
+  otpFor: string;
+  mobile: string;
+};
+
+const schemaPath = getAPIUrl();
+
+const otpVerify = async (body: OtpverifyBody) => {
+  const response = await axiosAgent.post<OtpResponse>(`${schemaPath}/ebanking/verify-otp`, body);
+
+  return response?.data;
+};
+
+const otpResend = async (body: OtpResendBody) => {
+  const response = await axiosAgent.post<ResendOtpResponse>(
+    `${schemaPath}/ebanking/resend-otp`,
+    body
+  );
+
+  return response?.data;
+};
 
 export const OTPPage = ({ setStatus }: IOTPPageProps) => {
   const {
@@ -21,18 +60,44 @@ export const OTPPage = ({ setStatus }: IOTPPageProps) => {
     formState: { errors },
   } = useFormContext<{ otp: string; mobileNo: string }>();
 
-  const { mutateAsync: resendOTP } = useResendOtpMutation();
+  const { mutateAsync: resendOTP } = useMutation(otpResend, {
+    onMutate: () => {
+      toast({
+        id: 'resend',
+        type: 'success',
+        state: 'loading',
+        message: 'Re-sending OTP',
+      });
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast({
+        id: 'resend',
+        type: 'error',
+        message: error?.response?.data?.message || 'Server Error',
+      });
+    },
+    onSuccess: (res) => {
+      if (!res?.success) {
+        return;
+      }
 
-  const { isLoading, mutateAsync } = useVerifyOtpMutation({
-    onSuccess: (response) => {
-      const error = response.eBanking.auth?.verifyOtp?.error;
+      toast({
+        id: 'resend',
+        type: 'success',
+        message: 'Otp resent Successfully',
+      });
+    },
+  });
 
-      if (error?.__typename === 'BadRequestError') {
-        setError('otp', {
-          message: error.badRequestErrorMessage,
-        });
-      } else {
+  const { isLoading, mutateAsync } = useMutation(otpVerify, {
+    onError: (error: AxiosError<{ error: { message: string } }>) => {
+      setError('otp', { message: error?.response?.data?.error?.message });
+    },
+    onSuccess: (res) => {
+      if (res?.success) {
         setStatus(SignUpStatus.DETAILS);
+      } else {
+        setError('otp', { message: 'Invalid Otp' });
       }
     },
   });
@@ -40,7 +105,7 @@ export const OTPPage = ({ setStatus }: IOTPPageProps) => {
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
-        await mutateAsync({ data: { otp: data.otp, mobile: data.mobileNo } });
+        await mutateAsync({ otp: data.otp, mobile: data.mobileNo });
       })}
     >
       <AuthContainer
@@ -75,14 +140,7 @@ export const OTPPage = ({ setStatus }: IOTPPageProps) => {
               color="primary.500"
               cursor="pointer"
               onClick={async () => {
-                await asyncToast({
-                  id: 'resend-toast',
-                  msgs: {
-                    loading: 'Resending OTP',
-                    success: 'OTP Resent Successfully',
-                  },
-                  promise: resendOTP({ otpFor: OtpFor.SignUp, mobile: getValues().mobileNo }),
-                });
+                await resendOTP({ otpFor: OtpFor.SignUp, mobile: getValues().mobileNo });
               }}
             >
               Resend
