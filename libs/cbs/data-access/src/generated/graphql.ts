@@ -780,8 +780,14 @@ export type AllAccountEdge = {
 };
 
 export type AllAccountsFilter = {
-  accountType?: InputMaybe<AccountTypes>;
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
+  loanAccountName?: InputMaybe<Scalars['String']>;
+  loanMemberName?: InputMaybe<Scalars['String']>;
+  loanProductName?: InputMaybe<Scalars['String']>;
+  savingAccountName?: InputMaybe<Scalars['String']>;
+  savingMemberName?: InputMaybe<Scalars['String']>;
+  savingProductName?: InputMaybe<Scalars['String']>;
 };
 
 export type AllAccountsQuery = {
@@ -9054,9 +9060,13 @@ export type LoanAccountResult = {
 };
 
 export type LoanAccountSearchFilter = {
+  accountName?: InputMaybe<Scalars['String']>;
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
+  memberName?: InputMaybe<Scalars['String']>;
   objectState?: InputMaybe<LoanObjState>;
   productID?: InputMaybe<Scalars['ID']>;
+  productName?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
 };
 
@@ -9807,8 +9817,13 @@ export type LoanRepaymentEdge = {
 };
 
 export type LoanRepaymentFilter = {
+  accountName?: InputMaybe<Scalars['String']>;
+  filterMode?: InputMaybe<Filter_Mode>;
   loanAccountId?: InputMaybe<Scalars['String']>;
+  memberCode?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
+  memberName?: InputMaybe<Scalars['String']>;
+  productName?: InputMaybe<Scalars['String']>;
 };
 
 export type LoanRepaymentInput = {
