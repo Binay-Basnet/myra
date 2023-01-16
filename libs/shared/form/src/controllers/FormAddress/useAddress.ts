@@ -1,24 +1,43 @@
 import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useQuery } from '@tanstack/react-query';
 
+import { axiosAgent } from '@coop/cbs/data-access';
 // import { useAllAdministrationQuery } from '@coop/cbs/data-access';
-import { useAllAdministrationQuery } from '@coop/neosys-admin/data-access';
+import { getAPIUrl } from '@coop/shared/utils';
 
 interface IUseAddressProps {
   name: string;
 }
 
+export type AllAdministrationQuery = {
+  id: number;
+  name: string;
+  districts: {
+    id: number;
+    name: string;
+    municipalities: { id: number; name: string; wards: Array<number> }[];
+  }[];
+}[];
+const schemaPath = getAPIUrl();
+
+const getAdministration = async () => {
+  const response = await axiosAgent.get<AllAdministrationQuery>(`${schemaPath}/administration`);
+
+  return response?.data;
+};
+
 export const useAddress = ({ name }: IUseAddressProps) => {
   const { watch } = useFormContext();
-  const { data } = useAllAdministrationQuery();
+  const { data } = useQuery(['admination'], getAdministration);
 
   const provinceList = useMemo(
     () =>
-      data?.administration?.all?.map((d) => ({
+      data?.map((d) => ({
         label: d.name,
         value: d.id,
       })) ?? [],
-    [data?.administration?.all]
+    [data]
   );
 
   const currentProvinceId = watch(`${name}.provinceId`);
@@ -26,8 +45,8 @@ export const useAddress = ({ name }: IUseAddressProps) => {
   const localGovernmentId = watch(`${name}.localGovernmentId`);
 
   const districtList = useMemo(
-    () => data?.administration?.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
-    [currentProvinceId, data?.administration?.all]
+    () => data?.find((d) => d.id === currentProvinceId)?.districts ?? [],
+    [currentProvinceId, data]
   );
 
   const localityList = useMemo(
