@@ -8900,9 +8900,13 @@ export type LoanAccountResult = {
 };
 
 export type LoanAccountSearchFilter = {
+  accountName?: InputMaybe<Scalars['String']>;
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
+  memberName?: InputMaybe<Scalars['String']>;
   objectState?: InputMaybe<LoanObjState>;
   productID?: InputMaybe<Scalars['ID']>;
+  productName?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
 };
 

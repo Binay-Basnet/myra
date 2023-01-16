@@ -21,7 +21,7 @@ import {
 } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { FormDatePicker, FormInput, FormTextArea } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import { amountConverter, amountToWordsConverter, useTranslation } from '@coop/shared/utils';
 
 import { JournalVouchersTable } from '../components';
 import { CustomJournalVoucherInput } from '../types';
@@ -143,7 +143,13 @@ export const AccountingFeatureAddJournalVoucher = () => {
                   const result = response?.accounting?.journalVoucher?.new?.record;
                   const temp: Record<string, React.ReactNode> = {};
 
+                  let total = 0;
+
                   result?.entries?.forEach((fee) => {
+                    if (fee?.value?.includes('Dr')) {
+                      total += Number(fee?.value?.split('. ')[1] ?? 0);
+                    }
+
                     if (fee?.name && fee?.value) {
                       temp[String(fee.name)] = fee?.value?.includes('Dr') ? (
                         <Box display="flex" gap="s8">
@@ -180,6 +186,8 @@ export const AccountingFeatureAddJournalVoucher = () => {
                       Date: localizedDate(result?.date),
                       Refrence: result?.reference,
                       ...temp,
+                      'Total Amount': amountConverter(total),
+                      'Total Amount in words': amountToWordsConverter(total),
                       Note: result?.note,
                     },
                     subTitle:
