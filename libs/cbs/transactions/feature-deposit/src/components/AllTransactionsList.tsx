@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Box, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetAllTransactionsListQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetAllTransactionsListQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
@@ -16,8 +16,16 @@ export const AllTransactionsList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  const searchTerm = router?.query['search'] as string;
+
   const { data, isFetching } = useGetAllTransactionsListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    filter: {
+      id: searchTerm,
+      transactionId: searchTerm,
+      txnType: searchTerm,
+      filterMode: Filter_Mode.Or,
+    },
   });
 
   const rowData = useMemo(() => data?.transaction?.listAllTransactions?.edges ?? [], [data]);

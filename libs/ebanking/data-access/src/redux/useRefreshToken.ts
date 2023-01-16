@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
 import axios from 'axios';
 
-import { EBankingTokenType, store } from '@coop/ebanking/data-access';
+import { EBankingTokenType, saveCoopToken, store } from '@coop/ebanking/data-access';
 
 import { saveToken } from './slices/auth-slice';
 
@@ -148,10 +148,10 @@ export const useRefreshToken = (url: string, type: EBankingTokenType = EBankingT
           const accessToken = res.data?.data?.eBanking.auth?.getNewToken?.token?.access;
 
           localStorage.setItem(
-            'master-refreshToken',
+            'coop-refreshToken',
             res.data?.data?.eBanking.auth?.getNewToken?.token?.refresh
           );
-          dispatch(saveToken(accessToken));
+          dispatch(saveCoopToken(accessToken));
 
           return accessToken;
         }
