@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
@@ -18,10 +18,20 @@ export const CBSLoanRepaymentList = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isLoading } = useGetLoanRepaymentListQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+      filter: {
+        loanAccountId: searchTerm,
+        memberId: searchTerm,
+        memberCode: searchTerm,
+        accountName: searchTerm,
+        productName: searchTerm,
+        memberName: searchTerm,
+        filterMode: Filter_Mode.Or,
+      },
     },
     {
       staleTime: 0,

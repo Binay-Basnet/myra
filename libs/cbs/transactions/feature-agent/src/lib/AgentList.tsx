@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetAgentListDataQuery } from '@coop/cbs/data-access';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 // const MEMBER_TAB_ITEMS = [
@@ -33,10 +33,23 @@ export const AgentList = () => {
   //     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
   //   },
   // });
-
+  const searchTerm = router?.query['search'] as string;
   const { data, isFetching } = useGetAgentListDataQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        id: searchTerm,
+        // query: searchTerm,
+        // from: searchTerm,
+        // to: searchTerm,
+        // memberId: searchTerm,
+        // memberName: searchTerm,
+        // transactionId: searchTerm,
+        // depositedBy: searchTerm,
+        marketRepName: searchTerm,
+        marketRepId: searchTerm,
+        filterMode: Filter_Mode.Or,
+      },
       // filter: {
       //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
       // },
