@@ -1,7 +1,7 @@
-import { Box, FormSection, GridItem } from '@myra-ui';
+import { FormSection, GridItem } from '@myra-ui';
 
 import { DepositFrequency } from '@coop/cbs/data-access';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { FormSwitchTab } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const PostingFrequency = () => {
@@ -35,14 +35,14 @@ export const PostingFrequency = () => {
       <GridItem colSpan={3}>
         <FormSwitchTab name="postingFrequency" options={postingFrequency} />
       </GridItem>
-      <Box w="290px">
+      {/* <Box w="290px">
         <FormInput
           name="maxPostingFreqDifference"
           textAlign="right"
           label={t['depositProductMaximumPostingFrequencyDifference']}
           rightAddonText="days"
         />
-      </Box>
+      </Box> */}
     </FormSection>
   );
 };
