@@ -3,10 +3,13 @@ import { useFormContext } from 'react-hook-form';
 import { AiOutlineMobile, AiOutlineWarning } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import { Box, Button, Icon, Input, Modal, Text } from '@myra-ui';
 
-import { useSignUpMutation } from '@coop/ebanking/data-access';
+import { axiosAgent } from '@coop/ebanking/data-access';
+import { getAPIUrl } from '@coop/shared/utils';
 
 import { AuthContainer } from '../components/AuthContainer';
 import { SignUpStatus } from '../types/SignUpStatus';
@@ -14,6 +17,22 @@ import { SignUpStatus } from '../types/SignUpStatus';
 interface ISignUpHomePage {
   setStatus: Dispatch<SetStateAction<SignUpStatus>>;
 }
+
+export type SignUpResponse = {
+  recordId?: string;
+};
+
+type SignUpBody = {
+  mobileNo: string;
+};
+
+const schemaPath = getAPIUrl();
+
+const signUp = async (body: SignUpBody) => {
+  const response = await axiosAgent.post<SignUpResponse>(`${schemaPath}/ebanking/signup`, body);
+
+  return response?.data;
+};
 
 export const SignUpHomePage = ({ setStatus }: ISignUpHomePage) => {
   const router = useRouter();
@@ -29,20 +48,18 @@ export const SignUpHomePage = ({ setStatus }: ISignUpHomePage) => {
     formState: { errors },
   } = useFormContext<{ mobileNo: string; id: string }>();
 
-  const { mutateAsync, isLoading } = useSignUpMutation({
+  const { mutateAsync, isLoading } = useMutation(signUp, {
+    onError: (error: AxiosError<{ error: { message: string } }>) => {
+      failIsOnToggle();
+
+      setErrMsg(error?.response?.data?.error?.message || 'Something went wrong. Please try Again.');
+    },
+
     onSuccess: (response) => {
-      const id = response?.eBanking?.auth?.signUp?.recordId;
-      const error = response?.eBanking?.auth?.signUp?.error;
+      const id = response?.recordId;
       if (id) {
         setValue('id', id);
         setStatus(SignUpStatus.OTP);
-      } else {
-        failIsOnToggle();
-        if (error?.__typename === 'BadRequestError') {
-          setErrMsg(error.badRequestErrorMessage);
-        } else {
-          setErrMsg('Something Went Wrong. Please Try again!!');
-        }
       }
     },
   });

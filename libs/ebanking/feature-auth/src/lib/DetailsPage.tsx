@@ -4,11 +4,13 @@ import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
 import * as yup from 'yup';
 
 import { Box, Button, Icon, Input, Modal, PasswordInput, Text } from '@myra-ui';
 
-import { useSetPasswordMutation } from '@coop/ebanking/data-access';
+import { axiosAgent } from '@coop/ebanking/data-access';
+import { getAPIUrl } from '@coop/shared/utils';
 
 import { AuthContainer } from '../components/AuthContainer';
 import { SignUpStatus } from '../types/SignUpStatus';
@@ -16,6 +18,29 @@ import { SignUpStatus } from '../types/SignUpStatus';
 interface IDetailsPageProps {
   setStatus: Dispatch<SetStateAction<SignUpStatus>>;
 }
+
+export type SetPasswordMutation = {
+  recordId?: string;
+};
+
+type SetPasswordBody = {
+  dob: string;
+  password: string;
+  name: string;
+  userId: string;
+  otp: string;
+};
+
+const schemaPath = getAPIUrl();
+
+const setPassword = async (body: SetPasswordBody) => {
+  const response = await axiosAgent.post<SetPasswordMutation>(
+    `${schemaPath}/ebanking/set-password`,
+    body
+  );
+
+  return response?.data;
+};
 
 const validationSchema = yup.object({
   name: yup.string().required('Name is Required.'),
@@ -49,9 +74,9 @@ export const DetailsPage = ({ setStatus }: IDetailsPageProps) => {
 
   const { isOpen, onClose, onToggle } = useDisclosure();
 
-  const { mutateAsync, isLoading } = useSetPasswordMutation({
+  const { mutateAsync, isLoading } = useMutation(setPassword, {
     onSuccess: (response) => {
-      const id = response?.eBanking?.auth?.setPassword?.recordId;
+      const id = response?.recordId;
 
       if (id) {
         onToggle();
@@ -61,14 +86,18 @@ export const DetailsPage = ({ setStatus }: IDetailsPageProps) => {
 
   const { getValues } = useFormContext<{
     id: string;
+    otp: string;
   }>();
 
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
         await mutateAsync({
-          data: { dob: data.dob, password: data.password, name: data.name },
+          dob: data.dob,
+          password: data.password,
+          name: data.name,
           userId: getValues()['id'],
+          otp: getValues()['otp'],
         });
       })}
     >
