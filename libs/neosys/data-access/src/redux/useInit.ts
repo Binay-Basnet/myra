@@ -7,9 +7,9 @@ import {
   useGetMeQuery,
   useRefreshToken,
 } from '@coop/neosys-admin/data-access';
-import { useReplace } from '@coop/shared/utils';
+import { getSchemaPath, useReplace } from '@coop/shared/utils';
 
-const url = process.env['NX_SCHEMA_PATH'] ?? '';
+const url = getSchemaPath();
 
 export const useInit = () => {
   const [triggerQuery, setTriggerQuery] = React.useState(false);

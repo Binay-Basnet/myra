@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box } from '@myra-ui';
+import { Box, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetAllTransactionsListQuery } from '@coop/cbs/data-access';
@@ -25,7 +25,11 @@ export const AllTransactionsList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['depositListTransactionId'],
+        header: 'Date',
+        accessorFn: (row) => row?.node?.date?.local?.split(' ')[0] ?? 'N/A',
+      },
+      {
+        header: 'Txn ID',
         accessorFn: (row) => row?.node?.id,
       },
       {
@@ -39,8 +43,9 @@ export const AllTransactionsList = () => {
         ),
       },
       {
-        header: 'Narration',
+        header: 'Note',
         accessorFn: (row) => row?.node?.narration,
+        cell: (props) => <Tooltip title={props?.row?.original?.node?.narration as string} />,
         meta: {
           width: '20%',
         },
@@ -59,10 +64,6 @@ export const AllTransactionsList = () => {
           isNumeric: true,
           width: '2%',
         },
-      },
-      {
-        header: 'Date',
-        accessorFn: (row) => row?.node?.date?.local?.split(' ')[0] ?? 'N/A',
       },
     ],
     [t]

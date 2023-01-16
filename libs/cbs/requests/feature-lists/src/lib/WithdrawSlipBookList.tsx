@@ -38,6 +38,10 @@ export const WithdrawSlipBookList = () => {
   const columns = React.useMemo<Column<typeof chequeBookRequests[0]>[]>(
     () => [
       {
+        header: 'Issued Date',
+        accessorFn: (row) => row?.node?.requestedDate,
+      },
+      {
         header: 'ID',
         accessorFn: (row) => row?.node?.id,
       },
@@ -55,9 +59,6 @@ export const WithdrawSlipBookList = () => {
             </Text>
           </Box>
         ),
-        meta: {
-          width: '60%',
-        },
       },
       {
         header: 'Account',
@@ -77,18 +78,15 @@ export const WithdrawSlipBookList = () => {
         },
       },
       {
-        header: 'Status',
-        accessorFn: (row) => row?.node?.approvalStatus,
-        cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
-      },
-      {
         header: 'No of Leaves',
         accessorFn: (row) => row?.node?.numberOfLeaves,
       },
       {
-        header: 'Issued Date',
-        accessorFn: (row) => row?.node?.requestedDate,
+        header: 'Approval Status',
+        accessorFn: (row) => row?.node?.approvalStatus,
+        cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
       },
+
       {
         id: '_actions',
         header: '',
@@ -98,6 +96,8 @@ export const WithdrawSlipBookList = () => {
               items={[
                 {
                   title: 'Print',
+                  // aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE',
+                  // action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_WITHDRAW_SLIP_BOOK_PRINT}?id=${row?.id}`);
                   },
@@ -121,7 +121,7 @@ export const WithdrawSlipBookList = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader heading="Withdraw Slip List" />
+        <PageHeader heading="Withdraw Slip Book" />
       </Box>
 
       <Table

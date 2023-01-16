@@ -51,6 +51,8 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
     ],
     [totalDebit, totalCredit]
   );
+
+  if (data?.length === 0) return null;
   return (
     <DetailsCard
       title={t['transDetailGLTransactions']}

@@ -89,6 +89,9 @@
       "@coop/cbs/settings/loan-products": ["libs/cbs/settings/feature-loan-products/src/index.ts"],
       "@coop/cbs/settings/members": ["libs/cbs/settings/feature-members/src/index.ts"],
       "@coop/cbs/settings/organization": ["libs/cbs/settings/feature-organization/src/index.ts"],
+      "@coop/cbs/settings/print-preference": [
+        "libs/cbs/settings/feature-print-preference/src/index.ts"
+      ],
       "@coop/cbs/settings/share": ["libs/cbs/settings/feature-share/src/index.ts"],
       "@coop/cbs/settings/super-admin": ["libs/cbs/settings/feature-super-admin/src/index.ts"],
       "@coop/cbs/settings/ui-components": ["libs/cbs/settings/ui-components/src/index.ts"],
@@ -104,6 +107,9 @@
       "@coop/cbs/transactions/agent": ["libs/cbs/transactions/feature-agent/src/index.ts"],
       "@coop/cbs/transactions/agent-transaction": [
         "libs/cbs/transactions/feature-agent-transaction/src/index.ts"
+      ],
+      "@coop/cbs/transactions/all-accounts": [
+        "libs/cbs/transactions/feature-all-accounts/src/index.ts"
       ],
       "@coop/cbs/transactions/deposit": ["libs/cbs/transactions/feature-deposit/src/index.ts"],
       "@coop/cbs/transactions/feature-detail-page": [

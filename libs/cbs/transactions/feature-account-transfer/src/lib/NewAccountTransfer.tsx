@@ -252,6 +252,7 @@ export const NewAccountTransfer = () => {
                             <FormMemberSelect
                               name="destMemberId"
                               label={t['newAccountTransferReceipentMember']}
+                              excludeIds={[memberId]}
                             />
 
                             <FormAccountSelect
@@ -343,9 +344,10 @@ export const NewAccountTransfer = () => {
                               overdrawnBalance: sourceAccount?.overDrawnBalance ?? '0',
                               fine: sourceAccount?.dues?.fine ?? 0,
                               // branch: 'Kumaripati',
-                              openDate: sourceAccount?.accountOpenedDate ?? 'N/A',
-                              expiryDate: sourceAccount?.accountExpiryDate ?? 'N/A',
-                              lastTransactionDate: sourceAccount?.lastTransactionDate ?? 'N/A',
+                              openDate: localizedDate(sourceAccount?.accountOpenedDate) ?? 'N/A',
+                              expiryDate: localizedDate(sourceAccount?.accountExpiryDate) ?? 'N/A',
+                              lastTransactionDate:
+                                localizedDate(sourceAccount?.lastTransactionDate) ?? 'N/A',
                               productName: sourceAccount?.product?.productName,
                               installmentAmount:
                                 sourceAccount?.product?.nature ===

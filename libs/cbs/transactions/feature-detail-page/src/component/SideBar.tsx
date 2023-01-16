@@ -12,17 +12,18 @@ type SidebarProps = {
     name?: string | undefined | null;
     profilePic?: string | undefined | null;
     transactionId?: string | undefined | null;
-    transactionDate?: string | undefined | null;
+    transactionDate?: Record<'local' | 'en' | 'np', string> | null | undefined;
     paymentMode?: string | undefined | null;
     amount?: string | undefined | null;
     method?: string | undefined | null;
     sourceAccount?: string | undefined | null;
     destinationName?: string | undefined | null;
     destinationAccount?: string | undefined | null;
+    recipientMember?: string | undefined | null;
     loanAccountName?: string | undefined | null;
     loanSubtype?: string | undefined | null;
     loanAccId?: string | undefined | null;
-    repaymentDate?: string | undefined | null;
+    repaymentDate?: Record<'local' | 'en' | 'np', string> | undefined | null;
     interestRate?: string | undefined | null;
   };
   detailPage: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction' | 'loanRepayment';
@@ -46,6 +47,7 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
             sourceAccount={summary?.sourceAccount ?? ''}
             destinationName={summary?.destinationName ?? ' '}
             destinationAccount={summary?.destinationAccount ?? ''}
+            recipientMemberId={summary?.recipientMember ?? ''}
           />
         </>
       )}

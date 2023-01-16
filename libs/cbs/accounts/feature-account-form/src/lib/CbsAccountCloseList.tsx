@@ -37,12 +37,21 @@ export const CBSAccountCloseList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Member Id',
-        accessorFn: (row) => row?.node?.id,
+        header: 'Account Closed Date',
+        accessorFn: (row) => row?.node?.createdAt,
+        cell: (props) => <span>{props?.row?.original?.node?.closedAt?.split('T')[0]} </span>,
       },
 
       {
-        header: 'Member Name',
+        header: 'Account Name',
+        accessorFn: (row) => row?.node?.accountName,
+      },
+      {
+        header: 'Product Name',
+        accessorFn: (row) => row?.node?.product?.productName,
+      },
+      {
+        header: 'Member',
         accessorFn: (row) => row?.node?.member?.name?.local,
         cell: (props) => (
           <Box
@@ -61,19 +70,6 @@ export const CBSAccountCloseList = () => {
       },
 
       {
-        header: 'Account Name',
-        accessorFn: (row) => row?.node?.accountName,
-      },
-      {
-        header: 'Product Name',
-        accessorFn: (row) => row?.node?.product?.productName,
-      },
-      {
-        header: 'Account Closed Date',
-        accessorFn: (row) => row?.node?.createdAt,
-        cell: (props) => <span>{props?.row?.original?.node?.closedAt?.split('T')[0]} </span>,
-      },
-      {
         id: '_actions',
         header: '',
         cell: (props) => (
@@ -81,6 +77,8 @@ export const CBSAccountCloseList = () => {
             items={[
               {
                 title: 'View Details',
+                aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT_CLOSE',
+                action: 'VIEW',
                 onClick: (row) =>
                   router.push(`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${row['id']}`),
               },

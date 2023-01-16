@@ -6,7 +6,7 @@ import { LoanObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
-import { LoanTable } from '../components/LoanTable';
+import { LoanClosedAccountTable } from '../components/LoanTable';
 
 export const ClosedLoanList = () => {
   const router = useRouter();
@@ -20,12 +20,11 @@ export const ClosedLoanList = () => {
   return (
     <>
       <PageHeader heading="Closed Account List " />
-      <LoanTable
+      <LoanClosedAccountTable
         data={data}
         isLoading={isFetching}
         type={LoanObjState.Completed}
         viewLink={ROUTES.CBS_LOAN_ACCOUNT_CLOSED_DETAILS}
-        isClosed
       />
     </>
   );

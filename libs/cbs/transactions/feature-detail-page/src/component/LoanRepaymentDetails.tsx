@@ -1,5 +1,6 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
@@ -11,12 +12,12 @@ export const LoanRepaymentDetails = () => {
   return (
     <DetailsCard title={t['transDetailLoanRepaymentDetails']} hasThreeRows>
       <DetailCardContent
-        title={t['transDetailLoanRepaymentID']}
+        title="Transaction ID"
         subtitle={loanRepaymentDetailData?.transactionCode}
       />
       <DetailCardContent
         title={t['transDetailRepaymentDate']}
-        subtitle={loanRepaymentDetailData?.repaymentDate}
+        subtitle={localizedDate(loanRepaymentDetailData?.repaymentDate)}
       />
       <DetailCardContent
         title={t['transDetailInstallmentNo']}

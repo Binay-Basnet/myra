@@ -2,11 +2,11 @@ import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { Filter_Mode, useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
+import { TableListPageHeader } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
@@ -29,8 +29,6 @@ export const ShareBalanceTable = () => {
   }, [router]);
 
   const rowData = useMemo(() => data?.share?.balance?.edges ?? [], [data]);
-
-  const popoverTitle = ['shareRegisterTableViewMemberProfile'];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -72,7 +70,21 @@ export const ShareBalanceTable = () => {
       {
         id: '_actions',
         header: '',
-        cell: () => <PopoverComponent title={popoverTitle} />,
+        cell: (props) => (
+          <TablePopover
+            node={props?.row?.original.node}
+            items={[
+              {
+                title: t['shareRegisterTableViewMemberProfile'],
+                aclKey: 'CBS_MEMBERS_MEMBER_DETAIL',
+                action: 'VIEW',
+                onClick: (node) => {
+                  router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${node?.member?.id}&tab=share`);
+                },
+              },
+            ]}
+          />
+        ),
       },
     ],
     [router.locale]

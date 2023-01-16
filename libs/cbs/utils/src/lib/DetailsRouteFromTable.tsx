@@ -1,5 +1,6 @@
-import { useRouter } from 'next/router';
-import { Button } from '@chakra-ui/react';
+import Link from 'next/link';
+
+import { Button } from '@myra-ui';
 
 import { ROUTES } from '../constants/ROUTES';
 
@@ -10,59 +11,55 @@ interface IProps {
 }
 
 export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
-  const router = useRouter();
   switch (type) {
     case 'member':
       return (
-        <Button variant="link" onClick={() => router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${id}`)}>
-          {label}
-        </Button>
+        <Link target="_blank" href={`${ROUTES.CBS_MEMBER_DETAILS}?id=${id}`}>
+          <Button variant="link" color="primary.500">
+            {label}{' '}
+          </Button>
+        </Link>
       );
     case 'loan':
       return (
-        <Button
-          variant="link"
-          onClick={() => router.push(`${ROUTES.CBS_LOAN_ACCOUNTS_DETAILS}?id=${id}`)}
-        >
-          {label}
-        </Button>
+        <Link target="_blank" href={`${ROUTES.CBS_LOAN_ACCOUNTS_DETAILS}?id=${id}`}>
+          <Button variant="link" color="primary.500">
+            {label}{' '}
+          </Button>
+        </Link>
       );
     case 'savings':
       return (
-        <Button
-          variant="link"
-          onClick={() => router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${id}`)}
-        >
-          {label}
-        </Button>
+        <Link target="_blank" href={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${id}`}>
+          <Button variant="link" color="primary.500">
+            {label}{' '}
+          </Button>
+        </Link>
       );
     case 'transactions':
       return (
-        <Button
-          variant="link"
-          onClick={() => router.push(`${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${id}`)}
-        >
-          {label}
-        </Button>
+        <Link target="_blank" href={`${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${id}`}>
+          <Button variant="link" color="primary.500">
+            {label}{' '}
+          </Button>
+        </Link>
       );
     case 'account-close':
       return (
-        <Button
-          variant="link"
-          onClick={() => router.push(`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${id}`)}
-        >
-          {label}
-        </Button>
+        <Link target="_blank" href={`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${id}`}>
+          <Button variant="link" color="primary.500">
+            {label}{' '}
+          </Button>
+        </Link>
       );
 
     default:
       return (
-        <Button
-          variant="link"
-          onClick={() => router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${id}`)}
-        >
-          {label}
-        </Button>
+        <Link target="_blank" href={`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${id}`}>
+          <Button variant="link" color="primary.500">
+            {label}{' '}
+          </Button>
+        </Link>
       );
   }
 };

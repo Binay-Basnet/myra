@@ -90,12 +90,12 @@ export const CBS: NavType = {
         {
           label: 'memberLayoutActiveInactiveMemberReport',
           aclKey: 'CBS_REPORTS',
-          route: ROUTES.CBS_REPORTS_MEMBER_CLASSIFICATION,
+          route: ROUTES.CBS_REPORTS_MEMBER_ACTIVE_INACTIVE,
         },
         {
           label: 'memberLayoutKymStatusReport',
           aclKey: 'CBS_REPORTS',
-          route: ROUTES.CBS_REPORTS_MEMBER_CLASSIFICATION,
+          route: ROUTES.CBS_REPORTS_KYM_STATUS,
         },
       ],
     },
@@ -394,6 +394,16 @@ export const CBS: NavType = {
         {
           label: 'transactionsSidebarAllTransactions',
           route: ROUTES.CBS_TRANS_ALL_TRANSACTION_LIST,
+          aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
+        },
+        {
+          label: 'All Ledgers',
+          route: ROUTES.CBS_TRANS_ALL_LEDGERS_LIST,
+          aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
+        },
+        {
+          label: 'All Accounts',
+          route: ROUTES.CBS_TRANS_ALL_ACCOUNTS_LIST,
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
       ],

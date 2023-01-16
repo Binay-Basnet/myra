@@ -1,8 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { debounce } from 'lodash';
-
-import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
+import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
@@ -15,38 +11,32 @@ interface IFormAgentSelectProps {
 type OptionType = { label: string; value: string };
 
 export const FormAgentSelect = ({ name, label, isRequired }: IFormAgentSelectProps) => {
-  const [agentId, setAgentId] = useState('');
+  // const { watch } = useFormContext();
 
-  const { watch } = useFormContext();
-
-  const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery({
-    paginate: {
+  const { data: agentListQueryData, isFetching } = useGetAgentListDataQuery({
+    pagination: {
       ...getRouterQuery({ type: ['PAGINATION'] }),
-      first: 10,
-    },
-    filter: {
-      query: agentId,
-      role: [Roles.Agent],
+      first: -1,
     },
   });
 
-  const agentList = agentListQueryData?.settings?.myraUser?.list?.edges;
+  const agentList = agentListQueryData?.transaction?.listAgent?.edges;
 
   const agentOptions = agentList?.reduce(
     (prevVal, curVal) => [
       ...prevVal,
       {
-        label: `${curVal?.node?.name} [ID:${curVal?.node?.id}]`,
+        label: `${curVal?.node?.agentName} [ID:${curVal?.node?.id}]`,
         value: curVal?.node?.id as string,
       },
     ],
     [] as OptionType[]
   );
 
-  useEffect(() => {
-    const id = watch(name);
-    setAgentId(id);
-  }, []);
+  // useEffect(() => {
+  //   const id = watch(name);
+  //   setAgentId(id);
+  // }, []);
 
   return (
     <FormSelect
@@ -54,11 +44,11 @@ export const FormAgentSelect = ({ name, label, isRequired }: IFormAgentSelectPro
       label={label}
       isRequired={isRequired}
       isLoading={isFetching}
-      onInputChange={debounce((id) => {
-        if (id) {
-          setAgentId(id);
-        }
-      }, 800)}
+      // onInputChange={debounce((id) => {
+      //   if (id) {
+      //     setAgentId(id);
+      //   }
+      // }, 800)}
       options={agentOptions}
     />
   );

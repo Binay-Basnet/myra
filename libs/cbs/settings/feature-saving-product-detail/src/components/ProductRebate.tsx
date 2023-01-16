@@ -54,6 +54,7 @@ export const ProductRebate = ({ rebateData }: IProductRebateProps) => {
     ],
     []
   );
+  if (rebateDataArray?.length === 0) return null;
 
   return (
     <DetailsCard title="Rebate" hasTable>

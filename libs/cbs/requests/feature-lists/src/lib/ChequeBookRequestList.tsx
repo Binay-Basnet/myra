@@ -46,12 +46,16 @@ export const ChequeBookRequestList = () => {
   const columns = React.useMemo<Column<typeof chequeBookRequests[0]>[]>(
     () => [
       {
+        header: 'Requested Date',
+        accessorFn: (row) => row?.node?.requestedDate,
+      },
+      {
         header: 'Request ID',
         accessorFn: (row) => row?.node?.id,
       },
 
       {
-        header: 'Requested By',
+        header: 'Member',
         accessorFn: (row) => row?.node?.memberName,
         cell: (props) => (
           <Box display="flex" flexDir="column" gap="s4">
@@ -91,10 +95,6 @@ export const ChequeBookRequestList = () => {
       },
 
       {
-        header: 'Requested Date',
-        accessorFn: (row) => row?.node?.requestedDate,
-      },
-      {
         id: '_actions',
         header: '',
         cell: (props) =>
@@ -103,6 +103,8 @@ export const ChequeBookRequestList = () => {
               items={[
                 {
                   title: 'View Details',
+                  // aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_REQUESTS',
+                  // action: 'VIEW',
                   onClick: (row) => {
                     router.push(
                       {
@@ -136,7 +138,7 @@ export const ChequeBookRequestList = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader heading={`Withdraw Slip List - ${featureCode?.withdrawSlipRequest}`} />
+        <PageHeader heading={`Withdraw Slip Requests - ${featureCode?.withdrawSlipRequest}`} />
       </Box>
 
       <Table

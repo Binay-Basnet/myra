@@ -71,15 +71,15 @@ export const WithdrawSlipBookPrintCard = React.forwardRef<
             fontSize="s1"
             fontWeight={500}
             color="black"
-            top={branchPosition.top}
-            left={branchPosition.left}
+            top={`${branchPosition.top}`}
+            left={`${branchPosition.left}`}
             position="absolute"
           >
             {details?.branch}
           </Text>
           <Box
-            top={accountPosition.top}
-            left={accountPosition.left}
+            top={`${accountPosition.top}`}
+            left={`${accountPosition.left}`}
             display="flex"
             flexDirection="column"
             gap="s4"
@@ -101,8 +101,8 @@ export const WithdrawSlipBookPrintCard = React.forwardRef<
             fontWeight={500}
             color="black"
             position="absolute"
-            top={slipNumberPosition.top}
-            left={slipNumberPosition.left}
+            bottom={`${slipNumberPosition.top}`}
+            left={`${slipNumberPosition.left}`}
           >
             {String(details.from + number - 1).padStart(10, '0')}
           </Text>

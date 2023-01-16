@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -30,22 +30,39 @@ export interface WithdrawListProps {}
 export const WithdrawList = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
 
-  const { data, isFetching } = useGetWithdrawListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-  });
+  const { data, isFetching } = useGetWithdrawListDataQuery(
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        id: searchTerm,
+        memberId: searchTerm,
+        memberName: searchTerm,
+        transactionId: searchTerm,
+        filterMode: Filter_Mode.Or,
+      },
+    },
+    {
+      enabled: searchTerm !== 'undefined',
+    }
+  );
 
   const rowData = useMemo(() => data?.transaction?.listWithdraw?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: t['withdrawListWithdrawnDate'],
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+      {
         header: t['withdrawListTransactionId'],
         accessorFn: (row) => row?.node?.transactionCode,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: t['withdrawListTransactionName'],
+        header: 'Member',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
@@ -69,10 +86,6 @@ export const WithdrawList = () => {
         },
       },
       {
-        header: t['withdrawListAmount'],
-        accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
-      },
-      {
         header: t['withdrawListPaymentMode'],
         accessorFn: (row) => row?.node?.paymentMode,
       },
@@ -80,11 +93,11 @@ export const WithdrawList = () => {
         header: t['withdrawListWithdrawBy'],
         accessorFn: (row) => row?.node?.name?.local,
       },
-
       {
-        header: t['withdrawListWithdrawnDate'],
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+        header: t['withdrawListAmount'],
+        accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
       },
+
       {
         id: '_actions',
         header: '',
@@ -95,6 +108,8 @@ export const WithdrawList = () => {
               items={[
                 {
                   title: t['transDetailViewDetail'],
+                  aclKey: 'CBS_TRANSACTIONS_WITHDRAW',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_TRANS_WITHDRAW_DETAILS}?id=${row?.ID}`);
                   },
@@ -107,7 +122,7 @@ export const WithdrawList = () => {
         },
       },
     ],
-    [t]
+    [t, rowData]
   );
 
   return (

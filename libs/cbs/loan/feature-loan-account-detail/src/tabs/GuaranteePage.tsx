@@ -10,7 +10,7 @@ export const GuaranteePage = () => {
     <>
       <TabHeader heading="Guarantee" />
       <Statistics statsData={guaranteeSummary} />
-      <DetailsCard title={`Guarantee List ${gauranteeListInfo?.length} `} bg="white" hasTable>
+      <DetailsCard title={`Guarantee List (${gauranteeListInfo?.length}) `} bg="white" hasTable>
         {gauranteeListInfo &&
           gauranteeListInfo?.map((item) => <GuaranteeList gauranteeList={item} />)}
       </DetailsCard>

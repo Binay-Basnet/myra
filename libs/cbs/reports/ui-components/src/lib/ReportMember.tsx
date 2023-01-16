@@ -8,7 +8,7 @@ interface ReportMemberProps {
 }
 
 export const ReportMember = ({ member }: ReportMemberProps) => {
-  const branch = useAppSelector((state) => state?.auth?.user?.branch);
+  const branch = useAppSelector((state) => state?.auth?.user?.currentBranch);
 
   return (
     <Box px="s16" pt="s16" display="flex" justifyContent="space-between">

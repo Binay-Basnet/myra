@@ -5,7 +5,7 @@ import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -33,7 +33,11 @@ export const VaultTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Vault Transfer Code',
+        header: 'Transfer Date',
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+      {
+        header: 'Transfer Code',
         accessorFn: (row) => row?.node?.transferCode,
       },
       {
@@ -49,7 +53,7 @@ export const VaultTransferList = () => {
               size="sm"
               src={
                 props?.row?.original?.node?.transferType === TellerTransferType.VaultToCash
-                  ? props?.row?.original?.node?.destProfilePicUrl
+                  ? props?.row?.original?.node?.destProfilePicUrl ?? ''
                   : props?.row?.original?.node?.srcProfilePicUrl ?? ' '
               }
             />
@@ -65,7 +69,7 @@ export const VaultTransferList = () => {
         ),
 
         meta: {
-          width: 'auto',
+          width: '20%',
         },
       },
       {
@@ -76,10 +80,7 @@ export const VaultTransferList = () => {
           isNumeric: true,
         },
       },
-      {
-        header: 'Transfer Date',
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
-      },
+
       {
         id: '_actions',
         header: '',
@@ -89,6 +90,8 @@ export const VaultTransferList = () => {
             items={[
               {
                 title: 'viewDetails',
+                aclKey: 'CBS_TRANSFERS_VAULT_TRANSFER',
+                action: 'VIEW',
                 onClick: () => {
                   router.push(
                     `/${getUrl(router.pathname, 3)}/view?id=${props?.row?.original?.node?.ID}`
@@ -98,9 +101,6 @@ export const VaultTransferList = () => {
             ]}
           />
         ),
-        meta: {
-          width: '50px',
-        },
       },
     ],
     [t]

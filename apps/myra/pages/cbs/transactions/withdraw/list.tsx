@@ -1,8 +1,9 @@
 import { ReactElement } from 'react';
 
+import { MainLayout } from '@myra-ui';
+
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 import { WithdrawList } from '@coop/cbs/transactions/withdraw';
-import { MainLayout } from '@myra-ui';
 
 const TransactionsWithdrawList = () => <WithdrawList />;
 

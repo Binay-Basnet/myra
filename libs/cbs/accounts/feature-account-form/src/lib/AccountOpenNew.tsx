@@ -167,7 +167,6 @@ export const AccountOpenNew = () => {
   const redirectPath = router.query['redirect'];
 
   const routeId = router?.query?.['id'] as string;
-
   const id = routeId || newId;
 
   const { mutateAsync } = useSetAccountOpenDataMutation();
@@ -448,6 +447,7 @@ export const AccountOpenNew = () => {
     },
     { enabled: !!routeId }
   );
+
   useEffect(() => {
     if (editValues && routeId) {
       const editValueData = editValues?.account?.formState?.data;

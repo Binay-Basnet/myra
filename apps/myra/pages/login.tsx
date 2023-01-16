@@ -1,54 +1,124 @@
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import {
-  asyncToast,
   Box,
   Button,
   Checkbox,
   Input,
   LocaleSwitcher,
+  MutationError,
   PasswordInput,
   Text,
+  toast,
 } from '@myra-ui';
 
-import { login, setPreference, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
-import { useTranslation } from '@coop/shared/utils';
+import {
+  authenticate,
+  axiosAgent,
+  DateType,
+  Language,
+  saveToken,
+  useAppDispatch,
+  User,
+} from '@coop/cbs/data-access';
+import { AbilityContext, updateAbility } from '@coop/cbs/utils';
+import { getAPIUrl, useTranslation } from '@coop/shared/utils';
+
+type LoginResponse = {
+  recordId?: string;
+  record?: {
+    token: { access: string; refresh: string };
+    data: {
+      branches?: Array<{ id: string; name: string }>;
+      rolesList?: Array<{ id: string; name: string }>;
+      permission?: { myPermission?: Record<string, string> };
+      preference?: {
+        language?: Language;
+        languageCode?: string;
+        date?: DateType;
+      };
+      user?: Partial<User>;
+    };
+  } | null;
+  error?: MutationError;
+};
+
+type LoginBody = {
+  password: string;
+  username: string;
+};
+
+const schemaPath = getAPIUrl();
+
+const login = async (body: LoginBody) => {
+  const response = await axiosAgent.post<LoginResponse>(`${schemaPath}/erp/login`, body);
+
+  return response?.data;
+};
 
 export const Login = () => {
   const { t } = useTranslation();
-  const { mutateAsync, isLoading } = useLoginMutation();
+  const { mutateAsync, isLoading } = useMutation(login, {
+    onMutate: () => {
+      toast({
+        id: 'login',
+        type: 'success',
+        state: 'loading',
+        message: 'Logging In!!',
+      });
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast({
+        id: 'login',
+        type: 'error',
+        message: error?.response?.data?.message || 'Server Error',
+      });
+    },
+    onSuccess: (res) => {
+      if (!res?.recordId) {
+        return;
+      }
+
+      const loginRecord = res?.record;
+      const loginData = loginRecord?.data;
+
+      dispatch(
+        saveToken({
+          accessToken: loginRecord?.token?.access,
+          refreshToken: loginRecord?.token?.refresh,
+        })
+      );
+      dispatch(
+        authenticate({
+          user: loginData.user,
+          permissions: loginData?.permission?.myPermission,
+          preference: loginData?.preference,
+          availableRoles: loginData?.rolesList,
+          availableBranches: loginData?.branches,
+        })
+      );
+
+      updateAbility(ability, loginData?.permission?.myPermission);
+      replace('/');
+
+      toast({
+        id: 'login',
+        type: 'success',
+        message: 'Logged In Successfully',
+      });
+    },
+  });
   const dispatch = useAppDispatch();
-  // const ability = useContext(AbilityContext);
+  const ability = useContext(AbilityContext);
 
   const { replace } = useRouter();
 
-  const { register, handleSubmit } = useForm();
-
-  const onSubmit = async (data) => {
-    await asyncToast({
-      id: 'login',
-      msgs: {
-        success: 'Logged in Successfully!!',
-        loading: 'Logging in!!',
-      },
-      onSuccess: (res) => {
-        if (!res?.auth?.login?.recordId) {
-          return;
-        }
-        const accessToken = res?.auth?.login?.record?.token?.access;
-        const refreshToken = res?.auth?.login?.record?.token?.refresh;
-        const user = res?.auth?.login?.record?.data?.user;
-        dispatch(login({ user, token: accessToken }));
-        dispatch(setPreference({ preference: res?.auth?.login?.record?.data?.preference }));
-        localStorage.setItem('refreshToken', refreshToken);
-
-        replace('/');
-      },
-      promise: mutateAsync({ data }),
-    });
-  };
+  const { register, handleSubmit } = useForm<{ username: string; password: string }>();
 
   return (
     <Box
@@ -90,7 +160,11 @@ export const Login = () => {
           <Text fontSize="l1" color="gray.700">
             {t['loginHeader']}
           </Text>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form
+            onSubmit={handleSubmit(async (data) => {
+              await mutateAsync(data);
+            })}
+          >
             <Box display="flex" flexDir="column" gap={5}>
               <Box>
                 <Text variant="formLabel" color="gray.700">
@@ -103,11 +177,7 @@ export const Login = () => {
                 />
               </Box>
               <Box>
-                <PasswordInput
-                  label={t['loginPassword']}
-                  register={register}
-                  fieldName="password"
-                />
+                <PasswordInput label={t['loginPassword']} {...register('password')} />
               </Box>
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Box display="flex" gap={1}>

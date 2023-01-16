@@ -17,14 +17,17 @@ import {
 } from '@myra-ui';
 
 import {
+  SlipSizeStandard,
   useAppSelector,
   useGetWithdrawSlipDataQuery,
+  useGetWithdrawSlipPrintPreferenceQuery,
   usePrintSlipMutation,
   WithdrawSlipIssueInput,
 } from '@coop/cbs/data-access';
-import { FormAccountSelect, FormMemberSelect, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { ROUTES } from '@coop/cbs/utils';
+import { FormAccountSelect, FormMemberSelect, FormSelect } from '@coop/shared/form';
 
-import { WithdrawSlipBookPrintCard, WithdrawSlipBookPrintPreviewCard } from '../component';
+import { WithdrawPrintCard, WithdrawSlipBookPrintPreviewCard } from '../component';
 
 interface CustomWithdrawSlipIssueInput extends WithdrawSlipIssueInput {
   memberId: string;
@@ -50,12 +53,6 @@ const totalNumberOptions = [
   },
 ];
 
-const slipSizes = [
-  { label: '7*3.5 Inch', value: '7*3.5' },
-  { label: '9*3 Inch', value: '9*3' },
-  { label: '7.5*3.5 Inch', value: '7.5*3.5' },
-];
-
 export const WithdrawSlipBookPrint = () => {
   const router = useRouter();
 
@@ -64,6 +61,14 @@ export const WithdrawSlipBookPrint = () => {
   const user = useAppSelector((state) => state?.auth?.user);
 
   const queryClient = useQueryClient();
+
+  const { data: printPreferenceData } = useGetWithdrawSlipPrintPreferenceQuery();
+  const printPreferenceList = printPreferenceData?.settings?.general?.printPreference?.get?.data;
+
+  const selectedPrintPreference = useMemo(
+    () => printPreferenceList?.find((preference) => preference?.isSlipStandardActive),
+    [printPreferenceList]
+  );
 
   const methods = useForm<CustomWithdrawSlipIssueInput>({
     defaultValues: { printSize: '7*3.5' },
@@ -98,44 +103,23 @@ export const WithdrawSlipBookPrint = () => {
     [withdrawSlipData]
   );
 
-  const printSize = watch('printSize');
-
-  const getPrintCardSizes = () => {
-    switch (printSize) {
-      case '7*3.5':
-        return {
-          height: '336px',
-          width: '672px',
-          branchPosition: { top: '65px', left: '300px' },
-          accountPosition: { top: '170px', left: '60px' },
-          slipNumberPosition: { top: '276px', left: '60px' },
-        };
-      case '9*3':
-        return {
-          height: '288px',
-          width: '864px',
-          branchPosition: { top: '65px', left: '300px' },
-          accountPosition: { top: '122px', left: '60px' },
-          slipNumberPosition: { top: '228px', left: '60px' },
-        };
-      case '7.5*3.5':
-        return {
-          height: '336px',
-          width: '720px',
-          branchPosition: { top: '65px', left: '300px' },
-          accountPosition: { top: '170px', left: '60px' },
-          slipNumberPosition: { top: '276px', left: '60px' },
-        };
-
-      default:
-        return {
-          height: '336px',
-          width: '672px',
-          branchPosition: { top: '65px', left: '300px' },
-          accountPosition: { top: '170px', left: '60px' },
-          slipNumberPosition: { top: '276px', left: '60px' },
-        };
-    }
+  const slipDimensions = {
+    [SlipSizeStandard.Width_9Height_3]: {
+      height: 3,
+      width: 9,
+    },
+    [SlipSizeStandard.Width_7Point5Height_3Point5]: {
+      height: 3.5,
+      width: 7.5,
+    },
+    [SlipSizeStandard.Width_7Height_3Point5]: {
+      height: 3.5,
+      width: 7,
+    },
+    [SlipSizeStandard.Custom]: {
+      height: selectedPrintPreference?.slipSizeCustom?.height || 0,
+      width: selectedPrintPreference?.slipSizeCustom?.width || 0,
+    },
   };
 
   const componentRef = useRef<HTMLInputElement | null>(null);
@@ -165,6 +149,24 @@ export const WithdrawSlipBookPrint = () => {
     handlePrint();
   };
 
+  const slipHeight = slipDimensions[selectedPrintPreference?.slipSizeStandard || 'CUSTOM'].height;
+  const slipWidth = slipDimensions[selectedPrintPreference?.slipSizeStandard || 'CUSTOM'].width;
+
+  const printProps = {
+    height: slipHeight,
+    width: slipWidth,
+    branchPosition: selectedPrintPreference?.blockOne,
+    accountPosition: selectedPrintPreference?.blockTwo,
+    slipNumberPosition: selectedPrintPreference?.blockThree,
+    details: {
+      branch: user?.currentBranch?.name as string,
+      memberName: withdrawSlipData?.member?.name?.local as string,
+      accountNumber: withdrawSlipData?.account?.id as string,
+      accountName: withdrawSlipData?.account?.accountName as string,
+      slipNumber: String(from),
+    },
+  };
+
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -174,19 +176,20 @@ export const WithdrawSlipBookPrint = () => {
 
         <Box bg="white">
           <FormProvider {...methods}>
-            <WithdrawSlipBookPrintCard
-              {...getPrintCardSizes()}
-              size={printSize}
-              details={{
-                branch: user?.branch?.name as string,
-                memberName: withdrawSlipData?.member?.name?.local as string,
-                accountNumber: withdrawSlipData?.account?.id as string,
-                accountName: withdrawSlipData?.account?.accountName as string,
-                slipNumber: String(from),
-                from: parseInt(withdrawSlipData?.availableRange?.from || '0', 10),
+            <Box
+              display="none"
+              sx={{
+                '@media print': {
+                  display: 'flex',
+                },
+                '@page': {
+                  size: 'A4 landscape',
+                },
               }}
-              ref={componentRef}
-            />
+            >
+              <WithdrawPrintCard ref={componentRef} {...printProps} />
+            </Box>
+
             <form>
               <Box minH="calc(100vh - 170px)" pb="s60">
                 <FormSection templateColumns={2}>
@@ -231,22 +234,24 @@ export const WithdrawSlipBookPrint = () => {
                   )}
 
                   {count && from && to && (
-                    <FormSwitchTab name="printSize" label="Slip Sizes" options={slipSizes} />
+                    <GridItem colSpan={2}>
+                      <Alert
+                        status="warning"
+                        title="Withdraw Slip Print Preference"
+                        subtitle={`Withdraw Slip of Width ${slipWidth} inch and height ${slipHeight} inch will be printed`}
+                        bottomButtonlabel="Configure"
+                        bottomButtonHandler={() => {
+                          router.push(ROUTES.SETTINGS_GENERAL_PRINT_PREFERENCE);
+                        }}
+                        hideCloseIcon
+                      />
+                    </GridItem>
                   )}
                 </FormSection>
 
                 {count && from && to && (
                   <FormSection header="Print Preview" templateColumns={1} divider={false}>
-                    <WithdrawSlipBookPrintPreviewCard
-                      {...getPrintCardSizes()}
-                      details={{
-                        branch: user?.branch?.name as string,
-                        memberName: withdrawSlipData?.member?.name?.local as string,
-                        accountNumber: withdrawSlipData?.account?.id as string,
-                        accountName: withdrawSlipData?.account?.accountName as string,
-                        slipNumber: String(from),
-                      }}
-                    />
+                    <WithdrawSlipBookPrintPreviewCard {...printProps} />
                   </FormSection>
                 )}
               </Box>

@@ -224,6 +224,8 @@ query getLoanList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
         cursor
         node {
           id
+          appliedLoanAmount
+          totalSanctionedAmount
           member {
             id
             name

@@ -46,6 +46,7 @@ export const ProductLoanProcessingCharge = ({
     ],
     []
   );
+  if (loanProcessingChargeListWithIndex?.length === 0) return null;
 
   return (
     <DetailsCard title="Loan Processing Charge" hasTable>

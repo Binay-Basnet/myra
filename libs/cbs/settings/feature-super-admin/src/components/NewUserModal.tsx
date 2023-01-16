@@ -6,10 +6,10 @@ import { asyncToast, Box, Grid, Modal } from '@myra-ui';
 import {
   Id_Type,
   MyraUserInput,
-  Roles,
   setAddUserData,
   useAppDispatch,
   useGetNewIdMutation,
+  useGetUserRolesQuery,
   UserGender,
   useSetSettingsUserDataMutation,
 } from '@coop/cbs/data-access';
@@ -36,30 +36,26 @@ const genderOptions = [
   { label: 'Other', value: UserGender.Other },
 ];
 
-const roleOptions = [
-  { label: 'Market Representative', value: Roles.Agent },
-  { label: 'Service Center Manager', value: Roles.BranchManager },
-  { label: 'Head Teller', value: Roles.HeadTeller },
-  { label: 'Teller', value: Roles.Teller },
-  { label: 'Super Admin', value: Roles.Superadmin },
-];
+type UserForm = Omit<MyraUserInput, 'branch' | 'role'> & {
+  branch: { label: string; value: string }[];
+  role: { label: string; value: string }[];
+};
 
 export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModalProps) => {
-  const methods = useForm<MyraUserInput>({ defaultValues: { isCoreEmployee: false } });
+  const router = useRouter();
 
-  const { getValues, watch, reset } = methods;
+  const methods = useForm<UserForm>({ defaultValues: { isCoreEmployee: false } });
+  const { getValues, reset } = methods;
 
   const dispatch = useAppDispatch();
 
-  const router = useRouter();
-
-  const { mutateAsync: newIdMutate } = useGetNewIdMutation();
-
-  const { mutateAsync: userMutateAsync } = useSetSettingsUserDataMutation();
+  const { mutateAsync: getNewId } = useGetNewIdMutation();
+  const { mutateAsync: sendUserInvitation } = useSetSettingsUserDataMutation();
+  const { data: userRoles } = useGetUserRolesQuery();
 
   const handleSendInvitation = () => {
     // console.log({ values: getValues() });
-    newIdMutate({ idType: Id_Type.Myrauser }).then((res) => {
+    getNewId({ idType: Id_Type.Myrauser }).then((res) => {
       asyncToast({
         id: 'create-new-user-modal',
         msgs: {
@@ -70,7 +66,14 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
           refetchUserList();
           handleModalClose();
         },
-        promise: userMutateAsync({ id: res.newId, data: getValues() }),
+        promise: sendUserInvitation({
+          id: res.newId,
+          data: {
+            ...getValues(),
+            role: getValues().role.map((r) => r.value),
+            branch: getValues().branch.map((r) => r.value),
+          },
+        }),
       });
     });
   };
@@ -82,16 +85,13 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
         userData: { ...formData },
       })
     );
-    router.push(`/settings/users/super-admin/add`);
 
-    newIdMutate({ idType: Id_Type.Myrauser }).then((res) => {
+    getNewId({ idType: Id_Type.Myrauser }).then((res) => {
       router.push(`${ROUTES.SETTINGS_USERS_ADD}?id=${res.newId}`);
     });
 
     handleModalClose();
   };
-
-  const role = watch('role');
 
   const handleModalClose = () => {
     reset({});
@@ -117,23 +117,22 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
             <FormInput type="text" name="empCode" label="Employee Code" />
             <Grid templateColumns="repeat(2, 1fr)" rowGap="s24" columnGap="s20">
               <FormSelect isRequired name="gender" label="Gender" options={genderOptions} />
-
-              {/* <FormInput type="date" name="dob" label="Date of Birth (BS)" /> */}
-
               <FormDatePicker isRequired name="dob" label="Date of Birth" maxToday />
-
               <FormPhoneNumber isRequired name="contactNo" label="Mobile No" />
-
               <FormEmailInput isRequired name="email" label="Email" />
             </Grid>
-
-            <FormSelect isRequired name="role" label="Role" options={roleOptions} />
-
-            <FormBranchSelect
-              name="branch"
-              label="Service Center"
-              isDisabled={role === Roles.Superadmin}
+            <FormSelect
+              isMulti
+              isRequired
+              menuPosition="fixed"
+              name="role"
+              label="Role"
+              options={userRoles?.settings?.allRoles?.map((userRole) => ({
+                label: userRole?.name as string,
+                value: userRole?.id as string,
+              }))}
             />
+            <FormBranchSelect menuPosition="fixed" isMulti name="branch" label="Service Center" />
           </Box>
         </form>
       </FormProvider>

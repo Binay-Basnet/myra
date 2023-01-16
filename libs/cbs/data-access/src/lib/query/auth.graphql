@@ -2,57 +2,25 @@ query getMe {
   auth {
     me {
       data {
-        user {
+        branches {
           id
-          username
-          email
-          firstName
-          lastName
-          role
-          profilePic
-          userBalance
-          branch {
-            id
-            name
-            category
-            branchBalance
-          }
-          organization {
-            basicDetails {
-              name
-              logo
-            }
-            contactDetails {
-              website
-              phoneNumber
-              email
-            }
-            address {
-              district
-              wardNo
-              state
-              locality
-              localGovernment
-              houseNo
-            }
-            registrationDetails {
-              regdNo
-              panOrVat
-            }
-          }
+          name
+        }
+        rolesList {
+          id
+          name
+        }
+        permission {
+          myPermission
         }
         preference {
           language
           languageCode
           date
         }
-
-        permission {
-          myPermission
+        user {
+          ...User
         }
-
-
-
       }
       error {
         ...MutationError
@@ -61,9 +29,67 @@ query getMe {
   }
 }
 
-query getMyPermissions {
-  permission {
-    myPermission
-    menuPermission
+fragment User on User {
+  id
+  username
+  email
+  firstName
+  lastName
+  profilePic
+  userBalance
+  userLedger
+  currentRole {
+    id
+    name
+  }
+  currentBranch {
+    id
+    name
+    category
+    branchBalance
+    branchCode
+    branchStatus
+  }
+  organization {
+    id
+    basicDetails {
+      name
+      logo
+    }
+    contactDetails {
+      website
+      phoneNumber
+      email
+    }
+    address {
+      district
+      wardNo
+      state
+      locality
+      localGovernment
+      houseNo
+    }
+    registrationDetails {
+      regdNo
+      panOrVat
+    }
+  }
+}
+
+query getUserAndBranchBalance {
+  auth {
+    me {
+      data {
+        user {
+          userBalance
+          currentBranch {
+            branchBalance
+          }
+        }
+      }
+      error {
+        ...MutationError
+      }
+    }
   }
 }

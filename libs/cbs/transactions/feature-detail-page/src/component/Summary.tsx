@@ -1,22 +1,23 @@
 import { IoCopyOutline } from 'react-icons/io5';
 
-import { Box, Chips, Icon, Text } from '@myra-ui';
+import { Box, Chips, Icon, Text, Tooltip } from '@myra-ui';
 
 import { TransferType } from '@coop/cbs/data-access';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type SummaryProps = {
   summary: {
     transactionId?: string | undefined | null;
     memberId?: string | undefined | null;
-    transactionDate?: string | undefined | null;
+    transactionDate?: Record<'local' | 'en' | 'np', string> | null | undefined;
     paymentMode?: string | undefined | null;
     amount?: string | undefined | null;
     method?: string | undefined | null;
     loanAccountName?: string | undefined | null;
     loanSubtype?: string | undefined | null;
     loanAccId?: string | undefined | null;
-    repaymentDate?: string | undefined | null;
+    repaymentDate?: Record<'local' | 'en' | 'np', string> | undefined | null;
     //  interestRate?: loanRepaymentDetailData?.transactionDate,
   };
   detailPage?: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction' | 'loanRepayment';
@@ -48,7 +49,7 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
           <Box gap="s8" display="flex" width="full" justifyContent="space-between">
             <Box gap="s4" w="100%" display="flex" flexDirection="column">
               <Text fontSize="r1" fontWeight="Medium" color="neutralColorLight.Gray-80">
-                {summary.transactionDate}
+                {localizedDate(summary.transactionDate)}
               </Text>
               {detailPage === 'accountTransfer' ? (
                 <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
@@ -57,7 +58,7 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
                 </Text>
               ) : (
                 <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
-                  Withdraw -&nbsp;
+                  {detailPage === 'withdraw' ? 'Withdraw' : 'Deposit'} -&nbsp;
                   {summary.method === 'AGENT' ? agentSlug[summary.method] : summary.method}
                 </Text>
               )}
@@ -89,7 +90,7 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
               #{summary.transactionId}
             </Text>
             <Text fontSize="r1" fontWeight="Medium" color="neutralColorLight.Gray-80">
-              {summary.transactionDate}
+              {localizedDate(summary.transactionDate)}
             </Text>
           </Box>
 
@@ -104,10 +105,11 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
       {detailPage === 'loanRepayment' && (
         <Box display="flex" w="100%" flexDirection="column" gap="s16">
           <Box display="flex" justifyContent="space-between">
-            <Box display="flex" flexDirection="column">
-              <Text fontSize="s3" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-                {summary.loanAccountName}
-              </Text>
+            <Box display="flex" flexDirection="column" w="100%">
+              <RedirectButton
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${summary?.loanAccId}`}
+                label={<Tooltip title={summary.loanAccountName as string} />}
+              />
               <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-70">
                 {summary.loanSubtype}
               </Text>
@@ -119,21 +121,21 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
               </Box>
             </Box>
 
-            <Box display="flex" flexDirection="column">
+            {/* <Box display="flex" flexDirection="column">
               <Text fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-80">
                 {t['transDetailInterest']}
               </Text>
-              {/* <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
+              <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
               {summary.interestRate}
-            </Text> */}
-            </Box>
+            </Text>
+            </Box> */}
           </Box>
           <Box display="flex" flexDirection="column">
             <Text fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-80">
               {t['transDetailSubmittedDate']}
             </Text>
             <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
-              {summary.repaymentDate}
+              {localizedDate(summary.repaymentDate)}
             </Text>
           </Box>
         </Box>

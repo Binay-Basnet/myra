@@ -1,11 +1,12 @@
 import { Box, Chips, Text } from '@myra-ui';
 
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 type SidebarType = {
   sidebarData: {
     id: string | null | undefined;
-    date: string | null | undefined;
+    date: Record<'local' | 'en' | 'np', string> | null | undefined;
     status: string | null | undefined;
     amount: string | null | undefined;
   };
@@ -27,7 +28,7 @@ export const Summary = ({ sidebarData }: SidebarType) => (
         #{sidebarData?.id ?? '-'}
       </Text>
       <Text fontSize="s3" fontWeight="Medium" color="gray.800" lineHeight="16px">
-        {sidebarData?.date}
+        {localizedDate(sidebarData?.date)}
       </Text>
     </Box>
 

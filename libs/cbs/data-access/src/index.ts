@@ -1,3 +1,4 @@
+export { axiosAgent } from './generated/axiosHelper';
 export * from './generated/graphql';
 export * from './hooks/useAccountDetails';
 export * from './hooks/useGetAccountTransactionList';

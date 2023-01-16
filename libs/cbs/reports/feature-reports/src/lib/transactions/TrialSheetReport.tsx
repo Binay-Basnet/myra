@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import Link from 'next/link';
 
 import { Box, Column, ExpandedCell, ExpandedHeader, GridItem, Text } from '@myra-ui';
 
@@ -12,7 +13,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedText } from '@coop/cbs/utils';
+import { localizedText, ROUTES } from '@coop/cbs/utils';
 import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
 
@@ -85,7 +86,7 @@ export const TrialSheetReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Trial Balance', link: '/reports/cbs/transactions/trail-sheet/new' },
+            { label: 'Trial Balance', link: '/reports/cbs/transactions/trial-sheet/new' },
           ]}
         />
 
@@ -323,9 +324,20 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
       cell: (props) => (
         <ExpandedCell
           row={props.row}
-          value={` ${props.row.original.ledgerId} - ${localizedText(
-            props?.row?.original?.ledgerName
-          )}`}
+          value={
+            !props.row?.getCanExpand() ? (
+              <Link
+                target="_blank"
+                href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props.row?.original?.ledgerId}`}
+              >
+                <Text fontSize="s3" color="primary.500">
+                  {props.row.original.ledgerId} - {localizedText(props?.row?.original?.ledgerName)}
+                </Text>
+              </Link>
+            ) : (
+              ` ${props.row.original.ledgerId} - ${localizedText(props?.row?.original?.ledgerName)}`
+            )
+          }
         />
       ),
       meta: {

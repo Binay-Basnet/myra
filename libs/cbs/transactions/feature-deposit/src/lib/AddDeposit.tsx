@@ -574,9 +574,11 @@ export const AddDeposit = () => {
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: fine ?? FINE,
                               // branch: 'Kumaripati',
-                              openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
-                              expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
-                              lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
+                              openDate: localizedDate(selectedAccount?.accountOpenedDate) ?? 'N/A',
+                              expiryDate:
+                                localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
+                              lastTransactionDate:
+                                localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
                               productName: selectedAccount?.product?.productName,
                               installmentAmount:
                                 selectedAccount?.product?.nature ===
@@ -589,6 +591,7 @@ export const AddDeposit = () => {
                             }
                           : null
                       }
+                      redirectUrl={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedAccount?.id}`}
                     />
                   </Box>
                 )}

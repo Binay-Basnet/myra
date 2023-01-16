@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
@@ -9,6 +10,7 @@ import {
   CashTransferMode,
   CashValue,
   useAppSelector,
+  useGetUserAndBranchBalanceQuery,
   useSetCashInTransitTransferMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -43,7 +45,14 @@ export const AddCashTransitTransfer = () => {
 
   const user = useAppSelector((state) => state.auth?.user);
 
-  const branchData = user?.branch;
+  const { data: balanceQueryData } = useGetUserAndBranchBalanceQuery();
+
+  const userBalance = useMemo(
+    () => balanceQueryData?.auth?.me?.data?.user?.userBalance,
+    [balanceQueryData]
+  );
+
+  const branchData = user?.currentBranch;
 
   const { mutateAsync } = useSetCashInTransitTransferMutation();
 
@@ -63,7 +72,7 @@ export const AddCashTransitTransfer = () => {
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
+      (accumulator: number, { amount: currAmount }) => accumulator + Number(currAmount),
       0 as number
     ) ?? 0;
 
@@ -89,7 +98,7 @@ export const AddCashTransitTransfer = () => {
       promise: mutateAsync({ data: updatedData as CashInTransitInput }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getCashInTransitList']);
-        queryClient.invalidateQueries(['getMe']);
+        // queryClient.invalidateQueries(['getMe']);
         router.push(ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST);
       },
     });
@@ -111,7 +120,7 @@ export const AddCashTransitTransfer = () => {
               <Box minH="calc(100vh - 170px)" pb="s60">
                 <CashTransitInfo />
                 <TransferMode />
-                <Denomination availableCash={user?.userBalance} />
+                <Denomination availableCash={userBalance} />
               </Box>
             </form>
           </FormProvider>

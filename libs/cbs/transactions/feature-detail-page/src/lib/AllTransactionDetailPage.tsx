@@ -1,12 +1,12 @@
 import { IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Icon, IconButton, PathBar } from '@myra-ui';
+import { Box, Divider, Icon, IconButton, PathBar } from '@myra-ui';
 
 import { useGetAllTransactionsDetailQuery } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
-import { GlTransaction } from '../component';
+import { GlTransaction, Note } from '../component';
 
 export const AllTransactionDetailPage = () => {
   const router = useRouter();
@@ -24,7 +24,9 @@ export const AllTransactionDetailPage = () => {
     <Box bg="gray.100" minH="calc(100vh - 110px)">
       <Box display="flex" flexDir="column" bg="white">
         <PathBar
-          paths={[{ label: 'All Transactions List', link: '/transactions/all-transactions/list' }]}
+          paths={[
+            { label: 'All Transactions List', link: '/cbs/transactions/all-transactions/list' },
+          ]}
           button={
             <IconButton
               variant="ghost"
@@ -44,6 +46,14 @@ export const AllTransactionDetailPage = () => {
           branch={depositDetailData?.transactionBranch as string}
           teller={depositDetailData?.teller as string}
         /> */}
+        {allTransactionsData?.note && (
+          <Box>
+            {' '}
+            <Note note={allTransactionsData?.note} />
+          </Box>
+        )}
+
+        <Divider />
         <GlTransaction
           totalDebit={String(amountConverter(allTransactionsData?.totalDebit ?? 0))}
           totalCredit={String(amountConverter(allTransactionsData?.totalCredit ?? 0))}

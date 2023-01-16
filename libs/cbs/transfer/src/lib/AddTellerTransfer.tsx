@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,6 +20,7 @@ import {
   TellerTransferInput,
   TellerTransferType,
   useAppSelector,
+  useGetUserAndBranchBalanceQuery,
   useSetTellerTransferDataMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -75,6 +77,13 @@ export const AddTellerTransfer = () => {
 
   const user = useAppSelector((state) => state?.auth?.user);
 
+  const { data: balanceQueryData } = useGetUserAndBranchBalanceQuery();
+
+  const userBalance = useMemo(
+    () => balanceQueryData?.auth?.me?.data?.user?.userBalance,
+    [balanceQueryData]
+  );
+
   const methods = useForm<CustomTellerTransferInput>({
     defaultValues: { srcTellerID: [user?.firstName?.local, user?.lastName?.local].join(' ') },
   });
@@ -89,7 +98,7 @@ export const AddTellerTransfer = () => {
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
+      (accumulator: number, { amount: currAmount }) => accumulator + Number(currAmount),
       0 as number
     ) ?? 0;
 
@@ -151,7 +160,7 @@ export const AddTellerTransfer = () => {
                   <GridItem colSpan={3}>
                     <BalanceCard
                       label="Sender Teller Available Cash"
-                      balance={user?.userBalance ?? '0'}
+                      balance={userBalance ?? '0'}
                     />
                   </GridItem>
 

@@ -6,7 +6,7 @@ import { LoanObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
-import { LoanTable } from '../components/LoanTable';
+import { LoanDeclinedTable } from '../components/LoanTable';
 
 export const DeclinedLoanList = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ export const DeclinedLoanList = () => {
   return (
     <>
       <PageHeader heading={`Declined Loan - ${featureCode.loanDeclined}`} />
-      <LoanTable
+      <LoanDeclinedTable
         data={data}
         isLoading={isFetching}
         type={LoanObjState.Cancelled}

@@ -6,7 +6,7 @@ import { LoanObjState, ObjState, useGetLoanListQuery } from '@coop/cbs/data-acce
 import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
-import { LoanTable } from '../components/LoanTable';
+import { LoanAppTable } from '../components/LoanTable';
 
 export const LOAN_LIST_TAB_ITEMS = [
   {
@@ -35,7 +35,7 @@ export const LoanList = () => {
         heading={`Loan Application - ${featureCode.loanApplication}`}
         tabItems={LOAN_LIST_TAB_ITEMS}
       />
-      <LoanTable
+      <LoanAppTable
         data={data}
         viewLink={ROUTES.CBS_LOAN_APPLICATION_DETAILS}
         isLoading={isFetching}

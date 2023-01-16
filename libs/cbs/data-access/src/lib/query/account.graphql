@@ -507,6 +507,7 @@ query getAccountDetailsData($id: ID!) {
           profilePicUrl
           contact
         }
+        productId
         installmentAmount
         accountName
         accountTenure
@@ -579,6 +580,30 @@ query getAccountLedgersList($accountId: ID!) {
         accountType
         balance
         balanceType
+      }
+    }
+  }
+}
+
+query getAllAccounts($paginate: Pagination, $filter: AllAccountsFilter) {
+  allAccounts {
+    list(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          ID
+          member {
+            name
+          }
+          accountName
+          productName
+          accountType
+          accountOpenDate
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
       }
     }
   }

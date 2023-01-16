@@ -20,6 +20,7 @@ export const ROUTES = {
   CBS_ACCOUNT_CLOSE_ADD: '/cbs/savings/account-close/add',
   CBS_ACCOUNT_LIST: '/cbs/savings/account-open/list',
   CBS_ACCOUNT_SAVING_PRODUCT: '/cbs/savings/products/list',
+  CBS_ACCOUNT_SAVING_PRODUCT_DETAILS: '/cbs/savings/products/details',
   CBS_ACCOUNT_CLOSE_LIST: '/cbs/savings/account-close/list',
   CBS_ACCOUNT_SAVING_DETAILS: '/cbs/savings/account-open/details',
 
@@ -48,6 +49,8 @@ export const ROUTES = {
   CBS_TRANS_MARKET_REPRESENTATIVE_LIST: '/cbs/transactions/market-representative/list',
   CBS_TRANS_JOURNAL_VOUCHER_LIST: '/cbs/transactions/journal-vouchers/list',
   CBS_TRANS_ALL_TRANSACTION_LIST: '/cbs/transactions/all-transactions/list',
+  CBS_TRANS_ALL_LEDGERS_LIST: '/cbs/transactions/all-ledgers/list',
+  CBS_TRANS_ALL_ACCOUNTS_LIST: '/cbs/transactions/all-accounts/list',
 
   CBS_TRANSFER_VAULT_ADD: '/cbs/transfers/vault-transfer/add',
   CBS_TRANSFER_TELLER_ADD: '/cbs/transfers/teller-transfer/add',
@@ -153,6 +156,7 @@ export const ROUTES = {
   CBS_TRANS_WITHDRAW_DETAILS: '/cbs/transactions/withdraw/details',
   CBS_TRANS_JOURNAL_VOUCHER_DETAILS: '/cbs/transactions/journal-vouchers/details',
   CBS_TRANS_LOAN_PAYMENT_DETAILS: '/cbs/transactions/loan-payment/details',
+  CBS_TRANS_ALL_ACCOUNTS_DETAILS: '/cbs/transactions/all-accounts/details',
 
   CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_LIST:
     '/cbs/others/market-representative-transaction/list',
@@ -208,14 +212,14 @@ export const ROUTES = {
   ALTERNATIVE_CHANNELS_DOWNLOADS_REPORTS: '/alternative-channels/downloads/reports',
   ALTERNATIVE_CHANNELS_DOWNLOADS_DIRECTIVES: '/alternative-channels/downloads/directives',
 
-  ACCOUNTING_SALES_ENTRY: '/accounting/sales/list',
-  ACCOUNTING_SALES_ENTRY_ADD: '/accounting/sales/add/1',
+  ACCOUNTING_SALES_ENTRY: '/accounting/sales/sales-entry/list',
+  ACCOUNTING_SALES_ENTRY_ADD: '/accounting/sales/sales-entry/add',
   ACCOUNTING_SALES_CREDIT_NOTE: '/accounting/sales/credit-note/list',
-  ACCOUNTING_SALES_CREDIT_NOTE_ADD: '/accounting/sales/credit-note/add/1',
+  ACCOUNTING_SALES_CREDIT_NOTE_ADD: '/accounting/sales/credit-note/add',
   ACCOUNTING_SALES_CUSTOMER_PAYMENT: '/accounting/sales/customer-payment/list',
-  ACCOUNTING_SALES_CUSTOMER_PAYMENT_ADD: '/accounting/sales/customer-payment/add/1',
+  ACCOUNTING_SALES_CUSTOMER_PAYMENT_ADD: '/accounting/sales/customer-payment/add',
   ACCOUNTING_SALES_CUSTOMER: '/accounting/sales/customer/list',
-  ACCOUNTING_SALES_CUSTOMER_ADD: '/accounting/sales/customer/add/1',
+  ACCOUNTING_SALES_CUSTOMER_ADD: '/accounting/sales/customer/add',
 
   ACCOUNTING_PURCHASE_LIST: '/accounting/purchase/list',
   ACCOUNTING_PURCHASE_LIST_ADD: '/accounting/purchase/add',
@@ -257,6 +261,8 @@ export const ROUTES = {
   SETTINGS_GENERAL_SAVING_PRODUCTS_DETAILS: '/settings/general/saving-products/details',
   CBS_LOAN_ACCOUNT_CLOSED_DETAILS: '/cbs/loan/closed-accounts/details',
   CBS_ACCOUNT_CLOSED_DETAILS: '/cbs/savings/account-close/details',
+
+  SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/general/print-preference/withdraw-slip',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

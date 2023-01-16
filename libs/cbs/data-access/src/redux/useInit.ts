@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import {
   authenticate,
   logout,
-  setPreference,
+  RoleInfo,
   useAppDispatch,
   useAppSelector,
   useGetMeQuery,
@@ -36,35 +36,53 @@ export const useInit = () => {
   const refreshToken = useRefreshToken(url ?? '');
 
   const hasDataReturned = getMe?.data?.auth;
-  const userData = getMe?.data?.auth?.me?.data?.user;
-  const preference = getMe?.data?.auth?.me?.data?.preference;
-  const permissions = getMe?.data?.auth?.me?.data?.permission?.myPermission;
   const hasData = getMe?.data?.auth?.me?.data;
 
+  const loginRecord = getMe?.data?.auth?.me;
+  const loginData = loginRecord?.data;
+
+  const userData = loginData?.user;
+  const preference = loginData?.preference;
+  const permissions = loginData?.permission?.myPermission;
+  const availableRoles = loginData?.rolesList;
+  const availableBranches = loginData?.branches;
+
   useEffect(() => {
-    refreshToken()
-      .then((res) => {
-        if (res) {
-          setTriggerQuery(true);
-        }
-      })
-      .catch(() => {
-        if (route?.pathname.includes('password-recovery')) {
-          setIsLoading(false);
-          return;
-        }
-        dispatch(logout());
-        replace('/login').then(() => setIsLoading(false));
-      });
-  }, [dispatch, refreshToken, replace]);
+    if (!route.pathname.includes('login') && !isLoggedIn) {
+      refreshToken()
+        .then((res) => {
+          if (res) {
+            setTriggerQuery(true);
+          }
+        })
+        .catch(() => {
+          if (route?.pathname.includes('password-recovery')) {
+            setIsLoading(false);
+            return;
+          }
+          dispatch(logout());
+          replace('/login').then(() => setIsLoading(false));
+        });
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch, refreshToken, replace, route]);
 
   useEffect(() => {
     if (hasDataReturned) {
-      if (userData) {
+      if (userData && preference && permissions && availableRoles && availableBranches) {
         updateAbility(ability, permissions as Partial<Record<string, string>>);
 
-        dispatch(authenticate({ user: userData }));
-        preference && dispatch(setPreference({ preference }));
+        dispatch(
+          authenticate({
+            user: userData,
+            permissions,
+            preference,
+            availableRoles: availableRoles as RoleInfo[],
+            availableBranches: availableBranches as RoleInfo[],
+          })
+        );
+
         setIsLoading(false);
       } else {
         if (route?.pathname.includes('password-recovery')) {
@@ -75,13 +93,13 @@ export const useInit = () => {
         replace('/login').then(() => setIsLoading(false));
       }
     }
-  }, [dispatch, hasDataReturned, hasData, userData, replace, isLoggedIn]);
+  }, [dispatch, hasDataReturned, hasData, userData, replace]);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      setTriggerQuery(true);
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     setTriggerQuery(true);
+  //   }
+  // }, [isLoggedIn]);
 
   return { isLoading };
 };

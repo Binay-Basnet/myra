@@ -2,10 +2,9 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 // const MEMBER_TAB_ITEMS = [
@@ -50,19 +49,12 @@ export const AgentList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['agentListPhoneNo'],
-        accessorFn: (row) => row?.node?.phoneNo,
-        // meta: {
-        //   width: '20%',
-        // },
-      },
-      {
         header: t['agentListMarketRepresentativeId'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.agentName,
-        header: t['agentListMarketRepresentativeName'],
+        header: 'Name',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
@@ -86,6 +78,14 @@ export const AgentList = () => {
         },
       },
       {
+        header: 'Contact No',
+        accessorFn: (row) => row?.node?.phoneNo,
+        // meta: {
+        //   width: '20%',
+        // },
+      },
+
+      {
         header: t['agentListMemberAssigned'],
         accessorFn: (row) => row?.node?.assignedMember,
       },
@@ -94,10 +94,12 @@ export const AgentList = () => {
         header: '',
         accessorKey: 'actions',
         cell: (cell) => (
-          <ActionPopoverComponent
+          <TablePopover
             items={[
               {
                 title: 'transactionsAgentListViewDetail',
+                aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
+                action: 'VIEW',
                 onClick: () => {
                   router.push(
                     `/${getUrl(router.pathname, 3)}/details?id=${cell?.row?.original?.node?.id}`
@@ -105,7 +107,7 @@ export const AgentList = () => {
                 },
               },
             ]}
-            id={cell?.row?.original?.node?.id as string}
+            node={cell?.row?.original?.node}
           />
         ),
         meta: {

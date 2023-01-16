@@ -24,6 +24,7 @@ export interface SuccessCardProps {
     accountName?: string | null;
     accountId?: string | null;
   };
+  showSignatures?: boolean;
 }
 
 export const SuccessCard = ({
@@ -36,12 +37,22 @@ export const SuccessCard = ({
   newOpenHandler,
   closeModal,
   meta,
+  showSignatures,
 }: SuccessCardProps) => {
   const router = useRouter();
   const componentRef = useRef<HTMLInputElement | null>(null);
 
   return (
-    <Box bg="white" p="s24" display="flex" flexDir="column" gap="s32" maxW="500px" boxShadow="E2">
+    <Box
+      bg="white"
+      p="s24"
+      display="flex"
+      flexDir="column"
+      gap="s32"
+      maxW="500px"
+      boxShadow="E2"
+      overflowY="auto"
+    >
       <Box display="flex" flexDir="column" alignItems="center" gap="s16">
         <SuccessCheckmark />
 
@@ -132,7 +143,13 @@ export const SuccessCard = ({
         </Box>
       </Box>
 
-      <SuccessPrint meta={meta} total={total as string} details={details} ref={componentRef} />
+      <SuccessPrint
+        meta={meta}
+        showSignatures={showSignatures}
+        total={total as string}
+        details={details}
+        ref={componentRef}
+      />
     </Box>
   );
 };
@@ -159,10 +176,11 @@ interface SuccessPrintProps {
   };
   details: Record<string, React.ReactNode>;
   total: string;
+  showSignatures?: boolean;
 }
 
-const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
-  ({ details, total, meta }, ref) => {
+export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
+  ({ details, total, meta, showSignatures }, ref) => {
     const user = useAppSelector((state) => state.auth.user);
 
     return (
@@ -173,24 +191,24 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
         p="s32"
         flexDir="column"
         gap="s8"
+        position="relative"
         sx={{
           '@media print': {
             display: 'flex',
           },
           '@page': {
             size: 'A4 portrait',
-            margin: '0.2in',
-            marginLeft: '0.4in',
+            margin: '0.1in',
           },
         }}
       >
-        <Box w="100%">
-          <Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box display="flex" alignItems="flex-start" gap="s8">
+        <Box w="100%" mb="s12">
+          <Box display="flex" flexDir="column" gap="s12">
+            <Box display="flex" alignItems="center" gap="s8">
               <Box position="relative">
                 <Avatar
-                  w="s40"
-                  h="s40"
+                  w="s48"
+                  h="s48"
                   name={user?.organization?.basicDetails?.name as string}
                   src={user?.organization?.basicDetails?.logo as string}
                 />
@@ -207,75 +225,85 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
                 </Text>
               </Box>
             </Box>
-            <Box>
-              <Box display="flex" gap="s4">
-                <Text fontSize="s2" color="gray.700">
-                  Address:
+
+            <Box display="flex" alignItems="start" justifyContent="space-between">
+              <Box display="flex" flexDir="column">
+                <Text fontSize="s2" color="gray.700" as="span">
+                  Branch: {user?.currentBranch?.name}
                 </Text>
-                <Text fontSize="s2" color="gray.700" fontWeight="500" whiteSpace="nowrap">
-                  {formatAddress(user?.organization?.address)}
+                <Text fontSize="s2" color="gray.700" as="span">
+                  Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
                 </Text>
               </Box>
 
-              <Box display="flex" gap="s4">
-                <Text fontSize="s2" color="gray.700">
-                  Regd No:
-                </Text>
-                <Text fontSize="s2" color="gray.700" fontWeight="500">
-                  {user?.organization?.registrationDetails?.regdNo ?? 'N/A'}
-                </Text>
-              </Box>
+              <Box>
+                <Box display="flex" gap="s4">
+                  <Text fontSize="s2" color="gray.700">
+                    Address:
+                  </Text>
+                  <Text fontSize="s2" color="gray.700" fontWeight="500" whiteSpace="nowrap">
+                    {formatAddress(user?.organization?.address)}
+                  </Text>
+                </Box>
 
-              <Box display="flex" gap="s4">
-                <Text fontSize="s2" color="gray.700">
-                  Pan:
-                </Text>
-                <Text fontSize="s2" color="gray.700" fontWeight="500">
-                  {user?.organization?.registrationDetails?.panOrVat ?? 'N/A'}
-                </Text>
+                <Box display="flex" gap="s4">
+                  <Text fontSize="s2" color="gray.700">
+                    Regd No:
+                  </Text>
+                  <Text fontSize="s2" color="gray.700" fontWeight="500">
+                    {user?.organization?.registrationDetails?.regdNo ?? 'N/A'}
+                  </Text>
+                </Box>
+
+                <Box display="flex" gap="s4">
+                  <Text fontSize="s2" color="gray.700">
+                    Pan:
+                  </Text>
+                  <Text fontSize="s2" color="gray.700" fontWeight="500">
+                    {user?.organization?.registrationDetails?.panOrVat ?? 'N/A'}
+                  </Text>
+                </Box>
               </Box>
-              <Text fontSize="s2" color="gray.700" as="span">
-                Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
-              </Text>
             </Box>
           </Box>
         </Box>
 
-        <Divider />
-        <Box
-          w="100%"
-          display="grid"
-          gridTemplateColumns="repeat(2, 1fr)"
-          rowGap="s4"
-          columnGap="s8"
-          pb="s24"
-        >
-          {meta?.member && (
-            <Text fontSize="s2" fontWeight="400" color="gray.700">
-              Member: {meta?.member}
-            </Text>
-          )}
+        <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
+        {meta && Object.keys(meta).length !== 0 && (
+          <Box
+            w="100%"
+            display="grid"
+            gridTemplateColumns="repeat(2, 1fr)"
+            rowGap="s4"
+            columnGap="s8"
+          >
+            {meta?.member && (
+              <Text fontSize="s2" fontWeight="400" color="gray.700">
+                Member: {meta?.member}
+              </Text>
+            )}
 
-          {meta?.memberId && (
-            <Text fontSize="s2" fontWeight="400" color="gray.700">
-              Member Code: {meta?.memberId}
-            </Text>
-          )}
+            {meta?.memberId && (
+              <Text fontSize="s2" fontWeight="400" color="gray.700">
+                Member Code: {meta?.memberId}
+              </Text>
+            )}
 
-          {meta?.accountName && (
-            <Text fontSize="s2" fontWeight="400" color="gray.700">
-              Account Name: {meta?.accountName}
-            </Text>
-          )}
+            {meta?.accountName && (
+              <Text fontSize="s2" fontWeight="400" color="gray.700">
+                Account Name: {meta?.accountName}
+              </Text>
+            )}
 
-          {meta?.accountId && (
-            <Text fontSize="s2" fontWeight="400" color="gray.700">
-              Account Id: {meta?.accountId}
-            </Text>
-          )}
-        </Box>
+            {meta?.accountId && (
+              <Text fontSize="s2" fontWeight="400" color="gray.700">
+                Account Id: {meta?.accountId}
+              </Text>
+            )}
+          </Box>
+        )}
 
-        <Box w="100%" bg="highlight.500" display="flex" flexDir="column" py="s8" px="s16">
+        <Box mt="s12" w="100%" bg="highlight.500" display="flex" flexDir="column" py="s8" px="s16">
           <Box
             borderBottom={total ? '1px' : 'none'}
             borderBottomColor="border.layout"
@@ -315,6 +343,38 @@ const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
             </Box>
           )}
         </Box>
+
+        {showSignatures && (
+          <Box
+            position="fixed"
+            w="100%"
+            bottom="100px"
+            left={0}
+            display="grid"
+            gridTemplateColumns="repeat(3, 1fr)"
+            gap="s32"
+            px="s32"
+          >
+            <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+              <Divider borderTop="1px dotted black" />
+              <Text fontSize="s2" color="gray.800" fontWeight="500">
+                Prepared By
+              </Text>
+            </Box>
+            <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+              <Divider borderTop="1px dotted black" />
+              <Text fontSize="s2" color="gray.800" fontWeight="500">
+                Verified By
+              </Text>
+            </Box>
+            <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+              <Divider borderTop="1px dotted black" />
+              <Text fontSize="s2" color="gray.800" fontWeight="500">
+                Approved By
+              </Text>
+            </Box>
+          </Box>
+        )}
       </Box>
     );
   }

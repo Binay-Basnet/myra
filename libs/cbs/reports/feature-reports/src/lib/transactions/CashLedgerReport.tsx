@@ -104,7 +104,7 @@ export const CashLedgersReport = () => {
                     Cash Ledger Report(Summary)
                   </Text>
                   <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                    Opening Balance: {openingBalance ? amountConverter(openingBalance) : '-'}
+                    Opening Balance: {openingBalance || '-'}
                   </Text>
                 </Box>
                 <Report.Table<CashLedgerReport>
@@ -130,7 +130,7 @@ export const CashLedgersReport = () => {
                             Closing Balance
                           </Text>
                           <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                            {closingBalance ? amountConverter(closingBalance) : '-'}
+                            {closingBalance || '-'}
                           </Text>
                         </Box>
                       ),
@@ -163,7 +163,7 @@ export const CashLedgersReport = () => {
                       },
                     },
                     {
-                      header: 'Cash Recieved Cr.',
+                      header: 'Cash Payment Cr.',
                       cell: (props) => amountConverter(props.getValue() as string),
                       accessorKey: 'cashCr',
                       meta: {
@@ -222,7 +222,7 @@ export const CashLedgersReport = () => {
                             Closing Balance
                           </Text>
                           <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                            {closingBalance ? amountConverter(closingBalance) : '-'}
+                            {closingBalance || '-'}
                           </Text>
                         </Box>
                       ),
@@ -270,7 +270,7 @@ export const CashLedgersReport = () => {
                       },
                     },
                     {
-                      header: 'Cash Recieved Cr.',
+                      header: 'Cash Payment Cr.',
                       accessorKey: 'cashCr',
                       cell: (props) => amountConverter(props.getValue() as string),
 

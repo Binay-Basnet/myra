@@ -1,9 +1,9 @@
 import { ReactNode, useMemo } from 'react';
 
-import { DetailsCard, Tooltip } from '@myra-ui';
+import { DetailsCard, Switch, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { LedgerList } from '@coop/cbs/data-access';
+import { LedgerList, useUpdateLedgerStatusMutation } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 
 interface ILedgerListsProps {
@@ -20,6 +20,7 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
       })) ?? [],
     [ledgers]
   );
+  const { mutateAsync } = useUpdateLedgerStatusMutation();
 
   const columns = useMemo<Column<typeof ledgersList[0]>[]>(
     () => [
@@ -49,6 +50,21 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
       {
         header: 'Balance',
         accessorFn: (row) => row?.balance as string,
+      },
+      {
+        header: 'Status',
+        // accessorFn: (row) => row?.balance as string,
+        cell: (props) => (
+          <Switch
+            defaultChecked={props?.row?.original?.status as boolean}
+            onChange={(e) =>
+              mutateAsync({
+                id: props?.row?.original?.accountCode as string,
+                status: e.target.checked,
+              })
+            }
+          />
+        ),
       },
     ],
     []

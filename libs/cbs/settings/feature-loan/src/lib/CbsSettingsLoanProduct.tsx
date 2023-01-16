@@ -8,6 +8,7 @@ import { Column, Table, TablePopover } from '@myra-ui/table';
 import {
   AccountTypeFilter,
   DepositProductStatus,
+  Filter_Mode,
   LoanProductInactiveData,
   useGetLoanProductListQuery,
   useSetLoanProductInactiveMutation,
@@ -68,6 +69,7 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
   const { resetField } = methods;
 
   const { t } = useTranslation();
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isLoading, refetch } = useGetLoanProductListQuery(
     router.query['before']
@@ -77,8 +79,13 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
             order: null,
           },
           filter: {
+            id: searchTerm,
+            productName: searchTerm,
+            productCode: searchTerm,
+            productSubType: searchTerm,
             objState: (router.query['objState'] ??
               DepositProductStatus.Active) as DepositProductStatus,
+            filterMode: Filter_Mode.Or,
           },
         }
       : {
@@ -87,8 +94,13 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
             order: null,
           },
           filter: {
+            id: searchTerm,
+            productName: searchTerm,
+            productSubType: searchTerm,
+            productCode: searchTerm,
             objState: (router.query['objState'] ??
               DepositProductStatus.Active) as DepositProductStatus,
+            filterMode: Filter_Mode.Or,
           },
         },
     {
@@ -100,6 +112,10 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
+      {
+        header: t['loanProductsCreatedDate'],
+        accessorFn: (row) => row?.node.createdDate,
+      },
       {
         header: t['loanProductsProductCode'],
         accessorFn: (row) => row?.node.productCodeString,
@@ -136,10 +152,7 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
         accessorFn: (row) => row?.node.interest?.defaultRate,
         cell: (props) => <span>{props?.row?.original?.node?.interest?.defaultRate} %</span>,
       },
-      {
-        header: t['loanProductsCreatedDate'],
-        accessorFn: (row) => row?.node.createdDate,
-      },
+
       {
         id: '_actions',
         header: '',
@@ -197,7 +210,7 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
         },
       },
     ],
-    [t, router]
+    [t, router, rowData]
   );
 
   const makeInactive = useCallback(async () => {

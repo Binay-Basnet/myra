@@ -255,7 +255,7 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
   ];
 
   return (
-    <>
+    <Box>
       <Accordion defaultIndex={[0]} display="flex" flexDirection="column" gap="s16" allowToggle>
         <AccordionItem key={1}>
           <AccordionButton>
@@ -271,17 +271,21 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
               <Box display="flex" flexDirection="column" gap="s4" textAlign="left">
                 <Box display="flex" gap="s8" alignItems="center">
                   <Text fontSize="r1" color="gray.800" lineHeight="150%" fontWeight="SemiBold">
-                    {collatDataList?.valuationMethod}
+                    {collatDataList?.collateralType === 'Land' ||
+                    collatDataList?.collateralType === 'Land and Building'
+                      ? collatDataList?.ownerName
+                      : collatDataList?.collateralType === 'Vehicle'
+                      ? collatDataList?.vehicleName
+                      : collatDataList?.collateralType === 'Documents'
+                      ? collatDataList?.documentName
+                      : 'N/A'}
                   </Text>
                   <Chips variant="solid" type="label" size="sm" theme="success" label="Active" />
                 </Box>
                 <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
-                  {collatDataList?.description}
+                  {collatDataList?.collateralType}
                 </Text>
               </Box>
-              <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
-                {collatDataList?.description}
-              </Text>
             </Box>
             <AccordionIcon />
           </AccordionButton>
@@ -344,6 +348,6 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
           </Box>
         </FormProvider>
       </Modal>
-    </>
+    </Box>
   );
 };

@@ -6,7 +6,7 @@ import { LoanObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
-import { LoanTable } from '../components/LoanTable';
+import { LoanAccTable } from '../components/LoanTable';
 
 export const LoanAccountList = () => {
   const router = useRouter();
@@ -20,12 +20,11 @@ export const LoanAccountList = () => {
   return (
     <>
       <PageHeader heading={`Loan Account - ${featureCode.loanAccounts} `} />
-      <LoanTable
+      <LoanAccTable
         data={data}
         isLoading={isFetching}
         type={LoanObjState.Disbursed}
         viewLink={ROUTES.CBS_LOAN_ACCOUNT_DETAILS}
-        isDisbured
       />
     </>
   );

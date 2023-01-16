@@ -18,7 +18,7 @@ export const Overview = () => {
       <FeesAndCharges charges={shareDetails?.charges} />
       <PaymentDetails paymentData={shareDetails?.paymentDetail} />
       <OtherDetails txnBranch={shareDetails?.transactionBranch} teller={shareDetails?.teller} />
-      <Note note={shareDetails?.note} />
+      {shareDetails?.note && <Note note={shareDetails?.note} />}
       <GlTransaction
         tableData={shareDetails?.glTransactions}
         totalDebit={shareDetails?.totalDebit ?? '0'}

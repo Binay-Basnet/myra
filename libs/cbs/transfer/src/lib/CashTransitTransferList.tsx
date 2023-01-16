@@ -11,6 +11,7 @@ import {
   RequestStatus,
   useGetCashInTransitListQuery,
 } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 import { CashInTransitTransferAproveModal } from '../components/cash-in-transit/CashInTransitTransferAproveModal';
@@ -56,11 +57,15 @@ export const CashTransitTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'ID',
+        header: 'Transfer Date',
+        accessorFn: (row) => localizedDate(row?.node?.transferDate),
+      },
+      {
+        header: 'Transfer ID',
         accessorFn: (row) => row?.node?.transactionCode,
       },
       {
-        header: 'Sender Service Center',
+        header: 'Sender',
         accessorFn: (row) => row?.node?.senderServiceCentreName,
         cell: (props) => (
           <Box display="flex" flexDirection="column" gap="s4">
@@ -96,16 +101,13 @@ export const CashTransitTransferList = () => {
         ),
       },
       {
-        header: 'Cash Amount',
+        header: 'Amount',
         accessorFn: (row) => row?.node?.cashAmount,
         meta: {
           isNumeric: true,
         },
       },
-      {
-        header: 'Transfer Date',
-        accessorFn: (row) => row?.node?.transferDate?.local?.split(' ')[0] ?? 'N/A',
-      },
+
       {
         id: '_actions',
         header: '',
@@ -115,6 +117,8 @@ export const CashTransitTransferList = () => {
             items={[
               {
                 title: 'viewDetails',
+                aclKey: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
+                action: 'VIEW',
                 onClick: () => {
                   router.push(
                     `/${getUrl(router.pathname, 3)}/view?id=${props?.row?.original?.node?.id}`

@@ -53,6 +53,7 @@ const whatsNewData = {
       'Creation of multiple environment from neosys portal for same client',
       'Closed accounts detail page',
       'Coa account, ledger detail page',
+      'Table search in Deposit, Withdraw, Account Transfer, Saving Products and Loan Products',
       'Completed Reports:',
       '1. Mobile Banking Registration',
       '2. Mobile Banking Expiry',
@@ -155,8 +156,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.1.4</Text>
-          <Text fontSize="s3">January 10, 2023</Text>
+          <Text fontSize="r2">Version 1.1.5</Text>
+          <Text fontSize="s3">January 13, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

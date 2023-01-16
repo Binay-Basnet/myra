@@ -3,7 +3,7 @@ import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook
 import { AiOutlinePlus } from 'react-icons/ai';
 import { omit } from 'lodash';
 
-import { Box, Button, Modal, Divider, Icon, Text, VStack } from '@myra-ui';
+import { Box, Button, Divider, Icon, Modal, Text, VStack } from '@myra-ui';
 
 import {
   LoanProduct,
@@ -121,6 +121,7 @@ export const CollateralDetails = () => {
             <Box width="50%" pr="s10">
               <FormSelect
                 name="collateralType"
+                menuPosition="fixed"
                 isDisabled={!!collateralType}
                 label="Collateral Type"
                 options={loanProduct?.collateralValue?.map((collateralData) => ({

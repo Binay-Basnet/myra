@@ -169,7 +169,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
 
                   return {
                     type: 'Journal Voucher',
-
+                    showSignatures: true,
                     title: 'Journal Voucher Entry Successful',
                     details: {
                       'Transaction Id': (

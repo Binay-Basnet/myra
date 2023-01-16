@@ -11,6 +11,7 @@ export const AccountTransferDetailPage = () => {
   const tableData = accountTransferDetailData?.glTransaction;
 
   const summary = {
+    memberId: accountTransferDetailData?.member?.id,
     name: accountTransferDetailData?.member?.name?.local,
     profilePic: accountTransferDetailData?.member?.profilePicUrl,
     transactionId: accountTransferDetailData?.transactionCode,
@@ -21,6 +22,7 @@ export const AccountTransferDetailPage = () => {
     sourceAccount: accountTransferDetailData?.sourceAccount?.accountName,
     destinationName: accountTransferDetailData?.recipientMember?.name?.local,
     destinationAccount: accountTransferDetailData?.destinationAccount?.accountName,
+    recipientMember: accountTransferDetailData?.recipientMember?.id,
   };
   return (
     <Box bg="gray.100">

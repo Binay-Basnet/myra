@@ -3,13 +3,14 @@ import { BiSave } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
 
+import { Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
+
 import {
   BoxContainer,
   DividerContainer,
   InputGroupContainer,
 } from '@coop/accounting/ui-components';
 import { FormInput, FormSelect, FormSwitchTab, FormTextArea } from '@coop/shared/form';
-import { Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { SupplierPaymentTable } from '../components';
@@ -17,7 +18,7 @@ import { SupplierPaymentTable } from '../components';
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseAddSupplierPaymentProps {}
 
-export function AccountingFeaturePurchaseAddSupplierPayment() {
+export const AccountingFeaturePurchaseAddSupplierPayment = () => {
   const { t } = useTranslation();
 
   const methods = useForm({
@@ -75,14 +76,14 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
           borderColor="border.layout"
           borderTopRadius={5}
           position="sticky"
-          top="110px"
+          top="0"
           zIndex={8}
         >
           <Text fontSize="r2" fontWeight="600" color="neutralColorLight.Gray-80">
             {t['accountingSupplierPaymentAddNewSupplierPayment']}
           </Text>
           <IconButton
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<GrClose />}
             onClick={() => router.back()}
@@ -119,7 +120,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                       name="amount"
                       type="number"
                       label={t['accountingSupplierPaymentAddAmount']}
-                      textAlign={'right'}
+                      textAlign="right"
                       __placeholder="0.00"
                     />
 
@@ -132,11 +133,11 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                 </BoxContainer>
 
                 <BoxContainer>
-                  <Text fontSize={'s3'} fontWeight="500" color="neutralColorLight.Gray-80">
+                  <Text fontSize="s3" fontWeight="500" color="neutralColorLight.Gray-80">
                     {t['accountingSupplierPaymentAddPaymentMode']}
                   </Text>
 
-                  <FormSwitchTab name={'paymentMode'} options={PaymentModes} />
+                  <FormSwitchTab name="paymentMode" options={PaymentModes} />
 
                   <InputGroupContainer>
                     <FormInput
@@ -177,7 +178,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                         name="tdsAmount"
                         type="number"
                         label={t['accountingSupplierPaymentAddTDSAmount']}
-                        textAlign={'right'}
+                        textAlign="right"
                         __placeholder="0.00"
                       />
                     </InputGroupContainer>
@@ -217,4 +218,4 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
       </Box>
     </>
   );
-}
+};

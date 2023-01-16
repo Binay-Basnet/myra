@@ -28,26 +28,16 @@ export const BlockWithdrawSlipRequestsList = () => {
   const columns = React.useMemo<Column<typeof blockChequeRequests[0]>[]>(
     () => [
       {
-        header: 'ID',
+        header: 'Request Date',
+        accessorFn: (row) => row?.node?.requestedDate,
+      },
+      {
+        header: 'Request ID',
         accessorFn: (row) => row?.node?.id,
       },
-
       {
-        header: 'Requested By',
-        accessorFn: (row) => row?.node?.memberId,
-        cell: (props) => (
-          <Box display="flex" flexDir="column" gap="s4">
-            <Text fontSize="r1" fontWeight={500} color="gray.800">
-              {props.row?.original?.node?.memberName?.local}
-            </Text>
-            <Text fontSize="r1" color="gray.600">
-              {props.row?.original?.node?.memberCode}
-            </Text>
-          </Box>
-        ),
-        meta: {
-          width: '60%',
-        },
+        header: 'Cheque Number',
+        accessorFn: (row) => row?.node?.chequeNumber,
       },
       {
         header: 'Account',
@@ -66,16 +56,28 @@ export const BlockWithdrawSlipRequestsList = () => {
           width: '60%',
         },
       },
+
+      {
+        header: 'Member',
+        accessorFn: (row) => row?.node?.memberId,
+        cell: (props) => (
+          <Box display="flex" flexDir="column" gap="s4">
+            <Text fontSize="r1" fontWeight={500} color="gray.800">
+              {props.row?.original?.node?.memberName?.local}
+            </Text>
+            <Text fontSize="r1" color="gray.600">
+              {props.row?.original?.node?.memberCode}
+            </Text>
+          </Box>
+        ),
+      },
+
       {
         header: 'Approval Status',
         accessorFn: (row) => row?.node?.approvalStatus,
         cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
       },
 
-      {
-        header: 'Cheque Number',
-        accessorFn: (row) => row?.node?.chequeNumber,
-      },
       {
         id: '_actions',
         header: '',
@@ -85,6 +87,8 @@ export const BlockWithdrawSlipRequestsList = () => {
               items={[
                 {
                   title: 'View Details',
+                  // aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK',
+                  // action: 'VIEW',
                   onClick: (row) => {
                     router.push(
                       {

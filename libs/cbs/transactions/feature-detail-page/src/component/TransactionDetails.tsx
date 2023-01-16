@@ -1,7 +1,7 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
 import { ObjState, TransferType, WithdrawWith } from '@coop/cbs/data-access';
-import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
@@ -30,11 +30,16 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailTransactionDate']}
-            subtitle={depositDetailData?.transactionDate}
+            subtitle={localizedDate(depositDetailData?.transactionDate)}
           />
           <DetailCardContent
             title={t['transDetailAccount']}
-            subtitle={depositDetailData?.accountName}
+            children={
+              <RedirectButton
+                label={depositDetailData?.accountName}
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${depositDetailData?.accountId}`}
+              />
+            }
           />
           <DetailCardContent
             title={t['transDetailVoucherID']}
@@ -69,11 +74,16 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailTransactionDate']}
-            subtitle={withdrawDetailData?.transactionDate}
+            subtitle={localizedDate(withdrawDetailData?.transactionDate)}
           />
           <DetailCardContent
             title={t['transDetailAccount']}
-            subtitle={withdrawDetailData?.accountName}
+            children={
+              <RedirectButton
+                label={withdrawDetailData?.accountName}
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${withdrawDetailData?.accountId}`}
+              />
+            }
           />
           <DetailCardContent
             title={t['transDetailWithdrawBy']}
@@ -113,7 +123,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailTransactionDate']}
-            subtitle={accountTransferDetailData?.transactionDate}
+            subtitle={localizedDate(accountTransferDetailData?.transactionDate)}
           />
           <DetailCardContent
             title={t['transDetailSourceAccount']}
@@ -170,7 +180,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailTransactionDate']}
-            subtitle={agentTransactionDetailData?.transactionDate}
+            subtitle={localizedDate(agentTransactionDetailData?.transactionDate)}
           />
           <DetailCardContent title={t['transDetailStatus']} status />
         </>

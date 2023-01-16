@@ -78,7 +78,7 @@ export const STRDetail = () => {
   return (
     <>
       <Container minW="container.xl" height="fit-content" bg="white" p="0">
-        <Box position="sticky" bg="white" top="110px" zIndex="10" width="100%">
+        <Box position="sticky" bg="white" top="0" zIndex="10" width="100%">
           <PathBar
             paths={[
               { label: 'STR Report', link: '' },

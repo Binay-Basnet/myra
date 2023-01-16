@@ -12,7 +12,7 @@ privateAgent.interceptors.request.use(
   (config) => {
     config.headers = {
       ...config.headers,
-      Slug: localStorage.getItem('db') || 'myra',
+      Slug: localStorage.getItem('db') || 'myra-prod',
     };
     return config;
   },

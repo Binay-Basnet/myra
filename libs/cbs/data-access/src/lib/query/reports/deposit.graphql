@@ -5,6 +5,7 @@ query getAccountOpeningReport($data: AccountOpeningReportInput) {
         data {
           accountName
           accountNumber
+          memberCode
           memberId
           openedBy
           openingDate

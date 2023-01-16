@@ -4,10 +4,9 @@ import { Box, GridItem, MultiFooter, Text } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
-  Roles,
   TellerDataEntry,
   TellerType,
-  useGetSettingsUserListDataQuery,
+  useGetTellerListQuery,
   useGetTransactionTellerReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -34,11 +33,8 @@ export const TellerReport = () => {
       ? filters?.filter?.tellerId?.map((t) => t.value)
       : null;
 
-  const { data: userListData } = useGetSettingsUserListDataQuery({
-    filter: { role: [Roles.HeadTeller, Roles.Teller] },
-    paginate: { after: '', first: -1 },
-  });
-  const userList = userListData?.settings?.myraUser?.list?.edges;
+  const { data: userListData } = useGetTellerListQuery();
+  const userList = userListData?.settings?.myraUser?.tellers;
 
   const { data, isFetching } = useGetTransactionTellerReportQuery(
     {
@@ -318,8 +314,8 @@ export const TellerReport = () => {
             <FormSelect
               isMulti
               options={userList?.map((user) => ({
-                label: user.node?.name as string,
-                value: user.node?.id as string,
+                label: user?.name as string,
+                value: user?.id as string,
               }))}
               name="filter.tellerId"
             />

@@ -8,6 +8,7 @@ import {
   SettingsLayout,
   SettingsPageHeader,
 } from '@coop/cbs/settings/ui-layout';
+import { Can } from '@coop/cbs/utils';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const ChartsOfAccounts = () => {
@@ -26,18 +27,23 @@ const ChartsOfAccounts = () => {
   ];
 
   return (
-    <Box width="full">
-      <SettingsPageHeader
-        heading={`${t['settingsCoa']} - ${featureCode?.settingsChartsOfAccount}`}
-        tabItems={tabList}
-        // buttonLabel={t['settingsCoaNewAccount']}
-        // buttonHandler={() => router.push('/settings/general/charts-of-accounts/add-new-account')}
-      />
-      <Box>
-        {(router.query['objState'] === 'full-view' || !router.query['objState']) && <COAFullView />}
-        {router.query['objState'] === 'account-list' && <COAListView />}
+    <Can I="SHOW_IN_MENU" a="SETTINGS_COA" showError isErrorCentered>
+      <Box width="full">
+        <SettingsPageHeader
+          heading={`${t['settingsCoa']} - ${featureCode?.settingsChartsOfAccount}`}
+          tabItems={tabList}
+          // buttonLabel={t['settingsCoaNewAccount']}
+          // buttonHandler={() => router.push('/settings/general/charts-of-accounts/add-new-account')}
+        />
+        <Box>
+          {(router.query['objState'] === 'full-view' ||
+            (!router.query['objState'] && !router.query['search'])) && <COAFullView />}
+          {(router.query['objState'] === 'account-list' || router.query['search']) && (
+            <COAListView />
+          )}
+        </Box>
       </Box>
-    </Box>
+    </Can>
   );
 };
 

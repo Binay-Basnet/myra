@@ -117,7 +117,7 @@ export const MemberListPage = () => {
         },
       },
       {
-        header: 'Branch',
+        header: 'Service Center',
         accessorFn: (row) => row?.node?.branch,
         meta: {
           width: '120px',
@@ -154,6 +154,8 @@ export const MemberListPage = () => {
                   ? [
                       {
                         title: t['memberListTableEditMember'],
+                        aclKey: 'CBS_MEMBERS_KYM_UPDATE',
+                        action: 'UPDATE',
                         onClick: (node) => {
                           router.push(
                             `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
@@ -174,6 +176,8 @@ export const MemberListPage = () => {
                   ? [
                       {
                         title: t['memberListTableEditMember'],
+                        aclKey: 'CBS_MEMBERS_MEMBER',
+                        action: 'UPDATE',
                         onClick: (node) => {
                           router.push(
                             `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
@@ -187,6 +191,8 @@ export const MemberListPage = () => {
                           objState === 'VALIDATED'
                             ? t['memberListTableMakeActive']
                             : t['memberListTableMakeInactive'],
+                        aclKey: 'CBS_MEMBERS_MEMBER',
+                        action: 'UPDATE',
                         onClick: (node) => {
                           objState === 'VALIDATED'
                             ? router.push(`${ROUTES.CBS_MEMBER_ACTIVATION}/${node?.id}`)
@@ -197,11 +203,15 @@ export const MemberListPage = () => {
                   : [
                       {
                         title: t['memberListTableViewMemberProfile'],
+                        aclKey: 'CBS_MEMBERS_MEMBER_DETAIL',
+                        action: 'VIEW',
                         onClick: (node) =>
                           router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${node?.id}`),
                       },
                       {
                         title: t['memberListTableEditMember'],
+                        aclKey: 'CBS_MEMBERS_MEMBER',
+                        action: 'UPDATE',
                         onClick: (node) => {
                           router.push(
                             `/cbs/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
@@ -215,6 +225,8 @@ export const MemberListPage = () => {
                           objState === 'VALIDATED'
                             ? t['memberListTableMakeActive']
                             : t['memberListTableMakeInactive'],
+                        aclKey: 'CBS_MEMBERS_MEMBER',
+                        action: 'UPDATE',
                         onClick: (node) => {
                           objState === 'VALIDATED'
                             ? router.push(`${ROUTES.CBS_MEMBER_ACTIVATION}/${node?.id}`)

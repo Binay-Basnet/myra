@@ -10,10 +10,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { asyncToast, Box, Button, ButtonProps, Grid, GridItem, Icon, Modal, Text } from '@myra-ui';
 
 import {
+  CoaAccountClass,
   CoaAccountSetup,
   CoaCategory,
   CoaTypeOfTransaction,
   CoaTypesOfAccount,
+  InputMaybe,
   NewCoaGroupInput,
   useAddAccountInCoaMutation,
   useAddGroupMutation,
@@ -21,7 +23,13 @@ import {
   useGetCoaFullViewQuery,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormInput, FormRadioGroup, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import {
+  FormBranchSelect,
+  FormInput,
+  FormRadioGroup,
+  FormSelect,
+  FormSwitchTab,
+} from '@coop/shared/form';
 
 import NodeWrapper from './NodeWrapper';
 import { CoaTree } from '../../types';
@@ -86,7 +94,7 @@ const LeafNode = ({ data }: ITestProps) => {
   useEffect(() => {
     methods.reset({
       underAccountCode: clickedAccount?.under,
-      accountClass: clickedAccount?.accountClass,
+      accountClass: clickedAccount?.accountClass as CoaAccountClass,
       accountCode: newCode,
       typeOfTransaction: CoaTypeOfTransaction.Debit,
       allowedBalance: CoaTypeOfTransaction.Debit,
@@ -182,7 +190,12 @@ interface IAddGroupProps {
 
 export const AddGroup = ({ clickedAccount, setClickedAccount, data }: IAddGroupProps) => {
   const queryClient = useQueryClient();
-  const methods = useForm<NewCoaGroupInput>();
+  const methods = useForm<
+    Omit<NewCoaGroupInput, 'openForBranches'> & {
+      openForBranches: { label: string; value: string }[];
+    }
+  >();
+  const { watch, reset } = methods;
   const { isOpen, onClose, onToggle } = useDisclosure();
 
   const { mutateAsync: addGroup } = useAddGroupMutation();
@@ -200,15 +213,23 @@ export const AddGroup = ({ clickedAccount, setClickedAccount, data }: IAddGroupP
     clickedAccount?.id as string
   );
 
+  const isAccountOpenForSelectedBranch = watch('accountSetup') === CoaAccountSetup.SelectedBranch;
+
   useEffect(() => {
     methods.reset({
       underAccountCode: clickedAccount?.id,
-      accountClass: clickedAccount?.accountClass,
+      accountClass: clickedAccount?.accountClass as InputMaybe<CoaAccountClass> | undefined,
       accountCode: newCode,
       typeOfTransaction: CoaTypeOfTransaction.Debit,
       allowedBalance: CoaTypeOfTransaction.Debit,
     });
   }, [clickedAccount?.id]);
+
+  useEffect(() => {
+    if (!isAccountOpenForSelectedBranch) {
+      reset({ openForBranches: undefined });
+    }
+  }, [isAccountOpenForSelectedBranch]);
 
   return (
     <>
@@ -239,7 +260,11 @@ export const AddGroup = ({ clickedAccount, setClickedAccount, data }: IAddGroupP
               onToggle();
             },
             promise: addGroup({
-              data: { ...methods.getValues(), underAccountCode: clickedAccount?.id },
+              data: {
+                ...methods.getValues(),
+                underAccountCode: clickedAccount?.id,
+                openForBranches: methods?.getValues()?.openForBranches?.map((item) => item?.value),
+              },
             }),
           });
         }}
@@ -306,12 +331,27 @@ export const AddGroup = ({ clickedAccount, setClickedAccount, data }: IAddGroupP
               <FormRadioGroup
                 name="accountSetup"
                 label="Account Setup"
-                direction="row"
+                direction="column"
                 options={[
-                  { label: 'Open Account for this Branch', value: CoaAccountSetup.ThisBranch },
-                  { label: 'Open Account for all Branch', value: CoaAccountSetup.AllBranch },
+                  {
+                    label: 'Open Account for this Service Center',
+                    value: CoaAccountSetup.ThisBranch,
+                  },
+                  {
+                    label: 'Open Account for all Service Center',
+                    value: CoaAccountSetup.AllBranch,
+                  },
+                  {
+                    label: 'Open Account for selected Service Center',
+                    value: CoaAccountSetup.SelectedBranch,
+                  },
                 ]}
               />
+              {isAccountOpenForSelectedBranch && (
+                <Box mt="s32" width={280}>
+                  <FormBranchSelect name="openForBranches" label="Select Service Center" isMulti />
+                </Box>
+              )}
             </GridItem>
           </FormProvider>
         </Grid>
@@ -348,7 +388,7 @@ export const ConfigureGroup = ({
     methods.reset({
       groupName: clickedAccount?.name?.en,
       underAccountCode: clickedAccount?.under,
-      accountClass: clickedAccount?.accountClass,
+      accountClass: clickedAccount?.accountClass as InputMaybe<CoaAccountClass> | undefined,
       accountCode: clickedAccount?.id,
       typeOfTransaction: clickedAccount?.transactionAllowed,
       allowedBalance: clickedAccount?.allowedBalance,
@@ -470,7 +510,19 @@ export const AddAccount = ({
   setClickedAccount,
   isGrouped = true,
 }: IAddAccountProps) => {
-  const methods = useForm<{ accountSetup: CoaAccountSetup; parentAccountCode: string }>();
+  const methods = useForm<{
+    accountSetup: CoaAccountSetup;
+    parentAccountCode: string;
+    openForBranches: { label: string; value: string }[];
+  }>();
+  const { watch, reset } = methods;
+  const isAccountOpenForSelectedBranch = watch('accountSetup') === CoaAccountSetup.SelectedBranch;
+  useEffect(() => {
+    if (!isAccountOpenForSelectedBranch) {
+      reset({ openForBranches: undefined });
+    }
+  }, [isAccountOpenForSelectedBranch]);
+
   const queryClient = useQueryClient();
   const { isOpen, onClose, onToggle } = useDisclosure();
 
@@ -509,6 +561,7 @@ export const AddAccount = ({
             promise: addNewAccount({
               accountSetup: methods.getValues().accountSetup,
               parentAccountCode: clickedAccount?.id as string,
+              openForBranches: methods?.getValues()?.openForBranches?.map((item) => item?.value),
             }),
           });
         }}
@@ -516,12 +569,21 @@ export const AddAccount = ({
         <FormProvider {...methods}>
           <FormRadioGroup
             name="accountSetup"
-            direction="row"
+            direction="column"
             options={[
-              { label: 'Open Account for this Branch', value: CoaAccountSetup.ThisBranch },
-              { label: 'Open Account for all Branch', value: CoaAccountSetup.AllBranch },
+              { label: 'Open Account for this Service Center', value: CoaAccountSetup.ThisBranch },
+              { label: 'Open Account for all Service Center', value: CoaAccountSetup.AllBranch },
+              {
+                label: 'Open Account for selected Service Center',
+                value: CoaAccountSetup.SelectedBranch,
+              },
             ]}
           />
+          {isAccountOpenForSelectedBranch && (
+            <Box mt="s32" width={280}>
+              <FormBranchSelect name="openForBranches" label="Select Service Center" isMulti />
+            </Box>
+          )}
         </FormProvider>
       </Modal>
     </>

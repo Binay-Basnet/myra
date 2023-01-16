@@ -77,19 +77,22 @@ export const Alert = ({
                     {children}
                   </AlertDescription>
                 )}
+                {bottomButtonlabel && (
+                  <Box display="flex" flexDirection="row" justifyContent="flex-start">
+                    <Button
+                      minW="0"
+                      px={0}
+                      color={COLOR_DICT[status]}
+                      variant={buttonVariant ?? 'link'}
+                      shade={status === 'error' ? 'danger' : 'primary'}
+                      onClick={bottomButtonHandler}
+                    >
+                      {bottomButtonlabel}
+                    </Button>
+                  </Box>
+                )}
               </Box>
             </Box>
-            {bottomButtonlabel && (
-              <Box display="flex" flexDirection="row" justifyContent="flex-start">
-                <Button
-                  variant={buttonVariant ?? 'link'}
-                  shade={status === 'error' ? 'danger' : 'primary'}
-                  onClick={bottomButtonHandler}
-                >
-                  {bottomButtonlabel}
-                </Button>
-              </Box>
-            )}
           </Box>
           {showUndo ? (
             <Button onClick={undoHandler} variant="ghost" size="xs">

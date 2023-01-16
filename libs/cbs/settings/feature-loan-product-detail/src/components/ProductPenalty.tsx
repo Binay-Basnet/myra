@@ -42,6 +42,7 @@ export const ProductPenalty = ({ penaltyData }: IProductPenalty) => {
     ],
     []
   );
+  if (penaltyDataArray?.length === 0) return null;
 
   return (
     <DetailsCard title="Penalty" hasTable>
