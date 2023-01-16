@@ -11960,6 +11960,7 @@ export type RequestsQuery = {
 
 export type ResetPasswordData = {
   newPassword: Scalars['String'];
+  oldPassword: Scalars['String'];
   userId: Scalars['String'];
 };
 
@@ -14908,6 +14909,7 @@ export type SetAgentTodayDepositDataMutation = {
 export type ResetPasswordMutationVariables = Exact<{
   userId: Scalars['String'];
   newPassword: Scalars['String'];
+  oldPassword: Scalars['String'];
 }>;
 
 export type ResetPasswordMutation = {
@@ -27044,9 +27046,11 @@ export const useSetAgentTodayDepositDataMutation = <TError = unknown, TContext =
     options
   );
 export const ResetPasswordDocument = `
-    mutation resetPassword($userId: String!, $newPassword: String!) {
+    mutation resetPassword($userId: String!, $newPassword: String!, $oldPassword: String!) {
   user {
-    resetPassword(data: {userId: $userId, newPassword: $newPassword}) {
+    resetPassword(
+      data: {userId: $userId, newPassword: $newPassword, oldPassword: $oldPassword}
+    ) {
       recordId
       error {
         ...MutationError

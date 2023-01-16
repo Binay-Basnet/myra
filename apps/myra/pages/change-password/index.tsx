@@ -64,7 +64,11 @@ const ChangePassword = () => {
         onSuccess: () => {
           setSuccess(true);
         },
-        promise: mutateAsync({ userId, newPassword: data?.password }),
+        promise: mutateAsync({
+          userId,
+          newPassword: data?.password,
+          oldPassword: data?.oldPassword,
+        }),
       });
     } else {
       toast('Password did not match');
@@ -72,6 +76,7 @@ const ChangePassword = () => {
   };
   const passwordError = formState?.errors?.password;
   const cPasswordError = formState?.errors?.cpassword;
+  const oldPasswordError = formState?.errors?.oldPassword;
 
   if (!success) {
     return (
@@ -84,6 +89,15 @@ const ChangePassword = () => {
         </Box>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDir="column" gap="s32">
+            <Box>
+              <PasswordInput
+                label="Old Password"
+                register={register}
+                fieldName="oldPassword"
+                validation={{ required: true }}
+              />
+              {oldPasswordError && errorText(oldPasswordError?.type)}
+            </Box>
             <Box>
               <PasswordInput
                 label={t['newPasswordText']}
