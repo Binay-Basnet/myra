@@ -3,6 +3,8 @@ import { useDisclosure } from '@chakra-ui/react';
 
 import { AccountQRModal, Avatar, Box, Icon, Text } from '@myra-ui';
 
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+
 import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
 
 export const LoanInfo = () => {
@@ -82,15 +84,19 @@ export const LoanInfo = () => {
         borderBottomColor="border.layout"
       >
         <Avatar src={memberDetails?.profilePicUrl as string} size="sm" />
-        <Text fontSize="r1" fontWeight="Medium" color="primary.500" lineHeight="150%">
+        <RedirectButton
+          label={memberDetails?.memberName?.local}
+          link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${memberDetails?.memberId}`}
+        />
+        {/* <Text fontSize="r1" fontWeight="Medium" color="primary.500" lineHeight="150%">
           {memberDetails?.memberName?.local}
-        </Text>
+        </Text> */}
       </Box>
       <AccountQRModal
         account={{
           name: memberDetails?.memberName?.local ?? 'N/A',
           accountNo: generalInfo?.accountId as string,
-          phoneNo: '98547889993' ?? 'N/A',
+          phoneNo: memberDetails?.memberPhoneNo ?? 'N/A',
           accountName: generalInfo?.accountName as string,
         }}
         open={isOpen}

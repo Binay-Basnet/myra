@@ -64,6 +64,7 @@ query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
             }
             reportStatement {
               memberId
+              memberCode
               memberName
               district
               wardNo
@@ -96,6 +97,7 @@ query getKymStatusReport($data: KymStatusReportFilter) {
           }
           memberName
           memberId
+          memberCode
           contact
           regDate
           riskCategory

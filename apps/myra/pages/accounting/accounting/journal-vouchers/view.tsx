@@ -2,12 +2,12 @@ import { ReactElement } from 'react';
 import { JournalVoucerDetailPage } from 'libs/accounting/feature-accounting-detail/src';
 
 import { AccountingLayout, AccountingSidebarLayout } from '@coop/accounting/ui-layouts';
-import { DetailPathBar } from '@coop/cbs/settings/ui-layout';
+import { TransactionDetailPathBar } from '@coop/cbs/transactions/ui-components';
 
 // TODO ( Update this page when design arrives )
 const AccountingJournalVoucherView = () => (
   <>
-    <DetailPathBar title="Journal Vouchers" />
+    <TransactionDetailPathBar title="Journal Vouchers" />
     <JournalVoucerDetailPage />
   </>
 );

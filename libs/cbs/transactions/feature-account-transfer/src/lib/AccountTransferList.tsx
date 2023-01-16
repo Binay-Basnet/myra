@@ -4,9 +4,13 @@ import { useRouter } from 'next/router';
 import { TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { TransferType, useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
+import {
+  Filter_Mode,
+  TransferType,
+  useGetAccountTransferListDataQuery,
+} from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -31,13 +35,20 @@ export interface AccountTransferListProps {}
 export const AccountTransferList = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetAccountTransferListDataQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        id: searchTerm,
+        transactionId: searchTerm,
+        filterMode: Filter_Mode.Or,
+      },
     },
     {
       staleTime: 0,
+      enabled: searchTerm !== 'undefined',
     }
   );
 
@@ -47,7 +58,7 @@ export const AccountTransferList = () => {
     () => [
       {
         header: t['accountTransferListDate'],
-        accessorFn: (row) => row?.node?.date ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
         header: t['accountTransferListTransactionId'],
@@ -87,6 +98,8 @@ export const AccountTransferList = () => {
               items={[
                 {
                   title: t['transDetailViewDetail'],
+                  aclKey: 'CBS_TRANSACTIONS_ACCOUNT_TRANSFER',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_DETAILS}?id=${row?.ID}`);
                   },
@@ -99,7 +112,7 @@ export const AccountTransferList = () => {
         },
       },
     ],
-    [t]
+    [t, rowData]
   );
 
   return (

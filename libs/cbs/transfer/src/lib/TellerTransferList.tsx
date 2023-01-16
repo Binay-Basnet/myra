@@ -11,7 +11,7 @@ import {
   TellerTransferType,
   useGetTellerTransactionListDataQuery,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 import { TellerTransferApproveModal } from '../components';
@@ -44,7 +44,11 @@ export const TellerTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Teller Transfer Code',
+        header: 'Transfer Date',
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+      {
+        header: 'Transfer Code',
         accessorFn: (row) => row?.node?.transferCode,
       },
       {
@@ -110,17 +114,14 @@ export const TellerTransferList = () => {
         ),
       },
       {
-        header: 'Cash Amount',
+        header: 'Amount',
 
         accessorFn: (row) => row?.node?.amount,
         meta: {
           isNumeric: true,
         },
       },
-      {
-        header: 'Transfer Date',
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
-      },
+
       {
         id: '_actions',
         header: '',
@@ -129,7 +130,9 @@ export const TellerTransferList = () => {
             node={props?.row?.original?.node}
             items={[
               {
-                title: 'loanProductViewDetails',
+                title: 'viewDetails',
+                aclKey: 'CBS_TRANSFERS_TELLER_TRANSFER',
+                action: 'VIEW',
                 onClick: () => {
                   router.push(
                     `/${getUrl(router.pathname, 3)}/view?id=${props?.row?.original?.node?.ID}`
@@ -175,6 +178,7 @@ export const TellerTransferList = () => {
           router.push(
             {
               query: {
+                ...router.query,
                 id: row?.node?.ID,
               },
             },

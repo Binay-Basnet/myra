@@ -84,6 +84,8 @@ export const BlockChequeRequest = () => {
               items={[
                 {
                   title: 'View Details',
+                  aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(
                       {
@@ -116,7 +118,7 @@ export const BlockChequeRequest = () => {
 
   return (
     <Box display="flex" flexDir="column">
-      <Box position="sticky" top="110px" zIndex={3}>
+      <Box position="sticky" top="0" zIndex={3}>
         <PageHeader heading="Block Cheque Request" />
       </Box>
 

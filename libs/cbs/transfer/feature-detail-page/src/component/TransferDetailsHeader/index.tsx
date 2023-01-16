@@ -10,7 +10,7 @@ export const TransferDetailsHeader = ({ title }: ITransferDetailsHeaderProps) =>
   const { transferDetailData } = useTransferDetailHooks();
 
   return (
-    <Box position="sticky" top="110px">
+    <Box position="sticky" top="0">
       <DetailPageHeader
         title={title}
         member={{

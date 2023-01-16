@@ -47,7 +47,7 @@ export const Pagination = ({ pageInfo, total, pageSizeOptions }: PaginationProps
           <Box width="90px">
             <Select
               instanceId="pagination-select"
-              menuPlacement="top"
+              menuPlacement="auto"
               isSearchable={false}
               value={{ label: pageSize, value: pageSize }}
               onChange={(newValue) => {

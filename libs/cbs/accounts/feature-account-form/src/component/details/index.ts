@@ -1,5 +1,6 @@
 export * from './Accounts';
 export * from './Activity';
+export * from './AdditionalInfoCard';
 export * from './AvailableWithdrawSlipList';
 export * from './BalanceChart';
 export * from './Bio';
@@ -7,6 +8,7 @@ export * from './Cheque';
 export * from './CreateWithdrawSlipModal';
 export * from './Documents';
 export * from './GeneralInfoCard';
+export * from './LedgerListTab';
 export * from './PastWithdrawSlipList';
 export * from './RecentTransactions';
 export * from './Reports';

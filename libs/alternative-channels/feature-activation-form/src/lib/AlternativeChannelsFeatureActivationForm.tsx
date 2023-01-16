@@ -191,7 +191,7 @@ export const ActivationForm = () => {
 
   return (
     <Container minW="container.lg" p="0" bg="white">
-      <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <FormHeader title={t['acNewServiceActivationForm']} />
       </Box>
 

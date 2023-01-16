@@ -1,16 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import pickBy from 'lodash/pickBy';
+
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import {
   CustomerPayment,
   SalesCustomerPaymentInput,
+  useGetNewIdMutation,
   useGetSalesCustomerPaymentFormStateDataQuery,
   useSetSalesCustomerPaymentDataMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -25,8 +27,14 @@ export const CustomerPaymentForm = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
+  const [newId, setNewId] = useState('');
 
-  const id = router?.query?.['id'];
+  const getNewId = useGetNewIdMutation({});
+  useEffect(() => {
+    getNewId?.mutateAsync({}).then((res) => setNewId(res?.newId));
+  }, []);
+
+  const id = router?.query?.['id'] || newId;
 
   const queryClient = useQueryClient();
 
@@ -95,7 +103,7 @@ export const CustomerPaymentForm = () => {
   return (
     <>
       <Container minW="container.xl" height="fit-content" pb="60px">
-        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={t['accountingCustomerPaymentAddNewCustomerPayment']}
             closeLink="/accounting/sales/customer-payment/list"

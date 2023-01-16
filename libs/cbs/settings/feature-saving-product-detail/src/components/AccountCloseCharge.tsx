@@ -34,7 +34,7 @@ export const AccountCloseCharge = ({ accountCloseCharge }: IAccountCloseCharge) 
     ],
     []
   );
-
+  if (accountCloseCharge?.length === 0) return null;
   return (
     <DetailsCard title="Account Close Service Charge" hasTable>
       <Table isDetailPageTable isStatic data={accountCloseCharge ?? []} columns={columns} />

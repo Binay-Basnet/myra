@@ -5,7 +5,7 @@ import { Box, WIPState } from '@myra-ui';
 import { AccountDetailsPathBar } from '@coop/cbs/accounts/ui-components';
 import { AccountDetailsSidebar } from '@coop/cbs/accounts/ui-layouts';
 
-import { Overview, Transactions, WithdrawSlip } from '../component';
+import { LedgerListTab, Overview, Transactions, WithdrawSlip } from '../component';
 
 export const AccountDetails = () => {
   const router = useRouter();
@@ -40,8 +40,12 @@ export const AccountDetails = () => {
 
         {tabQuery === 'withdraw slip' && <WithdrawSlip />}
 
+        {tabQuery === 'ledger' && <LedgerListTab />}
+
         {tabQuery &&
-          !['undefined', 'overview', 'transactions', 'withdraw slip'].includes(tabQuery) && (
+          !['undefined', 'overview', 'transactions', 'withdraw slip', 'ledger'].includes(
+            tabQuery
+          ) && (
             <Box h="calc(100vh - 110px)">
               <WIPState />
             </Box>

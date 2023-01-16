@@ -6,6 +6,7 @@ import {
   useGetLoanAccountCollateralDetailsQuery,
   useGetLoanAccountDetailsQuery,
   useGetLoanAccountGuaranteeDetailsQuery,
+  useGetLoanAccountLedgersListQuery,
   useGetLoanAccountMemberDetailsQuery,
 } from '@coop/cbs/data-access';
 import { amountConverter, getRouterQuery } from '@coop/shared/utils';
@@ -32,6 +33,8 @@ export const useLoanAccountDetailHooks = () => {
     loanAccountId: id as string,
   });
 
+  const { data: loanAccountLedgersData } = useGetLoanAccountLedgersListQuery({ id: id as string });
+
   const gauranteeData = loanAccountGuaranteeDetailsData?.loanAccount?.loanAccountDetails?.guarantee;
   const collatData = loanAccountCollateralDetailsData?.loanAccount?.loanAccountDetails?.collateral;
   const overviewData = loanAccountDetailsQueryData?.loanAccount?.loanAccountDetails?.overView;
@@ -41,6 +44,8 @@ export const useLoanAccountDetailHooks = () => {
   const paymentsListInfo = overviewData?.loanSchedule;
   const gauranteeListInfo = gauranteeData?.guaranteeList;
   const collatListInfo = collatData?.collateralList;
+  const ledgerList = loanAccountLedgersData?.account?.listAccountLedgers?.data;
+  const isClosed = overviewData?.isClosed;
 
   const generalInfoCardData = [
     { label: 'Account Name', value: generalInfo?.accountName ?? 'N/A' },
@@ -56,6 +61,7 @@ export const useLoanAccountDetailHooks = () => {
     { label: 'Tenure', value: `${generalInfo?.tenure} ${generalInfo?.tenureUnit}` ?? 'N/A' },
     { label: 'Linked Account', value: generalInfo?.linkedAccountName ?? 'N/A' },
   ];
+  const productId = generalInfo?.productId;
 
   const accountSummary = [
     {
@@ -158,7 +164,10 @@ export const useLoanAccountDetailHooks = () => {
     guaranteeSummary,
     gauranteeListInfo,
     collateralSummary,
+    productId,
+    isClosed,
     collatListInfo,
     memberDetails,
+    ledgerList,
   };
 };

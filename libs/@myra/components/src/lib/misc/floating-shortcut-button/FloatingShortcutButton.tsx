@@ -41,12 +41,19 @@ const whatsNewData = {
       'Withdraw-slip print',
       'Headoffice information to be filled from neosys portal and subsequent head office will be created automatically * added in required fields',
       'COA - (Holding Account) Detail Page',
-      'All Transaction Detail Page',
       'No validation with calendar date for day end (user will be able to close day anytime and multiple times',
       'Branch Readiness implemented for each branch and Day End for all branch only through Head Branch',
       'COA Account List',
       'Service Center Cash Transfer',
-      'Loan account detail page(member name is static)',
+      'Roles and Permissions',
+      'Global search',
+      'Audit logs',
+      'Export of reports',
+      'Cash in Transit',
+      'Creation of multiple environment from neosys portal for same client',
+      'Closed accounts detail page',
+      'Coa account, ledger detail page',
+      'Table search in Deposit, Withdraw, Account Transfer, Saving Products and Loan Products',
       'Completed Reports:',
       '1. Mobile Banking Registration',
       '2. Mobile Banking Expiry',
@@ -149,8 +156,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.1.3</Text>
-          <Text fontSize="s3">January 3, 2023</Text>
+          <Text fontSize="r2">Version 1.1.5</Text>
+          <Text fontSize="s3">January 13, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
@@ -280,118 +287,120 @@ export const FloatingShortcutButton = () => {
           />
         </PopoverTrigger>
 
-        <PopoverContent
-          // bg="gray.0"
-          p={0}
-          _focus={{ boxShadow: 'none' }}
-          width="300px"
-        >
-          <PopoverBody boxShadow="E1" p={0}>
-            <Box display="flex" flexDirection="column" gap="" px="s8" py="s8">
-              <Box
-                h="40px"
-                _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
-                display="flex"
-                flexDirection="row"
-                gap="s8"
-                px="s8"
-                cursor="pointer"
-                alignItems="center"
-                onClick={() => router.push('https://docs.migration.myraerp.com/')}
-              >
-                <Icon as={BsBook} />
-                <Text fontSize="s3" fontWeight="500" color="gray.600">
-                  {' '}
-                  Support guide
-                </Text>
-              </Box>
-
-              <Box
-                display="flex"
-                h="40px"
-                px="s8"
-                _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
-                flexDirection="row"
-                justifyContent="space-between"
-                cursor="pointer"
-                onClick={handleWhatsNewModalOpen}
-                alignItems="center"
-              >
+        <Box zIndex={15}>
+          <PopoverContent
+            // bg="gray.0"
+            p={0}
+            _focus={{ boxShadow: 'none' }}
+            width="300px"
+          >
+            <PopoverBody boxShadow="E1" p={0}>
+              <Box display="flex" flexDirection="column" gap="" px="s8" py="s8">
                 <Box
+                  h="40px"
+                  _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
+                  display="flex"
+                  flexDirection="row"
+                  gap="s8"
+                  px="s8"
+                  cursor="pointer"
+                  alignItems="center"
+                  onClick={() => router.push('https://docs.migration.myraerp.com/')}
+                >
+                  <Icon as={BsBook} />
+                  <Text fontSize="s3" fontWeight="500" color="gray.600">
+                    {' '}
+                    Support guide
+                  </Text>
+                </Box>
+
+                <Box
+                  display="flex"
+                  h="40px"
+                  px="s8"
+                  _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  cursor="pointer"
+                  onClick={handleWhatsNewModalOpen}
+                  alignItems="center"
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    gap="s8"
+                    cursor="pointer"
+                    alignItems="center"
+                  >
+                    <Icon as={AiOutlineStar} />
+                    <Text fontSize="s3" fontWeight="500" cursor="pointer" color="gray.600">
+                      {' '}
+                      What&apos;s New?
+                    </Text>
+                  </Box>
+                </Box>
+
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  h="40px"
+                  px="s8"
+                  _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
+                  justifyContent="space-between"
+                  cursor="pointer"
+                  onClick={handleModalOpen}
+                  alignItems="center"
+                >
+                  <Box display="flex" gap="s8">
+                    <Icon as={CgShortcut} />
+                    <Text fontSize="s3" fontWeight="500" cursor="pointer" color="gray.600">
+                      {' '}
+                      Keyboard shortcuts
+                    </Text>
+                  </Box>
+                  <Text fontSize="s3" fontWeight="500" color="gray.600">
+                    {' '}
+                    Alt + l
+                  </Text>
+                </Box>
+
+                <Box
+                  display="flex"
+                  px="s8"
+                  h="40px"
+                  flexDirection="row"
+                  gap="s8"
+                  cursor="pointer"
+                  alignItems="center"
+                  _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
+                >
+                  <Icon as={BsHeart} />
+                  <Text fontSize="s3" fontWeight="500" color="gray.600">
+                    {' '}
+                    Give Feedback
+                  </Text>
+                </Box>
+
+                <Box
+                  h="40px"
+                  px="s8"
                   display="flex"
                   flexDirection="row"
                   gap="s8"
                   cursor="pointer"
                   alignItems="center"
+                  _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
                 >
-                  <Icon as={AiOutlineStar} />
-                  <Text fontSize="s3" fontWeight="500" cursor="pointer" color="gray.600">
+                  <Icon as={TbMessageDots} />
+                  <Text fontSize="s3" fontWeight="500" color="gray.600">
                     {' '}
-                    What&apos;s New?
+                    Send us a message
                   </Text>
                 </Box>
               </Box>
-
-              <Box
-                display="flex"
-                flexDirection="row"
-                h="40px"
-                px="s8"
-                _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
-                justifyContent="space-between"
-                cursor="pointer"
-                onClick={handleModalOpen}
-                alignItems="center"
-              >
-                <Box display="flex" gap="s8">
-                  <Icon as={CgShortcut} />
-                  <Text fontSize="s3" fontWeight="500" cursor="pointer" color="gray.600">
-                    {' '}
-                    Keyboard shortcuts
-                  </Text>
-                </Box>
-                <Text fontSize="s3" fontWeight="500" color="gray.600">
-                  {' '}
-                  Alt + l
-                </Text>
-              </Box>
-
-              <Box
-                display="flex"
-                px="s8"
-                h="40px"
-                flexDirection="row"
-                gap="s8"
-                cursor="pointer"
-                alignItems="center"
-                _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
-              >
-                <Icon as={BsHeart} />
-                <Text fontSize="s3" fontWeight="500" color="gray.600">
-                  {' '}
-                  Give Feedback
-                </Text>
-              </Box>
-
-              <Box
-                h="40px"
-                px="s8"
-                display="flex"
-                flexDirection="row"
-                gap="s8"
-                cursor="pointer"
-                alignItems="center"
-                _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
-              >
-                <Icon as={TbMessageDots} />
-                <Text fontSize="s3" fontWeight="500" color="gray.600">
-                  {' '}
-                  Send us a message
-                </Text>
-              </Box>
-            </Box>
-          </PopoverBody>
-        </PopoverContent>
+            </PopoverBody>
+          </PopoverContent>
+        </Box>
       </Popover>
 
       <Modal

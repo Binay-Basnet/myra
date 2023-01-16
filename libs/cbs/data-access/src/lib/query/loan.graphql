@@ -224,6 +224,8 @@ query getLoanList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
         cursor
         node {
           id
+          appliedLoanAmount
+          totalSanctionedAmount
           member {
             id
             name
@@ -591,6 +593,7 @@ query getLoanAccountDetails(
   loanAccount {
     loanAccountDetails(loanAccountId: $loanAccountId) {
       overView {
+        isClosed
         totalPrincipalPaid
         totalInterestPaid
         totalRemainingPrincipal
@@ -744,8 +747,23 @@ query getLoanAccountMemberDetails($loanAccountId: ID!) {
         memberId
         memberCode
         memberName
+        memberPhoneNo
         profilePicId
         profilePicUrl
+      }
+    }
+  }
+}
+
+query getLoanAccountLedgersList($id: ID!) {
+  account {
+    listAccountLedgers(id: $id) {
+      data {
+        ledgerId
+        ledgerName
+        accountType
+        balance
+        balanceType
       }
     }
   }

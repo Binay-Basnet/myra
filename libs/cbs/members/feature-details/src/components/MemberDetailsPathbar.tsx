@@ -9,6 +9,7 @@ import {
   InstitutionBasicMinInfo,
   useGetMemberOverviewBasicDetailsQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 
 interface PathBarProps {
   title: string;
@@ -47,10 +48,10 @@ export const MemberDetailsPathBar = ({ title }: PathBarProps) => {
       : null;
 
   return (
-    <Box position="sticky" top="110px" w="100%" zIndex={10}>
+    <Box position="sticky" top="0" w="100%" zIndex={10}>
       <DetailPageHeader
         title={title}
-        backLink="/members/list"
+        backLink={ROUTES.CBS_MEMBER_LIST}
         member={{
           name: memberInfo?.memberName
             ? (memberInfo?.memberName as string)

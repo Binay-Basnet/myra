@@ -80,6 +80,7 @@ export const LoanAccountList = () => {
       accountName: data?.accountName,
       totalBalance: amountConverter(data?.totalBalance as string),
       interestRate: data?.interestRate,
+      accountNumber: data?.accountNumber,
     })) || [];
   return (
     <>

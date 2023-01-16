@@ -67,7 +67,7 @@ export const KYMCooperativePage = () => {
 
   return (
     <>
-      <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
           <FormHeader title={t['membersFormAddNewMembers']} closeLink={ROUTES.CBS_MEMBER_LIST} />
         </Container>

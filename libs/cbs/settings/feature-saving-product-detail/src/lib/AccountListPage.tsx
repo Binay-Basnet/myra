@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { Box, Button, Column, Icon, Table, Text } from '@myra-ui';
 
 import { Id_Type, useGetNewIdMutation, useGetSavingsAccountListQuery } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
@@ -33,6 +34,12 @@ export const AccountListPage = () => {
       {
         header: 'Account No',
         accessorFn: (row) => row?.node?.id,
+        cell: (props) => (
+          <RedirectButton
+            link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${props?.row?.original?.node?.id}`}
+            label={props?.row?.original?.node?.id as string}
+          />
+        ),
       },
 
       {

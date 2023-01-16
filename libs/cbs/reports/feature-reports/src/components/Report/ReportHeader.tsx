@@ -5,10 +5,21 @@ import { GrClose } from 'react-icons/gr';
 import { IoChevronForward, IoSaveOutline } from 'react-icons/io5';
 import ReactToPrint from 'react-to-print';
 import { useRouter } from 'next/router';
-import { IconButton } from '@chakra-ui/react';
+import { IconButton, Popover, PopoverBody, PopoverContent, PopoverTrigger } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Button, Icon, Input, Modal, Text } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  Icon,
+  Input,
+  Modal,
+  OptionsIcon,
+  Text,
+} from '@myra-ui';
 
 import {
   ShareStatementReportSettings,
@@ -17,6 +28,7 @@ import {
 } from '@coop/cbs/data-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { useReport } from '@coop/cbs/reports';
+import { exportVisibleTableToExcel } from '@coop/cbs/utils';
 
 type Path = {
   link?: string;
@@ -30,7 +42,8 @@ export interface PathBarProps {
 
 export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
   const router = useRouter();
-  const { printRef, data } = useReport();
+  const { printRef, data, report } = useReport();
+
   const { getValues: filters } = useFormContext<ShareStatementReportSettings>();
 
   const { register, getValues } = useForm<{ name: string }>();
@@ -118,6 +131,42 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
           <Icon as={IoSaveOutline} />
           Save Report
         </Button>
+
+        <Popover placement="bottom-end">
+          <PopoverTrigger>
+            <Box display="flex" alignItems="center" justifyContent="center">
+              <Button
+                variant="ghost"
+                colorScheme="gray"
+                color="gray.600"
+                fontSize="r1"
+                display="flex"
+                alignItems="center"
+                gap="s8"
+              >
+                <Icon as={OptionsIcon} size="sm" />
+                <span>Options</span>
+              </Button>
+            </Box>
+          </PopoverTrigger>
+          <PopoverContent minWidth="180px" w="180px" color="white" boxShadow="E2">
+            <PopoverBody px="0" py="0">
+              <Grid>
+                <GridItem
+                  px="s16"
+                  py="s8"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
+                  onClick={() => exportVisibleTableToExcel(report)}
+                >
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    Export Visible
+                  </Text>
+                </GridItem>
+              </Grid>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
 
         <IconButton
           variant="ghost"

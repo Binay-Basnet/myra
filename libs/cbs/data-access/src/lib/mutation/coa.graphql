@@ -28,11 +28,11 @@ mutation deleteCOA($id: ID!) {
   }
 }
 
-mutation AddGroup($data:  NewCoaGroupInput!){
+mutation AddGroup($data: NewCoaGroupInput!) {
   settings {
     chartsOfAccount {
       account {
-        newGroup(data: $data){
+        newGroup(data: $data) {
           recordId
           error {
             ...MutationError
@@ -43,15 +43,39 @@ mutation AddGroup($data:  NewCoaGroupInput!){
   }
 }
 
-
-mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!){
+mutation addAccountInCOA(
+  $accountSetup: COAAccountSetup!
+  $parentAccountCode: String!
+  $openForBranches: [ID]
+) {
   settings {
     chartsOfAccount {
       account {
-        addAccount(accountSetup: $accountSetup, parentAccountCode: $parentAccountCode){
+        addAccount(
+          accountSetup: $accountSetup
+          parentAccountCode: $parentAccountCode
+          openForBranches: $openForBranches
+        ) {
           success
           error {
             ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updateLedgerStatus($id: ID!, $status: Boolean!) {
+  settings {
+    general {
+      chartsOfAccount {
+        account {
+          updateMoneyLedger(id: $id, status: $status) {
+            recordId
+            error {
+              ...MutationError
+            }
           }
         }
       }

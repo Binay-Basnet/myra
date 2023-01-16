@@ -9,9 +9,14 @@ import {
   useAccountDetails,
   useGetAccountTransactionListsQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
-export const RecentTransactions = () => {
+interface IProps {
+  isClosed?: boolean;
+}
+
+export const RecentTransactions = ({ isClosed }: IProps) => {
   const router = useRouter();
 
   const { accountDetails } = useAccountDetails();
@@ -36,14 +41,16 @@ export const RecentTransactions = () => {
 
   return (
     <DetailsCard
-      title="Recent Transactions"
+      title={isClosed ? 'Past Transactions' : 'Recent Transactions'}
       bg="white"
       hasTable
       leftBtn={
         <Button
           variant="ghost"
           onClick={() =>
-            router.push(`/savings/details/${accountDetails?.accountId}?tab=transactions`)
+            router.push(
+              `${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${accountDetails?.accountId}&tab=transactions`
+            )
           }
         >
           View all transactions

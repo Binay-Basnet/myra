@@ -1,42 +1,20 @@
 import React from 'react';
 
-import { Sidebar } from '@myra-ui';
+import { AppSidebar, MenuContainer, PageContainer, Scrollable } from '@myra-ui';
 
-import { useTranslation } from '@coop/shared/utils';
+import { Can } from '@coop/cbs/utils';
 
 interface IAccountPageLayoutProps {
   children: React.ReactNode;
 }
 
-const userColumns = [
-  {
-    title: 'acDownloadsForms',
-    link: '/alternative-channels/downloads/forms',
-  },
-  {
-    title: 'acDownloadsGuidelines',
-    link: '/alternative-channels/downloads/guidelines',
-  },
-  {
-    title: 'acDownloadsReports',
-    link: '/alternative-channels/downloads/reports',
-  },
-  {
-    title: 'acDwnloadsDirectives',
-    link: '/alternative-channels/downloads/directives',
-  },
-];
-
-export const DownloadLayout = ({ children }: IAccountPageLayoutProps) => {
-  const { t } = useTranslation();
-
-  return (
-    <Sidebar
-      applicationName="Alternative Channels"
-      featureName={t['acDownload']}
-      featureLink="/alternative-channels/downloads/forms"
-      tabColumns={userColumns}
-      children={children}
-    />
-  );
-};
+export const DownloadLayout = ({ children }: IAccountPageLayoutProps) => (
+  <Can I="SHOW_IN_MENU" a="ALTERNATIVE_CHANNELS_DOWNLOADS" showError isErrorCentered>
+    <MenuContainer>
+      <AppSidebar module="ALTERNATIVE_CHANNELS" menu="DOWNLOADS" />
+      <PageContainer>
+        <Scrollable>{children}</Scrollable>
+      </PageContainer>
+    </MenuContainer>
+  </Can>
+);

@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
+import { DepositedBy, Filter_Mode, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -20,7 +20,7 @@ import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@c
 //   },
 // ];
 
-const depositedBy = {
+const depositedBy: Record<DepositedBy, string> = {
   [DepositedBy.Agent]: 'Market Representative',
   [DepositedBy.Self]: 'Self',
   [DepositedBy.Other]: 'Other',
@@ -32,22 +32,41 @@ export interface DepositListProps {}
 export const DepositList = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
 
-  const { data, isFetching } = useGetDepositListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-  });
+  const { data, isFetching } = useGetDepositListDataQuery(
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        id: searchTerm,
+        memberId: searchTerm,
+        memberName: searchTerm,
+        transactionId: searchTerm,
+        depositedBy: searchTerm,
+        filterMode: Filter_Mode.Or,
+      },
+    },
+
+    {
+      enabled: searchTerm !== 'undefined',
+    }
+  );
 
   const rowData = useMemo(() => data?.transaction?.listDeposit?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: t['depositListDepositDate'],
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+      {
         header: t['depositListTransactionId'],
         accessorFn: (row) => row?.node?.transactionCode,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: t['depositListName'],
+        header: 'Member',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
@@ -71,26 +90,21 @@ export const DepositList = () => {
         },
       },
       {
+        header: t['depositListPaymentMode'],
+        accessorFn: (row) => row?.node?.paymentMode,
+      },
+      {
+        header: t['depositListDepositedBy'],
+        accessorFn: (row) =>
+          row?.node?.processedBy ? depositedBy[row?.node?.processedBy as DepositedBy] : '',
+      },
+      {
         header: t['depositListAmount'],
 
         accessorFn: (row) => amountConverter(row?.node?.amount as string),
         meta: {
           isNumeric: true,
         },
-      },
-
-      {
-        header: t['depositListPaymentMode'],
-        accessorFn: (row) => row?.node?.paymentMode,
-      },
-      {
-        header: t['depositListDepositedBy'],
-        accessorFn: (row) => (row?.node?.processedBy ? depositedBy[row?.node?.processedBy] : ''),
-      },
-
-      {
-        header: t['depositListDepositDate'],
-        accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
       },
 
       {
@@ -103,6 +117,8 @@ export const DepositList = () => {
               items={[
                 {
                   title: t['transDetailViewDetail'],
+                  aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_TRANS_DEPOSIT_DETAILS}?id=${row?.ID}`);
                   },
@@ -115,7 +131,7 @@ export const DepositList = () => {
         },
       },
     ],
-    [t]
+    [t, rowData]
   );
 
   return (

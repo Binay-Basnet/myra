@@ -18,6 +18,7 @@ interface IMemberSelectProps extends MemberSelectProps {
   label?: string;
   placeholder?: string;
   allMembers?: boolean;
+  excludeIds?: string[];
 }
 
 export const FormMemberSelect = ({
@@ -25,6 +26,7 @@ export const FormMemberSelect = ({
   label,
   placeholder,
   allMembers,
+  excludeIds,
   ...rest
 }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
@@ -57,6 +59,10 @@ export const FormMemberSelect = ({
 
   const memberOptions: Option[] =
     memberListData?.reduce((prevVal, curVal) => {
+      if (excludeIds?.includes(curVal?.node?.id as string) || !curVal) {
+        return prevVal;
+      }
+
       const profileData = curVal?.node?.profile as KymIndFormStateQuery;
       return [
         ...prevVal,

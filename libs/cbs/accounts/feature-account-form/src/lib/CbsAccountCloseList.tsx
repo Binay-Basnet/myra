@@ -2,9 +2,10 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { ObjState, useGetAccountTableListMinimalQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const CBSAccountCloseList = () => {
@@ -36,12 +37,21 @@ export const CBSAccountCloseList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Member Id',
-        accessorFn: (row) => row?.node?.id,
+        header: 'Account Closed Date',
+        accessorFn: (row) => row?.node?.createdAt,
+        cell: (props) => <span>{props?.row?.original?.node?.closedAt?.split('T')[0]} </span>,
       },
 
       {
-        header: 'Member Name',
+        header: 'Account Name',
+        accessorFn: (row) => row?.node?.accountName,
+      },
+      {
+        header: 'Product Name',
+        accessorFn: (row) => row?.node?.product?.productName,
+      },
+      {
+        header: 'Member',
         accessorFn: (row) => row?.node?.member?.name?.local,
         cell: (props) => (
           <Box
@@ -60,31 +70,23 @@ export const CBSAccountCloseList = () => {
       },
 
       {
-        header: 'Account Name',
-        accessorFn: (row) => row?.node?.accountName,
+        id: '_actions',
+        header: '',
+        cell: (props) => (
+          <TablePopover
+            items={[
+              {
+                title: 'View Details',
+                aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT_CLOSE',
+                action: 'VIEW',
+                onClick: (row) =>
+                  router.push(`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${row['id']}`),
+              },
+            ]}
+            node={props?.row?.original?.node}
+          />
+        ),
       },
-      {
-        header: 'Product Name',
-        accessorFn: (row) => row?.node?.product?.productName,
-      },
-      {
-        header: 'Account Closed Date',
-        accessorFn: (row) => row?.node?.createdAt,
-        cell: (props) => <span>{props?.row?.original?.node?.closedAt?.split('T')[0]} </span>,
-      },
-      // {
-      //   id: '_actions',
-      //   header: '',
-      //   cell: (props) => (
-      //     <ActionPopoverComponent
-      //       items={popoverTitle}
-      //       id={props?.row?.original?.node?.id as string}
-      //     />
-      //   ),
-      //   meta: {
-      //     width: '50px',
-      //   },
-      // },
     ],
     [t]
   );
@@ -97,6 +99,9 @@ export const CBSAccountCloseList = () => {
         isLoading={isLoading}
         data={rowData}
         columns={columns}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${row?.node?.id}`);
+        }}
         pagination={{
           total: data?.account?.list?.totalCount ?? 'Many',
           pageInfo: data?.account?.list?.pageInfo,

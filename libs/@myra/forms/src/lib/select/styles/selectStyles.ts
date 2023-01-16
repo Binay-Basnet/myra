@@ -21,7 +21,6 @@ export const getChakraDefaultStyles: (
   menuList: (provided) => ({
     ...provided,
     width: '100%',
-
     maxHeight: '200px',
     paddingY: '0',
     minWidth: 'none',

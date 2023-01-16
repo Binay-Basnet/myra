@@ -1,15 +1,18 @@
-import { Box, DetailsCard, Text } from '@myra-ui';
+import { Box, DetailCardContent, DetailsCard, Text } from '@myra-ui';
+
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 
 interface IGeneralInfoCardProps {
   title: string;
   items: { label: string; value: number | string | null | undefined }[];
+  productId?: string;
 }
 
-export const GeneralInfoCard = ({ title, items }: IGeneralInfoCardProps) => (
+export const GeneralInfoCard = ({ title, items, productId }: IGeneralInfoCardProps) => (
   <DetailsCard title={title} bg="white" hasThreeRows>
-    {items.map(
-      (item) =>
-        item.value && (
+    {items.map((item) => (
+      <>
+        {item?.label !== 'Product Name' && (
           <Box display="flex" flexDirection="column" gap="s4">
             <Text fontSize="s3" fontWeight="500" color="neutralColorLight.Gray-70">
               {item.label}
@@ -18,7 +21,19 @@ export const GeneralInfoCard = ({ title, items }: IGeneralInfoCardProps) => (
               {item.value}
             </Text>
           </Box>
-        )
-    )}
+        )}
+        {item?.label === 'Product Name' && (
+          <DetailCardContent
+            title="Product Name"
+            children={
+              <RedirectButton
+                link={`${ROUTES.SETTINGS_GENERAL_LP_DETAILS}?id=${productId}`}
+                label={item?.value as string}
+              />
+            }
+          />
+        )}
+      </>
+    ))}
   </DetailsCard>
 );

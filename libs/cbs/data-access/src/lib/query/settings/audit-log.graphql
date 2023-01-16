@@ -1,6 +1,6 @@
-query getAuditLogList{
+query getAuditLogList($filter: AuditLogFilters) {
   auditLog {
-    humanize {
+    humanize(filter: $filter) {
       __typename
       ... on AuditLogHumanizeResult {
         data {

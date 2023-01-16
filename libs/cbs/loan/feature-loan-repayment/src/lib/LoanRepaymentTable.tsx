@@ -33,10 +33,23 @@ export const CBSLoanRepaymentList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: 'Payment Date',
+        accessorFn: (row) => row?.node?.paymentDate,
+        cell: (props) => <span>{props?.row?.original?.node?.paymentDate?.split('T')[0]} </span>,
+      },
+      {
         header: 'Member Code',
         accessorFn: (row) => row?.node?.memberCode,
       },
 
+      {
+        header: 'Account Name',
+        accessorFn: (row) => row?.node?.loanAccountName,
+      },
+      {
+        header: 'Product Name',
+        accessorFn: (row) => row?.node?.loanProductName,
+      },
       {
         header: 'Member Name',
         accessorFn: (row) => row?.node?.memberName?.local,
@@ -59,24 +72,11 @@ export const CBSLoanRepaymentList = () => {
           </Box>
         ),
       },
-
-      {
-        header: 'Account Name',
-        accessorFn: (row) => row?.node?.loanAccountName,
-      },
-      {
-        header: 'Product Name',
-        accessorFn: (row) => row?.node?.loanProductName,
-      },
       {
         header: 'Amount',
         accessorFn: (row) => amountConverter(row?.node?.amount ?? 0),
       },
-      {
-        header: 'Payment Date',
-        accessorFn: (row) => row?.node?.paymentDate,
-        cell: (props) => <span>{props?.row?.original?.node?.paymentDate?.split('T')[0]} </span>,
-      },
+
       {
         id: '_actions',
         header: '',
@@ -87,12 +87,16 @@ export const CBSLoanRepaymentList = () => {
               items={[
                 {
                   title: t['transDetailViewDetail'],
+                  aclKey: 'CBS_TRANSACTIONS_LOAN_REPAYMENT',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_LOAN_REPAYMENT_DETAILS}?id=${row?.id}`);
                   },
                 },
                 {
                   title: t['LoanApplicationView'],
+                  aclKey: 'CBS_LOAN_LOAN_APPLICATION',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(`${ROUTES.CBS_LOAN_APPLICATION_DETAILS}?id=${row?.loanAccountId}`);
                   },
@@ -110,7 +114,7 @@ export const CBSLoanRepaymentList = () => {
 
   return (
     <>
-      <Box position="sticky" top="110px" zIndex={3}>
+      <Box position="sticky" top="0" zIndex={3}>
         <PageHeader heading={`Loan Repayment - ${featureCode.loanRepayment} `} />
       </Box>
 

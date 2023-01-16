@@ -366,7 +366,7 @@ export const AddDeposit = () => {
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={`${t['addDepositNewDeposit']} - ${featureCode?.newDeposit}`}
             buttonLabel={t['addDepositAddBulkDeposit']}
@@ -567,16 +567,18 @@ export const AddDeposit = () => {
                                 ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
                               ID: selectedAccount?.id,
-                              currentBalance: selectedAccount?.balance ?? '0',
+                              currentBalance: selectedAccount?.availableBalance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                               interestAccured: selectedAccount?.interestAccured ?? '0',
                               guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: fine ?? FINE,
                               // branch: 'Kumaripati',
-                              openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
-                              expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
-                              lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
+                              openDate: localizedDate(selectedAccount?.accountOpenedDate) ?? 'N/A',
+                              expiryDate:
+                                localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
+                              lastTransactionDate:
+                                localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
                               productName: selectedAccount?.product?.productName,
                               installmentAmount:
                                 selectedAccount?.product?.nature ===
@@ -589,6 +591,7 @@ export const AddDeposit = () => {
                             }
                           : null
                       }
+                      redirectUrl={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedAccount?.id}`}
                     />
                   </Box>
                 )}

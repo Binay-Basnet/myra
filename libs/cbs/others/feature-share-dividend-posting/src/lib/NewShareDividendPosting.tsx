@@ -24,12 +24,12 @@ export const NewShareDividendPosting = () => {
 
   const { watch } = methods;
 
-  const dividendTransferTreatment = watch('dividendTransferTreatment');
+  const dividendTransferTreatment = watch('dividendTransferTreatment') as DividendTransferTreatment;
 
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title="Share Dividend Posting"
             // closeLink="/others/share-dividend-posting/list"

@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
+import { AllTransactionsList } from 'libs/cbs/transactions/feature-deposit/src/components';
 
 import { MainLayout } from '@myra-ui';
 
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { AllTransactionsList } from 'libs/cbs/transactions/feature-deposit/src/components';
 
 const AllTransactionList = () => <AllTransactionsList />;
 

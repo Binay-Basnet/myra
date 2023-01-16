@@ -47,10 +47,13 @@ query getCashInTransitList(
         cursor
         node {
           id
+          transactionCode
           senderServiceCentreId
           senderServiceCentreName
           receiverServiceCentreId
           receiverServiceCentreName
+          senderTellerName
+          senderTellerId
           approvalStatus
           cashAmount
           transferDate
@@ -60,6 +63,65 @@ query getCashInTransitList(
             amount
           }
         }
+      }
+    }
+  }
+}
+
+query getCashInTransitDetail($transitID: ID!) {
+  transaction {
+    cashInTransitDetail(transitID: $transitID) {
+      data {
+        ID
+        transitStatus
+        srcTeller
+        amount
+        totalBalance
+        transferMode
+        collectorName
+        destTeller
+        date
+        srcBranch
+        destBranch
+        srcProfilePic
+        srcProfilePicUrl
+        glTransaction {
+          account
+          serviceCenter
+          debit
+          credit
+        }
+        totalCredit
+        totalDebit
+        note
+      }
+    }
+  }
+}
+
+query getServiceCenterTransferList(
+  $filter: ServiceCenterTransactionFilter
+  $pagination: Pagination
+) {
+  transaction {
+    listServiceCenterCashTransfer(filter: $filter, pagination: $pagination) {
+      totalCount
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
+      }
+      edges {
+        node {
+          id
+          sender
+          senderId
+          receiver
+          amount
+          transactionDate
+        }
+        cursor
       }
     }
   }

@@ -1,12 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import pickBy from 'lodash/pickBy';
 
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+
 import {
   SalesCreditNoteInput,
+  useGetNewIdMutation,
   useGetSalesCreditNoteFormStateDataQuery,
   useSetSalesCreditNoteDataMutation,
 } from '@coop/cbs/data-access';
@@ -20,10 +22,16 @@ import {
 
 export const CreditNoteForm = () => {
   const { t } = useTranslation();
+  const [newId, setNewId] = useState('');
 
   const router = useRouter();
 
-  const id = router?.query?.['id'];
+  const getNewId = useGetNewIdMutation({});
+  useEffect(() => {
+    getNewId?.mutateAsync({}).then((res) => setNewId(res?.newId));
+  }, []);
+
+  const id = router?.query?.['id'] || newId;
 
   const queryClient = useQueryClient();
 
@@ -84,7 +92,7 @@ export const CreditNoteForm = () => {
   return (
     <>
       <Container minW="container.xl" height="fit-content" pb="60px">
-        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={t['accountingCreditNoteAddNewCreditNote']}
             closeLink="/accounting/sales/credit-note/list"

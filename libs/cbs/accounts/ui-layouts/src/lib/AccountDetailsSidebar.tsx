@@ -5,8 +5,8 @@ import { useDisclosure } from '@chakra-ui/react';
 import { AccountQRModal, Box, DetailPageMemberCard, DetailPageTabs, Icon, Text } from '@myra-ui';
 
 import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
-import { amountConverter, copyToClipboard } from '@coop/shared/utils';
 import { ROUTES } from '@coop/cbs/utils';
+import { amountConverter, copyToClipboard } from '@coop/shared/utils';
 
 const accountTypes = {
   [NatureOfDepositProduct.Saving]: 'Saving Account',
@@ -103,6 +103,7 @@ export const AccountDetailsSidebar = () => {
           'Overview',
           'Transactions',
           'Withdraw Slip',
+          'Ledger',
           // 'ATM',
           // 'Activity',
           // 'Documents',

@@ -87,7 +87,7 @@ export const UsersList = () => {
       },
       {
         header: 'Role',
-        accessorFn: (row) => (row?.node?.role ? roles[row?.node?.role] : ''),
+        accessorFn: (row) => (row?.node?.role ? roles.AGENT : ''),
       },
       {
         header: 'Last Active Date',

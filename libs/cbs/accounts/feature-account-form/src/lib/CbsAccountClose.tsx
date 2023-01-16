@@ -32,7 +32,7 @@ import {
   useGetIndividualMemberDetails,
   useSetAccountCloseDataMutation,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAmountInput,
@@ -390,7 +390,7 @@ export const CbsAccountClose = () => {
       <FormProvider {...methods}>
         <form>
           {' '}
-          <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+          <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
             <FormHeader title={`${t['accountClose']} - ${featureCode?.newAccountClose}`} />
           </Box>
           <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
@@ -617,7 +617,7 @@ export const CbsAccountClose = () => {
               </Box>
             </Box>
             {memberId && memberId !== 'undefined' && (
-              <Box position="sticky" top="170px" right="0" maxH="500px">
+              <Box position="sticky" top="0" right="0" maxH="500px">
                 <MemberCard
                   memberDetails={{
                     name: memberDetailData?.name,
@@ -644,16 +644,17 @@ export const CbsAccountClose = () => {
                             ? accountTypes[selectedAccount?.product?.nature]
                             : '',
                           ID: selectedAccount?.id,
-                          currentBalance: selectedAccount?.balance ?? '0',
+                          currentBalance: selectedAccount?.availableBalance ?? '0',
                           minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                           interestAccured: selectedAccount?.interestAccured ?? '0',
                           guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                           overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                           fine: selectedAccount?.dues?.fine ?? 0,
                           // branch: 'Kumaripati',
-                          openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
-                          expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
-                          lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
+                          openDate: localizedDate(selectedAccount?.accountOpenedDate) ?? 'N/A',
+                          expiryDate: localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
+                          lastTransactionDate:
+                            localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
                           productName: selectedAccount?.product?.productName,
                           installmentAmount:
                             selectedAccount?.product?.nature ===

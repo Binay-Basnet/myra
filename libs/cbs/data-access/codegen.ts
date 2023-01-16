@@ -5,7 +5,7 @@ const config: CodegenConfig = {
   overwrite: true,
   schema: [
     {
-      [process.env['NX_SCHEMA_PATH'] as string]: {
+      [`${process.env['NX_SCHEMA_PATH']}/query` as string]: {
         headers: {
           schema: 'true',
         },
@@ -40,6 +40,7 @@ const config: CodegenConfig = {
           Date: 'string',
           Localized: 'Record<"local"|"en"|"np",string>',
         },
+        enumsAsConst: true,
         skipTypename: true,
         inlineFragmentTypes: 'combine',
         fetcher: {

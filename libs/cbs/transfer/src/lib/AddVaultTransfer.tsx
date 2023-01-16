@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,6 +20,7 @@ import {
   TellerTransferInput,
   TellerTransferType,
   useAppSelector,
+  useGetUserAndBranchBalanceQuery,
   useSetTellerTransferDataMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -81,6 +83,16 @@ export const AddVaultTransfer = () => {
 
   const user = useAppSelector((state) => state.auth?.user);
 
+  const { data: balanceQueryData } = useGetUserAndBranchBalanceQuery();
+
+  const { userBalance, branchBalance } = useMemo(
+    () => ({
+      userBalance: balanceQueryData?.auth?.me?.data?.user?.userBalance,
+      branchBalance: balanceQueryData?.auth?.me?.data?.user?.currentBranch?.branchBalance,
+    }),
+    [balanceQueryData]
+  );
+
   const { mutateAsync: setVaultTransfer } = useSetTellerTransferDataMutation();
 
   const methods = useForm<CustomTellerTransferInput>({
@@ -100,7 +112,7 @@ export const AddVaultTransfer = () => {
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
+      (accumulator: number, { amount: currAmount }) => accumulator + Number(currAmount),
       0 as number
     ) ?? 0;
 
@@ -133,7 +145,7 @@ export const AddVaultTransfer = () => {
       promise: setVaultTransfer({ data: filteredValues as TellerTransferInput }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getTellerTransactionListData']);
-        queryClient.invalidateQueries(['getMe']);
+        // queryClient.invalidateQueries(['getMe']);
 
         router.push(ROUTES.CBS_TRANSFER_VAULT_LIST);
       },
@@ -143,7 +155,7 @@ export const AddVaultTransfer = () => {
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader title={`New Vault Transfer - ${featureCode.newVaultTransfer}`} />
         </Box>
 
@@ -174,8 +186,8 @@ export const AddVaultTransfer = () => {
                         }
                         balance={
                           (transferType === TellerTransferType.VaultToCash
-                            ? user?.branch?.branchBalance
-                            : user?.userBalance) ?? '0'
+                            ? branchBalance
+                            : userBalance) ?? '0'
                         }
                       />
                     </GridItem>

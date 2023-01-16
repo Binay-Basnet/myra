@@ -3,6 +3,8 @@ import { BiSave } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
 
+import { Box, Button, Container, FormFooter, GridItem, Icon, IconButton, Text } from '@myra-ui';
+
 import {
   BoxContainer,
   DividerContainer,
@@ -10,7 +12,6 @@ import {
 } from '@coop/accounting/ui-components';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
-import { Box, Button, Container, FormFooter, GridItem, Icon, IconButton, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { DebitNoteTable } from '../components';
@@ -56,7 +57,7 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
           borderColor="border.layout"
           borderTopRadius={5}
           position="sticky"
-          top="110px"
+          top="0"
           zIndex={8}
         >
           <Text fontSize="r2" fontWeight="600" color="neutralColorLight.Gray-80">

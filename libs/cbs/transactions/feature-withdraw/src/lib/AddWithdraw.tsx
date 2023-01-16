@@ -15,8 +15,10 @@ import {
   Text,
 } from '@myra-ui';
 
+import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   CashValue,
+  KymMemberTypesEnum,
   NatureOfDepositProduct,
   ObjState,
   useGetAccountTableListQuery,
@@ -325,7 +327,7 @@ export const AddWithdraw = () => {
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader title={`${t['addWithdrawNewWithdraw']} - ${featureCode?.newWithdraw}`} />
         </Box>
 
@@ -397,7 +399,9 @@ export const AddWithdraw = () => {
                         label={t['addWithdrawWithdrawAmount']}
                       />
 
-                      {/* <SuspiciousTransaction /> */}
+                      {memberDetailData?.type === KymMemberTypesEnum.Individual && (
+                        <SuspiciousTransaction />
+                      )}
 
                       <Box
                         bg="background.500"
@@ -471,16 +475,18 @@ export const AddWithdraw = () => {
                                 ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
                               ID: selectedAccount?.id,
-                              currentBalance: selectedAccount?.balance ?? '0',
+                              currentBalance: selectedAccount?.availableBalance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                               interestAccured: selectedAccount?.interestAccured ?? '0',
                               guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: selectedAccount?.dues?.fine ?? '0',
                               // branch: 'Kumaripati',
-                              openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
-                              expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
-                              lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
+                              openDate: localizedDate(selectedAccount?.accountOpenedDate) ?? 'N/A',
+                              expiryDate:
+                                localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
+                              lastTransactionDate:
+                                localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
                               productName: selectedAccount?.product?.productName,
                               installmentAmount:
                                 selectedAccount?.product?.nature ===

@@ -147,6 +147,7 @@ query transactionDepositDetail($transactionId: ID!) {
           profilePicUrl
         }
         transactionDate
+        accountId
         accountName
         voucherId
         amount
@@ -187,6 +188,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
         }
         transactionDate
         transactionCode
+        accountId
         accountName
         chequeNo
         withdrawAmount
@@ -222,6 +224,7 @@ query transactionAccountTransferDetail($transactionId: ID!) {
         member {
           id
           name
+          code
           profilePic
           profilePicUrl
         }
@@ -271,6 +274,7 @@ query agentTransactionDetail($agentId: ID!, $date: String!) {
         status
         totalAmount
         assignedMember {
+          transactionId
           member
           account
           amount
@@ -313,6 +317,7 @@ query loanRepaymentDetail($paymentId: ID!) {
         installmentNo
         installmentAmount
         fine
+        rebate
         totalRepaymentAmount
         objState
         installmentDetails {
@@ -408,6 +413,7 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
         transactionMode
         amount
         branch
+        note
         status
         glTransaction {
           account

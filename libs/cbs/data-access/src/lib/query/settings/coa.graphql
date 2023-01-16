@@ -80,10 +80,10 @@ query getCOAAccountsUnderLeafList($parentId: [String]!, $currentBranch: Boolean)
   }
 }
 
-query getCoaAccountList($branchId: String, $pagination: Pagination) {
+query getCoaAccountList($branchId: String, $pagination: Pagination, $filter: COAListFilter) {
   settings {
     chartsOfAccount {
-      coaAccountList(branchId: $branchId, pagination: $pagination) {
+      coaAccountList(branchId: $branchId, pagination: $pagination, filter: $filter) {
         edges {
           node {
             accountCode
@@ -129,6 +129,33 @@ query getCOAAccountDetails($id: String!) {
             txnType
             particulars
             total
+          }
+        }
+      }
+    }
+  }
+}
+
+query getCOALeafNodeDetails($id: ID!) {
+  settings {
+    chartsOfAccount {
+      coaLeafNodeDetails(id: $id) {
+        data {
+          id
+          accountName
+          accountType
+          date
+          noOfAccounts
+          drAmount
+          crAmount
+          closingBalance
+          ledgers {
+            accountCode
+            date
+            ledgerName
+            serviceCenter
+            balance
+            status
           }
         }
       }

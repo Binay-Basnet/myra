@@ -1,13 +1,15 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, Table } from '@myra-ui/table';
 
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
     | {
+        id: string | null | undefined;
         date: Record<'local' | 'en' | 'np', string> | null | undefined;
         type: string | null | undefined;
         toFrom: string | null | undefined;
@@ -20,6 +22,7 @@ interface ILoanPaymentScheduleTableProps {
 }
 
 export const ShareTableComponent = ({ data }: ILoanPaymentScheduleTableProps) => {
+  const router = useRouter();
   const columns = React.useMemo<Column<typeof data[0]>[]>(
     () => [
       {
@@ -58,5 +61,13 @@ export const ShareTableComponent = ({ data }: ILoanPaymentScheduleTableProps) =>
     []
   );
 
-  return <Table<typeof data[0]> isStatic data={data ?? []} isDetailPageTable columns={columns} />;
+  return (
+    <Table<typeof data[0]>
+      isStatic
+      data={data ?? []}
+      rowOnClick={(row) => router.push(`${ROUTES.CBS_SHARE_REGISTER_DETAILS}?id=${row?.id}`)}
+      isDetailPageTable
+      columns={columns}
+    />
+  );
 };

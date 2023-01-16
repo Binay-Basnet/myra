@@ -167,7 +167,6 @@ export const AccountOpenNew = () => {
   const redirectPath = router.query['redirect'];
 
   const routeId = router?.query?.['id'] as string;
-
   const id = routeId || newId;
 
   const { mutateAsync } = useSetAccountOpenDataMutation();
@@ -448,6 +447,7 @@ export const AccountOpenNew = () => {
     },
     { enabled: !!routeId }
   );
+
   useEffect(() => {
     if (editValues && routeId) {
       const editValueData = editValues?.account?.formState?.data;
@@ -482,7 +482,7 @@ export const AccountOpenNew = () => {
 
   return (
     <Container minW="container.xl" p="0" bg="white">
-      <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <FormHeader title={`${t['newAccountOpen']} - ${featureCode?.newAccountOpen}`} />
       </Box>
       <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">

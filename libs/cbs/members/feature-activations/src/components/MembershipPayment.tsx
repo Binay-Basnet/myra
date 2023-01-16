@@ -248,256 +248,268 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
   };
 
   return (
-    <FormProvider {...methods}>
+    <>
       <Container p={0} minWidth="container.lg" bg="white" minH="calc(100vh - 110px)">
-        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title="Membership Payment" />
-        </Box>
-
-        <Box display="flex" flexDirection="column" gap="s16">
-          <Box px="s20" pt="s20">
-            <FormSwitchTab
-              label={t['depositPaymentPaymentMode']}
-              options={paymentModes}
-              name="paymentMode"
-            />
+        <FormProvider {...methods}>
+          <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
+            <FormHeader title="Membership Payment" />
           </Box>
 
-          {selectedPaymentMode === DepositPaymentType.WithdrawSlip && (
-            <Box>
-              <GridItem colSpan={3} px="s20">
-                <FormCheckbox
-                  name="withdrawSlipData.isDifferentMember"
-                  label="Withdraw slip is from different member"
-                />
-              </GridItem>
+          <Box display="flex" flexDirection="column" gap="s16">
+            <Box px="s20" pt="s20">
+              <FormSwitchTab
+                label={t['depositPaymentPaymentMode']}
+                options={paymentModes}
+                name="paymentMode"
+              />
+            </Box>
 
-              <FormSection>
-                {isDiffMember && (
-                  <GridItem colSpan={3}>
-                    <FormMemberSelect name="withdrawSlipData.memberId" label="Member" />
-                  </GridItem>
-                )}
-
-                <GridItem colSpan={2}>
-                  <FormAccountSelect
-                    name="withdrawSlipData.accountId"
-                    memberId={String(isDiffMember ? dmemberId : memberId)}
-                    label="Account Name"
-                    filterBy={ObjState.Active}
+            {selectedPaymentMode === DepositPaymentType.WithdrawSlip && (
+              <Box>
+                <GridItem colSpan={3} px="s20">
+                  <FormCheckbox
+                    name="withdrawSlipData.isDifferentMember"
+                    label="Withdraw slip is from different member"
                   />
                 </GridItem>
 
-                <FormSelect
-                  name="withdrawSlipData.withdrawSlipNo"
-                  label="Withdraw Slip No"
-                  options={availableSlipListOptions}
-                />
+                <FormSection>
+                  {isDiffMember && (
+                    <GridItem colSpan={3}>
+                      <FormMemberSelect name="withdrawSlipData.memberId" label="Member" />
+                    </GridItem>
+                  )}
 
-                <FormInput
-                  name="withdrawSlipData.amount"
-                  type="number"
-                  label={t['depositPaymentAmount']}
-                  textAlign="right"
-                />
-              </FormSection>
+                  <GridItem colSpan={2}>
+                    <FormAccountSelect
+                      name="withdrawSlipData.accountId"
+                      memberId={String(isDiffMember ? dmemberId : memberId)}
+                      label="Account Name"
+                      filterBy={ObjState.Active}
+                    />
+                  </GridItem>
 
-              <FormSection flexLayout>
-                <Box display="flex" flexDir="column" gap="s16">
+                  <FormSelect
+                    name="withdrawSlipData.withdrawSlipNo"
+                    label="Withdraw Slip No"
+                    options={availableSlipListOptions}
+                  />
+
+                  <FormInput
+                    name="withdrawSlipData.amount"
+                    type="number"
+                    label={t['depositPaymentAmount']}
+                    textAlign="right"
+                  />
+                </FormSection>
+
+                <FormSection flexLayout>
+                  <Box display="flex" flexDir="column" gap="s16">
+                    <FormSwitchTab
+                      label="Deposited By"
+                      name="withdrawSlipData.depositedBy"
+                      options={[
+                        {
+                          label: t['depositPaymentSelf'],
+                          value: DepositedBy.Self,
+                        },
+                        {
+                          label: t['depositPaymentOther'],
+                          value: DepositedBy.Other,
+                        },
+                        {
+                          label: t['depositPaymentMarketRepresentative'],
+                          value: DepositedBy.Agent,
+                        },
+                      ]}
+                    />
+
+                    {depositedBy === DepositedBy.Agent && (
+                      <InputGroupContainer>
+                        <FormAgentSelect
+                          name="openingPayment.agentId"
+                          label={t['depositPaymentMarketRepresentative']}
+                        />
+                      </InputGroupContainer>
+                    )}
+                  </Box>
+                </FormSection>
+              </Box>
+            )}
+
+            {selectedPaymentMode === DepositPaymentType.BankVoucher && (
+              <Box>
+                <Grid px="s20" templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
+                  <GridItem colSpan={3}>
+                    <FormBankSelect name="bankDeposit.bankId" label={t['depositPaymentBankName']} />
+                  </GridItem>
+
+                  <FormInput name="bankDeposit.voucherId" label={t['addDepositVoucherId']} />
+
+                  <FormInput
+                    name="bankDeposit.amount"
+                    type="number"
+                    label={t['depositPaymentAmount']}
+                    textAlign="right"
+                  />
+
+                  <FormDatePicker
+                    name="bankDeposit.depositedDate"
+                    label={t['depositPaymentDepositedDate']}
+                  />
+                </Grid>
+                <FormSection>
                   <FormSwitchTab
                     label="Deposited By"
-                    name="withdrawSlipData.depositedBy"
+                    name="bankDeposit.depositedBy"
                     options={[
                       {
                         label: t['depositPaymentSelf'],
-                        value: DepositedBy.Self,
+                        value: PaymentDepositedBy.Self,
                       },
                       {
                         label: t['depositPaymentOther'],
-                        value: DepositedBy.Other,
-                      },
-                      {
-                        label: t['depositPaymentMarketRepresentative'],
-                        value: DepositedBy.Agent,
+                        value: PaymentDepositedBy.Other,
                       },
                     ]}
                   />
-
-                  {depositedBy === DepositedBy.Agent && (
-                    <InputGroupContainer>
-                      <FormAgentSelect
-                        name="openingPayment.agentId"
-                        label={t['depositPaymentMarketRepresentative']}
-                      />
-                    </InputGroupContainer>
-                  )}
-                </Box>
-              </FormSection>
-            </Box>
-          )}
-
-          {selectedPaymentMode === DepositPaymentType.BankVoucher && (
-            <Box>
-              <Grid px="s20" templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
-                <GridItem colSpan={3}>
-                  <FormBankSelect name="bankDeposit.bankId" label={t['depositPaymentBankName']} />
-                </GridItem>
-
-                <FormInput name="bankDeposit.voucherId" label={t['addDepositVoucherId']} />
-
-                <FormInput
-                  name="bankDeposit.amount"
-                  type="number"
-                  label={t['depositPaymentAmount']}
-                  textAlign="right"
-                />
-
-                <FormDatePicker
-                  name="bankDeposit.depositedDate"
-                  label={t['depositPaymentDepositedDate']}
-                />
-              </Grid>
-              <FormSection>
-                <FormSwitchTab
-                  label="Deposited By"
-                  name="bankDeposit.depositedBy"
-                  options={[
-                    {
-                      label: t['depositPaymentSelf'],
-                      value: PaymentDepositedBy.Self,
-                    },
-                    {
-                      label: t['depositPaymentOther'],
-                      value: PaymentDepositedBy.Other,
-                    },
-                  ]}
-                />
-              </FormSection>
-            </Box>
-          )}
-
-          {selectedPaymentMode === DepositPaymentType.Cash && (
-            <>
-              <Grid px="s20" templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
-                <FormAmountInput
-                  name="cashData.cash"
-                  type="number"
-                  label={t['depositPaymentCash']}
-                  textAlign="right"
-                />
-              </Grid>
-              <Box px="s20">
-                <Box display="flex" flexDir="column" gap="s8">
-                  <FormSwitch
-                    name="cashData.disableDenomination"
-                    label={t['depositPaymentDisableDenomination']}
-                    defaultChecked={false}
-                  />
-
-                  {!disableDenomination && (
-                    <FormEditableTable<PaymentTableType>
-                      name="cashData.denominations"
-                      columns={[
-                        {
-                          accessor: 'value',
-                          header: t['depositPaymentDenomination'],
-                          cellWidth: 'auto',
-                          fieldType: 'search',
-                          searchOptions: denominationsOptions,
-                        },
-                        {
-                          accessor: 'quantity',
-                          header: t['depositPaymentQuantity'],
-                          isNumeric: true,
-                        },
-                        {
-                          accessor: 'amount',
-                          header: t['depositPaymentAmount'],
-                          isNumeric: true,
-                          accessorFn: (row) =>
-                            row.quantity ? Number(row.value) * Number(row.quantity) : '0',
-                        },
-                      ]}
-                      defaultData={[
-                        { value: '1000', quantity: '0', amount: '0' },
-                        { value: '500', quantity: '0', amount: '0' },
-                        { value: '100', quantity: '0', amount: '0' },
-                        { value: '50', quantity: '0', amount: '0' },
-                        { value: '25', quantity: '0', amount: '0' },
-                        { value: '20', quantity: '0', amount: '0' },
-                        { value: '10', quantity: '0', amount: '0' },
-                        { value: '5', quantity: '0', amount: '0' },
-                        { value: '2', quantity: '0', amount: '0' },
-                        { value: '1', quantity: '0', amount: '0' },
-                      ]}
-                      canDeleteRow={false}
-                      canAddRow={false}
-                    />
-                  )}
-                </Box>
-                <Box
-                  display="flex"
-                  mt="s16"
-                  flexDirection="column"
-                  gap="s20"
-                  px="s8"
-                  py="s10"
-                  border="1px"
-                  borderColor="border.layout"
-                  borderRadius="br2"
-                >
-                  <Box display="flex" justifyContent="space-between">
-                    <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                      {t['depositPaymentTotal']}
-                    </Text>
-                    <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                      {totalCashPaid}
-                    </Text>
-                  </Box>
-
-                  <Box display="flex" justifyContent="space-between">
-                    <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                      {t['depositPaymentReturn']}
-                    </Text>
-                    <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                      {returnAmount}
-                    </Text>
-                  </Box>
-
-                  <Box display="flex" justifyContent="space-between">
-                    <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                      {t['depositPaymentGrandTotal']}
-                    </Text>
-                    <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                      {totalCashPaid - returnAmount}
-                    </Text>
-                  </Box>
-                </Box>
+                </FormSection>
               </Box>
-            </>
-          )}
+            )}
 
-          <FormSection templateColumns={2}>
-            <FormInput name="sourceFund" label={t['depositPaymentSourceOfFund']} />
-            <FormFileInput size="md" label={t['depositPaymentFileUpload']} name="doc_identifiers" />
-          </FormSection>
-          <FormSection flexLayout>
-            <FormTextArea name="remark" label={t['depositPaymentNote']} rows={5} />
-          </FormSection>
-        </Box>
+            {selectedPaymentMode === DepositPaymentType.Cash && (
+              <>
+                <Grid px="s20" templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
+                  <FormAmountInput
+                    name="cashData.cash"
+                    type="number"
+                    label={t['depositPaymentCash']}
+                    textAlign="right"
+                  />
+                </Grid>
+                <Box px="s20">
+                  <Box display="flex" flexDir="column" gap="s8">
+                    <FormSwitch
+                      name="cashData.disableDenomination"
+                      label={t['depositPaymentDisableDenomination']}
+                      defaultChecked={false}
+                    />
 
-        <Box position="sticky" bottom={0} zIndex="11">
-          <FormFooter
-            status={
-              <Button variant="outline" onClick={() => setMode('details')}>
-                Previous
-              </Button>
-            }
-            mainButtonLabel="Confirm Payment"
-            mainButtonHandler={onSubmit}
-          />
-        </Box>
+                    {!disableDenomination && (
+                      <FormEditableTable<PaymentTableType>
+                        name="cashData.denominations"
+                        columns={[
+                          {
+                            accessor: 'value',
+                            header: t['depositPaymentDenomination'],
+                            cellWidth: 'auto',
+                            fieldType: 'search',
+                            searchOptions: denominationsOptions,
+                          },
+                          {
+                            accessor: 'quantity',
+                            header: t['depositPaymentQuantity'],
+                            isNumeric: true,
+                          },
+                          {
+                            accessor: 'amount',
+                            header: t['depositPaymentAmount'],
+                            isNumeric: true,
+                            accessorFn: (row) =>
+                              row.quantity ? Number(row.value) * Number(row.quantity) : '0',
+                          },
+                        ]}
+                        defaultData={[
+                          { value: '1000', quantity: '0', amount: '0' },
+                          { value: '500', quantity: '0', amount: '0' },
+                          { value: '100', quantity: '0', amount: '0' },
+                          { value: '50', quantity: '0', amount: '0' },
+                          { value: '25', quantity: '0', amount: '0' },
+                          { value: '20', quantity: '0', amount: '0' },
+                          { value: '10', quantity: '0', amount: '0' },
+                          { value: '5', quantity: '0', amount: '0' },
+                          { value: '2', quantity: '0', amount: '0' },
+                          { value: '1', quantity: '0', amount: '0' },
+                        ]}
+                        canDeleteRow={false}
+                        canAddRow={false}
+                      />
+                    )}
+                  </Box>
+                  <Box
+                    display="flex"
+                    mt="s16"
+                    flexDirection="column"
+                    gap="s20"
+                    px="s8"
+                    py="s10"
+                    border="1px"
+                    borderColor="border.layout"
+                    borderRadius="br2"
+                  >
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+                        {t['depositPaymentTotal']}
+                      </Text>
+                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+                        {totalCashPaid}
+                      </Text>
+                    </Box>
+
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+                        {t['depositPaymentReturn']}
+                      </Text>
+                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+                        {returnAmount}
+                      </Text>
+                    </Box>
+
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+                        {t['depositPaymentGrandTotal']}
+                      </Text>
+                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+                        {totalCashPaid - returnAmount}
+                      </Text>
+                    </Box>
+                  </Box>
+                </Box>
+              </>
+            )}
+
+            <FormSection templateColumns={2}>
+              <FormInput name="sourceFund" label={t['depositPaymentSourceOfFund']} />
+              <FormFileInput
+                size="md"
+                label={t['depositPaymentFileUpload']}
+                name="doc_identifiers"
+              />
+            </FormSection>
+            <FormSection flexLayout>
+              <FormTextArea name="remark" label={t['depositPaymentNote']} rows={5} />
+            </FormSection>
+          </Box>
+        </FormProvider>
       </Container>
-    </FormProvider>
+
+      <Box position="relative" margin="0px auto">
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+          <Container minW="container.lg" height="fit-content" p="0">
+            <Box position="sticky" bottom={0} zIndex="11">
+              <FormFooter
+                status={
+                  <Button variant="outline" onClick={() => setMode('details')}>
+                    Previous
+                  </Button>
+                }
+                mainButtonLabel="Confirm Payment"
+                mainButtonHandler={onSubmit}
+              />
+            </Box>
+          </Container>
+        </Box>
+      </Box>
+    </>
   );
 };

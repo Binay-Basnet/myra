@@ -54,7 +54,7 @@ export const CbsMemberFeatureInactivations = () => {
 
   return (
     <Container p={0} minWidth="container.lg" bg="white" minH="calc(100vh - 110px)">
-      <Box position="sticky" top="110px">
+      <Box position="sticky" top="0">
         <FormHeader title="Member Inactive" />
       </Box>
       <Box minH="calc(100vh - 220px)" p="s16" display="flex" flexDir="column" gap="s16">

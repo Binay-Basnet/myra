@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { Column, Table, Text, Tooltip } from '@myra-ui';
 
 import { EbankingTransaction, EbankingTransactionDirection } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 export type CustomTransactionItem = EbankingTransaction & {
@@ -14,6 +14,12 @@ interface ITransactionTableProps {
   data: CustomTransactionItem[];
   hasIndex?: boolean;
 }
+// const routeObj = {
+//   DEPOSIT: ROUTES.CBS_TRANS_DEPOSIT_DETAILS,
+//   LOAN_REPAYMENT: ROUTES.CBS_TRANS_LOAN_PAYMENT_DETAILS,
+//   WITHDRAW: ROUTES.CBS_TRANS_WITHDRAW_DETAILS,
+//   LOAN_DISBURSMENT: ROUTES.CBS_TRANS_DEPOSIT_DETAILS,
+// };
 
 export const TransactionTable = ({ data, hasIndex = false }: ITransactionTableProps) => {
   const transactionList = hasIndex
@@ -33,14 +39,12 @@ export const TransactionTable = ({ data, hasIndex = false }: ITransactionTablePr
       {
         header: 'Transaction ID',
         accessorKey: 'transactionId',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="500" fontSize="r1" color="primary.500">
-              #{props.getValue() as string}
-            </Text>
-          ) : (
-            'N/A'
-          ),
+        cell: (props) => (
+          <RedirectButton
+            link={`${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${props.getValue()}`}
+            label={props.getValue() as string}
+          />
+        ),
       },
       {
         header: 'Type',

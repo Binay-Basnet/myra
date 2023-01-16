@@ -23,12 +23,16 @@ export const LoanRequestList = () => {
   const columns = React.useMemo<Column<typeof loanRequests[0]>[]>(
     () => [
       {
+        header: 'Last Modified Date',
+        accessorFn: (row) => row?.node?.lastModifiedDate,
+      },
+      {
         header: 'Request ID',
         accessorFn: (row) => row?.node?.id,
       },
 
       {
-        header: 'Requested By',
+        header: 'Member',
         accessorFn: (row) => row?.node?.memberId,
         cell: (props) => (
           <Box display="flex" flexDir="column" gap="s4">
@@ -45,7 +49,7 @@ export const LoanRequestList = () => {
         },
       },
       {
-        header: 'Loan Amount',
+        header: 'Applied Amount',
         accessorFn: (row) => row?.node?.loanAmount,
         cell: (props) => amountConverter(props.getValue() as string),
       },
@@ -56,10 +60,6 @@ export const LoanRequestList = () => {
       },
 
       {
-        header: 'Last Modified Date',
-        accessorFn: (row) => row?.node?.lastModifiedDate,
-      },
-      {
         id: '_actions',
         header: '',
         cell: (props) =>
@@ -68,6 +68,8 @@ export const LoanRequestList = () => {
               items={[
                 {
                   title: 'View Details',
+                  aclKey: 'CBS_REQUESTS_LOAN_REQUESTS',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(
                       {
@@ -100,7 +102,7 @@ export const LoanRequestList = () => {
 
   return (
     <Box display="flex" flexDir="column">
-      <Box position="sticky" top="110px" zIndex={3}>
+      <Box position="sticky" top="0" zIndex={3}>
         <PageHeader heading={`Loan Request - ${featureCode.loanRequestList}`} />
       </Box>
 

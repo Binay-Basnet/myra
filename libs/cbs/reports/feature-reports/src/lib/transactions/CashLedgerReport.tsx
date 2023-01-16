@@ -12,7 +12,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -104,7 +104,7 @@ export const CashLedgersReport = () => {
                     Cash Ledger Report(Summary)
                   </Text>
                   <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                    Opening Balance: {openingBalance ? amountConverter(openingBalance) : '-'}
+                    Opening Balance: {openingBalance || '-'}
                   </Text>
                 </Box>
                 <Report.Table<CashLedgerReport>
@@ -130,7 +130,7 @@ export const CashLedgersReport = () => {
                             Closing Balance
                           </Text>
                           <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                            {closingBalance ? amountConverter(closingBalance) : '-'}
+                            {closingBalance || '-'}
                           </Text>
                         </Box>
                       ),
@@ -163,7 +163,7 @@ export const CashLedgersReport = () => {
                       },
                     },
                     {
-                      header: 'Cash Recieved Cr.',
+                      header: 'Cash Payment Cr.',
                       cell: (props) => amountConverter(props.getValue() as string),
                       accessorKey: 'cashCr',
                       meta: {
@@ -222,7 +222,7 @@ export const CashLedgersReport = () => {
                             Closing Balance
                           </Text>
                           <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                            {closingBalance ? amountConverter(closingBalance) : '-'}
+                            {closingBalance || '-'}
                           </Text>
                         </Box>
                       ),
@@ -245,7 +245,13 @@ export const CashLedgersReport = () => {
                     {
                       header: 'Voucher No',
                       accessorKey: 'voucherNo',
-
+                      cell: (props) => (
+                        <RouteToDetailsPage
+                          id={props?.row?.original?.voucherNo as string}
+                          type="transactions"
+                          label={props?.row?.original?.voucherNo as string}
+                        />
+                      ),
                       meta: {
                         Footer: {
                           display: 'none',
@@ -264,7 +270,7 @@ export const CashLedgersReport = () => {
                       },
                     },
                     {
-                      header: 'Cash Recieved Cr.',
+                      header: 'Cash Payment Cr.',
                       accessorKey: 'cashCr',
                       cell: (props) => amountConverter(props.getValue() as string),
 

@@ -1,8 +1,9 @@
 import { ReactElement } from 'react';
 
+import { MainLayout } from '@myra-ui';
+
 import { DepositList } from '@coop/cbs/transactions/deposit';
 import { AccountPagesLayout } from '@coop/myra/components';
-import { MainLayout } from '@myra-ui';
 
 const AccountsDepositList = () => <DepositList />;
 

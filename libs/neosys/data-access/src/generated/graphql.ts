@@ -26,6 +26,16 @@ export type Scalars = {
   Time: string;
 };
 
+export type Address = {
+  coordinates?: Maybe<Coordinate>;
+  district?: Maybe<Scalars['Localized']>;
+  houseNo?: Maybe<Scalars['String']>;
+  localGovernment?: Maybe<Scalars['Localized']>;
+  locality?: Maybe<Scalars['Localized']>;
+  state?: Maybe<Scalars['Localized']>;
+  wardNo?: Maybe<Scalars['String']>;
+};
+
 export type AdministrationQuery = {
   all: Array<Province>;
   districts: Array<Result>;
@@ -57,27 +67,29 @@ export type AdministrativeAddress = {
   wardNo: Scalars['Int'];
 };
 
-export enum AllModules {
-  AccountingSystem = 'ACCOUNTING_SYSTEM',
-  AlternativeChannels = 'ALTERNATIVE_CHANNELS',
-  BusinessIntelligenceAndReporting = 'BUSINESS_INTELLIGENCE_AND_REPORTING',
-  BusinessProcessManagement = 'BUSINESS_PROCESS_MANAGEMENT',
-  CapacityAndTrainingManagement = 'CAPACITY_AND_TRAINING_MANAGEMENT',
-  ComplianceManagement = 'COMPLIANCE_MANAGEMENT',
-  CoreBankingSystem = 'CORE_BANKING_SYSTEM',
-  DocumentManagement = 'DOCUMENT_MANAGEMENT',
-  FixedAssetManagement = 'FIXED_ASSET_MANAGEMENT',
-  HrManagement = 'HR_MANAGEMENT',
-  InventoryManagement = 'INVENTORY_MANAGEMENT',
-  MemberAndShareManagement = 'MEMBER_AND_SHARE_MANAGEMENT',
-  QualityAssuranceForNefscun = 'QUALITY_ASSURANCE_FOR_NEFSCUN',
-}
+export const AllModules = {
+  AccountingSystem: 'ACCOUNTING_SYSTEM',
+  AlternativeChannels: 'ALTERNATIVE_CHANNELS',
+  BusinessIntelligenceAndReporting: 'BUSINESS_INTELLIGENCE_AND_REPORTING',
+  BusinessProcessManagement: 'BUSINESS_PROCESS_MANAGEMENT',
+  CapacityAndTrainingManagement: 'CAPACITY_AND_TRAINING_MANAGEMENT',
+  ComplianceManagement: 'COMPLIANCE_MANAGEMENT',
+  CoreBankingSystem: 'CORE_BANKING_SYSTEM',
+  DocumentManagement: 'DOCUMENT_MANAGEMENT',
+  FixedAssetManagement: 'FIXED_ASSET_MANAGEMENT',
+  HrManagement: 'HR_MANAGEMENT',
+  InventoryManagement: 'INVENTORY_MANAGEMENT',
+  MemberAndShareManagement: 'MEMBER_AND_SHARE_MANAGEMENT',
+  QualityAssuranceForNefscun: 'QUALITY_ASSURANCE_FOR_NEFSCUN',
+} as const;
 
-export enum Arrange {
-  Asc = 'ASC',
-  Desc = 'DESC',
-}
+export type AllModules = typeof AllModules[keyof typeof AllModules];
+export const Arrange = {
+  Asc: 'ASC',
+  Desc: 'DESC',
+} as const;
 
+export type Arrange = typeof Arrange[keyof typeof Arrange];
 export type AuthorizationError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -97,21 +109,52 @@ export type Base = {
   objState: ObjState;
 };
 
-export enum BranchCategory {
-  BranchOffice = 'BRANCH_OFFICE',
-  ContactOffice = 'CONTACT_OFFICE',
-  ExtensionCounter = 'EXTENSION_COUNTER',
-  HeadOffice = 'HEAD_OFFICE',
-  RegionalOffice = 'REGIONAL_OFFICE',
-  ServiceCenter = 'SERVICE_CENTER',
-}
+export const BranchCategory = {
+  BranchOffice: 'BRANCH_OFFICE',
+  ContactOffice: 'CONTACT_OFFICE',
+  ExtensionCounter: 'EXTENSION_COUNTER',
+  HeadOffice: 'HEAD_OFFICE',
+  RegionalOffice: 'REGIONAL_OFFICE',
+  ServiceCenter: 'SERVICE_CENTER',
+} as const;
 
-export enum ComparatorType {
-  EqualTo = 'EqualTo',
-  GreaterThan = 'GreaterThan',
-  LessThan = 'LessThan',
-}
+export type BranchCategory = typeof BranchCategory[keyof typeof BranchCategory];
+export type ClientEnvironment = {
+  description?: Maybe<Scalars['String']>;
+  environmentName: Scalars['String'];
+  environmentSlug: Scalars['String'];
+  id: Scalars['ID'];
+  isForProduction?: Maybe<Scalars['Boolean']>;
+  otpToken?: Maybe<Scalars['String']>;
+};
 
+export type ClientEnvironmentMutation = {
+  createDB?: Maybe<DbCreateResult>;
+  delete: DeleteClientEnvironmentResult;
+  new: NewClientEnvironmentResult;
+};
+
+export type ClientEnvironmentMutationCreateDbArgs = {
+  clientId: Scalars['ID'];
+  environmentId: Scalars['ID'];
+};
+
+export type ClientEnvironmentMutationDeleteArgs = {
+  environmentId: Scalars['String'];
+};
+
+export type ClientEnvironmentMutationNewArgs = {
+  clientId: Scalars['ID'];
+  data: NewClientEnvironmentInput;
+};
+
+export const ComparatorType = {
+  EqualTo: 'EqualTo',
+  GreaterThan: 'GreaterThan',
+  LessThan: 'LessThan',
+} as const;
+
+export type ComparatorType = typeof ComparatorType[keyof typeof ComparatorType];
 export type Condition = {
   column: Scalars['String'];
   comparator: ComparatorType;
@@ -145,6 +188,12 @@ export type DbCreateResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type DeleteClientEnvironmentResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<NeosysClientQuery>;
+  success: Scalars['Boolean'];
+};
+
 export type District = {
   id: Scalars['Int'];
   municipalities: Array<Municipality>;
@@ -168,56 +217,57 @@ export type HeadOfficeDetailsInput = {
   serviceCentreCode?: InputMaybe<Scalars['String']>;
 };
 
-export enum Id_Type {
-  Account = 'ACCOUNT',
-  Address = 'ADDRESS',
-  Bank = 'BANK',
-  Bankbranch = 'BANKBRANCH',
-  Branch = 'BRANCH',
-  Chartsofaccount = 'CHARTSOFACCOUNT',
-  Customfield = 'CUSTOMFIELD',
-  Declaration = 'DECLARATION',
-  Depositiro = 'DEPOSITIRO',
-  Depositproduct = 'DEPOSITPRODUCT',
-  Depositproductcriteria = 'DEPOSITPRODUCTCRITERIA',
-  Deposittds = 'DEPOSITTDS',
-  Document = 'DOCUMENT',
-  Documentreference = 'DOCUMENTREFERENCE',
-  Dynamicentry = 'DYNAMICENTRY',
-  Formfield = 'FORMFIELD',
-  Formoption = 'FORMOPTION',
-  Formsection = 'FORMSECTION',
-  Kymaccountoperatordetails = 'KYMACCOUNTOPERATORDETAILS',
-  Kymcoopaccountoperatordetails = 'KYMCOOPACCOUNTOPERATORDETAILS',
-  Kymcoopdirectordetails = 'KYMCOOPDIRECTORDETAILS',
-  Kymcooperative = 'KYMCOOPERATIVE',
-  Kymcooperativeunion = 'KYMCOOPERATIVEUNION',
-  Kymcooperativeunionpers = 'KYMCOOPERATIVEUNIONPERS',
-  Kymdocument = 'KYMDOCUMENT',
-  Kymfield = 'KYMFIELD',
-  Kymfieldoption = 'KYMFIELDOPTION',
-  Kymidentification = 'KYMIDENTIFICATION',
-  Kymindividual = 'KYMINDIVIDUAL',
-  Kymindividualfamilymembers = 'KYMINDIVIDUALFAMILYMEMBERS',
-  Kymindividualincomesource = 'KYMINDIVIDUALINCOMESOURCE',
-  Kymindividualoccupation = 'KYMINDIVIDUALOCCUPATION',
-  Kyminstitutions = 'KYMINSTITUTIONS',
-  Kymsisterconcerndetails = 'KYMSISTERCONCERNDETAILS',
-  Loanproduct = 'LOANPRODUCT',
-  Loanproductcriteria = 'LOANPRODUCTCRITERIA',
-  Member = 'MEMBER',
-  Myrauser = 'MYRAUSER',
-  Myrauseridetification = 'MYRAUSERIDETIFICATION',
-  Organization = 'ORGANIZATION',
-  Productdocument = 'PRODUCTDOCUMENT',
-  Sharebalance = 'SHAREBALANCE',
-  Shareextracharges = 'SHAREEXTRACHARGES',
-  Sharenumbers = 'SHARENUMBERS',
-  Shareregister = 'SHAREREGISTER',
-  User = 'USER',
-  Userpreference = 'USERPREFERENCE',
-}
+export const Id_Type = {
+  Account: 'ACCOUNT',
+  Address: 'ADDRESS',
+  Bank: 'BANK',
+  Bankbranch: 'BANKBRANCH',
+  Branch: 'BRANCH',
+  Chartsofaccount: 'CHARTSOFACCOUNT',
+  Customfield: 'CUSTOMFIELD',
+  Declaration: 'DECLARATION',
+  Depositiro: 'DEPOSITIRO',
+  Depositproduct: 'DEPOSITPRODUCT',
+  Depositproductcriteria: 'DEPOSITPRODUCTCRITERIA',
+  Deposittds: 'DEPOSITTDS',
+  Document: 'DOCUMENT',
+  Documentreference: 'DOCUMENTREFERENCE',
+  Dynamicentry: 'DYNAMICENTRY',
+  Formfield: 'FORMFIELD',
+  Formoption: 'FORMOPTION',
+  Formsection: 'FORMSECTION',
+  Kymaccountoperatordetails: 'KYMACCOUNTOPERATORDETAILS',
+  Kymcoopaccountoperatordetails: 'KYMCOOPACCOUNTOPERATORDETAILS',
+  Kymcoopdirectordetails: 'KYMCOOPDIRECTORDETAILS',
+  Kymcooperative: 'KYMCOOPERATIVE',
+  Kymcooperativeunion: 'KYMCOOPERATIVEUNION',
+  Kymcooperativeunionpers: 'KYMCOOPERATIVEUNIONPERS',
+  Kymdocument: 'KYMDOCUMENT',
+  Kymfield: 'KYMFIELD',
+  Kymfieldoption: 'KYMFIELDOPTION',
+  Kymidentification: 'KYMIDENTIFICATION',
+  Kymindividual: 'KYMINDIVIDUAL',
+  Kymindividualfamilymembers: 'KYMINDIVIDUALFAMILYMEMBERS',
+  Kymindividualincomesource: 'KYMINDIVIDUALINCOMESOURCE',
+  Kymindividualoccupation: 'KYMINDIVIDUALOCCUPATION',
+  Kyminstitutions: 'KYMINSTITUTIONS',
+  Kymsisterconcerndetails: 'KYMSISTERCONCERNDETAILS',
+  Loanproduct: 'LOANPRODUCT',
+  Loanproductcriteria: 'LOANPRODUCTCRITERIA',
+  Member: 'MEMBER',
+  Myrauser: 'MYRAUSER',
+  Myrauseridetification: 'MYRAUSERIDETIFICATION',
+  Organization: 'ORGANIZATION',
+  Productdocument: 'PRODUCTDOCUMENT',
+  Sharebalance: 'SHAREBALANCE',
+  Shareextracharges: 'SHAREEXTRACHARGES',
+  Sharenumbers: 'SHARENUMBERS',
+  Shareregister: 'SHAREREGISTER',
+  User: 'USER',
+  Userpreference: 'USERPREFERENCE',
+} as const;
 
+export type Id_Type = typeof Id_Type[keyof typeof Id_Type];
 export type Identity = {
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -244,14 +294,15 @@ export type MutationError =
   | ServerError
   | ValidationError;
 
-export enum NatureOfCooperative {
-  AgricultureCooperative = 'AGRICULTURE_COOPERATIVE',
-  HealthCooperative = 'HEALTH_COOPERATIVE',
-  MultipurposeCooperative = 'MULTIPURPOSE_COOPERATIVE',
-  Others = 'OTHERS',
-  SavingAndCredit = 'SAVING_AND_CREDIT',
-}
+export const NatureOfCooperative = {
+  AgricultureCooperative: 'AGRICULTURE_COOPERATIVE',
+  HealthCooperative: 'HEALTH_COOPERATIVE',
+  MultipurposeCooperative: 'MULTIPURPOSE_COOPERATIVE',
+  Others: 'OTHERS',
+  SavingAndCredit: 'SAVING_AND_CREDIT',
+} as const;
 
+export type NatureOfCooperative = typeof NatureOfCooperative[keyof typeof NatureOfCooperative];
 export type NeosysAuthMutation = {
   login?: Maybe<NeosysLoginResult>;
   token?: Maybe<NeosysAuthTokenResult>;
@@ -279,6 +330,17 @@ export type NeosysAuthTokenResult = {
   token?: Maybe<NeosysAuthToken>;
 };
 
+export type NeosysClientDetails = {
+  address?: Maybe<Address>;
+  clientId: Scalars['String'];
+  environments?: Maybe<Array<Maybe<ClientEnvironment>>>;
+  logoId?: Maybe<Scalars['String']>;
+  logoUrl?: Maybe<Scalars['String']>;
+  organizationCode: Scalars['String'];
+  organizationName: Scalars['String'];
+  organizationType?: Maybe<OrganizationType>;
+};
+
 export type NeosysClientFilter = {
   dateFrom?: InputMaybe<Scalars['String']>;
   dateTo?: InputMaybe<Scalars['String']>;
@@ -301,6 +363,7 @@ export type NeosysClientMinimalInfo = {
 export type NeosysClientMutation = {
   add?: Maybe<OrganizationClientAddResult>;
   createDB?: Maybe<DbCreateResult>;
+  environment?: Maybe<ClientEnvironmentMutation>;
 };
 
 export type NeosysClientMutationAddArgs = {
@@ -312,7 +375,12 @@ export type NeosysClientMutationCreateDbArgs = {
 };
 
 export type NeosysClientQuery = {
+  details?: Maybe<NeosysClientDetails>;
   list?: Maybe<Array<Maybe<NeosysClientMinimalInfo>>>;
+};
+
+export type NeosysClientQueryDetailsArgs = {
+  clientId: Scalars['ID'];
 };
 
 export type NeosysClientQueryListArgs = {
@@ -365,21 +433,35 @@ export type NeosysUser = Base & {
   username: Scalars['String'];
 };
 
+export type NewClientEnvironmentInput = {
+  description?: InputMaybe<Scalars['String']>;
+  environmentName?: InputMaybe<Scalars['String']>;
+  isForProduction?: InputMaybe<Scalars['Boolean']>;
+  otpToken?: InputMaybe<Scalars['String']>;
+};
+
+export type NewClientEnvironmentResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<NeosysClientQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type NotFoundError = {
   code: Scalars['Int'];
   message: Scalars['String'];
 };
 
-export enum ObjState {
-  Active = 'ACTIVE',
-  Approved = 'APPROVED',
-  Dormant = 'DORMANT',
-  Draft = 'DRAFT',
-  Inactive = 'INACTIVE',
-  Submitted = 'SUBMITTED',
-  Validated = 'VALIDATED',
-}
+export const ObjState = {
+  Active: 'ACTIVE',
+  Approved: 'APPROVED',
+  Dormant: 'DORMANT',
+  Draft: 'DRAFT',
+  Inactive: 'INACTIVE',
+  Submitted: 'SUBMITTED',
+  Validated: 'VALIDATED',
+} as const;
 
+export type ObjState = typeof ObjState[keyof typeof ObjState];
 export type OrConditions = {
   andConditions: Array<Condition>;
 };
@@ -496,12 +578,14 @@ export type OrganizationContactDetailsInput = {
   website?: InputMaybe<Scalars['String']>;
 };
 
-export enum OrganizationInstallmentLicense {
-  Basic = 'BASIC',
-  Professional = 'PROFESSIONAL',
-  Standard = 'STANDARD',
-}
+export const OrganizationInstallmentLicense = {
+  Basic: 'BASIC',
+  Professional: 'PROFESSIONAL',
+  Standard: 'STANDARD',
+} as const;
 
+export type OrganizationInstallmentLicense =
+  typeof OrganizationInstallmentLicense[keyof typeof OrganizationInstallmentLicense];
 export type OrganizationRegistrationDetails = {
   panOrVat?: Maybe<Scalars['String']>;
   regdAddress?: Maybe<Scalars['String']>;
@@ -517,18 +601,21 @@ export type OrganizationRegistrationDetailsInput = {
   registeredOffice?: InputMaybe<Scalars['String']>;
 };
 
-export enum OrganizationSecuritySetup {
-  PureSass = 'PURE_SASS',
-  Vpn = 'VPN',
-}
+export const OrganizationSecuritySetup = {
+  PureSass: 'PURE_SASS',
+  Vpn: 'VPN',
+} as const;
 
-export enum OrganizationType {
-  CooperativeUnion = 'COOPERATIVE_UNION',
-  DistrictUnion = 'DISTRICT_UNION',
-  Preliminary = 'PRELIMINARY',
-  ProvinceUnion = 'PROVINCE_UNION',
-}
+export type OrganizationSecuritySetup =
+  typeof OrganizationSecuritySetup[keyof typeof OrganizationSecuritySetup];
+export const OrganizationType = {
+  CooperativeUnion: 'COOPERATIVE_UNION',
+  DistrictUnion: 'DISTRICT_UNION',
+  Preliminary: 'PRELIMINARY',
+  ProvinceUnion: 'PROVINCE_UNION',
+} as const;
 
+export type OrganizationType = typeof OrganizationType[keyof typeof OrganizationType];
 export type PageInfo = {
   endCursor?: Maybe<Scalars['Cursor']>;
   hasNextPage: Scalars['Boolean'];
@@ -583,22 +670,26 @@ export type ServerError = {
   message: Scalars['String'];
 };
 
-export enum Transaction_Direction {
-  Purchased = 'PURCHASED',
-  Sold = 'SOLD',
-}
+export const Transaction_Direction = {
+  Purchased: 'PURCHASED',
+  Sold: 'SOLD',
+} as const;
 
-export enum TextFormat {
-  Email = 'EMAIL',
-  IPv4 = 'IPv4',
-  IPv6 = 'IPv6',
-}
+export type Transaction_Direction =
+  typeof Transaction_Direction[keyof typeof Transaction_Direction];
+export const TextFormat = {
+  Email: 'EMAIL',
+  IPv4: 'IPv4',
+  IPv6: 'IPv6',
+} as const;
 
-export enum UserType {
-  Human = 'HUMAN',
-  System = 'SYSTEM',
-}
+export type TextFormat = typeof TextFormat[keyof typeof TextFormat];
+export const UserType = {
+  Human: 'HUMAN',
+  System: 'SYSTEM',
+} as const;
 
+export type UserType = typeof UserType[keyof typeof UserType];
 export type ValidationError = {
   code: Scalars['Int'];
   message: Scalars['InvalidData'];
@@ -692,6 +783,77 @@ export type CreateDbMutation = {
   };
 };
 
+export type SetEnvironementMutationVariables = Exact<{
+  clientId: Scalars['ID'];
+  data: NewClientEnvironmentInput;
+}>;
+
+export type SetEnvironementMutation = {
+  neosys: {
+    client?: {
+      environment?: {
+        new: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type DeleteEnvironementMutationVariables = Exact<{
+  environmentId: Scalars['String'];
+}>;
+
+export type DeleteEnvironementMutation = {
+  neosys: {
+    client?: {
+      environment?: {
+        delete: {
+          success: boolean;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetUpEnvironmentDatabaseMutationVariables = Exact<{
+  environmentId: Scalars['ID'];
+  clientId: Scalars['ID'];
+}>;
+
+export type SetUpEnvironmentDatabaseMutation = {
+  neosys: {
+    client?: {
+      environment?: {
+        createDB?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
 
 export type AllAdministrationQuery = {
@@ -761,6 +923,28 @@ export type GetClientsListQuery = {
         dateJoined?: string | null;
         dbCreated?: boolean | null;
       } | null> | null;
+    } | null;
+  };
+};
+
+export type GetClientDetailsQueryVariables = Exact<{
+  clientId: Scalars['ID'];
+}>;
+
+export type GetClientDetailsQuery = {
+  neosys: {
+    client?: {
+      details?: {
+        organizationName: string;
+        environments?: Array<{
+          id: string;
+          environmentName: string;
+          environmentSlug: string;
+          otpToken?: string | null;
+          description?: string | null;
+          isForProduction?: boolean | null;
+        } | null> | null;
+      } | null;
     } | null;
   };
 };
@@ -1007,6 +1191,102 @@ export const useCreateDbMutation = <TError = unknown, TContext = unknown>(
     useAxios<CreateDbMutation, CreateDbMutationVariables>(CreateDbDocument),
     options
   );
+export const SetEnvironementDocument = `
+    mutation setEnvironement($clientId: ID!, $data: NewClientEnvironmentInput!) {
+  neosys {
+    client {
+      environment {
+        new(clientId: $clientId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEnvironementMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEnvironementMutation,
+    TError,
+    SetEnvironementMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEnvironementMutation, TError, SetEnvironementMutationVariables, TContext>(
+    ['setEnvironement'],
+    useAxios<SetEnvironementMutation, SetEnvironementMutationVariables>(SetEnvironementDocument),
+    options
+  );
+export const DeleteEnvironementDocument = `
+    mutation deleteEnvironement($environmentId: String!) {
+  neosys {
+    client {
+      environment {
+        delete(environmentId: $environmentId) {
+          success
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteEnvironementMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteEnvironementMutation,
+    TError,
+    DeleteEnvironementMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteEnvironementMutation, TError, DeleteEnvironementMutationVariables, TContext>(
+    ['deleteEnvironement'],
+    useAxios<DeleteEnvironementMutation, DeleteEnvironementMutationVariables>(
+      DeleteEnvironementDocument
+    ),
+    options
+  );
+export const SetUpEnvironmentDatabaseDocument = `
+    mutation setUpEnvironmentDatabase($environmentId: ID!, $clientId: ID!) {
+  neosys {
+    client {
+      environment {
+        createDB(environmentId: $environmentId, clientId: $clientId) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetUpEnvironmentDatabaseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetUpEnvironmentDatabaseMutation,
+    TError,
+    SetUpEnvironmentDatabaseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetUpEnvironmentDatabaseMutation,
+    TError,
+    SetUpEnvironmentDatabaseMutationVariables,
+    TContext
+  >(
+    ['setUpEnvironmentDatabase'],
+    useAxios<SetUpEnvironmentDatabaseMutation, SetUpEnvironmentDatabaseMutationVariables>(
+      SetUpEnvironmentDatabaseDocument
+    ),
+    options
+  );
 export const AllAdministrationDocument = `
     query allAdministration {
   administration {
@@ -1156,6 +1436,37 @@ export const useGetClientsListQuery = <TData = GetClientsListQuery, TError = unk
   useQuery<GetClientsListQuery, TError, TData>(
     variables === undefined ? ['getClientsList'] : ['getClientsList', variables],
     useAxios<GetClientsListQuery, GetClientsListQueryVariables>(GetClientsListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetClientDetailsDocument = `
+    query getClientDetails($clientId: ID!) {
+  neosys {
+    client {
+      details(clientId: $clientId) {
+        organizationName
+        environments {
+          id
+          environmentName
+          environmentSlug
+          otpToken
+          description
+          isForProduction
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetClientDetailsQuery = <TData = GetClientDetailsQuery, TError = unknown>(
+  variables: GetClientDetailsQueryVariables,
+  options?: UseQueryOptions<GetClientDetailsQuery, TError, TData>
+) =>
+  useQuery<GetClientDetailsQuery, TError, TData>(
+    ['getClientDetails', variables],
+    useAxios<GetClientDetailsQuery, GetClientDetailsQueryVariables>(GetClientDetailsDocument).bind(
       null,
       variables
     ),

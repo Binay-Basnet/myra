@@ -11,7 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { LoanReportInputs, LoanReportMember } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 export const LoanStatementReport = () => {
@@ -92,6 +92,13 @@ export const LoanStatementReport = () => {
               {
                 header: 'Transaction Id',
                 accessorKey: 'txnId',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.txnId as string}
+                    type="loan"
+                    label={props?.row?.original?.txnId as string}
+                  />
+                ),
               },
 
               {

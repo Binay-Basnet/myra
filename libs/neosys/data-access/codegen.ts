@@ -5,7 +5,7 @@ const config: CodegenConfig = {
   overwrite: true,
   schema: [
     {
-      [process.env['NX_SCHEMA_PATH'] as string]: {
+      [`${process.env['NX_SCHEMA_PATH']}/query` as string]: {
         headers: {
           schema: 'true',
         },
@@ -42,6 +42,7 @@ const config: CodegenConfig = {
         },
         skipTypename: true,
         inlineFragmentTypes: 'combine',
+        enumsAsConst: true,
         fetcher: {
           func: './axiosHelper#useAxios',
           isReactHook: true,

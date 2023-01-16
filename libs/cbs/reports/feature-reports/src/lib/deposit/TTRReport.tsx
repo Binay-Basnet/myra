@@ -13,7 +13,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { formatAddress, localizedDate } from '@coop/cbs/utils';
+import { formatAddress, localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -155,6 +155,13 @@ export const TTRReport = () => {
                   {
                     header: 'Account Type of No.',
                     accessorKey: 'accountNo',
+                    cell: (props) => (
+                      <RouteToDetailsPage
+                        id={props?.row?.original?.accountNo as string}
+                        type="savings"
+                        label={props?.row?.original?.accountNo as string}
+                      />
+                    ),
                   },
                   {
                     header: 'Source of Fund',

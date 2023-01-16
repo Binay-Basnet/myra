@@ -188,7 +188,7 @@ export const NewAccountTransfer = () => {
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={`${t['newAccountTransferNewAccountTransfer']} - ${featureCode?.newAccountTransfer}`}
           />
@@ -252,6 +252,7 @@ export const NewAccountTransfer = () => {
                             <FormMemberSelect
                               name="destMemberId"
                               label={t['newAccountTransferReceipentMember']}
+                              excludeIds={[memberId]}
                             />
 
                             <FormAccountSelect
@@ -336,16 +337,17 @@ export const NewAccountTransfer = () => {
                                 ? accountTypes[sourceAccount?.product?.nature]
                                 : '',
                               ID: sourceAccount?.id,
-                              currentBalance: sourceAccount?.balance ?? '0',
+                              currentBalance: sourceAccount?.availableBalance ?? '0',
                               minimumBalance: sourceAccount?.product?.minimumBalance ?? '0',
                               interestAccured: sourceAccount?.interestAccured ?? '0',
                               guaranteeBalance: sourceAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: sourceAccount?.overDrawnBalance ?? '0',
                               fine: sourceAccount?.dues?.fine ?? 0,
                               // branch: 'Kumaripati',
-                              openDate: sourceAccount?.accountOpenedDate ?? 'N/A',
-                              expiryDate: sourceAccount?.accountExpiryDate ?? 'N/A',
-                              lastTransactionDate: sourceAccount?.lastTransactionDate ?? 'N/A',
+                              openDate: localizedDate(sourceAccount?.accountOpenedDate) ?? 'N/A',
+                              expiryDate: localizedDate(sourceAccount?.accountExpiryDate) ?? 'N/A',
+                              lastTransactionDate:
+                                localizedDate(sourceAccount?.lastTransactionDate) ?? 'N/A',
                               productName: sourceAccount?.product?.productName,
                               installmentAmount:
                                 sourceAccount?.product?.nature ===

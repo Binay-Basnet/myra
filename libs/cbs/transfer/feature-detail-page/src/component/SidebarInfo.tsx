@@ -23,7 +23,7 @@ export const SidebarInfo = ({ sidebarData }: SidebarProps) => (
     >
       <Box w="100%" display="flex" gap="s16" flexDirection="column">
         <Text fontSize="r1" fontWeight="Regular" color="gray.700" lineHeight="17px">
-          {sidebarData?.code}
+          #{sidebarData?.code}
         </Text>
         <Box display="flex" justifyContent="space-between">
           <Box display="flex" flexDirection="column" gap="s4">
@@ -37,10 +37,6 @@ export const SidebarInfo = ({ sidebarData }: SidebarProps) => (
               </Text>
             )}
           </Box>
-
-          <Text fontSize="r1" fontWeight="SemiBold" color="gray.800" lineHeight="150%">
-            {sidebarData?.amount}
-          </Text>
         </Box>
       </Box>
     </Box>

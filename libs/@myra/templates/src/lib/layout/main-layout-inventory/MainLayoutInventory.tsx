@@ -17,6 +17,7 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
       <Box position="fixed" top={0} width="100%" zIndex={11}>
         <TopLevelHeader />
         <TabMenu
+          module="INVENTORY"
           routeIndex={2}
           tabs={[
             {
@@ -24,24 +25,32 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
               icon: FaTools,
               link: '/inventory/register',
               match: ['register'],
+              aclKey: 'CBS_MEMBERS_MEMBER',
+              navMenu: 'INVENTORY',
             },
             {
               title: 'items',
               icon: FaShapes,
               link: '/inventory/items',
               match: ['items'],
+              aclKey: 'CBS_MEMBERS_MEMBER',
+              navMenu: 'ITEMS',
             },
             {
               title: 'warehouse',
               icon: FaShapes,
               link: '/inventory/warehouse/list',
               match: ['warehouse'],
+              aclKey: 'CBS_MEMBERS_MEMBER',
+              navMenu: 'WAREHOUSE',
             },
             {
               title: 'suppliers',
               icon: FaUserFriends,
               link: '/inventory/suppliers',
               match: ['suppliers'],
+              aclKey: 'CBS_MEMBERS_MEMBER',
+              navMenu: 'SUPPLIERS',
             },
           ]}
         />

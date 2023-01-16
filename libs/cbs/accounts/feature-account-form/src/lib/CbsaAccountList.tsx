@@ -52,8 +52,22 @@ export const CBSAccountList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Account Id',
+        header: 'Account Open Date',
+        accessorFn: (row) => row?.node?.createdAt,
+        cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
+      },
+      {
+        header: 'Account ID',
         accessorFn: (row) => row?.node?.id,
+      },
+
+      {
+        header: 'Account Name',
+        accessorFn: (row) => row?.node?.accountName,
+      },
+      {
+        header: 'Product Name',
+        accessorFn: (row) => row?.node?.product?.productName,
       },
       {
         header: 'Member Name',
@@ -77,20 +91,6 @@ export const CBSAccountList = () => {
           </Box>
         ),
       },
-
-      {
-        header: 'Account Name',
-        accessorFn: (row) => row?.node?.accountName,
-      },
-      {
-        header: 'Product Name',
-        accessorFn: (row) => row?.node?.product?.productName,
-      },
-      {
-        header: 'Account Open Date',
-        accessorFn: (row) => row?.node?.createdAt,
-        cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
-      },
       {
         id: '_actions',
         header: '',
@@ -100,11 +100,15 @@ export const CBSAccountList = () => {
               items={[
                 {
                   title: 'View Details',
+                  aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT',
+                  action: 'VIEW',
                   onClick: (row) =>
                     router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${row['id']}`),
                 },
                 {
                   title: 'depositProductEdit',
+                  aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT',
+                  action: 'UPDATE',
                   onClick: (row) => router.push(`${ROUTES.CBS_ACCOUNT_OPEN_EDIT}?id=${row['id']}`),
                 },
               ]}
@@ -115,6 +119,8 @@ export const CBSAccountList = () => {
               items={[
                 {
                   title: 'View Details',
+                  aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT',
+                  action: 'VIEW',
                   onClick: (row) =>
                     router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${row['id']}`),
                 },
@@ -132,7 +138,7 @@ export const CBSAccountList = () => {
 
   return (
     <>
-      <Box position="sticky" top="110px" zIndex={3}>
+      <Box position="sticky" top="0px" zIndex={3}>
         <PageHeader
           heading={`Saving Accounts - ${featureCode?.accountList}`}
           tabItems={ACCOUNT_TAB_ITEMS}

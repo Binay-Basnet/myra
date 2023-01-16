@@ -1,4 +1,3 @@
-import { BsPinAngle } from 'react-icons/bs';
 import { IoChevronForwardOutline, IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
@@ -36,7 +35,7 @@ export const ProductDetailPathBar = ({
   const router = useRouter();
 
   return (
-    <Box position="sticky" top="110px" zIndex={10}>
+    <Box position="sticky" top="0" zIndex={10}>
       <Box
         h="50px"
         bg="white"
@@ -57,7 +56,7 @@ export const ProductDetailPathBar = ({
           <Text fontSize="r2" fontWeight="Medium" color="gray.800" lineHeight="150%">
             {name}
           </Text>
-          <Icon as={BsPinAngle} size="md" />
+          {/* <Icon as={BsPinAngle} size="md" /> */}
         </Box>
 
         <Box display="flex" gap="s32">

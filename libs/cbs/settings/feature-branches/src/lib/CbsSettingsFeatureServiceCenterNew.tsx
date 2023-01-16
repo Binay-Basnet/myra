@@ -10,7 +10,6 @@ import {
   Id_Type,
   useAllAdministrationQuery,
   useGetBranchEditDataQuery,
-  useGetCoaListQuery,
   useGetNewIdMutation,
   useSetBranchDataMutation,
 } from '@coop/cbs/data-access';
@@ -76,18 +75,18 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
     { label: t['settingsBranchStatusInactive'], value: false },
   ];
 
-  const { data: coa } = useGetCoaListQuery({
-    filter: {
-      active: true,
-    },
-  });
+  // const { data: coa } = useGetCoaListQuery({
+  //   filter: {
+  //     active: true,
+  //   },
+  // });
 
-  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+  // const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => ({
-    label: item?.name?.en as string,
-    value: item?.id as string,
-  }));
+  // const coaList = coaData?.map((item) => ({
+  //   label: item?.name?.en as string,
+  //   value: item?.id as string,
+  // }));
 
   const branchCategories = [
     {
@@ -161,7 +160,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
   return (
     <>
       <Container height="fit-content" minW="container.xl">
-        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader title={t['serviceCenterAdd']} />
         </Box>
 
@@ -296,7 +295,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                       )} */}
                     </Box>
 
-                    <Box>
+                    {/* <Box>
                       <InputGroupContainer>
                         <FormSelect
                           label={t['settinsBranchPLTransfer']}
@@ -309,7 +308,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                           options={coaList}
                         />
                       </InputGroupContainer>
-                    </Box>
+                    </Box> */}
 
                     <Box display="flex" justifyContent="space-between">
                       <Box display="flex" flexDirection="column">
@@ -337,7 +336,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
               status={
                 <Box display="flex" gap="s8">
                   <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
-                    Press Save Account to save form
+                    Press Save Service Center to save form
                   </Text>
                 </Box>
               }

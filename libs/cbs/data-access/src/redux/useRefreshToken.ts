@@ -1,9 +1,11 @@
 import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
-import axios from 'axios';
+
+import { getAPIUrl } from '@coop/shared/utils';
 
 import { saveToken } from './slices/auth-slice';
+import { axiosAgent } from '../generated/axiosHelper';
 
 interface IToken {
   access: string;
@@ -11,13 +13,7 @@ interface IToken {
 }
 
 interface RefreshTokenResponse {
-  data: {
-    auth: {
-      token: {
-        token: IToken;
-      };
-    };
-  };
+  token: IToken;
 }
 
 // https://github.com/vercel/next.js/issues/18127#issuecomment-950907739
@@ -33,6 +29,8 @@ function useReplace() {
   return replace;
 }
 
+const schemaPath = getAPIUrl();
+
 export const useRefreshToken = (url: string) => {
   const replace = useReplace();
   const dispatch = useDispatch();
@@ -41,52 +39,22 @@ export const useRefreshToken = (url: string) => {
     const refreshToken = localStorage.getItem('refreshToken');
     // eslint-disable-next-line prefer-promise-reject-errors
     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
-    return axios
-      .post<RefreshTokenResponse>(url, {
-        query: `mutation{
-          auth{
-            token(refreshToken:"${refreshToken}"){
-            token{
-              refresh
-              access
-            }
-              error {
-                  ... on BadRequestError {
-                  __typename
-                  badRequestErrorMessage: message
-                  jpt:code
-                }
-                ... on ServerError {
-                  __typename
-                  serverErrorMessage: message
-                  yes:code
-                }
-                ... on AuthorizationError {
-                  __typename
-                  authorizationErrorMsg: message
-                  no:code
-                }
-                ... on ValidationError {
-                  __typename
-                  validationErrorMsg: message
-                  haha:code
-                }
-                ... on NotFoundError {
-                  __typename
-                  notFoundErrorMsg: message
-                  hey:code
-                }
-            }
-            }
-          }
-        }`,
+    return axiosAgent
+      .post<RefreshTokenResponse>(`${schemaPath}/erp/reset-token`, {
+        refreshToken,
       })
       .then((res) => {
-        if (res.data.data.auth?.token?.token) {
-          const accessToken = res.data?.data?.auth?.token?.token?.access;
-          localStorage.setItem('refreshToken', res.data?.data?.auth?.token?.token?.refresh);
-          dispatch(saveToken(accessToken));
-          return accessToken;
+        const tokens = res.data?.token;
+
+        if (tokens) {
+          dispatch(
+            saveToken({
+              accessToken: tokens.access,
+              refreshToken: tokens.refresh,
+            })
+          );
+
+          return tokens.access;
         }
         replace('/login');
         throw new Error('Credentials are Expired!!');

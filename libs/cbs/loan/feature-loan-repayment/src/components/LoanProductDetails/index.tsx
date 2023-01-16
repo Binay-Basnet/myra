@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+
 import { Box, Text } from '@myra-ui';
 
 import { LoanProductInstallment, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 
 interface IProductProps {
   loanAccountId: string;
@@ -28,10 +30,12 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
       {' '}
       <Box border="1px solid" borderColor="border.layout" borderRadius="br2">
         <Box w="100%" p="s16" display="flex" flexDirection="column" gap="s4" bg="gray.100">
-          <Box display="flex" flexDirection="column" gap="s4">
-            <Text fontWeight="500" fontSize="r1" color="#006837">
-              {loanGeneralInfo?.loanProduct}
-            </Text>
+          <Box display="flex" flexDirection="column" gap="s4" alignItems="start">
+            <RedirectButton
+              label={loanGeneralInfo?.loanProduct as string}
+              link={`${ROUTES.SETTINGS_GENERAL_LP_DETAILS}?id=${loanData?.productId}`}
+            />
+
             <Text fontWeight="500" fontSize="s3">
               {loanGeneralInfo?.loanSubType}
             </Text>
@@ -80,7 +84,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Expiry Date{' '}
             </Text>
             <Text fontSize="s3" fontWeight="600">
-              {loanData?.loanDetails?.expiryDate}
+              {loanData?.loanDetails?.expiryDate ?? '-'}
             </Text>
           </Box>
           <Box display="flex" flexDirection="column" gap="s4">
@@ -88,7 +92,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Last Payment Date{' '}
             </Text>
             <Text fontSize="s3" fontWeight="600">
-              {loanData?.repaymentDetails?.lastPaymentDate}
+              {loanData?.repaymentDetails?.lastPaymentDate ?? '-'}
             </Text>
           </Box>
           <Box display="flex" flexDirection="column" gap="s4">

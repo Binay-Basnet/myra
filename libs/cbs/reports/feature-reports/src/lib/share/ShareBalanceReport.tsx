@@ -11,7 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { formatAddress, localizedDate } from '@coop/cbs/utils';
+import { formatAddress, localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -69,7 +69,7 @@ export const ShareBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 8,
+                    colspan: 7,
                   },
                 },
               },
@@ -85,11 +85,13 @@ export const ShareBalanceReport = () => {
               {
                 header: 'Member ID',
                 accessorKey: 'memberCode',
-                meta: {
-                  Footer: {
-                    display: 'none',
-                  },
-                },
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.memberId as string}
+                    type="member"
+                    label={props?.row?.original?.memberCode as string}
+                  />
+                ),
               },
               {
                 header: 'Member Name',

@@ -58,7 +58,7 @@ export const AddCashTransfer = () => {
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={`Service Center Cash Transfer - ${featureCode.newVaultTransfer}`}
             closeLink={ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_LIST}

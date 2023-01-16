@@ -272,6 +272,11 @@ export const REPORTS = {
 
   [ReportGroup.LOAN]: [
     {
+      id: '6.0',
+      report: Report.LOAN_BALANCE_REPORT,
+      link: 'loan-balance',
+    },
+    {
       id: '6.1',
       report: Report.LOAN_INDIVIDUAL_STATEMENT,
       link: 'statement',
@@ -496,11 +501,7 @@ export const REPORTS = {
       report: Report.USER_LIST_REPORT,
       link: 'users',
     },
-    {
-      id: '11',
-      report: Report.LOAN_BALANCE_REPORT,
-      link: 'loan-balance',
-    },
+
     {
       id: '',
       report: Report.SAVING_BALANCE_REPORT,

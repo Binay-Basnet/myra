@@ -5,8 +5,7 @@ import { TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useAppSelector, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 // const accountClass = {
 //   EQUITY_AND_LIABILITIES: 'Equity and Liabilities',
@@ -19,7 +18,7 @@ export const COAListView = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
-  const branch = useAppSelector((state) => state?.auth?.user?.branch);
+  const branch = useAppSelector((state) => state?.auth?.user?.currentBranch);
 
   const { data: accountList, isFetching } = useGetCoaAccountListQuery({
     branchId: branch?.id,
@@ -85,9 +84,11 @@ export const COAListView = () => {
               items={[
                 {
                   title: 'View Details',
+                  aclKey: 'SETTINGS_COA',
+                  action: 'VIEW',
                   onClick: (row) => {
                     router.push(
-                      `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${row?.node?.accountCode}`
+                      `/${getUrl(router.pathname, 3)}/details?id=${row?.node?.accountCode}`
                     );
                   },
                 },
@@ -107,7 +108,7 @@ export const COAListView = () => {
       columns={columns}
       isLoading={isFetching}
       rowOnClick={(row) =>
-        router.push(`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${row?.node?.accountCode}`)
+        router.push(`/${getUrl(router.pathname, 3)}/details?id=${row?.node?.accountCode}`)
       }
       pagination={{
         total: accountList?.settings?.chartsOfAccount?.coaAccountList?.totalCount ?? 'Many',

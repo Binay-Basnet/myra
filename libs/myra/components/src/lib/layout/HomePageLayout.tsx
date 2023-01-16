@@ -11,34 +11,6 @@ export interface HomePageLayoutProps {
   children: React.ReactNode;
 }
 
-const myraAppn = [
-  {
-    title: 'corebankingSystems',
-    img: '/cbs.svg',
-    link: '/cbs/members/list',
-  },
-  {
-    title: 'memberAndShareManagement',
-    img: '/memberandshare.svg',
-    link: '/cbs/members/list',
-  },
-  {
-    title: 'accountingSystem',
-    img: '/accounting.svg',
-    link: '/accounting/sales/list',
-  },
-  {
-    title: 'alternativeChannelsAndCrossConnectivity',
-    img: '/tnt.svg',
-    link: '/alternative-channels/users/mBanking',
-  },
-  {
-    title: 'inventoryManagement',
-    img: '/inventory.svg',
-    link: '/inventory/register',
-  },
-];
-
 const notSubscribed = [
   {
     title: 'mobileApp',
@@ -82,6 +54,34 @@ const comingSoon = [
   },
 ];
 
+const myraAppn = [
+  {
+    title: 'corebankingSystems',
+    img: '/cbs.svg',
+    link: '/cbs/members/list',
+  },
+  {
+    title: 'memberAndShareManagement',
+    img: '/memberandshare.svg',
+    link: '/cbs/members/list',
+  },
+  {
+    title: 'accountingSystem',
+    img: '/accounting.svg',
+    link: '/accounting/sales/sales-entry/list',
+  },
+  {
+    title: 'alternativeChannelsAndCrossConnectivity',
+    img: '/tnt.svg',
+    link: '/alternative-channels/users/mBanking',
+  },
+  {
+    title: 'inventoryManagement',
+    img: '/inventory.svg',
+    link: '/inventory/register',
+  },
+];
+
 export const HomePageLayout = (props: HomePageLayoutProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const { t } = useTranslation();
@@ -101,7 +101,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
         justifyContent="flex-start"
         height="calc(100vh - 60px)"
         px="s16"
-        py="s16"
+        py="s24"
         gap="s32"
         overflowY="auto"
       >
@@ -126,7 +126,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                 alignItems="center"
                 cursor="pointer"
                 _hover={{ bg: 'gray.200' }}
-                onClick={() => router.push(item.link)}
+                onClick={() => router?.push(item?.link)}
               >
                 <Box flexShrink={0} display="flex" justifyContent="center" alignItems="center">
                   <Image width="32" height="32" src={item.img} alt={t[item.title]} />
@@ -267,7 +267,8 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
       <Box
         display="flex"
         justifyContent="center"
-        p="s16"
+        py="s24"
+        px="s16"
         ml="300px"
         mr="300px"
         flexGrow="1"

@@ -81,6 +81,7 @@ export const NewLoanApplication = () => {
     useGetIndividualMemberDetails({ memberId: String(memberId) });
 
   const { data: loanTypeData } = useGetLoanProductTypesQuery();
+
   const { data: loanSubTypeData } = useGetLoanProductSubTypeQuery(
     { productTypeId: loanType },
     { enabled: !!loanType }
@@ -254,7 +255,7 @@ export const NewLoanApplication = () => {
 
   return (
     <Container minW="container.xl" p="0" bg="white">
-      <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <FormHeader title={`New Loan Application - ${featureCode.newLoanApplication} `} />
       </Box>
       <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
 import { Box, Text } from '@myra-ui';
+
+import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface IProductProps {
@@ -27,13 +29,14 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
   return (
     <Box border="1px solid" borderColor="border.layout" borderRadius="br2">
       <Box w="100%" p="s16" display="flex" flexDirection="column" gap="s4" bg="gray.100">
-        <Box display="flex" flexDirection="column" gap="s4">
-          <Text fontWeight="500" fontSize="r1" color="#006837">
-            {productData?.productName}
-          </Text>
-          <Text fontWeight="500" fontSize="s3">
+        <Box display="flex" flexDirection="column" gap="s4" alignSelf="start">
+          {/* <Text fontWeight="500" fontSize="s3">
             {productData?.productSubType}
-          </Text>
+          </Text> */}
+          <RedirectButton
+            label={productData?.productName as string}
+            link={`${ROUTES.SETTINGS_GENERAL_LP_DETAILS}?id=${productId} `}
+          />
         </Box>
         <Text fontWeight="Medium" fontSize="s3">
           {productData?.productCode?.prefix}-{productData?.productCode?.initialNo}

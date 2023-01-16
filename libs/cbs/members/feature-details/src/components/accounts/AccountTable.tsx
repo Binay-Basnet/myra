@@ -4,6 +4,7 @@ import { Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
@@ -14,6 +15,7 @@ interface ILoanPaymentScheduleTableProps {
         accountName: string | null | undefined;
         totalBalance?: string | number | null | undefined;
         interestRate: string | number | null | undefined;
+        accountNumber?: string | null | undefined;
       }[];
 
   //   data: MemberPaymentView[] | null | undefined;
@@ -41,6 +43,12 @@ export const AccountTable = ({ data }: ILoanPaymentScheduleTableProps) => {
       {
         header: 'Account Name',
         accessorKey: 'accountName',
+        cell: (props) => (
+          <RedirectButton
+            label={props?.row?.original?.accountName as string}
+            link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${props?.row?.original?.accountNumber}`}
+          />
+        ),
       },
       {
         header: 'Balance',

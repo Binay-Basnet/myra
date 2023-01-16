@@ -12,7 +12,7 @@
     "start:all": "concurrently \"yarn start:myra\" \"yarn start:neosys-admin\" \"yarn start:ebanking\"",
     "storybook": "nx run @myra-ui:storybook",
     "prepare": "husky install",
-    "gen:theme-typings": "chakra-cli tokens ./libs/shared/utils/src/lib/theme/index.ts",
+    "gen:theme-typings": "chakra-cli tokens ./libs/@myra/theme/src/lib/theme/index.ts",
     "graphql-cbs:codegen": "graphql-codegen -r dotenv/config --config libs/cbs/data-access/codegen.ts dotenv_config_path=apps/myra/.env",
     "graphql-ebank:codegen": "graphql-codegen -r dotenv/config --config libs/ebanking/data-access/codegen.ts dotenv_config_path=apps/ebanking/.env",
     "graphql-neosys:codegen": "graphql-codegen -r dotenv/config --config libs/neosys/data-access/codegen.ts dotenv_config_path=apps/neosys-admin/.env",
@@ -24,6 +24,8 @@
   },
   "private": true,
   "dependencies": {
+    "@casl/ability": "^6.3.3",
+    "@casl/react": "^3.1.0",
     "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^2.4.3",
     "@emotion/react": "^11.10.5",
@@ -40,7 +42,7 @@
     "add": "^2.0.6",
     "apexcharts": "^3.35.4",
     "axios": "^0.27.2",
-    "chakra-react-select": "4.2.2",
+    "chakra-react-select": "^4.4.3",
     "concurrently": "^7.2.1",
     "core-js": "^3.6.5",
     "date-fns": "^2.28.0",
@@ -76,6 +78,7 @@
     "regenerator-runtime": "0.13.7",
     "to-words": "^3.3.0",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {

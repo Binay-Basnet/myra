@@ -5,6 +5,7 @@ query getAccountOpeningReport($data: AccountOpeningReportInput) {
         data {
           accountName
           accountNumber
+          memberCode
           memberId
           openedBy
           openingDate
@@ -20,6 +21,7 @@ query getAccountClosingReport($data: AccountClosingReportInput) {
       accountClosingReport(data: $data) {
         data {
           memberId
+          memberCode
           accountNumber
           accountName
           openingDate
@@ -38,6 +40,7 @@ query getAccountClosingReport($data: AccountClosingReportInput) {
       accountClosingReport(data: $data) {
         data {
           memberId
+          memberCode
           accountNumber
           accountName
           openingDate

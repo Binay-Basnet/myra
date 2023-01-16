@@ -10,16 +10,9 @@ interface IToken {
   access: string;
   refresh: string;
 }
+
 interface RefreshTokenResponse {
-  data: {
-    neosys: {
-      auth: {
-        token: {
-          token: IToken;
-        };
-      };
-    };
-  };
+  token: IToken;
 }
 
 // https://github.com/vercel/next.js/issues/18127#issuecomment-950907739
@@ -44,54 +37,18 @@ export const useRefreshToken = (url: string) => {
     // eslint-disable-next-line prefer-promise-reject-errors
     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
     return privateAgent
-      .post<RefreshTokenResponse>(url, {
-        query: `mutation {
-  neosys {
-    auth {
-      token(refreshToken: "${refreshToken}") {
-        token {
-          refresh
-          access
-        }
-        error {
-          ... on BadRequestError {
-            __typename
-            badRequestErrorMessage: message
-            jpt: code
-          }
-          ... on ServerError {
-            __typename
-            serverErrorMessage: message
-            yes: code
-          }
-          ... on AuthorizationError {
-            __typename
-            authorizationErrorMsg: message
-            no: code
-          }
-          ... on ValidationError {
-            __typename
-            validationErrorMsg: message
-            haha: code
-          }
-          ... on NotFoundError {
-            __typename
-            notFoundErrorMsg: message
-            hey: code
-          }
-        }
-      }
-    }
-  }
-}`,
+      .post<RefreshTokenResponse>(`${process.env['NX_SCHEMA_PATH']}/neosys/reset-token`, {
+        refreshToken,
       })
       .then((res) => {
-        if (res.data.data.neosys.auth?.token?.token) {
-          const accessToken = res.data?.data?.neosys.auth?.token?.token?.access;
-          localStorage.setItem('refreshToken', res.data?.data?.neosys.auth?.token?.token?.refresh);
-          dispatch(saveToken(accessToken));
-          return accessToken;
+        const tokens = res.data?.token;
+
+        if (tokens && tokens?.refresh && tokens?.access) {
+          localStorage.setItem('refreshToken', tokens.refresh);
+          dispatch(saveToken(tokens.access));
+          return tokens?.access;
         }
+
         replace('/login');
         throw new Error('Credentials are Expired!!');
       })

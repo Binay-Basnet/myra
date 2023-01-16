@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
+import omit from 'lodash/omit';
 
 import { asyncToast, Box, DetailCardContent, Grid, GridItem, Modal } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -15,7 +16,6 @@ import {
   TransferRequestAction,
   useSetTellerTransferActionMutation,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
 import { FormTextArea } from '@coop/shared/form';
 
 interface ITellerTransferApproveModalProps {
@@ -72,7 +72,7 @@ export const TellerTransferApproveModal = ({
       }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getTellerTransactionListData']);
-        queryClient.invalidateQueries(['getMe']);
+        // queryClient.invalidateQueries(['getMe']);
 
         onToggle();
         methods.reset();
@@ -192,7 +192,15 @@ export const TellerTransferApproveModal = ({
         }}
         isSecondaryDanger
         onClose={() => {
-          router.replace(ROUTES.CBS_TRANSFER_TELLER_LIST, undefined, { shallow: true });
+          router.push(
+            {
+              query: {
+                ...omit(router.query, 'id'),
+              },
+            },
+            undefined,
+            { shallow: true }
+          );
           onClose();
         }}
         title="Teller Transfer"

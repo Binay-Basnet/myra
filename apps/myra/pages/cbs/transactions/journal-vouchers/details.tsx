@@ -1,15 +1,15 @@
 import { ReactElement } from 'react';
-import { JournalVoucerDetailPage } from 'libs/accounting/feature-accounting-detail/src';
 
 import { MainLayout } from '@myra-ui';
 
-import { DetailPathBar } from '@coop/cbs/settings/ui-layout';
+import { JournalVoucerDetailPage } from '@coop/accounting/details';
+import { TransactionDetailPathBar } from '@coop/cbs/transactions/ui-components';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 
 // TODO ( Update this page when design arrives )
 const AccountingJournalVoucherView = () => (
   <>
-    <DetailPathBar title="Journal Vouchers" />
+    <TransactionDetailPathBar title="Journal Vouchers" />
     <JournalVoucerDetailPage />
   </>
 );

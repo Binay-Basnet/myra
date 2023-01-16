@@ -1,10 +1,11 @@
-import { DetailPageQuickLinks } from '@myra-ui';
+import { Alert, DetailPageQuickLinks } from '@myra-ui';
 
-import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
+import { NatureOfDepositProduct, ObjState, useAccountDetails } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 
 import {
   AccountStatistics,
+  AdditionalInfoCard,
   BalanceChart,
   GeneralInfoCard,
   RecentTransactions,
@@ -20,16 +21,17 @@ import {
 
 // const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const accountTypes = {
-  [NatureOfDepositProduct.Saving]: 'Saving Account',
-  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-  [NatureOfDepositProduct.Current]: 'Current Account',
-};
+// const accountTypes = {
+//   [NatureOfDepositProduct.Saving]: 'Saving Account',
+//   [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+//   [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+//   [NatureOfDepositProduct.Current]: 'Current Account',
+// };
 
 export const Overview = () => {
   const { accountDetails } = useAccountDetails();
   const isTermSaving = accountDetails?.accountType === 'TERM_SAVING_OR_FD';
+  const isClosed = accountDetails?.objState === ObjState?.Inactive;
 
   const links = [
     {
@@ -44,49 +46,6 @@ export const Overview = () => {
       title: 'New Account Transfer',
       link: `${ROUTES.CBS_ACCOUNT_TRANSFER_ADD}?memberId=${accountDetails?.member?.id}&srcAccountId=${accountDetails?.accountId}`,
     },
-  ];
-
-  const generalInfos = [
-    { label: 'Account Name', value: accountDetails?.accountName },
-    { label: 'Product Name', value: accountDetails?.productName },
-    {
-      label: 'Account Open Date',
-      value: accountDetails?.accountOpenDate,
-    },
-    {
-      label: 'Default Amount Deposit Account Type',
-      value:
-        accountDetails?.accountType === NatureOfDepositProduct.RecurringSaving ||
-        (accountDetails?.accountType === NatureOfDepositProduct?.Current &&
-          accountDetails?.isMandatory)
-          ? accountDetails?.defaultAccountType
-            ? accountTypes[accountDetails?.defaultAccountType]
-            : '-'
-          : '',
-    },
-    {
-      label: 'Interest Accrued',
-      value:
-        accountDetails?.accountType === NatureOfDepositProduct.Current
-          ? null
-          : accountDetails?.interestAccrued ?? '0',
-    },
-    {
-      label: 'Interest Earned',
-      value:
-        accountDetails?.accountType === NatureOfDepositProduct.Current
-          ? null
-          : accountDetails?.interestEarned ?? '0',
-    },
-    {
-      label: 'Interest Rate',
-      value:
-        accountDetails?.accountType === NatureOfDepositProduct.Current
-          ? null
-          : `${accountDetails?.interestRate} %`,
-    },
-    { label: 'Guarantee Amount', value: accountDetails?.guaranteedAmount ?? '0' },
-    { label: 'Tenure', value: accountDetails?.accountTenure ?? '-' },
   ];
 
   const additionalFeatures = [
@@ -107,25 +66,45 @@ export const Overview = () => {
     { label: 'ATM Facility', value: accountDetails?.atmFacility ? 'Yes' : 'No' },
   ];
 
+  const generalInfoData = {
+    accountName: accountDetails?.accountName,
+    productId: accountDetails?.productId,
+    productName: accountDetails?.productName,
+    accountOpenDate: accountDetails?.accountOpenDate,
+    defaultAccountType: accountDetails?.defaultAccountType,
+    accountType: accountDetails?.accountType,
+    interestAccrued: accountDetails?.interestAccrued,
+    interestEarned: accountDetails?.interestEarned,
+    interestRate: accountDetails?.interestRate,
+    guaranteedAmount: accountDetails?.guaranteedAmount,
+    accountTenure: accountDetails?.accountTenure,
+    isMandatory: accountDetails?.isMandatory,
+  };
   return (
     <>
       <TabHeader heading="Overview" />
+      {isClosed && <Alert status="error" subtitle="This Account has been Closed" hideCloseIcon />}
 
-      {!isTermSaving && <DetailPageQuickLinks links={links} />}
+      {!isTermSaving && !isClosed && <DetailPageQuickLinks links={links} />}
 
       <AccountStatistics />
 
-      <GeneralInfoCard title="General Information" items={generalInfos} />
+      <GeneralInfoCard
+        title="General Information"
+        data={generalInfoData}
+        // accountTypes={accountTypes}
+      />
 
       <BalanceChart />
 
-      <RecentTransactions />
+      <RecentTransactions isClosed={isClosed} />
 
       {(accountDetails?.accountType === NatureOfDepositProduct.RecurringSaving ||
         (accountDetails?.accountType === NatureOfDepositProduct.Saving &&
-          accountDetails?.isMandatory)) && <UpcomingInstallments />}
+          accountDetails?.isMandatory &&
+          !isClosed)) && <UpcomingInstallments />}
 
-      <GeneralInfoCard title="Additional Features" items={additionalFeatures} />
+      <AdditionalInfoCard title="Additional Features" items={additionalFeatures} />
 
       {/* <MemberBasicInformation /> */}
       {/* <Grid templateColumns="repeat(2,1fr)" gap="s16">

@@ -2,15 +2,19 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { PageHeader } from '@myra-ui';
-import { ApprovalStatusCell, Column, Table } from '@myra-ui/table';
+import { Box, PageHeader, Text } from '@myra-ui';
+import { ApprovalStatusCell, Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
+  CashInTransitInfo,
   CashInTransitTransferType,
   RequestStatus,
   useGetCashInTransitListQuery,
 } from '@coop/cbs/data-access';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { localizedDate } from '@coop/cbs/utils';
+import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
+
+import { CashInTransitTransferAproveModal } from '../components/cash-in-transit/CashInTransitTransferAproveModal';
 
 /* eslint-disable-next-line */
 export interface CashTransitTransferProps {}
@@ -53,16 +57,36 @@ export const CashTransitTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'ID',
-        accessorFn: (row) => row?.node?.id,
+        header: 'Transfer Date',
+        accessorFn: (row) => localizedDate(row?.node?.transferDate),
       },
       {
-        header: 'Sender Service Center',
+        header: 'Transfer ID',
+        accessorFn: (row) => row?.node?.transactionCode,
+      },
+      {
+        header: 'Sender',
         accessorFn: (row) => row?.node?.senderServiceCentreName,
+        cell: (props) => (
+          <Box display="flex" flexDirection="column" gap="s4">
+            <Text fontWeight="Regular" fontSize="r1" lineHeight="17px" color="gray.900">
+              {props.row.original?.node?.senderTellerName}
+            </Text>
+            <Text fontWeight="Regular" fontSize="s3" lineHeight="16px" color="gray.500">
+              {props.row.original?.node?.senderServiceCentreName}
+            </Text>
+          </Box>
+        ),
+        meta: {
+          width: '20%',
+        },
       },
       {
         header: 'Receiver Service Center',
         accessorFn: (row) => row?.node?.receiverServiceCentreName,
+        meta: {
+          width: '20%',
+        },
       },
       {
         header: 'Approval Status',
@@ -77,37 +101,44 @@ export const CashTransitTransferList = () => {
         ),
       },
       {
-        header: 'Cash Amount',
-
+        header: 'Amount',
         accessorFn: (row) => row?.node?.cashAmount,
         meta: {
           isNumeric: true,
         },
       },
+
       {
-        header: 'Transfer Date',
-        accessorFn: (row) => row?.node?.transferDate?.local?.split(' ')[0] ?? 'N/A',
+        id: '_actions',
+        header: '',
+        cell: (props) => (
+          <TablePopover
+            node={props?.row?.original?.node}
+            items={[
+              {
+                title: 'viewDetails',
+                aclKey: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
+                action: 'VIEW',
+                onClick: () => {
+                  router.push(
+                    `/${getUrl(router.pathname, 3)}/view?id=${props?.row?.original?.node?.id}`
+                  );
+                },
+              },
+            ]}
+          />
+        ),
+        meta: {
+          width: '50px',
+        },
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
-      //   accessorKey: 'actions',
-      //   cell: (cell) => {
-      //     const member = cell?.row?.original?.node;
-      //     const memberData = { id: member?.ID };
-      //     return <PopoverComponent items={[]} member={memberData} />;
-      //   },
-      //   meta: {
-      //     width: '60px',
-      //   },
-      // },
     ],
     [t]
   );
 
-  // const selectedTransfer = rowData?.find(
-  //   (transfer) => transfer?.node?.id === router.query['id']
-  // )?.node;
+  const selectedTransfer = rowData?.find(
+    (transfer) => transfer?.node?.id === router.query['id']
+  )?.node;
 
   return (
     <>
@@ -130,7 +161,9 @@ export const CashTransitTransferList = () => {
           router.push(
             {
               query: {
+                ...router.query,
                 id: row?.node?.id,
+                code: row?.node?.transactionCode,
               },
             },
             undefined,
@@ -140,10 +173,10 @@ export const CashTransitTransferList = () => {
         }}
       />
 
-      {/* <TellerTransferApproveModal
-        transfer={selectedTransfer as TellerActivityEntry}
+      <CashInTransitTransferAproveModal
+        transfer={selectedTransfer as CashInTransitInfo}
         approveModal={modalProps}
-      /> */}
+      />
     </>
   );
 };

@@ -8,6 +8,7 @@ import {
   PickupMethod,
   useAccountDetails,
   useGetAvailableRangeQuery,
+  useGetAvailableSlipsListQuery,
   useSetIssueNewSlipMutation,
   WithdrawSlipIssueInput,
 } from '@coop/cbs/data-access';
@@ -56,6 +57,11 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
   const count = watch('count');
 
   const pickupMethod = watch('pickupMethod');
+
+  const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
+    { accountId: accountDetails?.accountId as string },
+    { enabled: !!accountDetails?.accountId }
+  );
 
   const { data: availableRangeQueryData } = useGetAvailableRangeQuery(
     { count },
@@ -106,17 +112,20 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
           <Grid templateColumns="repeat(2, 1fr)" gap="s16">
             <FormSelect
               name="count"
+              menuPosition="fixed"
               label="Total no of withdraw slip"
               options={totalNumberOptions}
             />
 
-            <GridItem colSpan={2}>
-              <Alert
-                status="warning"
-                title="If new withdraw slip is created, existing active withdraw slips will be blocked and new withdraw slip will be created."
-                hideCloseIcon
-              />
-            </GridItem>
+            {availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.length && (
+              <GridItem colSpan={2}>
+                <Alert
+                  status="warning"
+                  title="If new withdraw slip is created, existing active withdraw slips will be blocked and new withdraw slip will be created."
+                  hideCloseIcon
+                />
+              </GridItem>
+            )}
 
             {count && from && to && (
               <>

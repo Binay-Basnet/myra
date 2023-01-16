@@ -15,7 +15,7 @@ export const AccordianListCardComponent = ({
   <Grid p="s16" gap="s20" templateColumns={`repeat(${columns},1fr)`}>
     {accordionCardDetails &&
       accordionCardDetails?.map((item) => (
-        <DetailCardContent title={item?.label} subtitle={item?.value} />
+        <DetailCardContent title={item?.label} subtitle={item?.value ?? 'N/A'} />
       ))}
   </Grid>
 );

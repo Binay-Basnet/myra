@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Box } from '@myra-ui';
 
 import { SideBar } from '../component/SideBar';
-import { CollateralPage, DocumentPage, GuaranteePage } from '../tabs';
+import { CollateralPage, DocumentPage, GuaranteePage, LedgerPage } from '../tabs';
 import { OverviewPage } from '../tabs/OverviewPage';
 
 /* eslint-disable-next-line */
@@ -25,11 +25,12 @@ export const CbsLoanFeatureLoanAccountDetail = () => {
       >
         <SideBar />
       </Box>
-      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+      <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <OverviewPage />}
         {tabQuery === 'collateral' && <CollateralPage />}
         {tabQuery === 'guarantee' && <GuaranteePage />}
         {tabQuery === 'documents' && <DocumentPage />}
+        {tabQuery === 'ledger' && <LedgerPage />}
       </Box>
     </Box>
   );

@@ -1,56 +1,117 @@
 import { FieldValues, useForm, UseFormRegister } from 'react-hook-form';
 import { AiOutlineMobile } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
-import { login, useAppDispatch, useEBankingLoginMutation } from '@coop/ebanking/data-access';
-import { Box, Button, Checkbox, Icon, Input, PasswordInput, Text, toast } from '@myra-ui';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Icon,
+  Input,
+  MutationError,
+  PasswordInput,
+  Text,
+  toast,
+} from '@myra-ui';
+
+import { axiosAgent, login, useAppDispatch } from '@coop/ebanking/data-access';
 
 import { AuthContainer } from '../components/AuthContainer';
 
+export type LoginResponse = {
+  recordId?: string;
+  record?: {
+    token: { access: string; refresh: string };
+
+    data?: {
+      id: string;
+      dob?: string | null;
+      mobile?: string | null;
+      name?: string | null;
+      cooperatives?: {
+        id: string;
+        name?: string | null;
+        logoUrl?: string | null;
+        mobileNo?: string | null;
+      }[];
+    };
+  };
+  error?: MutationError;
+};
+
+type LoginBody = {
+  mobileNo: string;
+  password: string;
+};
+
+const loginUser = async (body: LoginBody) => {
+  const response = await axiosAgent.post<LoginResponse>(
+    `${process.env['NX_SCHEMA_PATH']}/ebanking/login`,
+    body
+  );
+
+  return response?.data;
+};
+
 export const LoginPage = () => {
   const router = useRouter();
-  const { register, handleSubmit } = useForm<{ mobileNo: string; password: string }>();
+  const { register, handleSubmit } = useForm<LoginBody>();
 
-  const { mutateAsync, isLoading } = useEBankingLoginMutation();
+  // const { mutateAsync, isLoading } = useEBankingLoginMutation();
   const dispatch = useAppDispatch();
 
-  const onSubmit = handleSubmit(async (data) => {
-    const response = await mutateAsync({
-      data,
-    });
-
-    if (response?.eBanking?.auth?.login?.error) {
-      toast({ id: 'login-error', type: 'error', message: 'Invalid Credentials' });
-      return;
-    }
-
-    if ('error' in response) {
+  const { mutateAsync, isLoading } = useMutation(loginUser, {
+    onMutate: () => {
       toast({
-        id: 'login-error',
-        type: 'error',
-        message: 'Invalid Credentials',
+        id: 'login',
+        type: 'success',
+        state: 'loading',
+        message: 'Logging In!!',
       });
-      return;
-    }
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast({
+        id: 'login',
+        type: 'error',
+        message: error?.response?.data?.message || 'Server Error',
+      });
+    },
+    onSuccess: (res) => {
+      if (!res?.record?.token?.access) {
+        return;
+      }
 
-    const accessToken = response?.eBanking?.auth?.login?.record?.token?.access;
-    const refreshToken = response?.eBanking?.auth?.login?.record?.token?.refresh;
-    const user = response?.eBanking?.auth?.login?.record?.data;
+      const accessToken = res?.record?.token?.access;
+      const refreshToken = res?.record?.token?.refresh;
+      const user = res?.record?.data;
 
-    if (user && accessToken) {
-      dispatch(login({ user, token: accessToken }));
-    }
-    localStorage.setItem('master-refreshToken', String(refreshToken));
+      if (accessToken && refreshToken && user) {
+        dispatch(login({ user, token: accessToken }));
+        localStorage.setItem('master-refreshToken', String(refreshToken));
 
-    if (user?.cooperatives?.length === 0) {
-      router.replace('/setup');
-    } else {
-      router.replace('/login/coop');
-    }
+        if (user?.cooperatives?.length === 0) {
+          router.replace('/setup');
+        } else {
+          router.replace('/login/coop');
+        }
+
+        toast({
+          id: 'login',
+          type: 'success',
+          message: 'Logged In Successfully',
+        });
+      }
+    },
   });
 
   return (
-    <form onSubmit={onSubmit}>
+    <form
+      onSubmit={handleSubmit(async (data) => {
+        await mutateAsync(data);
+      })}
+    >
       <AuthContainer
         title="Welcome back to Myra!"
         subtitle="Please enter your login credentials below to continue using the app."
@@ -109,7 +170,13 @@ export const LoginPage = () => {
             <Box h="1px" bg="#DCDCDC" w="100%" />
           </Box>
           <Box>
-            <Button h="s48" w="100%" variant="outline" type="button">
+            <Button
+              onClick={() => router.push('/setup/apply/kym')}
+              h="s48"
+              w="100%"
+              variant="outline"
+              type="button"
+            >
               Apply for COOP registration
             </Button>
           </Box>

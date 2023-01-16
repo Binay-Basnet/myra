@@ -6,6 +6,7 @@ import {
   LocalizedDateFilter,
   RolesFilter,
   useGetUserReportQuery,
+  useGetUserRolesQuery,
   UserReport,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -30,6 +31,8 @@ export const UsersReport = () => {
     filters?.filter?.role && filters?.filter?.role?.length !== 0
       ? filters?.filter?.role?.map((r) => r.value)
       : null;
+
+  const { data: userRoles } = useGetUserRolesQuery();
 
   const { data, isFetching } = useGetUserReportQuery(
     {
@@ -154,13 +157,10 @@ export const UsersReport = () => {
             <FormSelect
               name="filter.role"
               isMulti
-              options={[
-                { label: 'Agent', value: RolesFilter.Agent },
-                { label: 'Branch Manager', value: RolesFilter.BranchManager },
-                { label: 'Head Teller', value: RolesFilter.HeadTeller },
-                { label: 'Teller', value: RolesFilter.Teller },
-                { label: 'Superadmin', value: RolesFilter.Superadmin },
-              ]}
+              options={userRoles?.settings.allRoles?.map((role) => ({
+                label: role?.name as string,
+                value: role?.id as string,
+              }))}
             />
           </Report.Filter>
         </Report.Filters>

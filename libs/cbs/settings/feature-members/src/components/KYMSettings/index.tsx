@@ -274,7 +274,7 @@ export const KYMCustomFieldAdd = ({ kymType }: { kymType: KYMCategory }) => {
   const [hasNewField, setHasNewField] = useState(false);
   const methods = useForm<{
     name: string;
-    fieldType: FormFieldType.SingleSelect | FormFieldType.MultipleSelect | 'FormSection';
+    fieldType: 'SINGLE_SELECT' | 'MULTIPLE_SELECT' | 'FormSection';
   }>({});
   const { mutateAsync: addNewCustomSection, isLoading } = useUpsertCustomSectionMutation();
   const { mutateAsync: addNewCustomField, isLoading: fieldLoading } =

@@ -34,6 +34,7 @@ export const ProductServiceCharge = ({ serviceCharge }: IProductServiceCharge) =
     ],
     []
   );
+  if (serviceCharge?.length === 0) return null;
 
   return (
     <DetailsCard title="Account Service Charge" hasTable>

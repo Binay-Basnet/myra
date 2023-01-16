@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Avatar, Box, Icon, Text } from '@myra-ui';
 
-import { ROUTES } from '@coop/cbs/utils';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 
 type MemberInfoProps = {
   memberId?: string | undefined | null;
@@ -13,6 +13,7 @@ type MemberInfoProps = {
   sourceAccount: string | undefined | null;
   destinationName: string | undefined | null;
   destinationAccount: string | undefined | null;
+  recipientMemberId?: string | undefined | null;
   detailPage?: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction' | 'loanRepayment';
 };
 
@@ -25,6 +26,7 @@ export const MemberInfo = ({
   sourceAccount,
   destinationName,
   destinationAccount,
+  recipientMemberId,
 }: MemberInfoProps) => {
   const router = useRouter();
   return (
@@ -53,18 +55,19 @@ export const MemberInfo = ({
         {detailPage === 'accountTransfer' && (
           <Box display="flex" alignItems="center" gap="s12">
             <Box>
-              <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
-                {name}
-              </Text>
+              <RedirectButton label={name} link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${memberId}`} />
+
               <Text fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-70">
                 {sourceAccount}
               </Text>
             </Box>
             <Icon color="success.400" as={IoArrowForwardOutline} />
             <Box>
-              <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
-                {destinationName}
-              </Text>
+              <RedirectButton
+                label={destinationName}
+                link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${recipientMemberId}`}
+              />
+
               <Text fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-70">
                 {destinationAccount}
               </Text>

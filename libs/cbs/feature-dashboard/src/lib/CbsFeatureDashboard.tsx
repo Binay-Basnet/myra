@@ -19,16 +19,20 @@ export const CbsFeatureDashboard = () => (
     width="100%"
     display="flex"
     flexDirection="column"
-    gap="s32"
+    gap="s24"
     p="0"
     pb="55px"
   >
     <QuickLinksComponent />
-    <MyDay />
-    <DashboardTable />
+    <Box display="flex" flexDir="column" gap="s16">
+      <MyDay />
+      <DashboardTable />
+    </Box>
     <MyBranch />
-    <MyCoop />
-    <DashboardCharts />
+    <Box display="flex" flexDir="column" gap="s16">
+      <MyCoop />
+      <DashboardCharts />
+    </Box>
   </Box>
 );
 

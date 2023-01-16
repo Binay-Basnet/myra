@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useRouter } from 'next/router';
-import { Input, InputGroup, InputLeftElement, Popover, Text } from '@chakra-ui/react';
+import {
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  Text,
+} from '@chakra-ui/react';
 import debounce from 'lodash/debounce';
 import qs from 'qs';
 
-import { DEFAULT_PAGE_SIZE, PopoverTrigger, SmallPagination } from '@myra-ui/components';
-import { Box, Button, Icon } from '@myra-ui/foundations';
+import { DEFAULT_PAGE_SIZE, GridItem, PopoverTrigger, SmallPagination } from '@myra-ui/components';
+import { Box, Button, Grid, Icon } from '@myra-ui/foundations';
+
+import { exportVisibleTableToExcel } from '@coop/cbs/utils';
 
 export const SearchIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -77,6 +87,11 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
     paginationParams['first'] ?? paginationParams['last'] ?? DEFAULT_PAGE_SIZE
   );
 
+  const excelFileName = useMemo(
+    () => router?.pathname?.replace(/\//gi, '-')?.substring(1),
+    [router?.pathname]
+  );
+
   React.useEffect(() => {
     if (searchTerm) {
       setSearch(searchTerm);
@@ -101,11 +116,18 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
           _active={{ border: 'solid 1px', borderColor: 'primary.500' }}
           defaultValue={search && search}
           onChange={debounce((e) => {
-            router.push({
-              query: {
-                search: e.target.value,
-              },
-            });
+            router.query['objState']
+              ? router.push({
+                  query: {
+                    objState: router.query['objState'],
+                    search: e.target.value,
+                  },
+                })
+              : router.push({
+                  query: {
+                    search: e.target.value,
+                  },
+                });
           }, 800)}
         />
       </InputGroup>
@@ -193,22 +215,28 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
             </Button>
           </Box>
         </PopoverTrigger>
-        {/*   <PopoverContent minWidth="180px" w="180px" color="white" _focus={{ boxShadow: 'none' }}>
+        <PopoverContent minWidth="180px" w="180px" color="white" _focus={{ boxShadow: 'none' }}>
           <PopoverBody px="0" py="s8">
             <Grid>
-              <GridItem px="s16" py="s8" _hover={{ bg: 'gray.100' }} cursor="pointer">
+              {/* <GridItem px="s16" py="s8" _hover={{ bg: 'gray.100' }} cursor="pointer">
                 <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
                   Export All (.xlsx)
                 </Text>
-              </GridItem>
-              <GridItem px="s16" py="s8" _hover={{ bg: 'gray.100' }} cursor="pointer">
+              </GridItem> */}
+              <GridItem
+                px="s16"
+                py="s8"
+                _hover={{ bg: 'gray.100' }}
+                cursor="pointer"
+                onClick={() => exportVisibleTableToExcel(excelFileName)}
+              >
                 <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                  Export Visible (.xlsx)
+                  Export Visible
                 </Text>
               </GridItem>
             </Grid>
           </PopoverBody>
-        </PopoverContent> */}
+        </PopoverContent>
       </Popover>
     </Box>
   );

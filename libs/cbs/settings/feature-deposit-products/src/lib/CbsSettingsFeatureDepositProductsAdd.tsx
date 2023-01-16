@@ -36,7 +36,6 @@ import {
   LadderRate,
   MandatoryProduct,
   Penalty,
-  PostingFrequency,
   PrematuredPenalty,
   Product,
   ProductCode,
@@ -364,7 +363,7 @@ export const SettingsDepositProductsAdd = () => {
 
   return (
     <>
-      <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.lg" height="fit-content" paddingInline="0">
           <FormHeader title={t['depositProductAddDepositProducts']} />
         </Container>
@@ -417,7 +416,7 @@ export const SettingsDepositProductsAdd = () => {
               {depositNature !== NatureOfDepositProduct.Current && (
                 <>
                   <Interest />
-                  <PostingFrequency />
+                  {/* <PostingFrequency /> */}
                 </>
               )}
 

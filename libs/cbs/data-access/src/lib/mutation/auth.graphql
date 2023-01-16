@@ -1,80 +1,54 @@
-mutation login($data: LoginInput!) {
-  auth {
-    login(data: $data) {
-      recordId
-      record {
-        token {
-          access
-          refresh
-        }
-        data {
-          user {
-            id
-            objState
-            username
-            firstName
-            middleName
-            lastName
-            role
-            profilePic
-            userBalance
-            branch {
-              id
-              name
-              category
-              branchBalance
-            }
-            organization {
-              basicDetails {
-                name
-                logo
-              }
-              contactDetails {
-                website
-                phoneNumber
-                email
-              }
-              address {
-                district
-                wardNo
-                state
-                locality
-                localGovernment
-                houseNo
-              }
-              registrationDetails {
-                regdNo
-                panOrVat
-              }
-            }
-          }
-          preference {
-            language
-            languageCode
-            date
-          }
-        }
-      }
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
-
-mutation refresh($refreshToken: String!) {
-  auth {
-    token(refreshToken: $refreshToken) {
-      token {
-        access
-        refresh
-      }
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
+#mutation login($data: LoginInput!) {
+#  auth {
+#    login(data: $data) {
+#      recordId
+#      record {
+#        token {
+#          access
+#          refresh
+#        }
+#        data {
+#          branches {
+#            id
+#            name
+#          }
+#          rolesList {
+#            id
+#            name
+#          }
+#          permission {
+#            myPermission
+#          }
+#          preference {
+#            language
+#            languageCode
+#            date
+#          }
+#          user {
+#            ...User
+#          }
+#        }
+#      }
+#      error {
+#        ...MutationError
+#      }
+#    }
+#  }
+#}
+#
+#mutation refresh($refreshToken: String!) {
+#  auth {
+#    token(refreshToken: $refreshToken) {
+#      token {
+#        access
+#        refresh
+#      }
+#      error {
+#        ...MutationError
+#      }
+#    }
+#  }
+#}
 
 mutation resetPassword($userId: String!, $newPassword: String!) {
   user {
@@ -107,6 +81,40 @@ mutation setNewPassword($token: String!, $newPassword: String!) {
         recordID
         error {
           ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation switchRole($role: String, $branch: String) {
+  auth {
+    switchRole(role: $role, branchId: $branch) {
+      data {
+        token {
+          access
+          refresh
+        }
+        me {
+          branches {
+            id
+            name
+          }
+          rolesList {
+            id
+            name
+          }
+          permission {
+            myPermission
+          }
+          preference {
+            language
+            languageCode
+            date
+          }
+          user {
+            ...User
+          }
         }
       }
     }

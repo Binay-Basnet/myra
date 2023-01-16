@@ -19,6 +19,7 @@ import {
   RequestType,
   useGetChequeBookRequestsQuery,
 } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
@@ -45,12 +46,16 @@ export const ChequeBookRequestList = () => {
   const columns = React.useMemo<Column<typeof chequeBookRequests[0]>[]>(
     () => [
       {
+        header: 'Requested Date',
+        accessorFn: (row) => row?.node?.requestedDate,
+      },
+      {
         header: 'Request ID',
         accessorFn: (row) => row?.node?.id,
       },
 
       {
-        header: 'Requested By',
+        header: 'Member',
         accessorFn: (row) => row?.node?.memberName,
         cell: (props) => (
           <Box display="flex" flexDir="column" gap="s4">
@@ -90,10 +95,6 @@ export const ChequeBookRequestList = () => {
       },
 
       {
-        header: 'Requested Date',
-        accessorFn: (row) => row?.node?.requestedDate,
-      },
-      {
         id: '_actions',
         header: '',
         cell: (props) =>
@@ -102,6 +103,8 @@ export const ChequeBookRequestList = () => {
               items={[
                 {
                   title: 'View Details',
+                  // aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_REQUESTS',
+                  // action: 'VIEW',
                   onClick: (row) => {
                     router.push(
                       {
@@ -134,8 +137,8 @@ export const ChequeBookRequestList = () => {
 
   return (
     <Box display="flex" flexDir="column">
-      <Box position="sticky" top="110px" zIndex={3}>
-        <PageHeader heading={`Withdraw Slip List - ${featureCode?.withdrawSlipRequest}`} />
+      <Box position="sticky" top="0" zIndex={3}>
+        <PageHeader heading={`Withdraw Slip Requests - ${featureCode?.withdrawSlipRequest}`} />
       </Box>
 
       <Table
@@ -166,6 +169,7 @@ export const ChequeBookRequestList = () => {
         requestType={RequestType.ChequeBookRequest}
         queryKey="getChequeBookRequests"
       >
+        Value
         <Box borderBottom="1px" borderBottomColor="border.layout">
           <DetailPageMemberCard
             id={selectedRequest?.memberId as string}
@@ -176,7 +180,15 @@ export const ChequeBookRequestList = () => {
           />
         </Box>
         <Grid templateColumns="repeat(3, 1fr)" gap="s20" p="s16">
-          <DetailCardContent title="Account Name" subtitle={selectedRequest?.accountType} />
+          <DetailCardContent
+            title="Account Name"
+            children={
+              <RedirectButton
+                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedRequest?.accountNumber}`}
+                label={selectedRequest?.accountType as string}
+              />
+            }
+          />
           <DetailCardContent title="Account Number" subtitle={selectedRequest?.accountNumber} />
           <DetailCardContent title="Branch" subtitle={selectedRequest?.branchName} />
           <DetailCardContent

@@ -42,6 +42,7 @@ export const ProductWithdrawPenalty = ({ penaltyData }: IProductWithdrawPenalty)
     ],
     []
   );
+  if (penaltyDataArray?.length === 0) return null;
 
   return (
     <DetailsCard title="Withdraw Penalty Setup" hasTable>

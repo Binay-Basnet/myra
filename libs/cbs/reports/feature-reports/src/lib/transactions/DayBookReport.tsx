@@ -7,9 +7,8 @@ import { ExpandedCell, ExpandedHeader, MultiFooter } from '@myra-ui/table';
 
 import {
   LocalizedDateFilter,
-  Roles,
   useGetDayBookReportQuery,
-  useGetSettingsUserListDataQuery,
+  useGetTellerListQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
@@ -56,12 +55,9 @@ export const DayBookReport = () => {
     { enabled: !!filters }
   );
 
-  const { data: userListData } = useGetSettingsUserListDataQuery({
-    filter: { role: [Roles.Teller, Roles.HeadTeller] },
-    paginate: { after: '', first: -1 },
-  });
+  const { data: userListData } = useGetTellerListQuery();
 
-  const userList = userListData?.settings?.myraUser?.list?.edges;
+  const userList = userListData?.settings?.myraUser?.tellers;
 
   const receiptData = data?.report?.transactionReport?.financial?.dayBookReport?.data;
   const totalAmount = receiptData?.totalAmount;
@@ -287,8 +283,8 @@ export const DayBookReport = () => {
             <FormSelect
               label="User"
               options={userList?.map((user) => ({
-                label: user.node?.name as string,
-                value: user.node?.id as string,
+                label: user?.name as string,
+                value: user?.id as string,
               }))}
               name="filter.user"
             />

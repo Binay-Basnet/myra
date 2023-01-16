@@ -11,6 +11,7 @@ type AssignedMemberListProps = {
         member?: string | null | undefined;
         account?: string | null | undefined;
         amount?: string | null | undefined;
+        transactionId?: string | null | undefined;
       } | null)[]
     | null
     | undefined;
@@ -27,6 +28,11 @@ export const AssignedMemberList = ({ data }: AssignedMemberListProps) => {
         id: '1',
         header: t['transDetailSN'],
         accessorFn: (row) => row?.account,
+      },
+      {
+        id: '1',
+        header: 'Txn ID',
+        accessorFn: (row) => row?.transactionId,
       },
       {
         id: '2',
@@ -46,6 +52,8 @@ export const AssignedMemberList = ({ data }: AssignedMemberListProps) => {
     ],
     []
   );
+
+  if (data?.length === 0) return null;
   return (
     <DetailsCard title={t['transDetailAssignedMemberList']} hasTable>
       <Table showFooter isStatic isLoading={false} data={rowData ?? []} columns={columns} />

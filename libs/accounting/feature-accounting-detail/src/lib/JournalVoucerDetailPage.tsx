@@ -17,14 +17,14 @@ export const JournalVoucerDetailPage = () => {
 
   const detailData = {
     id: voucherData?.transactionCode,
-    date: voucherData?.date?.local,
+    date: voucherData?.date,
     reference: voucherData?.reference,
     note: voucherData?.note,
   };
 
   const sidebarDetailData = {
-    id: voucherData?.id,
-    date: voucherData?.date?.local,
+    id: voucherData?.transactionCode,
+    date: voucherData?.date,
     status: voucherData?.status,
     amount: voucherData?.amount,
   };
@@ -47,7 +47,8 @@ export const JournalVoucerDetailPage = () => {
           Overview
         </Text>
         <TransactionDetails detailData={detailData} />
-        <Note note={voucherData?.note} />
+        {voucherData?.note && <Note note={voucherData?.note} />}
+
         <GlTransaction
           data={voucherData?.glTransaction}
           totalDebit={voucherData?.totalDebit ?? '-'}
