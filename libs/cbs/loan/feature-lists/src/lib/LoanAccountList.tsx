@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { PageHeader } from '@myra-ui';
 
-import { LoanObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, LoanObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
@@ -10,11 +10,19 @@ import { LoanAccTable } from '../components/LoanTable';
 
 export const LoanAccountList = () => {
   const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetLoanListQuery({
     paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
     filter: {
       objectState: LoanObjState.Disbursed,
+      id: searchTerm,
+      query: searchTerm,
+      productID: searchTerm,
+      accountName: searchTerm,
+      productName: searchTerm,
+      memberName: searchTerm,
+      filterMode: Filter_Mode.Or,
     },
   });
   return (

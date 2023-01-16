@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { useGetJournalVoucherListQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetJournalVoucherListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -15,9 +15,15 @@ export const AccountingFeatureJournalVouchersList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetJournalVoucherListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    filter: {
+      id: searchTerm,
+      transactionId: searchTerm,
+      filterMode: Filter_Mode.Or,
+    },
     // filter: {
     //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
     // },

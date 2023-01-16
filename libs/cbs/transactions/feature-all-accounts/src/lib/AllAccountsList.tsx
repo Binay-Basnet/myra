@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetAllAccountsQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetAllAccountsQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
@@ -12,8 +12,20 @@ export interface AllAccountsListProps {}
 
 export const AllAccountsList = () => {
   const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
+
   const { data, isFetching } = useGetAllAccountsQuery({
     paginate: getRouterQuery({ type: ['PAGINATION'] }),
+    filter: {
+      id: searchTerm,
+      loanAccountName: searchTerm,
+      loanProductName: searchTerm,
+      savingAccountName: searchTerm,
+      savingProductName: searchTerm,
+      loanMemberName: searchTerm,
+      savingMemberName: searchTerm,
+      filterMode: Filter_Mode.Or,
+    },
   });
 
   const rowData = useMemo(() => data?.allAccounts?.list?.edges ?? [], [data]);

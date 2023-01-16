@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import {
   amountConverter,
   featureCode,
@@ -38,11 +38,17 @@ export const AgentTransactionList = () => {
   //     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
   //   },
   // });
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetDepositListDataQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
-      filter: { depositedBy: 'agent' },
+      filter: {
+        depositedBy: 'agent',
+        marketRepName: searchTerm,
+        marketRepId: searchTerm,
+        filterMode: Filter_Mode.Or,
+      },
     },
     {
       staleTime: 0,

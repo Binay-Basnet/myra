@@ -7,6 +7,7 @@ import { Box, DetailPageHeader, SuccessPrint, Text } from '@myra-ui';
 
 import { useGetJournalVoucherDetailQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
+import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
 
 export interface PathBarProps {
   title: string;
@@ -180,6 +181,8 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
         Date: localizedDate(voucherData?.date),
         Reference: voucherData?.reference,
         ...temp,
+        'Total Amount': amountConverter(voucherData?.amount ?? 0),
+        'Total Amount in words': amountToWordsConverter(voucherData?.amount ?? 0),
         Note: voucherData?.note,
       };
 
