@@ -258,6 +258,7 @@ query getLoanInstallments(
   $tenure: Int!
   $interest: Float!
   $repaymentScheme: LoanRepaymentScheme!
+  $installmentFrequency: InstallmentFrequency
 ) {
   loanAccount {
     getLoanInstallments(
@@ -267,6 +268,7 @@ query getLoanInstallments(
       repaymentScheme: $repaymentScheme
       sanctionAmount: $sanctionAmount
       tenure: $tenure
+      installmentFrequency: $installmentFrequency
     ) {
       data {
         total

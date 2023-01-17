@@ -27,7 +27,7 @@ const paymentModes = [
     value: AlternativeChannelPaymentMode?.Account,
   },
   {
-    label: 'Bank Cheque',
+    label: 'Bank Voucher',
     value: AlternativeChannelPaymentMode?.BankVoucher,
   },
   {
@@ -89,6 +89,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
 
   useEffect(() => {
     setValue('cash.cashPaid', String(totalDeposit));
+    setValue('totalAmount', String(totalDeposit));
   }, [totalDeposit, setValue]);
 
   return (
@@ -105,6 +106,13 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 filterBy={ObjState.Active}
               />
             </GridItem>
+            <FormInput
+              name="totalAmount"
+              label="Amount"
+              isDisabled
+              textAlign="right"
+              placeholder="0.00"
+            />
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
               <FormTextArea name="accountTransfer.note" label="Note" />
             </GridItem>
@@ -117,6 +125,13 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 <FormBankSelect name="bankCheque.bank" label="Bank Name" />
               </GridItem>
               <FormInput name="bankCheque.voucher_id" label="Voucher Number" />
+              <FormInput
+                name="totalAmount"
+                label="Amount"
+                isDisabled
+                textAlign="right"
+                placeholder="0.00"
+              />
 
               <FormInput type="date" name="bankCheque.deposited_date" label="Deposited Date" />
             </Grid>
