@@ -93,7 +93,7 @@ export const CBSAccountCloseList = () => {
 
   return (
     <>
-      <PageHeader heading={`${t['accountClose']} - ${featureCode?.accountCloseList}`} />
+      <PageHeader heading={`${t['accountClose']} - ${featureCode?.savingCloseAccountList}`} />
 
       <Table
         isLoading={isLoading}

@@ -155,7 +155,7 @@ export const ShareRegisterTable = () => {
     <>
       <Box position="sticky" top="0" zIndex={3}>
         <TableListPageHeader
-          heading={`${t['shareRegisterTable']} - ${featureCode?.shareRegister}`}
+          heading={`${t['shareRegisterTable']} - ${featureCode?.shareRegisterList}`}
         />
       </Box>
       <Table

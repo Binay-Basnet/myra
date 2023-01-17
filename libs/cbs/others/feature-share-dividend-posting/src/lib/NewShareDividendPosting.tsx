@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import { DividendDistributionCondition, DividendTransferTreatment } from '@coop/cbs/data-access';
+import { featureCode } from '@coop/shared/utils';
 
 import {
   AccountTransfer,
@@ -31,7 +32,7 @@ export const NewShareDividendPosting = () => {
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title="Share Dividend Posting"
+            title={`Share Dividend Posting - ${featureCode.shareDividendPostingList}`}
             // closeLink="/others/share-dividend-posting/list"
           />
         </Box>

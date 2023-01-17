@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, useAppSelector, useGetMemberRequestListQuery } from '@coop/cbs/data-access';
 import { localizedDate, localizedText } from '@coop/cbs/utils';
-import { getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { MemberApproveOrDeclineModal } from '../components/MemberApproveOrDeclineModal';
@@ -96,7 +96,7 @@ export const MemberRequestPage = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader heading="Member Request" />
+        <PageHeader heading={`Member Request - ${featureCode.memberRequestList}`} />
       </Box>
 
       <Table

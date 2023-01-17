@@ -131,7 +131,7 @@ export const AgentTransactionList = () => {
   return (
     <>
       <PageHeader
-        heading={`Market Representative Transaction - ${featureCode?.marketRepresentativeTransactionsList}`}
+        heading={`Market Representative Transaction - ${featureCode?.marketRepresentativeTransactionList}`}
       />
 
       <Table

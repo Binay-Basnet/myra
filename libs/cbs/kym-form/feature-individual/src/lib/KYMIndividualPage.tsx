@@ -1,5 +1,5 @@
 /* eslint-disable-next-line */
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
@@ -94,7 +94,10 @@ export const KYMIndividualPage = () => {
 
       <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
-          <FormHeader title={t['membersFormAddNewMembers']} closeLink={ROUTES.CBS_MEMBER_LIST} />
+          <FormHeader
+            title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberIndiviual}`}
+            closeLink={ROUTES.CBS_MEMBER_LIST}
+          />
         </Container>
       </Box>
 

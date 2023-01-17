@@ -93,7 +93,7 @@ export const CbsSettingsFeatureValuatorList = () => {
   return (
     <>
       <SettingsPageHeader
-        heading={`${t['settingsGeneralValuatorValuator']} - ${featureCode?.settingsValuator}`}
+        heading={`${t['settingsGeneralValuatorValuator']} - ${featureCode?.valuatorSetting}`}
         buttonLabel={t['settingsGeneralValuatorNewValuator']}
         buttonHandler={() => {
           mutateAsync({}).then((res) => {

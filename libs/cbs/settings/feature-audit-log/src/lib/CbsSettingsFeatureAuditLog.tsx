@@ -6,6 +6,7 @@ import { Box, Icon, Text } from '@myra-ui';
 import { useGetAuditLogListQuery } from '@coop/cbs/data-access';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
+import { featureCode } from '@coop/shared/utils';
 
 import { AUDIT_LOG_ICONS } from '../../constants/AUDIT_LOG_ICONS';
 
@@ -75,7 +76,7 @@ export const CBSSettingsAuditLog = () => {
 
   return (
     <FormProvider {...methods}>
-      <SettingsPageHeader heading="Audit Log" />
+      <SettingsPageHeader heading={`Audit Log - ${featureCode.auditLogList}`} />
       <Box p="s16">
         <Box display="flex" flexDir="column" gap="s16">
           <Text fontSize="s2" color="gray.600">

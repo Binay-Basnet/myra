@@ -3,7 +3,7 @@ import React from 'react';
 import { Box } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
@@ -40,7 +40,7 @@ export const SettingsMemberLayout = ({ children }: SettingsMemberLayoutProps) =>
 
   return (
     <>
-      <SettingsPageHeader heading={`${t['settingsMember']} - ${featureCode?.settingsMembers}`} />
+      <SettingsPageHeader heading={t['settingsMember']} />
       <Box
         w="260px"
         px="s8"

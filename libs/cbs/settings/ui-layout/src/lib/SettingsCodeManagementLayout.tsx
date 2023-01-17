@@ -3,6 +3,7 @@ import React from 'react';
 import { Box } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
+import { featureCode } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
@@ -28,7 +29,7 @@ interface SettingsCodeManagementLayoutProps {
 
 export const SettingsCodeManagementLayout = ({ children }: SettingsCodeManagementLayoutProps) => (
   <>
-    <SettingsPageHeader heading="Code Management" />
+    <SettingsPageHeader heading={`Code Management - ${featureCode.codeManagementCbs}`} />
     <Box
       w="260px"
       px="s8"

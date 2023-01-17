@@ -12,7 +12,7 @@ import {
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormCheckbox, FormCheckboxGroup, FormInput } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
 import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettingsHeader';
@@ -91,7 +91,9 @@ export const ShareSettingsGeneralPage = () => {
       <form>
         <Box p="s16" pb="80px" display="flex" flexDir="column" gap="s16">
           {' '}
-          <ShareSettingsHeader title={t['settingsShareGeneral']} />
+          <ShareSettingsHeader
+            title={`${t['settingsShareGeneral']} - ${featureCode.generalShareSetting}`}
+          />
           <ShareSettingsCard title={t['shareTypesOfShare']} subtitle={t['shareChooseTypeOfShare']}>
             <Box display="flex" flexDir="column" gap="s16">
               <FormCheckbox

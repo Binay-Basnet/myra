@@ -40,7 +40,7 @@ export const SettingsLoanProduct = () => {
   return (
     <>
       <PageHeader
-        heading={`${t['loanProductsLoanProducts']} - ${featureCode?.settingsLoanProduct}`}
+        heading={`${t['loanProductsLoanProducts']} - ${featureCode?.loanProductList}`}
         tabItems={LOAN_TAB_ITEMS}
         onClick={onSubmit}
         button

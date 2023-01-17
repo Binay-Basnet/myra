@@ -17,7 +17,7 @@ import {
 import { AccorrdianAddInstitution } from '@coop/cbs/kym-form/formElements';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { ROUTES } from '@coop/cbs/utils';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {
   AccountHolderDeclarationInstitution,
@@ -66,7 +66,10 @@ export const KYMInstitutionPage = () => {
     <>
       <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
-          <FormHeader title={t['membersFormAddNewMembers']} closeLink={ROUTES.CBS_MEMBER_LIST} />
+          <FormHeader
+            title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberInstitution}`}
+            closeLink={ROUTES.CBS_MEMBER_LIST}
+          />
         </Container>
       </Box>
 

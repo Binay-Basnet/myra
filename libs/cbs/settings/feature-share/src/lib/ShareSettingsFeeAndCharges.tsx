@@ -13,7 +13,7 @@ import {
 import { ROUTES } from '@coop/cbs/utils';
 import { COASelectModal } from '@coop/shared/components';
 import { FormEditableTable } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettingsHeader';
 
@@ -100,7 +100,9 @@ export const ShareSettingsFeeAndCharges = () => {
       <form>
         <Box p="s16" pb="80px" display="flex" flexDir="column" gap="s16">
           <Box display="flex" flexDirection="column" gap="s32">
-            <ShareSettingsHeader title={t['settingsShareFeeAndCharges']} />
+            <ShareSettingsHeader
+              title={`${t['settingsShareFeeAndCharges']} -  ${featureCode.shareIssueSetting}`}
+            />
             <Box display="flex" flexDirection="column" gap="s48">
               <Box display="flex" flexDirection="column" gap="s10">
                 <Box display="flex" flexDirection="column" gap="s4">

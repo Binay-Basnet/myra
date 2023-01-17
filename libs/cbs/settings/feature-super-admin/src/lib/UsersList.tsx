@@ -8,7 +8,7 @@ import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
 import { ActionPopoverComponent } from '@coop/myra/components';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { NewUserModal } from '../components';
 
@@ -135,7 +135,7 @@ export const UsersList = () => {
   return (
     <>
       <SettingsPageHeader
-        heading="Roles"
+        heading={`Roles - ${featureCode.userList}`}
         buttonLabel="New User"
         buttonHandler={handleAddUserModalOpen}
         // buttonHandler={() =>

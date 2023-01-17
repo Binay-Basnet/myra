@@ -20,7 +20,7 @@ import {
   useSetLoanProductMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {
   AllowGaurantee,
@@ -436,7 +436,7 @@ export const SettingsLoanProductForm = () => {
     <>
       <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.lg" height="fit-content" paddingInline="0">
-          <FormHeader title={t['loanProductAddLoanProduct']} />
+          <FormHeader title={`${t['loanProductAddLoanProduct']} - ${featureCode.newloanProduct}`} />
         </Container>
       </Box>
 

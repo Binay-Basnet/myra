@@ -54,7 +54,7 @@ export const SettingsLoanLayout = ({ children }: ISettingsLoanLayout) => {
       <SettingsPageHeader
         // buttonLabel={t['saveChanges']}
         // buttonHandler={saveButtonHandler}
-        heading={`${t['settingsLoan']} - ${featureCode?.settingsLoan}`}
+        heading={`${t['settingsLoan']} - ${featureCode?.generalLoanSetting}`}
       />
       <Box
         w="250px"

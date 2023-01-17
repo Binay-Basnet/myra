@@ -77,7 +77,7 @@ export const CashTransferList = () => {
 
     <>
       <PageHeader
-        heading={`Service Center Cash Transfer - ${featureCode.vaultTransferList}`}
+        heading={`Service Center Cash Transfer - ${featureCode.serviceCenterTransferList}`}
         // tabItems={tabList}
       />
 
