@@ -765,7 +765,7 @@ export const TopLevelHeader = () => {
                                 }}
                                 label="Role"
                                 options={auth.availableRoles?.map((role) => ({
-                                  label: role.name.slice(0, 30),
+                                  label: role.name,
                                   value: role.id,
                                 }))}
                                 onChange={async (newValue) => {
