@@ -12,6 +12,8 @@ query getLoanBalanceReport($data: LoanBalanceFilterData!) {
           remainingBalance
           remainingInterest
           lastPaymentDate
+          branchId
+          branchName
         }
         totalOutstandingBalance
         totalRemainingBalance

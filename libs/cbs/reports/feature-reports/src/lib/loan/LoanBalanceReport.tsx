@@ -18,12 +18,24 @@ import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormAmountFilter, FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
+type LoanBalanceReportFilters = Omit<LoanBalanceFilterData, 'branchId'> & {
+  branchId: {
+    label: string;
+    value: string;
+  }[];
+};
+
 export const LoanBalanceReport = () => {
-  const [filters, setFilters] = useState<LoanBalanceFilterData | null>(null);
+  const [filters, setFilters] = useState<LoanBalanceReportFilters | null>(null);
+
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
 
   const { data, isFetching } = useGetLoanBalanceReportQuery(
     {
-      data: filters as LoanBalanceFilterData,
+      data: { ...filters, branchId: branchIds } as LoanBalanceFilterData,
     },
     { enabled: !!filters }
   );
@@ -50,7 +62,7 @@ export const LoanBalanceReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Select Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange />
@@ -98,6 +110,16 @@ export const LoanBalanceReport = () => {
               {
                 header: 'Member Name',
                 accessorFn: (row) => row?.memberName?.local,
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+
+              {
+                header: 'Branch',
+                accessorFn: (row) => row?.branchName,
                 meta: {
                   Footer: {
                     display: 'none',

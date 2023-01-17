@@ -8646,6 +8646,7 @@ export type LoanAccountFormState = {
   fingerprintDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   gracePeriod?: Maybe<LoanAccountGrace>;
   gurantee_details?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
+  installmentFrequency?: Maybe<InstallmentFrequency>;
   interestAuthority?: Maybe<InterestAuthority>;
   interestDoc?: Maybe<Array<Maybe<PictureData>>>;
   intrestRate?: Maybe<Scalars['Float']>;
@@ -9025,6 +9026,8 @@ export type LoanBalanceFilterData = {
 };
 
 export type LoanBalanceReport = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   lastPaymentDate?: Maybe<Scalars['String']>;
   loanAccountId?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -12407,6 +12410,8 @@ export type SavingsBalanceReport = {
   accountId?: Maybe<Scalars['String']>;
   accountOpeningDate?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -22334,6 +22339,8 @@ export type GetLoanBalanceReportQuery = {
           remainingBalance?: string | null;
           remainingInterest?: string | null;
           lastPaymentDate?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
       };
     };
@@ -37312,6 +37319,8 @@ export const GetLoanBalanceReportDocument = `
           remainingBalance
           remainingInterest
           lastPaymentDate
+          branchId
+          branchName
         }
         totalOutstandingBalance
         totalRemainingBalance
