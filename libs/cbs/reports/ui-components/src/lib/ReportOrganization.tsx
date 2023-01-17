@@ -2,14 +2,49 @@ import { useFormContext } from 'react-hook-form';
 
 import { Box, Text } from '@myra-ui';
 
-import { LocalizedDateFilter, useAppSelector } from '@coop/cbs/data-access';
+import {
+  Filter_Mode,
+  LocalizedDateFilter,
+  useAppSelector,
+  useGetBranchListQuery,
+} from '@coop/cbs/data-access';
 import { formatAddress, getLocalizedTodaysDate, localizedDate } from '@coop/cbs/utils';
+
+type SelectType = {
+  label: string;
+  value: string;
+}[];
 
 export const ReportOrganization = () => {
   const { getValues } = useFormContext();
   const user = useAppSelector((state) => state.auth.user);
 
   const period = getValues('period') as LocalizedDateFilter;
+  const branchId = getValues('branchId');
+  const { data: branchListQueryData } = useGetBranchListQuery(
+    {
+      paginate: {
+        first: -1,
+        after: '',
+        order: null,
+      },
+      filter: {
+        filterMode: Filter_Mode.Or,
+      },
+    },
+    {
+      staleTime: 0,
+    }
+  );
+
+  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
+
+  const singleName =
+    typeof branchId !== 'object'
+      ? branchList?.find((c) => c.node?.id === branchId)?.node?.name
+      : null;
+
+  const nameList = typeof branchId === 'object' ? (branchId as SelectType) : null;
 
   return (
     <Box
@@ -47,6 +82,25 @@ export const ReportOrganization = () => {
           <Text fontSize="r1" color="gray.700" fontWeight="500">
             {user?.organization?.registrationDetails?.panOrVat ?? 'N/A'}
           </Text>
+        </Box>
+        <Box display="flex" gap="s4">
+          <Text fontSize="r1" color="gray.700">
+            Service Center:
+          </Text>
+          {singleName?.length && (
+            <Text fontSize="r1" color="gray.700" fontWeight="500">
+              {singleName}
+            </Text>
+          )}
+          {nameList?.length && (
+            <Box display="flex">
+              {nameList?.map((data) => (
+                <Text fontSize="r1" color="gray.700" fontWeight="500">
+                  {data?.label},
+                </Text>
+              ))}
+            </Box>
+          )}
         </Box>
       </Box>
       <Box display="flex" flexDir="column" alignItems="flex-end">
