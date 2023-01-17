@@ -56,7 +56,6 @@ export const OverviewPage = () => {
               productSubType: detailData?.productSubType,
               interestMethod: detailData?.interestMethod,
               loanRepaymentScheme: detailData?.repaymentScheme,
-              installmentFrequency: detailData?.installmentFrequency,
             }}
           />
           <ProductCriteria criteria={criteriaData} memberType={detailData?.typeOfMember} />

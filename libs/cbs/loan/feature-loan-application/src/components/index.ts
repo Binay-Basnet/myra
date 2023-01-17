@@ -1,6 +1,7 @@
 export * from './AccordianComponent';
 export { ValuationDocuments } from './collateral/ValuationDocuments';
 export * from './CriteriaCard';
+export * from './InstallmentFrequency';
 export * from './Interest';
 export * from './LinkedAccounts';
 export * from './LoanProcessingCharges';
