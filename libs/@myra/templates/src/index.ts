@@ -1,5 +1,6 @@
 export * from './lib/card';
 export * from './lib/detail-page';
+export * from './lib/error/Error';
 export * from './lib/form';
 export * from './lib/header';
 export * from './lib/layout';

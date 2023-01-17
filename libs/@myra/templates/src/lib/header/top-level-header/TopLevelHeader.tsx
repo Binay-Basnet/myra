@@ -77,8 +77,8 @@ export interface TopLevelHeaderProps {
 // ];
 
 const calendarList = [
-  { label: 'AD', value: DateType.Ad },
-  { label: 'BS', value: DateType.Bs },
+  { label: 'AD', value: 'AD' },
+  { label: 'BS', value: 'BS' },
 ];
 const keyMap = {
   inputFocus: ['ctrl+/'],
