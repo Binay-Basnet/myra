@@ -42,7 +42,7 @@ const minorOptions = [
 ];
 
 type Filter = {
-  branchId: string;
+  branchId: { label: string; value: string }[];
   period: LocalizedDateFilter;
   filter: {
     memberIds?: string[];
@@ -55,9 +55,14 @@ type Filter = {
 export const SavingBalanceReport = () => {
   const [filters, setFilters] = useState<Filter | null>(null);
 
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
+
   const { data, isFetching } = useGetSavingsBalanceReportQuery(
     {
-      data: filters as SavingsBalanceFilterData,
+      data: { ...filters, branchId: branchIds } as SavingsBalanceFilterData,
     },
     { enabled: !!filters }
   );
@@ -83,7 +88,7 @@ export const SavingBalanceReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Date Period" />
