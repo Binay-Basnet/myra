@@ -9019,7 +9019,7 @@ export type LoanBalanceFilter = {
 };
 
 export type LoanBalanceFilterData = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<LoanBalanceFilter>;
   period: LocalizedDateFilter;
 };
@@ -12300,6 +12300,12 @@ export type SavingAmountRange = {
   min?: InputMaybe<Scalars['Int']>;
 };
 
+export type SavingBalanceReportSummary = {
+  totalIndividualAccount?: Maybe<Scalars['Int']>;
+  totalMinorAccount?: Maybe<Scalars['Int']>;
+  totalOtherAccount?: Maybe<Scalars['Int']>;
+};
+
 export type SavingFilters = {
   amountRange?: InputMaybe<SavingAmountRange>;
   service?: InputMaybe<SavingServiceType>;
@@ -12392,7 +12398,7 @@ export type SavingsBalanceFilter = {
 };
 
 export type SavingsBalanceFilterData = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<SavingsBalanceFilter>;
   period: LocalizedDateFilter;
 };
@@ -12413,6 +12419,7 @@ export type SavingsBalanceReport = {
 export type SavingsBalanceReportResult = {
   data?: Maybe<Array<Maybe<SavingsBalanceReport>>>;
   error?: Maybe<QueryError>;
+  summary?: Maybe<SavingBalanceReportSummary>;
   totalBalance?: Maybe<Scalars['String']>;
 };
 

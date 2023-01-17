@@ -308,7 +308,7 @@ export const ActivationForm = () => {
               </Button>
             )
           }
-          mainButtonLabel={mode === 'form' ? 'Proceed To Transactions' : 'Submit'}
+          mainButtonLabel={mode === 'form' ? 'Proceed Transaction' : 'Submit'}
           mainButtonHandler={mode === 'form' ? () => setMode('payment') : handleSubmit}
 
           // mainButtonHandler={sendForApprovalHandler}
