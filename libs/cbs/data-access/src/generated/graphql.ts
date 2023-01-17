@@ -20182,6 +20182,7 @@ export type GetLoanInstallmentsQueryVariables = Exact<{
   tenure: Scalars['Int'];
   interest: Scalars['Float'];
   repaymentScheme: LoanRepaymentScheme;
+  installmentFrequency?: InputMaybe<InstallmentFrequency>;
 }>;
 
 export type GetLoanInstallmentsQuery = {
@@ -34579,7 +34580,7 @@ export const useGetLoanListQuery = <TData = GetLoanListQuery, TError = unknown>(
     options
   );
 export const GetLoanInstallmentsDocument = `
-    query getLoanInstallments($productId: ID!, $gracePeriod: LoanAccountGraceInput, $sanctionAmount: Int!, $tenure: Int!, $interest: Float!, $repaymentScheme: LoanRepaymentScheme!) {
+    query getLoanInstallments($productId: ID!, $gracePeriod: LoanAccountGraceInput, $sanctionAmount: Int!, $tenure: Int!, $interest: Float!, $repaymentScheme: LoanRepaymentScheme!, $installmentFrequency: InstallmentFrequency) {
   loanAccount {
     getLoanInstallments(
       interest: $interest
@@ -34588,6 +34589,7 @@ export const GetLoanInstallmentsDocument = `
       repaymentScheme: $repaymentScheme
       sanctionAmount: $sanctionAmount
       tenure: $tenure
+      installmentFrequency: $installmentFrequency
     ) {
       data {
         total
