@@ -7,7 +7,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { Box, FloatingShortcutButton, Toaster } from '@myra-ui';
+import { Box, Loader, Toaster } from '@myra-ui';
 import { neosysTheme } from '@myra-ui/theme';
 
 import { store, useInit } from '@coop/neosys-admin/data-access';
@@ -40,7 +40,7 @@ const queryClient = new QueryClient({
 });
 
 const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
-  useInit();
+  const { isLoading } = useInit();
   useSnap();
 
   const getLayout = Component.getLayout || ((page) => page);
@@ -52,17 +52,13 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       </Head>
       <Toaster />
 
-      <main className="app">{getLayout(<Component {...pageProps} />)}</main>
-      <Box
-        position="fixed"
-        bottom="40px"
-        right="32px"
-        display="flex"
-        flexDirection="row-reverse"
-        zIndex="99"
-      >
-        <FloatingShortcutButton />
-      </Box>
+      {isLoading ? (
+        <Box h="100vh" bg="white" display="flex" alignItems="center" justifyContent="center">
+          <Loader height={300} />
+        </Box>
+      ) : (
+        <main className="app">{getLayout(<Component {...pageProps} />)}</main>
+      )}
     </>
   );
 };
