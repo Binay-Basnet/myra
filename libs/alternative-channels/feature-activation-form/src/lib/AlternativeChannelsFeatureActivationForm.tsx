@@ -142,7 +142,7 @@ export const ActivationForm = () => {
         {
           ...filteredValues,
         },
-        ['account', 'bankCheque']
+        ['accountTransfer', 'bankCheque']
       );
       filteredValues.cash = {
         ...values.cash,
@@ -158,7 +158,7 @@ export const ActivationForm = () => {
       };
     }
     if (values.paymentMode === AlternativeChannelPaymentMode.BankVoucher) {
-      filteredValues = omit({ ...filteredValues }, ['account', 'cash']);
+      filteredValues = omit({ ...filteredValues }, ['accountTransfer', 'cash']);
     }
 
     if (values.paymentMode === AlternativeChannelPaymentMode.Account) {
@@ -308,7 +308,7 @@ export const ActivationForm = () => {
               </Button>
             )
           }
-          mainButtonLabel="Proceed To Payment"
+          mainButtonLabel={mode === 'form' ? 'Proceed To Transactions' : 'Submit'}
           mainButtonHandler={mode === 'form' ? () => setMode('payment') : handleSubmit}
 
           // mainButtonHandler={sendForApprovalHandler}
