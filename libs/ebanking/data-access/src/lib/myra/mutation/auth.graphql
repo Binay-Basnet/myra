@@ -24,18 +24,18 @@ mutation verifyOTP($data: EbankingOtpInput!) {
   }
 }
 
-mutation setPassword($data: EbankingPasswordInput!, $userId: ID!) {
-  eBanking {
-    auth(type: EBANKING) {
-      setPassword(data: $data, userID: $userId) {
-        error {
-          ...MutationError
-        }
-        recordId
-      }
-    }
-  }
-}
+# mutation setPassword($data: EbankingPasswordInput!, $userId: ID!) {
+#   eBanking {
+#     auth(type: EBANKING) {
+#       setPassword(data: $data, userID: $userId) {
+#         error {
+#           ...MutationError
+#         }
+#         recordId
+#       }
+#     }
+#   }
+# }
 
 mutation eBankingLogin($data: EbankingLoginInput!) {
   eBanking {

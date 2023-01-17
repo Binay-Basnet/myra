@@ -55,7 +55,7 @@ export const LoanRepaymentDetailPage = () => {
           branch={loanRepaymentDetailData?.transactionBranch as string}
           teller={loanRepaymentDetailData?.teller as string}
         />
-        <Note note={loanRepaymentDetailData?.note} />
+        {loanRepaymentDetailData?.note && <Note note={loanRepaymentDetailData?.note} />}
         <GlTransaction
           data={glTransData ?? []}
           totalCredit={String(amountConverter(loanRepaymentDetailData?.totalCredit ?? 0))}

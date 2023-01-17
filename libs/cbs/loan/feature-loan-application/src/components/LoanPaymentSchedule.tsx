@@ -68,7 +68,7 @@ export const LoanPaymentSchedule = () => {
     gracePeriod?.principalGracePeriod,
   ]);
 
-  const loanInstallmentData = data?.loanAccount.getLoanInstallments?.data
+  const loanInstallmentData = data?.loanAccount?.getLoanInstallments?.data
     ?.installments as LoanInstallment[];
 
   const loanInstallmentColumns = useMemo<Column<typeof loanInstallmentData[0]>[]>(

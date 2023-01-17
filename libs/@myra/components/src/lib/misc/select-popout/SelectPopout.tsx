@@ -22,7 +22,7 @@ type MemberOption = {
   name: string;
 };
 
-type ValueType = Readonly<Option | Option[] | MemberOption[] | MemberOption | null>;
+type ValueType = Readonly<Option | Option[] | MemberOption[] | MemberOption | null | undefined>;
 
 export interface SelectPopoutProps {
   optionType: 'member' | 'default';

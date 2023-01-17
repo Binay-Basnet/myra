@@ -142,7 +142,7 @@ export const CbsMembersFeatureActivate = () => {
                       leftIcon={<Icon as={AiOutlinePlus} />}
                       onClick={() =>
                         router.push(
-                          `${ROUTES.CBS_SHARE_ISSUE_ADD}&redirect=${router.asPath}&memberId=${id}`
+                          `${ROUTES.CBS_SHARE_ISSUE_ADD}?redirect=${router.asPath}&memberId=${id}`
                         )
                       }
                     >

@@ -2,13 +2,15 @@ import React from 'react';
 
 import { Box } from '@myra-ui';
 
+import { ROUTES } from '@coop/cbs/utils';
+
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
 
 const tabList = [
   {
     title: 'Core Banking System',
-    to: '/settings/general/code-management/core-banking-system',
+    to: ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS,
   },
   // {
   //   title: 'Accounting',

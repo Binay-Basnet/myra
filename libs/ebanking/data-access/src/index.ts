@@ -11,7 +11,6 @@ export {
   useResendOtpMutation,
   useResetPasswordMutation,
   useSetNewPinMutation,
-  useSetPasswordMutation,
   useSignUpMutation,
   useVerifyOtpMutation,
 } from './generated/myra/graphql';
