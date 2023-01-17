@@ -12,10 +12,10 @@ import { Box, Loader, Toaster } from '@myra-ui';
 import { theme } from '@myra-ui/theme';
 
 import { store, useInit } from '@coop/cbs/data-access';
+import { AbilityContext, buildEmptyPermissions } from '@coop/cbs/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css';
 import './app.css';
-import { buildEmptyPermissions, AbilityContext } from '@coop/cbs/utils';
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -70,21 +70,19 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
 const ability = buildEmptyPermissions();
 
-const CustomApp = (props: AppPropsWithLayout) => {
-  return (
-    <Provider store={store}>
-      {/* <AuthProvider> */}
-      <QueryClientProvider client={queryClient}>
-        <ChakraProvider theme={theme}>
-          <AbilityContext.Provider value={ability}>
-            <MainApp {...props} />
-          </AbilityContext.Provider>
-        </ChakraProvider>
-        <ReactQueryDevtools position="bottom-right" />
-      </QueryClientProvider>
-      {/* </AuthProvider> */}
-    </Provider>
-  );
-};
+const CustomApp = (props: AppPropsWithLayout) => (
+  <Provider store={store}>
+    {/* <AuthProvider> */}
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider theme={theme}>
+        <AbilityContext.Provider value={ability}>
+          <MainApp {...props} />
+        </AbilityContext.Provider>
+      </ChakraProvider>
+      <ReactQueryDevtools position="bottom-right" />
+    </QueryClientProvider>
+    {/* </AuthProvider> */}
+  </Provider>
+);
 
 export default CustomApp;

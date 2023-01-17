@@ -71516,8 +71516,8 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
+              "kind": "ENUM",
+              "name": "InstallmentFrequency",
               "ofType": null
             },
             "isDeprecated": false,
@@ -73943,6 +73943,18 @@
             "deprecationReason": null
           },
           {
+            "name": "installmentFrequency",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "InstallmentFrequency",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "interestAuthority",
             "description": null,
             "type": {
@@ -74842,6 +74854,18 @@
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "LoanAccountGraceInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "installmentFrequency",
+                "description": null,
+                "type": {
+                  "kind": "ENUM",
+                  "name": "InstallmentFrequency",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -76865,6 +76889,18 @@
             "deprecationReason": null
           },
           {
+            "name": "installmentFrequency",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "InstallmentFrequency",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "interestAccrued",
             "description": null,
             "args": [],
@@ -78049,6 +78085,18 @@
         "description": null,
         "fields": [
           {
+            "name": "installmentFrequency",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "InstallmentFrequency",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "loanName",
             "description": null,
             "args": [],
@@ -78787,18 +78835,6 @@
                 "name": "ID",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "installmentFrequency",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "LoanProductInstallment",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null

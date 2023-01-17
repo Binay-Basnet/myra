@@ -40,6 +40,7 @@ import { amountConverter, featureCode } from '@coop/shared/utils';
 import {
   AccordianComponent,
   CriteriaCard,
+  InstallmentFrequencyComp,
   Interest,
   LinkedAccounts,
   LoanProcessingCharge,
@@ -370,6 +371,7 @@ export const NewLoanApplication = () => {
                     <LoanAmountDetails />
                     <Interest />
                     <Tenure />
+                    <InstallmentFrequencyComp />
                     <LinkedAccounts />
                     <LoanRepaymentSchemeComponent />
                     <LoanPaymentSchedule />

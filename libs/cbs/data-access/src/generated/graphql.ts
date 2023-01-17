@@ -8511,7 +8511,7 @@ export type LoanAccount = {
   createdAt: Scalars['Time'];
   createdBy: Identity;
   id: Scalars['ID'];
-  installmentFrequency?: Maybe<Scalars['String']>;
+  installmentFrequency?: Maybe<InstallmentFrequency>;
   intrestRate?: Maybe<Scalars['Float']>;
   isBoardAuthority?: Maybe<Scalars['Boolean']>;
   isCeoAuthority?: Maybe<Scalars['Boolean']>;
@@ -8736,6 +8736,7 @@ export type LoanAccountInput = {
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
+  installmentFrequency?: InputMaybe<InstallmentFrequency>;
   interestAuthority?: InputMaybe<InterestAuthority>;
   interestDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   intrestRate?: InputMaybe<Scalars['Float']>;
@@ -8850,6 +8851,7 @@ export type LoanAccountQueryFormStateArgs = {
 
 export type LoanAccountQueryGetLoanInstallmentsArgs = {
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
+  installmentFrequency?: InputMaybe<InstallmentFrequency>;
   interest: Scalars['Float'];
   productId: Scalars['ID'];
   repaymentScheme: LoanRepaymentScheme;
@@ -9084,6 +9086,7 @@ export type LoanGeneralInformation = {
   accountId: Scalars['String'];
   accountName: Scalars['String'];
   accountOpenDate: Scalars['Localized'];
+  installmentFrequency?: Maybe<InstallmentFrequency>;
   interestAccrued?: Maybe<Scalars['String']>;
   interestEarned?: Maybe<Scalars['String']>;
   interestGracePeriod?: Maybe<Scalars['Int']>;
@@ -9226,6 +9229,7 @@ export type LoanPreviewAdditionalFeatures = {
 };
 
 export type LoanPreviewGeneralInformation = {
+  installmentFrequency?: Maybe<InstallmentFrequency>;
   loanName?: Maybe<Scalars['String']>;
   loanProduct?: Maybe<Scalars['String']>;
   loanSubType?: Maybe<Scalars['String']>;
@@ -9295,7 +9299,6 @@ export type LoanProduct = Base & {
   foreignEmployment?: Maybe<Scalars['Boolean']>;
   genderId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   id: Scalars['ID'];
-  installmentFrequency?: Maybe<LoanProductInstallment>;
   insuranceType?: Maybe<Insurance>;
   interest?: Maybe<InterestRateType>;
   interestMaxGraceNumber?: Maybe<Scalars['Int']>;
@@ -20179,6 +20182,7 @@ export type GetLoanInstallmentsQueryVariables = Exact<{
   tenure: Scalars['Int'];
   interest: Scalars['Float'];
   repaymentScheme: LoanRepaymentScheme;
+  installmentFrequency?: InputMaybe<InstallmentFrequency>;
 }>;
 
 export type GetLoanInstallmentsQuery = {
@@ -23883,7 +23887,6 @@ export type GetLoanProductEditDataQuery = {
             maxLoanAmount?: any | null;
             repaymentScheme?: Array<LoanRepaymentScheme | null> | null;
             allowPartialInstallment?: boolean | null;
-            installmentFrequency?: LoanProductInstallment | null;
             isMonthlyInstallmentCompulsory?: boolean | null;
             interestMethod?: LoanInterestMethod | null;
             isPenaltyApplicable?: boolean | null;
@@ -24001,7 +24004,6 @@ export type GetLoanProductDetailQuery = {
             maxLoanAmount?: any | null;
             repaymentScheme?: Array<LoanRepaymentScheme | null> | null;
             allowPartialInstallment?: boolean | null;
-            installmentFrequency?: LoanProductInstallment | null;
             isMonthlyInstallmentCompulsory?: boolean | null;
             interestMethod?: LoanInterestMethod | null;
             isPenaltyApplicable?: boolean | null;
@@ -34578,7 +34580,7 @@ export const useGetLoanListQuery = <TData = GetLoanListQuery, TError = unknown>(
     options
   );
 export const GetLoanInstallmentsDocument = `
-    query getLoanInstallments($productId: ID!, $gracePeriod: LoanAccountGraceInput, $sanctionAmount: Int!, $tenure: Int!, $interest: Float!, $repaymentScheme: LoanRepaymentScheme!) {
+    query getLoanInstallments($productId: ID!, $gracePeriod: LoanAccountGraceInput, $sanctionAmount: Int!, $tenure: Int!, $interest: Float!, $repaymentScheme: LoanRepaymentScheme!, $installmentFrequency: InstallmentFrequency) {
   loanAccount {
     getLoanInstallments(
       interest: $interest
@@ -34587,6 +34589,7 @@ export const GetLoanInstallmentsDocument = `
       repaymentScheme: $repaymentScheme
       sanctionAmount: $sanctionAmount
       tenure: $tenure
+      installmentFrequency: $installmentFrequency
     ) {
       data {
         total
@@ -39391,7 +39394,6 @@ export const GetLoanProductEditDataDocument = `
             maxLoanAmount
             repaymentScheme
             allowPartialInstallment
-            installmentFrequency
             isMonthlyInstallmentCompulsory
             interestMethod
             isPenaltyApplicable
@@ -39524,7 +39526,6 @@ export const GetLoanProductDetailDocument = `
             maxLoanAmount
             repaymentScheme
             allowPartialInstallment
-            installmentFrequency
             isMonthlyInstallmentCompulsory
             interestMethod
             isPenaltyApplicable
