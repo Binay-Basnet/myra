@@ -24,9 +24,9 @@ export const Can = ({ showError = false, children, isErrorCentered, ...rest }: C
             <Box>
               <Error
                 errorCode={403}
-                errorTitle="Forbidden Resource"
-                errorMessage="You do not have permissions to access this resource."
-                errorMessageSubTitle=" If you need assistance, please contact branch admin or website administrator."
+                // errorTitle="Forbidden Resource"
+                // errorMessage="You do not have permissions to access this resource."
+                // errorMessageSubTitle=" If you need assistance, please contact branch admin or website administrator."
                 isCentered={isErrorCentered}
               />
             </Box>
