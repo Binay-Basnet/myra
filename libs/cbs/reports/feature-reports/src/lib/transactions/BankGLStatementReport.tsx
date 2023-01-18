@@ -18,7 +18,8 @@ import { localizedDate } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
-type Filters = Omit<BankGlStatementFilter, 'filter'> & {
+type Filters = Omit<BankGlStatementFilter, 'filter' | 'branchId'> & {
+  branchId: { label: string; value: string }[];
   filter: {
     amount?: MinMaxFilter;
     bank?: { label: string; value: string }[];
@@ -28,6 +29,11 @@ type Filters = Omit<BankGlStatementFilter, 'filter'> & {
 
 export const BankGLStatementReport = () => {
   const [filters, setFilters] = useState<Filters | null>(null);
+
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
 
   const bankIds =
     filters?.filter?.bank && filters?.filter?.bank.length !== 0
@@ -39,7 +45,7 @@ export const BankGLStatementReport = () => {
   const { data, isFetching } = useGetBankGlStatementReportQuery(
     {
       data: {
-        branchId: filters?.branchId as string,
+        branchId: branchIds,
         period: filters?.period as LocalizedDateFilter,
         filter: {
           bank: bankIds,
@@ -101,6 +107,10 @@ export const BankGLStatementReport = () => {
                 meta: {
                   width: '60px',
                 },
+              },
+              {
+                header: 'Service Center',
+                accessorKey: 'branchName',
               },
               {
                 header: 'Date',

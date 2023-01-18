@@ -9,13 +9,15 @@ query getAccountOpeningReport($data: AccountOpeningReportInput) {
           memberId
           openedBy
           openingDate
+          branchId
+          branchName
         }
       }
     }
   }
 }
 
-query getAccountClosingReport($data: AccountClosingReportInput) {
+query getDepositAccountClosingReport($data: AccountClosingReportInput) {
   report {
     depositReport {
       accountClosingReport(data: $data) {
@@ -28,6 +30,8 @@ query getAccountClosingReport($data: AccountClosingReportInput) {
           closingDate
           closedBalance
           closedBy
+          branchId
+          branchName
         }
       }
     }
@@ -89,7 +93,6 @@ query getTtrReport($data: TTRReportFilter!) {
             address {
               ...Address
             }
-
             branch
             date
             nature
@@ -208,6 +211,8 @@ query getSuspiciousTransactionReport($data: SuspiciousTransactionReportInput!) {
           product_name
           tranxType
           status
+          branchId
+          branchName
         }
       }
     }

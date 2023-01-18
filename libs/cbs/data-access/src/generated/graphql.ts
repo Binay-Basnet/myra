@@ -134,6 +134,8 @@ export type AccountCloseReason = typeof AccountCloseReason[keyof typeof AccountC
 export type AccountClosingReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   closedBalance?: Maybe<Scalars['String']>;
   closedBy?: Maybe<Scalars['String']>;
   closingDate?: Maybe<Scalars['Localized']>;
@@ -143,7 +145,7 @@ export type AccountClosingReport = {
 };
 
 export type AccountClosingReportInput = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<AccountOpeningReportInputFilter>;
   period: LocalizedDateFilter;
 };
@@ -178,6 +180,8 @@ export type AccountListFilter = {
 export type AccountOpeningReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   openedBy?: Maybe<Scalars['String']>;
@@ -185,7 +189,7 @@ export type AccountOpeningReport = {
 };
 
 export type AccountOpeningReportInput = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<AccountOpeningReportInputFilter>;
   period: LocalizedDateFilter;
 };
@@ -565,7 +569,7 @@ export type ActiveInactiveMemberReport = {
 };
 
 export type ActiveInactiveMemberReportData = {
-  branchId: Scalars['ID'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<MemberReportFilters>;
   period: LocalizedDateFilter;
 };
@@ -579,6 +583,8 @@ export type ActiveInactiveMemberReportSummary = {
 export type ActiveInactiveMemberStatement = {
   address?: Maybe<Scalars['String']>;
   age?: Maybe<Scalars['Int']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   contactNo?: Maybe<Scalars['String']>;
   district?: Maybe<Scalars['String']>;
   dob?: Maybe<Scalars['Localized']>;
@@ -1333,6 +1339,8 @@ export type BankDepositData = {
 
 export type BankGlDataEntry = {
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   chequeNo?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   depositAmount?: Maybe<Scalars['String']>;
@@ -1343,7 +1351,7 @@ export type BankGlDataEntry = {
 };
 
 export type BankGlStatementFilter = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<GlStatementFilter>;
   period: LocalizedDateFilter;
 };
@@ -8407,6 +8415,8 @@ export type KymStatusFilter = {
 
 export type KymStatusReport = {
   address?: Maybe<Address>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   contact?: Maybe<Scalars['String']>;
   kymExpireDays?: Maybe<Scalars['String']>;
   kymStatus?: Maybe<Scalars['String']>;
@@ -8419,7 +8429,7 @@ export type KymStatusReport = {
 };
 
 export type KymStatusReportFilter = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<KymStatusFilter>;
   period: LocalizedDateFilter;
 };
@@ -8954,13 +8964,15 @@ export type LoanAgingStatementData = {
 };
 
 export type LoanAgingStatementInput = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<LoanAgingFilters>;
   period?: InputMaybe<LoanAgingPeriodInput>;
 };
 
 export type LoanAgingStatementReport = {
   address?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   disbursePrincipal?: Maybe<Scalars['String']>;
   goodAmount?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
@@ -12614,6 +12626,8 @@ export type ShareBalanceFilterData = {
 export type ShareBalanceReportData = {
   address?: Maybe<Address>;
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   contactNo?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -12625,7 +12639,7 @@ export type ShareBalanceReportData = {
 };
 
 export type ShareBalanceReportFilter = {
-  branchId: Scalars['ID'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<ShareBalanceFilterData>;
   period: LocalizedDateFilter;
 };
@@ -12854,6 +12868,8 @@ export type SharePurchaseRegisterFilter = {
 };
 
 export type SharePurchaseRegisterReport = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   kittaNumFrom?: Maybe<Scalars['String']>;
   kittaNumTo?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
@@ -12866,7 +12882,7 @@ export type SharePurchaseRegisterReport = {
 };
 
 export type SharePurchaseRegisterReportFilter = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<SharePurchaseRegisterFilter>;
   period: LocalizedDateFilter;
 };
@@ -13168,6 +13184,8 @@ export type ShareTransactionFooter = {
 
 export type ShareTransactionReport = {
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -13178,7 +13196,7 @@ export type ShareTransactionReport = {
 };
 
 export type ShareTransactionReportFilter = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<ShareTransactionFilter>;
   period: LocalizedDateFilter;
 };
@@ -13336,6 +13354,8 @@ export type SubscriptionMutationUpsertArgs = {
 
 export type SuspiciousTransactionReport = {
   amount?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -13346,7 +13366,7 @@ export type SuspiciousTransactionReport = {
 };
 
 export type SuspiciousTransactionReportInput = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<SuspiciousTransactionReportInputFilter>;
   period: LocalizedDateFilter;
 };
@@ -13421,7 +13441,7 @@ export type TtrReportData = {
 };
 
 export type TtrReportFilter = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<TtrFilter>;
   period: LocalizedDateFilter;
 };
@@ -22091,6 +22111,33 @@ export type GetAccountOpeningReportQuery = {
           memberId?: string | null;
           openedBy?: string | null;
           openingDate?: Record<'local' | 'en' | 'np', string> | null;
+          branchId?: string | null;
+          branchName?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetDepositAccountClosingReportQueryVariables = Exact<{
+  data?: InputMaybe<AccountClosingReportInput>;
+}>;
+
+export type GetDepositAccountClosingReportQuery = {
+  report: {
+    depositReport: {
+      accountClosingReport?: {
+        data?: Array<{
+          memberId?: string | null;
+          memberCode?: string | null;
+          accountNumber?: string | null;
+          accountName?: string | null;
+          openingDate?: Record<'local' | 'en' | 'np', string> | null;
+          closingDate?: Record<'local' | 'en' | 'np', string> | null;
+          closedBalance?: string | null;
+          closedBy?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
       } | null;
     };
@@ -22286,6 +22333,8 @@ export type GetSuspiciousTransactionReportQuery = {
           product_name?: string | null;
           tranxType?: NatureOfTransaction | null;
           status?: boolean | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
       } | null;
     };
@@ -22382,6 +22431,8 @@ export type GetLoanAgingStatementReportQuery = {
             installmentLateDays?: number | null;
             nextPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
             tenure?: string | null;
+            branchId?: string | null;
+            branchName?: string | null;
           } | null> | null;
           summary?: {
             disbursePrincipalTotal?: string | null;
@@ -22543,6 +22594,8 @@ export type GetActiveInactiveMemberReportQuery = {
                 memberRegistrationDate?: Record<'local' | 'en' | 'np', string> | null;
                 status?: MemberStatus | null;
                 memberType?: KymMemberTypesEnum | null;
+                branchId?: string | null;
+                branchName?: string | null;
               } | null> | null;
             }
           | {}
@@ -22571,6 +22624,8 @@ export type GetKymStatusReportQuery = {
           lastKymUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
           kymExpireDays?: string | null;
           kymStatus?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
           address?: AddressFragment | null;
         } | null> | null;
       } | null;
@@ -22856,6 +22911,8 @@ export type GetShareRegisterReportQuery = {
           kittaNumTo?: string | null;
           totalKitta?: string | null;
           totalAmount?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
       } | null;
     };
@@ -22881,6 +22938,8 @@ export type GetShareTransactionReportQuery = {
           shareReturnDr?: string | null;
           shareIssueCr?: string | null;
           balance?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
         footer?: {
           totalCr?: string | null;
@@ -22911,6 +22970,8 @@ export type GetShareBalanceReportQuery = {
           membershipDate?: Record<'local' | 'en' | 'np', string> | null;
           noOfKitta?: number | null;
           balance?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
           address?: AddressFragment | null;
         } | null> | null;
         error?:
@@ -23103,6 +23164,8 @@ export type GetBankGlStatementReportQuery = {
             withdrawAmount?: string | null;
             balance?: string | null;
             remarks?: string | null;
+            branchId?: string | null;
+            branchName?: string | null;
           } | null> | null;
         };
       };
@@ -36987,6 +37050,8 @@ export const GetAccountOpeningReportDocument = `
           memberId
           openedBy
           openingDate
+          branchId
+          branchName
         }
       }
     }
@@ -37004,6 +37069,44 @@ export const useGetAccountOpeningReportQuery = <
     variables === undefined ? ['getAccountOpeningReport'] : ['getAccountOpeningReport', variables],
     useAxios<GetAccountOpeningReportQuery, GetAccountOpeningReportQueryVariables>(
       GetAccountOpeningReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDepositAccountClosingReportDocument = `
+    query getDepositAccountClosingReport($data: AccountClosingReportInput) {
+  report {
+    depositReport {
+      accountClosingReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          accountNumber
+          accountName
+          openingDate
+          closingDate
+          closedBalance
+          closedBy
+          branchId
+          branchName
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositAccountClosingReportQuery = <
+  TData = GetDepositAccountClosingReportQuery,
+  TError = unknown
+>(
+  variables?: GetDepositAccountClosingReportQueryVariables,
+  options?: UseQueryOptions<GetDepositAccountClosingReportQuery, TError, TData>
+) =>
+  useQuery<GetDepositAccountClosingReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getDepositAccountClosingReport']
+      : ['getDepositAccountClosingReport', variables],
+    useAxios<GetDepositAccountClosingReportQuery, GetDepositAccountClosingReportQueryVariables>(
+      GetDepositAccountClosingReportDocument
     ).bind(null, variables),
     options
   );
@@ -37248,6 +37351,8 @@ export const GetSuspiciousTransactionReportDocument = `
           product_name
           tranxType
           status
+          branchId
+          branchName
         }
       }
     }
@@ -37372,6 +37477,8 @@ export const GetLoanAgingStatementReportDocument = `
             installmentLateDays
             nextPaymentDate
             tenure
+            branchId
+            branchName
           }
           summary {
             disbursePrincipalTotal
@@ -37570,6 +37677,8 @@ export const GetActiveInactiveMemberReportDocument = `
               memberRegistrationDate
               status
               memberType
+              branchId
+              branchName
             }
           }
         }
@@ -37613,6 +37722,8 @@ export const GetKymStatusReportDocument = `
           lastKymUpdatedDate
           kymExpireDays
           kymStatus
+          branchId
+          branchName
         }
       }
     }
@@ -38008,6 +38119,8 @@ export const GetShareRegisterReportDocument = `
           kittaNumTo
           totalKitta
           totalAmount
+          branchId
+          branchName
         }
       }
     }
@@ -38042,6 +38155,8 @@ export const GetShareTransactionReportDocument = `
           shareReturnDr
           shareIssueCr
           balance
+          branchId
+          branchName
         }
         footer {
           totalCr
@@ -38089,6 +38204,8 @@ export const GetShareBalanceReportDocument = `
           membershipDate
           noOfKitta
           balance
+          branchId
+          branchName
         }
         totalBalance
         error {
@@ -38314,6 +38431,8 @@ export const GetBankGlStatementReportDocument = `
             withdrawAmount
             balance
             remarks
+            branchId
+            branchName
           }
         }
       }

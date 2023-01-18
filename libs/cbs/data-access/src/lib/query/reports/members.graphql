@@ -78,6 +78,8 @@ query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
               memberRegistrationDate
               status
               memberType
+              branchId
+              branchName
             }
           }
         }
@@ -104,6 +106,8 @@ query getKymStatusReport($data: KymStatusReportFilter) {
           lastKymUpdatedDate
           kymExpireDays
           kymStatus
+          branchId
+          branchName
         }
       }
     }

@@ -15,12 +15,24 @@ import { RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
+type ShareRegisterReportFilters = Omit<SharePurchaseRegisterReportFilter, 'branchId'> & {
+  branchId: {
+    label: string;
+    value: string;
+  }[];
+};
+
 export const ShareRegisterReport = () => {
-  const [filters, setFilters] = useState<SharePurchaseRegisterReportFilter | null>(null);
+  const [filters, setFilters] = useState<ShareRegisterReportFilters | null>(null);
+
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
 
   const { data, isFetching } = useGetShareRegisterReportQuery(
     {
-      data: filters as SharePurchaseRegisterReportFilter,
+      data: { ...filters, branchId: branchIds } as SharePurchaseRegisterReportFilter,
     },
     { enabled: !!filters }
   );
@@ -49,7 +61,7 @@ export const ShareRegisterReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange />
@@ -82,6 +94,10 @@ export const ShareRegisterReport = () => {
               {
                 header: 'Particular',
                 accessorKey: 'particular',
+              },
+              {
+                header: 'Service Center',
+                accessorKey: 'branchName',
               },
               {
                 header: 'Share Information',

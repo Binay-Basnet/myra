@@ -93,10 +93,10 @@ export const ReportOrganization = () => {
             </Text>
           )}
           {nameList?.length && (
-            <Box display="flex">
+            <Box maxW="50ch">
               {nameList?.map((data) => (
-                <Text fontSize="r1" color="gray.700" fontWeight="500">
-                  {data?.label},
+                <Text as="span" fontSize="r1" color="gray.700" fontWeight="500">
+                  {data?.label},{' '}
                 </Text>
               ))}
             </Box>

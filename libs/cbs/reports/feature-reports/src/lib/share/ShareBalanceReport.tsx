@@ -15,12 +15,24 @@ import { formatAddress, localizedDate, RouteToDetailsPage } from '@coop/cbs/util
 import { FormAmountFilter, FormBranchSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
+type ShareBalanceReportFilters = Omit<ShareBalanceReportFilter, 'branchId'> & {
+  branchId: {
+    label: string;
+    value: string;
+  }[];
+};
+
 export const ShareBalanceReport = () => {
-  const [filters, setFilters] = useState<ShareBalanceReportFilter | null>(null);
+  const [filters, setFilters] = useState<ShareBalanceReportFilters | null>(null);
+
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
 
   const { data, isFetching } = useGetShareBalanceReportQuery(
     {
-      data: filters as ShareBalanceReportFilter,
+      data: { ...filters, branchId: branchIds } as ShareBalanceReportFilter,
     },
     { enabled: !!filters }
   );
@@ -46,7 +58,7 @@ export const ShareBalanceReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange />
@@ -69,7 +81,7 @@ export const ShareBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 7,
+                    colspan: 8,
                   },
                 },
               },
@@ -96,6 +108,15 @@ export const ShareBalanceReport = () => {
               {
                 header: 'Member Name',
                 accessorFn: (row) => row?.memberName?.local,
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Service Center',
+                accessorFn: (row) => row?.branchName,
                 meta: {
                   Footer: {
                     display: 'none',

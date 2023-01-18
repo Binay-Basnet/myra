@@ -52,6 +52,8 @@ query getShareRegisterReport($data: SharePurchaseRegisterReportFilter!) {
           kittaNumTo
           totalKitta
           totalAmount
+          branchId
+          branchName
         }
       }
     }
@@ -71,6 +73,8 @@ query getShareTransactionReport($data: ShareTransactionReportFilter) {
           shareReturnDr
           shareIssueCr
           balance
+          branchId
+          branchName
         }
         footer {
           totalCr
@@ -101,6 +105,8 @@ query getShareBalanceReport($data: ShareBalanceReportFilter!) {
           membershipDate
           noOfKitta
           balance
+          branchId
+          branchName
         }
         totalBalance
         error {

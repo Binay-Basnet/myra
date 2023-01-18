@@ -163,6 +163,8 @@ query getBankGLStatementReport($data: BankGLStatementFilter!) {
             withdrawAmount
             balance
             remarks
+            branchId
+            branchName
           }
         }
       }

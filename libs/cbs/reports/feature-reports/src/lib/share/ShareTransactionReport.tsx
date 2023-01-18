@@ -26,7 +26,10 @@ import {
 import { amountConverter } from '@coop/shared/utils';
 
 type Filter = {
-  branchId: string;
+  branchId: {
+    label: string;
+    value: string;
+  }[];
   period: LocalizedDateFilter;
   filter: {
     gender?: string[];
@@ -40,6 +43,11 @@ type Filter = {
 };
 export const ShareTransactionsReport = () => {
   const [filters, setFilters] = useState<Filter | null>(null);
+
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
 
   const occupationIds =
     filters?.filter?.occupation && filters?.filter?.occupation?.length !== 0
@@ -67,7 +75,7 @@ export const ShareTransactionsReport = () => {
   const { data, isFetching } = useGetShareTransactionReportQuery(
     {
       data: {
-        branchId: filters?.branchId as string,
+        branchId: branchIds,
         period: filters?.period as LocalizedDateFilter,
         filter: {
           ...filters?.filter,
@@ -135,7 +143,7 @@ export const ShareTransactionsReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Share Transaction Date Period" />
@@ -187,6 +195,15 @@ export const ShareTransactionsReport = () => {
                     accessorKey: 'name',
                     meta: {
                       width: '100%',
+                      Footer: {
+                        display: 'none',
+                      },
+                    },
+                  },
+                  {
+                    header: 'Service Center',
+                    accessorKey: 'branchName',
+                    meta: {
                       Footer: {
                         display: 'none',
                       },
