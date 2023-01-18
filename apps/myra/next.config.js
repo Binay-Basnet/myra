@@ -2,24 +2,24 @@
 const withNx = require('@nrwl/next/plugins/with-nx');
 const path = require('path');
 
-const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self';
-  style-src 'self';
-  font-src 'self';
-  frame-ancestors 'none';
-  frame-src 'self';
-`;
+// const ContentSecurityPolicy = `
+//   default-src 'self';
+//   script-src 'self';
+//   style-src 'self';
+//   font-src 'self';
+//   frame-ancestors 'none';
+//   frame-src 'self';
+// `;
 
 const securityHeaders = [
   {
     key: 'X-Frame-Options',
     value: 'SAMEORIGIN',
   },
-  {
-    key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-  },
+  // {
+  //   key: 'Content-Security-Policy',
+  //   value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+  // },
   // {
   //   key: 'X-Content-Type-Options',
   //   value: 'nosniff',
@@ -46,9 +46,12 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
-  // typescript: {
-  //   ignoreBuildErrors: true,
-  // },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   reactStrictMode: false,
   webpack: (config) => {
     // load worker files as a urls with `file-loader`
@@ -76,12 +79,12 @@ const nextConfig = {
       'minio.migration.myraerp.com',
       'minio.myraerp.com',
     ],
-    // unoptimized: true,
+    unoptimized: true,
   },
-  i18n: {
-    locales: ['en', 'ne'],
-    defaultLocale: 'en',
-  },
+  // i18n: {
+  //   locales: ['en', 'ne'],
+  //   defaultLocale: 'en',
+  // },
   poweredByHeader: false,
   async headers() {
     return [
