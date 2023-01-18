@@ -14,8 +14,17 @@ import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 
+type AccountOpeningReportFilters = Omit<AccountOpeningReportInput, 'branchId'> & {
+  branchId: { label: string; value: string }[];
+};
+
 export const AccountOpenReport = () => {
-  const [filters, setFilters] = useState<AccountOpeningReportInput | null>(null);
+  const [filters, setFilters] = useState<AccountOpeningReportFilters | null>(null);
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
+
   const { data: userListData } = useGetSettingsUserListDataQuery({
     // filter: { role: [Roles.Agent] },
     paginate: { after: '', first: -1 },
@@ -23,7 +32,7 @@ export const AccountOpenReport = () => {
 
   const { data, isFetching } = useGetAccountOpeningReportQuery(
     {
-      data: filters as AccountOpeningReportInput,
+      data: { ...filters, branchId: branchIds } as AccountOpeningReportInput,
     },
     { enabled: !!filters }
   );
@@ -49,7 +58,7 @@ export const AccountOpenReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Select Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange />
@@ -64,6 +73,10 @@ export const AccountOpenReport = () => {
           <Report.Table<AccountOpeningReport>
             hasSNo={false}
             columns={[
+              {
+                header: 'Service Center',
+                accessorKey: 'branchName',
+              },
               {
                 header: 'Member Id',
                 accessorKey: 'memberId',
