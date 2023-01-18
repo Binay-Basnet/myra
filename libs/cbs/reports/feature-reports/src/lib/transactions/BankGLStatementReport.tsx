@@ -87,7 +87,7 @@ export const BankGLStatementReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect name="branchId" label="Service Center" isMulti />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange />
