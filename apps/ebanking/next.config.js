@@ -2,24 +2,24 @@
 const withNx = require('@nrwl/next/plugins/with-nx');
 const path = require('path');
 
-const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self';
-  style-src 'self';
-  font-src 'self';
-  frame-ancestors 'none';
-  frame-src 'self';
-`;
+// const ContentSecurityPolicy = `
+//   default-src 'self';
+//   script-src 'self';
+//   style-src 'self';
+//   font-src 'self';
+//   frame-ancestors 'none';
+//   frame-src 'self';
+// `;
 
 const securityHeaders = [
   {
     key: 'X-Frame-Options',
     value: 'SAMEORIGIN',
   },
-  {
-    key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-  },
+  // {
+  //   key: 'Content-Security-Policy',
+  //   value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+  // },
   // {
   //   key: 'X-Content-Type-Options',
   //   value: 'nosniff',
