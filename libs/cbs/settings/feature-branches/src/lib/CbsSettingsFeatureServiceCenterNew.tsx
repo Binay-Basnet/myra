@@ -31,7 +31,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const { t } = useTranslation();
 
-  const methods = useForm<BranchInput>({ defaultValues: { abbsStatus: true } });
+  const methods = useForm<BranchInput>({ defaultValues: { abbsStatus: true, branchStatus: true } });
 
   const { getValues, watch, reset, setError, clearErrors } = methods;
 
