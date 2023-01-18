@@ -1,11 +1,10 @@
 import { IoCopyOutline, IoQrCode } from 'react-icons/io5';
-import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { AccountQRModal, Box, Divider, Icon, IconButton, Text } from '@myra-ui';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, copyToClipboard } from '@coop/shared/utils';
 
 interface IAccountCardProps {
@@ -37,7 +36,6 @@ export const AccountCard = ({
   memberName,
 }: IAccountCardProps) => {
   const { onClose: modalOnClose, isOpen, onToggle } = useDisclosure();
-  const router = useRouter();
 
   return (
     <>
@@ -47,19 +45,13 @@ export const AccountCard = ({
           <Box display="flex" flexDirection="column" gap="s8">
             <Box display="flex" flexDirection="column" gap="s4">
               <Box>
-                <Text
-                  fontWeight="600"
-                  fontSize="r1"
-                  color="primary.500"
-                  cursor="pointer"
-                  onClick={() =>
-                    router.push(`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${accountNumber}`)
-                  }
-                >
-                  {accountName}
-                </Text>
+                <RedirectButton
+                  link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${accountNumber}`}
+                  label={accountName}
+                />
+
                 <Box display="flex" alignItems="center" gap="s4">
-                  <Text fontWeight="400" fontSize="s3">
+                  <Text fontWeight="Regular" fontSize="s3">
                     {accountNumber}{' '}
                   </Text>
                   <Icon

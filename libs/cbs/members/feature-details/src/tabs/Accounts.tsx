@@ -8,7 +8,6 @@ import {
   ObjState,
   useGetAccountTableListMinimalQuery,
   useGetMemberDetailsOverviewQuery,
-  useGetNewIdMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
@@ -33,6 +32,7 @@ export const Accounts = () => {
   });
 
   const memberPayment = memberDetails?.data?.members?.memberOverview?.data?.overview?.payments;
+
   const memberPaymentUp = memberPayment?.map((data, index) => ({
     sn: Number(index) + 1,
     date: data?.date,
@@ -40,7 +40,7 @@ export const Accounts = () => {
     paymentType: data?.paymentType,
     amount: amountConverter(data?.amount as string),
   }));
-  const newId = useGetNewIdMutation();
+  // const newId = useGetNewIdMutation();
 
   const memberAccountDetails =
     memberDetails?.data?.members?.memberOverview?.data?.accounts?.accounts;

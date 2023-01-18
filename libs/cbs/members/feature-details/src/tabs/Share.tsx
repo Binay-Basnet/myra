@@ -5,7 +5,7 @@ import { Box, Grid, Icon, Text } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
 
-import { ShareInfo, ShareRegister, ShareTable } from '../components';
+import { ShareInfo, ShareTable } from '../components';
 
 export const MemberShareInfo = () => {
   const router = useRouter();
@@ -60,7 +60,7 @@ export const MemberShareInfo = () => {
         </Grid>
       </Box>
       <ShareInfo />
-      <ShareRegister />
+      {/* <ShareRegister /> */}
       <ShareTable />
     </>
   );

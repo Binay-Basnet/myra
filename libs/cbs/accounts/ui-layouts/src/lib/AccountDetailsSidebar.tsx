@@ -93,6 +93,7 @@ export const AccountDetailsSidebar = () => {
         onClick={() => router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${accountDetails?.member?.id}`)}
       >
         <DetailPageMemberCard
+          id={accountDetails?.member?.id}
           name={accountDetails?.member?.name?.local as string}
           profilePicUrl={accountDetails?.member?.profilePicUrl ?? ''}
         />

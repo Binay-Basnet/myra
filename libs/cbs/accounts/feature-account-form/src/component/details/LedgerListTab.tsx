@@ -35,6 +35,9 @@ export const LedgerListTab = () => {
         header: 'SN',
         accessorKey: 'index',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
+        meta: {
+          width: '10%',
+        },
       },
       {
         header: 'Ledger Name',
