@@ -22807,6 +22807,11 @@ export type GetSavingsBalanceReportQuery = {
           memberType?: KymMemberTypesEnum | null;
           balance?: string | null;
         } | null> | null;
+        summary?: {
+          totalIndividualAccount?: number | null;
+          totalMinorAccount?: number | null;
+          totalOtherAccount?: number | null;
+        } | null;
       };
     };
   };
@@ -37971,6 +37976,11 @@ export const GetSavingsBalanceReportDocument = `
           accountOpeningDate
           memberType
           balance
+        }
+        summary {
+          totalIndividualAccount
+          totalMinorAccount
+          totalOtherAccount
         }
         totalBalance
       }
