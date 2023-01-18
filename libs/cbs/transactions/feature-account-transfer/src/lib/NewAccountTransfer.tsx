@@ -48,6 +48,11 @@ export interface NewAccountTransferProps {}
 
 type AccountTransferForm = TransferInput & { destMemberId: string };
 
+const transferTypeObj = {
+  [TransferType.Self]: 'Self Transfer',
+  [TransferType.Member]: 'Member to Member',
+};
+
 export const NewAccountTransfer = () => {
   const { t } = useTranslation();
 
@@ -422,7 +427,9 @@ export const NewAccountTransfer = () => {
                         ),
                         Date: localizedDate(result?.date),
                         'Withdrawn By': result?.withdrawWith,
-                        'Transfer Type': result?.transferType,
+                        'Transfer Type': result?.transferType
+                          ? transferTypeObj[result.transferType]
+                          : '',
                         'Transfer Amount': amountConverter(result?.amount || 0) as string,
                         Fine: String(amountConverter(result?.fine || 0)),
                       },
