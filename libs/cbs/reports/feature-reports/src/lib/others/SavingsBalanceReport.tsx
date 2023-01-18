@@ -68,6 +68,7 @@ export const SavingBalanceReport = () => {
   );
 
   const savingBalanceData = data?.report?.otherReport?.savingsBalanceReport?.data;
+  const summary = data?.report?.otherReport?.savingsBalanceReport?.summary;
   const totalBalance = data?.report?.otherReport?.savingsBalanceReport?.totalBalance;
 
   return (
@@ -203,6 +204,74 @@ export const SavingBalanceReport = () => {
               },
             ]}
           />
+
+          <Box
+            display="flex"
+            flexDir="column"
+            borderRadius="br2"
+            border="1px"
+            mb="s16"
+            mx="s16"
+            borderColor="border.element"
+          >
+            <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.element">
+              <Box
+                display="flex"
+                alignItems="center"
+                w="80%"
+                h="100%"
+                px="s12"
+                borderRight="1px"
+                borderRightColor="border.element"
+                fontSize="r1"
+                fontWeight={600}
+                color="gray.700"
+              >
+                Total Individual Account
+              </Box>
+              <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
+                {summary?.totalIndividualAccount}
+              </Box>
+            </Box>
+            <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.element">
+              <Box
+                display="flex"
+                alignItems="center"
+                w="80%"
+                h="100%"
+                px="s12"
+                borderRight="1px"
+                borderRightColor="border.element"
+                fontSize="r1"
+                fontWeight={600}
+                color="gray.700"
+              >
+                Total Minor Account
+              </Box>
+              <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
+                {summary?.totalMinorAccount}
+              </Box>
+            </Box>
+            <Box h="40px" display="flex">
+              <Box
+                display="flex"
+                alignItems="center"
+                w="80%"
+                h="100%"
+                px="s12"
+                borderRight="1px"
+                borderRightColor="border.element"
+                fontSize="r1"
+                fontWeight={600}
+                color="gray.700"
+              >
+                Total Other Account
+              </Box>
+              <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
+                {summary?.totalOtherAccount}{' '}
+              </Box>
+            </Box>
+          </Box>
         </Report.Content>
         <Report.Filters>
           <Report.Filter title="Member Wise">

@@ -16850,7 +16850,7 @@ export type GetSavingsBalanceReportQueryVariables = Exact<{
 }>;
 
 
-export type GetSavingsBalanceReportQuery = { report: { otherReport: { savingsBalanceReport: { totalBalance?: string | null, data?: Array<{ accountId?: string | null, memberId?: string | null, memberCode?: string | null, memberName?: Record<"local"|"en"|"np",string> | null, productId?: string | null, productName?: string | null, productCode?: string | null, accountOpeningDate?: string | null, memberType?: KymMemberTypesEnum | null, balance?: string | null } | null> | null } } } };
+export type GetSavingsBalanceReportQuery = { report: { otherReport: { savingsBalanceReport: { totalBalance?: string | null, data?: Array<{ accountId?: string | null, memberId?: string | null, memberCode?: string | null, memberName?: Record<"local"|"en"|"np",string> | null, productId?: string | null, productName?: string | null, productCode?: string | null, accountOpeningDate?: string | null, memberType?: KymMemberTypesEnum | null, balance?: string | null } | null> | null, summary?: { totalIndividualAccount?: number | null, totalMinorAccount?: number | null, totalOtherAccount?: number | null } | null } } } };
 
 export type GetAllSavedReportsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
@@ -28126,6 +28126,11 @@ export const GetSavingsBalanceReportDocument = `
           accountOpeningDate
           memberType
           balance
+        }
+        summary {
+          totalIndividualAccount
+          totalMinorAccount
+          totalOtherAccount
         }
         totalBalance
       }

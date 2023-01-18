@@ -254,7 +254,7 @@ export const ShareTransactionsReport = () => {
             border="1px"
             mb="s16"
             mx="s16"
-            borderColor="border.element"
+            borderColor="border.layout"
           >
             <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.element">
               <Box
