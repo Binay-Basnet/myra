@@ -1,8 +1,8 @@
-query getTrialSheetReport($data: TrialSheetReportFilter!, ) {
+query getTrialSheetReport($data: TrialSheetReportFilter!) {
   report {
     transactionReport {
       financial {
-        trialSheetReport(data: $data, ) {
+        trialSheetReport(data: $data) {
           data {
             equityAndLiablities {
               balance
@@ -163,6 +163,8 @@ query getBankGLStatementReport($data: BankGLStatementFilter!) {
             withdrawAmount
             balance
             remarks
+            branchId
+            branchName
           }
         }
       }

@@ -15,16 +15,28 @@ import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
+type AccountClosingReportFilters = Omit<AccountClosingReportInput, 'branchId'> & {
+  branchId: {
+    label: string;
+    value: string;
+  }[];
+};
+
 export const AccountCloseReport = () => {
-  const [filters, setFilters] = useState<AccountClosingReportInput | null>(null);
+  const [filters, setFilters] = useState<AccountClosingReportFilters | null>(null);
   const { data: userListData } = useGetSettingsUserListDataQuery({
     // filter: { role: [Roles.Agent] },
     paginate: { after: '', first: -1 },
   });
 
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
+
   const { data, isFetching } = useGetAccountClosingReportQuery(
     {
-      data: filters as AccountClosingReportInput,
+      data: { ...filters, branchId: branchIds } as AccountClosingReportInput,
     },
     { enabled: !!filters }
   );
@@ -50,7 +62,7 @@ export const AccountCloseReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Select Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange />
@@ -65,6 +77,10 @@ export const AccountCloseReport = () => {
           <Report.Table<AccountClosingReport>
             hasSNo={false}
             columns={[
+              {
+                header: 'Service Center',
+                accessorKey: 'branchName',
+              },
               {
                 header: 'Member Id',
                 accessorKey: 'memberId',

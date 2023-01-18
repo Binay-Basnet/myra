@@ -53,6 +53,9 @@ query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
             installmentLateDays
             nextPaymentDate
             tenure
+
+            branchId
+            branchName
           }
           summary {
             disbursePrincipalTotal

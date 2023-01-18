@@ -18,12 +18,24 @@ import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
+type LoanAgeingFilters = Omit<LoanAgingStatementInput, 'branchId'> & {
+  branchId: {
+    label: string;
+    value: string;
+  }[];
+};
+
 export const LoanAgingStatementsReport = () => {
-  const [filters, setFilters] = useState<LoanAgingStatementInput | null>(null);
+  const [filters, setFilters] = useState<LoanAgeingFilters | null>(null);
+
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
 
   const { data, isFetching } = useGetLoanAgingStatementReportQuery(
     {
-      data: filters as LoanAgingStatementInput,
+      data: { ...filters, branchId: branchIds } as LoanAgingStatementInput,
     },
     { enabled: !!filters }
   );
@@ -49,7 +61,7 @@ export const LoanAgingStatementsReport = () => {
         />
         <Report.Inputs hideDate>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Select Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
@@ -68,7 +80,16 @@ export const LoanAgingStatementsReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 11,
+                    colspan: 12,
+                  },
+                },
+              },
+              {
+                header: 'Service Center',
+                accessorKey: 'branchName',
+                meta: {
+                  Footer: {
+                    display: 'none',
                   },
                 },
               },

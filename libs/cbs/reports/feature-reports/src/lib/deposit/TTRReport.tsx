@@ -23,7 +23,7 @@ import {
 import { amountConverter } from '@coop/shared/utils';
 
 type Filter = {
-  branchId: string;
+  branchId: { label: string; value: string }[];
   filter?: {
     amount?: MinMaxFilter;
     fiscalYear?: LocalizedDateFilter;
@@ -44,10 +44,15 @@ export const TTRReport = () => {
       ? filters?.filter?.member?.map((m) => m.value)
       : null;
 
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
+
   const { data, isFetching } = useGetTtrReportQuery(
     {
       data: {
-        branchId: filters?.branchId as string,
+        branchId: branchIds,
         period: filters?.period as LocalizedDateFilter,
         filter: {
           ...filters?.filter,
@@ -80,7 +85,7 @@ export const TTRReport = () => {
           natureOfTransactions: [NatureOfTransaction?.All],
         },
       }}
-      data={reportData as TtrDataEntry[]}
+      data={(reportData || eachTransReport) as TtrDataEntry[]}
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
@@ -95,7 +100,7 @@ export const TTRReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange />
@@ -108,77 +113,84 @@ export const TTRReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization />
           <Box display="flex" py="s32" flexDir="column">
-            <Box display="flex" py="s8" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Yearly Transaction (above 30 Lakh){' '}
-              </Text>
-              <Report.Table<TtrDataEntry & { index: number }>
-                columns={[
-                  {
-                    header: 'S.No.',
-                    accessorKey: 'index',
+            {reportData && reportData?.length !== 0 && (
+              <Box display="flex" py="s8" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  Yearly Transaction (above 30 Lakh){' '}
+                </Text>
+                <Report.Table<TtrDataEntry & { index: number }>
+                  data={reportData?.map((d, index) => ({ ...d, index: index + 1 })) || []}
+                  columns={[
+                    {
+                      header: 'S.No.',
+                      accessorKey: 'index',
 
-                    meta: {
-                      width: '60px',
-                      Footer: {
-                        colspan: 4,
+                      meta: {
+                        width: '60px',
+                        Footer: {
+                          colspan: 4,
+                        },
                       },
                     },
-                  },
-                  {
-                    header: 'Name',
-                    accessorFn: (row) => row?.name?.local,
-                  },
-                  {
-                    header: 'Address',
-                    accessorKey: 'address',
-                    cell: (props) => formatAddress(props.getValue() as Address),
-                  },
-                  {
-                    header: 'Branch',
-                    accessorKey: 'branch',
-                  },
-                  {
-                    header: 'Date',
-                    accessorFn: (row) => localizedDate(row?.date),
-                  },
-                  {
-                    header: 'Nature of Transaction',
-                    accessorKey: 'nature',
-                    cell: (props) => (
-                      <Box textTransform="capitalize">
-                        {' '}
-                        {props?.row?.original?.nature?.toLowerCase()?.replace(/_/g, ' ')}
-                      </Box>
-                    ),
-                  },
-                  {
-                    header: 'Account Type of No.',
-                    accessorKey: 'accountNo',
-                    cell: (props) => (
-                      <RouteToDetailsPage
-                        id={props?.row?.original?.accountNo as string}
-                        type="savings"
-                        label={props?.row?.original?.accountNo as string}
-                      />
-                    ),
-                  },
-                  {
-                    header: 'Source of Fund',
-                    accessorKey: 'sourceOfFund',
-                  },
-                  {
-                    header: 'Amount Involved',
-                    accessorKey: 'amount',
-                    cell: (props) => amountConverter(props.getValue() as string),
-                  },
-                  {
-                    header: 'Remarks',
-                    accessorKey: 'remarks',
-                  },
-                ]}
-              />
-            </Box>
+                    {
+                      header: 'Service Center',
+                      accessorKey: 'branch',
+                    },
+                    {
+                      header: 'Name',
+                      accessorFn: (row) => row?.name?.local,
+                    },
+                    {
+                      header: 'Address',
+                      accessorKey: 'address',
+                      cell: (props) => formatAddress(props.getValue() as Address),
+                    },
+                    {
+                      header: 'Branch',
+                      accessorKey: 'branch',
+                    },
+                    {
+                      header: 'Date',
+                      accessorFn: (row) => localizedDate(row?.date),
+                    },
+                    {
+                      header: 'Nature of Transaction',
+                      accessorKey: 'nature',
+                      cell: (props) => (
+                        <Box textTransform="capitalize">
+                          {' '}
+                          {props?.row?.original?.nature?.toLowerCase()?.replace(/_/g, ' ')}
+                        </Box>
+                      ),
+                    },
+                    {
+                      header: 'Account Type of No.',
+                      accessorKey: 'accountNo',
+                      cell: (props) => (
+                        <RouteToDetailsPage
+                          id={props?.row?.original?.accountNo as string}
+                          type="savings"
+                          label={props?.row?.original?.accountNo as string}
+                        />
+                      ),
+                    },
+                    {
+                      header: 'Source of Fund',
+                      accessorKey: 'sourceOfFund',
+                    },
+                    {
+                      header: 'Amount Involved',
+                      accessorKey: 'amount',
+                      cell: (props) => amountConverter(props.getValue() as string),
+                    },
+                    {
+                      header: 'Remarks',
+                      accessorKey: 'remarks',
+                    },
+                  ]}
+                />
+              </Box>
+            )}
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
                 Each Transaction (above 10 Lakh){' '}
@@ -196,6 +208,10 @@ export const TTRReport = () => {
                         colspan: 4,
                       },
                     },
+                  },
+                  {
+                    header: 'Service Center',
+                    accessorKey: 'branch',
                   },
                   {
                     header: 'Name',
