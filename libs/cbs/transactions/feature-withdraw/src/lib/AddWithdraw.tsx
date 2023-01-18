@@ -536,7 +536,7 @@ export const AddWithdraw = () => {
                           ),
                           Date: localizedDate(result?.date),
                           'Withdraw Amount': amountConverter(result?.amount || 0),
-                          Fine: result?.fine,
+                          Fine: amountConverter(result?.fine || '0'),
 
                           'Payment Mode': result?.paymentMode,
                           'Withdrawn By': result?.withdrawnBy,
