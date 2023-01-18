@@ -49,6 +49,7 @@ export const SettingsLoanProductForm = () => {
   const { t } = useTranslation();
   const [newId, setNewId] = useState('');
   const { mutateAsync: getId } = useGetNewIdMutation();
+
   useEffect(() => {
     getId({ idType: Id_Type.Loanproduct }).then((res) => setNewId(res?.newId as string));
   }, []);

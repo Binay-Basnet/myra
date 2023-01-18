@@ -11,7 +11,6 @@ import {
   InstitutionBasicMinInfo,
   useGetMemberDetailsOverviewQuery,
   useGetMemberOverviewBasicDetailsQuery,
-  useGetNewIdMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
@@ -31,6 +30,7 @@ export const Overview = () => {
   const memberDetails = useGetMemberDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
+
   const links = [
     {
       title: 'New Deposit',
@@ -71,6 +71,7 @@ export const Overview = () => {
   ];
 
   const memberPayment = memberDetails?.data?.members?.memberOverview?.data?.overview?.payments;
+
   const memberShareDetails =
     memberDetails?.data?.members?.memberOverview?.data?.overview?.statistics;
   const memberGraphs =
@@ -92,9 +93,9 @@ export const Overview = () => {
     date: data?.date,
     accountName: data?.accountName,
     paymentType: data?.paymentType,
+    installmentNo: data?.installmentNo,
     amount: amountConverter(data?.amount as string),
   }));
-  const newId = useGetNewIdMutation();
 
   // to find out member type
   const memberDetailsData = useGetMemberOverviewBasicDetailsQuery({

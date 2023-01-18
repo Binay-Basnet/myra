@@ -29,7 +29,7 @@ export const LoanRepaymentDetailPage = () => {
     loanSubtype: loanRepaymentDetailData?.loanSubType,
     loanAccId: loanRepaymentDetailData?.loanAccountId,
     repaymentDate: loanRepaymentDetailData?.repaymentDate,
-    //  interestRate: loanRepaymentDetailData?.transactionDate,
+    paymentMode: loanRepaymentDetailData?.paymentMode,
   };
   return (
     <Box bg="gray.100">
@@ -44,7 +44,7 @@ export const LoanRepaymentDetailPage = () => {
         <SideBar summary={summary} detailPage="loanRepayment" />
       </Box>
 
-      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+      <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
         <Text color="gray.800" fontWeight="SemiBold" fontSize="r3">
           {t['transDetailOverview']}
         </Text>

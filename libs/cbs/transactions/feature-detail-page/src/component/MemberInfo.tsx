@@ -1,6 +1,6 @@
 import { IoArrowForwardOutline } from 'react-icons/io5';
 
-import { Avatar, Box, Icon, Text } from '@myra-ui';
+import { Avatar, Box, Icon, Text, Tooltip } from '@myra-ui';
 
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 
@@ -44,7 +44,10 @@ export const MemberInfo = ({
       {detailPage === 'accountTransfer' && (
         <Box display="flex" alignItems="center" gap="s12">
           <Box>
-            <RedirectButton label={name} link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${memberId}`} />
+            <RedirectButton
+              label={<Tooltip title={name as string} />}
+              link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${memberId}`}
+            />
             <Text fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-70">
               {sourceAccount}
             </Text>
@@ -52,7 +55,7 @@ export const MemberInfo = ({
           <Icon color="success.400" as={IoArrowForwardOutline} />
           <Box>
             <RedirectButton
-              label={destinationName}
+              label={<Tooltip title={destinationName as string} />}
               link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${recipientMemberId}`}
             />
 

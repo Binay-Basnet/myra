@@ -2,6 +2,8 @@ import { IoCopyOutline } from 'react-icons/io5';
 
 import { Box, Icon, Text } from '@myra-ui';
 
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 
 export const LoanProductSummary = () => {
@@ -42,9 +44,10 @@ export const LoanProductSummary = () => {
 
       <Box fontSize="s3" color="gray.800" maxW="80%">
         <Text>Product Type</Text>
-        <Text fontWeight="500" textTransform="capitalize">
-          {loanPreview?.generalInformation?.loanProduct}
-        </Text>
+        <RedirectButton
+          label={loanPreview?.generalInformation?.loanProduct}
+          link={`${ROUTES.CBS_LOAN_PRODUCTS_DETAILS}?id=${loanPreview?.productId}`}
+        />
       </Box>
     </Box>
   );

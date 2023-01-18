@@ -11,7 +11,7 @@ export const OtherDetails = ({ branch, teller }: OtherDetailProps) => {
   const { t } = useTranslation();
 
   return (
-    <DetailsCard title={t['transDetailOtherDetails']}>
+    <DetailsCard title={t['transDetailOtherDetails']} hasThreeRows>
       <DetailCardContent title={t['transDetailTransactionBranch']} subtitle={branch} />
       <DetailCardContent title={t['transDetailTeller']} subtitle={teller} />
     </DetailsCard>

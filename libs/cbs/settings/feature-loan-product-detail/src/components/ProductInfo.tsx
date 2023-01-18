@@ -9,7 +9,7 @@ export const ProductInfo = () => {
 
   return (
     <Box
-      h="100px"
+      h="auto"
       w="100%"
       p="s16"
       display="flex"

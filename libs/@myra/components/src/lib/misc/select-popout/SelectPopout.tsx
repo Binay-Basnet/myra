@@ -76,7 +76,15 @@ export const SelectPopout = ({ optionType, options, popoverBtn, ...rest }: TSele
         </Button> */}
       </PopoverTrigger>
       <PopoverContent w="360px">
-        <Box p="s16" boxShadow="E2" borderRadius="br2" display="flex" flexDir="column" gap="s16">
+        <Box
+          p="s16"
+          w="100%"
+          boxShadow="E2"
+          borderRadius="br2"
+          display="flex"
+          flexDir="column"
+          gap="s16"
+        >
           <Select<Option | MemberOption, boolean, GroupBase<Option | MemberOption>>
             autoFocus
             ref={firstFieldRef}
@@ -147,9 +155,6 @@ export const SelectPopout = ({ optionType, options, popoverBtn, ...rest }: TSele
             controlShouldRenderValue={false}
             hideSelectedOptions={false}
             isClearable={false}
-            onChange={(newValue) => {
-              setSelectValue(newValue as ValueType);
-            }}
             menuIsOpen
             options={options}
             placeholder="Search..."
@@ -160,6 +165,13 @@ export const SelectPopout = ({ optionType, options, popoverBtn, ...rest }: TSele
             getOptionLabel={(option) => ('id' in option ? option.name : option.label)}
             getOptionValue={(option) => ('id' in option ? option.id : option.value)}
             {...rest}
+            onChange={(newValue) => {
+              setSelectValue(newValue as ValueType);
+              rest?.onChange?.(newValue, {
+                action: 'select-option',
+                option: undefined,
+              });
+            }}
           />
           <Box display="flex" alignItems="center" justifyContent="space-between">
             <Button

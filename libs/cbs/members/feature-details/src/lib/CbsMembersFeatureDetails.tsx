@@ -52,12 +52,12 @@ export const MemberDetails = () => {
         {tabQuery === 'activity' && <Activity />}
         {tabQuery === 'loan' && <Loan />}
         {tabQuery === 'bio' && <Bio />}
-        {tabQuery === 'withdraw slip' && <WithdrawSlip />}
         {tabQuery === 'documents' && <Documents />}
         {tabQuery === 'reports' && <Reports />}
-        {tabQuery === 'share' && <MemberShareInfo />}
         {tabQuery === 'tasks' && <Tasks />}
+        {tabQuery === 'share' && <MemberShareInfo />}
         {tabQuery === 'transactions' && <Transactions />}
+        {tabQuery === 'withdraw slip' && <WithdrawSlip />}
       </Box>
     </>
   );
