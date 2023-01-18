@@ -134,6 +134,8 @@ export type AccountCloseReason = typeof AccountCloseReason[keyof typeof AccountC
 export type AccountClosingReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   closedBalance?: Maybe<Scalars['String']>;
   closedBy?: Maybe<Scalars['String']>;
   closingDate?: Maybe<Scalars['Localized']>;
@@ -143,7 +145,7 @@ export type AccountClosingReport = {
 };
 
 export type AccountClosingReportInput = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<AccountOpeningReportInputFilter>;
   period: LocalizedDateFilter;
 };
@@ -178,6 +180,8 @@ export type AccountListFilter = {
 export type AccountOpeningReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   openedBy?: Maybe<Scalars['String']>;
@@ -185,7 +189,7 @@ export type AccountOpeningReport = {
 };
 
 export type AccountOpeningReportInput = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<AccountOpeningReportInputFilter>;
   period: LocalizedDateFilter;
 };
@@ -565,7 +569,7 @@ export type ActiveInactiveMemberReport = {
 };
 
 export type ActiveInactiveMemberReportData = {
-  branchId: Scalars['ID'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<MemberReportFilters>;
   period: LocalizedDateFilter;
 };
@@ -579,6 +583,8 @@ export type ActiveInactiveMemberReportSummary = {
 export type ActiveInactiveMemberStatement = {
   address?: Maybe<Scalars['String']>;
   age?: Maybe<Scalars['Int']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   contactNo?: Maybe<Scalars['String']>;
   district?: Maybe<Scalars['String']>;
   dob?: Maybe<Scalars['Localized']>;
@@ -1333,6 +1339,8 @@ export type BankDepositData = {
 
 export type BankGlDataEntry = {
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   chequeNo?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   depositAmount?: Maybe<Scalars['String']>;
@@ -1343,7 +1351,7 @@ export type BankGlDataEntry = {
 };
 
 export type BankGlStatementFilter = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<GlStatementFilter>;
   period: LocalizedDateFilter;
 };
@@ -8407,6 +8415,8 @@ export type KymStatusFilter = {
 
 export type KymStatusReport = {
   address?: Maybe<Address>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   contact?: Maybe<Scalars['String']>;
   kymExpireDays?: Maybe<Scalars['String']>;
   kymStatus?: Maybe<Scalars['String']>;
@@ -8419,7 +8429,7 @@ export type KymStatusReport = {
 };
 
 export type KymStatusReportFilter = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<KymStatusFilter>;
   period: LocalizedDateFilter;
 };
@@ -8954,13 +8964,15 @@ export type LoanAgingStatementData = {
 };
 
 export type LoanAgingStatementInput = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<LoanAgingFilters>;
   period?: InputMaybe<LoanAgingPeriodInput>;
 };
 
 export type LoanAgingStatementReport = {
   address?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   disbursePrincipal?: Maybe<Scalars['String']>;
   goodAmount?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
@@ -12614,6 +12626,8 @@ export type ShareBalanceFilterData = {
 export type ShareBalanceReportData = {
   address?: Maybe<Address>;
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   contactNo?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -12625,7 +12639,7 @@ export type ShareBalanceReportData = {
 };
 
 export type ShareBalanceReportFilter = {
-  branchId: Scalars['ID'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<ShareBalanceFilterData>;
   period: LocalizedDateFilter;
 };
@@ -12854,6 +12868,8 @@ export type SharePurchaseRegisterFilter = {
 };
 
 export type SharePurchaseRegisterReport = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   kittaNumFrom?: Maybe<Scalars['String']>;
   kittaNumTo?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
@@ -12866,7 +12882,7 @@ export type SharePurchaseRegisterReport = {
 };
 
 export type SharePurchaseRegisterReportFilter = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<SharePurchaseRegisterFilter>;
   period: LocalizedDateFilter;
 };
@@ -13168,6 +13184,8 @@ export type ShareTransactionFooter = {
 
 export type ShareTransactionReport = {
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -13178,7 +13196,7 @@ export type ShareTransactionReport = {
 };
 
 export type ShareTransactionReportFilter = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<ShareTransactionFilter>;
   period: LocalizedDateFilter;
 };
@@ -13336,6 +13354,8 @@ export type SubscriptionMutationUpsertArgs = {
 
 export type SuspiciousTransactionReport = {
   amount?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -13346,7 +13366,7 @@ export type SuspiciousTransactionReport = {
 };
 
 export type SuspiciousTransactionReportInput = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<SuspiciousTransactionReportInputFilter>;
   period: LocalizedDateFilter;
 };
@@ -13421,7 +13441,7 @@ export type TtrReportData = {
 };
 
 export type TtrReportFilter = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<TtrFilter>;
   period: LocalizedDateFilter;
 };
