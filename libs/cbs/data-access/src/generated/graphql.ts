@@ -3441,6 +3441,7 @@ export type DepositLoanAccountFormStateResult = {
 };
 
 export type DepositLoanAccountInput = {
+  accountDocuments?: InputMaybe<Array<InputMaybe<DocumentInsertInput>>>;
   accountName?: InputMaybe<Scalars['String']>;
   agentId?: InputMaybe<Scalars['ID']>;
   atmFacility?: InputMaybe<Scalars['Boolean']>;
@@ -3464,6 +3465,7 @@ export type DepositLoanAccountInput = {
   mobileBanking?: InputMaybe<Scalars['Boolean']>;
   openingPayment?: InputMaybe<DepositInput>;
   productId: Scalars['ID'];
+  referenceFromKYM?: InputMaybe<Scalars['Boolean']>;
   serviceCharge?: InputMaybe<Array<InputMaybe<ServiceChargeInput>>>;
   smsBanking?: InputMaybe<Scalars['Boolean']>;
   tenure?: InputMaybe<FrequencyTenure>;
@@ -4120,6 +4122,11 @@ export type Document = {
 export type DocumentInfo = {
   id: Scalars['String'];
   url: Scalars['String'];
+};
+
+export type DocumentInsertInput = {
+  fieldId: Scalars['String'];
+  identifiers: Array<Scalars['String']>;
 };
 
 export type DocumentMutation = {

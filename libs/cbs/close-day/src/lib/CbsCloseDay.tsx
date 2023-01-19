@@ -179,22 +179,27 @@ export const CbsCloseDay = () => {
   };
 
   const isDayCloseDisabled = () => {
+    if (!eodStatus?.states) {
+      return true;
+    }
+
     if (!eodStatus?.states?.currentBranchesReady) {
       return true;
     }
 
     if (
-      eodStatusQueryData?.transaction?.eodStatus?.states?.transactionDate !== EodState.Completed
+      eodStatusQueryData?.transaction?.eodStatus?.states?.transactionDate === EodState.Completed
     ) {
       return false;
     }
 
-    if (!ignore) return true;
-
-    if (!eodStatus?.states) return true;
-
-    if (Object.values(eodStatus?.states ?? {}).find((value) => value === EodState.Ongoing))
+    if (Object.values(eodStatus?.states ?? {}).find((value) => value === EodState.Ongoing)) {
       return true;
+    }
+
+    if (!ignore) {
+      return true;
+    }
 
     return false;
   };
