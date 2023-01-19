@@ -10347,7 +10347,22 @@ export type MemberOverviewAccountsView = {
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
 };
 
+export type MemberOverviewAccountsViewV2 = {
+  data?: Maybe<MemberOverviewAccountsView>;
+  error?: Maybe<QueryError>;
+};
+
 export type MemberOverviewBio = CoopBio | CoopUnionBio | IndividualBio | InstitutionBio;
+
+export type MemberOverviewBioV2 = {
+  data?: Maybe<MemberOverviewBio>;
+  error?: Maybe<QueryError>;
+};
+
+export type MemberOverviewChequeV2 = {
+  data?: Maybe<Array<Maybe<MemberChequeDetails>>>;
+  error?: Maybe<QueryError>;
+};
 
 export type MemberOverviewData = {
   accounts?: Maybe<MemberOverviewAccountsView>;
@@ -10369,8 +10384,18 @@ export type MemberOverviewLoanView = {
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
 };
 
+export type MemberOverviewLoanViewV2 = {
+  data?: Maybe<MemberOverviewLoanView>;
+  error?: Maybe<QueryError>;
+};
+
 export type MemberOverviewReportView = {
   list?: Maybe<Array<Maybe<MemberReportView>>>;
+};
+
+export type MemberOverviewReportViewV2 = {
+  data?: Maybe<MemberOverviewReportView>;
+  error?: Maybe<QueryError>;
 };
 
 export type MemberOverviewResult = {
@@ -10382,6 +10407,49 @@ export type MemberOverviewShareView = {
   balanceDetails?: Maybe<ShareRegisterConnection>;
   registerDetails?: Maybe<Array<Maybe<ShareRegisterDetails>>>;
   shareInfo?: Maybe<ShareInfoView>;
+};
+
+export type MemberOverviewShareViewV2 = {
+  data?: Maybe<MemberOverviewShareView>;
+  error?: Maybe<QueryError>;
+};
+
+export type MemberOverviewV2Result = {
+  accounts?: Maybe<MemberOverviewAccountsViewV2>;
+  bio?: Maybe<MemberOverviewBioV2>;
+  cheques?: Maybe<MemberOverviewChequeV2>;
+  loan?: Maybe<MemberOverviewLoanViewV2>;
+  overview?: Maybe<OverviewViewV2>;
+  reports?: Maybe<MemberOverviewReportViewV2>;
+  share?: Maybe<MemberOverviewShareViewV2>;
+};
+
+export type MemberOverviewV2ResultAccountsArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultBioArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultChequesArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultLoanArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultOverviewArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultReportsArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultShareArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberPaymentView = {
@@ -10413,6 +10481,7 @@ export type MemberQuery = {
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
   memberOverview?: Maybe<MemberOverviewResult>;
+  memberOverviewV2?: Maybe<MemberOverviewV2Result>;
   memberPDF: Scalars['String'];
   memberTypes: MemberTypeResult;
   officialUse?: Maybe<OfficialUseResult>;
@@ -11245,6 +11314,11 @@ export type OverviewView = {
   pendingView?: Maybe<Array<Maybe<PendingOverview>>>;
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactionView>>>;
   statistics?: Maybe<MemberStatisticsView>;
+};
+
+export type OverviewViewV2 = {
+  data?: Maybe<OverviewView>;
+  error?: Maybe<QueryError>;
 };
 
 export type PageInfo = {
