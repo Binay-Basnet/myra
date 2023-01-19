@@ -167,6 +167,8 @@ query getMemberDetailsOverview($id: ID!) {
             accountName
             paymentType
             amount
+            installmentNo
+            interestRate
           }
           recentTransactions {
             date

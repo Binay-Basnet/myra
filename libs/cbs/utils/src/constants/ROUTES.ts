@@ -31,6 +31,7 @@ export const ROUTES = {
   CBS_LOAN_REPAYMENT_DETAILS: '/cbs/loan/repayments/details',
 
   CBS_LOAN_PRODUCTS_LIST: '/cbs/loan/products/list',
+  CBS_LOAN_PRODUCTS_DETAILS: '/cbs/loan/products/details',
   CBS_LOAN_DECLINED_LIST: '/cbs/loan/declined/list',
   CBS_LOAN_ACCOUNTS_LIST: '/cbs/loan/accounts/list',
   CBS_LOAN_ACCOUNT_DETAILS: '/cbs/loan/accounts/details',

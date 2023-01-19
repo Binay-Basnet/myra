@@ -1,6 +1,4 @@
-import { IoCopyOutline } from 'react-icons/io5';
-
-import { Box, Chips, Icon, Text, Tooltip } from '@myra-ui';
+import { Box, Chips, Text, Tooltip } from '@myra-ui';
 
 import { TransferType } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
@@ -18,7 +16,6 @@ type SummaryProps = {
     loanSubtype?: string | undefined | null;
     loanAccId?: string | undefined | null;
     repaymentDate?: Record<'local' | 'en' | 'np', string> | undefined | null;
-    //  interestRate?: loanRepaymentDetailData?.transactionDate,
   };
   detailPage?: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction' | 'loanRepayment';
 };
@@ -98,31 +95,35 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
 
         {detailPage === 'loanRepayment' && (
           <Box display="flex" w="100%" flexDirection="column" gap="s16">
-            <Box display="flex" justifyContent="space-between">
-              <Box display="flex" flexDirection="column">
+            <Box display="flex" flexDirection="column" gap="s4" justifyContent="space-between">
+              <Text
+                fontSize="r1"
+                fontWeight="Medium"
+                color="neutralColorLight.Gray-80"
+                lineHeight="17px"
+              >
+                #{summary.transactionId}
+              </Text>
+              <Box display="flex">
                 <RedirectButton
                   link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${summary?.loanAccId}`}
                   label={<Tooltip title={summary.loanAccountName as string} />}
                 />
-                <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-70">
+              </Box>
+              <Box display="flex" justifyContent="space-between">
+                <Text fontSize="s3" fontWeight="Regular" color="gray.900" lineHeight="16px">
                   {summary.loanSubtype}
                 </Text>
-                <Box display="flex">
-                  <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70">
-                    {summary.loanAccId}
-                  </Text>
-                  <Icon ml="s4" as={IoCopyOutline} />
-                </Box>
+                {summary?.paymentMode && (
+                  <Chips
+                    theme="success"
+                    variant="solid"
+                    label={summary?.paymentMode}
+                    size="sm"
+                    type="label"
+                  />
+                )}
               </Box>
-
-              {/* <Box display="flex" flexDirection="column">
-              <Text fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-80">
-                {t['transDetailInterest']}
-              </Text>
-              <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
-              {summary.interestRate}
-            </Text>
-            </Box> */}
             </Box>
           </Box>
         )}

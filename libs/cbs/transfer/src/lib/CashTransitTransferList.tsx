@@ -12,7 +12,7 @@ import {
   useGetCashInTransitListQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
+import { getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 import { CashInTransitTransferAproveModal } from '../components/cash-in-transit/CashInTransitTransferAproveModal';
 
@@ -142,10 +142,7 @@ export const CashTransitTransferList = () => {
 
   return (
     <>
-      <PageHeader
-        heading={`Cash in Transit Transfer - ${featureCode.vaultTransferList}`}
-        tabItems={CASH_IN_TRANSIT_TAB_ITEMS}
-      />
+      <PageHeader heading="Cash in Transit Transfer" tabItems={CASH_IN_TRANSIT_TAB_ITEMS} />
 
       <Table
         data={rowData}
