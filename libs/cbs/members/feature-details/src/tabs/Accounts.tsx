@@ -7,7 +7,7 @@ import {
   NatureOfDepositProduct,
   ObjState,
   useGetAccountTableListMinimalQuery,
-  useGetMemberDetailsOverviewQuery,
+  useGetMemberKymDetailsAccountsQuery,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
@@ -27,11 +27,11 @@ export const Accounts = () => {
       link: ROUTES.CBS_ACCOUNT_CLOSE_ADD,
     },
   ];
-  const memberDetails = useGetMemberDetailsOverviewQuery({
+  const memberDetails = useGetMemberKymDetailsAccountsQuery({
     id: router.query['id'] as string,
   });
 
-  const memberPayment = memberDetails?.data?.members?.memberOverview?.data?.overview?.payments;
+  const memberPayment = memberDetails?.data?.members?.memberOverviewV2?.accounts?.data?.payments;
 
   const memberPaymentUp = memberPayment?.map((data, index) => ({
     sn: Number(index) + 1,
@@ -43,7 +43,7 @@ export const Accounts = () => {
   // const newId = useGetNewIdMutation();
 
   const memberAccountDetails =
-    memberDetails?.data?.members?.memberOverview?.data?.accounts?.accounts;
+    memberDetails?.data?.members?.memberOverviewV2?.accounts?.data?.accounts;
   const memberLength = memberAccountDetails?.length ?? 0;
   const title = `Saving Accounts List(${memberLength})`;
   const accountList =
