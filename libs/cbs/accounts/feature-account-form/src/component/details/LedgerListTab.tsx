@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { DetailsCard, Tooltip } from '@myra-ui';
+import { Box, DetailsCard, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetAccountLedgersListQuery } from '@coop/cbs/data-access';
@@ -36,16 +36,19 @@ export const LedgerListTab = () => {
         accessorKey: 'index',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
         meta: {
-          width: '10%',
+          width: '5%',
         },
       },
       {
         header: 'Ledger Name',
+        accessorKey: 'ledgerName',
         cell: (props) => (
-          <RedirectButton
-            label={<Tooltip title={props?.row?.original?.ledgerName as string} />}
-            link={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props?.row?.original?.ledgerId}`}
-          />
+          <Box minW="10px">
+            <RedirectButton
+              link={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props?.row?.original?.ledgerId}`}
+              label={<Tooltip title={props?.row?.original?.ledgerName as string} />}
+            />
+          </Box>
         ),
       },
       {
@@ -59,7 +62,6 @@ export const LedgerListTab = () => {
   return (
     <>
       <TabHeader heading="Ledger Lists" />
-
       <DetailsCard title="Ledger Lists" hasTable>
         <Table isDetailPageTable isStatic data={ledgersList} columns={columns} />
       </DetailsCard>

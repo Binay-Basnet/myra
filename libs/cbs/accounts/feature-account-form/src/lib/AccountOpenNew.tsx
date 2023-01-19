@@ -33,7 +33,6 @@ import {
   useGetIndividualMemberDetails,
   useGetNewIdMutation,
   useGetProductListQuery,
-  useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -170,7 +169,6 @@ export const AccountOpenNew = () => {
   const id = routeId || newId;
 
   const { mutateAsync } = useSetAccountOpenDataMutation();
-  const { mutate: mutateDocs } = useSetAccountDocumentDataMutation();
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({ memberId });
@@ -378,6 +376,17 @@ export const AccountOpenNew = () => {
       updatedData = { ...omit({ ...values }, ['openingPayment']) };
     }
 
+    const tempDocuments: { fieldId: string; identifiers: string[] }[] = [];
+
+    Object.keys(fileList).forEach((fieldName) => {
+      if (fileList[fieldName as FileList]) {
+        tempDocuments.push({
+          fieldId: fieldName,
+          identifiers: fileList[fieldName as FileList],
+        });
+      }
+    });
+
     updatedData = {
       ...updatedData,
       tenure: values?.tenure ? values?.tenure : null,
@@ -399,6 +408,7 @@ export const AccountOpenNew = () => {
       depositFrequencyWeekly: values?.depositFrequencyWeekly
         ? values?.depositFrequencyWeekly
         : null,
+      accountDocuments: tempDocuments,
     };
 
     asyncToast({
@@ -431,15 +441,15 @@ export const AccountOpenNew = () => {
       },
     });
 
-    Object.keys(fileList).forEach((fieldName) => {
-      if (fileList[fieldName as FileList]) {
-        mutateDocs({
-          subscriptionId: id,
-          fieldId: fieldName,
-          identifiers: fileList[fieldName as FileList],
-        });
-      }
-    });
+    // Object.keys(fileList).forEach((fieldName) => {
+    //   if (fileList[fieldName as FileList]) {
+    //     mutateDocs({
+    //       subscriptionId: id,
+    //       fieldId: fieldName,
+    //       identifiers: fileList[fieldName as FileList],
+    //     });
+    //   }
+    // });
   };
   const { data: editValues, refetch } = useGetAccountOpenEditDataQuery(
     {

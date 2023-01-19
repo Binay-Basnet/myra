@@ -8,6 +8,7 @@ interface ILoanPaymentScheduleTableProps {
   data:
     | {
         sn: number;
+        id: string | null | undefined;
         accountType: string | null | undefined;
         accountName: string | null | undefined;
         totalBalance: string | 0;
@@ -35,7 +36,7 @@ export const LoanTable = ({ data }: ILoanPaymentScheduleTableProps) => {
         cell: (props) => (
           <RedirectButton
             label={props?.row?.original?.accountName as string}
-            link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props?.row?.original?.accountNumber}`}
+            link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props?.row?.original?.id}`}
           />
         ),
       },

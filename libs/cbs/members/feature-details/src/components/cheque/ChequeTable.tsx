@@ -17,6 +17,7 @@ export const ChequeTable = () => {
   const memberListData =
     memberReportsDetails?.map((data, index) => ({
       sn: Number(index) + 1,
+      id: data?.accountId,
       accounttName: data?.accountName,
       used: data?.used,
       left: data?.left,
