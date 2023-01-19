@@ -24,7 +24,7 @@ export const LoanPaymentSchedule = () => {
       hasTable
       leftBtn={
         <Button variant="ghost" onClick={onToggle}>
-          View full schedule{' '}
+          View full schedule
         </Button>
       }
     >

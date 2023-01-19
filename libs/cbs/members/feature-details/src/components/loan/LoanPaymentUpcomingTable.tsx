@@ -10,6 +10,7 @@ interface ILoanPaymentScheduleTableProps {
   data:
     | {
         sn: number;
+        id: string | null | undefined;
         date: Record<'local' | 'en' | 'np', string> | null | undefined;
         accountName: string | null | undefined;
         installmentNo: string | null | undefined;
@@ -40,7 +41,7 @@ export const UpcomingLoanPaymentTable = ({ data }: ILoanPaymentScheduleTableProp
           // id to be sent by BE
           <RedirectButton
             label={props?.row?.original?.accountName}
-            link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${props.cell.row.original?.sn}`}
+            link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props.cell.row.original?.id}`}
           />
         ),
         meta: {
@@ -57,6 +58,7 @@ export const UpcomingLoanPaymentTable = ({ data }: ILoanPaymentScheduleTableProp
       {
         header: 'Interest',
         accessorKey: 'interestRate',
+        cell: (props) => <Text>{props?.row?.original?.interestRate ?? 'N/A'}</Text>,
         meta: {
           isNumeric: true,
         },

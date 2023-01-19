@@ -1,8 +1,8 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
+import { DepositFrequency } from '@coop/cbs/data-access';
 import {
   DefaultAccountType,
-  Frequency,
   NatureOfDepositProduct,
   ProductCodeFormState,
 } from '@coop/ebanking/data-access';
@@ -12,7 +12,7 @@ interface IProductGeneralInformation {
     productName?: string | null;
     productCode?: ProductCodeFormState | null;
     nature?: NatureOfDepositProduct | null;
-    depositFrequency?: Frequency | null;
+    postingFrequency?: DepositFrequency | null;
     accountType?: DefaultAccountType | null;
   };
 }
@@ -31,8 +31,8 @@ export const ProductGeneralInformation = ({ generalInformation }: IProductGenera
     <DetailCardContent
       title="Interest Positing Frequency"
       subtitle={
-        generalInformation?.depositFrequency
-          ? generalInformation?.depositFrequency?.toLowerCase()
+        generalInformation?.postingFrequency
+          ? generalInformation?.postingFrequency?.replace(/_/g, ' ')
           : 'N/A'
       }
     />

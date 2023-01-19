@@ -21500,6 +21500,7 @@ export type GetMemberDetailsOverviewQuery = {
           } | null> | null;
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
+            accountId?: string | null;
             accountName?: string | null;
             paymentType?: string | null;
             amount?: string | null;
@@ -21531,6 +21532,7 @@ export type GetMemberDetailsOverviewQuery = {
             loanBalance?: string | null;
           } | null;
           payments?: Array<{
+            accountId?: string | null;
             date?: Record<'local' | 'en' | 'np', string> | null;
             accountName?: string | null;
             paymentType?: string | null;
@@ -21547,6 +21549,7 @@ export type GetMemberDetailsOverviewQuery = {
           } | null> | null;
         } | null;
         cheques?: Array<{
+          accountId?: string | null;
           accountName?: string | null;
           issued?: number | null;
           used?: number | null;
@@ -36313,6 +36316,7 @@ export const GetMemberDetailsOverviewDocument = `
           }
           payments {
             date
+            accountId
             accountName
             paymentType
             amount
@@ -36350,6 +36354,7 @@ export const GetMemberDetailsOverviewDocument = `
             loanBalance
           }
           payments {
+            accountId
             date
             accountName
             paymentType
@@ -36366,6 +36371,7 @@ export const GetMemberDetailsOverviewDocument = `
           }
         }
         cheques {
+          accountId
           accountName
           issued
           used

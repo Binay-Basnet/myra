@@ -18,6 +18,7 @@ export const LoanPaymentTable = () => {
   const memberListData =
     memberReportsDetails?.map((data, index) => ({
       sn: Number(index) + 1,
+      id: data?.accountId,
       date: data?.date,
       accountName: data?.accountName,
       installmentNo: data?.installmentNo,

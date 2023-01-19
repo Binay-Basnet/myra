@@ -90,6 +90,7 @@ export const Overview = () => {
 
   const memberPaymentUp = memberPayment?.map((data, index) => ({
     sn: Number(index) + 1,
+    id: data?.accountId,
     date: data?.date,
     accountName: data?.accountName,
     paymentType: data?.paymentType,

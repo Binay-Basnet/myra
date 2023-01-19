@@ -99,6 +99,7 @@ query getMemberDetailsOverview($id: ID!) {
           }
           payments {
             date
+            accountId
             accountName
             paymentType
             amount
@@ -163,6 +164,7 @@ query getMemberDetailsOverview($id: ID!) {
             loanBalance
           }
           payments {
+            accountId
             date
             accountName
             paymentType
@@ -179,6 +181,7 @@ query getMemberDetailsOverview($id: ID!) {
           }
         }
         cheques {
+          accountId
           accountName
           issued
           used
