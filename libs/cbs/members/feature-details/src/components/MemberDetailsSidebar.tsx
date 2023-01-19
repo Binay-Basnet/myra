@@ -13,11 +13,18 @@ import {
 } from '@coop/cbs/data-access';
 import { copyToClipboard } from '@coop/shared/utils';
 
+const fiveMinutesInMs = 5 * 60 * 1000;
+
 export const MemberDetailsSidebar = () => {
   const router = useRouter();
-  const memberDetails = useGetMemberKymDetailsOverviewQuery({
-    id: router.query['id'] as string,
-  });
+  const memberDetails = useGetMemberKymDetailsOverviewQuery(
+    {
+      id: router.query['id'] as string,
+    },
+    {
+      staleTime: fiveMinutesInMs,
+    }
+  );
 
   const memberInfo =
     memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation?.__typename ===
