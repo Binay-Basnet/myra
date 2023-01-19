@@ -9,6 +9,7 @@ import { amountConverter } from '@coop/shared/utils';
 interface ILoanPaymentScheduleTableProps {
   data:
     | {
+        id: string | null | undefined;
         sn: number;
         date: Record<'local' | 'en' | 'np', string> | null | undefined;
         accountName?: string | null | undefined;
@@ -39,7 +40,7 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
           // id to be sent by BE
           <RedirectButton
             label={props?.row?.original?.accountName}
-            link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${props.cell.row.original?.sn}`}
+            link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props.cell.row.original?.id}`}
           />
         ),
         meta: {

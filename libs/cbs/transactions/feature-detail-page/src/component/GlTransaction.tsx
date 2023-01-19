@@ -31,7 +31,7 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
         footer: t['transDetailTotal'],
         accessorFn: (row) => row?.account,
         meta: {
-          width: '500px',
+          width: '50%',
         },
       },
       {

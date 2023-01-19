@@ -60,7 +60,7 @@ export const OverviewPage = () => {
           <ProductGeneralInformation
             generalInformation={{
               productCode: detailData?.productCode,
-              depositFrequency: detailData?.depositFrequency,
+              postingFrequency: detailData?.postingFrequency,
               productName: detailData?.productName,
               accountType: detailData?.accountType,
               nature: detailData?.nature,

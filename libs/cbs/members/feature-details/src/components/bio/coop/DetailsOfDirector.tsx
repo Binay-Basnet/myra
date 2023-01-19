@@ -13,7 +13,7 @@ import {
   Text,
 } from '@myra-ui';
 
-import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
+import { useGetMemberKymDetailsBioQuery } from '@coop/cbs/data-access';
 
 import { AccordianMemberDetailsCardComponent } from '../components/AccordianCard';
 import { DocumentComponent } from '../components/Documents';
@@ -21,13 +21,13 @@ import { DocumentComponent } from '../components/Documents';
 export const DirectorDetails = () => {
   const router = useRouter();
 
-  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+  const memberBioData = useGetMemberKymDetailsBioQuery({
     id: router.query['id'] as string,
   });
 
   const bioDataCoopDirector =
-    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'CoopBio'
-      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.partnerDirectorDetails
+    memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.__typename === 'CoopBio'
+      ? memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.partnerDirectorDetails
       : null;
 
   return (

@@ -9,8 +9,8 @@ import {
   CooperativeUnionBasicMinInfo,
   IndividualBasicMinInfo,
   InstitutionBasicMinInfo,
-  useGetMemberDetailsOverviewQuery,
-  useGetMemberOverviewBasicDetailsQuery,
+  useGetMemberKymDetailsLoanQuery,
+  useGetMemberKymDetailsOverviewQuery,
 } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -23,43 +23,43 @@ export const LoanAccountList = () => {
   const handleClick = () => {
     setShowGrid(!showGrid);
   };
-  const memberDetails = useGetMemberDetailsOverviewQuery({
+  const memberDetails = useGetMemberKymDetailsLoanQuery({
     id: router.query['id'] as string,
   });
-  const memberDetailsBasic = useGetMemberOverviewBasicDetailsQuery({
+  const memberDetailsBasic = useGetMemberKymDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
 
-  const typename = memberDetailsBasic?.data?.members?.memberOverview?.data?.overview
+  const typename = memberDetailsBasic?.data?.members?.memberOverviewV2?.overview?.data
     ?.basicInformation?.__typename as string;
 
   const memberInfo =
-    memberDetailsBasic?.data?.members?.memberOverview?.data?.overview?.basicInformation
+    memberDetailsBasic?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
       ?.__typename === 'IndividualBasicMinInfo'
-      ? (memberDetailsBasic?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetailsBasic?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as IndividualBasicMinInfo)
       : null;
 
   const memberBasicInstitution =
-    memberDetailsBasic?.data?.members?.memberOverview?.data?.overview?.basicInformation
+    memberDetailsBasic?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
       ?.__typename === 'InstitutionBasicMinInfo'
-      ? (memberDetailsBasic?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetailsBasic?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as InstitutionBasicMinInfo)
       : null;
 
   const memberBasicCooperative =
-    memberDetailsBasic?.data?.members?.memberOverview?.data?.overview?.basicInformation
+    memberDetailsBasic?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
       ?.__typename === 'CooperativeBasicMinInfo'
-      ? (memberDetailsBasic?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetailsBasic?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as CooperativeBasicMinInfo)
       : null;
   const memberBasicCooperativeUnion =
-    memberDetailsBasic?.data?.members?.memberOverview?.data?.overview?.basicInformation
+    memberDetailsBasic?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
       ?.__typename === 'CooperativeUnionBasicMinInfo'
-      ? (memberDetailsBasic?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetailsBasic?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as CooperativeUnionBasicMinInfo)
       : null;
-  const memberAccountDetails = memberDetails?.data?.members?.memberOverview?.data?.loan?.accounts;
+  const memberAccountDetails = memberDetails?.data?.members?.memberOverviewV2?.loan?.data?.accounts;
   const memberBasicDetails =
     memberInfo ?? memberBasicInstitution ?? memberBasicCooperative ?? memberBasicCooperativeUnion;
 
@@ -76,6 +76,7 @@ export const LoanAccountList = () => {
   const memberListData =
     memberAccountDetails?.map((data, index) => ({
       sn: Number(index) + 1,
+      id: data?.accountId,
       accountType: data?.productType,
       accountName: data?.accountName,
       totalBalance: amountConverter(data?.totalBalance as string),

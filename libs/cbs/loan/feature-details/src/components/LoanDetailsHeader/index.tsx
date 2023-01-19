@@ -10,7 +10,7 @@ export const LoanDetailsHeader = ({ title }: ILoanDetailsHeaderProps) => {
   const { loanPreview } = useLoanDetails();
 
   return (
-    <Box position="sticky" top="0">
+    <Box position="sticky" zIndex={10} top="0">
       <DetailPageHeader
         title={title}
         member={{
