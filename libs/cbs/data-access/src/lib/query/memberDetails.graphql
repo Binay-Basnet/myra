@@ -785,3 +785,756 @@ query getMemberOverviewBioDetails($id: ID!) {
     }
   }
 }
+
+query getMemberKYMDetailsOverview($id: ID!) {
+  members {
+    memberOverviewV2 {
+      overview(memberId: $id) {
+        data {
+          basicInformation {
+            __typename
+            ... on IndividualBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              genderId
+              gender
+              maritalStatus
+              maritalStatusId
+              fathersName
+              mothersName
+              grandFathersName
+              familyMembers {
+                fullName
+                relationship
+                dob
+              }
+              isStaff
+            }
+            ... on InstitutionBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+            ... on CooperativeBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              registrationNo
+              registrationOffice
+              registrationDate
+            }
+            ... on CooperativeUnionBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+          }
+          memberGraphs {
+            deposit {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+            withdraw {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+          }
+          statistics {
+            totalShareValue
+            accountBalance
+            loanBalance
+          }
+          payments {
+            date
+            accountName
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+          recentTransactions {
+            date
+            title
+            txnType
+            amount
+            noOfShares
+          }
+        }
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsAccounts($id: ID!) {
+  members {
+    memberOverviewV2 {
+      accounts(memberId: $id) {
+        data {
+          accounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+          }
+          payments {
+            date
+            accountName
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsAccounts($id: ID!) {
+  members {
+    memberOverviewV2 {
+      accounts(memberId: $id) {
+        data {
+          accounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+          }
+          payments {
+            date
+            accountName
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsLoan($id: ID!) {
+  members {
+    memberOverviewV2 {
+      loan(memberId: $id) {
+        data {
+          accounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+            subscriptionDate
+            interestEarned
+            interestBooked
+          }
+          payments {
+            date
+            accountName
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsShares($id: ID!) {
+  members {
+    memberOverviewV2 {
+      share(memberId: $id) {
+        data {
+          shareInfo {
+            totalCount
+            issuedCount
+            returnedCount
+            totalBalance
+          }
+          registerDetails {
+            date
+            title
+            txnAmount
+            txnType
+            noOfShares
+          }
+          balanceDetails {
+            totalCount
+            edges {
+              node {
+                id
+                memberId
+                member {
+                  id
+                  objState
+                  createdAt
+                  modifiedAt
+                  code
+                  type
+                  name
+
+                  contact
+                  dateJoined
+                  profilePic
+                  signaturepic
+                  profilePicUrl
+                  signaturePicUrl
+                }
+                status
+                transactionDate
+                transactionDirection
+                credit
+                debit
+                startNumber
+                endNumber
+                balance
+                shareAmount
+                extraFee {
+                  name
+                  value
+                }
+                totalAmount
+                paymentMode
+                bankId
+                voucherNumber
+                accountId
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsBio($id: ID!) {
+  members {
+    memberOverviewV2 {
+      bio(memberId: $id) {
+        data {
+          __typename
+          ... on IndividualBio {
+            memberName
+            profilePic
+            memberCode
+            memberJoined
+            dob
+            gender
+            mobile
+            email
+            currentAddress
+            permanentAddress
+            maritalStatus
+            familyMembers {
+              relationship
+              fullName
+              dob
+            }
+            docs {
+              key
+              value
+            }
+          }
+          ... on InstitutionBio {
+            basicInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+            addressDetails {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            registrationDetails {
+              registeredNumber
+              issuingOffice
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+            }
+            operatingOfficeAddress {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            serviceCenterOfficeAddress {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            contactDetails {
+              phoneNumber
+              fax
+              email
+              website
+              poBoxNo
+              noOfEmployees
+              agmDetails
+            }
+            bankAcDetails {
+              bank
+              accountNumber
+              accountName
+            }
+            partnerDirectorDetails {
+              name
+              permAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              dateOfMembership
+              highestQualification
+              mobileNo
+              email
+              citizenshipNo
+              panNo
+              docs {
+                key
+                value
+              }
+            }
+            operatorDetails {
+              name
+              contactNo
+              email
+              panNo
+              pemAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            transactionProfileDetails {
+              nature
+              annualTurnover
+              initialDepositAmount
+              expectedMonthlyTurnover
+              expectedMonthlyTransaction
+            }
+            sisterConcernDetails {
+              name
+              address
+              phone
+              natureOfBusiness
+            }
+            operatorInstructionDetails {
+              accountType
+              stampCompulsory
+              specialInstruction
+            }
+            declaration {
+              name
+              phoneNo
+              email
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+            }
+            docs {
+              key
+              value
+            }
+          }
+          ... on CoopBio {
+            basicInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              registrationNo
+              registrationOffice
+              registrationDate
+            }
+            registeredAddress {
+              ...Address
+            }
+            operatingAddress {
+              ...Address
+            }
+            contactDetails {
+              email
+              website
+              phone
+            }
+            currentMemberDetails {
+              noOfMaleMembers
+              noOfFemaleMembers
+              noOfOtherMembers
+              lastAuditDate
+            }
+            representativeDetails {
+              name
+              designation
+              contactNumber
+              email
+              panVatNo
+              address {
+                ...Address
+              }
+              docs {
+                key
+                value
+              }
+            }
+
+            additionalCoopDetails {
+              coopType
+              mainServiceProduct
+            }
+            employeeDetails {
+              male
+              female
+              other
+              total
+            }
+            equityLiabilities {
+              shareCapital
+              reserveAndSurplus
+              savingDeposit
+              loanAccount
+              capitalGrant
+              total
+            }
+            assetDetails {
+              cashAndEquivalents
+              bank
+              investments
+              loan
+              nonCurrentAssets
+              otherNonCurrentAssets
+              other
+            }
+            partnerDirectorDetails {
+              name
+              designation
+              permAddress {
+                ...Address
+              }
+              tempAddress {
+                ...Address
+              }
+              dateOfMembership
+              highestQualification
+              mobileNo
+              email
+              citizenshipNo
+              panNo
+              docs {
+                key
+                value
+              }
+            }
+            operatorDetails {
+              name
+              contactNo
+              email
+              panNo
+              pemAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            docs {
+              key
+              value
+            }
+          }
+          ... on CoopUnionBio {
+            basicInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+            address {
+              ...Address
+            }
+            registrationDetails {
+              registeredNo
+              issuingOffice
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+            }
+            operatingAddress {
+              ...Address
+            }
+            serviceCenterAddress {
+              ...Address
+            }
+            contactDetails {
+              phoneNo
+              fax
+              email
+              website
+              poBoxNo
+              noOfEmployees
+              agmDetails
+            }
+            bankAccDetails {
+              bank
+              accountNumber
+              accountName
+            }
+            applicantDetails {
+              name
+              designation
+              contactNo
+              email
+              panNo
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            memberInfo {
+              noOfMaleCurrent
+              noOfFemaleCurrent
+              noOfInstitutionalCurrent
+              noOfMaleTarget
+              noOfFemaleTarget
+              noOfInstitutionalTarget
+              totalCurrent
+              totalTarget
+            }
+            partnerDirectorDetails {
+              name
+              designation
+              email
+              panNo
+              mobileNo
+              permAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            operatorDetails {
+              name
+              designation
+              contactNo
+              email
+              panNo
+              pemAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            equityLiabilities {
+              shareCapitalCurrent
+              reserveAndSurplusCurrent
+              savingDepositCurrent
+              loanAccountCurrent
+              capitalGrantCurrent
+              liabilitiesPayableCurrent
+              nonCurrentLiabilitiesCurrent
+              totalCurrent
+              shareCapitalTarget
+              reserveAndSurplusTarget
+              savingDepositTarget
+              loanAccountTarget
+              capitalGrantTarget
+              liabilitiesPayableTarget
+              nonCurrentLiabilitiesTarget
+              totalTarget
+            }
+            assetDetails {
+              cashAndEquivalentsCurrent
+              bankCurrent
+              investmentsCurrent
+              loanCurrent
+              nonCurrentAssetsCurrent
+              otherNonCurrentAssetsCurrent
+              totalCurrent
+              cashAndEquivalentsTarget
+              bankTarget
+              investmentsTarget
+              loanTarget
+              nonCurrentAssetsTarget
+              otherNonCurrentAssetsTarget
+              totalTarget
+            }
+            incomeDetails {
+              financialInvestment
+              nonFinancialInvestment
+              investment
+              serviceOperations
+              sales
+              otherIncome
+              miscIncome
+              total
+            }
+            expenseDetails {
+              purchase
+              directExpense
+              adminExpense
+              financialCost
+              riskManagement
+              deferredTax
+              total
+            }
+            docs {
+              key
+              value
+            }
+          }
+        }
+      }
+    }
+  }
+}
