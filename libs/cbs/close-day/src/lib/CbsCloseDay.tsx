@@ -1,16 +1,19 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader, toast } from '@myra-ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader, Loader, toast } from '@myra-ui';
 
 import {
+  BranchCategory,
   EodOption,
   EodState,
+  useAppSelector,
   useGetEodStatusQuery,
   useSetEndOfDayDataMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 import { DayClose } from '../component/DayClose';
@@ -25,6 +28,8 @@ export const CbsCloseDay = () => {
   const { t } = useTranslation();
 
   const queryClient = useQueryClient();
+
+  const user = useAppSelector((state) => state?.auth?.user);
 
   const methods = useForm();
 
@@ -49,6 +54,7 @@ export const CbsCloseDay = () => {
         }
       },
       refetchInterval: stopFetch ? false : 2000,
+      enabled: user?.currentBranch?.category === BranchCategory.HeadOffice,
     }
   );
   const showAdditionalFields = useMemo(() => {
@@ -193,7 +199,13 @@ export const CbsCloseDay = () => {
     return false;
   };
 
-  return (
+  useEffect(() => {
+    if (user?.currentBranch?.category !== BranchCategory.HeadOffice) {
+      router.push(ROUTES.HOME);
+    }
+  }, [user?.currentBranch]);
+
+  return user?.currentBranch?.category === BranchCategory.HeadOffice ? (
     <>
       <Box bg="gray.100" width="100%" position="sticky" top={0} zIndex={10}>
         <Container minW="container.lg" height="fit-content" paddingInline="0">
@@ -222,6 +234,8 @@ export const CbsCloseDay = () => {
         </Box>
       </Box>
     </>
+  ) : (
+    <Loader />
   );
 };
 export default CbsCloseDay;

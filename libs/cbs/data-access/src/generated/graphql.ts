@@ -10150,6 +10150,7 @@ export type MemberChargeInput = {
 };
 
 export type MemberChequeDetails = {
+  accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   cancelled?: Maybe<Scalars['Int']>;
   issued?: Maybe<Scalars['Int']>;
@@ -10384,6 +10385,7 @@ export type MemberOverviewShareView = {
 };
 
 export type MemberPaymentView = {
+  accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
