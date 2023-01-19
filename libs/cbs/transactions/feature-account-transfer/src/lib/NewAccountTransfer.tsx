@@ -114,8 +114,7 @@ export const NewAccountTransfer = () => {
 
   const destMemberId = watch('destMemberId');
 
-  const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
-    useGetIndividualMemberDetails({ memberId });
+  const { memberDetailData, memberCitizenshipUrl } = useGetIndividualMemberDetails({ memberId });
 
   const {
     memberDetailData: destMemberDetailData,
@@ -332,7 +331,7 @@ export const NewAccountTransfer = () => {
                         address: memberDetailData?.address,
                       }}
                       // notice="KYM needs to be updated"
-                      signaturePath={memberSignatureUrl}
+                      signaturePath={sourceAccount?.member?.signaturePicUrl ?? ''}
                       citizenshipPath={memberCitizenshipUrl}
                       accountInfo={
                         sourceAccount

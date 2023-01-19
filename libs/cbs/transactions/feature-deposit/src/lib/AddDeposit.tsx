@@ -104,8 +104,9 @@ export const AddDeposit = () => {
 
   const memberId = watch('memberId');
 
-  const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
-    useGetIndividualMemberDetails({ memberId: memberId || '' });
+  const { memberDetailData, memberCitizenshipUrl } = useGetIndividualMemberDetails({
+    memberId: memberId || '',
+  });
 
   const { data: accountListData } = useGetAccountTableListQuery(
     {
@@ -557,7 +558,7 @@ export const AddDeposit = () => {
                         address: memberDetailData?.address,
                       }}
                       // notice="KYM needs to be updated"
-                      signaturePath={memberSignatureUrl}
+                      signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
                       citizenshipPath={memberCitizenshipUrl}
                       accountInfo={
                         selectedAccount

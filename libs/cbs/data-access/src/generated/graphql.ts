@@ -17535,6 +17535,7 @@ export type GetAccountTableListQuery = {
             name?: Record<'local' | 'en' | 'np', string> | null;
             profilePicUrl?: string | null;
             profilePic?: string | null;
+            signaturePicUrl?: string | null;
             contact?: string | null;
             dateJoined?: Record<'local' | 'en' | 'np', string> | null;
             address?: {
@@ -31187,6 +31188,7 @@ export const GetAccountTableListDocument = `
             name
             profilePicUrl
             profilePic
+            signaturePicUrl
             address {
               state
               district

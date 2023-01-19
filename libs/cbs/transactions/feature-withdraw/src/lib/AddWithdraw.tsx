@@ -108,8 +108,7 @@ export const AddWithdraw = () => {
 
   const memberId = watch('memberId');
 
-  const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
-    useGetIndividualMemberDetails({ memberId });
+  const { memberDetailData, memberCitizenshipUrl } = useGetIndividualMemberDetails({ memberId });
 
   useEffect(() => {
     resetField('accountId');
@@ -464,7 +463,7 @@ export const AddWithdraw = () => {
                         address: memberDetailData?.address,
                       }}
                       // notice="KYM needs to be updated"
-                      signaturePath={memberSignatureUrl}
+                      signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
                       showSignaturePreview
                       citizenshipPath={memberCitizenshipUrl}
                       accountInfo={
