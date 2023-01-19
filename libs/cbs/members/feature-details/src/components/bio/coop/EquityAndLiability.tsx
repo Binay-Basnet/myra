@@ -2,17 +2,17 @@ import { useRouter } from 'next/router';
 
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
-import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
+import { useGetMemberKymDetailsBioQuery } from '@coop/cbs/data-access';
 
 export const EquityAndLiabilityCOOP = () => {
   const router = useRouter();
-  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+  const memberBioData = useGetMemberKymDetailsBioQuery({
     id: router.query['id'] as string,
   });
 
   const bioDataCoop =
-    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'CoopBio'
-      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.equityLiabilities
+    memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.__typename === 'CoopBio'
+      ? memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.equityLiabilities
       : null;
   return (
     <DetailsCard title="Economic Details- Equity and Liabilities" bg="white" hasThreeRows>
