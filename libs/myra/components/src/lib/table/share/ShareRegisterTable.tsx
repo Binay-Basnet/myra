@@ -169,6 +169,7 @@ export const ShareRegisterTable = () => {
           total: data?.share?.register?.totalCount ?? 'Many',
           pageInfo: data?.share?.register?.pageInfo,
         }}
+        menu="SHARE"
       />
     </>
   );

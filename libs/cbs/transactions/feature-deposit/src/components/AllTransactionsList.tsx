@@ -96,6 +96,7 @@ export const AllTransactionsList = () => {
           pageInfo: data?.transaction?.listAllTransactions?.pageInfo,
         }}
         searchPlaceholder="Search all transactions"
+        menu="TRANSACTIONS"
       />
     </>
   );

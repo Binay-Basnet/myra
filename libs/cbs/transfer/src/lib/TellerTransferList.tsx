@@ -187,6 +187,7 @@ export const TellerTransferList = () => {
           );
           modalProps.onToggle();
         }}
+        menu="TRANSFERS"
       />
 
       <TellerTransferApproveModal
