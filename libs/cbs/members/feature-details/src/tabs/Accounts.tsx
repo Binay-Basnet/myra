@@ -35,7 +35,7 @@ export const Accounts = () => {
 
   const memberPaymentUp = memberPayment?.map((data, index) => ({
     sn: Number(index) + 1,
-    id: data?.accountId,
+    id: data?.accountName,
     date: data?.date,
     accountName: data?.accountName,
     paymentType: data?.paymentType,

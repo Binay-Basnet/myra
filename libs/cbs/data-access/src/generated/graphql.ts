@@ -21584,6 +21584,7 @@ export type GetMemberKymDetailsLoanQuery = {
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
             accountName?: string | null;
+            accountId?: string | null;
             paymentType?: string | null;
             amount?: string | null;
             installmentNo?: string | null;
@@ -36490,6 +36491,7 @@ export const GetMemberKymDetailsLoanDocument = `
           payments {
             date
             accountName
+            accountId
             paymentType
             amount
             installmentNo

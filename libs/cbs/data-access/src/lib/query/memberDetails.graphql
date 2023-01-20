@@ -206,6 +206,7 @@ query getMemberKYMDetailsLoan($id: ID!) {
           payments {
             date
             accountName
+            accountId
             paymentType
             amount
             installmentNo
