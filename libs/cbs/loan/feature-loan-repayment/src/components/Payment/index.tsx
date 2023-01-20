@@ -10,6 +10,7 @@ import {
   FormBankSelect,
   FormEditableTable,
   FormInput,
+  FormNumberInput,
   FormSwitch,
   FormSwitchTab,
   FormTextArea,
@@ -45,7 +46,6 @@ const denominationsOptions = [
 
 /* eslint-disable-next-line */
 export interface PaymentProps {
-  totalDeposit: number;
   loanTotal: string | undefined;
 }
 
@@ -55,7 +55,7 @@ type PaymentTableType = {
   amount: string;
 };
 
-export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
+export const Payment = ({ loanTotal }: PaymentProps) => {
   const { watch, setValue } = useFormContext();
 
   const selectedPaymentMode = watch('paymentMethod');
@@ -75,10 +75,11 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
 
   const totalCashPaid: number = disableDenomination ? Number(cashPaid) : Number(denominationTotal);
 
-  const returnAmount = totalCashPaid - totalDeposit;
+  const returnAmount = watch('cash.returned_amount');
 
   useEffect(() => {
     setValue('cash.cashPaid', String(Math.ceil(Number(loanTotal))));
+    setValue('cash.returned_amount', Math.ceil(Number(loanTotal)) - Number(loanTotal));
   }, [loanTotal, setValue]);
 
   return (
@@ -213,9 +214,13 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   Return
                 </Text>
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
+
+                <Box>
+                  <FormNumberInput name="cash.returned_amount" />
+                </Box>
+                {/* <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {returnAmount.toFixed(2)}
-                </Text>
+                </Text> */}
               </Box>
 
               <Box display="flex" justifyContent="space-between">
