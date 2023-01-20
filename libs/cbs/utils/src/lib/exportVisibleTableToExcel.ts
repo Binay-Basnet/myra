@@ -41,7 +41,7 @@ export const exportVisibleTableToExcel = (fileName: string) => {
     //   }
     // });
 
-    utils.book_append_sheet(wb, ws);
+    utils.book_append_sheet(wb, ws, table.dataset?.tableTitle);
   });
 
   writeFileXLSX(wb, `${fileName} - ${new Date().toISOString()}.xlsx`);

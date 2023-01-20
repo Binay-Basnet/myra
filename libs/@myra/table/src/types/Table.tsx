@@ -57,6 +57,8 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
 
   // Expand Props
   getSubRows?: (row: TData) => TData[];
+
+  tableTitle?: string;
 }
 
 export type TableInstance<T> = Table<T>;

@@ -210,7 +210,7 @@ export const MemberTable = ({ data, header }: IMemberTableProps) => {
         {
           header: 'In Number',
           accessorKey: 'inNumber',
-          footer: String(newData?.reduce((acc, curr) => (acc += curr.inNumber || 0), 0)),
+          footer: String(newData?.reduce((acc, curr) => acc + (curr.inNumber || 0), 0)),
           meta: {
             isNumeric: true,
           },
@@ -224,6 +224,7 @@ export const MemberTable = ({ data, header }: IMemberTableProps) => {
           },
         },
       ]}
+      tableTitle={header}
     />
   );
 };

@@ -210,6 +210,7 @@ export const DayBookReport = () => {
                   ),
                 },
               ]}
+              tableTitle="Receipts (Cr.)"
             />
           </Box>
 
@@ -290,6 +291,7 @@ export const DayBookReport = () => {
                   ),
                 },
               ]}
+              tableTitle="Payments (Dr.)"
             />
           </Box>
         </Report.Content>
