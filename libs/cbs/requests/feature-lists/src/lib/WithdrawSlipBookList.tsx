@@ -2,7 +2,15 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { Box, DetailCardContent, DetailPageMemberCard, Grid, PageHeader, Text } from '@myra-ui';
+import {
+  Box,
+  DetailCardContent,
+  DetailPageMemberCard,
+  Grid,
+  PageHeader,
+  Text,
+  Tooltip,
+} from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
@@ -168,7 +176,7 @@ export const WithdrawSlipBookList = () => {
             children={
               <RedirectButton
                 link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedRequest?.accountNumber}`}
-                label={selectedRequest?.accountType as string}
+                label={<Tooltip title={selectedRequest?.accountType as string} />}
               />
             }
           />

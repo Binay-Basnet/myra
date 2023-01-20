@@ -148,8 +148,8 @@ export const CBSSettingsAuditLog = () => {
             </Box>
           </Box>
           <Box display="flex" flexDir="column" gap="s8">
-            <Text fontSize="s2" color="gray.600">
-              All
+            <Text fontWeight="Regular" fontSize="s2" color="gray.600">
+              {humanizedAuditLog ? 'All' : 'No data found'}
             </Text>
             <Box display="flex" flexDir="column" gap="s16">
               {humanizedAuditLog &&
