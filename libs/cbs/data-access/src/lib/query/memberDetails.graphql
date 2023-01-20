@@ -114,6 +114,7 @@ query getMemberKYMDetailsOverview($id: ID!) {
           payments {
             date
             accountName
+            accountId
             paymentType
             amount
             installmentNo
@@ -796,6 +797,22 @@ query getMemberKYMDetailsWithdrawSlips($id: ID!) {
           used
           left
           cancelled
+        }
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsReport($id: ID!) {
+  members {
+    memberOverviewV2 {
+      reports(memberId: $id) {
+        data {
+          list {
+            code
+            reportName
+            category
+          }
         }
       }
     }

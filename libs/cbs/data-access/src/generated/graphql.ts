@@ -21511,6 +21511,7 @@ export type GetMemberKymDetailsOverviewQuery = {
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
             accountName?: string | null;
+            accountId?: string | null;
             paymentType?: string | null;
             amount?: string | null;
             installmentNo?: string | null;
@@ -22133,6 +22134,26 @@ export type GetMemberKymDetailsWithdrawSlipsQuery = {
           left?: number | null;
           cancelled?: number | null;
         } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMemberKymDetailsReportQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberKymDetailsReportQuery = {
+  members: {
+    memberOverviewV2?: {
+      reports?: {
+        data?: {
+          list?: Array<{
+            code?: string | null;
+            reportName?: string | null;
+            category?: string | null;
+          } | null> | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -36374,6 +36395,7 @@ export const GetMemberKymDetailsOverviewDocument = `
           payments {
             date
             accountName
+            accountId
             paymentType
             amount
             installmentNo
@@ -37119,6 +37141,37 @@ export const useGetMemberKymDetailsWithdrawSlipsQuery = <
     ['getMemberKYMDetailsWithdrawSlips', variables],
     useAxios<GetMemberKymDetailsWithdrawSlipsQuery, GetMemberKymDetailsWithdrawSlipsQueryVariables>(
       GetMemberKymDetailsWithdrawSlipsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberKymDetailsReportDocument = `
+    query getMemberKYMDetailsReport($id: ID!) {
+  members {
+    memberOverviewV2 {
+      reports(memberId: $id) {
+        data {
+          list {
+            code
+            reportName
+            category
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberKymDetailsReportQuery = <
+  TData = GetMemberKymDetailsReportQuery,
+  TError = unknown
+>(
+  variables: GetMemberKymDetailsReportQueryVariables,
+  options?: UseQueryOptions<GetMemberKymDetailsReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberKymDetailsReportQuery, TError, TData>(
+    ['getMemberKYMDetailsReport', variables],
+    useAxios<GetMemberKymDetailsReportQuery, GetMemberKymDetailsReportQueryVariables>(
+      GetMemberKymDetailsReportDocument
     ).bind(null, variables),
     options
   );
