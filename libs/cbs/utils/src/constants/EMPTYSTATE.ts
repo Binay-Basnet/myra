@@ -6,10 +6,9 @@ import { IoIosList } from 'react-icons/io';
 import { IoCubeOutline, IoMailUnreadOutline, IoPerson, IoPrismOutline } from 'react-icons/io5';
 import { TbMailForward } from 'react-icons/tb';
 
-import { Page } from './NAV';
-import { ROUTES } from './ROUTES';
+import { APP_NAVS, Page } from './NAV';
 
-export type MenuType =
+type MenuType =
   | 'MEMBERS'
   | 'SHARE'
   | 'SAVINGS'
@@ -47,18 +46,7 @@ export const EMPTYSTATE: Nodata = {
     subtitle: '',
     buttonLabel: '',
     docLink: 'https://docs.migration.myraerp.com/docs/CBS/Share/intro',
-    buttonLink: [
-      {
-        label: 'New Share Issue',
-        aclKey: 'CBS_SHARE_SHARE_ISSUE',
-        route: ROUTES.CBS_SHARE_ISSUE_ADD,
-      },
-      {
-        label: 'New Share Return',
-        aclKey: 'CBS_SHARE_SHARE_RETURN',
-        route: ROUTES.CBS_SHARE_RETURN_ADD,
-      },
-    ],
+    buttonLink: APP_NAVS.CBS.menus.SHARE?.forms,
   },
   SAVINGS: {
     icon: ImStack,
@@ -66,18 +54,7 @@ export const EMPTYSTATE: Nodata = {
     subtitle: '',
     buttonLabel: '',
     docLink: 'https://docs.migration.myraerp.com/docs/CBS/Savings/account',
-    buttonLink: [
-      {
-        label: 'newAccountOpen',
-        aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT',
-        route: ROUTES.CBS_ACCOUNT_OPEN_ADD,
-      },
-      {
-        label: 'New Account Close',
-        aclKey: 'CBS_SAVINGS_SAVING_ACCOUNT_CLOSE',
-        route: ROUTES.CBS_ACCOUNT_CLOSE_ADD,
-      },
-    ],
+    buttonLink: APP_NAVS.CBS.menus.SAVINGS?.forms,
   },
   LOAN: {
     icon: BsArrowLeftRight,
@@ -85,18 +62,7 @@ export const EMPTYSTATE: Nodata = {
     subtitle: '',
     buttonLabel: '',
     docLink: 'https://docs.migration.myraerp.com/docs/CBS/Loan/',
-    buttonLink: [
-      {
-        label: 'New Loan Application',
-        aclKey: 'CBS_LOAN_LOAN_APPLICATION',
-        route: ROUTES.CBS_LOAN_APPLICATIONS_ADD,
-      },
-      {
-        label: 'Loan Repayment',
-        aclKey: 'CBS_TRANSACTIONS_LOAN_REPAYMENT',
-        route: ROUTES.CBS_LOAN_REPAYMENTS_ADD,
-      },
-    ],
+    buttonLink: APP_NAVS.CBS.menus.LOAN?.forms,
   },
   TRANSACTIONS: {
     icon: IoIosList,
@@ -104,39 +70,7 @@ export const EMPTYSTATE: Nodata = {
     subtitle: '',
     buttonLabel: '',
     docLink: 'https://docs.migration.myraerp.com/docs/CBS/Transaction/record_transaction',
-    buttonLink: [
-      {
-        label: 'transactionSidebarNewDeposit',
-        route: ROUTES.CBS_TRANS_DEPOSIT_ADD,
-        aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
-      },
-      {
-        label: 'transactionSidebarNewWithdraw',
-        route: ROUTES.CBS_TRANS_WITHDRAW_ADD,
-        aclKey: 'CBS_TRANSACTIONS_WITHDRAW',
-      },
-      {
-        label: 'transactionSidebarNewAccountTransfer',
-        route: ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_ADD,
-        aclKey: 'CBS_TRANSACTIONS_ACCOUNT_TRANSFER',
-      },
-      {
-        label: 'transactionSidebarNewLoanPayment',
-        route: ROUTES.CBS_TRANS_LOAN_PAYMENT_ADD,
-        aclKey: 'CBS_TRANSACTIONS_LOAN_REPAYMENT',
-      },
-
-      {
-        label: 'transactionSidebarNewMarketRepresentativeTransaction',
-        route: ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_ADD,
-        aclKey: 'CBS_TRANSACTIONS_MARKET_REPRESENTATIVE_COLLECTION',
-      },
-      {
-        label: 'New Journal Voucher',
-        route: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD,
-        aclKey: 'CBS_TRANSACTIONS_JOURNAL_VOUCHER',
-      },
-    ],
+    buttonLink: APP_NAVS.CBS.menus.TRANSACTIONS?.forms,
   },
 
   TRANSFERS: {
@@ -145,28 +79,7 @@ export const EMPTYSTATE: Nodata = {
     subtitle: '',
     buttonLabel: '',
     docLink: 'https://docs.migration.myraerp.com/docs/CBS/Transfer/Record_transfer',
-    buttonLink: [
-      {
-        label: 'transferVaultTransfer',
-        route: ROUTES.CBS_TRANSFER_VAULT_ADD,
-        aclKey: 'CBS_TRANSFERS_VAULT_TRANSFER',
-      },
-      {
-        label: 'transferTellerTransfer',
-        route: ROUTES.CBS_TRANSFER_TELLER_ADD,
-        aclKey: 'CBS_TRANSFERS_TELLER_TRANSFER',
-      },
-      {
-        label: 'transCashTransitTransfer',
-        route: ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_ADD,
-        aclKey: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
-      },
-      {
-        label: 'transServiceCenterTransfer',
-        route: ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_ADD,
-        aclKey: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
-      },
-    ],
+    buttonLink: APP_NAVS.CBS.menus.TRANSFERS?.forms,
   },
   REPORTS: {
     icon: BsFileText,
@@ -182,18 +95,7 @@ export const EMPTYSTATE: Nodata = {
     buttonLabel: '',
     docLink:
       'https://docs.migration.myraerp.com/docs/CBS/Withdraw%20Slip/Create_new_wihdraw_slip_book',
-    buttonLink: [
-      {
-        label: 'Withdraw Slip Book',
-        route: ROUTES.CBS_WITHDRAW_SLIP_BOOK_ADD,
-        aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE',
-      },
-      {
-        label: 'Block Withdraw Slip Requests',
-        route: ROUTES.CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD,
-        aclKey: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK',
-      },
-    ],
+    buttonLink: APP_NAVS.CBS.menus.WITHDRAW_SLIP?.forms,
   },
   REQUESTS: {
     icon: IoMailUnreadOutline,
@@ -208,23 +110,7 @@ export const EMPTYSTATE: Nodata = {
     subtitle: '',
     buttonLabel: '',
     docLink: 'https://docs.migration.myraerp.com/docs/CBS/Others/Market_representative_list',
-    buttonLink: [
-      {
-        label: 'New Market Representatives Transaction',
-        route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_TRANSACTIONS_ADD,
-        aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
-      },
-      {
-        label: 'New Profit to Fund Management',
-        route: ROUTES.CBS_OTHERS_FUND_MANAGEMENT_ADD,
-        aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_PROFIT_TO_FUND_MANAGEMENT',
-      },
-      {
-        label: 'New Share Dividend Posting',
-        route: ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD,
-        aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
-      },
-    ],
+    buttonLink: APP_NAVS.CBS.menus.OTHERS?.forms,
   },
 };
 
