@@ -134,6 +134,8 @@ export type AccountCloseReason = typeof AccountCloseReason[keyof typeof AccountC
 export type AccountClosingReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   closedBalance?: Maybe<Scalars['String']>;
   closedBy?: Maybe<Scalars['String']>;
   closingDate?: Maybe<Scalars['Localized']>;
@@ -143,7 +145,7 @@ export type AccountClosingReport = {
 };
 
 export type AccountClosingReportInput = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<AccountOpeningReportInputFilter>;
   period: LocalizedDateFilter;
 };
@@ -178,6 +180,8 @@ export type AccountListFilter = {
 export type AccountOpeningReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   openedBy?: Maybe<Scalars['String']>;
@@ -185,7 +189,7 @@ export type AccountOpeningReport = {
 };
 
 export type AccountOpeningReportInput = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<AccountOpeningReportInputFilter>;
   period: LocalizedDateFilter;
 };
@@ -565,7 +569,7 @@ export type ActiveInactiveMemberReport = {
 };
 
 export type ActiveInactiveMemberReportData = {
-  branchId: Scalars['ID'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<MemberReportFilters>;
   period: LocalizedDateFilter;
 };
@@ -579,6 +583,8 @@ export type ActiveInactiveMemberReportSummary = {
 export type ActiveInactiveMemberStatement = {
   address?: Maybe<Scalars['String']>;
   age?: Maybe<Scalars['Int']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   contactNo?: Maybe<Scalars['String']>;
   district?: Maybe<Scalars['String']>;
   dob?: Maybe<Scalars['Localized']>;
@@ -1333,6 +1339,8 @@ export type BankDepositData = {
 
 export type BankGlDataEntry = {
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   chequeNo?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   depositAmount?: Maybe<Scalars['String']>;
@@ -1343,7 +1351,7 @@ export type BankGlDataEntry = {
 };
 
 export type BankGlStatementFilter = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<GlStatementFilter>;
   period: LocalizedDateFilter;
 };
@@ -3433,6 +3441,7 @@ export type DepositLoanAccountFormStateResult = {
 };
 
 export type DepositLoanAccountInput = {
+  accountDocuments?: InputMaybe<Array<InputMaybe<DocumentInsertInput>>>;
   accountName?: InputMaybe<Scalars['String']>;
   agentId?: InputMaybe<Scalars['ID']>;
   atmFacility?: InputMaybe<Scalars['Boolean']>;
@@ -3456,6 +3465,7 @@ export type DepositLoanAccountInput = {
   mobileBanking?: InputMaybe<Scalars['Boolean']>;
   openingPayment?: InputMaybe<DepositInput>;
   productId: Scalars['ID'];
+  referenceFromKYM?: InputMaybe<Scalars['Boolean']>;
   serviceCharge?: InputMaybe<Array<InputMaybe<ServiceChargeInput>>>;
   smsBanking?: InputMaybe<Scalars['Boolean']>;
   tenure?: InputMaybe<FrequencyTenure>;
@@ -4112,6 +4122,11 @@ export type Document = {
 export type DocumentInfo = {
   id: Scalars['String'];
   url: Scalars['String'];
+};
+
+export type DocumentInsertInput = {
+  fieldId: Scalars['String'];
+  identifiers: Array<Scalars['String']>;
 };
 
 export type DocumentMutation = {
@@ -8407,6 +8422,8 @@ export type KymStatusFilter = {
 
 export type KymStatusReport = {
   address?: Maybe<Address>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   contact?: Maybe<Scalars['String']>;
   kymExpireDays?: Maybe<Scalars['String']>;
   kymStatus?: Maybe<Scalars['String']>;
@@ -8419,7 +8436,7 @@ export type KymStatusReport = {
 };
 
 export type KymStatusReportFilter = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<KymStatusFilter>;
   period: LocalizedDateFilter;
 };
@@ -8511,6 +8528,7 @@ export type LoanAccount = {
   createdAt: Scalars['Time'];
   createdBy: Identity;
   id: Scalars['ID'];
+  installmentFrequency?: Maybe<InstallmentFrequency>;
   intrestRate?: Maybe<Scalars['Float']>;
   isBoardAuthority?: Maybe<Scalars['Boolean']>;
   isCeoAuthority?: Maybe<Scalars['Boolean']>;
@@ -8645,6 +8663,7 @@ export type LoanAccountFormState = {
   fingerprintDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   gracePeriod?: Maybe<LoanAccountGrace>;
   gurantee_details?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
+  installmentFrequency?: Maybe<InstallmentFrequency>;
   interestAuthority?: Maybe<InterestAuthority>;
   interestDoc?: Maybe<Array<Maybe<PictureData>>>;
   intrestRate?: Maybe<Scalars['Float']>;
@@ -8735,6 +8754,7 @@ export type LoanAccountInput = {
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
+  installmentFrequency?: InputMaybe<InstallmentFrequency>;
   interestAuthority?: InputMaybe<InterestAuthority>;
   interestDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   intrestRate?: InputMaybe<Scalars['Float']>;
@@ -8849,6 +8869,7 @@ export type LoanAccountQueryFormStateArgs = {
 
 export type LoanAccountQueryGetLoanInstallmentsArgs = {
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
+  installmentFrequency?: InputMaybe<InstallmentFrequency>;
   interest: Scalars['Float'];
   productId: Scalars['ID'];
   repaymentScheme: LoanRepaymentScheme;
@@ -8931,11 +8952,7 @@ export const LoanAgingPeriod = {
   AboveTwelveMonths: 'ABOVE_TWELVE_MONTHS',
   All: 'ALL',
   Below_30Days: 'BELOW_30_DAYS',
-  CustomPeriod: 'CUSTOM_PERIOD',
   OneTwelveMonths: 'ONE_TWELVE_MONTHS',
-  ThisFiscalYearToDate: 'THIS_FISCAL_YEAR_TO_DATE',
-  ThreeMonths: 'THREE_MONTHS',
-  TwoMonths: 'TWO_MONTHS',
 } as const;
 
 export type LoanAgingPeriod = typeof LoanAgingPeriod[keyof typeof LoanAgingPeriod];
@@ -8950,13 +8967,16 @@ export type LoanAgingStatementData = {
 };
 
 export type LoanAgingStatementInput = {
-  branchId?: InputMaybe<Scalars['String']>;
+  agingPeriod?: InputMaybe<LoanAgingPeriod>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<LoanAgingFilters>;
-  period?: InputMaybe<LoanAgingPeriodInput>;
+  period: LocalizedDateFilter;
 };
 
 export type LoanAgingStatementReport = {
   address?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   disbursePrincipal?: Maybe<Scalars['String']>;
   goodAmount?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
@@ -9016,12 +9036,14 @@ export type LoanBalanceFilter = {
 };
 
 export type LoanBalanceFilterData = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<LoanBalanceFilter>;
   period: LocalizedDateFilter;
 };
 
 export type LoanBalanceReport = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   lastPaymentDate?: Maybe<Scalars['String']>;
   loanAccountId?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -9083,6 +9105,7 @@ export type LoanGeneralInformation = {
   accountId: Scalars['String'];
   accountName: Scalars['String'];
   accountOpenDate: Scalars['Localized'];
+  installmentFrequency?: Maybe<InstallmentFrequency>;
   interestAccrued?: Maybe<Scalars['String']>;
   interestEarned?: Maybe<Scalars['String']>;
   interestGracePeriod?: Maybe<Scalars['Int']>;
@@ -9225,6 +9248,7 @@ export type LoanPreviewAdditionalFeatures = {
 };
 
 export type LoanPreviewGeneralInformation = {
+  installmentFrequency?: Maybe<InstallmentFrequency>;
   loanName?: Maybe<Scalars['String']>;
   loanProduct?: Maybe<Scalars['String']>;
   loanSubType?: Maybe<Scalars['String']>;
@@ -9294,7 +9318,6 @@ export type LoanProduct = Base & {
   foreignEmployment?: Maybe<Scalars['Boolean']>;
   genderId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   id: Scalars['ID'];
-  installmentFrequency?: Maybe<LoanProductInstallment>;
   insuranceType?: Maybe<Insurance>;
   interest?: Maybe<InterestRateType>;
   interestMaxGraceNumber?: Maybe<Scalars['Int']>;
@@ -9749,7 +9772,7 @@ export type LoanReport = {
 };
 
 export type LoanReportLoanAgingStatementReportArgs = {
-  data?: InputMaybe<LoanAgingStatementInput>;
+  data: LoanAgingStatementInput;
 };
 
 export type LoanReportLoanBalanceReportArgs = {
@@ -10131,6 +10154,7 @@ export type MemberChargeInput = {
 };
 
 export type MemberChequeDetails = {
+  accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   cancelled?: Maybe<Scalars['Int']>;
   issued?: Maybe<Scalars['Int']>;
@@ -10327,7 +10351,22 @@ export type MemberOverviewAccountsView = {
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
 };
 
+export type MemberOverviewAccountsViewV2 = {
+  data?: Maybe<MemberOverviewAccountsView>;
+  error?: Maybe<QueryError>;
+};
+
 export type MemberOverviewBio = CoopBio | CoopUnionBio | IndividualBio | InstitutionBio;
+
+export type MemberOverviewBioV2 = {
+  data?: Maybe<MemberOverviewBio>;
+  error?: Maybe<QueryError>;
+};
+
+export type MemberOverviewChequeV2 = {
+  data?: Maybe<Array<Maybe<MemberChequeDetails>>>;
+  error?: Maybe<QueryError>;
+};
 
 export type MemberOverviewData = {
   accounts?: Maybe<MemberOverviewAccountsView>;
@@ -10349,8 +10388,18 @@ export type MemberOverviewLoanView = {
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
 };
 
+export type MemberOverviewLoanViewV2 = {
+  data?: Maybe<MemberOverviewLoanView>;
+  error?: Maybe<QueryError>;
+};
+
 export type MemberOverviewReportView = {
   list?: Maybe<Array<Maybe<MemberReportView>>>;
+};
+
+export type MemberOverviewReportViewV2 = {
+  data?: Maybe<MemberOverviewReportView>;
+  error?: Maybe<QueryError>;
 };
 
 export type MemberOverviewResult = {
@@ -10364,7 +10413,51 @@ export type MemberOverviewShareView = {
   shareInfo?: Maybe<ShareInfoView>;
 };
 
+export type MemberOverviewShareViewV2 = {
+  data?: Maybe<MemberOverviewShareView>;
+  error?: Maybe<QueryError>;
+};
+
+export type MemberOverviewV2Result = {
+  accounts?: Maybe<MemberOverviewAccountsViewV2>;
+  bio?: Maybe<MemberOverviewBioV2>;
+  cheques?: Maybe<MemberOverviewChequeV2>;
+  loan?: Maybe<MemberOverviewLoanViewV2>;
+  overview?: Maybe<OverviewViewV2>;
+  reports?: Maybe<MemberOverviewReportViewV2>;
+  share?: Maybe<MemberOverviewShareViewV2>;
+};
+
+export type MemberOverviewV2ResultAccountsArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultBioArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultChequesArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultLoanArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultOverviewArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultReportsArgs = {
+  memberId: Scalars['ID'];
+};
+
+export type MemberOverviewV2ResultShareArgs = {
+  memberId: Scalars['ID'];
+};
+
 export type MemberPaymentView = {
+  accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
@@ -10392,6 +10485,7 @@ export type MemberQuery = {
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
   memberOverview?: Maybe<MemberOverviewResult>;
+  memberOverviewV2?: Maybe<MemberOverviewV2Result>;
   memberPDF: Scalars['String'];
   memberTypes: MemberTypeResult;
   officialUse?: Maybe<OfficialUseResult>;
@@ -11224,6 +11318,11 @@ export type OverviewView = {
   pendingView?: Maybe<Array<Maybe<PendingOverview>>>;
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactionView>>>;
   statistics?: Maybe<MemberStatisticsView>;
+};
+
+export type OverviewViewV2 = {
+  data?: Maybe<OverviewView>;
+  error?: Maybe<QueryError>;
 };
 
 export type PageInfo = {
@@ -12296,6 +12395,12 @@ export type SavingAmountRange = {
   min?: InputMaybe<Scalars['Int']>;
 };
 
+export type SavingBalanceReportSummary = {
+  totalIndividualAccount?: Maybe<Scalars['Int']>;
+  totalMinorAccount?: Maybe<Scalars['Int']>;
+  totalOtherAccount?: Maybe<Scalars['Int']>;
+};
+
 export type SavingFilters = {
   amountRange?: InputMaybe<SavingAmountRange>;
   service?: InputMaybe<SavingServiceType>;
@@ -12388,7 +12493,7 @@ export type SavingsBalanceFilter = {
 };
 
 export type SavingsBalanceFilterData = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<SavingsBalanceFilter>;
   period: LocalizedDateFilter;
 };
@@ -12397,6 +12502,8 @@ export type SavingsBalanceReport = {
   accountId?: Maybe<Scalars['String']>;
   accountOpeningDate?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -12409,6 +12516,7 @@ export type SavingsBalanceReport = {
 export type SavingsBalanceReportResult = {
   data?: Maybe<Array<Maybe<SavingsBalanceReport>>>;
   error?: Maybe<QueryError>;
+  summary?: Maybe<SavingBalanceReportSummary>;
   totalBalance?: Maybe<Scalars['String']>;
 };
 
@@ -12598,6 +12706,8 @@ export type ShareBalanceFilterData = {
 export type ShareBalanceReportData = {
   address?: Maybe<Address>;
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   contactNo?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -12609,7 +12719,7 @@ export type ShareBalanceReportData = {
 };
 
 export type ShareBalanceReportFilter = {
-  branchId: Scalars['ID'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<ShareBalanceFilterData>;
   period: LocalizedDateFilter;
 };
@@ -12838,6 +12948,8 @@ export type SharePurchaseRegisterFilter = {
 };
 
 export type SharePurchaseRegisterReport = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   kittaNumFrom?: Maybe<Scalars['String']>;
   kittaNumTo?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
@@ -12850,7 +12962,7 @@ export type SharePurchaseRegisterReport = {
 };
 
 export type SharePurchaseRegisterReportFilter = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<SharePurchaseRegisterFilter>;
   period: LocalizedDateFilter;
 };
@@ -13152,6 +13264,8 @@ export type ShareTransactionFooter = {
 
 export type ShareTransactionReport = {
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -13162,7 +13276,7 @@ export type ShareTransactionReport = {
 };
 
 export type ShareTransactionReportFilter = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<ShareTransactionFilter>;
   period: LocalizedDateFilter;
 };
@@ -13320,6 +13434,8 @@ export type SubscriptionMutationUpsertArgs = {
 
 export type SuspiciousTransactionReport = {
   amount?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -13330,7 +13446,7 @@ export type SuspiciousTransactionReport = {
 };
 
 export type SuspiciousTransactionReportInput = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<SuspiciousTransactionReportInputFilter>;
   period: LocalizedDateFilter;
 };
@@ -13405,7 +13521,7 @@ export type TtrReportData = {
 };
 
 export type TtrReportFilter = {
-  branchId: Scalars['String'];
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<TtrFilter>;
   period: LocalizedDateFilter;
 };
@@ -17416,6 +17532,7 @@ export type GetAccountTableListQuery = {
             name?: Record<'local' | 'en' | 'np', string> | null;
             profilePicUrl?: string | null;
             profilePic?: string | null;
+            signaturePicUrl?: string | null;
             contact?: string | null;
             dateJoined?: Record<'local' | 'en' | 'np', string> | null;
             address?: {
@@ -20178,6 +20295,7 @@ export type GetLoanInstallmentsQueryVariables = Exact<{
   tenure: Scalars['Int'];
   interest: Scalars['Float'];
   repaymentScheme: LoanRepaymentScheme;
+  installmentFrequency?: InputMaybe<InstallmentFrequency>;
 }>;
 
 export type GetLoanInstallmentsQuery = {
@@ -21279,15 +21397,148 @@ export type GetMemberInactiveCheckQuery = {
   };
 };
 
-export type GetMemberDetailsOverviewQueryVariables = Exact<{
+export type GetMemberDetailsShareBalanceQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type GetMemberDetailsOverviewQuery = {
+export type GetMemberDetailsShareBalanceQuery = {
+  share: {
+    history?: {
+      history?: Array<{
+        id?: string | null;
+        memberId?: string | null;
+        status?: Share_Status | null;
+        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+        transactionDirection: Share_Transaction_Direction;
+        credit?: number | null;
+        debit?: number | null;
+        startNumber: number;
+        endNumber: number;
+        balance?: number | null;
+        shareAmount?: string | null;
+        totalAmount?: number | null;
+        paymentMode?: SharePaymentMode | null;
+        bankId?: string | null;
+        voucherNumber?: string | null;
+        accountId?: string | null;
+        member?: { id: string; objState: ObjState; createdAt: string } | null;
+        extraFee?: Array<{ name: string; value: number } | null> | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetMemberKymDetailsOverviewQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberKymDetailsOverviewQuery = {
   members: {
-    memberOverview?: {
-      data?: {
-        accounts?: {
+    memberOverviewV2?: {
+      overview?: {
+        data?: {
+          basicInformation?:
+            | {
+                __typename: 'CooperativeBasicMinInfo';
+                memberName?: string | null;
+                profilePic?: string | null;
+                memberCode?: string | null;
+                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+                registrationNo?: string | null;
+                registrationOffice?: string | null;
+                registrationDate?: Record<'local' | 'en' | 'np', string> | null;
+              }
+            | {
+                __typename: 'CooperativeUnionBasicMinInfo';
+                memberName?: string | null;
+                profilePic?: string | null;
+                memberCode?: string | null;
+                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+                type?: string | null;
+                nature?: string | null;
+                registrationDate?: Record<'local' | 'en' | 'np', string> | null;
+                vatPanNo?: string | null;
+                noOfServiceCenters?: number | null;
+              }
+            | {
+                __typename: 'IndividualBasicMinInfo';
+                memberName?: string | null;
+                profilePic?: string | null;
+                memberCode?: string | null;
+                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+                genderId?: string | null;
+                gender?: Record<'local' | 'en' | 'np', string> | null;
+                maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+                maritalStatusId?: string | null;
+                fathersName?: string | null;
+                mothersName?: string | null;
+                grandFathersName?: string | null;
+                isStaff?: boolean | null;
+                familyMembers?: Array<{
+                  fullName?: string | null;
+                  relationship?: string | null;
+                  dob?: string | null;
+                } | null> | null;
+              }
+            | {
+                __typename: 'InstitutionBasicMinInfo';
+                memberName?: string | null;
+                profilePic?: string | null;
+                memberCode?: string | null;
+                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+                type?: string | null;
+                nature?: string | null;
+                registrationDate?: Record<'local' | 'en' | 'np', string> | null;
+                vatPanNo?: string | null;
+                noOfServiceCenters?: number | null;
+              }
+            | null;
+          memberGraphs?: {
+            deposit?: {
+              periodType?: PeriodTypeEnum | null;
+              data?: Array<{ time?: number | null; amount?: string | null } | null> | null;
+            } | null;
+            withdraw?: {
+              periodType?: PeriodTypeEnum | null;
+              data?: Array<{ time?: number | null; amount?: string | null } | null> | null;
+            } | null;
+          } | null;
+          statistics?: {
+            totalShareValue?: string | null;
+            accountBalance?: string | null;
+            loanBalance?: string | null;
+          } | null;
+          payments?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            accountName?: string | null;
+            accountId?: string | null;
+            paymentType?: string | null;
+            amount?: string | null;
+            installmentNo?: string | null;
+            interestRate?: string | null;
+          } | null> | null;
+          recentTransactions?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            title?: string | null;
+            txnType?: MemberRecentTransactionViewTxnType | null;
+            amount?: string | null;
+            noOfShares?: number | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMemberKymDetailsAccountsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberKymDetailsAccountsQuery = {
+  members: {
+    memberOverviewV2?: {
+      accounts?: {
+        data?: {
           accounts?: Array<{
             accountName?: string | null;
             accountNumber?: string | null;
@@ -21305,7 +21556,55 @@ export type GetMemberDetailsOverviewQuery = {
             interestRate?: string | null;
           } | null> | null;
         } | null;
-        share?: {
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMemberKymDetailsLoanQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberKymDetailsLoanQuery = {
+  members: {
+    memberOverviewV2?: {
+      loan?: {
+        data?: {
+          accounts?: Array<{
+            accountName?: string | null;
+            accountNumber?: string | null;
+            totalBalance?: string | null;
+            productName?: string | null;
+            productType?: string | null;
+            interestRate?: string | null;
+            subscriptionDate?: Record<'local' | 'en' | 'np', string> | null;
+            interestEarned?: string | null;
+            interestBooked?: string | null;
+          } | null> | null;
+          payments?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            accountName?: string | null;
+            accountId?: string | null;
+            paymentType?: string | null;
+            amount?: string | null;
+            installmentNo?: string | null;
+            interestRate?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMemberKymDetailsSharesQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberKymDetailsSharesQuery = {
+  members: {
+    memberOverviewV2?: {
+      share?: {
+        data?: {
           shareInfo?: {
             totalCount?: string | null;
             issuedCount?: string | null;
@@ -21366,187 +21665,20 @@ export type GetMemberDetailsOverviewQuery = {
             } | null;
           } | null;
         } | null;
-        loan?: {
-          accounts?: Array<{
-            accountName?: string | null;
-            accountNumber?: string | null;
-            totalBalance?: string | null;
-            productName?: string | null;
-            productType?: string | null;
-            interestRate?: string | null;
-            subscriptionDate?: Record<'local' | 'en' | 'np', string> | null;
-            interestEarned?: string | null;
-            interestBooked?: string | null;
-          } | null> | null;
-          payments?: Array<{
-            date?: Record<'local' | 'en' | 'np', string> | null;
-            accountName?: string | null;
-            paymentType?: string | null;
-            amount?: string | null;
-            installmentNo?: string | null;
-            interestRate?: string | null;
-          } | null> | null;
-        } | null;
-        reports?: {
-          list?: Array<{
-            code?: string | null;
-            reportName?: string | null;
-            category?: string | null;
-          } | null> | null;
-        } | null;
-        overview?: {
-          memberGraphs?: {
-            deposit?: {
-              periodType?: PeriodTypeEnum | null;
-              data?: Array<{ time?: number | null; amount?: string | null } | null> | null;
-            } | null;
-            withdraw?: {
-              periodType?: PeriodTypeEnum | null;
-              data?: Array<{ time?: number | null; amount?: string | null } | null> | null;
-            } | null;
-          } | null;
-          statistics?: {
-            totalShareValue?: string | null;
-            accountBalance?: string | null;
-            loanBalance?: string | null;
-          } | null;
-          payments?: Array<{
-            date?: Record<'local' | 'en' | 'np', string> | null;
-            accountName?: string | null;
-            paymentType?: string | null;
-            amount?: string | null;
-          } | null> | null;
-          recentTransactions?: Array<{
-            date?: Record<'local' | 'en' | 'np', string> | null;
-            title?: string | null;
-            txnType?: MemberRecentTransactionViewTxnType | null;
-            amount?: string | null;
-            noOfShares?: number | null;
-          } | null> | null;
-        } | null;
-        cheques?: Array<{
-          accountName?: string | null;
-          issued?: number | null;
-          used?: number | null;
-          left?: number | null;
-          cancelled?: number | null;
-        } | null> | null;
       } | null;
     } | null;
   };
 };
 
-export type GetMemberDetailsShareBalanceQueryVariables = Exact<{
+export type GetMemberKymDetailsBioQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type GetMemberDetailsShareBalanceQuery = {
-  share: {
-    history?: {
-      history?: Array<{
-        id?: string | null;
-        memberId?: string | null;
-        status?: Share_Status | null;
-        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
-        transactionDirection: Share_Transaction_Direction;
-        credit?: number | null;
-        debit?: number | null;
-        startNumber: number;
-        endNumber: number;
-        balance?: number | null;
-        shareAmount?: string | null;
-        totalAmount?: number | null;
-        paymentMode?: SharePaymentMode | null;
-        bankId?: string | null;
-        voucherNumber?: string | null;
-        accountId?: string | null;
-        member?: { id: string; objState: ObjState; createdAt: string } | null;
-        extraFee?: Array<{ name: string; value: number } | null> | null;
-      } | null> | null;
-    } | null;
-  };
-};
-
-export type GetMemberOverviewBasicDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetMemberOverviewBasicDetailsQuery = {
+export type GetMemberKymDetailsBioQuery = {
   members: {
-    memberOverview?: {
-      data?: {
-        overview?: {
-          basicInformation?:
-            | {
-                __typename: 'CooperativeBasicMinInfo';
-                memberName?: string | null;
-                profilePic?: string | null;
-                memberCode?: string | null;
-                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
-                registrationNo?: string | null;
-                registrationOffice?: string | null;
-                registrationDate?: Record<'local' | 'en' | 'np', string> | null;
-              }
-            | {
-                __typename: 'CooperativeUnionBasicMinInfo';
-                memberName?: string | null;
-                profilePic?: string | null;
-                memberCode?: string | null;
-                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
-                type?: string | null;
-                nature?: string | null;
-                registrationDate?: Record<'local' | 'en' | 'np', string> | null;
-                vatPanNo?: string | null;
-                noOfServiceCenters?: number | null;
-              }
-            | {
-                __typename: 'IndividualBasicMinInfo';
-                memberName?: string | null;
-                profilePic?: string | null;
-                memberCode?: string | null;
-                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
-                genderId?: string | null;
-                gender?: Record<'local' | 'en' | 'np', string> | null;
-                maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
-                maritalStatusId?: string | null;
-                fathersName?: string | null;
-                mothersName?: string | null;
-                grandFathersName?: string | null;
-                isStaff?: boolean | null;
-                familyMembers?: Array<{
-                  fullName?: string | null;
-                  relationship?: string | null;
-                  dob?: string | null;
-                } | null> | null;
-              }
-            | {
-                __typename: 'InstitutionBasicMinInfo';
-                memberName?: string | null;
-                profilePic?: string | null;
-                memberCode?: string | null;
-                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
-                type?: string | null;
-                nature?: string | null;
-                registrationDate?: Record<'local' | 'en' | 'np', string> | null;
-                vatPanNo?: string | null;
-                noOfServiceCenters?: number | null;
-              }
-            | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetMemberOverviewBioDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetMemberOverviewBioDetailsQuery = {
-  members: {
-    memberOverview?: {
-      data?: {
-        bio?:
+    memberOverviewV2?: {
+      bio?: {
+        data?:
           | {
               __typename: 'CoopBio';
               basicInfo?: {
@@ -21987,6 +22119,47 @@ export type GetMemberOverviewBioDetailsQuery = {
   };
 };
 
+export type GetMemberKymDetailsWithdrawSlipsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberKymDetailsWithdrawSlipsQuery = {
+  members: {
+    memberOverviewV2?: {
+      cheques?: {
+        data?: Array<{
+          accountId?: string | null;
+          accountName?: string | null;
+          issued?: number | null;
+          used?: number | null;
+          left?: number | null;
+          cancelled?: number | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMemberKymDetailsReportQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberKymDetailsReportQuery = {
+  members: {
+    memberOverviewV2?: {
+      reports?: {
+        data?: {
+          list?: Array<{
+            code?: string | null;
+            reportName?: string | null;
+            category?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetMemberPdfQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -22074,6 +22247,33 @@ export type GetAccountOpeningReportQuery = {
           memberId?: string | null;
           openedBy?: string | null;
           openingDate?: Record<'local' | 'en' | 'np', string> | null;
+          branchId?: string | null;
+          branchName?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetDepositAccountClosingReportQueryVariables = Exact<{
+  data?: InputMaybe<AccountClosingReportInput>;
+}>;
+
+export type GetDepositAccountClosingReportQuery = {
+  report: {
+    depositReport: {
+      accountClosingReport?: {
+        data?: Array<{
+          memberId?: string | null;
+          memberCode?: string | null;
+          accountNumber?: string | null;
+          accountName?: string | null;
+          openingDate?: Record<'local' | 'en' | 'np', string> | null;
+          closingDate?: Record<'local' | 'en' | 'np', string> | null;
+          closedBalance?: string | null;
+          closedBy?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
       } | null;
     };
@@ -22269,6 +22469,8 @@ export type GetSuspiciousTransactionReportQuery = {
           product_name?: string | null;
           tranxType?: NatureOfTransaction | null;
           status?: boolean | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
       } | null;
     };
@@ -22322,6 +22524,8 @@ export type GetLoanBalanceReportQuery = {
           remainingBalance?: string | null;
           remainingInterest?: string | null;
           lastPaymentDate?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
       };
     };
@@ -22329,7 +22533,7 @@ export type GetLoanBalanceReportQuery = {
 };
 
 export type GetLoanAgingStatementReportQueryVariables = Exact<{
-  data?: InputMaybe<LoanAgingStatementInput>;
+  data: LoanAgingStatementInput;
 }>;
 
 export type GetLoanAgingStatementReportQuery = {
@@ -22363,6 +22567,8 @@ export type GetLoanAgingStatementReportQuery = {
             installmentLateDays?: number | null;
             nextPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
             tenure?: string | null;
+            branchId?: string | null;
+            branchName?: string | null;
           } | null> | null;
           summary?: {
             disbursePrincipalTotal?: string | null;
@@ -22524,6 +22730,8 @@ export type GetActiveInactiveMemberReportQuery = {
                 memberRegistrationDate?: Record<'local' | 'en' | 'np', string> | null;
                 status?: MemberStatus | null;
                 memberType?: KymMemberTypesEnum | null;
+                branchId?: string | null;
+                branchName?: string | null;
               } | null> | null;
             }
           | {}
@@ -22552,6 +22760,8 @@ export type GetKymStatusReportQuery = {
           lastKymUpdatedDate?: Record<'local' | 'en' | 'np', string> | null;
           kymExpireDays?: string | null;
           kymStatus?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
           address?: AddressFragment | null;
         } | null> | null;
       } | null;
@@ -22733,6 +22943,11 @@ export type GetSavingsBalanceReportQuery = {
           memberType?: KymMemberTypesEnum | null;
           balance?: string | null;
         } | null> | null;
+        summary?: {
+          totalIndividualAccount?: number | null;
+          totalMinorAccount?: number | null;
+          totalOtherAccount?: number | null;
+        } | null;
       };
     };
   };
@@ -22837,6 +23052,8 @@ export type GetShareRegisterReportQuery = {
           kittaNumTo?: string | null;
           totalKitta?: string | null;
           totalAmount?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
       } | null;
     };
@@ -22862,6 +23079,8 @@ export type GetShareTransactionReportQuery = {
           shareReturnDr?: string | null;
           shareIssueCr?: string | null;
           balance?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
         footer?: {
           totalCr?: string | null;
@@ -22892,6 +23111,8 @@ export type GetShareBalanceReportQuery = {
           membershipDate?: Record<'local' | 'en' | 'np', string> | null;
           noOfKitta?: number | null;
           balance?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
           address?: AddressFragment | null;
         } | null> | null;
         error?:
@@ -23084,6 +23305,8 @@ export type GetBankGlStatementReportQuery = {
             withdrawAmount?: string | null;
             balance?: string | null;
             remarks?: string | null;
+            branchId?: string | null;
+            branchName?: string | null;
           } | null> | null;
         };
       };
@@ -23882,7 +24105,6 @@ export type GetLoanProductEditDataQuery = {
             maxLoanAmount?: any | null;
             repaymentScheme?: Array<LoanRepaymentScheme | null> | null;
             allowPartialInstallment?: boolean | null;
-            installmentFrequency?: LoanProductInstallment | null;
             isMonthlyInstallmentCompulsory?: boolean | null;
             interestMethod?: LoanInterestMethod | null;
             isPenaltyApplicable?: boolean | null;
@@ -24000,7 +24222,6 @@ export type GetLoanProductDetailQuery = {
             maxLoanAmount?: any | null;
             repaymentScheme?: Array<LoanRepaymentScheme | null> | null;
             allowPartialInstallment?: boolean | null;
-            installmentFrequency?: LoanProductInstallment | null;
             isMonthlyInstallmentCompulsory?: boolean | null;
             interestMethod?: LoanInterestMethod | null;
             isPenaltyApplicable?: boolean | null;
@@ -31017,6 +31238,7 @@ export const GetAccountTableListDocument = `
             name
             profilePicUrl
             profilePic
+            signaturePicUrl
             address {
               state
               district
@@ -34577,7 +34799,7 @@ export const useGetLoanListQuery = <TData = GetLoanListQuery, TError = unknown>(
     options
   );
 export const GetLoanInstallmentsDocument = `
-    query getLoanInstallments($productId: ID!, $gracePeriod: LoanAccountGraceInput, $sanctionAmount: Int!, $tenure: Int!, $interest: Float!, $repaymentScheme: LoanRepaymentScheme!) {
+    query getLoanInstallments($productId: ID!, $gracePeriod: LoanAccountGraceInput, $sanctionAmount: Int!, $tenure: Int!, $interest: Float!, $repaymentScheme: LoanRepaymentScheme!, $installmentFrequency: InstallmentFrequency) {
   loanAccount {
     getLoanInstallments(
       interest: $interest
@@ -34586,6 +34808,7 @@ export const GetLoanInstallmentsDocument = `
       repaymentScheme: $repaymentScheme
       sanctionAmount: $sanctionAmount
       tenure: $tenure
+      installmentFrequency: $installmentFrequency
     ) {
       data {
         total
@@ -36041,12 +36264,177 @@ export const useGetMemberInactiveCheckQuery = <
     ).bind(null, variables),
     options
   );
-export const GetMemberDetailsOverviewDocument = `
-    query getMemberDetailsOverview($id: ID!) {
+export const GetMemberDetailsShareBalanceDocument = `
+    query getMemberDetailsShareBalance($id: ID!) {
+  share {
+    history(memberId: $id) {
+      history {
+        id
+        memberId
+        member {
+          id
+          objState
+          createdAt
+        }
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        balance
+        shareAmount
+        extraFee {
+          name
+          value
+        }
+        totalAmount
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberDetailsShareBalanceQuery = <
+  TData = GetMemberDetailsShareBalanceQuery,
+  TError = unknown
+>(
+  variables: GetMemberDetailsShareBalanceQueryVariables,
+  options?: UseQueryOptions<GetMemberDetailsShareBalanceQuery, TError, TData>
+) =>
+  useQuery<GetMemberDetailsShareBalanceQuery, TError, TData>(
+    ['getMemberDetailsShareBalance', variables],
+    useAxios<GetMemberDetailsShareBalanceQuery, GetMemberDetailsShareBalanceQueryVariables>(
+      GetMemberDetailsShareBalanceDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberKymDetailsOverviewDocument = `
+    query getMemberKYMDetailsOverview($id: ID!) {
   members {
-    memberOverview(id: $id) {
-      data {
-        accounts {
+    memberOverviewV2 {
+      overview(memberId: $id) {
+        data {
+          basicInformation {
+            __typename
+            ... on IndividualBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              genderId
+              gender
+              maritalStatus
+              maritalStatusId
+              fathersName
+              mothersName
+              grandFathersName
+              familyMembers {
+                fullName
+                relationship
+                dob
+              }
+              isStaff
+            }
+            ... on InstitutionBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+            ... on CooperativeBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              registrationNo
+              registrationOffice
+              registrationDate
+            }
+            ... on CooperativeUnionBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+          }
+          memberGraphs {
+            deposit {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+            withdraw {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+          }
+          statistics {
+            totalShareValue
+            accountBalance
+            loanBalance
+          }
+          payments {
+            date
+            accountName
+            accountId
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+          recentTransactions {
+            date
+            title
+            txnType
+            amount
+            noOfShares
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberKymDetailsOverviewQuery = <
+  TData = GetMemberKymDetailsOverviewQuery,
+  TError = unknown
+>(
+  variables: GetMemberKymDetailsOverviewQueryVariables,
+  options?: UseQueryOptions<GetMemberKymDetailsOverviewQuery, TError, TData>
+) =>
+  useQuery<GetMemberKymDetailsOverviewQuery, TError, TData>(
+    ['getMemberKYMDetailsOverview', variables],
+    useAxios<GetMemberKymDetailsOverviewQuery, GetMemberKymDetailsOverviewQueryVariables>(
+      GetMemberKymDetailsOverviewDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberKymDetailsAccountsDocument = `
+    query getMemberKYMDetailsAccounts($id: ID!) {
+  members {
+    memberOverviewV2 {
+      accounts(memberId: $id) {
+        data {
           accounts {
             accountName
             accountNumber
@@ -36064,7 +36452,77 @@ export const GetMemberDetailsOverviewDocument = `
             interestRate
           }
         }
-        share {
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberKymDetailsAccountsQuery = <
+  TData = GetMemberKymDetailsAccountsQuery,
+  TError = unknown
+>(
+  variables: GetMemberKymDetailsAccountsQueryVariables,
+  options?: UseQueryOptions<GetMemberKymDetailsAccountsQuery, TError, TData>
+) =>
+  useQuery<GetMemberKymDetailsAccountsQuery, TError, TData>(
+    ['getMemberKYMDetailsAccounts', variables],
+    useAxios<GetMemberKymDetailsAccountsQuery, GetMemberKymDetailsAccountsQueryVariables>(
+      GetMemberKymDetailsAccountsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberKymDetailsLoanDocument = `
+    query getMemberKYMDetailsLoan($id: ID!) {
+  members {
+    memberOverviewV2 {
+      loan(memberId: $id) {
+        data {
+          accounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+            subscriptionDate
+            interestEarned
+            interestBooked
+          }
+          payments {
+            date
+            accountName
+            accountId
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberKymDetailsLoanQuery = <
+  TData = GetMemberKymDetailsLoanQuery,
+  TError = unknown
+>(
+  variables: GetMemberKymDetailsLoanQueryVariables,
+  options?: UseQueryOptions<GetMemberKymDetailsLoanQuery, TError, TData>
+) =>
+  useQuery<GetMemberKymDetailsLoanQuery, TError, TData>(
+    ['getMemberKYMDetailsLoan', variables],
+    useAxios<GetMemberKymDetailsLoanQuery, GetMemberKymDetailsLoanQueryVariables>(
+      GetMemberKymDetailsLoanDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberKymDetailsSharesDocument = `
+    query getMemberKYMDetailsShares($id: ID!) {
+  members {
+    memberOverviewV2 {
+      share(memberId: $id) {
+        data {
           shareInfo {
             totalCount
             issuedCount
@@ -36128,230 +36586,31 @@ export const GetMemberDetailsOverviewDocument = `
             }
           }
         }
-        loan {
-          accounts {
-            accountName
-            accountNumber
-            totalBalance
-            productName
-            productType
-            interestRate
-            subscriptionDate
-            interestEarned
-            interestBooked
-          }
-          payments {
-            date
-            accountName
-            paymentType
-            amount
-            installmentNo
-            interestRate
-          }
-        }
-        reports {
-          list {
-            code
-            reportName
-            category
-          }
-        }
-        overview {
-          memberGraphs {
-            deposit {
-              data {
-                time
-                amount
-              }
-              periodType
-            }
-            withdraw {
-              data {
-                time
-                amount
-              }
-              periodType
-            }
-          }
-          statistics {
-            totalShareValue
-            accountBalance
-            loanBalance
-          }
-          payments {
-            date
-            accountName
-            paymentType
-            amount
-          }
-          recentTransactions {
-            date
-            title
-            txnType
-            amount
-            noOfShares
-          }
-        }
-        cheques {
-          accountName
-          issued
-          used
-          left
-          cancelled
-        }
       }
     }
   }
 }
     `;
-export const useGetMemberDetailsOverviewQuery = <
-  TData = GetMemberDetailsOverviewQuery,
+export const useGetMemberKymDetailsSharesQuery = <
+  TData = GetMemberKymDetailsSharesQuery,
   TError = unknown
 >(
-  variables: GetMemberDetailsOverviewQueryVariables,
-  options?: UseQueryOptions<GetMemberDetailsOverviewQuery, TError, TData>
+  variables: GetMemberKymDetailsSharesQueryVariables,
+  options?: UseQueryOptions<GetMemberKymDetailsSharesQuery, TError, TData>
 ) =>
-  useQuery<GetMemberDetailsOverviewQuery, TError, TData>(
-    ['getMemberDetailsOverview', variables],
-    useAxios<GetMemberDetailsOverviewQuery, GetMemberDetailsOverviewQueryVariables>(
-      GetMemberDetailsOverviewDocument
+  useQuery<GetMemberKymDetailsSharesQuery, TError, TData>(
+    ['getMemberKYMDetailsShares', variables],
+    useAxios<GetMemberKymDetailsSharesQuery, GetMemberKymDetailsSharesQueryVariables>(
+      GetMemberKymDetailsSharesDocument
     ).bind(null, variables),
     options
   );
-export const GetMemberDetailsShareBalanceDocument = `
-    query getMemberDetailsShareBalance($id: ID!) {
-  share {
-    history(memberId: $id) {
-      history {
-        id
-        memberId
-        member {
-          id
-          objState
-          createdAt
-        }
-        status
-        transactionDate
-        transactionDirection
-        credit
-        debit
-        startNumber
-        endNumber
-        balance
-        shareAmount
-        extraFee {
-          name
-          value
-        }
-        totalAmount
-        paymentMode
-        bankId
-        voucherNumber
-        accountId
-      }
-    }
-  }
-}
-    `;
-export const useGetMemberDetailsShareBalanceQuery = <
-  TData = GetMemberDetailsShareBalanceQuery,
-  TError = unknown
->(
-  variables: GetMemberDetailsShareBalanceQueryVariables,
-  options?: UseQueryOptions<GetMemberDetailsShareBalanceQuery, TError, TData>
-) =>
-  useQuery<GetMemberDetailsShareBalanceQuery, TError, TData>(
-    ['getMemberDetailsShareBalance', variables],
-    useAxios<GetMemberDetailsShareBalanceQuery, GetMemberDetailsShareBalanceQueryVariables>(
-      GetMemberDetailsShareBalanceDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetMemberOverviewBasicDetailsDocument = `
-    query getMemberOverviewBasicDetails($id: ID!) {
+export const GetMemberKymDetailsBioDocument = `
+    query getMemberKYMDetailsBio($id: ID!) {
   members {
-    memberOverview(id: $id) {
-      data {
-        overview {
-          basicInformation {
-            __typename
-            ... on IndividualBasicMinInfo {
-              memberName
-              profilePic
-              memberCode
-              memberJoined
-              genderId
-              gender
-              maritalStatus
-              maritalStatusId
-              fathersName
-              mothersName
-              grandFathersName
-              familyMembers {
-                fullName
-                relationship
-                dob
-              }
-              isStaff
-            }
-            ... on InstitutionBasicMinInfo {
-              memberName
-              profilePic
-              memberCode
-              memberJoined
-              type
-              nature
-              registrationDate
-              vatPanNo
-              noOfServiceCenters
-            }
-            ... on CooperativeBasicMinInfo {
-              memberName
-              profilePic
-              memberCode
-              memberJoined
-              registrationNo
-              registrationOffice
-              registrationDate
-            }
-            ... on CooperativeUnionBasicMinInfo {
-              memberName
-              profilePic
-              memberCode
-              memberJoined
-              type
-              nature
-              registrationDate
-              vatPanNo
-              noOfServiceCenters
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetMemberOverviewBasicDetailsQuery = <
-  TData = GetMemberOverviewBasicDetailsQuery,
-  TError = unknown
->(
-  variables: GetMemberOverviewBasicDetailsQueryVariables,
-  options?: UseQueryOptions<GetMemberOverviewBasicDetailsQuery, TError, TData>
-) =>
-  useQuery<GetMemberOverviewBasicDetailsQuery, TError, TData>(
-    ['getMemberOverviewBasicDetails', variables],
-    useAxios<GetMemberOverviewBasicDetailsQuery, GetMemberOverviewBasicDetailsQueryVariables>(
-      GetMemberOverviewBasicDetailsDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetMemberOverviewBioDetailsDocument = `
-    query getMemberOverviewBioDetails($id: ID!) {
-  members {
-    memberOverview(id: $id) {
-      data {
-        bio {
+    memberOverviewV2 {
+      bio(memberId: $id) {
+        data {
           __typename
           ... on IndividualBio {
             memberName
@@ -36841,17 +37100,80 @@ export const GetMemberOverviewBioDetailsDocument = `
   }
 }
     ${AddressFragmentDoc}`;
-export const useGetMemberOverviewBioDetailsQuery = <
-  TData = GetMemberOverviewBioDetailsQuery,
+export const useGetMemberKymDetailsBioQuery = <
+  TData = GetMemberKymDetailsBioQuery,
   TError = unknown
 >(
-  variables: GetMemberOverviewBioDetailsQueryVariables,
-  options?: UseQueryOptions<GetMemberOverviewBioDetailsQuery, TError, TData>
+  variables: GetMemberKymDetailsBioQueryVariables,
+  options?: UseQueryOptions<GetMemberKymDetailsBioQuery, TError, TData>
 ) =>
-  useQuery<GetMemberOverviewBioDetailsQuery, TError, TData>(
-    ['getMemberOverviewBioDetails', variables],
-    useAxios<GetMemberOverviewBioDetailsQuery, GetMemberOverviewBioDetailsQueryVariables>(
-      GetMemberOverviewBioDetailsDocument
+  useQuery<GetMemberKymDetailsBioQuery, TError, TData>(
+    ['getMemberKYMDetailsBio', variables],
+    useAxios<GetMemberKymDetailsBioQuery, GetMemberKymDetailsBioQueryVariables>(
+      GetMemberKymDetailsBioDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberKymDetailsWithdrawSlipsDocument = `
+    query getMemberKYMDetailsWithdrawSlips($id: ID!) {
+  members {
+    memberOverviewV2 {
+      cheques(memberId: $id) {
+        data {
+          accountId
+          accountName
+          issued
+          used
+          left
+          cancelled
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberKymDetailsWithdrawSlipsQuery = <
+  TData = GetMemberKymDetailsWithdrawSlipsQuery,
+  TError = unknown
+>(
+  variables: GetMemberKymDetailsWithdrawSlipsQueryVariables,
+  options?: UseQueryOptions<GetMemberKymDetailsWithdrawSlipsQuery, TError, TData>
+) =>
+  useQuery<GetMemberKymDetailsWithdrawSlipsQuery, TError, TData>(
+    ['getMemberKYMDetailsWithdrawSlips', variables],
+    useAxios<GetMemberKymDetailsWithdrawSlipsQuery, GetMemberKymDetailsWithdrawSlipsQueryVariables>(
+      GetMemberKymDetailsWithdrawSlipsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberKymDetailsReportDocument = `
+    query getMemberKYMDetailsReport($id: ID!) {
+  members {
+    memberOverviewV2 {
+      reports(memberId: $id) {
+        data {
+          list {
+            code
+            reportName
+            category
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberKymDetailsReportQuery = <
+  TData = GetMemberKymDetailsReportQuery,
+  TError = unknown
+>(
+  variables: GetMemberKymDetailsReportQueryVariables,
+  options?: UseQueryOptions<GetMemberKymDetailsReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberKymDetailsReportQuery, TError, TData>(
+    ['getMemberKYMDetailsReport', variables],
+    useAxios<GetMemberKymDetailsReportQuery, GetMemberKymDetailsReportQueryVariables>(
+      GetMemberKymDetailsReportDocument
     ).bind(null, variables),
     options
   );
@@ -36969,6 +37291,8 @@ export const GetAccountOpeningReportDocument = `
           memberId
           openedBy
           openingDate
+          branchId
+          branchName
         }
       }
     }
@@ -36986,6 +37310,44 @@ export const useGetAccountOpeningReportQuery = <
     variables === undefined ? ['getAccountOpeningReport'] : ['getAccountOpeningReport', variables],
     useAxios<GetAccountOpeningReportQuery, GetAccountOpeningReportQueryVariables>(
       GetAccountOpeningReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDepositAccountClosingReportDocument = `
+    query getDepositAccountClosingReport($data: AccountClosingReportInput) {
+  report {
+    depositReport {
+      accountClosingReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          accountNumber
+          accountName
+          openingDate
+          closingDate
+          closedBalance
+          closedBy
+          branchId
+          branchName
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositAccountClosingReportQuery = <
+  TData = GetDepositAccountClosingReportQuery,
+  TError = unknown
+>(
+  variables?: GetDepositAccountClosingReportQueryVariables,
+  options?: UseQueryOptions<GetDepositAccountClosingReportQuery, TError, TData>
+) =>
+  useQuery<GetDepositAccountClosingReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getDepositAccountClosingReport']
+      : ['getDepositAccountClosingReport', variables],
+    useAxios<GetDepositAccountClosingReportQuery, GetDepositAccountClosingReportQueryVariables>(
+      GetDepositAccountClosingReportDocument
     ).bind(null, variables),
     options
   );
@@ -37230,6 +37592,8 @@ export const GetSuspiciousTransactionReportDocument = `
           product_name
           tranxType
           status
+          branchId
+          branchName
         }
       }
     }
@@ -37301,6 +37665,8 @@ export const GetLoanBalanceReportDocument = `
           remainingBalance
           remainingInterest
           lastPaymentDate
+          branchId
+          branchName
         }
         totalOutstandingBalance
         totalRemainingBalance
@@ -37321,7 +37687,7 @@ export const useGetLoanBalanceReportQuery = <TData = GetLoanBalanceReportQuery, 
     options
   );
 export const GetLoanAgingStatementReportDocument = `
-    query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
+    query getLoanAgingStatementReport($data: LoanAgingStatementInput!) {
   report {
     loanReport {
       loanAgingStatementReport(data: $data) {
@@ -37352,6 +37718,8 @@ export const GetLoanAgingStatementReportDocument = `
             installmentLateDays
             nextPaymentDate
             tenure
+            branchId
+            branchName
           }
           summary {
             disbursePrincipalTotal
@@ -37376,13 +37744,11 @@ export const useGetLoanAgingStatementReportQuery = <
   TData = GetLoanAgingStatementReportQuery,
   TError = unknown
 >(
-  variables?: GetLoanAgingStatementReportQueryVariables,
+  variables: GetLoanAgingStatementReportQueryVariables,
   options?: UseQueryOptions<GetLoanAgingStatementReportQuery, TError, TData>
 ) =>
   useQuery<GetLoanAgingStatementReportQuery, TError, TData>(
-    variables === undefined
-      ? ['getLoanAgingStatementReport']
-      : ['getLoanAgingStatementReport', variables],
+    ['getLoanAgingStatementReport', variables],
     useAxios<GetLoanAgingStatementReportQuery, GetLoanAgingStatementReportQueryVariables>(
       GetLoanAgingStatementReportDocument
     ).bind(null, variables),
@@ -37550,6 +37916,8 @@ export const GetActiveInactiveMemberReportDocument = `
               memberRegistrationDate
               status
               memberType
+              branchId
+              branchName
             }
           }
         }
@@ -37593,6 +37961,8 @@ export const GetKymStatusReportDocument = `
           lastKymUpdatedDate
           kymExpireDays
           kymStatus
+          branchId
+          branchName
         }
       }
     }
@@ -37841,6 +38211,11 @@ export const GetSavingsBalanceReportDocument = `
           memberType
           balance
         }
+        summary {
+          totalIndividualAccount
+          totalMinorAccount
+          totalOtherAccount
+        }
         totalBalance
       }
     }
@@ -37988,6 +38363,8 @@ export const GetShareRegisterReportDocument = `
           kittaNumTo
           totalKitta
           totalAmount
+          branchId
+          branchName
         }
       }
     }
@@ -38022,6 +38399,8 @@ export const GetShareTransactionReportDocument = `
           shareReturnDr
           shareIssueCr
           balance
+          branchId
+          branchName
         }
         footer {
           totalCr
@@ -38069,6 +38448,8 @@ export const GetShareBalanceReportDocument = `
           membershipDate
           noOfKitta
           balance
+          branchId
+          branchName
         }
         totalBalance
         error {
@@ -38294,6 +38675,8 @@ export const GetBankGlStatementReportDocument = `
             withdrawAmount
             balance
             remarks
+            branchId
+            branchName
           }
         }
       }
@@ -39390,7 +39773,6 @@ export const GetLoanProductEditDataDocument = `
             maxLoanAmount
             repaymentScheme
             allowPartialInstallment
-            installmentFrequency
             isMonthlyInstallmentCompulsory
             interestMethod
             isPenaltyApplicable
@@ -39523,7 +39905,6 @@ export const GetLoanProductDetailDocument = `
             maxLoanAmount
             repaymentScheme
             allowPartialInstallment
-            installmentFrequency
             isMonthlyInstallmentCompulsory
             interestMethod
             isPenaltyApplicable

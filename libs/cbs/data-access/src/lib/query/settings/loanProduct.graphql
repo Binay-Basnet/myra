@@ -92,7 +92,7 @@ query getLoanProductEditData($id: ID!) {
             maxLoanAmount
             repaymentScheme
             allowPartialInstallment
-            installmentFrequency
+            # installmentFrequency
             isMonthlyInstallmentCompulsory
             interestMethod
             isPenaltyApplicable
@@ -210,7 +210,7 @@ query getLoanProductDetail($id: ID!) {
             maxLoanAmount
             repaymentScheme
             allowPartialInstallment
-            installmentFrequency
+            # installmentFrequency
             isMonthlyInstallmentCompulsory
             interestMethod
             isPenaltyApplicable

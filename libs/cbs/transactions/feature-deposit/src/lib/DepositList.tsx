@@ -152,6 +152,7 @@ export const DepositList = () => {
           pageInfo: data?.transaction?.listDeposit?.pageInfo,
         }}
         searchPlaceholder={t['depositListSearchDeposit']}
+        menu="TRANSACTIONS"
       />
     </>
   );

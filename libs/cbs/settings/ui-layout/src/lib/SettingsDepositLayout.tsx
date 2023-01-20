@@ -30,7 +30,9 @@ export const SettingsDepositLayout = ({ children }: ISettingsDepositLayout) => {
 
   return (
     <>
-      <SettingsPageHeader heading={`${t['settingsDeposit']} - ${featureCode?.settingsDeposit}`} />
+      <SettingsPageHeader
+        heading={`${t['settingsDeposit']} - ${featureCode.savingGeneralSetting}`}
+      />
       <Box
         w="250px"
         px="s8"

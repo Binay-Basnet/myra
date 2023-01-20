@@ -37,7 +37,7 @@ const SetupPage = () => {
           <Text variant="bodyRegular" color="gray.700">
             Apply for a membership to any cooperative of your choice.
           </Text>
-          <Button variant="outline" width="100%">
+          <Button variant="outline" width="100%" onClick={() => router.push(`/setup/apply/`)}>
             Apply for COOP membership
           </Button>
         </Box>

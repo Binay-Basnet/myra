@@ -19,7 +19,7 @@ import {
   useSetDepositProductMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {
   AccountCloseServices,
@@ -366,7 +366,9 @@ export const SettingsDepositProductsAdd = () => {
     <>
       <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.lg" height="fit-content" paddingInline="0">
-          <FormHeader title={t['depositProductAddDepositProducts']} />
+          <FormHeader
+            title={`${t['depositProductAddDepositProducts']} - ${featureCode.newSavingProduct}`}
+          />
         </Container>
       </Box>
       <Container bg="white" height="fit-content" minW="container.lg" pb="120px" paddingInline="0">

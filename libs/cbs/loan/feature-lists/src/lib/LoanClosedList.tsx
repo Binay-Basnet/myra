@@ -4,7 +4,7 @@ import { PageHeader } from '@myra-ui';
 
 import { Filter_Mode, LoanObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { LoanClosedAccountTable } from '../components/LoanTable';
 
@@ -27,7 +27,7 @@ export const ClosedLoanList = () => {
   });
   return (
     <>
-      <PageHeader heading="Closed Account List " />
+      <PageHeader heading={`Closed Account List - ${featureCode?.loanClosedAccountList}`} />
       <LoanClosedAccountTable
         data={data}
         isLoading={isFetching}

@@ -122,7 +122,9 @@ export const BlockWithdrawSlipRequestsList = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader heading={`Block Withdraw Slip Request - ${featureCode.blockWithdrawSlip}`} />
+        <PageHeader
+          heading={`Block Withdraw Slip Request - ${featureCode.blockWithdrawSlipRequestList}`}
+        />
       </Box>
 
       <Table
@@ -146,6 +148,7 @@ export const BlockWithdrawSlipRequestsList = () => {
           total: data?.requests?.list?.blockCheque?.totalCount ?? 'Many',
           pageInfo: data?.requests?.list?.blockCheque?.pageInfo,
         }}
+        menu="WITHDRAW_SLIP"
       />
 
       <ApproveDeclineModal

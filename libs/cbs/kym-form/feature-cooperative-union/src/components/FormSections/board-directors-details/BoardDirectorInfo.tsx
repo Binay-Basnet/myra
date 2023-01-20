@@ -193,12 +193,14 @@ const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDire
                         label={t['kymCoopUnionEmail']}
                       />
                       <FormInput
+                        isRequired
                         type="string"
                         name="citizenshipNo"
                         id="boardOfDirectors.citizenshipNo"
                         label={t['kymCoopUnionCitizenshipPassportDrivingLicenseNo']}
                       />
                       <FormInput
+                        isRequired
                         type="string"
                         name="panNo"
                         id="boardOfDirectors.panNo"

@@ -2,10 +2,13 @@ import React from 'react';
 
 import { Column, Table } from '@myra-ui/table';
 
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+
 interface ILoanPaymentScheduleTableProps {
   data:
     | {
         sn: number;
+        id: string | null | undefined;
         accounttName: string | null | undefined;
         used: number | null | undefined;
         left: number | null | undefined;
@@ -24,6 +27,12 @@ export const ReportTableComponent = ({ data }: ILoanPaymentScheduleTableProps) =
       {
         header: 'Account Name',
         accessorKey: 'accounttName',
+        cell: (props) => (
+          <RedirectButton
+            label={props?.row?.original?.accounttName}
+            link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${props?.row?.original?.id}`}
+          />
+        ),
         meta: {
           width: '40%',
         },

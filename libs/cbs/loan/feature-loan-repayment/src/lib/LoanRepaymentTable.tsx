@@ -125,7 +125,7 @@ export const CBSLoanRepaymentList = () => {
   return (
     <>
       <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader heading={`Loan Repayment - ${featureCode.loanRepayment} `} />
+        <PageHeader heading={`Loan Repayment - ${featureCode.loanRepaymentList} `} />
       </Box>
 
       <Table
@@ -139,6 +139,7 @@ export const CBSLoanRepaymentList = () => {
           total: data?.loanAccount?.repaymentList?.totalCount ?? 'Many',
           pageInfo: data?.loanAccount?.repaymentList?.pageInfo,
         }}
+        menu="LOAN"
       />
     </>
   );

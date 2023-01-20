@@ -1,19 +1,21 @@
 import React from 'react';
 
-import { Chips, Text } from '@myra-ui';
+import { Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
     | {
+        id: string | null | undefined;
         sn: number;
         date: Record<'local' | 'en' | 'np', string> | null | undefined;
         accountName?: string | null | undefined;
         paymentType?: string | null | undefined;
         amount?: string | 0;
+        installmentNo?: string | null | undefined;
       }[];
 
   //   data: MemberPaymentView[] | null | undefined;
@@ -34,6 +36,13 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
       {
         header: 'Account Name',
         accessorKey: 'accountName',
+        cell: (props) => (
+          // id to be sent by BE
+          <RedirectButton
+            label={props?.row?.original?.accountName}
+            link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props.cell.row.original?.id}`}
+          />
+        ),
         meta: {
           width: '50%',
         },
@@ -45,18 +54,18 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
           const value = props.getValue() as string;
 
           return (
-            <Chips
-              variant="solid"
-              theme={value !== 'LOAN' ? 'success' : 'danger'}
-              size="md"
-              type="label"
-              label={value}
-            />
+            <Text fontWeight="Medium" color="gray.700" lineHeight="125%" fontSize="Regular">
+              {value?.replace(/_/g, ' ')}
+            </Text>
           );
         },
         meta: {
           width: '30%',
         },
+      },
+      {
+        header: 'Installment No.',
+        accessorKey: 'installmentNo',
       },
       {
         header: 'Amount',

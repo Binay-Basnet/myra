@@ -119,7 +119,7 @@ export const FundManagementList = () => {
   return (
     <>
       <PageHeader
-        heading={`Fund Management List - ${featureCode?.profitFundManagementList}`}
+        heading={`Fund Management List - ${featureCode?.profitToFundManagementList}`}
         // tabItems={tabList}
       />
 

@@ -1,81 +1,95 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { VscTriangleDown } from 'react-icons/vsc';
 import dayjs from 'dayjs';
 
 import { Box, Icon, Text } from '@myra-ui';
 
-import { useGetAuditLogListQuery } from '@coop/cbs/data-access';
+import {
+  AuditLogActions,
+  LocalizedDateFilter,
+  useGetAuditLogListQuery,
+  useGetSettingsUserListDataQuery,
+} from '@coop/cbs/data-access';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
+import { FormSelectPopout } from '@coop/shared/form';
+import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { AUDIT_LOG_ICONS } from '../../constants/AUDIT_LOG_ICONS';
 
 export const CBSSettingsAuditLog = () => {
-  const methods = useForm();
-  // const { watch } = methods;
-  // const memberId = watch('memberId');
-  // const actions = watch('actions');
-  // const time = watch('period');
+  const methods = useForm<{
+    memberId: { id: string }[];
+    actions: { value: AuditLogActions }[];
+    period: LocalizedDateFilter;
+  }>();
+  const { watch } = methods;
+  const memberId = watch('memberId');
+  const actions = watch('actions');
+  const time = watch('period');
 
-  // const arrayId = memberId && memberId?.map((item) => item?.id);
-  // const actionEnums = actions && actions?.map((item) => item?.value);
+  const arrayId = memberId && memberId?.map((item) => item?.id);
+  const actionEnums = actions && actions?.map((item) => item?.value);
 
-  const { data } = useGetAuditLogListQuery();
-  // {
-  //   filter: {
-  //     users: ['1234'],
-  //     action: ['ALL'],
-  //     time,
-  //   },
-  // },
-  // { staleTime: 0 }
+  const { data } = useGetAuditLogListQuery(
+    {
+      filter: {
+        users: arrayId,
+        action: actionEnums,
+        time,
+      },
+    },
+    { staleTime: 0 }
+  );
 
   const humanizedAuditLog =
     data?.auditLog?.humanize?.__typename === 'AuditLogHumanizeResult' &&
     data?.auditLog?.humanize.data;
 
-  // const { data: userListQueryData } = useGetSettingsUserListDataQuery(
-  //   {
-  //     paginate: getRouterQuery({ type: ['PAGINATION'] }),
-  //   },
-  //   { staleTime: 0 }
-  // );
+  const { data: userListQueryData } = useGetSettingsUserListDataQuery(
+    {
+      paginate: getRouterQuery({ type: ['PAGINATION'] }),
+    },
+    { staleTime: 0 }
+  );
 
-  // const userListArray = userListQueryData?.settings?.myraUser?.list?.edges;
+  const userListArray = userListQueryData?.settings?.myraUser?.list?.edges;
 
-  // const userList =
-  //   userListArray &&
-  //   userListArray?.map((item) => ({
-  //     id: item?.node?.id as string,
-  //     url: item?.node?.profilePicUrl as string,
-  //     name: item?.node?.name as string,
-  //   }));
+  const userList =
+    (userListArray &&
+      userListArray?.map((item) => ({
+        id: item?.node?.id as string,
+        url: item?.node?.profilePicUrl as string,
+        name: item?.node?.name as string,
+      }))) ??
+    [];
 
-  // const actionList = [
-  //   {
-  //     label: 'All',
-  //     value: AuditLogActions.All,
-  //   },
-  //   {
-  //     label: 'Create',
-  //     value: AuditLogActions.Create,
-  //   },
-  //   {
-  //     label: 'Update',
-  //     value: AuditLogActions.Update,
-  //   },
-  //   {
-  //     label: 'Read',
-  //     value: AuditLogActions.Read,
-  //   },
-  //   {
-  //     label: 'Delete',
-  //     value: AuditLogActions.Delete,
-  //   },
-  // ];
+  const actionList = [
+    {
+      label: 'All',
+      value: AuditLogActions.All,
+    },
+    {
+      label: 'Create',
+      value: AuditLogActions.Create,
+    },
+    {
+      label: 'Update',
+      value: AuditLogActions.Update,
+    },
+    {
+      label: 'Read',
+      value: AuditLogActions.Read,
+    },
+    {
+      label: 'Delete',
+      value: AuditLogActions.Delete,
+    },
+  ];
 
   return (
     <FormProvider {...methods}>
-      <SettingsPageHeader heading="Audit Log" />
+      <SettingsPageHeader heading={`Audit Log - ${featureCode.auditLogList}`} />
       <Box p="s16">
         <Box display="flex" flexDir="column" gap="s16">
           <Text fontSize="s2" color="gray.600">
@@ -90,7 +104,7 @@ export const CBSSettingsAuditLog = () => {
                 Filter by user:
               </Text>
 
-              {/* <FormSelectPopout
+              <FormSelectPopout
                 popoverBtn={(value) => (
                   <Box display="flex" alignItems="center" gap="s4" cursor="pointer">
                     <Text fontSize="r1" color="gray.800">
@@ -105,14 +119,14 @@ export const CBSSettingsAuditLog = () => {
                 name="memberId"
                 optionType="member"
                 options={userList}
-              /> */}
+              />
             </Box>
 
             <Box display="flex" alignItems="center" gap="s8">
               <Text fontSize="s3" color="gray.800">
                 Filter by action:
               </Text>
-              {/* <FormSelectPopout
+              <FormSelectPopout
                 popoverBtn={(value) => (
                   <Box display="flex" alignItems="center" gap="s4" cursor="pointer">
                     <Text fontSize="r1" color="gray.800">
@@ -126,7 +140,7 @@ export const CBSSettingsAuditLog = () => {
                 )}
                 name="actions"
                 options={actionList}
-              /> */}
+              />
             </Box>
 
             <Box>

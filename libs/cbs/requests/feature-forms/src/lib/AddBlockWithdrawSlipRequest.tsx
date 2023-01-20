@@ -26,6 +26,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
+import { featureCode } from '@coop/shared/utils';
 
 const blockModes = [
   {
@@ -115,7 +116,9 @@ export const AddBlockWithdrawSlipRequest = () => {
     <>
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title="Block Withdraw Slip Book" />
+          <FormHeader
+            title={`Block Withdraw Slip Book - ${featureCode.newBlockWithdrawSlipBook}`}
+          />
         </Box>
 
         <Box bg="white">

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { Grid } from '@myra-ui';
+
 import {
   IndividualRequiredDocument,
   InstitutionRequiredDocument,
@@ -11,7 +13,6 @@ import {
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput } from '@coop/shared/form';
-import { Grid } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 interface Iprops {
@@ -104,7 +105,7 @@ export const RequiredDocuments = ({ setFileList, id, productId, memberId }: Ipro
       photo: docData
         ?.find((doc) => doc?.fieldId === 'photo')
         ?.docData?.map((doc) => ({ fileName: doc?.identifier, url: doc?.url })),
-      fingerPrintPhoto: docData
+      fingerprintPhoto: docData
         ?.find((doc) => doc?.fieldId === 'fingerPrintPhoto')
         ?.docData?.map((doc) => ({ fileName: doc?.identifier, url: doc?.url })),
       decisionDocuments: docData

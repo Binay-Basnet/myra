@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   authenticate,
@@ -12,6 +12,8 @@ import { getSchemaPath, useReplace } from '@coop/shared/utils';
 const url = getSchemaPath();
 
 export const useInit = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const dispatch = useAppDispatch();
   const replace = useReplace();
@@ -33,12 +35,13 @@ export const useInit = () => {
     refreshToken()
       .then((res) => {
         if (res) {
+          setIsLoading(false);
           setTriggerQuery(true);
         }
       })
       .catch(() => {
         dispatch(logout());
-        replace('/login');
+        replace('/login').then(() => setIsLoading(false));
       });
   }, [dispatch, refreshToken, replace]);
 
@@ -46,10 +49,13 @@ export const useInit = () => {
     if (hasDataReturned) {
       if (userData) {
         dispatch(authenticate({ user: userData }));
+        setIsLoading(false);
       } else {
         dispatch(logout());
-        replace('/login');
+        replace('/login').then(() => setIsLoading(false));
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData, replace]);
+
+  return { isLoading };
 };

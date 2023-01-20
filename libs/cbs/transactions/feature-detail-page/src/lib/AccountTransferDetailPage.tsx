@@ -37,7 +37,7 @@ export const AccountTransferDetailPage = () => {
         <SideBar detailPage="accountTransfer" summary={summary} />
       </Box>
 
-      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+      <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
         <Text color="gray.800" fontWeight="SemiBold" fontSize="r3">
           {t['transDetailOverview']}
         </Text>
@@ -46,7 +46,8 @@ export const AccountTransferDetailPage = () => {
           branch={accountTransferDetailData?.transactionBranch as string}
           teller={accountTransferDetailData?.teller as string}
         />
-        <Note note={accountTransferDetailData?.note} />
+        {accountTransferDetailData?.note && <Note note={accountTransferDetailData?.note} />}
+
         <GlTransaction
           totalDebit={String(amountConverter(accountTransferDetailData?.totalDebit ?? 0))}
           totalCredit={String(amountConverter(accountTransferDetailData?.totalCredit ?? 0))}

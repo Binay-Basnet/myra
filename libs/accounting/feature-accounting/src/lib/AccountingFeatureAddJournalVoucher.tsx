@@ -21,7 +21,12 @@ import {
 } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { FormDatePicker, FormInput, FormTextArea } from '@coop/shared/form';
-import { amountConverter, amountToWordsConverter, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  amountToWordsConverter,
+  featureCode,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { JournalVouchersTable } from '../components';
 import { CustomJournalVoucherInput } from '../types';
@@ -77,7 +82,9 @@ export const AccountingFeatureAddJournalVoucher = () => {
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="60px">
-        <FormHeader title={t['accountingJournalVoucherAddNewJournalVoucher']} />
+        <FormHeader
+          title={`${t['accountingJournalVoucherAddNewJournalVoucher']} - ${featureCode.newJournalVoucher}`}
+        />
 
         <FormProvider {...methods}>
           <form>
@@ -90,7 +97,6 @@ export const AccountingFeatureAddJournalVoucher = () => {
                   label={t['accountingJournalVoucherAddDueDate']}
                 />
                 <FormInput
-                  isRequired
                   name="reference"
                   type="text"
                   label={t['accountingJournalVoucherAddReference']}

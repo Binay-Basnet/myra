@@ -14,7 +14,7 @@ export const Tooltip = forwardRef<HTMLInputElement, TooltipProps>((props, ref) =
   return (
     <ChakraTooltip label={title} placement="top" {...rest} ref={ref}>
       {children || (
-        <Text textOverflow="ellipsis" overflow="hidden">
+        <Text overflow="hidden" textOverflow="ellipsis">
           {title}
         </Text>
       )}

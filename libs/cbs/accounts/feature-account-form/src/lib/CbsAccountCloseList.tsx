@@ -93,7 +93,7 @@ export const CBSAccountCloseList = () => {
 
   return (
     <>
-      <PageHeader heading={`${t['accountClose']} - ${featureCode?.accountCloseList}`} />
+      <PageHeader heading={`${t['accountClose']} - ${featureCode?.savingCloseAccountList}`} />
 
       <Table
         isLoading={isLoading}
@@ -106,6 +106,7 @@ export const CBSAccountCloseList = () => {
           total: data?.account?.list?.totalCount ?? 'Many',
           pageInfo: data?.account?.list?.pageInfo,
         }}
+        menu="SAVINGS"
       />
     </>
   );

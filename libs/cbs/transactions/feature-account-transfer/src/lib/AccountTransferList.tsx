@@ -137,6 +137,7 @@ export const AccountTransferList = () => {
           pageInfo: data?.transaction?.listTransfer?.pageInfo,
         }}
         searchPlaceholder={t['accountTransferListSearch']}
+        menu="TRANSACTIONS"
       />
     </>
   );

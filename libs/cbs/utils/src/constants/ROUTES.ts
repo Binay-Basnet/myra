@@ -31,6 +31,7 @@ export const ROUTES = {
   CBS_LOAN_REPAYMENT_DETAILS: '/cbs/loan/repayments/details',
 
   CBS_LOAN_PRODUCTS_LIST: '/cbs/loan/products/list',
+  CBS_LOAN_PRODUCTS_DETAILS: '/cbs/loan/products/details',
   CBS_LOAN_DECLINED_LIST: '/cbs/loan/declined/list',
   CBS_LOAN_ACCOUNTS_LIST: '/cbs/loan/accounts/list',
   CBS_LOAN_ACCOUNT_DETAILS: '/cbs/loan/accounts/details',
@@ -46,7 +47,10 @@ export const ROUTES = {
   CBS_TRANS_ACCOUNT_TRANSFER_LIST: '/cbs/transactions/account-transfer/list',
   CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_LIST:
     '/cbs/transactions/market-representative-transaction/list',
+  CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_DETAILS:
+    '/cbs/transactions/market-representative-transaction/details',
   CBS_TRANS_MARKET_REPRESENTATIVE_LIST: '/cbs/transactions/market-representative/list',
+  CBS_TRANS_MARKET_REPRESENTATIVE_DETAILS: '/cbs/transactions/market-representative/details',
   CBS_TRANS_JOURNAL_VOUCHER_LIST: '/cbs/transactions/journal-vouchers/list',
   CBS_TRANS_ALL_TRANSACTION_LIST: '/cbs/transactions/all-transactions/list',
   CBS_TRANS_ALL_LEDGERS_LIST: '/cbs/transactions/all-ledgers/list',

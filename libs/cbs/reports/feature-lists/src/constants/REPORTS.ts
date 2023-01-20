@@ -189,6 +189,11 @@ export const REPORTS = {
 
   [ReportGroup.SAVINGS]: [
     {
+      id: '5.0',
+      report: Report.SAVING_BALANCE_REPORT,
+      link: 'saving-balance',
+    },
+    {
       id: '5.1',
       report: Report.SAVING_STATEMENT,
       link: 'statement',
@@ -500,12 +505,6 @@ export const REPORTS = {
       id: '10',
       report: Report.USER_LIST_REPORT,
       link: 'users',
-    },
-
-    {
-      id: '',
-      report: Report.SAVING_BALANCE_REPORT,
-      link: 'saving-balance',
     },
   ],
 };

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { TablePopover, Text } from '@myra-ui';
+import { TablePopover, Text, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { Filter_Mode, useAppSelector, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
@@ -46,6 +46,15 @@ export const COAListView = () => {
       {
         header: t['settingsCoaTableAccountName'],
         accessorFn: (row) => row?.node?.accountName?.local,
+        cell: (props) => (
+          <Tooltip
+            title={
+              props?.row?.original?.node?.accountName?.local
+                ?.replace(/_/gi, ' ')
+                .toLowerCase() as string
+            }
+          />
+        ),
         meta: {
           width: '50%',
         },

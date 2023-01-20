@@ -3,13 +3,14 @@ import React from 'react';
 import { Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
     | {
         sn: number;
+        id: string | null | undefined;
         date: Record<'local' | 'en' | 'np', string> | null | undefined;
         accountName: string | null | undefined;
         installmentNo: string | null | undefined;
@@ -36,6 +37,13 @@ export const UpcomingLoanPaymentTable = ({ data }: ILoanPaymentScheduleTableProp
       {
         header: 'Account Name',
         accessorKey: 'accountName',
+        cell: (props) => (
+          // id to be sent by BE
+          <RedirectButton
+            label={props?.row?.original?.accountName}
+            link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props.cell.row.original?.id}`}
+          />
+        ),
         meta: {
           width: '40%',
         },
@@ -50,6 +58,7 @@ export const UpcomingLoanPaymentTable = ({ data }: ILoanPaymentScheduleTableProp
       {
         header: 'Interest',
         accessorKey: 'interestRate',
+        cell: (props) => <Text>{props?.row?.original?.interestRate ?? 'N/A'}</Text>,
         meta: {
           isNumeric: true,
         },

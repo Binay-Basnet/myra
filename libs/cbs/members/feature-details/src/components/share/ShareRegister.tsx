@@ -2,17 +2,17 @@ import { useRouter } from 'next/router';
 
 import { Box, Chips, Text } from '@myra-ui';
 
-import { ShareTransactionType, useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
+import { ShareTransactionType, useGetMemberKymDetailsSharesQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 
 export const ShareRegister = () => {
   const router = useRouter();
-  const memberDetails = useGetMemberDetailsOverviewQuery({
+  const memberDetails = useGetMemberKymDetailsSharesQuery({
     id: router.query['id'] as string,
   });
 
   const memberRecentTrans =
-    memberDetails?.data?.members?.memberOverview?.data?.share?.registerDetails;
+    memberDetails?.data?.members?.memberOverviewV2?.share?.data?.registerDetails;
 
   return (
     <Box p="s16" bg="white">

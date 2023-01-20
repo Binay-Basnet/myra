@@ -31,7 +31,7 @@ export type MenuType =
   | 'WAREHOUSE'
   | 'SUPPLIERS';
 
-type Page = {
+export type Page = {
   label: string;
   aclKey: AclKey;
   route: RouteValue;
@@ -960,12 +960,12 @@ export const ALTERNATIVE_CHANNELS: NavType = {
         },
         {
           label: 'acActivateEBanking',
-          route: ROUTES.ALTERNATIVE_CHANNELS_EBANKING_REG_LIST,
+          route: ROUTES.ALTERNATIVE_CHANNELS_EBANKING_REG,
           aclKey: 'ALTERNATIVE_CHANNELS_E_BANKING_REGISTRATION',
         },
         {
           label: 'acActivateSMSBanking',
-          route: '/alternative-channels/users/activation?type=smsBanking',
+          route: ROUTES.ALTERNATIVE_CHANNELS_SMS_BANKING_REG,
           aclKey: 'ALTERNATIVE_CHANNELS_SMS_REGISTRATION',
         },
       ],

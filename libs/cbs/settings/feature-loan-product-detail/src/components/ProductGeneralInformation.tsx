@@ -2,7 +2,6 @@ import { DetailCardContent, DetailsCard } from '@myra-ui';
 
 import {
   LoanInterestMethod,
-  LoanProductInstallment,
   LoanRepaymentScheme,
   NatureOfLoanProduct,
   ProductCodeType,
@@ -17,7 +16,7 @@ interface IProductGeneralInformation {
     productSubType: string | null | undefined;
     interestMethod: LoanInterestMethod | null | undefined;
     loanRepaymentScheme: (LoanRepaymentScheme | null)[] | null | undefined;
-    installmentFrequency: LoanProductInstallment | null | undefined;
+    // installmentFrequency: LoanProductInstallment | null | undefined;
   };
 }
 
@@ -57,13 +56,13 @@ export const ProductGeneralInformation = ({ generalInformation }: IProductGenera
           : 'N/A'
       }
     />
-    <DetailCardContent
+    {/* <DetailCardContent
       title="Installment Frequency"
       subtitle={
         generalInformation?.installmentFrequency
           ? generalInformation?.installmentFrequency?.toLowerCase()
           : 'N/A'
       }
-    />
+    /> */}
   </DetailsCard>
 );

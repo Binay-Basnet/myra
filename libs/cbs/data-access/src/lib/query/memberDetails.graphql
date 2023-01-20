@@ -1,8 +1,143 @@
-query getMemberDetailsOverview($id: ID!) {
+query getMemberDetailsShareBalance($id: ID!) {
+  share {
+    history(memberId: $id) {
+      history {
+        id
+        memberId
+        member {
+          id
+          objState
+          createdAt
+        }
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        balance
+        shareAmount
+        extraFee {
+          name
+          value
+        }
+        totalAmount
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsOverview($id: ID!) {
   members {
-    memberOverview(id: $id) {
-      data {
-        accounts {
+    memberOverviewV2 {
+      overview(memberId: $id) {
+        data {
+          basicInformation {
+            __typename
+            ... on IndividualBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              genderId
+              gender
+              maritalStatus
+              maritalStatusId
+              fathersName
+              mothersName
+              grandFathersName
+              familyMembers {
+                fullName
+                relationship
+                dob
+              }
+              isStaff
+            }
+            ... on InstitutionBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+            ... on CooperativeBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              registrationNo
+              registrationOffice
+              registrationDate
+            }
+            ... on CooperativeUnionBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+          }
+          memberGraphs {
+            deposit {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+            withdraw {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+          }
+          statistics {
+            totalShareValue
+            accountBalance
+            loanBalance
+          }
+          payments {
+            date
+            accountName
+            accountId
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+          recentTransactions {
+            date
+            title
+            txnType
+            amount
+            noOfShares
+          }
+        }
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsAccounts($id: ID!) {
+  members {
+    memberOverviewV2 {
+      accounts(memberId: $id) {
+        data {
           accounts {
             accountName
             accountNumber
@@ -20,7 +155,74 @@ query getMemberDetailsOverview($id: ID!) {
             interestRate
           }
         }
-        share {
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsAccounts($id: ID!) {
+  members {
+    memberOverviewV2 {
+      accounts(memberId: $id) {
+        data {
+          accounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+          }
+          payments {
+            date
+            accountName
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsLoan($id: ID!) {
+  members {
+    memberOverviewV2 {
+      loan(memberId: $id) {
+        data {
+          accounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+            subscriptionDate
+            interestEarned
+            interestBooked
+          }
+          payments {
+            date
+            accountName
+            accountId
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsShares($id: ID!) {
+  members {
+    memberOverviewV2 {
+      share(memberId: $id) {
+        data {
           shareInfo {
             totalCount
             issuedCount
@@ -85,212 +287,16 @@ query getMemberDetailsOverview($id: ID!) {
             }
           }
         }
-        loan {
-          accounts {
-            accountName
-            accountNumber
-            totalBalance
-            productName
-            productType
-            interestRate
-            subscriptionDate
-            interestEarned
-            interestBooked
-          }
-          payments {
-            date
-            accountName
-            paymentType
-            amount
-            installmentNo
-            interestRate
-          }
-        }
-        reports {
-          list {
-            code
-            reportName
-            category
-          }
-        }
-        overview {
-          # basicInformation {
-          #   memberName
-          #   profilePic
-          #   memberCode
-          #   memberJoined
-          #   genderId
-          #   gender
-          #   isStaff
-          #   maritalStatusId
-          #   maritalStatus
-          #   contactNumber
-          #   email
-          #   addressId
-          #   address
-          #   fathersName
-          #   mothersName
-          #   familyMembers {
-          #     relationship
-          #     fullName
-          #     dob
-          #   }
-          #   documents {
-          #     key
-          #     value
-          #   }
-          #   grandFathersName
-          # }
-          memberGraphs {
-            deposit {
-              data {
-                time
-                amount
-              }
-              periodType
-            }
-            withdraw {
-              data {
-                time
-                amount
-              }
-              periodType
-            }
-          }
-          statistics {
-            totalShareValue
-            accountBalance
-            loanBalance
-          }
-          payments {
-            date
-            accountName
-            paymentType
-            amount
-          }
-          recentTransactions {
-            date
-            title
-            txnType
-            amount
-            noOfShares
-          }
-        }
-        cheques {
-          accountName
-          issued
-          used
-          left
-          cancelled
-        }
       }
     }
   }
 }
 
-query getMemberDetailsShareBalance($id: ID!) {
-  share {
-    history(memberId: $id) {
-      history {
-        id
-        memberId
-        member {
-          id
-          objState
-          createdAt
-        }
-        status
-        transactionDate
-        transactionDirection
-        credit
-        debit
-        startNumber
-        endNumber
-        balance
-        shareAmount
-        extraFee {
-          name
-          value
-        }
-        totalAmount
-        paymentMode
-        bankId
-        voucherNumber
-        accountId
-      }
-    }
-  }
-}
-
-query getMemberOverviewBasicDetails($id: ID!) {
+query getMemberKYMDetailsBio($id: ID!) {
   members {
-    memberOverview(id: $id) {
-      data {
-        overview {
-          basicInformation {
-            __typename
-            ... on IndividualBasicMinInfo {
-              memberName
-              profilePic
-              memberCode
-              memberJoined
-              genderId
-              gender
-              maritalStatus
-              maritalStatusId
-              fathersName
-              mothersName
-              grandFathersName
-              familyMembers {
-                fullName
-                relationship
-                dob
-              }
-              isStaff
-            }
-            ... on InstitutionBasicMinInfo {
-              memberName
-              profilePic
-              memberCode
-              memberJoined
-              type
-              nature
-              registrationDate
-              vatPanNo
-              noOfServiceCenters
-            }
-            ... on CooperativeBasicMinInfo {
-              memberName
-              profilePic
-              memberCode
-              memberJoined
-              registrationNo
-              registrationOffice
-              registrationDate
-            }
-            ... on CooperativeUnionBasicMinInfo {
-              memberName
-              profilePic
-              memberCode
-              memberJoined
-              type
-              nature
-              registrationDate
-              vatPanNo
-              noOfServiceCenters
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-query getMemberOverviewBioDetails($id: ID!) {
-  members {
-    memberOverview(id: $id) {
-      data {
-        bio {
+    memberOverviewV2 {
+      bio(memberId: $id) {
+        data {
           __typename
           ... on IndividualBio {
             memberName
@@ -774,6 +780,39 @@ query getMemberOverviewBioDetails($id: ID!) {
               key
               value
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsWithdrawSlips($id: ID!) {
+  members {
+    memberOverviewV2 {
+      cheques(memberId: $id) {
+        data {
+          accountId
+          accountName
+          issued
+          used
+          left
+          cancelled
+        }
+      }
+    }
+  }
+}
+
+query getMemberKYMDetailsReport($id: ID!) {
+  members {
+    memberOverviewV2 {
+      reports(memberId: $id) {
+        data {
+          list {
+            code
+            reportName
+            category
           }
         }
       }

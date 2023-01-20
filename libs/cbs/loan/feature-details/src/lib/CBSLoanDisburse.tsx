@@ -276,7 +276,7 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
         </Box>
 
         <Box>
-          <Box position="sticky" top="170px" right="0" w="320px" overflowX="hidden">
+          <Box position="sticky" top="0" right="0" w="320px">
             <Box display="flex" flexDirection="column" gap="s16">
               <MemberCard
                 memberDetails={{

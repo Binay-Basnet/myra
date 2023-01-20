@@ -45,7 +45,7 @@ export const SettingsDepositProducts = () => {
   return (
     <>
       <PageHeader
-        heading={`${t['settingsDepositProducts']} - ${featureCode?.settingsDepositProduct}`}
+        heading={`${t['settingsDepositProducts']} - ${featureCode?.savingProductList}`}
         tabItems={DEPOSIT_TAB_ITEMS}
         onClick={onSubmit}
         button

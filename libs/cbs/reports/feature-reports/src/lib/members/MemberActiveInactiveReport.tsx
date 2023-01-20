@@ -16,13 +16,25 @@ import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 
+type MemberActiveInactiveReportFilters = Omit<ActiveInactiveMemberReportData, 'branchId'> & {
+  branchId: {
+    label: string;
+    value: string;
+  }[];
+};
+
 export const MemberActiveInactiveReport = () => {
-  const [filters, setFilters] = useState<ActiveInactiveMemberReportData | null>(null);
+  const [filters, setFilters] = useState<MemberActiveInactiveReportFilters | null>(null);
+
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
 
   const { data: memberActiveInactiveReportData, isFetching } =
     useGetActiveInactiveMemberReportQuery(
       {
-        data: filters as ActiveInactiveMemberReportData,
+        data: { ...filters, branchId: branchIds } as ActiveInactiveMemberReportData,
       },
       { enabled: !!filters }
     );
@@ -62,7 +74,7 @@ export const MemberActiveInactiveReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Member Registration Date Period" />
@@ -89,6 +101,10 @@ export const MemberActiveInactiveReport = () => {
                       meta: {
                         width: '60px',
                       },
+                    },
+                    {
+                      header: 'Service Center',
+                      accessorKey: 'branchName',
                     },
                     {
                       header: 'Member ID',
@@ -165,6 +181,10 @@ export const MemberActiveInactiveReport = () => {
                       meta: {
                         width: '60px',
                       },
+                    },
+                    {
+                      header: 'Service Center',
+                      accessorKey: 'branchName',
                     },
                     {
                       header: 'Member ID',

@@ -11,7 +11,7 @@ import {
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormCheckbox, FormSelect } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
 import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettingsHeader';
@@ -66,7 +66,9 @@ export const ShareSettingsTransfer = () => {
     <FormProvider {...methods}>
       <form>
         <Box p="s16" pb="80px" display="flex" flexDir="column" gap="s16">
-          <ShareSettingsHeader title={t['settingsShareTransfer']} />
+          <ShareSettingsHeader
+            title={`${t['settingsShareTransfer']} - ${featureCode.shareTransferSetting}`}
+          />
           <ShareSettingsCard
             title={t['settingsShareTransfer']}
             subtitle={t['shareTransferSubtitle']}

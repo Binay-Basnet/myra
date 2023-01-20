@@ -12,6 +12,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -180,6 +181,13 @@ export const DayBookReport = () => {
                 {
                   header: 'Voucher No',
                   accessorKey: 'voucherNo',
+                  cell: (props) => (
+                    <RouteToDetailsPage
+                      id={props?.row?.original?.voucherNo as string}
+                      type="transactions"
+                      label={props?.row?.original?.voucherNo as string}
+                    />
+                  ),
                   meta: {
                     Footer: {
                       display: 'none',
@@ -253,6 +261,13 @@ export const DayBookReport = () => {
                 {
                   header: 'Voucher No',
                   accessorKey: 'voucherNo',
+                  cell: (props) => (
+                    <RouteToDetailsPage
+                      id={props?.row?.original?.voucherNo as string}
+                      type="transactions"
+                      label={props?.row?.original?.voucherNo as string}
+                    />
+                  ),
                   meta: {
                     Footer: {
                       display: 'none',

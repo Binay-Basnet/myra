@@ -77,8 +77,8 @@ export interface TopLevelHeaderProps {
 // ];
 
 const calendarList = [
-  { label: 'AD', value: DateType.Ad },
-  { label: 'BS', value: DateType.Bs },
+  { label: 'AD', value: 'AD' },
+  { label: 'BS', value: 'BS' },
 ];
 const keyMap = {
   inputFocus: ['ctrl+/'],
@@ -139,16 +139,21 @@ export const TopLevelHeader = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  const auth = useAppSelector((state) => state?.auth);
+  const user = useAppSelector((state) => state?.auth?.user);
+  const userId = user?.id;
+
   const { mutateAsync } = useSetPreferenceMutation();
-  const { data: eodStatusQueryData, refetch } = useGetEodStatusQuery({});
+  const { data: eodStatusQueryData, refetch } = useGetEodStatusQuery(
+    {},
+    {
+      enabled: user?.currentBranch?.category === BranchCategory.HeadOffice,
+    }
+  );
 
   const { mutateAsync: switchRole } = useSwitchRoleMutation();
 
   const isHeadOfficeReady = eodStatusQueryData?.transaction?.eodStatus?.states?.headOfficeReady;
-
-  const auth = useAppSelector((state) => state?.auth);
-  const user = useAppSelector((state) => state?.auth?.user);
-  const userId = user?.id;
 
   const ability = useContext(AbilityContext);
 
@@ -765,7 +770,7 @@ export const TopLevelHeader = () => {
                                 }}
                                 label="Role"
                                 options={auth.availableRoles?.map((role) => ({
-                                  label: role.name.slice(0, 30),
+                                  label: role.name,
                                   value: role.id,
                                 }))}
                                 onChange={async (newValue) => {

@@ -5,6 +5,7 @@ import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { Filter_Mode, useGetDepositListDataQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
@@ -112,7 +113,7 @@ export const AgentTransactionList = () => {
                   action: 'VIEW',
                   onClick: (row) => {
                     router.push(
-                      `/${getUrl(router.pathname, 3)}/details?id=${row?.agentId}&date=${row?.date}`
+                      `${ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_TRANS_DETAILS}?id=${row?.agentId}&date=${row?.date}`
                     );
                   },
                 },
@@ -130,7 +131,7 @@ export const AgentTransactionList = () => {
   return (
     <>
       <PageHeader
-        heading={`Market Representative Transaction - ${featureCode?.marketRepresentativeTransactionsList}`}
+        heading={`Market Representative Transaction - ${featureCode?.marketRepresentativeTransactionList}`}
       />
 
       <Table
@@ -150,6 +151,7 @@ export const AgentTransactionList = () => {
           total: data?.transaction?.listDeposit?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listDeposit?.pageInfo,
         }}
+        menu="TRANSACTIONS"
       />
     </>
   );

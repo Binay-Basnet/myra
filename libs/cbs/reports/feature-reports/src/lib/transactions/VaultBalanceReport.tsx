@@ -2,11 +2,14 @@ import { useState } from 'react';
 
 import { Box, GridItem } from '@myra-ui';
 
-import { useGetVaultBalanceReportQuery, VaultBalanceReportFilter } from '@coop/cbs/data-access';
+import {
+  LocalizedDateFilter,
+  useGetVaultBalanceReportQuery,
+  VaultBalanceReportFilter,
+} from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormDatePicker } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type VaultBalanceReportDataType = {
@@ -31,7 +34,15 @@ export const VaultBalanceReport = () => {
   const [filters, setFilters] = useState<VaultBalanceReportFilter | null>(null);
 
   const { data, isFetching } = useGetVaultBalanceReportQuery(
-    { data: filters as VaultBalanceReportFilter },
+    {
+      data: {
+        ...filters,
+        period: {
+          from: filters?.period?.from,
+          to: filters?.period?.from,
+        } as LocalizedDateFilter,
+      } as VaultBalanceReportFilter,
+    },
     { enabled: !!filters }
   );
 
@@ -98,11 +109,11 @@ export const VaultBalanceReport = () => {
           ]}
         />
         <Report.Inputs hideDate>
-          <GridItem colSpan={2}>
+          <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange />
+            <FormDatePicker name="period.from" label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

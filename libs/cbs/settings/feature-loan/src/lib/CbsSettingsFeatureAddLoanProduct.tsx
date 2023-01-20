@@ -20,7 +20,7 @@ import {
   useSetLoanProductMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {
   AllowGaurantee,
@@ -29,7 +29,6 @@ import {
   Critera,
   GeneralSetup,
   GridItems,
-  InstallmentFrequency,
   Interest,
   LoanProcessing,
   LoanRepayment,
@@ -50,6 +49,7 @@ export const SettingsLoanProductForm = () => {
   const { t } = useTranslation();
   const [newId, setNewId] = useState('');
   const { mutateAsync: getId } = useGetNewIdMutation();
+
   useEffect(() => {
     getId({ idType: Id_Type.Loanproduct }).then((res) => setNewId(res?.newId as string));
   }, []);
@@ -437,7 +437,7 @@ export const SettingsLoanProductForm = () => {
     <>
       <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.lg" height="fit-content" paddingInline="0">
-          <FormHeader title={t['loanProductAddLoanProduct']} />
+          <FormHeader title={`${t['loanProductAddLoanProduct']} - ${featureCode.newloanProduct}`} />
         </Container>
       </Box>
 
@@ -465,7 +465,7 @@ export const SettingsLoanProductForm = () => {
 
             <LoanRepayment />
             <NewQuestions />
-            <InstallmentFrequency />
+            {/* <InstallmentFrequency /> */}
             <Interest />
             {/* <InsuranceApplicable /> */}
             <LoanProcessing />

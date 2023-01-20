@@ -43,7 +43,7 @@ export const WithdrawDetailPage = () => {
         <SideBar detailPage="withdraw" summary={summary} />
       </Box>
 
-      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+      <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
         <Text color="gray.800" fontWeight="SemiBold" fontSize="r3">
           {t['transDetailOverview']}
         </Text>
@@ -58,7 +58,7 @@ export const WithdrawDetailPage = () => {
           teller={withdrawDetailData?.teller as string}
         />
 
-        <Note note={withdrawDetailData?.note} />
+        {withdrawDetailData?.note && <Note note={withdrawDetailData?.note} />}
 
         <GlTransaction
           totalDebit={String(amountConverter(withdrawDetailData?.totalDebit ?? 0))}

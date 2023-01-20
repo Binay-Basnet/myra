@@ -2,17 +2,17 @@ import { useRouter } from 'next/router';
 
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
-import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
+import { useGetMemberKymDetailsBioQuery } from '@coop/cbs/data-access';
 
 export const ServiceCenterAddress = () => {
   const router = useRouter();
-  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+  const memberBioData = useGetMemberKymDetailsBioQuery({
     id: router.query['id'] as string,
   });
 
   const bioDataCoopUnion =
-    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'CoopUnionBio'
-      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.serviceCenterAddress
+    memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.__typename === 'CoopUnionBio'
+      ? memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.serviceCenterAddress
       : null;
   return (
     <DetailsCard title="Service Centre Office Address" bg="white" hasThreeRows>

@@ -23,12 +23,24 @@ const riskCategory = [
   { label: 'High Risk', value: RiskCategoryFilter.High },
 ];
 
+type KYMStatusReportFilters = Omit<KymStatusReportFilter, 'branchId'> & {
+  branchId: {
+    label: string;
+    value: string;
+  }[];
+};
+
 export const KYMStatusReport = () => {
-  const [filters, setFilters] = useState<KymStatusReportFilter | null>(null);
+  const [filters, setFilters] = useState<KYMStatusReportFilters | null>(null);
+
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
 
   const { data, isFetching } = useGetKymStatusReportQuery(
     {
-      data: filters as KymStatusReportFilter,
+      data: { ...filters, branchId: branchIds } as KymStatusReportFilter,
     },
     { enabled: !!filters }
   );
@@ -60,7 +72,7 @@ export const KYMStatusReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Member Registration Date Period" />
@@ -81,6 +93,11 @@ export const KYMStatusReport = () => {
                   width: '60px',
                 },
               },
+              {
+                header: 'Service Center',
+                accessorKey: 'branchName',
+              },
+
               {
                 header: 'Member ID',
                 accessorKey: 'memberId',

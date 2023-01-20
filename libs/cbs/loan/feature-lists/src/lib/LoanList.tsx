@@ -32,7 +32,7 @@ export const LoanList = () => {
   return (
     <>
       <PageHeader
-        heading={`Loan Application - ${featureCode.loanApplication}`}
+        heading={`Loan Application - ${featureCode.loanApplicationList}`}
         tabItems={LOAN_LIST_TAB_ITEMS}
       />
       <LoanAppTable

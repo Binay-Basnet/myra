@@ -20,7 +20,7 @@ export type Scalars = {
   Email: any;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
-  Localized: Record<"local"|"en"|"np",string>;
+  Localized: Record<'local' | 'en' | 'np', string>;
   Map: Record<string, string>;
   Time: string;
 };
@@ -69,7 +69,6 @@ export type AccountMinimalResult = {
   totalBalance?: Maybe<Scalars['String']>;
 };
 
-
 export type AccountMinimalResultRecentTransactionsArgs = {
   filter?: InputMaybe<EbankingTransactionFilter>;
   paginate?: InputMaybe<Pagination>;
@@ -98,17 +97,14 @@ export type AdministrationQuery = {
   wards: Array<Scalars['Int']>;
 };
 
-
 export type AdministrationQueryDistrictsArgs = {
   provinceId?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AdministrationQueryMunicipalitiesArgs = {
   districtId?: InputMaybe<Scalars['Int']>;
   provinceId?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AdministrationQueryWardsArgs = {
   districtId: Scalars['Int'];
@@ -132,7 +128,7 @@ export type AmountLimitFormState = {
 
 export const Arrange = {
   Asc: 'ASC',
-  Desc: 'DESC'
+  Desc: 'DESC',
 } as const;
 
 export type Arrange = typeof Arrange[keyof typeof Arrange];
@@ -187,7 +183,7 @@ export const BranchCategory = {
   ContactOffice: 'CONTACT_OFFICE',
   HeadOffice: 'HEAD_OFFICE',
   RegionalOffice: 'REGIONAL_OFFICE',
-  ServiceCenter: 'SERVICE_CENTER'
+  ServiceCenter: 'SERVICE_CENTER',
 } as const;
 
 export type BranchCategory = typeof BranchCategory[keyof typeof BranchCategory];
@@ -249,7 +245,7 @@ export type CollateralFormState = {
 export const ComparatorType = {
   EqualTo: 'EqualTo',
   GreaterThan: 'GreaterThan',
-  LessThan: 'LessThan'
+  LessThan: 'LessThan',
 } as const;
 
 export type ComparatorType = typeof ComparatorType[keyof typeof ComparatorType];
@@ -299,7 +295,7 @@ export const CriteriaSection = {
   MaritalStatus: 'MARITAL_STATUS',
   NatureOfBusinessCoopunion: 'NATURE_OF_BUSINESS_COOPUNION',
   NatureOfBusinessInstitutions: 'NATURE_OF_BUSINESS_INSTITUTIONS',
-  OccupationDetails: 'OCCUPATION_DETAILS'
+  OccupationDetails: 'OCCUPATION_DETAILS',
 } as const;
 
 export type CriteriaSection = typeof CriteriaSection[keyof typeof CriteriaSection];
@@ -310,7 +306,7 @@ export type DateFilter = {
 
 export const DefaultAccountType = {
   Current: 'CURRENT',
-  Saving: 'SAVING'
+  Saving: 'SAVING',
 } as const;
 
 export type DefaultAccountType = typeof DefaultAccountType[keyof typeof DefaultAccountType];
@@ -318,7 +314,7 @@ export const DepositFrequency = {
   HalfYearly: 'HALF_YEARLY',
   Monthly: 'MONTHLY',
   Quarterly: 'QUARTERLY',
-  Yearly: 'YEARLY'
+  Yearly: 'YEARLY',
 } as const;
 
 export type DepositFrequency = typeof DepositFrequency[keyof typeof DepositFrequency];
@@ -466,7 +462,7 @@ export type DepositProductMinimal = {
 
 export const DepositProductStatus = {
   Active: 'ACTIVE',
-  Inactive: 'INACTIVE'
+  Inactive: 'INACTIVE',
 } as const;
 
 export type DepositProductStatus = typeof DepositProductStatus[keyof typeof DepositProductStatus];
@@ -496,7 +492,6 @@ export type EBankingAccountMutation = {
   setDefaultAccount?: Maybe<EbankingSetDefaultAccountResult>;
 };
 
-
 export type EBankingAccountMutationSetDefaultAccountArgs = {
   accountId: Scalars['String'];
 };
@@ -507,7 +502,6 @@ export type EBankingAccountQuery = {
   summary?: Maybe<AccountSummary>;
 };
 
-
 export type EBankingAccountQueryGetArgs = {
   id: Scalars['ID'];
 };
@@ -515,14 +509,14 @@ export type EBankingAccountQueryGetArgs = {
 export const EBankingActiveLoanStatus = {
   Pending: 'Pending',
   Processing: 'Processing',
-  Scheduled: 'Scheduled'
+  Scheduled: 'Scheduled',
 } as const;
 
-export type EBankingActiveLoanStatus = typeof EBankingActiveLoanStatus[keyof typeof EBankingActiveLoanStatus];
+export type EBankingActiveLoanStatus =
+  typeof EBankingActiveLoanStatus[keyof typeof EBankingActiveLoanStatus];
 export type EBankingAnnouncementQuery = {
   list: Array<Maybe<EBankingAppAnnouncement>>;
 };
-
 
 export type EBankingAnnouncementQueryListArgs = {
   filter?: InputMaybe<NotificationFilter>;
@@ -547,7 +541,6 @@ export type EBankingAppNotification = {
 export type EBankingAppNotificationQuery = {
   list: Array<Maybe<EBankingAppNotification>>;
 };
-
 
 export type EBankingAppNotificationQueryListArgs = {
   filter?: InputMaybe<NotificationFilter>;
@@ -582,18 +575,15 @@ export type EBankingAuthMutation = {
   verifyOtp?: Maybe<EbankingOtpResult>;
 };
 
-
 export type EBankingAuthMutationChangeCoopPinArgs = {
   newPin: Scalars['String'];
   oldPin: Scalars['String'];
 };
 
-
 export type EBankingAuthMutationChangePasswordArgs = {
   newPassword: Scalars['String'];
   oldPassword: Scalars['String'];
 };
-
 
 export type EBankingAuthMutationCheckAccountArgs = {
   coopId: Scalars['ID'];
@@ -601,18 +591,15 @@ export type EBankingAuthMutationCheckAccountArgs = {
   pin: Scalars['Int'];
 };
 
-
 export type EBankingAuthMutationGetNewTokenArgs = {
   refreshToken: Scalars['String'];
   slug?: InputMaybe<Scalars['String']>;
   tokenFor: EBankingTokenType;
 };
 
-
 export type EBankingAuthMutationLoginArgs = {
   data: EbankingLoginInput;
 };
-
 
 export type EBankingAuthMutationLoginToCooperativeArgs = {
   cooperativeId: Scalars['ID'];
@@ -620,34 +607,29 @@ export type EBankingAuthMutationLoginToCooperativeArgs = {
   pinCode: Scalars['String'];
 };
 
-
 export type EBankingAuthMutationResendOtpArgs = {
   mobile: Scalars['String'];
   otpFor: OtpFor;
 };
-
 
 export type EBankingAuthMutationResetPasswordArgs = {
   mobileNo: Scalars['String'];
   newPassword: Scalars['String'];
 };
 
-
 export type EBankingAuthMutationSetNewPinArgs = {
   data?: InputMaybe<CooperativeConnectInput>;
 };
 
-
 export type EBankingAuthMutationSetPasswordArgs = {
   data: EbankingPasswordInput;
+  otp: Scalars['String'];
   userID: Scalars['ID'];
 };
-
 
 export type EBankingAuthMutationSignUpArgs = {
   mobileNo: Scalars['String'];
 };
-
 
 export type EBankingAuthMutationVerifyOtpArgs = {
   data: EbankingOtpInput;
@@ -665,18 +647,15 @@ export type EBankingChequeMutation = {
   withdrawViaCollector?: Maybe<EBankingChequeResult>;
 };
 
-
 export type EBankingChequeMutationBlockArgs = {
   data?: InputMaybe<EBankingChequeBlockInput>;
   memberID: Scalars['String'];
 };
 
-
 export type EBankingChequeMutationRequestArgs = {
   data?: InputMaybe<EBankingChequeRequestInput>;
   memberID: Scalars['String'];
 };
-
 
 export type EBankingChequeMutationWithdrawViaCollectorArgs = {
   data?: InputMaybe<EBankingChequeWithdrawViaCollectorInput>;
@@ -689,7 +668,6 @@ export type EBankingChequeQuery = {
   options: Array<EBankingCooperativeServiceOption>;
   pastRequests?: Maybe<Array<Maybe<ChequePastRequest>>>;
 };
-
 
 export type EBankingChequeQueryPastRequestsArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
@@ -707,10 +685,11 @@ export type EBankingChequeRequestInput = {
 
 export const EBankingChequeRequestType = {
   SelfPickup: 'Self_Pickup',
-  ThroughAgent: 'Through_agent'
+  ThroughAgent: 'Through_agent',
 } as const;
 
-export type EBankingChequeRequestType = typeof EBankingChequeRequestType[keyof typeof EBankingChequeRequestType];
+export type EBankingChequeRequestType =
+  typeof EBankingChequeRequestType[keyof typeof EBankingChequeRequestType];
 export type EBankingChequeResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<EBankingCooperativeServiceQuery>;
@@ -756,7 +735,6 @@ export type EBankingComplaintMutation = {
   register?: Maybe<EBankingComplaintRegisterResult>;
 };
 
-
 export type EBankingComplaintMutationRegisterArgs = {
   data?: InputMaybe<EBankingRegisterComplaintInput>;
   memberID: Scalars['String'];
@@ -766,7 +744,6 @@ export type EBankingComplaintQuery = {
   history?: Maybe<EBankingComplaintHistoryData>;
   options: Array<EBankingCooperativeServiceOption>;
 };
-
 
 export type EBankingComplaintQueryHistoryArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
@@ -828,7 +805,6 @@ export type EBankingDownloadsQuery = {
   options: Array<EBankingCooperativeServiceOption>;
 };
 
-
 export type EBankingDownloadsQueryFilesArgs = {
   filter?: InputMaybe<EBankingDownloadsFilter>;
 };
@@ -837,7 +813,6 @@ export type EBankingLoanAccountQuery = {
   get?: Maybe<EbankingAccountResult>;
   list?: Maybe<AccountMinimalResult>;
 };
-
 
 export type EBankingLoanAccountQueryGetArgs = {
   id: Scalars['ID'];
@@ -859,7 +834,6 @@ export type EBankingLoanMutation = {
   apply?: Maybe<EBankingApplyLoanResult>;
 };
 
-
 export type EBankingLoanMutationApplyArgs = {
   data?: InputMaybe<EBankingApplyLoanInput>;
   memberID: Scalars['String'];
@@ -869,7 +843,6 @@ export type EBankingLoanQuery = {
   history?: Maybe<EbankingLoanHistoryData>;
   options: Array<EBankingCooperativeServiceOption>;
 };
-
 
 export type EBankingLoanQueryHistoryArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
@@ -884,7 +857,6 @@ export type EBankingMutation = {
   utilityPayment: UtilityPayemntMutation;
   webUtilityPayments?: Maybe<EbankingWebUtilityPaymentsMutation>;
 };
-
 
 export type EBankingMutationAuthArgs = {
   type?: InputMaybe<RequestSource>;
@@ -921,15 +893,15 @@ export type EBankingRegisterComplaintInput = {
 export const EBankingServiceStatus = {
   Active: 'Active',
   Completed: 'Completed',
-  Declined: 'Declined'
+  Declined: 'Declined',
 } as const;
 
-export type EBankingServiceStatus = typeof EBankingServiceStatus[keyof typeof EBankingServiceStatus];
+export type EBankingServiceStatus =
+  typeof EBankingServiceStatus[keyof typeof EBankingServiceStatus];
 export type EBankingShareQuery = {
   history?: Maybe<Array<Maybe<EbankingShareHistory>>>;
   summary?: Maybe<EbankingShare>;
 };
-
 
 export type EBankingShareQueryHistoryArgs = {
   filter?: InputMaybe<EbankingShareFilter>;
@@ -937,7 +909,7 @@ export type EBankingShareQueryHistoryArgs = {
 
 export const EBankingTokenType = {
   Cooperative: 'COOPERATIVE',
-  Myra: 'MYRA'
+  Myra: 'MYRA',
 } as const;
 
 export type EBankingTokenType = typeof EBankingTokenType[keyof typeof EBankingTokenType];
@@ -946,11 +918,9 @@ export type EBankingTransactionQuery = {
   recent?: Maybe<EbankingTransactionConnection>;
 };
 
-
 export type EBankingTransactionQueryMonthlyArgs = {
   filter?: InputMaybe<Filter>;
 };
-
 
 export type EBankingTransactionQueryRecentArgs = {
   paginate?: InputMaybe<Pagination>;
@@ -973,7 +943,6 @@ export type EbankingAccount = {
   subscribedDate: Scalars['String'];
   transactions?: Maybe<EbankingTransactionConnection>;
 };
-
 
 export type EbankingAccountTransactionsArgs = {
   filter?: InputMaybe<EbankingTransactionFilter>;
@@ -1021,7 +990,7 @@ export type EbankingAccountTransferResult = {
 
 export const EbankingAccountType = {
   Loan: 'LOAN',
-  Saving: 'SAVING'
+  Saving: 'SAVING',
 } as const;
 
 export type EbankingAccountType = typeof EbankingAccountType[keyof typeof EbankingAccountType];
@@ -1154,11 +1123,9 @@ export type EbankingSendMoneyMutation = {
   proceed?: Maybe<EbankingSendMoneyResult>;
 };
 
-
 export type EbankingSendMoneyMutationCheckArgs = {
   data?: InputMaybe<EbankingSendMoneyInput>;
 };
-
 
 export type EbankingSendMoneyMutationProceedArgs = {
   data?: InputMaybe<EbankingSendMoneyInput>;
@@ -1187,10 +1154,11 @@ export type EbankingSendMoneyResult = {
 export const EbankingServiceRequestType = {
   ChequeBlockRequest: 'CHEQUE_BLOCK_REQUEST',
   ChequeRequest: 'CHEQUE_REQUEST',
-  WithdrawViaCollector: 'WITHDRAW_VIA_COLLECTOR'
+  WithdrawViaCollector: 'WITHDRAW_VIA_COLLECTOR',
 } as const;
 
-export type EbankingServiceRequestType = typeof EbankingServiceRequestType[keyof typeof EbankingServiceRequestType];
+export type EbankingServiceRequestType =
+  typeof EbankingServiceRequestType[keyof typeof EbankingServiceRequestType];
 export type EbankingSetDefaultAccountResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<EBankingQuery>;
@@ -1250,16 +1218,18 @@ export type EbankingTransactionConnection = {
 
 export const EbankingTransactionCrOrDr = {
   Credit: 'CREDIT',
-  Debit: 'DEBIT'
+  Debit: 'DEBIT',
 } as const;
 
-export type EbankingTransactionCrOrDr = typeof EbankingTransactionCrOrDr[keyof typeof EbankingTransactionCrOrDr];
+export type EbankingTransactionCrOrDr =
+  typeof EbankingTransactionCrOrDr[keyof typeof EbankingTransactionCrOrDr];
 export const EbankingTransactionDirection = {
   Incoming: 'INCOMING',
-  Outgoing: 'OUTGOING'
+  Outgoing: 'OUTGOING',
 } as const;
 
-export type EbankingTransactionDirection = typeof EbankingTransactionDirection[keyof typeof EbankingTransactionDirection];
+export type EbankingTransactionDirection =
+  typeof EbankingTransactionDirection[keyof typeof EbankingTransactionDirection];
 export type EbankingTransactionEdge = {
   cursor: Scalars['String'];
   node: EbankingTransaction;
@@ -1275,10 +1245,11 @@ export const EbankingTransactionType = {
   Deposit: 'DEPOSIT',
   SharePurchase: 'SHARE_PURCHASE',
   Transfer: 'TRANSFER',
-  Withdraw: 'WITHDRAW'
+  Withdraw: 'WITHDRAW',
 } as const;
 
-export type EbankingTransactionType = typeof EbankingTransactionType[keyof typeof EbankingTransactionType];
+export type EbankingTransactionType =
+  typeof EbankingTransactionType[keyof typeof EbankingTransactionType];
 export type EbankingUser = {
   cooperatives?: Maybe<Array<Maybe<CooperativeInformation>>>;
   dob?: Maybe<Scalars['String']>;
@@ -1298,7 +1269,6 @@ export type EbankingWebUtilityPaymentsMutation = {
   sendMoney?: Maybe<EbankingSendMoneyMutation>;
 };
 
-
 export type EbankingWebUtilityPaymentsMutationAccountTransferArgs = {
   data?: InputMaybe<EbankingAccountTransferInput>;
 };
@@ -1311,7 +1281,7 @@ export const Frequency = {
   Daily: 'DAILY',
   Monthly: 'MONTHLY',
   Weekly: 'WEEKLY',
-  Yearly: 'YEARLY'
+  Yearly: 'YEARLY',
 } as const;
 
 export type Frequency = typeof Frequency[keyof typeof Frequency];
@@ -1319,7 +1289,7 @@ export const FrequencyTenure = {
   Day: 'DAY',
   Month: 'MONTH',
   Week: 'WEEK',
-  Year: 'YEAR'
+  Year: 'YEAR',
 } as const;
 
 export type FrequencyTenure = typeof FrequencyTenure[keyof typeof FrequencyTenure];
@@ -1376,7 +1346,7 @@ export const Id_Type = {
   Sharenumbers: 'SHARENUMBERS',
   Shareregister: 'SHAREREGISTER',
   User: 'USER',
-  Userpreference: 'USERPREFERENCE'
+  Userpreference: 'USERPREFERENCE',
 } as const;
 
 export type Id_Type = typeof Id_Type[keyof typeof Id_Type];
@@ -1392,7 +1362,7 @@ export const IdetificationType = {
   DrivingLicense: 'DRIVING_LICENSE',
   NationalId: 'NATIONAL_ID',
   Passport: 'PASSPORT',
-  VoterCard: 'VOTER_CARD'
+  VoterCard: 'VOTER_CARD',
 } as const;
 
 export type IdetificationType = typeof IdetificationType[keyof typeof IdetificationType];
@@ -1401,18 +1371,20 @@ export const IndividualRequiredDocument = {
   Form: 'FORM',
   NomineeDocument: 'NOMINEE_DOCUMENT',
   Photo: 'PHOTO',
-  Signature: 'SIGNATURE'
+  Signature: 'SIGNATURE',
 } as const;
 
-export type IndividualRequiredDocument = typeof IndividualRequiredDocument[keyof typeof IndividualRequiredDocument];
+export type IndividualRequiredDocument =
+  typeof IndividualRequiredDocument[keyof typeof IndividualRequiredDocument];
 export const InstitutionRequiredDocument = {
   Decision: 'DECISION',
   Registered: 'REGISTERED',
   Signature: 'SIGNATURE',
-  TaxClearance: 'TAX_CLEARANCE'
+  TaxClearance: 'TAX_CLEARANCE',
 } as const;
 
-export type InstitutionRequiredDocument = typeof InstitutionRequiredDocument[keyof typeof InstitutionRequiredDocument];
+export type InstitutionRequiredDocument =
+  typeof InstitutionRequiredDocument[keyof typeof InstitutionRequiredDocument];
 export type Insurance = {
   amount?: Maybe<Scalars['Amount']>;
   rate?: Maybe<Scalars['Float']>;
@@ -1431,7 +1403,7 @@ export type InterestFormState = {
 
 export const InterestMethod = {
   Diminishing: 'DIMINISHING',
-  Flat: 'FLAT'
+  Flat: 'FLAT',
 } as const;
 
 export type InterestMethod = typeof InterestMethod[keyof typeof InterestMethod];
@@ -1467,7 +1439,7 @@ export const KymMemberTypesEnum = {
   Cooperative: 'COOPERATIVE',
   CooperativeUnion: 'COOPERATIVE_UNION',
   Individual: 'INDIVIDUAL',
-  Institution: 'INSTITUTION'
+  Institution: 'INSTITUTION',
 } as const;
 
 export type KymMemberTypesEnum = typeof KymMemberTypesEnum[keyof typeof KymMemberTypesEnum];
@@ -1485,7 +1457,7 @@ export type LedgerMappingFormState = {
 
 export const LoanInterestMethod = {
   Diminishing: 'DIMINISHING',
-  Straight: 'STRAIGHT'
+  Straight: 'STRAIGHT',
 } as const;
 
 export type LoanInterestMethod = typeof LoanInterestMethod[keyof typeof LoanInterestMethod];
@@ -1599,10 +1571,11 @@ export const LoanProductInstallment = {
   Monthly: 'MONTHLY',
   Quarterly: 'QUARTERLY',
   Weekly: 'WEEKLY',
-  Yearly: 'YEARLY'
+  Yearly: 'YEARLY',
 } as const;
 
-export type LoanProductInstallment = typeof LoanProductInstallment[keyof typeof LoanProductInstallment];
+export type LoanProductInstallment =
+  typeof LoanProductInstallment[keyof typeof LoanProductInstallment];
 export type LoanProductLists = {
   data?: Maybe<Array<Maybe<LoanProductMinimal>>>;
   error?: Maybe<QueryError>;
@@ -1622,7 +1595,7 @@ export type LoanProductSearchFilter = {
 export const LoanRepaymentScheme = {
   Emi: 'EMI',
   Epi: 'EPI',
-  Flat: 'FLAT'
+  Flat: 'FLAT',
 } as const;
 
 export type LoanRepaymentScheme = typeof LoanRepaymentScheme[keyof typeof LoanRepaymentScheme];
@@ -1630,10 +1603,11 @@ export const LoanRequiredDocuments = {
   Citizenship: 'CITIZENSHIP',
   Form: 'FORM',
   LoanChangeDocument: 'LOAN_CHANGE_DOCUMENT',
-  PolicyDocument: 'POLICY_DOCUMENT'
+  PolicyDocument: 'POLICY_DOCUMENT',
 } as const;
 
-export type LoanRequiredDocuments = typeof LoanRequiredDocuments[keyof typeof LoanRequiredDocuments];
+export type LoanRequiredDocuments =
+  typeof LoanRequiredDocuments[keyof typeof LoanRequiredDocuments];
 export type LoanSettingsProductSubTypeData = {
   id?: Maybe<Scalars['ID']>;
   productSubType?: Maybe<Scalars['String']>;
@@ -1682,7 +1656,6 @@ export type MembershipRequestMutation = {
   new?: Maybe<MembershipRequestResult>;
 };
 
-
 export type MembershipRequestMutationNewArgs = {
   cooperativeId: Scalars['String'];
   data?: InputMaybe<MembershipRequestInput>;
@@ -1712,7 +1685,12 @@ export type Mutation = {
   presignedUrl: PresignedUrlMutation;
 };
 
-export type MutationError = AuthorizationError | BadRequestError | NotFoundError | ServerError | ValidationError;
+export type MutationError =
+  | AuthorizationError
+  | BadRequestError
+  | NotFoundError
+  | ServerError
+  | ValidationError;
 
 export type MyraUser = Base & {
   branch?: Maybe<Branch>;
@@ -1784,13 +1762,14 @@ export const NatureOfDepositProduct = {
   Current: 'CURRENT',
   RecurringSaving: 'RECURRING_SAVING',
   Saving: 'SAVING',
-  TermSavingOrFd: 'TERM_SAVING_OR_FD'
+  TermSavingOrFd: 'TERM_SAVING_OR_FD',
 } as const;
 
-export type NatureOfDepositProduct = typeof NatureOfDepositProduct[keyof typeof NatureOfDepositProduct];
+export type NatureOfDepositProduct =
+  typeof NatureOfDepositProduct[keyof typeof NatureOfDepositProduct];
 export const NatureOfLoanProduct = {
   Progressive: 'PROGRESSIVE',
-  Unprogressive: 'UNPROGRESSIVE'
+  Unprogressive: 'UNPROGRESSIVE',
 } as const;
 
 export type NatureOfLoanProduct = typeof NatureOfLoanProduct[keyof typeof NatureOfLoanProduct];
@@ -1823,7 +1802,7 @@ export const ObjState = {
   Draft: 'DRAFT',
   Inactive: 'INACTIVE',
   Submitted: 'SUBMITTED',
-  Validated: 'VALIDATED'
+  Validated: 'VALIDATED',
 } as const;
 
 export type ObjState = typeof ObjState[keyof typeof ObjState];
@@ -1838,7 +1817,7 @@ export type Order = {
 
 export const OtpFor = {
   ResetPassword: 'RESET_PASSWORD',
-  SignUp: 'SIGN_UP'
+  SignUp: 'SIGN_UP',
 } as const;
 
 export type OtpFor = typeof OtpFor[keyof typeof OtpFor];
@@ -1873,7 +1852,7 @@ export type PenaltyFormState = {
 
 export const PenaltyRateType = {
   FlatRate: 'FLAT_RATE',
-  RelativeRate: 'RELATIVE_RATE'
+  RelativeRate: 'RELATIVE_RATE',
 } as const;
 
 export type PenaltyRateType = typeof PenaltyRateType[keyof typeof PenaltyRateType];
@@ -1891,7 +1870,7 @@ export type PenaltyRebateResult = {
 
 export const PenaltyType = {
   PenalInterest: 'PenalInterest',
-  RemainingPrincipal: 'RemainingPrincipal'
+  RemainingPrincipal: 'RemainingPrincipal',
 } as const;
 
 export type PenaltyType = typeof PenaltyType[keyof typeof PenaltyType];
@@ -1902,10 +1881,11 @@ export type PictureData = {
 
 export const PrematurePenaltyDateType = {
   EffectiveDaysFromStart: 'EFFECTIVE_DAYS_FROM_START',
-  RemainingDaysToGetMatured: 'REMAINING_DAYS_TO_GET_MATURED'
+  RemainingDaysToGetMatured: 'REMAINING_DAYS_TO_GET_MATURED',
 } as const;
 
-export type PrematurePenaltyDateType = typeof PrematurePenaltyDateType[keyof typeof PrematurePenaltyDateType];
+export type PrematurePenaltyDateType =
+  typeof PrematurePenaltyDateType[keyof typeof PrematurePenaltyDateType];
 export type PrematurePenaltyFormState = {
   noOfDays?: Maybe<Scalars['Int']>;
   penaltyAmount?: Maybe<Scalars['Amount']>;
@@ -1917,7 +1897,6 @@ export type PrematurePenaltyFormState = {
 export type PresignedUrlMutation = {
   upload: PresignedUrlOutput;
 };
-
 
 export type PresignedUrlMutationUploadArgs = {
   contentType?: InputMaybe<Scalars['String']>;
@@ -1953,36 +1932,29 @@ export type ProductsQuery = {
   loanProductTypes?: Maybe<Array<Maybe<LoanSettingsProductTypeData>>>;
 };
 
-
 export type ProductsQueryDepositProductListArgs = {
   filter: NatureOfDepositProduct;
 };
-
 
 export type ProductsQueryGetDepositProductArgs = {
   id: Scalars['ID'];
 };
 
-
 export type ProductsQueryGetDepositProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
-
 
 export type ProductsQueryGetLoanProductArgs = {
   id: Scalars['ID'];
 };
 
-
 export type ProductsQueryGetLoanProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
 
-
 export type ProductsQueryGetLoanProductTypeArgs = {
   id: Scalars['ID'];
 };
-
 
 export type ProductsQueryLoanProductListArgs = {
   productSubTypeId: Scalars['ID'];
@@ -1999,7 +1971,7 @@ export const PurposeOfTransaction = {
   BillSharing: 'BILL_SHARING',
   FamilyExpenses: 'FAMILY_EXPENSES',
   LendOrBorrow: 'LEND_OR_BORROW',
-  PersonalUse: 'PERSONAL_USE'
+  PersonalUse: 'PERSONAL_USE',
 } as const;
 
 export type PurposeOfTransaction = typeof PurposeOfTransaction[keyof typeof PurposeOfTransaction];
@@ -2008,7 +1980,6 @@ export type Query = {
   eBanking: EBankingQuery;
   genderOptions: Array<Maybe<GenderOption>>;
 };
-
 
 export type QueryGenderOptionsArgs = {
   cooperativeId: Scalars['String'];
@@ -2038,7 +2009,7 @@ export type RecentTransactionFilter = {
 
 export const RequestSource = {
   Ebanking: 'EBANKING',
-  MobileBanking: 'MOBILE_BANKING'
+  MobileBanking: 'MOBILE_BANKING',
 } as const;
 
 export type RequestSource = typeof RequestSource[keyof typeof RequestSource];
@@ -2053,7 +2024,7 @@ export const Roles = {
   BranchManager: 'BRANCH_MANAGER',
   HeadTeller: 'HEAD_TELLER',
   Superadmin: 'SUPERADMIN',
-  Teller: 'TELLER'
+  Teller: 'TELLER',
 } as const;
 
 export type Roles = typeof Roles[keyof typeof Roles];
@@ -2078,14 +2049,15 @@ export type Services = {
 
 export const Transaction_Direction = {
   Purchased: 'PURCHASED',
-  Sold: 'SOLD'
+  Sold: 'SOLD',
 } as const;
 
-export type Transaction_Direction = typeof Transaction_Direction[keyof typeof Transaction_Direction];
+export type Transaction_Direction =
+  typeof Transaction_Direction[keyof typeof Transaction_Direction];
 export const TextFormat = {
   Email: 'EMAIL',
   IPv4: 'IPv4',
-  IPv6: 'IPv6'
+  IPv6: 'IPv6',
 } as const;
 
 export type TextFormat = typeof TextFormat[keyof typeof TextFormat];
@@ -2116,20 +2088,19 @@ export type TranslateInput = {
 export const UserGender = {
   Female: 'FEMALE',
   Male: 'MALE',
-  Other: 'OTHER'
+  Other: 'OTHER',
 } as const;
 
 export type UserGender = typeof UserGender[keyof typeof UserGender];
 export const UserType = {
   Human: 'HUMAN',
-  System: 'SYSTEM'
+  System: 'SYSTEM',
 } as const;
 
 export type UserType = typeof UserType[keyof typeof UserType];
 export type UtilityPayemntMutation = {
   post?: Maybe<UtilityPaymentResult>;
 };
-
 
 export type UtilityPayemntMutationPostArgs = {
   serviceID: Scalars['ID'];
@@ -2180,342 +2151,1314 @@ export type WithdrawPenaltyFormState = {
   penaltyRate?: Maybe<Scalars['Float']>;
 };
 
-type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
+type MutationError_AuthorizationError_Fragment = {
+  __typename: 'AuthorizationError';
+  code: number;
+  authorizationErrorMsg: string;
+};
 
-type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
+type MutationError_BadRequestError_Fragment = {
+  __typename: 'BadRequestError';
+  code: number;
+  badRequestErrorMessage: string;
+};
 
-type MutationError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
+type MutationError_NotFoundError_Fragment = {
+  __typename: 'NotFoundError';
+  code: number;
+  notFoundErrorMsg: string;
+};
 
-type MutationError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
+type MutationError_ServerError_Fragment = {
+  __typename: 'ServerError';
+  code: number;
+  serverErrorMessage: string;
+};
 
-type MutationError_ValidationError_Fragment = { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> };
+type MutationError_ValidationError_Fragment = {
+  __typename: 'ValidationError';
+  code: number;
+  validationErrorMsg: Record<string, Array<string>>;
+};
 
-export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
+export type MutationErrorFragment =
+  | MutationError_AuthorizationError_Fragment
+  | MutationError_BadRequestError_Fragment
+  | MutationError_NotFoundError_Fragment
+  | MutationError_ServerError_Fragment
+  | MutationError_ValidationError_Fragment;
 
-type QueryError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
+type QueryError_AuthorizationError_Fragment = {
+  __typename: 'AuthorizationError';
+  code: number;
+  authorizationErrorMsg: string;
+};
 
-type QueryError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
+type QueryError_BadRequestError_Fragment = {
+  __typename: 'BadRequestError';
+  code: number;
+  badRequestErrorMessage: string;
+};
 
-type QueryError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
+type QueryError_NotFoundError_Fragment = {
+  __typename: 'NotFoundError';
+  code: number;
+  notFoundErrorMsg: string;
+};
 
-type QueryError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
+type QueryError_ServerError_Fragment = {
+  __typename: 'ServerError';
+  code: number;
+  serverErrorMessage: string;
+};
 
-export type QueryErrorFragment = QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment;
+export type QueryErrorFragment =
+  | QueryError_AuthorizationError_Fragment
+  | QueryError_BadRequestError_Fragment
+  | QueryError_NotFoundError_Fragment
+  | QueryError_ServerError_Fragment;
 
-export type PaginationFragment = { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean };
+export type PaginationFragment = {
+  startCursor?: string | null;
+  endCursor?: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+};
 
 export type SetDefaultAccountMutationVariables = Exact<{
   accountId: Scalars['String'];
 }>;
 
-
-export type SetDefaultAccountMutation = { eBanking: { account?: { setDefaultAccount?: { recordId?: string | null } | null } | null } };
+export type SetDefaultAccountMutation = {
+  eBanking: { account?: { setDefaultAccount?: { recordId?: string | null } | null } | null };
+};
 
 export type ChangeCoopPinMutationVariables = Exact<{
   oldPin: Scalars['String'];
   newPin: Scalars['String'];
 }>;
 
-
-export type ChangeCoopPinMutation = { eBanking: { auth?: { changeCoopPin?: { success: boolean, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
+export type ChangeCoopPinMutation = {
+  eBanking: {
+    auth?: {
+      changeCoopPin?: {
+        success: boolean;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type ChangeMyraPasswordMutationVariables = Exact<{
   newPassword: Scalars['String'];
   oldPassword: Scalars['String'];
 }>;
 
-
-export type ChangeMyraPasswordMutation = { eBanking: { auth?: { changePassword?: { success: boolean, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
+export type ChangeMyraPasswordMutation = {
+  eBanking: {
+    auth?: {
+      changePassword?: {
+        success: boolean;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetChequeRequestDataMutationVariables = Exact<{
   memberID: Scalars['String'];
   data?: InputMaybe<EBankingChequeRequestInput>;
 }>;
 
-
-export type SetChequeRequestDataMutation = { eBanking: { cooperativeServices?: { cheque?: { request?: { recordID: string, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } | null } };
+export type SetChequeRequestDataMutation = {
+  eBanking: {
+    cooperativeServices?: {
+      cheque?: {
+        request?: {
+          recordID: string;
+          error?:
+            | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+            | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+            | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+            | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+            | {
+                __typename: 'ValidationError';
+                code: number;
+                validationErrorMsg: Record<string, Array<string>>;
+              }
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetWithdrawViaCollectorRequestDataMutationVariables = Exact<{
   memberID: Scalars['String'];
   data?: InputMaybe<EBankingChequeWithdrawViaCollectorInput>;
 }>;
 
-
-export type SetWithdrawViaCollectorRequestDataMutation = { eBanking: { cooperativeServices?: { cheque?: { withdrawViaCollector?: { recordID: string } | null } | null } | null } };
+export type SetWithdrawViaCollectorRequestDataMutation = {
+  eBanking: {
+    cooperativeServices?: {
+      cheque?: { withdrawViaCollector?: { recordID: string } | null } | null;
+    } | null;
+  };
+};
 
 export type SetBlockChequeRequestDataMutationVariables = Exact<{
   memberID: Scalars['String'];
   data?: InputMaybe<EBankingChequeBlockInput>;
 }>;
 
-
-export type SetBlockChequeRequestDataMutation = { eBanking: { cooperativeServices?: { cheque?: { block?: { recordID: string } | null } | null } | null } };
+export type SetBlockChequeRequestDataMutation = {
+  eBanking: {
+    cooperativeServices?: { cheque?: { block?: { recordID: string } | null } | null } | null;
+  };
+};
 
 export type ApplyForLoanMutationVariables = Exact<{
   memberId: Scalars['String'];
   data?: InputMaybe<EBankingApplyLoanInput>;
 }>;
 
-
-export type ApplyForLoanMutation = { eBanking: { cooperativeServices?: { loan?: { apply?: { recordID: string, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } | null } };
+export type ApplyForLoanMutation = {
+  eBanking: {
+    cooperativeServices?: {
+      loan?: {
+        apply?: {
+          recordID: string;
+          error?:
+            | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+            | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+            | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+            | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+            | {
+                __typename: 'ValidationError';
+                code: number;
+                validationErrorMsg: Record<string, Array<string>>;
+              }
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type AddNewComplaintMutationVariables = Exact<{
   memberId: Scalars['String'];
   data?: InputMaybe<EBankingRegisterComplaintInput>;
 }>;
 
-
-export type AddNewComplaintMutation = { eBanking: { cooperativeServices?: { complaint?: { register?: { recordID: string, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } | null } };
+export type AddNewComplaintMutation = {
+  eBanking: {
+    cooperativeServices?: {
+      complaint?: {
+        register?: {
+          recordID: string;
+          error?:
+            | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+            | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+            | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+            | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+            | {
+                __typename: 'ValidationError';
+                code: number;
+                validationErrorMsg: Record<string, Array<string>>;
+              }
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type AccountTransferMutationVariables = Exact<{
   data?: InputMaybe<EbankingAccountTransferInput>;
 }>;
 
-
-export type AccountTransferMutation = { eBanking: { webUtilityPayments?: { accountTransfer?: { recordId?: string | null, success: boolean, record?: { amount: string, destinationAccount: string, remarks?: string | null, sourceAccount: string, transactionCode: string, transactionDate: string } | null, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
+export type AccountTransferMutation = {
+  eBanking: {
+    webUtilityPayments?: {
+      accountTransfer?: {
+        recordId?: string | null;
+        success: boolean;
+        record?: {
+          amount: string;
+          destinationAccount: string;
+          remarks?: string | null;
+          sourceAccount: string;
+          transactionCode: string;
+          transactionDate: string;
+        } | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type CheckForSendMoneyMutationVariables = Exact<{
   data?: InputMaybe<EbankingSendMoneyInput>;
 }>;
 
-
-export type CheckForSendMoneyMutation = { eBanking: { webUtilityPayments?: { sendMoney?: { check?: { verified: boolean, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } | null } };
+export type CheckForSendMoneyMutation = {
+  eBanking: {
+    webUtilityPayments?: {
+      sendMoney?: {
+        check?: {
+          verified: boolean;
+          error?:
+            | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+            | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+            | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+            | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+            | {
+                __typename: 'ValidationError';
+                code: number;
+                validationErrorMsg: Record<string, Array<string>>;
+              }
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type CompleteSendMoneyMutationVariables = Exact<{
   data?: InputMaybe<EbankingSendMoneyInput>;
   transactionPin: Scalars['String'];
 }>;
 
-
-export type CompleteSendMoneyMutation = { eBanking: { webUtilityPayments?: { sendMoney?: { proceed?: { recordId?: string | null, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null, record?: { amount: string, purposeOfTransaction?: PurposeOfTransaction | null, recipientAccountNumber: string, recipientMobileNumber: string, recipientName: string, remarks?: string | null, sourceAccount: string, transactionCode: string, transactionDate: string } | null } | null } | null } | null } };
+export type CompleteSendMoneyMutation = {
+  eBanking: {
+    webUtilityPayments?: {
+      sendMoney?: {
+        proceed?: {
+          recordId?: string | null;
+          error?:
+            | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+            | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+            | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+            | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+            | {
+                __typename: 'ValidationError';
+                code: number;
+                validationErrorMsg: Record<string, Array<string>>;
+              }
+            | null;
+          record?: {
+            amount: string;
+            purposeOfTransaction?: PurposeOfTransaction | null;
+            recipientAccountNumber: string;
+            recipientMobileNumber: string;
+            recipientName: string;
+            remarks?: string | null;
+            sourceAccount: string;
+            transactionCode: string;
+            transactionDate: string;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAccountListQueryVariables = Exact<{
   transactionPagination?: InputMaybe<Pagination>;
 }>;
 
+export type GetAccountListQuery = {
+  eBanking: {
+    account?: {
+      list?: {
+        totalBalance?: string | null;
+        accounts?: Array<{
+          id: string;
+          name: string;
+          productName: string;
+          accountNumber: string;
+          isDefault: boolean;
+          balance: string;
+          interestRate: number;
+        } | null> | null;
+        recentTransactions?: {
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id: string;
+              accountId?: string | null;
+              name: string;
+              date: Record<'local' | 'en' | 'np', string>;
+              month: Record<'local' | 'en' | 'np', string>;
+              transactionDirection: EbankingTransactionDirection;
+              amount: string;
+            };
+          } | null> | null;
+          pageInfo?: {
+            startCursor?: string | null;
+            endCursor?: string | null;
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetAccountListQuery = { eBanking: { account?: { list?: { totalBalance?: string | null, accounts?: Array<{ id: string, name: string, productName: string, accountNumber: string, isDefault: boolean, balance: string, interestRate: number } | null> | null, recentTransactions?: { edges?: Array<{ cursor: string, node: { id: string, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, amount: string } } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } | null } | null } | null } };
+export type GetAccountSummaryQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAccountSummaryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAccountSummaryQuery = { eBanking: { account?: { summary?: { totalSaving: number, totalLoan: number } | null } | null } };
+export type GetAccountSummaryQuery = {
+  eBanking: { account?: { summary?: { totalSaving: number; totalLoan: number } | null } | null };
+};
 
 export type GetTransactionListsQueryVariables = Exact<{
   filter?: InputMaybe<EbankingTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
-
-export type GetTransactionListsQuery = { eBanking: { account?: { list?: { accounts?: Array<{ id: string, name: string, accountNumber: string } | null> | null, recentTransactions?: { edges?: Array<{ node: { id: string, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, amount: string } } | null> | null, pageInfo?: { endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } | null } | null } | null } };
+export type GetTransactionListsQuery = {
+  eBanking: {
+    account?: {
+      list?: {
+        accounts?: Array<{ id: string; name: string; accountNumber: string } | null> | null;
+        recentTransactions?: {
+          edges?: Array<{
+            node: {
+              id: string;
+              accountId?: string | null;
+              name: string;
+              date: Record<'local' | 'en' | 'np', string>;
+              month: Record<'local' | 'en' | 'np', string>;
+              transactionDirection: EbankingTransactionDirection;
+              amount: string;
+            };
+          } | null> | null;
+          pageInfo?: {
+            endCursor?: string | null;
+            startCursor?: string | null;
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAccountDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
   transactionPagination?: InputMaybe<Pagination>;
 }>;
 
+export type GetAccountDetailsQuery = {
+  eBanking: {
+    account?: {
+      get?: {
+        data?: {
+          id: string;
+          productId?: string | null;
+          name: string;
+          accountNumber: string;
+          isDefault: boolean;
+          balance: string;
+          interestRate: number;
+          accountType: string;
+          accountSubType: string;
+          interestBooked?: string | null;
+          interestEarned?: string | null;
+          subscribedDate: string;
+          history?: Array<{ id: string; balance: number; date: string }> | null;
+          transactions?: {
+            edges?: Array<{
+              node: {
+                id: string;
+                accountId?: string | null;
+                name: string;
+                date: Record<'local' | 'en' | 'np', string>;
+                month: Record<'local' | 'en' | 'np', string>;
+                transactionDirection: EbankingTransactionDirection;
+                amount: string;
+              };
+            } | null> | null;
+            pageInfo?: {
+              startCursor?: string | null;
+              endCursor?: string | null;
+              hasNextPage: boolean;
+              hasPreviousPage: boolean;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetAccountDetailsQuery = { eBanking: { account?: { get?: { data?: { id: string, productId?: string | null, name: string, accountNumber: string, isDefault: boolean, balance: string, interestRate: number, accountType: string, accountSubType: string, interestBooked?: string | null, interestEarned?: string | null, subscribedDate: string, history?: Array<{ id: string, balance: number, date: string }> | null, transactions?: { edges?: Array<{ node: { id: string, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, amount: string } } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } | null } | null } | null } | null } };
+export type GetEbankingLoanAccountsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetEbankingLoanAccountsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetEbankingLoanAccountsQuery = { eBanking: { loanAccount?: { list?: { totalBalance?: string | null, accounts?: Array<{ id: string, name: string, productName: string, accountNumber: string, isDefault: boolean, balance: string, interestRate: number } | null> | null } | null } | null } };
+export type GetEbankingLoanAccountsQuery = {
+  eBanking: {
+    loanAccount?: {
+      list?: {
+        totalBalance?: string | null;
+        accounts?: Array<{
+          id: string;
+          name: string;
+          productName: string;
+          accountNumber: string;
+          isDefault: boolean;
+          balance: string;
+          interestRate: number;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetEbankLoanAccountDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
   transactionPagination?: InputMaybe<Pagination>;
 }>;
 
+export type GetEbankLoanAccountDetailsQuery = {
+  eBanking: {
+    loanAccount?: {
+      get?: {
+        data?: {
+          id: string;
+          productId?: string | null;
+          name: string;
+          accountNumber: string;
+          isDefault: boolean;
+          balance: string;
+          interestRate: number;
+          accountType: string;
+          accountSubType: string;
+          interestBooked?: string | null;
+          interestEarned?: string | null;
+          subscribedDate: string;
+          history?: Array<{ id: string; balance: number; date: string }> | null;
+          transactions?: {
+            edges?: Array<{
+              node: {
+                id: string;
+                accountId?: string | null;
+                name: string;
+                date: Record<'local' | 'en' | 'np', string>;
+                month: Record<'local' | 'en' | 'np', string>;
+                transactionDirection: EbankingTransactionDirection;
+                amount: string;
+              };
+            } | null> | null;
+            pageInfo?: {
+              startCursor?: string | null;
+              endCursor?: string | null;
+              hasNextPage: boolean;
+              hasPreviousPage: boolean;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetEbankLoanAccountDetailsQuery = { eBanking: { loanAccount?: { get?: { data?: { id: string, productId?: string | null, name: string, accountNumber: string, isDefault: boolean, balance: string, interestRate: number, accountType: string, accountSubType: string, interestBooked?: string | null, interestEarned?: string | null, subscribedDate: string, history?: Array<{ id: string, balance: number, date: string }> | null, transactions?: { edges?: Array<{ node: { id: string, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, amount: string } } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } | null } | null } | null } | null } };
+export type GetTotalExpenseQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetTotalExpenseQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetTotalExpenseQuery = {
+  eBanking: {
+    account?: {
+      list?: {
+        recentTransactions?: { summary?: { expensesThisMonth?: string | null } | null } | null;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetCoopMeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetTotalExpenseQuery = { eBanking: { account?: { list?: { recentTransactions?: { summary?: { expensesThisMonth?: string | null } | null } | null } | null } | null } };
+export type GetCoopMeQuery = {
+  eBanking: {
+    auth?: {
+      meCooperativeUser?: {
+        data?: {
+          defaultAccount?: string | null;
+          myraUserId: string;
+          cooperativeId?: string | null;
+          cooperativeName?: string | null;
+          cooperativeProvince?: string | null;
+          cooperativeDistrict?: string | null;
+          cooperativeWard?: number | null;
+          cooperativeLocalGovt?: string | null;
+          memberId?: string | null;
+          memberName?: string | null;
+          memberProfilePicId?: string | null;
+          memberProfilePicUrl?: string | null;
+          memberMobileNo?: string | null;
+        } | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetCoopMeQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetCoopStatsQueryVariables = Exact<{ [key: string]: never }>;
 
+export type GetCoopStatsQuery = {
+  eBanking: {
+    cooperativeServices?: {
+      coopStatistics?: {
+        totalBranches: number;
+        totalMembers: number;
+        totalCapital?: string | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetCoopMeQuery = { eBanking: { auth?: { meCooperativeUser?: { data?: { defaultAccount?: string | null, myraUserId: string, cooperativeId?: string | null, cooperativeName?: string | null, cooperativeProvince?: string | null, cooperativeDistrict?: string | null, cooperativeWard?: number | null, cooperativeLocalGovt?: string | null, memberId?: string | null, memberName?: string | null, memberProfilePicId?: string | null, memberProfilePicUrl?: string | null, memberMobileNo?: string | null } | null, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | null } | null } | null } };
+export type GetCoopChequeServicesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCoopStatsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetCoopChequeServicesQuery = {
+  eBanking: {
+    cooperativeServices?: {
+      cheque?: { options: Array<{ name: string; enabled: boolean }> } | null;
+    } | null;
+  };
+};
 
+export type GetCoopLoanServicesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCoopStatsQuery = { eBanking: { cooperativeServices?: { coopStatistics?: { totalBranches: number, totalMembers: number, totalCapital?: string | null } | null } | null } };
+export type GetCoopLoanServicesQuery = {
+  eBanking: {
+    cooperativeServices?: {
+      loan?: {
+        options: Array<{ name: string; enabled: boolean; requestType?: string | null }>;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetCoopChequeServicesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetCoopComplaintServicesQueryVariables = Exact<{ [key: string]: never }>;
 
+export type GetCoopComplaintServicesQuery = {
+  eBanking: {
+    cooperativeServices?: {
+      complaint?: {
+        options: Array<{ name: string; enabled: boolean; requestType?: string | null }>;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetCoopChequeServicesQuery = { eBanking: { cooperativeServices?: { cheque?: { options: Array<{ name: string, enabled: boolean }> } | null } | null } };
+export type GetCoopDownloadsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCoopLoanServicesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetCoopLoanServicesQuery = { eBanking: { cooperativeServices?: { loan?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
-
-export type GetCoopComplaintServicesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetCoopComplaintServicesQuery = { eBanking: { cooperativeServices?: { complaint?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
-
-export type GetCoopDownloadsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetCoopDownloadsQuery = { eBanking: { cooperativeServices?: { downloads?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
+export type GetCoopDownloadsQuery = {
+  eBanking: {
+    cooperativeServices?: {
+      downloads?: {
+        options: Array<{ name: string; enabled: boolean; requestType?: string | null }>;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetCoopPastChequeRequestsQueryVariables = Exact<{
   memberId: Scalars['ID'];
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
 }>;
 
-
-export type GetCoopPastChequeRequestsQuery = { eBanking: { cooperativeServices?: { cheque?: { pastRequests?: Array<{ id: string, typeOfRequest?: EbankingServiceRequestType | null, chequeRequestType?: EBankingChequeRequestType | null, createdDate?: string | null, serviceStatus: EBankingActiveLoanStatus, withdrawAmount?: any | null, withdrawDate?: string | null, chequeBlockReason?: string | null, chequeBlockNumber?: string | null, status: EBankingServiceStatus, branch?: { name?: string | null } | null, collector?: { name?: string | null } | null } | null> | null } | null } | null } };
+export type GetCoopPastChequeRequestsQuery = {
+  eBanking: {
+    cooperativeServices?: {
+      cheque?: {
+        pastRequests?: Array<{
+          id: string;
+          typeOfRequest?: EbankingServiceRequestType | null;
+          chequeRequestType?: EBankingChequeRequestType | null;
+          createdDate?: string | null;
+          serviceStatus: EBankingActiveLoanStatus;
+          withdrawAmount?: any | null;
+          withdrawDate?: string | null;
+          chequeBlockReason?: string | null;
+          chequeBlockNumber?: string | null;
+          status: EBankingServiceStatus;
+          branch?: { name?: string | null } | null;
+          collector?: { name?: string | null } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetComplaintsListQueryVariables = Exact<{
   memberId: Scalars['ID'];
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
 }>;
 
-
-export type GetComplaintsListQuery = { eBanking: { cooperativeServices?: { complaint?: { history?: { data?: Array<{ id: string, feedbackDate: string, detailedAccount?: string | null } | null> | null } | null } | null } | null } };
+export type GetComplaintsListQuery = {
+  eBanking: {
+    cooperativeServices?: {
+      complaint?: {
+        history?: {
+          data?: Array<{
+            id: string;
+            feedbackDate: string;
+            detailedAccount?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetDownloadCoopListQueryVariables = Exact<{
   filter?: InputMaybe<EBankingDownloadsFilter>;
 }>;
 
+export type GetDownloadCoopListQuery = {
+  eBanking: {
+    cooperativeServices?: {
+      downloads?: {
+        files: Array<{
+          id: string;
+          name: string;
+          category: string;
+          extension: string;
+          size: string;
+          url: string;
+        }>;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetDownloadCoopListQuery = { eBanking: { cooperativeServices?: { downloads?: { files: Array<{ id: string, name: string, category: string, extension: string, size: string, url: string }> } | null } | null } };
+export type GetBranchListEbankingQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetBranchListEbankingQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetBranchListEbankingQuery = {
+  eBanking: {
+    cooperativeServices?: {
+      cheque?: {
+        branchList?: {
+          data?: Array<{
+            id?: string | null;
+            branchCode?: string | null;
+            name?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetCollectorListEbankingQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetBranchListEbankingQuery = { eBanking: { cooperativeServices?: { cheque?: { branchList?: { data?: Array<{ id?: string | null, branchCode?: string | null, name?: string | null } | null> | null } | null } | null } | null } };
-
-export type GetCollectorListEbankingQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetCollectorListEbankingQuery = { eBanking: { cooperativeServices?: { cheque?: { collectors?: { data?: Array<{ id?: string | null, name?: string | null } | null> | null } | null } | null } | null } };
+export type GetCollectorListEbankingQuery = {
+  eBanking: {
+    cooperativeServices?: {
+      cheque?: {
+        collectors?: {
+          data?: Array<{ id?: string | null; name?: string | null } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetLoanHistoryQueryVariables = Exact<{
   memberId: Scalars['ID'];
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
 }>;
 
+export type GetLoanHistoryQuery = {
+  eBanking: {
+    cooperativeServices?: {
+      loan?: {
+        history?: {
+          data?: Array<{
+            id: string;
+            activeLoanStatus?: EBankingActiveLoanStatus | null;
+            amount?: any | null;
+            type?: string | null;
+            branch?: { id: string; branchCode?: string | null; name?: string | null } | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetLoanHistoryQuery = { eBanking: { cooperativeServices?: { loan?: { history?: { data?: Array<{ id: string, activeLoanStatus?: EBankingActiveLoanStatus | null, amount?: any | null, type?: string | null, branch?: { id: string, branchCode?: string | null, name?: string | null } | null } | null> | null } | null } | null } | null } };
+export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAnnouncementListQuery = { eBanking: { notification?: { announcements?: { list: Array<{ id: string, details: any, summary: string, title: string, date: string } | null> } | null } | null } };
+export type GetAnnouncementListQuery = {
+  eBanking: {
+    notification?: {
+      announcements?: {
+        list: Array<{
+          id: string;
+          details: any;
+          summary: string;
+          title: string;
+          date: string;
+        } | null>;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetEbankingDepositProductsQueryVariables = Exact<{
   filter: NatureOfDepositProduct;
 }>;
 
-
-export type GetEbankingDepositProductsQuery = { eBanking: { products?: { depositProductList?: { data?: Array<{ id: string, productName: string } | null> | null } | null } | null } };
+export type GetEbankingDepositProductsQuery = {
+  eBanking: {
+    products?: {
+      depositProductList?: {
+        data?: Array<{ id: string; productName: string } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetEbankingDepositProductQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetEbankingDepositProductQuery = { eBanking: { products?: { getDepositProduct?: { data?: { id?: string | null, productName?: string | null, nature?: NatureOfDepositProduct | null, description?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, transactionAllowed?: DepositFrequency | null, noOftransactionAllowed?: number | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, isTenureApplicable?: boolean | null, tenureUnit?: FrequencyTenure | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: DefaultAccountType | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, isForMinors?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, isMandatorySaving?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, isPrematurePenaltyApplicable?: boolean | null, productCode: { initialNo: string, prefix: string }, depositAmount?: { avgAmount?: any | null, maxAmount?: any | null, minAmount?: any | null } | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null, avgAmount?: any | null } | null, fixedDepositAmountLimit?: { minAmount?: any | null, maxAmount?: any | null, avgAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null, penaltyRate?: number | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateLedgerMapping?: string | null, rebateRate?: number | null } | null, balanceLimit?: { avgAmount?: any | null, maxAmount?: any | null, minAmount?: any | null } | null, interest?: { additionalRate?: number | null, boardAuthority?: number | null, ceoAuthority?: number | null, defaultRate?: number | null, interestMethod?: InterestMethod | null, maxRate?: number | null, minRate?: number | null } | null, ladderRateData?: Array<{ amount: any, rate: number, type: string } | null> | null, serviceCharge?: Array<{ amount?: any | null, ledgerName?: string | null, serviceName?: string | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, amount?: any | null, ledgerName?: string | null } | null> | null, dormantSetup?: Array<{ condition?: string | null, duration?: string | null } | null> | null, alternativeChannelCharge?: Array<{ ledgerName?: string | null, amount?: any | null, serviceName?: string | null } | null> | null, atmCharge?: Array<{ ledgerName?: string | null, amount?: any | null, serviceName?: string | null } | null> | null, chequeCharge?: Array<{ ledgerName?: string | null, amount?: any | null, serviceName?: string | null } | null> | null, prematurePenalty?: { penaltyRate?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyDateType?: PrematurePenaltyDateType | null } | null, withdrawPenalty?: { penaltyAmount?: any | null, penaltyLedgerMapping?: string | null, penaltyRate?: number | null } | null, ledgerMapping?: { interestAccuredDaily?: string | null, interestIncome?: string | null, principal?: string | null } | null } | null } | null } | null } };
+export type GetEbankingDepositProductQuery = {
+  eBanking: {
+    products?: {
+      getDepositProduct?: {
+        data?: {
+          id?: string | null;
+          productName?: string | null;
+          nature?: NatureOfDepositProduct | null;
+          description?: string | null;
+          typeOfMember?: Array<KymMemberTypesEnum | null> | null;
+          criteria?: Array<CriteriaSection | null> | null;
+          minAge?: number | null;
+          maxAge?: number | null;
+          genderId?: Array<string | null> | null;
+          maritalStatusId?: Array<string | null> | null;
+          educationQualification?: Array<string | null> | null;
+          ethnicity?: Array<string | null> | null;
+          occupation?: Array<string | null> | null;
+          foreignEmployment?: boolean | null;
+          natureOfBusinessInstitution?: Array<string | null> | null;
+          natureOFBusinessCoop?: Array<string | null> | null;
+          cooperativeType?: Array<string | null> | null;
+          transactionAllowed?: DepositFrequency | null;
+          noOftransactionAllowed?: number | null;
+          depositFrequency?: Frequency | null;
+          penalty?: boolean | null;
+          rebate?: boolean | null;
+          isTenureApplicable?: boolean | null;
+          tenureUnit?: FrequencyTenure | null;
+          minTenureUnitNumber?: number | null;
+          maxTenureUnitNumber?: number | null;
+          ladderRate?: boolean | null;
+          postingFrequency?: DepositFrequency | null;
+          maxPostingFreqDifference?: number | null;
+          accountType?: DefaultAccountType | null;
+          autoOpen?: boolean | null;
+          allowLoan?: boolean | null;
+          percentageOfDeposit?: number | null;
+          alternativeChannels?: boolean | null;
+          atmFacility?: boolean | null;
+          isForMinors?: boolean | null;
+          chequeIssue?: boolean | null;
+          supportMultiple?: boolean | null;
+          staffProduct?: boolean | null;
+          withdrawRestricted?: boolean | null;
+          specifyWithdrawRestriction?: string | null;
+          wealthBuildingProduct?: boolean | null;
+          isMandatorySaving?: boolean | null;
+          individualDocuments?: Array<IndividualRequiredDocument | null> | null;
+          institutionDocuments?: Array<InstitutionRequiredDocument | null> | null;
+          isPrematurePenaltyApplicable?: boolean | null;
+          productCode: { initialNo: string; prefix: string };
+          depositAmount?: {
+            avgAmount?: any | null;
+            maxAmount?: any | null;
+            minAmount?: any | null;
+          } | null;
+          withdrawAmountLimit?: {
+            minAmount?: any | null;
+            maxAmount?: any | null;
+            avgAmount?: any | null;
+          } | null;
+          fixedDepositAmountLimit?: {
+            minAmount?: any | null;
+            maxAmount?: any | null;
+            avgAmount?: any | null;
+          } | null;
+          penaltyData?: {
+            dayAfterInstallmentDate?: number | null;
+            penaltyAmount?: any | null;
+            penaltyLedgerMapping?: string | null;
+            penaltyRate?: number | null;
+          } | null;
+          rebateData?: {
+            dayBeforeInstallmentDate?: number | null;
+            noOfInstallment?: number | null;
+            rebateAmount?: any | null;
+            rebateLedgerMapping?: string | null;
+            rebateRate?: number | null;
+          } | null;
+          balanceLimit?: {
+            avgAmount?: any | null;
+            maxAmount?: any | null;
+            minAmount?: any | null;
+          } | null;
+          interest?: {
+            additionalRate?: number | null;
+            boardAuthority?: number | null;
+            ceoAuthority?: number | null;
+            defaultRate?: number | null;
+            interestMethod?: InterestMethod | null;
+            maxRate?: number | null;
+            minRate?: number | null;
+          } | null;
+          ladderRateData?: Array<{ amount: any; rate: number; type: string } | null> | null;
+          serviceCharge?: Array<{
+            amount?: any | null;
+            ledgerName?: string | null;
+            serviceName?: string | null;
+          } | null> | null;
+          accountCloseCharge?: Array<{
+            serviceName?: string | null;
+            amount?: any | null;
+            ledgerName?: string | null;
+          } | null> | null;
+          dormantSetup?: Array<{
+            condition?: string | null;
+            duration?: string | null;
+          } | null> | null;
+          alternativeChannelCharge?: Array<{
+            ledgerName?: string | null;
+            amount?: any | null;
+            serviceName?: string | null;
+          } | null> | null;
+          atmCharge?: Array<{
+            ledgerName?: string | null;
+            amount?: any | null;
+            serviceName?: string | null;
+          } | null> | null;
+          chequeCharge?: Array<{
+            ledgerName?: string | null;
+            amount?: any | null;
+            serviceName?: string | null;
+          } | null> | null;
+          prematurePenalty?: {
+            penaltyRate?: number | null;
+            penaltyLedgerMapping?: string | null;
+            penaltyAmount?: any | null;
+            penaltyDateType?: PrematurePenaltyDateType | null;
+          } | null;
+          withdrawPenalty?: {
+            penaltyAmount?: any | null;
+            penaltyLedgerMapping?: string | null;
+            penaltyRate?: number | null;
+          } | null;
+          ledgerMapping?: {
+            interestAccuredDaily?: string | null;
+            interestIncome?: string | null;
+            principal?: string | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetEbankingDepositProductCriteriaQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
+export type GetEbankingDepositProductCriteriaQuery = {
+  eBanking: {
+    products?: {
+      getDepositProductCriteria?: {
+        data?: {
+          minAge?: number | null;
+          maxAge?: number | null;
+          gender?: Array<string | null> | null;
+          maritalStatus?: Array<string | null> | null;
+          occupation?: Array<string | null> | null;
+          educationQualification?: Array<string | null> | null;
+          ethnicity?: Array<string | null> | null;
+          foreignEmployment?: boolean | null;
+          institutionType?: Array<string | null> | null;
+          cooperativeUnion?: Array<string | null> | null;
+          cooperativeType?: Array<string | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetEbankingDepositProductCriteriaQuery = { eBanking: { products?: { getDepositProductCriteria?: { data?: { minAge?: number | null, maxAge?: number | null, gender?: Array<string | null> | null, maritalStatus?: Array<string | null> | null, occupation?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, foreignEmployment?: boolean | null, institutionType?: Array<string | null> | null, cooperativeUnion?: Array<string | null> | null, cooperativeType?: Array<string | null> | null } | null } | null } | null } };
+export type GetEbankingLoanProductTypeListQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetEbankingLoanProductTypeListQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetEbankingLoanProductTypeListQuery = {
+  eBanking: {
+    products?: {
+      loanProductTypes?: Array<{
+        id?: string | null;
+        productType?: string | null;
+        description?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
+export type GetEbankingLoanProductSubTypeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetEbankingLoanProductTypeListQuery = { eBanking: { products?: { loanProductTypes?: Array<{ id?: string | null, productType?: string | null, description?: string | null } | null> | null } | null } };
-
-export type GetEbankingLoanProductSubTypeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetEbankingLoanProductSubTypeQuery = { eBanking: { products?: { loanProductSubTypes?: Array<{ id?: string | null, productSubType?: string | null, productTypeID?: string | null } | null> | null } | null } };
+export type GetEbankingLoanProductSubTypeQuery = {
+  eBanking: {
+    products?: {
+      loanProductSubTypes?: Array<{
+        id?: string | null;
+        productSubType?: string | null;
+        productTypeID?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
 export type GetEbankingLoanProductsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetEbankingLoanProductsQuery = { eBanking: { products?: { loanProductList?: { data?: Array<{ id: string, productName: string } | null> | null } | null } | null } };
+export type GetEbankingLoanProductsQuery = {
+  eBanking: {
+    products?: {
+      loanProductList?: { data?: Array<{ id: string; productName: string } | null> | null } | null;
+    } | null;
+  };
+};
 
 export type GetEbankingLoanProductQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetEbankingLoanProductQuery = { eBanking: { products?: { getLoanProduct?: { data?: { id: string, productName: string, productType: string, productSubType: string, productNature: NatureOfLoanProduct, description?: string | null, typeOfMember: Array<KymMemberTypesEnum | null>, minAge?: number | null, maxAge?: number | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, interestMethod?: LoanInterestMethod | null, repaymentScheme?: Array<LoanRepaymentScheme | null> | null, installmentFrequency?: LoanProductInstallment | null, isStaffProduct?: boolean | null, isInsuranceApplicable?: boolean | null, isTenureApplicable?: boolean | null, isMonthlyInstallmentCompulsory?: boolean | null, isPenaltyApplicable?: boolean | null, isRebateApplicable?: boolean | null, isCollateralRequired?: boolean | null, updateInterest?: boolean | null, waiveInterest?: boolean | null, allowGurantee?: boolean | null, loanScheduleChangeOverride?: boolean | null, allowPartialInstallment?: boolean | null, supportMultipleAccounts?: boolean | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, maxLoanAmount?: any | null, minimumLoanAmount?: any | null, principalMaxGraceNumber?: number | null, interestMaxGraceNumber?: number | null, penaltyType?: PenaltyType | null, penaltyDayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, tenureUnit?: FrequencyTenure | null, productCode?: { initialNo: string, noOfDigits?: number | null, prefix: string } | null, insuranceType?: { amount?: any | null, type?: string | null, rate?: number | null } | null, prematurePenaltySetup?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null } | null, loanProcessingCharge?: Array<{ serviceName?: string | null, amount?: any | null } | null> | null, rebate?: { dayBeforeInstallmentDate?: number | null, rebateAmount?: any | null, rebateRate?: number | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null } | null } | null } | null } };
+export type GetEbankingLoanProductQuery = {
+  eBanking: {
+    products?: {
+      getLoanProduct?: {
+        data?: {
+          id: string;
+          productName: string;
+          productType: string;
+          productSubType: string;
+          productNature: NatureOfLoanProduct;
+          description?: string | null;
+          typeOfMember: Array<KymMemberTypesEnum | null>;
+          minAge?: number | null;
+          maxAge?: number | null;
+          requiredDocuments?: Array<LoanRequiredDocuments | null> | null;
+          interestMethod?: LoanInterestMethod | null;
+          repaymentScheme?: Array<LoanRepaymentScheme | null> | null;
+          installmentFrequency?: LoanProductInstallment | null;
+          isStaffProduct?: boolean | null;
+          isInsuranceApplicable?: boolean | null;
+          isTenureApplicable?: boolean | null;
+          isMonthlyInstallmentCompulsory?: boolean | null;
+          isPenaltyApplicable?: boolean | null;
+          isRebateApplicable?: boolean | null;
+          isCollateralRequired?: boolean | null;
+          updateInterest?: boolean | null;
+          waiveInterest?: boolean | null;
+          allowGurantee?: boolean | null;
+          loanScheduleChangeOverride?: boolean | null;
+          allowPartialInstallment?: boolean | null;
+          supportMultipleAccounts?: boolean | null;
+          minTenureUnitNumber?: number | null;
+          maxTenureUnitNumber?: number | null;
+          maxLoanAmount?: any | null;
+          minimumLoanAmount?: any | null;
+          principalMaxGraceNumber?: number | null;
+          interestMaxGraceNumber?: number | null;
+          penaltyType?: PenaltyType | null;
+          penaltyDayAfterInstallmentDate?: number | null;
+          penaltyRate?: number | null;
+          penaltyAmount?: any | null;
+          tenureUnit?: FrequencyTenure | null;
+          productCode?: { initialNo: string; noOfDigits?: number | null; prefix: string } | null;
+          insuranceType?: {
+            amount?: any | null;
+            type?: string | null;
+            rate?: number | null;
+          } | null;
+          prematurePenaltySetup?: {
+            penaltyDateType?: PrematurePenaltyDateType | null;
+            noOfDays?: number | null;
+            penaltyRate?: number | null;
+            penaltyAmount?: any | null;
+          } | null;
+          loanProcessingCharge?: Array<{
+            serviceName?: string | null;
+            amount?: any | null;
+          } | null> | null;
+          rebate?: {
+            dayBeforeInstallmentDate?: number | null;
+            rebateAmount?: any | null;
+            rebateRate?: number | null;
+          } | null;
+          interest?: {
+            minRate?: number | null;
+            maxRate?: number | null;
+            defaultRate: number;
+            ceoAuthority?: number | null;
+            boardAuthority?: number | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetEbankingLoanProductCriteriaQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
+export type GetEbankingLoanProductCriteriaQuery = {
+  eBanking: {
+    products?: {
+      getLoanProductCriteria?: {
+        data?: {
+          minAge?: number | null;
+          maxAge?: number | null;
+          gender?: Array<string | null> | null;
+          ethnicity?: Array<string | null> | null;
+          educationQualification?: Array<string | null> | null;
+          maritalStatus?: Array<string | null> | null;
+          foreignEmployment?: boolean | null;
+          occupation?: Array<string | null> | null;
+          institutionType?: Array<string | null> | null;
+          cooperativeType?: Array<string | null> | null;
+          cooperativeUnion?: Array<string | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetEbankingLoanProductCriteriaQuery = { eBanking: { products?: { getLoanProductCriteria?: { data?: { minAge?: number | null, maxAge?: number | null, gender?: Array<string | null> | null, ethnicity?: Array<string | null> | null, educationQualification?: Array<string | null> | null, maritalStatus?: Array<string | null> | null, foreignEmployment?: boolean | null, occupation?: Array<string | null> | null, institutionType?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, cooperativeUnion?: Array<string | null> | null } | null } | null } | null } };
+export type GetMemberProfileQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMemberProfileQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetMemberProfileQuery = {
+  eBanking: {
+    profile?: {
+      data?: {
+        memberId?: string | null;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        dobAD?: string | null;
+        dobBS?: string | null;
+        gender?: Record<'local' | 'en' | 'np', string> | null;
+        mobileNumber?: string | null;
+        email?: string | null;
+        maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+        temporaryAddress?: {
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          houseNo?: string | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+          locality?: Record<'local' | 'en' | 'np', string> | null;
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          wardNo?: string | null;
+          coordinates?: { latitude?: number | null; longitude?: number | null } | null;
+        } | null;
+        permanentAddress?: {
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          houseNo?: string | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+          locality?: Record<'local' | 'en' | 'np', string> | null;
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          wardNo?: string | null;
+          coordinates?: { latitude?: number | null; longitude?: number | null } | null;
+        } | null;
+        familyMembers?: Array<{
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          relationship?: Record<'local' | 'en' | 'np', string> | null;
+        } | null> | null;
+        photo?: Array<{ id?: string | null; url?: string | null } | null> | null;
+        citizenship?: Array<{ id?: string | null; url?: string | null } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetHomeServiceListQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMemberProfileQuery = { eBanking: { profile?: { data?: { memberId?: string | null, name?: Record<"local"|"en"|"np",string> | null, dobAD?: string | null, dobBS?: string | null, gender?: Record<"local"|"en"|"np",string> | null, mobileNumber?: string | null, email?: string | null, maritalStatus?: Record<"local"|"en"|"np",string> | null, temporaryAddress?: { district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, state?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, coordinates?: { latitude?: number | null, longitude?: number | null } | null } | null, permanentAddress?: { district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, state?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, coordinates?: { latitude?: number | null, longitude?: number | null } | null } | null, familyMembers?: Array<{ name?: Record<"local"|"en"|"np",string> | null, relationship?: Record<"local"|"en"|"np",string> | null } | null> | null, photo?: Array<{ id?: string | null, url?: string | null } | null> | null, citizenship?: Array<{ id?: string | null, url?: string | null } | null> | null } | null } | null } };
+export type GetHomeServiceListQuery = {
+  eBanking: {
+    services?: Array<{
+      id: string;
+      name: string;
+      service_id: string;
+      icon: string;
+      enabled: boolean;
+    } | null> | null;
+  };
+};
 
-export type GetHomeServiceListQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetShareSummaryQueryVariables = Exact<{ [key: string]: never }>;
 
+export type GetShareSummaryQuery = {
+  eBanking: { share?: { summary?: { totalShare: number; value: string } | null } | null };
+};
 
-export type GetHomeServiceListQuery = { eBanking: { services?: Array<{ id: string, name: string, service_id: string, icon: string, enabled: boolean } | null> | null } };
+export type GetEbankingShareHistoryQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetShareSummaryQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetEbankingShareHistoryQuery = {
+  eBanking: {
+    share?: {
+      history?: Array<{
+        id: string;
+        title: string;
+        date: string;
+        amount: string;
+        transactionDirection: Transaction_Direction;
+        numberOfShares: number;
+      } | null> | null;
+    } | null;
+  };
+};
 
+export type GetUtilityListQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetShareSummaryQuery = { eBanking: { share?: { summary?: { totalShare: number, value: string } | null } | null } };
-
-export type GetEbankingShareHistoryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetEbankingShareHistoryQuery = { eBanking: { share?: { history?: Array<{ id: string, title: string, date: string, amount: string, transactionDirection: Transaction_Direction, numberOfShares: number } | null> | null } | null } };
-
-export type GetUtilityListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetUtilityListQuery = { eBanking: { utilityPayments?: Array<{ id: string, name: string, enabled: boolean, icon: string, service_id: string } | null> | null } };
+export type GetUtilityListQuery = {
+  eBanking: {
+    utilityPayments?: Array<{
+      id: string;
+      name: string;
+      enabled: boolean;
+      icon: string;
+      service_id: string;
+    } | null> | null;
+  };
+};
 
 export type SignUpMutationVariables = Exact<{
   mobileNo: Scalars['String'];
 }>;
 
-
-export type SignUpMutation = { eBanking: { auth?: { signUp?: { recordId?: string | null, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
+export type SignUpMutation = {
+  eBanking: {
+    auth?: {
+      signUp?: {
+        recordId?: string | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type VerifyOtpMutationVariables = Exact<{
   data: EbankingOtpInput;
 }>;
 
-
-export type VerifyOtpMutation = { eBanking: { auth?: { verifyOtp?: { success?: boolean | null, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
-
-export type SetPasswordMutationVariables = Exact<{
-  data: EbankingPasswordInput;
-  userId: Scalars['ID'];
-}>;
-
-
-export type SetPasswordMutation = { eBanking: { auth?: { setPassword?: { recordId?: string | null, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
+export type VerifyOtpMutation = {
+  eBanking: {
+    auth?: {
+      verifyOtp?: {
+        success?: boolean | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type EBankingLoginMutationVariables = Exact<{
   data: EbankingLoginInput;
 }>;
 
-
-export type EBankingLoginMutation = { eBanking: { auth?: { login?: { recordId?: string | null, record?: { data?: { id: string, dob?: string | null, mobile?: string | null, name?: string | null, cooperatives?: Array<{ id: string, name?: string | null, logoUrl?: string | null, mobileNo?: string | null } | null> | null } | null, token: { access: string, refresh: string } } | null, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
+export type EBankingLoginMutation = {
+  eBanking: {
+    auth?: {
+      login?: {
+        recordId?: string | null;
+        record?: {
+          data?: {
+            id: string;
+            dob?: string | null;
+            mobile?: string | null;
+            name?: string | null;
+            cooperatives?: Array<{
+              id: string;
+              name?: string | null;
+              logoUrl?: string | null;
+              mobileNo?: string | null;
+            } | null> | null;
+          } | null;
+          token: { access: string; refresh: string };
+        } | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type CheckAccountMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -2523,15 +3466,56 @@ export type CheckAccountMutationVariables = Exact<{
   pin: Scalars['Int'];
 }>;
 
-
-export type CheckAccountMutation = { eBanking: { auth?: { checkAccount?: { success?: boolean | null, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
+export type CheckAccountMutation = {
+  eBanking: {
+    auth?: {
+      checkAccount?: {
+        success?: boolean | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetNewPinMutationVariables = Exact<{
   data?: InputMaybe<CooperativeConnectInput>;
 }>;
 
-
-export type SetNewPinMutation = { eBanking: { auth?: { setNewPin?: { record?: { name?: string | null, id: string, mobile?: string | null, cooperatives?: Array<{ id: string, mobileNo?: string | null } | null> | null } | null, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
+export type SetNewPinMutation = {
+  eBanking: {
+    auth?: {
+      setNewPin?: {
+        record?: {
+          name?: string | null;
+          id: string;
+          mobile?: string | null;
+          cooperatives?: Array<{ id: string; mobileNo?: string | null } | null> | null;
+        } | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type LoginToCooperativeMutationVariables = Exact<{
   cooperativeId: Scalars['ID'];
@@ -2539,46 +3523,165 @@ export type LoginToCooperativeMutationVariables = Exact<{
   mobileNumber: Scalars['String'];
 }>;
 
-
-export type LoginToCooperativeMutation = { eBanking: { auth?: { loginToCooperative?: { error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null, record?: { data?: { myraUserId: string, cooperativeSlug?: string | null, cooperativeId?: string | null, cooperativeName?: string | null, cooperativeProvince?: string | null, cooperativeDistrict?: string | null, cooperativeWard?: number | null, cooperativeLocalGovt?: string | null, memberId?: string | null, memberName?: string | null, memberProfilePicId?: string | null, memberProfilePicUrl?: string | null, memberMobileNo?: string | null } | null, token: { refresh: string, access: string } } | null } | null } | null } };
+export type LoginToCooperativeMutation = {
+  eBanking: {
+    auth?: {
+      loginToCooperative?: {
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+        record?: {
+          data?: {
+            myraUserId: string;
+            cooperativeSlug?: string | null;
+            cooperativeId?: string | null;
+            cooperativeName?: string | null;
+            cooperativeProvince?: string | null;
+            cooperativeDistrict?: string | null;
+            cooperativeWard?: number | null;
+            cooperativeLocalGovt?: string | null;
+            memberId?: string | null;
+            memberName?: string | null;
+            memberProfilePicId?: string | null;
+            memberProfilePicUrl?: string | null;
+            memberMobileNo?: string | null;
+          } | null;
+          token: { refresh: string; access: string };
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type ResendOtpMutationVariables = Exact<{
   mobile: Scalars['String'];
   otpFor: OtpFor;
 }>;
 
-
-export type ResendOtpMutation = { eBanking: { auth?: { resendOtp?: { success?: boolean | null, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
+export type ResendOtpMutation = {
+  eBanking: {
+    auth?: {
+      resendOtp?: {
+        success?: boolean | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type ResetPasswordMutationVariables = Exact<{
   mobileNo: Scalars['String'];
   newPassword: Scalars['String'];
 }>;
 
-
-export type ResetPasswordMutation = { eBanking: { auth?: { resetPassword?: { success: boolean, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
+export type ResetPasswordMutation = {
+  eBanking: {
+    auth?: {
+      resetPassword?: {
+        success: boolean;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type NewMembershipRequestMutationVariables = Exact<{
   cooperativeId: Scalars['String'];
   data?: InputMaybe<MembershipRequestInput>;
 }>;
 
+export type NewMembershipRequestMutation = {
+  eBanking: {
+    membershipRequest?: {
+      new?: {
+        recordId?: string | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type NewMembershipRequestMutation = { eBanking: { membershipRequest?: { new?: { recordId?: string | null, error?: { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string } | { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string } | { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string } | { __typename: 'ServerError', code: number, serverErrorMessage: string } | { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> } | null } | null } | null } };
+export type GetMyraMeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMyraMeQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetMyraMeQuery = {
+  eBanking: {
+    auth?: {
+      meMyraUser?: {
+        data?: {
+          id: string;
+          name?: string | null;
+          mobile?: string | null;
+          dob?: string | null;
+          cooperatives?: Array<{
+            id: string;
+            name?: string | null;
+            logoUrl?: string | null;
+            mobileNo?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetCoopListQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMyraMeQuery = { eBanking: { auth?: { meMyraUser?: { data?: { id: string, name?: string | null, mobile?: string | null, dob?: string | null, cooperatives?: Array<{ id: string, name?: string | null, logoUrl?: string | null, mobileNo?: string | null } | null> | null } | null } | null } | null } };
-
-export type GetCoopListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetCoopListQuery = { eBanking: { neosysClientsList?: Array<{ id?: string | null, clientName?: string | null, localGovernmentId?: string | null } | null> | null } };
+export type GetCoopListQuery = {
+  eBanking: {
+    neosysClientsList?: Array<{
+      id?: string | null;
+      clientName?: string | null;
+      localGovernmentId?: string | null;
+    } | null> | null;
+  };
+};
 
 export type GetKymGenderQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
-
-export type GetKymGenderQuery = { genderOptions: Array<{ id?: string | null, nameEn?: string | null, nameNp?: string | null } | null> };
+export type GetKymGenderQuery = {
+  genderOptions: Array<{
+    id?: string | null;
+    nameEn?: string | null;
+    nameNp?: string | null;
+  } | null>;
+};

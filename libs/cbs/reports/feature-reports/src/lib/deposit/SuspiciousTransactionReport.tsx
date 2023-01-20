@@ -23,7 +23,7 @@ import {
 import { amountConverter } from '@coop/shared/utils';
 
 type Filter = {
-  branchId: string;
+  branchId: { label: string; value: string }[];
   filter?: {
     amount?: MinMaxFilter;
 
@@ -41,14 +41,20 @@ export const SuspiousTransactionReport = () => {
 
   const [filters, setFilters] = useState<Filter | null>(null);
 
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
+
   const memberIds =
     filters?.filter?.memberId && filters?.filter?.memberId.length !== 0
       ? filters?.filter?.memberId?.map((m) => m.value)
       : null;
+
   const { data, isFetching } = useGetSuspiciousTransactionReportQuery(
     {
       data: {
-        branchId: filters?.branchId as string,
+        branchId: branchIds,
         period: filters?.period as LocalizedDateFilter,
         filter: {
           ...filters?.filter,
@@ -93,7 +99,7 @@ export const SuspiousTransactionReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect name="branchId" label="Service Center" />
+            <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange />
@@ -108,6 +114,10 @@ export const SuspiousTransactionReport = () => {
 
           <Report.Table<SuspiciousTransactionReport>
             columns={[
+              {
+                header: 'Service Center',
+                accessorKey: 'branchName',
+              },
               {
                 header: 'Transaction Id',
                 cell: (props) => (

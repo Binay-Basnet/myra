@@ -129,8 +129,7 @@ export const CbsAccountClose = () => {
 
   const [totalDeposit, setTotalDeposit] = useState<number>(0);
 
-  const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
-    useGetIndividualMemberDetails({ memberId });
+  const { memberDetailData, memberCitizenshipUrl } = useGetIndividualMemberDetails({ memberId });
   const { data: accountListData } = useGetAccountTableListQuery(
     {
       paginate: {
@@ -634,7 +633,7 @@ export const CbsAccountClose = () => {
                     address: memberDetailData?.address,
                   }}
                   // notice="KYM needs to be updated"
-                  signaturePath={memberSignatureUrl}
+                  signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
                   citizenshipPath={memberCitizenshipUrl}
                   accountInfo={
                     selectedAccount

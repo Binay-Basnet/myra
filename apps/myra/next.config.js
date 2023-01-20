@@ -2,6 +2,42 @@
 const withNx = require('@nrwl/next/plugins/with-nx');
 const path = require('path');
 
+// const ContentSecurityPolicy = `
+//   default-src 'self';
+//   script-src 'self';
+//   style-src 'self';
+//   font-src 'self';
+//   frame-ancestors 'none';
+//   frame-src 'self';
+// `;
+
+const securityHeaders = [
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN',
+  },
+  // {
+  //   key: 'Content-Security-Policy',
+  //   value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+  // },
+  // {
+  //   key: 'X-Content-Type-Options',
+  //   value: 'nosniff',
+  // },
+  {
+    key: 'Permissions-Policy',
+    value: 'camera=(); battery=(); geolocation=(self); microphone=()',
+  },
+  {
+    key: 'Referrer-Policy',
+    value: 'origin-when-cross-origin',
+  },
+  {
+    key: 'X-XSS-Protection',
+    value: '1; mode=block',
+  },
+];
+
 /**
  * @type {import("@nrwl/next/plugins/with-nx").WithNxOptions}
  **/
@@ -10,11 +46,13 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
+  // eslint: {
+  //   ignoreDuringBuilds: true,
+  // },
   // typescript: {
   //   ignoreBuildErrors: true,
   // },
   reactStrictMode: false,
-
   webpack: (config) => {
     // load worker files as a urls with `file-loader`
     config.module.rules.unshift({
@@ -34,11 +72,6 @@ const nextConfig = {
     return config;
   },
 
-  // nx: {
-  //   // Set this to true if you would like to to use SVGR
-  //   // See: https://github.com/gregberge/svgr
-  //   svgr: false,
-  // },
   images: {
     domains: [
       'images.unsplash.com',
@@ -51,6 +84,15 @@ const nextConfig = {
   i18n: {
     locales: ['en', 'ne'],
     defaultLocale: 'en',
+  },
+  poweredByHeader: false,
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ];
   },
 };
 

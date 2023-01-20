@@ -140,7 +140,7 @@ export const CBSAccountList = () => {
     <>
       <Box position="sticky" top="0px" zIndex={3}>
         <PageHeader
-          heading={`Saving Accounts - ${featureCode?.accountList}`}
+          heading={`Saving Accounts - ${featureCode?.savingAccountList}`}
           tabItems={ACCOUNT_TAB_ITEMS}
         />
       </Box>
@@ -156,6 +156,7 @@ export const CBSAccountList = () => {
           total: data?.account?.list?.totalCount ?? 'Many',
           pageInfo: data?.account?.list?.pageInfo,
         }}
+        menu="SAVINGS"
       />
     </>
   );

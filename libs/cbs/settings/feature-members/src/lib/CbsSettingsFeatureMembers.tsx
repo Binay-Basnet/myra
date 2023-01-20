@@ -7,7 +7,7 @@ import {
   useAddGeneralMemberMutation,
   useGetGeneralMemberSettingsDataQuery,
 } from '@coop/cbs/data-access';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { NewMemberCharge } from '../components/general/MemberCharge';
 import { MemberCodeManagement } from '../components/general/MemberCodeManagement';
@@ -79,7 +79,7 @@ export const CbsSettingsFeatureMembers = () => {
       <Box flex={1} p="s16">
         <Box borderBottom="1px" borderBottomColor="border.layout" py="s8" w="100%">
           <Text fontSize="r2" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-            {t['settingsGeneral']}
+            {`${t['settingsGeneral']} - ${featureCode.generalMemberSetting}`}
           </Text>
           <Text pt="s2" fontSize="r1" fontWeight="Reglular" color="gray.400">
             {t['settingsTheseSettings']}

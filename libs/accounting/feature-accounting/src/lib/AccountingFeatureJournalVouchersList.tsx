@@ -6,7 +6,7 @@ import { Column, Table, TablePopover } from '@myra-ui/table';
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { Filter_Mode, useGetJournalVoucherListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureJournalVouchersListProps {}
@@ -83,7 +83,7 @@ export const AccountingFeatureJournalVouchersList = () => {
   return (
     <>
       <AccountingPageHeader
-        heading={t['accountingJournalVouchersListJournalVouchers']}
+        heading={`${t['accountingJournalVouchersListJournalVouchers']} - ${featureCode?.journalVoucherList}`}
         buttonLabel={t['accountingJournalVouchersListNewJournalVoucher']}
         buttonHandler={() => router.push('/accounting/accounting/journal-vouchers/add')}
       />
@@ -102,6 +102,7 @@ export const AccountingFeatureJournalVouchersList = () => {
           total: data?.accounting?.journalVoucher?.list?.totalCount ?? 'Many',
           pageInfo: data?.accounting?.journalVoucher?.list?.pageInfo,
         }}
+        menu="TRANSACTIONS"
       />
     </>
   );

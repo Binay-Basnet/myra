@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { ProductDetailPathBar } from '@coop/cbs/settings/ui-layout';
+import { featureCode } from '@coop/shared/utils';
 
 import { AccountListPage } from './AccountListPage';
 import { OverviewPage } from './OverviewPage';
@@ -14,7 +15,10 @@ export const CbsSettingsSavingsDetailPage = () => {
 
   return (
     <>
-      <ProductDetailPathBar name={sidebarData?.productName ?? ''} title="Savings Product" />
+      <ProductDetailPathBar
+        name={sidebarData?.productName ?? ''}
+        title={`Savings Product - ${featureCode.savingProductDetail}`}
+      />
       {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <OverviewPage />}
       {tabQuery === 'account list' && <AccountListPage />}
 

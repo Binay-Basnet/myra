@@ -86,7 +86,7 @@ export const SettingsServiceCenterTable = () => {
   return (
     <>
       <SettingsPageHeader
-        heading={`${t['serviceCenterSettings']} - ${featureCode?.settingsServiceCenter}`}
+        heading={`${t['serviceCenterSettings']} - ${featureCode?.serviceCenterList}`}
         buttonLabel={t['serviceCenterNew']}
         buttonHandler={() => router.push(`${ROUTES.SETTINGS_GENERAL_SERVICE_CENTER_LIST_ADD}`)}
       />
