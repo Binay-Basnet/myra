@@ -148,6 +148,7 @@ export const BlockWithdrawSlipRequestsList = () => {
           total: data?.requests?.list?.blockCheque?.totalCount ?? 'Many',
           pageInfo: data?.requests?.list?.blockCheque?.pageInfo,
         }}
+        menu="WITHDRAW_SLIP"
       />
 
       <ApproveDeclineModal

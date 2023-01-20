@@ -9,11 +9,13 @@ import {
   Filter_Mode,
   ObjState,
   useDeleteDraftMutation,
+  useGetGeneralMemberSettingsDataQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
 import { formatTableAddress, localizedDate, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
+import { forms, Page } from './MemberLayout';
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
 
 const memberTypeSlug = {
@@ -41,6 +43,19 @@ export const MemberListPage = () => {
   const router = useRouter();
   const searchTerm = router?.query['search'] as string;
   const objState = router?.query['objState'];
+
+  const { data: memberTypeData } = useGetGeneralMemberSettingsDataQuery();
+  const memberTypes =
+    memberTypeData?.settings?.general?.KYM?.general?.generalMember?.record?.memberType;
+
+  const memberForms = Object.keys(memberTypes || {})
+    ?.map((memberType) => {
+      if (memberType && memberTypes?.[memberType as keyof typeof memberTypes]) {
+        return forms[memberType];
+      }
+      return false;
+    })
+    ?.filter(Boolean) as Page[];
 
   const { data, isFetching, refetch } = useGetMemberListQuery(
     {
@@ -286,6 +301,8 @@ export const MemberListPage = () => {
           total: data?.members?.list?.totalCount ?? 'Many',
           pageInfo: data?.members?.list?.pageInfo,
         }}
+        menu="MEMBERS"
+        forms={memberForms}
       />
       <Modal
         open={openModal}

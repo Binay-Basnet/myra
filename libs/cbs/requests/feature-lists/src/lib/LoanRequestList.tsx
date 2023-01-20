@@ -127,6 +127,7 @@ export const LoanRequestList = () => {
           total: data?.requests?.list?.loanRequest?.totalCount ?? 'Many',
           pageInfo: data?.requests?.list?.loanRequest?.pageInfo,
         }}
+        menu="REQUESTS"
       />
 
       <LoanApproveOrDeclineModal queryKey="getLoanRequests" approveModal={modalProps}>

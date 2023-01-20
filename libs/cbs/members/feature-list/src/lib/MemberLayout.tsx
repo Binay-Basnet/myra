@@ -9,14 +9,14 @@ interface IMemberPagesLayoutProps {
   children: React.ReactNode;
 }
 
-type Page = {
+export type Page = {
   label: string;
   aclKey: AclKey;
   route: RouteValue;
   idType?: Id_Type;
 };
 
-const forms: Record<string, Page> = {
+export const forms: Record<string, Page> = {
   individual: {
     label: 'New Individual',
     aclKey: 'CBS_MEMBERS_MEMBER',

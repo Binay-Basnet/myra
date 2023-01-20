@@ -106,7 +106,7 @@ export const LoanRepayment = () => {
   );
 
   const totalCashPaid = isDisableDenomination ? cashPaid : denominationTotal;
-  const returnAmount = Number(totalCashPaid) - Number(amountPaid);
+  const returnAmount = watch('cash.returned_amount');
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({ memberId });
@@ -316,7 +316,7 @@ export const LoanRepayment = () => {
                 )}
               </Box>
               <Box display={mode === '1' ? 'flex' : 'none'}>
-                <Payment loanTotal={amountPaid as string} totalDeposit={amountPaid as number} />
+                <Payment loanTotal={amountPaid as string} />
               </Box>
             </form>
           </FormProvider>

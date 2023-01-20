@@ -131,6 +131,7 @@ export const WithdrawViaCollectorList = () => {
           total: data?.requests?.list?.withdrawViaCollector?.totalCount ?? 'Many',
           pageInfo: data?.requests?.list?.withdrawViaCollector?.pageInfo,
         }}
+        menu="REQUESTS"
       />
       <ApproveDeclineModal
         approveModal={modalProps}

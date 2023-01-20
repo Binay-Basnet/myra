@@ -102,6 +102,7 @@ export const AccountingFeatureJournalVouchersList = () => {
           total: data?.accounting?.journalVoucher?.list?.totalCount ?? 'Many',
           pageInfo: data?.accounting?.journalVoucher?.list?.pageInfo,
         }}
+        menu="TRANSACTIONS"
       />
     </>
   );

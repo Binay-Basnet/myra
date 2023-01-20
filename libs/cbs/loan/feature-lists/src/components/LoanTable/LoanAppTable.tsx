@@ -137,6 +137,7 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
         total: data?.loanAccount?.list?.totalCount ?? 'Many',
         pageInfo: data?.loanAccount?.list?.pageInfo,
       }}
+      menu="LOAN"
     />
   );
 };

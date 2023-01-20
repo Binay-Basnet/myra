@@ -91,6 +91,7 @@ export const CashTransferList = () => {
           pageInfo: data?.transaction?.listServiceCenterCashTransfer?.pageInfo,
         }}
         noDataTitle="service center cash transfer list"
+        menu="TRANSFERS"
       />
     </>
   );

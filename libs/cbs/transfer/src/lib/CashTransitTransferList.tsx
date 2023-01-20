@@ -168,6 +168,7 @@ export const CashTransitTransferList = () => {
           );
           modalProps.onToggle();
         }}
+        menu="TRANSFERS"
       />
 
       <CashInTransitTransferAproveModal

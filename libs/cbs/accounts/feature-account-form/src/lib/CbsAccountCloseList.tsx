@@ -106,6 +106,7 @@ export const CBSAccountCloseList = () => {
           total: data?.account?.list?.totalCount ?? 'Many',
           pageInfo: data?.account?.list?.pageInfo,
         }}
+        menu="SAVINGS"
       />
     </>
   );

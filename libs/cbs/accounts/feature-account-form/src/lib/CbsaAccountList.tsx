@@ -156,6 +156,7 @@ export const CBSAccountList = () => {
           total: data?.account?.list?.totalCount ?? 'Many',
           pageInfo: data?.account?.list?.pageInfo,
         }}
+        menu="SAVINGS"
       />
     </>
   );
