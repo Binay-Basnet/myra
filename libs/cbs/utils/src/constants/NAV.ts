@@ -31,7 +31,7 @@ export type MenuType =
   | 'WAREHOUSE'
   | 'SUPPLIERS';
 
-type Page = {
+export type Page = {
   label: string;
   aclKey: AclKey;
   route: RouteValue;

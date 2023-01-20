@@ -120,6 +120,7 @@ export const MemberRequestPage = () => {
           total: data?.requests?.list?.membershipRequest?.totalCount ?? 'Many',
           pageInfo: data?.requests?.list?.membershipRequest?.pageInfo,
         }}
+        menu="REQUESTS"
       />
 
       <MemberApproveOrDeclineModal approveModal={modalProps}>

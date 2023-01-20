@@ -108,6 +108,7 @@ export const ShareBalanceTable = () => {
           total: data?.share?.balance?.totalCount as number,
           pageInfo: data?.share?.balance?.pageInfo,
         }}
+        menu="SHARE"
       />
     </>
   );

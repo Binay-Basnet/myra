@@ -139,6 +139,7 @@ export const CBSLoanRepaymentList = () => {
           total: data?.loanAccount?.repaymentList?.totalCount ?? 'Many',
           pageInfo: data?.loanAccount?.repaymentList?.pageInfo,
         }}
+        menu="LOAN"
       />
     </>
   );

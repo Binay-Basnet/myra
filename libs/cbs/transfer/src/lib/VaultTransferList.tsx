@@ -127,6 +127,7 @@ export const VaultTransferList = () => {
           pageInfo: data?.transaction?.listTellerTransaction?.pageInfo,
         }}
         noDataTitle="vault transfer list"
+        menu="TRANSFERS"
       />
     </>
   );

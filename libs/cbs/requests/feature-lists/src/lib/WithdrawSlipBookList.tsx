@@ -145,6 +145,7 @@ export const WithdrawSlipBookList = () => {
           total: data?.requests?.list?.chequeBookRequest?.totalCount ?? 'Many',
           pageInfo: data?.requests?.list?.chequeBookRequest?.pageInfo,
         }}
+        menu="WITHDRAW_SLIP"
       />
 
       <ApproveDeclineModal
