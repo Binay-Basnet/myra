@@ -8952,11 +8952,7 @@ export const LoanAgingPeriod = {
   AboveTwelveMonths: 'ABOVE_TWELVE_MONTHS',
   All: 'ALL',
   Below_30Days: 'BELOW_30_DAYS',
-  CustomPeriod: 'CUSTOM_PERIOD',
   OneTwelveMonths: 'ONE_TWELVE_MONTHS',
-  ThisFiscalYearToDate: 'THIS_FISCAL_YEAR_TO_DATE',
-  ThreeMonths: 'THREE_MONTHS',
-  TwoMonths: 'TWO_MONTHS',
 } as const;
 
 export type LoanAgingPeriod = typeof LoanAgingPeriod[keyof typeof LoanAgingPeriod];
@@ -8971,9 +8967,10 @@ export type LoanAgingStatementData = {
 };
 
 export type LoanAgingStatementInput = {
+  agingPeriod?: InputMaybe<LoanAgingPeriod>;
   branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<LoanAgingFilters>;
-  period?: InputMaybe<LoanAgingPeriodInput>;
+  period: LocalizedDateFilter;
 };
 
 export type LoanAgingStatementReport = {
@@ -9775,7 +9772,7 @@ export type LoanReport = {
 };
 
 export type LoanReportLoanAgingStatementReportArgs = {
-  data?: InputMaybe<LoanAgingStatementInput>;
+  data: LoanAgingStatementInput;
 };
 
 export type LoanReportLoanBalanceReportArgs = {
@@ -22514,7 +22511,7 @@ export type GetLoanBalanceReportQuery = {
 };
 
 export type GetLoanAgingStatementReportQueryVariables = Exact<{
-  data?: InputMaybe<LoanAgingStatementInput>;
+  data: LoanAgingStatementInput;
 }>;
 
 export type GetLoanAgingStatementReportQuery = {
@@ -37635,7 +37632,7 @@ export const useGetLoanBalanceReportQuery = <TData = GetLoanBalanceReportQuery, 
     options
   );
 export const GetLoanAgingStatementReportDocument = `
-    query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
+    query getLoanAgingStatementReport($data: LoanAgingStatementInput!) {
   report {
     loanReport {
       loanAgingStatementReport(data: $data) {
@@ -37692,13 +37689,11 @@ export const useGetLoanAgingStatementReportQuery = <
   TData = GetLoanAgingStatementReportQuery,
   TError = unknown
 >(
-  variables?: GetLoanAgingStatementReportQueryVariables,
+  variables: GetLoanAgingStatementReportQueryVariables,
   options?: UseQueryOptions<GetLoanAgingStatementReportQuery, TError, TData>
 ) =>
   useQuery<GetLoanAgingStatementReportQuery, TError, TData>(
-    variables === undefined
-      ? ['getLoanAgingStatementReport']
-      : ['getLoanAgingStatementReport', variables],
+    ['getLoanAgingStatementReport', variables],
     useAxios<GetLoanAgingStatementReportQuery, GetLoanAgingStatementReportQueryVariables>(
       GetLoanAgingStatementReportDocument
     ).bind(null, variables),

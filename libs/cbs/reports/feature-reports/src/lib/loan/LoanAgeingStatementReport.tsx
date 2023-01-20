@@ -8,6 +8,7 @@ import {
   LoanAgingStatementInput,
   LoanAgingStatementReport,
   LoanBalanceFilterData,
+  LocalizedDateFilter,
   useGetLoanAgingStatementReportQuery,
   useGetLoanProductTypeQuery,
   useGetMultipleSubProductsQuery,
@@ -15,7 +16,12 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormAmountFilter, FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
+import {
+  FormAmountFilter,
+  FormBranchSelect,
+  FormCheckboxGroup,
+  FormDatePicker,
+} from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type LoanAgeingFilters = Omit<LoanAgingStatementInput, 'branchId'> & {
@@ -35,7 +41,14 @@ export const LoanAgingStatementsReport = () => {
 
   const { data, isFetching } = useGetLoanAgingStatementReportQuery(
     {
-      data: { ...filters, branchId: branchIds } as LoanAgingStatementInput,
+      data: {
+        ...filters,
+        branchId: branchIds,
+        period: {
+          from: filters?.period?.from,
+          to: filters?.period?.from,
+        } as LocalizedDateFilter,
+      } as LoanAgingStatementInput,
     },
     { enabled: !!filters }
   );
@@ -62,6 +75,10 @@ export const LoanAgingStatementsReport = () => {
         <Report.Inputs hideDate>
           <GridItem colSpan={3}>
             <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
+          </GridItem>
+
+          <GridItem colSpan={1}>
+            <FormDatePicker name="period.from" label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
