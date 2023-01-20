@@ -76,7 +76,7 @@ export const LoanAccountList = () => {
   const memberListData =
     memberAccountDetails?.map((data, index) => ({
       sn: Number(index) + 1,
-      id: data?.accountId,
+      id: data?.accountNumber,
       accountType: data?.productType,
       accountName: data?.accountName,
       totalBalance: amountConverter(data?.totalBalance as string),
