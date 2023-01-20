@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 import { Filter_Mode, useGetAllTransactionsListQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { ROUTES } from '@coop/cbs/utils';
-import { amountConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface DepositListProps {}
@@ -79,7 +79,7 @@ export const AllTransactionsList = () => {
 
   return (
     <>
-      <TransactionPageHeader heading="All Transactions" />
+      <TransactionPageHeader heading={`All Transactions - ${featureCode?.allTransactionList}`} />
 
       <Table
         data={rowData}
@@ -96,6 +96,7 @@ export const AllTransactionsList = () => {
           pageInfo: data?.transaction?.listAllTransactions?.pageInfo,
         }}
         searchPlaceholder="Search all transactions"
+        menu="TRANSACTIONS"
       />
     </>
   );

@@ -155,7 +155,7 @@ export const ShareRegisterTable = () => {
     <>
       <Box position="sticky" top="0" zIndex={3}>
         <TableListPageHeader
-          heading={`${t['shareRegisterTable']} - ${featureCode?.shareRegister}`}
+          heading={`${t['shareRegisterTable']} - ${featureCode?.shareRegisterList}`}
         />
       </Box>
       <Table
@@ -169,6 +169,7 @@ export const ShareRegisterTable = () => {
           total: data?.share?.register?.totalCount ?? 'Many',
           pageInfo: data?.share?.register?.pageInfo,
         }}
+        menu="SHARE"
       />
     </>
   );

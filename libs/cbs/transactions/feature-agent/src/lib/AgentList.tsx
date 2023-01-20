@@ -151,6 +151,7 @@ export const AgentList = () => {
           total: data?.transaction?.listAgent?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listAgent?.pageInfo,
         }}
+        menu="TRANSACTIONS"
       />
     </>
   );

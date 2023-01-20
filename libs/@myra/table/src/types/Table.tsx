@@ -1,5 +1,9 @@
 import { ChangeEventHandler, MouseEventHandler } from 'react';
+import { As } from '@chakra-ui/react';
 import { ColumnDef, Row, RowData, Table } from '@tanstack/react-table';
+
+import { Id_Type } from '@coop/cbs/data-access';
+import { AclKey, MenuType, RouteValue } from '@coop/cbs/utils';
 
 declare module '@tanstack/table-core' {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -57,6 +61,17 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
 
   // Expand Props
   getSubRows?: (row: TData) => TData[];
+
+  menuIcon?: As<any> | undefined;
+  type?: string;
+
+  menu?: MenuType;
+  forms?: {
+    label: string;
+    aclKey: AclKey;
+    route: RouteValue;
+    idType?: Id_Type;
+  }[];
 }
 
 export type TableInstance<T> = Table<T>;

@@ -1,10 +1,10 @@
 import { IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Divider, Icon, IconButton, PathBar } from '@myra-ui';
+import { Box, DetailCardContent, DetailsCard, Divider, Icon, IconButton, PathBar } from '@myra-ui';
 
 import { useGetAllTransactionsDetailQuery } from '@coop/cbs/data-access';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { GlTransaction, Note } from '../component';
 
@@ -19,6 +19,7 @@ export const AllTransactionDetailPage = () => {
   );
   const allTransactionsData = allTransactionsDetails?.transaction?.viewTransactionDetail?.data;
   const tableData = allTransactionsData?.glTransaction;
+  const { t } = useTranslation();
 
   return (
     <Box bg="gray.100" minH="calc(100vh - 110px)">
@@ -46,6 +47,22 @@ export const AllTransactionDetailPage = () => {
           branch={depositDetailData?.transactionBranch as string}
           teller={depositDetailData?.teller as string}
         /> */}
+
+        <DetailsCard title={t['transDetailTransactionDetails']} hasThreeRows>
+          <DetailCardContent
+            title={t['transDetailTransactionID']}
+            subtitle={allTransactionsData?.id}
+          />
+
+          <DetailCardContent
+            title="Amount"
+            subtitle={amountConverter(allTransactionsData?.amount ?? 0)}
+          />
+
+          <DetailCardContent title={t['transDetailStatus']} status />
+          <DetailCardContent title="Transaction Type" subtitle={allTransactionsData?.txnType} />
+        </DetailsCard>
+        <Divider />
         {allTransactionsData?.note && (
           <Box>
             {' '}
@@ -54,6 +71,7 @@ export const AllTransactionDetailPage = () => {
         )}
 
         <Divider />
+
         <GlTransaction
           totalDebit={String(amountConverter(allTransactionsData?.totalDebit ?? 0))}
           totalCredit={String(amountConverter(allTransactionsData?.totalCredit ?? 0))}

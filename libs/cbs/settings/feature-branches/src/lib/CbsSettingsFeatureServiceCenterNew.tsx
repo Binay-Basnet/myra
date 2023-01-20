@@ -16,7 +16,7 @@ import {
 import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 export const CbsSettingsFeatureServiceCenterNew = () => {
   const router = useRouter();
@@ -31,7 +31,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const { t } = useTranslation();
 
-  const methods = useForm<BranchInput>({ defaultValues: { abbsStatus: true } });
+  const methods = useForm<BranchInput>({ defaultValues: { abbsStatus: true, branchStatus: true } });
 
   const { getValues, watch, reset, setError, clearErrors } = methods;
 
@@ -161,7 +161,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
     <>
       <Container height="fit-content" minW="container.xl">
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title={t['serviceCenterAdd']} />
+          <FormHeader title={`${t['serviceCenterAdd']} - ${featureCode.newServiceCenter}`} />
         </Box>
 
         <Box bg="white" pb="100px">

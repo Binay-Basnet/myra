@@ -77,7 +77,7 @@ export const CashTransferList = () => {
 
     <>
       <PageHeader
-        heading={`Service Center Cash Transfer - ${featureCode.vaultTransferList}`}
+        heading={`Service Center Cash Transfer - ${featureCode.serviceCenterTransferList}`}
         // tabItems={tabList}
       />
 
@@ -91,6 +91,7 @@ export const CashTransferList = () => {
           pageInfo: data?.transaction?.listServiceCenterCashTransfer?.pageInfo,
         }}
         noDataTitle="service center cash transfer list"
+        menu="TRANSFERS"
       />
     </>
   );

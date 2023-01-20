@@ -8,7 +8,7 @@ import { featureCode } from '@coop/shared/utils';
 
 const LoanRepayments = () => (
   <>
-    <PageHeader heading={`Loan Products - ${featureCode.loanProducts}`} />
+    <PageHeader heading={`Loan Products - ${featureCode.loanProductList}`} />
     <LoanProductTable showSettingsAction={false} />
   </>
 );

@@ -2,19 +2,19 @@ import { useRouter } from 'next/router';
 
 import { Box, DetailCardContent, DetailsCard, Divider, Grid } from '@myra-ui';
 
-import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
+import { useGetMemberKymDetailsBioQuery } from '@coop/cbs/data-access';
 
 import { DocumentComponent } from '../components/Documents';
 
 export const RepresentativeDetails = () => {
   const router = useRouter();
-  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+  const memberBioData = useGetMemberKymDetailsBioQuery({
     id: router.query['id'] as string,
   });
 
   const bioDataCoop =
-    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'CoopBio'
-      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.representativeDetails
+    memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.__typename === 'CoopBio'
+      ? memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.representativeDetails
       : null;
 
   return (

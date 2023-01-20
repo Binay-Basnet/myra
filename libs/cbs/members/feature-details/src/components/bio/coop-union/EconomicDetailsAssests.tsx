@@ -3,18 +3,18 @@ import { useRouter } from 'next/router';
 
 import { Column, DetailsCard, Table } from '@myra-ui';
 
-import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
+import { useGetMemberKymDetailsBioQuery } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 export const EconomicDetailsAssests = () => {
   const router = useRouter();
-  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+  const memberBioData = useGetMemberKymDetailsBioQuery({
     id: router.query['id'] as string,
   });
 
   const bioDataCoopUnion =
-    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'CoopUnionBio'
-      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.assetDetails
+    memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.__typename === 'CoopUnionBio'
+      ? memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.assetDetails
       : null;
 
   const data = [

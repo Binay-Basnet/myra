@@ -6,7 +6,7 @@ import {
   SettingsLayout,
   SettingsMemberLayout,
 } from '@coop/cbs/settings/ui-layout';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const KYMCoperative = () => {
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ const KYMCoperative = () => {
       <Box flex={1} p="s16">
         <Box borderBottom="1px" borderBottomColor="border.layout" py="s8" w="100%">
           <Text fontSize="r2" fontWeight="600" color="neutralColorLight.Gray-80">
-            {t['settingsKymCoopForm']}
+            {`${t['settingsKymCoopForm']} - ${featureCode.coopMemberSetting}`}
           </Text>
           <Text pt="s2" fontSize="r1" fontWeight="400" color="gray.400">
             {t['settingsKymCoopSettingsChange']}

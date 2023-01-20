@@ -3,18 +3,18 @@ import { useRouter } from 'next/router';
 
 import { Column, DetailsCard, Table, Text } from '@myra-ui';
 
-import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
+import { useGetMemberKymDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 export const TransactionTable = () => {
   const router = useRouter();
-  const memberDetails = useGetMemberDetailsOverviewQuery({
+  const memberDetails = useGetMemberKymDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
 
   const memberRecentTrans =
-    memberDetails?.data?.members?.memberOverview?.data?.overview?.recentTransactions;
+    memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.recentTransactions;
 
   const memberRecentTransWithIndex =
     memberRecentTrans?.map((trans, index) => ({

@@ -9,7 +9,7 @@ import {
   CooperativeUnionBasicMinInfo,
   IndividualBasicMinInfo,
   InstitutionBasicMinInfo,
-  useGetMemberOverviewBasicDetailsQuery,
+  useGetMemberKymDetailsOverviewQuery,
 } from '@coop/cbs/data-access';
 
 import { AccountCard } from './AccountCard';
@@ -42,33 +42,33 @@ export const AccountList = ({
     setShowGrid(!showGrid);
   };
 
-  const memberDetailsData = useGetMemberOverviewBasicDetailsQuery({
+  const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
 
   const memberIndividual =
-    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
       ?.__typename === 'IndividualBasicMinInfo'
-      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as IndividualBasicMinInfo)
       : null;
   const memberBasicInstitution =
-    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
       ?.__typename === 'InstitutionBasicMinInfo'
-      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as InstitutionBasicMinInfo)
       : null;
 
   const memberBasicCooperative =
-    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
       ?.__typename === 'CooperativeBasicMinInfo'
-      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as CooperativeBasicMinInfo)
       : null;
   const memberBasicCooperativeUnion =
-    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
       ?.__typename === 'CooperativeUnionBasicMinInfo'
-      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as CooperativeUnionBasicMinInfo)
       : null;
 

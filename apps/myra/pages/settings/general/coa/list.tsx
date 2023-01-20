@@ -30,7 +30,7 @@ const ChartsOfAccounts = () => {
     <Can I="SHOW_IN_MENU" a="SETTINGS_COA" showError isErrorCentered>
       <Box width="full">
         <SettingsPageHeader
-          heading={`${t['settingsCoa']} - ${featureCode?.settingsChartsOfAccount}`}
+          heading={`${t['settingsCoa']} - ${featureCode?.coaList}`}
           tabItems={tabList}
           // buttonLabel={t['settingsCoaNewAccount']}
           // buttonHandler={() => router.push('/settings/general/charts-of-accounts/add-new-account')}

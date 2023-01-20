@@ -48,12 +48,16 @@ export const DetailPageTabs = ({ tabs }: DetailPageTabsProps) => {
                 key={tab}
                 w="100%"
                 onClick={() =>
-                  router.push({
-                    query: {
-                      ...router.query,
-                      tab: tab.toLowerCase(),
+                  router.push(
+                    {
+                      query: {
+                        ...router.query,
+                        tab: tab.toLowerCase(),
+                      },
                     },
-                  })
+                    undefined,
+                    { shallow: true }
+                  )
                 }
               >
                 <TabCol>

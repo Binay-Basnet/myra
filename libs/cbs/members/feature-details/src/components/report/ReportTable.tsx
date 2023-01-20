@@ -2,17 +2,17 @@ import { useRouter } from 'next/router';
 
 import { DetailsCard } from '@myra-ui';
 
-import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
+import { useGetMemberKymDetailsReportQuery } from '@coop/cbs/data-access';
 
 import { ReportTableComponent } from './ReportTableComponent';
 
 export const ReportTable = () => {
   const router = useRouter();
 
-  const memberDetails = useGetMemberDetailsOverviewQuery({
+  const memberDetails = useGetMemberKymDetailsReportQuery({
     id: router.query['id'] as string,
   });
-  const memberReportsDetails = memberDetails?.data?.members?.memberOverview?.data?.reports?.list;
+  const memberReportsDetails = memberDetails?.data?.members?.memberOverviewV2?.reports?.data?.list;
 
   const memberListData =
     memberReportsDetails?.map((data, index) => ({

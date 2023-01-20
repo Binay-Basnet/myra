@@ -69,7 +69,7 @@ export const NewFundManagement = () => {
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title={`New Profit to Fund Management - ${featureCode?.newProfitFundManagement}`}
+            title={`New Profit to Fund Management - ${featureCode?.newProfitToFundManagement}`}
             // closeLink="/others/fund-management/list"
           />
         </Box>

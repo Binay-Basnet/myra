@@ -31,6 +31,11 @@ query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
           memberType
           balance
         }
+        summary {
+          totalIndividualAccount
+          totalMinorAccount
+          totalOtherAccount
+        }
         totalBalance
       }
     }

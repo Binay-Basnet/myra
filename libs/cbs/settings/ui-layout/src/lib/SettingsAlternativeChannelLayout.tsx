@@ -3,7 +3,7 @@ import React from 'react';
 import { Box } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
@@ -24,7 +24,9 @@ export const SettingsAlternativeChannelLayout = ({ children }: ISettingsLoanLayo
 
   return (
     <>
-      <SettingsPageHeader heading={`${t['settingsAlternativeChannel']}`} />
+      <SettingsPageHeader
+        heading={`${t['settingsAlternativeChannel']} - ${featureCode.alternativeChannelCharges}`}
+      />
       <Box
         w="250px"
         px="s8"

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { DetailsCard } from '@myra-ui';
 
-import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
+import { useGetMemberKymDetailsBioQuery } from '@coop/cbs/data-access';
 
 import { AccountOperatorDetails } from './AccountOperatorsDetails';
 import { AppicantDetails } from './ApplicantDetails';
@@ -22,13 +22,13 @@ import { DocumentComponent } from '../components/Documents';
 
 export const BioCoopUnion = () => {
   const router = useRouter();
-  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+  const memberBioData = useGetMemberKymDetailsBioQuery({
     id: router.query['id'] as string,
   });
 
   const bioDataCoopUnionDocs =
-    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'CoopUnionBio'
-      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.docs
+    memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.__typename === 'CoopUnionBio'
+      ? memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.docs
       : null;
   return (
     <>

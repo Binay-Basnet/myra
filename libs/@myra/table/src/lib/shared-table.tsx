@@ -16,9 +16,10 @@ import {
 import { ExpandedState, flexRender, SortingState } from '@tanstack/react-table';
 import qs from 'qs';
 
-import { Loader, Pagination } from '@myra-ui/components';
-import { Text } from '@myra-ui/foundations';
-import { NoDataState } from '@myra-ui/templates';
+import { EmptyState, Loader, NoDataState, Text } from '@myra-ui';
+import { Pagination } from '@myra-ui/components';
+
+import { EMPTYSTATE } from '@coop/cbs/utils';
 
 // eslint-disable-next-line import/no-cycle
 import { TableSearch, TableSelectionBar } from '../components';
@@ -47,6 +48,9 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
     enableSorting,
     manualSorting = true,
     getSubRows,
+
+    menu,
+    forms,
   } = props;
 
   const router = useRouter();
@@ -89,6 +93,10 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router?.isReady]);
+
+  const emptyStateData = EMPTYSTATE[menu];
+
+  const sidebarForms = forms || EMPTYSTATE[menu]?.buttonLink;
 
   return (
     <>
@@ -216,7 +224,16 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
                   justifyContent="center"
                 >
                   <Flex as="td" justifyContent="center" height="300px" alignItems="center">
-                    <NoDataState title={noDataTitle} />
+                    {menu ? (
+                      <EmptyState
+                        menuIcon={emptyStateData?.icon}
+                        menu={emptyStateData?.title}
+                        forms={sidebarForms}
+                        docLink={emptyStateData.docLink}
+                      />
+                    ) : (
+                      <NoDataState title={noDataTitle} />
+                    )}
                   </Flex>
                 </Box>
               ))

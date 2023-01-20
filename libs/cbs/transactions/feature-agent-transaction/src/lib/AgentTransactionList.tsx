@@ -131,7 +131,7 @@ export const AgentTransactionList = () => {
   return (
     <>
       <PageHeader
-        heading={`Market Representative Transaction - ${featureCode?.marketRepresentativeTransactionsList}`}
+        heading={`Market Representative Transaction - ${featureCode?.marketRepresentativeTransactionList}`}
       />
 
       <Table
@@ -151,6 +151,7 @@ export const AgentTransactionList = () => {
           total: data?.transaction?.listDeposit?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listDeposit?.pageInfo,
         }}
+        menu="TRANSACTIONS"
       />
     </>
   );

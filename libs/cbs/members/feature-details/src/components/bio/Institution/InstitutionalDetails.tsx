@@ -14,7 +14,7 @@ import {
   Text,
 } from '@myra-ui';
 
-import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
+import { useGetMemberKymDetailsBioQuery } from '@coop/cbs/data-access';
 
 import { AccountHolderDecleration } from './AccountHoldersDecleration';
 import { AccountOperationInstruction } from './AccountOperationInstruction';
@@ -30,25 +30,25 @@ import { DocumentComponent } from '../components/Documents';
 
 export const BioInstitution = () => {
   const router = useRouter();
-  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+  const memberBioData = useGetMemberKymDetailsBioQuery({
     id: router.query['id'] as string,
   });
 
   const bioDataInstitutionSisterConcern =
-    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'InstitutionBio'
-      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.sisterConcernDetails
+    memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.__typename === 'InstitutionBio'
+      ? memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.sisterConcernDetails
       : null;
   const bioDataInstitutionAccountOPerator =
-    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'InstitutionBio'
-      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.operatorDetails
+    memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.__typename === 'InstitutionBio'
+      ? memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.operatorDetails
       : null;
   const bioDataInstitutionDirector =
-    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'InstitutionBio'
-      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.partnerDirectorDetails
+    memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.__typename === 'InstitutionBio'
+      ? memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.partnerDirectorDetails
       : null;
   const bioDataInstitutionDocs =
-    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'InstitutionBio'
-      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.docs
+    memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.__typename === 'InstitutionBio'
+      ? memberBioData?.data?.members?.memberOverviewV2?.bio?.data?.docs
       : null;
 
   return (

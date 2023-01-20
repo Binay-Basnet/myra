@@ -2,16 +2,16 @@ import { useRouter } from 'next/router';
 
 import { Box, Grid, Text } from '@myra-ui';
 
-import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
+import { useGetMemberKymDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 export const MemberStatistics = () => {
   const router = useRouter();
-  const memberDetails = useGetMemberDetailsOverviewQuery({
+  const memberDetails = useGetMemberKymDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
   const memberShareDetails =
-    memberDetails?.data?.members?.memberOverview?.data?.overview?.statistics;
+    memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.statistics;
   return (
     <Grid templateColumns="repeat(3,1fr)" gap="s16">
       {memberShareDetails?.totalShareValue && (

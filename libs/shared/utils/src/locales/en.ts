@@ -1395,7 +1395,7 @@ const en: Record<string, string> = {
   shareIssueAuthoritySubtitle: 'Who can issue the share',
   shareHeadOffice: 'Head Office',
   shareRegionalOffice: 'Regional Office',
-  shareServiceCenterBranch: 'Share Center /  Branch',
+  shareServiceCenterBranch: 'Service Center /  Branch',
   shareContactOffice: 'Contact Office (Samparka Karyalaya)',
   shareOther: 'Other',
   shareKitta: 'Share Kitta',

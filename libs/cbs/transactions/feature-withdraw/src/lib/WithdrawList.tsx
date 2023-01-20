@@ -145,6 +145,7 @@ export const WithdrawList = () => {
           pageInfo: data?.transaction?.listWithdraw?.pageInfo,
         }}
         searchPlaceholder={t['withdrawListSearchPlaceholder']}
+        menu="TRANSACTIONS"
       />
     </>
   );

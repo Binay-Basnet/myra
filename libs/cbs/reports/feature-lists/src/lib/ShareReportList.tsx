@@ -19,7 +19,7 @@ export const ShareReportList = () => (
         key={report.id}
         link={report.link ? `/reports/cbs/share/${report.link}/new` : undefined}
       >
-        {report.id} - {report.report} - {featureCode?.shareRegister}
+        {report.id} - {report.report} - {featureCode?.shareRegisterList}
       </ReportLinkText>
     ))}
   </Box>

@@ -1,14 +1,15 @@
 import { useRouter } from 'next/router';
 
-import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { Box, Grid, Text } from '@myra-ui';
+
+import { useGetMemberKymDetailsSharesQuery } from '@coop/cbs/data-access';
 
 export const ShareInfo = () => {
   const router = useRouter();
-  const memberDetails = useGetMemberDetailsOverviewQuery({
+  const memberDetails = useGetMemberKymDetailsSharesQuery({
     id: router.query['id'] as string,
   });
-  const memberShareDetails = memberDetails?.data?.members?.memberOverview?.data?.share?.shareInfo;
+  const memberShareDetails = memberDetails?.data?.members?.memberOverviewV2?.share?.data?.shareInfo;
   return (
     <Grid templateColumns="repeat(4,1fr)" gap="s16">
       {memberShareDetails?.totalCount && (

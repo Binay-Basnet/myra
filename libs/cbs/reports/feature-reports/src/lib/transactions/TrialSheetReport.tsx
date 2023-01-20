@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Link from 'next/link';
 
-import { Box, Column, ExpandedCell, ExpandedHeader, GridItem, Text } from '@myra-ui';
+import { Box, Button, Column, ExpandedCell, ExpandedHeader, GridItem, Text } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
@@ -330,9 +330,9 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
                 target="_blank"
                 href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props.row?.original?.ledgerId}`}
               >
-                <Text fontSize="s3" color="primary.500">
+                <Button variant="link" color="primary.500">
                   {props.row.original.ledgerId} - {localizedText(props?.row?.original?.ledgerName)}
-                </Text>
+                </Button>
               </Link>
             ) : (
               ` ${props.row.original.ledgerId} - ${localizedText(props?.row?.original?.ledgerName)}`

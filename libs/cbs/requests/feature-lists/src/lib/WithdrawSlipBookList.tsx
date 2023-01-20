@@ -12,7 +12,7 @@ import {
   useGetChequeBookRequestsQuery,
 } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
@@ -121,7 +121,7 @@ export const WithdrawSlipBookList = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader heading="Withdraw Slip Book" />
+        <PageHeader heading={`Withdraw Slip Book - ${featureCode.withdrawSlipBookList}`} />
       </Box>
 
       <Table
@@ -145,6 +145,7 @@ export const WithdrawSlipBookList = () => {
           total: data?.requests?.list?.chequeBookRequest?.totalCount ?? 'Many',
           pageInfo: data?.requests?.list?.chequeBookRequest?.pageInfo,
         }}
+        menu="WITHDRAW_SLIP"
       />
 
       <ApproveDeclineModal

@@ -3,7 +3,7 @@ import React from 'react';
 import { Box } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
@@ -45,7 +45,7 @@ export const SettingsShareLayout = ({ children }: SettingsShareLayoutProps) => {
 
   return (
     <>
-      <SettingsPageHeader heading={`${t['shareSettings']} - ${featureCode?.settingsShare}`} />
+      <SettingsPageHeader heading={t['shareSettings']} />
       <Box
         w="250px"
         px="s8"

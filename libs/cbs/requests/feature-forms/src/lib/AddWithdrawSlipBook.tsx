@@ -31,6 +31,7 @@ import {
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
+import { featureCode } from '@coop/shared/utils';
 
 interface CustomWithdrawSlipIssueInput extends WithdrawSlipIssueInput {
   memberId: string;
@@ -136,7 +137,7 @@ export const AddWithdrawSlipBook = () => {
     <>
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title="Create Withdraw Slip Book" />
+          <FormHeader title={`Create Withdraw Slip Book - ${featureCode.newWithdrawSlipBook}`} />
         </Box>
 
         <Box bg="white">

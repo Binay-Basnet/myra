@@ -93,7 +93,9 @@ export const ShareBalanceTable = () => {
   return (
     <>
       <Box position="sticky" top={0} zIndex={3}>
-        <TableListPageHeader heading={`${t['shareBalanceTable']} - ${featureCode?.shareBalance}`} />
+        <TableListPageHeader
+          heading={`${t['shareBalanceTable']} - ${featureCode?.shareBalanceList}`}
+        />
       </Box>
       <Table
         isLoading={isFetching}
@@ -106,6 +108,7 @@ export const ShareBalanceTable = () => {
           total: data?.share?.balance?.totalCount as number,
           pageInfo: data?.share?.balance?.pageInfo,
         }}
+        menu="SHARE"
       />
     </>
   );

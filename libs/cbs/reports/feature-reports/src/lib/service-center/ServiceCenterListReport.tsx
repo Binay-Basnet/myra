@@ -86,7 +86,7 @@ export const ServiceCenterListReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <ReportDateRange label="Branch Established Date" />
+            <ReportDateRange label="Service Center Established Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

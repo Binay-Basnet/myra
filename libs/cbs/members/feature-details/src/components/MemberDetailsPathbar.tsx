@@ -7,7 +7,7 @@ import {
   CooperativeUnionBasicMinInfo,
   IndividualBasicMinInfo,
   InstitutionBasicMinInfo,
-  useGetMemberOverviewBasicDetailsQuery,
+  useGetMemberKymDetailsOverviewQuery,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 
@@ -17,33 +17,33 @@ interface PathBarProps {
 
 export const MemberDetailsPathBar = ({ title }: PathBarProps) => {
   const router = useRouter();
-  const memberDetails = useGetMemberOverviewBasicDetailsQuery({
+  const memberDetails = useGetMemberKymDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
 
   const memberInfo =
-    memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation?.__typename ===
+    memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation?.__typename ===
     'IndividualBasicMinInfo'
-      ? (memberDetails?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetails?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as IndividualBasicMinInfo)
       : null;
 
   const memberBasicInstitution =
-    memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation?.__typename ===
+    memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation?.__typename ===
     'InstitutionBasicMinInfo'
-      ? (memberDetails?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetails?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as InstitutionBasicMinInfo)
       : null;
   const memberBasicCooperative =
-    memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation?.__typename ===
+    memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation?.__typename ===
     'CooperativeBasicMinInfo'
-      ? (memberDetails?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetails?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as CooperativeBasicMinInfo)
       : null;
   const memberBasicCooperativeUnion =
-    memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation?.__typename ===
+    memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation?.__typename ===
     'CooperativeUnionBasicMinInfo'
-      ? (memberDetails?.data?.members?.memberOverview?.data?.overview
+      ? (memberDetails?.data?.members?.memberOverviewV2?.overview?.data
           ?.basicInformation as CooperativeUnionBasicMinInfo)
       : null;
 
