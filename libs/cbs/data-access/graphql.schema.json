@@ -75795,31 +75795,7 @@
             "deprecationReason": null
           },
           {
-            "name": "CUSTOM_PERIOD",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "ONE_TWELVE_MONTHS",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "THIS_FISCAL_YEAR_TO_DATE",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "THREE_MONTHS",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "TWO_MONTHS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -75916,6 +75892,18 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "agingPeriod",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "LoanAgingPeriod",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "branchId",
             "description": null,
             "type": {
@@ -75951,9 +75939,13 @@
             "name": "period",
             "description": null,
             "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "LoanAgingPeriodInput",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "LocalizedDateFilter",
+                "ofType": null
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -83307,9 +83299,13 @@
                 "name": "data",
                 "description": null,
                 "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "LoanAgingStatementInput",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "LoanAgingStatementInput",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,

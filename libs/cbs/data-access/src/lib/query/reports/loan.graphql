@@ -22,7 +22,7 @@ query getLoanBalanceReport($data: LoanBalanceFilterData!) {
   }
 }
 
-query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
+query getLoanAgingStatementReport($data: LoanAgingStatementInput!) {
   report {
     loanReport {
       loanAgingStatementReport(data: $data) {
