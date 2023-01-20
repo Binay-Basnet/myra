@@ -160,27 +160,6 @@ export const LoginPage = () => {
             </Text>
           </Text>
         </Box>
-
-        <Box pt="s40" display="flex" flexDir="column" gap="s16">
-          <Box display="flex" alignItems="center" gap="s16">
-            <Box h="1px" bg="#DCDCDC" w="100%" />
-            <Text fontSize="r1" color="gray.500">
-              OR
-            </Text>
-            <Box h="1px" bg="#DCDCDC" w="100%" />
-          </Box>
-          <Box>
-            <Button
-              onClick={() => router.push('/setup/apply/kym')}
-              h="s48"
-              w="100%"
-              variant="outline"
-              type="button"
-            >
-              Apply for COOP registration
-            </Button>
-          </Box>
-        </Box>
       </AuthContainer>
     </form>
   );

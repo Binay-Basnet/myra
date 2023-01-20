@@ -30,6 +30,7 @@ export const LoanPaymentSchedule = () => {
   const interest = watch('intrestRate');
   const repaymentScheme = watch('repaymentScheme');
   const gracePeriod = watch('gracePeriod');
+  const installmentFrequency = watch('installmentFrequency');
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,6 +40,7 @@ export const LoanPaymentSchedule = () => {
       productId: String(productId),
       tenure: Number(tenure),
       sanctionAmount: Number(sanctionAmount),
+      installmentFrequency,
       repaymentScheme: repaymentScheme ?? LoanRepaymentScheme.Emi,
       gracePeriod: gracePeriod
         ? {
@@ -54,7 +56,14 @@ export const LoanPaymentSchedule = () => {
   );
 
   useEffect(() => {
-    if (!!productId && !!tenure && !!sanctionAmount && !!interest && !!repaymentScheme) {
+    if (
+      !!productId &&
+      !!tenure &&
+      !!sanctionAmount &&
+      !!interest &&
+      !!repaymentScheme &&
+      !!installmentFrequency
+    ) {
       setTrigger(true);
     }
   }, [
@@ -64,11 +73,12 @@ export const LoanPaymentSchedule = () => {
     interest,
     repaymentScheme,
     errors,
+    installmentFrequency,
     gracePeriod?.interestGracePeriod,
     gracePeriod?.principalGracePeriod,
   ]);
 
-  const loanInstallmentData = data?.loanAccount.getLoanInstallments?.data
+  const loanInstallmentData = data?.loanAccount?.getLoanInstallments?.data
     ?.installments as LoanInstallment[];
 
   const loanInstallmentColumns = useMemo<Column<typeof loanInstallmentData[0]>[]>(

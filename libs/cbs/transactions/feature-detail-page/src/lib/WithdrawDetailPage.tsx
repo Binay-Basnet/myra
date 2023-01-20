@@ -58,7 +58,7 @@ export const WithdrawDetailPage = () => {
           teller={withdrawDetailData?.teller as string}
         />
 
-        <Note note={withdrawDetailData?.note} />
+        {withdrawDetailData?.note && <Note note={withdrawDetailData?.note} />}
 
         <GlTransaction
           totalDebit={String(amountConverter(withdrawDetailData?.totalDebit ?? 0))}

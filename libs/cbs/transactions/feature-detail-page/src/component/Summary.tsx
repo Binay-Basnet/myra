@@ -31,97 +31,91 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
   const { t } = useTranslation();
 
   return (
-    <Box
-      p="s16"
-      borderBottom="1px"
-      // justifyContent="space-between"
-      borderBottomColor="border.layout"
-      display="flex"
-      gap="s16"
-    >
-      {(detailPage === 'accountTransfer' ||
-        detailPage === 'deposit' ||
-        detailPage === 'withdraw') && (
-        <Box gap="s8" display="flex" flexDirection="column" width="full">
-          <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-70">
-            #{summary.transactionId}
-          </Text>
-          <Box gap="s8" display="flex" width="full" justifyContent="space-between">
-            <Box gap="s4" w="100%" display="flex" flexDirection="column">
-              <Text fontSize="r1" fontWeight="Medium" color="neutralColorLight.Gray-80">
-                {localizedDate(summary.transactionDate)}
-              </Text>
-              {detailPage === 'accountTransfer' ? (
-                <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
-                  {summary.method === TransferType.Self && t['transDetailSelf']}
-                  {summary.method === TransferType.Member && t['transDetailMembertoMember']}
-                </Text>
-              ) : (
-                <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
-                  {detailPage === 'withdraw' ? 'Withdraw' : 'Deposit'} -&nbsp;
-                  {summary.method === 'AGENT' ? agentSlug[summary.method] : summary.method}
-                </Text>
-              )}
-            </Box>
-            <Box w="100%" gap="s4" display="flex" flexDirection="column">
-              <Box display="flex" justifyContent="flex-end">
-                <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-                  {amountConverter(summary.amount ?? 0)}
-                </Text>
-              </Box>
-              <Box display="flex" justifyContent="flex-end">
-                <Chips
-                  type="label"
-                  theme="success"
-                  variant="solid"
-                  label={summary.paymentMode ?? ''}
-                  size="md"
-                />
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-      )}
-
-      {detailPage === 'agentTransaction' && (
-        <>
-          <Box w="100%" display="flex" flexDirection="column">
+    <>
+      <Box p="s16" borderBottom="1px" borderBottomColor="border.layout" display="flex" gap="s16">
+        {(detailPage === 'accountTransfer' ||
+          detailPage === 'deposit' ||
+          detailPage === 'withdraw') && (
+          <Box gap="s8" display="flex" flexDirection="column" width="full">
             <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-70">
               #{summary.transactionId}
             </Text>
-            <Text fontSize="r1" fontWeight="Medium" color="neutralColorLight.Gray-80">
-              {localizedDate(summary.transactionDate)}
-            </Text>
-          </Box>
-
-          <Box display="flex" flexDirection="column">
-            <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-              {amountConverter(summary.amount ?? 0)}
-            </Text>
-          </Box>
-        </>
-      )}
-
-      {detailPage === 'loanRepayment' && (
-        <Box display="flex" w="100%" flexDirection="column" gap="s16">
-          <Box display="flex" justifyContent="space-between">
-            <Box display="flex" flexDirection="column" w="100%">
-              <RedirectButton
-                link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${summary?.loanAccId}`}
-                label={<Tooltip title={summary.loanAccountName as string} />}
-              />
-              <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-70">
-                {summary.loanSubtype}
-              </Text>
-              <Box display="flex">
-                <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70">
-                  {summary.loanAccId}
+            <Box gap="s8" display="flex" width="full" justifyContent="space-between">
+              <Box gap="s4" w="100%" display="flex" flexDirection="column">
+                <Text fontSize="r1" fontWeight="Medium" color="neutralColorLight.Gray-80">
+                  {localizedDate(summary.transactionDate)}
                 </Text>
-                <Icon ml="s4" as={IoCopyOutline} />
+                {detailPage === 'accountTransfer' ? (
+                  <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
+                    {summary.method === TransferType.Self && t['transDetailSelf']}
+                    {summary.method === TransferType.Member && t['transDetailMembertoMember']}
+                  </Text>
+                ) : (
+                  <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
+                    {detailPage === 'withdraw' ? 'Withdraw' : 'Deposit'} -&nbsp;
+                    {summary.method === 'AGENT' ? agentSlug[summary.method] : summary.method}
+                  </Text>
+                )}
+              </Box>
+              <Box w="100%" gap="s4" display="flex" flexDirection="column">
+                <Box display="flex" justifyContent="flex-end">
+                  <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
+                    {amountConverter(summary.amount ?? 0)}
+                  </Text>
+                </Box>
+                <Box display="flex" justifyContent="flex-end">
+                  <Chips
+                    type="label"
+                    theme="success"
+                    variant="solid"
+                    label={summary.paymentMode ?? ''}
+                    size="md"
+                  />
+                </Box>
               </Box>
             </Box>
+          </Box>
+        )}
 
-            {/* <Box display="flex" flexDirection="column">
+        {detailPage === 'agentTransaction' && (
+          <>
+            <Box w="100%" display="flex" flexDirection="column">
+              <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-70">
+                #{summary.transactionId}
+              </Text>
+              <Text fontSize="r1" fontWeight="Medium" color="neutralColorLight.Gray-80">
+                {localizedDate(summary.transactionDate)}
+              </Text>
+            </Box>
+
+            <Box display="flex" flexDirection="column">
+              <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
+                {amountConverter(summary.amount ?? 0)}
+              </Text>
+            </Box>
+          </>
+        )}
+
+        {detailPage === 'loanRepayment' && (
+          <Box display="flex" w="100%" flexDirection="column" gap="s16">
+            <Box display="flex" justifyContent="space-between">
+              <Box display="flex" flexDirection="column">
+                <RedirectButton
+                  link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${summary?.loanAccId}`}
+                  label={<Tooltip title={summary.loanAccountName as string} />}
+                />
+                <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-70">
+                  {summary.loanSubtype}
+                </Text>
+                <Box display="flex">
+                  <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70">
+                    {summary.loanAccId}
+                  </Text>
+                  <Icon ml="s4" as={IoCopyOutline} />
+                </Box>
+              </Box>
+
+              {/* <Box display="flex" flexDirection="column">
               <Text fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-80">
                 {t['transDetailInterest']}
               </Text>
@@ -129,17 +123,21 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
               {summary.interestRate}
             </Text>
             </Box> */}
+            </Box>
           </Box>
-          <Box display="flex" flexDirection="column">
-            <Text fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-80">
-              {t['transDetailSubmittedDate']}
-            </Text>
-            <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
-              {localizedDate(summary.repaymentDate)}
-            </Text>
-          </Box>
+        )}
+      </Box>
+
+      {detailPage === 'loanRepayment' && (
+        <Box p="s16" display="flex" borderBottom="1px solid" borderColor="border.layout" gap="s4">
+          <Text fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-80">
+            Repayment Date:
+          </Text>
+          <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
+            {localizedDate(summary.repaymentDate)}
+          </Text>
         </Box>
       )}
-    </Box>
+    </>
   );
 };

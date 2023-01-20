@@ -4,24 +4,19 @@
 
 // import { SelectPopout, SelectProps } from '@myra-ui';
 
+// interface Option {
+//   label: string;
+//   value: string;
+// }
+
 // interface IFormSelectPopoutProps<T extends Record<string, unknown>> extends SelectProps {
 //   control?: Control<T>;
 //   name?: string;
 //   showAll?: boolean;
 //   optionType: 'default' | 'member' | undefined;
 //   rules?: UseControllerProps['rules'];
+//   //   options: Option | MemberOption | undefined;
 // }
-
-// interface Option {
-//   label: string;
-//   value: string;
-// }
-
-// // type MemberOption = {
-// //   id: string;
-// //   url: string;
-// //   name: string;
-// // };
 
 // // type ValueType = Readonly<Option | Option[] | MemberOption[] | MemberOption | null>;
 
@@ -72,7 +67,7 @@
 //   optionType,
 //   ...rest
 // }: FormControlProps<T>) => {
-//   const foundValue = selectOptions?.find((option) => option.value === value);
+//   //   const foundValue = selectOptions?.find((option) => option.value === value);
 
 //   const methods = useFormContext();
 //   const { clearErrors } = methods;
@@ -82,7 +77,7 @@
 //       errorText={name ? (get(errors, name)?.message as string) : undefined}
 //       optionType={optionType}
 //       options={selectOptions}
-//       value={foundValue}
+//       value={value}
 //       inputId={name}
 //       {...rest}
 //       onChange={(newValue) => {

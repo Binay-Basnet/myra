@@ -4,7 +4,8 @@ import { useRouter } from 'next/router';
 import { Box, Button, Grid, Text } from '@myra-ui';
 
 import { useGetAgentDetailDataQuery, useGetAgentTodayListDataQuery } from '@coop/cbs/data-access';
-import { getUrl, useTranslation } from '@coop/shared/utils';
+import { ROUTES } from '@coop/cbs/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 export const AssignedMembersCard = () => {
   const { t } = useTranslation();
@@ -42,7 +43,11 @@ export const AssignedMembersCard = () => {
 
         <Button
           variant="link"
-          onClick={() => router.push(`/${getUrl(router?.pathname, 2)}/${id}/assigned-members`)}
+          onClick={() =>
+            router.push(
+              `${ROUTES.CBS_TRANS_MARKET_REPRESENTATIVE_DETAILS}?${id}&tab=assigned+members`
+            )
+          }
         >
           {t['agentOverviewViewAllMembers']}
         </Button>
