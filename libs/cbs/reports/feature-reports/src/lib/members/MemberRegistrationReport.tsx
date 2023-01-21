@@ -170,6 +170,7 @@ export const MemberRegisterReport = () => {
                       accessorKey: 'other',
                     },
                   ]}
+                  tableTitle="Individual"
                 />
               </Box>
             ) : null}
@@ -280,6 +281,7 @@ export const MemberRegisterReport = () => {
                       accessorKey: 'other',
                     },
                   ]}
+                  tableTitle="Institutional, Cooperative, Cooperative Union"
                 />
               </Box>
             ) : null}

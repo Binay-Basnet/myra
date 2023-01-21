@@ -60,8 +60,8 @@ const identificationOptions = [
 ];
 
 type UserFormInput = Omit<MyraUserInput, 'branch' | 'role'> & {
-  branch: { label: string; value: string }[];
-  role: { label: string; value: string }[];
+  branch: { label: string; value: string }[] | string[];
+  role: { label: string; value: string }[] | string[];
   citizenship?: MyraUserIdentificationInput;
   drivingLicense?: MyraUserIdentificationInput;
   passport?: MyraUserIdentificationInput;
@@ -165,8 +165,12 @@ export const AddUser = () => {
         id: id as string,
         data: {
           ...formValues,
-          role: formValues.role.map((r) => r.value),
-          branch: formValues.branch.map((r) => r.value),
+          role: formValues.role.map((role) =>
+            role && typeof role !== 'string' ? role.value : role
+          ),
+          branch: formValues.branch.map((branch) =>
+            branch && typeof branch !== 'string' ? branch.value : branch
+          ),
         },
       }),
     });

@@ -470,7 +470,7 @@ export const CBS: NavType = {
           addRoute: ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_ADD,
         },
         {
-          label: 'Service Center Cash Transfer',
+          label: 'transServiceCenterTransfer',
           route: ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_LIST,
           aclKey: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
           addRoute: ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_ADD,

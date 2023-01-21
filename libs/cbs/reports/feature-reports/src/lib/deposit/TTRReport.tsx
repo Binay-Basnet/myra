@@ -188,6 +188,7 @@ export const TTRReport = () => {
                       accessorKey: 'remarks',
                     },
                   ]}
+                  tableTitle="Yearly Transaction (above 30 Lakh)"
                 />
               </Box>
             )}
@@ -258,6 +259,7 @@ export const TTRReport = () => {
                     accessorKey: 'remarks',
                   },
                 ]}
+                tableTitle="Each Transaction (above 10 Lakh)"
               />
             </Box>
           </Box>
