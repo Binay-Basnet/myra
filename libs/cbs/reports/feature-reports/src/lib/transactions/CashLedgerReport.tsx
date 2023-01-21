@@ -189,6 +189,7 @@ export const CashLedgersReport = () => {
                       },
                     },
                   ]}
+                  tableTitle="Cash Ledger Report(Summary)"
                 />
               </Box>
             )}
@@ -293,6 +294,7 @@ export const CashLedgersReport = () => {
                       },
                     },
                   ]}
+                  tableTitle="Cash Ledger Report(Details)"
                 />
               </Box>
             )}

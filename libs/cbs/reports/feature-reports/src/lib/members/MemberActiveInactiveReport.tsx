@@ -163,6 +163,7 @@ export const MemberActiveInactiveReport = () => {
                       cell: (props) => (props.getValue() === 'APPROVED' ? 'Active' : 'Inactive'),
                     },
                   ]}
+                  tableTitle="Individual"
                 />
               </Box>
             ) : null}
@@ -246,6 +247,7 @@ export const MemberActiveInactiveReport = () => {
                       cell: (props) => (props.getValue() === 'APPROVED' ? 'Active' : 'Inactive'),
                     },
                   ]}
+                  tableTitle="Institutional, Cooperative, Cooperative Union"
                 />
               </Box>
             ) : null}

@@ -48,7 +48,7 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
     enableSorting,
     manualSorting = true,
     getSubRows,
-
+    tableTitle,
     menu,
     forms,
   } = props;
@@ -119,6 +119,7 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
           }}
           size={tableSize}
           variant={variant}
+          data-table-title={tableTitle}
           ref={ref}
         >
           <Thead display="table-header-group">

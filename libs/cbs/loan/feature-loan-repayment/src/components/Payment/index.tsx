@@ -82,6 +82,10 @@ export const Payment = ({ loanTotal }: PaymentProps) => {
     setValue('cash.returned_amount', Math.ceil(Number(loanTotal)) - Number(loanTotal));
   }, [loanTotal, setValue]);
 
+  useEffect(() => {
+    setValue('cash.returned_amount', Number(cashPaid) - Number(loanTotal));
+  }, [cashPaid]);
+
   return (
     <ContainerWithDivider borderRight="1px" borderColor="border.layout" p="s16" pb="100px">
       <BoxContainer>

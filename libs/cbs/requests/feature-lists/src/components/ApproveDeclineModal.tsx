@@ -105,7 +105,7 @@ export const ApproveDeclineModal = ({
       </Modal>
 
       <Modal
-        width="2xl"
+        width="4xl"
         primaryButtonLabel={status ? 'Approve' : undefined}
         primaryButtonHandler={async () => {
           await asyncToast({
