@@ -309,7 +309,7 @@ export const SettingsDepositProductsAdd = () => {
         loading: 'Adding New Deposit',
       },
       onSuccess: () => router.push(ROUTES.SETTINGS_GENERAL_SP_LIST),
-      promise: mutateAsync({ id, data: updatedData as DepositProductInput }),
+      promise: mutateAsync({ id, data: updatedData as unknown as DepositProductInput }),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
           Object.keys(error.validationErrorMsg).map((key) =>
