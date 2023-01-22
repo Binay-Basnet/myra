@@ -170,6 +170,14 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
                         setID(row?.id);
                       },
                     },
+                    {
+                      title: 'Edit Product',
+                      aclKey: 'SETTINGS_LOAN_PRODUCTS',
+                      action: 'UPDATE',
+                      onClick: (row) => {
+                        router.push(`${ROUTES.SETTINGS_GENERAL_LP_ADD}?id=${row?.id}`);
+                      },
+                    },
                   ]}
                 />
               );
@@ -183,6 +191,14 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
                     onClick: (row) => {
                       onOpenModal();
                       setID(row?.id);
+                    },
+                  },
+                  {
+                    title: 'Edit Product',
+                    aclKey: 'SETTINGS_LOAN_PRODUCTS',
+                    action: 'UPDATE',
+                    onClick: (row) => {
+                      router.push(`${ROUTES.SETTINGS_GENERAL_LP_ADD}?id=${row?.id}`);
                     },
                   },
                 ]}
@@ -199,6 +215,14 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
                     router.push(
                       `/${getUrl(router.pathname, 3)}/details?id=${props?.row?.original?.node?.id}`
                     );
+                  },
+                },
+                {
+                  title: 'Edit Product',
+                  aclKey: 'SETTINGS_LOAN_PRODUCTS',
+                  action: 'UPDATE',
+                  onClick: (row) => {
+                    router.push(`${ROUTES.SETTINGS_GENERAL_LP_ADD}?id=${row?.id}`);
                   },
                 },
               ]}

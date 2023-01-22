@@ -166,6 +166,7 @@ export const TellerReport = () => {
                       },
                     },
                   ]}
+                  tableTitle="Head Teller"
                 />
               </Box>
             )}
@@ -304,6 +305,7 @@ export const TellerReport = () => {
                       },
                     },
                   ]}
+                  tableTitle="Teller"
                 />
               </Box>
             )}

@@ -3856,7 +3856,7 @@ const en: Record<string, string> = {
   transactionLayoutBalanceSheet: 'Trial Balance',
   transDetailAmountDeposited: 'Deposit Amount',
   transCashTransitTransfer: 'Cash in Transit Transfer',
-  transServiceCenterTransfer: 'Service Center Cash Transfer',
+  transServiceCenterTransfer: 'Inter Service Center Transaction',
   viewDetails: 'View Details',
 };
 

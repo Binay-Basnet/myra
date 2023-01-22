@@ -282,7 +282,7 @@ export const CoaTotalTable = ({ totals }: ICoaTotalTableProps) => {
     ),
   ];
 
-  return <Report.Table data={data} columns={columns} />;
+  return <Report.Table data={data} columns={columns} tableTitle="Total" />;
 };
 
 interface ICOATableProps {
@@ -383,7 +383,14 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
     ''
   );
 
-  return <Report.Table<TrialSheetReportDataEntry> showFooter data={tree} columns={columns} />;
+  return (
+    <Report.Table<TrialSheetReportDataEntry>
+      showFooter
+      data={tree}
+      columns={columns}
+      tableTitle={type}
+    />
+  );
 };
 
 export const sortCoa = (data: TrialSheetReportDataEntry[]) =>

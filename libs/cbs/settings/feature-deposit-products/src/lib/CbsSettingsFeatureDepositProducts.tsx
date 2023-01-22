@@ -155,6 +155,14 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                         setID(row?.id);
                       },
                     },
+                    {
+                      title: 'Edit Product',
+                      aclKey: 'SETTINGS_LOAN_PRODUCTS',
+                      action: 'UPDATE',
+                      onClick: (row) => {
+                        router.push(`${ROUTES.SETTINGS_GENERAL_LP_ADD}?id=${row?.id}`);
+                      },
+                    },
                   ]}
                 />
               );
@@ -165,11 +173,19 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                 items={[
                   {
                     title: 'loanProductMakeInactive',
-                    aclKey: 'SETTINGS_GENERAL',
+                    aclKey: 'SETTINGS_SAVING_PRODUCTS',
                     action: 'VIEW',
                     onClick: (row) => {
                       onOpenModal();
                       setID(row?.id);
+                    },
+                  },
+                  {
+                    title: 'Edit Product',
+                    aclKey: 'SETTINGS_SAVING_PRODUCTS',
+                    action: 'UPDATE',
+                    onClick: (row) => {
+                      router.push(`${ROUTES.SETTINGS_GENERAL_SP_ADD}?id=${row?.id}`);
                     },
                   },
                 ]}
@@ -186,6 +202,14 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                     router.push(
                       `/${getUrl(router.pathname, 3)}/details?id=${props?.row?.original?.node?.id}`
                     );
+                  },
+                },
+                {
+                  title: 'Edit Product',
+                  aclKey: 'SETTINGS_LOAN_PRODUCTS',
+                  action: 'UPDATE',
+                  onClick: (row) => {
+                    router.push(`${ROUTES.SETTINGS_GENERAL_LP_ADD}?id=${row?.id}`);
                   },
                 },
               ]}
