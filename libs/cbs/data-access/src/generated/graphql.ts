@@ -20370,6 +20370,7 @@ export type GetLoanApplicationDetailsQuery = {
         productId?: string | null;
         loanAccountName?: string | null;
         appliedLoanAmount?: string | null;
+        installmentFrequency?: InstallmentFrequency | null;
         linkedAccountId?: string | null;
         totalValuation?: string | null;
         totalSanctionedAmount?: string | null;
@@ -34914,6 +34915,7 @@ export const GetLoanApplicationDetailsDocument = `
         productId
         loanAccountName
         appliedLoanAmount
+        installmentFrequency
         collateralData {
           collateralType
           ownerName
