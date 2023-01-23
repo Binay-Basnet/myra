@@ -53,8 +53,8 @@ export const CBSAccountList = () => {
     () => [
       {
         header: 'Account Open Date',
-        accessorFn: (row) => row?.node?.createdAt,
-        cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
+        accessorFn: (row) => row?.node?.accountOpenedDate?.local,
+        // cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
       },
       {
         header: 'Account ID',

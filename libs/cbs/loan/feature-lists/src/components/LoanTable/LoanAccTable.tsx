@@ -5,7 +5,7 @@ import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
-import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanAccTable {
@@ -31,9 +31,9 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
       },
       {
         id: 'loan Account Creation Date id',
-        header: () => 'Loan Applied Date',
-        accessorFn: (row) => row?.node?.appliedDate,
-        cell: (props) => localizedDate(props?.row?.original?.node?.appliedDate),
+        header: () => 'Loan disbursed date',
+        accessorFn: (row) => row?.node?.approvedDate,
+        // cell: (props) => props?.row?.original?.node?.approvedDate,
       },
       {
         header: 'Product Name',
