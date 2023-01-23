@@ -115,7 +115,7 @@ export const ReportLinkText = ({ children, link }: ReportLinkTextProps) => {
       w="100%"
       fontSize="r1"
       cursor={link ? 'pointer' : 'default'}
-      color="gray.600"
+      color={link ? 'gray.600' : 'gray.400'}
       fontWeight="500"
       onClick={() => link && router.push(link)}
       _hover={
