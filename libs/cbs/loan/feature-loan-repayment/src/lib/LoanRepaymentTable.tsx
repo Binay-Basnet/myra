@@ -5,7 +5,7 @@ import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { Filter_Mode, useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
@@ -44,8 +44,7 @@ export const CBSLoanRepaymentList = () => {
     () => [
       {
         header: 'Payment Date',
-        accessorFn: (row) => row?.node?.paymentDate,
-        cell: (props) => <span>{props?.row?.original?.node?.paymentDate?.split('T')[0]} </span>,
+        accessorFn: (row) => localizedDate(row?.node?.paymentDate),
       },
       {
         header: 'Member Code',

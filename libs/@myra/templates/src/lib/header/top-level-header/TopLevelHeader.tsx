@@ -6,7 +6,6 @@ import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
-import { format } from 'date-fns';
 
 import {
   asyncToast,
@@ -41,7 +40,13 @@ import {
   useSetPreferenceMutation,
   useSwitchRoleMutation,
 } from '@coop/cbs/data-access';
-import { AbilityContext, localizedDate, ROUTES, updateAbility } from '@coop/cbs/utils';
+import {
+  AbilityContext,
+  getLocalizedTodaysDate,
+  localizedDate,
+  ROUTES,
+  updateAbility,
+} from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 // const ROLE_SLUG: Record<string, string> = {
@@ -93,7 +98,6 @@ const keyMap = {
   // delete: ["r"],
   // addFocus: ["a"]
 };
-const currentDate = format(new Date(), 'yyyy-MM-dd');
 
 const AppSwitcherIconWrapper = (props: {
   children: React.ReactNode;
@@ -466,7 +470,7 @@ export const TopLevelHeader = () => {
                           Calender Date
                         </Text>
                         <Text fontSize="s3" fontWeight="500" color="gray.800">
-                          {currentDate}
+                          {getLocalizedTodaysDate()}
                         </Text>
                       </PopoverBody>
                       <PopoverBody p="s8">

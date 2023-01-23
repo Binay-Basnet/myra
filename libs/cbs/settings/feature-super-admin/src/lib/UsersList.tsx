@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -91,11 +91,11 @@ export const UsersList = () => {
       // },
       {
         header: 'Last Active Date',
-        accessorFn: (row) => row?.node?.modifiedAt.split('T')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.modifiedAt),
       },
       {
         header: t['memberListDateJoined'],
-        accessorFn: (row) => row?.node?.createdAt.split('T')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.createdAt),
       },
       {
         id: '_actions',
