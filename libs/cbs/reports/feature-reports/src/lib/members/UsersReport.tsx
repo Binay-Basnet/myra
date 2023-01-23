@@ -53,7 +53,7 @@ export const UsersReport = () => {
     <Report
       defaultFilters={{
         filter: {
-          isCoreEmployee: 'no',
+          // isCoreEmployee: 'no',
           role: [],
         },
       }}

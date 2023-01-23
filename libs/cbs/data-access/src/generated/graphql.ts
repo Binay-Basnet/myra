@@ -17943,6 +17943,31 @@ export type GetAllAccountsQuery = {
   };
 };
 
+export type ListAssociatedGuaranteeAccountsQueryVariables = Exact<{
+  accountId: Scalars['ID'];
+}>;
+
+export type ListAssociatedGuaranteeAccountsQuery = {
+  account: {
+    listAssociatedGuaranteeAccounts?: {
+      total?: string | null;
+      data?: Array<{
+        memberName?: string | null;
+        memberId?: string | null;
+        accountName?: string | null;
+        loanAccountId?: string | null;
+        amount?: string | null;
+      } | null> | null;
+      error?:
+        | QueryError_AuthorizationError_Fragment
+        | QueryError_BadRequestError_Fragment
+        | QueryError_NotFoundError_Fragment
+        | QueryError_ServerError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type GetBankAccountListQueryVariables = Exact<{
   filter?: InputMaybe<BankAccountFilter>;
   pagination?: InputMaybe<Pagination>;
@@ -31819,6 +31844,39 @@ export const useGetAllAccountsQuery = <TData = GetAllAccountsQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const ListAssociatedGuaranteeAccountsDocument = `
+    query listAssociatedGuaranteeAccounts($accountId: ID!) {
+  account {
+    listAssociatedGuaranteeAccounts(id: $accountId) {
+      data {
+        memberName
+        memberId
+        accountName
+        loanAccountId
+        amount
+      }
+      total
+      error {
+        ...QueryError
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useListAssociatedGuaranteeAccountsQuery = <
+  TData = ListAssociatedGuaranteeAccountsQuery,
+  TError = unknown
+>(
+  variables: ListAssociatedGuaranteeAccountsQueryVariables,
+  options?: UseQueryOptions<ListAssociatedGuaranteeAccountsQuery, TError, TData>
+) =>
+  useQuery<ListAssociatedGuaranteeAccountsQuery, TError, TData>(
+    ['listAssociatedGuaranteeAccounts', variables],
+    useAxios<ListAssociatedGuaranteeAccountsQuery, ListAssociatedGuaranteeAccountsQueryVariables>(
+      ListAssociatedGuaranteeAccountsDocument
+    ).bind(null, variables),
     options
   );
 export const GetBankAccountListDocument = `

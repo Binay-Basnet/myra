@@ -21,7 +21,7 @@ export const Transactions = () => {
 
   const { accountDetails } = useAccountDetails();
   const isClosed = accountDetails?.objState === ObjState?.Inactive;
-  const { data: transactionListQueryData } = useGetAccountTransactionListsQuery(
+  const { data: transactionListQueryData, isFetching } = useGetAccountTransactionListsQuery(
     {
       filter: { accountIds: [accountDetails?.accountId as string] },
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -75,7 +75,7 @@ export const Transactions = () => {
         //   </Button>
         // }
       >
-        <TransactionTable data={transactionList} hasIndex />
+        <TransactionTable data={transactionList} hasIndex isLoading={isFetching} />
       </DetailsCard>
     </>
   );

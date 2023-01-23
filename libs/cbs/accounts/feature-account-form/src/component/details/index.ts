@@ -1,6 +1,7 @@
 export * from './Accounts';
 export * from './Activity';
 export * from './AdditionalInfoCard';
+export * from './AssociatedGuaranteeAccounts';
 export * from './AvailableWithdrawSlipList';
 export * from './BalanceChart';
 export * from './Bio';

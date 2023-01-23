@@ -21,7 +21,7 @@ export const RecentTransactions = ({ isClosed }: IProps) => {
 
   const { accountDetails } = useAccountDetails();
 
-  const { data: transactionListQueryData } = useGetAccountTransactionListsQuery(
+  const { data: transactionListQueryData, isFetching } = useGetAccountTransactionListsQuery(
     {
       filter: { accountIds: [accountDetails?.accountId as string] },
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -57,7 +57,7 @@ export const RecentTransactions = ({ isClosed }: IProps) => {
         </Button>
       }
     >
-      <TransactionTable data={transactionList} hasIndex />
+      <TransactionTable data={transactionList} hasIndex isLoading={isFetching} />
     </DetailsCard>
   );
 };

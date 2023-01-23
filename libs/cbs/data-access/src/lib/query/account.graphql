@@ -609,3 +609,21 @@ query getAllAccounts($paginate: Pagination, $filter: AllAccountsFilter) {
     }
   }
 }
+
+query listAssociatedGuaranteeAccounts($accountId: ID!) {
+  account {
+    listAssociatedGuaranteeAccounts(id: $accountId) {
+      data {
+        memberName
+        memberId
+        accountName
+        loanAccountId
+        amount
+      }
+      total
+      error {
+        ...QueryError
+      }
+    }
+  }
+}
