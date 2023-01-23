@@ -18,7 +18,7 @@ import { FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form'
 type UserReportFilter = {
   branchId?: string;
   filter?: {
-    isCoreEmployee?: 'yes' | 'no';
+    coreEmployee?: 'ALL' | 'YES' | 'NO';
     role?: { label: string; value: RolesFilter }[];
   };
   period: LocalizedDateFilter;
@@ -40,7 +40,7 @@ export const UsersReport = () => {
         period: filters?.period as LocalizedDateFilter,
         branchId: filters?.branchId,
         filter: {
-          isCoreEmployee: filters?.filter?.isCoreEmployee === 'yes',
+          coreEmployee: filters?.filter?.coreEmployee || 'ALL',
           role: roleIDs?.length === 0 ? null : roleIDs,
         },
       },
@@ -145,10 +145,12 @@ export const UsersReport = () => {
         <Report.Filters>
           <Report.Filter title="Core Employee">
             <FormRadioGroup
-              name="filter.isCoreEmployee"
+              name="filter.coreEmployee"
               options={[
-                { label: 'Yes', value: 'yes' },
-                { label: 'No', value: 'no' },
+                { label: 'All', value: 'ALL' },
+
+                { label: 'Yes', value: 'YES' },
+                { label: 'No', value: 'NO' },
               ]}
               direction="column"
             />

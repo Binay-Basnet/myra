@@ -1015,7 +1015,7 @@ export type AssignMembersInput = {
 
 export type AssignedMemberList = {
   account?: Maybe<DepositLoanAccount>;
-  assignedDate?: Maybe<Scalars['String']>;
+  assignedDate?: Maybe<Scalars['Localized']>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
   product?: Maybe<DepositProduct>;
@@ -2213,7 +2213,7 @@ export type ChequeBookRequestList = {
   numberOfLeaves?: Maybe<Scalars['Int']>;
   pickUpMethod?: Maybe<ChequePickUpMethod>;
   remarks?: Maybe<Scalars['String']>;
-  requestedDate: Scalars['String'];
+  requestedDate: Scalars['Localized'];
 };
 
 export const ChequePickUpMethod = {
@@ -3063,6 +3063,13 @@ export type CoordinateInput = {
   longitude?: InputMaybe<Scalars['Float']>;
 };
 
+export const CoreEmployee = {
+  All: 'ALL',
+  No: 'NO',
+  Yes: 'YES',
+} as const;
+
+export type CoreEmployee = typeof CoreEmployee[keyof typeof CoreEmployee];
 export type Country = {
   code?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -9064,7 +9071,7 @@ export type LoanBalanceFilterData = {
 export type LoanBalanceReport = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
-  lastPaymentDate?: Maybe<Scalars['String']>;
+  lastPaymentDate?: Maybe<Scalars['Localized']>;
   loanAccountId?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -9162,7 +9169,7 @@ export type LoanGeneralSettingsInput = {
 };
 
 export type LoanInstallment = {
-  installmentDate: Scalars['String'];
+  installmentDate: Scalars['Localized'];
   installmentNo: Scalars['Int'];
   interest: Scalars['String'];
   paid: Scalars['Boolean'];
@@ -9688,7 +9695,7 @@ export type LoanRepaymentDetail = {
   memberName: Scalars['Localized'];
   memberProfilePicId?: Maybe<Scalars['String']>;
   memberProfilePicUrl?: Maybe<Scalars['String']>;
-  paymentDate: Scalars['String'];
+  paymentDate: Scalars['Localized'];
 };
 
 export type LoanRepaymentEdge = {
@@ -10869,10 +10876,10 @@ export type MyCoopInfo = {
   totalShareIssued?: Maybe<Scalars['Int']>;
 };
 
-export type MyraUser = Base & {
+export type MyraUser = {
   branch?: Maybe<Branch>;
   contactNo?: Maybe<Scalars['String']>;
-  createdAt: Scalars['Time'];
+  createdAt: Scalars['Localized'];
   createdBy: Identity;
   dob?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -10881,7 +10888,7 @@ export type MyraUser = Base & {
   id: Scalars['ID'];
   isCoreEmployee?: Maybe<Scalars['Boolean']>;
   linkedBranches?: Maybe<Array<Maybe<BranchMinimal>>>;
-  modifiedAt: Scalars['Time'];
+  modifiedAt: Scalars['Localized'];
   modifiedBy: Identity;
   name?: Maybe<Scalars['String']>;
   objState: ObjState;
@@ -14228,7 +14235,7 @@ export type UserReportFilter = {
 };
 
 export type UserReportFilterData = {
-  isCoreEmployee?: InputMaybe<Scalars['Boolean']>;
+  coreEmployee?: InputMaybe<CoreEmployee>;
   role?: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -18685,7 +18692,7 @@ export type GetAgentAssignedMemberListDataQuery = {
         cursor: string;
         node?: {
           id: string;
-          assignedDate?: string | null;
+          assignedDate?: Record<'local' | 'en' | 'np', string> | null;
           member?: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
@@ -20364,7 +20371,7 @@ export type GetLoanInstallmentsQuery = {
         totalPrincipal?: string | null;
         installments?: Array<{
           interest: string;
-          installmentDate: string;
+          installmentDate: Record<'local' | 'en' | 'np', string>;
           installmentNo: number;
           payment: string;
           principal: string;
@@ -20567,7 +20574,7 @@ export type GetLoanPreviewQuery = {
           totalInterest?: string | null;
           totalPrincipal?: string | null;
           installments?: Array<{
-            installmentDate: string;
+            installmentDate: Record<'local' | 'en' | 'np', string>;
             installmentNo: number;
             interest: string;
             payment: string;
@@ -20609,7 +20616,7 @@ export type GetLoanRepaymentListQuery = {
           loanProductId: string;
           loanProductName: string;
           amount: string;
-          paymentDate: string;
+          paymentDate: Record<'local' | 'en' | 'np', string>;
         } | null;
       }> | null;
       pageInfo?: {
@@ -20731,7 +20738,7 @@ export type GetLoanAccountDetailsQuery = {
           totalPrincipal?: string | null;
           installments?: Array<{
             installmentNo: number;
-            installmentDate: string;
+            installmentDate: Record<'local' | 'en' | 'np', string>;
             principal: string;
             interest: string;
             payment: string;
@@ -22581,7 +22588,7 @@ export type GetLoanBalanceReportQuery = {
           outstandingBalance?: string | null;
           remainingBalance?: string | null;
           remainingInterest?: string | null;
-          lastPaymentDate?: string | null;
+          lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
           branchId?: string | null;
           branchName?: string | null;
         } | null> | null;
@@ -23438,7 +23445,7 @@ export type GetChequeBookRequestsQuery = {
             accountNumber: string;
             accountType: string;
             approvalStatus: RequestStatus;
-            requestedDate: string;
+            requestedDate: Record<'local' | 'en' | 'np', string>;
             branchId?: string | null;
             branchName?: string | null;
             numberOfLeaves?: number | null;
@@ -25321,8 +25328,8 @@ export type GetSettingsUserListDataQuery = {
           node?: {
             id: string;
             objState: ObjState;
-            createdAt: string;
-            modifiedAt: string;
+            createdAt: Record<'local' | 'en' | 'np', string>;
+            modifiedAt: Record<'local' | 'en' | 'np', string>;
             name?: string | null;
             email?: string | null;
             contactNo?: string | null;
