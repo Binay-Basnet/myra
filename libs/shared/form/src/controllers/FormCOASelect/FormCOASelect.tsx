@@ -35,7 +35,7 @@ export const FormCOASelect = (props: IFormBranchSelectProps) => {
     },
     {
       staleTime: 0,
-      // enabled: trigger,
+      enabled: !!branchId,
     }
   );
 
