@@ -15399,9 +15399,9 @@ export type SearchIndexingMutationVariables = Exact<{ [key: string]: never }>;
 
 export type SearchIndexingMutation = { search: { indexData?: string | null } };
 
-export type ResetTrailBalanceCacheMutationVariables = Exact<{ [key: string]: never }>;
+export type ResetTrialBalanceCacheMutationVariables = Exact<{ [key: string]: never }>;
 
-export type ResetTrailBalanceCacheMutation = {
+export type ResetTrialBalanceCacheMutation = {
   settings: { report?: { resetTrialCache?: string | null } | null };
 };
 
@@ -27929,8 +27929,8 @@ export const useSearchIndexingMutation = <TError = unknown, TContext = unknown>(
     useAxios<SearchIndexingMutation, SearchIndexingMutationVariables>(SearchIndexingDocument),
     options
   );
-export const ResetTrailBalanceCacheDocument = `
-    mutation resetTrailBalanceCache {
+export const ResetTrialBalanceCacheDocument = `
+    mutation resetTrialBalanceCache {
   settings {
     report {
       resetTrialCache
@@ -27938,23 +27938,23 @@ export const ResetTrailBalanceCacheDocument = `
   }
 }
     `;
-export const useResetTrailBalanceCacheMutation = <TError = unknown, TContext = unknown>(
+export const useResetTrialBalanceCacheMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
-    ResetTrailBalanceCacheMutation,
+    ResetTrialBalanceCacheMutation,
     TError,
-    ResetTrailBalanceCacheMutationVariables,
+    ResetTrialBalanceCacheMutationVariables,
     TContext
   >
 ) =>
   useMutation<
-    ResetTrailBalanceCacheMutation,
+    ResetTrialBalanceCacheMutation,
     TError,
-    ResetTrailBalanceCacheMutationVariables,
+    ResetTrialBalanceCacheMutationVariables,
     TContext
   >(
-    ['resetTrailBalanceCache'],
-    useAxios<ResetTrailBalanceCacheMutation, ResetTrailBalanceCacheMutationVariables>(
-      ResetTrailBalanceCacheDocument
+    ['resetTrialBalanceCache'],
+    useAxios<ResetTrialBalanceCacheMutation, ResetTrialBalanceCacheMutationVariables>(
+      ResetTrialBalanceCacheDocument
     ),
     options
   );

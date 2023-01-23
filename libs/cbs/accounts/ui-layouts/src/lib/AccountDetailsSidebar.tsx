@@ -75,7 +75,7 @@ export const AccountDetailsSidebar = () => {
 
       <Box borderBottom="1px" borderBottomColor="border.layout" p="s16" display="flex" gap="s4">
         <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-          Created Date:
+          Account Open Date:
         </Text>
         <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
           {accountDetails?.accountOpenDate}
