@@ -57,6 +57,7 @@ type SelectOption = {
 type DepositForm = Omit<
   DepositProductInput,
   | 'genderId'
+  | 'typeOfMember'
   | 'maritalStatusId'
   | 'educationQualification'
   | 'occupation'
@@ -64,6 +65,7 @@ type DepositForm = Omit<
   | 'natureOFBusinessCoop'
   | 'natureOfBusinessInstitution'
 > & {
+  typeOfMember: KymMemberTypesEnum | undefined | string;
   genderId: SelectOption;
   maritalStatusId: SelectOption;
   educationQualification: SelectOption;
@@ -195,6 +197,7 @@ export const SettingsDepositProductsAdd = () => {
 
     const updatedData = {
       ...values,
+      typeOfMember: values?.typeOfMember ?? null,
       genderId: genderList,
       maritalStatusId: maritalStatusList,
       educationQualification: educationQualificationList,
@@ -306,7 +309,7 @@ export const SettingsDepositProductsAdd = () => {
         loading: 'Adding New Deposit',
       },
       onSuccess: () => router.push(ROUTES.SETTINGS_GENERAL_SP_LIST),
-      promise: mutateAsync({ id, data: updatedData as DepositProductInput }),
+      promise: mutateAsync({ id, data: updatedData as unknown as DepositProductInput }),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
           Object.keys(error.validationErrorMsg).map((key) =>
@@ -347,6 +350,10 @@ export const SettingsDepositProductsAdd = () => {
   }, [refetch]);
 
   useEffect(() => {
+    reset({
+      ...getValues(),
+      typeOfMember: '',
+    });
     resetField('minAge');
     resetField('maxAge');
     resetField('genderId');
@@ -358,7 +365,7 @@ export const SettingsDepositProductsAdd = () => {
     resetField('foreignEmployment');
     resetField('cooperativeType');
     resetField('natureOFBusinessCoop');
-    resetField('typeOfMember');
+    // resetField('typeOfMember');
     resetField('criteria');
   }, [JSON.stringify(depositNature)]);
 

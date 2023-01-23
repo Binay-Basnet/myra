@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
+import { useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
 import { ActionPopoverComponent } from '@coop/myra/components';
@@ -18,14 +18,14 @@ import { NewUserModal } from '../components';
 //   COOPERATIVE: 'coop',
 //   COOPERATIVE_UNION: 'coop_union',
 // };
-
-const roles = {
-  [Roles.Agent]: 'Market Representative',
-  [Roles.BranchManager]: 'Service Center Manager',
-  [Roles.HeadTeller]: 'Head Teller',
-  [Roles.Teller]: 'Teller',
-  [Roles.Superadmin]: 'Super Admin',
-};
+//
+// const roles = {
+//   [Roles.Agent]: 'Market Representative',
+//   [Roles.BranchManager]: 'Service Center Manager',
+//   [Roles.HeadTeller]: 'Head Teller',
+//   [Roles.Teller]: 'Teller',
+//   [Roles.Superadmin]: 'Super Admin',
+// };
 
 export const UsersList = () => {
   const { t } = useTranslation();
@@ -77,18 +77,18 @@ export const UsersList = () => {
           </Box>
         ),
       },
-      {
-        header: 'Service Center',
-        accessorFn: (row) => row?.node?.branch?.name,
-      },
+      // {
+      //   header: 'Service Center',
+      //   accessorFn: (row) => row?.node?.branch?.name,
+      // },
       {
         header: 'Contact No',
         accessorFn: (row) => row?.node?.contactNo,
       },
-      {
-        header: 'Role',
-        accessorFn: (row) => (row?.node?.role ? roles.AGENT : ''),
-      },
+      // {
+      //   header: 'Role',
+      //   accessorFn: (row) => (row?.node?.role ? roles.AGENT : ''),
+      // },
       {
         header: 'Last Active Date',
         accessorFn: (row) => row?.node?.modifiedAt.split('T')[0] ?? 'N/A',
