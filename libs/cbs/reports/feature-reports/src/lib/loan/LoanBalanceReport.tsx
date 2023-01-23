@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import dayjs from 'dayjs';
 
 import { Box, GridItem } from '@myra-ui';
 
@@ -15,6 +14,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -177,7 +177,7 @@ export const LoanBalanceReport = () => {
               {
                 header: 'Last Payment Date',
                 accessorKey: 'lastPaymentDate',
-                cell: ({ cell }) => dayjs(cell.row.original.lastPaymentDate).format('YYYY-MM-DD'),
+                accessorFn: (row) => localizedDate(row?.lastPaymentDate),
                 meta: {
                   isNumeric: true,
                 },

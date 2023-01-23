@@ -1039,7 +1039,7 @@ export type AssignMembersInput = {
 
 export type AssignedMemberList = {
   account?: Maybe<DepositLoanAccount>;
-  assignedDate?: Maybe<Scalars['String']>;
+  assignedDate?: Maybe<Scalars['Localized']>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
   product?: Maybe<DepositProduct>;
@@ -2268,7 +2268,7 @@ export type ChequeBookRequestList = {
   numberOfLeaves?: Maybe<Scalars['Int']>;
   pickUpMethod?: Maybe<ChequePickUpMethod>;
   remarks?: Maybe<Scalars['String']>;
-  requestedDate: Scalars['String'];
+  requestedDate: Scalars['Localized'];
 };
 
 export const ChequePickUpMethod = {
@@ -9225,7 +9225,7 @@ export type LoanBalanceFilterData = {
 export type LoanBalanceReport = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
-  lastPaymentDate?: Maybe<Scalars['String']>;
+  lastPaymentDate?: Maybe<Scalars['Localized']>;
   loanAccountId?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -9322,7 +9322,7 @@ export type LoanGeneralSettingsInput = {
 };
 
 export type LoanInstallment = {
-  installmentDate: Scalars['String'];
+  installmentDate: Scalars['Localized'];
   installmentNo: Scalars['Int'];
   interest: Scalars['String'];
   paid: Scalars['Boolean'];
@@ -9852,7 +9852,7 @@ export type LoanRepaymentDetail = {
   memberName: Scalars['Localized'];
   memberProfilePicId?: Maybe<Scalars['String']>;
   memberProfilePicUrl?: Maybe<Scalars['String']>;
-  paymentDate: Scalars['String'];
+  paymentDate: Scalars['Localized'];
 };
 
 export type LoanRepaymentEdge = {
@@ -11070,10 +11070,10 @@ export type MyCoopInfo = {
   totalShareIssued?: Maybe<Scalars['Int']>;
 };
 
-export type MyraUser = Base & {
+export type MyraUser = {
   branch?: Maybe<Branch>;
   contactNo?: Maybe<Scalars['String']>;
-  createdAt: Scalars['Time'];
+  createdAt: Scalars['Localized'];
   createdBy: Identity;
   dob?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -11082,7 +11082,7 @@ export type MyraUser = Base & {
   id: Scalars['ID'];
   isCoreEmployee?: Maybe<Scalars['Boolean']>;
   linkedBranches?: Maybe<Array<Maybe<BranchMinimal>>>;
-  modifiedAt: Scalars['Time'];
+  modifiedAt: Scalars['Localized'];
   modifiedBy: Identity;
   name?: Maybe<Scalars['String']>;
   objState: ObjState;
@@ -16237,7 +16237,7 @@ export type GetAgentAssignedMemberListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetAgentAssignedMemberListDataQuery = { transaction: { assignedMemberList: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, assignedDate?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } | null, account?: { id: string, dues?: { totalDue?: string | null } | null } | null, product?: { productName: string } | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetAgentAssignedMemberListDataQuery = { transaction: { assignedMemberList: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, assignedDate?: Record<"local"|"en"|"np",string> | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } | null, account?: { id: string, dues?: { totalDue?: string | null } | null } | null, product?: { productName: string } | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetAgentTodayListDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -16552,7 +16552,7 @@ export type GetLoanInstallmentsQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanInstallmentsQuery = { loanAccount: { getLoanInstallments?: { data?: { total: string, totalInterest?: string | null, totalPrincipal?: string | null, installments?: Array<{ interest: string, installmentDate: string, installmentNo: number, payment: string, principal: string, remainingPrincipal: string } | null> | null } | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
+export type GetLoanInstallmentsQuery = { loanAccount: { getLoanInstallments?: { data?: { total: string, totalInterest?: string | null, totalPrincipal?: string | null, installments?: Array<{ interest: string, installmentDate: Record<"local"|"en"|"np",string>, installmentNo: number, payment: string, principal: string, remainingPrincipal: string } | null> | null } | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
 
 export type GetLoanApplicationDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -16573,7 +16573,7 @@ export type GetLoanPreviewQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanPreviewQuery = { loanAccount: { loanPreview?: { data?: { productId?: string | null, memberId?: string | null, additionalFeatures?: { allowPartialInstallment?: boolean | null, collateral?: boolean | null, insurance?: boolean | null, isMonthlyInterestCompulsory?: boolean | null, loanScheduleChangeOverride?: boolean | null, overrideInterest?: boolean | null, staffProduct?: boolean | null, supportMultipleAccount?: boolean | null } | null, criteria?: { gender?: Array<string | null> | null, minAge?: number | null, maxAge?: number | null, ethnicity?: Array<string | null> | null, educationQualification?: Array<string | null> | null, maritalStatus?: Array<string | null> | null, foreignEmployment?: boolean | null, occupation?: Array<string | null> | null, institutionType?: Array<string | null> | null, cooperativeUnion?: Array<string | null> | null, cooperativeType?: Array<string | null> | null } | null, collateralAndGuarantees?: Array<{ name?: string | null, valuation?: string | null } | null> | null, generalInformation?: { loanProduct?: string | null, loanSubType?: string | null, loanType?: string | null, natureOfLoanProduct?: NatureOfLoanProduct | null, loanName?: string | null, productCode?: string | null } | null, loanDetails?: { appliedLoanAmount?: string | null, interestMethod?: LoanInterestMethod | null, interestRate?: number | null, loanRepaymentScheme?: LoanRepaymentScheme | null, tenure?: number | null, tenureUnit?: FrequencyTenure | null, totalCollateralValuation?: string | null, totalGuaranteeValuation?: string | null, totalProcessingChargesValuation?: string | null, totalSanctionedAmount?: string | null, totalDisbursedAmount?: string | null, principalGracePeriod?: number | null, interestGracePeriod?: number | null, interestAmount?: string | null, disburseDate?: string | null, expiryDate?: string | null, paymentFrequency?: LoanProductInstallment | null, processingCharges?: Array<{ name: string, amount?: any | null } | null> | null } | null, repaymentDetails?: { lastPaymentDate?: string | null, remainingPrincipal?: string | null, remainingInterest?: string | null, remainingTotal?: string | null, totalInstallmentAmount?: string | null, nextInstallmentNo?: number | null, remainingInstallments?: Array<{ installmentNo?: number | null, principal?: string | null, fine?: string | null, interestAmount?: string | null } | null> | null } | null, member?: { name?: Record<"local"|"en"|"np",string> | null, id: string, code: string, profilePicUrl?: string | null } | null, paymentSchedule?: { total: string, totalInterest?: string | null, totalPrincipal?: string | null, installments?: Array<{ installmentDate: string, installmentNo: number, interest: string, payment: string, principal: string, remainingPrincipal: string, paid: boolean } | null> | null } | null, statistics?: { remainingPayableAmount?: string | null, totalPaidAmount?: string | null, totalPayableAmount?: string | null } | null } | null } | null } };
+export type GetLoanPreviewQuery = { loanAccount: { loanPreview?: { data?: { productId?: string | null, memberId?: string | null, additionalFeatures?: { allowPartialInstallment?: boolean | null, collateral?: boolean | null, insurance?: boolean | null, isMonthlyInterestCompulsory?: boolean | null, loanScheduleChangeOverride?: boolean | null, overrideInterest?: boolean | null, staffProduct?: boolean | null, supportMultipleAccount?: boolean | null } | null, criteria?: { gender?: Array<string | null> | null, minAge?: number | null, maxAge?: number | null, ethnicity?: Array<string | null> | null, educationQualification?: Array<string | null> | null, maritalStatus?: Array<string | null> | null, foreignEmployment?: boolean | null, occupation?: Array<string | null> | null, institutionType?: Array<string | null> | null, cooperativeUnion?: Array<string | null> | null, cooperativeType?: Array<string | null> | null } | null, collateralAndGuarantees?: Array<{ name?: string | null, valuation?: string | null } | null> | null, generalInformation?: { loanProduct?: string | null, loanSubType?: string | null, loanType?: string | null, natureOfLoanProduct?: NatureOfLoanProduct | null, loanName?: string | null, productCode?: string | null } | null, loanDetails?: { appliedLoanAmount?: string | null, interestMethod?: LoanInterestMethod | null, interestRate?: number | null, loanRepaymentScheme?: LoanRepaymentScheme | null, tenure?: number | null, tenureUnit?: FrequencyTenure | null, totalCollateralValuation?: string | null, totalGuaranteeValuation?: string | null, totalProcessingChargesValuation?: string | null, totalSanctionedAmount?: string | null, totalDisbursedAmount?: string | null, principalGracePeriod?: number | null, interestGracePeriod?: number | null, interestAmount?: string | null, disburseDate?: string | null, expiryDate?: string | null, paymentFrequency?: LoanProductInstallment | null, processingCharges?: Array<{ name: string, amount?: any | null } | null> | null } | null, repaymentDetails?: { lastPaymentDate?: string | null, remainingPrincipal?: string | null, remainingInterest?: string | null, remainingTotal?: string | null, totalInstallmentAmount?: string | null, nextInstallmentNo?: number | null, remainingInstallments?: Array<{ installmentNo?: number | null, principal?: string | null, fine?: string | null, interestAmount?: string | null } | null> | null } | null, member?: { name?: Record<"local"|"en"|"np",string> | null, id: string, code: string, profilePicUrl?: string | null } | null, paymentSchedule?: { total: string, totalInterest?: string | null, totalPrincipal?: string | null, installments?: Array<{ installmentDate: Record<"local"|"en"|"np",string>, installmentNo: number, interest: string, payment: string, principal: string, remainingPrincipal: string, paid: boolean } | null> | null } | null, statistics?: { remainingPayableAmount?: string | null, totalPaidAmount?: string | null, totalPayableAmount?: string | null } | null } | null } | null } };
 
 export type GetLoanRepaymentListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
@@ -16581,7 +16581,7 @@ export type GetLoanRepaymentListQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanRepaymentListQuery = { loanAccount: { repaymentList?: { totalCount?: number | null, edges?: Array<{ cursor: string, node?: { id: string, loanAccountId: string, memberId: string, memberName: Record<"local"|"en"|"np",string>, memberCode?: string | null, memberProfilePicId?: string | null, memberProfilePicUrl?: string | null, loanAccountName: string, loanProductId: string, loanProductName: string, amount: string, paymentDate: string } | null }> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
+export type GetLoanRepaymentListQuery = { loanAccount: { repaymentList?: { totalCount?: number | null, edges?: Array<{ cursor: string, node?: { id: string, loanAccountId: string, memberId: string, memberName: Record<"local"|"en"|"np",string>, memberCode?: string | null, memberProfilePicId?: string | null, memberProfilePicUrl?: string | null, loanAccountName: string, loanProductId: string, loanProductName: string, amount: string, paymentDate: Record<"local"|"en"|"np",string> } | null }> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
 
 export type GetMemberLinkedAccountsQueryVariables = Exact<{
   memberId: Scalars['ID'];
@@ -16613,7 +16613,7 @@ export type GetLoanAccountDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanAccountDetailsQuery = { loanAccount: { loanAccountDetails?: { overView?: { isClosed: boolean, totalPrincipalPaid: string, totalInterestPaid: string, totalRemainingPrincipal: string, generalInformation?: { accountId: string, accountName: string, productId: string, productName: string, accountOpenDate: Record<"local"|"en"|"np",string>, loanAccountOpenBranchId: string, loanAccountOpenBranchName: string, repaymentScheme: LoanRepaymentScheme, interestRate: number, interestAccrued?: string | null, interestEarned?: string | null, sanctionedAmount: string, principalGracePeriod?: number | null, interestGracePeriod?: number | null, tenure: number, tenureUnit: string, linkedAccountId?: string | null, linkedAccountName?: string | null } | null, loanSchedule?: { total: string, totalInterest?: string | null, totalPrincipal?: string | null, installments?: Array<{ installmentNo: number, installmentDate: string, principal: string, interest: string, payment: string, remainingPrincipal: string, paid: boolean } | null> | null } | null, transactions?: { totalCount?: number | null, edges?: Array<{ node: { id: string, transactionId?: string | null, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, transactionType?: string | null, amount: string, currentBalance: string } } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } | null, additionalFeatures?: { allowPartialInstallment?: boolean | null, insurance?: boolean | null, staffProduct?: boolean | null, loanScheduleChangeOverride?: boolean | null, isMonthlyInterestCompulsory?: boolean | null, collateral?: boolean | null, supportMultipleAccount?: boolean | null, overrideInterest?: boolean | null } | null } | null } | null } };
+export type GetLoanAccountDetailsQuery = { loanAccount: { loanAccountDetails?: { overView?: { isClosed: boolean, totalPrincipalPaid: string, totalInterestPaid: string, totalRemainingPrincipal: string, generalInformation?: { accountId: string, accountName: string, productId: string, productName: string, accountOpenDate: Record<"local"|"en"|"np",string>, loanAccountOpenBranchId: string, loanAccountOpenBranchName: string, repaymentScheme: LoanRepaymentScheme, interestRate: number, interestAccrued?: string | null, interestEarned?: string | null, sanctionedAmount: string, principalGracePeriod?: number | null, interestGracePeriod?: number | null, tenure: number, tenureUnit: string, linkedAccountId?: string | null, linkedAccountName?: string | null } | null, loanSchedule?: { total: string, totalInterest?: string | null, totalPrincipal?: string | null, installments?: Array<{ installmentNo: number, installmentDate: Record<"local"|"en"|"np",string>, principal: string, interest: string, payment: string, remainingPrincipal: string, paid: boolean } | null> | null } | null, transactions?: { totalCount?: number | null, edges?: Array<{ node: { id: string, transactionId?: string | null, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, transactionType?: string | null, amount: string, currentBalance: string } } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } | null, additionalFeatures?: { allowPartialInstallment?: boolean | null, insurance?: boolean | null, staffProduct?: boolean | null, loanScheduleChangeOverride?: boolean | null, isMonthlyInterestCompulsory?: boolean | null, collateral?: boolean | null, supportMultipleAccount?: boolean | null, overrideInterest?: boolean | null } | null } | null } | null } };
 
 export type GetLoanAccountGuaranteeDetailsQueryVariables = Exact<{
   loanAccountId: Scalars['ID'];
@@ -16927,7 +16927,7 @@ export type GetLoanBalanceReportQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanBalanceReportQuery = { report: { loanReport: { loanBalanceReport: { totalOutstandingBalance?: string | null, totalRemainingBalance?: string | null, data?: Array<{ memberId?: string | null, loanAccountId?: string | null, memberName?: Record<"local"|"en"|"np",string> | null, productName?: string | null, productCode?: string | null, outstandingBalance?: string | null, remainingBalance?: string | null, remainingInterest?: string | null, lastPaymentDate?: string | null, branchId?: string | null, branchName?: string | null } | null> | null } } } };
+export type GetLoanBalanceReportQuery = { report: { loanReport: { loanBalanceReport: { totalOutstandingBalance?: string | null, totalRemainingBalance?: string | null, data?: Array<{ memberId?: string | null, loanAccountId?: string | null, memberName?: Record<"local"|"en"|"np",string> | null, productName?: string | null, productCode?: string | null, outstandingBalance?: string | null, remainingBalance?: string | null, remainingInterest?: string | null, lastPaymentDate?: Record<"local"|"en"|"np",string> | null, branchId?: string | null, branchName?: string | null } | null> | null } } } };
 
 export type GetLoanAgingStatementReportQueryVariables = Exact<{
   data: LoanAgingStatementInput;
@@ -17089,7 +17089,7 @@ export type GetChequeBookRequestsQueryVariables = Exact<{
 }>;
 
 
-export type GetChequeBookRequestsQuery = { requests: { list?: { chequeBookRequest?: { totalCount?: number | null, pageInfo?: PaginationFragment | null, edges?: Array<{ node?: { id: string, memberId: string, memberCode?: string | null, memberName: Record<"local"|"en"|"np",string>, memberPhoneNumber: string, memberAge?: number | null, memberGender?: string | null, memberProfilePicUrl?: string | null, accountNumber: string, accountType: string, approvalStatus: RequestStatus, requestedDate: string, branchId?: string | null, branchName?: string | null, numberOfLeaves?: number | null, pickUpMethod?: ChequePickUpMethod | null, agentName?: string | null, remarks?: string | null } | null } | null> | null } | null } | null } };
+export type GetChequeBookRequestsQuery = { requests: { list?: { chequeBookRequest?: { totalCount?: number | null, pageInfo?: PaginationFragment | null, edges?: Array<{ node?: { id: string, memberId: string, memberCode?: string | null, memberName: Record<"local"|"en"|"np",string>, memberPhoneNumber: string, memberAge?: number | null, memberGender?: string | null, memberProfilePicUrl?: string | null, accountNumber: string, accountType: string, approvalStatus: RequestStatus, requestedDate: Record<"local"|"en"|"np",string>, branchId?: string | null, branchName?: string | null, numberOfLeaves?: number | null, pickUpMethod?: ChequePickUpMethod | null, agentName?: string | null, remarks?: string | null } | null } | null> | null } | null } | null } };
 
 export type GetWithdrawViaCollectorQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
@@ -17443,7 +17443,7 @@ export type GetSettingsUserListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetSettingsUserListDataQuery = { settings: { myraUser?: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, profilePicUrl?: string | null, role?: Array<{ id: string, name: string } | null> | null, branch?: { id: string, name?: string | null } | null } | null }> | null, pageInfo: PaginationFragment } | null } | null } };
+export type GetSettingsUserListDataQuery = { settings: { myraUser?: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, objState: ObjState, createdAt: Record<"local"|"en"|"np",string>, modifiedAt: Record<"local"|"en"|"np",string>, name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, profilePicUrl?: string | null, role?: Array<{ id: string, name: string } | null> | null, branch?: { id: string, name?: string | null } | null } | null }> | null, pageInfo: PaginationFragment } | null } | null } };
 
 export type GetSettingsUserEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
