@@ -16,7 +16,7 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 import { AsyncSelect, Select } from 'chakra-react-select';
-import _, { uniqueId } from 'lodash';
+import _, { debounce, uniqueId } from 'lodash';
 
 import { Checkbox, Grid, GridItem } from '@myra-ui';
 
@@ -63,6 +63,9 @@ export type Column<T extends RecordWithId & Record<string, string | number | boo
 
   cellWidth?: 'auto' | 'lg' | 'md' | 'sm';
   colSpan?: number;
+
+  searchLoading?: boolean;
+  searchCallback?: (newSearch: string) => void;
 };
 
 export interface EditableTableProps<
@@ -360,6 +363,13 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
               options={columns.find((column) => column.searchOptions)?.searchOptions}
               chakraStyles={searchBarStyle}
               value=""
+              isLoading={columns.find((column) => column.searchOptions)?.searchLoading}
+              onInputChange={debounce((id) => {
+                if (id) {
+                  columns.find((column) => column.searchOptions)?.searchCallback?.(id);
+                  // setTrigger(true);
+                }
+              }, 800)}
               onChange={(newValue) => {
                 dispatch({
                   type: EditableTableActionKind.ADD,
