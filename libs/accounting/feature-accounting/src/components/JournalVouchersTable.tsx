@@ -4,8 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { Box } from '@myra-ui';
 
 import { TableOverview, TableOverviewColumnType } from '@coop/accounting/ui-components';
-import { useGetCoaAccountsUnderLeafListQuery } from '@coop/cbs/data-access';
-import { COASelectModal } from '@coop/shared/components';
+import { useAppSelector, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 
 import { CustomJournalVoucherInput } from '../types';
@@ -19,7 +18,8 @@ type JournalVouchersTableType = {
 };
 
 export const JournalVouchersTable = () => {
-  const [parentId, setParentId] = useState<string>('');
+  const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
   const { watch } = useFormContext<CustomJournalVoucherInput>();
 
@@ -37,21 +37,21 @@ export const JournalVouchersTable = () => {
     return { crTotal: tempCR, drTotal: tempDR };
   }, [entries]);
 
-  const { refetch } = useGetCoaAccountsUnderLeafListQuery({ parentId, currentBranch: true });
+  const { data: accountList, isFetching } = useGetCoaAccountListQuery({
+    branchId,
 
-  const getAccountsList = async (pId: string) =>
-    new Promise<{ label: string; value: string }[]>((resolve) => {
-      setParentId(pId);
+    pagination: {
+      after: '',
+      first: 10,
+    },
+    filter: {
+      ledgerId: searchTerm,
+      name: searchTerm,
+      filterMode: 'OR',
+    },
+  });
 
-      refetch().then(({ data }) => {
-        resolve(
-          data?.settings?.chartsOfAccount?.accountsUnderLeaf?.map((account) => ({
-            label: account?.name as string,
-            value: account?.accountId as string,
-          })) ?? []
-        );
-      });
-    });
+  const accountListData = accountList?.settings?.chartsOfAccount?.coaAccountList?.edges;
 
   const tableSummaryColumns: TableOverviewColumnType[] = [
     { label: 'Total', width: 'auto', isNumeric: true },
@@ -63,20 +63,21 @@ export const JournalVouchersTable = () => {
     <Box display="flex" flexDir="column" gap="s12">
       <FormEditableTable<JournalVouchersTableType>
         name="entries"
+        searchPlaceholder="Search for Accounts"
         columns={[
-          {
-            accessor: 'ledger',
-            cellWidth: 'lg',
-            header: 'Ledger',
-            fieldType: 'modal',
-            modal: COASelectModal,
-          },
           {
             accessor: 'accountId',
             header: 'Account',
-            loadOptions: (row) => getAccountsList(row?.ledger),
-            fieldType: 'select',
-            cellWidth: 'auto',
+            fieldType: 'search',
+            searchOptions: accountListData?.map((account) => ({
+              label: account?.node?.accountName?.local as string,
+              value: account?.node?.accountCode as string,
+            })),
+            searchLoading: isFetching,
+            searchCallback: (newSearch) => {
+              setSearchTerm(newSearch);
+            },
+            cellWidth: 'lg',
           },
           {
             accessor: 'drAmount',

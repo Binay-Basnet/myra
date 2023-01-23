@@ -3,3 +3,11 @@ mutation searchIndexing {
     indexData(tableName: ["all"])
   }
 }
+
+mutation resetTrailBalanceCache {
+  settings {
+    report {
+      resetTrialCache
+    }
+  }
+}
