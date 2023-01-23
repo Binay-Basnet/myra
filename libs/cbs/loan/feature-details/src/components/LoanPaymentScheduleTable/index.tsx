@@ -7,7 +7,7 @@ import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data: ({
-    installmentDate: string;
+    installmentDate: Record<'local' | 'en' | 'np', string> | null | undefined;
     installmentNo: number;
     interest: string;
     payment: string;

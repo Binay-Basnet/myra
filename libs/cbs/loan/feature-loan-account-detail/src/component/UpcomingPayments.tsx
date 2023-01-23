@@ -3,12 +3,13 @@ import { useMemo } from 'react';
 import { DetailsCard, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 type CustomPaymentItem = {
   index?: string | number;
   installmentNo: number | undefined;
-  installmentDate: string | undefined;
+  installmentDate: Record<'local' | 'en' | 'np', string> | null | undefined;
   payment: string | undefined;
   principal: string | undefined;
   interest: string | undefined;
@@ -36,6 +37,7 @@ export const UpcomingPayments = ({ paymentList }: IPaymentProps) => {
       {
         header: 'Date',
         accessorKey: 'installmentDate',
+        accessorFn: (row) => localizedDate(row?.installmentDate),
       },
       {
         header: 'Installment No.',

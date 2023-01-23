@@ -5,6 +5,7 @@ import { Box, DetailPageContentCard, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetAgentAssignedMemberListDataQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -72,7 +73,7 @@ export const AgentAssignedMembers = () => {
       },
       {
         header: t['agentAssignedMembersAssignedDate'],
-        accessorFn: (row) => row?.node?.assignedDate?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.assignedDate),
       },
       {
         id: '_actions',

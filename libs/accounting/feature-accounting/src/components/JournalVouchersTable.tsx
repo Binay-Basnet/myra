@@ -19,7 +19,7 @@ type JournalVouchersTableType = {
 
 export const JournalVouchersTable = () => {
   const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
-  const [searchTerm, setSearchTerm] = useState<string | null>(null);
+  // const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
   const { watch } = useFormContext<CustomJournalVoucherInput>();
 
@@ -42,13 +42,13 @@ export const JournalVouchersTable = () => {
 
     pagination: {
       after: '',
-      first: 10,
+      first: -1,
     },
-    filter: {
-      ledgerId: searchTerm,
-      name: searchTerm,
-      filterMode: 'OR',
-    },
+    // filter: {
+    //   ledgerId: searchTerm,
+    //   name: searchTerm,
+    //   filterMode: 'OR',
+    // },
   });
 
   const accountListData = accountList?.settings?.chartsOfAccount?.coaAccountList?.edges;
@@ -73,10 +73,10 @@ export const JournalVouchersTable = () => {
               label: account?.node?.accountName?.local as string,
               value: account?.node?.accountCode as string,
             })),
-            searchLoading: isFetching,
-            searchCallback: (newSearch) => {
-              setSearchTerm(newSearch);
-            },
+            // searchLoading: isFetching,
+            // searchCallback: (newSearch) => {
+            //   setSearchTerm(newSearch);
+            // },
             cellWidth: 'lg',
           },
           {

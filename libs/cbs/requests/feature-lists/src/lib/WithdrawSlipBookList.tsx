@@ -19,7 +19,7 @@ import {
   RequestType,
   useGetChequeBookRequestsQuery,
 } from '@coop/cbs/data-access';
-import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
@@ -47,7 +47,7 @@ export const WithdrawSlipBookList = () => {
     () => [
       {
         header: 'Issued Date',
-        accessorFn: (row) => row?.node?.requestedDate,
+        accessorFn: (row) => localizedDate(row?.node?.requestedDate),
       },
       {
         header: 'ID',
