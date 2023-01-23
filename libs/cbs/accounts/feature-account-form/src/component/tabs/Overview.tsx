@@ -6,6 +6,7 @@ import { ROUTES } from '@coop/cbs/utils';
 import {
   AccountStatistics,
   AdditionalInfoCard,
+  AssociatedGuaranteeAccounts,
   BalanceChart,
   GeneralInfoCard,
   RecentTransactions,
@@ -96,6 +97,8 @@ export const Overview = () => {
       />
 
       <BalanceChart />
+
+      <AssociatedGuaranteeAccounts />
 
       <RecentTransactions isClosed={isClosed} />
 

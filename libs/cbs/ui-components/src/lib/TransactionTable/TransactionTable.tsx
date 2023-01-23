@@ -13,6 +13,7 @@ export type CustomTransactionItem = EbankingTransaction & {
 interface ITransactionTableProps {
   data: CustomTransactionItem[];
   hasIndex?: boolean;
+  isLoading?: boolean;
 }
 // const routeObj = {
 //   DEPOSIT: ROUTES.CBS_TRANS_DEPOSIT_DETAILS,
@@ -21,7 +22,7 @@ interface ITransactionTableProps {
 //   LOAN_DISBURSMENT: ROUTES.CBS_TRANS_DEPOSIT_DETAILS,
 // };
 
-export const TransactionTable = ({ data, hasIndex = false }: ITransactionTableProps) => {
+export const TransactionTable = ({ data, hasIndex = false, isLoading }: ITransactionTableProps) => {
   const transactionList = hasIndex
     ? data?.map((trans, index) => ({
         index: String(index + 1),
@@ -104,5 +105,13 @@ export const TransactionTable = ({ data, hasIndex = false }: ITransactionTablePr
     return tempColumns;
   }, [hasIndex]);
 
-  return <Table isDetailPageTable isStatic data={transactionList} columns={columns} />;
+  return (
+    <Table
+      isDetailPageTable
+      isStatic
+      data={transactionList}
+      columns={columns}
+      isLoading={isLoading}
+    />
+  );
 };
