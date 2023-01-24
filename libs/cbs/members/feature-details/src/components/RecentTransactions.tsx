@@ -44,7 +44,7 @@ export const RecentTransactions = () => {
         </Button>
       }
     >
-      <TransactionTable data={transactionList} hasIndex />
+      <TransactionTable data={transactionList} />
     </DetailsCard>
   );
 };
