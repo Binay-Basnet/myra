@@ -18,6 +18,8 @@ interface IGeneralInfoCardProps {
     guaranteedAmount: string | null | undefined;
     accountTenure: string | null | undefined;
     isMandatory: boolean | null | undefined;
+    nomineeAccountNumber: string | null | undefined;
+    nomineeAccountName: string | null | undefined;
   };
   // accountTypes?: {
   //   SAVING: string;
@@ -69,6 +71,15 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => (
     />
     <DetailCardContent title="Guarantee Amount" subtitle={data?.guaranteedAmount ?? '0'} />
     <DetailCardContent title="Tenure" subtitle={data?.accountTenure ?? '-'} />
+
+    {data?.nomineeAccountName && data?.nomineeAccountNumber ? (
+      <DetailCardContent title="Nominee Account">
+        <RedirectButton
+          label={data?.nomineeAccountName}
+          link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}/?id=${data?.nomineeAccountNumber}`}
+        />
+      </DetailCardContent>
+    ) : null}
   </DetailsCard>
 );
 

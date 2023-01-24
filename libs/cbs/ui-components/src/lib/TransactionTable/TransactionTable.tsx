@@ -109,6 +109,7 @@ export const TransactionTable = ({ data, hasIndex = false, isLoading }: ITransac
     <Table
       isDetailPageTable
       isStatic
+      size="compact"
       data={transactionList}
       columns={columns}
       isLoading={isLoading}
