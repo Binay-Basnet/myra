@@ -30,8 +30,8 @@ export const en = {
   Ashwin: 'Ashwin',
   Kartik: 'Kartik',
   Mangsir: 'Mangsir',
-  Paush: 'Paush',
-  Mangh: 'Mangh',
+  Poush: 'Poush',
+  Magh: 'Magh',
   Falgun: 'Falgun',
   Chaitra: 'Chaitra',
 };

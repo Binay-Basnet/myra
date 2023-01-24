@@ -37,8 +37,8 @@ export const JournalVouchersTable = () => {
     return { crTotal: tempCR, drTotal: tempDR };
   }, [entries]);
 
-  const { data: accountList, isFetching } = useGetCoaAccountListQuery({
-    branchId,
+  const { data: accountList } = useGetCoaAccountListQuery({
+    branchId: [branchId as string],
 
     pagination: {
       after: '',
