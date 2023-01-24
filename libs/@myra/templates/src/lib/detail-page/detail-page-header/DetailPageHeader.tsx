@@ -1,9 +1,10 @@
-import { IoChevronForwardOutline, IoClose } from 'react-icons/io5';
+import { IoChevronForwardOutline } from 'react-icons/io5';
+import { VscChromeClose } from 'react-icons/vsc';
 import { useRouter } from 'next/router';
 import { Popover, PopoverBody, PopoverContent, PopoverTrigger, Text } from '@chakra-ui/react';
 
 import { GridItem } from '@myra-ui/components';
-import { Avatar, Box, Button, Grid, Icon, IconButton } from '@myra-ui/foundations';
+import { Box, Button, Grid, Icon, IconButton } from '@myra-ui/foundations';
 
 // const optionsMemberHeader = [
 //   {
@@ -18,7 +19,6 @@ export interface DetailPageHeaderProps {
   title: string;
   member: {
     name: string;
-    profilePicUrl?: string | undefined | null;
   };
   closeLink?: string;
   backLink?: string;
@@ -69,17 +69,26 @@ export const DetailPageHeader = ({
           fontSize="r2"
           fontWeight="500"
           color="gray.700"
+          px="s8"
+          py="s4"
+          _hover={{
+            cursor: 'pointer',
+            backgroundColor: 'highlight.500',
+            borderRadius: 'br2',
+          }}
           cursor={backLink ? 'pointer' : 'default'}
           onClick={() => {
-            if (backLink) {
-              router.push(backLink);
+            if (closeLink) {
+              router.push(closeLink);
+            } else {
+              router.back();
             }
           }}
         >
           {title}
         </Text>
         <Icon as={IoChevronForwardOutline} size="md" />
-        <Avatar name={member.name} src={member.profilePicUrl ?? ''} size="sm" />
+
         <Text fontSize="r2" fontWeight="500" color="gray.700">
           {member.name}
         </Text>
@@ -130,8 +139,7 @@ export const DetailPageHeader = ({
           variant="ghost"
           aria-label="close"
           color="gray.500"
-          height="40px"
-          icon={<Icon as={IoClose} size="lg" />}
+          icon={<Icon as={VscChromeClose} size="lg" />}
           onClick={() => {
             if (closeLink) {
               router.push(closeLink);

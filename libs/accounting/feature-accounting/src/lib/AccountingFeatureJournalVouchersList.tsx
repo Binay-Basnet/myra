@@ -60,16 +60,16 @@ export const AccountingFeatureJournalVouchersList = () => {
           props?.row?.original?.node && (
             <TablePopover
               node={props?.row?.original?.node}
-              items={
-                [
-                  // {
-                  //   title: 'Edit Account',
-                  //   onClick: (row) => {
-                  //     router.push(`/accounting/investment/investment-account/edit/${row['id']}`);
-                  //   },
-                  // },
-                ]
-              }
+              items={[
+                {
+                  title: 'View Details',
+                  onClick: (row) => {
+                    router?.pathname?.includes('transactions')
+                      ? router.push(`/${ROUTES.CBS_TRANS_JOURNAL_VOUCHER_DETAILS}?id=${row?.id}`)
+                      : router.push(`/${baseRoute}/journal-vouchers/view?id=${row?.id}`);
+                  },
+                },
+              ]}
             />
           ),
         // meta: {

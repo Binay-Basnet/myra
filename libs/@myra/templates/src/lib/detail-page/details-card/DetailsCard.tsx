@@ -23,7 +23,7 @@ export const DetailsCard = ({
   hasThreeRows,
   leftBtn = null,
 }: DetailsCardProps) => (
-  <Box borderRadius="br2" bg={bg ?? 'white'}>
+  <Box borderRadius="br2" boxShadow="E0" bg={bg ?? 'white'}>
     <Box px="s16" h="60px" display="flex" alignItems="center">
       <Box w="100%" display="flex" alignItems="center" justifyContent="space-between">
         <Box display="flex" flexDir="column">

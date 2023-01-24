@@ -75,7 +75,7 @@ export const Transactions = () => {
         //   </Button>
         // }
       >
-        <TransactionTable data={transactionList} hasIndex isLoading={isFetching} />
+        <TransactionTable data={transactionList} isLoading={isFetching} />
       </DetailsCard>
     </>
   );

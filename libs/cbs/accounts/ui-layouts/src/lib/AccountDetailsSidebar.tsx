@@ -23,13 +23,7 @@ export const AccountDetailsSidebar = () => {
 
   return (
     <>
-      <Box
-        borderBottom="1px"
-        borderBottomColor="border.layout"
-        display="flex"
-        p="s16"
-        justifyContent="space-between"
-      >
+      <Box display="flex" p="s16" justifyContent="space-between">
         <Box display="flex" flexDirection="column" gap="s8" width="100%">
           <Box display="flex" flexDirection="column">
             <Box display="flex" justifyContent="space-between">
