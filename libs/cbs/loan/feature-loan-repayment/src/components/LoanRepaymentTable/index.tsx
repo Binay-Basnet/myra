@@ -31,7 +31,7 @@ export const LoanPaymentScheduleTable = ({
         meta: {
           width: '50px',
           Footer: {
-            colspan: 2,
+            colspan: 1,
           },
         },
       },
