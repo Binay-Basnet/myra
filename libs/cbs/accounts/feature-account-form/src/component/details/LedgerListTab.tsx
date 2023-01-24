@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { Box, DetailsCard, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetAccountLedgersListQuery } from '@coop/cbs/data-access';
-import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 import { TabHeader } from './TabHeader';
@@ -44,10 +45,12 @@ export const LedgerListTab = () => {
         accessorKey: 'ledgerName',
         cell: (props) => (
           <Box minW="10px">
-            <RedirectButton
-              link={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props?.row?.original?.ledgerId}`}
-              label={<Tooltip title={props?.row?.original?.ledgerName as string} />}
-            />
+            <Link
+              href={`${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${props?.row?.original?.ledgerId}`}
+              target="_blank"
+            >
+              <Tooltip title={props?.row?.original?.ledgerName as string} />
+            </Link>
           </Box>
         ),
       },

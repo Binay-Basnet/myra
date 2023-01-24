@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-import { Box, Button, Column, DetailsCard, Table, Text, Tooltip } from '@myra-ui';
+import { Box, Column, DetailsCard, Table, Text, Tooltip } from '@myra-ui';
 
 import { AccountLedgerDetails } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -15,7 +15,6 @@ type CustomTransactionItem = AccountLedgerDetails & {
 };
 
 export const LedgerPage = () => {
-  const router = useRouter();
   const { ledgerList } = useLoanAccountDetailHooks();
 
   const rowData = useMemo(() => ledgerList ?? [], [ledgerList]);
@@ -37,16 +36,12 @@ export const LedgerPage = () => {
         meta: { width: '80%' },
         cell: (props) => (
           <Box gap="s4">
-            <Button
-              variant="link"
-              onClick={() =>
-                router.push(
-                  `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props?.row?.original?.ledgerId}`
-                )
-              }
+            <Link
+              href={`${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${props?.row?.original?.ledgerId}`}
+              target="_blank"
             >
               <Tooltip title={props?.row?.original?.ledgerName as string} />
-            </Button>
+            </Link>
           </Box>
         ),
       },

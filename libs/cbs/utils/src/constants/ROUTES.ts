@@ -55,6 +55,7 @@ export const ROUTES = {
   CBS_TRANS_ALL_TRANSACTION_LIST: '/cbs/transactions/all-transactions/list',
   CBS_TRANS_ALL_LEDGERS_LIST: '/cbs/transactions/all-ledgers/list',
   CBS_TRANS_ALL_ACCOUNTS_LIST: '/cbs/transactions/all-accounts/list',
+  CBS_TRANS_ALL_LEDGERS_DETAIL: '/cbs/transactions/all-ledgers/details',
 
   CBS_TRANSFER_VAULT_ADD: '/cbs/transfers/vault-transfer/add',
   CBS_TRANSFER_TELLER_ADD: '/cbs/transfers/teller-transfer/add',
