@@ -4,6 +4,7 @@ import { Chips, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { LoanInstallment } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
@@ -36,13 +37,7 @@ export const LoanPaymentScheduleTable = ({
       },
       {
         header: 'Installment Date',
-        accessorKey: 'installmentDate',
-        meta: {
-          isNumeric: true,
-          Footer: {
-            display: 'none',
-          },
-        },
+        accessorFn: (row) => localizedDate(row?.installmentDate),
       },
 
       {
