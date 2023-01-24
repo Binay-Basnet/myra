@@ -21614,6 +21614,7 @@ export type GetMemberKymDetailsAccountsQuery = {
           } | null> | null;
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
+            accountId?: string | null;
             accountName?: string | null;
             paymentType?: string | null;
             amount?: string | null;
@@ -36573,6 +36574,7 @@ export const GetMemberKymDetailsAccountsDocument = `
           }
           payments {
             date
+            accountId
             accountName
             paymentType
             amount

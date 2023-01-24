@@ -1,7 +1,7 @@
 import { IoCreateOutline, IoEyeOutline, IoPrintOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Grid, Icon, Text } from '@myra-ui';
+import { Box, Grid, GridItem, QuickLinks, Text } from '@myra-ui';
 
 import {
   CooperativeBasicMinInfo,
@@ -10,6 +10,7 @@ import {
   InstitutionBasicMinInfo,
   useGetMemberKymDetailsOverviewQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 
 import {
   BioCoop,
@@ -23,24 +24,11 @@ import {
   MemberFamilyRelationsInfo,
 } from '../components';
 
-// const links = [
-//   {
-//     icon: IoCreateOutline,
-//     title: 'Edit KYM',
-//   },
-//   {
-//     icon: IoEyeOutline,
-//     title: 'View KYM',
-//   },
-//   {
-//     icon: IoPrintOutline,
-//     title: 'Print KYM',
-//   },
-// ];
 export const Bio = () => {
   const router = useRouter();
+  const { id } = router.query;
   const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
-    id: router.query['id'] as string,
+    id: id as string,
   });
 
   const memberIndividual =
@@ -84,71 +72,40 @@ export const Bio = () => {
     memberType = 'individual';
   }
 
+  const links = [
+    {
+      id: '1',
+      text: 'Edit KYM',
+      icon: IoCreateOutline,
+      onclick: () => router.push(`${ROUTES.CBS_MEMBER}/${memberType}/edit/${id}`),
+    },
+    {
+      id: '2',
+      text: 'View KYM',
+      icon: IoEyeOutline,
+      onclick: () => router.push(`${ROUTES.CBS_MEMBER}/${memberType}/edit/${id}`),
+    },
+    {
+      id: '3',
+      text: 'Print KYM',
+      icon: IoPrintOutline,
+      onclick: () => router.push(`${ROUTES.CBS_MEMBER}/${memberType}/edit/${id}`),
+    },
+  ];
+
   return (
     <>
       <Text fontSize="r3" fontWeight="600">
         Bio{' '}
       </Text>
+      <Grid templateColumns="repeat(3,1fr)" columnGap="s8" rowGap="s16">
+        {links?.map((item) => (
+          <GridItem key={item?.text}>
+            <QuickLinks icon={item.icon} text={item.text} onclick={item.onclick} />
+          </GridItem>
+        ))}
+      </Grid>
 
-      <Box display="flex" flexDirection="column" gap="s16" pb="s16">
-        <Text fontWeight="600" fontSize="r1">
-          Quick Links
-        </Text>
-        <Grid templateColumns="repeat(3,1fr)" gap="s16">
-          <Box
-            display="flex"
-            justifyContent="flex-start"
-            alignItems="center"
-            bg="white"
-            borderRadius="br2"
-            gap="s12"
-            h="58px"
-            pl="s16"
-            cursor="pointer"
-            onClick={() => {
-              router.push(`/cbs/members/${memberType}/edit/${router.query['id'] as string}`);
-            }}
-          >
-            <Icon as={IoCreateOutline} />
-
-            <Text fontWeight="500" fontSize="s3">
-              Edit KYM
-            </Text>
-          </Box>
-          <Box
-            display="flex"
-            justifyContent="flex-start"
-            alignItems="center"
-            bg="white"
-            borderRadius="br2"
-            gap="s12"
-            h="58px"
-            pl="s16"
-          >
-            <Icon as={IoEyeOutline} />
-
-            <Text fontWeight="500" fontSize="s3">
-              View KYM{' '}
-            </Text>
-          </Box>
-          <Box
-            display="flex"
-            justifyContent="flex-start"
-            alignItems="center"
-            bg="white"
-            borderRadius="br2"
-            gap="s12"
-            h="58px"
-            pl="s16"
-          >
-            <Icon as={IoPrintOutline} />
-
-            <Text fontWeight="500" fontSize="s3">
-              Print KYM{' '}
-            </Text>
-          </Box>
-        </Grid>
-      </Box>
       {memberIndividual && (
         <Box display="flex" flexDirection="column" gap="s16">
           <MemberBasicInfo />

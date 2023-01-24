@@ -8,12 +8,6 @@ type Option = {
   value: string;
 };
 
-// type MemberOption = {
-//   id: string;
-//   url: string;
-//   name: string;
-// };
-
 type IFormSelectPopoutProps<T extends Record<string, unknown>> = TSelectPopoutProps & {
   control?: Control<T>;
   name?: string;
@@ -21,20 +15,6 @@ type IFormSelectPopoutProps<T extends Record<string, unknown>> = TSelectPopoutPr
   optionType?: 'default' | 'member' | undefined;
   rules?: UseControllerProps['rules'];
 };
-
-// type ValueType = Readonly<Option | Option[] | MemberOption[] | MemberOption | null>;
-
-// type TSelectPopoutProps =
-//   | (SelectProps & {
-//       popoverBtn: (selectedValue: ValueType) => React.ReactNode;
-//       optionType?: 'default' | undefined;
-//       options: Option[];
-//     })
-//   | (SelectProps & {
-//       popoverBtn: (selectedValue: ValueType) => React.ReactNode;
-//       optionType: 'member';
-//       options: MemberOption[];
-//     });
 
 export const FormSelectPopout = <T extends Record<string, unknown>>(
   props: IFormSelectPopoutProps<T>
@@ -65,14 +45,10 @@ type FormControlProps<T extends Record<string, unknown>> = IFormSelectPopoutProp
 
 const FormControl = <T extends Record<string, unknown>>({
   name,
-
   errors,
   field: { onChange, value },
-
   ...rest
 }: FormControlProps<T>) => {
-  //   const foundValue = selectOptions?.find((option) => option.value === value);
-
   const methods = useFormContext();
   const { clearErrors } = methods;
 

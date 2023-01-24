@@ -1,8 +1,8 @@
-import { IoAddOutline, IoCreateOutline } from 'react-icons/io5';
+import { IoCreateOutline } from 'react-icons/io5';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
-import { Box, Grid, Icon, Text } from '@myra-ui';
+import { Box, DetailPageQuickLinks, Grid, Text } from '@myra-ui';
 
 import {
   CooperativeBasicMinInfo,
@@ -29,45 +29,6 @@ export const Overview = () => {
   const memberDetails = useGetMemberKymDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
-
-  const links = [
-    {
-      title: 'New Deposit',
-      link: `${ROUTES.CBS_TRANS_DEPOSIT_ADD}?memberId=${id}`,
-    },
-    {
-      title: 'New Withdraw',
-      link: `${ROUTES.CBS_TRANS_WITHDRAW_ADD}?memberId=${id}`,
-    },
-    {
-      title: 'Account Transfer',
-      link: `${ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_ADD}?memberId=${id}`,
-    },
-    {
-      title: 'New Account',
-      link: `${ROUTES.CBS_ACCOUNT_OPEN_ADD}?memberId=${id}`,
-    },
-    {
-      title: 'New Share Issue',
-      link: `${ROUTES.CBS_SHARE_ISSUE_ADD}?memberId=${id}`,
-    },
-    {
-      title: 'Share Return',
-      link: `${ROUTES.CBS_SHARE_ISSUE_ADD}?memberId=${id}`,
-    },
-    {
-      title: 'New Loan Application',
-      link: `${ROUTES.CBS_LOAN_APPLICATIONS_ADD}?memberId=${id}`,
-    },
-    {
-      title: 'Loan Payment',
-      link: `${ROUTES.CBS_LOAN_REPAYMENTS_ADD}?memberId=${id}`,
-    },
-    {
-      title: 'Edit KYM',
-      link: `/members`,
-    },
-  ];
 
   const memberPayment = memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.payments;
 
@@ -143,62 +104,54 @@ export const Overview = () => {
     memberType = 'individual';
   }
 
+  const links = [
+    {
+      title: 'New Deposit',
+      link: `${ROUTES.CBS_TRANS_DEPOSIT_ADD}?memberId=${id}`,
+    },
+    {
+      title: 'New Withdraw',
+      link: `${ROUTES.CBS_TRANS_WITHDRAW_ADD}?memberId=${id}`,
+    },
+    {
+      title: 'Account Transfer',
+      link: `${ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_ADD}?memberId=${id}`,
+    },
+    {
+      title: 'New Account',
+      link: `${ROUTES.CBS_ACCOUNT_OPEN_ADD}?memberId=${id}`,
+    },
+    {
+      title: 'New Share Issue',
+      link: `${ROUTES.CBS_SHARE_ISSUE_ADD}?memberId=${id}`,
+    },
+    {
+      title: 'Share Return',
+      link: `${ROUTES.CBS_SHARE_ISSUE_ADD}?memberId=${id}`,
+    },
+    {
+      title: 'New Loan Application',
+      link: `${ROUTES.CBS_LOAN_APPLICATIONS_ADD}?memberId=${id}`,
+    },
+    {
+      title: 'Loan Payment',
+      link: `${ROUTES.CBS_LOAN_REPAYMENTS_ADD}?memberId=${id}`,
+    },
+    {
+      title: 'Edit KYM',
+      link: `${ROUTES.CBS_MEMBER}/${memberType}/edit/${id}`,
+      icon: IoCreateOutline,
+    },
+  ];
+
   return (
     <>
       <Text fontSize="r3" fontWeight="600">
         Overview
       </Text>
-      <Box display="flex" flexDirection="column" gap="s16" pb="s16">
-        <Text fontWeight="600" fontSize="r1">
-          Quick Links
-        </Text>
-        <Grid templateColumns="repeat(3,1fr)" gap="s16">
-          {links?.map((item) => (
-            <Box key={`${item.link}${item.title}`}>
-              {item.title === 'Edit KYM' ? (
-                <Box
-                  display="flex"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  bg="white"
-                  borderRadius="br2"
-                  gap="s12"
-                  h="58px"
-                  pl="s16"
-                  cursor="pointer"
-                  onClick={() => {
-                    router.push(`/cbs/members/${memberType}/edit/${router.query['id'] as string}`);
-                  }}
-                >
-                  <Icon as={IoCreateOutline} />
 
-                  <Text fontWeight="500" fontSize="s3">
-                    Edit KYM
-                  </Text>
-                </Box>
-              ) : (
-                <Box
-                  display="flex"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  bg="white"
-                  borderRadius="br2"
-                  gap="s12"
-                  h="58px"
-                  pl="s16"
-                  cursor="pointer"
-                  onClick={() => router.push(`${item.link}`)}
-                >
-                  <Icon as={IoAddOutline} />
-
-                  <Text fontWeight="500" fontSize="s3">
-                    {item.title}
-                  </Text>
-                </Box>
-              )}
-            </Box>
-          ))}
-        </Grid>
+      <Box display="flex" flexDirection="column" gap="s16">
+        <DetailPageQuickLinks links={links} />
       </Box>
       <MemberBasicInformation />
       <Grid templateColumns="repeat(2,1fr)" gap="s16">

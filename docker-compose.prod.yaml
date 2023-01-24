@@ -41,5 +41,5 @@ services:
       - myra-frontend
 
 networks:
-   myra-frontend:
-      driver: bridge
+  myra-frontend:
+    driver: bridge

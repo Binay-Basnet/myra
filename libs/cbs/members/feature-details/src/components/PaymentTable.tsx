@@ -4,7 +4,6 @@ import { Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
@@ -40,7 +39,7 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
           // id to be sent by BE
           <RedirectButton
             label={props?.row?.original?.accountName}
-            link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props.cell.row.original?.id}`}
+            link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${props.cell.row.original?.id}`}
           />
         ),
         meta: {
@@ -71,11 +70,7 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
         header: 'Amount',
         accessorKey: 'amount',
         cell: (props) =>
-          props.getValue() ? (
-            <Text color="primary.500">{amountConverter(props.getValue() as string)}</Text>
-          ) : (
-            'N/A'
-          ),
+          props.getValue() ? <Text color="primary.500">{props.getValue() as string}</Text> : 'N/A',
         meta: {
           isNumeric: true,
         },

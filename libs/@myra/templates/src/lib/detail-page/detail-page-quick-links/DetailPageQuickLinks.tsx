@@ -14,9 +14,9 @@ export const DetailPageQuickLinks = ({ links }: DetailPageQuickLinksProps) => {
 
   return (
     <Box display="flex" flexDirection="column" gap="s8" pb="s16">
-      <Text fontWeight="600" fontSize="r1">
+      {/* <Text fontWeight="600" fontSize="r1">
         Quick Links
-      </Text>
+      </Text> */}
       <Grid templateColumns="repeat(3,1fr)" gap="s16">
         {links?.map((item) => (
           <Box key={`${item.link}${item.title}`}>
@@ -30,9 +30,10 @@ export const DetailPageQuickLinks = ({ links }: DetailPageQuickLinksProps) => {
               h="58px"
               pl="s16"
               cursor="pointer"
+              boxShadow="E0"
               onClick={() => (item.onClick ? item.onClick() : router.push(`${item.link}`))}
             >
-              <Icon as={item.icon || IoAddOutline} />
+              <Icon color="primary.500" as={item.icon || IoAddOutline} />
 
               <Text fontWeight="500" fontSize="s3">
                 {item.title}
