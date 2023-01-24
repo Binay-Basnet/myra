@@ -675,7 +675,7 @@ export const CbsAccountClose = () => {
                 mainButtonLabel={
                   Number(selectedAccount?.balance ?? 0) - netInterestPayable - totalCharge === 0
                     ? 'Close Account'
-                    : 'Proceed to Payment'
+                    : 'Proceed Transaction'
                 }
                 isMainButtonDisabled={!radioOther}
                 dangerButton={

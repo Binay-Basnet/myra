@@ -681,7 +681,7 @@ export const AccountOpenNew = () => {
                 </Box>
               }
               isMainButtonDisabled={!!errors || !memberId || !productID || !accountName}
-              mainButtonLabel={totalDeposit === 0 ? 'Open Account' : 'Proceed to Payment'}
+              mainButtonLabel={totalDeposit === 0 ? 'Open Account' : 'Proceed Transaction'}
               mainButtonHandler={totalDeposit === 0 ? submitForm : proceedToPaymentHandler}
             />
           )}

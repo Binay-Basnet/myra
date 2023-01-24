@@ -240,7 +240,7 @@ export const LoanRepayment = () => {
       methods.setValue('memberId', String(redirectLoanMemberId));
       methods.setValue('loanAccountId', String(redirectloanAccountId));
     }
-  }, [redirectMemberId, redirectLoanMemberId]);
+  }, [redirectloanAccountId, redirectLoanMemberId]);
 
   const isSuspicious = watch('isSuspicious');
 
@@ -364,7 +364,7 @@ export const LoanRepayment = () => {
         <Box>
           {mode === '0' && (
             <FormFooter
-              mainButtonLabel="Proceed Transactions"
+              mainButtonLabel="Proceed Transaction"
               mainButtonHandler={proceedButtonHandler}
               isMainButtonDisabled={Boolean(!amountPaid || (isSuspicious && !suspicionRemarks))}
             />

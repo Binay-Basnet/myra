@@ -40,24 +40,22 @@ export const EmptyState = (props: IEmptyStateProps) => {
       <Box display="flex" gap="s40" alignItems="center">
         {/* <Button onClick={onClick}>New {type}</Button> */}
         {forms && (
-          <Box minW={50}>
-            <PopOverComponentForButtonList buttonLabel={`new ${menu}`}>
+          <Box>
+            <PopOverComponentForButtonList buttonLabel={`New ${menu}`}>
               {forms?.map((item) => (
                 <Can I="CREATE" a={item.aclKey} key={item?.label}>
-                  <Box>
-                    <AddButtonList
-                      label={t[item.label] || item?.label}
-                      onClick={() => {
-                        if (item.idType) {
-                          mutateAsync({ idType: item?.idType ?? null }).then((res) =>
-                            router.push(`${item.route}/${res?.newId}`)
-                          );
-                        } else {
-                          router.push(item.route);
-                        }
-                      }}
-                    />
-                  </Box>
+                  <AddButtonList
+                    label={t[item.label] || item?.label}
+                    onClick={() => {
+                      if (item.idType) {
+                        mutateAsync({ idType: item?.idType ?? null }).then((res) =>
+                          router.push(`${item.route}/${res?.newId}`)
+                        );
+                      } else {
+                        router.push(item.route);
+                      }
+                    }}
+                  />
                 </Can>
               ))}
             </PopOverComponentForButtonList>
