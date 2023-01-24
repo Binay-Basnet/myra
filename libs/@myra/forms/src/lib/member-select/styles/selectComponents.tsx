@@ -17,6 +17,7 @@ export interface Option {
     maritialStatus?: string;
     address?: string;
     profilePicUrl?: string | null | undefined;
+    branch?: string;
   };
 }
 
@@ -80,14 +81,35 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
                 {data.memberInfo?.gender ?? '-'} | {data.memberInfo?.age ?? '-'} |{' '}
                 {data.memberInfo?.maritialStatus ?? '-'}
               </Text>
-              <Text
-                lineHeight="100%"
-                fontWeight="Regular"
-                fontSize="s3"
-                color="neutralColorLight.Gray-60"
-              >
-                {data.memberInfo?.address}
-              </Text>
+              <Box display="flex" gap="s16">
+                <Text
+                  lineHeight="100%"
+                  fontWeight="Regular"
+                  fontSize="s3"
+                  color="neutralColorLight.Gray-60"
+                >
+                  {data.memberInfo?.address}
+                </Text>
+
+                <Box display="flex" gap="s4">
+                  <Text
+                    lineHeight="100%"
+                    fontWeight="Regular"
+                    fontSize="s3"
+                    color="neutralColorLight.Gray-60"
+                  >
+                    Branch:
+                  </Text>
+                  <Text
+                    lineHeight="100%"
+                    fontWeight="Regular"
+                    fontSize="s3"
+                    color="neutralColorLight.Gray-60"
+                  >
+                    {data.memberInfo?.branch}
+                  </Text>
+                </Box>
+              </Box>
             </Box>
           </Box>
           <Box>

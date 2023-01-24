@@ -11,7 +11,7 @@ export const MainLayoutContainer = ({ children }: IContainer) => <Box h="100vh">
 export const MenuContainer = ({ children }: IContainer) => <Box display="flex">{children}</Box>;
 
 export const PageContainer = ({ children }: IContainer) => (
-  <Box width="calc(100% - 260px)">
+  <Box width="calc(100% - 260px)" boxShadow="E1">
     <Box minHeight="calc(100vh - 110px)" width="100%" bg="white">
       {children}
     </Box>

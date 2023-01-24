@@ -1,5 +1,6 @@
-import { useAccountDetails } from '@coop/cbs/data-access';
 import { Box, DetailPageHeader } from '@myra-ui';
+
+import { useAccountDetails } from '@coop/cbs/data-access';
 
 export interface PathBarProps {
   title: string;
@@ -14,7 +15,6 @@ export const AccountDetailsPathBar = ({ title }: PathBarProps) => {
         title={title}
         member={{
           name: accountDetails?.member?.name?.local as string,
-          profilePicUrl: accountDetails?.member?.profilePicUrl as string,
         }}
       />
     </Box>

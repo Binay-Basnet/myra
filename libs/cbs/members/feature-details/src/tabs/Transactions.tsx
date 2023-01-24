@@ -81,7 +81,7 @@ export const Transactions = () => {
       </Box>
 
       <DetailsCard title="Recent Transactions" hasTable>
-        <TransactionTable data={transactionList} hasIndex />
+        <TransactionTable data={transactionList} />
       </DetailsCard>
     </>
   );

@@ -25,6 +25,7 @@ export interface Option {
     maritialStatus?: string;
     address?: string;
     profilePicUrl?: string | null | undefined;
+    branch?: string | null | undefined;
   };
 }
 

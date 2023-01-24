@@ -57,7 +57,7 @@ export const RecentTransactions = ({ isClosed }: IProps) => {
         </Button>
       }
     >
-      <TransactionTable data={transactionList} hasIndex isLoading={isFetching} />
+      <TransactionTable data={transactionList} isLoading={isFetching} />
     </DetailsCard>
   );
 };
