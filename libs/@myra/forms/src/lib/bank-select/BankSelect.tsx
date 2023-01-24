@@ -21,7 +21,6 @@ interface Option {
     displayName: string;
     accountType: string;
     balance: string;
-    branchName: string;
   };
 }
 
