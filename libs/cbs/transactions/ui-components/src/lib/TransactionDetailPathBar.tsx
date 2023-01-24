@@ -224,7 +224,6 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
           title={title}
           member={{
             name: memberDetail?.name ?? '',
-            profilePicUrl: memberDetail?.profilePicUrl ?? '',
           }}
           options={pageHeaderOptions}
         />

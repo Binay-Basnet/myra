@@ -15,7 +15,6 @@ export const TransferDetailsHeader = ({ title }: ITransferDetailsHeaderProps) =>
         title={title}
         member={{
           name: transferDetailData?.srcBranch?.local as string,
-          profilePicUrl: transferDetailData?.srcProfilePicUrl as string,
         }}
       />
     </Box>

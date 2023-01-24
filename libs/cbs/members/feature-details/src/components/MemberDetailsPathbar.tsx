@@ -60,12 +60,6 @@ export const MemberDetailsPathBar = ({ title }: PathBarProps) => {
             : memberBasicCooperative?.memberName
             ? (memberBasicCooperative?.memberName as string)
             : (memberBasicCooperativeUnion?.memberName as string),
-          profilePicUrl:
-            memberInfo?.profilePic ??
-            memberBasicInstitution?.profilePic ??
-            memberBasicCooperative?.profilePic ??
-            memberBasicCooperativeUnion?.profilePic ??
-            '',
         }}
       />
     </Box>

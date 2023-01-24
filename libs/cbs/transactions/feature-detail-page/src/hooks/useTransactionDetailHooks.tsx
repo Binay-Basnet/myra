@@ -104,12 +104,6 @@ export const useTransactionDetailHooks = () => {
         localizedText(accountTransferDetailData?.member?.name) ??
         agentDetailData?.name ??
         localizedText(loanRepaymentDetailData?.member?.name),
-      profilePicUrl:
-        depositDetailData?.member?.profilePicUrl ??
-        withdrawDetailData?.member?.profilePicUrl ??
-        accountTransferDetailData?.member?.profilePicUrl ??
-        agentDetailData?.profilePicUrl ??
-        loanRepaymentDetailData?.member?.profilePicUrl,
     },
   };
 };
