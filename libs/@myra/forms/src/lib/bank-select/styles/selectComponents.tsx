@@ -13,7 +13,6 @@ export interface Option {
     displayName: string;
     accountType: string;
     balance: string;
-    branchName: string;
   };
 }
 
@@ -60,12 +59,7 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
               {data.bankInfo.bankName}
             </Text>
           </Box>
-        </Box>
 
-        <Box>
-          <Text fontSize="s3" fontWeight={600} color="primary.500">
-            {amountConverter(data.bankInfo.balance)}
-          </Text>
           <Text
             fontSize="s3"
             fontWeight={400}
@@ -74,15 +68,11 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
           >
             {data.bankInfo.accountType}
           </Text>
-          <Text
-            fontSize="s3"
-            fontWeight={400}
-            color="neutralColorLight.Gray-60"
-            textTransform="capitalize"
-          >
-            {data.bankInfo.branchName}
-          </Text>
         </Box>
+
+        <Text fontSize="s3" fontWeight={600} color="primary.500">
+          {amountConverter(data.bankInfo.balance)}
+        </Text>
       </Box>
     </chakraComponents.Option>
   ),
