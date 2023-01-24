@@ -40,11 +40,11 @@ export const EmptyState = (props: IEmptyStateProps) => {
       <Box display="flex" gap="s40" alignItems="center">
         {/* <Button onClick={onClick}>New {type}</Button> */}
         {forms && (
-          <Box minW={50}>
-            <PopOverComponentForButtonList buttonLabel={`new ${menu}`}>
+          <Box>
+            <PopOverComponentForButtonList buttonLabel={`New ${menu}`}>
               {forms?.map((item) => (
                 <Can I="CREATE" a={item.aclKey} key={item?.label}>
-                  <Box>
+
                     <AddButtonList
                       label={t[item.label] || item?.label}
                       onClick={() => {
@@ -57,7 +57,7 @@ export const EmptyState = (props: IEmptyStateProps) => {
                         }
                       }}
                     />
-                  </Box>
+
                 </Can>
               ))}
             </PopOverComponentForButtonList>
