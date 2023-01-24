@@ -5,13 +5,12 @@ import { useRouter } from 'next/router';
 import { asyncToast, Box, SettingsFooter, Text, toast } from '@myra-ui';
 
 import {
-  BranchCategory,
   TypeOfShare,
   useGetSettingsShareGeneralDataQuery,
   useSetSettingsShareGeneralMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormCheckbox, FormCheckboxGroup, FormInput } from '@coop/shared/form';
+import { FormCheckbox, FormInput } from '@coop/shared/form';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -24,28 +23,28 @@ export const ShareSettingsGeneralPage = () => {
 
   const { getValues, reset, watch } = methods;
 
-  const shareIssueAuthorityOpt = [
-    {
-      label: t['shareHeadOffice'],
-      value: BranchCategory?.HeadOffice,
-    },
-    {
-      label: t['shareRegionalOffice'],
-      value: BranchCategory?.RegionalOffice,
-    },
-    {
-      label: t['shareServiceCenterBranch'],
-      value: BranchCategory?.ServiceCenter,
-    },
-    {
-      label: t['shareContactOffice'],
-      value: BranchCategory?.ContactOffice,
-    },
-    {
-      label: t['shareOther'],
-      value: BranchCategory?.BranchOffice,
-    },
-  ];
+  // const shareIssueAuthorityOpt = [
+  //   {
+  //     label: t['shareHeadOffice'],
+  //     value: BranchCategory?.HeadOffice,
+  //   },
+  //   {
+  //     label: t['shareRegionalOffice'],
+  //     value: BranchCategory?.RegionalOffice,
+  //   },
+  //   {
+  //     label: t['shareServiceCenterBranch'],
+  //     value: BranchCategory?.ServiceCenter,
+  //   },
+  //   {
+  //     label: t['shareContactOffice'],
+  //     value: BranchCategory?.ContactOffice,
+  //   },
+  //   {
+  //     label: t['shareOther'],
+  //     value: BranchCategory?.BranchOffice,
+  //   },
+  // ];
   const { mutateAsync } = useSetSettingsShareGeneralMutation();
   const { data, refetch } = useGetSettingsShareGeneralDataQuery();
   const settingsGeneralData = data?.settings?.general?.share?.general;
@@ -143,7 +142,7 @@ export const ShareSettingsGeneralPage = () => {
               </Box>
             </Box>
           </ShareSettingsCard>
-          <ShareSettingsCard
+          {/* <ShareSettingsCard
             title={t['shareIssueAuthority']}
             subtitle={t['shareIssueAuthoritySubtitle']}
           >
@@ -154,7 +153,7 @@ export const ShareSettingsGeneralPage = () => {
                 orientation="column"
               />
             </Box>
-          </ShareSettingsCard>
+          </ShareSettingsCard> */}
           {/* <ShareSettingsCard
             title={t['shareKitta']}
             subtitle={t['shareKittaSubtitle']}
