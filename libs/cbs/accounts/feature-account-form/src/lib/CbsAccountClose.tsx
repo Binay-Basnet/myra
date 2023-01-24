@@ -122,6 +122,7 @@ export const CbsAccountClose = () => {
   const [mode, setMode] = useState('0');
 
   const memberId = watch('memberID');
+  const disableDenomination = watch('cash.disableDenomination');
 
   const { mutateAsync, mutate } = useSetAccountCloseDataMutation();
 
@@ -146,7 +147,11 @@ export const CbsAccountClose = () => {
 
   const accountId = watch('accountID');
   const radioOther = watch('reason');
+  const totalAmount = watch('cash.cashPaid');
+  const chequeNo = watch('bankCheque.cheque_no');
   const isDisableDenomination = watch('cash.disableDenomination');
+  const bankSelected = watch('bankCheque.bank');
+  const accountSelected = watch('accountTransfer.destination_account');
 
   useEffect(() => {
     reset({ memberID: memberId, accountID: '', reason: undefined });
@@ -164,8 +169,29 @@ export const CbsAccountClose = () => {
       ) ?? 0,
     [denominations]
   );
-
   const selectedPaymentMode = watch('paymentMode');
+  const disableSubmitButtonFxn = (paymentMode: AccountClosePaymentMode | undefined | null) => {
+    if (
+      paymentMode === AccountClosePaymentMode.Cash &&
+      !disableDenomination &&
+      cashPaid === undefined
+    ) {
+      return !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount));
+    }
+    if (
+      (selectedPaymentMode === AccountClosePaymentMode.BankCheque && bankSelected === undefined) ||
+      (selectedPaymentMode === AccountClosePaymentMode.BankCheque && chequeNo === undefined)
+    ) {
+      return true;
+    }
+    if (
+      selectedPaymentMode === AccountClosePaymentMode.AccountTransfer &&
+      accountSelected === undefined
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   const totalCashPaid = Number(isDisableDenomination ? cashPaid : denominationTotal);
 
@@ -686,9 +712,10 @@ export const CbsAccountClose = () => {
             )}
             {mode === '1' && (
               <FormFooter
-                status={<Button onClick={previousButtonHandler}> Previous</Button>}
+                status={<Button onClick={previousButtonHandler}>Previous</Button>}
                 mainButtonLabel="Confirm Payment"
                 mainButtonHandler={handleSubmit}
+                isMainButtonDisabled={disableSubmitButtonFxn(selectedPaymentMode)}
               />
             )}
           </Box>

@@ -1206,6 +1206,11 @@ export type BankAccountConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type BankAccountDetailsResult = {
+  data?: Maybe<BankAccount>;
+  error?: Maybe<QueryError>;
+};
+
 export type BankAccountEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<BankAccount>;
@@ -1218,6 +1223,7 @@ export type BankAccountFilter = {
 
 export type BankAccountMutation = {
   new?: Maybe<NewBankAccountResult>;
+  update?: Maybe<BankAccountUpdateResult>;
 };
 
 
@@ -1225,14 +1231,30 @@ export type BankAccountMutationNewArgs = {
   data?: InputMaybe<NewBankAccountInput>;
 };
 
+
+export type BankAccountMutationUpdateArgs = {
+  data?: InputMaybe<UpdateBankAccountInput>;
+};
+
 export type BankAccountQuery = {
+  details?: Maybe<BankAccountDetailsResult>;
   list?: Maybe<BankAccountConnection>;
+};
+
+
+export type BankAccountQueryDetailsArgs = {
+  id: Scalars['ID'];
 };
 
 
 export type BankAccountQueryListArgs = {
   filter?: InputMaybe<BankAccountFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type BankAccountUpdateResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type BankAddResult = {
@@ -14384,6 +14406,17 @@ export const TypeOfShare = {
 } as const;
 
 export type TypeOfShare = typeof TypeOfShare[keyof typeof TypeOfShare];
+export type UpdateBankAccountInput = {
+  accountName?: InputMaybe<Scalars['String']>;
+  accountNumber?: InputMaybe<Scalars['String']>;
+  accountType?: InputMaybe<AccountingBankAccountType>;
+  bankId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  displayName?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID'];
+  openingBalance?: InputMaybe<Scalars['String']>;
+};
+
 export type UploadedDocument = {
   docData: Array<Maybe<UploadedDocumentData>>;
   fieldId?: Maybe<Scalars['String']>;
@@ -16816,7 +16849,7 @@ export type GetMemberKymDetailsAccountsQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberKymDetailsAccountsQuery = { members: { memberOverviewV2?: { accounts?: { data?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null } | null> | null, payments?: Array<{ date?: Record<"local"|"en"|"np",string> | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null } | null } | null } };
+export type GetMemberKymDetailsAccountsQuery = { members: { memberOverviewV2?: { accounts?: { data?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null } | null> | null, payments?: Array<{ date?: Record<"local"|"en"|"np",string> | null, accountId?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null } | null } | null } };
 
 export type GetMemberKymDetailsLoanQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -26715,6 +26748,7 @@ export const GetMemberKymDetailsAccountsDocument = `
           }
           payments {
             date
+            accountId
             accountName
             paymentType
             amount

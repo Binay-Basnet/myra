@@ -217,7 +217,7 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
               !data ||
               (data?.length === 0 && (
                 <Box
-                  // position="absolute"
+                  position="absolute"
                   width="70vw"
                   as="tr"
                   height="100vh"
