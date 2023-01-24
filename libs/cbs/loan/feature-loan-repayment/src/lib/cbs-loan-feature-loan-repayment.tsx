@@ -240,7 +240,7 @@ export const LoanRepayment = () => {
       methods.setValue('memberId', String(redirectLoanMemberId));
       methods.setValue('loanAccountId', String(redirectloanAccountId));
     }
-  }, [redirectMemberId, redirectLoanMemberId]);
+  }, [redirectloanAccountId, redirectLoanMemberId]);
 
   const isSuspicious = watch('isSuspicious');
 
