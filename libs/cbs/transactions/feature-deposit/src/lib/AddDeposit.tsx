@@ -81,6 +81,10 @@ export const AddDeposit = () => {
 
   const redirectAccountId = router.query['accountId'];
 
+  // redirect from account dormant table
+  const dormantMemberId = router.query['dormantMember'];
+  const dormantAccountId = router.query['dormantAcc'];
+
   const queryClient = useQueryClient();
 
   const { t } = useTranslation();
@@ -114,7 +118,10 @@ export const AddDeposit = () => {
         first: -1,
         after: '',
       },
-      filter: { memberId, objState: ObjState.Active },
+      filter: {
+        memberId,
+        objState: !dormantMemberId ? ObjState.Active : ObjState.Dormant,
+      },
     },
     {
       staleTime: 0,
@@ -364,6 +371,14 @@ export const AddDeposit = () => {
     }
   }, [memberId, redirectAccountId]);
 
+  useEffect(() => {
+    if (dormantMemberId && dormantAccountId) {
+      methods.setValue('memberId', String(dormantMemberId));
+
+      methods.setValue('accountId', String(dormantAccountId));
+    }
+  }, [dormantMemberId, dormantAccountId]);
+
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -397,7 +412,7 @@ export const AddDeposit = () => {
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
-                      filterBy={ObjState.Active}
+                      filterBy={!dormantMemberId ? ObjState.Active : ObjState.Dormant}
                     />
                   )}
 

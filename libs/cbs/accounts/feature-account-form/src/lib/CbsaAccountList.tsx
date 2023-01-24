@@ -114,6 +114,22 @@ export const CBSAccountList = () => {
               ]}
               node={props?.row?.original?.node}
             />
+          ) : objState === 'DORMANT' ? (
+            <TablePopover
+              items={[
+                {
+                  title: 'Make Active',
+                  aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
+                  action: 'CREATE',
+
+                  onClick: (row) =>
+                    router.push(
+                      `${ROUTES.CBS_TRANS_DEPOSIT_ADD}?dormantAcc=${row['id']}&dormantMember=${row?.member?.id}`
+                    ),
+                },
+              ]}
+              node={props?.row?.original?.node}
+            />
           ) : (
             <TablePopover
               items={[
