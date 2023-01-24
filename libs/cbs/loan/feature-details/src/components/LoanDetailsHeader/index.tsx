@@ -15,7 +15,6 @@ export const LoanDetailsHeader = ({ title }: ILoanDetailsHeaderProps) => {
         title={title}
         member={{
           name: loanPreview?.member?.name?.local as string,
-          profilePicUrl: loanPreview?.member?.profilePicUrl as string,
         }}
       />
     </Box>

@@ -25,11 +25,6 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
   const columns = useMemo<Column<typeof ledgersList[0]>[]>(
     () => [
       {
-        header: 'SN',
-        accessorKey: 'index',
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-      },
-      {
         header: 'Date',
         accessorKey: 'date',
         cell: (props) => localizedDate(props?.row?.original?.date),
