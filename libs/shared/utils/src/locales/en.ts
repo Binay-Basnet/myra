@@ -3199,7 +3199,7 @@ const en: Record<string, string> = {
   transactionsAgentListViewDetail: 'View Detail',
 
   memberInfo: 'Member Info',
-  proceedToPayment: 'Proceed Transactions',
+  proceedToPayment: 'Proceed Transaction',
   sharePurchaseNewShareIssue: 'New Share Issue',
   sharePurchaseShareIssue: 'Share Issue',
   sharePurchaseBankName: 'Bank Name',
@@ -3362,7 +3362,7 @@ const en: Record<string, string> = {
   addDepositTotalDeposit: 'Total Deposit',
   addDepositTotalDepositAmount: 'Total Deposit Amount',
   addDepositPrevious: 'Previous',
-  addDepositProceedPayment: 'Proceed Transactions',
+  addDepositProceedPayment: 'Proceed Transaction',
   addDepositSubmit: 'Submit',
 
   // installment modal
@@ -3422,7 +3422,7 @@ const en: Record<string, string> = {
   addWithdrawTotalWithdraw: 'Total Withdraw',
   addWithdrawTotalWithdrawAmount: 'Total Withdraw Amount',
   addWithdrawPrevious: 'Previous',
-  addWithdrawProceedToPayment: 'Proceed Transactions',
+  addWithdrawProceedToPayment: 'Proceed Transaction',
   addWithdrawSubmit: 'Submit',
 
   // withdraw payment

@@ -355,7 +355,7 @@ export const LoanRepayment = () => {
         <Box>
           {mode === '0' && (
             <FormFooter
-              mainButtonLabel="Proceed Transactions"
+              mainButtonLabel="Proceed Transaction"
               mainButtonHandler={proceedButtonHandler}
               isMainButtonDisabled={Boolean(!amountPaid || (isSuspicious && !suspicionRemarks))}
             />

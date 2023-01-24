@@ -446,7 +446,7 @@ export const NewAccountTransfer = () => {
                     title: 'New Deposit Failed',
                   }}
                 >
-                  <Button width="160px">Add New Deposit</Button>
+                  <Button width="160px">Proceed Transaction</Button>
                 </ResponseDialog>
               }
               status={

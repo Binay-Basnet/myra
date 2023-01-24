@@ -254,7 +254,7 @@ export const AddBulkDeposit = () => {
                   </Button>
                 )
               }
-              mainButtonLabel={mode === 0 ? 'Proceed to Payment' : 'Submit'}
+              mainButtonLabel={mode === 0 ? 'Proceed Transaction' : 'Submit'}
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
             />
           </Container>

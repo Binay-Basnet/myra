@@ -28,7 +28,7 @@ export const PopOverComponentForButtonList = ({
       <PopoverContent
         // bg="gray.0"
         p={0}
-        maxW="325px"
+        w="325px"
         // maxW="300px"
         _focus={{ boxShadow: 'E1' }}
       >
