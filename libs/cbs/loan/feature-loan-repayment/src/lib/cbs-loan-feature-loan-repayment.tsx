@@ -226,12 +226,21 @@ export const LoanRepayment = () => {
 
   //  get redirect id from url
   const redirectMemberId = router.query['memberId'];
+  const redirectLoanMemberId = router.query['redirectMemberId'];
+  const redirectloanAccountId = router.query['loanAccountId'];
   // redirect from member details
   useEffect(() => {
     if (redirectMemberId) {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
+  useEffect(() => {
+    if (redirectLoanMemberId && redirectloanAccountId) {
+      methods.setValue('memberId', String(redirectLoanMemberId));
+      methods.setValue('loanAccountId', String(redirectloanAccountId));
+    }
+  }, [redirectMemberId, redirectLoanMemberId]);
 
   const isSuspicious = watch('isSuspicious');
 
