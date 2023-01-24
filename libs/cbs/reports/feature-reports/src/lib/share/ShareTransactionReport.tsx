@@ -170,7 +170,7 @@ export const ShareTransactionsReport = () => {
                     meta: {
                       width: '60px',
                       Footer: {
-                        colspan: 3,
+                        colspan: 4,
                       },
                     },
                   },
@@ -217,7 +217,7 @@ export const ShareTransactionsReport = () => {
                 columns: [
                   {
                     header: 'Share Return Amount Dr.',
-                    footer: () => footerData?.totalDr,
+                    footer: () => amountConverter(footerData?.totalDr as string),
                     accessorKey: 'shareReturnDr',
                     cell: (props) => amountConverter(props.getValue() as string),
                     meta: {
@@ -227,7 +227,7 @@ export const ShareTransactionsReport = () => {
                   {
                     header: 'Share Issue Amount Cr.',
                     accessorKey: 'shareIssueCr',
-                    footer: () => footerData?.totalCr,
+                    footer: () => amountConverter(footerData?.totalCr as string),
                     cell: (props) => amountConverter(props.getValue() as string),
                     meta: {
                       isNumeric: true,
@@ -237,7 +237,7 @@ export const ShareTransactionsReport = () => {
                     header: 'Balance',
                     accessorKey: 'balance',
                     cell: (props) => amountConverter(props.getValue() as string),
-                    footer: () => footerData?.totalBalance,
+                    footer: () => amountConverter(footerData?.totalBalance as string),
 
                     meta: {
                       isNumeric: true,

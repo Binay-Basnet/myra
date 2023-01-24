@@ -4,16 +4,15 @@ import { useRouter } from 'next/router';
 
 import { Box, Button, Column, Icon, Table, Text } from '@myra-ui';
 
-import { Id_Type, useGetNewIdMutation, useGetSavingsAccountListQuery } from '@coop/cbs/data-access';
-import { RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery } from '@coop/shared/utils';
+import { useGetSavingsAccountListQuery } from '@coop/cbs/data-access';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
 
 export const AccountListPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const newId = useGetNewIdMutation({});
 
   const { data, isLoading } = useGetSavingsAccountListQuery({
     paginate: {
@@ -52,11 +51,11 @@ export const AccountListPage = () => {
       },
       {
         header: 'Balance',
-        accessorFn: (row) => row?.node?.balance,
+        accessorFn: (row) => amountConverter(row?.node?.balance ?? 0),
       },
       {
         header: 'Open Date',
-        accessorFn: (row) => row?.node?.accountOpenedDate,
+        accessorFn: (row) => localizedDate(row?.node?.accountOpenedDate),
       },
       //   {
       //     id: '_actions',
@@ -90,17 +89,8 @@ export const AccountListPage = () => {
             Account List
           </Text>
           <Button
-            leftIcon={
-              <Icon
-                as={IoAdd}
-                size="md"
-                onClick={() =>
-                  newId
-                    .mutateAsync({ idType: Id_Type.Account })
-                    .then((res) => router.push(`/savings/account-open/add//${res?.newId}`))
-                }
-              />
-            }
+            leftIcon={<Icon as={IoAdd} size="md" />}
+            onClick={() => router.push(`${ROUTES.CBS_ACCOUNT_OPEN_ADD}`)}
           >
             Add Account
           </Button>

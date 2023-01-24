@@ -26,11 +26,10 @@ export const PopOverComponentForButtonList = ({
       </PopoverTrigger>
 
       <PopoverContent
-        // bg="gray.0"
         p={0}
-        w="325px"
         // maxW="300px"
         _focus={{ boxShadow: 'E1' }}
+        w="225px"
       >
         <PopoverBody p={0}>
           <Box display="flex" flexDirection="column" gap="s4">

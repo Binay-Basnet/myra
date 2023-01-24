@@ -2170,7 +2170,7 @@ export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
 };
 
 export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<CoaListFilter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -8550,7 +8550,7 @@ export type LoanAccount = {
   LoanAccountName?: Maybe<Scalars['String']>;
   appliedDate?: Maybe<Scalars['Localized']>;
   appliedLoanAmount: Scalars['String'];
-  approvedDate?: Maybe<Scalars['String']>;
+  approvedDate?: Maybe<Scalars['Localized']>;
   closedDate?: Maybe<Scalars['Localized']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -20333,7 +20333,7 @@ export type GetLoanListQuery = {
           createdAt: string;
           closedDate?: Record<'local' | 'en' | 'np', string> | null;
           appliedDate?: Record<'local' | 'en' | 'np', string> | null;
-          approvedDate?: string | null;
+          approvedDate?: Record<'local' | 'en' | 'np', string> | null;
           member: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
@@ -23918,7 +23918,7 @@ export type GetCoaAccountsUnderLeafListQuery = {
 };
 
 export type GetCoaAccountListQueryVariables = Exact<{
-  branchId?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<CoaListFilter>;
 }>;
@@ -24386,7 +24386,7 @@ export type GetLoanAccountListQuery = {
             node?: {
               id: string;
               objState: LoanObjState;
-              approvedDate?: string | null;
+              approvedDate?: Record<'local' | 'en' | 'np', string> | null;
               productType: string;
               LoanAccountName?: string | null;
               appliedLoanAmount: string;
@@ -39569,7 +39569,7 @@ export const useGetCoaAccountsUnderLeafListQuery = <
     options
   );
 export const GetCoaAccountListDocument = `
-    query getCoaAccountList($branchId: String, $pagination: Pagination, $filter: COAListFilter) {
+    query getCoaAccountList($branchId: [String!], $pagination: Pagination, $filter: COAListFilter) {
   settings {
     chartsOfAccount {
       coaAccountList(branchId: $branchId, pagination: $pagination, filter: $filter) {

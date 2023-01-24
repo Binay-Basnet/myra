@@ -20,12 +20,14 @@ export const OverviewPage = () => {
     paymentList,
     productId,
     isClosed,
+    generalInfo,
+    memberDetails,
   } = useLoanAccountDetailHooks();
 
   const links = [
     {
       title: 'Loan Repayment',
-      link: ROUTES.CBS_LOAN_REPAYMENTS_ADD,
+      link: `${ROUTES.CBS_LOAN_REPAYMENTS_ADD}?redirectMemberId=${memberDetails?.memberId}&loanAccountId=${generalInfo?.accountId}`,
     },
   ];
 

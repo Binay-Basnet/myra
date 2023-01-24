@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Box } from '@myra-ui';
@@ -37,8 +37,8 @@ export const JournalVouchersTable = () => {
     return { crTotal: tempCR, drTotal: tempDR };
   }, [entries]);
 
-  const { data: accountList, isFetching } = useGetCoaAccountListQuery({
-    branchId,
+  const { data: accountList } = useGetCoaAccountListQuery({
+    branchId: [branchId as string],
 
     pagination: {
       after: '',
