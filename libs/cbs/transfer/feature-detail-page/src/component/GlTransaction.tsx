@@ -29,14 +29,6 @@ export const GlTransactionTable = ({ data, totalAmount }: GlTransactionDetailPro
   const columns = useMemo<Column<typeof glTransactionListWithIndex[0]>[]>(
     () => [
       {
-        header: 'SN',
-        accessorKey: 'index',
-        footer: 'Total Amount',
-        meta: {
-          width: '10%',
-        },
-      },
-      {
         header: t['transDetailAccount'],
         accessorFn: (row) => row?.account,
       },
