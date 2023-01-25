@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { TablePopover, Text, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Filter_Mode, useAppSelector, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
 import { getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 // const accountClass = {
@@ -18,11 +18,10 @@ export const COAListView = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
-  const branch = useAppSelector((state) => state?.auth?.user?.currentBranch);
+  // const branch = useAppSelector((state) => state?.auth?.user?.currentBranch);
   const searchTerm = router?.query['search'] as string;
 
   const { data: accountList, isFetching } = useGetCoaAccountListQuery({
-    branchId: branch?.id,
     pagination: {
       ...getRouterQuery({ type: ['PAGINATION'] }),
     },
