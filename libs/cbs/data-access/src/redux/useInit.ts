@@ -17,11 +17,10 @@ const url = getSchemaPath();
 
 export const useInit = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const route = useRouter();
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const dispatch = useAppDispatch();
   const replace = useReplace();
-  const router = useRouter();
+  const { pathname } = useRouter();
 
   const ability = useContext(AbilityContext);
 
@@ -49,7 +48,7 @@ export const useInit = () => {
   const availableBranches = loginData?.branches;
 
   useEffect(() => {
-    if (!route.pathname.includes('login') && !isLoggedIn) {
+    if (!pathname.includes('login') && !isLoggedIn) {
       refreshToken()
         .then((res) => {
           if (res) {
@@ -57,14 +56,15 @@ export const useInit = () => {
           }
         })
         .catch(() => {
-          if (route?.pathname.includes('password-recovery')) {
+          if (pathname.includes('password-recovery')) {
             setIsLoading(false);
             return;
           }
           replace(
             {
+              pathname: '/login',
               query: {
-                redirect: router.pathname,
+                redirect: pathname,
               },
             },
             '/login'
@@ -76,7 +76,7 @@ export const useInit = () => {
     } else {
       setIsLoading(false);
     }
-  }, [dispatch, refreshToken, replace, route]);
+  }, [dispatch, refreshToken, replace, pathname]);
 
   useEffect(() => {
     if (hasDataReturned) {
@@ -95,14 +95,15 @@ export const useInit = () => {
 
         setIsLoading(false);
       } else {
-        if (route?.pathname.includes('password-recovery')) {
+        if (pathname.includes('password-recovery')) {
           setIsLoading(false);
           return;
         }
         replace(
           {
+            pathname: '/login',
             query: {
-              redirect: router.pathname,
+              redirect: pathname,
             },
           },
           '/login'
@@ -112,7 +113,7 @@ export const useInit = () => {
         });
       }
     }
-  }, [dispatch, hasDataReturned, hasData, userData, replace]);
+  }, [dispatch, hasDataReturned, hasData, userData]);
 
   // useEffect(() => {
   //   if (isLoggedIn) {

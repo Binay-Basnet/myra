@@ -9,7 +9,7 @@ export const useReplace = () => {
   routerRef.current = router;
 
   const [{ replace }] = useState<Pick<NextRouter, 'replace'>>({
-    replace: (path) => routerRef.current.replace(path),
+    replace: (path, as) => routerRef.current.replace(path, as),
   });
   return replace;
 };
