@@ -891,7 +891,7 @@ export const TopLevelHeader = () => {
                             py="s8"
                             px="s8"
                           >
-                            <Box
+                            {/* <Box
                               _hover={{
                                 bg: 'background.500',
                                 borderRadius: 'br2',
@@ -909,11 +909,11 @@ export const TopLevelHeader = () => {
                               >
                                 Profile Settings
                               </Text>
-                            </Box>
+                            </Box> */}
 
                             <Box
                               _hover={{
-                                bg: 'background.500',
+                                bg: 'highlight.500',
                                 borderRadius: 'br2',
                               }}
                               h="40px"
@@ -935,7 +935,7 @@ export const TopLevelHeader = () => {
 
                             <Box
                               _hover={{
-                                bg: 'background.500',
+                                bg: 'highlight.500',
                                 borderRadius: 'br2',
                               }}
                               h="40px"
