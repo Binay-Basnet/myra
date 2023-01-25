@@ -47,14 +47,17 @@ export const AgeCharts = () => {
       height="400px"
       w="100%"
       options={{
+        theme: {
+          palette: 'palette4', // upto palette10
+        },
         chart: {
           toolbar: {
             show: false,
           },
         },
-        colors: ['#A6CEE3'],
+
         legend: {
-          show: true,
+          show: false,
           horizontalAlign: 'right',
           position: 'bottom',
 
@@ -64,7 +67,7 @@ export const AgeCharts = () => {
           enabled: false,
         },
         grid: {
-          borderColor: '#cccccc',
+          borderColor: '#fff',
           strokeDashArray: 2,
           yaxis: {
             lines: {

@@ -28,6 +28,7 @@ export const DetailCardStats = ({
 }: DetailCardStatsProps) => (
   <Box
     borderRadius="br2"
+    boxShadow="E0"
     w="100%"
     bg="gray.0"
     p="s16"
