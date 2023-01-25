@@ -148,33 +148,7 @@ query getMemberKYMDetailsAccounts($id: ID!) {
           }
           payments {
             date
-            accountName
-            paymentType
-            amount
-            installmentNo
-            interestRate
-          }
-        }
-      }
-    }
-  }
-}
-
-query getMemberKYMDetailsAccounts($id: ID!) {
-  members {
-    memberOverviewV2 {
-      accounts(memberId: $id) {
-        data {
-          accounts {
-            accountName
-            accountNumber
-            totalBalance
-            productName
-            productType
-            interestRate
-          }
-          payments {
-            date
+            accountId
             accountName
             paymentType
             amount

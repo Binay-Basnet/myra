@@ -80,6 +80,8 @@ export const Overview = () => {
     guaranteedAmount: accountDetails?.guaranteedAmount,
     accountTenure: accountDetails?.accountTenure,
     isMandatory: accountDetails?.isMandatory,
+    nomineeAccountNumber: accountDetails?.nomineeAccountNumber,
+    nomineeAccountName: accountDetails?.nomineeAccountName,
   };
   return (
     <>

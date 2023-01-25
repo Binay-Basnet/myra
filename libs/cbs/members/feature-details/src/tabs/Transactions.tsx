@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
-import { IoAddOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, DetailsCard, Grid, Icon, Text } from '@myra-ui';
+import { Box, DetailPageQuickLinks, DetailsCard, Text } from '@myra-ui';
 
 import { TransactionTable } from '@coop/cbs/components';
 import { EbankingTransaction, useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
@@ -50,34 +49,8 @@ export const Transactions = () => {
       <Text fontSize="r3" fontWeight="600">
         Transactions
       </Text>
-      <Box display="flex" flexDirection="column" gap="s16" pb="s16">
-        <Text fontWeight="600" fontSize="r1">
-          Quick Links
-        </Text>
-        <Grid templateColumns="repeat(3,1fr)" gap="s16">
-          {links?.map((item) => (
-            <Box key={`${item.link}${item.title}`}>
-              <Box
-                display="flex"
-                justifyContent="flex-start"
-                alignItems="center"
-                bg="white"
-                borderRadius="br2"
-                gap="s12"
-                h="58px"
-                pl="s16"
-                cursor="pointer"
-                onClick={() => router.push(`${item.link}`)}
-              >
-                <Icon as={IoAddOutline} />
-
-                <Text fontWeight="500" fontSize="s3">
-                  {item.title}
-                </Text>
-              </Box>
-            </Box>
-          ))}
-        </Grid>
+      <Box display="flex" flexDirection="column" gap="s16">
+        <DetailPageQuickLinks links={links} />
       </Box>
 
       <DetailsCard title="Recent Transactions" hasTable>

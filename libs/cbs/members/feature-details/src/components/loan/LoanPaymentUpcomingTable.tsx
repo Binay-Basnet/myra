@@ -4,7 +4,6 @@ import { Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
@@ -69,7 +68,7 @@ export const UpcomingLoanPaymentTable = ({ data }: ILoanPaymentScheduleTableProp
         cell: (props) =>
           props.getValue() ? (
             <Text fontWeight="500" fontSize="r1" color="primary.500">
-              {amountConverter(props.getValue() as string)}
+              {props.getValue() as string}
             </Text>
           ) : (
             'N/A'

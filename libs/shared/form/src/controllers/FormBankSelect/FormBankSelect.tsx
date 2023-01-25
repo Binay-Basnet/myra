@@ -15,6 +15,7 @@ interface Option {
     displayName: string;
     accountType: AccountingBankAccountType;
     balance: string;
+    branchName: string;
   };
 }
 
@@ -40,6 +41,7 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
           displayName: item?.node?.displayName as string,
           accountType: item?.node?.accountType?.replace(/_/gi, ' ').toLowerCase() ?? '',
           balance: item?.node?.balance as string,
+          branchName: item?.node?.branchName as string,
         },
       })),
     [bankAccountListQueryData]

@@ -4,7 +4,6 @@ import { Column, Table, Text, Tooltip } from '@myra-ui';
 
 import { EbankingTransaction, EbankingTransactionDirection } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { amountConverter } from '@coop/shared/utils';
 
 export type CustomTransactionItem = EbankingTransaction & {
   index?: string;
@@ -79,7 +78,7 @@ export const TransactionTable = ({ data, hasIndex = false, isLoading }: ITransac
                   : 'danger.500'
               }
             >
-              {amountConverter(props.getValue() as string)}
+              {props.getValue() as string}
             </Text>
           ) : (
             'N/A'
@@ -109,6 +108,7 @@ export const TransactionTable = ({ data, hasIndex = false, isLoading }: ITransac
     <Table
       isDetailPageTable
       isStatic
+      size="compact"
       data={transactionList}
       columns={columns}
       isLoading={isLoading}

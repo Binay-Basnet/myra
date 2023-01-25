@@ -508,6 +508,8 @@ query getAccountDetailsData($id: ID!) {
           profilePicUrl
           contact
         }
+        nomineeAccountNumber
+        nomineeAccountName
         productId
         installmentAmount
         accountName

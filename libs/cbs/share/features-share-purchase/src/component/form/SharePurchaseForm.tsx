@@ -387,7 +387,9 @@ export const SharePurchaseForm = () => {
                       title: 'Share Issue Failed',
                     }}
                   >
-                    <Button width="160px">{t['shareConfirmPayment']}</Button>
+                    <Button width="160px" isDisabled={disableSubmitButtonFxn(paymentModes)}>
+                      {t['shareConfirmPayment']}
+                    </Button>
                   </ResponseDialog>
                 }
                 status={
@@ -400,7 +402,7 @@ export const SharePurchaseForm = () => {
                   </Button>
                 }
                 mainButtonHandler={handleSubmit}
-                isMainButtonDisabled={disableSubmitButtonFxn(paymentModes)}
+                // isMainButtonDisabled={disableSubmitButtonFxn(paymentModes)}
               />
             )}
           </Container>
