@@ -14150,6 +14150,8 @@ export type TrialSheetReportData = {
   incomeTotal?: Maybe<Scalars['Map']>;
   offBalance?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
   offBalanceTotal?: Maybe<Scalars['Map']>;
+  orphanEntries?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
+  orphanTotal?: Maybe<Scalars['Map']>;
   totalAssetExpense?: Maybe<Scalars['Map']>;
   totalLiablitiesIncome?: Maybe<Scalars['Map']>;
   totalProfitLoss?: Maybe<Scalars['Map']>;
@@ -23333,6 +23335,7 @@ export type GetTrialSheetReportQuery = {
             expenseTotal?: Record<string, string> | null;
             incomeTotal?: Record<string, string> | null;
             offBalanceTotal?: Record<string, string> | null;
+            orphanTotal?: Record<string, string> | null;
             totalAssetExpense?: Record<string, string> | null;
             totalLiablitiesIncome?: Record<string, string> | null;
             totalProfitLoss?: Record<string, string> | null;
@@ -23361,6 +23364,12 @@ export type GetTrialSheetReportQuery = {
               under?: string | null;
             } | null> | null;
             offBalance?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            orphanEntries?: Array<{
               balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
@@ -38887,11 +38896,18 @@ export const GetTrialSheetReportDocument = `
               ledgerName
               under
             }
+            orphanEntries {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
             equityAndLiablitiesTotal
             assetsTotal
             expenseTotal
             incomeTotal
             offBalanceTotal
+            orphanTotal
             totalAssetExpense
             totalLiablitiesIncome
             totalProfitLoss

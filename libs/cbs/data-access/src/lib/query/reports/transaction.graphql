@@ -34,12 +34,19 @@ query getTrialSheetReport($data: TrialSheetReportFilter!) {
               ledgerName
               under
             }
+            orphanEntries {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
 
             equityAndLiablitiesTotal
             assetsTotal
             expenseTotal
             incomeTotal
             offBalanceTotal
+            orphanTotal
 
             totalAssetExpense
             totalLiablitiesIncome
