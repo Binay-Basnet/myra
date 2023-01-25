@@ -21,6 +21,7 @@ export const useInit = () => {
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const dispatch = useAppDispatch();
   const replace = useReplace();
+  const router = useRouter();
 
   const ability = useContext(AbilityContext);
 
@@ -60,8 +61,17 @@ export const useInit = () => {
             setIsLoading(false);
             return;
           }
-          dispatch(logout());
-          replace('/login').then(() => setIsLoading(false));
+          replace(
+            {
+              query: {
+                redirect: router.pathname,
+              },
+            },
+            '/login'
+          ).then(() => {
+            dispatch(logout());
+            setIsLoading(false);
+          });
         });
     } else {
       setIsLoading(false);
@@ -89,8 +99,17 @@ export const useInit = () => {
           setIsLoading(false);
           return;
         }
-        dispatch(logout());
-        replace('/login').then(() => setIsLoading(false));
+        replace(
+          {
+            query: {
+              redirect: router.pathname,
+            },
+          },
+          '/login'
+        ).then(() => {
+          dispatch(logout());
+          setIsLoading(false);
+        });
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData, replace]);

@@ -63,6 +63,9 @@ const login = async (body: LoginBody) => {
 
 export const Login = () => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+
   const { mutateAsync, isLoading } = useMutation(login, {
     onMutate: () => {
       toast({
@@ -104,7 +107,7 @@ export const Login = () => {
       );
 
       updateAbility(ability, loginData?.permission?.myPermission);
-      replace('/');
+      replace((router.query.redirect as string) || '/');
 
       toast({
         id: 'login',
