@@ -14758,6 +14758,27 @@ export type SetJournalVoucherDataMutation = {
   };
 };
 
+export type UpdateBankAccountsMutationVariables = Exact<{
+  data?: InputMaybe<UpdateBankAccountInput>;
+}>;
+
+export type UpdateBankAccountsMutation = {
+  accounting: {
+    bankAccounts: {
+      update?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
 export type SetExternalLoanMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
   data?: InputMaybe<ExternalLoanApplicationInput>;
@@ -18079,6 +18100,28 @@ export type GetBankAccountListQuery = {
             branchName?: string | null;
           } | null;
         } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetBankAccountDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetBankAccountDetailsQuery = {
+  accounting: {
+    bankAccounts: {
+      details?: {
+        data?: {
+          id?: string | null;
+          bankId?: string | null;
+          displayName?: string | null;
+          accountName?: string | null;
+          accountNumber?: string | null;
+          accountType?: AccountingBankAccountType | null;
+          description?: string | null;
+        } | null;
       } | null;
     };
   };
@@ -24098,6 +24141,40 @@ export type GetCoaLeafNodeDetailsQuery = {
   };
 };
 
+export type GetLedgerListQueryVariables = Exact<{
+  id: Scalars['ID'];
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<CoaLedgerListFilter>;
+}>;
+
+export type GetLedgerListQuery = {
+  settings: {
+    chartsOfAccount?: {
+      coaLedgerList?: {
+        totalCount: number;
+        pageInfo?: {
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+          startCursor?: string | null;
+          endCursor?: string | null;
+        } | null;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id?: string | null;
+            accountCode?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            ledgerName?: string | null;
+            serviceCenter?: string | null;
+            balance?: string | null;
+            status?: boolean | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type ListCbsShareCodesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ListCbsShareCodesQuery = {
@@ -26856,6 +26933,35 @@ export const useSetJournalVoucherDataMutation = <TError = unknown, TContext = un
     ['setJournalVoucherData'],
     useAxios<SetJournalVoucherDataMutation, SetJournalVoucherDataMutationVariables>(
       SetJournalVoucherDataDocument
+    ),
+    options
+  );
+export const UpdateBankAccountsDocument = `
+    mutation updateBankAccounts($data: UpdateBankAccountInput) {
+  accounting {
+    bankAccounts {
+      update(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateBankAccountsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateBankAccountsMutation,
+    TError,
+    UpdateBankAccountsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpdateBankAccountsMutation, TError, UpdateBankAccountsMutationVariables, TContext>(
+    ['updateBankAccounts'],
+    useAxios<UpdateBankAccountsMutation, UpdateBankAccountsMutationVariables>(
+      UpdateBankAccountsDocument
     ),
     options
   );
@@ -32029,6 +32135,36 @@ export const useGetBankAccountListQuery = <TData = GetBankAccountListQuery, TErr
     variables === undefined ? ['getBankAccountList'] : ['getBankAccountList', variables],
     useAxios<GetBankAccountListQuery, GetBankAccountListQueryVariables>(
       GetBankAccountListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetBankAccountDetailsDocument = `
+    query getBankAccountDetails($id: ID!) {
+  accounting {
+    bankAccounts {
+      details(id: $id) {
+        data {
+          id
+          bankId
+          displayName
+          accountName
+          accountNumber
+          accountType
+          description
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBankAccountDetailsQuery = <TData = GetBankAccountDetailsQuery, TError = unknown>(
+  variables: GetBankAccountDetailsQueryVariables,
+  options?: UseQueryOptions<GetBankAccountDetailsQuery, TError, TData>
+) =>
+  useQuery<GetBankAccountDetailsQuery, TError, TData>(
+    ['getBankAccountDetails', variables],
+    useAxios<GetBankAccountDetailsQuery, GetBankAccountDetailsQueryVariables>(
+      GetBankAccountDetailsDocument
     ).bind(null, variables),
     options
   );
@@ -39799,6 +39935,47 @@ export const useGetCoaLeafNodeDetailsQuery = <TData = GetCoaLeafNodeDetailsQuery
     useAxios<GetCoaLeafNodeDetailsQuery, GetCoaLeafNodeDetailsQueryVariables>(
       GetCoaLeafNodeDetailsDocument
     ).bind(null, variables),
+    options
+  );
+export const GetLedgerListDocument = `
+    query getLedgerList($id: ID!, $pagination: Pagination, $filter: COALedgerListFilter) {
+  settings {
+    chartsOfAccount {
+      coaLedgerList(id: $id, pagination: $pagination, filter: $filter) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        edges {
+          node {
+            id
+            accountCode
+            date
+            ledgerName
+            serviceCenter
+            balance
+            status
+          }
+          cursor
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLedgerListQuery = <TData = GetLedgerListQuery, TError = unknown>(
+  variables: GetLedgerListQueryVariables,
+  options?: UseQueryOptions<GetLedgerListQuery, TError, TData>
+) =>
+  useQuery<GetLedgerListQuery, TError, TData>(
+    ['getLedgerList', variables],
+    useAxios<GetLedgerListQuery, GetLedgerListQueryVariables>(GetLedgerListDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const ListCbsShareCodesDocument = `

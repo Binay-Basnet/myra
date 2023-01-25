@@ -26,9 +26,16 @@ const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 export const Overview = () => {
   const router = useRouter();
   const id = router.query['id'] as string;
-  const memberDetails = useGetMemberKymDetailsOverviewQuery({
-    id: router.query['id'] as string,
-  });
+  const memberDetails = useGetMemberKymDetailsOverviewQuery(
+    {
+      id: router.query['id'] as string,
+    },
+    {
+      enabled: !!id,
+    }
+  );
+
+  // console.log({ isFetching: memberDetails?.isFetching });
 
   const memberPayment = memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.payments;
 

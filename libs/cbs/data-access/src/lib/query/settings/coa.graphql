@@ -162,3 +162,31 @@ query getCOALeafNodeDetails($id: ID!) {
     }
   }
 }
+
+query getLedgerList($id: ID!, $pagination: Pagination, $filter: COALedgerListFilter) {
+  settings {
+    chartsOfAccount {
+      coaLedgerList(id: $id, pagination: $pagination, filter: $filter) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        edges {
+          node {
+            id
+            accountCode
+            date
+            ledgerName
+            serviceCenter
+            balance
+            status
+          }
+          cursor
+        }
+      }
+    }
+  }
+}

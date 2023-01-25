@@ -14,18 +14,13 @@ import {
 } from '@coop/cbs/data-access';
 import { copyToClipboard } from '@coop/shared/utils';
 
-const fiveMinutesInMs = 5 * 60 * 1000;
+// const fiveMinutesInMs = 5 * 60 * 1000;
 
 export const AvatarComponentForMemberDetails = React.memo(() => {
   const router = useRouter();
-  const memberDetails = useGetMemberKymDetailsOverviewQuery(
-    {
-      id: router.query['id'] as string,
-    },
-    {
-      cacheTime: fiveMinutesInMs,
-    }
-  );
+  const memberDetails = useGetMemberKymDetailsOverviewQuery({
+    id: router.query['id'] as string,
+  });
 
   const memberInfo = useMemo(
     () =>
