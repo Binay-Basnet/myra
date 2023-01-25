@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { CgMenuGridO } from 'react-icons/cg';
@@ -22,15 +22,11 @@ import { Select, SwitchTabs } from '@myra-ui/forms';
 import { Avatar, Box, Button, Divider, Grid, Icon, IconButton, Text } from '@myra-ui/foundations';
 
 import {
-  authenticate,
   BranchCategory,
-  BranchMinimal,
   DateType,
   EodOption,
   logout,
-  RoleInfo,
   RootState,
-  saveToken,
   setPreference,
   useAppDispatch,
   useAppSelector,
@@ -40,13 +36,7 @@ import {
   useSetPreferenceMutation,
   useSwitchRoleMutation,
 } from '@coop/cbs/data-access';
-import {
-  AbilityContext,
-  getLocalizedTodaysDate,
-  localizedDate,
-  ROUTES,
-  updateAbility,
-} from '@coop/cbs/utils';
+import { getLocalizedTodaysDate, localizedDate, ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 // const ROLE_SLUG: Record<string, string> = {
@@ -158,8 +148,6 @@ export const TopLevelHeader = () => {
   const { mutateAsync: switchRole } = useSwitchRoleMutation();
 
   const isHeadOfficeReady = eodStatusQueryData?.transaction?.eodStatus?.states?.headOfficeReady;
-
-  const ability = useContext(AbilityContext);
 
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
@@ -323,37 +311,38 @@ export const TopLevelHeader = () => {
         role: type === 'ROLE' ? value : undefined,
         branch: type === 'BRANCH' ? value : undefined,
       }),
-      onSuccess: (response) => {
-        const tokens = response?.auth?.switchRole?.data?.token;
-        const me = response?.auth?.switchRole?.data?.me;
-
-        if (tokens?.access && tokens?.refresh) {
-          dispatch(
-            saveToken({
-              accessToken: tokens?.access,
-              refreshToken: tokens?.refresh,
-            })
-          );
-        }
-
-        if (
-          me?.user &&
-          me?.permission?.myPermission &&
-          me?.preference &&
-          me?.rolesList &&
-          me?.branches
-        ) {
-          dispatch(
-            authenticate({
-              user: me?.user,
-              permissions: me?.permission?.myPermission,
-              preference: me?.preference,
-              availableRoles: me?.rolesList as RoleInfo[],
-              availableBranches: me?.branches as BranchMinimal[],
-            })
-          );
-          updateAbility(ability, me?.permission?.myPermission);
-        }
+      onSuccess: () => {
+        router.reload();
+        // const tokens = response?.auth?.switchRole?.data?.token;
+        // const me = response?.auth?.switchRole?.data?.me;
+        //
+        // if (tokens?.access && tokens?.refresh) {
+        //   dispatch(
+        //     saveToken({
+        //       accessToken: tokens?.access,
+        //       refreshToken: tokens?.refresh,
+        //     })
+        //   );
+        // }
+        //
+        // if (
+        //   me?.user &&
+        //   me?.permission?.myPermission &&
+        //   me?.preference &&
+        //   me?.rolesList &&
+        //   me?.branches
+        // ) {
+        //   dispatch(
+        //     authenticate({
+        //       user: me?.user,
+        //       permissions: me?.permission?.myPermission,
+        //       preference: me?.preference,
+        //       availableRoles: me?.rolesList as RoleInfo[],
+        //       availableBranches: me?.branches as BranchMinimal[],
+        //     })
+        //   );
+        //   updateAbility(ability, me?.permission?.myPermission);
+        // }
       },
     });
   };
@@ -757,7 +746,6 @@ export const TopLevelHeader = () => {
                                       String(newValue.label),
                                       String(newValue.value)
                                     );
-                                    router.reload();
                                   }
                                 }}
                               />
@@ -784,7 +772,6 @@ export const TopLevelHeader = () => {
                                       String(newValue.value),
                                       'ROLE'
                                     );
-                                    router.reload();
                                   }
                                 }}
                               />

@@ -1,71 +1,97 @@
-import { useState } from 'react';
+import { Box, FormSection } from '@myra-ui';
 
-import { FormSection, GridItem } from '@myra-ui';
-
-import { useGetCoaAccountsUnderLeafListQuery } from '@coop/cbs/data-access';
-import { COASelectModal } from '@coop/shared/components';
+import { useAppSelector, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 
-export type LedgerTableProps = {
+type JournalVouchersTableType = {
   ledgerId: string;
   accountId: string;
-  dr: string;
   cr: string;
+
+  dr: string;
+  description: string;
 };
+
 export const LedgerTable = () => {
-  const [parentId, setParentId] = useState<string>('');
-  const { refetch } = useGetCoaAccountsUnderLeafListQuery({ parentId, currentBranch: true });
+  const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
+  // const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
-  const getAccountsList = async (pId: string) =>
-    new Promise<{ label: string; value: string }[]>((resolve) => {
-      setParentId(pId);
+  // const { watch } = useFormContext<CustomJournalVoucherInput>();
 
-      refetch()?.then(({ data }) => {
-        resolve(
-          data?.settings?.chartsOfAccount?.accountsUnderLeaf?.map((account) => ({
-            label: account?.name as string,
-            value: account?.accountId as string,
-          })) ?? []
-        );
-      });
-    });
+  // const entries = watch('entries');
+
+  // const { crTotal, drTotal } = useMemo(() => {
+  //   let tempCR = 0;
+  //   let tempDR = 0;
+
+  //   entries?.forEach((entry) => {
+  //     tempCR += Number(entry?.crAmount ?? 0);
+  //     tempDR += Number(entry?.drAmount ?? 0);
+  //   });
+
+  //   return { crTotal: tempCR, drTotal: tempDR };
+  // }, [entries]);
+
+  const { data: accountList } = useGetCoaAccountListQuery({
+    branchId: [branchId as string],
+
+    pagination: {
+      after: '',
+      first: -1,
+    },
+    // filter: {
+    //   ledgerId: searchTerm,
+    //   name: searchTerm,
+    //   filterMode: 'OR',
+    // },
+  });
+
+  const accountListData = accountList?.settings?.chartsOfAccount?.coaAccountList?.edges;
 
   return (
     <FormSection header="My Ledger" subHeader="Select Source Ledger & account." templateColumns={1}>
-      <GridItem colSpan={3}>
-        <FormEditableTable<LedgerTableProps>
+      <Box display="flex" flexDir="column" gap="s12">
+        <FormEditableTable<JournalVouchersTableType>
           name="selfEntries"
-          debug={false}
+          searchPlaceholder="Search for Accounts"
           columns={[
             {
               accessor: 'accountId',
               header: 'Account',
-              fieldType: 'modal',
-              cellWidth: 'auto',
-              modal: COASelectModal,
-            },
-            {
-              accessor: 'ledgerId',
-              header: 'Ledger',
-              loadOptions: (row) => getAccountsList(row?.accountId),
-              fieldType: 'select',
-              cellWidth: 'auto',
+              fieldType: 'search',
+              searchOptions: accountListData?.map((account) => ({
+                label: account?.node?.accountName?.local as string,
+                value: account?.node?.accountCode as string,
+              })),
+              // searchLoading: isFetching,
+              // searchCallback: (newSearch) => {
+              //   setSearchTerm(newSearch);
+              // },
+              cellWidth: 'lg',
             },
             {
               accessor: 'dr',
-              header: 'DR',
+              header: 'DR Amount',
               isNumeric: true,
               cellWidth: 'lg',
             },
             {
               accessor: 'cr',
-              header: 'CR',
+              header: 'CR Amount',
               isNumeric: true,
               cellWidth: 'lg',
             },
+            // {
+            //   accessor: 'description',
+            //   hidden: true,
+            //   fieldType: 'textarea',
+            //   header: 'Description',
+            //   cellWidth: 'auto',
+            //   colSpan: 3,
+            // },
           ]}
         />
-      </GridItem>
+      </Box>
     </FormSection>
   );
 };

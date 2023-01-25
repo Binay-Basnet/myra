@@ -30,6 +30,7 @@ function useReplace() {
 
 export const useRefreshToken = (url: string) => {
   const replace = useReplace();
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const refreshTokenPromise = useCallback(() => {
@@ -49,11 +50,25 @@ export const useRefreshToken = (url: string) => {
           return tokens?.access;
         }
 
-        replace('/login');
+        replace(
+          {
+            query: {
+              redirect: router.pathname,
+            },
+          },
+          '/login'
+        );
         throw new Error('Credentials are Expired!!');
       })
       .catch(() => {
-        replace('/login');
+        replace(
+          {
+            query: {
+              redirect: router.pathname,
+            },
+          },
+          '/login'
+        );
         dispatch(logout());
       });
   }, [dispatch, replace, url]);
