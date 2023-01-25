@@ -1178,8 +1178,19 @@ export type BankAccountConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type BankAccountDetails = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  accountType?: Maybe<AccountingBankAccountType>;
+  bankId?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  displayName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+};
+
 export type BankAccountDetailsResult = {
-  data?: Maybe<BankAccount>;
+  data?: Maybe<BankAccountDetails>;
   error?: Maybe<QueryError>;
 };
 
@@ -1818,6 +1829,19 @@ export type CoaLeafNodeDetails = {
   noOfAccounts?: Maybe<Scalars['String']>;
 };
 
+export type CoaLedgerListFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
+  ledgerId?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type CoaLedgerListResult = {
+  edges?: Maybe<Array<Maybe<LedgerListEdges>>>;
+  error?: Maybe<QueryError>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
 export type CoaListFilter = {
   filterMode?: InputMaybe<Filter_Mode>;
   ledgerId?: InputMaybe<Scalars['String']>;
@@ -2167,6 +2191,7 @@ export type ChartsOfAccountSettingsQuery = {
   coaAccountDetails?: Maybe<CoaDetailsResult>;
   coaAccountList?: Maybe<CoaAccountListResult>;
   coaLeafNodeDetails?: Maybe<CoaLeafNodeDetailView>;
+  coaLedgerList?: Maybe<CoaLedgerListResult>;
   fullView: CoaFullView;
   search?: Maybe<CoaMinimalResult>;
 };
@@ -2197,6 +2222,12 @@ export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
 
 export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
   id: Scalars['ID'];
+};
+
+export type ChartsOfAccountSettingsQueryCoaLedgerListArgs = {
+  filter?: InputMaybe<CoaLedgerListFilter>;
+  id: Scalars['ID'];
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type ChartsOfAccountSettingsQuerySearchArgs = {
@@ -8522,9 +8553,15 @@ export type LedgerList = {
   accountCode?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['String']>;
   ledgerName?: Maybe<Scalars['String']>;
   serviceCenter?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['Boolean']>;
+};
+
+export type LedgerListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<LedgerList>;
 };
 
 export type LedgerMapping = {

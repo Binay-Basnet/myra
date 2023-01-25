@@ -14,6 +14,7 @@ import {
   FormFooter,
   FormHeader,
   Grid,
+  Loader,
   MemberCard,
   Text,
 } from '@myra-ui';
@@ -172,7 +173,11 @@ export const AccountOpenNew = () => {
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({ memberId });
-  const { data, isFetching } = useGetProductListQuery(
+  const {
+    data,
+    isFetching,
+    isLoading: productLoading,
+  } = useGetProductListQuery(
     {
       memberId,
     },
@@ -237,19 +242,20 @@ export const AccountOpenNew = () => {
   const previousButtonHandler = () => {
     setMode('0');
   };
-  const { data: minorData } = useGetAccountOpenMinorListQuery(
+  const { data: minorData, isLoading: minorListLoading } = useGetAccountOpenMinorListQuery(
     {
       memberId: memberId as string,
     },
     { enabled: triggerQuery }
   );
 
-  const { data: defaultAccountData } = useGetDefaultAccountListQuery(
-    { memberId, productId: productID },
-    {
-      enabled: triggerQuery || triggerProductQuery,
-    }
-  );
+  const { data: defaultAccountData, isLoading: defaultAccountLoading } =
+    useGetDefaultAccountListQuery(
+      { memberId, productId: productID },
+      {
+        enabled: triggerQuery || triggerProductQuery,
+      }
+    );
   const defaulDataAcc = defaultAccountData?.account?.listDefaultAccounts?.data;
   const defaultDataOptions = defaulDataAcc?.map((item) => ({
     label: item?.accountName as string,
@@ -451,7 +457,11 @@ export const AccountOpenNew = () => {
     //   }
     // });
   };
-  const { data: editValues, refetch } = useGetAccountOpenEditDataQuery(
+  const {
+    data: editValues,
+    refetch,
+    isLoading: editLoading,
+  } = useGetAccountOpenEditDataQuery(
     {
       id: routeId,
     },
@@ -503,127 +513,138 @@ export const AccountOpenNew = () => {
           borderRight="1px solid"
           borderColor="border.layout"
         >
-          <FormProvider {...methods}>
-            <form>
-              <Box
-                display={mode === '0' ? 'flex' : 'none'}
-                flexDirection="column"
-                gap="s32"
-                p="s20"
-                w="100%"
-              >
-                <FormMemberSelect isRequired name="memberId" label="Member" />
-                <FormSelect
-                  name="productId"
-                  label={t['accProductName']}
-                  isLoading={isFetching}
-                  options={productOptions}
-                />
-                {errors && (
-                  <Alert
-                    status="error"
-                    title="Error"
-                    bottomButtonlabel="View All Criteria"
-                    bottomButtonHandler={() => setShowCriteria((prev) => !prev)}
-                    hideCloseIcon
-                  >
-                    <Box pt="s8">
-                      <ul>
-                        {errors?.error?.map((item) => (
-                          <li key={item}>
-                            {' '}
-                            <Text fontWeight="400" fontSize="s2">
-                              {item}
-                            </Text>
-                          </li>
-                        ))}
-                      </ul>
+          {editLoading &&
+          minorListLoading &&
+          defaultAccountLoading &&
+          productLoading &&
+          !memberDetailData &&
+          router.pathname.includes('edit') ? (
+            <Box display="flex" justifyContent="center" pt="100px">
+              <Loader />
+            </Box>
+          ) : (
+            <FormProvider {...methods}>
+              <form>
+                <Box
+                  display={mode === '0' ? 'flex' : 'none'}
+                  flexDirection="column"
+                  gap="s32"
+                  p="s20"
+                  w="100%"
+                >
+                  <FormMemberSelect isRequired name="memberId" label="Member" />
+                  <FormSelect
+                    name="productId"
+                    label={t['accProductName']}
+                    isLoading={isFetching}
+                    options={productOptions}
+                  />
+                  {errors && (
+                    <Alert
+                      status="error"
+                      title="Error"
+                      bottomButtonlabel="View All Criteria"
+                      bottomButtonHandler={() => setShowCriteria((prev) => !prev)}
+                      hideCloseIcon
+                    >
+                      <Box pt="s8">
+                        <ul>
+                          {errors?.error?.map((item) => (
+                            <li key={item}>
+                              {' '}
+                              <Text fontWeight="400" fontSize="s2">
+                                {item}
+                              </Text>
+                            </li>
+                          ))}
+                        </ul>
+                      </Box>
+                    </Alert>
+                  )}
+                  {showCriteria && (
+                    <Box border="1px solid" borderColor="border.layout" borderRadius="br2" p="s16">
+                      <CriteriaCard productId={productID} />
                     </Box>
-                  </Alert>
-                )}
-                {showCriteria && (
-                  <Box border="1px solid" borderColor="border.layout" borderRadius="br2" p="s16">
-                    <CriteriaCard productId={productID} />
-                  </Box>
-                )}
-                {memberId && productID && !errors && (
-                  <Box display="flex" flexDirection="column" gap="s32" w="100%">
-                    <FormInput name="accountName" label="Account Name" />
-                    {ProductData?.isForMinors && (
-                      <FormSelect name="minor" label="Minor" options={minorOptions} />
-                    )}
-                    {productType !== NatureOfDepositProduct?.Current &&
-                      productType !== NatureOfDepositProduct?.Saving && <Tenure />}
-                    <Divider />
-                    {productType !== NatureOfDepositProduct?.Current && <Interest />}
-                    {(productType === NatureOfDepositProduct?.RecurringSaving ||
-                      (productType === NatureOfDepositProduct.Saving && isMandatoryFlag)) && (
-                      <DepositFrequency />
-                    )}
-                    {(productType === NatureOfDepositProduct?.TermSavingOrFd ||
-                      productType === NatureOfDepositProduct?.RecurringSaving) && (
-                      <Box display="flex" flexDirection="column" gap="s16">
-                        <Box display="flex" flexDirection="column" gap="s4">
-                          <Text fontWeight="500" fontSize="r1">
-                            Nominee Account
-                          </Text>
-                          <Text fontWeight="400" fontSize="s2">
-                            If the member does not specify particular account for deposit, this
-                            mapped account will be set globally. Normally this is a compulsory
-                            account type.
-                          </Text>
-                        </Box>
+                  )}
+                  {memberId && productID && !errors && (
+                    <Box display="flex" flexDirection="column" gap="s32" w="100%">
+                      <FormInput name="accountName" label="Account Name" />
+                      {ProductData?.isForMinors && (
+                        <FormSelect name="minor" label="Minor" options={minorOptions} />
+                      )}
+                      {productType !== NatureOfDepositProduct?.Current &&
+                        productType !== NatureOfDepositProduct?.Saving && <Tenure />}
+                      <Divider />
+                      {productType !== NatureOfDepositProduct?.Current && <Interest />}
+                      {(productType === NatureOfDepositProduct?.RecurringSaving ||
+                        (productType === NatureOfDepositProduct.Saving && isMandatoryFlag)) && (
+                        <DepositFrequency />
+                      )}
+                      {(productType === NatureOfDepositProduct?.TermSavingOrFd ||
+                        productType === NatureOfDepositProduct?.RecurringSaving) && (
+                        <Box display="flex" flexDirection="column" gap="s16">
+                          <Box display="flex" flexDirection="column" gap="s4">
+                            <Text fontWeight="500" fontSize="r1">
+                              Nominee Account
+                            </Text>
+                            <Text fontWeight="400" fontSize="s2">
+                              If the member does not specify particular account for deposit, this
+                              mapped account will be set globally. Normally this is a compulsory
+                              account type.
+                            </Text>
+                          </Box>
 
-                        <FormSelect
-                          name="defaultAmountDepositAccountName"
-                          options={defaultDataOptions}
+                          <FormSelect
+                            name="defaultAmountDepositAccountName"
+                            options={defaultDataOptions}
+                          />
+                        </Box>
+                      )}
+
+                      {(ProductData?.alternativeChannels ||
+                        ProductData?.atmFacility ||
+                        ProductData?.chequeIssue) && (
+                        <Box display="flex" flexDirection="column" gap="s16">
+                          <Text fontWeight="600" fontSize="r1">
+                            Other Services
+                          </Text>
+                          <Box display="flex" flexDirection="column" gap="s8">
+                            {ProductData?.atmFacility && (
+                              <FormCheckbox name="atmFacility" label="ATM Facility" />
+                            )}
+                            {ProductData?.chequeIssue && (
+                              <FormCheckbox name="chequeFacility" label="Cheque Facility" />
+                            )}
+                          </Box>
+                        </Box>
+                      )}
+                      <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
+                        <FormAmountInput
+                          type="number"
+                          name="initialDepositAmount"
+                          label="Initial Deposit Amount"
                         />
-                      </Box>
-                    )}
-
-                    {(ProductData?.alternativeChannels ||
-                      ProductData?.atmFacility ||
-                      ProductData?.chequeIssue) && (
-                      <Box display="flex" flexDirection="column" gap="s16">
-                        <Text fontWeight="600" fontSize="r1">
-                          Other Services
-                        </Text>
-                        <Box display="flex" flexDirection="column" gap="s8">
-                          {ProductData?.atmFacility && (
-                            <FormCheckbox name="atmFacility" label="ATM Facility" />
-                          )}
-                          {ProductData?.chequeIssue && (
-                            <FormCheckbox name="chequeFacility" label="Cheque Facility" />
-                          )}
-                        </Box>
-                      </Box>
-                    )}
-                    <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormAmountInput
-                        type="number"
-                        name="initialDepositAmount"
-                        label="Initial Deposit Amount"
-                      />
-                    </Grid>
-                    {/* <Agent /> */}
-                    <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormAgentSelect name="agentId" label="Market Representative" />
-                    </Grid>
-                    <FeesAndCharge setTotalCharge={setTotalCharge} />
-                  </Box>
-                )}
-              </Box>
-              <Box
-                display={mode === '1' ? 'flex' : 'none'}
-                flexDirection="column"
-                gap="s32"
-                p="s20"
-                w="100%"
-              >
-                <Payment mode={Number(mode)} totalAmount={totalDeposit} />
-              </Box>
-            </form>
-          </FormProvider>
+                      </Grid>
+                      {/* <Agent /> */}
+                      <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
+                        <FormAgentSelect name="agentId" label="Market Representative" />
+                      </Grid>
+                      <FeesAndCharge setTotalCharge={setTotalCharge} />
+                    </Box>
+                  )}
+                </Box>
+                <Box
+                  display={mode === '1' ? 'flex' : 'none'}
+                  flexDirection="column"
+                  gap="s32"
+                  p="s20"
+                  w="100%"
+                >
+                  <Payment mode={Number(mode)} totalAmount={totalDeposit} />
+                </Box>
+              </form>
+            </FormProvider>
+          )}
           {memberId && productID && !errors && (
             <Box display={mode === '0' ? 'flex' : 'none'} flexDirection="column">
               <RequiredDocuments
