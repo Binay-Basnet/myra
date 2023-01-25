@@ -27,6 +27,7 @@ import {
   EodOption,
   logout,
   RootState,
+  saveToken,
   setPreference,
   useAppDispatch,
   useAppSelector,
@@ -311,19 +312,22 @@ export const TopLevelHeader = () => {
         role: type === 'ROLE' ? value : undefined,
         branch: type === 'BRANCH' ? value : undefined,
       }),
-      onSuccess: () => {
-        router.reload();
-        // const tokens = response?.auth?.switchRole?.data?.token;
+      onSuccess: (response) => {
+        const tokens = response?.auth?.switchRole?.data?.token;
+
         // const me = response?.auth?.switchRole?.data?.me;
         //
-        // if (tokens?.access && tokens?.refresh) {
-        //   dispatch(
-        //     saveToken({
-        //       accessToken: tokens?.access,
-        //       refreshToken: tokens?.refresh,
-        //     })
-        //   );
-        // }
+        if (tokens?.access && tokens?.refresh) {
+          dispatch(
+            saveToken({
+              accessToken: tokens?.access,
+              refreshToken: tokens?.refresh,
+            })
+          );
+        }
+
+        router.reload();
+
         //
         // if (
         //   me?.user &&
