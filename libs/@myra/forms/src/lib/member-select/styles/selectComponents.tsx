@@ -98,7 +98,7 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
                     fontSize="s3"
                     color="neutralColorLight.Gray-60"
                   >
-                    Branch:
+                    Service-Center:
                   </Text>
                   <Text
                     lineHeight="100%"

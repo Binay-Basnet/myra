@@ -1178,6 +1178,11 @@ export type BankAccountConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type BankAccountDetailsResult = {
+  data?: Maybe<BankAccount>;
+  error?: Maybe<QueryError>;
+};
+
 export type BankAccountEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<BankAccount>;
@@ -1190,19 +1195,34 @@ export type BankAccountFilter = {
 
 export type BankAccountMutation = {
   new?: Maybe<NewBankAccountResult>;
+  update?: Maybe<BankAccountUpdateResult>;
 };
 
 export type BankAccountMutationNewArgs = {
   data?: InputMaybe<NewBankAccountInput>;
 };
 
+export type BankAccountMutationUpdateArgs = {
+  data?: InputMaybe<UpdateBankAccountInput>;
+};
+
 export type BankAccountQuery = {
+  details?: Maybe<BankAccountDetailsResult>;
   list?: Maybe<BankAccountConnection>;
+};
+
+export type BankAccountQueryDetailsArgs = {
+  id: Scalars['ID'];
 };
 
 export type BankAccountQueryListArgs = {
   filter?: InputMaybe<BankAccountFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type BankAccountUpdateResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type BankAddResult = {
@@ -3503,6 +3523,7 @@ export type DepositLoanAccountMutation = {
   add?: Maybe<DepositLoanAccountResult>;
   close?: Maybe<DepositAccountCloseResult>;
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
+  makeActive?: Maybe<Scalars['String']>;
 };
 
 export type DepositLoanAccountMutationAddArgs = {
@@ -3517,6 +3538,10 @@ export type DepositLoanAccountMutationCloseArgs = {
 export type DepositLoanAccountMutationForgiveInstallmentArgs = {
   id: Scalars['ID'];
   installmentDate: Array<Scalars['String']>;
+};
+
+export type DepositLoanAccountMutationMakeActiveArgs = {
+  accountID: Scalars['ID'];
 };
 
 export type DepositLoanAccountQuery = {
@@ -10082,6 +10107,8 @@ export type MemberAccountDetails = {
   isMandatory?: Maybe<Scalars['Boolean']>;
   member?: Maybe<Member>;
   monthlyInterestCompulsory?: Maybe<Scalars['Boolean']>;
+  nomineeAccountName?: Maybe<Scalars['String']>;
+  nomineeAccountNumber?: Maybe<Scalars['String']>;
   objState?: Maybe<ObjState>;
   productId?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
@@ -14121,6 +14148,17 @@ export const TypeOfShare = {
 } as const;
 
 export type TypeOfShare = typeof TypeOfShare[keyof typeof TypeOfShare];
+export type UpdateBankAccountInput = {
+  accountName?: InputMaybe<Scalars['String']>;
+  accountNumber?: InputMaybe<Scalars['String']>;
+  accountType?: InputMaybe<AccountingBankAccountType>;
+  bankId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  displayName?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID'];
+  openingBalance?: InputMaybe<Scalars['String']>;
+};
+
 export type UploadedDocument = {
   docData: Array<Maybe<UploadedDocumentData>>;
   fieldId?: Maybe<Scalars['String']>;
@@ -14957,6 +14995,12 @@ export type SetAccountDocumentDataMutationVariables = Exact<{
 export type SetAccountDocumentDataMutation = {
   document: { Subscription: { Upsert: { recordId?: string | null } } };
 };
+
+export type SetMakeDormantAccountActiveMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+}>;
+
+export type SetMakeDormantAccountActiveMutation = { account: { makeActive?: string | null } };
 
 export type SetIssueNewSlipMutationVariables = Exact<{
   data: WithdrawSlipIssueInput;
@@ -27187,6 +27231,33 @@ export const useSetAccountDocumentDataMutation = <TError = unknown, TContext = u
     ['setAccountDocumentData'],
     useAxios<SetAccountDocumentDataMutation, SetAccountDocumentDataMutationVariables>(
       SetAccountDocumentDataDocument
+    ),
+    options
+  );
+export const SetMakeDormantAccountActiveDocument = `
+    mutation setMakeDormantAccountActive($accountId: ID!) {
+  account {
+    makeActive(accountID: $accountId)
+  }
+}
+    `;
+export const useSetMakeDormantAccountActiveMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetMakeDormantAccountActiveMutation,
+    TError,
+    SetMakeDormantAccountActiveMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetMakeDormantAccountActiveMutation,
+    TError,
+    SetMakeDormantAccountActiveMutationVariables,
+    TContext
+  >(
+    ['setMakeDormantAccountActive'],
+    useAxios<SetMakeDormantAccountActiveMutation, SetMakeDormantAccountActiveMutationVariables>(
+      SetMakeDormantAccountActiveDocument
     ),
     options
   );

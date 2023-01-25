@@ -1,10 +1,15 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
+import { Avatar, Box, PageHeader, TablePopover, Text, toast } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Filter_Mode, ObjState, useGetAccountTableListMinimalQuery } from '@coop/cbs/data-access';
+import {
+  Filter_Mode,
+  ObjState,
+  useGetAccountTableListMinimalQuery,
+  useSetMakeDormantAccountActiveMutation,
+} from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -29,6 +34,19 @@ export const CBSAccountList = () => {
   const { t } = useTranslation();
   const searchTerm = router?.query['search'] as string;
   const objState = router?.query['objState'];
+  const { mutateAsync: makeActiveMutation } = useSetMakeDormantAccountActiveMutation();
+
+  const makeActiveHandler = (id: string) => {
+    makeActiveMutation({ accountId: id }).then(() => {
+      toast({
+        id: 'Making Account Active',
+        type: 'success',
+        message: 'Accounnt Activated Successfully',
+      });
+
+      router.push(ROUTES.CBS_ACCOUNT_LIST);
+    });
+  };
 
   const { data, isFetching } = useGetAccountTableListMinimalQuery(
     {
@@ -122,10 +140,7 @@ export const CBSAccountList = () => {
                   aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
                   action: 'CREATE',
 
-                  onClick: (row) =>
-                    router.push(
-                      `${ROUTES.CBS_TRANS_DEPOSIT_ADD}?dormantAcc=${row['id']}&dormantMember=${row?.member?.id}`
-                    ),
+                  onClick: (row) => makeActiveHandler(row?.id),
                 },
               ]}
               node={props?.row?.original?.node}

@@ -22,3 +22,9 @@ mutation setAccountDocumentData(
     }
   }
 }
+
+mutation setMakeDormantAccountActive($accountId: ID!) {
+  account {
+    makeActive(accountID: $accountId)
+  }
+}
