@@ -40,7 +40,7 @@ export const LedgerPage = () => {
               href={`${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${props?.row?.original?.ledgerId}`}
               target="_blank"
             >
-              <Tooltip title={props?.row?.original?.ledgerName as string} />
+              <Tooltip title={props?.row?.original?.ledgerName as string} link />
             </Link>
           </Box>
         ),
