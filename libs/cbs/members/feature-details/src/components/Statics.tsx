@@ -15,7 +15,7 @@ export const MemberStatistics = () => {
   return (
     <Grid templateColumns="repeat(3,1fr)" gap="s16">
       {memberShareDetails?.totalShareValue && (
-        <Box bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
+        <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
           <Text fontSize="s3" fontWeight="500">
             Total Share Value
           </Text>
@@ -25,7 +25,7 @@ export const MemberStatistics = () => {
         </Box>
       )}
       {memberShareDetails?.accountBalance && (
-        <Box bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
+        <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
           <Text fontSize="s3" fontWeight="500">
             Overall Account Balance
           </Text>
@@ -35,7 +35,7 @@ export const MemberStatistics = () => {
         </Box>
       )}
       {memberShareDetails?.accountBalance && (
-        <Box bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
+        <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
           <Text fontSize="s3" fontWeight="500">
             Total Loan Amount
           </Text>

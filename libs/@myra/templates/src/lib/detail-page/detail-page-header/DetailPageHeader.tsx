@@ -136,9 +136,10 @@ export const DetailPageHeader = ({
         ) : null}
 
         <IconButton
+          colorScheme="gray"
           variant="ghost"
           aria-label="close"
-          color="gray.500"
+          color="gray.700"
           icon={<Icon as={VscChromeClose} size="lg" />}
           onClick={() => {
             if (closeLink) {

@@ -63,10 +63,11 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
         </Box>
 
         <Box>
-          <Text fontSize="s3" fontWeight={600} color="primary.500">
+          <Text align="right" fontSize="s3" fontWeight={600} color="primary.500">
             {amountConverter(data.bankInfo.balance)}
           </Text>
           <Text
+            align="right"
             fontSize="s3"
             fontWeight={400}
             color="neutralColorLight.Gray-60"
@@ -75,6 +76,7 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
             {data.bankInfo.accountType}
           </Text>
           <Text
+            align="right"
             fontSize="s3"
             fontWeight={400}
             color="neutralColorLight.Gray-60"
