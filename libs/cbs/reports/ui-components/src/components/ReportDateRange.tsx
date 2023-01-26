@@ -39,7 +39,7 @@ export const ReportDateRange = ({ label = 'Select Period', name }: IReportDateRa
               },
             })
           }
-          tillDateStart={new Date('2019-12-10')}
+          tillDateStart={new Date('1988-08-16')}
         />
       )}
       control={control}

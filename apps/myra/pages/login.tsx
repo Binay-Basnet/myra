@@ -107,7 +107,7 @@ export const Login = () => {
       );
 
       updateAbility(ability, loginData?.permission?.myPermission);
-      replace((router.query.redirect as string) || '/');
+      replace(((router?.query?.redirect as string) ?? '/') || '/');
 
       toast({
         id: 'login',
