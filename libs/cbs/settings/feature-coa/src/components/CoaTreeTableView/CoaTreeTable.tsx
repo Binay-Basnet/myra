@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AiOutlineDelete, AiOutlineSetting } from 'react-icons/ai';
 import { BsThreeDots } from 'react-icons/bs';
 import { IoAdd } from 'react-icons/io5';
+import Link from 'next/link';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { ActionMenu } from '@myra-ui/components';
@@ -9,7 +10,7 @@ import { Box } from '@myra-ui/foundations';
 import { Column, ExpandedCell, ExpandedHeader, Table } from '@myra-ui/table';
 
 import { CoaView } from '@coop/cbs/data-access';
-import { localizedText } from '@coop/cbs/utils';
+import { localizedText, ROUTES } from '@coop/cbs/utils';
 
 import { AddAccountModal, AddGroupModal, ConfigureGroupModal } from '../modals';
 import { arrayToTreeCOA } from '../../utils/arrayToTree';
@@ -39,9 +40,25 @@ export const CoaTreeTable = ({ data, type }: ICoaTreeTableProps) => {
         <ExpandedCell
           row={props.row}
           value={
-            <Box color={props.row?.original?.category === 'USER_DEFINED' ? 'info.500' : 'inherit'}>
-              {props.row.original.accountCode} - {localizedText(props.row.original.name)}
-            </Box>
+            !props.row?.getCanExpand() ? (
+              <Link
+                target="_blank"
+                href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props.row?.original?.id}`}
+              >
+                <Box
+                  color={props.row?.original?.category === 'USER_DEFINED' ? 'info.500' : 'inherit'}
+                  _hover={{ textDecoration: 'underline' }}
+                >
+                  {props.row.original.accountCode} - {localizedText(props.row.original.name)}
+                </Box>
+              </Link>
+            ) : (
+              <Box
+                color={props.row?.original?.category === 'USER_DEFINED' ? 'info.500' : 'inherit'}
+              >
+                {props.row.original.accountCode} - {localizedText(props.row.original.name)}
+              </Box>
+            )
           }
         />
       ),
