@@ -91,7 +91,7 @@ export const EodExceptions = () => {
 
               <FormSwitchTab name="maturityCheck" label="Maturity Check" options={YesNo} />
 
-              <FormSwitchTab name="cashInHand" label="Maturity Check" options={YesNo} />
+              <FormSwitchTab name="cashInHand" label="Cash in Hand" options={YesNo} />
             </Box>
           </Box>
 
