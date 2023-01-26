@@ -36,8 +36,6 @@ export const Overview = () => {
     }
   );
 
-  const meberFetching = memberDetails?.isFetching;
-
   const memberPayment = memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.payments;
 
   const memberShareDetails =
