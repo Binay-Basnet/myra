@@ -72,6 +72,7 @@
     "cbs-settings-feature-deposit": "libs/cbs/settings/feature-deposit",
     "cbs-settings-feature-deposit-products": "libs/cbs/settings/feature-deposit-products",
     "cbs-settings-feature-documents": "libs/cbs/settings/feature-documents",
+    "cbs-settings-feature-eod": "libs/cbs/settings/feature-eod",
     "cbs-settings-feature-loan-product-detail": "libs/cbs/settings/feature-loan-product-detail",
     "cbs-settings-feature-loan-products": "libs/cbs/settings/feature-loan-products",
     "cbs-settings-feature-members": "libs/cbs/settings/feature-members",

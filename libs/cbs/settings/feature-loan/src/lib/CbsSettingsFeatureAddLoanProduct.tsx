@@ -126,7 +126,7 @@ export const SettingsLoanProductForm = () => {
       isInsuranceApplicable: false,
       isCollateralRequired: false,
       allowGurantee: false,
-      installmentFrequency: LoanProductInstallment.Daily,
+      // installmentFrequency: LoanProductInstallment.Daily,
       isRebateApplicable: false,
       tenureUnit: FrequencyTenure.Day,
       penaltyType: PenaltyType.RemainingPrincipal,

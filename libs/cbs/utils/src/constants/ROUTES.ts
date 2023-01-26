@@ -95,6 +95,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
 
   SETTINGS_GENERAL_AUDIT_LOG: '/settings/general/audit-log/list',
+  SETTINGS_EOD_SETUP: '/settings/general/eod',
   SETTINGS_GENERAL_BANK: '/settings/general/bank/configure',
 
   SETTINGS_GENERAL_COA: '/settings/general/coa/list',

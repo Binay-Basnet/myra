@@ -87,6 +87,7 @@ query getEndOfDayDateData {
     endOfDayDate {
       value
       hasErrors
+      isInitialized
     }
   }
 }

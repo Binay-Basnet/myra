@@ -406,8 +406,6 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
     ''
   );
 
-  console.log(tree);
-
   return (
     <Report.Table<TrialSheetReportDataEntry>
       showFooter
