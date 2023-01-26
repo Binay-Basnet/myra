@@ -2,7 +2,16 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader, GridItem, Text } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Container,
+  FormFooter,
+  FormHeader,
+  GridItem,
+  Loader,
+  Text,
+} from '@myra-ui';
 
 import {
   BranchCategory,
@@ -137,7 +146,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
     });
   };
 
-  const { data: editValues } = useGetBranchEditDataQuery(
+  const { data: editValues, isLoading: editValueLoading } = useGetBranchEditDataQuery(
     {
       id: id as string,
     },
@@ -163,121 +172,125 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader title={`${t['serviceCenterAdd']} - ${featureCode.newServiceCenter}`} />
         </Box>
-
-        <Box bg="white" pb="100px">
-          <FormProvider {...methods}>
-            <form>
-              <Box px="s20" py="s24">
-                <Box>
-                  <ContainerWithDivider>
-                    <Box>
-                      <InputGroupContainer>
-                        <GridItem colSpan={2}>
-                          <FormInput isRequired name="name" label={t['serviceCenterFormName']} />
-                        </GridItem>
-                        <FormInput isRequired name="branchCode" label={t['serviceCenterCode']} />
-                      </InputGroupContainer>
-
-                      <InputGroupContainer mt="s16">
-                        <FormInput
-                          isRequired
-                          type="text"
-                          name="managerName"
-                          label={t['serviceCenterManager']}
-                        />
-                        <FormSelect
-                          isRequired
-                          label={t['serviceCenterCategory']}
-                          name="category"
-                          options={branchCategories}
-                        />
-                        <FormDatePicker
-                          isRequired
-                          label={t['settingsBranchEstablishedDate']}
-                          name="estDate"
-                        />
-                      </InputGroupContainer>
-
-                      <InputGroupContainer mt="s16">
-                        <FormInput
-                          isRequired
-                          type="text"
-                          name="serviceCenterPhone"
-                          label={t['serviceCenterServiceCenterContactNumber']}
-                        />
-                      </InputGroupContainer>
-                    </Box>
-
-                    <Box>
-                      <Text variant="tableHeader" color="gray.700" mb="s16">
-                        {t['serviceCenterAddress']}
-                      </Text>
-                      <Box gap="s16" display="flex" flexDirection="column">
+        {editValueLoading && router?.asPath?.includes('edit') ? (
+          <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
+            <Loader />
+          </Box>
+        ) : (
+          <Box bg="white" pb="100px">
+            <FormProvider {...methods}>
+              <form>
+                <Box px="s20" py="s24">
+                  <Box>
+                    <ContainerWithDivider>
+                      <Box>
                         <InputGroupContainer>
-                          <FormSelect
-                            name="provinceId"
-                            label={t['kymIndProvince']}
-                            options={province}
-                          />
-                          <FormSelect
-                            name="districtId"
-                            label={t['kymIndDistrict']}
-                            options={districtList.map((d) => ({
-                              label: d.name,
-                              value: d.id,
-                            }))}
-                          />
-                          <FormSelect
-                            name="localGovernmentId"
-                            label={t['kymIndLocalGovernment']}
-                            options={localityList.map((d) => ({
-                              label: d.name,
-                              value: d.id,
-                            }))}
-                          />
-                          <FormSelect
-                            name="wardNo"
-                            label={t['kymIndWardNo']}
-                            options={wardList.map((d) => ({
-                              label: d,
-                              value: d,
-                            }))}
-                          />
-                          <FormInput type="text" name="locality" label={t['kymIndLocality']} />
+                          <GridItem colSpan={2}>
+                            <FormInput isRequired name="name" label={t['serviceCenterFormName']} />
+                          </GridItem>
+                          <FormInput isRequired name="branchCode" label={t['serviceCenterCode']} />
                         </InputGroupContainer>
 
-                        <Box>
-                          <FormMap name="location" />
+                        <InputGroupContainer mt="s16">
+                          <FormInput
+                            isRequired
+                            type="text"
+                            name="managerName"
+                            label={t['serviceCenterManager']}
+                          />
+                          <FormSelect
+                            isRequired
+                            label={t['serviceCenterCategory']}
+                            name="category"
+                            options={branchCategories}
+                          />
+                          <FormDatePicker
+                            isRequired
+                            label={t['settingsBranchEstablishedDate']}
+                            name="estDate"
+                          />
+                        </InputGroupContainer>
+
+                        <InputGroupContainer mt="s16">
+                          <FormInput
+                            isRequired
+                            type="text"
+                            name="serviceCenterPhone"
+                            label={t['serviceCenterServiceCenterContactNumber']}
+                          />
+                        </InputGroupContainer>
+                      </Box>
+
+                      <Box>
+                        <Text variant="tableHeader" color="gray.700" mb="s16">
+                          {t['serviceCenterAddress']}
+                        </Text>
+                        <Box gap="s16" display="flex" flexDirection="column">
+                          <InputGroupContainer>
+                            <FormSelect
+                              name="provinceId"
+                              label={t['kymIndProvince']}
+                              options={province}
+                            />
+                            <FormSelect
+                              name="districtId"
+                              label={t['kymIndDistrict']}
+                              options={districtList.map((d) => ({
+                                label: d.name,
+                                value: d.id,
+                              }))}
+                            />
+                            <FormSelect
+                              name="localGovernmentId"
+                              label={t['kymIndLocalGovernment']}
+                              options={localityList.map((d) => ({
+                                label: d.name,
+                                value: d.id,
+                              }))}
+                            />
+                            <FormSelect
+                              name="wardNo"
+                              label={t['kymIndWardNo']}
+                              options={wardList.map((d) => ({
+                                label: d,
+                                value: d,
+                              }))}
+                            />
+                            <FormInput type="text" name="locality" label={t['kymIndLocality']} />
+                          </InputGroupContainer>
+
+                          <Box>
+                            <FormMap name="location" />
+                          </Box>
                         </Box>
                       </Box>
-                    </Box>
 
-                    <Box display="flex" flexDirection="column" gap="s20">
-                      <Text variant="tableHeader" color="gray.700">
-                        {t['serviceCenterManager']}
-                      </Text>
-                      <InputGroupContainer>
-                        <FormInput
-                          isRequired
-                          name="phoneNumber"
-                          label={t['settingsBranchPhoneNumber']}
+                      <Box display="flex" flexDirection="column" gap="s20">
+                        <Text variant="tableHeader" color="gray.700">
+                          {t['serviceCenterManager']}
+                        </Text>
+                        <InputGroupContainer>
+                          <FormInput
+                            isRequired
+                            name="phoneNumber"
+                            label={t['settingsBranchPhoneNumber']}
+                          />
+                          <FormInput isRequired name="email" label={t['settingsBranchEmail']} />
+                        </InputGroupContainer>
+                      </Box>
+
+                      <Box display="flex" flexDirection="column" gap="s16">
+                        <Text variant="tableHeader" color="gray.700">
+                          {t['settingsBranchABBSTransaction']}
+                        </Text>
+
+                        <FormSwitchTab
+                          label={t['settingsBranchStatus']}
+                          options={booleanList}
+                          name="abbsStatus"
                         />
-                        <FormInput isRequired name="email" label={t['settingsBranchEmail']} />
-                      </InputGroupContainer>
-                    </Box>
 
-                    <Box display="flex" flexDirection="column" gap="s16">
-                      <Text variant="tableHeader" color="gray.700">
-                        {t['settingsBranchABBSTransaction']}
-                      </Text>
-
-                      <FormSwitchTab
-                        label={t['settingsBranchStatus']}
-                        options={booleanList}
-                        name="abbsStatus"
-                      />
-
-                      {/* {abbsStatus && (
+                        {/* {abbsStatus && (
                         <Box p="s16" border="1px solid" borderColor="border.layout">
                           <InputGroupContainer>
                             <FormSelect
@@ -293,9 +306,9 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                           </InputGroupContainer>
                         </Box>
                       )} */}
-                    </Box>
+                      </Box>
 
-                    {/* <Box>
+                      {/* <Box>
                       <InputGroupContainer>
                         <FormSelect
                           label={t['settinsBranchPLTransfer']}
@@ -310,23 +323,24 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                       </InputGroupContainer>
                     </Box> */}
 
-                    <Box display="flex" justifyContent="space-between">
-                      <Box display="flex" flexDirection="column">
-                        <Text fontSize="s3" fontWeight="500" color="gray.700">
-                          {t['serviceCenterStatus']}
-                        </Text>
-                        <Text fontSize="s3" fontWeight="400" color="gray.700">
-                          {t['settingsBranchStatusReversible']}
-                        </Text>
+                      <Box display="flex" justifyContent="space-between">
+                        <Box display="flex" flexDirection="column">
+                          <Text fontSize="s3" fontWeight="500" color="gray.700">
+                            {t['serviceCenterStatus']}
+                          </Text>
+                          <Text fontSize="s3" fontWeight="400" color="gray.700">
+                            {t['settingsBranchStatusReversible']}
+                          </Text>
+                        </Box>
+                        <FormSwitchTab options={booleanList} name="branchStatus" />
                       </Box>
-                      <FormSwitchTab options={booleanList} name="branchStatus" />
-                    </Box>
-                  </ContainerWithDivider>
+                    </ContainerWithDivider>
+                  </Box>
                 </Box>
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
+              </form>
+            </FormProvider>
+          </Box>
+        )}
       </Container>
 
       <Box position="relative" margin="0px auto">

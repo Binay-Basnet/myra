@@ -171,7 +171,7 @@ export const AccountOpenNew = () => {
 
   const { mutateAsync } = useSetAccountOpenDataMutation();
 
-  const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
+  const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl, memberLoading } =
     useGetIndividualMemberDetails({ memberId });
   const {
     data,
@@ -517,7 +517,7 @@ export const AccountOpenNew = () => {
           minorListLoading &&
           defaultAccountLoading &&
           productLoading &&
-          !memberDetailData &&
+          !memberLoading &&
           router.pathname.includes('edit') ? (
             <Box display="flex" justifyContent="center" pt="100px">
               <Loader />

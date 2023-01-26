@@ -5,10 +5,10 @@ import { Tabs } from '@chakra-ui/react';
 import { Box, SidebarTabs } from '@myra-ui';
 
 const REPORTS_INNER_TAB_LINKS = [
-  {
-    title: 'Organization Profile / Report',
-    to: '/reports/cbs/organizations',
-  },
+  // {
+  //   title: 'Organization Profile / Report',
+  //   to: '/reports/cbs/organizations',
+  // },
   {
     title: 'Share Report',
     to: '/reports/cbs/share',
@@ -34,14 +34,14 @@ const REPORTS_INNER_TAB_LINKS = [
     to: '/reports/cbs/mobile-banking',
   },
 
-  {
-    title: 'ATM Reports',
-    to: '/reports/cbs/atm-report',
-  },
-  {
-    title: 'Branchless Banking Reports',
-    to: '/reports/cbs/branch-less-report',
-  },
+  // {
+  //   title: 'ATM Reports',
+  //   to: '/reports/cbs/atm-report',
+  // },
+  // {
+  //   title: 'Branchless Banking Reports',
+  //   to: '/reports/cbs/branch-less-report',
+  // },
   {
     title: 'Service Center Report',
     to: '/reports/cbs/service-center',

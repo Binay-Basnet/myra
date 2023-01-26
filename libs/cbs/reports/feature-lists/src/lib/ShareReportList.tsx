@@ -110,7 +110,7 @@ interface ReportLinkTextProps {
 export const ReportLinkText = ({ children, link }: ReportLinkTextProps) => {
   const router = useRouter();
 
-  return (
+  return link ? (
     <Text
       w="100%"
       fontSize="r1"
@@ -129,5 +129,5 @@ export const ReportLinkText = ({ children, link }: ReportLinkTextProps) => {
     >
       {children}
     </Text>
-  );
+  ) : null;
 };

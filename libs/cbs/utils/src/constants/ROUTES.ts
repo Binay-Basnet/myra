@@ -82,7 +82,7 @@ export const ROUTES = {
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_LIST: '/cbs/withdraw/block-withdraw-slip-requests/list',
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD: '/cbs/withdraw/block-withdraw-slip-requests/add',
 
-  CBS_REPORT_LIST: '/reports/cbs/organizations',
+  CBS_REPORT_LIST: '/reports/cbs/share',
   CBS_REPORT_SAVED: '/reports/saved',
 
   CBS_OTHERS_FUND_MANAGEMENT_ADD: '/cbs/others/fund-management/add',
@@ -108,6 +108,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_SAVINGS_TDS: '/settings/general/savings/tds/configure',
   SETTINGS_GENERAL_SP_LIST: '/settings/general/saving-products/list',
   SETTINGS_GENERAL_SP_ADD: '/settings/general/saving-products/add',
+  SETTINGS_GENERAL_SP_EDIT: '/settings/general/saving-products/edit',
   SETTINGS_GENERAL_SP_DETAILS: '/settings/general/deposit-products/details',
 
   SETTINGS_GENERAL_LOAN: '/settings/general/loan/configure',
@@ -118,6 +119,7 @@ export const ROUTES = {
 
   SETTINGS_GENERAL_LP_LIST: '/settings/general/loan-products/list',
   SETTINGS_GENERAL_LP_ADD: '/settings/general/loan-products/add',
+  SETTINGS_GENERAL_LP_EDIT: '/settings/general/loan-products/edit',
   SETTINGS_GENERAL_LP_DETAILS: '/settings/general/loan-products/details',
 
   SETTINGS_GENERAL_INDEXING: '/settings/general/indexing',

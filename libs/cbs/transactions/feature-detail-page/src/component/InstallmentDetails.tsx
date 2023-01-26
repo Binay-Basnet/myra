@@ -26,26 +26,21 @@ export const InstallmentDetails = ({ data }: InstallmentDetailsProps) => {
     () => [
       {
         id: '1',
-        header: t['transDetailSN'],
-        accessorFn: (row) => row?.installmentNo,
-      },
-      {
-        id: '2',
         header: t['transDetailInstallmentNo'],
         accessorFn: (row) => row?.installmentNo,
       },
       {
-        id: '3',
+        id: '2',
         header: t['transDetailPayment'],
         accessorFn: (row) => row?.payment,
       },
       {
-        id: '4',
+        id: '3',
         header: t['transDetailPrincipalAmount'],
         accessorFn: (row) => amountConverter(row?.principalAmount ?? 0),
       },
       {
-        id: '5',
+        id: '4',
         header: t['transDetailInterestAmount'],
         accessorFn: (row) => amountConverter(row?.interestAmount ?? 0),
       },
@@ -54,14 +49,7 @@ export const InstallmentDetails = ({ data }: InstallmentDetailsProps) => {
   );
   return (
     <DetailsCard title={t['transDetailInstallmentDetails']} hasTable>
-      <Table
-        isDetailPageTable
-        showFooter
-        isStatic
-        isLoading={false}
-        data={rowData ?? []}
-        columns={columns}
-      />
+      <Table isDetailPageTable isStatic isLoading={false} data={rowData ?? []} columns={columns} />
     </DetailsCard>
   );
 };
