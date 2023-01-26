@@ -315,7 +315,7 @@ export const SettingsLoanProductForm = () => {
       minTenureUnitNumber: values?.minTenureUnitNumber ? values?.minTenureUnitNumber : null,
       maxLoanAmount: values?.maxLoanAmount ?? null,
       minimumLoanAmount: values?.minimumLoanAmount ?? null,
-      installmentFrequency: values?.installmentFrequency ?? null,
+      // installmentFrequency: values?.installmentFrequency ?? null,
       collateralValue: isCollateralRequired ? collateralValueList : null,
       collateralTypes: isCollateralRequired ? collateralTypes : null,
       maxPercentOfGurantee: allowGurantee ? values?.maxPercentOfGurantee : null,
