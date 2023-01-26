@@ -11,6 +11,7 @@ import {
   FormHeader,
   FormSection,
   Grid,
+  Loader,
   Text,
 } from '@myra-ui';
 
@@ -176,7 +177,11 @@ export const AddUser = () => {
     });
   };
 
-  const { data: userQueryData, refetch: refetchUserData } = useGetSettingsUserEditDataQuery(
+  const {
+    data: userQueryData,
+    refetch: refetchUserData,
+    isLoading: editLoading,
+  } = useGetSettingsUserEditDataQuery(
     {
       id: id as string,
     },
@@ -230,217 +235,229 @@ export const AddUser = () => {
             closeLink={ROUTES.SETTINGS_USERS_LIST}
           />
         </Box>
+        {editLoading ? (
+          <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
+            <Loader />
+          </Box>
+        ) : (
+          <Box bg="white" pb="120px">
+            <FormProvider {...methods}>
+              <form>
+                <Box p="s20">
+                  <FormSwitch name="isCoreEmployee" label="This user is a core employee" />
+                </Box>
+                <FormSection header="settingsUserAddUserBasicInformation" templateColumns={2}>
+                  <FormInput isRequired type="text" name="name" label="Name" />
+                  <FormInput type="text" name="empCode" label="Employee Code" />
 
-        <Box bg="white" pb="120px">
-          <FormProvider {...methods}>
-            <form>
-              <Box p="s20">
-                <FormSwitch name="isCoreEmployee" label="This user is a core employee" />
-              </Box>
-              <FormSection header="settingsUserAddUserBasicInformation" templateColumns={2}>
-                <FormInput isRequired type="text" name="name" label="Name" />
-                <FormInput type="text" name="empCode" label="Employee Code" />
+                  <FormSelect isRequired name="gender" label="Gender" options={genderOptions} />
 
-                <FormSelect isRequired name="gender" label="Gender" options={genderOptions} />
+                  {/* <FormInput type="date" name="dob" label="Date of Birth (BS)" /> */}
 
-                {/* <FormInput type="date" name="dob" label="Date of Birth (BS)" /> */}
+                  <FormDatePicker isRequired name="dob" label="Date of Birth" maxToday />
 
-                <FormDatePicker isRequired name="dob" label="Date of Birth" maxToday />
+                  <FormPhoneNumber isRequired name="contactNo" label="Mobile No" />
 
-                <FormPhoneNumber isRequired name="contactNo" label="Mobile No" />
+                  <FormEmailInput isRequired name="email" label="Email" />
 
-                <FormEmailInput isRequired name="email" label="Email" />
-
-                <FormSelect
-                  isRequired
-                  isMulti
-                  name="role"
-                  label="Role"
-                  options={userRoles?.settings?.allRoles?.map((option) => ({
-                    label: option?.name as string,
-                    value: option?.id as string,
-                  }))}
-                />
-
-                <FormBranchSelect isMulti name="branch" label="Service Center" />
-              </FormSection>
-
-              <Box borderBottom="1px solid" borderBottomColor="border.layout">
-                <GroupContainer>
-                  <Text fontSize="r1" fontWeight="semibold" color="neutralColorLight.Gray-80">
-                    {t['kymIndIDENTIFICATIONDETAILS']}
-                  </Text>
-                  <Text fontSize="r1" fontWeight="medium">
-                    {t['kymIndChooseidentificationdetails']}
-                  </Text>
-                  <FormCheckboxGroup
-                    name="identificationSelection"
-                    showOther={false}
-                    list={identificationOptions}
+                  <FormSelect
+                    isRequired
+                    isMulti
+                    name="role"
+                    label="Role"
+                    options={userRoles?.settings?.allRoles?.map((option) => ({
+                      label: option?.name as string,
+                      value: option?.id as string,
+                    }))}
                   />
-                </GroupContainer>
 
-                <GroupContainer>
-                  {identificationValues?.includes('citizenship') && (
-                    <Box display="flex" flexDirection="column" gap="s16">
-                      <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
-                        {t['kynIndCitizenship']}
-                      </Text>
+                  <FormBranchSelect isMulti name="branch" label="Service Center" />
+                </FormSection>
 
-                      <InputGroupContainer>
-                        <FormInput
-                          type="text"
-                          name="citizenship.idNo"
-                          label={t['kynIndCitizenshipNo']}
-                        />
+                <Box borderBottom="1px solid" borderBottomColor="border.layout">
+                  <GroupContainer>
+                    <Text fontSize="r1" fontWeight="semibold" color="neutralColorLight.Gray-80">
+                      {t['kymIndIDENTIFICATIONDETAILS']}
+                    </Text>
+                    <Text fontSize="r1" fontWeight="medium">
+                      {t['kymIndChooseidentificationdetails']}
+                    </Text>
+                    <FormCheckboxGroup
+                      name="identificationSelection"
+                      showOther={false}
+                      list={identificationOptions}
+                    />
+                  </GroupContainer>
 
-                        <FormInput
-                          type="text"
-                          name="citizenship.place"
-                          label={t['kynIndCitizenshipIssuePlace']}
-                        />
+                  <GroupContainer>
+                    {identificationValues?.includes('citizenship') && (
+                      <Box display="flex" flexDirection="column" gap="s16">
+                        <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
+                          {t['kynIndCitizenship']}
+                        </Text>
 
-                        <FormDatePicker
-                          name="citizenship.date"
-                          label={t['kynIndCitizenshipIssueDate']}
-                        />
-                      </InputGroupContainer>
-                    </Box>
-                  )}
+                        <InputGroupContainer>
+                          <FormInput
+                            type="text"
+                            name="citizenship.idNo"
+                            label={t['kynIndCitizenshipNo']}
+                          />
 
-                  {identificationValues?.includes('drivingLicense') && (
-                    <Box display="flex" flexDirection="column" gap="s16">
-                      <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
-                        {t['kymIndDrivingLicense']}
-                      </Text>
+                          <FormInput
+                            type="text"
+                            name="citizenship.place"
+                            label={t['kynIndCitizenshipIssuePlace']}
+                          />
 
-                      <InputGroupContainer>
-                        <FormInput
-                          type="text"
-                          name="drivingLicense.idNo"
-                          label={t['kymIndDrivingLicenseNo']}
-                        />
+                          <FormDatePicker
+                            name="citizenship.date"
+                            label={t['kynIndCitizenshipIssueDate']}
+                          />
+                        </InputGroupContainer>
+                      </Box>
+                    )}
 
-                        <FormInput
-                          type="text"
-                          name="drivingLicense.place"
-                          label={t['kymIndDrivingLicenseIssuePlace']}
-                        />
+                    {identificationValues?.includes('drivingLicense') && (
+                      <Box display="flex" flexDirection="column" gap="s16">
+                        <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
+                          {t['kymIndDrivingLicense']}
+                        </Text>
 
-                        <FormDatePicker
-                          name="drivingLicense.date"
-                          label={t['kymIndDrivingLicenseIssueDate']}
-                        />
-                      </InputGroupContainer>
-                    </Box>
-                  )}
+                        <InputGroupContainer>
+                          <FormInput
+                            type="text"
+                            name="drivingLicense.idNo"
+                            label={t['kymIndDrivingLicenseNo']}
+                          />
 
-                  {identificationValues?.includes('passport') && (
-                    <Box display="flex" flexDirection="column" gap="s16">
-                      <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
-                        {t['kymIndPassport']}
-                      </Text>
+                          <FormInput
+                            type="text"
+                            name="drivingLicense.place"
+                            label={t['kymIndDrivingLicenseIssuePlace']}
+                          />
 
-                      <InputGroupContainer>
-                        <FormInput type="text" name="passport.idNo" label={t['kymIndPassportNo']} />
+                          <FormDatePicker
+                            name="drivingLicense.date"
+                            label={t['kymIndDrivingLicenseIssueDate']}
+                          />
+                        </InputGroupContainer>
+                      </Box>
+                    )}
 
-                        <FormInput
-                          type="text"
-                          name="passport.place"
-                          label={t['kymIndPassportIssuePlace']}
-                        />
+                    {identificationValues?.includes('passport') && (
+                      <Box display="flex" flexDirection="column" gap="s16">
+                        <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
+                          {t['kymIndPassport']}
+                        </Text>
 
-                        <FormDatePicker name="passport.date" label={t['kymIndPassportIssueDate']} />
-                      </InputGroupContainer>
-                    </Box>
-                  )}
+                        <InputGroupContainer>
+                          <FormInput
+                            type="text"
+                            name="passport.idNo"
+                            label={t['kymIndPassportNo']}
+                          />
 
-                  {identificationValues?.includes('voterCard') && (
-                    <Box display="flex" flexDirection="column" gap="s16">
-                      <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
-                        {t['kymIndVoterCard']}
-                      </Text>
+                          <FormInput
+                            type="text"
+                            name="passport.place"
+                            label={t['kymIndPassportIssuePlace']}
+                          />
 
-                      <InputGroupContainer>
-                        <FormInput
-                          type="text"
-                          name="voterCard.idNo"
-                          label={t['kymIndVoterCardNo']}
-                        />
+                          <FormDatePicker
+                            name="passport.date"
+                            label={t['kymIndPassportIssueDate']}
+                          />
+                        </InputGroupContainer>
+                      </Box>
+                    )}
 
-                        <FormInput
-                          type="text"
-                          name="voterCard.place"
-                          label={t['kymIndVoterCardPollingStation']}
-                        />
-                      </InputGroupContainer>
-                    </Box>
-                  )}
+                    {identificationValues?.includes('voterCard') && (
+                      <Box display="flex" flexDirection="column" gap="s16">
+                        <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
+                          {t['kymIndVoterCard']}
+                        </Text>
 
-                  {identificationValues?.includes('nationalId') && (
-                    <Box display="flex" flexDirection="column" gap="s16">
-                      <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
-                        {t['kymIndNationalID']}
-                      </Text>
+                        <InputGroupContainer>
+                          <FormInput
+                            type="text"
+                            name="voterCard.idNo"
+                            label={t['kymIndVoterCardNo']}
+                          />
 
-                      <InputGroupContainer>
-                        <FormInput
-                          type="text"
-                          name="nationalId.idNo"
-                          label={t['kymIndNationalIDNo']}
-                        />
-                      </InputGroupContainer>
-                    </Box>
-                  )}
-                </GroupContainer>
-              </Box>
+                          <FormInput
+                            type="text"
+                            name="voterCard.place"
+                            label={t['kymIndVoterCardPollingStation']}
+                          />
+                        </InputGroupContainer>
+                      </Box>
+                    )}
 
-              <FormAddress
-                sectionId="kymAccIndPermanentAddress"
-                sectionHeader="kymIndPermanentAddress"
-                name="permanentAddress"
-              />
+                    {identificationValues?.includes('nationalId') && (
+                      <Box display="flex" flexDirection="column" gap="s16">
+                        <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
+                          {t['kymIndNationalID']}
+                        </Text>
 
-              <Box
-                id="kymAccIndTemporaryAddress"
-                gap="s16"
-                display="flex"
-                flexDirection="column"
-                scrollMarginTop="200px"
-              >
-                <Box p="s20" pb="0" display="flex" flexDirection="column" gap="s16">
-                  <Text fontSize="r1" fontWeight="semibold" color="neutralColorLight.Gray-80">
-                    {t['kymIndTemporaryAddress']}
-                  </Text>
-                  <FormSwitch
-                    name="isTempAsPermanentAddressSame"
-                    label={t['kymIndTemporaryAddressPermanent']}
-                  />
+                        <InputGroupContainer>
+                          <FormInput
+                            type="text"
+                            name="nationalId.idNo"
+                            label={t['kymIndNationalIDNo']}
+                          />
+                        </InputGroupContainer>
+                      </Box>
+                    )}
+                  </GroupContainer>
                 </Box>
 
-                {!isPermanentAndTemporaryAddressSame && (
-                  <Box borderBottom="1px solid" borderBottomColor="border.layout" p="s20" pt="0">
-                    <Grid templateColumns="repeat(3,1fr)" gap="s20" rowGap="s16">
-                      <FormAddress name="temporaryAddress" />
-                    </Grid>
+                <FormAddress
+                  sectionId="kymAccIndPermanentAddress"
+                  sectionHeader="kymIndPermanentAddress"
+                  name="permanentAddress"
+                />
+
+                <Box
+                  id="kymAccIndTemporaryAddress"
+                  gap="s16"
+                  display="flex"
+                  flexDirection="column"
+                  scrollMarginTop="200px"
+                >
+                  <Box p="s20" pb="0" display="flex" flexDirection="column" gap="s16">
+                    <Text fontSize="r1" fontWeight="semibold" color="neutralColorLight.Gray-80">
+                      {t['kymIndTemporaryAddress']}
+                    </Text>
+                    <FormSwitch
+                      name="isTempAsPermanentAddressSame"
+                      label={t['kymIndTemporaryAddressPermanent']}
+                    />
                   </Box>
-                )}
-              </Box>
 
-              <FormSection
-                header="kymIndINCASERESIDINGINRENTEDHOUSE"
-                id="kymAccIndIncaseofresidinginRentedHouse"
-              >
-                <FormInput type="text" name="landlordName" label={t['kymIndLandlordName']} />
-                <FormInput type="number" name="landlordContact" label={t['kymIndContactNo']} />
-              </FormSection>
+                  {!isPermanentAndTemporaryAddressSame && (
+                    <Box borderBottom="1px solid" borderBottomColor="border.layout" p="s20" pt="0">
+                      <Grid templateColumns="repeat(3,1fr)" gap="s20" rowGap="s16">
+                        <FormAddress name="temporaryAddress" />
+                      </Grid>
+                    </Box>
+                  )}
+                </Box>
 
-              <GroupContainer>
-                <FormFileInput size="lg" label="Profile Picture" name="profilePicture" />
-              </GroupContainer>
-            </form>
-          </FormProvider>
-        </Box>
+                <FormSection
+                  header="kymIndINCASERESIDINGINRENTEDHOUSE"
+                  id="kymAccIndIncaseofresidinginRentedHouse"
+                >
+                  <FormInput type="text" name="landlordName" label={t['kymIndLandlordName']} />
+                  <FormInput type="number" name="landlordContact" label={t['kymIndContactNo']} />
+                </FormSection>
+
+                <GroupContainer>
+                  <FormFileInput size="lg" label="Profile Picture" name="profilePicture" />
+                </GroupContainer>
+              </form>
+            </FormProvider>
+          </Box>
+        )}
       </Container>
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>

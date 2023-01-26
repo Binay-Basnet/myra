@@ -157,10 +157,10 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                     },
                     {
                       title: 'Edit Product',
-                      aclKey: 'SETTINGS_LOAN_PRODUCTS',
+                      aclKey: 'SETTINGS_SAVING_PRODUCTS',
                       action: 'UPDATE',
                       onClick: (row) => {
-                        router.push(`${ROUTES.SETTINGS_GENERAL_LP_EDIT}?id=${row?.id}`);
+                        router.push(`${ROUTES.SETTINGS_GENERAL_SP_EDIT}?id=${row?.id}`);
                       },
                     },
                   ]}
@@ -206,10 +206,10 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                 },
                 {
                   title: 'Edit Product',
-                  aclKey: 'SETTINGS_LOAN_PRODUCTS',
+                  aclKey: 'SETTINGS_SAVING_PRODUCTS',
                   action: 'UPDATE',
                   onClick: (row) => {
-                    router.push(`${ROUTES.SETTINGS_GENERAL_LP_EDIT}?id=${row?.id}`);
+                    router.push(`${ROUTES.SETTINGS_GENERAL_SP_EDIT}?id=${row?.id}`);
                   },
                 },
               ]}
