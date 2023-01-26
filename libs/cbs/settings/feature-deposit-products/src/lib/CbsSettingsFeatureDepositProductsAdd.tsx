@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader, Loader, Text } from '@myra-ui';
 
 import {
   CriteriaSection,
@@ -322,7 +322,11 @@ export const SettingsDepositProductsAdd = () => {
     });
   };
 
-  const { data: editValues, refetch } = useGetDepositProductSettingsEditDataQuery(
+  const {
+    data: editValues,
+    refetch,
+    isLoading: editDataLoading,
+  } = useGetDepositProductSettingsEditDataQuery(
     {
       id,
     },
@@ -379,82 +383,90 @@ export const SettingsDepositProductsAdd = () => {
         </Container>
       </Box>
       <Container bg="white" height="fit-content" minW="container.lg" pb="120px" paddingInline="0">
-        <FormProvider {...methods}>
-          <form>
-            <Box>
-              <Product />
-              <ProductCode />
-              <TypesOfMember />
+        {editDataLoading && router?.asPath?.includes('edit') ? (
+          <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
+            <Loader />
+          </Box>
+        ) : (
+          <FormProvider {...methods}>
+            <form>
+              <Box>
+                <Product />
+                <ProductCode />
+                <TypesOfMember />
 
-              <Box display="flex" flexDirection="column" gap="s16">
-                {typesOfMember && <Critera />}
-                <GridItems />
+                <Box display="flex" flexDirection="column" gap="s16">
+                  {typesOfMember && <Critera />}
+                  <GridItems />
+                </Box>
+
+                {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <BalanceLimit />}
+
+                {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  depositNature === NatureOfDepositProduct.Saving) && <AllowedTransaction />}
+
+                {depositNature === NatureOfDepositProduct.RecurringSaving && <DepositFrequency />}
+
+                {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <TransactionLimit />}
+
+                {depositNature === NatureOfDepositProduct.Saving && <MandatoryProduct />}
+
+                {depositNature === NatureOfDepositProduct.Saving && isMandatorySaving && (
+                  <DepositFrequency />
+                )}
+
+                {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  (depositNature === NatureOfDepositProduct.Saving && isMandatorySaving)) && (
+                  <>
+                    {/* <DepositAmount /> */}
+                    <Penalty />
+                    <Rebate />
+                  </>
+                )}
+
+                {depositNature === NatureOfDepositProduct.TermSavingOrFd && <FixedDepositAmount />}
+
+                {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  depositNature === NatureOfDepositProduct.TermSavingOrFd) && <Tenure />}
+
+                {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  depositNature === NatureOfDepositProduct.TermSavingOrFd) && (
+                  <DefaultAccountName />
+                )}
+
+                {depositNature !== NatureOfDepositProduct.Current && (
+                  <>
+                    <Interest />
+                    <PostingFrequency />
+                  </>
+                )}
+
+                <AccountOpenServices />
+                <AccountCloseServices />
+
+                <Questions />
+
+                {depositNature === NatureOfDepositProduct.Saving && <LadderRate />}
+
+                {(depositNature === NatureOfDepositProduct.Current ||
+                  depositNature === NatureOfDepositProduct.Saving) && <DormantSetup />}
+
+                {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  depositNature === NatureOfDepositProduct.TermSavingOrFd) && <PrematuredPenalty />}
+
+                {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  depositNature === NatureOfDepositProduct.TermSavingOrFd) && <WithdrawPenalty />}
+
+                {(typesOfMember?.includes(KymMemberTypesEnum.Individual) ||
+                  typesOfMember?.includes(KymMemberTypesEnum.Institution) ||
+                  typesOfMember?.includes(KymMemberTypesEnum.Cooperative) ||
+                  typesOfMember?.includes(KymMemberTypesEnum.CooperativeUnion)) && (
+                  <RequiredDocumentSetup />
+                )}
               </Box>
-
-              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <BalanceLimit />}
-
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.Saving) && <AllowedTransaction />}
-
-              {depositNature === NatureOfDepositProduct.RecurringSaving && <DepositFrequency />}
-
-              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <TransactionLimit />}
-
-              {depositNature === NatureOfDepositProduct.Saving && <MandatoryProduct />}
-
-              {depositNature === NatureOfDepositProduct.Saving && isMandatorySaving && (
-                <DepositFrequency />
-              )}
-
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                (depositNature === NatureOfDepositProduct.Saving && isMandatorySaving)) && (
-                <>
-                  {/* <DepositAmount /> */}
-                  <Penalty />
-                  <Rebate />
-                </>
-              )}
-
-              {depositNature === NatureOfDepositProduct.TermSavingOrFd && <FixedDepositAmount />}
-
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <Tenure />}
-
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <DefaultAccountName />}
-
-              {depositNature !== NatureOfDepositProduct.Current && (
-                <>
-                  <Interest />
-                  <PostingFrequency />
-                </>
-              )}
-
-              <AccountOpenServices />
-              <AccountCloseServices />
-
-              <Questions />
-
-              {depositNature === NatureOfDepositProduct.Saving && <LadderRate />}
-
-              {(depositNature === NatureOfDepositProduct.Current ||
-                depositNature === NatureOfDepositProduct.Saving) && <DormantSetup />}
-
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <PrematuredPenalty />}
-
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <WithdrawPenalty />}
-
-              {(typesOfMember?.includes(KymMemberTypesEnum.Individual) ||
-                typesOfMember?.includes(KymMemberTypesEnum.Institution) ||
-                typesOfMember?.includes(KymMemberTypesEnum.Cooperative) ||
-                typesOfMember?.includes(KymMemberTypesEnum.CooperativeUnion)) && (
-                <RequiredDocumentSetup />
-              )}
-            </Box>
-          </form>
-        </FormProvider>
+            </form>
+          </FormProvider>
+        )}
       </Container>
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>

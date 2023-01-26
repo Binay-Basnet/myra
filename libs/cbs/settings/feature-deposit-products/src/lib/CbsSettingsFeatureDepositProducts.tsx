@@ -160,7 +160,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                       aclKey: 'SETTINGS_LOAN_PRODUCTS',
                       action: 'UPDATE',
                       onClick: (row) => {
-                        router.push(`${ROUTES.SETTINGS_GENERAL_LP_ADD}?id=${row?.id}`);
+                        router.push(`${ROUTES.SETTINGS_GENERAL_LP_EDIT}?id=${row?.id}`);
                       },
                     },
                   ]}
@@ -185,7 +185,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                     aclKey: 'SETTINGS_SAVING_PRODUCTS',
                     action: 'UPDATE',
                     onClick: (row) => {
-                      router.push(`${ROUTES.SETTINGS_GENERAL_SP_ADD}?id=${row?.id}`);
+                      router.push(`${ROUTES.SETTINGS_GENERAL_SP_EDIT}?id=${row?.id}`);
                     },
                   },
                 ]}
@@ -209,7 +209,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
                   aclKey: 'SETTINGS_LOAN_PRODUCTS',
                   action: 'UPDATE',
                   onClick: (row) => {
-                    router.push(`${ROUTES.SETTINGS_GENERAL_LP_ADD}?id=${row?.id}`);
+                    router.push(`${ROUTES.SETTINGS_GENERAL_LP_EDIT}?id=${row?.id}`);
                   },
                 },
               ]}

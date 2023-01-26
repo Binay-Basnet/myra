@@ -175,7 +175,7 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
                       aclKey: 'SETTINGS_LOAN_PRODUCTS',
                       action: 'UPDATE',
                       onClick: (row) => {
-                        router.push(`${ROUTES.SETTINGS_GENERAL_LP_ADD}?id=${row?.id}`);
+                        router.push(`${ROUTES.SETTINGS_GENERAL_LP_EDIT}?id=${row?.id}`);
                       },
                     },
                   ]}
@@ -198,7 +198,7 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
                     aclKey: 'SETTINGS_LOAN_PRODUCTS',
                     action: 'UPDATE',
                     onClick: (row) => {
-                      router.push(`${ROUTES.SETTINGS_GENERAL_LP_ADD}?id=${row?.id}`);
+                      router.push(`${ROUTES.SETTINGS_GENERAL_LP_EDIT}?id=${row?.id}`);
                     },
                   },
                 ]}
@@ -222,7 +222,7 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
                   aclKey: 'SETTINGS_LOAN_PRODUCTS',
                   action: 'UPDATE',
                   onClick: (row) => {
-                    router.push(`${ROUTES.SETTINGS_GENERAL_LP_ADD}?id=${row?.id}`);
+                    router.push(`${ROUTES.SETTINGS_GENERAL_LP_EDIT}?id=${row?.id}`);
                   },
                 },
               ]}

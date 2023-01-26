@@ -21,17 +21,19 @@ type MemberDetailData = Omit<Member, 'profile'> & {
 export const useGetIndividualMemberDetails = ({
   memberId,
 }: IUseGetIndividualMemberDetailsProps) => {
-  const { data: memberDetailQueryData } = useGetMemberIndividualDataQuery(
-    { id: memberId },
-    { enabled: !!memberId && memberId !== 'undefined' }
-  );
+  const { data: memberDetailQueryData, isLoading: memberDetailsLoading } =
+    useGetMemberIndividualDataQuery(
+      { id: memberId },
+      { enabled: !!memberId && memberId !== 'undefined' }
+    );
 
-  const { data: identificationListData } = useGetIndividualKymIdentificationListQuery(
-    {
-      id: String(memberId),
-    },
-    { enabled: !!memberId && memberId !== 'undefined' }
-  );
+  const { data: identificationListData, isLoading: indentificationLoading } =
+    useGetIndividualKymIdentificationListQuery(
+      {
+        id: String(memberId),
+      },
+      { enabled: !!memberId && memberId !== 'undefined' }
+    );
 
   const memberDetailData = useMemo(() => {
     if (!memberDetailQueryData?.members?.details?.data) {
@@ -63,7 +65,7 @@ export const useGetIndividualMemberDetails = ({
     };
   }, [memberDetailQueryData, identificationListData]);
 
-  const { data: documentListQueryData } = useGetKymDocumentsListQuery(
+  const { data: documentListQueryData, isLoading: documentLoading } = useGetKymDocumentsListQuery(
     {
       memberId,
     },
@@ -90,5 +92,7 @@ export const useGetIndividualMemberDetails = ({
     return kymDocumentsList?.find((doc) => doc?.fieldId === 'citizenshipPhoto')?.docData[0]?.url;
   }, [documentListQueryData]);
 
-  return { memberDetailData, memberSignatureUrl, memberCitizenshipUrl };
+  const memberLoading = memberDetailsLoading && indentificationLoading && documentLoading;
+
+  return { memberDetailData, memberSignatureUrl, memberCitizenshipUrl, memberLoading };
 };

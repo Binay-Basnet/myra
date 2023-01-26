@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader, Loader, Text } from '@myra-ui';
 
 import {
   Collateral,
@@ -145,7 +145,11 @@ export const SettingsLoanProductForm = () => {
   const isPenaltyApplicable = watch('isPenaltyApplicable');
   const isInsuranceApplicable = watch('isInsuranceApplicable');
 
-  const { data: editValues, refetch } = useGetLoanProductEditDataQuery(
+  const {
+    data: editValues,
+    refetch,
+    isLoading: editValueLoading,
+  } = useGetLoanProductEditDataQuery(
     {
       id,
     },
@@ -442,38 +446,44 @@ export const SettingsLoanProductForm = () => {
       </Box>
 
       <Container minW="container.lg" height="fit-content" bg="gray.0" pb="55px" paddingInline="0">
-        <FormProvider {...methods}>
-          <form>
-            <GeneralSetup />
-            <ProductCode />
-            <TypesOfMember />
+        {editValueLoading && router.pathname.includes('edit') ? (
+          <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
+            <Loader />
+          </Box>
+        ) : (
+          <FormProvider {...methods}>
+            <form>
+              <GeneralSetup />
+              <ProductCode />
+              <TypesOfMember />
 
-            {memberType && (
-              <>
-                <Critera />
-                <GridItems />
-              </>
-            )}
+              {memberType && (
+                <>
+                  <Critera />
+                  <GridItems />
+                </>
+              )}
 
-            <Tenure />
-            <AmountLimit />
-            <LoanRepaymentSchemes />
-            <PartialPayment />
-            <Penalty />
-            <PrematurePenalty />
-            {repaymentScheme && repaymentScheme?.includes(LoanRepaymentScheme.Epi) && <Rebate />}
+              <Tenure />
+              <AmountLimit />
+              <LoanRepaymentSchemes />
+              <PartialPayment />
+              <Penalty />
+              <PrematurePenalty />
+              {repaymentScheme && repaymentScheme?.includes(LoanRepaymentScheme.Epi) && <Rebate />}
 
-            <LoanRepayment />
-            <NewQuestions />
-            {/* <InstallmentFrequency /> */}
-            <Interest />
-            {/* <InsuranceApplicable /> */}
-            <LoanProcessing />
-            <CollateralForm />
-            <AllowGaurantee />
-            <RequiredDocumentSetup />
-          </form>
-        </FormProvider>
+              <LoanRepayment />
+              <NewQuestions />
+              {/* <InstallmentFrequency /> */}
+              <Interest />
+              {/* <InsuranceApplicable /> */}
+              <LoanProcessing />
+              <CollateralForm />
+              <AllowGaurantee />
+              <RequiredDocumentSetup />
+            </form>
+          </FormProvider>
+        )}
       </Container>
 
       <Box position="relative" margin="0px auto">
