@@ -24,7 +24,7 @@ export const ReportDateRange = ({ label = 'Select Period', name }: IReportDateRa
         <RangedDatePicker
           label={label}
           locale={locale === 'ne' ? 'ne' : 'en'}
-          calendarType={calendarType || 'AD'}
+          calendarType={calendarType || 'BS'}
           value={value}
           baseDate={new Date(transactionDate || '')}
           onChange={(newDate) =>
