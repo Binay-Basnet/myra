@@ -191,7 +191,7 @@ export const TrialSheetReport = () => {
           {unMappedCoaHeads?.length !== 0 && (
             <Box display="flex" py="s16" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                5. Unmapped COA Heads
+                6. Unmapped COA Heads
               </Text>
               <COATable
                 total={
@@ -351,11 +351,14 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
                 href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props.row?.original?.ledgerId}`}
               >
                 <Button variant="link" color="primary.500">
-                  {props.row.original.ledgerId} - {localizedText(props?.row?.original?.ledgerName)}
+                  {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+                  {localizedText(props?.row?.original?.ledgerName)}
                 </Button>
               </Link>
             ) : (
-              ` ${props.row.original.ledgerId} - ${localizedText(props?.row?.original?.ledgerName)}`
+              ` ${props.row.original.ledgerId} ${
+                props?.row?.original?.ledgerName ? '-' : ''
+              } ${localizedText(props?.row?.original?.ledgerName)}`
             )
           }
         />
