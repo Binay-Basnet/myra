@@ -61,7 +61,7 @@ export const CoaTreeTable = ({ data, type }: ICoaTreeTableProps) => {
       header: 'Allowed Balance',
       accessorKey: 'allowedBalance',
       cell: (props) => (
-        <Box textTransform="capitalize">{props.row.original.transactionAllowed?.toLowerCase()}</Box>
+        <Box textTransform="capitalize">{props.row.original.allowedBalance?.toLowerCase()}</Box>
       ),
     },
     {
