@@ -82,7 +82,7 @@ export const ROUTES = {
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_LIST: '/cbs/withdraw/block-withdraw-slip-requests/list',
   CBS_BLOCK_WITHDRAW_SLIP_REQUEST_ADD: '/cbs/withdraw/block-withdraw-slip-requests/add',
 
-  CBS_REPORT_LIST: '/reports/cbs/organizations',
+  CBS_REPORT_LIST: '/reports/cbs/share',
   CBS_REPORT_SAVED: '/reports/saved',
 
   CBS_OTHERS_FUND_MANAGEMENT_ADD: '/cbs/others/fund-management/add',
