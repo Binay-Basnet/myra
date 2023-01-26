@@ -33,6 +33,8 @@ query getCoaFullView {
           category
           allowedBalance
           transactionAllowed
+          allowDirectPostingFromJV
+          allowMultipleLedger
         }
       }
     }
@@ -80,10 +82,15 @@ query getCOAAccountsUnderLeafList($parentId: [String]!, $currentBranch: Boolean)
   }
 }
 
-query getCoaAccountList($branchId: [String!], $pagination: Pagination, $filter: COAListFilter) {
+query getCoaAccountList(
+  $branchId: [String!]
+  $pagination: Pagination
+  $filter: COAListFilter
+  $flag: COAListFlag
+) {
   settings {
     chartsOfAccount {
-      coaAccountList(branchId: $branchId, pagination: $pagination, filter: $filter) {
+      coaAccountList(branchId: $branchId, pagination: $pagination, filter: $filter, flag: $flag) {
         edges {
           node {
             accountCode

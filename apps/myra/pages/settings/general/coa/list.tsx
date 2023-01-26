@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { Box } from '@myra-ui';
 
-import { COAFullView, COAListView } from '@coop/cbs/settings/coa';
+import { COAListView, CoaTreeTableView } from '@coop/cbs/settings/coa';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
@@ -37,7 +37,7 @@ const ChartsOfAccounts = () => {
         />
         <Box>
           {(router.query['objState'] === 'full-view' ||
-            (!router.query['objState'] && !router.query['search'])) && <COAFullView />}
+            (!router.query['objState'] && !router.query['search'])) && <CoaTreeTableView />}
           {(router.query['objState'] === 'account-list' || router.query['search']) && (
             <COAListView />
           )}

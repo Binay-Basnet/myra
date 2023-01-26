@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Box } from '@myra-ui';
 
 import { AccountingLayout, AccountingSidebarLayout } from '@coop/accounting/ui-layouts';
-import { COAFullView, COAListView } from '@coop/cbs/settings/coa';
+import { COAListView, CoaTreeTableView } from '@coop/cbs/settings/coa';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
@@ -31,7 +31,9 @@ const ChartsOfAccounts = () => {
         // buttonHandler={() => router.push('/settings/general/charts-of-accounts/add-new-account')}
       />
       <Box>
-        {(router.query['objState'] === 'full-view' || !router.query['objState']) && <COAFullView />}
+        {(router.query['objState'] === 'full-view' || !router.query['objState']) && (
+          <CoaTreeTableView />
+        )}
         {router.query['objState'] === 'account-list' && <COAListView />}
       </Box>
     </Box>

@@ -1848,6 +1848,11 @@ export type CoaListFilter = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export const CoaListFlag = {
+  JournalVoucher: 'JOURNAL_VOUCHER',
+} as const;
+
+export type CoaListFlag = typeof CoaListFlag[keyof typeof CoaListFlag];
 export type CoaMinimal = {
   accountCode: Scalars['String'];
   id: Scalars['ID'];
@@ -1878,7 +1883,9 @@ export type CoaView = {
   accountCode: Scalars['String'];
   accountType: CoaTypesOfAccount;
   accountTypeDetails?: Maybe<AccountTypeDetailsUnion>;
+  allowDirectPostingFromJV?: Maybe<Scalars['Boolean']>;
   allowFreeEntry: Scalars['Boolean'];
+  allowMultipleLedger?: Maybe<Scalars['Boolean']>;
   allowTransaction: Scalars['Boolean'];
   allowedBalance?: Maybe<CoaTypeOfTransaction>;
   category?: Maybe<CoaCategory>;
@@ -2217,6 +2224,7 @@ export type ChartsOfAccountSettingsQueryCoaAccountDetailsArgs = {
 export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<CoaListFilter>;
+  flag?: InputMaybe<CoaListFlag>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -11149,6 +11157,8 @@ export type NewCoaGroupInput = {
   accountClass?: InputMaybe<CoaAccountClass>;
   accountCode?: InputMaybe<Scalars['String']>;
   accountSetup?: InputMaybe<CoaAccountSetup>;
+  allowDirectPostingFromJV?: InputMaybe<Scalars['Boolean']>;
+  allowMultipleLedger?: InputMaybe<Scalars['Boolean']>;
   allowedBalance?: InputMaybe<CoaTypeOfTransaction>;
   category?: InputMaybe<CoaCategory>;
   groupName?: InputMaybe<Scalars['String']>;
@@ -24006,6 +24016,8 @@ export type GetCoaFullViewQuery = {
           category?: CoaCategory | null;
           allowedBalance?: CoaTypeOfTransaction | null;
           transactionAllowed?: CoaTypeOfTransaction | null;
+          allowDirectPostingFromJV?: boolean | null;
+          allowMultipleLedger?: boolean | null;
         } | null> | null;
       };
     } | null;
@@ -24067,6 +24079,7 @@ export type GetCoaAccountListQueryVariables = Exact<{
   branchId?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<CoaListFilter>;
+  flag?: InputMaybe<CoaListFlag>;
 }>;
 
 export type GetCoaAccountListQuery = {
@@ -39745,6 +39758,8 @@ export const GetCoaFullViewDocument = `
           category
           allowedBalance
           transactionAllowed
+          allowDirectPostingFromJV
+          allowMultipleLedger
         }
       }
     }
@@ -39845,10 +39860,15 @@ export const useGetCoaAccountsUnderLeafListQuery = <
     options
   );
 export const GetCoaAccountListDocument = `
-    query getCoaAccountList($branchId: [String!], $pagination: Pagination, $filter: COAListFilter) {
+    query getCoaAccountList($branchId: [String!], $pagination: Pagination, $filter: COAListFilter, $flag: COAListFlag) {
   settings {
     chartsOfAccount {
-      coaAccountList(branchId: $branchId, pagination: $pagination, filter: $filter) {
+      coaAccountList(
+        branchId: $branchId
+        pagination: $pagination
+        filter: $filter
+        flag: $flag
+      ) {
         edges {
           node {
             accountCode
