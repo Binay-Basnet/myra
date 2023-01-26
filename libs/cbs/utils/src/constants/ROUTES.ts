@@ -108,6 +108,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_SAVINGS_TDS: '/settings/general/savings/tds/configure',
   SETTINGS_GENERAL_SP_LIST: '/settings/general/saving-products/list',
   SETTINGS_GENERAL_SP_ADD: '/settings/general/saving-products/add',
+  SETTINGS_GENERAL_SP_EDIT: '/settings/general/saving-products/edit',
   SETTINGS_GENERAL_SP_DETAILS: '/settings/general/deposit-products/details',
 
   SETTINGS_GENERAL_LOAN: '/settings/general/loan/configure',
@@ -118,6 +119,7 @@ export const ROUTES = {
 
   SETTINGS_GENERAL_LP_LIST: '/settings/general/loan-products/list',
   SETTINGS_GENERAL_LP_ADD: '/settings/general/loan-products/add',
+  SETTINGS_GENERAL_LP_EDIT: '/settings/general/loan-products/edit',
   SETTINGS_GENERAL_LP_DETAILS: '/settings/general/loan-products/details',
 
   SETTINGS_GENERAL_INDEXING: '/settings/general/indexing',

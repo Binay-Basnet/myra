@@ -5483,6 +5483,7 @@ export type GeneralSettingsMutation = {
   loanProducts?: Maybe<LoanProductsMutation>;
   organization?: Maybe<OrganizationSettingsMutation>;
   printPreference?: Maybe<PrintPreferenceMutation>;
+  setup: SetupMutation;
   share?: Maybe<ShareSettingsMutation>;
   valuator?: Maybe<ValuatorSettingsMutation>;
 };
@@ -11921,6 +11922,7 @@ export const Resource = {
   SettingsCoa: 'SETTINGS_COA',
   SettingsCodeManagement: 'SETTINGS_CODE_MANAGEMENT',
   SettingsDocumentManagement: 'SETTINGS_DOCUMENT_MANAGEMENT',
+  SettingsEodSeed: 'SETTINGS_EOD_SEED',
   SettingsGeneral: 'SETTINGS_GENERAL',
   SettingsIndexing: 'SETTINGS_INDEXING',
   SettingsInsurance: 'SETTINGS_INSURANCE',
@@ -12766,6 +12768,14 @@ export type SettingsQuery = {
   form?: Maybe<FormSettingQuery>;
   general?: Maybe<GeneralSettingsQuery>;
   myraUser?: Maybe<MyraUserQuery>;
+};
+
+export type SetupMutation = {
+  eodSeed?: Maybe<Scalars['String']>;
+};
+
+export type SetupMutationEodSeedArgs = {
+  date: Scalars['Localized'];
 };
 
 export type ShareBalance = {
