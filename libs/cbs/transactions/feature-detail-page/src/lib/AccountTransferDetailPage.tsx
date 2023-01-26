@@ -1,5 +1,6 @@
 import { Box, Text } from '@myra-ui';
 
+import { Member } from '@coop/cbs/data-access';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { GlTransaction, Note, OtherDetails, SideBar, TransactionDetails } from '../component';
@@ -20,10 +21,15 @@ export const AccountTransferDetailPage = () => {
     amount: accountTransferDetailData?.transferAmount,
     method: accountTransferDetailData?.transferType,
     sourceAccount: accountTransferDetailData?.sourceAccount?.accountName,
+    sourceAccountId: accountTransferDetailData?.sourceAccount?.id,
     destinationName: accountTransferDetailData?.recipientMember?.name?.local,
     destinationAccount: accountTransferDetailData?.destinationAccount?.accountName,
+    destinationAccountId: accountTransferDetailData?.destinationAccount?.id,
     recipientMember: accountTransferDetailData?.recipientMember?.id,
+    senderMember: accountTransferDetailData?.member as Member,
+    reciepentMemberDetails: accountTransferDetailData?.recipientMember as Member,
   };
+
   return (
     <Box bg="gray.100">
       <Box

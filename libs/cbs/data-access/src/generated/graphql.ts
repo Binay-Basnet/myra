@@ -1178,8 +1178,19 @@ export type BankAccountConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type BankAccountDetails = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  accountType?: Maybe<AccountingBankAccountType>;
+  bankId?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  displayName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+};
+
 export type BankAccountDetailsResult = {
-  data?: Maybe<BankAccount>;
+  data?: Maybe<BankAccountDetails>;
   error?: Maybe<QueryError>;
 };
 
@@ -1818,6 +1829,19 @@ export type CoaLeafNodeDetails = {
   noOfAccounts?: Maybe<Scalars['String']>;
 };
 
+export type CoaLedgerListFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
+  ledgerId?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type CoaLedgerListResult = {
+  edges?: Maybe<Array<Maybe<LedgerListEdges>>>;
+  error?: Maybe<QueryError>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
 export type CoaListFilter = {
   filterMode?: InputMaybe<Filter_Mode>;
   ledgerId?: InputMaybe<Scalars['String']>;
@@ -2167,6 +2191,7 @@ export type ChartsOfAccountSettingsQuery = {
   coaAccountDetails?: Maybe<CoaDetailsResult>;
   coaAccountList?: Maybe<CoaAccountListResult>;
   coaLeafNodeDetails?: Maybe<CoaLeafNodeDetailView>;
+  coaLedgerList?: Maybe<CoaLedgerListResult>;
   fullView: CoaFullView;
   search?: Maybe<CoaMinimalResult>;
 };
@@ -2197,6 +2222,12 @@ export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
 
 export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
   id: Scalars['ID'];
+};
+
+export type ChartsOfAccountSettingsQueryCoaLedgerListArgs = {
+  filter?: InputMaybe<CoaLedgerListFilter>;
+  id: Scalars['ID'];
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type ChartsOfAccountSettingsQuerySearchArgs = {
@@ -8522,9 +8553,15 @@ export type LedgerList = {
   accountCode?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['String']>;
   ledgerName?: Maybe<Scalars['String']>;
   serviceCenter?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['Boolean']>;
+};
+
+export type LedgerListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<LedgerList>;
 };
 
 export type LedgerMapping = {
@@ -14113,6 +14150,8 @@ export type TrialSheetReportData = {
   incomeTotal?: Maybe<Scalars['Map']>;
   offBalance?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
   offBalanceTotal?: Maybe<Scalars['Map']>;
+  orphanEntries?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
+  orphanTotal?: Maybe<Scalars['Map']>;
   totalAssetExpense?: Maybe<Scalars['Map']>;
   totalLiablitiesIncome?: Maybe<Scalars['Map']>;
   totalProfitLoss?: Maybe<Scalars['Map']>;
@@ -14709,6 +14748,27 @@ export type SetJournalVoucherDataMutation = {
           paymentMode?: JournalVoucherPaymentMode | null;
           entries?: Array<{ name?: string | null; value?: string | null } | null> | null;
         } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type UpdateBankAccountsMutationVariables = Exact<{
+  data?: InputMaybe<UpdateBankAccountInput>;
+}>;
+
+export type UpdateBankAccountsMutation = {
+  accounting: {
+    bankAccounts: {
+      update?: {
+        recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
           | MutationError_BadRequestError_Fragment
@@ -18042,6 +18102,28 @@ export type GetBankAccountListQuery = {
             branchName?: string | null;
           } | null;
         } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetBankAccountDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetBankAccountDetailsQuery = {
+  accounting: {
+    bankAccounts: {
+      details?: {
+        data?: {
+          id?: string | null;
+          bankId?: string | null;
+          displayName?: string | null;
+          accountName?: string | null;
+          accountNumber?: string | null;
+          accountType?: AccountingBankAccountType | null;
+          description?: string | null;
+        } | null;
       } | null;
     };
   };
@@ -23253,6 +23335,7 @@ export type GetTrialSheetReportQuery = {
             expenseTotal?: Record<string, string> | null;
             incomeTotal?: Record<string, string> | null;
             offBalanceTotal?: Record<string, string> | null;
+            orphanTotal?: Record<string, string> | null;
             totalAssetExpense?: Record<string, string> | null;
             totalLiablitiesIncome?: Record<string, string> | null;
             totalProfitLoss?: Record<string, string> | null;
@@ -23281,6 +23364,12 @@ export type GetTrialSheetReportQuery = {
               under?: string | null;
             } | null> | null;
             offBalance?: Array<{
+              balance?: Record<string, string> | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            orphanEntries?: Array<{
               balance?: Record<string, string> | null;
               ledgerId?: string | null;
               ledgerName?: Record<'local' | 'en' | 'np', string> | null;
@@ -24056,6 +24145,40 @@ export type GetCoaLeafNodeDetailsQuery = {
             status?: boolean | null;
           } | null> | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLedgerListQueryVariables = Exact<{
+  id: Scalars['ID'];
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<CoaLedgerListFilter>;
+}>;
+
+export type GetLedgerListQuery = {
+  settings: {
+    chartsOfAccount?: {
+      coaLedgerList?: {
+        totalCount: number;
+        pageInfo?: {
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+          startCursor?: string | null;
+          endCursor?: string | null;
+        } | null;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id?: string | null;
+            accountCode?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            ledgerName?: string | null;
+            serviceCenter?: string | null;
+            balance?: string | null;
+            status?: boolean | null;
+          } | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -26819,6 +26942,35 @@ export const useSetJournalVoucherDataMutation = <TError = unknown, TContext = un
     ['setJournalVoucherData'],
     useAxios<SetJournalVoucherDataMutation, SetJournalVoucherDataMutationVariables>(
       SetJournalVoucherDataDocument
+    ),
+    options
+  );
+export const UpdateBankAccountsDocument = `
+    mutation updateBankAccounts($data: UpdateBankAccountInput) {
+  accounting {
+    bankAccounts {
+      update(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateBankAccountsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateBankAccountsMutation,
+    TError,
+    UpdateBankAccountsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpdateBankAccountsMutation, TError, UpdateBankAccountsMutationVariables, TContext>(
+    ['updateBankAccounts'],
+    useAxios<UpdateBankAccountsMutation, UpdateBankAccountsMutationVariables>(
+      UpdateBankAccountsDocument
     ),
     options
   );
@@ -31992,6 +32144,36 @@ export const useGetBankAccountListQuery = <TData = GetBankAccountListQuery, TErr
     variables === undefined ? ['getBankAccountList'] : ['getBankAccountList', variables],
     useAxios<GetBankAccountListQuery, GetBankAccountListQueryVariables>(
       GetBankAccountListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetBankAccountDetailsDocument = `
+    query getBankAccountDetails($id: ID!) {
+  accounting {
+    bankAccounts {
+      details(id: $id) {
+        data {
+          id
+          bankId
+          displayName
+          accountName
+          accountNumber
+          accountType
+          description
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBankAccountDetailsQuery = <TData = GetBankAccountDetailsQuery, TError = unknown>(
+  variables: GetBankAccountDetailsQueryVariables,
+  options?: UseQueryOptions<GetBankAccountDetailsQuery, TError, TData>
+) =>
+  useQuery<GetBankAccountDetailsQuery, TError, TData>(
+    ['getBankAccountDetails', variables],
+    useAxios<GetBankAccountDetailsQuery, GetBankAccountDetailsQueryVariables>(
+      GetBankAccountDetailsDocument
     ).bind(null, variables),
     options
   );
@@ -38714,11 +38896,18 @@ export const GetTrialSheetReportDocument = `
               ledgerName
               under
             }
+            orphanEntries {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
             equityAndLiablitiesTotal
             assetsTotal
             expenseTotal
             incomeTotal
             offBalanceTotal
+            orphanTotal
             totalAssetExpense
             totalLiablitiesIncome
             totalProfitLoss
@@ -39762,6 +39951,47 @@ export const useGetCoaLeafNodeDetailsQuery = <TData = GetCoaLeafNodeDetailsQuery
     useAxios<GetCoaLeafNodeDetailsQuery, GetCoaLeafNodeDetailsQueryVariables>(
       GetCoaLeafNodeDetailsDocument
     ).bind(null, variables),
+    options
+  );
+export const GetLedgerListDocument = `
+    query getLedgerList($id: ID!, $pagination: Pagination, $filter: COALedgerListFilter) {
+  settings {
+    chartsOfAccount {
+      coaLedgerList(id: $id, pagination: $pagination, filter: $filter) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        edges {
+          node {
+            id
+            accountCode
+            date
+            ledgerName
+            serviceCenter
+            balance
+            status
+          }
+          cursor
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLedgerListQuery = <TData = GetLedgerListQuery, TError = unknown>(
+  variables: GetLedgerListQueryVariables,
+  options?: UseQueryOptions<GetLedgerListQuery, TError, TData>
+) =>
+  useQuery<GetLedgerListQuery, TError, TData>(
+    ['getLedgerList', variables],
+    useAxios<GetLedgerListQuery, GetLedgerListQueryVariables>(GetLedgerListDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const ListCbsShareCodesDocument = `

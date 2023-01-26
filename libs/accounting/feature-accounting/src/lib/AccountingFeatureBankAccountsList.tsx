@@ -6,6 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetBankAccountListQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const AccountingFeatureBankAccountsList = () => {
@@ -51,7 +52,11 @@ export const AccountingFeatureBankAccountsList = () => {
               node={props?.row?.original}
               items={[
                 {
-                  title: t['transDetailViewDetail'],
+                  title: 'Edit',
+                  onClick: () =>
+                    router.push(
+                      `${ROUTES.ACCOUNTING_BANK_ACCOUNTS_EDIT}?id=${props?.row?.original?.node?.id}`
+                    ),
                 },
               ]}
             />
@@ -70,7 +75,7 @@ export const AccountingFeatureBankAccountsList = () => {
       <AccountingPageHeader
         heading={t['accountingBankAccountsListBankAccounts']}
         buttonLabel={t['accountingBankAccountsListNewBankAccounts']}
-        buttonHandler={() => router.push('/accounting/accounting/bank-accounts/add')}
+        buttonHandler={() => router.push(`${ROUTES.ACCOUNTING_BANK_ACCOUNTS_ADD}`)}
       />
 
       <Table

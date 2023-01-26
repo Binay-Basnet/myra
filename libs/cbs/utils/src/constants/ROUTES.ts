@@ -242,6 +242,7 @@ export const ROUTES = {
   ACCOUNTING_CASH_TRANSFER_ADD: '/accounting/accounting/cash-transfer/add',
   ACCOUNTING_BANK_ACCOUNTS_LIST: '/accounting/accounting/bank-accounts/list',
   ACCOUNTING_BANK_ACCOUNTS_ADD: '/accounting/accounting/bank-accounts/add',
+  ACCOUNTING_BANK_ACCOUNTS_EDIT: '/accounting/accounting/bank-accounts/edit',
   ACCOUNTING_COA_LIST: '/accounting/accounting/charts-of-account',
 
   ACCOUNTING_EXTERNAL_LOAN_LIST: '/accounting/loan/external-loan/list',

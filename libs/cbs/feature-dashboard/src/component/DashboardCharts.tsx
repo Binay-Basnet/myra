@@ -4,11 +4,7 @@ import { AgeCharts } from './AgeCharts';
 import { TypeCharts } from './TypeCharts';
 
 export const DashboardCharts = () => (
-  <Box bg="white" display="flex" flexDirection="column" gap="s16" borderRadius="br2" p="s12">
-    <Text fontSize="r2" fontWeight="SemiBold">
-      Member Categorization Info
-    </Text>
-
+  <Box display="flex" flexDirection="column" gap="s16" borderRadius="br2">
     {/* <Box display="flex" gap="s16">
       <DetailCardStats
         title="Total Deposits"
@@ -23,16 +19,32 @@ export const DashboardCharts = () => (
     </Box> */}
 
     <Grid templateColumns="repeat(2,1fr)" gap="s16">
-      <Box p="s16" display="flex" flexDirection="column" gap="s16" borderRadius="6px">
+      <Box
+        boxShadow="E0"
+        bg="white"
+        p="s16"
+        display="flex"
+        flexDirection="column"
+        gap="s16"
+        borderRadius="6px"
+      >
         <Text fontSize="r1" fontWeight="Medium">
-          By Age
+          Member Categorization By Age
         </Text>
         <AgeCharts />
       </Box>
 
-      <Box p="s16" display="flex" flexDirection="column" gap="s16" borderRadius="6px">
+      <Box
+        boxShadow="E0"
+        bg="white"
+        p="s16"
+        display="flex"
+        flexDirection="column"
+        gap="s16"
+        borderRadius="6px"
+      >
         <Text fontSize="r1" fontWeight="Medium">
-          By Type
+          Member Categorization By Type
         </Text>
         <TypeCharts />
       </Box>

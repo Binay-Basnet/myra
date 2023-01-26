@@ -36,3 +36,16 @@ mutation setJournalVoucherData($data: JournalVoucherInput) {
     }
   }
 }
+
+mutation updateBankAccounts($data: UpdateBankAccountInput) {
+  accounting {
+    bankAccounts {
+      update(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

@@ -24,10 +24,6 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
   const columns = React.useMemo<Column<typeof data[0]>[]>(
     () => [
       {
-        header: 'S.N.',
-        accessorKey: 'sn',
-      },
-      {
         header: 'Date',
         accessorKey: 'date',
         cell: (props) => localizedDate(props.cell.row.original.date),

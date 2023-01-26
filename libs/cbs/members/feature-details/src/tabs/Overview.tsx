@@ -26,9 +26,16 @@ const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 export const Overview = () => {
   const router = useRouter();
   const id = router.query['id'] as string;
-  const memberDetails = useGetMemberKymDetailsOverviewQuery({
-    id: router.query['id'] as string,
-  });
+  const memberDetails = useGetMemberKymDetailsOverviewQuery(
+    {
+      id: router.query['id'] as string,
+    },
+    {
+      enabled: !!id,
+    }
+  );
+
+  // console.log({ isFetching: memberDetails?.isFetching });
 
   const memberPayment = memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.payments;
 
@@ -155,8 +162,19 @@ export const Overview = () => {
       </Box>
       <MemberBasicInformation />
       <Grid templateColumns="repeat(2,1fr)" gap="s16">
-        <Box borderRadius="br2" display="flex" flexDirection="column" gap="s16" bg="white" p="s16">
-          <Text>Deposit</Text>{' '}
+        <Box
+          boxShadow="E0"
+          borderRadius="br2"
+          display="flex"
+          flexDirection="column"
+          gap="s16"
+          bg="white"
+          p="s16"
+        >
+          <Text fontSize="r1" fontWeight="Medium">
+            Deposit
+          </Text>
+
           <Charts
             series={[
               {
@@ -181,7 +199,7 @@ export const Overview = () => {
                 type: 'gradient',
               },
               legend: {
-                show: true,
+                show: false,
                 horizontalAlign: 'right',
                 position: 'bottom',
 
@@ -194,7 +212,7 @@ export const Overview = () => {
                 enabled: false,
               },
               grid: {
-                borderColor: '#cccccc',
+                borderColor: '#ffffff',
                 strokeDashArray: 2,
                 yaxis: {
                   lines: {
@@ -210,8 +228,19 @@ export const Overview = () => {
             }}
           />
         </Box>
-        <Box borderRadius="br2" display="flex" flexDirection="column" gap="s16" bg="white" p="s16">
-          <Text>Withdraw</Text>{' '}
+        <Box
+          boxShadow="E0"
+          borderRadius="br2"
+          display="flex"
+          flexDirection="column"
+          gap="s16"
+          bg="white"
+          p="s16"
+        >
+          <Text fontSize="r1" fontWeight="Medium">
+            Withdraw
+          </Text>
+
           <Charts
             series={[
               {
@@ -246,7 +275,7 @@ export const Overview = () => {
                 enabled: false,
               },
               grid: {
-                borderColor: '#cccccc',
+                borderColor: '#fff',
                 strokeDashArray: 2,
                 yaxis: {
                   lines: {
@@ -266,7 +295,7 @@ export const Overview = () => {
 
       {memberShareDetails && <MemberStatistics />}
       {memberPaymentUp && (
-        <Box bg="white" display="flex" flexDirection="column" borderRadius="br2">
+        <Box boxShadow="E0" bg="white" display="flex" flexDirection="column" borderRadius="br2">
           <Box display="flex" justifyContent="space-between" p="s16">
             <Text fontSize="r1" fontWeight="SemiBold">
               Upcoming Payments

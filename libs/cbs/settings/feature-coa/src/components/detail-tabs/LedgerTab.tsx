@@ -1,8 +1,6 @@
 import { Box, Text } from '@myra-ui';
 
-import { LedgerList } from '@coop/cbs/data-access';
-
-import { LedgerLists } from '../details/LedgerList';
+import { LedgerTabList } from '../details';
 import { AddAccount } from '../Tree/LeafNode';
 import { useCOALeafNodeDetails } from '../../hooks';
 import { CoaTree } from '../../types';
@@ -23,7 +21,7 @@ export const LedgerTab = () => {
         />
       </Box>
 
-      <LedgerLists ledgers={leafNodeData?.ledgers as LedgerList[]} />
+      <LedgerTabList />
     </>
   );
 };

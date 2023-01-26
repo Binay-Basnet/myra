@@ -39,7 +39,7 @@ export const LoanAccountCard = ({
               <Box>
                 <RedirectButton
                   label={accountName}
-                  link={`${ROUTES.CBS_LOAN_ACCOUNTS_DETAILS}?id=${accountNumber}`}
+                  link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${accountNumber}`}
                 />
 
                 <Box display="flex" alignItems="center" gap="s4">

@@ -18,3 +18,21 @@ query getBankAccountList($filter: BankAccountFilter, $pagination: Pagination) {
     }
   }
 }
+
+query getBankAccountDetails($id: ID!) {
+  accounting {
+    bankAccounts {
+      details(id: $id) {
+        data {
+          id
+          bankId
+          displayName
+          accountName
+          accountNumber
+          accountType
+          description
+        }
+      }
+    }
+  }
+}

@@ -69,6 +69,11 @@ export const TrialSheetReport = () => {
       []) as TrialSheetReportDataEntry[]
   );
 
+  const unMappedCoaHeads = sortCoa(
+    (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.orphanEntries ??
+      []) as TrialSheetReportDataEntry[]
+  );
+
   return (
     <Report
       defaultFilters={{
@@ -179,6 +184,21 @@ export const TrialSheetReport = () => {
                     ?.offBalanceTotal
                 }
                 data={offBalanceSheetReport as TrialSheetReportDataEntry[]}
+              />
+            </Box>
+          )}
+
+          {unMappedCoaHeads?.length !== 0 && (
+            <Box display="flex" py="s16" flexDir="column">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                5. Unmapped COA Heads
+              </Text>
+              <COATable
+                total={
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data?.orphanTotal
+                }
+                type="Unmapped COA Heads"
+                data={unMappedCoaHeads as TrialSheetReportDataEntry[]}
               />
             </Box>
           )}

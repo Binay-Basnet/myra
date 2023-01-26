@@ -52,9 +52,12 @@ export const TypeCharts = () => {
             show: false,
           },
         },
-        colors: ['#B2D97E'],
+
+        theme: {
+          palette: 'palette2', // upto palette10
+        },
         legend: {
-          show: true,
+          show: false,
           horizontalAlign: 'right',
           position: 'bottom',
 
@@ -64,7 +67,7 @@ export const TypeCharts = () => {
           enabled: false,
         },
         grid: {
-          borderColor: '#cccccc',
+          borderColor: '#ffffff',
           strokeDashArray: 2,
           yaxis: {
             lines: {
@@ -73,7 +76,7 @@ export const TypeCharts = () => {
           },
           xaxis: {
             lines: {
-              show: true,
+              show: false,
             },
           },
         },

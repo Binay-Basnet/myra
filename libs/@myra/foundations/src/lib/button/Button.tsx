@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import Link from 'next/link';
 import { Button as ChakraButton, ButtonProps as ChakrabuttonProps } from '@chakra-ui/react';
 
 // type buttonsizes = 'xl' | 'sm' | 'md' | 'lg';
@@ -11,37 +12,53 @@ export interface ButtonProps extends ChakrabuttonProps {
   bg?: string;
   variant?: 'solid' | 'outline' | 'link' | 'ghost' | 'unstyled';
   shade?: 'primary' | 'danger' | 'neutral';
+  hasLink?: boolean;
+  link?: string;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  const { children, shade, ...rest } = props;
+  const { children, shade, hasLink, link, ...rest } = props;
+
+  let buttonComp;
 
   switch (shade) {
     case 'primary':
-      return (
+      buttonComp = (
         <ChakraButton colorScheme="primary" ref={ref} {...rest}>
           {children}
         </ChakraButton>
       );
+      break;
     case 'danger':
-      return (
+      buttonComp = (
         <ChakraButton colorScheme="danger" ref={ref} {...rest}>
           {children}
         </ChakraButton>
       );
+      break;
     case 'neutral':
-      return (
+      buttonComp = (
         <ChakraButton colorScheme="gray" ref={ref} {...rest}>
           {children}
         </ChakraButton>
       );
+      break;
     default:
-      return (
+      buttonComp = (
         <ChakraButton ref={ref} {...rest}>
           {children}
         </ChakraButton>
       );
+      break;
   }
+
+  return hasLink && link ? (
+    <Link href={link} target="_blank">
+      {buttonComp}
+    </Link>
+  ) : (
+    buttonComp
+  );
 });
 
 export default Button;

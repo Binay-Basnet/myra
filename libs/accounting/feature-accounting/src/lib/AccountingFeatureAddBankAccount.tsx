@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -14,8 +15,10 @@ import {
 import {
   AccountingBankAccountType,
   NewBankAccountInput,
+  useGetBankAccountDetailsQuery,
   useGetBankListQuery,
   useSetBankAccountsMutation,
+  useUpdateBankAccountsMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
@@ -26,9 +29,9 @@ export interface AccountingFeatureAddBankAccountProps {}
 export const AccountingFeatureAddBankAccount = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const { id } = router.query;
   const methods = useForm();
-
-  const { getValues } = methods;
+  const { getValues, reset } = methods;
 
   const accountTypeList = [
     {
@@ -41,7 +44,8 @@ export const AccountingFeatureAddBankAccount = () => {
     },
   ];
 
-  const { mutateAsync } = useSetBankAccountsMutation();
+  const { mutateAsync: addAsync } = useSetBankAccountsMutation();
+  const { mutateAsync: editAsync } = useUpdateBankAccountsMutation();
 
   const { data } = useGetBankListQuery();
 
@@ -52,28 +56,58 @@ export const AccountingFeatureAddBankAccount = () => {
       value: item?.id as string,
     }));
 
+  const { data: bankAccountDetail } = useGetBankAccountDetailsQuery({ id: id as string });
+  const editedData = bankAccountDetail?.accounting?.bankAccounts?.details?.data;
+
   const submitForm = () => {
     const values = getValues();
 
-    asyncToast({
-      id: 'accounting-bank-account-id',
-      msgs: {
-        success: 'New Accounting Bank Account Added',
-        loading: 'Adding Accounting Bank Account',
-      },
-      onSuccess: () => router.push('/accounting/accounting/bank-accounts/list'),
-      promise: mutateAsync({ data: values }),
-      onError: (error) => {
-        if (error.__typename === 'ValidationError') {
-          Object.keys(error.validationErrorMsg).map((key) =>
-            methods.setError(key as keyof NewBankAccountInput, {
-              message: error.validationErrorMsg[key][0] as string,
-            })
-          );
-        }
-      },
-    });
+    if (id) {
+      asyncToast({
+        id: 'accounting-bank-account-id-edit',
+        msgs: {
+          success: 'Accounting Bank Account Edited',
+          loading: 'Editing Accounting Bank Account',
+        },
+        onSuccess: () => router.push('/accounting/accounting/bank-accounts/list'),
+        promise: editAsync({ data: { ...values, id: id as string } }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof NewBankAccountInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
+      });
+    } else {
+      asyncToast({
+        id: 'accounting-bank-account-id',
+        msgs: {
+          success: 'New Accounting Bank Account Added',
+          loading: 'Adding Accounting Bank Account',
+        },
+        onSuccess: () => router.push('/accounting/accounting/bank-accounts/list'),
+        promise: addAsync({ data: values }),
+        onError: (error) => {
+          if (error.__typename === 'ValidationError') {
+            Object.keys(error.validationErrorMsg).map((key) =>
+              methods.setError(key as keyof NewBankAccountInput, {
+                message: error.validationErrorMsg[key][0] as string,
+              })
+            );
+          }
+        },
+      });
+    }
   };
+
+  useEffect(() => {
+    if (editedData) {
+      reset({ ...editedData });
+    }
+  }, [id, bankAccountDetail]);
 
   return (
     <>
