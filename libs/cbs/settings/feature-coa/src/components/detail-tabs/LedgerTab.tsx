@@ -1,11 +1,15 @@
-import { Box, Text } from '@myra-ui';
+import { useDisclosure } from '@chakra-ui/react';
+
+import { Box, Button, Text } from '@myra-ui';
 
 import { LedgerTabList } from '../details';
-import { AddAccount } from '../Tree/LeafNode';
+import { AddAccountModal } from '../modals';
+// import { AddAccount } from '../Tree/LeafNode';
 import { useCOALeafNodeDetails } from '../../hooks';
 import { CoaTree } from '../../types';
 
 export const LedgerTab = () => {
+  const modalProps = useDisclosure();
   const { leafNodeData } = useCOALeafNodeDetails();
 
   return (
@@ -15,10 +19,16 @@ export const LedgerTab = () => {
           Ledger
         </Text>
 
-        <AddAccount
-          clickedAccount={{ id: leafNodeData?.id as string } as CoaTree}
-          isGrouped={false}
-        />
+        <Button
+          variant="ghost"
+          onClick={() => {
+            modalProps.onToggle();
+          }}
+        >
+          Add New Account
+        </Button>
+
+        <AddAccountModal clickedAccount={leafNodeData as CoaTree} modalProps={modalProps} />
       </Box>
 
       <LedgerTabList />

@@ -44,6 +44,9 @@ export const JournalVouchersTable = () => {
       after: '',
       first: -1,
     },
+
+    flag: 'JOURNAL_VOUCHER',
+
     // filter: {
     //   ledgerId: searchTerm,
     //   name: searchTerm,
