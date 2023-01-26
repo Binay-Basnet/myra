@@ -79,7 +79,9 @@ export const NewLoanApplication = () => {
   const productId = watch('productId');
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
-    useGetIndividualMemberDetails({ memberId: String(memberId) });
+    useGetIndividualMemberDetails({
+      memberId: memberId as string,
+    });
 
   const { data: loanTypeData } = useGetLoanProductTypesQuery();
 
@@ -409,8 +411,8 @@ export const NewLoanApplication = () => {
 
             {productId && (
               <Box p="s16" display="flex" flexDirection="column" gap="s16">
-                <LoanProductCard productId={productId} />
-                <AccordianComponent productId={productId} />
+                <LoanProductCard productId={productId ?? undefined} />
+                <AccordianComponent productId={productId ?? undefined} />
               </Box>
             )}
           </Box>
