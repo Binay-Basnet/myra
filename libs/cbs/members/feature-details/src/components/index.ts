@@ -9,5 +9,6 @@ export * from './PaymentTable';
 export * from './RecentTransactions';
 export * from './report';
 export * from './share';
+export * from './SkeletonDetailsPage';
 export * from './Statics';
 export * from './transcations';
