@@ -15006,6 +15006,23 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "COAListFlag",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "JOURNAL_VOUCHER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "COAMinimal",
         "description": null,
@@ -15227,6 +15244,18 @@
             "deprecationReason": null
           },
           {
+            "name": "allowDirectPostingFromJV",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "allowFreeEntry",
             "description": null,
             "args": [],
@@ -15238,6 +15267,18 @@
                 "name": "Boolean",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "allowMultipleLedger",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -18146,6 +18187,18 @@
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "COAListFilter",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "flag",
+                "description": null,
+                "type": {
+                  "kind": "ENUM",
+                  "name": "COAListFlag",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -94502,6 +94555,30 @@
             "type": {
               "kind": "ENUM",
               "name": "COAAccountSetup",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "allowDirectPostingFromJV",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "allowMultipleLedger",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
               "ofType": null
             },
             "defaultValue": null,

@@ -95,7 +95,7 @@ export const LoanStatementReport = () => {
                 cell: (props) => (
                   <RouteToDetailsPage
                     id={props?.row?.original?.txnId as string}
-                    type="loan"
+                    type="transactions"
                     label={props?.row?.original?.txnId as string}
                   />
                 ),

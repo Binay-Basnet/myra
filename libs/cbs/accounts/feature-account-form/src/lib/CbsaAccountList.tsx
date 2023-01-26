@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { Avatar, Box, PageHeader, TablePopover, Text, toast } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -30,6 +31,7 @@ const ACCOUNT_TAB_ITEMS = [
 
 export const CBSAccountList = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { t } = useTranslation();
   const searchTerm = router?.query['search'] as string;
@@ -41,9 +43,9 @@ export const CBSAccountList = () => {
       toast({
         id: 'Making Account Active',
         type: 'success',
-        message: 'Accounnt Activated Successfully',
+        message: 'Account Activated Successfully',
       });
-
+      queryClient.invalidateQueries(['getAccountTableListMinimal']);
       router.push(ROUTES.CBS_ACCOUNT_LIST);
     });
   };

@@ -50,7 +50,7 @@ export const Calendar = ({ calendarProps, nextMonth }: CalendarProps) => {
           calendarType={calendarProps.calendarType}
           state={calendarProps.state}
           setState={calendarProps.setState}
-          showNextYear
+          showNextYear={nextMonth}
         />
         <Box display="flex" alignItems="center" flexDir={nextMonth ? 'row' : 'row-reverse'}>
           <MonthSelect
