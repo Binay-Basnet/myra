@@ -179,7 +179,7 @@ const sizes = {
       px: 's16',
       lineHeight: '125%',
       fontSize: 's3',
-      minHeight: '35px',
+      height: '35px',
     },
     td: {
       px: 's16',

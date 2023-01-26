@@ -201,7 +201,7 @@ export const YearSelect = ({
       showNextYear
         ? calendarType === 'AD'
           ? getNextMonth(state.ad.month, state.ad.year).year
-          : getNextMonth(state.bs.month, state.ad.year).year
+          : getNextMonth(state.bs.month, state.bs.year).year
         : calendarType === 'AD'
         ? state.ad.year
         : state.bs.year
