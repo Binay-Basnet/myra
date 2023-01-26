@@ -22,6 +22,7 @@ import {
   MemberContactInfo,
   MemberFamilyInfo,
   MemberFamilyRelationsInfo,
+  SkeletonDetails,
 } from '../components';
 
 export const Bio = () => {
@@ -30,7 +31,7 @@ export const Bio = () => {
   const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
     id: id as string,
   });
-
+  const isMembersBioFetching = memberDetailsData?.isFetching;
   const memberIndividual =
     memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
       ?.__typename === 'IndividualBasicMinInfo'
@@ -95,30 +96,35 @@ export const Bio = () => {
 
   return (
     <>
-      <Text fontSize="r3" fontWeight="600">
-        Bio{' '}
-      </Text>
-      <Grid templateColumns="repeat(3,1fr)" columnGap="s8" rowGap="s16">
-        {links?.map((item) => (
-          <GridItem key={item?.text}>
-            <QuickLinks icon={item.icon} text={item.text} onclick={item.onclick} />
-          </GridItem>
-        ))}
-      </Grid>
-
-      {memberIndividual && (
+      {isMembersBioFetching && <SkeletonDetails />}
+      {!isMembersBioFetching && (
         <Box display="flex" flexDirection="column" gap="s16">
-          <MemberBasicInfo />
-          <MemberContactInfo />
-          <MemberAddressInfo />
-          <MemberFamilyInfo />
-          <MemberFamilyRelationsInfo />
-          <DocumentInd />
+          <Text fontSize="r3" fontWeight="600">
+            Bio{' '}
+          </Text>
+          <Grid templateColumns="repeat(3,1fr)" columnGap="s8" rowGap="s16">
+            {links?.map((item) => (
+              <GridItem key={item?.text}>
+                <QuickLinks icon={item.icon} text={item.text} onclick={item.onclick} />
+              </GridItem>
+            ))}
+          </Grid>
+
+          {memberIndividual && (
+            <Box display="flex" flexDirection="column" gap="s16">
+              <MemberBasicInfo />
+              <MemberContactInfo />
+              <MemberAddressInfo />
+              <MemberFamilyInfo />
+              <MemberFamilyRelationsInfo />
+              <DocumentInd />
+            </Box>
+          )}
+          {memberBasicInstitution && <BioInstitution />}
+          {memberBasicCooperative && <BioCoop />}
+          {memberBasicCooperativeUnion && <BioCoopUnion />}
         </Box>
       )}
-      {memberBasicInstitution && <BioInstitution />}
-      {memberBasicCooperative && <BioCoop />}
-      {memberBasicCooperativeUnion && <BioCoopUnion />}
     </>
   );
 };

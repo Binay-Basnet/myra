@@ -2,13 +2,18 @@ import { useRouter } from 'next/router';
 
 import { Box, DetailPageQuickLinks, Text } from '@myra-ui';
 
+import { useGetMemberKymDetailsLoanQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 
-import { LoanAccountList, LoanPaymentTable } from '../components';
+import { LoanAccountList, LoanPaymentTable, SkeletonDetails } from '../components';
 
 export const Loan = () => {
   const router = useRouter();
   const id = router.query['id'] as string;
+  const memberDetails = useGetMemberKymDetailsLoanQuery({
+    id: router.query['id'] as string,
+  });
+  const isMemberLoanDetailsFetching = memberDetails?.isFetching;
 
   const links = [
     {
@@ -26,14 +31,19 @@ export const Loan = () => {
   ];
   return (
     <>
-      <Text fontSize="r3" fontWeight="600">
-        Loan{' '}
-      </Text>
-      <Box display="flex" flexDirection="column" gap="s16">
-        <DetailPageQuickLinks links={links} />
-      </Box>
-      <LoanAccountList />
-      <LoanPaymentTable />
+      {isMemberLoanDetailsFetching && <SkeletonDetails />}
+      {!isMemberLoanDetailsFetching && (
+        <Box display="flex" flexDirection="column" gap="s16">
+          <Text fontSize="r3" fontWeight="600">
+            Loan{' '}
+          </Text>
+          <Box display="flex" flexDirection="column" gap="s16">
+            <DetailPageQuickLinks links={links} />
+          </Box>
+          <LoanAccountList />
+          <LoanPaymentTable />
+        </Box>
+      )}
     </>
   );
 };

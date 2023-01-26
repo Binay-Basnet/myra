@@ -20,6 +20,7 @@ import {
   RecentTransactions,
   UpcomingPaymentTable,
 } from '../components';
+import { SkeletonDetails } from '../components/SkeletonDetailsPage';
 
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -35,7 +36,7 @@ export const Overview = () => {
     }
   );
 
-  // console.log({ isFetching: memberDetails?.isFetching });
+  const meberFetching = memberDetails?.isFetching;
 
   const memberPayment = memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.payments;
 
@@ -153,160 +154,165 @@ export const Overview = () => {
 
   return (
     <>
-      <Text fontSize="r3" fontWeight="600">
-        Overview
-      </Text>
-
-      <Box display="flex" flexDirection="column" gap="s16">
-        <DetailPageQuickLinks links={links} />
-      </Box>
-      <MemberBasicInformation />
-      <Grid templateColumns="repeat(2,1fr)" gap="s16">
-        <Box
-          boxShadow="E0"
-          borderRadius="br2"
-          display="flex"
-          flexDirection="column"
-          gap="s16"
-          bg="white"
-          p="s16"
-        >
-          <Text fontSize="r1" fontWeight="Medium">
-            Deposit
+      {meberFetching && <SkeletonDetails />}
+      {!meberFetching && (
+        <Box display="flex" flexDirection="column" gap="s16">
+          <Text fontSize="r3" fontWeight="600">
+            Overview
           </Text>
 
-          <Charts
-            series={[
-              {
-                name: 'Deposit',
-                data: dataForGraphs,
-              },
-            ]}
-            type="area"
-            height="400px"
-            w="100%"
-            options={{
-              chart: {
-                toolbar: {
-                  show: false,
-                },
-              },
-              xaxis: {
-                type: 'datetime',
-              },
-              colors: ['#82CA9D'],
-              fill: {
-                type: 'gradient',
-              },
-              legend: {
-                show: false,
-                horizontalAlign: 'right',
-                position: 'bottom',
-
-                showForSingleSeries: true,
-              },
-              // fill: {
-              //   colors: ['#82CA9D'],
-              // },
-              dataLabels: {
-                enabled: false,
-              },
-              grid: {
-                borderColor: '#ffffff',
-                strokeDashArray: 2,
-                yaxis: {
-                  lines: {
-                    show: true,
-                  },
-                },
-                xaxis: {
-                  lines: {
-                    show: true,
-                  },
-                },
-              },
-            }}
-          />
-        </Box>
-        <Box
-          boxShadow="E0"
-          borderRadius="br2"
-          display="flex"
-          flexDirection="column"
-          gap="s16"
-          bg="white"
-          p="s16"
-        >
-          <Text fontSize="r1" fontWeight="Medium">
-            Withdraw
-          </Text>
-
-          <Charts
-            series={[
-              {
-                name: 'Withdraw',
-                data: dataForGraphWithdraw,
-              },
-            ]}
-            type="area"
-            height="400px"
-            w="100%"
-            options={{
-              chart: {
-                toolbar: {
-                  show: false,
-                },
-              },
-              xaxis: {
-                type: 'datetime',
-              },
-              colors: ['#FFECEB'],
-              legend: {
-                show: true,
-                horizontalAlign: 'right',
-                position: 'bottom',
-
-                showForSingleSeries: true,
-              },
-              // fill: {
-              //   colors: ['#82CA9D'],
-              // },
-              dataLabels: {
-                enabled: false,
-              },
-              grid: {
-                borderColor: '#fff',
-                strokeDashArray: 2,
-                yaxis: {
-                  lines: {
-                    show: true,
-                  },
-                },
-                xaxis: {
-                  lines: {
-                    show: true,
-                  },
-                },
-              },
-            }}
-          />
-        </Box>
-      </Grid>
-
-      {memberShareDetails && <MemberStatistics />}
-      {memberPaymentUp && (
-        <Box boxShadow="E0" bg="white" display="flex" flexDirection="column" borderRadius="br2">
-          <Box display="flex" justifyContent="space-between" p="s16">
-            <Text fontSize="r1" fontWeight="SemiBold">
-              Upcoming Payments
-            </Text>
+          <Box display="flex" flexDirection="column" gap="s16">
+            <DetailPageQuickLinks links={links} />
           </Box>
-          <Box borderRadius="br4" p="s16">
-            <UpcomingPaymentTable data={memberPaymentUp} />
-          </Box>
+          <MemberBasicInformation />
+          <Grid templateColumns="repeat(2,1fr)" gap="s16">
+            <Box
+              boxShadow="E0"
+              borderRadius="br2"
+              display="flex"
+              flexDirection="column"
+              gap="s16"
+              bg="white"
+              p="s16"
+            >
+              <Text fontSize="r1" fontWeight="Medium">
+                Deposit
+              </Text>
+
+              <Charts
+                series={[
+                  {
+                    name: 'Deposit',
+                    data: dataForGraphs,
+                  },
+                ]}
+                type="area"
+                height="400px"
+                w="100%"
+                options={{
+                  chart: {
+                    toolbar: {
+                      show: false,
+                    },
+                  },
+                  xaxis: {
+                    type: 'datetime',
+                  },
+                  colors: ['#82CA9D'],
+                  fill: {
+                    type: 'gradient',
+                  },
+                  legend: {
+                    show: false,
+                    horizontalAlign: 'right',
+                    position: 'bottom',
+
+                    showForSingleSeries: true,
+                  },
+                  // fill: {
+                  //   colors: ['#82CA9D'],
+                  // },
+                  dataLabels: {
+                    enabled: false,
+                  },
+                  grid: {
+                    borderColor: '#ffffff',
+                    strokeDashArray: 2,
+                    yaxis: {
+                      lines: {
+                        show: true,
+                      },
+                    },
+                    xaxis: {
+                      lines: {
+                        show: true,
+                      },
+                    },
+                  },
+                }}
+              />
+            </Box>
+            <Box
+              boxShadow="E0"
+              borderRadius="br2"
+              display="flex"
+              flexDirection="column"
+              gap="s16"
+              bg="white"
+              p="s16"
+            >
+              <Text fontSize="r1" fontWeight="Medium">
+                Withdraw
+              </Text>
+
+              <Charts
+                series={[
+                  {
+                    name: 'Withdraw',
+                    data: dataForGraphWithdraw,
+                  },
+                ]}
+                type="area"
+                height="400px"
+                w="100%"
+                options={{
+                  chart: {
+                    toolbar: {
+                      show: false,
+                    },
+                  },
+                  xaxis: {
+                    type: 'datetime',
+                  },
+                  colors: ['#FFECEB'],
+                  legend: {
+                    show: true,
+                    horizontalAlign: 'right',
+                    position: 'bottom',
+
+                    showForSingleSeries: true,
+                  },
+                  // fill: {
+                  //   colors: ['#82CA9D'],
+                  // },
+                  dataLabels: {
+                    enabled: false,
+                  },
+                  grid: {
+                    borderColor: '#fff',
+                    strokeDashArray: 2,
+                    yaxis: {
+                      lines: {
+                        show: true,
+                      },
+                    },
+                    xaxis: {
+                      lines: {
+                        show: true,
+                      },
+                    },
+                  },
+                }}
+              />
+            </Box>
+          </Grid>
+
+          {memberShareDetails && <MemberStatistics />}
+          {memberPaymentUp && (
+            <Box boxShadow="E0" bg="white" display="flex" flexDirection="column" borderRadius="br2">
+              <Box display="flex" justifyContent="space-between" p="s16">
+                <Text fontSize="r1" fontWeight="SemiBold">
+                  Upcoming Payments
+                </Text>
+              </Box>
+              <Box borderRadius="br4" p="s16">
+                <UpcomingPaymentTable data={memberPaymentUp} />
+              </Box>
+            </Box>
+          )}
+          <RecentTransactions />
         </Box>
       )}
-      <RecentTransactions />
     </>
   );
 };

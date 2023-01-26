@@ -11,7 +11,7 @@ import {
 import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
-import { AccountList, UpcomingPaymentTable } from '../components';
+import { AccountList, SkeletonDetails, UpcomingPaymentTable } from '../components';
 
 export const Accounts = () => {
   const router = useRouter();
@@ -30,6 +30,7 @@ export const Accounts = () => {
     id: router.query['id'] as string,
   });
 
+  const isMemberAccountFetching = memberDetails?.isFetching;
   const memberPayment = memberDetails?.data?.members?.memberOverviewV2?.accounts?.data?.payments;
 
   const memberPaymentUp = memberPayment?.map((data, index) => ({
@@ -91,30 +92,46 @@ export const Accounts = () => {
 
   return (
     <>
-      <Text fontSize="r3" fontWeight="600">
-        Saving Accounts
-      </Text>
-      <Box display="flex" flexDirection="column" gap="s16">
-        <DetailPageQuickLinks links={links} />
-      </Box>
-
-      <AccountList title={title} accountList={accountList} />
-
-      {memberPaymentUp && (
-        <Box bg="white" display="flex" flexDirection="column" gap="s8" pb="s16" borderRadius="br2">
-          <Box display="flex" justifyContent="space-between" p="s16">
-            <Text fontSize="r1" fontWeight="600">
-              {' '}
-              Upcoming Payments
-            </Text>
+      {isMemberAccountFetching && <SkeletonDetails />}
+      {!isMemberAccountFetching && (
+        <Box display="flex" flexDirection="column" gap="s16">
+          <Text fontSize="r3" fontWeight="600">
+            Saving Accounts
+          </Text>
+          <Box display="flex" flexDirection="column" gap="s16">
+            <DetailPageQuickLinks links={links} />
           </Box>
-          <Box>
-            <UpcomingPaymentTable data={memberPaymentUp} />
-          </Box>
+
+          <AccountList title={title} accountList={accountList} />
+
+          {memberPaymentUp && (
+            <Box
+              bg="white"
+              display="flex"
+              flexDirection="column"
+              gap="s8"
+              pb="s16"
+              borderRadius="br2"
+            >
+              <Box display="flex" justifyContent="space-between" p="s16">
+                <Text fontSize="r1" fontWeight="600">
+                  {' '}
+                  Upcoming Payments
+                </Text>
+              </Box>
+              <Box>
+                <UpcomingPaymentTable data={memberPaymentUp} />
+              </Box>
+            </Box>
+          )}
+
+          <AccountList
+            title={closedAccountTitle}
+            accountList={closedAccountList}
+            isClosedAccounts
+          />
         </Box>
       )}
-
-      <AccountList title={closedAccountTitle} accountList={closedAccountList} isClosedAccounts />
     </>
   );
 };
