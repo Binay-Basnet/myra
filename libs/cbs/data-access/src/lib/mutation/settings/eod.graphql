@@ -1,0 +1,19 @@
+mutation eodDateSetup($date: Localized!) {
+  settings {
+    general {
+      setup {
+        eodSeed(date: $date)
+      }
+    }
+  }
+}
+
+mutation eodExceptionSetup($value: EODExceptionInput!) {
+  settings {
+    general {
+      setup {
+        eodException(value: $value)
+      }
+    }
+  }
+}

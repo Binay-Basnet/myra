@@ -1,0 +1,15 @@
+query getEodExceptions {
+  settings {
+    general {
+      setup {
+        eodSeed
+        eodException {
+          branchReadiness
+          dormantCheck
+          maturityCheck
+          cashInHand
+        }
+      }
+    }
+  }
+}

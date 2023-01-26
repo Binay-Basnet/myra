@@ -135,7 +135,7 @@ export const Overview = () => {
     },
     {
       title: 'Share Return',
-      link: `${ROUTES.CBS_SHARE_ISSUE_ADD}?memberId=${id}`,
+      link: `${ROUTES.CBS_SHARE_RETURN_ADD}?memberId=${id}`,
     },
     {
       title: 'New Loan Application',
