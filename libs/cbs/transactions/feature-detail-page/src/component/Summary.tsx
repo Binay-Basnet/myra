@@ -106,7 +106,7 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
               </Text>
               <Box display="flex">
                 <RedirectButton
-                  link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${summary?.loanAccId}`}
+                  link={`${ROUTES.CBS_LOAN_ACCOUNTS_DETAILS}?id=${summary?.loanAccId}`}
                   label={<Tooltip title={summary.loanAccountName as string} />}
                 />
               </Box>
