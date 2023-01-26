@@ -36,6 +36,8 @@ export const Overview = () => {
     }
   );
 
+  const memberFetching = memberDetails?.isFetching;
+
   const memberPayment = memberDetails?.data?.members?.memberOverviewV2?.overview?.data?.payments;
 
   const memberShareDetails =
@@ -152,8 +154,8 @@ export const Overview = () => {
 
   return (
     <>
-      {meberFetching && <SkeletonDetails />}
-      {!meberFetching && (
+      {memberFetching && <SkeletonDetails />}
+      {!memberFetching && (
         <Box display="flex" flexDirection="column" gap="s16">
           <Text fontSize="r3" fontWeight="600">
             Overview
