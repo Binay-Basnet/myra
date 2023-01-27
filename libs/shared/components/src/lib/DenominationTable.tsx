@@ -2,8 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
-import { FormAmountInput, FormEditableTable, FormSwitch } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import { FormEditableTable } from '@coop/shared/form';
 
 type PaymentTableType = {
   value: string;
@@ -30,6 +29,7 @@ type PurchaseProps = {
   totalCashPaid: number;
   returnAmount: number;
   totalAmount: number;
+  fieldName: string;
 };
 
 export const Cash = ({
@@ -37,8 +37,8 @@ export const Cash = ({
   totalCashPaid,
   returnAmount,
   totalAmount,
+  fieldName,
 }: PurchaseProps) => {
-  const { t } = useTranslation();
   const methods = useFormContext();
   const { watch } = methods;
 
@@ -47,23 +47,11 @@ export const Cash = ({
   const cashReturn = cashPaid - totalAmount;
 
   return (
-    <FormSection templateColumns={2}>
-      <GridItem colSpan={1}>
-        <FormAmountInput isRequired name="cash.cashPaid" label={t['sharePurchaseCash']} />
-      </GridItem>
-
-      <GridItem colSpan={2}>
-        <FormSwitch
-          name="cash.disableDenomination"
-          label={t['sharePurchaseDisableDenomination']}
-          defaultChecked
-        />
-      </GridItem>
-
+    <FormSection>
       {!disableDenomination && (
         <GridItem colSpan={2}>
           <FormEditableTable<PaymentTableType>
-            name="cash.denominations"
+            name={fieldName}
             columns={[
               {
                 accessor: 'value',
@@ -123,9 +111,9 @@ export const Cash = ({
               flexDirection="column"
               gap="s8"
             >
-              <Text>{t['sharePurchaseTotal']}</Text>
-              <Text>{t['sharePurchaseReturn']}</Text>
-              <Text>{t['sharePurchaseGrandTotal']}</Text>
+              <Text>Total</Text>
+              <Text>Return</Text>
+              <Text>Grand Total</Text>
             </Box>
 
             <Box
@@ -163,9 +151,9 @@ export const Cash = ({
               flexDirection="column"
               gap="s8"
             >
-              <Text>{t['sharePurchaseTotal']}</Text>
-              <Text>{t['sharePurchaseReturn']}</Text>
-              <Text>{t['sharePurchaseGrandTotal']}</Text>
+              <Text>Total</Text>
+              <Text>Return</Text>
+              <Text>Grand Total</Text>
             </Box>
 
             <Box

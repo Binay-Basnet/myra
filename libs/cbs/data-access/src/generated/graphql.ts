@@ -2124,7 +2124,6 @@ export type CashTransferSelfEntry = {
   accountId: Scalars['String'];
   cr?: InputMaybe<Scalars['String']>;
   dr?: InputMaybe<Scalars['String']>;
-  ledgerId: Scalars['String'];
 };
 
 export type CashTransferServiceCentreEntry = {
