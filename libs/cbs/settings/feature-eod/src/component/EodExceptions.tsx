@@ -58,7 +58,7 @@ export const EodExceptions = () => {
   });
   const { getValues, reset } = methods;
   const { mutateAsync } = useEodExceptionSetupMutation();
-  const { data } = useGetEodExceptionsQuery();
+  const { data, refetch } = useGetEodExceptionsQuery();
 
   const eodExceptions = data?.settings?.general?.setup?.eodException;
 
@@ -77,6 +77,7 @@ export const EodExceptions = () => {
         loading: 'Adding EOD Exception',
       },
       promise: mutateAsync({ value: values }),
+      onSuccess: () => refetch(),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
           Object.keys(error.validationErrorMsg).map((key) =>
@@ -147,7 +148,7 @@ export const EodExceptions = () => {
           </Box>
 
           <Box h="60px" px="s16" display="flex" gap="s16" justifyContent="end" alignItems="center">
-            <Button onClick={() => reset()} variant="ghost">
+            <Button onClick={() => reset({ ...eodExceptions })} variant="ghost">
               Discard Changes
             </Button>
             <Button onClick={submitButton}>Save Changes</Button>

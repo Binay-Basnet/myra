@@ -85,7 +85,12 @@ export const TxnDate = () => {
             </Text>
           </Box>
 
-          <Box display="flex" p="s16" borderBottom="1px solid" borderBottomColor="border.layout">
+          <Box
+            display="flex"
+            p="s16"
+            borderBottom={!hideButton ? '1px solid' : ' '}
+            borderBottomColor={!hideButton ? 'border.layout' : ' '}
+          >
             <Grid templateColumns="repeat(3,1fr)">
               <GridItem colSpan={1}>
                 <FormDatePicker name="eodSeed" label="Date" />
