@@ -116,18 +116,12 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
           _active={{ border: 'solid 1px', borderColor: 'primary.500' }}
           defaultValue={search && search}
           onChange={debounce((e) => {
-            router.query['objState']
-              ? router.push({
-                  query: {
-                    objState: router.query['objState'],
-                    search: e.target.value,
-                  },
-                })
-              : router.push({
-                  query: {
-                    search: e.target.value,
-                  },
-                });
+            router.push({
+              query: {
+                ...router.query,
+                search: e.target.value,
+              },
+            });
           }, 800)}
         />
       </InputGroup>

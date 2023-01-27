@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Box } from '@myra-ui';
@@ -19,7 +19,7 @@ type JournalVouchersTableType = {
 
 export const JournalVouchersTable = () => {
   const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
-  // const [searchTerm, setSearchTerm] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
   const { watch } = useFormContext<CustomJournalVoucherInput>();
 
@@ -37,21 +37,18 @@ export const JournalVouchersTable = () => {
     return { crTotal: tempCR, drTotal: tempDR };
   }, [entries]);
 
-  const { data: accountList } = useGetCoaAccountListQuery({
+  const { data: accountList, isFetching } = useGetCoaAccountListQuery({
     branchId: [branchId as string],
-
     pagination: {
       after: '',
-      first: -1,
+      first: 10,
     },
-
     flag: 'JOURNAL_VOUCHER',
-
-    // filter: {
-    //   ledgerId: searchTerm,
-    //   name: searchTerm,
-    //   filterMode: 'OR',
-    // },
+    filter: {
+      ledgerId: searchTerm,
+      name: searchTerm,
+      filterMode: 'OR',
+    },
   });
 
   const accountListData = accountList?.settings?.chartsOfAccount?.coaAccountList?.edges;
@@ -66,20 +63,20 @@ export const JournalVouchersTable = () => {
     <Box display="flex" flexDir="column" gap="s12">
       <FormEditableTable<JournalVouchersTableType>
         name="entries"
-        searchPlaceholder="Search for Accounts"
+        searchPlaceholder="Search for ledgers"
         columns={[
           {
             accessor: 'accountId',
-            header: 'Account',
+            header: 'Ledger',
             fieldType: 'search',
             searchOptions: accountListData?.map((account) => ({
               label: account?.node?.accountName?.local as string,
               value: account?.node?.accountCode as string,
             })),
-            // searchLoading: isFetching,
-            // searchCallback: (newSearch) => {
-            //   setSearchTerm(newSearch);
-            // },
+            searchLoading: isFetching,
+            searchCallback: (newSearch) => {
+              setSearchTerm(newSearch);
+            },
             cellWidth: 'lg',
           },
           {
@@ -87,11 +84,13 @@ export const JournalVouchersTable = () => {
             header: 'DR Amount',
             isNumeric: true,
             cellWidth: 'lg',
+            getDisabled: (row) => !!row.crAmount,
           },
           {
             accessor: 'crAmount',
             header: 'CR Amount',
             isNumeric: true,
+            getDisabled: (row) => !!row.drAmount,
             cellWidth: 'lg',
           },
           {

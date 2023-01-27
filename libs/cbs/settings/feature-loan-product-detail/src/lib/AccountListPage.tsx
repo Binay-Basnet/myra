@@ -13,7 +13,7 @@ import { SideBar } from '../components';
 
 export const AccountListPage = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isLoading } = useGetLoanAccountListQuery({
     paginate: {
@@ -21,7 +21,7 @@ export const AccountListPage = () => {
       order: null,
     },
     filter: {
-      productID: id as string,
+      accountName: searchTerm,
     },
   });
   const rowData = useMemo(

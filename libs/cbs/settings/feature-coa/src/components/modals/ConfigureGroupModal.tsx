@@ -61,8 +61,8 @@ export const ConfigureGroupModal = ({ clickedAccount, modalProps }: IConfigureGr
         await asyncToast({
           id: 'add-group',
           msgs: {
-            success: 'Group Added Successfully',
-            loading: 'Adding Group',
+            success: 'Group Configured Successfully',
+            loading: 'Configuring Group',
           },
           onSuccess: () => {
             queryClient.refetchQueries(['getCoaFullView']);
