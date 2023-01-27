@@ -83,6 +83,7 @@ export enum Report {
   TRANSACTION_DAY_BOOK_REPORT = 'Day Book Report',
   TRANSACTION_SUSPICIOUS_TRANSACTION_REPORT = 'Suspicious Transaction Report',
   TRANSACTION_BALANCE_SHEET_REPORT = 'Balance Sheet Report',
+  TRANSACTION_SERVICE_CENTER_BALANCE_REPORT = 'Service Center Balance',
   TRANSACTION_BANK_GL_BALANCE_REPORT = 'Bank GL Balance Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
@@ -426,6 +427,11 @@ export const REPORTS = {
     {
       id: '7.2',
       report: Report.TRANSACTION_INCOME_STATEMENT,
+    },
+    {
+      id: '7.2.2',
+      report: Report.TRANSACTION_SERVICE_CENTER_BALANCE_REPORT,
+      link: 'service-center-balance',
     },
     {
       id: '7.2.5.b',
