@@ -22,7 +22,7 @@ export const LoanProcessing = () => {
       header="loanProductLoanProcessingCharge"
       subHeader="loanProductAdddifferentservicecharges"
     >
-      <GridItem colSpan={3}>
+      <GridItem colSpan={3} cursor={router?.asPath?.includes('/edit') ? 'not-allowed' : 'auto'}>
         <Box pointerEvents={router?.asPath?.includes('/edit') ? 'none' : 'auto'}>
           <FormEditableTable<LoanProcessingTable>
             name="loanProcessingCharge"

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
@@ -32,6 +33,8 @@ export const Questions = () => {
   }>();
   const { t } = useTranslation();
 
+  const router = useRouter();
+
   const depositNature = watch('nature');
   const allowLoan = watch('allowLoan');
   const withdrawRestricted = watch('withdrawRestricted');
@@ -49,6 +52,11 @@ export const Questions = () => {
   const yesNo = [
     { label: t['yes'], value: true },
     { label: t['no'], value: false },
+  ];
+
+  const editYesNo = [
+    { label: t['yes'], value: true, isDisabled: router?.asPath?.includes('/edit') },
+    { label: t['no'], value: false, isDisabled: router?.asPath?.includes('/edit') },
   ];
 
   return (
@@ -101,7 +109,7 @@ export const Questions = () => {
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="row" justifyContent="space-between">
               <SubHeadingText>{t['depositProductATMFacility']} </SubHeadingText>
-              <FormSwitchTab name="atmFacility" options={yesNo} />
+              <FormSwitchTab name="atmFacility" options={editYesNo} />
             </Box>
             {atmFacility && <AtmFacility />}
           </GridItem>
@@ -114,7 +122,7 @@ export const Questions = () => {
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="row" justifyContent="space-between">
               <SubHeadingText>{t['depositProductChequeIssue']}</SubHeadingText>
-              <FormSwitchTab name="chequeIssue" options={yesNo} />
+              <FormSwitchTab name="chequeIssue" options={editYesNo} />
             </Box>
 
             {chequeIssue && <AllowChequeIssue />}

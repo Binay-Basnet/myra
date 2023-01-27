@@ -56,7 +56,7 @@ export const AccountListPage = () => {
       },
       {
         header: 'Open Date',
-        accessorFn: (row) => row?.node?.approvedDate,
+        accessorFn: (row) => row?.node?.approvedDate?.local || '-',
       },
       //   {
       //     id: '_actions',
