@@ -216,3 +216,23 @@ query getDayBookReport($data: DayBookReportFilter!) {
     }
   }
 }
+
+query getBankGLBalanceReport($data: BankGLBalanceFilter!) {
+  report {
+    transactionReport {
+      financial {
+        bankGLBalanceReport(data: $data) {
+          data {
+            bankId
+            bankName
+            bankDisplayName
+            bankAccountName
+            accountNo
+            closingBalance
+          }
+          total
+        }
+      }
+    }
+  }
+}

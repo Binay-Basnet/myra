@@ -1383,6 +1383,27 @@ export type BankDepositData = {
   voucherId: Scalars['String'];
 };
 
+export type BankGlBalanceEntry = {
+  accountNo?: Maybe<Scalars['String']>;
+  bankAccountName?: Maybe<Scalars['String']>;
+  bankDisplayName?: Maybe<Scalars['String']>;
+  bankId?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
+  closingBalance?: Maybe<Scalars['String']>;
+};
+
+export type BankGlBalanceFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  filter?: InputMaybe<GlBalanceFilter>;
+  period: LocalizedDateFilter;
+};
+
+export type BankGlBalanceResult = {
+  data?: Maybe<Array<Maybe<BankGlBalanceEntry>>>;
+  error?: Maybe<QueryError>;
+  total?: Maybe<Scalars['String']>;
+};
+
 export type BankGlDataEntry = {
   balance?: Maybe<Scalars['String']>;
   branchId?: Maybe<Scalars['String']>;
@@ -4787,11 +4808,16 @@ export type FamilyMemberDetails = {
 };
 
 export type FianancialTransactionReport = {
+  bankGLBalanceReport: BankGlBalanceResult;
   bankGLStatementReport: BankGlStatementResult;
   dayBookReport: DayBookReportResult;
   tellerReport: TellerReportResult;
   trialSheetReport: TrialSheetReportResult;
   vaultBalanceReport: VaultBalanceReportResult;
+};
+
+export type FianancialTransactionReportBankGlBalanceReportArgs = {
+  data: BankGlBalanceFilter;
 };
 
 export type FianancialTransactionReportBankGlStatementReportArgs = {
@@ -5425,6 +5451,10 @@ export type FundManagementResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<FundManagementQuery>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type GlBalanceFilter = {
+  amount?: InputMaybe<MinMaxFilter>;
 };
 
 export type GlStatementFilter = {
@@ -23626,6 +23656,30 @@ export type GetDayBookReportQuery = {
   };
 };
 
+export type GetBankGlBalanceReportQueryVariables = Exact<{
+  data: BankGlBalanceFilter;
+}>;
+
+export type GetBankGlBalanceReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        bankGLBalanceReport: {
+          total?: string | null;
+          data?: Array<{
+            bankId?: string | null;
+            bankName?: string | null;
+            bankDisplayName?: string | null;
+            bankAccountName?: string | null;
+            accountNo?: string | null;
+            closingBalance?: string | null;
+          } | null> | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<RequestFilter>;
@@ -39291,6 +39345,41 @@ export const useGetDayBookReportQuery = <TData = GetDayBookReportQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetBankGlBalanceReportDocument = `
+    query getBankGLBalanceReport($data: BankGLBalanceFilter!) {
+  report {
+    transactionReport {
+      financial {
+        bankGLBalanceReport(data: $data) {
+          data {
+            bankId
+            bankName
+            bankDisplayName
+            bankAccountName
+            accountNo
+            closingBalance
+          }
+          total
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBankGlBalanceReportQuery = <
+  TData = GetBankGlBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetBankGlBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetBankGlBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetBankGlBalanceReportQuery, TError, TData>(
+    ['getBankGLBalanceReport', variables],
+    useAxios<GetBankGlBalanceReportQuery, GetBankGlBalanceReportQueryVariables>(
+      GetBankGlBalanceReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetChequeBookRequestsDocument = `
