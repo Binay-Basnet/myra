@@ -25,6 +25,15 @@ import { components } from '../utils/SelectComponents';
 
 export const isArrayEqual = <T,>(x: T[], y: T[]) => _(x).xorWith(y, _.isEqual).isEmpty();
 
+type EditableValue =
+  | string
+  | number
+  | boolean
+  | {
+      label: string;
+      value: string;
+    };
+
 interface RecordWithId {
   _id?: number;
 }
@@ -35,11 +44,11 @@ interface ModalProps {
   onChange: (newValue: string) => void;
 }
 
-export type Column<T extends RecordWithId & Record<string, string | number | boolean>> = {
+export type Column<T extends RecordWithId & Record<string, EditableValue>> = {
   id?: string;
   header?: string;
   accessor: keyof T;
-  accessorFn?: (row: T) => string | number | boolean;
+  accessorFn?: (row: T) => EditableValue;
   hidden?: boolean;
   fieldType?:
     | 'text'
@@ -57,6 +66,7 @@ export type Column<T extends RecordWithId & Record<string, string | number | boo
   loadOptions?: (row: T) => Promise<{ label: string; value: string }[]>;
 
   isNumeric?: boolean;
+  getDisabled?: (row: T) => boolean;
 
   cell?: (row: T) => React.ReactNode;
   modal?: React.ComponentType<ModalProps>;
@@ -68,9 +78,7 @@ export type Column<T extends RecordWithId & Record<string, string | number | boo
   searchCallback?: (newSearch: string) => void;
 };
 
-export interface EditableTableProps<
-  T extends RecordWithId & Record<string, string | number | boolean>
-> {
+export interface EditableTableProps<T extends RecordWithId & Record<string, EditableValue>> {
   defaultData?: T[];
 
   columns: Column<T>[];
@@ -102,7 +110,7 @@ enum EditableTableActionKind {
   ACCESSOR_FN_EDIT = 'Accessor',
 }
 
-type EditableTableAction<TData extends RecordWithId & Record<string, string | number | boolean>> =
+type EditableTableAction<TData extends RecordWithId & Record<string, EditableValue>> =
   | {
       type: EditableTableActionKind.ADD;
       payload: TData;
@@ -142,12 +150,12 @@ type EditableTableAction<TData extends RecordWithId & Record<string, string | nu
       };
     };
 
-interface EditableState<T extends RecordWithId & Record<string, string | number | boolean>> {
+interface EditableState<T extends RecordWithId & Record<string, EditableValue>> {
   data: T[];
   columns: Column<T>[];
 }
 
-function editableReducer<T extends RecordWithId & Record<string, string | number | boolean>>(
+function editableReducer<T extends RecordWithId & Record<string, EditableValue>>(
   state: EditableState<T>,
   action: EditableTableAction<T>
 ): EditableState<T> {
@@ -238,9 +246,7 @@ function editableReducer<T extends RecordWithId & Record<string, string | number
   }
 }
 
-const flexBasisFunc = (
-  column: Pick<Column<Record<string, string | number | boolean>>, 'cellWidth'>
-) => {
+const flexBasisFunc = (column: Pick<Column<Record<string, EditableValue>>, 'cellWidth'>) => {
   if (column.cellWidth === 'auto') {
     return '100%';
   }
@@ -250,7 +256,7 @@ const flexBasisFunc = (
   return '30%';
 };
 
-export const EditableTable = <T extends RecordWithId & Record<string, string | number | boolean>>({
+export const EditableTable = <T extends RecordWithId & Record<string, EditableValue>>({
   columns,
   defaultData = [],
   canDeleteRow = true,
@@ -272,12 +278,34 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
   useDeepCompareEffect(() => {
     if (onChange) {
       // eslint-disable-next-line unused-imports/no-unused-vars
-      onChange(state.data.map(({ _id, ...rest }) => rest));
+      onChange(
+        state.data.map(({ _id, ...rest }) => {
+          const keys = Object.keys(rest);
+
+          const newObject = keys.reduce((acc, key) => {
+            const value = rest[key];
+
+            acc = {
+              ...acc,
+              [key]:
+                typeof value === 'number' || typeof value === 'string'
+                  ? value
+                  : 'value' in value
+                  ? value.value
+                  : value,
+            };
+
+            return acc;
+          }, {});
+
+          return newObject;
+        }) as Omit<T, '_id'>[]
+      );
     }
   }, [state.data]);
 
   useDeepCompareEffect(() => {
-    if (defaultData) {
+    if (defaultData && !columns.some((column) => !!column.searchOptions)) {
       dispatch({
         type: EditableTableActionKind.REPLACE,
         payload: {
@@ -366,7 +394,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
               isLoading={columns.find((column) => column.searchOptions)?.searchLoading}
               onInputChange={debounce((id) => {
                 if (id) {
-                  columns.find((column) => column.searchOptions)?.searchCallback?.(id);
+                  columns.find((column) => column.searchCallback)?.searchCallback?.(id);
                   // setTrigger(true);
                 }
               }, 800)}
@@ -378,7 +406,10 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
                       key.fieldType === 'search'
                         ? {
                             ...o,
-                            [key.accessor]: newValue.value,
+                            [key.accessor]: {
+                              value: newValue.value,
+                              label: newValue.label,
+                            },
                           }
                         : {
                             ...o,
@@ -450,9 +481,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
 
 export default EditableTable;
 
-interface IEditableTableRowProps<
-  T extends RecordWithId & Record<string, string | number | boolean>
-> {
+interface IEditableTableRowProps<T extends RecordWithId & Record<string, EditableValue>> {
   columns: Column<T>[];
   data: T;
   canDeleteRow?: boolean;
@@ -463,7 +492,7 @@ interface IEditableTableRowProps<
   dispatch: React.Dispatch<EditableTableAction<T>>;
 }
 
-const EditableTableRow = <T extends RecordWithId & Record<string, string | number | boolean>>({
+const EditableTableRow = <T extends RecordWithId & Record<string, EditableValue>>({
   columns,
   data,
   index,
@@ -652,13 +681,13 @@ const MemoEditableTableRow = React.memo(
     JSON.stringify(previousProps.columns) === JSON.stringify(nextProps.columns)
 ) as typeof EditableTableRow;
 
-interface EditableCellProps<T extends RecordWithId & Record<string, string | number | boolean>> {
+interface EditableCellProps<T extends RecordWithId & Record<string, EditableValue>> {
   column: Column<T>;
   data: T;
   dispatch: React.Dispatch<EditableTableAction<T>>;
 }
 
-const EditableCell = <T extends RecordWithId & Record<string, string | number | boolean>>({
+const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
   column,
   dispatch,
   data,
@@ -681,6 +710,8 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
     }
   }, []);
 
+  const dataValue = data[column.accessor];
+
   return (
     <Editable
       _after={
@@ -694,7 +725,11 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
             }
           : {}
       }
-      isDisabled={column.fieldType === 'search' || !!column?.accessorFn}
+      isDisabled={
+        column.getDisabled
+          ? column.getDisabled(data)
+          : column.fieldType === 'search' || !!column?.accessorFn
+      }
       isPreviewFocusable
       selectAllOnFocus={false}
       w="100%"
@@ -711,7 +746,9 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
       flexBasis={flexBasisFunc(column)}
       value={
         column.fieldType === 'search'
-          ? column.searchOptions?.find((search) => search.value === data[column.accessor])?.label
+          ? typeof dataValue === 'object' && 'label' in dataValue
+            ? dataValue.label
+            : String(dataValue)
           : column.accessorFn
           ? column.accessorFn(data)
             ? String(column.accessorFn(data))
@@ -764,6 +801,15 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
           px="s8"
           display="flex"
           alignItems="center"
+          sx={
+            column.getDisabled && column.getDisabled(data)
+              ? {
+                  cursor: 'not-allowed',
+                  bg: 'gray.50',
+                  borderRadius: '0',
+                }
+              : {}
+          }
           justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
         />
       )}
