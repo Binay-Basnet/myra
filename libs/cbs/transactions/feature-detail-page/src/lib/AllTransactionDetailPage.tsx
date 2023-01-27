@@ -3,10 +3,21 @@ import { useRouter } from 'next/router';
 
 import { Box, DetailCardContent, DetailsCard, Divider, Icon, IconButton, PathBar } from '@myra-ui';
 
-import { useGetAllTransactionsDetailQuery } from '@coop/cbs/data-access';
+import { AllTransactionType, useGetAllTransactionsDetailQuery } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { GlTransaction, Note } from '../component';
+
+const ROUTESOBJTRANS = {
+  [AllTransactionType.Deposit]: ROUTES.CBS_TRANS_DEPOSIT_DETAILS,
+  [AllTransactionType.Withdraw]: ROUTES.CBS_TRANS_WITHDRAW_DETAILS,
+  [AllTransactionType.Transfer]: ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_DETAILS,
+  [AllTransactionType.LoanRepayment]: ROUTES.CBS_TRANS_LOAN_PAYMENT_DETAILS,
+  [AllTransactionType.JournalVoucher]: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_DETAILS,
+};
+
+const objKeys = Object.keys(ROUTESOBJTRANS);
 
 export const AllTransactionDetailPage = () => {
   const router = useRouter();
@@ -49,16 +60,29 @@ export const AllTransactionDetailPage = () => {
         /> */}
 
         <DetailsCard title={t['transDetailTransactionDetails']} hasThreeRows>
-          <DetailCardContent
-            title={t['transDetailTransactionID']}
-            subtitle={allTransactionsData?.id}
-          />
-
+          {!objKeys.includes(allTransactionsData?.txnType as string) && (
+            <DetailCardContent
+              title={t['transDetailTransactionID']}
+              subtitle={allTransactionsData?.id}
+            />
+          )}
+          {allTransactionsData?.txnType && objKeys.includes(allTransactionsData?.txnType) && (
+            <DetailCardContent
+              title={t['transDetailTransactionID']}
+              subtitle={
+                <RedirectButton
+                  label={allTransactionsData?.id}
+                  link={`${ROUTESOBJTRANS[allTransactionsData?.txnType]}?id=${
+                    allTransactionsData?.id
+                  }`}
+                />
+              }
+            />
+          )}
           <DetailCardContent
             title="Amount"
             subtitle={amountConverter(allTransactionsData?.amount ?? 0)}
           />
-
           <DetailCardContent title={t['transDetailStatus']} status />
           <DetailCardContent title="Transaction Type" subtitle={allTransactionsData?.txnType} />
         </DetailsCard>
