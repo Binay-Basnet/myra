@@ -26,6 +26,24 @@ export type Scalars = {
   Time: string;
 };
 
+export type AbbsReportFilter = {
+  abbs?: InputMaybe<Scalars['Boolean']>;
+  active?: InputMaybe<Scalars['Boolean']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type AbbsSatusEntry = {
+  ServiceCenterName?: Maybe<Scalars['String']>;
+  abbsActive?: Maybe<Scalars['Boolean']>;
+  serviceCenterActive?: Maybe<Scalars['Boolean']>;
+  serviceCenterId?: Maybe<Scalars['String']>;
+};
+
+export type AbbsSatusResult = {
+  data?: Maybe<Array<Maybe<AbbsSatusEntry>>>;
+  error?: Maybe<QueryError>;
+};
+
 export const Action = {
   Approved: 'APPROVED',
   Create: 'CREATE',
@@ -4787,11 +4805,17 @@ export type FamilyMemberDetails = {
 };
 
 export type FianancialTransactionReport = {
+  abbsStatusReport: AbbsSatusResult;
   bankGLStatementReport: BankGlStatementResult;
   dayBookReport: DayBookReportResult;
+  serviceCenterBalanceReport: SericeCenterStatementResult;
   tellerReport: TellerReportResult;
   trialSheetReport: TrialSheetReportResult;
   vaultBalanceReport: VaultBalanceReportResult;
+};
+
+export type FianancialTransactionReportAbbsStatusReportArgs = {
+  data: AbbsReportFilter;
 };
 
 export type FianancialTransactionReportBankGlStatementReportArgs = {
@@ -4800,6 +4824,10 @@ export type FianancialTransactionReportBankGlStatementReportArgs = {
 
 export type FianancialTransactionReportDayBookReportArgs = {
   data: DayBookReportFilter;
+};
+
+export type FianancialTransactionReportServiceCenterBalanceReportArgs = {
+  data: ServiceCenterBalanceFilter;
 };
 
 export type FianancialTransactionReportTellerReportArgs = {
@@ -12705,6 +12733,11 @@ export type SectionWiseError = {
   sectionName?: Maybe<Scalars['String']>;
 };
 
+export type SericeCenterStatementResult = {
+  data?: Maybe<Array<Maybe<ServiceCenterBalanceEntry>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type ServerError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -12737,6 +12770,24 @@ export type ServiceCenterActivityDetails = {
 export type ServiceCenterActivityListEdges = {
   cursor: Scalars['Cursor'];
   node?: Maybe<ServiceCenterActivityDetails>;
+};
+
+export type ServiceCenterBalanceEntry = {
+  ServiceCenterName?: Maybe<Scalars['String']>;
+  depositToLiquidityRatio?: Maybe<Scalars['String']>;
+  serviceCenterId?: Maybe<Scalars['String']>;
+  todayBankBalance?: Maybe<Scalars['String']>;
+  todayCashBalance?: Maybe<Scalars['String']>;
+  todaySavingBalance?: Maybe<Scalars['String']>;
+  todayTotalBalance?: Maybe<Scalars['String']>;
+  totalBankBalance?: Maybe<Scalars['String']>;
+  totalCashBalance?: Maybe<Scalars['String']>;
+  totalSavingBalance?: Maybe<Scalars['String']>;
+  totalTotalBalance?: Maybe<Scalars['String']>;
+};
+
+export type ServiceCenterBalanceFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type ServiceCenterTransactionFilter = {
@@ -23620,6 +23671,53 @@ export type GetDayBookReportQuery = {
               } | null> | null;
             } | null> | null;
           } | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetServiceCenterBalanceReportQueryVariables = Exact<{
+  data: ServiceCenterBalanceFilter;
+}>;
+
+export type GetServiceCenterBalanceReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        serviceCenterBalanceReport: {
+          data?: Array<{
+            serviceCenterId?: string | null;
+            ServiceCenterName?: string | null;
+            todayCashBalance?: string | null;
+            todayBankBalance?: string | null;
+            todayTotalBalance?: string | null;
+            totalCashBalance?: string | null;
+            totalBankBalance?: string | null;
+            totalTotalBalance?: string | null;
+            depositToLiquidityRatio?: string | null;
+          } | null> | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetAbbsStatusReportQueryVariables = Exact<{
+  data: AbbsReportFilter;
+}>;
+
+export type GetAbbsStatusReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        abbsStatusReport: {
+          data?: Array<{
+            serviceCenterId?: string | null;
+            ServiceCenterName?: string | null;
+            serviceCenterActive?: boolean | null;
+            abbsActive?: boolean | null;
+          } | null> | null;
         };
       };
     };
@@ -39291,6 +39389,72 @@ export const useGetDayBookReportQuery = <TData = GetDayBookReportQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetServiceCenterBalanceReportDocument = `
+    query getServiceCenterBalanceReport($data: ServiceCenterBalanceFilter!) {
+  report {
+    transactionReport {
+      financial {
+        serviceCenterBalanceReport(data: $data) {
+          data {
+            serviceCenterId
+            ServiceCenterName
+            todayCashBalance
+            todayBankBalance
+            todayTotalBalance
+            totalCashBalance
+            totalBankBalance
+            totalTotalBalance
+            depositToLiquidityRatio
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetServiceCenterBalanceReportQuery = <
+  TData = GetServiceCenterBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetServiceCenterBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetServiceCenterBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetServiceCenterBalanceReportQuery, TError, TData>(
+    ['getServiceCenterBalanceReport', variables],
+    useAxios<GetServiceCenterBalanceReportQuery, GetServiceCenterBalanceReportQueryVariables>(
+      GetServiceCenterBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAbbsStatusReportDocument = `
+    query getABBSStatusReport($data: ABBSReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        abbsStatusReport(data: $data) {
+          data {
+            serviceCenterId
+            ServiceCenterName
+            serviceCenterActive
+            abbsActive
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAbbsStatusReportQuery = <TData = GetAbbsStatusReportQuery, TError = unknown>(
+  variables: GetAbbsStatusReportQueryVariables,
+  options?: UseQueryOptions<GetAbbsStatusReportQuery, TError, TData>
+) =>
+  useQuery<GetAbbsStatusReportQuery, TError, TData>(
+    ['getABBSStatusReport', variables],
+    useAxios<GetAbbsStatusReportQuery, GetAbbsStatusReportQueryVariables>(
+      GetAbbsStatusReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetChequeBookRequestsDocument = `

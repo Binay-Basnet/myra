@@ -429,6 +429,9 @@ export const NewAccountTransfer = () => {
                         'Transfer Type': result?.transferType
                           ? transferTypeObj[result.transferType]
                           : '',
+                        'Recipient Name': result?.receiverAccountName,
+                        'Recipient Account Name': result?.receiverAccountName,
+
                         'Transfer Amount': amountConverter(result?.amount || 0) as string,
                         Fine: String(amountConverter(result?.fine || 0)),
                       },

@@ -216,3 +216,42 @@ query getDayBookReport($data: DayBookReportFilter!) {
     }
   }
 }
+
+query getServiceCenterBalanceReport($data: ServiceCenterBalanceFilter!) {
+  report {
+    transactionReport {
+      financial {
+        serviceCenterBalanceReport(data: $data) {
+          data {
+            serviceCenterId
+            ServiceCenterName
+            todayCashBalance
+            todayBankBalance
+            todayTotalBalance
+            totalCashBalance
+            totalBankBalance
+            totalTotalBalance
+            depositToLiquidityRatio
+          }
+        }
+      }
+    }
+  }
+}
+
+query getABBSStatusReport($data: ABBSReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        abbsStatusReport(data: $data) {
+          data {
+            serviceCenterId
+            ServiceCenterName
+            serviceCenterActive
+            abbsActive
+          }
+        }
+      }
+    }
+  }
+}
