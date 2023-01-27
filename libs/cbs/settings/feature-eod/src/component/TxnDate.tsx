@@ -1,5 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  useDisclosure,
+} from '@chakra-ui/react';
 
 import { asyncToast, Box, Button, Grid, GridItem, Text } from '@myra-ui';
 
@@ -14,8 +23,11 @@ import { FormDatePicker } from '@coop/shared/form';
 export const TxnDate = () => {
   const methods = useForm();
   const { getValues, reset } = methods;
+  const { isOpen, onClose, onToggle } = useDisclosure();
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
-  const disableButton = endOfDayData?.transaction?.endOfDayDate?.isInitialized;
+  const cancelRef = useRef<HTMLButtonElement | null>(null);
+
+  const hideButton = endOfDayData?.transaction?.endOfDayDate?.isInitialized;
   const { mutateAsync } = useEodDateSetupMutation();
 
   const { data } = useGetEodExceptionsQuery();
@@ -68,7 +80,7 @@ export const TxnDate = () => {
             <Text fontWeight="SemiBold" color="gray.800" fontSize="r1" lineHeight="125%">
               EOD Start Transaction Date
             </Text>
-            <Text fontWeight="Medium" color="gray.600" fontSize="s3" lineHeight="125%">
+            <Text fontWeight="Medium" color="danger.500" fontSize="s3" lineHeight="125%">
               Once the date is selected, it cannot be altered.
             </Text>
           </Box>
@@ -80,14 +92,41 @@ export const TxnDate = () => {
               </GridItem>
             </Grid>
           </Box>
-
-          <Box h="60px" px="s16" display="flex" justifyContent="end" alignItems="center">
-            <Button disabled={disableButton} onClick={submitButton}>
-              Save Changes
-            </Button>
-          </Box>
+          {!hideButton && (
+            <Box h="60px" px="s16" display="flex" justifyContent="end" alignItems="center">
+              <Button onClick={onToggle}>Save</Button>
+            </Box>
+          )}
         </Box>
       </Box>
+
+      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose} isCentered>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              <Text fontWeight="SemiBold" fontSize="r2" color="gray.800" lineHeight="150%">
+                Confirm EOD Start Transaction Date?
+              </Text>
+            </AlertDialogHeader>
+
+            <AlertDialogBody borderBottom="1px solid" borderBottomColor="border.layout">
+              <Text fontWeight="Regular" color="gray.800" fontSize="r1">
+                This will permanently set up settings. This action is irreversible. To continue,
+                click &quot;Save,&quot; and to discard, click &quot;Cancel.&quot;
+              </Text>
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} variant="outline" onClick={onClose}>
+                Cancel
+              </Button>
+              <Button onClick={submitButton} ml={3}>
+                Save
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </FormProvider>
   );
 };

@@ -9,6 +9,7 @@ import {
   useGetLoanAccountLedgersListQuery,
   useGetLoanAccountMemberDetailsQuery,
 } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 
 export const useLoanAccountDetailHooks = () => {
@@ -47,6 +48,8 @@ export const useLoanAccountDetailHooks = () => {
   const ledgerList = loanAccountLedgersData?.account?.listAccountLedgers?.data;
   const isClosed = overviewData?.isClosed;
 
+  const length = paymentsListInfo?.installments?.length ?? 0;
+
   const generalInfoCardData = [
     { label: 'Account Name', value: generalInfo?.accountName ?? 'N/A' },
     { label: 'Product Name', value: generalInfo?.productName ?? 'N/A' },
@@ -59,6 +62,13 @@ export const useLoanAccountDetailHooks = () => {
     { label: 'Interest Grace Period', value: generalInfo?.interestGracePeriod ?? 'N/A' },
     { label: 'Principal Grace Period', value: generalInfo?.principalGracePeriod ?? 'N/A' },
     { label: 'Tenure', value: `${generalInfo?.tenure} ${generalInfo?.tenureUnit}` ?? 'N/A' },
+    {
+      label: 'Last Installment Date',
+      value:
+        (paymentsListInfo?.installments &&
+          localizedDate(paymentsListInfo?.installments[length - 1]?.installmentDate)) ??
+        'N/A',
+    },
     { label: 'Linked Account', value: generalInfo?.linkedAccountName ?? 'N/A' },
   ];
   const productId = generalInfo?.productId;
@@ -135,6 +145,20 @@ export const useLoanAccountDetailHooks = () => {
     [paymentsListInfo]
   );
 
+  const paymentAllList = useMemo(
+    () =>
+      paymentsListInfo?.installments?.map((installment) => ({
+        installmentNo: installment?.installmentNo,
+        installmentDate: installment?.installmentDate,
+        payment: installment?.payment,
+        principal: installment?.principal ?? '0',
+        interest: installment?.interest ?? '0',
+        remainingPrincipal: installment?.remainingPrincipal,
+        paid: installment?.paid,
+      })) ?? [],
+    [paymentsListInfo]
+  );
+
   const collateralSummary = [
     {
       title: 'No of Collateral',
@@ -169,5 +193,6 @@ export const useLoanAccountDetailHooks = () => {
     collatListInfo,
     memberDetails,
     ledgerList,
+    paymentAllList,
   };
 };

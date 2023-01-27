@@ -11,8 +11,40 @@ import {
 import { FormSwitchTab } from '@coop/shared/form';
 
 const YesNo = [
-  { label: 'Yes', value: true },
-  { label: 'No', value: false },
+  { label: 'Skip', value: true },
+  { label: 'Don’t Skip', value: false },
+];
+
+const eodExeptionList = [
+  {
+    title: 'Branch Readiness',
+    subTitle:
+      'Pressing “Skip” will allow skipping the check to see if all branches are ready for EOD Process.',
+    fieldName: 'branchReadiness',
+    border: true,
+  },
+
+  {
+    title: 'Dormant Check',
+    subTitle: 'Pressing “Skip” will allow skipping dormant account check for EOD Process.',
+    fieldName: 'dormantCheck',
+    border: true,
+  },
+
+  {
+    title: 'Maturity Check',
+    subTitle:
+      'Pressing “Skip” will allow skipping maturity check whether all the account that are matured are processed.',
+    fieldName: 'maturityCheck',
+    border: true,
+  },
+
+  {
+    title: 'Cash in Hand',
+    subTitle: 'Pressing “Skip” will allow skipping Cash in Hand check during EOD Process.',
+    fieldName: 'cashInHand',
+    border: false,
+  },
 ];
 
 export const EodExceptions = () => {
@@ -78,20 +110,39 @@ export const EodExceptions = () => {
               EOD Exceptions
             </Text>
             <Text fontWeight="Medium" color="gray.600" fontSize="s3" lineHeight="125%">
-              Manage exceptions that may arise during the day-end process by using options that can
-              be easily toggled.
+              Define the Day End Process exceptions. In essence, that will let the Myra system skip
+              the check.
             </Text>
           </Box>
 
-          <Box display="flex" p="s16" borderBottom="1px solid" borderBottomColor="border.layout">
-            <Box display="flex" flexDirection="column" gap="s16">
-              <FormSwitchTab name="branchReadiness" label="Branch Readiness" options={YesNo} />
-
-              <FormSwitchTab name="dormantCheck" label="Dormant Check" options={YesNo} />
-
-              <FormSwitchTab name="maturityCheck" label="Maturity Check" options={YesNo} />
-
-              <FormSwitchTab name="cashInHand" label="Cash in Hand" options={YesNo} />
+          <Box
+            display="flex"
+            px="s16"
+            paddingTop="s16"
+            borderBottom="1px solid"
+            borderBottomColor="border.layout"
+          >
+            <Box display="flex" flexDirection="column" gap="s16" w="100%">
+              {eodExeptionList?.map((item) => (
+                <Box
+                  pb="s24"
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  borderBottom={item.border ? '1px solid' : ' '}
+                  borderBottomColor={item.border ? 'border.layout' : ' '}
+                >
+                  <Box display="flex" flexDirection="column">
+                    <Text fontWeight="SemiBold" color="gray.800" fontSize="r1" lineHeight="17px">
+                      {item.title}
+                    </Text>
+                    <Text fontWeight="Regular" color="gray.600" fontSize="s3" lineHeight="150%">
+                      {item.subTitle}
+                    </Text>
+                  </Box>
+                  <FormSwitchTab name={item.fieldName} options={YesNo} />
+                </Box>
+              ))}
             </Box>
           </Box>
 
