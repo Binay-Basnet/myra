@@ -53,7 +53,7 @@ export const useRefreshToken = (url: string) => {
         replace(
           {
             query: {
-              redirect: router.pathname,
+              redirect: router.asPath,
             },
           },
           '/login'
@@ -64,7 +64,7 @@ export const useRefreshToken = (url: string) => {
         replace(
           {
             query: {
-              redirect: router.pathname,
+              redirect: router.asPath,
             },
           },
           '/login'

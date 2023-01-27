@@ -20,7 +20,7 @@ export const useInit = () => {
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const dispatch = useAppDispatch();
   const replace = useReplace();
-  const { pathname } = useRouter();
+  const { asPath } = useRouter();
 
   const ability = useContext(AbilityContext);
 
@@ -48,7 +48,7 @@ export const useInit = () => {
   const availableBranches = loginData?.branches;
 
   useEffect(() => {
-    if (!pathname.includes('login') && !isLoggedIn) {
+    if (!asPath.includes('login') && !isLoggedIn) {
       refreshToken()
         .then((res) => {
           if (res) {
@@ -56,7 +56,7 @@ export const useInit = () => {
           }
         })
         .catch(() => {
-          if (pathname.includes('password-recovery')) {
+          if (asPath.includes('password-recovery')) {
             setIsLoading(false);
             return;
           }
@@ -64,7 +64,7 @@ export const useInit = () => {
             {
               pathname: '/login',
               query: {
-                redirect: pathname,
+                redirect: asPath,
               },
             },
             '/login'
@@ -76,7 +76,7 @@ export const useInit = () => {
     } else {
       setIsLoading(false);
     }
-  }, [dispatch, refreshToken, replace, pathname]);
+  }, [dispatch, refreshToken, replace, asPath]);
 
   useEffect(() => {
     if (hasDataReturned) {
@@ -95,7 +95,7 @@ export const useInit = () => {
 
         setIsLoading(false);
       } else {
-        if (pathname.includes('password-recovery')) {
+        if (asPath.includes('password-recovery')) {
           setIsLoading(false);
           return;
         }
@@ -103,7 +103,7 @@ export const useInit = () => {
           {
             pathname: '/login',
             query: {
-              redirect: pathname,
+              redirect: asPath,
             },
           },
           '/login'
