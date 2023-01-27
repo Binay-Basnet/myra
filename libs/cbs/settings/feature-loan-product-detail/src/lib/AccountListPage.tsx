@@ -90,13 +90,8 @@ export const AccountListPage = () => {
             Account List
           </Text>
           <Button
-            leftIcon={
-              <Icon
-                as={IoAdd}
-                size="md"
-                onClick={() => router.push(ROUTES.CBS_LOAN_APPLICATIONS_ADD)}
-              />
-            }
+            onClick={() => router.push(ROUTES.CBS_LOAN_APPLICATIONS_ADD)}
+            leftIcon={<Icon as={IoAdd} size="md" />}
           >
             Add Account
           </Button>

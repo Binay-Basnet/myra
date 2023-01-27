@@ -166,6 +166,7 @@ query transactionDepositDetail($transactionId: ID!) {
           debit
           credit
           serviceCenter
+          ledgerId
         }
         totalDebit
         totalCredit
@@ -208,6 +209,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
           debit
           credit
           serviceCenter
+          ledgerId
         }
         totalDebit
         totalCredit
@@ -257,6 +259,7 @@ query transactionAccountTransferDetail($transactionId: ID!) {
           debit
           credit
           serviceCenter
+          ledgerId
         }
         totalDebit
         totalCredit
@@ -335,6 +338,7 @@ query loanRepaymentDetail($paymentId: ID!) {
           debit
           credit
           serviceCenter
+          ledgerId
         }
         totalDebit
         totalCredit
@@ -421,6 +425,7 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
           serviceCenter
           debit
           credit
+          ledgerId
         }
         totalDebit
         totalCredit
