@@ -25,7 +25,7 @@ export const LedgerTab = () => {
             modalProps.onToggle();
           }}
         >
-          Add New Account
+          Add New Ledger
         </Button>
 
         <AddAccountModal clickedAccount={leafNodeData as CoaTree} modalProps={modalProps} />
