@@ -120,7 +120,7 @@ export const DepositList = () => {
                   aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
                   action: 'VIEW',
                   onClick: (row) => {
-                    router.push(`${ROUTES.CBS_TRANS_DEPOSIT_DETAILS}?id=${row?.ID}`);
+                    router.push(`${ROUTES.CBS_TRANS_DEPOSIT_DETAILS}?id=${row?.transactionCode}`);
                   },
                 },
               ]}
@@ -146,7 +146,9 @@ export const DepositList = () => {
         getRowId={(row) => String(row?.node?.ID)}
         isLoading={isFetching}
         columns={columns}
-        rowOnClick={(row) => router.push(`${ROUTES.CBS_TRANS_DEPOSIT_DETAILS}?id=${row?.node?.ID}`)}
+        rowOnClick={(row) =>
+          router.push(`${ROUTES.CBS_TRANS_DEPOSIT_DETAILS}?id=${row?.node?.transactionCode}`)
+        }
         pagination={{
           total: data?.transaction?.listDeposit?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listDeposit?.pageInfo,
