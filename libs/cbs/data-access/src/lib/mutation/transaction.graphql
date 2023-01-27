@@ -48,6 +48,7 @@ mutation setWithdrawData($data: WithdrawInput!) {
         fine
         totalAmount
         withdrawnBy
+        withdrawOther
         withdrawWith
         paymentMode
       }

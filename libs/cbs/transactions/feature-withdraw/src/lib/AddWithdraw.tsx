@@ -522,6 +522,7 @@ export const AddWithdraw = () => {
                     promise={() => mutateAsync({ data: handleSubmit() })}
                     successCardProps={(response) => {
                       const result = response?.transaction?.withdraw?.record;
+                      const isWithdrawOther = result?.withdrawnBy === 'OTHER';
 
                       return {
                         type: 'Withdraw',
@@ -536,9 +537,10 @@ export const AddWithdraw = () => {
                           Date: localizedDate(result?.date),
                           'Withdraw Amount': amountConverter(result?.amount || 0),
                           Fine: amountConverter(result?.fine || '0'),
-
                           'Payment Mode': result?.paymentMode,
                           'Withdrawn By': result?.withdrawnBy,
+
+                          ...(isWithdrawOther && { 'Withdrawer Name': result?.withdrawOther }),
                         },
                         subTitle:
                           'Amount withdrawn successfully. Details of the transaction is listed below.',
