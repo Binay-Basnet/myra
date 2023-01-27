@@ -1,13 +1,13 @@
-import { Controller, Path, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import { SwitchTabs, SwitchTabsProps } from '@myra-ui';
 
-interface IFormSwitchTabsProps<T> extends Omit<SwitchTabsProps, 'onChange' | 'value' | 'id'> {
-  name: Path<T>;
+interface IFormSwitchTabsProps extends Omit<SwitchTabsProps, 'onChange' | 'value' | 'id'> {
+  name: string;
   id?: string;
 }
 
-export const FormSwitchTab = <T,>({ name, ...rest }: IFormSwitchTabsProps<T>) => {
+export const FormSwitchTab = ({ name, ...rest }: IFormSwitchTabsProps) => {
   const methods = useFormContext();
 
   const { control } = methods;

@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { FormSection } from '@myra-ui';
 
@@ -11,9 +12,15 @@ export const BalanceLimit = () => {
   const { watch } = method;
   const minAmount = watch('balanceLimit.minAmount');
 
+  const router = useRouter();
+
   return (
     <FormSection header="depositProductBalanceLimit">
-      <FormAmountInput name="balanceLimit.minAmount" label={t['depositProductMinimumAmount']} />
+      <FormAmountInput
+        name="balanceLimit.minAmount"
+        label={t['depositProductMinimumAmount']}
+        isDisabled={router?.asPath?.includes('/edit')}
+      />
       <FormAmountInput
         name="balanceLimit.maxAmount"
         label={t['depositProductMaximumAmount']}
@@ -23,6 +30,7 @@ export const BalanceLimit = () => {
             message: 'Maximum balance amount should be greater than minimum amount',
           },
         }}
+        isDisabled={router?.asPath?.includes('/edit')}
       />
     </FormSection>
   );

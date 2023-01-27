@@ -111,7 +111,7 @@ export const WithdrawList = () => {
                   aclKey: 'CBS_TRANSACTIONS_WITHDRAW',
                   action: 'VIEW',
                   onClick: (row) => {
-                    router.push(`${ROUTES.CBS_TRANS_WITHDRAW_DETAILS}?id=${row?.ID}`);
+                    router.push(`${ROUTES.CBS_TRANS_WITHDRAW_DETAILS}?id=${row?.transactionCode}`);
                   },
                 },
               ]}
@@ -138,7 +138,7 @@ export const WithdrawList = () => {
         isLoading={isFetching}
         columns={columns}
         rowOnClick={(row) =>
-          router.push(`${ROUTES.CBS_TRANS_WITHDRAW_DETAILS}?id=${row?.node?.ID}`)
+          router.push(`${ROUTES.CBS_TRANS_WITHDRAW_DETAILS}?id=${row?.node?.transactionCode}`)
         }
         pagination={{
           total: data?.transaction?.listWithdraw?.totalCount ?? 'Many',

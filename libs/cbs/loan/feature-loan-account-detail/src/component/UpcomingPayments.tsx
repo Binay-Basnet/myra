@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
+import { useDisclosure } from '@chakra-ui/react';
 
-import { DetailsCard, Text } from '@myra-ui';
+import { Button, DetailsCard, Modal, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { localizedDate } from '@coop/cbs/utils';
@@ -19,11 +20,19 @@ type CustomPaymentItem = {
 
 interface IPaymentProps {
   paymentList: CustomPaymentItem[];
+  allList: CustomPaymentItem[];
 }
 
-export const UpcomingPayments = ({ paymentList }: IPaymentProps) => {
+export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
+  const { isOpen, onClose, onToggle } = useDisclosure();
   const paymentListWithIndex =
     paymentList?.map((payment, index) => ({
+      index: index + 1,
+      ...payment,
+    })) ?? [];
+
+  const allPaymentListWithIndex =
+    allList?.map((payment, index) => ({
       index: index + 1,
       ...payment,
     })) ?? [];
@@ -72,15 +81,42 @@ export const UpcomingPayments = ({ paymentList }: IPaymentProps) => {
   );
 
   return (
-    <DetailsCard title="Upcoming Payments" bg="white" hasTable>
-      <Table
-        isDetailPageTable
-        isStatic
-        showFooter
-        data={paymentListWithIndex}
-        columns={columns}
-        noDataTitle="upcoming payment"
-      />
-    </DetailsCard>
+    <>
+      <DetailsCard
+        title="Upcoming Payments"
+        bg="white"
+        hasTable
+        leftBtn={
+          <Button variant="ghost" onClick={onToggle}>
+            View All Payments
+          </Button>
+        }
+      >
+        <Table
+          isDetailPageTable
+          isStatic
+          data={paymentListWithIndex}
+          columns={columns}
+          noDataTitle="upcoming payment"
+        />
+      </DetailsCard>
+
+      <Modal
+        onClose={onClose}
+        open={isOpen}
+        title="Upcoming Payments"
+        scrollBehavior="inside"
+        blockScrollOnMount
+        width="4xl"
+      >
+        <Table
+          isDetailPageTable
+          isStatic
+          data={allPaymentListWithIndex}
+          columns={columns}
+          noDataTitle="upcoming payment"
+        />
+      </Modal>
+    </>
   );
 };

@@ -101,7 +101,9 @@ export const AccountTransferList = () => {
                   aclKey: 'CBS_TRANSACTIONS_ACCOUNT_TRANSFER',
                   action: 'VIEW',
                   onClick: (row) => {
-                    router.push(`${ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_DETAILS}?id=${row?.ID}`);
+                    router.push(
+                      `${ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_DETAILS}?id=${row?.transactionCode}`
+                    );
                   },
                 },
               ]}
@@ -130,7 +132,9 @@ export const AccountTransferList = () => {
         isLoading={isFetching}
         columns={columns}
         rowOnClick={(row) =>
-          router.push(`${ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_DETAILS}?id=${row?.node?.ID}`)
+          router.push(
+            `${ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_DETAILS}?id=${row?.node?.transactionCode}`
+          )
         }
         pagination={{
           total: data?.transaction?.listTransfer?.totalCount ?? 'Many',

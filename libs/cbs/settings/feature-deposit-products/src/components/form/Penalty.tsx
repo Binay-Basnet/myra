@@ -1,4 +1,6 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
+
 import { Alert, Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 
 import { FormAmountInput, FormInput, FormSwitchTab } from '@coop/shared/form';
@@ -11,14 +13,18 @@ export const Penalty = () => {
   const { watch } = useFormContext();
   const penalty = watch('penalty');
 
+  const router = useRouter();
+
   const enableSwitch = [
     {
       label: t['enable'],
       value: true,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['disable'],
       value: false,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
   ];
 
@@ -53,6 +59,7 @@ export const Penalty = () => {
                   name="penaltyData.dayAfterInstallmentDate"
                   type="number"
                   label={t['depositProductDayaftertheinstallmentdate']}
+                  isDisabled={router?.asPath?.includes('/edit')}
                 />
 
                 <FormInput
@@ -65,12 +72,14 @@ export const Penalty = () => {
                       %
                     </Text>
                   }
+                  isDisabled={router?.asPath?.includes('/edit')}
                 />
 
                 <FormAmountInput
                   type="number"
                   name="penaltyData.penaltyAmount"
                   label={t['depositProductPenaltyAmount']}
+                  isDisabled={router?.asPath?.includes('/edit')}
                 />
                 {/* <FormSelect
                   name="penaltyData.penaltyLedgerMapping"

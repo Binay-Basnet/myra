@@ -55,6 +55,7 @@ export interface SwitchTabsProps {
   options: {
     label: string;
     value: string | boolean;
+    isDisabled?: boolean;
   }[];
   id?: string;
   label?: string;
@@ -138,7 +139,7 @@ export const SwitchTabs = ({
                     }
               }
             >
-              <SwitchTab name={name} key={val.label} {...radio} id={id}>
+              <SwitchTab name={name} key={val.label} isDisabled={val.isDisabled} {...radio} id={id}>
                 {val.label}
               </SwitchTab>
             </Box>

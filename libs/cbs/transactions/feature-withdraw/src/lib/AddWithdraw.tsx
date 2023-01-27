@@ -345,7 +345,6 @@ export const AddWithdraw = () => {
                   borderColor="border.layout"
                 >
                   <FormMemberSelect isRequired name="memberId" label={t['addWithdrawMember']} />
-
                   {memberId && (
                     <FormAccountSelect
                       isRequired
@@ -355,7 +354,6 @@ export const AddWithdraw = () => {
                       filterBy={ObjState.Active}
                     />
                   )}
-
                   {selectedAccount?.product?.withdrawRestricted && (
                     <Alert
                       status="info"
@@ -364,7 +362,6 @@ export const AddWithdraw = () => {
                       subtitle="Withdraw is restricted for this account."
                     />
                   )}
-
                   {memberId && accountId && (
                     <>
                       <FormSwitchTab
@@ -522,6 +519,7 @@ export const AddWithdraw = () => {
                     promise={() => mutateAsync({ data: handleSubmit() })}
                     successCardProps={(response) => {
                       const result = response?.transaction?.withdraw?.record;
+                      const isWithdrawOther = result?.withdrawnBy === 'OTHER';
 
                       return {
                         type: 'Withdraw',
@@ -536,9 +534,12 @@ export const AddWithdraw = () => {
                           Date: localizedDate(result?.date),
                           'Withdraw Amount': amountConverter(result?.amount || 0),
                           Fine: amountConverter(result?.fine || '0'),
-
                           'Payment Mode': result?.paymentMode,
-                          'Withdrawn By': result?.withdrawnBy,
+                          'Withdrawn By': !isWithdrawOther
+                            ? result?.withdrawnBy
+                            : `${result?.withdrawnBy}-(${result?.withdrawOther})`,
+
+                          // ...(isWithdrawOther && { 'Withdrawer Name': result?.withdrawOther }),
                         },
                         subTitle:
                           'Amount withdrawn successfully. Details of the transaction is listed below.',

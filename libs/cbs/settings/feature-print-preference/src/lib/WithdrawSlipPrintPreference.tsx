@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { asyncToast, Box, SettingsFooter, Text } from '@myra-ui';
+import { asyncToast, Box, Loader, SettingsFooter, Text } from '@myra-ui';
 
 import {
   PrintPreferenceInput,
@@ -20,7 +20,7 @@ export const WithdrawSlipPrintPreference = () => {
 
   const { watch, reset } = methods;
 
-  const { data, refetch } = useGetWithdrawSlipPrintPreferenceQuery();
+  const { data, refetch, isFetching } = useGetWithdrawSlipPrintPreferenceQuery();
 
   const printPreferenceData = data?.settings?.general?.printPreference?.get?.data;
 
@@ -83,13 +83,19 @@ export const WithdrawSlipPrintPreference = () => {
           </Text>
         </Box>
         <Box mt="s16" display="flex" flexDir="column" gap="s16">
-          <FormProvider {...methods}>
-            <WithdrawSlipSize />
+          {isFetching ? (
+            <Box display="flex" justifyContent="center" pt="100px">
+              <Loader />
+            </Box>
+          ) : (
+            <FormProvider {...methods}>
+              <WithdrawSlipSize />
 
-            <WithdrawSlipElementCustomization />
+              <WithdrawSlipElementCustomization />
 
-            <WithdrawSlipPrintPreview />
-          </FormProvider>
+              <WithdrawSlipPrintPreview />
+            </FormProvider>
+          )}
         </Box>
       </Box>
       <SettingsFooter handleSave={onSubmit} />

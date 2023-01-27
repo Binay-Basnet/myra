@@ -43,7 +43,6 @@ export const JournalVouchersTable = () => {
       after: '',
       first: 10,
     },
-
     flag: 'JOURNAL_VOUCHER',
     filter: {
       ledgerId: searchTerm,

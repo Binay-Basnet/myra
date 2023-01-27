@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { asyncToast, Box, Button, Text } from '@myra-ui';
+import { asyncToast, Box, Button, Loader, Text } from '@myra-ui';
 
 import { BankInput, useGetBankTableListQuery, useSetBankListMutation } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
@@ -20,7 +20,7 @@ export const CbsSettingsFeatureBank = () => {
 
   const { mutateAsync } = useSetBankListMutation();
 
-  const { data } = useGetBankTableListQuery();
+  const { data, isFetching } = useGetBankTableListQuery();
 
   const bankList = data?.bank?.bank?.list;
   const bankName = bankList?.map((item) => item?.name);
@@ -59,14 +59,21 @@ export const CbsSettingsFeatureBank = () => {
   return (
     <>
       <SettingsPageHeader heading="Bank List" />
+
       <Box display="flex" flexDirection="column" p="s16" gap="s16" mb="70px">
         <Text fontWeight="Regular" fontSize="s2" color="gray.600" lineHeight="125%">
           Default Lists of all commercial banks in Nepal. If your bank is not in the list, you can
           add them.
         </Text>
-        <FormProvider {...methods}>
-          <BankTable />
-        </FormProvider>
+        {isFetching ? (
+          <Box display="flex" justifyContent="center" pt="100px">
+            <Loader />
+          </Box>
+        ) : (
+          <FormProvider {...methods}>
+            <BankTable />
+          </FormProvider>
+        )}
         <Box
           p="s16"
           display="flex"

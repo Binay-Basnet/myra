@@ -34,6 +34,7 @@ const cashOptions: Record<CashValue, string> = {
   [CashValue.Cash_5]: '5x',
   [CashValue.Cash_2]: '2x',
   [CashValue.Cash_1]: '1x',
+  [CashValue.Paisa]: 'paisa',
 };
 
 export const TellerTransferApproveModal = ({

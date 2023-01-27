@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { FormSection, Text } from '@myra-ui';
 
@@ -12,6 +13,8 @@ export const Interest = () => {
   const depositNature = watch('nature');
   const minRate = watch('interest.minRate');
 
+  const router = useRouter();
+
   return (
     <FormSection header="depositProductInterest">
       <FormInput
@@ -24,6 +27,7 @@ export const Interest = () => {
             %
           </Text>
         }
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <FormInput
         name="interest.maxRate"
@@ -41,6 +45,7 @@ export const Interest = () => {
             message: 'Maximum rate should be greater than minimum rate',
           },
         }}
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <FormInput
         isRequired
@@ -53,6 +58,7 @@ export const Interest = () => {
             %
           </Text>
         }
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       {depositNature !== NatureOfDepositProduct.RecurringSaving && (
         <FormInput
@@ -65,6 +71,7 @@ export const Interest = () => {
               %
             </Text>
           }
+          isDisabled={router?.asPath?.includes('/edit')}
         />
       )}
       <FormInput
@@ -77,6 +84,7 @@ export const Interest = () => {
             %
           </Text>
         }
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <FormInput
         name="interest.boardAuthority"
@@ -88,6 +96,7 @@ export const Interest = () => {
             %
           </Text>
         }
+        isDisabled={router?.asPath?.includes('/edit')}
       />
     </FormSection>
   );

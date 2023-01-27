@@ -329,9 +329,9 @@ const en: Record<string, string> = {
   sharePurchaseTableBalance: 'Balance',
 
   // settings COA table
-  settingsCoaTableAccountCode: 'Account Code',
-  settingsCoaTableAccountName: 'Account Name',
-  settingsCoaTableAccountClass: 'Account Class',
+  settingsCoaTableAccountCode: 'Ledger Code',
+  settingsCoaTableAccountName: 'Ledger Name',
+  settingsCoaTableAccountClass: 'Ledger Class',
   settingsCoaTableAccountParentGroup: 'Parent Group',
 
   // settings branch table
@@ -417,7 +417,7 @@ const en: Record<string, string> = {
   settingsCoa: 'Charts Of Accounts',
   settingsCoaNewAccount: 'New Account',
   settingsCoaFullView: 'Full View',
-  settingsCoaAccountList: 'Account List',
+  settingsCoaAccountList: 'Ledger List',
 
   settingsCoaAddNewAccount: 'Add New Account',
   settingsCoaAddSaveAccount: 'Save Account',
