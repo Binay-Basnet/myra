@@ -5665,7 +5665,9 @@ export type GlTransaction = {
   account: Scalars['String'];
   credit?: Maybe<Scalars['String']>;
   debit?: Maybe<Scalars['String']>;
+  ledgerId?: Maybe<Scalars['String']>;
   serviceCenter?: Maybe<Scalars['String']>;
+  serviceCentreId?: Maybe<Scalars['String']>;
 };
 
 export const GlobalPageAppName = {

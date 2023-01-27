@@ -57,6 +57,7 @@ export type Column<T extends RecordWithId & Record<string, string | number | boo
   loadOptions?: (row: T) => Promise<{ label: string; value: string }[]>;
 
   isNumeric?: boolean;
+  getDisabled?: (row: T) => boolean;
 
   cell?: (row: T) => React.ReactNode;
   modal?: React.ComponentType<ModalProps>;
@@ -272,12 +273,32 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
   useDeepCompareEffect(() => {
     if (onChange) {
       // eslint-disable-next-line unused-imports/no-unused-vars
-      onChange(state.data.map(({ _id, ...rest }) => rest));
+      onChange(
+        state.data.map(({ _id, ...rest }) => {
+          const keys = Object.keys(rest);
+
+          const newObject = keys.reduce((acc, key) => {
+            acc = {
+              ...acc,
+              [key]:
+                typeof rest[key] === 'number' || typeof rest[key] === 'string'
+                  ? rest[key]
+                  : 'label' in rest[key]
+                  ? rest[key].label
+                  : rest[key],
+            };
+
+            return acc;
+          }, {});
+
+          return newObject;
+        })
+      );
     }
   }, [state.data]);
 
   useDeepCompareEffect(() => {
-    if (defaultData) {
+    if (defaultData && !columns.some((column) => !!column.searchOptions)) {
       dispatch({
         type: EditableTableActionKind.REPLACE,
         payload: {
@@ -366,7 +387,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
               isLoading={columns.find((column) => column.searchOptions)?.searchLoading}
               onInputChange={debounce((id) => {
                 if (id) {
-                  columns.find((column) => column.searchOptions)?.searchCallback?.(id);
+                  columns.find((column) => column.searchCallback)?.searchCallback?.(id);
                   // setTrigger(true);
                 }
               }, 800)}
@@ -378,7 +399,10 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
                       key.fieldType === 'search'
                         ? {
                             ...o,
-                            [key.accessor]: newValue.value,
+                            [key.accessor]: {
+                              value: newValue.value,
+                              label: newValue.label,
+                            },
                           }
                         : {
                             ...o,
@@ -694,7 +718,11 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
             }
           : {}
       }
-      isDisabled={column.fieldType === 'search' || !!column?.accessorFn}
+      isDisabled={
+        column.getDisabled
+          ? column.getDisabled(data)
+          : column.fieldType === 'search' || !!column?.accessorFn
+      }
       isPreviewFocusable
       selectAllOnFocus={false}
       w="100%"
@@ -711,7 +739,7 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
       flexBasis={flexBasisFunc(column)}
       value={
         column.fieldType === 'search'
-          ? column.searchOptions?.find((search) => search.value === data[column.accessor])?.label
+          ? data[column.accessor]?.label
           : column.accessorFn
           ? column.accessorFn(data)
             ? String(column.accessorFn(data))
@@ -764,6 +792,15 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
           px="s8"
           display="flex"
           alignItems="center"
+          sx={
+            column.getDisabled && column.getDisabled(data)
+              ? {
+                  cursor: 'not-allowed',
+                  bg: 'gray.50',
+                  borderRadius: '0',
+                }
+              : {}
+          }
           justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
         />
       )}
