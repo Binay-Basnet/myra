@@ -26139,6 +26139,7 @@ export type TransactionDepositDetailQuery = {
           debit?: string | null;
           credit?: string | null;
           serviceCenter?: string | null;
+          ledgerId?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -26185,6 +26186,7 @@ export type TransactionWithdrawDetailQuery = {
           debit?: string | null;
           credit?: string | null;
           serviceCenter?: string | null;
+          ledgerId?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -26230,6 +26232,7 @@ export type TransactionAccountTransferDetailQuery = {
           debit?: string | null;
           credit?: string | null;
           serviceCenter?: string | null;
+          ledgerId?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -26321,6 +26324,7 @@ export type LoanRepaymentDetailQuery = {
           debit?: string | null;
           credit?: string | null;
           serviceCenter?: string | null;
+          ledgerId?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -26418,6 +26422,7 @@ export type GetAllTransactionsDetailQuery = {
           serviceCenter?: string | null;
           debit?: string | null;
           credit?: string | null;
+          ledgerId?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -42686,6 +42691,7 @@ export const TransactionDepositDetailDocument = `
           debit
           credit
           serviceCenter
+          ledgerId
         }
         totalDebit
         totalCredit
@@ -42743,6 +42749,7 @@ export const TransactionWithdrawDetailDocument = `
           debit
           credit
           serviceCenter
+          ledgerId
         }
         totalDebit
         totalCredit
@@ -42806,6 +42813,7 @@ export const TransactionAccountTransferDetailDocument = `
           debit
           credit
           serviceCenter
+          ledgerId
         }
         totalDebit
         totalCredit
@@ -42927,6 +42935,7 @@ export const LoanRepaymentDetailDocument = `
           debit
           credit
           serviceCenter
+          ledgerId
         }
         totalDebit
         totalCredit
@@ -43053,6 +43062,7 @@ export const GetAllTransactionsDetailDocument = `
           serviceCenter
           debit
           credit
+          ledgerId
         }
         totalDebit
         totalCredit

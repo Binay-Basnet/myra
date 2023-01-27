@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Box, Button, Icon, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Id_Type, useGetLoanAccountListQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
+import { useGetLoanAccountListQuery } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { getRouterQuery } from '@coop/shared/utils';
 
@@ -13,7 +13,6 @@ import { SideBar } from '../components';
 
 export const AccountListPage = () => {
   const router = useRouter();
-  const newId = useGetNewIdMutation({});
   const { id } = router.query;
 
   const { data, isLoading } = useGetLoanAccountListQuery({
@@ -91,17 +90,8 @@ export const AccountListPage = () => {
             Account List
           </Text>
           <Button
-            leftIcon={
-              <Icon
-                as={IoAdd}
-                size="md"
-                onClick={() =>
-                  newId
-                    .mutateAsync({ idType: Id_Type.Account })
-                    .then((res) => router.push(`/savings/account-open/add//${res?.newId}`))
-                }
-              />
-            }
+            onClick={() => router.push(ROUTES.CBS_LOAN_APPLICATIONS_ADD)}
+            leftIcon={<Icon as={IoAdd} size="md" />}
           >
             Add Account
           </Button>
