@@ -16187,6 +16187,7 @@ export type SetCbsCodeMutation = {
 export type SetDepositProductMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<DepositProductInput>;
+  edit?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type SetDepositProductMutation = {
@@ -16328,6 +16329,7 @@ export type EodExceptionSetupMutation = {
 export type SetLoanProductMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<LoanProductInput>;
+  edit?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type SetLoanProductMutation = {
@@ -17318,6 +17320,7 @@ export type SetWithdrawDataMutation = {
         fine?: string | null;
         totalAmount?: string | null;
         withdrawnBy?: WithdrawBy | null;
+        withdrawOther?: string | null;
         withdrawWith?: WithdrawWith | null;
         paymentMode?: WithdrawPaymentType | null;
       } | null;
@@ -29439,11 +29442,11 @@ export const useSetCbsCodeMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const SetDepositProductDocument = `
-    mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
+    mutation setDepositProduct($id: ID!, $data: DepositProductInput, $edit: Boolean) {
   settings {
     general {
       depositProduct {
-        add(id: $id, data: $data) {
+        add(id: $id, data: $data, edit: $edit) {
           recordId
           record {
             id
@@ -29675,11 +29678,11 @@ export const useEodExceptionSetupMutation = <TError = unknown, TContext = unknow
     options
   );
 export const SetLoanProductDocument = `
-    mutation setLoanProduct($id: ID!, $data: LoanProductInput) {
+    mutation setLoanProduct($id: ID!, $data: LoanProductInput, $edit: Boolean) {
   settings {
     general {
       loanProducts {
-        upsert(id: $id, data: $data) {
+        upsert(id: $id, data: $data, edit: $edit) {
           recordId
           record {
             id
@@ -31124,6 +31127,7 @@ export const SetWithdrawDataDocument = `
         fine
         totalAmount
         withdrawnBy
+        withdrawOther
         withdrawWith
         paymentMode
       }

@@ -116,7 +116,7 @@ export const SettingsDepositProductsAdd = () => {
     },
   });
 
-  const { getValues, watch, reset, resetField } = methods;
+  const { getValues, watch, reset } = methods;
   const criteria = watch('criteria');
   const chequeIssue = watch('chequeIssue');
   const penalty = watch('penalty');
@@ -305,11 +305,19 @@ export const SettingsDepositProductsAdd = () => {
     asyncToast({
       id: 'deposit-id',
       msgs: {
-        success: 'New Product Added',
-        loading: 'Adding New Deposit',
+        success: router?.asPath?.includes('/edit')
+          ? 'Saving Product Updated'
+          : 'New Saving Product Added',
+        loading: router?.asPath?.includes('/edit')
+          ? 'Updated Saving Product'
+          : 'Adding New Saving Product',
       },
       onSuccess: () => router.push(ROUTES.SETTINGS_GENERAL_SP_LIST),
-      promise: mutateAsync({ id, data: updatedData as unknown as DepositProductInput }),
+      promise: mutateAsync({
+        id,
+        data: updatedData as unknown as DepositProductInput,
+        edit: router?.asPath?.includes('/edit'),
+      }),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
           Object.keys(error.validationErrorMsg).map((key) =>
@@ -353,32 +361,36 @@ export const SettingsDepositProductsAdd = () => {
     }
   }, [refetch]);
 
-  useEffect(() => {
-    reset({
-      ...getValues(),
-      typeOfMember: '',
-    });
-    resetField('minAge');
-    resetField('maxAge');
-    resetField('genderId');
-    resetField('maritalStatusId');
-    resetField('educationQualification');
-    resetField('ethnicity');
-    resetField('occupation');
-    resetField('natureOfBusinessInstitution');
-    resetField('foreignEmployment');
-    resetField('cooperativeType');
-    resetField('natureOFBusinessCoop');
-    // resetField('typeOfMember');
-    resetField('criteria');
-  }, [JSON.stringify(depositNature)]);
+  // useEffect(() => {
+  //   reset({
+  //     ...getValues(),
+  //     typeOfMember: '',
+  //   });
+  //   resetField('minAge');
+  //   resetField('maxAge');
+  //   resetField('genderId');
+  //   resetField('maritalStatusId');
+  //   resetField('educationQualification');
+  //   resetField('ethnicity');
+  //   resetField('occupation');
+  //   resetField('natureOfBusinessInstitution');
+  //   resetField('foreignEmployment');
+  //   resetField('cooperativeType');
+  //   resetField('natureOFBusinessCoop');
+  //   // resetField('typeOfMember');
+  //   resetField('criteria');
+  // }, [JSON.stringify(depositNature)]);
 
   return (
     <>
       <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.lg" height="fit-content" paddingInline="0">
           <FormHeader
-            title={`${t['depositProductAddDepositProducts']} - ${featureCode.newSavingProduct}`}
+            title={
+              router?.asPath?.includes('/edit')
+                ? 'Edit Saving Product'
+                : `${t['depositProductAddDepositProducts']} - ${featureCode.newSavingProduct}`
+            }
           />
         </Container>
       </Box>

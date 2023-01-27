@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 
@@ -33,6 +34,9 @@ const inputRightElementText = (props: IRightElementProps) => {
 
 export const Tenure = () => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+
   const { resetField, watch } = useFormContext();
   const [rightElement, setRightElement] = useState('days');
   const minimumTenureUnit = watch('minTenureUnit');
@@ -42,18 +46,22 @@ export const Tenure = () => {
     {
       label: t['day'],
       value: FrequencyTenure.Day,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['week'],
       value: FrequencyTenure.Week,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['month'],
       value: FrequencyTenure.Month,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['year'],
       value: FrequencyTenure.Year,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
   ];
 
@@ -97,6 +105,7 @@ export const Tenure = () => {
                   rightElement: rightElement as FrequencyTenure,
                   t,
                 })}
+                isDisabled={router?.asPath?.includes('/edit')}
               />
             </GridItem>
 
@@ -116,6 +125,7 @@ export const Tenure = () => {
                     message: 'Maximum tenure number should be greater than minimum number',
                   },
                 }}
+                isDisabled={router?.asPath?.includes('/edit')}
               />
             </GridItem>
           </Grid>

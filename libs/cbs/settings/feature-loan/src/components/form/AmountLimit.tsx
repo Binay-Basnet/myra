@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { FormSection } from '@myra-ui';
 
@@ -7,6 +8,9 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const AmountLimit = () => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+
   const method = useFormContext();
   const { watch } = method;
   const minLoanAmount = watch('minimumLoanAmount');
@@ -18,6 +22,7 @@ export const AmountLimit = () => {
         type="number"
         name="minimumLoanAmount"
         label={t['loanProductMinimumAmount']}
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <FormAmountInput
         isRequired
@@ -30,6 +35,7 @@ export const AmountLimit = () => {
             message: 'Maximum loan amount should be greater than minimum amount',
           },
         }}
+        isDisabled={router?.asPath?.includes('/edit')}
       />
     </FormSection>
   );

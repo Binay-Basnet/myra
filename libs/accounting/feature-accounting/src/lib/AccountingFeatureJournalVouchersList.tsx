@@ -65,8 +65,12 @@ export const AccountingFeatureJournalVouchersList = () => {
                   title: 'View Details',
                   onClick: (row) => {
                     router?.pathname?.includes('transactions')
-                      ? router.push(`/${ROUTES.CBS_TRANS_JOURNAL_VOUCHER_DETAILS}?id=${row?.id}`)
-                      : router.push(`/${baseRoute}/journal-vouchers/view?id=${row?.id}`);
+                      ? router.push(
+                          `/${ROUTES.CBS_TRANS_JOURNAL_VOUCHER_DETAILS}?id=${row?.transactionCode}`
+                        )
+                      : router.push(
+                          `/${baseRoute}/journal-vouchers/view?id=${row?.transactionCode}`
+                        );
                   },
                 },
               ]}
@@ -95,8 +99,10 @@ export const AccountingFeatureJournalVouchersList = () => {
         columns={columns}
         rowOnClick={(row) =>
           router?.pathname?.includes('transactions')
-            ? router.push(`/${ROUTES.CBS_TRANS_JOURNAL_VOUCHER_DETAILS}?id=${row?.node?.id}`)
-            : router.push(`/${baseRoute}/journal-vouchers/view?id=${row?.node?.id}`)
+            ? router.push(
+                `/${ROUTES.CBS_TRANS_JOURNAL_VOUCHER_DETAILS}?id=${row?.node?.transactionCode}`
+              )
+            : router.push(`/${baseRoute}/journal-vouchers/view?id=${row?.node?.transactionCode}`)
         }
         pagination={{
           total: data?.accounting?.journalVoucher?.list?.totalCount ?? 'Many',

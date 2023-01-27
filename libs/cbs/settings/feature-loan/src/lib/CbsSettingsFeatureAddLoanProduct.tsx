@@ -347,11 +347,19 @@ export const SettingsLoanProductForm = () => {
     asyncToast({
       id: 'loan-id',
       msgs: {
-        success: 'New Product Added',
-        loading: 'Adding New Loan Product',
+        success: router?.asPath?.includes('/edit')
+          ? 'Loan Product Updated'
+          : 'New Loan Product Added',
+        loading: router?.asPath?.includes('/edit')
+          ? 'Updating Loan Product'
+          : 'Adding New Loan Product',
       },
       onSuccess: () => router.push(ROUTES.SETTINGS_GENERAL_LP_LIST),
-      promise: mutateAsync({ id, data: updatedData as LoanProductInput }),
+      promise: mutateAsync({
+        id,
+        data: updatedData as LoanProductInput,
+        edit: router?.asPath?.includes('/edit'),
+      }),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
           Object.keys(error.validationErrorMsg).map((key) =>
@@ -367,27 +375,27 @@ export const SettingsLoanProductForm = () => {
   useEffect(() => {
     if (editVals) {
       const landEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === landData[0]?.value
+        (item) => item?.type === landData?.[0]?.value
       );
 
       const landAndBuildingEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === landaAndBuildingData[0]?.value
+        (item) => item?.type === landaAndBuildingData?.[0]?.value
       );
 
       const vehicleEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === vehicleData[0]?.value
+        (item) => item?.type === vehicleData?.[0]?.value
       );
 
       const depositEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === depositData[0]?.value
+        (item) => item?.type === depositData?.[0]?.value
       );
 
       const documentEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === documentData[0]?.value
+        (item) => item?.type === documentData?.[0]?.value
       );
 
       const othersEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === othersData[0]?.value
+        (item) => item?.type === othersData?.[0]?.value
       );
 
       reset({
@@ -441,7 +449,13 @@ export const SettingsLoanProductForm = () => {
     <>
       <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.lg" height="fit-content" paddingInline="0">
-          <FormHeader title={`${t['loanProductAddLoanProduct']} - ${featureCode.newloanProduct}`} />
+          <FormHeader
+            title={
+              router?.asPath?.includes('/edit')
+                ? 'Edit Loan Product'
+                : `${t['loanProductAddLoanProduct']} - ${featureCode.newloanProduct}`
+            }
+          />
         </Container>
       </Box>
 

@@ -89,20 +89,28 @@ export const StatusList = ({ statusList }: IStatusListProps) => {
                 </Text>
               </Box>
 
-              {status === EodState.CompletedWithErrors &&
-                errors?.length &&
-                errors?.map((error) => (
-                  <Alert status="error" hideCloseIcon>
-                    <Text
-                      fontSize="r1"
-                      fontWeight="SemiBold"
-                      color="neutralColorLight.Gray-80"
-                      lineHeight="150%"
-                    >
-                      {error}
-                    </Text>
-                  </Alert>
-                ))}
+              {status === EodState.CompletedWithErrors && errors?.length && (
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  gap="s16"
+                  maxHeight="200px"
+                  overflowY="auto"
+                >
+                  {errors?.map((error) => (
+                    <Alert status="error" hideCloseIcon>
+                      <Text
+                        fontSize="r1"
+                        fontWeight="SemiBold"
+                        color="neutralColorLight.Gray-80"
+                        lineHeight="150%"
+                      >
+                        {error}
+                      </Text>
+                    </Alert>
+                  ))}
+                </Box>
+              )}
             </Box>
           </Box>
           <Divider />

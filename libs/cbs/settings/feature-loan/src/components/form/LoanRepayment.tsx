@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { FormSection } from '@myra-ui';
 
@@ -7,6 +8,9 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const LoanRepayment = () => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+
   const method = useFormContext();
   const { watch } = method;
   const principalMaxGraceNumber = watch('principalMaxGraceNumber');
@@ -17,6 +21,7 @@ export const LoanRepayment = () => {
         name="principalMaxGraceNumber"
         textAlign="right"
         label={t['loanProductMaxInstallmentPrincipal']}
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <FormInput
         name="interestMaxGraceNumber"
@@ -28,6 +33,7 @@ export const LoanRepayment = () => {
             message: 'Maximum principal grace amount should be greater than minimum amount',
           },
         }}
+        isDisabled={router?.asPath?.includes('/edit')}
       />
     </FormSection>
   );

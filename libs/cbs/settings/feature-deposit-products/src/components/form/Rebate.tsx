@@ -1,4 +1,6 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
+
 import { Alert, Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 
 import { FormAmountInput, FormInput, FormSwitchTab } from '@coop/shared/form';
@@ -11,14 +13,18 @@ export const Rebate = () => {
   const { watch } = useFormContext();
   const rebate = watch('rebate');
 
+  const router = useRouter();
+
   const enableSwitch = [
     {
       label: t['enable'],
       value: true,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['disable'],
       value: false,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
   ];
 
@@ -41,6 +47,7 @@ export const Rebate = () => {
                     name="rebateData.dayBeforeInstallmentDate"
                     type="number"
                     label={t['depositProductDayBeforetheinstallmentdate']}
+                    isDisabled={router?.asPath?.includes('/edit')}
                   />
                 </GridItem>
                 <GridItem>
@@ -50,6 +57,7 @@ export const Rebate = () => {
                     label={t['depositProductNoInstallment']}
                     helperText={t['depositProductEnterNumberInstallments']}
                     textAlign="right"
+                    isDisabled={router?.asPath?.includes('/edit')}
                   />
                 </GridItem>
               </Grid>
@@ -66,6 +74,7 @@ export const Rebate = () => {
                         %
                       </Text>
                     }
+                    isDisabled={router?.asPath?.includes('/edit')}
                   />
                 </GridItem>
                 <GridItem>
@@ -73,6 +82,7 @@ export const Rebate = () => {
                     type="number"
                     name="rebateData.rebateAmount"
                     label={t['depositProductRebateAmount']}
+                    isDisabled={router?.asPath?.includes('/edit')}
                   />
                 </GridItem>
 
