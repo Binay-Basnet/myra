@@ -2145,7 +2145,8 @@ export const CashValue = {
   Cash_50: 'CASH_50',
   Cash_100: 'CASH_100',
   Cash_500: 'CASH_500',
-  Cash_1000: 'CASH_1000'
+  Cash_1000: 'CASH_1000',
+  Paisa: 'PAISA'
 } as const;
 
 export type CashValue = typeof CashValue[keyof typeof CashValue];

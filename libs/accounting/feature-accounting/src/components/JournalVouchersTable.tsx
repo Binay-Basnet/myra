@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { Box } from '@myra-ui';
 
 import { TableOverview, TableOverviewColumnType } from '@coop/accounting/ui-components';
-import { useGetCoaAccountListQuery } from '@coop/cbs/data-access';
+import { useAppSelector, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 
 import { CustomJournalVoucherInput } from '../types';
@@ -18,6 +18,7 @@ type JournalVouchersTableType = {
 };
 
 export const JournalVouchersTable = () => {
+  const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
   const { watch } = useFormContext<CustomJournalVoucherInput>();
@@ -37,6 +38,7 @@ export const JournalVouchersTable = () => {
   }, [entries]);
 
   const { data: accountList, isFetching } = useGetCoaAccountListQuery({
+    branchId: [branchId as string],
     pagination: {
       after: '',
       first: 10,
@@ -62,11 +64,11 @@ export const JournalVouchersTable = () => {
     <Box display="flex" flexDir="column" gap="s12">
       <FormEditableTable<JournalVouchersTableType>
         name="entries"
-        searchPlaceholder="Search for Accounts"
+        searchPlaceholder="Search for ledgers"
         columns={[
           {
             accessor: 'accountId',
-            header: 'Account',
+            header: 'Ledger',
             fieldType: 'search',
             searchOptions: accountListData?.map((account) => ({
               label: account?.node?.accountName?.local as string,
