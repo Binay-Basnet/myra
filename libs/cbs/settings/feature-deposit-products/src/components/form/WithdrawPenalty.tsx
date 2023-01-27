@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { Alert, FormSection, GridItem, Text } from '@myra-ui';
 
 import { FormAmountInput, FormInput } from '@coop/shared/form';
@@ -5,6 +7,8 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const WithdrawPenalty = () => {
   const { t } = useTranslation();
+
+  const router = useRouter();
 
   // const { data: coa } = useGetCoaListQuery({
   //   filter: {
@@ -32,11 +36,13 @@ export const WithdrawPenalty = () => {
           </Text>
         }
         type="number"
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <FormAmountInput
         type="number"
         name="withdrawPenalty.penaltyAmount"
         label={t['depositProductPenaltyAmount']}
+        isDisabled={router?.asPath?.includes('/edit')}
       />
 
       {/* <FormSelect

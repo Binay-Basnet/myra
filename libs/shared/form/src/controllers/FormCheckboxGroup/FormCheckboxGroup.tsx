@@ -11,7 +11,7 @@ interface IFormCheckboxGroupProps<T extends Record<string, string[]>> {
   name: Path<T>;
   control?: Control<T>;
   label?: string;
-  list?: { label: string; value: string }[];
+  list?: { label: string; value: string; isDisabled?: boolean }[];
   showOther?: boolean;
   orientation?: 'row' | 'column' | 'grid';
 }
@@ -66,6 +66,7 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
                 id={name}
                 key={item.value}
                 label={item.label}
+                isDisabled={item.isDisabled}
                 isInvalid={!!errorText}
                 isChecked={value?.includes(item.value)}
                 onChange={() => {
