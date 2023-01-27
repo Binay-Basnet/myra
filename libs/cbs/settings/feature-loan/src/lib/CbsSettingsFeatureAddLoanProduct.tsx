@@ -375,27 +375,27 @@ export const SettingsLoanProductForm = () => {
   useEffect(() => {
     if (editVals) {
       const landEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === landData[0]?.value
+        (item) => item?.type === landData?.[0]?.value
       );
 
       const landAndBuildingEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === landaAndBuildingData[0]?.value
+        (item) => item?.type === landaAndBuildingData?.[0]?.value
       );
 
       const vehicleEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === vehicleData[0]?.value
+        (item) => item?.type === vehicleData?.[0]?.value
       );
 
       const depositEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === depositData[0]?.value
+        (item) => item?.type === depositData?.[0]?.value
       );
 
       const documentEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === documentData[0]?.value
+        (item) => item?.type === documentData?.[0]?.value
       );
 
       const othersEditData = editVals?.collateralValue?.filter(
-        (item) => item?.type === othersData[0]?.value
+        (item) => item?.type === othersData?.[0]?.value
       );
 
       reset({
