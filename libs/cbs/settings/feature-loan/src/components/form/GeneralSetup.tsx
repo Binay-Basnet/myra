@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { FormSection, GridItem } from '@myra-ui';
 
@@ -13,6 +14,9 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const GeneralSetup = () => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+
   const { watch } = useFormContext();
   const productType = watch('productType');
   const [triggerProductSubType, settTiggerProductSubType] = useState(false);
@@ -68,6 +72,7 @@ export const GeneralSetup = () => {
         name="productType"
         options={productTypes}
         label={t['loanProductProductType']}
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <GridItem colSpan={2}>
         <FormSelect
@@ -75,6 +80,7 @@ export const GeneralSetup = () => {
           name="productSubType"
           options={productSubTypes}
           label={t['loanProductProductSubtype']}
+          isDisabled={router?.asPath?.includes('/edit')}
         />
       </GridItem>
 

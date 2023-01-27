@@ -347,11 +347,19 @@ export const SettingsLoanProductForm = () => {
     asyncToast({
       id: 'loan-id',
       msgs: {
-        success: 'New Product Added',
-        loading: 'Adding New Loan Product',
+        success: router?.asPath?.includes('/edit')
+          ? 'Loan Product Updated'
+          : 'New Loan Product Added',
+        loading: router?.asPath?.includes('/edit')
+          ? 'Updating Loan Product'
+          : 'Adding New Loan Product',
       },
       onSuccess: () => router.push(ROUTES.SETTINGS_GENERAL_LP_LIST),
-      promise: mutateAsync({ id, data: updatedData as LoanProductInput }),
+      promise: mutateAsync({
+        id,
+        data: updatedData as LoanProductInput,
+        edit: router?.asPath?.includes('/edit'),
+      }),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
           Object.keys(error.validationErrorMsg).map((key) =>
@@ -441,7 +449,13 @@ export const SettingsLoanProductForm = () => {
     <>
       <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.lg" height="fit-content" paddingInline="0">
-          <FormHeader title={`${t['loanProductAddLoanProduct']} - ${featureCode.newloanProduct}`} />
+          <FormHeader
+            title={
+              router?.asPath?.includes('/edit')
+                ? 'Edit Loan Product'
+                : `${t['loanProductAddLoanProduct']} - ${featureCode.newloanProduct}`
+            }
+          />
         </Container>
       </Box>
 

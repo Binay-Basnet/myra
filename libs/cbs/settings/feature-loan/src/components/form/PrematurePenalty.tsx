@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { Alert, Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 
@@ -9,6 +10,9 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const PrematurePenalty = () => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+
   const { watch } = useFormContext();
 
   const prematurePenaltyEnable = watch('isPrematurePenaltyApplicable');
@@ -28,10 +32,12 @@ export const PrematurePenalty = () => {
     {
       label: t['enable'],
       value: true,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['disable'],
       value: false,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
   ];
 
@@ -52,10 +58,12 @@ export const PrematurePenalty = () => {
                 name="prematurePenaltySetup.penaltyDateType"
                 label={t['depositProductPenaltyDateType']}
                 options={penaltyDataType}
+                isDisabled={router?.asPath?.includes('/edit')}
               />
               <FormInput
                 name="prematurePenaltySetup.noOfDays"
                 label={t['depositProductNumberofDays']}
+                isDisabled={router?.asPath?.includes('/edit')}
               />
               <FormInput
                 isRequired
@@ -67,11 +75,13 @@ export const PrematurePenalty = () => {
                   </Text>
                 }
                 textAlign="right"
+                isDisabled={router?.asPath?.includes('/edit')}
               />
               <FormAmountInput
                 type="number"
                 name="prematurePenaltySetup.penaltyAmount"
                 label={t['depositProductPenaltyAmount']}
+                isDisabled={router?.asPath?.includes('/edit')}
               />
 
               <GridItem colSpan={3}>

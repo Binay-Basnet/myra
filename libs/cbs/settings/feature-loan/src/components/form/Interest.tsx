@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
@@ -10,6 +11,8 @@ import { useTranslation } from '@coop/shared/utils';
 import { SubHeadingText } from '../formui';
 
 export const Interest = () => {
+  const router = useRouter();
+
   const { t } = useTranslation();
   const { watch } = useFormContext<LoanProductInput>();
   const minValueStr = watch('interest.minRate') ?? 0;
@@ -19,8 +22,8 @@ export const Interest = () => {
   const maxValue = Number(maxValueStr);
 
   const yesNo = [
-    { label: t['yes'], value: true },
-    { label: t['no'], value: false },
+    { label: t['yes'], value: true, isDisabled: router?.asPath?.includes('/edit') },
+    { label: t['no'], value: false, isDisabled: router?.asPath?.includes('/edit') },
   ];
 
   const postingFrequency = [
@@ -58,6 +61,7 @@ export const Interest = () => {
             %
           </Text>
         }
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <FormInput
         name="interest.maxRate"
@@ -75,6 +79,7 @@ export const Interest = () => {
             message: 'Maximum interest rate should be greater than minimum interest rate',
           },
         }}
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <FormInput
         isRequired
@@ -97,6 +102,7 @@ export const Interest = () => {
             %
           </Text>
         }
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <FormInput
         name="interest.ceoAuthority"
@@ -108,6 +114,7 @@ export const Interest = () => {
             %
           </Text>
         }
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <FormInput
         name="interest.boardAuthority"
@@ -119,6 +126,7 @@ export const Interest = () => {
             %
           </Text>
         }
+        isDisabled={router?.asPath?.includes('/edit')}
       />
       <GridItem colSpan={3}>
         <Box display="flex" flexDirection="column" gap="s48">
@@ -153,6 +161,7 @@ export const Interest = () => {
               name="postingFrequency"
               label={t['loanProductPostingFrequency']}
               options={postingFrequency}
+              isDisabled={router?.asPath?.includes('/edit')}
             />
           </Box>
         </Box>

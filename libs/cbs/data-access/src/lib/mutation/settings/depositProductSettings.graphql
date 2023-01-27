@@ -1,8 +1,8 @@
-mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
+mutation setDepositProduct($id: ID!, $data: DepositProductInput, $edit: Boolean) {
   settings {
     general {
       depositProduct {
-        add(id: $id, data: $data) {
+        add(id: $id, data: $data, edit: $edit) {
           recordId
           record {
             id

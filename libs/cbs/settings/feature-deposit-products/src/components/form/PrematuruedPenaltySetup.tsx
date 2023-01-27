@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { Alert, FormSection, Grid, GridItem, Text } from '@myra-ui';
 
 import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
@@ -7,6 +9,8 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const PrematuredPenalty = () => {
   const { t } = useTranslation();
+
+  const router = useRouter();
 
   // const prematurePenaltyEnable = watch('isPrematurePenaltyApplicable');
 
@@ -59,8 +63,13 @@ export const PrematuredPenalty = () => {
               name="prematurePenalty.penaltyDateType"
               label={t['depositProductPenaltyDateType']}
               options={penaltyDataType}
+              isDisabled={router?.asPath?.includes('/edit')}
             />
-            <FormInput name="prematurePenalty.noOfDays" label={t['depositProductNumberofDays']} />
+            <FormInput
+              name="prematurePenalty.noOfDays"
+              label={t['depositProductNumberofDays']}
+              isDisabled={router?.asPath?.includes('/edit')}
+            />
 
             <FormInput
               isRequired
@@ -72,11 +81,13 @@ export const PrematuredPenalty = () => {
                 </Text>
               }
               textAlign="right"
+              isDisabled={router?.asPath?.includes('/edit')}
             />
             <FormAmountInput
               type="number"
               name="prematurePenalty.penaltyAmount"
               label={t['depositProductPenaltyAmount']}
+              isDisabled={router?.asPath?.includes('/edit')}
             />
             <GridItem colSpan={3}>
               <Alert status="warning">

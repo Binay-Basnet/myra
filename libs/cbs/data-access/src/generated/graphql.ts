@@ -15670,6 +15670,7 @@ export type SetCbsCodeMutation = { settings: { general?: { codes?: { cbs?: { add
 export type SetDepositProductMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<DepositProductInput>;
+  edit?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
@@ -15722,6 +15723,7 @@ export type EodExceptionSetupMutation = { settings: { general?: { setup: { eodEx
 export type SetLoanProductMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<LoanProductInput>;
+  edit?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
@@ -19998,11 +20000,11 @@ export const useSetCbsCodeMutation = <
       options
     );
 export const SetDepositProductDocument = `
-    mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
+    mutation setDepositProduct($id: ID!, $data: DepositProductInput, $edit: Boolean) {
   settings {
     general {
       depositProduct {
-        add(id: $id, data: $data) {
+        add(id: $id, data: $data, edit: $edit) {
           recordId
           record {
             id
@@ -20188,11 +20190,11 @@ export const useEodExceptionSetupMutation = <
       options
     );
 export const SetLoanProductDocument = `
-    mutation setLoanProduct($id: ID!, $data: LoanProductInput) {
+    mutation setLoanProduct($id: ID!, $data: LoanProductInput, $edit: Boolean) {
   settings {
     general {
       loanProducts {
-        upsert(id: $id, data: $data) {
+        upsert(id: $id, data: $data, edit: $edit) {
           recordId
           record {
             id

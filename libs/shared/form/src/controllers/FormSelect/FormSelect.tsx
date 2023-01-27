@@ -10,6 +10,7 @@ interface IFormSelectProps<T extends Record<string, unknown>> extends SelectProp
   name?: string;
   showAll?: boolean;
   rules?: UseControllerProps['rules'];
+  onChangeAction?: () => void;
 }
 
 interface Option {
@@ -39,12 +40,14 @@ export const FormSelect = <T extends Record<string, unknown>>(props: IFormSelect
 interface FormControlProps<T extends Record<string, unknown>> extends IFormSelectProps<T> {
   errors: any;
   field: ControllerRenderProps<FieldValues, string>;
+  onChangeAction?: () => void;
 }
 
 const FormControl = <T extends Record<string, unknown>>({
   name,
   options: selectOptions,
   errors,
+  onChangeAction,
   field: { onChange, value },
   showAll,
   ...rest
@@ -84,9 +87,11 @@ const FormControl = <T extends Record<string, unknown>>({
         }
         if (Array.isArray(newValue)) {
           onChange(newValue);
+          onChangeAction && onChangeAction();
         } else {
           const { value: newVal } = newValue as Option;
           onChange(newVal);
+          onChangeAction && onChangeAction();
         }
       }}
     />

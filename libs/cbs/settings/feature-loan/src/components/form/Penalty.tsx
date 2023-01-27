@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
 
@@ -12,6 +13,9 @@ import { BoxContainer, TextBoxContainer } from '../formui';
 
 export const Penalty = () => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+
   const { watch } = useFormContext();
   const penalty = watch('isPenaltyApplicable');
 
@@ -19,10 +23,12 @@ export const Penalty = () => {
     {
       label: t['enable'],
       value: true,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['disable'],
       value: false,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
   ];
 
@@ -30,10 +36,12 @@ export const Penalty = () => {
     {
       label: t['loanProductRemainingPrincipal'],
       value: PenaltyType.RemainingPrincipal,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
     {
       label: t['loanProductPenalInterest'],
       value: PenaltyType.PenalInterest,
+      isDisabled: router?.asPath?.includes('/edit'),
     },
   ];
 
@@ -68,6 +76,7 @@ export const Penalty = () => {
                     name="penaltyDayAfterInstallmentDate"
                     type="number"
                     label={t['depositProductDayaftertheinstallmentdate']}
+                    isDisabled={router?.asPath?.includes('/edit')}
                   />
 
                   <FormInput
@@ -80,11 +89,13 @@ export const Penalty = () => {
                         %
                       </Text>
                     }
+                    isDisabled={router?.asPath?.includes('/edit')}
                   />
                   <FormAmountInput
                     type="number"
                     name="penaltyAmount"
                     label={t['loanProductPenaltyAmount']}
+                    isDisabled={router?.asPath?.includes('/edit')}
                   />
 
                   <GridItem colSpan={3}>
