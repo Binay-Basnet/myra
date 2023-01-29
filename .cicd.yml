@@ -380,7 +380,7 @@ trigger:
 
 kind: pipeline
 type: docker
-name: Deploy new build
+name: Update last successful build commit SHA
 
 steps:
 - name: update content in host file
@@ -397,7 +397,7 @@ volumes:
     path: /build-cache/myra-ui-${DRONE_BRANCH}/previous-success-build-commit-sha
 
 depends_on:
-- Build all the apps
+- Deploy new build
 trigger:
   branch:
   - dev
