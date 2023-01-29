@@ -342,8 +342,8 @@ trigger:
 #    - dev
 #  event:
 #    - push
-
----
+#
+#---
 
 kind: pipeline
 type: docker
