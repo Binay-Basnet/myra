@@ -364,7 +364,7 @@ volumes:
     path: /build-cache/myra-ui-${DRONE_BRANCH}/previous-success-build-commit-sha
 
 depends_on:
-- Pull images and deploy all the apps
+- Build all the apps
 trigger:
   branch:
   - dev
