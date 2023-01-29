@@ -296,6 +296,39 @@ trigger:
 
 ---
 
+kind: pipeline
+type: exec
+name: Deploy new build
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+- name: Run the script to deploy new build
+  commands:
+  - cd /drone
+  - ./cd.fe.sh $DRONE_COMMIT_SHA
+  when:
+    branch:
+    - dev
+    event:
+    - push
+
+depends_on:
+- Publish myra-app
+- Publish neosys-admin-app
+- Publish ebanking-app
+- Publish storybook
+
+trigger:
+  branch:
+  - dev
+  event:
+  - push
+
+---
+
 #kind: pipeline
 #type: ssh
 #name: Pull images and deploy all the apps
@@ -347,7 +380,7 @@ trigger:
 
 kind: pipeline
 type: docker
-name: Update last successful build commit SHA
+name: Deploy new build
 
 steps:
 - name: update content in host file
