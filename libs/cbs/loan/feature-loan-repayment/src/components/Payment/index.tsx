@@ -42,6 +42,7 @@ const denominationsOptions = [
   { label: '5x', value: '5' },
   { label: '2x', value: '2' },
   { label: '1x', value: '1' },
+  { label: 'Paisa', value: 'PAISA' },
 ];
 
 /* eslint-disable-next-line */
@@ -175,7 +176,11 @@ export const Payment = ({ loanTotal }: PaymentProps) => {
                     header: 'Amount',
                     isNumeric: true,
                     accessorFn: (row) =>
-                      row.quantity ? Number(row.value) * Number(row.quantity) : '0',
+                      row.value === 'PAISA'
+                        ? Number(row.quantity) / 100
+                        : row.quantity
+                        ? Number(row.value) * Number(row.quantity)
+                        : '0',
                   },
                 ]}
                 defaultData={[
@@ -189,6 +194,7 @@ export const Payment = ({ loanTotal }: PaymentProps) => {
                   { value: '5', quantity: '0', amount: '0' },
                   { value: '2', quantity: '0', amount: '0' },
                   { value: '1', quantity: '0', amount: '0' },
+                  { value: 'PAISA', quantity: '0', amount: '0' },
                 ]}
                 canDeleteRow={false}
                 canAddRow={false}

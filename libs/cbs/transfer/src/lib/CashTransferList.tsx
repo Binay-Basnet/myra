@@ -1,15 +1,17 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetServiceCenterTransferListQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { AllTransactionType, useGetServiceCenterTransferListQuery } from '@coop/cbs/data-access';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface CashTransferListProps {}
 
 export const CashTransferList = () => {
+  const router = useRouter();
   const { data, isFetching } = useGetServiceCenterTransferListQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -73,8 +75,6 @@ export const CashTransferList = () => {
     []
   );
   return (
-    // const { t } = useTranslation();
-
     <>
       <PageHeader
         heading={`Inter Service Center Transaction - ${featureCode.serviceCenterTransferList}`}
@@ -84,6 +84,11 @@ export const CashTransferList = () => {
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
+        rowOnClick={(row) =>
+          router.push(
+            `${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${row?.node?.id}&txnType=${AllTransactionType.Transfer}`
+          )
+        }
         isLoading={isFetching}
         columns={columns}
         pagination={{

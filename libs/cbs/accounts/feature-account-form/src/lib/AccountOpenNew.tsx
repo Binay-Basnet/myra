@@ -20,7 +20,6 @@ import {
 } from '@myra-ui';
 
 import {
-  CashValue,
   DepositedBy,
   DepositInput,
   DepositLoanAccountInput,
@@ -37,6 +36,7 @@ import {
   useSetAccountOpenDataMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
+import { CashOptions } from '@coop/shared/components';
 import {
   FormAgentSelect,
   FormAmountInput,
@@ -98,19 +98,6 @@ type CustomDepositInput = Omit<DepositInput, 'cash'> & {
 type CustomDepositLoanAccountInput = Omit<DepositLoanAccountInput, 'openingPayment'> & {
   // tenure?: FrequencyTenure | null | undefined;
   openingPayment: CustomDepositInput;
-};
-
-const cashOptions: Record<string, string> = {
-  '1000': CashValue.Cash_1000,
-  '500': CashValue.Cash_500,
-  '100': CashValue.Cash_100,
-  '50': CashValue.Cash_50,
-  '25': CashValue.Cash_25,
-  '20': CashValue.Cash_20,
-  '10': CashValue.Cash_10,
-  '5': CashValue.Cash_5,
-  '2': CashValue.Cash_2,
-  '1': CashValue.Cash_1,
 };
 
 const accountTypes = {
@@ -253,7 +240,7 @@ export const AccountOpenNew = () => {
     useGetDefaultAccountListQuery(
       { memberId, productId: productID },
       {
-        enabled: triggerQuery || triggerProductQuery,
+        enabled: (triggerQuery || triggerProductQuery) && !!productID,
       }
     );
   const defaulDataAcc = defaultAccountData?.account?.listDefaultAccounts?.data;
@@ -351,7 +338,7 @@ export const AccountOpenNew = () => {
               returned_amount: String(returnAmount),
               denominations:
                 values.openingPayment.cash?.denominations?.map(({ value, quantity }) => ({
-                  value: cashOptions[value as string],
+                  value: CashOptions[value as string],
                   quantity,
                 })) ?? [],
             },

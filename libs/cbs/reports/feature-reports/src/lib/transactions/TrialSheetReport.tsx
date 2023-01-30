@@ -6,7 +6,8 @@ import { Box, Button, Column, ExpandedCell, ExpandedHeader, GridItem, Text } fro
 
 import {
   LocalizedDateFilter,
-  TrialSheetReportDataEntry,
+  Maybe,
+  Scalars,
   TrialSheetReportFilter,
   useGetBranchListQuery,
   useGetTrialSheetReportQuery,
@@ -22,6 +23,15 @@ type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId
   filter: {
     includeZero: 'include' | 'exclude';
   };
+};
+
+export type TrialBalance = Record<string, { Dr: string; Cr: string; Total: string }>;
+
+export type TrialSheetReportDataEntry = {
+  balance?: TrialBalance;
+  ledgerId?: Maybe<Scalars['String']>;
+  ledgerName?: Maybe<Scalars['Localized']>;
+  under?: Maybe<Scalars['String']>;
 };
 
 export const TrialSheetReport = () => {
@@ -49,29 +59,29 @@ export const TrialSheetReport = () => {
 
   const assetsReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.assets ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
   const equityAndLiablities = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.equityAndLiablities ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
   const incomeReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.income ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
   const expensesReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.expenses ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
 
   const offBalanceSheetReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.offBalance ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
 
   const unMappedCoaHeads = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.orphanEntries ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
 
   return (
@@ -119,7 +129,7 @@ export const TrialSheetReport = () => {
                 type="Liabilities"
                 total={
                   data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.equityAndLiablitiesTotal
+                    ?.equityAndLiablitiesTotal as unknown as TrialBalance
                 }
                 data={equityAndLiablities as TrialSheetReportDataEntry[]}
               />
@@ -133,7 +143,8 @@ export const TrialSheetReport = () => {
               </Text>
               <COATable
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data?.assetsTotal
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.assetsTotal as unknown as TrialBalance
                 }
                 type="Assets"
                 data={assetsReport as TrialSheetReportDataEntry[]}
@@ -149,7 +160,8 @@ export const TrialSheetReport = () => {
 
               <COATable
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data?.expenseTotal
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.expenseTotal as unknown as TrialBalance
                 }
                 type="Expenses"
                 data={expensesReport as TrialSheetReportDataEntry[]}
@@ -164,7 +176,8 @@ export const TrialSheetReport = () => {
               </Text>
               <COATable
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data?.incomeTotal
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.incomeTotal as unknown as TrialBalance
                 }
                 type="Income"
                 data={incomeReport as TrialSheetReportDataEntry[]}
@@ -181,7 +194,7 @@ export const TrialSheetReport = () => {
                 type="Off Balance"
                 total={
                   data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.offBalanceTotal
+                    ?.offBalanceTotal as unknown as TrialBalance
                 }
                 data={offBalanceSheetReport as TrialSheetReportDataEntry[]}
               />
@@ -195,7 +208,8 @@ export const TrialSheetReport = () => {
               </Text>
               <COATable
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data?.orphanTotal
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.orphanTotal as unknown as TrialBalance
                 }
                 type="Unmapped COA Heads"
                 data={unMappedCoaHeads as TrialSheetReportDataEntry[]}
@@ -272,7 +286,7 @@ export const CoaTotalTable = ({ totals }: ICoaTotalTableProps) => {
   const data = particularData?.map((d, index) => ({
     ...d,
     ...totals[index],
-  }));
+  })) as unknown as TrialBalance[];
 
   const baseColumn: Column<typeof data[0]>[] = [
     {
@@ -291,13 +305,29 @@ export const CoaTotalTable = ({ totals }: ICoaTotalTableProps) => {
       (header) =>
         ({
           header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
-          accessorKey: header,
-          cell: (props) => (
-            <Box fontWeight="600">{(props.getValue() as string) || ('0.00' as string)}</Box>
-          ),
-          meta: {
-            isNumeric: true,
-          },
+          columns: [
+            {
+              header: 'Debit (Dr.)',
+              accessorFn: (row) => (header ? row?.[header]?.Dr || '0.00' : '0.00'),
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: 'Credit (Cr.)',
+              accessorFn: (row) => (header ? row?.[header]?.Cr || '0.00' : '0.00'),
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: 'Balance',
+              accessorFn: (row) => (header ? row?.[header]?.Total || '0.00' : '0.00'),
+              meta: {
+                isNumeric: true,
+              },
+            },
+          ],
         } as Column<typeof data[0]>)
     ),
   ];
@@ -308,7 +338,7 @@ export const CoaTotalTable = ({ totals }: ICoaTotalTableProps) => {
 interface ICOATableProps {
   data: TrialSheetReportDataEntry[];
   type: string;
-  total: Record<string, string> | null | undefined;
+  total: TrialBalance | null | undefined;
 }
 
 export const COATable = ({ data, type, total }: ICOATableProps) => {
@@ -376,33 +406,39 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
       (header) =>
         ({
           header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
-          accessorKey: header,
-          cell: (props) => props.getValue() || ('0.00' as string),
-          footer: () => total?.[header || ''] || '0.00',
-          meta: {
-            isNumeric: true,
-          },
+          accessorKey: 'balance',
+          columns: [
+            {
+              header: 'Debit (Dr.)',
+              accessorFn: (row) => (header ? row.balance?.[header]?.Dr || '0.00' : '0.00'),
+              footer: () => total?.[header || '']?.Dr || '0.00',
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: 'Credit (Cr.)',
+              accessorFn: (row) => (header ? row.balance?.[header]?.Cr || '0.00' : '0.00'),
+              footer: () => total?.[header || '']?.Cr || '0.00',
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: 'Balance',
+              accessorFn: (row) => (header ? row.balance?.[header]?.Total || '0.00' : '0.00'),
+              footer: () => total?.[header || '']?.Total || '0.00',
+              meta: {
+                isNumeric: true,
+              },
+            },
+          ],
         } as Column<TrialSheetReportDataEntry>)
     ),
   ];
 
-  const coaData = data?.reduce((acc, curr) => {
-    const balance = curr?.balance;
-
-    curr = {
-      ledgerId: curr?.ledgerId,
-      ledgerName: curr?.ledgerName,
-      under: curr?.under,
-      ...balance,
-    };
-
-    acc.push(curr);
-
-    return acc;
-  }, [] as TrialSheetReportDataEntry[]);
-
   const tree = arrayToTree(
-    coaData.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
+    data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
     ''
   );
 

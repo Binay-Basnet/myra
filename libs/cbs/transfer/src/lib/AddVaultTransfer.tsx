@@ -12,11 +12,9 @@ import {
   FormHeader,
   FormSection,
   GridItem,
-  Text,
 } from '@myra-ui';
 
 import {
-  CashValue,
   TellerTransferInput,
   TellerTransferType,
   useAppSelector,
@@ -24,8 +22,9 @@ import {
   useSetTellerTransferDataMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormAmountInput, FormEditableTable, FormInput, FormSwitchTab } from '@coop/shared/form';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { CashOptions, DenominationTable } from '@coop/shared/components';
+import { FormAmountInput, FormInput, FormSwitchTab } from '@coop/shared/form';
+import { featureCode } from '@coop/shared/utils';
 
 import { BalanceCard } from '../components';
 
@@ -37,48 +36,12 @@ const transferTypeOptions = [
   { label: 'Cash to Vault', value: TellerTransferType.CashToVault },
 ];
 
-const denominationsOptions = [
-  { label: '1000x', value: '1000' },
-  { label: '500x', value: '500' },
-  { label: '100x', value: '100' },
-  { label: '50x', value: '50' },
-  { label: '25x', value: '25' },
-  { label: '20x', value: '20' },
-  { label: '10x', value: '10' },
-  { label: '5x', value: '5' },
-  { label: '2x', value: '2' },
-  { label: '1x', value: '1' },
-  { label: 'Paisa', value: 'PAISA' },
-];
-
-const cashOptions: Record<string, string> = {
-  '1000': CashValue.Cash_1000,
-  '500': CashValue.Cash_500,
-  '100': CashValue.Cash_100,
-  '50': CashValue.Cash_50,
-  '25': CashValue.Cash_25,
-  '20': CashValue.Cash_20,
-  '10': CashValue.Cash_10,
-  '5': CashValue.Cash_5,
-  '2': CashValue.Cash_2,
-  '1': CashValue.Cash_1,
-  PAISA: CashValue.Paisa,
-};
-
-type PaymentTableType = {
-  value: string;
-  quantity: string;
-  amount: string;
-};
-
 type CustomTellerTransferInput = Omit<TellerTransferInput, 'denominations'> & {
   denominations: { value?: string; quantity?: number; amount?: string }[];
   teller: string;
 };
 
 export const AddVaultTransfer = () => {
-  const { t } = useTranslation();
-
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -111,7 +74,6 @@ export const AddVaultTransfer = () => {
   const denominations = watch('denominations');
 
   const transferType = watch('transferType');
-
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, { amount: currAmount }) => accumulator + Number(currAmount),
@@ -124,7 +86,7 @@ export const AddVaultTransfer = () => {
       ...omit({ ...values }, ['teller']),
       denominations:
         values?.denominations?.map(({ value, quantity }) => ({
-          value: cashOptions[value as string],
+          value: CashOptions[value as string],
           quantity,
         })) ?? [],
     };
@@ -195,71 +157,13 @@ export const AddVaultTransfer = () => {
                   )}
 
                   <FormAmountInput isRequired name="amount" label="Cash Amount" />
-
                   <GridItem colSpan={3} display="flex" flexDirection="column" gap="s4">
-                    <FormEditableTable<PaymentTableType>
-                      name="denominations"
-                      columns={[
-                        {
-                          accessor: 'value',
-                          header: t['depositPaymentDenomination'],
-                          cellWidth: 'auto',
-                          fieldType: 'search',
-                          searchOptions: denominationsOptions,
-                        },
-                        {
-                          accessor: 'quantity',
-                          header: t['depositPaymentQuantity'],
-                          isNumeric: true,
-                        },
-                        {
-                          accessor: 'amount',
-                          header: t['depositPaymentAmount'],
-                          isNumeric: true,
-                          accessorFn: (row) =>
-                            row?.value === 'PAISA'
-                              ? Number(row.quantity) / 100
-                              : row.quantity
-                              ? Number(row.value) * Number(row.quantity)
-                              : '0',
-                        },
-                      ]}
-                      defaultData={[
-                        { value: '1000', quantity: '0', amount: '0' },
-                        { value: '500', quantity: '0', amount: '0' },
-                        { value: '100', quantity: '0', amount: '0' },
-                        { value: '50', quantity: '0', amount: '0' },
-                        { value: '25', quantity: '0', amount: '0' },
-                        { value: '20', quantity: '0', amount: '0' },
-                        { value: '10', quantity: '0', amount: '0' },
-                        { value: '5', quantity: '0', amount: '0' },
-                        { value: '2', quantity: '0', amount: '0' },
-                        { value: '1', quantity: '0', amount: '0' },
-                        { value: 'PAISA', quantity: '0', amount: '0' },
-                      ]}
-                      canDeleteRow={false}
-                      canAddRow={false}
+                    <DenominationTable
+                      fieldName="denominations"
+                      cashPaid={amount ?? '0'}
+                      denominationTotal={denominationTotal}
+                      denominationTotalOnly
                     />
-
-                    <Box
-                      display="flex"
-                      flexDirection="column"
-                      gap="s20"
-                      px="s8"
-                      py="s10"
-                      border="1px"
-                      borderColor="border.layout"
-                      borderRadius="br2"
-                    >
-                      <Box display="flex" justifyContent="space-between">
-                        <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                          Grand Total
-                        </Text>
-                        <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                          {denominationTotal}
-                        </Text>
-                      </Box>
-                    </Box>
                   </GridItem>
                 </FormSection>
               </Box>

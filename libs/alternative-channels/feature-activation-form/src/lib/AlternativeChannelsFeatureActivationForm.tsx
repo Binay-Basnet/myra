@@ -28,6 +28,7 @@ import {
   useGetActivatedServiceQuery,
   useGetAlternativeFeeAndChargesQuery,
 } from '@coop/cbs/data-access';
+import { CashOptions } from '@coop/shared/components';
 import { FormInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -58,19 +59,6 @@ const ActivationChargeDict = {
   [AlternativeChannelServiceType.MobileBanking]: 'acMobileBankingActivationCharge',
   [AlternativeChannelServiceType.Ebanking]: 'acEBankingActivationCharge',
   [AlternativeChannelServiceType.SmsBanking]: 'acSMSBankingActivationCharge',
-};
-
-const cashOptions: Record<string, string> = {
-  '1000': CashValue.Cash_1000,
-  '500': CashValue.Cash_500,
-  '100': CashValue.Cash_100,
-  '50': CashValue.Cash_50,
-  '25': CashValue.Cash_25,
-  '20': CashValue.Cash_20,
-  '10': CashValue.Cash_10,
-  '5': CashValue.Cash_5,
-  '2': CashValue.Cash_2,
-  '1': CashValue.Cash_1,
 };
 
 export const ActivationForm = () => {
@@ -152,7 +140,7 @@ export const ActivationForm = () => {
         returned_amount: String(returnAmount),
         denominations:
           values.cash?.denominations?.map(({ value, quantity }) => ({
-            value: cashOptions[value as string] as CashValue,
+            value: CashOptions[value as string] as CashValue,
             quantity,
           })) ?? [],
       };

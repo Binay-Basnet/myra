@@ -4,6 +4,8 @@ import qs from 'qs';
 
 import { Box, Icon, IconButton, Text } from '@myra-ui/foundations';
 
+import { quantityConverter } from '@coop/shared/utils';
+
 /* eslint-disable-next-line */
 export interface SmallPaginationProps {
   limit: number;
@@ -51,9 +53,9 @@ export const SmallPagination = ({ pageInfo, limit, total }: SmallPaginationProps
       />
 
       <Text as="div" variant="bodyRegular">
-        {lowerLimit}-{upperLimit} /{' '}
+        {quantityConverter(lowerLimit)}-{quantityConverter(upperLimit)} /{' '}
         <Text as="span" color="primary.500" variant="bodyRegular">
-          {total}
+          {quantityConverter(total)}
         </Text>
       </Text>
 

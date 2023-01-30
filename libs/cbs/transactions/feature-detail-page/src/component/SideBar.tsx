@@ -46,6 +46,7 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
         <>
           <Summary detailPage={detailPage} summary={summary} />
           <MemberInfo
+            memberCode={summary?.code}
             memberId={summary?.memberId}
             detailPage={detailPage}
             name={summary?.name}
@@ -71,6 +72,7 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
             memberId={
               detailPage === 'agentTransaction' ? (id as string) : (summary?.memberId as string)
             }
+            memberCode={summary?.code}
             detailPage={detailPage}
             name={summary?.name}
             profilePic={summary?.profilePic ?? ''}

@@ -19,6 +19,7 @@ export const DepositDetailPage = () => {
 
   const summary = {
     memberId: depositDetailData?.member?.id,
+    code: depositDetailData?.member?.code,
     name: depositDetailData?.member?.name?.local,
     profilePic: depositDetailData?.member?.profilePicUrl,
     transactionId: depositDetailData?.transactionCode,

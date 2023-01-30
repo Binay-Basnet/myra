@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Box, Grid, GridItem, Text } from '@myra-ui';
+import { Box, Grid, GridItem } from '@myra-ui';
 
 import {
   DepositedBy,
@@ -14,6 +14,7 @@ import {
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
+import { DenominationTable } from '@coop/shared/components';
 import {
   FormAccountSelect,
   FormAgentSelect,
@@ -21,7 +22,6 @@ import {
   FormBankSelect,
   FormCheckbox,
   FormDatePicker,
-  FormEditableTable,
   FormFileInput,
   FormInput,
   FormMemberSelect,
@@ -30,7 +30,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { amountConverter, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 // const sourceOfFundsList = [
 //   'Personal Savings',
@@ -41,32 +41,6 @@ import { amountConverter, useTranslation } from '@coop/shared/utils';
 //   'Compensation',
 // ];
 
-// const denominationsOptions = [
-//   { label: '1000x', value: CashValue.Cash_1000 },
-//   { label: '500x', value: CashValue.Cash_500 },
-//   { label: '100x', value: CashValue.Cash_100 },
-//   { label: '50x', value: CashValue.Cash_50 },
-//   { label: '25x', value: CashValue.Cash_25 },
-//   { label: '20x', value: CashValue.Cash_20 },
-//   { label: '10x', value: CashValue.Cash_10 },
-//   { label: '5x', value: CashValue.Cash_5 },
-//   { label: '2x', value: CashValue.Cash_2 },
-//   { label: '1x', value: CashValue.Cash_1 },
-// ];
-
-const denominationsOptions = [
-  { label: '1000x', value: '1000' },
-  { label: '500x', value: '500' },
-  { label: '100x', value: '100' },
-  { label: '50x', value: '50' },
-  { label: '25x', value: '25' },
-  { label: '20x', value: '20' },
-  { label: '10x', value: '10' },
-  { label: '5x', value: '5' },
-  { label: '2x', value: '2' },
-  { label: '1x', value: '1' },
-];
-
 /* eslint-disable-next-line */
 export interface PaymentProps {
   mode: number;
@@ -74,12 +48,6 @@ export interface PaymentProps {
   // rebate: number;
   // selectedAccount?: DepositAccount;
 }
-
-type PaymentTableType = {
-  value: string;
-  quantity: string;
-  amount: string;
-};
 
 export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
   const { t } = useTranslation();
@@ -273,83 +241,17 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
               name="cash.disableDenomination"
               label={t['depositPaymentDisableDenomination']}
             />
-            {!disableDenomination && (
-              <FormEditableTable<PaymentTableType>
-                name="cash.denominations"
-                columns={[
-                  {
-                    accessor: 'value',
-                    header: t['depositPaymentDenomination'],
-                    cellWidth: 'auto',
-                    fieldType: 'search',
-                    searchOptions: denominationsOptions,
-                  },
-                  {
-                    accessor: 'quantity',
-                    header: t['depositPaymentQuantity'],
-                    isNumeric: true,
-                  },
-                  {
-                    accessor: 'amount',
-                    header: t['depositPaymentAmount'],
-                    isNumeric: true,
-                    accessorFn: (row) =>
-                      row.quantity ? Number(row.value) * Number(row.quantity) : '0',
-                  },
-                ]}
-                defaultData={[
-                  { value: '1000', quantity: '0', amount: '0' },
-                  { value: '500', quantity: '0', amount: '0' },
-                  { value: '100', quantity: '0', amount: '0' },
-                  { value: '50', quantity: '0', amount: '0' },
-                  { value: '25', quantity: '0', amount: '0' },
-                  { value: '20', quantity: '0', amount: '0' },
-                  { value: '10', quantity: '0', amount: '0' },
-                  { value: '5', quantity: '0', amount: '0' },
-                  { value: '2', quantity: '0', amount: '0' },
-                  { value: '1', quantity: '0', amount: '0' },
-                ]}
-                canDeleteRow={false}
-                canAddRow={false}
+
+            <GridItem colSpan={3}>
+              <DenominationTable
+                fieldName="cash.denominations"
+                cashPaid={cashPaid ?? '0'}
+                totalCashPaid={totalDeposit}
+                returnAmount={returnAmount}
+                denominationTotal={denominationTotal}
+                disableDenomination={disableDenomination}
               />
-            )}
-            <Box
-              display="flex"
-              flexDirection="column"
-              gap="s20"
-              px="s8"
-              py="s10"
-              border="1px"
-              borderColor="border.layout"
-              borderRadius="br2"
-            >
-              <Box display="flex" justifyContent="space-between">
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {t['depositPaymentTotal']}
-                </Text>
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {amountConverter(totalCashPaid)}
-                </Text>
-              </Box>
-
-              <Box display="flex" justifyContent="space-between">
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {t['depositPaymentReturn']}
-                </Text>
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {amountConverter(returnAmount)}
-                </Text>
-              </Box>
-
-              <Box display="flex" justifyContent="space-between">
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {t['depositPaymentGrandTotal']}
-                </Text>
-                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {amountConverter(totalCashPaid - returnAmount)}
-                </Text>
-              </Box>
-            </Box>
+            </GridItem>
           </>
         )}
       </BoxContainer>

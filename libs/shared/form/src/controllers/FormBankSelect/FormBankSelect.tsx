@@ -83,6 +83,7 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
             }
           }, 800)}
           options={bankOptions}
+          filterOption={() => true}
           {...rest}
         />
       )}

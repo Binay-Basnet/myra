@@ -14,11 +14,9 @@ import {
   FormSection,
   Grid,
   GridItem,
-  Text,
 } from '@myra-ui';
 
 import {
-  CashValue,
   DepositedBy,
   DepositPaymentType,
   MembershipPaymentInput,
@@ -29,6 +27,7 @@ import {
   usePayMembershipMutation,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
+import { CashOptions, DenominationTable } from '@coop/shared/components';
 import {
   FormAccountSelect,
   FormAgentSelect,
@@ -36,7 +35,6 @@ import {
   FormBankSelect,
   FormCheckbox,
   FormDatePicker,
-  FormEditableTable,
   FormFileInput,
   FormInput,
   FormMemberSelect,
@@ -46,37 +44,6 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
-
-const denominationsOptions = [
-  { label: '1000x', value: '1000' },
-  { label: '500x', value: '500' },
-  { label: '100x', value: '100' },
-  { label: '50x', value: '50' },
-  { label: '25x', value: '25' },
-  { label: '20x', value: '20' },
-  { label: '10x', value: '10' },
-  { label: '5x', value: '5' },
-  { label: '2x', value: '2' },
-  { label: '1x', value: '1' },
-];
-type PaymentTableType = {
-  value: string;
-  quantity: string;
-  amount: string;
-};
-
-const cashOptions: Record<string, string> = {
-  '1000': CashValue.Cash_1000,
-  '500': CashValue.Cash_500,
-  '100': CashValue.Cash_100,
-  '50': CashValue.Cash_50,
-  '25': CashValue.Cash_25,
-  '20': CashValue.Cash_20,
-  '10': CashValue.Cash_10,
-  '5': CashValue.Cash_5,
-  '2': CashValue.Cash_2,
-  '1': CashValue.Cash_1,
-};
 
 type CashPaid =
   | {
@@ -208,7 +175,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
           returned_amount: String(returnAmount),
           denominations:
             values.cashData?.denominations?.map(({ value, quantity }) => ({
-              value: cashOptions[value as string],
+              value: CashOptions[value as string],
               quantity,
             })) ?? [],
         },
@@ -395,84 +362,16 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
                       defaultChecked={false}
                     />
 
-                    {!disableDenomination && (
-                      <FormEditableTable<PaymentTableType>
-                        name="cashData.denominations"
-                        columns={[
-                          {
-                            accessor: 'value',
-                            header: t['depositPaymentDenomination'],
-                            cellWidth: 'auto',
-                            fieldType: 'search',
-                            searchOptions: denominationsOptions,
-                          },
-                          {
-                            accessor: 'quantity',
-                            header: t['depositPaymentQuantity'],
-                            isNumeric: true,
-                          },
-                          {
-                            accessor: 'amount',
-                            header: t['depositPaymentAmount'],
-                            isNumeric: true,
-                            accessorFn: (row) =>
-                              row.quantity ? Number(row.value) * Number(row.quantity) : '0',
-                          },
-                        ]}
-                        defaultData={[
-                          { value: '1000', quantity: '0', amount: '0' },
-                          { value: '500', quantity: '0', amount: '0' },
-                          { value: '100', quantity: '0', amount: '0' },
-                          { value: '50', quantity: '0', amount: '0' },
-                          { value: '25', quantity: '0', amount: '0' },
-                          { value: '20', quantity: '0', amount: '0' },
-                          { value: '10', quantity: '0', amount: '0' },
-                          { value: '5', quantity: '0', amount: '0' },
-                          { value: '2', quantity: '0', amount: '0' },
-                          { value: '1', quantity: '0', amount: '0' },
-                        ]}
-                        canDeleteRow={false}
-                        canAddRow={false}
+                    <GridItem colSpan={3}>
+                      <DenominationTable
+                        fieldName="cashData.denominations"
+                        cashPaid={cashPaid ?? '0'}
+                        totalCashPaid={totalCashPaid - returnAmount}
+                        returnAmount={returnAmount}
+                        denominationTotal={denominationTotal}
+                        disableDenomination={disableDenomination}
                       />
-                    )}
-                  </Box>
-                  <Box
-                    display="flex"
-                    mt="s16"
-                    flexDirection="column"
-                    gap="s20"
-                    px="s8"
-                    py="s10"
-                    border="1px"
-                    borderColor="border.layout"
-                    borderRadius="br2"
-                  >
-                    <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                        {t['depositPaymentTotal']}
-                      </Text>
-                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                        {totalCashPaid}
-                      </Text>
-                    </Box>
-
-                    <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                        {t['depositPaymentReturn']}
-                      </Text>
-                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                        {returnAmount}
-                      </Text>
-                    </Box>
-
-                    <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                        {t['depositPaymentGrandTotal']}
-                      </Text>
-                      <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                        {totalCashPaid - returnAmount}
-                      </Text>
-                    </Box>
+                    </GridItem>
                   </Box>
                 </Box>
               </>

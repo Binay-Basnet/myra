@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { Box } from '@myra-ui';
 
 import { TableOverview, TableOverviewColumnType } from '@coop/accounting/ui-components';
-import { useAppSelector, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
+import { useGetLedgerForJvPostingQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 
 import { CustomJournalVoucherInput } from '../types';
@@ -18,7 +18,7 @@ type JournalVouchersTableType = {
 };
 
 export const JournalVouchersTable = () => {
-  const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
+  // const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
   const { watch } = useFormContext<CustomJournalVoucherInput>();
@@ -37,21 +37,18 @@ export const JournalVouchersTable = () => {
     return { crTotal: tempCR, drTotal: tempDR };
   }, [entries]);
 
-  const { data: accountList, isFetching } = useGetCoaAccountListQuery({
-    branchId: [branchId as string],
+  const { data: accountList, isFetching } = useGetLedgerForJvPostingQuery({
     pagination: {
       after: '',
       first: 10,
     },
-    flag: 'JOURNAL_VOUCHER',
     filter: {
-      ledgerId: searchTerm,
       name: searchTerm,
       filterMode: 'OR',
     },
   });
 
-  const accountListData = accountList?.settings?.chartsOfAccount?.coaAccountList?.edges;
+  const accountListData = accountList?.settings?.chartsOfAccount?.ledgersForJVPosting?.edges;
 
   const tableSummaryColumns: TableOverviewColumnType[] = [
     { label: 'Total', width: 'auto', isNumeric: true },

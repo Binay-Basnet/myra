@@ -112,6 +112,35 @@ query getCoaAccountList(
   }
 }
 
+query getLedgerForJVPosting($pagination: Pagination, $filter: COAListFilter) {
+  settings {
+    chartsOfAccount {
+      ledgersForJVPosting(pagination: $pagination, filter: $filter) {
+        edges {
+          node {
+            id
+            accountCode
+            accountName
+            accountClass
+            parentGroup
+            branch
+          }
+        }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
 query getCOAAccountDetails($id: String!) {
   settings {
     chartsOfAccount {

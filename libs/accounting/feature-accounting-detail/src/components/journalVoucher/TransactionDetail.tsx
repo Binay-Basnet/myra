@@ -8,7 +8,7 @@ type DetailDataType = {
     id: string | null | undefined;
     date: Record<'local' | 'en' | 'np', string> | null | undefined;
     reference: string | null | undefined;
-    note: string | null | undefined;
+    note?: string | null | undefined;
   };
 };
 
@@ -19,7 +19,7 @@ export const TransactionDetails = ({ detailData }: DetailDataType) => {
       <DetailCardContent title="ID" subtitle={detailData?.id} />
       <DetailCardContent title="Date" subtitle={localizedDate(detailData?.date)} />
       <DetailCardContent title="Reference" subtitle={detailData?.reference} />
-      <DetailCardContent title="Note" subtitle={detailData?.note} />
+      {detailData?.note && <DetailCardContent title="Note" subtitle={detailData?.note} />}
     </DetailsCard>
   );
 };
