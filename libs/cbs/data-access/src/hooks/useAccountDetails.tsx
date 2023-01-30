@@ -1,6 +1,14 @@
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { DateType, useAppSelector, useGetAccountDetailsDataQuery } from '@coop/cbs/data-access';
+import {
+  DateType,
+  EbankingTransaction,
+  useAppSelector,
+  useGetAccountDetailsDataQuery,
+  useGetAccountTransactionListsQuery,
+} from '@coop/cbs/data-access';
+import { getRouterQuery } from '@coop/shared/utils';
 
 export const useAccountDetails = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
@@ -16,6 +24,24 @@ export const useAccountDetails = () => {
 
   const accountData = accountDetailsQueryData?.account?.accountDetails?.data;
 
+  const { data: transactionListQueryData, isFetching } = useGetAccountTransactionListsQuery(
+    {
+      filter: { accountIds: [id as string] },
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    },
+    {
+      enabled: !!id,
+    }
+  );
+
+  const transactionList = useMemo(
+    () =>
+      transactionListQueryData?.account?.listTransactions?.edges?.map(
+        (item) => item?.node as EbankingTransaction
+      ) ?? [],
+    [transactionListQueryData]
+  );
+
   return {
     accountDetails: {
       ...accountData,
@@ -24,5 +50,7 @@ export const useAccountDetails = () => {
           ? accountData?.accountOpenDate?.np
           : accountData?.accountOpenDate?.en,
     },
+    transactionLoading: isFetching,
+    transactionList,
   };
 };

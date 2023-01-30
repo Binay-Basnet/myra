@@ -85,6 +85,7 @@ export enum Report {
   TRANSACTION_BALANCE_SHEET_REPORT = 'Balance Sheet Report',
   TRANSACTION_SERVICE_CENTER_BALANCE_REPORT = 'Service Center Balance',
   TRANSACTION_BANK_GL_BALANCE_REPORT = 'Bank GL Balance Report',
+  TRANSACTION_ABBS_STATUS_REPORT = 'ABBS Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -426,7 +427,12 @@ export const REPORTS = {
     },
     {
       id: '7.2',
-      report: Report.TRANSACTION_INCOME_STATEMENT,
+      report: Report.TRANSACTION_ABBS_STATUS_REPORT,
+      link: 'abbs-status',
+    },
+    {
+      id: '7.5',
+      report: Report.TRANSACTION_APPROPRIATE_OF_PROFIT,
     },
     {
       id: '7.2.2',
@@ -461,6 +467,7 @@ export const REPORTS = {
       id: '7.4',
       report: Report.TRANSACTION_CHANGE_OF_EQUITY,
     },
+
     {
       id: '7.5',
       report: Report.TRANSACTION_APPROPRIATE_OF_PROFIT,
