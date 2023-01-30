@@ -11906,11 +11906,6 @@
           },
           {
             "kind": "OBJECT",
-            "name": "DepositProduct",
-            "ofType": null
-          },
-          {
-            "kind": "OBJECT",
             "name": "FormField",
             "ofType": null
           },
@@ -31979,7 +31974,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Time",
+                "name": "Localized",
                 "ofType": null
               }
             },
@@ -32204,13 +32199,7 @@
           }
         ],
         "inputFields": null,
-        "interfaces": [
-          {
-            "kind": "INTERFACE",
-            "name": "Base",
-            "ofType": null
-          }
-        ],
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },

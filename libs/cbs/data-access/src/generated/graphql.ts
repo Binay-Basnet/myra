@@ -3720,9 +3720,9 @@ export const DepositPaymentType = {
 } as const;
 
 export type DepositPaymentType = typeof DepositPaymentType[keyof typeof DepositPaymentType];
-export type DepositProduct = Base & {
+export type DepositProduct = {
   accountClosingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
-  createdAt: Scalars['Time'];
+  createdAt: Scalars['Localized'];
   createdBy: Identity;
   createdDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -25241,7 +25241,7 @@ export type GetDepositProductSettingsListQuery = {
               interest?: number | null;
               createdDate?: string | null;
               typeOfMember?: Array<KymMemberTypesEnum | null> | null;
-              createdAt: string;
+              createdAt: Record<'local' | 'en' | 'np', string>;
               modifiedAt: string;
               createdBy: { id: string; name: string; username: string; userType: UserType };
               modifiedBy: { id: string; name: string; username: string; userType: UserType };
