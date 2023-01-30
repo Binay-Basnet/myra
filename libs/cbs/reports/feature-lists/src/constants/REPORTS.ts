@@ -75,7 +75,7 @@ export enum Report {
   TRANSACTION_CHANGE_OF_EQUITY = 'Change of Equity',
   TRANSACTION_APPROPRIATE_OF_PROFIT = 'Appropriation of Profit',
   TRANSACTION_PROFIT_AND_LOSS = 'Profit and Loss',
-  TRANSACTION_BANK_GL_BALANCE = 'Bank GL Balance',
+  // TRANSACTION_BANK_GL_BALANCE = 'Bank GL Balance',
   TRANSACTION_BANK_GL_REPORT = 'Bank GL Statement',
   TRANSACTION_TELLER_REPORT = 'Teller Report',
   TRANSACTION_CASH_LEDGER = 'Cash Ledger Report',
@@ -83,6 +83,8 @@ export enum Report {
   TRANSACTION_DAY_BOOK_REPORT = 'Day Book Report',
   TRANSACTION_SUSPICIOUS_TRANSACTION_REPORT = 'Suspicious Transaction Report',
   TRANSACTION_BALANCE_SHEET_REPORT = 'Balance Sheet Report',
+  TRANSACTION_SERVICE_CENTER_BALANCE_REPORT = 'Service Center Balance',
+  TRANSACTION_BANK_GL_BALANCE_REPORT = 'Bank GL Balance Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -427,9 +429,19 @@ export const REPORTS = {
       report: Report.TRANSACTION_INCOME_STATEMENT,
     },
     {
+      id: '7.2.2',
+      report: Report.TRANSACTION_SERVICE_CENTER_BALANCE_REPORT,
+      link: 'service-center-balance',
+    },
+    {
       id: '7.2.5.b',
       report: Report.TRANSACTION_CASH_LEDGER,
       link: 'cash-ledger',
+    },
+    {
+      id: '7.2.5.2',
+      report: Report.TRANSACTION_BANK_GL_BALANCE_REPORT,
+      link: 'bankGL-balance',
     },
     {
       id: '7.2.6',
@@ -453,10 +465,10 @@ export const REPORTS = {
       id: '7.5',
       report: Report.TRANSACTION_APPROPRIATE_OF_PROFIT,
     },
-    {
-      id: '7.6',
-      report: Report.TRANSACTION_BANK_GL_BALANCE,
-    },
+    // {
+    //   id: '7.6',
+    //   report: Report.TRANSACTION_BANK_GL_BALANCE,
+    // },
     {
       id: '7.7',
       report: Report.TRANSACTION_BANK_GL_REPORT,

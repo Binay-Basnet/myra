@@ -23710,6 +23710,77 @@ export type GetDayBookReportQuery = {
   };
 };
 
+export type GetServiceCenterBalanceReportQueryVariables = Exact<{
+  data: ServiceCenterBalanceFilter;
+}>;
+
+export type GetServiceCenterBalanceReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        serviceCenterBalanceReport: {
+          data?: Array<{
+            serviceCenterId?: string | null;
+            ServiceCenterName?: string | null;
+            todayCashBalance?: string | null;
+            todayBankBalance?: string | null;
+            todayTotalBalance?: string | null;
+            totalCashBalance?: string | null;
+            totalBankBalance?: string | null;
+            totalTotalBalance?: string | null;
+            depositToLiquidityRatio?: string | null;
+          } | null> | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetAbbsStatusReportQueryVariables = Exact<{
+  data: AbbsReportFilter;
+}>;
+
+export type GetAbbsStatusReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        abbsStatusReport: {
+          data?: Array<{
+            serviceCenterId?: string | null;
+            ServiceCenterName?: string | null;
+            serviceCenterActive?: boolean | null;
+            abbsActive?: boolean | null;
+          } | null> | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetBankGlBalanceReportQueryVariables = Exact<{
+  data: BankGlBalanceFilter;
+}>;
+
+export type GetBankGlBalanceReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        bankGLBalanceReport: {
+          total?: string | null;
+          data?: Array<{
+            bankId?: string | null;
+            bankName?: string | null;
+            bankDisplayName?: string | null;
+            bankAccountName?: string | null;
+            accountNo?: string | null;
+            closingBalance?: string | null;
+          } | null> | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<RequestFilter>;
@@ -39375,6 +39446,107 @@ export const useGetDayBookReportQuery = <TData = GetDayBookReportQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetServiceCenterBalanceReportDocument = `
+    query getServiceCenterBalanceReport($data: ServiceCenterBalanceFilter!) {
+  report {
+    transactionReport {
+      financial {
+        serviceCenterBalanceReport(data: $data) {
+          data {
+            serviceCenterId
+            ServiceCenterName
+            todayCashBalance
+            todayBankBalance
+            todayTotalBalance
+            totalCashBalance
+            totalBankBalance
+            totalTotalBalance
+            depositToLiquidityRatio
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetServiceCenterBalanceReportQuery = <
+  TData = GetServiceCenterBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetServiceCenterBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetServiceCenterBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetServiceCenterBalanceReportQuery, TError, TData>(
+    ['getServiceCenterBalanceReport', variables],
+    useAxios<GetServiceCenterBalanceReportQuery, GetServiceCenterBalanceReportQueryVariables>(
+      GetServiceCenterBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAbbsStatusReportDocument = `
+    query getABBSStatusReport($data: ABBSReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        abbsStatusReport(data: $data) {
+          data {
+            serviceCenterId
+            ServiceCenterName
+            serviceCenterActive
+            abbsActive
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAbbsStatusReportQuery = <TData = GetAbbsStatusReportQuery, TError = unknown>(
+  variables: GetAbbsStatusReportQueryVariables,
+  options?: UseQueryOptions<GetAbbsStatusReportQuery, TError, TData>
+) =>
+  useQuery<GetAbbsStatusReportQuery, TError, TData>(
+    ['getABBSStatusReport', variables],
+    useAxios<GetAbbsStatusReportQuery, GetAbbsStatusReportQueryVariables>(
+      GetAbbsStatusReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetBankGlBalanceReportDocument = `
+    query getBankGLBalanceReport($data: BankGLBalanceFilter!) {
+  report {
+    transactionReport {
+      financial {
+        bankGLBalanceReport(data: $data) {
+          data {
+            bankId
+            bankName
+            bankDisplayName
+            bankAccountName
+            accountNo
+            closingBalance
+          }
+          total
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBankGlBalanceReportQuery = <
+  TData = GetBankGlBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetBankGlBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetBankGlBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetBankGlBalanceReportQuery, TError, TData>(
+    ['getBankGLBalanceReport', variables],
+    useAxios<GetBankGlBalanceReportQuery, GetBankGlBalanceReportQueryVariables>(
+      GetBankGlBalanceReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetChequeBookRequestsDocument = `

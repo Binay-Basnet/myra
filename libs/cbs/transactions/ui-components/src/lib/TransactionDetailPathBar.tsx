@@ -5,13 +5,17 @@ import { useTransactionDetailHooks } from 'libs/cbs/transactions/feature-detail-
 
 import { Box, DetailPageHeader, SuccessPrint, Text } from '@myra-ui';
 
-import { useGetJournalVoucherDetailQuery } from '@coop/cbs/data-access';
+import { TransferType, useGetJournalVoucherDetailQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
 
 export interface PathBarProps {
   title: string;
 }
+const transferTypeObj = {
+  [TransferType.Self]: 'Self Transfer',
+  [TransferType.Member]: 'Member to Member',
+};
 
 export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
   const router = useRouter();
@@ -103,7 +107,9 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
         ),
         Date: localizedDate(accountTransferDetailData?.transactionDate),
         'Withdrawn By': accountTransferDetailData?.withdrawnBy,
-        'Transfer Type': accountTransferDetailData?.transferType,
+        'Transfer Type': accountTransferDetailData?.transferType
+          ? transferTypeObj[accountTransferDetailData?.transferType]
+          : '',
         'Transfer Amount': accountTransferDetailData?.transferAmount,
       };
 
