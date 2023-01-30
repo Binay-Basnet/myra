@@ -59,29 +59,29 @@ export const TrialSheetReport = () => {
 
   const assetsReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.assets ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
   const equityAndLiablities = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.equityAndLiablities ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
   const incomeReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.income ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
   const expensesReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.expenses ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
 
   const offBalanceSheetReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.offBalance ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
 
   const unMappedCoaHeads = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.orphanEntries ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
 
   return (

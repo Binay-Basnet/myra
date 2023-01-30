@@ -50,11 +50,11 @@ export const ProfitAndLossReport = () => {
 
   const incomeReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.income ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
   const expensesReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.expenses ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
 
   return (
