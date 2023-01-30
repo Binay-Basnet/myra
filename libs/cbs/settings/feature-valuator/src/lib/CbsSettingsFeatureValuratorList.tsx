@@ -5,7 +5,7 @@ import { CellContext } from '@tanstack/react-table';
 import { Box, TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetNewIdMutation, useGetValuatorListQuery, ValuatorEdge } from '@coop/cbs/data-access';
+import { useGetValuatorListQuery, ValuatorEdge } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { formatAddress, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
@@ -33,7 +33,6 @@ const CBSSettingsValuatorPopover = ({ cell }: CellContext<ValuatorEdge, unknown>
 export const CbsSettingsFeatureValuatorList = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { mutateAsync } = useGetNewIdMutation();
 
   const { data, isFetching } = useGetValuatorListQuery({
     paginate: getRouterQuery({ type: ['PAGINATION'] }),
@@ -96,9 +95,7 @@ export const CbsSettingsFeatureValuatorList = () => {
         heading={`${t['settingsGeneralValuatorValuator']} - ${featureCode?.valuatorSetting}`}
         buttonLabel={t['settingsGeneralValuatorNewValuator']}
         buttonHandler={() => {
-          mutateAsync({}).then((res) => {
-            router.push(`${ROUTES.SETTINGS_GENERAL_LOAN_VALUATOR_ADD}?id=${res?.newId}`);
-          });
+          router.push(ROUTES.SETTINGS_GENERAL_LOAN_VALUATOR_ADD);
         }}
       />
 

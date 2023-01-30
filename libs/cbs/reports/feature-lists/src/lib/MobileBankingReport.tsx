@@ -1,5 +1,6 @@
-import { ReportLinkText } from '@coop/cbs/reports/list';
 import { Box, Text } from '@myra-ui';
+
+import { ReportLinkText } from '@coop/cbs/reports/list';
 
 import { ReportGroup, REPORTS } from '../constants/REPORTS';
 
@@ -13,7 +14,8 @@ export const MobileBankingReports = () => (
         key={report.id}
         link={report.link ? `/reports/cbs/mobile-banking/${report.link}/new` : undefined}
       >
-        {report.id} - {report.report}
+        {/* {report.id} -  */}
+        {report.report}
       </ReportLinkText>
     ))}
   </Box>
