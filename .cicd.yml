@@ -464,7 +464,7 @@ volumes:
 
 trigger:
   branch:
-    - prod
+    - main
   event:
     - tag
 
@@ -523,7 +523,7 @@ volumes:
 
 trigger:
   branch:
-    - prod
+    - main
   event:
     - tag
 
@@ -582,6 +582,6 @@ volumes:
 
 trigger:
   branch:
-    - prod
+    - main
   event:
     - tag
