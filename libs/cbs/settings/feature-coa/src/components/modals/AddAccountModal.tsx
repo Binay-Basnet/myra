@@ -40,7 +40,7 @@ export const AddAccountModal = ({ clickedAccount, modalProps }: IAddAccountProps
     <Modal
       open={isOpen}
       onClose={onClose}
-      title="Add Account"
+      title="Add Ledger"
       primaryButtonLabel="Save"
       primaryButtonHandler={async () => {
         await asyncToast({
@@ -67,10 +67,10 @@ export const AddAccountModal = ({ clickedAccount, modalProps }: IAddAccountProps
           name="accountSetup"
           direction="column"
           options={[
-            { label: 'Open Account for this Service Center', value: CoaAccountSetup.ThisBranch },
-            { label: 'Open Account for all Service Center', value: CoaAccountSetup.AllBranch },
+            { label: 'Open Ledger for this Service Center', value: CoaAccountSetup.ThisBranch },
+            { label: 'Open Ledger for all Service Center', value: CoaAccountSetup.AllBranch },
             {
-              label: 'Open Account for selected Service Center',
+              label: 'Open Ledger for selected Service Center',
               value: CoaAccountSetup.SelectedBranch,
             },
           ]}
