@@ -1,9 +1,14 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
+import debounce from 'lodash/debounce';
 
 import { BankSelect, BankSelectProps } from '@myra-ui/forms';
 
-import { AccountingBankAccountType, useGetBankAccountListQuery } from '@coop/cbs/data-access';
+import {
+  AccountingBankAccountType,
+  Filter_Mode,
+  useGetBankAccountListQuery,
+} from '@coop/cbs/data-access';
 import { getRouterQuery } from '@coop/shared/utils';
 
 interface Option {
@@ -27,8 +32,18 @@ interface IFormBankSelectProps extends BankSelectProps {
 export const FormBankSelect = (props: IFormBankSelectProps) => {
   const { name, label, ...rest } = props;
 
+  const [searchQuery, setSearchQuery] = useState('');
+
   const { data: bankAccountListQueryData, isFetching } = useGetBankAccountListQuery({
-    pagination: { ...getRouterQuery({ type: ['PAGINATION'] }), first: -1 },
+    pagination: { ...getRouterQuery({ type: ['PAGINATION'] }), first: 1 },
+    filter: {
+      id: searchQuery,
+      bankId: searchQuery,
+      bankName: searchQuery,
+      bankDisplayName: searchQuery,
+      accountName: searchQuery,
+      filterMode: Filter_Mode.Or,
+    },
   });
 
   const bankOptions = useMemo(
@@ -44,7 +59,7 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
           branchName: item?.node?.branchName as string,
         },
       })),
-    [bankAccountListQueryData]
+    [bankAccountListQueryData, isFetching]
   );
 
   return (
@@ -62,7 +77,13 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
               onChange(newVal);
             }
           }}
+          onInputChange={debounce((query) => {
+            if (query) {
+              setSearchQuery(query);
+            }
+          }, 800)}
           options={bankOptions}
+          filterOption={() => true}
           {...rest}
         />
       )}
