@@ -4,11 +4,17 @@ import { Box, GridItem, Text } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
-  TrialSheetReportDataEntry,
   TrialSheetReportFilter,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
-import { COATable, CoaTotalTable, Report, sortCoa } from '@coop/cbs/reports';
+import {
+  COATable,
+  CoaTotalTable,
+  Report,
+  sortCoa,
+  TrialBalance,
+  TrialSheetReportDataEntry,
+} from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
 
@@ -44,11 +50,11 @@ export const ProfitAndLossReport = () => {
 
   const incomeReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.income ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
   const expensesReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.expenses ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
 
   return (
@@ -93,7 +99,8 @@ export const ProfitAndLossReport = () => {
               </Text>
               <COATable
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data?.incomeTotal
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.incomeTotal as unknown as TrialBalance
                 }
                 type="Income"
                 data={incomeReport as TrialSheetReportDataEntry[]}
@@ -109,7 +116,8 @@ export const ProfitAndLossReport = () => {
 
               <COATable
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data?.expenseTotal
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.expenseTotal as unknown as TrialBalance
                 }
                 type="Expenses"
                 data={expensesReport as TrialSheetReportDataEntry[]}
