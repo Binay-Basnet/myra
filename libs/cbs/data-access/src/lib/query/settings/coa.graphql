@@ -118,6 +118,7 @@ query getLedgerForJVPosting($pagination: Pagination, $filter: COAListFilter) {
       ledgersForJVPosting(pagination: $pagination, filter: $filter) {
         edges {
           node {
+            id
             accountCode
             accountName
             accountClass

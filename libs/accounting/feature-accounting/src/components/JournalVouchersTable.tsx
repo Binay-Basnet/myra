@@ -43,7 +43,6 @@ export const JournalVouchersTable = () => {
       first: 10,
     },
     filter: {
-      ledgerId: searchTerm,
       name: searchTerm,
       filterMode: 'OR',
     },
