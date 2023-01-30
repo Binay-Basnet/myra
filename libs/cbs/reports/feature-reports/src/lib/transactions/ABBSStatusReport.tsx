@@ -11,11 +11,13 @@ import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 
-type AbbsReportFilters = Omit<AbbsReportFilter, 'branchId'> & {
+type AbbsReportFilters = Omit<AbbsReportFilter, 'branchId' | 'active' | 'abbs'> & {
   branchId: {
     label: string;
     value: string;
   }[];
+  active: 'Active' | 'Inactive';
+  abbs: 'Active' | 'Inactive';
 };
 const activeIactive = [
   { label: 'Active', value: 'Active' },
