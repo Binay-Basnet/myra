@@ -17,7 +17,7 @@ export const useLoanProductDetails = ({ productId }: IUseLoanProductDetailsProps
   const { data: loanProductDetails } = useGetLoanProductDetailsDataQuery(
     { id: String(productId) },
     {
-      enabled: !!productId,
+      enabled: !!productId && productId !== 'undefined',
     }
   );
   const loanProduct = useMemo(
