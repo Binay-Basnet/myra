@@ -54,7 +54,7 @@ export const FormMemberSelect = ({
     },
     {
       staleTime: 0,
-      enabled: router?.asPath?.includes('/edit') ? !!IDMember : true,
+      enabled: router?.asPath?.includes('/edit') ? !!IDMember : true && IDMember !== 'undefined',
     }
   );
 
@@ -91,7 +91,7 @@ export const FormMemberSelect = ({
     if (memberId) {
       setIDMember(memberId);
     }
-  }, [memberId, IDMember]);
+  }, [memberId]);
 
   return (
     <Controller

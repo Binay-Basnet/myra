@@ -21,7 +21,7 @@ export const useLoanProductErrors = ({
       productTypeId: loanType as string,
       productSubTypeId: loanSubType as string,
     },
-    { enabled: !!loanSubType }
+    { enabled: !!loanSubType && loanSubType !== 'undefined' }
   );
 
   const loanProductOptions = [

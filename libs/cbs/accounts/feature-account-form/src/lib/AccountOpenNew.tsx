@@ -253,7 +253,7 @@ export const AccountOpenNew = () => {
     useGetDefaultAccountListQuery(
       { memberId, productId: productID },
       {
-        enabled: triggerQuery || triggerProductQuery,
+        enabled: (triggerQuery || triggerProductQuery) && !!productID,
       }
     );
   const defaulDataAcc = defaultAccountData?.account?.listDefaultAccounts?.data;
