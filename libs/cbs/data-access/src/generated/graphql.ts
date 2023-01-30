@@ -26,6 +26,24 @@ export type Scalars = {
   Time: string;
 };
 
+export type AbbsReportFilter = {
+  abbs?: InputMaybe<Scalars['Boolean']>;
+  active?: InputMaybe<Scalars['Boolean']>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type AbbsSatusEntry = {
+  ServiceCenterName?: Maybe<Scalars['String']>;
+  abbsActive?: Maybe<Scalars['Boolean']>;
+  serviceCenterActive?: Maybe<Scalars['Boolean']>;
+  serviceCenterId?: Maybe<Scalars['String']>;
+};
+
+export type AbbsSatusResult = {
+  data?: Maybe<Array<Maybe<AbbsSatusEntry>>>;
+  error?: Maybe<QueryError>;
+};
+
 export const Action = {
   Approved: 'APPROVED',
   Create: 'CREATE',
@@ -1200,7 +1218,11 @@ export type BankAccountEdges = {
 };
 
 export type BankAccountFilter = {
+  accountName?: InputMaybe<Scalars['String']>;
+  bankDisplayName?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['String']>;
+  bankName?: InputMaybe<Scalars['String']>;
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
 };
 
@@ -1381,6 +1403,27 @@ export type BankDepositData = {
   depositedBy: PaymentDepositedBy;
   depositedDate: Scalars['Localized'];
   voucherId: Scalars['String'];
+};
+
+export type BankGlBalanceEntry = {
+  accountNo?: Maybe<Scalars['String']>;
+  bankAccountName?: Maybe<Scalars['String']>;
+  bankDisplayName?: Maybe<Scalars['String']>;
+  bankId?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
+  closingBalance?: Maybe<Scalars['String']>;
+};
+
+export type BankGlBalanceFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  filter?: InputMaybe<GlBalanceFilter>;
+  period: LocalizedDateFilter;
+};
+
+export type BankGlBalanceResult = {
+  data?: Maybe<Array<Maybe<BankGlBalanceEntry>>>;
+  error?: Maybe<QueryError>;
+  total?: Maybe<Scalars['String']>;
 };
 
 export type BankGlDataEntry = {
@@ -2081,7 +2124,6 @@ export type CashTransferSelfEntry = {
   accountId: Scalars['String'];
   cr?: InputMaybe<Scalars['String']>;
   dr?: InputMaybe<Scalars['String']>;
-  ledgerId: Scalars['String'];
 };
 
 export type CashTransferServiceCentreEntry = {
@@ -4787,11 +4829,22 @@ export type FamilyMemberDetails = {
 };
 
 export type FianancialTransactionReport = {
+  abbsStatusReport: AbbsSatusResult;
+  bankGLBalanceReport: BankGlBalanceResult;
   bankGLStatementReport: BankGlStatementResult;
   dayBookReport: DayBookReportResult;
+  serviceCenterBalanceReport: SericeCenterStatementResult;
   tellerReport: TellerReportResult;
   trialSheetReport: TrialSheetReportResult;
   vaultBalanceReport: VaultBalanceReportResult;
+};
+
+export type FianancialTransactionReportAbbsStatusReportArgs = {
+  data: AbbsReportFilter;
+};
+
+export type FianancialTransactionReportBankGlBalanceReportArgs = {
+  data: BankGlBalanceFilter;
 };
 
 export type FianancialTransactionReportBankGlStatementReportArgs = {
@@ -4800,6 +4853,10 @@ export type FianancialTransactionReportBankGlStatementReportArgs = {
 
 export type FianancialTransactionReportDayBookReportArgs = {
   data: DayBookReportFilter;
+};
+
+export type FianancialTransactionReportServiceCenterBalanceReportArgs = {
+  data: ServiceCenterBalanceFilter;
 };
 
 export type FianancialTransactionReportTellerReportArgs = {
@@ -5425,6 +5482,10 @@ export type FundManagementResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<FundManagementQuery>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type GlBalanceFilter = {
+  amount?: InputMaybe<MinMaxFilter>;
 };
 
 export type GlStatementFilter = {
@@ -12705,6 +12766,11 @@ export type SectionWiseError = {
   sectionName?: Maybe<Scalars['String']>;
 };
 
+export type SericeCenterStatementResult = {
+  data?: Maybe<Array<Maybe<ServiceCenterBalanceEntry>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type ServerError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -12737,6 +12803,24 @@ export type ServiceCenterActivityDetails = {
 export type ServiceCenterActivityListEdges = {
   cursor: Scalars['Cursor'];
   node?: Maybe<ServiceCenterActivityDetails>;
+};
+
+export type ServiceCenterBalanceEntry = {
+  ServiceCenterName?: Maybe<Scalars['String']>;
+  depositToLiquidityRatio?: Maybe<Scalars['String']>;
+  serviceCenterId?: Maybe<Scalars['String']>;
+  todayBankBalance?: Maybe<Scalars['String']>;
+  todayCashBalance?: Maybe<Scalars['String']>;
+  todaySavingBalance?: Maybe<Scalars['String']>;
+  todayTotalBalance?: Maybe<Scalars['String']>;
+  totalBankBalance?: Maybe<Scalars['String']>;
+  totalCashBalance?: Maybe<Scalars['String']>;
+  totalSavingBalance?: Maybe<Scalars['String']>;
+  totalTotalBalance?: Maybe<Scalars['String']>;
+};
+
+export type ServiceCenterBalanceFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type ServiceCenterTransactionFilter = {

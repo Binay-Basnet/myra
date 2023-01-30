@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import { debounce } from 'lodash';
 
 import { MemberSelect, MemberSelectProps, Option } from '@myra-ui/forms';
@@ -32,6 +33,8 @@ export const FormMemberSelect = ({
   const [IDMember, setIDMember] = useState('');
   const { watch, control } = useFormContext();
 
+  const router = useRouter();
+
   const memberId = watch(name);
 
   const { data: memberList, isFetching } = useGetMemberListQuery(
@@ -51,7 +54,7 @@ export const FormMemberSelect = ({
     },
     {
       staleTime: 0,
-      enabled: IDMember !== 'undefined',
+      enabled: router?.asPath?.includes('/edit') ? !!IDMember : true,
     }
   );
 
@@ -85,8 +88,10 @@ export const FormMemberSelect = ({
     }, [] as Option[]) ?? [];
 
   useEffect(() => {
-    setIDMember(memberId);
-  }, [memberId]);
+    if (memberId) {
+      setIDMember(memberId);
+    }
+  }, [memberId, IDMember]);
 
   return (
     <Controller
@@ -110,8 +115,6 @@ export const FormMemberSelect = ({
           onInputChange={debounce((id) => {
             if (id) {
               setIDMember(id);
-            } else {
-              setIDMember('');
             }
           }, 800)}
           options={memberOptions}
