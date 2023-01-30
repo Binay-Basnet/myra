@@ -15,7 +15,7 @@ import {
   useSetDepositProductInactiveMutation,
   useSetProductActiveMutation,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { FormTextArea } from '@coop/shared/form';
 import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
@@ -58,6 +58,7 @@ export const SettingsDepositProducts = () => {
 
 export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) => {
   const router = useRouter();
+
   const isInactive = router?.query['objState'] === DepositProductStatus.Inactive;
   const { t } = useTranslation();
 
@@ -105,7 +106,8 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
     () => [
       {
         header: t['depositCreatedDate'],
-        accessorFn: (row) => row?.node?.createdDate,
+        accessorFn: (row) => row?.node?.createdAt,
+        cell: (props) => localizedDate(props.cell.row.original.node.createdAt),
       },
       {
         header: t['depositProductCode'],

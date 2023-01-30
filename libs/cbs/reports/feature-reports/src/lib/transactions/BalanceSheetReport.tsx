@@ -4,11 +4,16 @@ import { Box, GridItem, Text } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
-  TrialSheetReportDataEntry,
   TrialSheetReportFilter,
   useGetTrialSheetReportQuery,
 } from '@coop/cbs/data-access';
-import { COATable, Report, sortCoa } from '@coop/cbs/reports';
+import {
+  COATable,
+  Report,
+  sortCoa,
+  TrialBalance,
+  TrialSheetReportDataEntry,
+} from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
 
@@ -46,11 +51,11 @@ export const BalanceSheetReport = () => {
 
   const assetsReport = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.assets ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
   const equityAndLiablities = sortCoa(
     (data?.report?.transactionReport?.financial?.trialSheetReport?.data?.equityAndLiablities ??
-      []) as TrialSheetReportDataEntry[]
+      []) as unknown as TrialSheetReportDataEntry[]
   );
 
   return (
@@ -97,7 +102,7 @@ export const BalanceSheetReport = () => {
                 type="Liabilities"
                 total={
                   data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.equityAndLiablitiesTotal
+                    ?.equityAndLiablitiesTotal as unknown as TrialBalance
                 }
                 data={equityAndLiablities as TrialSheetReportDataEntry[]}
               />
@@ -111,7 +116,8 @@ export const BalanceSheetReport = () => {
               </Text>
               <COATable
                 total={
-                  data?.report?.transactionReport?.financial?.trialSheetReport?.data?.assetsTotal
+                  data?.report?.transactionReport?.financial?.trialSheetReport?.data
+                    ?.assetsTotal as unknown as TrialBalance
                 }
                 type="Assets"
                 data={assetsReport as TrialSheetReportDataEntry[]}
