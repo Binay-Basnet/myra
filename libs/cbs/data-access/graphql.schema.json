@@ -11906,6 +11906,11 @@
           },
           {
             "kind": "OBJECT",
+            "name": "DepositProduct",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "FormField",
             "ofType": null
           },
@@ -31974,7 +31979,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Localized",
+                "name": "Time",
                 "ofType": null
               }
             },
@@ -32199,7 +32204,13 @@
           }
         ],
         "inputFields": null,
-        "interfaces": [],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Base",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -56083,6 +56094,22 @@
             "deprecationReason": null
           },
           {
+            "name": "glTransaction",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "GlTransaction",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "note",
             "description": null,
             "args": [],
@@ -56108,6 +56135,18 @@
           },
           {
             "name": "reference",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalAmount",
             "description": null,
             "args": [],
             "type": {

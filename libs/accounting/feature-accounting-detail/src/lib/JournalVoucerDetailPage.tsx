@@ -19,7 +19,7 @@ export const JournalVoucerDetailPage = () => {
     id: voucherData?.transactionCode,
     date: voucherData?.date,
     reference: voucherData?.reference,
-    note: voucherData?.note,
+    // note: voucherData?.note,
   };
 
   const sidebarDetailData = {

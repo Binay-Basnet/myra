@@ -3720,9 +3720,9 @@ export const DepositPaymentType = {
 } as const;
 
 export type DepositPaymentType = typeof DepositPaymentType[keyof typeof DepositPaymentType];
-export type DepositProduct = {
+export type DepositProduct = Base & {
   accountClosingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
-  createdAt: Scalars['Localized'];
+  createdAt: Scalars['Time'];
   createdBy: Identity;
   createdDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -6681,9 +6681,11 @@ export type JournalVoucherRecord = {
   creatorName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   entries?: Maybe<Array<Maybe<JournalVoucherEntryDetails>>>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   note?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<JournalVoucherPaymentMode>;
   reference?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
   transactionId?: Maybe<Scalars['ID']>;
 };
 
@@ -25241,7 +25243,7 @@ export type GetDepositProductSettingsListQuery = {
               interest?: number | null;
               createdDate?: string | null;
               typeOfMember?: Array<KymMemberTypesEnum | null> | null;
-              createdAt: Record<'local' | 'en' | 'np', string>;
+              createdAt: string;
               modifiedAt: string;
               createdBy: { id: string; name: string; username: string; userType: UserType };
               modifiedBy: { id: string; name: string; username: string; userType: UserType };
