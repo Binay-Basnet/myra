@@ -14,7 +14,8 @@ export const MemberReportList = () => (
         key={report.id}
         link={report.link ? `/reports/cbs/members/${report.link}/new` : undefined}
       >
-        {report.id} - {report.report}
+        {/* {report.id} -  */}
+        {report.report}
       </ReportLinkText>
     ))}
   </Box>

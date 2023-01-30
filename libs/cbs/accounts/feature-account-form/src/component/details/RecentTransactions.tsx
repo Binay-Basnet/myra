@@ -1,16 +1,10 @@
-import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Button, DetailsCard } from '@myra-ui';
 
 import { TransactionTable } from '@coop/cbs/components';
-import {
-  EbankingTransaction,
-  useAccountDetails,
-  useGetAccountTransactionListsQuery,
-} from '@coop/cbs/data-access';
+import { useAccountDetails } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery } from '@coop/shared/utils';
 
 interface IProps {
   isClosed?: boolean;
@@ -19,25 +13,7 @@ interface IProps {
 export const RecentTransactions = ({ isClosed }: IProps) => {
   const router = useRouter();
 
-  const { accountDetails } = useAccountDetails();
-
-  const { data: transactionListQueryData, isFetching } = useGetAccountTransactionListsQuery(
-    {
-      filter: { accountIds: [accountDetails?.accountId as string] },
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    },
-    {
-      enabled: !!accountDetails?.accountId,
-    }
-  );
-
-  const transactionList = useMemo(
-    () =>
-      transactionListQueryData?.account?.listTransactions?.edges
-        ?.slice(0, 10)
-        ?.map((item) => item?.node as EbankingTransaction) ?? [],
-    [transactionListQueryData]
-  );
+  const { accountDetails, transactionList, transactionLoading: isFetching } = useAccountDetails();
 
   return (
     <DetailsCard
@@ -57,7 +33,7 @@ export const RecentTransactions = ({ isClosed }: IProps) => {
         </Button>
       }
     >
-      <TransactionTable data={transactionList} isLoading={isFetching} />
+      <TransactionTable data={transactionList.slice(0, 10)} isLoading={isFetching} />
     </DetailsCard>
   );
 };
