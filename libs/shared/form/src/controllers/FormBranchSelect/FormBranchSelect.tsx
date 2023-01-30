@@ -1,10 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { debounce } from 'lodash';
-
 import { SelectProps } from '@myra-ui';
 
-import { Filter_Mode, useGetBranchListQuery } from '@coop/cbs/data-access';
+import { useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 
 interface IFormBranchSelectProps extends SelectProps {
@@ -15,9 +11,9 @@ interface IFormBranchSelectProps extends SelectProps {
 export const FormBranchSelect = (props: IFormBranchSelectProps) => {
   const { name, label, ...rest } = props;
 
-  const { watch } = useFormContext();
+  // const { watch } = useFormContext();
 
-  const [branchId, setBranchId] = useState('');
+  // const [branchId, setBranchId] = useState('');
 
   const { data: branchListQueryData, isFetching } = useGetBranchListQuery(
     {
@@ -26,11 +22,11 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
         after: '',
         order: null,
       },
-      filter: {
-        query: branchId?.length === 0 ? null : branchId,
-        id: branchId?.length === 0 ? null : branchId,
-        filterMode: Filter_Mode.Or,
-      },
+      // filter: {
+      //   query: branchId?.length === 0 ? null : branchId,
+      //   id: branchId?.length === 0 ? null : branchId,
+      //   filterMode: Filter_Mode.Or,
+      // },
     },
     {
       staleTime: 0,
@@ -44,25 +40,25 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
     value: branch?.node?.id as string,
   }));
 
-  const branch = watch(name);
+  // const branch = watch(name);
 
-  useEffect(() => {
-    if (branch && !branchOptions?.length) {
-      setBranchId(branch);
-    }
-  }, [branch, branchOptions]);
+  // useEffect(() => {
+  //   if (branch && !branchOptions?.length) {
+  //     setBranchId(branch);
+  //   }
+  // }, [branch, branchOptions]);
 
   return (
     <FormSelect
       name={name}
       label={label}
       isLoading={isFetching}
-      onInputChange={debounce((id) => {
-        if (id) {
-          setBranchId(id);
-          // setTrigger(true);
-        }
-      }, 800)}
+      // onInputChange={debounce((id) => {
+      //   if (id) {
+      //     setBranchId(id);
+      //     // setTrigger(true);
+      //   }
+      // }, 800)}
       options={branchOptions}
       {...rest}
     />

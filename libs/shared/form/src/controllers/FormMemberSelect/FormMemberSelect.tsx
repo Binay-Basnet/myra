@@ -118,6 +118,7 @@ export const FormMemberSelect = ({
             }
           }, 800)}
           options={memberOptions}
+          filterOption={() => true}
           {...rest}
         />
       )}
