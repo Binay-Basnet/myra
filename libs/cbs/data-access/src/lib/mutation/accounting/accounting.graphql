@@ -28,6 +28,15 @@ mutation setJournalVoucherData($data: JournalVoucherInput) {
             value
           }
           paymentMode
+          totalAmount
+          glTransaction {
+            ledgerId
+            account
+            serviceCentreId
+            serviceCenter
+            debit
+            credit
+          }
         }
         error {
           ...MutationError
