@@ -94,9 +94,9 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router?.isReady]);
 
-  const emptyStateData = EMPTYSTATE[menu];
+  const emptyStateData = EMPTYSTATE[menu as keyof typeof EMPTYSTATE];
 
-  const sidebarForms = forms || EMPTYSTATE[menu]?.buttonLink;
+  const sidebarForms = forms || EMPTYSTATE[menu as keyof typeof EMPTYSTATE]?.buttonLink;
 
   return (
     <>

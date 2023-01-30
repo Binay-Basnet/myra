@@ -5,7 +5,7 @@ import qs from 'qs';
 import { Select } from '@myra-ui/forms';
 import { Text } from '@myra-ui/foundations';
 
-import { DEFAULT_PAGE_SIZE as UTIL_PAGE_SIZE } from '@coop/shared/utils';
+import { DEFAULT_PAGE_SIZE as UTIL_PAGE_SIZE, quantityConverter } from '@coop/shared/utils';
 
 import SmallPagination from '../small-pagination/SmallPagination';
 
@@ -49,7 +49,7 @@ export const Pagination = ({ pageInfo, total, pageSizeOptions }: PaginationProps
               instanceId="pagination-select"
               menuPlacement="auto"
               isSearchable={false}
-              value={{ label: pageSize, value: pageSize }}
+              value={{ label: quantityConverter(pageSize), value: pageSize }}
               onChange={(newValue) => {
                 if (newValue && 'value' in newValue) {
                   router.push({
@@ -65,7 +65,7 @@ export const Pagination = ({ pageInfo, total, pageSizeOptions }: PaginationProps
                 }
               }}
               options={pageSizeOptions?.map((size) => ({
-                label: String(size),
+                label: quantityConverter(size),
                 value: size,
               }))}
             />
