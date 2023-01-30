@@ -25,7 +25,7 @@ type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId
   };
 };
 
-type TrialBalance = Record<string, { Dr: string; Cr: string; Total: string }>;
+export type TrialBalance = Record<string, { Dr: string; Cr: string; Total: string }>;
 
 export type TrialSheetReportDataEntry = {
   balance?: TrialBalance;
