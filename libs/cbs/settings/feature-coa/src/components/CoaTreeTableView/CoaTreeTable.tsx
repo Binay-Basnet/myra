@@ -122,7 +122,7 @@ export const CoaTreeTable = ({ data, type }: ICoaTreeTableProps) => {
               },
             },
             {
-              label: 'Add Account',
+              label: 'Create Ledger',
               icon: IoAdd,
               onClick: (node) => {
                 addAccountModalProps.onToggle();

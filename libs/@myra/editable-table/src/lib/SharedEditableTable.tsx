@@ -391,6 +391,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
               options={columns.find((column) => column.searchOptions)?.searchOptions}
               chakraStyles={searchBarStyle}
               value=""
+              filterOption={() => true}
               isLoading={columns.find((column) => column.searchOptions)?.searchLoading}
               onInputChange={debounce((id) => {
                 if (id) {

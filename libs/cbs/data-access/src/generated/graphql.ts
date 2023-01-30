@@ -2243,6 +2243,7 @@ export type ChartsOfAccountSettingsQuery = {
   coaLeafNodeDetails?: Maybe<CoaLeafNodeDetailView>;
   coaLedgerList?: Maybe<CoaLedgerListResult>;
   fullView: CoaFullView;
+  ledgersForJVPosting?: Maybe<LedgersForJvListResult>;
   search?: Maybe<CoaMinimalResult>;
 };
 
@@ -2278,6 +2279,11 @@ export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
 export type ChartsOfAccountSettingsQueryCoaLedgerListArgs = {
   filter?: InputMaybe<CoaLedgerListFilter>;
   id: Scalars['ID'];
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ChartsOfAccountSettingsQueryLedgersForJvPostingArgs = {
+  filter?: InputMaybe<CoaListFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -8664,6 +8670,18 @@ export type LedgerMappingFormState = {
   interestAccuredDaily?: Maybe<Scalars['String']>;
   interestIncome?: Maybe<Scalars['String']>;
   principal?: Maybe<Scalars['String']>;
+};
+
+export type LedgersForJvListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<CoaAccount>;
+};
+
+export type LedgersForJvListResult = {
+  edges?: Maybe<Array<Maybe<LedgersForJvListEdges>>>;
+  error?: Maybe<QueryError>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
 };
 
 export type Level1 = {
@@ -24306,6 +24324,42 @@ export type GetCoaAccountListQuery = {
           startCursor?: string | null;
           endCursor?: string | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLedgerForJvPostingQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<CoaListFilter>;
+}>;
+
+export type GetLedgerForJvPostingQuery = {
+  settings: {
+    chartsOfAccount?: {
+      ledgersForJVPosting?: {
+        totalCount: number;
+        edges?: Array<{
+          node?: {
+            accountCode?: string | null;
+            accountName?: Record<'local' | 'en' | 'np', string> | null;
+            accountClass?: string | null;
+            parentGroup?: Record<'local' | 'en' | 'np', string> | null;
+            branch?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+          startCursor?: string | null;
+          endCursor?: string | null;
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
       } | null;
     } | null;
   };
@@ -40281,6 +40335,46 @@ export const useGetCoaAccountListQuery = <TData = GetCoaAccountListQuery, TError
     variables === undefined ? ['getCoaAccountList'] : ['getCoaAccountList', variables],
     useAxios<GetCoaAccountListQuery, GetCoaAccountListQueryVariables>(
       GetCoaAccountListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLedgerForJvPostingDocument = `
+    query getLedgerForJVPosting($pagination: Pagination, $filter: COAListFilter) {
+  settings {
+    chartsOfAccount {
+      ledgersForJVPosting(pagination: $pagination, filter: $filter) {
+        edges {
+          node {
+            accountCode
+            accountName
+            accountClass
+            parentGroup
+            branch
+          }
+        }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetLedgerForJvPostingQuery = <TData = GetLedgerForJvPostingQuery, TError = unknown>(
+  variables?: GetLedgerForJvPostingQueryVariables,
+  options?: UseQueryOptions<GetLedgerForJvPostingQuery, TError, TData>
+) =>
+  useQuery<GetLedgerForJvPostingQuery, TError, TData>(
+    variables === undefined ? ['getLedgerForJVPosting'] : ['getLedgerForJVPosting', variables],
+    useAxios<GetLedgerForJvPostingQuery, GetLedgerForJvPostingQueryVariables>(
+      GetLedgerForJvPostingDocument
     ).bind(null, variables),
     options
   );
