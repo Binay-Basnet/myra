@@ -32,7 +32,7 @@ import {
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
-import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter, featureCode } from '@coop/shared/utils';
 
@@ -393,6 +393,7 @@ export const LoanRepayment = () => {
                           </Text>
                         ),
                         Date: localizedDate(result?.date),
+                        'Transaction Time': localizedTime(result?.createdAt),
                         'Installment No': result?.installmentNo,
                         'Principal Amount': result?.principalAmount,
                         'Interest Amount': result?.interestAmount,

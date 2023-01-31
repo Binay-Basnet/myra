@@ -30,7 +30,7 @@ import {
   useGetSettingsShareGeneralDataQuery,
   useGetShareChargesQuery,
 } from '@coop/cbs/data-access';
-import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { FormMemberSelect } from '@coop/shared/form';
 import {
   amountConverter,
@@ -370,6 +370,7 @@ export const SharePurchaseForm = () => {
                             </Text>
                           ),
                           Date: localizedDate(result?.transactionDate),
+                          'Transaction Time': localizedTime(result?.createdAt),
                           'No of Shares ': quantityConverter(result?.noOfShare || 0),
                           'Share Amount': amountConverter(result?.shareAmount || 0) as string,
 

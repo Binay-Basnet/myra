@@ -5,7 +5,7 @@ mutation addSharePurchase($data: SharePurchaseInput!) {
       record {
         id
         transactionId
-
+        createdAt
         status
         transactionDate
         transactionDirection

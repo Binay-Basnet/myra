@@ -34,7 +34,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { CashOptions } from '@coop/shared/components';
 import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
 import { amountConverter, decimalAdjust, featureCode, useTranslation } from '@coop/shared/utils';
@@ -617,6 +617,7 @@ export const AddDeposit = () => {
                     promise={() => mutateAsync({ data: handleSubmit() })}
                     successCardProps={(response) => {
                       const result = response?.transaction?.deposit?.record;
+                      const isDepositedByOther = result?.depositedBy === 'OTHER';
 
                       return {
                         type: 'Deposit',
@@ -629,10 +630,13 @@ export const AddDeposit = () => {
                             </Text>
                           ),
                           Date: localizedDate(result?.date),
+                          'Transaction Time': localizedTime(result?.createdAt),
                           'Deposit Amount': amountConverter(result?.amount || 0),
                           Rebate: amountConverter(result?.rebate || 0),
                           'Payment Mode': result?.paymentMode,
-                          'Deposited By': result?.depositedBy,
+                          'Deposited By': !isDepositedByOther
+                            ? result?.depositedBy
+                            : `${result?.depositedBy}-(${result?.depositedOther})`,
                         },
                         subTitle:
                           'Amount deposited successfully. Details of the transaction is listed below.',

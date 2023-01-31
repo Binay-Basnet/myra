@@ -30,7 +30,7 @@ import {
   WithdrawWith,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
-import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { CashOptions } from '@coop/shared/components';
 import {
   FormAccountSelect,
@@ -519,6 +519,7 @@ export const AddWithdraw = () => {
                             </Text>
                           ),
                           Date: localizedDate(result?.date),
+                          'Transaction Time': localizedTime(result?.createdAt),
                           'Withdraw Amount': amountConverter(result?.amount || 0),
                           Fine: amountConverter(result?.fine || '0'),
                           'Payment Mode': result?.paymentMode,
