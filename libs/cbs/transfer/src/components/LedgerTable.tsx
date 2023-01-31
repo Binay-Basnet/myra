@@ -1,6 +1,8 @@
+import { useState } from 'react';
+
 import { Box, FormSection } from '@myra-ui';
 
-import { useAppSelector, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
+import { useGetLedgerForJvPostingQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 
 type JournalVouchersTableType = {
@@ -13,8 +15,8 @@ type JournalVouchersTableType = {
 };
 
 export const LedgerTable = () => {
-  const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
-  // const [searchTerm, setSearchTerm] = useState<string | null>(null);
+  // const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
   // const { watch } = useFormContext<CustomJournalVoucherInput>();
 
@@ -32,21 +34,18 @@ export const LedgerTable = () => {
   //   return { crTotal: tempCR, drTotal: tempDR };
   // }, [entries]);
 
-  const { data: accountList } = useGetCoaAccountListQuery({
-    branchId: [branchId as string],
-
+  const { data: accountList, isFetching } = useGetLedgerForJvPostingQuery({
     pagination: {
       after: '',
-      first: -1,
+      first: 10,
     },
-    // filter: {
-    //   ledgerId: searchTerm,
-    //   name: searchTerm,
-    //   filterMode: 'OR',
-    // },
+    filter: {
+      name: searchTerm,
+      filterMode: 'OR',
+    },
   });
 
-  const accountListData = accountList?.settings?.chartsOfAccount?.coaAccountList?.edges;
+  const accountListData = accountList?.settings?.chartsOfAccount?.ledgersForJVPosting?.edges;
 
   return (
     <FormSection header="My Ledger" subHeader="Select Source Ledger & account." templateColumns={1}>
@@ -63,10 +62,10 @@ export const LedgerTable = () => {
                 label: account?.node?.accountName?.local as string,
                 value: account?.node?.accountCode as string,
               })),
-              // searchLoading: isFetching,
-              // searchCallback: (newSearch) => {
-              //   setSearchTerm(newSearch);
-              // },
+              searchLoading: isFetching,
+              searchCallback: (newSearch) => {
+                setSearchTerm(newSearch);
+              },
               cellWidth: 'lg',
             },
             {
