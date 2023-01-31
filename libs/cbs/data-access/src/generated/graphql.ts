@@ -1255,7 +1255,6 @@ export type BankAccountQueryDetailsArgs = {
 };
 
 export type BankAccountQueryListArgs = {
-  currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<BankAccountFilter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -4040,10 +4039,8 @@ export type DepositRecord = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
   depositedBy?: Maybe<DepositedBy>;
-  depositedOther?: Maybe<Scalars['String']>;
   fine?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -6686,7 +6683,6 @@ export type JournalVoucherQueryViewJournalVoucherDetailArgs = {
 };
 
 export type JournalVoucherRecord = {
-  createdAt?: Maybe<Scalars['Localized']>;
   creatorId?: Maybe<Scalars['ID']>;
   creatorName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
@@ -9918,7 +9914,6 @@ export type LoanRepaymentMethod = typeof LoanRepaymentMethod[keyof typeof LoanRe
 export type LoanRepaymentRecord = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
   installmentNo?: Maybe<Scalars['String']>;
   interestAmount?: Maybe<Scalars['String']>;
@@ -13280,7 +13275,6 @@ export type ShareRegister = {
   accountId?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['Int']>;
   bankId?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Localized']>;
   credit?: Maybe<Scalars['Int']>;
   debit?: Maybe<Scalars['Int']>;
   endNumber: Scalars['Int'];
@@ -14227,7 +14221,6 @@ export type TransactionTypeFilter =
   typeof TransactionTypeFilter[keyof typeof TransactionTypeFilter];
 export type TransferData = {
   amount?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
   fine?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
@@ -14717,7 +14710,6 @@ export type WithdrawRecord = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
   fine?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
