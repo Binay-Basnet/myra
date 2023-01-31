@@ -182,6 +182,14 @@ export const AccountingFeatureAddJournalVoucher = () => {
                   return {
                     type: 'Journal Voucher',
                     showSignatures: true,
+                    jVPrint: {
+                      glTransactions: result?.glTransaction,
+                      date: result?.date?.local,
+                      note: result?.note,
+                      refrence: result?.reference,
+                      totalDebit: result?.totalAmount,
+                      transactionId: result?.transactionId,
+                    },
                     title: 'Journal Voucher Entry Successful',
                     details: {
                       'Transaction Id': (

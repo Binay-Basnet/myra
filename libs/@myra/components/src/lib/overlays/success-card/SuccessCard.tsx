@@ -9,6 +9,8 @@ import { Avatar, Box, Button, Divider, Icon, Text } from '@myra-ui/foundations';
 import { useAppSelector } from '@coop/cbs/data-access';
 import { formatAddress } from '@coop/cbs/utils';
 
+import { GlTransactionJornalVoucherPrint } from './GLTransJornalVoucherPrint';
+
 export interface SuccessCardProps {
   title: string;
   subTitle: string;
@@ -25,6 +27,24 @@ export interface SuccessCardProps {
     accountId?: string | null;
   };
   showSignatures?: boolean;
+  jVPrint?: {
+    transactionId?: string | null;
+    refrence?: string | null;
+    transactionTime?: string | null;
+    date?: string | null;
+    note?: string | null;
+    totalDebit?: string | null;
+    glTransactions:
+      | ({
+          account: string;
+          serviceCenter?: string | null | undefined;
+          debit?: string | null | undefined;
+          credit?: string | null | undefined;
+          ledgerId?: string | null | undefined;
+        } | null)[]
+      | null
+      | undefined;
+  };
 }
 
 export const SuccessCard = ({
@@ -38,6 +58,7 @@ export const SuccessCard = ({
   closeModal,
   meta,
   showSignatures,
+  jVPrint,
 }: SuccessCardProps) => {
   const router = useRouter();
   const componentRef = useRef<HTMLInputElement | null>(null);
@@ -65,7 +86,6 @@ export const SuccessCard = ({
           </Text>
         </Box>
       </Box>
-
       <Box bg="highlight.500" display="flex" flexDir="column" py="s8" px="s16">
         <Box
           borderBottom={total ? '1px' : 'none'}
@@ -107,7 +127,6 @@ export const SuccessCard = ({
           </Box>
         )}
       </Box>
-
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <ReactToPrint
           trigger={() => (
@@ -142,14 +161,22 @@ export const SuccessCard = ({
           <Button onClick={completeHandler}>Done</Button>
         </Box>
       </Box>
-
-      <SuccessPrint
-        meta={meta}
-        showSignatures={showSignatures}
-        total={total as string}
-        details={details}
-        ref={componentRef}
-      />
+      {!jVPrint && (
+        <SuccessPrint
+          meta={meta}
+          showSignatures={showSignatures}
+          total={total as string}
+          details={details}
+          ref={componentRef}
+        />
+      )}
+      {jVPrint && (
+        <SuccessPrintJornalVoucher
+          showSignatures={showSignatures}
+          jVPrint={jVPrint}
+          ref={componentRef}
+        />
+      )}
     </Box>
   );
 };
@@ -346,7 +373,209 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
 
         {showSignatures && (
           <Box
-            position="fixed"
+            // position="fixed"
+            w="100%"
+            bottom="100px"
+            left={0}
+            display="grid"
+            gridTemplateColumns="repeat(3, 1fr)"
+            gap="s32"
+            px="s32"
+          >
+            <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+              <Divider borderTop="1px dotted black" />
+              <Text fontSize="s2" color="gray.800" fontWeight="500">
+                Prepared By
+              </Text>
+            </Box>
+            <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+              <Divider borderTop="1px dotted black" />
+              <Text fontSize="s2" color="gray.800" fontWeight="500">
+                Verified By
+              </Text>
+            </Box>
+            <Box display="flex" flexDir="column" alignItems="center" gap="s12">
+              <Divider borderTop="1px dotted black" />
+              <Text fontSize="s2" color="gray.800" fontWeight="500">
+                Approved By
+              </Text>
+            </Box>
+          </Box>
+        )}
+      </Box>
+    );
+  }
+);
+
+interface SuccessPrintJVProps {
+  jVPrint?: {
+    transactionId?: string | null;
+    refrence?: string | null;
+    transactionTime?: string | null;
+    date?: string | null;
+    note?: string | null;
+    totalDebit?: string | null;
+    glTransactions:
+      | ({
+          account: string;
+          serviceCenter?: string | null | undefined;
+          debit?: string | null | undefined;
+          credit?: string | null | undefined;
+          ledgerId?: string | null | undefined;
+        } | null)[]
+      | null
+      | undefined;
+  };
+  showSignatures?: boolean;
+}
+
+export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, SuccessPrintJVProps>(
+  ({ jVPrint, showSignatures }, ref) => {
+    const user = useAppSelector((state) => state.auth.user);
+
+    return (
+      <Box
+        ref={ref}
+        display="none"
+        bg="white"
+        p="s32"
+        flexDir="column"
+        gap="s8"
+        position="relative"
+        sx={{
+          '@media print': {
+            display: 'flex',
+          },
+          '@page': {
+            size: 'A4 portrait',
+            margin: '0.1in',
+          },
+        }}
+      >
+        <Box w="100%" mb="s12">
+          <Box display="flex" flexDir="column" gap="s12">
+            <Box display="flex" alignItems="center" gap="s8">
+              <Box position="relative">
+                <Avatar
+                  w="s48"
+                  h="s48"
+                  name={user?.organization?.basicDetails?.name as string}
+                  src={user?.organization?.basicDetails?.logo as string}
+                />
+              </Box>
+
+              <Box display="flex" flexDir="column" gap="s4">
+                <Text fontSize="r2" fontWeight="500" color="gray.800" lineHeight="0.8">
+                  {user?.organization?.basicDetails?.name}
+                </Text>
+                <Text fontSize="s2" fontWeight="400" color="gray.700">
+                  Contact: {user?.organization?.contactDetails?.phoneNumber} | Email:{' '}
+                  {user?.organization?.contactDetails?.email ?? 'N/A'} | Website:{' '}
+                  {user?.organization?.contactDetails?.website ?? 'N/A'}
+                </Text>
+              </Box>
+            </Box>
+
+            <Box display="flex" alignItems="start" justifyContent="space-between">
+              <Box display="flex" flexDir="column">
+                <Text fontSize="s2" color="gray.700" as="span">
+                  Branch: {user?.currentBranch?.name}
+                </Text>
+                <Text fontSize="s2" color="gray.700" as="span">
+                  Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
+                </Text>
+              </Box>
+
+              <Box>
+                <Box display="flex" gap="s4">
+                  <Text fontSize="s2" color="gray.700">
+                    Address:
+                  </Text>
+                  <Text fontSize="s2" color="gray.700" fontWeight="500" whiteSpace="nowrap">
+                    {formatAddress(user?.organization?.address)}
+                  </Text>
+                </Box>
+
+                <Box display="flex" gap="s4">
+                  <Text fontSize="s2" color="gray.700">
+                    Regd No:
+                  </Text>
+                  <Text fontSize="s2" color="gray.700" fontWeight="500">
+                    {user?.organization?.registrationDetails?.regdNo ?? 'N/A'}
+                  </Text>
+                </Box>
+
+                <Box display="flex" gap="s4">
+                  <Text fontSize="s2" color="gray.700">
+                    Pan:
+                  </Text>
+                  <Text fontSize="s2" color="gray.700" fontWeight="500">
+                    {user?.organization?.registrationDetails?.panOrVat ?? 'N/A'}
+                  </Text>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+
+        <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
+
+        <Box display="flex" flexDirection="column" gap="s4">
+          <Box display="flex" gap="s4">
+            <Text fontSize="s1" fontWeight="400" color="gray.600">
+              Transaction ID:
+            </Text>
+            <Text fontSize="s1" fontWeight="600" color="gray.800">
+              #{jVPrint?.transactionId}
+            </Text>
+          </Box>
+          {jVPrint?.transactionTime && (
+            <Box display="flex" gap="s4">
+              <Text fontSize="s1" fontWeight="400" color="gray.600">
+                Transaction Time:
+              </Text>
+              <Text fontSize="s1" fontWeight="600" color="gray.800">
+                {jVPrint?.transactionTime}
+              </Text>
+            </Box>
+          )}
+          <Box display="flex" gap="s4">
+            <Text fontSize="s1" fontWeight="400" color="gray.600">
+              Date:
+            </Text>
+            <Text fontSize="s1" fontWeight="600" color="gray.800">
+              {jVPrint?.date}
+            </Text>
+          </Box>
+          <Box display="flex" gap="s4">
+            <Text fontSize="s1" fontWeight="400" color="gray.600">
+              Reference:
+            </Text>
+            <Text fontSize="s1" fontWeight="600" color="gray.800">
+              {jVPrint?.refrence}
+            </Text>
+          </Box>
+        </Box>
+
+        <Box py="s16">
+          <Box display="flex" flexDirection="column" gap="s4">
+            <Text fontSize="s1" fontWeight="400" color="gray.600">
+              Note
+            </Text>
+            <Text fontSize="s1" fontWeight="600" color="gray.800">
+              {jVPrint?.note}
+            </Text>
+          </Box>
+        </Box>
+        <GlTransactionJornalVoucherPrint
+          data={jVPrint?.glTransactions}
+          total={jVPrint?.totalDebit}
+        />
+
+        {showSignatures && (
+          <Box
+            // position="fixed"
+            mt="s64"
             w="100%"
             bottom="100px"
             left={0}

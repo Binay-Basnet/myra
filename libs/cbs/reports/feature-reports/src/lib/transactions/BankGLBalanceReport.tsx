@@ -52,7 +52,7 @@ export const BankGLBalanceReport = () => {
           paths={[
             { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
             {
-              label: 'Service Center Wise Cash Bank Balance Report',
+              label: 'Bank Gl Balance Report',
               link: '/reports/cbs/transactions/bankGL-balance/new',
             },
           ]}

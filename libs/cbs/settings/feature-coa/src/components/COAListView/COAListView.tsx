@@ -26,7 +26,6 @@ export const COAListView = () => {
       ...getRouterQuery({ type: ['PAGINATION'] }),
     },
     filter: {
-      ledgerId: searchTerm,
       name: searchTerm,
       filterMode: Filter_Mode.Or,
     },
