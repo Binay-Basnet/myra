@@ -1,4 +1,4 @@
-import { Box, FormSection, GridItem, Text } from '@myra-ui';
+import { Box, GridItem, Text } from '@myra-ui';
 
 import { CashValue } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
@@ -42,7 +42,7 @@ type PurchaseProps = {
   totalCashPaid?: number;
   returnAmount?: number;
   fieldName: string;
-  cashPaid: string;
+  cashPaid?: string;
   disableDenomination?: boolean;
   denominationTotalOnly?: boolean;
 };
@@ -56,7 +56,7 @@ export const DenominationTable = ({
   disableDenomination,
   denominationTotalOnly,
 }: PurchaseProps) => (
-  <FormSection>
+  <Box>
     {!disableDenomination && (
       <GridItem colSpan={3}>
         <FormEditableTable<DenominationTableType>
@@ -102,7 +102,7 @@ export const DenominationTable = ({
           canDeleteRow={false}
           canAddRow={false}
         />
-        {denominationTotalOnly && (
+        {denominationTotalOnly ? (
           <Box
             display="flex"
             flexDirection="column"
@@ -122,43 +122,44 @@ export const DenominationTable = ({
               </Text>
             </Box>
           </Box>
+        ) : (
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap="s20"
+            px="s8"
+            py="s10"
+            border="1px"
+            borderColor="border.layout"
+            borderRadius="br2"
+          >
+            <Box
+              color="neutralColorLight.Gray-60"
+              fontSize="r1"
+              fontWeight="Regular"
+              display="flex"
+              flexDirection="column"
+              gap="s8"
+            >
+              <Text>Total</Text>
+              <Text>Return</Text>
+              <Text>Grand Total</Text>
+            </Box>
+
+            <Box
+              color="neutralColorLight.Gray-60"
+              fontSize="r1"
+              fontWeight="Regular"
+              display="flex"
+              flexDirection="column"
+              gap="s8"
+            >
+              <Text>{denominationTotal}</Text>
+              <Text>{totalCashPaid ? returnAmount.toFixed(2) : 0}</Text>
+              <Text>{(totalCashPaid && totalCashPaid.toFixed(2)) || 0}</Text>
+            </Box>
+          </Box>
         )}
-
-        <Box
-          border="1px solid"
-          borderColor="border.layout"
-          display="flex"
-          justifyContent="space-between"
-          mt="s16"
-          borderRadius="br2"
-          p="s8"
-        >
-          <Box
-            color="neutralColorLight.Gray-60"
-            fontSize="r1"
-            fontWeight="Regular"
-            display="flex"
-            flexDirection="column"
-            gap="s8"
-          >
-            <Text>Total</Text>
-            <Text>Return</Text>
-            <Text>Grand Total</Text>
-          </Box>
-
-          <Box
-            color="neutralColorLight.Gray-60"
-            fontSize="r1"
-            fontWeight="Regular"
-            display="flex"
-            flexDirection="column"
-            gap="s8"
-          >
-            <Text>{denominationTotal}</Text>
-            <Text>{totalCashPaid ? returnAmount.toFixed(2) : 0}</Text>
-            <Text>{(totalCashPaid && totalCashPaid.toFixed(2)) || 0}</Text>
-          </Box>
-        </Box>
       </GridItem>
     )}
 
@@ -201,5 +202,5 @@ export const DenominationTable = ({
         </Box>
       </GridItem>
     )}
-  </FormSection>
+  </Box>
 );

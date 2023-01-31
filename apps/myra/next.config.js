@@ -81,10 +81,10 @@ const nextConfig = {
     ],
     // unoptimized: true,
   },
-  i18n: {
-    locales: ['en', 'ne'],
-    defaultLocale: 'en',
-  },
+  // i18n: {
+  //   locales: ['en', 'ne'],
+  //   defaultLocale: 'en',
+  // },
   poweredByHeader: false,
   async headers() {
     return [

@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Box, FormSection, GridItem, Text } from '@myra-ui';
+import { Box, GridItem, Text } from '@myra-ui';
 
 import { CashTransferSelfEntry, CashTransferServiceCentreEntry } from '@coop/cbs/data-access';
+import { FormTextArea } from '@coop/shared/form';
 
 export const CashTransferTotalCard = () => {
   const { watch } = useFormContext();
@@ -40,10 +41,9 @@ export const CashTransferTotalCard = () => {
   const diff = totalDr - totalCr;
 
   return (
-    <FormSection>
+    <>
       <GridItem colSpan={3}>
         <Box
-          mt="s40"
           border="1px solid"
           borderColor="border.layout"
           borderRadius="br2"
@@ -80,6 +80,7 @@ export const CashTransferTotalCard = () => {
           </Box>
         </Box>
       </GridItem>
-    </FormSection>
+      <FormTextArea name="note" label="Note" isRequired />
+    </>
   );
 };
