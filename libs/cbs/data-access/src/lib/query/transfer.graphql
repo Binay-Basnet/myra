@@ -16,7 +16,9 @@ query getTransferDetail($transferID: ID!) {
         srcProfilePic
         srcProfilePicUrl
         glTransaction {
+          ledgerId
           account
+          serviceCentreId
           serviceCenter
           debit
           credit

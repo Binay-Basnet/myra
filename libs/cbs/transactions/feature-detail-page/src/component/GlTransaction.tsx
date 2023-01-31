@@ -28,7 +28,7 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['transDetailAccount'],
+        header: 'Ledger',
         footer: t['transDetailTotal'],
         accessorFn: (row) => row?.account,
         cell: (props) => {

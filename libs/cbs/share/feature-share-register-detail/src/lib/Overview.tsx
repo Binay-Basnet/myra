@@ -20,7 +20,7 @@ export const Overview = () => {
       <OtherDetails txnBranch={shareDetails?.transactionBranch} teller={shareDetails?.teller} />
       {shareDetails?.note && <Note note={shareDetails?.note} />}
       <GlTransaction
-        tableData={shareDetails?.glTransactions}
+        data={shareDetails?.glTransactions}
         totalDebit={shareDetails?.totalDebit ?? '0'}
         totalCredit={shareDetails?.totalCredit ?? '0'}
       />

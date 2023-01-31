@@ -1,10 +1,7 @@
-import { CashInTransitView, GlTransaction, TellerTransferView } from '@coop/cbs/data-access';
+import { CashInTransitView, TellerTransferView } from '@coop/cbs/data-access';
+import { amountConverter } from '@coop/shared/utils';
 
-import { GlTransactionTable, TabHeader, TxnDetails } from '../component';
-
-type CustomTransactionItem = GlTransaction & {
-  index?: string | number;
-};
+import { GlTransaction, TabHeader, TxnDetails } from '../component';
 
 type OverviewProps = {
   data?: TellerTransferView | null | undefined;
@@ -21,12 +18,10 @@ export const OverviewPage = ({ data, cashTransitData, summary }: OverviewProps) 
     {data && <TxnDetails list={summary} status={data?.transferState} />}
 
     {cashTransitData && <TxnDetails list={summary} status={cashTransitData?.transitStatus} />}
-    <GlTransactionTable
-      totalAmount={data?.totalCredit ?? '0'}
-      data={
-        (data?.glTransaction?.map((t, index) => ({ ...t, index: index + 1 })) ??
-          []) as CustomTransactionItem[]
-      }
+    <GlTransaction
+      data={data?.glTransaction}
+      totalDebit={String(amountConverter(data?.totalDebit ?? 0))}
+      totalCredit={String(amountConverter(data?.totalCredit ?? 0))}
     />
   </>
 );
