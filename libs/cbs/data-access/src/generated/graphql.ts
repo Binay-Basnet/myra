@@ -1188,6 +1188,7 @@ export type BankAccount = {
   accountNo?: Maybe<Scalars['String']>;
   accountType?: Maybe<AccountingBankAccountType>;
   balance?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   bankId?: Maybe<Scalars['String']>;
   bankName?: Maybe<Scalars['String']>;
   branchId?: Maybe<Scalars['String']>;
@@ -1414,6 +1415,7 @@ export type BankDepositData = {
 
 export type BankGlBalanceEntry = {
   accountNo?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   bankAccountName?: Maybe<Scalars['String']>;
   bankDisplayName?: Maybe<Scalars['String']>;
   bankId?: Maybe<Scalars['String']>;
@@ -2921,6 +2923,8 @@ export type CooperativeBodDetails = {
 };
 
 export type CooperativeBasicMinInfo = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberJoined?: Maybe<Scalars['Localized']>;
   memberName?: Maybe<Scalars['String']>;
@@ -3002,6 +3006,8 @@ export type CooperativeUnionBodDetails = {
 };
 
 export type CooperativeUnionBasicMinInfo = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberJoined?: Maybe<Scalars['Localized']>;
   memberName?: Maybe<Scalars['String']>;
@@ -5764,6 +5770,8 @@ export type IndFamilyMemberDetails = {
 export type IndividualBasicMinInfo = {
   address?: Maybe<Scalars['Localized']>;
   addressId?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   documents?: Maybe<Array<Maybe<MemberDocumentDetails>>>;
   email?: Maybe<Scalars['String']>;
@@ -5941,6 +5949,8 @@ export type InstitutionAccountOperatoionsDetails = {
 };
 
 export type InstitutionBasicMinInfo = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberJoined?: Maybe<Scalars['Localized']>;
   memberName?: Maybe<Scalars['String']>;

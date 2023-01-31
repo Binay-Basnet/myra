@@ -151,13 +151,13 @@ export const AccountingFeatureAddJournalVoucher = () => {
 
                   let total = 0;
 
-                  result?.entries?.forEach((fee) => {
+                  result?.entries?.forEach((fee, index) => {
                     if (fee?.value?.includes('Dr')) {
                       total += Number(fee?.value?.split('. ')[1] ?? 0);
                     }
 
                     if (fee?.name && fee?.value) {
-                      temp[String(fee.name)] = fee?.value?.includes('Dr') ? (
+                      temp[`${index + 1}. ${fee.name}`] = fee?.value?.includes('Dr') ? (
                         <Box display="flex" gap="s8">
                           <Text fontSize="s3" fontWeight="600">
                             {fee?.value?.split('. ')[1]}
