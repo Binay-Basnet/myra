@@ -27,7 +27,7 @@ import {
   User,
 } from '@coop/cbs/data-access';
 import { AbilityContext, updateAbility } from '@coop/cbs/utils';
-import { getAPIUrl, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 type LoginResponse = {
   recordId?: string;
@@ -53,10 +53,8 @@ type LoginBody = {
   username: string;
 };
 
-const schemaPath = getAPIUrl();
-
 const login = async (body: LoginBody) => {
-  const response = await axiosAgent.post<LoginResponse>(`${schemaPath}/erp/login`, body);
+  const response = await axiosAgent.post<LoginResponse>(`/erp/login`, body);
 
   return response?.data;
 };

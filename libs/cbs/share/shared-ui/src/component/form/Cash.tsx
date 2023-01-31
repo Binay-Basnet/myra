@@ -22,7 +22,7 @@ const denominationsOptions = [
   { label: '5x', value: '5' },
   { label: '2x', value: '2' },
   { label: '1x', value: '1' },
-  { label: 'Paisa', value: 'Paisa' },
+  { label: 'Paisa', value: 'PAISA' },
 ];
 
 type PurchaseProps = {
@@ -82,7 +82,7 @@ export const Cash = ({
                 header: 'Amount',
                 isNumeric: true,
                 accessorFn: (row) =>
-                  row.value === 'paisa'
+                  row.value === 'PAISA'
                     ? Number(row.quantity) / 100
                     : row.quantity
                     ? Number(row.value) * Number(row.quantity)
@@ -100,7 +100,7 @@ export const Cash = ({
               { value: '5', quantity: '0', amount: '0' },
               { value: '2', quantity: '0', amount: '0' },
               { value: '1', quantity: '0', amount: '0' },
-              { value: 'Paisa', quantity: '0', amount: '0' },
+              { value: 'PAISA', quantity: '0', amount: '0' },
             ]}
             canDeleteRow={false}
             canAddRow={false}
@@ -178,7 +178,7 @@ export const Cash = ({
             >
               <Text>{cashPaid || 0}</Text>
               <Text>{cashReturn.toFixed(2) || 0}</Text>
-              <Text>{totalAmount.toFixed(2) || 0}</Text>
+              <Text>{(totalCashPaid - returnAmount).toFixed(2) || 0}</Text>
             </Box>
           </Box>
         </GridItem>

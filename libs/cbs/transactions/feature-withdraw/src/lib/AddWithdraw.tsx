@@ -17,7 +17,6 @@ import {
 
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
-  CashValue,
   KymMemberTypesEnum,
   NatureOfDepositProduct,
   ObjState,
@@ -32,6 +31,7 @@ import {
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { CashOptions } from '@coop/shared/components';
 import {
   FormAccountSelect,
   FormAmountInput,
@@ -60,19 +60,6 @@ type WithdrawFormInput = Omit<WithdrawInput, 'cash'> & {
 
 /* eslint-disable-next-line */
 export interface AddWithdrawProps {}
-
-const cashOptions: Record<string, string> = {
-  '1000': CashValue.Cash_1000,
-  '500': CashValue.Cash_500,
-  '100': CashValue.Cash_100,
-  '50': CashValue.Cash_50,
-  '25': CashValue.Cash_25,
-  '20': CashValue.Cash_20,
-  '10': CashValue.Cash_10,
-  '5': CashValue.Cash_5,
-  '2': CashValue.Cash_2,
-  '1': CashValue.Cash_1,
-};
 
 export const AddWithdraw = () => {
   // const queryClient = useQueryClient();
@@ -224,7 +211,7 @@ export const AddWithdraw = () => {
         returned_amount: String(returnAmount),
         denominations:
           filteredValues['cash']?.['denominations']?.map(({ value, quantity }) => ({
-            value: cashOptions[value as string],
+            value: CashOptions[value as string],
             quantity,
           })) ?? [],
       };
@@ -309,7 +296,7 @@ export const AddWithdraw = () => {
       }
     }
 
-    if (paymentType === WithdrawPaymentType.Cash && totalCashPaid < totalWithdraw) {
+    if (paymentType === WithdrawPaymentType.Cash && Number(totalCashPaid) < Number(totalWithdraw)) {
       return true;
     }
 

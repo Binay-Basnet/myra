@@ -3,11 +3,10 @@ import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
 import { useTransactionDetailHooks } from 'libs/cbs/transactions/feature-detail-page/src/hooks/useTransactionDetailHooks';
 
-import { Box, DetailPageHeader, SuccessPrint, Text } from '@myra-ui';
+import { Box, DetailPageHeader, SuccessPrint, SuccessPrintJornalVoucher, Text } from '@myra-ui';
 
 import { TransferType, useGetJournalVoucherDetailQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
-import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
 
 export interface PathBarProps {
   title: string;
@@ -42,7 +41,7 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
     content: () => componentRef.current,
   });
 
-  const { accountId, accountName, total, details, showSignatures } = useMemo(() => {
+  const { accountId, accountName, total, details, showSignatures, jvDetails } = useMemo(() => {
     let tempAccountName = '';
     let tempAccountId = '';
 
@@ -51,6 +50,8 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
     let tempTotal = '';
 
     let tempShowSignatures = false;
+
+    let tempJVDetails;
 
     if (router?.asPath?.includes('/deposit/')) {
       tempAccountName = depositDetailData?.accountName as string;
@@ -146,55 +147,64 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
     }
 
     if (router?.asPath?.includes('/journal-vouchers/')) {
-      const temp: Record<string, React.ReactNode> = {};
+      // const temp: Record<string, React.ReactNode> = {};
 
-      voucherData?.glTransaction?.forEach((fee) => {
-        if (fee?.account && (fee?.credit || fee?.debit)) {
-          if (fee?.debit) {
-            temp[String(fee.account)] = (
-              <Box display="flex" gap="s8">
-                <Text fontSize="s3" fontWeight="600">
-                  {fee?.debit}
-                </Text>
-                <Text fontSize="s3" color="accent.700" fontWeight="600">
-                  DR
-                </Text>
-              </Box>
-            );
-          }
+      // voucherData?.glTransaction?.forEach((fee) => {
+      //   if (fee?.account && (fee?.credit || fee?.debit)) {
+      //     if (fee?.debit) {
+      //       temp[String(fee.account)] = (
+      //         <Box display="flex" gap="s8">
+      //           <Text fontSize="s3" fontWeight="600">
+      //             {fee?.debit}
+      //           </Text>
+      //           <Text fontSize="s3" color="accent.700" fontWeight="600">
+      //             DR
+      //           </Text>
+      //         </Box>
+      //       );
+      //     }
 
-          if (fee?.credit) {
-            temp[String(fee.account)] = (
-              <Box display="flex" gap="s8">
-                <Text fontSize="s3" fontWeight="600">
-                  {fee?.credit}
-                </Text>
-                <Text fontSize="s3" color="accent.100" fontWeight="600">
-                  CR
-                </Text>
-              </Box>
-            );
-          }
-        }
-      });
+      //     if (fee?.credit) {
+      //       temp[String(fee.account)] = (
+      //         <Box display="flex" gap="s8">
+      //           <Text fontSize="s3" fontWeight="600">
+      //             {fee?.credit}
+      //           </Text>
+      //           <Text fontSize="s3" color="accent.100" fontWeight="600">
+      //             CR
+      //           </Text>
+      //         </Box>
+      //       );
+      //     }
+      //   }
+      // });
 
-      tempDetails = {
-        'Transaction Id': (
-          <Text fontSize="s3" color="primary.500" fontWeight="600">
-            {voucherData?.transactionCode}
-          </Text>
-        ),
-        Date: localizedDate(voucherData?.date),
-        Reference: voucherData?.reference,
-        ...temp,
-        'Total Amount': amountConverter(voucherData?.amount ?? 0),
-        'Total Amount in words': amountToWordsConverter(voucherData?.amount ?? 0),
-        Note: voucherData?.note,
-      };
+      // tempDetails = {
+      //   'Transaction Id': (
+      //     <Text fontSize="s3" color="primary.500" fontWeight="600">
+      //       {voucherData?.transactionCode}
+      //     </Text>
+      //   ),
+      //   Date: localizedDate(voucherData?.date),
+      //   Reference: voucherData?.reference,
+      //   ...temp,
+      //   'Total Amount': amountConverter(voucherData?.amount ?? 0),
+      //   'Total Amount in words': amountToWordsConverter(voucherData?.amount ?? 0),
+      //   Note: voucherData?.note,
+      // };
 
-      tempTotal = loanRepaymentDetailData?.totalRepaymentAmount as string;
+      tempTotal = voucherData?.amount as string;
 
       tempShowSignatures = true;
+
+      tempJVDetails = {
+        glTransactions: voucherData?.glTransaction,
+        date: voucherData?.date?.local,
+        note: voucherData?.note,
+        refrence: voucherData?.reference,
+        totalDebit: voucherData?.amount,
+        transactionId: voucherData?.transactionCode,
+      };
     }
 
     return {
@@ -203,6 +213,7 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
       total: tempTotal,
       details: tempDetails,
       showSignatures: tempShowSignatures,
+      jvDetails: tempJVDetails,
     };
   }, [
     depositDetailData,
@@ -235,18 +246,26 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
         />
       </Box>
 
-      <SuccessPrint
-        meta={{
-          memberId: memberDetail?.code,
-          accountId,
-          accountName,
-          member: memberDetail?.name,
-        }}
-        total={total}
-        details={details}
-        showSignatures={showSignatures}
-        ref={componentRef}
-      />
+      {!router?.asPath?.includes('/journal-vouchers/') ? (
+        <SuccessPrint
+          meta={{
+            memberId: memberDetail?.code,
+            accountId,
+            accountName,
+            member: memberDetail?.name,
+          }}
+          total={total}
+          details={details}
+          showSignatures={showSignatures}
+          ref={componentRef}
+        />
+      ) : (
+        <SuccessPrintJornalVoucher
+          jVPrint={jvDetails}
+          showSignatures={showSignatures}
+          ref={componentRef}
+        />
+      )}
     </>
   );
 };

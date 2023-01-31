@@ -54,6 +54,7 @@ const cashOptions: Record<string, string> = {
   '5': CashValue.Cash_5,
   '2': CashValue.Cash_2,
   '1': CashValue.Cash_1,
+  PAISA: CashValue.Paisa,
 };
 
 type ShareReturnFormType = Omit<SharePurchaseInput, 'selectAllShares'> & {

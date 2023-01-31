@@ -19,7 +19,6 @@ import {
 
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
-  CashValue,
   DateType,
   DepositAccount,
   DepositedBy,
@@ -36,6 +35,7 @@ import {
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { CashOptions } from '@coop/shared/components';
 import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
 import { amountConverter, decimalAdjust, featureCode, useTranslation } from '@coop/shared/utils';
 
@@ -55,19 +55,6 @@ type DepositFormInput = Omit<DepositInput, 'cash'> & {
       }
     | undefined
     | null;
-};
-
-const cashOptions: Record<string, string> = {
-  '1000': CashValue.Cash_1000,
-  '500': CashValue.Cash_500,
-  '100': CashValue.Cash_100,
-  '50': CashValue.Cash_50,
-  '25': CashValue.Cash_25,
-  '20': CashValue.Cash_20,
-  '10': CashValue.Cash_10,
-  '5': CashValue.Cash_5,
-  '2': CashValue.Cash_2,
-  '1': CashValue.Cash_1,
 };
 
 const REBATE = '0';
@@ -316,7 +303,7 @@ export const AddDeposit = () => {
         returned_amount: String(returnAmount),
         denominations:
           values.cash?.denominations?.map(({ value, quantity }) => ({
-            value: cashOptions[value as string],
+            value: CashOptions[value as string],
             quantity,
           })) ?? [],
       };
