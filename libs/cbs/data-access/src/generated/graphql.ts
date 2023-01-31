@@ -21861,6 +21861,8 @@ export type GetMemberKymDetailsOverviewQuery = {
                 registrationNo?: string | null;
                 registrationOffice?: string | null;
                 registrationDate?: Record<'local' | 'en' | 'np', string> | null;
+                branchId?: string | null;
+                branchName?: string | null;
               }
             | {
                 __typename: 'CooperativeUnionBasicMinInfo';
@@ -21870,6 +21872,8 @@ export type GetMemberKymDetailsOverviewQuery = {
                 memberJoined?: Record<'local' | 'en' | 'np', string> | null;
                 type?: string | null;
                 nature?: string | null;
+                branchId?: string | null;
+                branchName?: string | null;
                 registrationDate?: Record<'local' | 'en' | 'np', string> | null;
                 vatPanNo?: string | null;
                 noOfServiceCenters?: number | null;
@@ -21885,6 +21889,8 @@ export type GetMemberKymDetailsOverviewQuery = {
                 maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
                 maritalStatusId?: string | null;
                 fathersName?: string | null;
+                branchId?: string | null;
+                branchName?: string | null;
                 mothersName?: string | null;
                 grandFathersName?: string | null;
                 isStaff?: boolean | null;
@@ -21904,6 +21910,8 @@ export type GetMemberKymDetailsOverviewQuery = {
                 nature?: string | null;
                 registrationDate?: Record<'local' | 'en' | 'np', string> | null;
                 vatPanNo?: string | null;
+                branchId?: string | null;
+                branchName?: string | null;
                 noOfServiceCenters?: number | null;
               }
             | null;
@@ -37156,6 +37164,8 @@ export const GetMemberKymDetailsOverviewDocument = `
               maritalStatus
               maritalStatusId
               fathersName
+              branchId
+              branchName
               mothersName
               grandFathersName
               familyMembers {
@@ -37174,6 +37184,8 @@ export const GetMemberKymDetailsOverviewDocument = `
               nature
               registrationDate
               vatPanNo
+              branchId
+              branchName
               noOfServiceCenters
             }
             ... on CooperativeBasicMinInfo {
@@ -37184,6 +37196,8 @@ export const GetMemberKymDetailsOverviewDocument = `
               registrationNo
               registrationOffice
               registrationDate
+              branchId
+              branchName
             }
             ... on CooperativeUnionBasicMinInfo {
               memberName
@@ -37192,6 +37206,8 @@ export const GetMemberKymDetailsOverviewDocument = `
               memberJoined
               type
               nature
+              branchId
+              branchName
               registrationDate
               vatPanNo
               noOfServiceCenters

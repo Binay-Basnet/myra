@@ -49,6 +49,8 @@ query getMemberKYMDetailsOverview($id: ID!) {
               maritalStatus
               maritalStatusId
               fathersName
+              branchId
+              branchName
               mothersName
               grandFathersName
               familyMembers {
@@ -67,6 +69,8 @@ query getMemberKYMDetailsOverview($id: ID!) {
               nature
               registrationDate
               vatPanNo
+              branchId
+              branchName
               noOfServiceCenters
             }
             ... on CooperativeBasicMinInfo {
@@ -77,6 +81,8 @@ query getMemberKYMDetailsOverview($id: ID!) {
               registrationNo
               registrationOffice
               registrationDate
+              branchId
+              branchName
             }
             ... on CooperativeUnionBasicMinInfo {
               memberName
@@ -85,6 +91,8 @@ query getMemberKYMDetailsOverview($id: ID!) {
               memberJoined
               type
               nature
+              branchId
+              branchName
               registrationDate
               vatPanNo
               noOfServiceCenters
