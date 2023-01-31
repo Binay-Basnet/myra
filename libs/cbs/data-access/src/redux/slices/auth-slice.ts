@@ -1,3 +1,4 @@
+import Router from 'next/router';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { BranchMinimal, RoleInfo, User, UserPreference } from '@coop/cbs/data-access';
@@ -81,6 +82,15 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       localStorage.removeItem('refreshToken');
+      Router.replace(
+        {
+          pathname: '/login',
+          query: {
+            redirect: Router.asPath,
+          },
+        },
+        '/login'
+      );
       // eslint-disable-next-line unused-imports/no-unused-vars
       state = initialState;
     },
