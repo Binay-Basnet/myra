@@ -1255,6 +1255,7 @@ export type BankAccountQueryDetailsArgs = {
 };
 
 export type BankAccountQueryListArgs = {
+  currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<BankAccountFilter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -4041,6 +4042,7 @@ export type DepositRecord = {
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   depositedBy?: Maybe<DepositedBy>;
+  depositedOther?: Maybe<Scalars['String']>;
   fine?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -14909,6 +14911,7 @@ export type SetJournalVoucherDataMutation = {
           note?: string | null;
           paymentMode?: JournalVoucherPaymentMode | null;
           totalAmount?: string | null;
+          createdAt?: Record<'local' | 'en' | 'np', string> | null;
           entries?: Array<{ name?: string | null; value?: string | null } | null> | null;
           glTransaction?: Array<{
             ledgerId?: string | null;
@@ -15770,6 +15773,7 @@ export type SetLoanRepaymentMutation = {
         memberId?: string | null;
         memberName?: Record<'local' | 'en' | 'np', string> | null;
         date?: Record<'local' | 'en' | 'np', string> | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         installmentNo?: string | null;
         principalAmount?: string | null;
         interestAmount?: string | null;
@@ -17297,6 +17301,7 @@ export type AddSharePurchaseMutation = {
       record?: {
         id?: string | null;
         transactionId?: string | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         status?: Share_Status | null;
         transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         transactionDirection: Share_Transaction_Direction;
@@ -17340,6 +17345,7 @@ export type AddShareReturnMutation = {
       record?: {
         id?: string | null;
         transactionId?: string | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         status?: Share_Status | null;
         transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         transactionDirection: Share_Transaction_Direction;
@@ -17387,10 +17393,12 @@ export type SetDepositDataMutation = {
         rebate?: string | null;
         paymentMode?: DepositPaymentType | null;
         depositedBy?: DepositedBy | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         memberName?: Record<'local' | 'en' | 'np', string> | null;
         memberId?: string | null;
         accountId?: string | null;
         accountName?: string | null;
+        depositedOther?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -17437,6 +17445,7 @@ export type SetWithdrawDataMutation = {
         accountName?: string | null;
         memberId?: string | null;
         memberName?: Record<'local' | 'en' | 'np', string> | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         amount?: string | null;
         fine?: string | null;
         totalAmount?: string | null;
@@ -17467,6 +17476,7 @@ export type SetAccountTransferDataMutation = {
       record?: {
         totalAmount?: string | null;
         amount?: string | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         date?: Record<'local' | 'en' | 'np', string> | null;
         id?: string | null;
         remarks?: string | null;
@@ -27246,6 +27256,7 @@ export const SetJournalVoucherDataDocument = `
           }
           paymentMode
           totalAmount
+          createdAt
           glTransaction {
             ledgerId
             account
@@ -28653,6 +28664,7 @@ export const SetLoanRepaymentDocument = `
         memberId
         memberName
         date
+        createdAt
         installmentNo
         principalAmount
         interestAmount
@@ -31189,6 +31201,7 @@ export const AddSharePurchaseDocument = `
       record {
         id
         transactionId
+        createdAt
         status
         transactionDate
         transactionDirection
@@ -31244,6 +31257,7 @@ export const AddShareReturnDocument = `
       record {
         id
         transactionId
+        createdAt
         status
         transactionDate
         transactionDirection
@@ -31303,10 +31317,12 @@ export const SetDepositDataDocument = `
         rebate
         paymentMode
         depositedBy
+        createdAt
         memberName
         memberId
         accountId
         accountName
+        depositedOther
       }
       error {
         ...MutationError
@@ -31367,6 +31383,7 @@ export const SetWithdrawDataDocument = `
         accountName
         memberId
         memberName
+        createdAt
         amount
         fine
         totalAmount
@@ -31403,6 +31420,7 @@ export const SetAccountTransferDataDocument = `
       record {
         totalAmount
         amount
+        createdAt
         date
         id
         remarks

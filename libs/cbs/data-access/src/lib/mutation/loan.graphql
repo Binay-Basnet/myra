@@ -44,6 +44,7 @@ mutation setLoanRepayment($data: LoanRepaymentInput) {
         memberId
         memberName
         date
+        createdAt
         installmentNo
         principalAmount
         interestAmount

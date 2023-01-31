@@ -567,6 +567,9 @@ export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, Succ
             </Text>
           </Box>
         </Box>
+        <Text fontSize="s1" fontWeight="600">
+          GL Transactions
+        </Text>
         <GlTransactionJornalVoucherPrint
           data={jVPrint?.glTransactions}
           total={jVPrint?.totalDebit}

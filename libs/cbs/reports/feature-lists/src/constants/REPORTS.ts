@@ -35,6 +35,7 @@ export enum Report {
   SHARE_BONUS_DISTRIBUTION_REPORT = 'Share Bonus Distribution Report',
 
   SAVING_STATEMENT = 'Saving Statement',
+  SAVING_INTEREST_STATEMENT = 'Interest Statement Report',
   DEPOSIT_CONSOLIDATED_REPORT = 'Deposit Consolidated Report',
   DEPOSIT_DAILY_TRANSACTION_REPORT = 'Deposit Daily Transaction Report',
   DEPOSIT_INTEREST_REPORT = 'Interest Report',

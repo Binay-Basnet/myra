@@ -30,7 +30,7 @@ import {
   useGetShareChargesQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
-import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { FormMemberSelect } from '@coop/shared/form';
 import {
   amountConverter,
@@ -374,6 +374,7 @@ export const ShareReturnForm = () => {
                           ),
 
                           Date: localizedDate(result?.transactionDate),
+                          'Transaction Time': localizedTime(result?.createdAt),
                           'No of Shares Returned': quantityConverter(result?.noOfShare || 0),
                           'Withdraw Amount': quantityConverter(result?.shareAmount || 0),
                           'Payment Mode': result?.paymentMode,

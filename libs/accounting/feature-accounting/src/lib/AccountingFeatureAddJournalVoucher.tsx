@@ -19,7 +19,7 @@ import {
   JournalVoucherPaymentMode,
   useSetJournalVoucherDataMutation,
 } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, localizedTime } from '@coop/cbs/utils';
 import { FormDatePicker, FormInput, FormTextArea } from '@coop/shared/form';
 import {
   amountConverter,
@@ -189,6 +189,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
                       refrence: result?.reference,
                       totalDebit: result?.totalAmount,
                       transactionId: result?.transactionId,
+                      transactionTime: localizedTime(result?.createdAt),
                     },
                     title: 'Journal Voucher Entry Successful',
                     details: {
@@ -198,10 +199,12 @@ export const AccountingFeatureAddJournalVoucher = () => {
                         </Text>
                       ),
                       Date: localizedDate(result?.date),
+                      'Transaction Time': localizedTime(result?.createdAt),
                       Refrence: result?.reference,
                       ...temp,
                       'Total Amount': amountConverter(total),
                       'Total Amount in words': amountToWordsConverter(total),
+
                       Note: result?.note,
                     },
                     subTitle:
