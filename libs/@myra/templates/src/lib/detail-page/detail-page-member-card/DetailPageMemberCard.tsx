@@ -20,7 +20,7 @@ export const DetailPageMemberCard = ({
   memberAge,
 }: DetailPageMemberCardProps) => (
   <Box h="94px" w="100%" px="s16" display="flex" alignItems="center" gap="s8">
-    <Avatar src={profilePicUrl as string} size="md" name={name} />
+    <Avatar src={profilePicUrl as string} size="sm" name={name} />
     <Box display="flex" flexDir="column">
       <RedirectButton label={name} link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${id}`} />
 

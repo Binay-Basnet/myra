@@ -4,6 +4,8 @@ import { useAppSelector, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
+import { CashTransferTotalCard } from './CashTransferTotalCard';
+
 export type ServiceCenterTableProps = {
   branchId: string;
   dr: string;
@@ -58,6 +60,7 @@ export const ServiceCenterTable = () => {
           ]}
         />
       </GridItem>
+      <CashTransferTotalCard />
     </FormSection>
   );
 };

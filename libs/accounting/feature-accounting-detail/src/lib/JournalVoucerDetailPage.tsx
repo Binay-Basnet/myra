@@ -42,7 +42,7 @@ export const JournalVoucerDetailPage = () => {
         <SideBar sidebarData={sidebarDetailData} />
       </Box>
 
-      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16" minH="100vh">
         <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
           Overview
         </Text>

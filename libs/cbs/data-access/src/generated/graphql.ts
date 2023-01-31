@@ -18174,6 +18174,7 @@ export type GetAccountDetailsDataQuery = {
         interestRate?: number | null;
         member?: {
           id: string;
+          code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
           profilePicUrl?: string | null;
           contact?: string | null;
@@ -26805,9 +26806,9 @@ export type GetTransferDetailQuery = {
         destBranch?: Record<'local' | 'en' | 'np', string> | null;
         srcProfilePic?: string | null;
         srcProfilePicUrl?: string | null;
+        note?: string | null;
         totalCredit?: string | null;
         totalDebit?: string | null;
-        note?: string | null;
         glTransaction?: Array<{
           ledgerId?: string | null;
           account: string;
@@ -26871,6 +26872,7 @@ export type GetCashInTransitDetailQuery = {
     cashInTransitDetail?: {
       data?: {
         ID: string;
+        note?: string | null;
         transitStatus?: RequestStatus | null;
         srcTeller?: Record<'local' | 'en' | 'np', string> | null;
         amount?: string | null;
@@ -26885,7 +26887,6 @@ export type GetCashInTransitDetailQuery = {
         srcProfilePicUrl?: string | null;
         totalCredit?: string | null;
         totalDebit?: string | null;
-        note?: string | null;
         glTransaction?: Array<{
           account: string;
           serviceCenter?: string | null;
@@ -32343,6 +32344,7 @@ export const GetAccountDetailsDataDocument = `
         objState
         member {
           id
+          code
           name
           profilePicUrl
           contact
@@ -43644,6 +43646,7 @@ export const GetTransferDetailDocument = `
         destBranch
         srcProfilePic
         srcProfilePicUrl
+        note
         glTransaction {
           ledgerId
           account
@@ -43728,6 +43731,7 @@ export const GetCashInTransitDetailDocument = `
     cashInTransitDetail(transitID: $transitID) {
       data {
         ID
+        note
         transitStatus
         srcTeller
         amount

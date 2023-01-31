@@ -504,6 +504,7 @@ query getAccountDetailsData($id: ID!) {
         objState
         member {
           id
+          code
           name
           profilePicUrl
           contact

@@ -23,7 +23,7 @@ import {
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { CashOptions, DenominationTable } from '@coop/shared/components';
-import { FormAmountInput, FormInput, FormSwitchTab } from '@coop/shared/form';
+import { FormAmountInput, FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import { BalanceCard } from '../components';
@@ -157,14 +157,15 @@ export const AddVaultTransfer = () => {
                   )}
 
                   <FormAmountInput isRequired name="amount" label="Cash Amount" />
-                  <GridItem colSpan={3} display="flex" flexDirection="column" gap="s4">
+                  <GridItem colSpan={3} display="flex" flexDirection="column">
                     <DenominationTable
                       fieldName="denominations"
-                      cashPaid={amount ?? '0'}
                       denominationTotal={denominationTotal}
                       denominationTotalOnly
                     />
                   </GridItem>
+
+                  <FormTextArea name="note" label="Note" />
                 </FormSection>
               </Box>
             </form>
