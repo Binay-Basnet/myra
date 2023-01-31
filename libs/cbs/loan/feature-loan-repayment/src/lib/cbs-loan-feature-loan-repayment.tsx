@@ -226,7 +226,7 @@ export const LoanRepayment = () => {
 
   //  get redirect id from url
   const redirectMemberId = router.query['memberId'];
-  const redirectLoanMemberId = router.query['redirectMemberId'];
+  // const redirectLoanMemberId = router.query['redirectMemberId'];
   const redirectloanAccountId = router.query['loanAccountId'];
   // redirect from member details
   useEffect(() => {
@@ -236,11 +236,11 @@ export const LoanRepayment = () => {
   }, [redirectMemberId]);
 
   useEffect(() => {
-    if (redirectLoanMemberId && redirectloanAccountId) {
-      methods.setValue('memberId', String(redirectLoanMemberId));
+    if (redirectMemberId && redirectloanAccountId) {
+      // methods.setValue('memberId', String(redirectLoanMemberId));
       methods.setValue('loanAccountId', String(redirectloanAccountId));
     }
-  }, [redirectloanAccountId, redirectLoanMemberId]);
+  }, [redirectloanAccountId, redirectMemberId]);
 
   const isSuspicious = watch('isSuspicious');
 
@@ -268,13 +268,19 @@ export const LoanRepayment = () => {
                 w="100%"
                 display={mode === '0' ? 'flex' : 'none'}
               >
-                <FormMemberSelect isRequired name="memberId" label="Member" />
+                <FormMemberSelect
+                  isRequired
+                  name="memberId"
+                  label="Member"
+                  isDisabled={!!redirectMemberId}
+                />
                 {memberId && (
                   <FormSelect
                     name="loanAccountId"
                     label="Loan Account Name"
                     isLoading={isFetching}
                     options={loanAccountOptions}
+                    isDisabled={!!redirectloanAccountId}
                   />
                 )}
                 {memberId && loanAccountId && loanPaymentScheduleSplice && loanPaymentSchedule && (

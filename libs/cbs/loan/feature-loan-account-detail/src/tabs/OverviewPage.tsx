@@ -28,7 +28,7 @@ export const OverviewPage = () => {
   const links = [
     {
       title: 'Loan Repayment',
-      link: `${ROUTES.CBS_LOAN_REPAYMENTS_ADD}?redirectMemberId=${memberDetails?.memberId}&loanAccountId=${generalInfo?.accountId}`,
+      link: `${ROUTES.CBS_LOAN_REPAYMENTS_ADD}?memberId=${memberDetails?.memberId}&loanAccountId=${generalInfo?.accountId}`,
     },
   ];
 

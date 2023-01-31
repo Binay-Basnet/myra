@@ -277,7 +277,7 @@ export const NewLoanApplication = () => {
                     isRequired
                     name="memberId"
                     label="Member Id"
-                    isDisabled={!!id}
+                    isDisabled={!!id || !!redirectMemberId}
                   />
                   {memberId && !loanLinkedData && !isLinkAccDataFetching && (
                     <Alert status="error"> Member does not have a Saving Account </Alert>

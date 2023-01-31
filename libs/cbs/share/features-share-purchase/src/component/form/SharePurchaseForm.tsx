@@ -283,6 +283,7 @@ export const SharePurchaseForm = () => {
                             }
                             name="memberId"
                             label={t['sharePurchaseSelectMember']}
+                            isDisabled={!!redirectMemberId}
                           />
                         </GridItem>
                       </FormSection>

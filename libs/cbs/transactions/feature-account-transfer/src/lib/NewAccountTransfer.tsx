@@ -218,6 +218,7 @@ export const NewAccountTransfer = () => {
                         isRequired
                         name="memberId"
                         label={t['newAccountTransferMember']}
+                        isDisabled={!!redirectMemberId}
                       />
 
                       {memberId && (
@@ -227,6 +228,7 @@ export const NewAccountTransfer = () => {
                           memberId={memberId}
                           filterBy={ObjState.Active}
                           isLinkedAccounts
+                          isDisabled={!!redirectSrcAccountId}
                         />
                       )}
                     </BoxContainer>
