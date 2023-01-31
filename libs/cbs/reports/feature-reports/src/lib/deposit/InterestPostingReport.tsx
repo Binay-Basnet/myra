@@ -37,7 +37,7 @@ export const InterestPostingReport = () => {
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
-      report={ReportEnum.SAVING_STATEMENT}
+      report={ReportEnum.DEPOSIT_INTEREST_REPORT}
     >
       <Report.Header>
         <Report.PageHeader
