@@ -13,7 +13,12 @@ export const BankCheque = ({ totalAmount }: ReturnProps) => {
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={2}>
-        <FormBankSelect isRequired name="bankCheque.bankId" label={t['shareReturneBankName']} />
+        <FormBankSelect
+          isRequired
+          name="bankCheque.bankId"
+          label={t['shareReturneBankName']}
+          currentBranchOnly
+        />
       </GridItem>
 
       <GridItem colSpan={1}>

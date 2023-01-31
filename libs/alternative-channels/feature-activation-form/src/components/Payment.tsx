@@ -102,7 +102,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
           <>
             <Grid templateColumns="repeat(2,1fr)" gap="s20">
               <GridItem colSpan={2}>
-                <FormBankSelect name="bankCheque.bank" label="Bank Name" />
+                <FormBankSelect name="bankCheque.bank" label="Bank Name" currentBranchOnly />
               </GridItem>
               <FormInput name="bankCheque.voucher_id" label="Voucher Number" />
               <FormInput

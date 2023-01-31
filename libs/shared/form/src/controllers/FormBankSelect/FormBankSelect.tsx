@@ -27,10 +27,11 @@ interface Option {
 interface IFormBankSelectProps extends BankSelectProps {
   name: string;
   label?: string;
+  currentBranchOnly?: boolean;
 }
 
 export const FormBankSelect = (props: IFormBankSelectProps) => {
-  const { name, label, ...rest } = props;
+  const { name, label, currentBranchOnly = false, ...rest } = props;
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -44,6 +45,7 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
       accountName: searchQuery,
       filterMode: Filter_Mode.Or,
     },
+    currentBranchOnly,
   });
 
   const bankOptions = useMemo(

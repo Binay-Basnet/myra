@@ -158,6 +158,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
                 isRequired
                 name="openingPayment.bankVoucher.bankId"
                 label={t['depositPaymentBankName']}
+                currentBranchOnly
               />
             </GridItem>
 

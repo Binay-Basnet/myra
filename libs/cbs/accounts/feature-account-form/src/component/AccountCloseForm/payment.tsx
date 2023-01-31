@@ -102,7 +102,12 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
         {selectedPaymentMode === AccountClosePaymentMode?.BankCheque && (
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
             <GridItem colSpan={2}>
-              <FormBankSelect isRequired name="bankCheque.bank" label="Bank Name" />
+              <FormBankSelect
+                isRequired
+                name="bankCheque.bank"
+                label="Bank Name"
+                currentBranchOnly
+              />
             </GridItem>
             <FormInput
               isRequired

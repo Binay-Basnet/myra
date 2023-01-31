@@ -13,7 +13,12 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={2}>
-        <FormBankSelect isRequired name="bankVoucher.bankId" label={t['sharePurchaseBankName']} />
+        <FormBankSelect
+          isRequired
+          name="bankVoucher.bankId"
+          label={t['sharePurchaseBankName']}
+          currentBranchOnly
+        />
       </GridItem>
 
       <GridItem colSpan={1}>

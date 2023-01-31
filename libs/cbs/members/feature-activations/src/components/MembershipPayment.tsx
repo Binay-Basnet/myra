@@ -308,7 +308,11 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
               <Box>
                 <Grid px="s20" templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
                   <GridItem colSpan={3}>
-                    <FormBankSelect name="bankDeposit.bankId" label={t['depositPaymentBankName']} />
+                    <FormBankSelect
+                      name="bankDeposit.bankId"
+                      label={t['depositPaymentBankName']}
+                      currentBranchOnly
+                    />
                   </GridItem>
 
                   <FormInput name="bankDeposit.voucherId" label={t['addDepositVoucherId']} />
