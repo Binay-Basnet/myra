@@ -8,31 +8,18 @@ import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 import {
   CashInTransitInput,
   CashTransferMode,
-  CashValue,
   useAppSelector,
   useGetUserAndBranchBalanceQuery,
   useSetCashInTransitTransferMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
+import { CashOptions } from '@coop/shared/components';
 import { featureCode } from '@coop/shared/utils';
 
 import { CashTransitInfo, Denomination, TransferMode } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddCashTransitTransferProps {}
-
-const cashOptions: Record<string, string> = {
-  '1000': CashValue.Cash_1000,
-  '500': CashValue.Cash_500,
-  '100': CashValue.Cash_100,
-  '50': CashValue.Cash_50,
-  '25': CashValue.Cash_25,
-  '20': CashValue.Cash_20,
-  '10': CashValue.Cash_10,
-  '5': CashValue.Cash_5,
-  '2': CashValue.Cash_2,
-  '1': CashValue.Cash_1,
-};
 
 type CustomTellerTransferInput = Omit<CashInTransitInput, 'denomination'> & {
   denomination: { value?: string; quantity?: number; amount?: string }[];
@@ -84,7 +71,7 @@ export const AddCashTransitTransfer = () => {
       senderServiceCentre: branchData?.id,
       denomination:
         values?.denomination?.map(({ value, quantity }) => ({
-          value: cashOptions[value as string],
+          value: CashOptions[value as string],
           quantity,
         })) ?? [],
     };

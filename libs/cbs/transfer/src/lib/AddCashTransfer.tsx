@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -12,7 +13,7 @@ import {
 import { ROUTES } from '@coop/cbs/utils';
 import { featureCode } from '@coop/shared/utils';
 
-import { CashTransferTotalCard, LedgerTable, ServiceCenterTable } from '../components';
+import { LedgerTable, ServiceCenterTable } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddCashTransferProps {}
@@ -21,13 +22,47 @@ export const AddCashTransfer = () => {
   const methods = useForm();
   const router = useRouter();
 
-  const { getValues } = methods;
+  const { getValues, watch } = methods;
+
+  const branchId = watch('branchEntries');
+
+  const selectedBranch = branchId && branchId[0]?.branchId;
 
   const { mutateAsync } = useSetServiceCenterCashTransferMutation();
+  const values = getValues();
+
+  const { crBranchTotal, drBranchTotal } = useMemo(() => {
+    let tempCR = 0;
+    let tempDR = 0;
+
+    values['branchEntries']?.forEach((entry: CashTransferServiceCentreEntry) => {
+      tempCR += Number(entry?.cr ?? 0);
+      tempDR += Number(entry?.dr ?? 0);
+    });
+
+    return { crBranchTotal: tempCR, drBranchTotal: tempDR };
+  }, [values]);
+
+  const { crSelfTotal, drSelfTotal } = useMemo(() => {
+    let tempCR = 0;
+    let tempDR = 0;
+
+    values['selfEntries']?.forEach((entry: CashTransferSelfEntry) => {
+      tempCR += Number(entry?.cr ?? 0);
+      tempDR += Number(entry?.dr ?? 0);
+    });
+
+    return { crSelfTotal: tempCR, drSelfTotal: tempDR };
+  }, [values]);
+
+  const disableButton = () => {
+    if (selectedBranch && crBranchTotal === drSelfTotal && drBranchTotal === crSelfTotal) {
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = () => {
-    const values = getValues();
-
     const updatedData = {
       ...values,
       selfEntries: values['selfEntries']?.map((item: CashTransferSelfEntry) => ({
@@ -46,7 +81,7 @@ export const AddCashTransfer = () => {
       id: 'add-vault-transfer',
       msgs: {
         loading: 'Adding Service Center Cash Transfer',
-        success: 'Service Center Cash Transfer',
+        success: 'Inter Service Center Transaction Successful',
       },
       promise: mutateAsync({ data: updatedData as ServiceCentreCashTransferInput }),
       onSuccess: () => {
@@ -71,7 +106,6 @@ export const AddCashTransfer = () => {
               <Box minH="calc(100vh - 170px)" pb="s60">
                 <LedgerTable />
                 <ServiceCenterTable />
-                <CashTransferTotalCard />
               </Box>
             </form>
           </FormProvider>
@@ -81,7 +115,11 @@ export const AddCashTransfer = () => {
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">
-            <FormFooter mainButtonLabel="Done" mainButtonHandler={handleSubmit} />
+            <FormFooter
+              mainButtonLabel="Done"
+              mainButtonHandler={handleSubmit}
+              isMainButtonDisabled={disableButton()}
+            />
           </Container>
         </Box>
       </Box>

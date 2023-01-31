@@ -88,6 +88,7 @@ export const AccountDetailsSidebar = () => {
       >
         <DetailPageMemberCard
           id={accountDetails?.member?.id}
+          memberCode={accountDetails?.member?.code}
           name={accountDetails?.member?.name?.local as string}
           profilePicUrl={accountDetails?.member?.profilePicUrl ?? ''}
         />
