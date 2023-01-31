@@ -37,10 +37,12 @@ query getJournalVoucherDetail($entryId: ID!) {
           note
           transactionCode
           glTransaction {
+            ledgerId
             account
+            serviceCentreId
+            serviceCenter
             debit
             credit
-            serviceCenter
           }
           totalDebit
           totalCredit

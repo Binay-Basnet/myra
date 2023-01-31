@@ -12869,6 +12869,7 @@ export type ServiceCentreCashTransferActivity = {
 
 export type ServiceCentreCashTransferInput = {
   branchEntries?: InputMaybe<Array<InputMaybe<CashTransferServiceCentreEntry>>>;
+  note?: InputMaybe<Scalars['String']>;
   selfEntries?: InputMaybe<Array<InputMaybe<CashTransferSelfEntry>>>;
 };
 
@@ -18662,10 +18663,12 @@ export type GetJournalVoucherDetailQuery = {
           totalDebit?: string | null;
           totalCredit?: string | null;
           glTransaction?: Array<{
+            ledgerId?: string | null;
             account: string;
+            serviceCentreId?: string | null;
+            serviceCenter?: string | null;
             debit?: string | null;
             credit?: string | null;
-            serviceCenter?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -26181,10 +26184,12 @@ export type GetShareDetailQuery = {
           sourceOfFund?: string | null;
         } | null;
         glTransactions?: Array<{
+          ledgerId?: string | null;
           account: string;
+          serviceCentreId?: string | null;
+          serviceCenter?: string | null;
           debit?: string | null;
           credit?: string | null;
-          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -26804,7 +26809,9 @@ export type GetTransferDetailQuery = {
         totalDebit?: string | null;
         note?: string | null;
         glTransaction?: Array<{
+          ledgerId?: string | null;
           account: string;
+          serviceCentreId?: string | null;
           serviceCenter?: string | null;
           debit?: string | null;
           credit?: string | null;
@@ -33017,10 +33024,12 @@ export const GetJournalVoucherDetailDocument = `
           note
           transactionCode
           glTransaction {
+            ledgerId
             account
+            serviceCentreId
+            serviceCenter
             debit
             credit
-            serviceCenter
           }
           totalDebit
           totalCredit
@@ -42839,10 +42848,12 @@ export const GetShareDetailDocument = `
         transactionBranch
         teller
         glTransactions {
+          ledgerId
           account
+          serviceCentreId
+          serviceCenter
           debit
           credit
-          serviceCenter
         }
         totalCredit
         totalDebit
@@ -43634,7 +43645,9 @@ export const GetTransferDetailDocument = `
         srcProfilePic
         srcProfilePicUrl
         glTransaction {
+          ledgerId
           account
+          serviceCentreId
           serviceCenter
           debit
           credit
