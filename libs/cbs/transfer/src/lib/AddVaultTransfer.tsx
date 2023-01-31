@@ -165,7 +165,7 @@ export const AddVaultTransfer = () => {
                     />
                   </GridItem>
 
-                  <FormTextArea name="note" label="Note" />
+                  <FormTextArea isRequired name="note" label="Note" />
                 </FormSection>
               </Box>
             </form>

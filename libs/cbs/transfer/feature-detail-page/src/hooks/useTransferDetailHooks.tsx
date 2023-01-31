@@ -60,6 +60,7 @@ export const useTransferDetailHooks = () => {
 
   const sidebarData = {
     code: transferDetailData?.transferCode,
+    memberCode: transferDetailData?.transferCode,
     date: transferDetailData?.date?.local,
     transferType: transferDetailData?.transferType,
     amount: transferDetailData?.amount,

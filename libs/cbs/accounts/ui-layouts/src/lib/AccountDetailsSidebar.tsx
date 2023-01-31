@@ -51,9 +51,6 @@ export const AccountDetailsSidebar = () => {
               />
             </Box>
           </Box>
-          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-            {accountDetails?.productName}
-          </Text>
 
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">

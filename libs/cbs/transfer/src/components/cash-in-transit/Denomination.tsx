@@ -53,7 +53,7 @@ export const Denomination = ({ availableCash }: DenominationProps) => {
           denominationTotal={denominationTotal}
         />
       </GridItem>
-      <FormTextArea name="note" label="Note" />
+      <FormTextArea isRequired name="note" label="Note" />
     </FormSection>
   );
 };

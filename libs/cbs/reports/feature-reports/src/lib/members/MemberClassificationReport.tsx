@@ -74,7 +74,7 @@ export const MemberClassificationReport = () => {
     { enabled: !!filters }
   );
   const memberData = data?.report?.memberReport?.memberClassificationReport?.data;
-  const genderWiseReport = memberData?.gender;
+  // const genderWiseReport = memberData?.gender;
 
   return (
     <Report
