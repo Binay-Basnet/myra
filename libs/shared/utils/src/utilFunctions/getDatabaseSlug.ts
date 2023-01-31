@@ -1,7 +1,6 @@
-export const getDatabaseSlug = () => {
-  if (typeof window === 'undefined') return 'myra-prod';
-
-  const slug = window.location.host.split('.')[0];
-  if (slug.includes('localhost')) return 'myra-prod';
-  return slug;
-};
+export const getDatabaseSlug = () =>
+  // if (typeof window === 'undefined') return 'myra';
+  //
+  // const slug = window.location.host.split('.')[0];
+  // if (slug.includes('localhost')) return 'myra';
+  'myra';

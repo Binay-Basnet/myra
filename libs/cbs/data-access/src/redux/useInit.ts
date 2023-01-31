@@ -60,18 +60,20 @@ export const useInit = () => {
             setIsLoading(false);
             return;
           }
-          replace(
-            {
-              pathname: '/login',
-              query: {
-                redirect: asPath,
+          if (!asPath.includes('login')) {
+            replace(
+              {
+                pathname: '/login',
+                query: {
+                  redirect: asPath,
+                },
               },
-            },
-            '/login'
-          ).then(() => {
-            dispatch(logout());
-            setIsLoading(false);
-          });
+              '/login'
+            ).then(() => {
+              dispatch(logout());
+              setIsLoading(false);
+            });
+          }
         });
     } else {
       setIsLoading(false);
@@ -99,18 +101,21 @@ export const useInit = () => {
           setIsLoading(false);
           return;
         }
-        replace(
-          {
-            pathname: '/login',
-            query: {
-              redirect: asPath,
+
+        if (!asPath.includes('login')) {
+          replace(
+            {
+              pathname: '/login',
+              query: {
+                redirect: asPath,
+              },
             },
-          },
-          '/login'
-        ).then(() => {
-          dispatch(logout());
-          setIsLoading(false);
-        });
+            '/login'
+          ).then(() => {
+            dispatch(logout());
+            setIsLoading(false);
+          });
+        }
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData]);

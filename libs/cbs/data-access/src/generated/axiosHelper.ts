@@ -1,3 +1,4 @@
+import Router from 'next/router';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
 import { getAPIUrl, getDatabaseSlug } from '@coop/shared/utils';
@@ -104,7 +105,19 @@ privateAgent.interceptors.response.use(
           })
           .catch((err: AxiosError) => {
             if (err?.response?.status === CODES.BAD_REQUEST_ERROR) {
-              store.dispatch(logout());
+              if (!Router.asPath.includes('login')) {
+                Router.replace(
+                  {
+                    pathname: '/login',
+                    query: {
+                      redirect: Router.asPath,
+                    },
+                  },
+                  '/login'
+                ).then(() => {
+                  store.dispatch(logout());
+                });
+              }
             }
 
             processQueue(err, null);
