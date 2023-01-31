@@ -252,7 +252,11 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                 <Grid templateColumns="repeat(2,1fr)" gap="s20" pt="s16">
                   {' '}
                   <GridItem colSpan={2}>
-                    <FormBankSelect name="bankChequePayment.bankAccountId" label="Bank Name" />
+                    <FormBankSelect
+                      name="bankChequePayment.bankAccountId"
+                      label="Bank Name"
+                      currentBranchOnly
+                    />
                   </GridItem>
                   <FormInput
                     name="bankChequePayment.chequeNo"

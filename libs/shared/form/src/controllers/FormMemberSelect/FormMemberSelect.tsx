@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { debounce } from 'lodash';
@@ -37,6 +37,18 @@ export const FormMemberSelect = ({
 
   const memberId = watch(name);
 
+  const isFetchEnabled = useMemo(() => {
+    if (router?.asPath?.includes('/edit')) {
+      return !!IDMember;
+    }
+
+    if (router?.query?.['memberId']) {
+      return !!IDMember;
+    }
+
+    return IDMember !== 'undefined';
+  }, [router?.asPath, IDMember]);
+
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
       pagination: {
@@ -54,7 +66,7 @@ export const FormMemberSelect = ({
     },
     {
       staleTime: 0,
-      enabled: router?.asPath?.includes('/edit') ? !!IDMember : true && IDMember !== 'undefined',
+      enabled: isFetchEnabled,
     }
   );
 

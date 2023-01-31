@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 
@@ -12,7 +11,7 @@ import {
 } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormCheckbox, FormNumberInput } from '@coop/shared/form';
-import { amountConverter, useTranslation } from '@coop/shared/utils';
+import { amountConverter, useDebounce, useTranslation } from '@coop/shared/utils';
 
 type IReturnInfo = {
   totalAmount: number;
@@ -40,10 +39,15 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
 
   const balanceData = shareHistoryTableData?.share?.history?.balance;
 
-  const { data: chargesData, refetch } = useGetShareChargesQuery({
-    transactionType: Share_Transaction_Direction?.Return,
-    shareCount: noOfShares,
-  });
+  const { data: chargesData } = useGetShareChargesQuery(
+    {
+      transactionType: Share_Transaction_Direction?.Return,
+      shareCount: useDebounce(noOfShares, 800),
+    },
+    {
+      enabled: !!noOfShares,
+    }
+  );
 
   const chargeList = chargesData?.share?.charges;
 
@@ -57,9 +61,9 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
     return 0;
   };
 
-  useEffect(() => {
-    refetch();
-  }, [noOfShares, refetch]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [noOfShares, refetch]);
 
   useDeepCompareEffect(() => {
     if (chargeList) {

@@ -379,7 +379,12 @@ export const AddDeposit = () => {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <FormMemberSelect isRequired name="memberId" label="Member" />
+                  <FormMemberSelect
+                    isRequired
+                    name="memberId"
+                    label="Member"
+                    isDisabled={!!redirectMemberId}
+                  />
 
                   {memberId && (
                     <FormAccountSelect
@@ -388,6 +393,7 @@ export const AddDeposit = () => {
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
                       filterBy={ObjState.Active}
+                      isDisabled={!!redirectAccountId}
                     />
                   )}
 

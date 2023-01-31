@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 
@@ -11,7 +10,7 @@ import {
 } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormNumberInput } from '@coop/shared/form';
-import { amountConverter, useTranslation } from '@coop/shared/utils';
+import { amountConverter, useDebounce, useTranslation } from '@coop/shared/utils';
 
 type IPurchaseInfo = {
   totalAmount: number;
@@ -26,19 +25,19 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
 
   const { data: shareData } = useGetSettingsShareGeneralDataQuery();
 
-  const { data: chargesData, refetch } = useGetShareChargesQuery(
+  const { data: chargesData } = useGetShareChargesQuery(
     {
       transactionType: Share_Transaction_Direction?.Purchase,
-      shareCount: noOfShares,
+      shareCount: useDebounce(noOfShares, 800),
     },
     { enabled: !!noOfShares }
   );
 
   const chargeList = chargesData?.share?.charges;
 
-  useEffect(() => {
-    refetch();
-  }, [noOfShares, refetch]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [noOfShares, refetch]);
 
   useDeepCompareEffect(() => {
     if (chargeList) {

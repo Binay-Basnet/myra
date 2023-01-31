@@ -519,7 +519,12 @@ export const AccountOpenNew = () => {
                   p="s20"
                   w="100%"
                 >
-                  <FormMemberSelect isRequired name="memberId" label="Member" />
+                  <FormMemberSelect
+                    isRequired
+                    name="memberId"
+                    label="Member"
+                    isDisabled={!!redirectMemberId || !!routeId}
+                  />
                   <FormSelect
                     name="productId"
                     label={t['accProductName']}

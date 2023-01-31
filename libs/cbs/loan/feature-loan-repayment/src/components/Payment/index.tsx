@@ -114,7 +114,12 @@ export const Payment = ({ loanTotal }: PaymentProps) => {
         {selectedPaymentMode === LoanRepaymentMethod?.BankVoucher && (
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
             <GridItem colSpan={2}>
-              <FormBankSelect isRequired name="bankVoucher.bank" label="Bank Name" />
+              <FormBankSelect
+                isRequired
+                name="bankVoucher.bank"
+                label="Bank Name"
+                currentBranchOnly
+              />
             </GridItem>
             <FormInput isRequired name="bankVoucher.voucher_no" label="Voucher Number" />
             <FormInput name="bankVoucher.amount" value={loanTotal} isDisabled label="Amount" />

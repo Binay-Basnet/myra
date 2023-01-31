@@ -121,6 +121,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
                 isRequired
                 name="bankCheque.bankId"
                 label={t['withdrawPaymentBankName']}
+                currentBranchOnly
               />
             </GridItem>
 

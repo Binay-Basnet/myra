@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-export const useDebounce = (value: string, delay: number): string => {
+export const useDebounce = <T>(value: T, delay: number): T => {
   // State and setters for debounced value
-  const [debouncedValue, setDebouncedValue] = useState(value);
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
   useEffect(
     () => {
       // Update debounced value after delay

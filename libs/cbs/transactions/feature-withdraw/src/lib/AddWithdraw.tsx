@@ -331,7 +331,12 @@ export const AddWithdraw = () => {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <FormMemberSelect isRequired name="memberId" label={t['addWithdrawMember']} />
+                  <FormMemberSelect
+                    isRequired
+                    name="memberId"
+                    label={t['addWithdrawMember']}
+                    isDisabled={!!redirectMemberId}
+                  />
                   {memberId && (
                     <FormAccountSelect
                       isRequired
@@ -339,6 +344,7 @@ export const AddWithdraw = () => {
                       label={t['addWithdrawSelectWithdrawAccount']}
                       memberId={memberId}
                       filterBy={ObjState.Active}
+                      isDisabled={!!redirectAccountId}
                     />
                   )}
                   {selectedAccount?.product?.withdrawRestricted && (
