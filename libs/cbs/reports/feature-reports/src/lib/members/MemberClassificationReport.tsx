@@ -79,7 +79,15 @@ export const MemberClassificationReport = () => {
   return (
     <Report
       defaultFilters={{}}
-      data={genderWiseReport as ReportEntry[]}
+      data={
+        (memberData?.gender ||
+          memberData?.age ||
+          memberData?.memberCategory ||
+          memberData?.income ||
+          memberData?.address ||
+          memberData?.education ||
+          memberData?.occupation) as ReportEntry[]
+      }
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
