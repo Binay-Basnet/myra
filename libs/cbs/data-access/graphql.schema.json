@@ -46422,6 +46422,29 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "GLReportSummary",
+        "description": null,
+        "fields": [
+          {
+            "name": "openingBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "GLStatementFilter",
         "description": null,
@@ -46500,6 +46523,18 @@
             "type": {
               "kind": "UNION",
               "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "summary",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "GLReportSummary",
               "ofType": null
             },
             "isDeprecated": false,

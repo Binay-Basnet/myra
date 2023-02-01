@@ -5509,6 +5509,10 @@ export type GlBalanceFilter = {
   amount?: InputMaybe<MinMaxFilter>;
 };
 
+export type GlReportSummary = {
+  openingBalance?: Maybe<Scalars['String']>;
+};
+
 export type GlStatementFilter = {
   amount?: InputMaybe<MinMaxFilter>;
   bank?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -5518,6 +5522,7 @@ export type GlStatementFilter = {
 export type GenderLedgerReportResult = {
   data?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
   error?: Maybe<QueryError>;
+  summary?: Maybe<GlReportSummary>;
 };
 
 export type GeneralBranchSettingsMutation = {
@@ -23851,6 +23856,7 @@ export type GetBankGlBalanceReportQuery = {
             bankAccountName?: string | null;
             accountNo?: string | null;
             closingBalance?: string | null;
+            balanceType?: BalanceType | null;
           } | null> | null;
         };
       };
@@ -39678,6 +39684,7 @@ export const GetBankGlBalanceReportDocument = `
             bankAccountName
             accountNo
             closingBalance
+            balanceType
           }
           total
         }

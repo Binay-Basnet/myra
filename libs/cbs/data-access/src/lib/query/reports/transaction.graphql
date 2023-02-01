@@ -267,6 +267,7 @@ query getBankGLBalanceReport($data: BankGLBalanceFilter!) {
             bankAccountName
             accountNo
             closingBalance
+            balanceType
           }
           total
         }
