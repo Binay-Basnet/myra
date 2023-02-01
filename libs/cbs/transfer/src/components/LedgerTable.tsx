@@ -52,11 +52,11 @@ export const LedgerTable = () => {
       <Box display="flex" flexDir="column" gap="s12">
         <FormEditableTable<JournalVouchersTableType>
           name="selfEntries"
-          searchPlaceholder="Search for Accounts"
+          searchPlaceholder="Search for Ledgers"
           columns={[
             {
               accessor: 'accountId',
-              header: 'Account',
+              header: 'Ledger',
               fieldType: 'search',
               searchOptions: accountListData?.map((account) => ({
                 label: account?.node?.accountName?.local as string,

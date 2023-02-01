@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import { ObjState, useGetAccountTableListMinimalQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, ObjState, useGetAccountTableListMinimalQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -12,12 +12,18 @@ export const CBSAccountCloseList = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isLoading } = useGetAccountTableListMinimalQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
       filter: {
         objState: ObjState.Inactive,
+        query: searchTerm,
+        id: searchTerm,
+        memberId: searchTerm,
+        productID: searchTerm,
+        filterMode: Filter_Mode.Or,
       },
     },
     {
