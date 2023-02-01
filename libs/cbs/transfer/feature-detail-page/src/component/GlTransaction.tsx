@@ -3,47 +3,65 @@ import { useMemo } from 'react';
 import { DetailsCard } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { GlTransaction } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
-type CustomTransactionItem = GlTransaction & {
-  index?: string | number;
-};
-
 type GlTransactionDetailProps = {
-  data: CustomTransactionItem[] | null | undefined;
-  totalAmount: string;
+  data:
+    | ({
+        account: string;
+        serviceCenter?: string | null | undefined;
+        debit?: string | null | undefined;
+        credit?: string | null | undefined;
+        ledgerId?: string | null | undefined;
+      } | null)[]
+    | null
+    | undefined;
+  totalDebit: string;
+  totalCredit: string;
 };
 
-export const GlTransactionTable = ({ data, totalAmount }: GlTransactionDetailProps) => {
+export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDetailProps) => {
   const { t } = useTranslation();
-
   const rowData = useMemo(() => data ?? [], [data]);
 
-  const glTransactionListWithIndex =
-    rowData?.map((trans, index) => ({
-      index: index + 1,
-      ...trans,
-    })) ?? [];
-
-  const columns = useMemo<Column<typeof glTransactionListWithIndex[0]>[]>(
+  const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['transDetailAccount'],
+        header: 'Ledger',
+        footer: t['transDetailTotal'],
         accessorFn: (row) => row?.account,
+        cell: (props) => {
+          const accountId = props.getValue() as string;
+          return (
+            <RedirectButton
+              link={`${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${props?.row?.original?.ledgerId}`}
+              label={accountId}
+            />
+          );
+        },
+        meta: {
+          width: '50%',
+        },
       },
       {
-        header: 'Debit',
+        header: 'Service Center',
+        accessorFn: (row) => row?.serviceCenter,
+      },
+      {
+        header: t['transDetailDebit'],
+        footer: totalDebit,
         accessorFn: (row) => amountConverter(row?.debit ?? 0),
       },
       {
-        header: 'credit',
-        footer: amountConverter(totalAmount ?? 0) as string,
+        header: t['transDetailCredit'],
+        footer: totalCredit,
         accessorFn: (row) => amountConverter(row?.credit ?? 0),
       },
     ],
-    [totalAmount]
+    [totalDebit, totalCredit]
   );
+
   if (data?.length === 0) return null;
   return (
     <DetailsCard
@@ -60,7 +78,7 @@ export const GlTransactionTable = ({ data, totalAmount }: GlTransactionDetailPro
         showFooter
         isStatic
         isLoading={false}
-        data={glTransactionListWithIndex ?? []}
+        data={rowData ?? []}
         columns={columns}
       />
     </DetailsCard>

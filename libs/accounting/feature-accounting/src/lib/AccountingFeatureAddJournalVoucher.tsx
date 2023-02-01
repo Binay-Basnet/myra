@@ -19,7 +19,7 @@ import {
   JournalVoucherPaymentMode,
   useSetJournalVoucherDataMutation,
 } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, localizedTime } from '@coop/cbs/utils';
 import { FormDatePicker, FormInput, FormTextArea } from '@coop/shared/form';
 import {
   amountConverter,
@@ -151,13 +151,13 @@ export const AccountingFeatureAddJournalVoucher = () => {
 
                   let total = 0;
 
-                  result?.entries?.forEach((fee) => {
+                  result?.entries?.forEach((fee, index) => {
                     if (fee?.value?.includes('Dr')) {
                       total += Number(fee?.value?.split('. ')[1] ?? 0);
                     }
 
                     if (fee?.name && fee?.value) {
-                      temp[String(fee.name)] = fee?.value?.includes('Dr') ? (
+                      temp[`${index + 1}. ${fee.name}`] = fee?.value?.includes('Dr') ? (
                         <Box display="flex" gap="s8">
                           <Text fontSize="s3" fontWeight="600">
                             {fee?.value?.split('. ')[1]}
@@ -189,6 +189,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
                       refrence: result?.reference,
                       totalDebit: result?.totalAmount,
                       transactionId: result?.transactionId,
+                      transactionTime: localizedTime(result?.createdAt),
                     },
                     title: 'Journal Voucher Entry Successful',
                     details: {
@@ -198,10 +199,12 @@ export const AccountingFeatureAddJournalVoucher = () => {
                         </Text>
                       ),
                       Date: localizedDate(result?.date),
+                      'Transaction Time': localizedTime(result?.createdAt),
                       Refrence: result?.reference,
                       ...temp,
                       'Total Amount': amountConverter(total),
                       'Total Amount in words': amountToWordsConverter(total),
+
                       Note: result?.note,
                     },
                     subTitle:

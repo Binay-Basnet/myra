@@ -14933,6 +14933,7 @@ export type SetJournalVoucherDataMutation = {
           note?: string | null;
           paymentMode?: JournalVoucherPaymentMode | null;
           totalAmount?: string | null;
+          createdAt?: Record<'local' | 'en' | 'np', string> | null;
           entries?: Array<{ name?: string | null; value?: string | null } | null> | null;
           glTransaction?: Array<{
             ledgerId?: string | null;
@@ -15794,6 +15795,7 @@ export type SetLoanRepaymentMutation = {
         memberId?: string | null;
         memberName?: Record<'local' | 'en' | 'np', string> | null;
         date?: Record<'local' | 'en' | 'np', string> | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         installmentNo?: string | null;
         principalAmount?: string | null;
         interestAmount?: string | null;
@@ -17321,6 +17323,7 @@ export type AddSharePurchaseMutation = {
       record?: {
         id?: string | null;
         transactionId?: string | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         status?: Share_Status | null;
         transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         transactionDirection: Share_Transaction_Direction;
@@ -17364,6 +17367,7 @@ export type AddShareReturnMutation = {
       record?: {
         id?: string | null;
         transactionId?: string | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         status?: Share_Status | null;
         transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         transactionDirection: Share_Transaction_Direction;
@@ -17411,10 +17415,12 @@ export type SetDepositDataMutation = {
         rebate?: string | null;
         paymentMode?: DepositPaymentType | null;
         depositedBy?: DepositedBy | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         memberName?: Record<'local' | 'en' | 'np', string> | null;
         memberId?: string | null;
         accountId?: string | null;
         accountName?: string | null;
+        depositedOther?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -17461,6 +17467,7 @@ export type SetWithdrawDataMutation = {
         accountName?: string | null;
         memberId?: string | null;
         memberName?: Record<'local' | 'en' | 'np', string> | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         amount?: string | null;
         fine?: string | null;
         totalAmount?: string | null;
@@ -17491,6 +17498,7 @@ export type SetAccountTransferDataMutation = {
       record?: {
         totalAmount?: string | null;
         amount?: string | null;
+        createdAt?: Record<'local' | 'en' | 'np', string> | null;
         date?: Record<'local' | 'en' | 'np', string> | null;
         id?: string | null;
         remarks?: string | null;
@@ -18181,6 +18189,7 @@ export type GetAccountDetailsDataQuery = {
         interestRate?: number | null;
         member?: {
           id: string;
+          code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
           profilePicUrl?: string | null;
           contact?: string | null;
@@ -18671,10 +18680,12 @@ export type GetJournalVoucherDetailQuery = {
           totalDebit?: string | null;
           totalCredit?: string | null;
           glTransaction?: Array<{
+            ledgerId?: string | null;
             account: string;
+            serviceCentreId?: string | null;
+            serviceCenter?: string | null;
             debit?: string | null;
             credit?: string | null;
-            serviceCenter?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -21856,6 +21867,8 @@ export type GetMemberKymDetailsOverviewQuery = {
                 registrationNo?: string | null;
                 registrationOffice?: string | null;
                 registrationDate?: Record<'local' | 'en' | 'np', string> | null;
+                branchId?: string | null;
+                branchName?: string | null;
               }
             | {
                 __typename: 'CooperativeUnionBasicMinInfo';
@@ -21865,6 +21878,8 @@ export type GetMemberKymDetailsOverviewQuery = {
                 memberJoined?: Record<'local' | 'en' | 'np', string> | null;
                 type?: string | null;
                 nature?: string | null;
+                branchId?: string | null;
+                branchName?: string | null;
                 registrationDate?: Record<'local' | 'en' | 'np', string> | null;
                 vatPanNo?: string | null;
                 noOfServiceCenters?: number | null;
@@ -21880,6 +21895,8 @@ export type GetMemberKymDetailsOverviewQuery = {
                 maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
                 maritalStatusId?: string | null;
                 fathersName?: string | null;
+                branchId?: string | null;
+                branchName?: string | null;
                 mothersName?: string | null;
                 grandFathersName?: string | null;
                 isStaff?: boolean | null;
@@ -21899,6 +21916,8 @@ export type GetMemberKymDetailsOverviewQuery = {
                 nature?: string | null;
                 registrationDate?: Record<'local' | 'en' | 'np', string> | null;
                 vatPanNo?: string | null;
+                branchId?: string | null;
+                branchName?: string | null;
                 noOfServiceCenters?: number | null;
               }
             | null;
@@ -23411,6 +23430,7 @@ export type GetShareStatementQuery = {
           id: string;
           code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
+          activeDate?: Record<'local' | 'en' | 'np', string> | null;
           dateJoined?: Record<'local' | 'en' | 'np', string> | null;
           address?: {
             wardNo?: string | null;
@@ -23837,6 +23857,7 @@ export type GetBankGlBalanceReportQuery = {
             bankAccountName?: string | null;
             accountNo?: string | null;
             closingBalance?: string | null;
+            balanceType?: BalanceType | null;
           } | null> | null;
         };
       };
@@ -26189,10 +26210,12 @@ export type GetShareDetailQuery = {
           sourceOfFund?: string | null;
         } | null;
         glTransactions?: Array<{
+          ledgerId?: string | null;
           account: string;
+          serviceCentreId?: string | null;
+          serviceCenter?: string | null;
           debit?: string | null;
           credit?: string | null;
-          serviceCenter?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -26808,11 +26831,13 @@ export type GetTransferDetailQuery = {
         destBranch?: Record<'local' | 'en' | 'np', string> | null;
         srcProfilePic?: string | null;
         srcProfilePicUrl?: string | null;
+        note?: string | null;
         totalCredit?: string | null;
         totalDebit?: string | null;
-        note?: string | null;
         glTransaction?: Array<{
+          ledgerId?: string | null;
           account: string;
+          serviceCentreId?: string | null;
           serviceCenter?: string | null;
           debit?: string | null;
           credit?: string | null;
@@ -26872,6 +26897,7 @@ export type GetCashInTransitDetailQuery = {
     cashInTransitDetail?: {
       data?: {
         ID: string;
+        note?: string | null;
         transitStatus?: RequestStatus | null;
         srcTeller?: Record<'local' | 'en' | 'np', string> | null;
         amount?: string | null;
@@ -26886,7 +26912,6 @@ export type GetCashInTransitDetailQuery = {
         srcProfilePicUrl?: string | null;
         totalCredit?: string | null;
         totalDebit?: string | null;
-        note?: string | null;
         glTransaction?: Array<{
           account: string;
           serviceCenter?: string | null;
@@ -27271,6 +27296,7 @@ export const SetJournalVoucherDataDocument = `
           }
           paymentMode
           totalAmount
+          createdAt
           glTransaction {
             ledgerId
             account
@@ -28678,6 +28704,7 @@ export const SetLoanRepaymentDocument = `
         memberId
         memberName
         date
+        createdAt
         installmentNo
         principalAmount
         interestAmount
@@ -31214,6 +31241,7 @@ export const AddSharePurchaseDocument = `
       record {
         id
         transactionId
+        createdAt
         status
         transactionDate
         transactionDirection
@@ -31269,6 +31297,7 @@ export const AddShareReturnDocument = `
       record {
         id
         transactionId
+        createdAt
         status
         transactionDate
         transactionDirection
@@ -31328,10 +31357,12 @@ export const SetDepositDataDocument = `
         rebate
         paymentMode
         depositedBy
+        createdAt
         memberName
         memberId
         accountId
         accountName
+        depositedOther
       }
       error {
         ...MutationError
@@ -31392,6 +31423,7 @@ export const SetWithdrawDataDocument = `
         accountName
         memberId
         memberName
+        createdAt
         amount
         fine
         totalAmount
@@ -31428,6 +31460,7 @@ export const SetAccountTransferDataDocument = `
       record {
         totalAmount
         amount
+        createdAt
         date
         id
         remarks
@@ -32336,6 +32369,7 @@ export const GetAccountDetailsDataDocument = `
         objState
         member {
           id
+          code
           name
           profilePicUrl
           contact
@@ -33018,10 +33052,12 @@ export const GetJournalVoucherDetailDocument = `
           note
           transactionCode
           glTransaction {
+            ledgerId
             account
+            serviceCentreId
+            serviceCenter
             debit
             credit
-            serviceCenter
           }
           totalDebit
           totalCredit
@@ -37136,6 +37172,8 @@ export const GetMemberKymDetailsOverviewDocument = `
               maritalStatus
               maritalStatusId
               fathersName
+              branchId
+              branchName
               mothersName
               grandFathersName
               familyMembers {
@@ -37154,6 +37192,8 @@ export const GetMemberKymDetailsOverviewDocument = `
               nature
               registrationDate
               vatPanNo
+              branchId
+              branchName
               noOfServiceCenters
             }
             ... on CooperativeBasicMinInfo {
@@ -37164,6 +37204,8 @@ export const GetMemberKymDetailsOverviewDocument = `
               registrationNo
               registrationOffice
               registrationDate
+              branchId
+              branchName
             }
             ... on CooperativeUnionBasicMinInfo {
               memberName
@@ -37172,6 +37214,8 @@ export const GetMemberKymDetailsOverviewDocument = `
               memberJoined
               type
               nature
+              branchId
+              branchName
               registrationDate
               vatPanNo
               noOfServiceCenters
@@ -39111,6 +39155,7 @@ export const GetShareStatementDocument = `
           id
           code
           name
+          activeDate
           address {
             wardNo
             state
@@ -39641,6 +39686,7 @@ export const GetBankGlBalanceReportDocument = `
             bankAccountName
             accountNo
             closingBalance
+            balanceType
           }
           total
         }
@@ -42839,10 +42885,12 @@ export const GetShareDetailDocument = `
         transactionBranch
         teller
         glTransactions {
+          ledgerId
           account
+          serviceCentreId
+          serviceCenter
           debit
           credit
-          serviceCenter
         }
         totalCredit
         totalDebit
@@ -43633,8 +43681,11 @@ export const GetTransferDetailDocument = `
         destBranch
         srcProfilePic
         srcProfilePicUrl
+        note
         glTransaction {
+          ledgerId
           account
+          serviceCentreId
           serviceCenter
           debit
           credit
@@ -43715,6 +43766,7 @@ export const GetCashInTransitDetailDocument = `
     cashInTransitDetail(transitID: $transitID) {
       data {
         ID
+        note
         transitStatus
         srcTeller
         amount

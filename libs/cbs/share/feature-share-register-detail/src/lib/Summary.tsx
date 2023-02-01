@@ -54,10 +54,15 @@ export const Summary = () => {
         }}
         onClick={() => router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${shareDetails?.member?.id}`)}
       >
-        <Avatar src={shareDetails?.member?.profilePicUrl as string} h="s32" w="s32" />
-        <Text color="primary.500" fontWeight="Medium" fontSize="r1" lineHeight="150%">
-          {shareDetails?.member?.name?.local}
-        </Text>
+        <Avatar src={shareDetails?.member?.profilePicUrl as string} size="sm" />
+        <Box display="flex" flexDir="column">
+          <Text color="primary.500" fontWeight="Medium" fontSize="r1" lineHeight="150%">
+            {shareDetails?.member?.name?.local}
+          </Text>
+          <Text fontSize="s3" fontWeight="Regular" color="gray.800">
+            {shareDetails?.member?.code}
+          </Text>
+        </Box>
       </Box>
     </>
   );

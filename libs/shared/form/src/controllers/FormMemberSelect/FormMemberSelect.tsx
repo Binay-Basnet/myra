@@ -100,10 +100,10 @@ export const FormMemberSelect = ({
     }, [] as Option[]) ?? [];
 
   useEffect(() => {
-    if (memberId) {
+    if ((router?.query?.['memberId'] || router?.asPath?.includes('/edit')) && memberId) {
       setIDMember(memberId);
     }
-  }, [memberId]);
+  }, [memberId, router]);
 
   return (
     <Controller

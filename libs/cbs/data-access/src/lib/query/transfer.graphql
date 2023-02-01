@@ -15,8 +15,11 @@ query getTransferDetail($transferID: ID!) {
         destBranch
         srcProfilePic
         srcProfilePicUrl
+        note
         glTransaction {
+          ledgerId
           account
+          serviceCentreId
           serviceCenter
           debit
           credit
@@ -73,6 +76,7 @@ query getCashInTransitDetail($transitID: ID!) {
     cashInTransitDetail(transitID: $transitID) {
       data {
         ID
+        note
         transitStatus
         srcTeller
         amount

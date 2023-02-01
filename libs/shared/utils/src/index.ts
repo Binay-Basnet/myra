@@ -10,6 +10,7 @@ export * from './locales';
 export * from './utilFunctions/amountConverter';
 export * from './utilFunctions/amountToWordsConverter';
 export * from './utilFunctions/copyToClipboard';
+export * from './utilFunctions/debitCreditConverter';
 export * from './utilFunctions/decimalAdjust';
 export * from './utilFunctions/getDatabaseSlug';
 export * from './utilFunctions/getKymCoopSection';

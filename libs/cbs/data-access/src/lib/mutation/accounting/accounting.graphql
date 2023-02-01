@@ -29,6 +29,7 @@ mutation setJournalVoucherData($data: JournalVoucherInput) {
           }
           paymentMode
           totalAmount
+          createdAt
           glTransaction {
             ledgerId
             account

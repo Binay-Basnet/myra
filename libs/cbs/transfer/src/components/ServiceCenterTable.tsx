@@ -1,8 +1,10 @@
 import { FormSection, GridItem } from '@myra-ui';
 
 import { useAppSelector, useGetBranchListQuery } from '@coop/cbs/data-access';
-import { FormEditableTable } from '@coop/shared/form';
+import { FormEditableTable, FormTextArea } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
+
+import { CashTransferTotalCard } from './CashTransferTotalCard';
 
 export type ServiceCenterTableProps = {
   branchId: string;
@@ -29,9 +31,10 @@ export const ServiceCenterTable = () => {
 
   return (
     <FormSection
+      divider={false}
       header="Service Center"
       subHeader="Select Destination Service Center"
-      templateColumns={1}
+      templateColumns={3}
     >
       <GridItem colSpan={3}>
         <FormEditableTable<ServiceCenterTableProps>
@@ -57,6 +60,10 @@ export const ServiceCenterTable = () => {
             },
           ]}
         />
+      </GridItem>
+      <CashTransferTotalCard />
+      <GridItem colSpan={1}>
+        <FormTextArea name="note" label="Note" isRequired />
       </GridItem>
     </FormSection>
   );

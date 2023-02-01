@@ -23,7 +23,7 @@ import {
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { CashOptions, DenominationTable } from '@coop/shared/components';
-import { FormAmountInput, FormInput, FormTellerSelect } from '@coop/shared/form';
+import { FormAmountInput, FormInput, FormTellerSelect, FormTextArea } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import { BalanceCard } from '../components';
@@ -133,11 +133,11 @@ export const AddTellerTransfer = () => {
                   <GridItem colSpan={3} display="flex" flexDirection="column" gap="s4">
                     <DenominationTable
                       fieldName="denominations"
-                      cashPaid={amount ?? '0'}
                       denominationTotal={denominationTotal}
                       denominationTotalOnly
                     />
                   </GridItem>
+                  <FormTextArea isRequired name="note" label="Note" />
                 </FormSection>
               </Box>
             </form>

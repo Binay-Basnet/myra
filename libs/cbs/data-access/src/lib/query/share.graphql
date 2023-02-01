@@ -148,10 +148,12 @@ query getShareDetail($transactionID: ID!) {
         transactionBranch
         teller
         glTransactions {
+          ledgerId
           account
+          serviceCentreId
+          serviceCenter
           debit
           credit
-          serviceCenter
         }
         totalCredit
         totalDebit

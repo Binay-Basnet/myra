@@ -11,7 +11,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormAmountFilter, FormBranchSelect } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, debitCreditConverter } from '@coop/shared/utils';
 
 type BankGlBalanceFilters = Omit<BankGlBalanceFilter, 'branchId'> & {
   branchId: {
@@ -114,7 +114,11 @@ export const BankGLBalanceReport = () => {
               {
                 header: 'Closing',
                 accessorKey: 'closingBalance',
-                cell: (props) => amountConverter(props.getValue() as string),
+                cell: (props) =>
+                  debitCreditConverter(
+                    props.getValue() as string,
+                    props?.row?.original?.balanceType as string
+                  ),
 
                 footer: () => amountConverter(total as string),
               },

@@ -3,6 +3,7 @@ import { Avatar, Box, Text } from '@myra-ui';
 type SidebarProps = {
   sidebarData: {
     code: string | null | undefined;
+    memberCode: string | null | undefined;
     date: string | null | undefined;
     transferType?: string | null | undefined;
     amount: string | null | undefined;
@@ -50,9 +51,18 @@ export const SidebarInfo = ({ sidebarData }: SidebarProps) => (
       borderBottomColor="border.layout"
     >
       <Avatar src={sidebarData?.srcTellerPic as string} size="sm" />
-      <Text fontSize="r1" fontWeight="Medium" color="gray.800" lineHeight="150%">
-        {sidebarData?.srcTellerName}
-      </Text>
+      <Box display="flex" flexDir="column">
+        {/* <RedirectButton
+          label={sidebarData?.srcTellerName}
+          link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${id}`}
+        /> */}
+        <Text fontSize="r1" fontWeight="Medium" color="gray.800" lineHeight="150%">
+          {sidebarData?.srcTellerName}
+        </Text>
+        <Text fontSize="r1" fontWeight="400" color="gray.800" wordBreak="break-all">
+          {sidebarData?.memberCode}
+        </Text>
+      </Box>
     </Box>
   </Box>
 );

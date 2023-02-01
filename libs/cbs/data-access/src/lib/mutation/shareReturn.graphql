@@ -5,7 +5,7 @@ mutation addShareReturn($data: ShareReturnInput!) {
       record {
         id
         transactionId
-
+        createdAt
         status
         transactionDate
         transactionDirection
@@ -32,7 +32,6 @@ mutation addShareReturn($data: ShareReturnInput!) {
           code
           name
         }
-
       }
       error {
         ...MutationError

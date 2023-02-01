@@ -63,6 +63,7 @@ export const MemberBasicInformation = () => {
               Contat Number:<b> {memberBasicInfo?.contactNumber} </b>
             </Text>
           )}
+          <DetailCardContent title="Member Service Centre" subtitle={memberBasicInfo?.branchName} />
           {memberBasicInfo?.email && (
             <Text fontSize="s2" fontWeight="400">
               Email:<b> {memberBasicInfo?.email} </b>
@@ -97,6 +98,10 @@ export const MemberBasicInformation = () => {
             subtitle={memberBasicInstitution?.memberName}
           />
           <DetailCardContent title="Institution Type" subtitle={memberBasicInstitution?.type} />
+          <DetailCardContent
+            title="Member Service Centre"
+            subtitle={memberBasicInstitution?.branchName}
+          />
           <DetailCardContent title="Nature of Business" subtitle={memberBasicInstitution?.nature} />
           <DetailCardContent
             title="Registration Date"
@@ -120,6 +125,10 @@ export const MemberBasicInformation = () => {
             subtitle={memberBasicCooperative?.registrationNo}
           />
           <DetailCardContent
+            title="Member Service Centre"
+            subtitle={memberBasicCooperative?.branchName}
+          />
+          <DetailCardContent
             title="Registration Office"
             subtitle={memberBasicCooperative?.registrationOffice}
           />
@@ -138,6 +147,10 @@ export const MemberBasicInformation = () => {
           <DetailCardContent
             title="Institution Type"
             subtitle={memberBasicCooperativeUnion?.type}
+          />
+          <DetailCardContent
+            title="Member Service Centre"
+            subtitle={memberBasicCooperativeUnion?.branchName}
           />
           <DetailCardContent
             title="Nature of Business"

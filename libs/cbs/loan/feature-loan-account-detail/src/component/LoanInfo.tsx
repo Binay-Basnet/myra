@@ -83,14 +83,16 @@ export const LoanInfo = () => {
         borderBottom="1px"
         borderBottomColor="border.layout"
       >
-        <Avatar src={memberDetails?.profilePicUrl as string} size="sm" />
-        <RedirectButton
-          label={memberDetails?.memberName?.local}
-          link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${memberDetails?.memberId}`}
-        />
-        {/* <Text fontSize="r1" fontWeight="Medium" color="primary.500" lineHeight="150%">
-          {memberDetails?.memberName?.local}
-        </Text> */}
+        <Avatar src={memberDetails?.profilePicUrl as string} size="sm" />{' '}
+        <Box display="flex" flexDir="column">
+          <RedirectButton
+            label={memberDetails?.memberName?.local}
+            link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${memberDetails?.memberId}`}
+          />
+          <Text fontSize="r1" fontWeight="400" color="gray.800" wordBreak="break-all">
+            {memberDetails?.memberCode}
+          </Text>
+        </Box>
       </Box>
       <AccountQRModal
         account={{

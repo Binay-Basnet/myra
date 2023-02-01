@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import { DenominationTable } from '@coop/shared/components';
-import { FormAmountInput } from '@coop/shared/form';
+import { FormAmountInput, FormTextArea } from '@coop/shared/form';
 
 type DenominationProps = { availableCash: string | undefined | null };
 
@@ -12,15 +12,12 @@ export const Denomination = ({ availableCash }: DenominationProps) => {
   const { watch } = method;
 
   const denominations = watch('denomination');
-  const amount = watch('amount');
 
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
       0 as number
     ) ?? 0;
-
-  const returnTotal = denominationTotal - amount;
 
   const availableBalance =
     Number(availableCash) === 0 ? 0 : Number(availableCash?.split(' ')[1])?.toFixed(0);
@@ -52,12 +49,11 @@ export const Denomination = ({ availableCash }: DenominationProps) => {
       <GridItem colSpan={3}>
         <DenominationTable
           fieldName="denomination"
-          cashPaid={amount ?? '0'}
-          totalCashPaid={Number(amount)}
-          returnAmount={returnTotal}
+          denominationTotalOnly
           denominationTotal={denominationTotal}
         />
       </GridItem>
+      <FormTextArea isRequired name="note" label="Note" />
     </FormSection>
   );
 };

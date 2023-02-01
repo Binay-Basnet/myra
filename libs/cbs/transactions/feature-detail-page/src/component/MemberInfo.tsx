@@ -39,11 +39,10 @@ export const MemberInfo = ({
   <Box borderBottom="1px" borderBottomColor="border.layout">
     <Box py="s12" w="100%" px="s16" display="flex" alignItems="center" gap="s8">
       {detailPage !== 'accountTransfer' && (
-        <Box gap="s8" display="flex">
-          <Avatar src={profilePic} size="md" name="test" />
-          <Box display="flex" flexDir="column" justifyContent="center">
+        <Box gap="s8" display="flex" alignItems="center">
+          <Avatar src={profilePic} size="sm" name="test" />
+          <Box display="flex" flexDir="column">
             <RedirectButton label={name} link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${memberId}`} />
-
             <Text fontSize="s3" fontWeight="Regular" color="gray.800">
               {memberCode}
             </Text>

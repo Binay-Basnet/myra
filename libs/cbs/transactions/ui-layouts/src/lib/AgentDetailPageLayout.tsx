@@ -52,7 +52,7 @@ export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) 
             <Box display="flex" gap="s16">
               <Avatar
                 name={agentDetailQueryData?.transaction?.agentDetail?.data?.name ?? 'Agent'}
-                size="lg"
+                size="md"
                 src={agentDetailQueryData?.transaction?.agentDetail?.data?.profilePicUrl ?? ''}
               />
 

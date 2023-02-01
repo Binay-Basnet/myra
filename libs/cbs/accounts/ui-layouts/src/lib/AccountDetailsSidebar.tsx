@@ -51,9 +51,6 @@ export const AccountDetailsSidebar = () => {
               />
             </Box>
           </Box>
-          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-            {accountDetails?.productName}
-          </Text>
 
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
@@ -88,6 +85,7 @@ export const AccountDetailsSidebar = () => {
       >
         <DetailPageMemberCard
           id={accountDetails?.member?.id}
+          memberCode={accountDetails?.member?.code}
           name={accountDetails?.member?.name?.local as string}
           profilePicUrl={accountDetails?.member?.profilePicUrl ?? ''}
         />

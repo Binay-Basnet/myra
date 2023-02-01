@@ -74,12 +74,20 @@ export const MemberClassificationReport = () => {
     { enabled: !!filters }
   );
   const memberData = data?.report?.memberReport?.memberClassificationReport?.data;
-  const genderWiseReport = memberData?.gender;
+  // const genderWiseReport = memberData?.gender;
 
   return (
     <Report
       defaultFilters={{}}
-      data={genderWiseReport as ReportEntry[]}
+      data={
+        (memberData?.gender ||
+          memberData?.age ||
+          memberData?.memberCategory ||
+          memberData?.income ||
+          memberData?.address ||
+          memberData?.education ||
+          memberData?.occupation) as ReportEntry[]
+      }
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}

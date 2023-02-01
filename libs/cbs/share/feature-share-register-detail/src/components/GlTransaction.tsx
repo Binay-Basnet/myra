@@ -3,15 +3,17 @@ import { useMemo } from 'react';
 import { DetailsCard } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type GlTransactionDetailProps = {
-  tableData:
+  data:
     | ({
         account: string;
         serviceCenter?: string | null | undefined;
         debit?: string | null | undefined;
         credit?: string | null | undefined;
+        ledgerId?: string | null | undefined;
       } | null)[]
     | null
     | undefined;
@@ -19,29 +21,27 @@ type GlTransactionDetailProps = {
   totalCredit: string;
 };
 
-export const GlTransaction = ({ tableData, totalCredit, totalDebit }: GlTransactionDetailProps) => {
+export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDetailProps) => {
   const { t } = useTranslation();
+  const rowData = useMemo(() => data ?? [], [data]);
 
-  const rowData = useMemo(() => tableData ?? [], [tableData]);
-
-  const glListWithIndex =
-    rowData?.map((gl, index) => ({
-      index: index + 1,
-      ...gl,
-    })) ?? [];
-
-  const columns = useMemo<Column<typeof glListWithIndex[0]>[]>(
+  const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'SN',
-        accessorKey: 'index',
-      },
-      {
-        header: t['transDetailAccount'],
-        footer: 'Total Amount',
+        header: 'Ledger',
+        footer: t['transDetailTotal'],
         accessorFn: (row) => row?.account,
+        cell: (props) => {
+          const accountId = props.getValue() as string;
+          return (
+            <RedirectButton
+              link={`${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${props?.row?.original?.ledgerId}`}
+              label={accountId}
+            />
+          );
+        },
         meta: {
-          width: '500px',
+          width: '50%',
         },
       },
       {
@@ -59,10 +59,10 @@ export const GlTransaction = ({ tableData, totalCredit, totalDebit }: GlTransact
         accessorFn: (row) => amountConverter(row?.credit ?? 0),
       },
     ],
-    [totalCredit, totalDebit]
+    [totalDebit, totalCredit]
   );
 
-  if (tableData?.length === 0) return null;
+  if (data?.length === 0) return null;
   return (
     <DetailsCard
       title={t['transDetailGLTransactions']}
@@ -74,11 +74,11 @@ export const GlTransaction = ({ tableData, totalCredit, totalDebit }: GlTransact
       // }
     >
       <Table
-        showFooter
         isDetailPageTable
+        showFooter
         isStatic
         isLoading={false}
-        data={glListWithIndex ?? []}
+        data={rowData ?? []}
         columns={columns}
       />
     </DetailsCard>
