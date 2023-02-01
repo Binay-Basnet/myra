@@ -1,6 +1,22 @@
+import { RefObject } from 'react';
 import { utils, writeFileXLSX } from 'xlsx';
 
-export const exportVisibleTableToExcel = (fileName: string) => {
+export const exportVisibleTableToExcel = (
+  fileName: string,
+  tableRef?: RefObject<HTMLTableElement>
+) => {
+  if (tableRef) {
+    const table = tableRef?.current;
+
+    const wb = utils.book_new();
+
+    const ws = utils.table_to_sheet(table);
+
+    utils.book_append_sheet(wb, ws, table?.dataset?.['tableTitle']);
+
+    return writeFileXLSX(wb, `${fileName} - ${new Date().toISOString()}.xlsx`);
+  }
+
   const tables = document?.getElementsByTagName('TABLE');
 
   const wb = utils.book_new();
@@ -44,5 +60,5 @@ export const exportVisibleTableToExcel = (fileName: string) => {
     utils.book_append_sheet(wb, ws, table.dataset?.tableTitle);
   });
 
-  writeFileXLSX(wb, `${fileName} - ${new Date().toISOString()}.xlsx`);
+  return writeFileXLSX(wb, `${fileName} - ${new Date().toISOString()}.xlsx`);
 };

@@ -1,12 +1,14 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { Button, DetailsCard, Modal, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useAppSelector } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { exportVisibleTableToExcel, localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
+
+import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
 
 type CustomPaymentItem = {
   index?: string | number;
@@ -25,6 +27,10 @@ interface IPaymentProps {
 }
 
 export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
+  const tableRef = useRef<HTMLTableElement>(null);
+
+  const { generalInfo } = useLoanAccountDetailHooks();
+
   const { isOpen, onClose, onToggle } = useDisclosure();
   const preference = useAppSelector((state) => state.auth?.preference);
 
@@ -115,6 +121,19 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
         scrollBehavior="inside"
         blockScrollOnMount
         width="4xl"
+        headerButton={
+          <Button
+            variant="ghost"
+            onClick={() =>
+              exportVisibleTableToExcel(
+                `${generalInfo?.accountName} - Payment Schedule - `,
+                tableRef
+              )
+            }
+          >
+            Export
+          </Button>
+        }
       >
         <Table
           isDetailPageTable
@@ -122,6 +141,7 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
           data={allPaymentListWithIndex}
           columns={columns}
           noDataTitle="Loan Repayment Schedule"
+          ref={tableRef}
         />
       </Modal>
     </>
