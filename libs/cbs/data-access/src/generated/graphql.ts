@@ -23345,6 +23345,7 @@ export type GetLedgerReportQuery = {
           credit?: string | null;
           debit?: string | null;
         } | null> | null;
+        summary?: { openingBalance?: string | null } | null;
       };
     };
   };
@@ -23358,6 +23359,7 @@ export type GetSavingsBalanceReportQuery = {
   report: {
     otherReport: {
       savingsBalanceReport: {
+        balanceType?: BalanceType | null;
         totalBalance?: string | null;
         data?: Array<{
           accountId?: string | null;
@@ -23370,6 +23372,7 @@ export type GetSavingsBalanceReportQuery = {
           accountOpeningDate?: string | null;
           memberType?: KymMemberTypesEnum | null;
           balance?: string | null;
+          balanceType?: BalanceType | null;
         } | null> | null;
         summary?: {
           totalIndividualAccount?: number | null;
@@ -39025,6 +39028,9 @@ export const GetLedgerReportDocument = `
           credit
           debit
         }
+        summary {
+          openingBalance
+        }
       }
     }
   }
@@ -39058,12 +39064,14 @@ export const GetSavingsBalanceReportDocument = `
           accountOpeningDate
           memberType
           balance
+          balanceType
         }
         summary {
           totalIndividualAccount
           totalMinorAccount
           totalOtherAccount
         }
+        balanceType
         totalBalance
       }
     }
