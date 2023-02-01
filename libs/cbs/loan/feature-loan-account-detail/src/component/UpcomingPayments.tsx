@@ -83,12 +83,12 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
   return (
     <>
       <DetailsCard
-        title="Upcoming Payments"
+        title="Loan Repayment Schedule"
         bg="white"
         hasTable
         leftBtn={
           <Button variant="ghost" onClick={onToggle}>
-            View All Payments
+            View Entire Schedule
           </Button>
         }
       >
@@ -104,7 +104,7 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
       <Modal
         onClose={onClose}
         open={isOpen}
-        title="Upcoming Payments"
+        title="Loan Repayment Schedule"
         scrollBehavior="inside"
         blockScrollOnMount
         width="4xl"
@@ -114,7 +114,7 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
           isStatic
           data={allPaymentListWithIndex}
           columns={columns}
-          noDataTitle="upcoming payment"
+          noDataTitle="Loan Repayment Schedule"
         />
       </Modal>
     </>

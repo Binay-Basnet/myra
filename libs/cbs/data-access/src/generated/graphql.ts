@@ -843,6 +843,7 @@ export type AllTransactionResult = {
   totalDebit?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;
   transactionMode?: Maybe<Scalars['String']>;
+  transactionTime?: Maybe<Scalars['String']>;
   txnType?: Maybe<AllTransactionType>;
 };
 
@@ -1462,6 +1463,7 @@ export type BankGlBalanceEntry = {
   bankId?: Maybe<Scalars['String']>;
   bankName?: Maybe<Scalars['String']>;
   closingBalance?: Maybe<Scalars['String']>;
+  ledgerId?: Maybe<Scalars['String']>;
 };
 
 export type BankGlBalanceFilter = {
@@ -2059,6 +2061,7 @@ export type CashInTransitInput = {
   amount?: InputMaybe<Scalars['String']>;
   collectorName?: InputMaybe<Scalars['String']>;
   denomination?: InputMaybe<Array<InputMaybe<Denomination>>>;
+  note?: InputMaybe<Scalars['String']>;
   receiverServiceCentre?: InputMaybe<Scalars['String']>;
   senderServiceCentre?: InputMaybe<Scalars['String']>;
   senderTeller?: InputMaybe<Scalars['String']>;
@@ -6746,6 +6749,8 @@ export type JournalChartsOfAccount = {
 
 export type JournalVoucher = {
   amount?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   reference?: Maybe<Scalars['String']>;
@@ -14150,6 +14155,7 @@ export type TellerTransferInput = {
   denominations?: InputMaybe<Array<Denomination>>;
   destBranch?: InputMaybe<Scalars['String']>;
   destTellerID?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
   srcBranch?: InputMaybe<Scalars['String']>;
   srcTellerID?: InputMaybe<Scalars['String']>;
   transferMode?: InputMaybe<CashTransferMode>;
@@ -17315,14 +17321,14 @@ export type GetLedgerReportQueryVariables = Exact<{
 }>;
 
 
-export type GetLedgerReportQuery = { report: { otherReport: { generalLedgerReport: { data?: Array<{ id?: string | null, date?: Record<"local"|"en"|"np",string> | null, account?: string | null, balance?: string | null, credit?: string | null, debit?: string | null } | null> | null } } } };
+export type GetLedgerReportQuery = { report: { otherReport: { generalLedgerReport: { data?: Array<{ id?: string | null, date?: Record<"local"|"en"|"np",string> | null, account?: string | null, balance?: string | null, credit?: string | null, debit?: string | null } | null> | null, summary?: { openingBalance?: string | null } | null } } } };
 
 export type GetSavingsBalanceReportQueryVariables = Exact<{
   data: SavingsBalanceFilterData;
 }>;
 
 
-export type GetSavingsBalanceReportQuery = { report: { otherReport: { savingsBalanceReport: { totalBalance?: string | null, data?: Array<{ accountId?: string | null, memberId?: string | null, memberCode?: string | null, memberName?: Record<"local"|"en"|"np",string> | null, productId?: string | null, productName?: string | null, productCode?: string | null, accountOpeningDate?: string | null, memberType?: KymMemberTypesEnum | null, balance?: string | null } | null> | null, summary?: { totalIndividualAccount?: number | null, totalMinorAccount?: number | null, totalOtherAccount?: number | null } | null } } } };
+export type GetSavingsBalanceReportQuery = { report: { otherReport: { savingsBalanceReport: { balanceType?: BalanceType | null, totalBalance?: string | null, data?: Array<{ accountId?: string | null, memberId?: string | null, memberCode?: string | null, memberName?: Record<"local"|"en"|"np",string> | null, productId?: string | null, productName?: string | null, productCode?: string | null, accountOpeningDate?: string | null, memberType?: KymMemberTypesEnum | null, balance?: string | null, balanceType?: BalanceType | null } | null> | null, summary?: { totalIndividualAccount?: number | null, totalMinorAccount?: number | null, totalOtherAccount?: number | null } | null } } } };
 
 export type GetAllSavedReportsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
@@ -28898,6 +28904,9 @@ export const GetLedgerReportDocument = `
           credit
           debit
         }
+        summary {
+          openingBalance
+        }
       }
     }
   }
@@ -28931,12 +28940,14 @@ export const GetSavingsBalanceReportDocument = `
           accountOpeningDate
           memberType
           balance
+          balanceType
         }
         summary {
           totalIndividualAccount
           totalMinorAccount
           totalOtherAccount
         }
+        balanceType
         totalBalance
       }
     }
