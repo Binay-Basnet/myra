@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { asyncToast, Box, Divider, SettingsFooter, Text } from '@myra-ui';
+import { asyncToast, Box, Divider, Loader, SettingsFooter, Text } from '@myra-ui';
 
 import {
   useGetLoanGeneralSettingsQuery,
@@ -16,7 +16,7 @@ export const CbsSettingsFeatureLoanProducts = () => {
   const { t } = useTranslation();
   const methods = useForm();
   const { watch, reset } = methods;
-  const { data } = useGetLoanGeneralSettingsQuery();
+  const { data, isLoading } = useGetLoanGeneralSettingsQuery();
   const loanGeneralData = data?.settings?.general?.loan?.general;
   const [collateralList, setCollateralList] = useState<
     { name: string; enabled: boolean; id: string }[]
@@ -53,26 +53,31 @@ export const CbsSettingsFeatureLoanProducts = () => {
       }),
     });
   };
-
   return (
     <Box pb="s20" width="full" display="flex" flexDirection="column">
-      <FormProvider {...methods}>
-        <Box display="flex" flexDirection="column" rowGap="s32" padding="s12" pb="s20">
-          <Box display="flex" flexDirection="column" gap="s16">
-            <Text fontSize="r1" fontWeight="500">
-              {t['settingsLoanRepaymentScheme']}{' '}
-            </Text>
-          </Box>
-          <Box display="flex" flexDir="column" gap={2}>
-            <FormCheckbox name="emi" label={t['settingsLoanInsuranceEmi']} />
-            <FormCheckbox name="epi" label={t['settingsLoanInsuranceEpi']} />
-            <FormCheckbox name="flat" label={t['settingsLoanInsuranceFlat']} />
-          </Box>
-          <Divider />
-          <AcceptedCollateral list={collateralList} setList={setCollateralList} />
+      {isLoading ? (
+        <Box display="flex" justifyContent="center" pt="100px">
+          <Loader />
         </Box>
-        <SettingsFooter handleSave={handleSave} />
-      </FormProvider>
+      ) : (
+        <FormProvider {...methods}>
+          <Box display="flex" flexDirection="column" rowGap="s32" padding="s12" pb="s20">
+            <Box display="flex" flexDirection="column" gap="s16">
+              <Text fontSize="r1" fontWeight="500">
+                {t['settingsLoanRepaymentScheme']}{' '}
+              </Text>
+            </Box>
+            <Box display="flex" flexDir="column" gap={2}>
+              <FormCheckbox name="emi" label={t['settingsLoanInsuranceEmi']} />
+              <FormCheckbox name="epi" label={t['settingsLoanInsuranceEpi']} />
+              <FormCheckbox name="flat" label={t['settingsLoanInsuranceFlat']} />
+            </Box>
+            <Divider />
+            <AcceptedCollateral list={collateralList} setList={setCollateralList} />
+          </Box>
+          <SettingsFooter handleSave={handleSave} />
+        </FormProvider>
+      )}
     </Box>
   );
 };
