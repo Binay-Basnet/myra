@@ -60,6 +60,7 @@ export const LoanPaymentScheduleTable = React.forwardRef<
         header: 'Payment',
         accessorKey: 'payment',
         cell: (props) => amountConverter(props.getValue() as string),
+        footer: () => amountConverter(total) || '-',
 
         meta: {
           isNumeric: true,
@@ -71,7 +72,6 @@ export const LoanPaymentScheduleTable = React.forwardRef<
 
         accessorKey: 'remainingPrincipal',
         cell: (props) => amountConverter(props.getValue() as string),
-        footer: () => amountConverter(total) || '-',
 
         meta: {
           isNumeric: true,
