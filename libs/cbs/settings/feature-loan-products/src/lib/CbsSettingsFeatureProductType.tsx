@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { asyncToast, Box, Divider, SettingsFooter } from '@myra-ui';
+import { asyncToast, Box, Divider, Loader, SettingsFooter } from '@myra-ui';
 
 import { useGetLoanProductTypeQuery, useSetProductTypeMutation } from '@coop/cbs/data-access';
 
@@ -55,16 +55,22 @@ export const CbsSettingsFeatureProductType = () => {
 
   return (
     <Box pb="s40" width="full" display="flex" flexDirection="column">
-      <FormProvider {...methods}>
-        <form>
-          <Box display="flex" flexDirection="column" rowGap="s32" padding="s16">
-            <ProductTypeTable />
-            <Divider />
-            <ProductSubTypeTable />
-          </Box>
-          <SettingsFooter handleSave={handleSave} zIndex={1} />
-        </form>
-      </FormProvider>
+      {isLoading ? (
+        <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
+          <Loader />
+        </Box>
+      ) : (
+        <FormProvider {...methods}>
+          <form>
+            <Box display="flex" flexDirection="column" rowGap="s32" padding="s16">
+              <ProductTypeTable />
+              <Divider />
+              <ProductSubTypeTable />
+            </Box>
+            <SettingsFooter handleSave={handleSave} zIndex={1} />
+          </form>
+        </FormProvider>
+      )}
     </Box>
   );
 };

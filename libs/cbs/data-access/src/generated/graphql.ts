@@ -820,6 +820,7 @@ export type AllTransactionResult = {
   totalDebit?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;
   transactionMode?: Maybe<Scalars['String']>;
+  transactionTime?: Maybe<Scalars['String']>;
   txnType?: Maybe<AllTransactionType>;
 };
 
@@ -1421,6 +1422,7 @@ export type BankGlBalanceEntry = {
   bankId?: Maybe<Scalars['String']>;
   bankName?: Maybe<Scalars['String']>;
   closingBalance?: Maybe<Scalars['String']>;
+  ledgerId?: Maybe<Scalars['String']>;
 };
 
 export type BankGlBalanceFilter = {
@@ -2015,6 +2017,7 @@ export type CashInTransitInput = {
   amount?: InputMaybe<Scalars['String']>;
   collectorName?: InputMaybe<Scalars['String']>;
   denomination?: InputMaybe<Array<InputMaybe<Denomination>>>;
+  note?: InputMaybe<Scalars['String']>;
   receiverServiceCentre?: InputMaybe<Scalars['String']>;
   senderServiceCentre?: InputMaybe<Scalars['String']>;
   senderTeller?: InputMaybe<Scalars['String']>;
@@ -5509,6 +5512,10 @@ export type GlBalanceFilter = {
   amount?: InputMaybe<MinMaxFilter>;
 };
 
+export type GlReportSummary = {
+  openingBalance?: Maybe<Scalars['String']>;
+};
+
 export type GlStatementFilter = {
   amount?: InputMaybe<MinMaxFilter>;
   bank?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -5518,6 +5525,7 @@ export type GlStatementFilter = {
 export type GenderLedgerReportResult = {
   data?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
   error?: Maybe<QueryError>;
+  summary?: Maybe<GlReportSummary>;
 };
 
 export type GeneralBranchSettingsMutation = {
@@ -6596,8 +6604,11 @@ export type JournalChartsOfAccount = {
 
 export type JournalVoucher = {
   amount?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
+  note?: Maybe<Scalars['String']>;
   reference?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;
@@ -13910,6 +13921,7 @@ export type TellerTransferInput = {
   denominations?: InputMaybe<Array<Denomination>>;
   destBranch?: InputMaybe<Scalars['String']>;
   destTellerID?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
   srcBranch?: InputMaybe<Scalars['String']>;
   srcTellerID?: InputMaybe<Scalars['String']>;
   transferMode?: InputMaybe<CashTransferMode>;

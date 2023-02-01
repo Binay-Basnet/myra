@@ -48,7 +48,7 @@ export const LedgerTable = () => {
   const accountListData = accountList?.settings?.chartsOfAccount?.ledgersForJVPosting?.edges;
 
   return (
-    <FormSection header="My Ledger" subHeader="Select Source Ledger & account." templateColumns={1}>
+    <FormSection header="My Ledger" subHeader="Select Source Ledger." templateColumns={1}>
       <Box display="flex" flexDir="column" gap="s12">
         <FormEditableTable<JournalVouchersTableType>
           name="selfEntries"
