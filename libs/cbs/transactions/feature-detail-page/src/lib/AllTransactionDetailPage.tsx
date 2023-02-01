@@ -1,13 +1,12 @@
-import { IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, DetailCardContent, DetailsCard, Divider, Icon, IconButton, PathBar } from '@myra-ui';
+import { Box, DetailCardContent, DetailsCard, Text } from '@myra-ui';
 
 import { AllTransactionType, useGetAllTransactionsDetailQuery } from '@coop/cbs/data-access';
-import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
-import { GlTransaction, Note } from '../component';
+import { GlTransaction, Note, SideBar } from '../component';
 
 const ROUTESOBJTRANS = {
   [AllTransactionType.Deposit]: ROUTES.CBS_TRANS_DEPOSIT_DETAILS,
@@ -20,6 +19,7 @@ const ROUTESOBJTRANS = {
 const objKeys = Object.keys(ROUTESOBJTRANS);
 
 export const AllTransactionDetailPage = () => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const { id } = router.query;
@@ -30,40 +30,43 @@ export const AllTransactionDetailPage = () => {
   );
   const allTransactionsData = allTransactionsDetails?.transaction?.viewTransactionDetail?.data;
   const tableData = allTransactionsData?.glTransaction;
-  const { t } = useTranslation();
+
+  const summary = {
+    transactionId: allTransactionsData?.id,
+    transactionDate: allTransactionsData?.transactionDate,
+    amount: allTransactionsData?.amount,
+    profilePic: allTransactionsData?.member?.profilePicUrl,
+    name: allTransactionsData?.member?.name?.local,
+  };
 
   return (
     <Box bg="gray.100" minH="calc(100vh - 110px)">
-      <Box display="flex" flexDir="column" bg="white">
-        <PathBar
-          paths={[
-            { label: 'All Transactions List', link: '/cbs/transactions/all-transactions/list' },
-          ]}
-          button={
-            <IconButton
-              variant="ghost"
-              aria-label="close"
-              color="gray.500"
-              height="40px"
-              icon={<Icon as={IoClose} size="lg" />}
-              onClick={() => {
-                router.back();
-              }}
-            />
-          }
-        />
-        {/* <TransactionDetails detailPage="deposit" />
+      <Box
+        bg="gray.0"
+        w="320px"
+        position="fixed"
+        h="calc(100vh - 110px)"
+        borderRight="1px"
+        borderRightColor="border.layout"
+      >
+        <SideBar detailPage="allTxn" summary={summary} />
+      </Box>
+      {/* <TransactionDetails detailPage="deposit" />
         <PaymentDetails detailPage="deposit" />
         <OtherDetails
           branch={depositDetailData?.transactionBranch as string}
           teller={depositDetailData?.teller as string}
         /> */}
 
+      <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
+        <Text color="gray.800" fontWeight="SemiBold" fontSize="r3">
+          {t['transDetailOverview']}
+        </Text>
         <DetailsCard title={t['transDetailTransactionDetails']} hasThreeRows>
           {!objKeys.includes(allTransactionsData?.txnType as string) && (
             <DetailCardContent
               title={t['transDetailTransactionID']}
-              subtitle={allTransactionsData?.id}
+              subtitle={`#${allTransactionsData?.id}`}
             />
           )}
           {allTransactionsData?.txnType && objKeys.includes(allTransactionsData?.txnType) && (
@@ -79,22 +82,40 @@ export const AllTransactionDetailPage = () => {
               }
             />
           )}
+
           <DetailCardContent
-            title="Amount"
+            title="Transaction Date"
+            subtitle={localizedDate(allTransactionsData?.transactionDate)}
+          />
+          <DetailCardContent
+            title="Transaction Type"
+            subtitle={allTransactionsData?.txnType?.replace(/_/g, ' ')}
+          />
+          <DetailCardContent
+            title="Transaction Mode"
+            subtitle={allTransactionsData?.transactionMode}
+          />
+          <DetailCardContent
+            title="Transaction Amount"
             subtitle={amountConverter(allTransactionsData?.amount ?? 0)}
           />
+          <DetailCardContent title="Transaction Branch" subtitle={allTransactionsData?.branch} />
           <DetailCardContent title={t['transDetailStatus']} status />
-          <DetailCardContent title="Transaction Type" subtitle={allTransactionsData?.txnType} />
         </DetailsCard>
-        <Divider />
-        {allTransactionsData?.note && (
-          <Box>
-            {' '}
-            <Note note={allTransactionsData?.note} />
-          </Box>
-        )}
 
-        <Divider />
+        {allTransactionsData?.note && <Note note={allTransactionsData?.note} />}
+
+        <DetailsCard title={t['transDetailOtherDetails']} hasThreeRows>
+          <DetailCardContent title="Teller" subtitle={allTransactionsData?.branch} />
+          <DetailCardContent
+            title="Transaction Date"
+            subtitle={localizedDate(allTransactionsData?.transactionDate)}
+          />
+          <DetailCardContent
+            title="Transaction Service Center"
+            subtitle={allTransactionsData?.branch}
+          />
+        </DetailsCard>
 
         <GlTransaction
           totalDebit={String(amountConverter(allTransactionsData?.totalDebit ?? 0))}

@@ -32,12 +32,17 @@ type SidebarProps = {
     senderMember?: Member | null | undefined;
     reciepentMemberDetails?: Member | null | undefined;
   };
-  detailPage: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction' | 'loanRepayment';
+  detailPage:
+    | 'deposit'
+    | 'withdraw'
+    | 'accountTransfer'
+    | 'agentTransaction'
+    | 'loanRepayment'
+    | 'allTxn';
 };
 
 export const SideBar = ({ summary, detailPage }: SidebarProps) => {
   const router = useRouter();
-
   const { id } = router.query;
 
   return (
@@ -84,6 +89,22 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
       )}
 
       {detailPage === 'loanRepayment' && (
+        <>
+          <Summary detailPage={detailPage} summary={summary} />
+          <MemberInfo
+            memberId={summary?.memberId}
+            memberCode={summary?.code}
+            detailPage={detailPage}
+            name={summary?.name}
+            profilePic={summary?.profilePic ?? ''}
+            sourceAccount={summary?.sourceAccount ?? ''}
+            destinationName={summary?.destinationName ?? ' '}
+            destinationAccount={summary?.destinationAccount ?? ''}
+          />
+        </>
+      )}
+
+      {detailPage === 'allTxn' && (
         <>
           <Summary detailPage={detailPage} summary={summary} />
           <MemberInfo
