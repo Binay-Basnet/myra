@@ -37,10 +37,10 @@ export const COAListView = () => {
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
-      {
-        header: t['settingsCoaTableAccountCode'],
-        accessorFn: (row) => row?.node?.accountCode,
-      },
+      // {
+      //   header: t['settingsCoaTableAccountCode'],
+      //   accessorFn: (row) => row?.node?.accountCode,
+      // },
       {
         header: t['settingsCoaTableAccountName'],
         accessorFn: (row) => row?.node?.accountName?.local,

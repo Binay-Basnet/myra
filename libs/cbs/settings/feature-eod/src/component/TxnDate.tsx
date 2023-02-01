@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-import { asyncToast, Box, Button, Grid, GridItem, Text } from '@myra-ui';
+import { asyncToast, Box, Button, Grid, GridItem, Loader, Text } from '@myra-ui';
 
 import {
   SetupMutation,
@@ -30,7 +30,7 @@ export const TxnDate = () => {
   const hideButton = endOfDayData?.transaction?.endOfDayDate?.isInitialized;
   const { mutateAsync } = useEodDateSetupMutation();
 
-  const { data } = useGetEodExceptionsQuery();
+  const { data, isLoading } = useGetEodExceptionsQuery();
 
   const eodSeed = data?.settings?.general?.setup?.eodSeed;
 
@@ -60,6 +60,14 @@ export const TxnDate = () => {
       },
     });
   };
+
+  if (isLoading) {
+    return (
+      <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
+        <Loader />
+      </Box>
+    );
+  }
   return (
     <FormProvider {...methods}>
       <Box p="s16">
