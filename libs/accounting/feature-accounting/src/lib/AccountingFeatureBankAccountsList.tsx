@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetBankAccountListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const AccountingFeatureBankAccountsList = () => {
   const { t } = useTranslation();
@@ -41,7 +41,10 @@ export const AccountingFeatureBankAccountsList = () => {
 
       {
         header: t['bankAccountsBankBalance'],
-        accessorFn: (row) => row?.node?.balance,
+        accessorFn: (row) =>
+          row?.node?.balance
+            ? `${row?.node?.balanceType}. ${amountConverter(row?.node?.balance)}`
+            : '0',
       },
       {
         id: '_actions',

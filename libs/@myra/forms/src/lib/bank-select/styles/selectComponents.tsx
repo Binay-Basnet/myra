@@ -2,8 +2,6 @@ import { IoChevronDownSharp, IoSearch } from 'react-icons/io5';
 import { Box, Icon, Text } from '@chakra-ui/react';
 import { chakraComponents, GroupBase, SelectComponentsConfig } from 'chakra-react-select';
 
-import { amountConverter } from '@coop/shared/utils';
-
 export interface Option {
   label: string | number;
   value: string | number;
@@ -64,7 +62,7 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
 
         <Box>
           <Text align="right" fontSize="s3" fontWeight={600} color="primary.500">
-            {amountConverter(data.bankInfo.balance)}
+            {data.bankInfo.balance}
           </Text>
           <Text
             align="right"

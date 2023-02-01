@@ -1188,6 +1188,7 @@ export type BankAccount = {
   accountNo?: Maybe<Scalars['String']>;
   accountType?: Maybe<AccountingBankAccountType>;
   balance?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   bankId?: Maybe<Scalars['String']>;
   bankName?: Maybe<Scalars['String']>;
   branchId?: Maybe<Scalars['String']>;
@@ -1255,6 +1256,7 @@ export type BankAccountQueryDetailsArgs = {
 };
 
 export type BankAccountQueryListArgs = {
+  currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<BankAccountFilter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -1413,6 +1415,7 @@ export type BankDepositData = {
 
 export type BankGlBalanceEntry = {
   accountNo?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   bankAccountName?: Maybe<Scalars['String']>;
   bankDisplayName?: Maybe<Scalars['String']>;
   bankId?: Maybe<Scalars['String']>;
@@ -2920,6 +2923,8 @@ export type CooperativeBodDetails = {
 };
 
 export type CooperativeBasicMinInfo = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberJoined?: Maybe<Scalars['Localized']>;
   memberName?: Maybe<Scalars['String']>;
@@ -3001,6 +3006,8 @@ export type CooperativeUnionBodDetails = {
 };
 
 export type CooperativeUnionBasicMinInfo = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberJoined?: Maybe<Scalars['Localized']>;
   memberName?: Maybe<Scalars['String']>;
@@ -4039,8 +4046,10 @@ export type DepositRecord = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
   depositedBy?: Maybe<DepositedBy>;
+  depositedOther?: Maybe<Scalars['String']>;
   fine?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -5500,6 +5509,10 @@ export type GlBalanceFilter = {
   amount?: InputMaybe<MinMaxFilter>;
 };
 
+export type GlReportSummary = {
+  openingBalance?: Maybe<Scalars['String']>;
+};
+
 export type GlStatementFilter = {
   amount?: InputMaybe<MinMaxFilter>;
   bank?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -5509,6 +5522,7 @@ export type GlStatementFilter = {
 export type GenderLedgerReportResult = {
   data?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
   error?: Maybe<QueryError>;
+  summary?: Maybe<GlReportSummary>;
 };
 
 export type GeneralBranchSettingsMutation = {
@@ -5761,6 +5775,8 @@ export type IndFamilyMemberDetails = {
 export type IndividualBasicMinInfo = {
   address?: Maybe<Scalars['Localized']>;
   addressId?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   documents?: Maybe<Array<Maybe<MemberDocumentDetails>>>;
   email?: Maybe<Scalars['String']>;
@@ -5938,6 +5954,8 @@ export type InstitutionAccountOperatoionsDetails = {
 };
 
 export type InstitutionBasicMinInfo = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberJoined?: Maybe<Scalars['Localized']>;
   memberName?: Maybe<Scalars['String']>;
@@ -6683,6 +6701,7 @@ export type JournalVoucherQueryViewJournalVoucherDetailArgs = {
 };
 
 export type JournalVoucherRecord = {
+  createdAt?: Maybe<Scalars['Localized']>;
   creatorId?: Maybe<Scalars['ID']>;
   creatorName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
@@ -9914,6 +9933,7 @@ export type LoanRepaymentMethod = typeof LoanRepaymentMethod[keyof typeof LoanRe
 export type LoanRepaymentRecord = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
   installmentNo?: Maybe<Scalars['String']>;
   interestAmount?: Maybe<Scalars['String']>;
@@ -12864,6 +12884,7 @@ export type ServiceCentreCashTransferActivity = {
 
 export type ServiceCentreCashTransferInput = {
   branchEntries?: InputMaybe<Array<InputMaybe<CashTransferServiceCentreEntry>>>;
+  note?: InputMaybe<Scalars['String']>;
   selfEntries?: InputMaybe<Array<InputMaybe<CashTransferSelfEntry>>>;
 };
 
@@ -13275,6 +13296,7 @@ export type ShareRegister = {
   accountId?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['Int']>;
   bankId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Localized']>;
   credit?: Maybe<Scalars['Int']>;
   debit?: Maybe<Scalars['Int']>;
   endNumber: Scalars['Int'];
@@ -14221,6 +14243,7 @@ export type TransactionTypeFilter =
   typeof TransactionTypeFilter[keyof typeof TransactionTypeFilter];
 export type TransferData = {
   amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
   fine?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
@@ -14710,6 +14733,7 @@ export type WithdrawRecord = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
   fine?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -18290,6 +18314,7 @@ export type GetBankAccountListQuery = {
             accountType?: AccountingBankAccountType | null;
             accountNo?: string | null;
             balance?: string | null;
+            balanceType?: BalanceType | null;
             branchName?: string | null;
           } | null;
         } | null> | null;
@@ -32521,6 +32546,7 @@ export const GetBankAccountListDocument = `
             accountType
             accountNo
             balance
+            balanceType
             branchName
           }
         }
