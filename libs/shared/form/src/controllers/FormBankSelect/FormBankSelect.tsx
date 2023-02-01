@@ -9,7 +9,7 @@ import {
   Filter_Mode,
   useGetBankAccountListQuery,
 } from '@coop/cbs/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { debitCreditConverter, getRouterQuery } from '@coop/shared/utils';
 
 interface Option {
   label?: string;
@@ -57,7 +57,10 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
           accountNo: item?.node?.accountNo as string,
           displayName: item?.node?.displayName as string,
           accountType: item?.node?.accountType?.replace(/_/gi, ' ').toLowerCase() ?? '',
-          balance: item?.node?.balance as string,
+          balance: debitCreditConverter(
+            item?.node?.balance as string,
+            item?.node?.balanceType as string
+          ),
           branchName: item?.node?.branchName as string,
         },
       })),
@@ -80,9 +83,9 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
             }
           }}
           onInputChange={debounce((query) => {
-            if (query) {
-              setSearchQuery(query);
-            }
+            // if (query) {
+            setSearchQuery(query);
+            // }
           }, 800)}
           options={bankOptions}
           filterOption={() => true}

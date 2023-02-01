@@ -125,6 +125,9 @@ export const AccountOpenNew = () => {
     taxClearance: [],
   });
   const { t } = useTranslation();
+
+  const router = useRouter();
+
   const [triggerQuery, setTriggerQuery] = useState(false);
   const [showCriteria, setShowCriteria] = useState(false);
   const [triggerProductQuery, setTriggerProductQuery] = useState(false);
@@ -132,8 +135,10 @@ export const AccountOpenNew = () => {
   const [newId, setNewId] = useState('');
 
   useEffect(() => {
-    getNewId?.mutateAsync({ idType: Id_Type?.Account }).then((res) => setNewId(res?.newId));
-  }, []);
+    if (router?.asPath?.includes('/add') && !newId) {
+      getNewId?.mutateAsync({ idType: Id_Type?.Account }).then((res) => setNewId(res?.newId));
+    }
+  }, [router?.asPath]);
 
   // const [mode, setMode] = useState<number>(0); // 0: form, 1: payment
 
@@ -150,7 +155,6 @@ export const AccountOpenNew = () => {
   });
   const { getValues, watch, reset, setValue } = methods;
   const memberId = watch('memberId');
-  const router = useRouter();
   const redirectPath = router.query['redirect'];
 
   const routeId = router?.query?.['id'] as string;
@@ -516,7 +520,7 @@ export const AccountOpenNew = () => {
                   display={mode === '0' ? 'flex' : 'none'}
                   flexDirection="column"
                   gap="s32"
-                  p="s20"
+                  p="s16"
                   w="100%"
                 >
                   <FormMemberSelect
@@ -629,7 +633,7 @@ export const AccountOpenNew = () => {
                   display={mode === '1' ? 'flex' : 'none'}
                   flexDirection="column"
                   gap="s32"
-                  p="s20"
+                  p="s16"
                   w="100%"
                 >
                   <Payment mode={Number(mode)} totalAmount={totalDeposit} />

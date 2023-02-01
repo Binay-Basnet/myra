@@ -17,7 +17,13 @@ type SummaryProps = {
     loanAccId?: string | undefined | null;
     repaymentDate?: Record<'local' | 'en' | 'np', string> | undefined | null;
   };
-  detailPage?: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction' | 'loanRepayment';
+  detailPage?:
+    | 'deposit'
+    | 'withdraw'
+    | 'accountTransfer'
+    | 'agentTransaction'
+    | 'loanRepayment'
+    | 'allTxn';
 };
 
 const agentSlug = {
@@ -74,7 +80,7 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
           </Box>
         )}
 
-        {detailPage === 'agentTransaction' && (
+        {(detailPage === 'agentTransaction' || detailPage === 'allTxn') && (
           <>
             <Box w="100%" display="flex" flexDirection="column">
               <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-70">

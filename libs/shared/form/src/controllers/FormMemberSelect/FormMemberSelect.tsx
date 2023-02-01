@@ -125,9 +125,9 @@ export const FormMemberSelect = ({
             }
           }}
           onInputChange={debounce((id) => {
-            if (id) {
-              setIDMember(id);
-            }
+            // if (id) {
+            setIDMember(id);
+            // }
           }, 800)}
           options={memberOptions}
           filterOption={() => true}
