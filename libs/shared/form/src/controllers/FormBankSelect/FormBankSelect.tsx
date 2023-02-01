@@ -83,9 +83,9 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
             }
           }}
           onInputChange={debounce((query) => {
-            if (query) {
-              setSearchQuery(query);
-            }
+            // if (query) {
+            setSearchQuery(query);
+            // }
           }, 800)}
           options={bankOptions}
           filterOption={() => true}
