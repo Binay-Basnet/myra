@@ -17,6 +17,7 @@ import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedText, ROUTES } from '@coop/cbs/utils';
 import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
+import { amountConverter, debitCreditConverter } from '@coop/shared/utils';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
   branchId: { label: string; value: string }[];
@@ -25,7 +26,7 @@ type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId
   };
 };
 
-export type TrialBalance = Record<string, { Dr: string; Cr: string; Total: string }>;
+export type TrialBalance = Record<string, { Dr: string; Cr: string; Total: string; Type: string }>;
 
 export type TrialSheetReportDataEntry = {
   balance?: TrialBalance;
@@ -308,23 +309,43 @@ export const CoaTotalTable = ({ totals }: ICoaTotalTableProps) => {
           columns: [
             {
               header: 'Debit (Dr.)',
-              accessorFn: (row) => (header ? row?.[header]?.Dr || '0.00' : '0.00'),
+              accessorFn: (row) => row?.[header || '']?.Dr,
+              cell: (props) =>
+                header ? amountConverter(props?.row?.original?.[header]?.Dr || '0.00') : '0.00',
               meta: {
                 isNumeric: true,
               },
             },
             {
               header: 'Credit (Cr.)',
-              accessorFn: (row) => (header ? row?.[header]?.Cr || '0.00' : '0.00'),
+              accessorFn: (row) => row?.[header || '']?.Cr,
+              cell: (props) =>
+                header ? amountConverter(props?.row?.original?.[header]?.Cr || '0.00') : '0.00',
               meta: {
                 isNumeric: true,
               },
             },
             {
               header: 'Balance',
-              accessorFn: (row) => (header ? row?.[header]?.Total || '0.00' : '0.00'),
+              accessorFn: (row) => row?.[header || '']?.Total,
+
+              cell: (props) =>
+                header
+                  ? debitCreditConverter(
+                      props.row.original?.[header]?.Total || '0.00',
+                      props.row.original?.[header]?.Type
+                    )
+                  : '0.00',
               meta: {
                 isNumeric: true,
+              },
+            },
+            {
+              header: '',
+              id: 'cr',
+              accessorFn: (row) => (header ? row?.[header]?.Type || '-' : '-'),
+              meta: {
+                width: '10px',
               },
             },
           ],
@@ -400,47 +421,76 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
     },
   ];
 
+  console.log(headers);
+
   const columns: Column<TrialSheetReportDataEntry>[] = [
     ...baseColumn,
-    ...headers.map(
-      (header) =>
-        ({
-          header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
-          accessorKey: 'balance',
-          columns: [
-            {
-              header: 'Debit (Dr.)',
-              accessorFn: (row) => (header ? row.balance?.[header]?.Dr || '0.00' : '0.00'),
-              footer: () => total?.[header || '']?.Dr || '0.00',
-              meta: {
-                isNumeric: true,
-              },
+    ...headers.map((header) => {
+      console.log(header);
+      return {
+        header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
+        accessorKey: 'balance',
+        columns: [
+          {
+            header: 'Debit (Dr.)',
+            accessorFn: (row) => row?.balance,
+            cell: (props) =>
+              amountConverter(props.row?.original?.balance?.[header || '']?.Dr || '0.00'),
+
+            footer: () => amountConverter(total?.[header || '']?.Dr || '0.00'),
+            meta: {
+              isNumeric: true,
             },
-            {
-              header: 'Credit (Cr.)',
-              accessorFn: (row) => (header ? row.balance?.[header]?.Cr || '0.00' : '0.00'),
-              footer: () => total?.[header || '']?.Cr || '0.00',
-              meta: {
-                isNumeric: true,
-              },
+          },
+          {
+            header: 'Credit (Cr.)',
+            accessorFn: (row) => row?.balance,
+            cell: (props) =>
+              amountConverter(props.row?.original?.balance?.[header || '']?.Cr || '0.00'),
+            footer: () => amountConverter(total?.[header || '']?.Cr || '0.00'),
+            meta: {
+              isNumeric: true,
             },
-            {
-              header: 'Balance',
-              accessorFn: (row) => (header ? row.balance?.[header]?.Total || '0.00' : '0.00'),
-              footer: () => total?.[header || '']?.Total || '0.00',
-              meta: {
-                isNumeric: true,
-              },
+          },
+          {
+            header: 'Balance',
+            accessorFn: (row) => row?.balance,
+            cell: (props) =>
+              header
+                ? debitCreditConverter(
+                    props.row?.original?.balance?.[header]?.Total || '0.00',
+                    props.row?.original?.balance?.[header]?.Type || ''
+                  )
+                : '0.00',
+            footer: () =>
+              debitCreditConverter(
+                total?.[header || '']?.Total || '0.00',
+                total?.[header || '']?.Type || ''
+              ),
+            meta: {
+              isNumeric: true,
             },
-          ],
-        } as Column<TrialSheetReportDataEntry>)
-    ),
+          },
+          {
+            header: '',
+            id: 'cr',
+            accessorFn: (row) => (header ? row.balance?.[header]?.Type || '-' : '-'),
+            footer: () => total?.[header || '']?.Type || '-',
+            meta: {
+              width: '10px',
+            },
+          },
+        ],
+      } as Column<TrialSheetReportDataEntry>;
+    }),
   ];
 
   const tree = arrayToTree(
     data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
     ''
   );
+
+  console.log(tree);
 
   return (
     <Report.Table<TrialSheetReportDataEntry>
