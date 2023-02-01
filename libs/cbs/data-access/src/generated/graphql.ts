@@ -6753,6 +6753,7 @@ export type JournalVoucher = {
   branchName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
+  note?: Maybe<Scalars['String']>;
   reference?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;

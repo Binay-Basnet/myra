@@ -55567,6 +55567,18 @@
             "deprecationReason": null
           },
           {
+            "name": "note",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "reference",
             "description": null,
             "args": [],
