@@ -18,7 +18,13 @@ type MemberInfoProps = {
   recipientMemberId?: string | undefined | null;
   senderMember?: Member | null | undefined;
   reciepentMember?: Member | null | undefined;
-  detailPage?: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction' | 'loanRepayment';
+  detailPage?:
+    | 'deposit'
+    | 'withdraw'
+    | 'accountTransfer'
+    | 'agentTransaction'
+    | 'loanRepayment'
+    | 'allTxn';
 };
 
 export const MemberInfo = ({

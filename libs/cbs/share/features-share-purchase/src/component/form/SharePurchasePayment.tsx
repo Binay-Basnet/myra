@@ -160,10 +160,7 @@ export const SharePurchasePayment = ({
       {paymentModes === SharePaymentMode.BankVoucherOrCheque && (
         <FormSection divider={false}>
           <GridItem colSpan={3}>
-            <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
-              {t['sharePurchaseNote']}
-            </Text>
-            <FormTextArea name="bankVoucher.note" />
+            <FormTextArea label="Note" name="bankVoucher.note" />
           </GridItem>
         </FormSection>
       )}
@@ -171,10 +168,7 @@ export const SharePurchasePayment = ({
       {paymentModes === SharePaymentMode.Account && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
-              {t['sharePurchaseNote']}
-            </Text>
-            <FormTextArea name="account.note" />
+            <FormTextArea label="Note" name="account.note" />
           </GridItem>
         </FormSection>
       )}
@@ -182,10 +176,7 @@ export const SharePurchasePayment = ({
       {paymentModes === SharePaymentMode.Cash && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
-              {t['sharePurchaseNote']}
-            </Text>
-            <FormTextArea name="cash.note" />
+            <FormTextArea label="Note" name="cash.note" />
           </GridItem>
         </FormSection>
       )}

@@ -27,6 +27,7 @@ const memberTypeSlug = {
 
 export const MemberListPage = () => {
   const { t } = useTranslation();
+
   const [ID, setID] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const { mutateAsync } = useDeleteDraftMutation();
