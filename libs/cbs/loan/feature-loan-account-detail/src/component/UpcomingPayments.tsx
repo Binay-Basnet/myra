@@ -4,6 +4,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import { Button, DetailsCard, Modal, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
+import { useAppSelector } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -25,6 +26,8 @@ interface IPaymentProps {
 
 export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
   const { isOpen, onClose, onToggle } = useDisclosure();
+  const preference = useAppSelector((state) => state.auth?.preference);
+
   const paymentListWithIndex =
     paymentList?.map((payment, index) => ({
       index: index + 1,
@@ -46,7 +49,11 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
       {
         header: 'Date',
         accessorKey: 'installmentDate',
-        accessorFn: (row) => localizedDate(row?.installmentDate),
+
+        cell: (props) =>
+          localizedDate(
+            props?.getValue() as Record<'local' | 'en' | 'np', string> | null | undefined
+          ),
       },
       {
         header: 'Installment No.',
@@ -77,7 +84,7 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
           ),
       },
     ],
-    []
+    [preference]
   );
 
   return (
