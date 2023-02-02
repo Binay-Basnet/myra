@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -17,25 +16,12 @@ export const SavingReportInputs = () => {
   const memberId = methods.watch('memberId');
 
   //  get redirect id from url
-  const redirectMemberId = router.query['memberId'];
   const redirectAccountId = router.query['accountId'];
-
-  useEffect(() => {
-    if (redirectMemberId) {
-      methods.setValue('memberId', String(redirectMemberId));
-    }
-  }, [redirectMemberId]);
-
-  useEffect(() => {
-    if (redirectAccountId && memberId) {
-      methods.setValue('accountId', String(redirectAccountId));
-    }
-  }, [memberId, redirectAccountId]);
 
   return (
     <>
       <GridItem colSpan={2}>
-        <FormMemberSelect name="memberId" label="Member Search" isDisabled={!!redirectMemberId} />
+        <FormMemberSelect name="memberId" label="Member Search" />
       </GridItem>
       <GridItem colSpan={1}>
         <FormAccountSelect

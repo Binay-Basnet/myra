@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { Box } from '@myra-ui';
 
@@ -16,6 +17,7 @@ import { amountConverter } from '@coop/shared/utils';
 
 export const LoanStatementReport = () => {
   const [filters, setFilters] = useState<LoanStatementReportSettings | null>(null);
+  const router = useRouter();
 
   const { data, isFetching } = useGetLoanStatementReportQuery(
     {
@@ -24,6 +26,9 @@ export const LoanStatementReport = () => {
     { enabled: !!filters }
   );
 
+  const memberId = router.query?.['memberId'];
+  const loanAccountId = router.query?.['loanAccountId'];
+
   const loanData = data?.report?.loanReport?.loanStatementReport?.statement;
   const loanReport = loanData && 'loanStatement' in loanData ? loanData.loanStatement : [];
   const loanMember = data?.report?.loanReport?.loanStatementReport?.member;
@@ -31,7 +36,10 @@ export const LoanStatementReport = () => {
     loanData && 'loanStatement' in loanData ? (loanData.meta as LoanAccReportDetails) : null;
   return (
     <Report
-      defaultFilters={null}
+      defaultFilters={{
+        memberId: memberId as string,
+        loanAccountId: loanAccountId as string,
+      }}
       data={loanReport as LoanStatement[]}
       filters={filters}
       setFilters={setFilters}

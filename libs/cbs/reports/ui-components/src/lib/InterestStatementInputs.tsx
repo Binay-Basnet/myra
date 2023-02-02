@@ -30,17 +30,17 @@ export const InterestStatementInputs = () => {
     }
   }, [redirectMemberId, router]);
 
-  useEffect(() => {
-    if (redirectAccountId && memberId) {
-      methods.setValue('accountId', String(redirectAccountId));
-    }
-  }, [memberId, redirectAccountId, router]);
-  ('');
+  // useEffect(() => {
+  //   if (redirectAccountId && memberId) {
+  //     methods.setValue('accountId', String(redirectAccountId));
+  //   }
+  // }, [memberId, redirectAccountId, router]);
+  // ('');
 
   return (
     <>
       <GridItem colSpan={2}>
-        <FormMemberSelect name="memberId" label="Member Search" isDisabled={!!redirectMemberId} />
+        <FormMemberSelect name="memberId" label="Member Search" />
       </GridItem>
       <GridItem colSpan={1}>
         <FormAccountSelect
