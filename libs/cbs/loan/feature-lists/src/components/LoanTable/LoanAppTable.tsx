@@ -6,6 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanAppTable {
   data: GetLoanListQuery | undefined;
@@ -75,7 +76,7 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
       },
       {
         header: 'Applied Amount',
-        accessorFn: (row) => row?.node?.appliedLoanAmount,
+        accessorFn: (row) => amountConverter(row?.node?.appliedLoanAmount as string),
       },
       {
         id: '_actions',

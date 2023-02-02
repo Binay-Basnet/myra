@@ -21,6 +21,7 @@ export interface ModalProps extends Omit<ChakraModalProps, 'isOpen' | 'onClose'>
   onClose: () => void;
   children: React.ReactNode;
   title?: React.ReactNode | string;
+  headerButton?: React.ReactNode;
   primaryButtonLabel?: string;
   secondaryButtonLabel?: string;
   secondaryButtonVariant?: 'ghost' | 'outline' | 'solid';
@@ -45,6 +46,7 @@ export const Modal = (props: ModalProps) => {
     onClose,
     children,
     title,
+    headerButton,
     primaryButtonLabel,
     secondaryButtonLabel,
     primaryButtonHandler,
@@ -82,8 +84,11 @@ export const Modal = (props: ModalProps) => {
             minH="50px"
             display="flex"
             alignItems="center"
+            justifyContent="space-between"
           >
             <Text variant="pageHeader">{t[typeof title === 'string' ? title : ''] ?? title}</Text>
+
+            <Box pr="s40">{headerButton}</Box>
           </Box>
         )}
         {hasCloseBtn && (

@@ -76,15 +76,15 @@ export const useLoanAccountDetailHooks = () => {
   const accountSummary = [
     {
       title: 'Total Principal Paid',
-      value: amountConverter(overviewData?.totalPrincipalPaid ?? 0),
+      value: amountConverter(overviewData?.totalPrincipalPaid || 0),
     },
     {
       title: 'Total Interest Paid',
-      value: amountConverter(overviewData?.totalInterestPaid ?? 0),
+      value: amountConverter(overviewData?.totalInterestPaid || 0),
     },
     {
       title: 'Remaining Principal Amount',
-      value: amountConverter(overviewData?.totalRemainingPrincipal ?? 0),
+      value: amountConverter(overviewData?.totalRemainingPrincipal || 0),
     },
   ];
 

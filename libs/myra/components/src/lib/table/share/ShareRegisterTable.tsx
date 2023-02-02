@@ -11,7 +11,7 @@ import {
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { TableListPageHeader } from '@coop/myra/components';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareRegisterTable = () => {
   const { t } = useTranslation();
@@ -114,8 +114,8 @@ export const ShareRegisterTable = () => {
       },
       {
         header: t['shareRegisterTableNameBalance'],
-        accessorFn: (row) => row?.node?.shareAmount,
-        cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
+        accessorFn: (row) => amountConverter(row?.node?.shareAmount as string),
+        // cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
       },
       {
         id: '_actions',

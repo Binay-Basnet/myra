@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
@@ -32,7 +32,7 @@ import {
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
-import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
+import { exportVisibleTableToExcel, localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter, featureCode } from '@coop/shared/utils';
 
@@ -72,6 +72,8 @@ export const LoanRepayment = () => {
 
   const [triggerLoanQuery, setTriggerLoanQuery] = useState(false);
   const { mutateAsync } = useSetLoanRepaymentMutation();
+
+  const tableRef = useRef<HTMLTableElement>(null);
 
   const router = useRouter();
 
@@ -308,6 +310,19 @@ export const LoanRepayment = () => {
                       scrollBehavior="inside"
                       blockScrollOnMount
                       width="4xl"
+                      headerButton={
+                        <Button
+                          variant="ghost"
+                          onClick={() =>
+                            exportVisibleTableToExcel(
+                              `${loanData?.generalInformation?.loanName} - Payment Schedule`,
+                              tableRef
+                            )
+                          }
+                        >
+                          Export
+                        </Button>
+                      }
                     >
                       <LoanPaymentScheduleTable
                         data={loanPaymentSchedule as LoanInstallment[]}
@@ -315,6 +330,7 @@ export const LoanRepayment = () => {
                         total={loanData?.paymentSchedule?.total as string}
                         totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
                         totalPrincipal={loanData?.paymentSchedule?.totalPrincipal ?? 0}
+                        ref={tableRef}
                       />
                     </Modal>
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">

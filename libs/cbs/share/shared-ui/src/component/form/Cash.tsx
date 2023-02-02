@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import { FormAmountInput, FormEditableTable, FormSwitch } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type PaymentTableType = {
   value: string;
@@ -136,9 +136,9 @@ export const Cash = ({
               flexDirection="column"
               gap="s8"
             >
-              <Text>{denominationTotal}</Text>
-              <Text>{totalCashPaid ? returnAmount.toFixed(2) : 0}</Text>
-              <Text>{totalAmount.toFixed(2) || 0}</Text>
+              <Text>{amountConverter(denominationTotal)}</Text>
+              <Text>{amountConverter(totalCashPaid ? returnAmount : 0)}</Text>
+              <Text>{amountConverter(totalAmount || 0)}</Text>
             </Box>
           </Box>
         </GridItem>
@@ -176,9 +176,9 @@ export const Cash = ({
               flexDirection="column"
               gap="s8"
             >
-              <Text>{cashPaid || 0}</Text>
-              <Text>{cashReturn.toFixed(2) || 0}</Text>
-              <Text>{(totalCashPaid - returnAmount).toFixed(2) || 0}</Text>
+              <Text>{amountConverter(cashPaid || 0)}</Text>
+              <Text>{amountConverter(cashReturn || 0)}</Text>
+              <Text>{amountConverter(totalCashPaid - returnAmount || 0)}</Text>
             </Box>
           </Box>
         </GridItem>

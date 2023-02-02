@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 
 import {
-  AllTransactionType,
   useAgentTransactionDetailQuery,
   useGetAgentDetailQuery,
   useGetAllTransactionsDetailQuery,
@@ -15,7 +14,7 @@ import { localizedText } from '@coop/cbs/utils';
 export const useTransactionDetailHooks = () => {
   const router = useRouter();
 
-  const { id, date, txnType } = router.query;
+  const { id, date } = router.query;
 
   // deposit
   const { data: deposit } = useTransactionDepositDetailQuery(
@@ -77,7 +76,7 @@ export const useTransactionDetailHooks = () => {
   );
 
   const { data: allTransactionsDetails } = useGetAllTransactionsDetailQuery(
-    { id: id as string, txnType: txnType as AllTransactionType },
+    { id: id as string },
     { staleTime: 0, enabled: !!id && router?.asPath?.includes('/all-transactions/') }
   );
   const allTransactionsData = allTransactionsDetails?.transaction?.viewTransactionDetail?.data;

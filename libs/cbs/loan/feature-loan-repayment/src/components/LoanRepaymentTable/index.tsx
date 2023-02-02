@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { Chips, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -15,13 +15,10 @@ interface ILoanPaymentScheduleTableProps {
   totalPrincipal: string | number;
 }
 
-export const LoanPaymentScheduleTable = ({
-  data,
-  total,
-  totalInterest,
-  totalPrincipal,
-  nextInstallmentNumber,
-}: ILoanPaymentScheduleTableProps) => {
+export const LoanPaymentScheduleTable = React.forwardRef<
+  HTMLTableElement,
+  ILoanPaymentScheduleTableProps
+>(({ data, total, totalInterest, totalPrincipal, nextInstallmentNumber }, ref) => {
   const columns = useMemo<Column<LoanInstallment>[]>(
     () => [
       {
@@ -63,6 +60,7 @@ export const LoanPaymentScheduleTable = ({
         header: 'Payment',
         accessorKey: 'payment',
         cell: (props) => amountConverter(props.getValue() as string),
+        footer: () => amountConverter(total) || '-',
 
         meta: {
           isNumeric: true,
@@ -74,7 +72,6 @@ export const LoanPaymentScheduleTable = ({
 
         accessorKey: 'remainingPrincipal',
         cell: (props) => amountConverter(props.getValue() as string),
-        footer: () => amountConverter(total) || '-',
 
         meta: {
           isNumeric: true,
@@ -116,6 +113,14 @@ export const LoanPaymentScheduleTable = ({
     [nextInstallmentNumber, total]
   );
   return (
-    <Table size="report" variant="report" isStatic showFooter data={data ?? []} columns={columns} />
+    <Table
+      size="report"
+      variant="report"
+      isStatic
+      showFooter
+      data={data ?? []}
+      columns={columns}
+      ref={ref}
+    />
   );
-};
+});
