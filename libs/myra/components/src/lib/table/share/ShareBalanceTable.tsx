@@ -7,7 +7,7 @@ import { Column, Table, TablePopover } from '@myra-ui/table';
 import { Filter_Mode, useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { TableListPageHeader } from '@coop/myra/components';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
   const router = useRouter();
@@ -62,8 +62,8 @@ export const ShareBalanceTable = () => {
       },
       {
         header: t['shareTableShareAmount'],
-        accessorFn: (row) => row?.node.amount,
-        cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
+        accessorFn: (row) => amountConverter(row?.node.amount),
+        // cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
         isNumeric: true,
       },
 

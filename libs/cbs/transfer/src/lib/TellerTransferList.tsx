@@ -12,7 +12,13 @@ import {
   useGetTellerTransactionListDataQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getRouterQuery,
+  getUrl,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { TellerTransferApproveModal } from '../components';
 
@@ -116,7 +122,7 @@ export const TellerTransferList = () => {
       {
         header: 'Amount',
 
-        accessorFn: (row) => row?.node?.amount,
+        accessorFn: (row) => amountConverter(row?.node?.amount as string),
         meta: {
           isNumeric: true,
         },

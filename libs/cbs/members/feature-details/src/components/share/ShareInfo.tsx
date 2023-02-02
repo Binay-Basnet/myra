@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Box, Grid, Text } from '@myra-ui';
 
 import { useGetMemberKymDetailsSharesQuery } from '@coop/cbs/data-access';
+import { amountConverter } from '@coop/shared/utils';
 
 export const ShareInfo = () => {
   const router = useRouter();
@@ -56,7 +57,7 @@ export const ShareInfo = () => {
           </Text>
           <Text fontSize="r3" fontWeight="600">
             {' '}
-            {memberShareDetails?.totalBalance}
+            {amountConverter(memberShareDetails?.totalBalance)}
           </Text>
         </Box>
       )}
