@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { Box } from '@myra-ui';
 
@@ -20,6 +21,7 @@ import { amountConverter } from '@coop/shared/utils';
 
 export const SavingStatementReport = () => {
   const [filters, setFilters] = useState<SavingStatementReportSettings | null>(null);
+  const router = useRouter();
 
   const { data, isFetching } = useGetSavingStatementQuery(
     {
@@ -29,6 +31,8 @@ export const SavingStatementReport = () => {
   );
 
   const savingMember = data?.report?.depositReport?.savingStatementReport?.member;
+  const memberId = router.query?.['memberId'];
+  const accountId = router.query?.['accountId'];
 
   const savingData = data?.report?.depositReport?.savingStatementReport?.statement;
   const savingReport =
@@ -40,6 +44,8 @@ export const SavingStatementReport = () => {
   return (
     <Report
       defaultFilters={{
+        memberId: memberId as string,
+        accountId: accountId as string,
         filter: {
           service: SavingServiceType.Charges,
           transactionType: SavingTransactionType.All,

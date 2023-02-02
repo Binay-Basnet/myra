@@ -36,6 +36,15 @@ export const FormMemberSelect = ({
   const router = useRouter();
 
   const memberId = watch(name);
+  const isDisabledCheck = useMemo(() => {
+    if (router?.asPath?.includes('/edit')) {
+      return true;
+    }
+    if (router?.query?.['memberId']) {
+      return true;
+    }
+    return false;
+  }, [router?.asPath]);
 
   const isFetchEnabled = useMemo(() => {
     if (router?.asPath?.includes('/edit')) {
@@ -115,6 +124,7 @@ export const FormMemberSelect = ({
           value={memberOptions?.find((option) => option.value === value)}
           label={label}
           isLoading={isFetching}
+          isDisabled={isDisabledCheck}
           placeholder={placeholder}
           onChange={(newValue: Option | Option[]) => {
             if (Array.isArray(newValue)) {
