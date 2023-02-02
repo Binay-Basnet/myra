@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
+import { AxiosError } from 'axios';
 
 import { getAPIUrl } from '@coop/shared/utils';
 
@@ -33,7 +34,6 @@ const schemaPath = getAPIUrl();
 
 export const useRefreshToken = (url: string) => {
   const replace = useReplace();
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const refreshTokenPromise = useCallback(() => {
@@ -59,17 +59,10 @@ export const useRefreshToken = (url: string) => {
         }
         throw new Error('Credentials are Expired!!');
       })
-      .catch(() => {
-        replace(
-          {
-            pathname: '/login',
-            query: {
-              redirect: router.asPath,
-            },
-          },
-          '/login'
-        );
-        throw new Error('Credentials are Expired!!');
+      .catch((e: AxiosError) => {
+        if (e.response?.status === 400) {
+          throw new Error('Credentials are Expired!!');
+        }
       });
   }, [dispatch, replace, url]);
 
