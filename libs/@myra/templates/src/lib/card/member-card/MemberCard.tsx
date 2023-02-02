@@ -182,7 +182,7 @@ export const MemberCard = ({
                             {memberDetails.name ?? '-'}
                           </Text>
                           <Text fontSize="s3" fontWeight="400" color="gray.800">
-                            {memberDetails.memberID ?? '-'}
+                            {memberDetails.code ?? '-'}
                           </Text>
                           <Text fontSize="s3" fontWeight="400" color="gray.800">
                             {memberMeta.join(' | ')}

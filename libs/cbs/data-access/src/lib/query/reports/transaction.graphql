@@ -227,10 +227,12 @@ query getServiceCenterBalanceReport($data: ServiceCenterBalanceFilter!) {
             ServiceCenterName
             todayCashBalance
             todayBankBalance
+            todaySavingBalance
             todayTotalBalance
             totalCashBalance
             totalBankBalance
             totalTotalBalance
+            totalSavingBalance
             depositToLiquidityRatio
           }
         }

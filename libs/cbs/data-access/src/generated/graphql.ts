@@ -23820,10 +23820,12 @@ export type GetServiceCenterBalanceReportQuery = {
             ServiceCenterName?: string | null;
             todayCashBalance?: string | null;
             todayBankBalance?: string | null;
+            todaySavingBalance?: string | null;
             todayTotalBalance?: string | null;
             totalCashBalance?: string | null;
             totalBankBalance?: string | null;
             totalTotalBalance?: string | null;
+            totalSavingBalance?: string | null;
             depositToLiquidityRatio?: string | null;
           } | null> | null;
         };
@@ -39636,10 +39638,12 @@ export const GetServiceCenterBalanceReportDocument = `
             ServiceCenterName
             todayCashBalance
             todayBankBalance
+            todaySavingBalance
             todayTotalBalance
             totalCashBalance
             totalBankBalance
             totalTotalBalance
+            totalSavingBalance
             depositToLiquidityRatio
           }
         }

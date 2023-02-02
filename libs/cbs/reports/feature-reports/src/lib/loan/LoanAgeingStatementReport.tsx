@@ -310,7 +310,7 @@ export const LoanAgingStatementsReport = () => {
               },
               {
                 header: 'Matured (Due)- Above 12 Month',
-                accessorKey: 'matured1To12Months',
+                accessorKey: 'maturedAbove12Months',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.maturedAbove12MonthsTotal || 0),
 
