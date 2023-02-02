@@ -1842,6 +1842,7 @@ export type CoaDetailsMeta = {
 };
 
 export type CoaDetailsMinOverview = {
+  balanceType?: Maybe<BalanceType>;
   closingBalance?: Maybe<Scalars['String']>;
   cr?: Maybe<Scalars['String']>;
   dr?: Maybe<Scalars['String']>;
@@ -1874,6 +1875,7 @@ export type CoaLeafNodeDetailView = {
 export type CoaLeafNodeDetails = {
   accountName?: Maybe<Scalars['Localized']>;
   accountType?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   closingBalance?: Maybe<Scalars['String']>;
   crAmount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
@@ -8681,6 +8683,7 @@ export type Language = typeof Language[keyof typeof Language];
 export type LedgerList = {
   accountCode?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   ledgerName?: Maybe<Scalars['String']>;

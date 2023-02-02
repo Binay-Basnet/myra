@@ -69,7 +69,12 @@ export const useInit = () => {
     };
 
     // next.js renders twice for dynamic pages since it takes time to fill dynamic fields such as [action]
-    if (asPath.includes('login') || asPath.includes('password-recovery') || asPath.includes('[')) {
+    if (!isReady) {
+      return;
+    }
+
+    if (asPath.includes('login') || asPath.includes('password-recovery')) {
+      setIsLoading(false);
       return;
     }
 
@@ -77,6 +82,8 @@ export const useInit = () => {
   }, [isReady]);
 
   useEffect(() => {
+    if (!isReady) return;
+
     if (hasDataReturned) {
       if (userData && preference && permissions && availableRoles && availableBranches) {
         updateAbility(ability, permissions as Partial<Record<string, string>>);
@@ -93,28 +100,26 @@ export const useInit = () => {
 
         setIsLoading(false);
       } else {
-        if (asPath.includes('password-recovery')) {
+        if (asPath.includes('password-recovery') || asPath.includes('login')) {
           setIsLoading(false);
           return;
         }
 
-        if (!asPath.includes('login')) {
-          replace(
-            {
-              pathname: '/login',
-              query: {
-                redirect: asPath,
-              },
+        replace(
+          {
+            pathname: '/login',
+            query: {
+              redirect: asPath,
             },
-            '/login'
-          ).then(() => {
-            dispatch(logout());
-            setIsLoading(false);
-          });
-        }
+          },
+          '/login'
+        ).then(() => {
+          dispatch(logout());
+          setIsLoading(false);
+        });
       }
     }
-  }, [dispatch, hasDataReturned, hasData, userData]);
+  }, [dispatch, hasDataReturned, hasData, userData, isReady]);
 
   return { isLoading };
 };

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { Box, GridItem } from '@myra-ui';
 
@@ -17,6 +18,8 @@ import { amountConverter, quantityConverter } from '@coop/shared/utils';
 
 export const ShareStatementReport = () => {
   const [filters, setFilters] = useState<ShareStatementReportSettings | null>(null);
+  const router = useRouter();
+  const memberId = router.query?.['memberId'];
 
   const { data, isFetching } = useGetShareStatementQuery(
     { data: filters as ShareStatementReportSettings },
@@ -40,7 +43,10 @@ export const ShareStatementReport = () => {
 
   return (
     <Report
-      defaultFilters={{ filter: ShareTransactionType.All }}
+      defaultFilters={{
+        memberId: memberId as string,
+        filter: ShareTransactionType.All,
+      }}
       data={shareReport as ShareStatement[]}
       filters={filters}
       setFilters={setFilters}

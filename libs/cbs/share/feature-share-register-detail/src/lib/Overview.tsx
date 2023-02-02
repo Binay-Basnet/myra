@@ -1,3 +1,8 @@
+import { AiOutlineFileText } from 'react-icons/ai';
+
+import { DetailPageQuickLinks } from '@myra-ui';
+
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 import {
@@ -13,9 +18,18 @@ import { useShareRegisterDetailHooks } from '../hooks/useShareRegisterDetailHook
 
 export const Overview = () => {
   const { shareDetails, shareDetailsData } = useShareRegisterDetailHooks();
+
+  const links = [
+    {
+      title: 'Share Statement Report',
+      link: `${ROUTES.CBS_REPORTS_SHARE_STATEMENT}?memberId=${shareDetails?.member?.id}`,
+      icon: AiOutlineFileText,
+    },
+  ];
   return (
     <>
       <TabHeader heading="Overview" />
+      <DetailPageQuickLinks links={links} />
       <ShareDetails shareDetails={shareDetailsData} />
       <FeesAndCharges charges={shareDetails?.charges} />
       <PaymentDetails paymentData={shareDetails?.paymentDetail} />

@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { GridItem } from '@myra-ui';
 
@@ -8,9 +9,15 @@ import { FormAccountSelect, FormMemberSelect } from '@coop/shared/form';
 import { ReportDateRange } from '../components';
 
 export const SavingReportInputs = () => {
+  const router = useRouter();
+
   const methods = useFormContext<SavingStatementReportSettings>();
 
   const memberId = methods.watch('memberId');
+
+  //  get redirect id from url
+  const redirectAccountId = router.query['accountId'];
+
   return (
     <>
       <GridItem colSpan={2}>
@@ -22,6 +29,7 @@ export const SavingReportInputs = () => {
           memberId={memberId}
           label="Select Account"
           filterBy={ObjState?.Active}
+          isDisabled={!!redirectAccountId}
         />
       </GridItem>
       <GridItem colSpan={1}>
