@@ -1,3 +1,5 @@
+import { amountConverter } from '@coop/shared/utils';
+
 import {
   FeesAndCharges,
   GlTransaction,
@@ -21,8 +23,8 @@ export const Overview = () => {
       {shareDetails?.note && <Note note={shareDetails?.note} />}
       <GlTransaction
         data={shareDetails?.glTransactions}
-        totalDebit={shareDetails?.totalDebit ?? '0'}
-        totalCredit={shareDetails?.totalCredit ?? '0'}
+        totalDebit={amountConverter(shareDetails?.totalDebit ?? '0')}
+        totalCredit={amountConverter(shareDetails?.totalCredit ?? '0')}
       />
     </>
   );
