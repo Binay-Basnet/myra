@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { DetailsCard } from '@myra-ui';
+import { DetailsCard, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
@@ -36,7 +36,7 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
           return (
             <RedirectButton
               link={`${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${props?.row?.original?.ledgerId}`}
-              label={accountId}
+              label={<Tooltip title={accountId} />}
             />
           );
         },
