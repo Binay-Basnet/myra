@@ -12,7 +12,7 @@ const baseStyle = definePartsStyle({
     overflow: 'hidden',
   },
   th: {
-    minWidth: '100px',
+    minWidth: '10px',
     fontFamily: 'heading',
     fontWeight: '600',
     textTransform: 'capitalize',
@@ -20,7 +20,7 @@ const baseStyle = definePartsStyle({
     textAlign: 'start',
   },
   td: {
-    minWidth: '100px',
+    minWidth: '10px',
     textOverflow: 'hidden',
     textAlign: 'start',
     transition: 'height 0.2s ease',

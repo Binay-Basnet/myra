@@ -17,6 +17,7 @@ import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedText, ROUTES } from '@coop/cbs/utils';
 import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
   branchId: { label: string; value: string }[];
@@ -25,7 +26,7 @@ type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId
   };
 };
 
-export type TrialBalance = Record<string, { Dr: string; Cr: string; Total: string }>;
+export type TrialBalance = Record<string, { Dr: string; Cr: string; Total: string; Type: string }>;
 
 export type TrialSheetReportDataEntry = {
   balance?: TrialBalance;
@@ -308,23 +309,38 @@ export const CoaTotalTable = ({ totals }: ICoaTotalTableProps) => {
           columns: [
             {
               header: 'Debit (Dr.)',
-              accessorFn: (row) => (header ? row?.[header]?.Dr || '0.00' : '0.00'),
+              accessorFn: (row) => row?.[header || '']?.Dr,
+              cell: (props) =>
+                header ? amountConverter(props?.row?.original?.[header]?.Dr || '0.00') : '0.00',
               meta: {
                 isNumeric: true,
               },
             },
             {
               header: 'Credit (Cr.)',
-              accessorFn: (row) => (header ? row?.[header]?.Cr || '0.00' : '0.00'),
+              accessorFn: (row) => row?.[header || '']?.Cr,
+              cell: (props) =>
+                header ? amountConverter(props?.row?.original?.[header]?.Cr || '0.00') : '0.00',
               meta: {
                 isNumeric: true,
               },
             },
             {
               header: 'Balance',
-              accessorFn: (row) => (header ? row?.[header]?.Total || '0.00' : '0.00'),
+              accessorFn: (row) => row?.[header || '']?.Total,
+
+              cell: (props) =>
+                header ? amountConverter(props.row.original?.[header]?.Total || '0.00') : '0.00',
               meta: {
                 isNumeric: true,
+              },
+            },
+            {
+              header: '',
+              id: 'cr',
+              accessorFn: (row) => (header ? row?.[header]?.Type || '-' : '-'),
+              meta: {
+                width: '10px',
               },
             },
           ],
@@ -410,26 +426,44 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
           columns: [
             {
               header: 'Debit (Dr.)',
-              accessorFn: (row) => (header ? row.balance?.[header]?.Dr || '0.00' : '0.00'),
-              footer: () => total?.[header || '']?.Dr || '0.00',
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                amountConverter(props.row?.original?.balance?.[header || '']?.Dr || '0.00'),
+
+              footer: () => amountConverter(total?.[header || '']?.Dr || '0.00'),
               meta: {
                 isNumeric: true,
               },
             },
             {
               header: 'Credit (Cr.)',
-              accessorFn: (row) => (header ? row.balance?.[header]?.Cr || '0.00' : '0.00'),
-              footer: () => total?.[header || '']?.Cr || '0.00',
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                amountConverter(props.row?.original?.balance?.[header || '']?.Cr || '0.00'),
+              footer: () => amountConverter(total?.[header || '']?.Cr || '0.00'),
               meta: {
                 isNumeric: true,
               },
             },
             {
               header: 'Balance',
-              accessorFn: (row) => (header ? row.balance?.[header]?.Total || '0.00' : '0.00'),
-              footer: () => total?.[header || '']?.Total || '0.00',
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                header
+                  ? amountConverter(props.row?.original?.balance?.[header]?.Total || '0.00')
+                  : '0.00',
+              footer: () => amountConverter(total?.[header || '']?.Total || '0.00'),
               meta: {
                 isNumeric: true,
+              },
+            },
+            {
+              header: '',
+              id: 'cr',
+              accessorFn: (row) => (header ? row.balance?.[header]?.Type || '-' : '-'),
+              footer: () => total?.[header || '']?.Type || '-',
+              meta: {
+                width: '10px',
               },
             },
           ],

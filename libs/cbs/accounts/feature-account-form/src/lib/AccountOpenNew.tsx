@@ -520,7 +520,7 @@ export const AccountOpenNew = () => {
                   display={mode === '0' ? 'flex' : 'none'}
                   flexDirection="column"
                   gap="s32"
-                  p="s20"
+                  p="s16"
                   w="100%"
                 >
                   <FormMemberSelect
@@ -633,7 +633,7 @@ export const AccountOpenNew = () => {
                   display={mode === '1' ? 'flex' : 'none'}
                   flexDirection="column"
                   gap="s32"
-                  p="s20"
+                  p="s16"
                   w="100%"
                 >
                   <Payment mode={Number(mode)} totalAmount={totalDeposit} />

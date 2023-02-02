@@ -5,7 +5,11 @@ export const debitCreditConverter = (amount: number | string, type: string) => {
 
   const convertedAmount = amountConverter(amount);
 
-  if (type === 'CR') {
+  if (!type) {
+    return '0.00';
+  }
+
+  if (type.toUpperCase() === 'CR') {
     return `Cr ${convertedAmount}`;
   }
 

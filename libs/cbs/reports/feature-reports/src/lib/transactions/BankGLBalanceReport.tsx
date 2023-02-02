@@ -105,6 +105,7 @@ export const BankGLBalanceReport = () => {
               {
                 header: 'Account No',
                 accessorKey: 'accountNo',
+
                 meta: {
                   Footer: {
                     display: 'none',

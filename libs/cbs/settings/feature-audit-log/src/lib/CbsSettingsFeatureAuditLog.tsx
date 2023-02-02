@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { VscTriangleDown } from 'react-icons/vsc';
 import dayjs from 'dayjs';
 
-import { Box, Icon, Text } from '@myra-ui';
+import { Box, Icon, Loader, Text } from '@myra-ui';
 
 import {
   AuditLogActions,
@@ -31,7 +31,7 @@ export const CBSSettingsAuditLog = () => {
   const arrayId = memberId && memberId?.map((item) => item?.id);
   const actionEnums = actions && actions?.map((item) => item?.value);
 
-  const { data } = useGetAuditLogListQuery(
+  const { data, isLoading } = useGetAuditLogListQuery(
     {
       filter: {
         users: arrayId,
@@ -148,32 +148,40 @@ export const CBSSettingsAuditLog = () => {
             </Box>
           </Box>
           <Box display="flex" flexDir="column" gap="s8">
-            <Text fontWeight="Regular" fontSize="s2" color="gray.600">
-              {humanizedAuditLog ? 'All' : 'No data found'}
-            </Text>
-            <Box display="flex" flexDir="column" gap="s16">
-              {humanizedAuditLog &&
-                humanizedAuditLog?.map((audit) => (
-                  <Box
-                    p="s8"
-                    display="flex"
-                    borderRadius="br2"
-                    border="1px"
-                    borderColor="border.layout"
-                    justifyContent="space-between"
-                  >
-                    <Box display="flex" gap="s16">
-                      <Icon as={AUDIT_LOG_ICONS['ADD']} size="xl" />
-                      <Text color="gray.700" fontSize="r1" fontWeight="500">
-                        {audit?.narration}
-                      </Text>
-                    </Box>
-                    <Text fontSize="s3" color="gray.500">
-                      {dayjs(audit?.timestamp).format('DD MMM YYYY [at] hh:mm A')}
-                    </Text>
-                  </Box>
-                ))}
-            </Box>
+            {isLoading ? (
+              <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
+                <Loader />
+              </Box>
+            ) : (
+              <>
+                <Text fontWeight="Regular" fontSize="s2" color="gray.600">
+                  {humanizedAuditLog ? 'All' : 'No data found'}
+                </Text>
+                <Box display="flex" flexDir="column" gap="s16">
+                  {humanizedAuditLog &&
+                    humanizedAuditLog?.map((audit) => (
+                      <Box
+                        p="s8"
+                        display="flex"
+                        borderRadius="br2"
+                        border="1px"
+                        borderColor="border.layout"
+                        justifyContent="space-between"
+                      >
+                        <Box display="flex" gap="s16">
+                          <Icon as={AUDIT_LOG_ICONS['ADD']} size="xl" />
+                          <Text color="gray.700" fontSize="r1" fontWeight="500">
+                            {audit?.narration}
+                          </Text>
+                        </Box>
+                        <Text fontSize="s3" color="gray.500">
+                          {dayjs(audit?.timestamp).format('DD MMM YYYY [at] hh:mm A')}
+                        </Text>
+                      </Box>
+                    ))}
+                </Box>
+              </>
+            )}
           </Box>
         </Box>
       </Box>

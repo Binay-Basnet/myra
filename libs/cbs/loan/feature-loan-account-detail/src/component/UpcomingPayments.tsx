@@ -1,11 +1,14 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { Button, DetailsCard, Modal, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { localizedDate } from '@coop/cbs/utils';
+import { useAppSelector } from '@coop/cbs/data-access';
+import { exportVisibleTableToExcel, localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
+
+import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
 
 type CustomPaymentItem = {
   index?: string | number;
@@ -24,7 +27,13 @@ interface IPaymentProps {
 }
 
 export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
+  const tableRef = useRef<HTMLTableElement>(null);
+
+  const { generalInfo } = useLoanAccountDetailHooks();
+
   const { isOpen, onClose, onToggle } = useDisclosure();
+  const preference = useAppSelector((state) => state.auth?.preference);
+
   const paymentListWithIndex =
     paymentList?.map((payment, index) => ({
       index: index + 1,
@@ -46,7 +55,11 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
       {
         header: 'Date',
         accessorKey: 'installmentDate',
-        accessorFn: (row) => localizedDate(row?.installmentDate),
+
+        cell: (props) =>
+          localizedDate(
+            props?.getValue() as Record<'local' | 'en' | 'np', string> | null | undefined
+          ),
       },
       {
         header: 'Installment No.',
@@ -77,18 +90,18 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
           ),
       },
     ],
-    []
+    [preference]
   );
 
   return (
     <>
       <DetailsCard
-        title="Upcoming Payments"
+        title="Loan Repayment Schedule"
         bg="white"
         hasTable
         leftBtn={
           <Button variant="ghost" onClick={onToggle}>
-            View All Payments
+            View Entire Schedule
           </Button>
         }
       >
@@ -104,17 +117,31 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
       <Modal
         onClose={onClose}
         open={isOpen}
-        title="Upcoming Payments"
+        title="Loan Repayment Schedule"
         scrollBehavior="inside"
         blockScrollOnMount
         width="4xl"
+        headerButton={
+          <Button
+            variant="ghost"
+            onClick={() =>
+              exportVisibleTableToExcel(
+                `${generalInfo?.accountName} - Payment Schedule - `,
+                tableRef
+              )
+            }
+          >
+            Export
+          </Button>
+        }
       >
         <Table
           isDetailPageTable
           isStatic
           data={allPaymentListWithIndex}
           columns={columns}
-          noDataTitle="upcoming payment"
+          noDataTitle="Loan Repayment Schedule"
+          ref={tableRef}
         />
       </Modal>
     </>

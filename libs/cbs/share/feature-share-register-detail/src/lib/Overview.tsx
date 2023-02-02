@@ -3,6 +3,7 @@ import { AiOutlineFileText } from 'react-icons/ai';
 import { DetailPageQuickLinks } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 import {
   FeesAndCharges,
@@ -36,8 +37,8 @@ export const Overview = () => {
       {shareDetails?.note && <Note note={shareDetails?.note} />}
       <GlTransaction
         data={shareDetails?.glTransactions}
-        totalDebit={shareDetails?.totalDebit ?? '0'}
-        totalCredit={shareDetails?.totalCredit ?? '0'}
+        totalDebit={amountConverter(shareDetails?.totalDebit ?? '0')}
+        totalCredit={amountConverter(shareDetails?.totalCredit ?? '0')}
       />
     </>
   );

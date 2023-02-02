@@ -17,6 +17,7 @@ import {
   useSetTellerTransferActionMutation,
 } from '@coop/cbs/data-access';
 import { FormTextArea } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 interface ITellerTransferApproveModalProps {
   transfer: TellerActivityEntry;
@@ -138,8 +139,8 @@ export const TellerTransferApproveModal = ({
     },
     {
       header: 'Amount',
-      accessorFn: (row) => row?.amount,
-      footer: () => denominationTotal,
+      accessorFn: (row) => amountConverter(row?.amount as string),
+      footer: () => amountConverter(denominationTotal),
       meta: {
         isNumeric: true,
         Footer: {
@@ -210,7 +211,10 @@ export const TellerTransferApproveModal = ({
         <Grid templateColumns="repeat(2, 1fr)" gap="s20">
           <DetailCardContent title="Sender Teller" subtitle={transfer?.srcTeller?.local} />
           <DetailCardContent title="Reciever Teller" subtitle={transfer?.destTeller?.local} />
-          <DetailCardContent title="Amount" subtitle={transfer?.amount} />
+          <DetailCardContent
+            title="Amount"
+            subtitle={amountConverter(transfer?.amount as string)}
+          />
 
           <GridItem colSpan={2}>
             <Table

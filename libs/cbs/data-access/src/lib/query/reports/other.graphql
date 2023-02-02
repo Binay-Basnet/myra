@@ -10,6 +10,9 @@ query getLedgerReport($data: GeneralLedgerFilter!) {
           credit
           debit
         }
+        summary {
+          openingBalance
+        }
       }
     }
   }
@@ -30,12 +33,14 @@ query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
           accountOpeningDate
           memberType
           balance
+          balanceType
         }
         summary {
           totalIndividualAccount
           totalMinorAccount
           totalOtherAccount
         }
+        balanceType
         totalBalance
       }
     }

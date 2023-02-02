@@ -1,6 +1,7 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 type ShareDetailProps = {
   shareDetails:
@@ -42,8 +43,11 @@ export const ShareDetails = ({ shareDetails }: ShareDetailProps) => (
       subtitle={`${shareDetails?.fromTo?.start}-${shareDetails?.fromTo?.end}`}
     />
     <DetailCardContent title="No of Share" subtitle={shareDetails?.noOfShare} />
-    <DetailCardContent title="Share Amount" subtitle={shareDetails?.amount} />
-    <DetailCardContent title="Total" subtitle={shareDetails?.total} />
+    <DetailCardContent
+      title="Share Amount"
+      subtitle={amountConverter(shareDetails?.amount as string)}
+    />
+    <DetailCardContent title="Total" subtitle={amountConverter(shareDetails?.total as string)} />
     <DetailCardContent title="Status" status={shareDetails?.status === 'Complete'} />
   </DetailsCard>
 );

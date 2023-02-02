@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { asyncToast, Box, Button, Text } from '@myra-ui';
+import { asyncToast, Box, Button, Loader, Text } from '@myra-ui';
 
 import {
   EodExceptionInput,
@@ -58,7 +58,7 @@ export const EodExceptions = () => {
   });
   const { getValues, reset } = methods;
   const { mutateAsync } = useEodExceptionSetupMutation();
-  const { data, refetch } = useGetEodExceptionsQuery();
+  const { data, refetch, isLoading } = useGetEodExceptionsQuery();
 
   const eodExceptions = data?.settings?.general?.setup?.eodException;
 
@@ -89,6 +89,12 @@ export const EodExceptions = () => {
       },
     });
   };
+
+  if (isLoading) {
+    <Box display="flex" bg="white" h="100vh" justifyContent="center" pt="100px">
+      <Loader />
+    </Box>;
+  }
 
   return (
     <FormProvider {...methods}>

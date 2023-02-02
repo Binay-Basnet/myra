@@ -3,9 +3,15 @@ import { ReactElement } from 'react';
 import { MainLayout } from '@myra-ui';
 
 import { AllTransactionDetailPage } from '@coop/cbs/transactions/feature-detail-page';
+import { TransactionDetailPathBar } from '@coop/cbs/transactions/ui-components';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 
-const DepositDetailsPage = () => <AllTransactionDetailPage />;
+const DepositDetailsPage = () => (
+  <>
+    <TransactionDetailPathBar title="Transaction List" />
+    <AllTransactionDetailPage />
+  </>
+);
 
 DepositDetailsPage.getLayout = function getLayout(page: ReactElement) {
   return (

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { GridItem } from '@myra-ui';
+import { Box, GridItem } from '@myra-ui';
 
 import {
   GeneralLedgerFilter,
@@ -11,7 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { RouteToDetailsPage } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormCOASelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -28,6 +28,7 @@ export const LedgerReport = () => {
     { enabled: !!filters }
   );
   const ledgerReport = data?.report?.otherReport?.generalLedgerReport?.data;
+  const openingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.openingBalance;
 
   return (
     <Report
@@ -55,11 +56,19 @@ export const LedgerReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
+          <Box display="flex" flexDirection="row" justifyContent="flex-end" p="s12">
+            {' '}
+            Opening Balance {amountConverter(openingBalance as string)}
+          </Box>
           <Report.Table<GeneralLedgerReportEntry>
             hasSNo={false}
             columns={[
               {
-                header: 'ID',
+                header: 'Date',
+                accessorFn: (row) => localizedDate(row?.date),
+              },
+              {
+                header: 'ID ',
                 accessorFn: (row) => row?.id,
                 cell: (props) => (
                   <RouteToDetailsPage

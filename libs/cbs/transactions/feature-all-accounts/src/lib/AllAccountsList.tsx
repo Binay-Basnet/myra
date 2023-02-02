@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { Filter_Mode, useGetAllAccountsQuery } from '@coop/cbs/data-access';
@@ -43,6 +44,7 @@ export const AllAccountsList = () => {
       {
         header: 'Account',
         accessorFn: (row) => row?.node?.accountName,
+        cell: (props) => <Tooltip title={props?.row?.original?.node?.accountName as string} />,
       },
       {
         header: 'Product',

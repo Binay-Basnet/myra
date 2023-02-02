@@ -6,7 +6,13 @@ import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getRouterQuery,
+  getUrl,
+  useTranslation,
+} from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface VaultTransferListProps {}
@@ -75,7 +81,7 @@ export const VaultTransferList = () => {
       {
         header: 'Cash Amount',
 
-        accessorFn: (row) => row?.node?.amount,
+        accessorFn: (row) => amountConverter(row?.node?.amount as string),
         meta: {
           isNumeric: true,
         },

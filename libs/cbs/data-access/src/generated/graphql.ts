@@ -1842,6 +1842,7 @@ export type CoaDetailsMeta = {
 };
 
 export type CoaDetailsMinOverview = {
+  balanceType?: Maybe<BalanceType>;
   closingBalance?: Maybe<Scalars['String']>;
   cr?: Maybe<Scalars['String']>;
   dr?: Maybe<Scalars['String']>;
@@ -1874,6 +1875,7 @@ export type CoaLeafNodeDetailView = {
 export type CoaLeafNodeDetails = {
   accountName?: Maybe<Scalars['Localized']>;
   accountType?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   closingBalance?: Maybe<Scalars['String']>;
   crAmount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
@@ -8681,6 +8683,7 @@ export type Language = typeof Language[keyof typeof Language];
 export type LedgerList = {
   accountCode?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   date?: Maybe<Scalars['Localized']>;
   id?: Maybe<Scalars['String']>;
   ledgerName?: Maybe<Scalars['String']>;
@@ -23353,6 +23356,7 @@ export type GetLedgerReportQuery = {
           credit?: string | null;
           debit?: string | null;
         } | null> | null;
+        summary?: { openingBalance?: string | null } | null;
       };
     };
   };
@@ -23366,6 +23370,7 @@ export type GetSavingsBalanceReportQuery = {
   report: {
     otherReport: {
       savingsBalanceReport: {
+        balanceType?: BalanceType | null;
         totalBalance?: string | null;
         data?: Array<{
           accountId?: string | null;
@@ -23378,6 +23383,7 @@ export type GetSavingsBalanceReportQuery = {
           accountOpeningDate?: string | null;
           memberType?: KymMemberTypesEnum | null;
           balance?: string | null;
+          balanceType?: BalanceType | null;
         } | null> | null;
         summary?: {
           totalIndividualAccount?: number | null;
@@ -39034,6 +39040,9 @@ export const GetLedgerReportDocument = `
           credit
           debit
         }
+        summary {
+          openingBalance
+        }
       }
     }
   }
@@ -39067,12 +39076,14 @@ export const GetSavingsBalanceReportDocument = `
           accountOpeningDate
           memberType
           balance
+          balanceType
         }
         summary {
           totalIndividualAccount
           totalMinorAccount
           totalOtherAccount
         }
+        balanceType
         totalBalance
       }
     }
