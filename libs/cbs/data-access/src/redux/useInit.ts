@@ -6,7 +6,6 @@ import {
   logout,
   RoleInfo,
   useAppDispatch,
-  useAppSelector,
   useGetMeQuery,
   useRefreshToken,
 } from '@coop/cbs/data-access';
@@ -20,7 +19,7 @@ export const useInit = () => {
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const dispatch = useAppDispatch();
   const replace = useReplace();
-  const { asPath } = useRouter();
+  const { asPath, isReady } = useRouter();
 
   const ability = useContext(AbilityContext);
 
@@ -30,8 +29,6 @@ export const useInit = () => {
       enabled: triggerQuery,
     }
   );
-
-  const isLoggedIn = useAppSelector((state) => state.auth.isLogged);
 
   const refreshToken = useRefreshToken(url ?? '');
 
@@ -48,37 +45,36 @@ export const useInit = () => {
   const availableBranches = loginData?.branches;
 
   useEffect(() => {
-    if (!asPath.includes('login') && !isLoggedIn) {
-      refreshToken()
-        .then((res) => {
-          if (res) {
-            setTriggerQuery(true);
-          }
-        })
-        .catch(() => {
-          if (asPath.includes('password-recovery')) {
-            setIsLoading(false);
-            return;
-          }
-          if (!asPath.includes('login')) {
-            replace(
-              {
-                pathname: '/login',
-                query: {
-                  redirect: asPath,
-                },
-              },
-              '/login'
-            ).then(() => {
-              dispatch(logout());
-              setIsLoading(false);
-            });
-          }
+    const getRefreshToken = async () => {
+      try {
+        const response = await refreshToken();
+
+        if (response) {
+          setTriggerQuery(true);
+        }
+      } catch (e) {
+        replace(
+          {
+            pathname: '/login',
+            query: {
+              redirect: asPath,
+            },
+          },
+          '/login'
+        ).then(() => {
+          dispatch(logout());
+          setIsLoading(false);
         });
-    } else {
-      setIsLoading(false);
+      }
+    };
+
+    // next.js renders twice for dynamic pages since it takes time to fill dynamic fields such as [action]
+    if (asPath.includes('login') || asPath.includes('password-recovery') || asPath.includes('[')) {
+      return;
     }
-  }, [dispatch, refreshToken, replace, asPath]);
+
+    getRefreshToken();
+  }, [isReady]);
 
   useEffect(() => {
     if (hasDataReturned) {
@@ -119,12 +115,6 @@ export const useInit = () => {
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData]);
-
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     setTriggerQuery(true);
-  //   }
-  // }, [isLoggedIn]);
 
   return { isLoading };
 };
