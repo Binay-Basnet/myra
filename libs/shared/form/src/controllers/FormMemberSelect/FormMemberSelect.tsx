@@ -38,7 +38,7 @@ export const FormMemberSelect = ({
   const memberId = watch(name);
 
   const isFetchEnabled = useMemo(() => {
-    if (router?.asPath?.includes('/edit')) {
+    if (router?.asPath?.includes('/edit') || router?.asPath?.includes('/print')) {
       return !!IDMember;
     }
 
@@ -100,7 +100,12 @@ export const FormMemberSelect = ({
     }, [] as Option[]) ?? [];
 
   useEffect(() => {
-    if ((router?.query?.['memberId'] || router?.asPath?.includes('/edit')) && memberId) {
+    if (
+      (router?.query?.['memberId'] ||
+        router?.asPath?.includes('/edit') ||
+        router?.asPath?.includes('/print')) &&
+      memberId
+    ) {
       setIDMember(memberId);
     }
   }, [memberId, router]);
