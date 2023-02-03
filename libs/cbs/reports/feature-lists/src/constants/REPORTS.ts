@@ -49,8 +49,8 @@ export enum Report {
   CHEQUE_WITHDRAW_RECORD = 'Cheque/Withdraw Record',
   BALANCE_CERTIFICATE = 'Balance Certificate (Deposit)',
   INTEREST_TAX_REPORT = 'Interest Tax Report',
-  ACCOUNT_OPENING_REPORT = 'Account Opening Report',
-  ACCOUNT_CLOSING_REPORT = 'Account Closing Report',
+  ACCOUNT_OPENING_REPORT = 'Opened Account Report',
+  ACCOUNT_CLOSING_REPORT = 'Closed Account Report',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',

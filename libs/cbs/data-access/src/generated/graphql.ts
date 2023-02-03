@@ -22735,6 +22735,8 @@ export type GetAccountClosingReportQuery = {
           openingDate?: Record<'local' | 'en' | 'np', string> | null;
           closingDate?: Record<'local' | 'en' | 'np', string> | null;
           closedBalance?: string | null;
+          branchName?: string | null;
+          branchId?: string | null;
           closedBy?: string | null;
         } | null> | null;
       } | null;
@@ -38229,6 +38231,8 @@ export const GetAccountClosingReportDocument = `
           openingDate
           closingDate
           closedBalance
+          branchName
+          branchId
           closedBy
         }
       }
