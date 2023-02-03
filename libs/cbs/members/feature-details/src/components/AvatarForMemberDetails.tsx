@@ -119,33 +119,31 @@ export const AvatarComponentForMemberDetails = React.memo(() => {
                 {memberBasicCooperativeUnion?.memberName}
               </Text>
 
-              {memberInfo?.memberCode && (
-                <Box display="flex" alignItems="center" gap="s4">
-                  <Text fontSize="r1" color="primary.500" fontWeight="600">
-                    {' '}
-                    {memberInfo?.memberCode}
-                    {memberBasicInstitution?.memberCode}
-                    {memberBasicCooperative?.memberCode}
-                    {memberBasicCooperativeUnion?.memberCode}
-                  </Text>
-                  <Icon
-                    _hover={{ cursor: 'pointer' }}
-                    size="sm"
-                    as={IoCopyOutline}
-                    onClick={() =>
-                      copyToClipboard(
-                        memberInfo
-                          ? (memberInfo?.memberCode as string)
-                          : memberBasicInstitution
-                          ? (memberBasicInstitution?.memberCode as string)
-                          : memberBasicCooperative
-                          ? (memberBasicCooperative?.memberCode as string)
-                          : (memberBasicCooperativeUnion?.memberCode as string)
-                      )
-                    }
-                  />
-                </Box>
-              )}
+              <Box display="flex" alignItems="center" gap="s4">
+                <Text fontSize="r1" color="primary.500" fontWeight="600">
+                  {' '}
+                  {memberInfo?.memberCode}
+                  {memberBasicInstitution?.memberCode}
+                  {memberBasicCooperative?.memberCode}
+                  {memberBasicCooperativeUnion?.memberCode}
+                </Text>
+                <Icon
+                  _hover={{ cursor: 'pointer' }}
+                  size="sm"
+                  as={IoCopyOutline}
+                  onClick={() =>
+                    copyToClipboard(
+                      memberInfo
+                        ? (memberInfo?.memberCode as string)
+                        : memberBasicInstitution
+                        ? (memberBasicInstitution?.memberCode as string)
+                        : memberBasicCooperative
+                        ? (memberBasicCooperative?.memberCode as string)
+                        : (memberBasicCooperativeUnion?.memberCode as string)
+                    )
+                  }
+                />
+              </Box>
               <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="400">
                 {' '}
                 Member Since :{' '}

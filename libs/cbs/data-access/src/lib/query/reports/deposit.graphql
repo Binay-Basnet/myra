@@ -50,6 +50,8 @@ query getAccountClosingReport($data: AccountClosingReportInput) {
           openingDate
           closingDate
           closedBalance
+          branchName
+          branchId
           closedBy
         }
       }

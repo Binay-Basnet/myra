@@ -57,7 +57,7 @@ export const AccountCloseReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Saving Reports', link: '/reports/cbs/savings' },
-            { label: 'Account Closing Report', link: '/reports/cbs/savings/account-closing/new' },
+            { label: 'Closed Account Report', link: '/reports/cbs/savings/account-closing/new' },
           ]}
         />
         <Report.Inputs>
