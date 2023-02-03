@@ -4,6 +4,7 @@ import { Box, Text } from '@myra-ui';
 
 import { LoanProductInstallment, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 interface IProductProps {
   loanAccountId: string;
@@ -60,7 +61,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Disbursed Principal Amount{' '}
             </Text>
             <Text fontSize="s3" fontWeight="600">
-              {loanData?.loanDetails?.totalDisbursedAmount}
+              {amountConverter(loanData?.loanDetails?.totalDisbursedAmount as string)}
             </Text>
           </Box>
           <Box display="flex" flexDirection="column" gap="s4">
@@ -146,7 +147,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Remaining Principal Amount
             </Text>
             <Text fontWeight="600" fontSize="s3">
-              {loanData?.repaymentDetails?.remainingPrincipal}{' '}
+              {amountConverter(loanData?.repaymentDetails?.remainingPrincipal as string)}{' '}
             </Text>
           </Box>
           {loanData?.repaymentDetails?.remainingInterest && (
