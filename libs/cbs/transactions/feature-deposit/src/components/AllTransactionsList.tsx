@@ -87,9 +87,7 @@ export const AllTransactionsList = () => {
         isLoading={isFetching}
         columns={columns}
         rowOnClick={(row) =>
-          router.push(
-            `${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${row?.node?.id}&txnType=${row?.node?.transactionType}`
-          )
+          router.push(`${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${row?.node?.id}`)
         }
         pagination={{
           total: data?.transaction?.listAllTransactions?.totalCount ?? 'Many',

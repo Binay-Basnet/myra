@@ -1,3 +1,5 @@
+import { AiOutlineFileText } from 'react-icons/ai';
+
 import { Alert, DetailPageQuickLinks } from '@myra-ui';
 
 import { NatureOfDepositProduct, ObjState, useAccountDetails } from '@coop/cbs/data-access';
@@ -46,6 +48,21 @@ export const Overview = () => {
     {
       title: 'New Account Transfer',
       link: `${ROUTES.CBS_ACCOUNT_TRANSFER_ADD}?memberId=${accountDetails?.member?.id}&srcAccountId=${accountDetails?.accountId}`,
+    },
+    {
+      title: 'Saving Statement',
+      link: `${ROUTES.CBS_REPORTS_SAVING_STATEMENT}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`,
+      icon: AiOutlineFileText,
+    },
+    {
+      title: 'Interest Statement',
+      link: `${ROUTES.CBS_REPORTS_INTEREST_STATEMENT}?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`,
+      icon: AiOutlineFileText,
+    },
+    {
+      title: 'Interest Tax',
+      link: ROUTES.CBS_REPORTS_INTEREST_TAX_REPORT,
+      icon: AiOutlineFileText,
     },
   ];
 

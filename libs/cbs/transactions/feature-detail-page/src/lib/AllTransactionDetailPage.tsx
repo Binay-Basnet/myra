@@ -8,7 +8,7 @@ import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { GlTransaction, Note, SideBar } from '../component';
 
-const ROUTESOBJTRANS = {
+const ROUTESOBJTRANS: Partial<Record<AllTransactionType, string>> = {
   [AllTransactionType.Deposit]: ROUTES.CBS_TRANS_DEPOSIT_DETAILS,
   [AllTransactionType.Withdraw]: ROUTES.CBS_TRANS_WITHDRAW_DETAILS,
   [AllTransactionType.Transfer]: ROUTES.CBS_TRANS_ACCOUNT_TRANSFER_DETAILS,

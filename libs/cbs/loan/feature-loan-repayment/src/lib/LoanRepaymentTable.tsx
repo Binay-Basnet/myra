@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
+import { Avatar, Box, PageHeader, TablePopover, Text, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { Filter_Mode, useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
@@ -53,7 +53,7 @@ export const CBSLoanRepaymentList = () => {
 
       {
         header: 'Account Name',
-        accessorFn: (row) => row?.node?.loanAccountName,
+        cell: (props) => <Tooltip title={props?.row?.original?.node?.loanAccountName as string} />,
       },
       {
         header: 'Product Name',

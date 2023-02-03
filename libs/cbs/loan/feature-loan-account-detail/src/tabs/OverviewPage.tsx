@@ -1,3 +1,5 @@
+import { AiOutlineFileText } from 'react-icons/ai';
+
 import { Alert, DetailPageQuickLinks } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
@@ -29,6 +31,11 @@ export const OverviewPage = () => {
     {
       title: 'Loan Repayment',
       link: `${ROUTES.CBS_LOAN_REPAYMENTS_ADD}?memberId=${memberDetails?.memberId}&loanAccountId=${generalInfo?.accountId}`,
+    },
+    {
+      title: 'Loan Statement',
+      link: `${ROUTES.CBS_REPORTS_LOAN_STATEMENT}?memberId=${memberDetails?.memberId}&loanAccountId=${generalInfo?.accountId}`,
+      icon: AiOutlineFileText,
     },
   ];
 

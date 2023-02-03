@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { Box } from '@myra-ui';
 
@@ -14,8 +15,14 @@ import { localizedDate } from '@coop/cbs/utils';
 import { FormAmountFilter } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
+type InterestStatementFilters = InterestStatementFilter & {
+  memberId: string;
+};
 export const InterestPostingReport = () => {
-  const [filters, setFilters] = useState<InterestStatementFilter | null>(null);
+  const [filters, setFilters] = useState<InterestStatementFilters | null>(null);
+  const router = useRouter();
+  const accountId = router.query?.['accountId'];
+  const memberId = router.query?.['memberId'];
 
   const { data, isFetching } = useGetInterestStatementReportQuery(
     {
@@ -23,7 +30,7 @@ export const InterestPostingReport = () => {
         period: filters?.period,
         accountId: filters?.accountId,
         filter: filters?.filter,
-      } as InterestStatementFilter,
+      } as InterestStatementFilters,
     },
     { enabled: !!filters }
   );
@@ -32,7 +39,10 @@ export const InterestPostingReport = () => {
 
   return (
     <Report
-      defaultFilters={null}
+      defaultFilters={{
+        accountId: accountId as string,
+        memberId: memberId as string,
+      }}
       data={interestStatementReport as unknown as InterestPostingReportEntry[]}
       filters={filters}
       setFilters={setFilters}

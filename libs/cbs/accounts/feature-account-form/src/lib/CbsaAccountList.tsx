@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Avatar, Box, PageHeader, TablePopover, Text, toast } from '@myra-ui';
+import { Avatar, Box, PageHeader, TablePopover, Text, toast, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
@@ -83,7 +83,7 @@ export const CBSAccountList = () => {
 
       {
         header: 'Account Name',
-        accessorFn: (row) => row?.node?.accountName,
+        cell: (props) => <Tooltip title={props?.row?.original?.node?.accountName as string} />,
       },
       {
         header: 'Product Name',

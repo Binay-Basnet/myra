@@ -79,7 +79,7 @@ export const TransactionTable = ({ data, hasIndex = false, isLoading }: ITransac
                   : 'danger.500'
               }
             >
-              {amountConverter(props.getValue() as string)}
+              {amountConverter(props?.row?.original?.amount)}
             </Text>
           ) : (
             'N/A'

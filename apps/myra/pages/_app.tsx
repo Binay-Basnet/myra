@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import Script from 'next/script';
-import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -16,8 +16,6 @@ import { AbilityContext, buildEmptyPermissions } from '@coop/cbs/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css';
 import './app.css';
-
-const { ToastContainer } = createStandaloneToast();
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -44,10 +42,17 @@ const queryClient = new QueryClient({
 });
 
 const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
-  // useSnap();
   const { isLoading } = useInit();
 
   const getLayout = Component.getLayout || ((page) => page);
+
+  if (isLoading) {
+    return (
+      <Box h="100vh" bg="white" display="flex" alignItems="center" justifyContent="center">
+        <Loader height={300} />
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -55,15 +60,9 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <title>Myra | Cloud Cooperative Platform</title>
       </Head>
       <Script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
-      <ToastContainer />
       <Toaster />
-      {isLoading ? (
-        <Box h="100vh" bg="white" display="flex" alignItems="center" justifyContent="center">
-          <Loader height={300} />
-        </Box>
-      ) : (
-        <main className="app">{getLayout(<Component {...pageProps} />)}</main>
-      )}
+
+      <main className="app">{getLayout(<Component {...pageProps} />)}</main>
     </>
   );
 };
@@ -72,7 +71,6 @@ const ability = buildEmptyPermissions();
 
 const CustomApp = (props: AppPropsWithLayout) => (
   <Provider store={store}>
-    {/* <AuthProvider> */}
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
         <AbilityContext.Provider value={ability}>
@@ -81,7 +79,6 @@ const CustomApp = (props: AppPropsWithLayout) => (
       </ChakraProvider>
       <ReactQueryDevtools position="bottom-right" />
     </QueryClientProvider>
-    {/* </AuthProvider> */}
   </Provider>
 );
 

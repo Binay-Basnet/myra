@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { GridItem } from '@myra-ui';
+import { Box, GridItem } from '@myra-ui';
 
 import {
   ServiceCenterBalanceEntry,
@@ -90,6 +90,10 @@ export const ServviceCenterBalanceReport = () => {
                 accessorKey: 'todayTotalBalance',
               },
               {
+                header: 'Today Saving Balance(30)',
+                accessorKey: 'todaySavingBalance',
+              },
+              {
                 header: 'Total Cash Balance(80)',
                 accessorKey: 'totalCashBalance',
               },
@@ -102,8 +106,13 @@ export const ServviceCenterBalanceReport = () => {
                 accessorKey: 'totalTotalBalance',
               },
               {
+                header: 'Total Saving Balance(30)',
+                accessorKey: 'totalSavingBalance',
+              },
+              {
                 header: 'Deposit to Liquidity Ratio',
                 accessorKey: 'depositToLiquidityRatio',
+                cell: (props) => <Box textTransform="capitalize"> {`${props.getValue()} %`}</Box>,
               },
             ]}
           />
