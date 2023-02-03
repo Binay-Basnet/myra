@@ -54,7 +54,7 @@ export const WithdrawList = () => {
     () => [
       {
         header: t['withdrawListWithdrawnDate'],
-        accessorFn: (row) => localizedDate(row?.node?.date),
+        cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.date)}</Text>,
       },
       {
         header: t['withdrawListTransactionId'],

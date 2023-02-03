@@ -1,6 +1,7 @@
 export * from './components/Report/useReport';
 export * from './lib/deposit/AccountClosingReport';
 export * from './lib/deposit/AccountOpeningReport';
+export * from './lib/deposit/FixedDepositReport';
 export * from './lib/deposit/InterestPostingReport';
 export * from './lib/deposit/InterestTaxReport';
 export * from './lib/deposit/SavingStatementReport';

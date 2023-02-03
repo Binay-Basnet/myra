@@ -48,6 +48,7 @@ export const ChequeBookRequestList = () => {
       {
         header: 'Requested Date',
         accessorFn: (row) => localizedDate(row?.node?.requestedDate),
+        cell: (props) => localizedDate(props?.row?.original?.node?.requestedDate),
       },
       {
         header: 'Request ID',

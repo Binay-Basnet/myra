@@ -25,6 +25,7 @@ export const LoanRequestList = () => {
       {
         header: 'Last Modified Date',
         accessorFn: (row) => row?.node?.lastModifiedDate,
+        cell: (props) => props?.row?.original?.node?.lastModifiedDate,
       },
       {
         header: 'Request ID',

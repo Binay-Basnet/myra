@@ -48,6 +48,7 @@ export const WithdrawSlipBookList = () => {
       {
         header: 'Issued Date',
         accessorFn: (row) => localizedDate(row?.node?.requestedDate),
+        cell: (props) => localizedDate(props?.row?.original?.node?.requestedDate),
       },
       {
         header: 'ID',

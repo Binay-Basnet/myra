@@ -75,9 +75,6 @@ export const LoanClosedAccountTable = ({
             </Text>
           </Box>
         ),
-        meta: {
-          width: '200px',
-        },
       },
       {
         id: '_actions',

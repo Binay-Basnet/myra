@@ -51,6 +51,7 @@ export enum Report {
   INTEREST_TAX_REPORT = 'Interest Tax Report',
   ACCOUNT_OPENING_REPORT = 'Opened Account Report',
   ACCOUNT_CLOSING_REPORT = 'Closed Account Report',
+  SAVINGS_FD_MATURE_REPORT = 'Fixed Deposit Maturity Report',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
@@ -227,6 +228,11 @@ export const REPORTS = {
     },
     {
       id: '5.6',
+      report: Report.SAVINGS_FD_MATURE_REPORT,
+      link: 'fd-mature',
+    },
+    {
+      id: '5.6.1',
       report: Report.FD_PRE_MATURE_REPORT,
     },
     {

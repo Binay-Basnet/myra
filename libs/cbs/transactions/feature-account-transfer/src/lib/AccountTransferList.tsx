@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { TablePopover } from '@myra-ui';
+import { TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
@@ -58,7 +58,7 @@ export const AccountTransferList = () => {
     () => [
       {
         header: t['accountTransferListDate'],
-        accessorFn: (row) => localizedDate(row?.node?.date),
+        cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.date)}</Text>,
       },
       {
         header: t['accountTransferListTransactionId'],
@@ -68,7 +68,7 @@ export const AccountTransferList = () => {
         header: t['accountTransferListTransactionType'],
         accessorFn: (row) => (row?.node?.transferType ? transferType[row?.node?.transferType] : ''),
         meta: {
-          width: '40%',
+          width: '50%',
         },
       },
       {

@@ -29,34 +29,32 @@ export const CashTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: 'Transfer Date',
+        accessorFn: (row) => localizedDate(row?.node?.transactionDate),
+        cell: (props) => localizedDate(props?.row?.original?.node?.transactionDate),
+      },
+      {
         header: 'ID',
         accessorFn: (row) => row?.node?.id,
       },
       {
         header: 'Sender Service Center',
         accessorFn: (row) => row?.node?.sender,
+        meta: {
+          width: '25%',
+        },
       },
       {
         header: 'Receiver Service Center',
-
         accessorFn: (row) => row?.node?.receiver,
         meta: {
-          isNumeric: true,
-          width: '20%',
+          width: '25%',
         },
       },
       {
         header: 'Cash Amount',
 
         accessorFn: (row) => amountConverter(row?.node?.amount as string),
-        meta: {
-          isNumeric: true,
-          width: '20%',
-        },
-      },
-      {
-        header: 'Transfer Date',
-        accessorFn: (row) => localizedDate(row?.node?.transactionDate),
       },
       // {
       //   id: '_actions',

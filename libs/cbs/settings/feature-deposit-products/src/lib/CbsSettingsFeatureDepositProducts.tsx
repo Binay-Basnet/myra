@@ -117,6 +117,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
       {
         header: t['depositProductName'],
         accessorFn: (row) => row?.node?.productName,
+        meta: { width: '50%' },
       },
       {
         header: t['depositNature'],

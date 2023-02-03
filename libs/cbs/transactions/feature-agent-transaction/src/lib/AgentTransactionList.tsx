@@ -5,7 +5,7 @@ import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { Filter_Mode, useGetDepositListDataQuery } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
@@ -63,9 +63,7 @@ export const AgentTransactionList = () => {
       {
         header: 'Date',
         accessorFn: (row) => row?.node?.date?.local,
-        // meta: {
-        //   width: '20%',
-        // },
+        cell: (props) => localizedDate(props?.row?.original?.node?.date),
       },
       {
         header: 'MR Transaction ID',

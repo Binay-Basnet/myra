@@ -70,9 +70,6 @@ export const LoanDeclinedTable = ({ data, isLoading, type, viewLink }: ILoanDecl
             </Text>
           </Box>
         ),
-        meta: {
-          width: '200px',
-        },
       },
       {
         id: '_actions',

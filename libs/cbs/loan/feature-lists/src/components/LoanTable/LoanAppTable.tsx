@@ -70,9 +70,6 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
             </Text>
           </Box>
         ),
-        meta: {
-          width: '200px',
-        },
       },
       {
         header: 'Applied Amount',

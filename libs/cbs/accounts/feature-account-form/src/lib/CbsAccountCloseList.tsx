@@ -45,16 +45,18 @@ export const CBSAccountCloseList = () => {
       {
         header: 'Account Closed Date',
         accessorFn: (row) => row?.node?.createdAt,
-        cell: (props) => <span>{props?.row?.original?.node?.closedAt?.split('T')[0]} </span>,
+        cell: (props) => <span>{props?.row?.original?.node?.closedAt} </span>,
       },
 
       {
         header: 'Account Name',
         accessorFn: (row) => row?.node?.accountName,
+        meta: { width: '50%' },
       },
       {
         header: 'Product Name',
         accessorFn: (row) => row?.node?.product?.productName,
+        meta: { width: '50%' },
       },
       {
         header: 'Member',

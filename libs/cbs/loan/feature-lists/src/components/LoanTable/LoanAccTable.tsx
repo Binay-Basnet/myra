@@ -26,14 +26,14 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
   const columns = useMemo<Column<LoanAccountEdge>[]>(
     () => [
       {
-        header: 'Loan ID',
-        accessorFn: (row) => row?.node?.id,
-      },
-      {
         id: 'loan Account Creation Date id',
         header: () => 'Loan disbursed date',
         accessorFn: (row) => localizedDate(row?.node?.approvedDate),
-        // cell: (props) => props?.row?.original?.node?.approvedDate,
+        cell: (row) => localizedDate(row?.row?.original?.node?.approvedDate),
+      },
+      {
+        header: 'Loan ID',
+        accessorFn: (row) => row?.node?.id,
       },
       {
         header: 'Product Name',
@@ -67,9 +67,6 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
             </Text>
           </Box>
         ),
-        meta: {
-          width: '200px',
-        },
       },
       {
         header: 'Loan Amount',

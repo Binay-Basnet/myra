@@ -4,7 +4,13 @@ import { Box, Text } from '@myra-ui';
 
 import { useGetJournalVoucherDetailQuery } from '@coop/cbs/data-access';
 
-import { GlTransaction, Note, SideBar, TransactionDetails } from '../components/journalVoucher';
+import {
+  GlTransaction,
+  Note,
+  OtherDetails,
+  SideBar,
+  TransactionDetails,
+} from '../components/journalVoucher';
 
 /* eslint-disable-next-line */
 export interface JournalVoucerDetailPageProps {}
@@ -29,6 +35,11 @@ export const JournalVoucerDetailPage = () => {
     amount: voucherData?.amount,
   };
 
+  const otherData = {
+    tellerName: voucherData?.note,
+    serviceCenter: voucherData?.reference,
+  };
+
   return (
     <Box bg="gray.100">
       <Box
@@ -48,7 +59,7 @@ export const JournalVoucerDetailPage = () => {
         </Text>
         <TransactionDetails detailData={detailData} />
         {voucherData?.note && <Note note={voucherData?.note} />}
-
+        <OtherDetails otherData={otherData} />
         <GlTransaction
           data={voucherData?.glTransaction}
           totalDebit={voucherData?.totalDebit ?? '-'}

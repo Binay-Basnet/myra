@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Avatar, Box } from '@myra-ui';
+import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
@@ -43,7 +43,7 @@ export const ShareRegisterTable = () => {
     () => [
       {
         header: t['shareRegisterDate'],
-        accessorFn: (row) => localizedDate(row?.node.transactionDate),
+        cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.transactionDate)}</Text>,
       },
 
       {

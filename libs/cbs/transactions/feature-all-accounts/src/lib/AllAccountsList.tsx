@@ -34,6 +34,11 @@ export const AllAccountsList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: 'Account Open Date',
+        accessorFn: (row) => localizedDate(row?.node?.accountOpenDate),
+        cell: (props) => localizedDate(props?.row?.original?.node?.accountOpenDate),
+      },
+      {
         header: 'Account Id',
         accessorFn: (row) => row?.node?.ID,
       },
@@ -53,10 +58,6 @@ export const AllAccountsList = () => {
       {
         header: 'Account Type',
         accessorFn: (row) => row?.node?.accountType,
-      },
-      {
-        header: 'Account Open Date',
-        accessorFn: (row) => localizedDate(row?.node?.accountOpenDate),
       },
     ],
     []

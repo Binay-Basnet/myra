@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
@@ -38,19 +39,23 @@ export const AccountingFeatureJournalVouchersList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        accessorFn: (row) => localizedDate(row?.node?.transactionDate),
         header: 'Date',
+        cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.transactionDate)}</Text>,
       },
       {
         header: 'Transaction Id',
         accessorFn: (row) => row?.node?.transactionCode,
       },
       {
+        header: 'Note',
+        accessorFn: (row) => row?.node?.note,
+        meta: {
+          width: '50%',
+        },
+      },
+      {
         header: 'Amount',
         accessorFn: (row) => row?.node?.amount,
-        // meta: {
-        //   width: '30%',
-        // },
       },
       {
         id: '_actions',
@@ -76,9 +81,6 @@ export const AccountingFeatureJournalVouchersList = () => {
               ]}
             />
           ),
-        // meta: {
-        //   width: '60px',
-        // },
       },
     ],
     [t]
@@ -88,8 +90,8 @@ export const AccountingFeatureJournalVouchersList = () => {
     <>
       <AccountingPageHeader
         heading={`${t['accountingJournalVouchersListJournalVouchers']} - ${featureCode?.journalVoucherList}`}
-        buttonLabel={t['accountingJournalVouchersListNewJournalVoucher']}
-        buttonHandler={() => router.push('/accounting/accounting/journal-vouchers/add')}
+        // buttonLabel={t['accountingJournalVouchersListNewJournalVoucher']}
+        // buttonHandler={() => router.push('/accounting/accounting/journal-vouchers/add')}
       />
 
       <Table

@@ -18691,6 +18691,7 @@ export type GetJournalVoucherListQuery = {
             transactionCode?: string | null;
             reference?: string | null;
             amount?: string | null;
+            note?: string | null;
           } | null;
         } | null> | null;
         pageInfo?: {
@@ -22945,6 +22946,33 @@ export type GetSuspiciousTransactionReportQuery = {
           status?: boolean | null;
           branchId?: string | null;
           branchName?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetFixedDepositReportQueryVariables = Exact<{
+  data: FixedDepositReportInput;
+}>;
+
+export type GetFixedDepositReportQuery = {
+  report: {
+    depositReport: {
+      fixedDepositReport?: {
+        data?: Array<{
+          memberID?: string | null;
+          memberCode?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
+          serviceCenter?: string | null;
+          mobileNo?: string | null;
+          accountName?: string | null;
+          accountNo?: string | null;
+          expiryDate?: Record<'local' | 'en' | 'np', string> | null;
+          nomineeAccountNo?: string | null;
+          fdAmount?: string | null;
+          interestAmount?: string | null;
         } | null> | null;
       } | null;
     };
@@ -33064,6 +33092,7 @@ export const GetJournalVoucherListDocument = `
             transactionCode
             reference
             amount
+            note
           }
           cursor
         }
@@ -38514,6 +38543,41 @@ export const useGetSuspiciousTransactionReportQuery = <
     ['getSuspiciousTransactionReport', variables],
     useAxios<GetSuspiciousTransactionReportQuery, GetSuspiciousTransactionReportQueryVariables>(
       GetSuspiciousTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetFixedDepositReportDocument = `
+    query getFixedDepositReport($data: FixedDepositReportInput!) {
+  report {
+    depositReport {
+      fixedDepositReport(data: $data) {
+        data {
+          memberID
+          memberCode
+          memberName
+          accountOpenDate
+          serviceCenter
+          mobileNo
+          accountName
+          accountNo
+          expiryDate
+          nomineeAccountNo
+          fdAmount
+          interestAmount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetFixedDepositReportQuery = <TData = GetFixedDepositReportQuery, TError = unknown>(
+  variables: GetFixedDepositReportQueryVariables,
+  options?: UseQueryOptions<GetFixedDepositReportQuery, TError, TData>
+) =>
+  useQuery<GetFixedDepositReportQuery, TError, TData>(
+    ['getFixedDepositReport', variables],
+    useAxios<GetFixedDepositReportQuery, GetFixedDepositReportQueryVariables>(
+      GetFixedDepositReportDocument
     ).bind(null, variables),
     options
   );

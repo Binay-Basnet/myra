@@ -30,6 +30,7 @@ export const BlockWithdrawSlipRequestsList = () => {
       {
         header: 'Request Date',
         accessorFn: (row) => row?.node?.requestedDate,
+        cell: (props) => props?.row?.original?.node?.requestedDate,
       },
       {
         header: 'Request ID',

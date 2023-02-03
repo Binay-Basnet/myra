@@ -41,6 +41,7 @@ export const VaultTransferList = () => {
       {
         header: 'Transfer Date',
         accessorFn: (row) => localizedDate(row?.node?.date),
+        cell: (props) => localizedDate(props?.row?.original?.node?.date),
       },
       {
         header: 'Transfer Code',
@@ -73,10 +74,6 @@ export const VaultTransferList = () => {
             </Text>
           </Box>
         ),
-
-        meta: {
-          width: '20%',
-        },
       },
       {
         header: 'Cash Amount',

@@ -59,6 +59,7 @@ export const CashTransitTransferList = () => {
       {
         header: 'Transfer Date',
         accessorFn: (row) => localizedDate(row?.node?.transferDate),
+        cell: (props) => localizedDate(props?.row?.original?.node?.transferDate),
       },
       {
         header: 'Transfer ID',

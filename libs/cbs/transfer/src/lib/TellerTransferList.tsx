@@ -52,6 +52,7 @@ export const TellerTransferList = () => {
       {
         header: 'Transfer Date',
         accessorFn: (row) => localizedDate(row?.node?.date),
+        cell: (props) => localizedDate(props?.row?.original?.node?.date),
       },
       {
         header: 'Transfer Code',
