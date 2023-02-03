@@ -42,7 +42,7 @@ export const AccountingFeatureJournalVouchersList = () => {
         header: 'Date',
       },
       {
-        header: 'Txn ID',
+        header: 'Transaction Id',
         accessorFn: (row) => row?.node?.transactionCode,
       },
       {

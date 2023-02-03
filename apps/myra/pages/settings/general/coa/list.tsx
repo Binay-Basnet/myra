@@ -1,8 +1,6 @@
-import { useRouter } from 'next/router';
-
 import { Box } from '@myra-ui';
 
-import { COAListView, CoaTreeTableView } from '@coop/cbs/settings/coa';
+import { CoaTreeTableView } from '@coop/cbs/settings/coa';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
@@ -13,34 +11,35 @@ import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const ChartsOfAccounts = () => {
   const { t } = useTranslation();
-  const router = useRouter();
+  // const router = useRouter();
 
-  const tabList = [
-    {
-      title: 'settingsCoaFullView',
-      key: 'full-view',
-    },
-    {
-      title: 'settingsCoaAccountList',
-      key: 'account-list',
-    },
-  ];
+  // const tabList = [
+  //   {
+  //     title: 'settingsCoaFullView',
+  //     key: 'full-view',
+  //   },
+  //   {
+  //     title: 'settingsCoaAccountList',
+  //     key: 'account-list',
+  //   },
+  // ];
 
   return (
     <Can I="SHOW_IN_MENU" a="SETTINGS_COA" showError isErrorCentered>
       <Box width="full">
         <SettingsPageHeader
           heading={`${t['settingsCoa']} - ${featureCode?.coaList}`}
-          tabItems={tabList}
+          // tabItems={tabList}
           // buttonLabel={t['settingsCoaNewAccount']}
           // buttonHandler={() => router.push('/settings/general/charts-of-accounts/add-new-account')}
         />
         <Box>
-          {(router.query['objState'] === 'full-view' ||
+          <CoaTreeTableView />
+          {/* {(router.query['objState'] === 'full-view' ||
             (!router.query['objState'] && !router.query['search'])) && <CoaTreeTableView />}
           {(router.query['objState'] === 'account-list' || router.query['search']) && (
             <COAListView />
-          )}
+          )} */}
         </Box>
       </Box>
     </Can>
