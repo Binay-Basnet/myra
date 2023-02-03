@@ -220,3 +220,26 @@ query getSuspiciousTransactionReport($data: SuspiciousTransactionReportInput!) {
     }
   }
 }
+
+query getFixedDepositReport($data: FixedDepositReportInput!) {
+  report {
+    depositReport {
+      fixedDepositReport(data: $data) {
+        data {
+          memberID
+          memberCode
+          memberName
+          accountOpenDate
+          serviceCenter
+          mobileNo
+          accountName
+          accountNo
+          expiryDate
+          nomineeAccountNo
+          fdAmount
+          interestAmount
+        }
+      }
+    }
+  }
+}

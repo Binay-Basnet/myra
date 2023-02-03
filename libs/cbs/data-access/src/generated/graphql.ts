@@ -4067,6 +4067,8 @@ export type DepositRecord = {
 export type DepositReport = {
   accountClosingReport?: Maybe<AccountClosingReportResult>;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
+  dormantAccountReport?: Maybe<DormantAccountReportResult>;
+  fixedDepositReport?: Maybe<FixedDepositReportResult>;
   interestStatementReport: InterestPostingReportResult;
   interestTaxReport: InterestTaxReportResult;
   savingStatementReport?: Maybe<ReportResult>;
@@ -4080,6 +4082,14 @@ export type DepositReportAccountClosingReportArgs = {
 
 export type DepositReportAccountOpeningReportArgs = {
   data?: InputMaybe<AccountOpeningReportInput>;
+};
+
+export type DepositReportDormantAccountReportArgs = {
+  data?: InputMaybe<DormantAccountReportInput>;
+};
+
+export type DepositReportFixedDepositReportArgs = {
+  data?: InputMaybe<FixedDepositReportInput>;
 };
 
 export type DepositReportInterestStatementReportArgs = {
@@ -4326,6 +4336,33 @@ export type DocumentQueryListSubscriptionDocumentsArgs = {
 
 export type DocumentResult = {
   data?: Maybe<Array<Maybe<UploadedDocument>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type DormantAccountReport = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNo?: Maybe<Scalars['String']>;
+  accountOpenDate?: Maybe<Scalars['Localized']>;
+  balance?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberID?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  memberRegistrationDate?: Maybe<Scalars['Localized']>;
+  mobileNo?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  reason?: Maybe<Scalars['String']>;
+  remarks?: Maybe<Scalars['String']>;
+  serviceCenter?: Maybe<Scalars['String']>;
+};
+
+export type DormantAccountReportInput = {
+  accountType?: InputMaybe<SavingTransactionType>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+};
+
+export type DormantAccountReportResult = {
+  data?: Maybe<Array<Maybe<DormantAccountReport>>>;
   error?: Maybe<QueryError>;
 };
 
@@ -4904,6 +4941,31 @@ export type FieldDetailsQueryResult = {
 
 export type Filter = {
   orConditions: Array<OrConditions>;
+};
+
+export type FixedDepositReport = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNo?: Maybe<Scalars['String']>;
+  accountOpenDate?: Maybe<Scalars['Localized']>;
+  expiryDate?: Maybe<Scalars['Localized']>;
+  fdAmount?: Maybe<Scalars['String']>;
+  interestAmount?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberID?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  mobileNo?: Maybe<Scalars['String']>;
+  nomineeAccountNo?: Maybe<Scalars['String']>;
+  serviceCenter?: Maybe<Scalars['String']>;
+};
+
+export type FixedDepositReportInput = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+};
+
+export type FixedDepositReportResult = {
+  data?: Maybe<Array<Maybe<FixedDepositReport>>>;
+  error?: Maybe<QueryError>;
 };
 
 export const FormCategory = {
@@ -22918,6 +22980,33 @@ export type GetSuspiciousTransactionReportQuery = {
   };
 };
 
+export type GetFixedDepositReportQueryVariables = Exact<{
+  data: FixedDepositReportInput;
+}>;
+
+export type GetFixedDepositReportQuery = {
+  report: {
+    depositReport: {
+      fixedDepositReport?: {
+        data?: Array<{
+          memberID?: string | null;
+          memberCode?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
+          serviceCenter?: string | null;
+          mobileNo?: string | null;
+          accountName?: string | null;
+          accountNo?: string | null;
+          expiryDate?: Record<'local' | 'en' | 'np', string> | null;
+          nomineeAccountNo?: string | null;
+          fdAmount?: string | null;
+          interestAmount?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
 export type GetUserReportQueryVariables = Exact<{
   data?: InputMaybe<UserReportFilter>;
 }>;
@@ -38480,6 +38569,41 @@ export const useGetSuspiciousTransactionReportQuery = <
     ['getSuspiciousTransactionReport', variables],
     useAxios<GetSuspiciousTransactionReportQuery, GetSuspiciousTransactionReportQueryVariables>(
       GetSuspiciousTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetFixedDepositReportDocument = `
+    query getFixedDepositReport($data: FixedDepositReportInput!) {
+  report {
+    depositReport {
+      fixedDepositReport(data: $data) {
+        data {
+          memberID
+          memberCode
+          memberName
+          accountOpenDate
+          serviceCenter
+          mobileNo
+          accountName
+          accountNo
+          expiryDate
+          nomineeAccountNo
+          fdAmount
+          interestAmount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetFixedDepositReportQuery = <TData = GetFixedDepositReportQuery, TError = unknown>(
+  variables: GetFixedDepositReportQueryVariables,
+  options?: UseQueryOptions<GetFixedDepositReportQuery, TError, TData>
+) =>
+  useQuery<GetFixedDepositReportQuery, TError, TData>(
+    ['getFixedDepositReport', variables],
+    useAxios<GetFixedDepositReportQuery, GetFixedDepositReportQueryVariables>(
+      GetFixedDepositReportDocument
     ).bind(null, variables),
     options
   );
