@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { ActionPopoverComponent } from '@coop/myra/components';
@@ -33,6 +33,7 @@ export const UsersList = () => {
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState<boolean>(false);
 
   const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
 
   const {
     data: userListQueryData,
@@ -41,8 +42,14 @@ export const UsersList = () => {
   } = useGetSettingsUserListDataQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        query: searchTerm,
+        id: searchTerm,
+        branchId: searchTerm,
+        filterMode: Filter_Mode.And,
+      },
     },
-    { staleTime: 0 }
+    { staleTime: 0, enabled: searchTerm !== 'undefined' }
   );
 
   const rowData = useMemo(
@@ -121,7 +128,7 @@ export const UsersList = () => {
         },
       },
     ],
-    [t]
+    [t, searchTerm]
   );
 
   const handleAddUserModalOpen = () => {

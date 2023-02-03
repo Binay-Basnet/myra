@@ -5,7 +5,7 @@ import { TablePopover, Text, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { Filter_Mode, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
-import { getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
+import { amountConverter, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 // const accountClass = {
 //   EQUITY_AND_LIABILITIES: 'Equity and Liabilities',
@@ -79,6 +79,13 @@ export const COAListView = () => {
       {
         header: t['settingsCoaTableAccountParentGroup'],
         accessorFn: (row) => row?.node?.parentGroup?.local,
+        meta: {
+          width: '200px',
+        },
+      },
+      {
+        header: 'Balance',
+        accessorFn: (row) => amountConverter(row?.node?.balance as string),
         meta: {
           width: '200px',
         },

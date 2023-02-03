@@ -1783,6 +1783,8 @@ export type CoaAccount = {
   accountCode?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['Localized']>;
   accountType?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   branch?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   parentGroup?: Maybe<Scalars['Localized']>;
@@ -4067,6 +4069,7 @@ export type DepositRecord = {
 export type DepositReport = {
   accountClosingReport?: Maybe<AccountClosingReportResult>;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
+  fixedDepositReport?: Maybe<FixedDepositReportResult>;
   interestStatementReport: InterestPostingReportResult;
   interestTaxReport: InterestTaxReportResult;
   savingStatementReport?: Maybe<ReportResult>;
@@ -4080,6 +4083,10 @@ export type DepositReportAccountClosingReportArgs = {
 
 export type DepositReportAccountOpeningReportArgs = {
   data?: InputMaybe<AccountOpeningReportInput>;
+};
+
+export type DepositReportFixedDepositReportArgs = {
+  data?: InputMaybe<FixedDepositReportInput>;
 };
 
 export type DepositReportInterestStatementReportArgs = {
@@ -4904,6 +4911,31 @@ export type FieldDetailsQueryResult = {
 
 export type Filter = {
   orConditions: Array<OrConditions>;
+};
+
+export type FixedDepositReport = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNo?: Maybe<Scalars['String']>;
+  accountOpenDate?: Maybe<Scalars['Localized']>;
+  expiryDate?: Maybe<Scalars['Localized']>;
+  fdAmount?: Maybe<Scalars['String']>;
+  interestAmount?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberID?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  mobileNo?: Maybe<Scalars['String']>;
+  nomineeAccountNo?: Maybe<Scalars['String']>;
+  serviceCenter?: Maybe<Scalars['String']>;
+};
+
+export type FixedDepositReportInput = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+};
+
+export type FixedDepositReportResult = {
+  data?: Maybe<Array<Maybe<FixedDepositReport>>>;
+  error?: Maybe<QueryError>;
 };
 
 export const FormCategory = {
@@ -11218,6 +11250,7 @@ export type MyraUserResult = {
 
 export type MyraUserSearchFilter = {
   branchId?: InputMaybe<Scalars['String']>;
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
   query?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -24399,6 +24432,7 @@ export type GetCoaAccountListQuery = {
             accountClass?: string | null;
             parentGroup?: Record<'local' | 'en' | 'np', string> | null;
             branch?: string | null;
+            balance?: string | null;
           } | null;
         } | null> | null;
         pageInfo?: {
@@ -40445,6 +40479,7 @@ export const GetCoaAccountListDocument = `
             accountClass
             parentGroup
             branch
+            balance
           }
         }
         totalCount
