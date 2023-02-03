@@ -56,21 +56,22 @@ export const AddCashTransfer = () => {
   }, [values]);
 
   const disableButton = () => {
-    if (selectedBranch && crBranchTotal === drSelfTotal && drBranchTotal === crSelfTotal) {
+    if (selectedBranch && crBranchTotal + crSelfTotal === drSelfTotal + drBranchTotal) {
       return false;
     }
     return true;
   };
 
   const handleSubmit = () => {
+    const value = getValues();
     const updatedData = {
-      ...values,
-      selfEntries: values['selfEntries']?.map((item: CashTransferSelfEntry) => ({
+      ...value,
+      selfEntries: value['selfEntries']?.map((item: CashTransferSelfEntry) => ({
         ...item,
         dr: String(item.dr),
         cr: String(item.cr),
       })),
-      branchEntries: values['branchEntries']?.map((item: CashTransferServiceCentreEntry) => ({
+      branchEntries: value['branchEntries']?.map((item: CashTransferServiceCentreEntry) => ({
         ...item,
         dr: String(item.dr),
         cr: String(item.cr),

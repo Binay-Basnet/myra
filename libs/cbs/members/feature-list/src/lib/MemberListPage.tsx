@@ -85,6 +85,23 @@ export const MemberListPage = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header:
+          objState === 'DRAFT' || objState === 'VALIDATED'
+            ? t['memberListDateJoined']
+            : t['memberListActiveDate'],
+        accessorFn: (row) =>
+          objState === 'DRAFT' || objState === 'VALIDATED'
+            ? localizedDate(row?.node?.dateJoined)
+            : localizedDate(row?.node?.activeDate),
+        cell: (row) =>
+          objState === 'DRAFT' || objState === 'VALIDATED'
+            ? localizedDate(row?.cell?.row?.original?.node?.dateJoined)
+            : localizedDate(row?.cell?.row?.original?.node?.activeDate),
+        meta: {
+          width: '100px',
+        },
+      },
+      {
         id: 'id',
         header:
           objState === 'DRAFT' ? t['memberListTableMemberId'] : t['memberListTableMemberCode'],
@@ -139,23 +156,7 @@ export const MemberListPage = () => {
           width: '120px',
         },
       },
-      {
-        header:
-          objState === 'DRAFT' || objState === 'VALIDATED'
-            ? t['memberListDateJoined']
-            : t['memberListActiveDate'],
-        accessorFn: (row) =>
-          objState === 'DRAFT' || objState === 'VALIDATED'
-            ? localizedDate(row?.node?.dateJoined)
-            : localizedDate(row?.node?.activeDate),
-        cell: (row) =>
-          objState === 'DRAFT' || objState === 'VALIDATED'
-            ? localizedDate(row?.cell?.row?.original?.node?.dateJoined)
-            : localizedDate(row?.cell?.row?.original?.node?.activeDate),
-        meta: {
-          width: '100px',
-        },
-      },
+
       {
         id: '_actions',
         header: '',

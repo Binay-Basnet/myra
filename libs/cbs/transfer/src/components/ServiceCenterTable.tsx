@@ -52,11 +52,13 @@ export const ServiceCenterTable = () => {
               accessor: 'dr',
               header: 'DR',
               isNumeric: true,
+              getDisabled: (row) => !!row.cr,
             },
             {
               accessor: 'cr',
               header: 'CR',
               isNumeric: true,
+              getDisabled: (row) => !!row.dr,
             },
           ]}
         />

@@ -6,7 +6,7 @@ import { AllTransactionType, useGetAllTransactionsDetailQuery } from '@coop/cbs/
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
-import { GlTransaction, Note, SideBar } from '../component';
+import { GlTransaction, Note } from '../component';
 
 const ROUTESOBJTRANS: Partial<Record<AllTransactionType, string>> = {
   [AllTransactionType.Deposit]: ROUTES.CBS_TRANS_DEPOSIT_DETAILS,
@@ -31,26 +31,8 @@ export const AllTransactionDetailPage = () => {
   const allTransactionsData = allTransactionsDetails?.transaction?.viewTransactionDetail?.data;
   const tableData = allTransactionsData?.glTransaction;
 
-  const summary = {
-    transactionId: allTransactionsData?.id,
-    transactionDate: allTransactionsData?.transactionDate,
-    amount: allTransactionsData?.amount,
-    profilePic: allTransactionsData?.member?.profilePicUrl,
-    name: allTransactionsData?.member?.name?.local,
-  };
-
   return (
     <Box bg="gray.100" minH="calc(100vh - 110px)">
-      <Box
-        bg="gray.0"
-        w="320px"
-        position="fixed"
-        h="calc(100vh - 110px)"
-        borderRight="1px"
-        borderRightColor="border.layout"
-      >
-        <SideBar detailPage="allTxn" summary={summary} />
-      </Box>
       {/* <TransactionDetails detailPage="deposit" />
         <PaymentDetails detailPage="deposit" />
         <OtherDetails
@@ -58,7 +40,7 @@ export const AllTransactionDetailPage = () => {
           teller={depositDetailData?.teller as string}
         /> */}
 
-      <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
+      <Box p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
         <Text color="gray.800" fontWeight="SemiBold" fontSize="r3">
           {t['transDetailOverview']}
         </Text>
@@ -104,18 +86,6 @@ export const AllTransactionDetailPage = () => {
         </DetailsCard>
 
         {allTransactionsData?.note && <Note note={allTransactionsData?.note} />}
-
-        <DetailsCard title={t['transDetailOtherDetails']} hasThreeRows>
-          <DetailCardContent title="Teller" subtitle={allTransactionsData?.branch} />
-          <DetailCardContent
-            title="Transaction Date"
-            subtitle={localizedDate(allTransactionsData?.transactionDate)}
-          />
-          <DetailCardContent
-            title="Transaction Service Center"
-            subtitle={allTransactionsData?.branch}
-          />
-        </DetailsCard>
 
         <GlTransaction
           totalDebit={String(amountConverter(allTransactionsData?.totalDebit ?? 0))}

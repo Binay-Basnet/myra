@@ -96,7 +96,7 @@ export const AccountListPage = () => {
           </Button>
         </Box>
       </Box>
-      <Box bg="background.500" ml="320px" p="s16">
+      <Box bg="background.500" ml="320px" p="s16" minH="100vh">
         <Table
           isLoading={isLoading}
           data={rowData}

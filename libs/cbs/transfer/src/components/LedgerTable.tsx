@@ -73,12 +73,14 @@ export const LedgerTable = () => {
               header: 'DR Amount',
               isNumeric: true,
               cellWidth: 'lg',
+              getDisabled: (row) => !!row.cr,
             },
             {
               accessor: 'cr',
               header: 'CR Amount',
               isNumeric: true,
               cellWidth: 'lg',
+              getDisabled: (row) => !!row.dr,
             },
             // {
             //   accessor: 'description',

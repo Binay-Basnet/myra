@@ -173,6 +173,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
             <FormInput isRequired name="bankVoucher.voucherId" label={t['addDepositVoucherId']} />
 
             <FormAmountInput
+              isDisabled
               type="number"
               name="bankVoucher.amount"
               label={t['depositPaymentAmount']}
@@ -227,6 +228,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
             />
 
             <FormAmountInput
+              isDisabled
               type="number"
               name="withdrawSlip.amount"
               label={t['depositPaymentAmount']}

@@ -44,7 +44,7 @@ export const CBSLoanRepaymentList = () => {
     () => [
       {
         header: 'Payment Date',
-        accessorFn: (row) => localizedDate(row?.node?.paymentDate),
+        cell: (props) => localizedDate(props?.row?.original?.node?.paymentDate),
       },
       {
         header: 'Transaction Id',

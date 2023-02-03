@@ -58,7 +58,7 @@ export const DepositList = () => {
     () => [
       {
         header: t['depositListDepositDate'],
-        accessorFn: (row) => localizedDate(row?.node?.date),
+        cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.date)}</Text>,
       },
       {
         header: t['depositListTransactionId'],
@@ -84,9 +84,8 @@ export const DepositList = () => {
             </Text>
           </Box>
         ),
-
         meta: {
-          width: '60%',
+          width: '50%',
         },
       },
       {
@@ -126,9 +125,6 @@ export const DepositList = () => {
               ]}
             />
           ),
-        meta: {
-          width: '50px',
-        },
       },
     ],
     [t, rowData]

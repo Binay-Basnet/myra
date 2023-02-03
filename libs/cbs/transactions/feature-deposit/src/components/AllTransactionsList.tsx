@@ -34,7 +34,7 @@ export const AllTransactionsList = () => {
     () => [
       {
         header: 'Date',
-        accessorFn: (row) => row?.node?.date?.local?.split(' ')[0] ?? 'N/A',
+        cell: (props) => props?.row?.original?.node?.date?.local?.split(' ')[0] ?? 'N/A',
       },
       {
         header: 'Transaction Id',
@@ -45,7 +45,6 @@ export const AllTransactionsList = () => {
         header: 'Type',
         cell: (props) => (
           <Box textTransform="capitalize">
-            {' '}
             {props?.cell?.row?.original?.node?.transactionType?.toLowerCase()?.replace(/_/g, ' ')}
           </Box>
         ),
@@ -55,7 +54,7 @@ export const AllTransactionsList = () => {
         accessorFn: (row) => row?.node?.narration,
         cell: (props) => <Tooltip title={props?.row?.original?.node?.narration as string} />,
         meta: {
-          width: '20%',
+          width: '50%',
         },
       },
       {

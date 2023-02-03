@@ -65,6 +65,9 @@ const AddFamilyMember = ({
   familyMemberId,
 }: IAddFamilyMember) => {
   const { t } = useTranslation();
+  const { data: relationshipData } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.Relationship,
+  });
 
   const methods = useForm();
 
@@ -74,9 +77,13 @@ const AddFamilyMember = ({
 
   const id = String(router?.query?.['id']);
 
-  const { data: relationshipData } = useGetIndividualKymOptionsQuery({
-    searchTerm: FormFieldSearchTerm.Relationship,
-  });
+  // const fatherOption = relationshipData?.form?.options?.predefined?.data?.filter(
+  //   (item) => item?.name?.local === 'Father'
+  // );
+
+  // const grandFatherOption = relationshipData?.form?.options?.predefined?.data?.filter(
+  //   (item) => item?.name?.local === 'Grand Father'
+  // );
 
   const { data: editValues } = useGetIndividualKymFamilyMembersListQuery({
     id,
@@ -86,6 +93,12 @@ const AddFamilyMember = ({
     if (editValues) {
       const editValueData = editValues?.members?.individual?.listFamilyMember?.data;
 
+      // const filteredFatherData = editValueData?.filter(
+      //   (item) => fatherOption && fatherOption[0]?.id !== item?.relationshipId
+      // );
+      // const filteredGrandFatherData = filteredFatherData?.filter(
+      //   (item) => grandFatherOption && grandFatherOption[0]?.id !== item?.relationshipId
+      // );
       const familyMemberDetail = editValueData?.find((data) => data?.id === familyMemberId);
 
       if (familyMemberDetail) {
@@ -199,7 +212,6 @@ const MemberFamilyDetails = ({ setKymCurrentSection }: IMemberFamilyDetailsProps
   const { t } = useTranslation();
 
   const router = useRouter();
-
   const id = router?.query?.['id'];
 
   // const {
@@ -269,6 +281,9 @@ const MemberFamilyDetails = ({ setKymCurrentSection }: IMemberFamilyDetailsProps
   return (
     <FormSection templateColumns={1} header="kymIndFamilymembers">
       <DynamicBoxGroupContainer>
+        {/* <FatherMemberComponent />
+        <GrandFatherMemberComponent /> */}
+
         {familyMemberIds.map((familyMemberId) => (
           <Box key={familyMemberId}>
             <AddFamilyMember
@@ -301,7 +316,6 @@ interface IMemberKYMFamilyDetailsProps {
 export const MemberKYMFamilyDetails = ({ setKymCurrentSection }: IMemberKYMFamilyDetailsProps) => (
   <Box id="kymAccIndFamilyDetails" scrollMarginTop="200px">
     <MemberMaritalStatus setKymCurrentSection={setKymCurrentSection} />
-
     <MemberFamilyDetails setKymCurrentSection={setKymCurrentSection} />
   </Box>
 );

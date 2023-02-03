@@ -115,6 +115,7 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
       {
         header: t['loanProductsCreatedDate'],
         accessorFn: (row) => row?.node.createdDate,
+        cell: (props) => props?.row?.original?.node.createdDate,
       },
       {
         header: t['loanProductsProductCode'],
@@ -228,9 +229,6 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
               ]}
             />
           );
-        },
-        meta: {
-          width: '50px',
         },
       },
     ],

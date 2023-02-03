@@ -14,6 +14,7 @@ import { SideBar } from '../components';
 export const AccountListPage = () => {
   const router = useRouter();
   const searchTerm = router?.query['search'] as string;
+  const id = router?.query['id'] as string;
 
   const { data, isLoading } = useGetLoanAccountListQuery({
     paginate: {
@@ -22,6 +23,7 @@ export const AccountListPage = () => {
     },
     filter: {
       accountName: searchTerm,
+      productID: id,
     },
   });
   const rowData = useMemo(
@@ -97,7 +99,7 @@ export const AccountListPage = () => {
           </Button>
         </Box>
       </Box>
-      <Box bg="background.500" ml="320px" p="s16">
+      <Box bg="background.500" ml="320px" p="s16" minH="100vh">
         <Table
           isLoading={isLoading}
           data={rowData}

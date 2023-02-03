@@ -18720,6 +18720,7 @@ export type GetJournalVoucherListQuery = {
             transactionCode?: string | null;
             reference?: string | null;
             amount?: string | null;
+            note?: string | null;
           } | null;
         } | null> | null;
         pageInfo?: {
@@ -33119,6 +33120,7 @@ export const GetJournalVoucherListDocument = `
             transactionCode
             reference
             amount
+            note
           }
           cursor
         }

@@ -128,6 +128,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
             <FormInput isRequired name="bankCheque.chequeNo" label={t['withdrawPaymentChequeNo']} />
 
             <FormAmountInput
+              isDisabled
               type="number"
               name="bankCheque.amount"
               label={t['withdrawPaymentAmount']}

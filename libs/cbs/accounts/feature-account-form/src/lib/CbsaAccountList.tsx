@@ -11,7 +11,7 @@ import {
   useGetAccountTableListMinimalQuery,
   useSetMakeDormantAccountActiveMutation,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const ACCOUNT_TAB_ITEMS = [
@@ -73,8 +73,7 @@ export const CBSAccountList = () => {
     () => [
       {
         header: 'Account Open Date',
-        accessorFn: (row) => row?.node?.accountOpenedDate?.local,
-        // cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
+        cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.accountOpenedDate)}</Text>,
       },
       {
         header: 'Account ID',
