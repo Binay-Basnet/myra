@@ -37,7 +37,7 @@ export const AllTransactionsList = () => {
         accessorFn: (row) => row?.node?.date?.local?.split(' ')[0] ?? 'N/A',
       },
       {
-        header: 'Txn ID',
+        header: 'Transaction Id',
         accessorFn: (row) => row?.node?.id,
       },
       {
