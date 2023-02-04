@@ -18,7 +18,7 @@ import {
 
 export interface DetailPathBarProps {
   title: string;
-  name: string;
+  name: React.ReactNode;
   closeLink?: string;
   optionsHeader?: {
     label: string;

@@ -112,7 +112,24 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
         />
       )}
 
-      <TableContainer minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}>
+      <TableContainer
+        minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
+        sx={
+          variant === 'report'
+            ? {
+                maxH: '420px',
+                overflowY: 'auto',
+                border: '1px',
+                borderColor: 'border.layout',
+                borderRadius: 'br2',
+                scrollbarWidth: 'none',
+                '&::-webkit-scrollbar': {
+                  display: 'none',
+                },
+              }
+            : {}
+        }
+      >
         <ChakraTable
           sx={{
             pageBreakInside: 'auto',
@@ -144,6 +161,9 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
                     minW={header.column.columnDef.meta?.width}
                     w={header.column.columnDef.meta?.width}
                     textAlign={header.column.columns.length !== 0 ? 'center' : 'left'}
+                    position="sticky"
+                    top={(header.depth - 1) * 35}
+                    zIndex="docked"
                     // position={index === 0 ? 'sticky' : 'static'}
                     // top={0}
                     // left={0}

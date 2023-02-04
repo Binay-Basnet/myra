@@ -19,7 +19,7 @@ interface IEmptyStateProps {
     route: RouteValue;
     idType?: Id_Type;
   }[];
-  docLink: string;
+  docLink?: string;
 }
 
 export const EmptyState = (props: IEmptyStateProps) => {
@@ -61,14 +61,16 @@ export const EmptyState = (props: IEmptyStateProps) => {
             </PopOverComponentForButtonList>
           </Box>
         )}
-        <Link href={docLink} target="_blank">
-          <Box display="flex" gap="s12" cursor="pointer">
-            <Text fontSize="r1" color="primary" fontWeight="medium">
-              Learn more in Docs
-            </Text>
-            <Icon as={BsArrowUpRight} />
-          </Box>
-        </Link>
+        {docLink && (
+          <Link href={docLink} target="_blank">
+            <Box display="flex" gap="s12" cursor="pointer">
+              <Text fontSize="r1" color="primary" fontWeight="medium">
+                Learn more in Docs
+              </Text>
+              <Icon as={BsArrowUpRight} />
+            </Box>
+          </Link>
+        )}
       </Box>
     </Box>
   );

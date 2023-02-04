@@ -9,7 +9,7 @@ const baseStyle = definePartsStyle({
     fontVariantNumeric: 'lining-nums tabular-nums',
     borderCollapse: 'collapse',
     width: 'full',
-    overflow: 'hidden',
+    // overflow: 'hidden',
   },
   th: {
     minWidth: '10px',
@@ -75,8 +75,6 @@ const variantReport = definePartsStyle((props) => {
 
   return {
     table: {
-      border: '1px',
-      borderColor: 'border.layout',
       borderCollapse: 'separate',
       borderSpacing: '0',
       borderRadius: 'br2',
@@ -97,7 +95,7 @@ const variantReport = definePartsStyle((props) => {
     thead: {
       tr: {
         '&:last-of-type': {
-          th: { borderBottomWidth: 0 },
+          th: { borderBottomWidth: '1px' },
           td: { borderBottomWidth: 0 },
         },
       },
@@ -130,6 +128,15 @@ const variantReport = definePartsStyle((props) => {
       },
       ...numericStyles,
     },
+    tbody: {
+      tr: {
+        '&:first-of-type': {
+          td: {
+            borderTopWidth: '0px',
+          },
+        },
+      },
+    },
     td: {
       // // TODO! Experiment
       // maxWidth: '250px',
@@ -140,6 +147,7 @@ const variantReport = definePartsStyle((props) => {
       borderTopWidth: '1px',
       borderBottomWidth: '0px',
       borderLeftWidth: '0px',
+
       '&:last-child': {
         borderRight: '0',
       },

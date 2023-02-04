@@ -67,8 +67,8 @@ export const ROUTES = {
   CBS_TRANSFER_CASH_TRANSFER_LIST: '/cbs/transfers/cash-transfer/list',
   CBS_TRANSFER_BRANCH_TRANSFER_LIST: '/cbs/transfers/branch-transfer/list',
   CBS_TRANSFER_BRANCH_TRANSFER_ADD: '/cbs/transfers/branch-transfer/add',
-  CBS_TRANSFER_SERVICE_TRANSFER_LIST: '/cbs/transfers/service-transfer/list',
-  CBS_TRANSFER_SERVICE_TRANSFER_ADD: '/cbs/transfers/service-transfer/add',
+  CBS_TRANSFER_INTER_SERVICE_TRANS_LIST: '/cbs/transfers/service-center-transactions/list',
+  CBS_TRANSFER_INTER_SERVICE_TRANS_ADD: '/cbs/transfers/service-center-transactions/add',
   CBS_TRANSFER_CASH_IN_TRANSIT_ADD: '/cbs/transfers/cash-transit-transfer/add',
   CBS_TRANSFER_CASH_IN_TRANSIT_LIST: '/cbs/transfers/cash-transit-transfer/list',
 
@@ -247,6 +247,8 @@ export const ROUTES = {
   ACCOUNTING_BANK_ACCOUNTS_ADD: '/accounting/accounting/bank-accounts/add',
   ACCOUNTING_BANK_ACCOUNTS_EDIT: '/accounting/accounting/bank-accounts/edit',
   ACCOUNTING_COA_LIST: '/accounting/accounting/charts-of-account',
+  ACCOUNTING_INTER_SERVICE_TRANS_LIST: '/accounting/accounting/service-center-transactions/list',
+  ACCOUNTING_INTER_SERVICE_TRANS_ADD: '/accounting/accounting/service-center-transactions/add',
 
   ACCOUNTING_EXTERNAL_LOAN_LIST: '/accounting/loan/external-loan/list',
   ACCOUNTING_EXTERNAL_LOAN_ADD: '/accounting/loan/external-loan/new/add',
