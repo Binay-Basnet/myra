@@ -86,7 +86,7 @@ export const AddCashTransfer = () => {
       },
       promise: mutateAsync({ data: updatedData as ServiceCentreCashTransferInput }),
       onSuccess: () => {
-        router.push(ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_LIST);
+        router.push(ROUTES.CBS_TRANSFER_INTER_SERVICE_TRANS_LIST);
       },
     });
   };
@@ -97,7 +97,7 @@ export const AddCashTransfer = () => {
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={`Inter Service Center Transaction - ${featureCode.newVaultTransfer}`}
-            closeLink={ROUTES.CBS_TRANSFER_SERVICE_TRANSFER_LIST}
+            closeLink={ROUTES.CBS_TRANSFER_INTER_SERVICE_TRANS_LIST}
           />
         </Box>
 

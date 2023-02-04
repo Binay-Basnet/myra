@@ -4069,6 +4069,7 @@ export type DepositRecord = {
 export type DepositReport = {
   accountClosingReport?: Maybe<AccountClosingReportResult>;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
+  dormantAccountReport?: Maybe<DormantAccountReportResult>;
   fixedDepositReport?: Maybe<FixedDepositReportResult>;
   interestStatementReport: InterestPostingReportResult;
   interestTaxReport: InterestTaxReportResult;
@@ -4083,6 +4084,10 @@ export type DepositReportAccountClosingReportArgs = {
 
 export type DepositReportAccountOpeningReportArgs = {
   data?: InputMaybe<AccountOpeningReportInput>;
+};
+
+export type DepositReportDormantAccountReportArgs = {
+  data?: InputMaybe<DormantAccountReportInput>;
 };
 
 export type DepositReportFixedDepositReportArgs = {
@@ -4333,6 +4338,33 @@ export type DocumentQueryListSubscriptionDocumentsArgs = {
 
 export type DocumentResult = {
   data?: Maybe<Array<Maybe<UploadedDocument>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type DormantAccountReport = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNo?: Maybe<Scalars['String']>;
+  accountOpenDate?: Maybe<Scalars['Localized']>;
+  balance?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberID?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  memberRegistrationDate?: Maybe<Scalars['Localized']>;
+  mobileNo?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  reason?: Maybe<Scalars['String']>;
+  remarks?: Maybe<Scalars['String']>;
+  serviceCenter?: Maybe<Scalars['String']>;
+};
+
+export type DormantAccountReportInput = {
+  accountType?: InputMaybe<SavingTransactionType>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+};
+
+export type DormantAccountReportResult = {
+  data?: Maybe<Array<Maybe<DormantAccountReport>>>;
   error?: Maybe<QueryError>;
 };
 
@@ -11202,7 +11234,7 @@ export type MyraUserInput = {
   contactNo: Scalars['String'];
   dob: Scalars['Localized'];
   email: Scalars['String'];
-  empCode?: InputMaybe<Scalars['String']>;
+  empCode: Scalars['String'];
   gender: UserGender;
   identificationDetails?: InputMaybe<Array<InputMaybe<MyraUserIdentificationInput>>>;
   identificationSelection?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -12999,6 +13031,7 @@ export type ShareBalance = {
   id?: Maybe<Scalars['ID']>;
   member: Member;
   memberId?: Maybe<Scalars['ID']>;
+  shareCertificateNo?: Maybe<Scalars['String']>;
 };
 
 export type ShareBalanceConnection = {
@@ -13164,6 +13197,7 @@ export type ShareHistory = {
 export type ShareInfoView = {
   issuedCount?: Maybe<Scalars['String']>;
   returnedCount?: Maybe<Scalars['String']>;
+  shareCertificateNo?: Maybe<Scalars['String']>;
   totalBalance?: Maybe<Scalars['String']>;
   totalCount?: Maybe<Scalars['String']>;
 };
