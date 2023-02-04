@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -17,6 +17,7 @@ import {
 import {
   JournalVoucherInput,
   JournalVoucherPaymentMode,
+  useGetEndOfDayDateDataQuery,
   useSetJournalVoucherDataMutation,
 } from '@coop/cbs/data-access';
 import { localizedDate, localizedTime } from '@coop/cbs/utils';
@@ -32,15 +33,12 @@ import { JournalVouchersTable } from '../components';
 import { CustomJournalVoucherInput } from '../types';
 
 /* eslint-disable-next-line */
-export interface AccountingFeatureAddJournalVoucherProps {}
-
-// const PaymentModeOptions = [
-//   { label: 'Cash', value: JournalVoucherPaymentMode.Cash },
-//   { label: 'Cheque', value: JournalVoucherPaymentMode.Cheque },
-// ];
 
 export const AccountingFeatureAddJournalVoucher = () => {
   const { t } = useTranslation();
+  const { data } = useGetEndOfDayDateDataQuery();
+
+  const transactionDate = data?.transaction?.endOfDayDate?.value?.en;
 
   const router = useRouter();
 
@@ -48,9 +46,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
     defaultValues: { paymentMode: JournalVoucherPaymentMode.Cash },
   });
 
-  const { getValues } = methods;
-
-  // const paymentMode = watch('paymentMode');
+  const { getValues, setValue } = methods;
 
   const { mutateAsync } = useSetJournalVoucherDataMutation();
 
@@ -59,7 +55,6 @@ export const AccountingFeatureAddJournalVoucher = () => {
 
     const filteredValues = {
       ...values,
-      // eslint-disable-next-line unused-imports/no-unused-vars
       entries: values?.entries?.map((entry) => ({
         accountId: entry.accountId,
         drAmount: String(entry.drAmount),
@@ -68,16 +63,11 @@ export const AccountingFeatureAddJournalVoucher = () => {
       })),
     };
     return filteredValues as JournalVoucherInput;
-    // asyncToast({
-    //   id: 'set-accounting-journal-voucher-data',
-    //   msgs: {
-    //     loading: 'Adding journal voucher',
-    //     success: 'Journal voucher added',
-    //   },
-    //   promise: setJournalVoucherData({ data: filteredValues }),
-    //   onSuccess: () => router.back(),
-    // });
   };
+
+  useEffect(() => {
+    setValue('date', { en: transactionDate as string, local: '', np: '' });
+  }, [setValue, transactionDate]);
 
   return (
     <>
@@ -109,19 +99,6 @@ export const AccountingFeatureAddJournalVoucher = () => {
                 </GridItem>
               </FormSection>
 
-              {/* <FormSection>
-                <GridItem colSpan={3}>
-                  <FormSwitchTab
-                    name="paymentMode"
-                    label="Payment Mode"
-                    options={PaymentModeOptions}
-                  />
-                </GridItem>
-
-                {paymentMode === JournalVoucherPaymentMode.Cheque && (
-                  <FormInput name="chequeNo" label="Cheque No" />
-                )}
-              </FormSection> */}
               <FormSection divider={false}>
                 <GridItem colSpan={2}>
                   <FormTextArea
