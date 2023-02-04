@@ -1,8 +1,10 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { Box, WIPState } from '@myra-ui';
+import { Box, Text, WIPState } from '@myra-ui';
 
 import { COADetailSidebar, ProductDetailPathBar } from '@coop/cbs/settings/ui-layout';
+import { ROUTES } from '@coop/cbs/utils';
 
 import { Overview } from '../components/detail-tabs';
 import { useCOAAccountDetails } from '../hooks';
@@ -18,7 +20,25 @@ export const COAAccountDetail = () => {
     <>
       <ProductDetailPathBar
         title="Charts of Accounts"
-        name={accountDetails?.meta?.accountType ?? ''}
+        name={
+          <Link
+            href={`${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${
+              accountDetails?.meta?.accountId?.split('-')[0]
+            }`}
+            target="_blank"
+            rel="noreferer"
+          >
+            <Text
+              fontSize="r2"
+              fontWeight="Medium"
+              color="gray.800"
+              lineHeight="150%"
+              cursor="pointer"
+            >
+              {accountDetails?.meta?.accountName}
+            </Text>
+          </Link>
+        }
       />
       <Box
         w="320px"

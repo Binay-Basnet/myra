@@ -122,6 +122,10 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
                 border: '1px',
                 borderColor: 'border.layout',
                 borderRadius: 'br2',
+                scrollbarWidth: 'none',
+                '&::-webkit-scrollbar': {
+                  display: 'none',
+                },
               }
             : {}
         }
