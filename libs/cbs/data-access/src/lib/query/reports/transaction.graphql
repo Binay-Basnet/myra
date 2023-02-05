@@ -243,15 +243,13 @@ query getServiceCenterBalanceReport($data: ServiceCenterBalanceFilter!) {
 
 query getABBSStatusReport($data: ABBSReportFilter!) {
   report {
-    transactionReport {
-      financial {
-        abbsStatusReport(data: $data) {
-          data {
-            serviceCenterId
-            ServiceCenterName
-            serviceCenterActive
-            abbsActive
-          }
+    branchReport {
+      abbsStatusReport(data: $data) {
+        data {
+          serviceCenterId
+          ServiceCenterName
+          serviceCenterActive
+          abbsActive
         }
       }
     }

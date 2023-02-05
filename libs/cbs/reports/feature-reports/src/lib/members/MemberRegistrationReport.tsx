@@ -63,7 +63,7 @@ export const MemberRegisterReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/reports/cbs/member-report' },
+            { label: 'Member Reports', link: '/reports/cbs/members' },
             { label: 'Member Register', link: '/reports/cbs/members/register/new' },
           ]}
         />

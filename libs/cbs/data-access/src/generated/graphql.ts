@@ -1643,11 +1643,26 @@ export const BranchPaymentMode = {
 
 export type BranchPaymentMode = typeof BranchPaymentMode[keyof typeof BranchPaymentMode];
 export type BranchReport = {
+  abbsStatusReport: AbbsSatusResult;
   branchReport?: Maybe<BranchReportResult>;
+  savingProductBalanceReport: SavingProductBalanceResult;
+  serviceCenterCOAWiseBalanceReport: SericeCenterWiseStatementResult;
+};
+
+export type BranchReportAbbsStatusReportArgs = {
+  data: AbbsReportFilter;
 };
 
 export type BranchReportBranchReportArgs = {
   data?: InputMaybe<BranchReportFilter>;
+};
+
+export type BranchReportSavingProductBalanceReportArgs = {
+  data: SavingProductBalanceFilter;
+};
+
+export type BranchReportServiceCenterCoaWiseBalanceReportArgs = {
+  data: ServiceCenterCoaWiseBalanceFilter;
 };
 
 export type BranchReportFilter = {
@@ -1869,6 +1884,27 @@ export type CoaFullView = {
   error?: Maybe<QueryError>;
 };
 
+export const CoaHead = {
+  10: '_10',
+  20: '_20',
+  30: '_30',
+  40: '_40',
+  50: '_50',
+  60: '_60',
+  70: '_70',
+  80: '_80',
+  90: '_90',
+  100: '_100',
+  110: '_110',
+  120: '_120',
+  130: '_130',
+  140: '_140',
+  150: '_150',
+  160: '_160',
+  170: '_170',
+} as const;
+
+export type CoaHead = typeof CoaHead[keyof typeof CoaHead];
 export type CoaLeafNodeDetailView = {
   data?: Maybe<CoaLeafNodeDetails>;
   error?: Maybe<QueryError>;
@@ -1888,6 +1924,7 @@ export type CoaLeafNodeDetails = {
 };
 
 export type CoaLedgerListFilter = {
+  branch?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   filterMode?: InputMaybe<Filter_Mode>;
   ledgerId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -2289,6 +2326,7 @@ export type ChartsOfAccountSettingsQueryCoaAccountListArgs = {
 };
 
 export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
+  branch?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   id: Scalars['ID'];
 };
 
@@ -4923,7 +4961,6 @@ export type FamilyMemberDetails = {
 };
 
 export type FianancialTransactionReport = {
-  abbsStatusReport: AbbsSatusResult;
   bankGLBalanceReport: BankGlBalanceResult;
   bankGLStatementReport: BankGlStatementResult;
   dayBookReport: DayBookReportResult;
@@ -4931,10 +4968,6 @@ export type FianancialTransactionReport = {
   tellerReport: TellerReportResult;
   trialSheetReport: TrialSheetReportResult;
   vaultBalanceReport: VaultBalanceReportResult;
-};
-
-export type FianancialTransactionReportAbbsStatusReportArgs = {
-  data: AbbsReportFilter;
 };
 
 export type FianancialTransactionReportBankGlBalanceReportArgs = {
@@ -5529,6 +5562,7 @@ export type FormSettingQuery = {
 export const Frequency = {
   Daily: 'DAILY',
   Monthly: 'MONTHLY',
+  Nature: 'Nature',
   Weekly: 'WEEKLY',
   Yearly: 'YEARLY',
 } as const;
@@ -12835,6 +12869,38 @@ export const SavingInvestmentType = {
 } as const;
 
 export type SavingInvestmentType = typeof SavingInvestmentType[keyof typeof SavingInvestmentType];
+export type SavingProductBalanceData = {
+  accountTotal?: Maybe<Scalars['Int']>;
+  balanceTotal?: Maybe<Scalars['String']>;
+  balanceTotalType?: Maybe<BalanceType>;
+  entries?: Maybe<Array<Maybe<SavingProductBalanceEntry>>>;
+};
+
+export type SavingProductBalanceEntry = {
+  balanceType?: Maybe<BalanceType>;
+  code?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  nature?: Maybe<NatureOfDepositProduct>;
+  noOfAccounts?: Maybe<Scalars['Int']>;
+  totalBalance?: Maybe<Scalars['String']>;
+};
+
+export type SavingProductBalanceFilter = {
+  branchId: Array<Scalars['String']>;
+  filter?: InputMaybe<SavingProductBalanceReportFilter>;
+};
+
+export type SavingProductBalanceReportFilter = {
+  amount?: InputMaybe<MinMaxFilter>;
+  nature?: InputMaybe<Array<InputMaybe<NatureOfDepositProduct>>>;
+};
+
+export type SavingProductBalanceResult = {
+  data?: Maybe<SavingProductBalanceData>;
+  error?: Maybe<QueryError>;
+};
+
 export const SavingServiceType = {
   Charges: 'CHARGES',
   CustomerInitiated: 'CUSTOMER_INITIATED',
@@ -12977,6 +13043,16 @@ export type SericeCenterStatementResult = {
   error?: Maybe<QueryError>;
 };
 
+export type SericeCenterWiseStatementData = {
+  entries?: Maybe<Array<Maybe<ServiceCenterCoaWiseBalanceEntry>>>;
+  total?: Maybe<Scalars['Map']>;
+};
+
+export type SericeCenterWiseStatementResult = {
+  data?: Maybe<SericeCenterWiseStatementData>;
+  error?: Maybe<QueryError>;
+};
+
 export type ServerError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -13027,6 +13103,19 @@ export type ServiceCenterBalanceEntry = {
 
 export type ServiceCenterBalanceFilter = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type ServiceCenterCoaWiseBalanceEntry = {
+  ServiceCenterName?: Maybe<Scalars['String']>;
+  balanceMap?: Maybe<Scalars['Map']>;
+  serviceCenterCode?: Maybe<Scalars['String']>;
+  serviceCenterId?: Maybe<Scalars['String']>;
+};
+
+export type ServiceCenterCoaWiseBalanceFilter = {
+  branchId: Array<Scalars['String']>;
+  coaHead: Array<CoaHead>;
+  date: Scalars['Localized'];
 };
 
 export type ServiceCenterTransactionFilter = {
@@ -22790,6 +22879,28 @@ export type GetBranchReportQuery = {
   };
 };
 
+export type GetServiceCenterCoaBalanceReportQueryVariables = Exact<{
+  data: ServiceCenterCoaWiseBalanceFilter;
+}>;
+
+export type GetServiceCenterCoaBalanceReportQuery = {
+  report: {
+    branchReport: {
+      serviceCenterCOAWiseBalanceReport: {
+        data?: {
+          total?: Record<string, string> | null;
+          entries?: Array<{
+            ServiceCenterName?: string | null;
+            balanceMap?: Record<string, string> | null;
+            serviceCenterId?: string | null;
+            serviceCenterCode?: string | null;
+          } | null> | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type GetCashLedgerReportQueryVariables = Exact<{
   data?: InputMaybe<CashLedgerReportFilterData>;
 }>;
@@ -24088,16 +24199,14 @@ export type GetAbbsStatusReportQueryVariables = Exact<{
 
 export type GetAbbsStatusReportQuery = {
   report: {
-    transactionReport: {
-      financial: {
-        abbsStatusReport: {
-          data?: Array<{
-            serviceCenterId?: string | null;
-            ServiceCenterName?: string | null;
-            serviceCenterActive?: boolean | null;
-            abbsActive?: boolean | null;
-          } | null> | null;
-        };
+    branchReport: {
+      abbsStatusReport: {
+        data?: Array<{
+          serviceCenterId?: string | null;
+          ServiceCenterName?: string | null;
+          serviceCenterActive?: boolean | null;
+          abbsActive?: boolean | null;
+        } | null> | null;
       };
     };
   };
@@ -38353,6 +38462,39 @@ export const useGetBranchReportQuery = <TData = GetBranchReportQuery, TError = u
     ),
     options
   );
+export const GetServiceCenterCoaBalanceReportDocument = `
+    query getServiceCenterCOABalanceReport($data: ServiceCenterCOAWiseBalanceFilter!) {
+  report {
+    branchReport {
+      serviceCenterCOAWiseBalanceReport(data: $data) {
+        data {
+          entries {
+            ServiceCenterName
+            balanceMap
+            serviceCenterId
+            serviceCenterCode
+          }
+          total
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetServiceCenterCoaBalanceReportQuery = <
+  TData = GetServiceCenterCoaBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetServiceCenterCoaBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetServiceCenterCoaBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetServiceCenterCoaBalanceReportQuery, TError, TData>(
+    ['getServiceCenterCOABalanceReport', variables],
+    useAxios<GetServiceCenterCoaBalanceReportQuery, GetServiceCenterCoaBalanceReportQueryVariables>(
+      GetServiceCenterCoaBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCashLedgerReportDocument = `
     query getCashLedgerReport($data: CashLedgerReportFilterData) {
   report {
@@ -40047,15 +40189,13 @@ export const useGetServiceCenterBalanceReportQuery = <
 export const GetAbbsStatusReportDocument = `
     query getABBSStatusReport($data: ABBSReportFilter!) {
   report {
-    transactionReport {
-      financial {
-        abbsStatusReport(data: $data) {
-          data {
-            serviceCenterId
-            ServiceCenterName
-            serviceCenterActive
-            abbsActive
-          }
+    branchReport {
+      abbsStatusReport(data: $data) {
+        data {
+          serviceCenterId
+          ServiceCenterName
+          serviceCenterActive
+          abbsActive
         }
       }
     }

@@ -62,7 +62,7 @@ export const MemberBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/reports/cbs/member-report' },
+            { label: 'Member Reports', link: '/reports/cbs/members' },
             { label: 'Member Wise Balance Report', link: '/reports/cbs/members/balance/new' },
           ]}
         />

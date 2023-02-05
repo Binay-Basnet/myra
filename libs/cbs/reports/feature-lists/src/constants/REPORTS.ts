@@ -90,6 +90,7 @@ export enum Report {
   TRANSACTION_SUSPICIOUS_TRANSACTION_REPORT = 'Suspicious Transaction Report',
   TRANSACTION_BALANCE_SHEET_REPORT = 'Balance Sheet Report',
   TRANSACTION_SERVICE_CENTER_BALANCE_REPORT = 'Service Center Balance',
+  TRANSACTION_SERVICE_CENTER_COA_WISE_BALANCE = 'Service Center COA Head Wise Balance',
   TRANSACTION_BANK_GL_BALANCE_REPORT = 'Bank GL Balance Report',
   TRANSACTION_ABBS_STATUS_REPORT = 'ABBS Report',
 
@@ -113,7 +114,6 @@ export enum Report {
 
   BRANCH_WISE_FINANCIAL_REPORT = 'Service Centerwise financial Report',
   SERVICE_CENTER_LIST_REPORT = 'Service Center List Report',
-  SERVICE_CENTER_WISE_BALANCE_REPORT = 'Service Center Wise Balance Report',
 
   BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Service Centerwise Target vs Achievement',
 
@@ -457,6 +457,11 @@ export const REPORTS = {
       id: '7.2.2',
       report: Report.TRANSACTION_SERVICE_CENTER_BALANCE_REPORT,
       link: 'service-center-balance',
+    },
+    {
+      id: '7.2.2',
+      report: Report.TRANSACTION_SERVICE_CENTER_COA_WISE_BALANCE,
+      link: 'service-center-coa-wise-balance',
     },
     {
       id: '7.2.5.b',

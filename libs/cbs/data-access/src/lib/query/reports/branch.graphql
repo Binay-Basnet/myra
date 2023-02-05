@@ -25,3 +25,21 @@ query getBranchReport($data: BranchReportFilter) {
     }
   }
 }
+
+query getServiceCenterCOABalanceReport($data: ServiceCenterCOAWiseBalanceFilter!) {
+  report {
+    branchReport {
+      serviceCenterCOAWiseBalanceReport(data: $data) {
+        data {
+          entries {
+            ServiceCenterName
+            balanceMap
+            serviceCenterId
+            serviceCenterCode
+          }
+          total
+        }
+      }
+    }
+  }
+}
