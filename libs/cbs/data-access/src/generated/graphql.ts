@@ -1645,7 +1645,6 @@ export type BranchPaymentMode = typeof BranchPaymentMode[keyof typeof BranchPaym
 export type BranchReport = {
   abbsStatusReport: AbbsSatusResult;
   branchReport?: Maybe<BranchReportResult>;
-  savingProductBalanceReport: SavingProductBalanceResult;
   serviceCenterCOAWiseBalanceReport: SericeCenterWiseStatementResult;
 };
 
@@ -1655,10 +1654,6 @@ export type BranchReportAbbsStatusReportArgs = {
 
 export type BranchReportBranchReportArgs = {
   data?: InputMaybe<BranchReportFilter>;
-};
-
-export type BranchReportSavingProductBalanceReportArgs = {
-  data: SavingProductBalanceFilter;
 };
 
 export type BranchReportServiceCenterCoaWiseBalanceReportArgs = {
@@ -1856,6 +1851,9 @@ export type CoaDetailsMeta = {
   accountName?: Maybe<Scalars['String']>;
   accountType?: Maybe<Scalars['String']>;
   createdDate?: Maybe<Scalars['Localized']>;
+  isLoanAccount?: Maybe<Scalars['Boolean']>;
+  isSavingAccount?: Maybe<Scalars['Boolean']>;
+  parentId?: Maybe<Scalars['String']>;
 };
 
 export type CoaDetailsMinOverview = {
@@ -2393,6 +2391,43 @@ export type Citizenship = {
 
 export type CitizenshipInNepali = {
   issuePlace?: Maybe<Scalars['String']>;
+};
+
+export type ClosedSavingAccountData = {
+  balanceAmount?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
+  date?: Maybe<Scalars['Localized']>;
+  depositAmount?: Maybe<Scalars['String']>;
+  particular?: Maybe<Scalars['String']>;
+  transactionID?: Maybe<Scalars['String']>;
+  withdrawAmount?: Maybe<Scalars['String']>;
+};
+
+export type ClosedSavingAccountFilter = {
+  type?: InputMaybe<SavingTransactionType>;
+};
+
+export type ClosedSavingAccountInput = {
+  accountId: Scalars['String'];
+  filter?: InputMaybe<ClosedSavingAccountFilter>;
+  period: LocalizedDateFilter;
+};
+
+export type ClosedSavingAccountResult = {
+  data?: Maybe<ClosedSavingAccountResultData>;
+  error?: Maybe<QueryError>;
+};
+
+export type ClosedSavingAccountResultData = {
+  address?: Maybe<Address>;
+  closedDate?: Maybe<Scalars['Localized']>;
+  entries?: Maybe<Array<Maybe<ClosedSavingAccountData>>>;
+  memberName?: Maybe<Scalars['Localized']>;
+  memberShipCode?: Maybe<Scalars['String']>;
+  membershipDate?: Maybe<Scalars['Localized']>;
+  serviceCenterName?: Maybe<Scalars['String']>;
+  totalDeposit?: Maybe<Scalars['String']>;
+  totalWithdraw?: Maybe<Scalars['String']>;
 };
 
 export type CodeManagementInput = {
@@ -4136,10 +4171,12 @@ export type DepositRecord = {
 export type DepositReport = {
   accountClosingReport?: Maybe<AccountClosingReportResult>;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
+  closedSavingAccountReport?: Maybe<ClosedSavingAccountResult>;
   dormantAccountReport?: Maybe<DormantAccountReportResult>;
   fixedDepositReport?: Maybe<FixedDepositReportResult>;
   interestStatementReport: InterestPostingReportResult;
   interestTaxReport: InterestTaxReportResult;
+  savingProductBalanceReport: SavingProductBalanceResult;
   savingStatementReport?: Maybe<ReportResult>;
   suspiciousTransctionReport?: Maybe<SuspiciousTransactionReportResult>;
   thresholdTransactionReport: TtrReportResult;
@@ -4151,6 +4188,10 @@ export type DepositReportAccountClosingReportArgs = {
 
 export type DepositReportAccountOpeningReportArgs = {
   data?: InputMaybe<AccountOpeningReportInput>;
+};
+
+export type DepositReportClosedSavingAccountReportArgs = {
+  data: ClosedSavingAccountInput;
 };
 
 export type DepositReportDormantAccountReportArgs = {
@@ -4167,6 +4208,10 @@ export type DepositReportInterestStatementReportArgs = {
 
 export type DepositReportInterestTaxReportArgs = {
   data: InterestTaxReportFilter;
+};
+
+export type DepositReportSavingProductBalanceReportArgs = {
+  data: SavingProductBalanceFilter;
 };
 
 export type DepositReportSavingStatementReportArgs = {
@@ -23239,6 +23284,63 @@ export type GetFixedDepositReportQuery = {
   };
 };
 
+export type GetClosedSavingAccountStatementQueryVariables = Exact<{
+  data: ClosedSavingAccountInput;
+}>;
+
+export type GetClosedSavingAccountStatementQuery = {
+  report: {
+    depositReport: {
+      closedSavingAccountReport?: {
+        data?: {
+          closedDate?: Record<'local' | 'en' | 'np', string> | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          memberShipCode?: string | null;
+          membershipDate?: Record<'local' | 'en' | 'np', string> | null;
+          serviceCenterName?: string | null;
+          address?: AddressFragment | null;
+          entries?: Array<{
+            balanceAmount?: string | null;
+            balanceType?: BalanceType | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            transactionID?: string | null;
+            withdrawAmount?: string | null;
+            depositAmount?: string | null;
+            particular?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    };
+  };
+};
+
+export type GetSavingProductBalanceQueryVariables = Exact<{
+  data: SavingProductBalanceFilter;
+}>;
+
+export type GetSavingProductBalanceQuery = {
+  report: {
+    depositReport: {
+      savingProductBalanceReport: {
+        data?: {
+          accountTotal?: number | null;
+          balanceTotal?: string | null;
+          balanceTotalType?: BalanceType | null;
+          entries?: Array<{
+            balanceType?: BalanceType | null;
+            code?: string | null;
+            id?: string | null;
+            name?: string | null;
+            nature?: NatureOfDepositProduct | null;
+            noOfAccounts?: number | null;
+            totalBalance?: string | null;
+          } | null> | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type GetUserReportQueryVariables = Exact<{
   data?: InputMaybe<UserReportFilter>;
 }>;
@@ -24807,6 +24909,7 @@ export type GetLedgerForJvPostingQuery = {
 
 export type GetCoaAccountDetailsQueryVariables = Exact<{
   id: Scalars['String'];
+  branch?: InputMaybe<Scalars['String']>;
 }>;
 
 export type GetCoaAccountDetailsQuery = {
@@ -24820,6 +24923,9 @@ export type GetCoaAccountDetailsQuery = {
             accountId?: string | null;
             accountType?: string | null;
             createdDate?: Record<'local' | 'en' | 'np', string> | null;
+            isLoanAccount?: boolean | null;
+            isSavingAccount?: boolean | null;
+            parentId?: string | null;
           } | null;
           overview?: {
             openingBalance?: string | null;
@@ -24842,6 +24948,7 @@ export type GetCoaAccountDetailsQuery = {
 
 export type GetCoaLeafNodeDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
+  branch?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
 }>;
 
 export type GetCoaLeafNodeDetailsQuery = {
@@ -38953,6 +39060,88 @@ export const useGetFixedDepositReportQuery = <TData = GetFixedDepositReportQuery
     ).bind(null, variables),
     options
   );
+export const GetClosedSavingAccountStatementDocument = `
+    query getClosedSavingAccountStatement($data: ClosedSavingAccountInput!) {
+  report {
+    depositReport {
+      closedSavingAccountReport(data: $data) {
+        data {
+          address {
+            ...Address
+          }
+          closedDate
+          memberName
+          memberShipCode
+          membershipDate
+          serviceCenterName
+          entries {
+            balanceAmount
+            balanceType
+            date
+            transactionID
+            withdrawAmount
+            depositAmount
+            withdrawAmount
+            particular
+          }
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetClosedSavingAccountStatementQuery = <
+  TData = GetClosedSavingAccountStatementQuery,
+  TError = unknown
+>(
+  variables: GetClosedSavingAccountStatementQueryVariables,
+  options?: UseQueryOptions<GetClosedSavingAccountStatementQuery, TError, TData>
+) =>
+  useQuery<GetClosedSavingAccountStatementQuery, TError, TData>(
+    ['getClosedSavingAccountStatement', variables],
+    useAxios<GetClosedSavingAccountStatementQuery, GetClosedSavingAccountStatementQueryVariables>(
+      GetClosedSavingAccountStatementDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavingProductBalanceDocument = `
+    query getSavingProductBalance($data: SavingProductBalanceFilter!) {
+  report {
+    depositReport {
+      savingProductBalanceReport(data: $data) {
+        data {
+          accountTotal
+          balanceTotal
+          balanceTotalType
+          entries {
+            balanceType
+            code
+            id
+            name
+            nature
+            noOfAccounts
+            totalBalance
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingProductBalanceQuery = <
+  TData = GetSavingProductBalanceQuery,
+  TError = unknown
+>(
+  variables: GetSavingProductBalanceQueryVariables,
+  options?: UseQueryOptions<GetSavingProductBalanceQuery, TError, TData>
+) =>
+  useQuery<GetSavingProductBalanceQuery, TError, TData>(
+    ['getSavingProductBalance', variables],
+    useAxios<GetSavingProductBalanceQuery, GetSavingProductBalanceQueryVariables>(
+      GetSavingProductBalanceDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetUserReportDocument = `
     query getUserReport($data: UserReportFilter) {
   report {
@@ -41027,16 +41216,19 @@ export const useGetLedgerForJvPostingQuery = <TData = GetLedgerForJvPostingQuery
     options
   );
 export const GetCoaAccountDetailsDocument = `
-    query getCOAAccountDetails($id: String!) {
+    query getCOAAccountDetails($id: String!, $branch: String) {
   settings {
     chartsOfAccount {
-      coaAccountDetails(id: $id) {
+      coaAccountDetails(id: $id, branchId: $branch) {
         data {
           meta {
             accountName
             accountId
             accountType
             createdDate
+            isLoanAccount
+            isSavingAccount
+            parentId
           }
           overview {
             openingBalance
@@ -41070,10 +41262,10 @@ export const useGetCoaAccountDetailsQuery = <TData = GetCoaAccountDetailsQuery, 
     options
   );
 export const GetCoaLeafNodeDetailsDocument = `
-    query getCOALeafNodeDetails($id: ID!) {
+    query getCOALeafNodeDetails($id: ID!, $branch: [String]) {
   settings {
     chartsOfAccount {
-      coaLeafNodeDetails(id: $id) {
+      coaLeafNodeDetails(id: $id, branch: $branch) {
         data {
           id
           accountName

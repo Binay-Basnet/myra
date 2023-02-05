@@ -6,11 +6,12 @@ import { getRouterQuery } from '@coop/shared/utils';
 export const useCOALeafNodeDetails = () => {
   const router = useRouter();
 
-  const { id } = router.query;
+  const { id, branch } = router.query;
 
   const { data: leafNodeQueryData } = useGetCoaLeafNodeDetailsQuery(
     {
       id: id as string,
+      branch: JSON.parse(branch as string),
     },
     {
       enabled: !!id,

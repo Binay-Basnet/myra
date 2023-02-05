@@ -142,16 +142,19 @@ query getLedgerForJVPosting($pagination: Pagination, $filter: COAListFilter) {
   }
 }
 
-query getCOAAccountDetails($id: String!) {
+query getCOAAccountDetails($id: String!, $branch: String) {
   settings {
     chartsOfAccount {
-      coaAccountDetails(id: $id) {
+      coaAccountDetails(id: $id, branchId: $branch) {
         data {
           meta {
             accountName
             accountId
             accountType
             createdDate
+            isLoanAccount
+            isSavingAccount
+            parentId
           }
           overview {
             openingBalance
@@ -173,10 +176,10 @@ query getCOAAccountDetails($id: String!) {
   }
 }
 
-query getCOALeafNodeDetails($id: ID!) {
+query getCOALeafNodeDetails($id: ID!, $branch: [String]) {
   settings {
     chartsOfAccount {
-      coaLeafNodeDetails(id: $id) {
+      coaLeafNodeDetails(id: $id, branch: $branch) {
         data {
           id
           accountName

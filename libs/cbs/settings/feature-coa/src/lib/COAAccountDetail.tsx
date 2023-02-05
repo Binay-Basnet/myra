@@ -22,9 +22,19 @@ export const COAAccountDetail = () => {
         title="Charts of Accounts"
         name={
           <Link
-            href={`${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${
-              accountDetails?.meta?.accountId?.split('-')[0]
-            }`}
+            href={
+              accountDetails?.meta?.isSavingAccount
+                ? `${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${
+                    accountDetails?.meta?.accountId?.split('-')[1]
+                  }`
+                : accountDetails?.meta?.isLoanAccount
+                ? `${ROUTES.CBS_LOAN_ACCOUNTS_DETAILS}?id=${
+                    accountDetails?.meta?.accountId?.split('-')[1]
+                  }`
+                : `${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${
+                    accountDetails?.meta?.accountId?.split('-')[0]
+                  }`
+            }
             target="_blank"
             rel="noreferer"
           >
