@@ -98,6 +98,8 @@ export const useMenuLink = (menu: MenuType, app: ModuleType = 'CBS') => {
 
   const appMenu = APP_NAVS[app].menus[menu];
 
+  console.log(appMenu?.pages);
+
   appMenu?.pages?.forEach((page) => {
     if (ability.can('SHOW_IN_MENU', page.aclKey)) {
       linkArr.push(page.route);

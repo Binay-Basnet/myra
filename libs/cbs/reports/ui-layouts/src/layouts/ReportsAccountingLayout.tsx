@@ -3,21 +3,19 @@ import { useRouter } from 'next/router';
 
 import { Box, PageHeader } from '@myra-ui';
 
-import { featureCode } from '@coop/shared/utils';
-
 import { ReportsInnerSidebar } from '../components/ReportsInnerSidebar';
 
 interface ReportsCbsLayoutProps {
   children: React.ReactNode;
 }
 
-export const ReportsCbsLayout = ({ children }: ReportsCbsLayoutProps) => {
+export const ReportsAccountingLayout = ({ children }: ReportsCbsLayoutProps) => {
   const router = useRouter();
 
   return (
     <>
       <PageHeader
-        heading={`Core Banking System Reports - ${featureCode?.cbsReports}`}
+        heading="Accounting Reports"
         tabItems={[
           {
             title: 'reportsListView',
@@ -37,7 +35,14 @@ export const ReportsCbsLayout = ({ children }: ReportsCbsLayoutProps) => {
           minHeight="100vh"
           bg="white"
         >
-          <ReportsInnerSidebar />
+          <ReportsInnerSidebar
+            tabs={[
+              {
+                title: 'Transaction Report',
+                to: '/accounting/reports/transactions',
+              },
+            ]}
+          />
         </Box>
       )}
 

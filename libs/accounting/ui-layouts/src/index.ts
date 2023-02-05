@@ -1,4 +1,5 @@
 export * from './lib/AccountingLayout';
+export * from './lib/AccountingReportsLayout';
 export * from './lib/AccountingSidebarLayout';
 export * from './lib/AccountingUiLayouts';
 export * from './lib/ExternalLoanSidebarLayout';

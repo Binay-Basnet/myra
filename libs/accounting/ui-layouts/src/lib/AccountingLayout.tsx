@@ -1,10 +1,13 @@
 import React from 'react';
 import { AiOutlineAppstore } from 'react-icons/ai';
+import { BsFileText } from 'react-icons/bs';
 import { ImStack } from 'react-icons/im';
 import { IoIosList } from 'react-icons/io';
 import { IoCubeOutline, IoPerson } from 'react-icons/io5';
 
 import { MainLayoutContainer, Scrollable, TabMenu, TopLevelHeader } from '@myra-ui';
+
+import { ROUTES } from '@coop/cbs/utils';
 
 export interface AccountingLayoutProps {
   children: React.ReactNode;
@@ -58,6 +61,14 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
             match: ['investment'],
             aclKey: 'ACCOUNTING_INVESTMENT',
             navMenu: 'INVESTMENT',
+          },
+          {
+            title: 'reports',
+            icon: BsFileText,
+            link: ROUTES.ACCOUNTING_REPORTS,
+            match: ['reports'],
+            aclKey: 'ACCOUNTING_INVESTMENT',
+            navMenu: 'REPORTS',
           },
         ]}
         routeIndex={2}

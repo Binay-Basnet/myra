@@ -119,12 +119,17 @@ export const ACCOUNTING: NavType = {
           addRoute: ROUTES.ACCOUNTING_JOURNAL_VOUCHER_ADD,
         },
         {
+          label: 'transServiceCenterTransfer',
+          route: ROUTES.ACCOUNTING_INTER_SERVICE_TRANS_LIST,
+          aclKey: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
+          addRoute: ROUTES.ACCOUNTING_INTER_SERVICE_TRANS_ADD,
+        },
+        {
           label: 'accountingAccountingSidebarCashTransfer',
           route: ROUTES.ACCOUNTING_CASH_TRANSFER_LIST,
           aclKey: 'ACCOUNTING_SYSTEM_ACCOUNTING_CASH_TRANSFER',
           addRoute: ROUTES.ACCOUNTING_CASH_TRANSFER_ADD,
         },
-
         {
           label: 'accountingAccountingSidebarBankAccounts',
           route: ROUTES.ACCOUNTING_BANK_ACCOUNTS_LIST,
@@ -135,12 +140,6 @@ export const ACCOUNTING: NavType = {
           label: 'accountingAccountingSidebarChartsOfAccounts',
           aclKey: 'ACCOUNTING_SYSTEM_ACCOUNTING_CHARTS_OF_ACCOUNTS',
           route: ROUTES.ACCOUNTING_COA_LIST,
-        },
-        {
-          label: 'transServiceCenterTransfer',
-          route: ROUTES.ACCOUNTING_INTER_SERVICE_TRANS_LIST,
-          aclKey: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
-          addRoute: ROUTES.ACCOUNTING_INTER_SERVICE_TRANS_ADD,
         },
       ],
 
@@ -243,6 +242,17 @@ export const ACCOUNTING: NavType = {
           route: ROUTES.ACCOUNTING_INVESTMENT_ACCOUNT_TRANSACTIONS_ADD,
           addRoute: ROUTES.ACCOUNTING_INVESTMENT_ACCOUNT_TRANSACTIONS_ADD,
           aclKey: 'ACCOUNTING_SYSTEM_INVESTMENT_TRANSACTIONS',
+        },
+      ],
+    },
+    REPORTS: {
+      label: 'REPORTS',
+      aclKey: 'ACCOUNTING_INVESTMENT',
+      pages: [
+        {
+          label: 'Accounting Reports',
+          aclKey: 'ACCOUNTING_INVESTMENT',
+          route: ROUTES.ACCOUNTING_REPORTS,
         },
       ],
     },

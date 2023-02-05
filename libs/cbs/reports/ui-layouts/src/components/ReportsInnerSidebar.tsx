@@ -33,15 +33,6 @@ const REPORTS_INNER_TAB_LINKS = [
     title: 'Mobile Banking Reports',
     to: '/reports/cbs/mobile-banking',
   },
-
-  // {
-  //   title: 'ATM Reports',
-  //   to: '/reports/cbs/atm-report',
-  // },
-  // {
-  //   title: 'Branchless Banking Reports',
-  //   to: '/reports/cbs/branch-less-report',
-  // },
   {
     title: 'Service Center Report',
     to: '/reports/cbs/service-center',
@@ -52,19 +43,25 @@ const REPORTS_INNER_TAB_LINKS = [
   },
 ];
 
-export const ReportsInnerSidebar = () => {
+interface IReportsInnerSidebarProps {
+  tabs?: { title: string; to: string }[];
+}
+
+export const ReportsInnerSidebar = ({
+  tabs = REPORTS_INNER_TAB_LINKS,
+}: IReportsInnerSidebarProps) => {
   const router = useRouter();
 
   const currentIndex = useMemo(
-    () => REPORTS_INNER_TAB_LINKS.findIndex((link) => router.pathname.includes(link.to)),
+    () => tabs.findIndex((link) => router.pathname.includes(link.to)),
     [router.pathname]
   );
   return (
     <Box>
       <Tabs variant="unstyled" index={currentIndex}>
-        {REPORTS_INNER_TAB_LINKS.map((tabs) => (
-          <Fragment key={tabs?.title}>
-            <SidebarTabs {...tabs} />
+        {tabs.map((tab) => (
+          <Fragment key={tab?.title}>
+            <SidebarTabs {...tab} />
           </Fragment>
         ))}
       </Tabs>
