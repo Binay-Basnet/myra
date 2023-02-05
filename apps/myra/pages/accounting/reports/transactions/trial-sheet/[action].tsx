@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@myra-ui';
-
+import { AccountingLayout } from '@coop/accounting/ui-layouts';
 import { TrialSheetReport } from '@coop/cbs/reports';
 
 const NewShareStatementReport = () => <TrialSheetReport />;
@@ -9,5 +8,5 @@ const NewShareStatementReport = () => <TrialSheetReport />;
 export default NewShareStatementReport;
 
 NewShareStatementReport.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return <AccountingLayout>{page}</AccountingLayout>;
 };

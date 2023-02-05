@@ -13,12 +13,20 @@ import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate } from '@coop/cbs/utils';
 import { FormBranchSelect } from '@coop/shared/form';
 
-export const CopomisImportMemberReport = () => {
-  const [filters, setFilters] = useState<CopomisReportFilter | null>(null);
+type CopomisFilters = Omit<CopomisReportFilter, 'branchId'> & {
+  branchId: { label: string; value: string }[];
+};
 
+export const CopomisImportMemberReport = () => {
+  const [filters, setFilters] = useState<CopomisFilters | null>(null);
+
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
   const { data: interestTaxReportData, isFetching } = useGetCopomisImportMemberReportQuery(
     {
-      data: filters,
+      data: { ...filters, branchId: branchIds } as CopomisReportFilter,
     },
     { enabled: !!filters }
   );
@@ -45,7 +53,7 @@ export const CopomisImportMemberReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={3}>
-            <FormBranchSelect label="Select Branch" name="branchId" />
+            <FormBranchSelect isMulti label="Select Branch" name="branchId" />
           </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Select Period" />

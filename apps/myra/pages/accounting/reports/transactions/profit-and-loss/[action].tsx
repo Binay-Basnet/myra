@@ -1,13 +1,12 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@myra-ui';
-
 import { ProfitAndLossReport } from '@coop/cbs/reports';
+import { AccountingLayout } from '@coop/accounting/ui-layouts';
 
 const ProfitAndLossReportPage = () => <ProfitAndLossReport />;
 
 export default ProfitAndLossReportPage;
 
 ProfitAndLossReportPage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return <AccountingLayout>{page}</AccountingLayout>;
 };

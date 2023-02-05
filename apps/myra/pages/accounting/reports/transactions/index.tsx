@@ -1,18 +1,20 @@
 import { ReactElement } from 'react';
 
-import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
+import { AccountingLayout, AccountingReportsLayout } from '@coop/accounting/ui-layouts';
+import { ReportsAccountingLayout } from '@coop/cbs/reports/layout';
 import { TransactionReportList } from '@coop/cbs/reports/list';
-import { MainLayout } from '@myra-ui';
 
-const LoanReports = () => <TransactionReportList />;
+const LoanReports = () => (
+  <TransactionReportList reportParentLink="/accounting/reports/transactions" />
+);
 
 LoanReports.getLayout = function getLayout(page: ReactElement) {
   return (
-    <MainLayout>
-      <ReportMainLayout>
-        <ReportsCbsLayout>{page}</ReportsCbsLayout>
-      </ReportMainLayout>
-    </MainLayout>
+    <AccountingLayout>
+      <AccountingReportsLayout>
+        <ReportsAccountingLayout>{page}</ReportsAccountingLayout>
+      </AccountingReportsLayout>
+    </AccountingLayout>
   );
 };
 export default LoanReports;

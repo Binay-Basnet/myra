@@ -1,13 +1,12 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@myra-ui';
-
 import { ServiceCenterCOAWiseBalanceReport } from '@coop/cbs/reports';
+import { AccountingLayout } from '@coop/accounting/ui-layouts';
 
 const ServiceCenterCOAWiseBalanceReportPage = () => <ServiceCenterCOAWiseBalanceReport />;
 
 export default ServiceCenterCOAWiseBalanceReportPage;
 
 ServiceCenterCOAWiseBalanceReportPage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return <AccountingLayout>{page}</AccountingLayout>;
 };
