@@ -5,9 +5,10 @@ import { formatAddress, localizedDate } from '@coop/cbs/utils';
 
 interface ReportMemberProps {
   member: Partial<Member> | undefined | null;
+  accountCloseDate?: string;
 }
 
-export const ReportMember = ({ member }: ReportMemberProps) => {
+export const ReportMember = ({ member, accountCloseDate }: ReportMemberProps) => {
   const branch = useAppSelector((state) => state?.auth?.user?.currentBranch);
 
   return (
@@ -57,6 +58,11 @@ export const ReportMember = ({ member }: ReportMemberProps) => {
                 <Text fontSize="r1" color="gray.700">
                   Membership Date:
                 </Text>
+                {accountCloseDate && (
+                  <Text fontSize="r1" color="gray.700">
+                    Account Close Date
+                  </Text>
+                )}
               </Box>
             </GridItem>
 
@@ -68,6 +74,11 @@ export const ReportMember = ({ member }: ReportMemberProps) => {
                 <Text fontSize="r1" color="gray.700" fontWeight="500">
                   {localizedDate(member?.activeDate)}
                 </Text>
+                {accountCloseDate && (
+                  <Text fontSize="r1" color="gray.700" fontWeight="500">
+                    {accountCloseDate}
+                  </Text>
+                )}
               </Box>
             </GridItem>
           </Grid>
