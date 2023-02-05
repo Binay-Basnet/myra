@@ -394,7 +394,9 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
             !props.row?.getCanExpand() ? (
               <Link
                 target="_blank"
-                href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${props.row?.original?.ledgerId}`}
+                href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
+                  props.row?.original?.ledgerId
+                }&branch=${JSON.stringify(branchList?.map((branch) => branch?.node?.id))}`}
               >
                 <Button variant="link" color="primary.500">
                   {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}

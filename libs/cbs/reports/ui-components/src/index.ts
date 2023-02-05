@@ -1,4 +1,5 @@
 export * from './components';
+export * from './lib/ClosedAccountInputs';
 export * from './lib/InterestStatementInputs';
 export * from './lib/LoanReportInputs';
 export * from './lib/LoanReportMember';
