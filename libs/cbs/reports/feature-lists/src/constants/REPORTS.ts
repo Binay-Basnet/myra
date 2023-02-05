@@ -25,6 +25,7 @@ export enum Report {
   MEMBER_ACTIVATIONS = 'Active/Inactive Member',
   MEMBER_CLASSIFICATION_REPORT = 'Member Classification Reports',
   KYM_STATUS_REPORT = 'Kym Status Report',
+  MEMBER_WISE_BALANCE_REPORT = 'Member Wise Balance Report',
 
   SHARE_REGISTER = 'Share Register',
   SHARE_STATEMENT = 'Share Statement Report',
@@ -52,6 +53,8 @@ export enum Report {
   ACCOUNT_OPENING_REPORT = 'Opened Account Report',
   ACCOUNT_CLOSING_REPORT = 'Closed Account Report',
   SAVINGS_FD_MATURE_REPORT = 'Fixed Deposit Maturity Report',
+  SAVING_PRODUCT_BALANCE_REPORT = 'Saving Product Wise Balance Report',
+  CLOSED_SAVING_ACCOUNT_STATEMENT = 'Closed Saving Account Statement',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
@@ -69,6 +72,7 @@ export enum Report {
   CIB_CIC_MEMBER_LOAN_INFORMATION = 'CIB/CIC/Member loan information system(MLIB) Setup',
   LOAN_UTILIZATION_INSPECTION = 'Loan utilization inspection(eg. above 5 Lakh)',
   LOAN_BALANCE_REPORT = 'Loan Balance Report',
+  CLOSED_LOAN_ACCOUNT_STATEMENT = 'Closed Loan Account Statement',
 
   THRESHOLD_TRANSACTION_REPORT = 'Threshold Transaction ',
   TRANSACTION_TRIAL_SHEET = 'Trial Balance',
@@ -109,6 +113,8 @@ export enum Report {
 
   BRANCH_WISE_FINANCIAL_REPORT = 'Service Centerwise financial Report',
   SERVICE_CENTER_LIST_REPORT = 'Service Center List Report',
+  SERVICE_CENTER_WISE_BALANCE_REPORT = 'Service Center Wise Balance Report',
+
   BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Service Centerwise Target vs Achievement',
 
   USER_LIST_REPORT = 'User List Report',
@@ -155,6 +161,11 @@ export const REPORTS = {
       id: '2.6',
       report: Report.MEMBER_CLASSIFICATION_REPORT,
       link: 'classification',
+    },
+    {
+      id: '2.7',
+      report: Report.MEMBER_WISE_BALANCE_REPORT,
+      link: 'balance',
     },
   ],
 

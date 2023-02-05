@@ -172,3 +172,32 @@ query getMemberRegistrationReport($data: MemberRegistrationReportData) {
     }
   }
 }
+
+query getMemberWiseBalanceReport($data: MemberBalanceFilter) {
+  report {
+    memberReport {
+      memberBalanceReport(data: $data) {
+        data {
+          memberCode
+          memberId
+          memberName
+          memberType
+          membershipDate
+          totalSavingBalance
+          totalLoan
+          totalShareBalance
+        }
+        summary {
+          totalLoan
+          totalSavingBalance
+          totalSavingBalanceType
+          totalShareBalance
+        }
+        error {
+          ...QueryError
+        }
+      }
+      __typename
+    }
+  }
+}

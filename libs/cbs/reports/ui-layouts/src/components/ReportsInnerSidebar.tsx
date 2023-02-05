@@ -15,7 +15,7 @@ const REPORTS_INNER_TAB_LINKS = [
   },
   {
     title: 'Member Report',
-    to: '/reports/cbs/member-report',
+    to: '/reports/cbs/members',
   },
   {
     title: 'Savings Report',

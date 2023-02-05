@@ -74,6 +74,7 @@ export const CopomisImportMemberReport = () => {
               {
                 header: 'Membership Registration Date',
                 accessorFn: (row) => localizedDate(row?.memberRegistrationDate),
+                cell: (props) => localizedDate(props.row.original.dateOfBirth),
               },
               {
                 header: 'Gender Record',

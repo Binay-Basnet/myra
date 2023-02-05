@@ -6167,6 +6167,11 @@ export type InsuranceType = {
   type?: InputMaybe<Scalars['String']>;
 };
 
+export type IntRange = {
+  from: Scalars['Int'];
+  to: Scalars['Int'];
+};
+
 export const InterestAuthority = {
   Board: 'BOARD',
   Ceo: 'CEO',
@@ -10464,6 +10469,46 @@ export type MemberAgeRange = {
   min?: InputMaybe<Scalars['Int']>;
 };
 
+export type MemberBalanceExtraFilter = {
+  loanBalance?: InputMaybe<IntRange>;
+  memberType?: InputMaybe<KymMemberTypesEnum>;
+  savingBalance?: InputMaybe<IntRange>;
+  shareBalance?: InputMaybe<IntRange>;
+};
+
+export type MemberBalanceFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  filter?: InputMaybe<MemberBalanceExtraFilter>;
+  period: LocalizedDateFilter;
+};
+
+export type MemberBalanceReportData = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  memberType?: Maybe<Scalars['String']>;
+  membershipDate?: Maybe<Scalars['Localized']>;
+  totalLoan?: Maybe<Scalars['String']>;
+  totalSavingBalance?: Maybe<Scalars['String']>;
+  totalSavingBalanceType?: Maybe<BalanceType>;
+  totalShareBalance?: Maybe<Scalars['String']>;
+};
+
+export type MemberBalanceReportResult = {
+  data?: Maybe<Array<Maybe<MemberBalanceReportData>>>;
+  error?: Maybe<QueryError>;
+  summary?: Maybe<MemberBalanceReportResultSummary>;
+};
+
+export type MemberBalanceReportResultSummary = {
+  totalLoan?: Maybe<Scalars['String']>;
+  totalSavingBalance?: Maybe<Scalars['String']>;
+  totalSavingBalanceType?: Maybe<BalanceType>;
+  totalShareBalance?: Maybe<Scalars['String']>;
+};
+
 export type MemberBasicInfoView =
   | CooperativeBasicMinInfo
   | CooperativeUnionBasicMinInfo
@@ -10910,6 +10955,7 @@ export type MemberReport = {
   copomisReport?: Maybe<CopomisReportResult>;
   exportActiveInactiveMemberReport: Scalars['String'];
   kymStatusReport?: Maybe<KymStatusReportResult>;
+  memberBalanceReport?: Maybe<MemberBalanceReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   memberRegistrationReport?: Maybe<MemberRegistrationReportResult>;
 };
@@ -10928,6 +10974,10 @@ export type MemberReportExportActiveInactiveMemberReportArgs = {
 
 export type MemberReportKymStatusReportArgs = {
   data?: InputMaybe<KymStatusReportFilter>;
+};
+
+export type MemberReportMemberBalanceReportArgs = {
+  data?: InputMaybe<MemberBalanceFilter>;
 };
 
 export type MemberReportMemberClassificationReportArgs = {
@@ -23424,6 +23474,42 @@ export type GetMemberRegistrationReportQuery = {
             } | null;
           } | null> | null;
         } | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMemberWiseBalanceReportQueryVariables = Exact<{
+  data?: InputMaybe<MemberBalanceFilter>;
+}>;
+
+export type GetMemberWiseBalanceReportQuery = {
+  report: {
+    memberReport: {
+      __typename: 'MemberReport';
+      memberBalanceReport?: {
+        data?: Array<{
+          memberCode?: string | null;
+          memberId?: string | null;
+          memberName?: string | null;
+          memberType?: string | null;
+          membershipDate?: Record<'local' | 'en' | 'np', string> | null;
+          totalSavingBalance?: string | null;
+          totalLoan?: string | null;
+          totalShareBalance?: string | null;
+        } | null> | null;
+        summary?: {
+          totalLoan?: string | null;
+          totalSavingBalance?: string | null;
+          totalSavingBalanceType?: BalanceType | null;
+          totalShareBalance?: string | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
       } | null;
     };
   };
@@ -39164,6 +39250,52 @@ export const useGetMemberRegistrationReportQuery = <
       : ['getMemberRegistrationReport', variables],
     useAxios<GetMemberRegistrationReportQuery, GetMemberRegistrationReportQueryVariables>(
       GetMemberRegistrationReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberWiseBalanceReportDocument = `
+    query getMemberWiseBalanceReport($data: MemberBalanceFilter) {
+  report {
+    memberReport {
+      memberBalanceReport(data: $data) {
+        data {
+          memberCode
+          memberId
+          memberName
+          memberType
+          membershipDate
+          totalSavingBalance
+          totalLoan
+          totalShareBalance
+        }
+        summary {
+          totalLoan
+          totalSavingBalance
+          totalSavingBalanceType
+          totalShareBalance
+        }
+        error {
+          ...QueryError
+        }
+      }
+      __typename
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetMemberWiseBalanceReportQuery = <
+  TData = GetMemberWiseBalanceReportQuery,
+  TError = unknown
+>(
+  variables?: GetMemberWiseBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetMemberWiseBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberWiseBalanceReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getMemberWiseBalanceReport']
+      : ['getMemberWiseBalanceReport', variables],
+    useAxios<GetMemberWiseBalanceReportQuery, GetMemberWiseBalanceReportQueryVariables>(
+      GetMemberWiseBalanceReportDocument
     ).bind(null, variables),
     options
   );
