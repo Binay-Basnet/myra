@@ -46,7 +46,7 @@ export const ABBSStatusReport = () => {
     { enabled: !!filters }
   );
 
-  const abbsStatusReport = data?.report?.transactionReport?.financial?.abbsStatusReport?.data;
+  const abbsStatusReport = data?.report?.branchReport?.abbsStatusReport?.data;
 
   return (
     <Report
