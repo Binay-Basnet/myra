@@ -1,0 +1,7 @@
+# .graphqlrc.yml
+schema: './graphql.schema.json'
+documents: './src/lib/**/*.{graphql,js,ts,jsx,tsx}'
+extensions: 
+  endpoints: 
+    default:
+      url: 'https://myra-api.dev.myraerp.com/query'

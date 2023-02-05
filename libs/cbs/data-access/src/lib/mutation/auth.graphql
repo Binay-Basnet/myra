@@ -52,7 +52,7 @@
 
 mutation resetPassword($userId: String!, $newPassword: String!, $oldPassword: String!) {
   user {
-    resetPassword(data: { userId: $userId, newPassword: $newPassword, oldPassword: $oldPassword }) {
+    resetPassword(data: { userId:$userId, newPassword: $newPassword, oldPassword: $oldPassword }) {
       recordId
       error {
         ...MutationError

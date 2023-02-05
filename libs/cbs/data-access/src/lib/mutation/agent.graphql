@@ -3,6 +3,7 @@ mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput, $
     addMemberToAgent(agentId: $agentId, data: $data, override: $override) {
       data {
         id
+        
       }
       error {
         ...MutationError

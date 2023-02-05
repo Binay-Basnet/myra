@@ -9,5 +9,7 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "graphql-config.load.rootDir": "./libs/cbs/data-access",
+
   "githubPullRequests.ignoredPullRequestBranches": ["dev"]
 }

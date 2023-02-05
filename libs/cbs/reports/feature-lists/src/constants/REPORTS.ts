@@ -113,6 +113,7 @@ export enum Report {
 
   USER_LIST_REPORT = 'User List Report',
   SAVING_BALANCE_REPORT = 'Saving Balance [Individual]',
+  COPOMIS_IMPORT_MEMBER_REPORT = 'Copomis Import Member Report',
 }
 
 export const REPORTS = {
@@ -531,6 +532,11 @@ export const REPORTS = {
       id: '10',
       report: Report.USER_LIST_REPORT,
       link: 'users',
+    },
+    {
+      id: '11',
+      report: Report.COPOMIS_IMPORT_MEMBER_REPORT,
+      link: 'copomis-import-member',
     },
   ],
 };

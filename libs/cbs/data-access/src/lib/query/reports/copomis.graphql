@@ -1,0 +1,27 @@
+query getCopomisImportMemberReport($data: CopomisReportFilter) {
+  report {
+    memberReport {
+      copomisReport(data: $data) {
+        data {
+          address
+          memberNameEn
+          memberNameNp
+          memberRegistrationDate
+          membershipNo
+          shareCertificateNo
+          totalShare
+          castRecordId
+          citizenshipIssuedDate
+          citizenshipIssuedDistrictId
+          citizenshipNo
+          dateOfBirth
+          fatherHusbandName
+          genderRecordId
+          grandfatherName
+          maritalStatusId
+          castRecordId
+        }
+      }
+    }
+  }
+}
