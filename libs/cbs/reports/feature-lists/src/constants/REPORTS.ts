@@ -295,6 +295,16 @@ export const REPORTS = {
       report: Report.ACCOUNT_OPENING_REPORT,
       link: 'account-opening',
     },
+    {
+      id: '5.16',
+      report: Report.CLOSED_SAVING_ACCOUNT_STATEMENT,
+      link: 'closed-account-statement',
+    },
+    {
+      id: '5.17',
+      report: Report.SAVING_PRODUCT_BALANCE_REPORT,
+      link: 'saving-product-balance',
+    },
   ],
 
   [ReportGroup.LOAN]: [

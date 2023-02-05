@@ -243,3 +243,55 @@ query getFixedDepositReport($data: FixedDepositReportInput!) {
     }
   }
 }
+
+query getClosedSavingAccountStatement($data: ClosedSavingAccountInput!) {
+  report {
+    depositReport {
+      closedSavingAccountReport(data: $data) {
+        data {
+          address {
+            ...Address
+          }
+          closedDate
+          memberName
+          memberShipCode
+          membershipDate
+          serviceCenterName
+          entries {
+            balanceAmount
+            balanceType
+            date
+            transactionID
+            withdrawAmount
+            depositAmount
+            withdrawAmount
+            particular
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSavingProductBalance($data: SavingProductBalanceFilter!) {
+  report {
+    depositReport {
+      savingProductBalanceReport(data: $data) {
+        data {
+          accountTotal
+          balanceTotal
+          balanceTotalType
+          entries {
+            balanceType
+            code
+            id
+            name
+            nature
+            noOfAccounts
+            totalBalance
+          }
+        }
+      }
+    }
+  }
+}
