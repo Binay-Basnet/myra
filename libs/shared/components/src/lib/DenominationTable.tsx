@@ -45,6 +45,7 @@ type PurchaseProps = {
   cashPaid?: string;
   disableDenomination?: boolean;
   denominationTotalOnly?: boolean;
+  hideReturnAmount?: boolean;
 };
 
 export const DenominationTable = ({
@@ -55,6 +56,7 @@ export const DenominationTable = ({
   cashPaid,
   disableDenomination,
   denominationTotalOnly,
+  hideReturnAmount = false,
 }: PurchaseProps) => (
   <Box>
     {!disableDenomination && (
@@ -142,7 +144,7 @@ export const DenominationTable = ({
               gap="s8"
             >
               <Text>Total</Text>
-              <Text>Return</Text>
+              {!hideReturnAmount && <Text>Return</Text>}
               <Text>Grand Total</Text>
             </Box>
 
@@ -155,7 +157,7 @@ export const DenominationTable = ({
               gap="s8"
             >
               <Text>{denominationTotal}</Text>
-              <Text>{totalCashPaid ? returnAmount.toFixed(2) : 0}</Text>
+              {!hideReturnAmount && <Text>{totalCashPaid ? returnAmount.toFixed(2) : 0}</Text>}
               <Text>{(totalCashPaid && totalCashPaid.toFixed(2)) || 0}</Text>
             </Box>
           </Box>
@@ -183,7 +185,7 @@ export const DenominationTable = ({
             gap="s8"
           >
             <Text>Total</Text>
-            <Text>Return</Text>
+            {!hideReturnAmount && <Text>Return</Text>}
             <Text>Grand Total</Text>
           </Box>
 
@@ -196,7 +198,7 @@ export const DenominationTable = ({
             gap="s8"
           >
             <Text>{cashPaid || 0}</Text>
-            <Text>{returnAmount.toFixed(2) || 0}</Text>
+            {!hideReturnAmount && <Text>{returnAmount.toFixed(2) || 0}</Text>}
             <Text>{Number(totalCashPaid).toFixed(2) || 0}</Text>
           </Box>
         </Box>
