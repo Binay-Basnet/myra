@@ -1,6 +1,6 @@
 import { Box, Text } from '@myra-ui';
 
-import { amountConverter, quantityConverter } from '@coop/shared/utils';
+import { amountConverter, debitCreditConverter, quantityConverter } from '@coop/shared/utils';
 
 import { BalanceCard, RecentTransactions } from '../details';
 import { useCOAAccountDetails } from '../../hooks';
@@ -23,7 +23,10 @@ export const Overview = () => {
     },
     {
       title: 'Closing Balance',
-      value: amountConverter(accountDetails?.overview?.closingBalance ?? 0),
+      value: debitCreditConverter(
+        accountDetails?.overview?.closingBalance ?? 0,
+        accountDetails?.overview?.balanceType as string
+      ),
     },
   ];
 
