@@ -5,6 +5,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { LedgerList, useUpdateLedgerStatusMutation } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { debitCreditConverter } from '@coop/shared/utils';
 
 interface ILedgerListsProps {
   ledgers: LedgerList[];
@@ -44,7 +45,8 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
       },
       {
         header: 'Balance',
-        accessorFn: (row) => row?.balance as string,
+        accessorFn: (row) =>
+          debitCreditConverter(row?.balance as string, row?.balanceType as string),
       },
       {
         header: 'Status',
