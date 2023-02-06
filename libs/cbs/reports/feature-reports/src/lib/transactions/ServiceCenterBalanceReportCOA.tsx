@@ -105,7 +105,10 @@ export const ServiceCenterCOAWiseBalanceReport = () => {
               name="coaHead"
               label="Select COA Head"
               options={Object.keys(CoaHead).map((head) => ({
-                label: head,
+                label: head
+                  .replace(/_([0-9]*)/g, '')
+                  .replace(/([A-Z])/g, ' $1')
+                  .trim(),
                 value: CoaHead[head as unknown as keyof typeof CoaHead],
               }))}
             />
