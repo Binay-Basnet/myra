@@ -279,7 +279,7 @@ export const ReportInputs = <T extends FieldValues | null>({
 }) => {
   const { getValues, watch } = useFormContext<NonNullable<T>>();
 
-  const { isFilterShown, setIsFilterShown, defaultFilters, setFilters } = useReport();
+  const { isFilterShown, setIsFilterShown, setFilters } = useReport();
 
   // console.log(
   //   Object.keys(omit(getValues(), ['filter', 'period'])).some((field) => !!watch()[field])
@@ -299,7 +299,6 @@ export const ReportInputs = <T extends FieldValues | null>({
           onClick={() => {
             setFilters({
               ...getValues(),
-              ...defaultFilters,
             });
           }}
         >
