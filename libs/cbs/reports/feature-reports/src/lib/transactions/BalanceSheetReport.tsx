@@ -16,6 +16,7 @@ import {
 } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
+import { useIsCbs } from '@coop/shared/utils';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
   branchId: { label: string; value: string }[];
@@ -26,6 +27,7 @@ type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId
 
 export const BalanceSheetReport = () => {
   const [filters, setFilters] = useState<TrialSheetReportFilters | null>(null);
+  const { isCbs } = useIsCbs();
 
   const branchIDs =
     filters?.branchId && filters?.branchId.length !== 0
@@ -74,8 +76,16 @@ export const BalanceSheetReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Balance Sheet', link: '/reports/cbs/transactions/balance-sheet/new' },
+            {
+              label: 'Transaction Reports',
+              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+            },
+            {
+              label: 'Balance Sheet',
+              link: isCbs
+                ? '/reports/cbs/transactions/balance-sheet/new'
+                : '/accounting/reports/transactions/balance-sheet/new',
+            },
           ]}
         />
 
