@@ -10,13 +10,14 @@ import { localizedDate } from '@coop/cbs/utils';
 
 export interface PathBarProps {
   title: string;
+  closeLink?: string;
 }
 const transferTypeObj = {
   [TransferType.Self]: 'Self Transfer',
   [TransferType.Member]: 'Member to Member',
 };
 
-export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
+export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => {
   const router = useRouter();
 
   const id = router?.query?.['id'];
@@ -243,6 +244,7 @@ export const TransactionDetailPathBar = ({ title }: PathBarProps) => {
             name: memberDetail?.name ?? '',
           }}
           options={pageHeaderOptions}
+          closeLink={closeLink}
         />
       </Box>
 

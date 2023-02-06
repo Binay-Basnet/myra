@@ -219,7 +219,7 @@ export const LoanAgingStatementsReport = () => {
                 },
               },
               {
-                header: 'Remaining Principal',
+                header: 'Outstanding Balance',
                 accessorKey: 'remainingPrincipal',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.remainingPrincipalTotal || 0),

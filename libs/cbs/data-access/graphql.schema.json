@@ -15305,103 +15305,103 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "_10",
+            "name": "Total_Bank_Balance_90",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_20",
+            "name": "Total_Capital_Grant_Balance_50",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_30",
+            "name": "Total_Cash_and_Cash_Equivalent_Balance_80",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_40",
+            "name": "Total_Current_Liabilities_and_Payable_Balance_60",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_50",
+            "name": "Total_Expenses_Balance_150",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_60",
+            "name": "Total_Investment_Balance_100",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_70",
+            "name": "Total_Loan_Balance_110",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_80",
+            "name": "Total_Loan_Saving_Account_Balance_40",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_90",
+            "name": "Total_Non_Current_Assets_Balance_130",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_100",
+            "name": "Total_Non_Current_Liabilities_Balance_70",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_110",
+            "name": "Total_Off_Balance_Sheet_Balance_170",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_120",
+            "name": "Total_Other_Current_Assets_Balance_120",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_130",
+            "name": "Total_Other_Non_Current_Assets_Balance_140",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_140",
+            "name": "Total_Reserve_and_Surplus_Balance_20",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_150",
+            "name": "Total_Revinue_Balance_160",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_160",
+            "name": "Total_SavingDeposit_Balance_30",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "_170",
+            "name": "Total_Share_Capital_Balance_10",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -81198,6 +81198,18 @@
             "deprecationReason": null
           },
           {
+            "name": "disbursedAmount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "installmentFrequency",
             "description": null,
             "args": [],
@@ -124485,6 +124497,18 @@
                 "name": "ID",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lastLoggedIn",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Time",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
