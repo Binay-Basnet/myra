@@ -10,7 +10,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormDatePicker } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type VaultBalanceReportDataType = {
   value: string;
@@ -32,6 +32,7 @@ const cashOptions = ['1,000', '500', '100', '50', '25', '20', '10', '5', '2', '1
 
 export const VaultBalanceReport = () => {
   const [filters, setFilters] = useState<VaultBalanceReportFilter | null>(null);
+  const { isCbs } = useIsCbs();
 
   const { data, isFetching } = useGetVaultBalanceReportQuery(
     {
@@ -104,8 +105,16 @@ export const VaultBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Vault Balance Report', link: '/reports/cbs/transactions/vault-balance/new' },
+            {
+              label: 'Transaction Reports',
+              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+            },
+            {
+              label: 'Vault Balance Report',
+              link: isCbs
+                ? '/reports/cbs/transactions/vault-balance/new'
+                : '/accounting/reports/transactions/vault-balance/new',
+            },
           ]}
         />
         <Report.Inputs hideDate>

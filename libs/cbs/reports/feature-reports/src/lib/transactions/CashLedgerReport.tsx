@@ -14,7 +14,7 @@ import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup, FormSelect } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type Filter = {
   branchId: string;
@@ -30,6 +30,9 @@ type Filter = {
 };
 export const CashLedgersReport = () => {
   const [filters, setFilters] = useState<Filter | null>(null);
+
+  const { isCbs } = useIsCbs();
+
   const UserIds =
     filters?.filter?.userIds && filters?.filter?.userIds.length !== 0
       ? filters?.filter?.userIds?.map((t) => t.value)
@@ -77,8 +80,16 @@ export const CashLedgersReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Cash Ledger', link: '/reports/cbs/transactions/cash-ledger/new' },
+            {
+              label: 'Transaction Reports',
+              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+            },
+            {
+              label: 'Cash Ledger',
+              link: isCbs
+                ? '/reports/cbs/transactions/cash-ledger/new'
+                : '/accounting/reports/transactions/cash-ledger/new',
+            },
           ]}
         />
         <Report.Inputs>

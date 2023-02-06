@@ -17,7 +17,7 @@ import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedText, ROUTES } from '@coop/cbs/utils';
 import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
   branchId: { label: string; value: string }[];
@@ -41,6 +41,8 @@ export const TrialSheetReport = () => {
     filters?.branchId && filters?.branchId.length !== 0
       ? filters?.branchId?.map((t) => t.value)
       : [];
+
+  const { isCbs } = useIsCbs();
 
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
@@ -101,8 +103,16 @@ export const TrialSheetReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Trial Balance', link: '/reports/cbs/transactions/trial-sheet/new' },
+            {
+              label: 'Transaction Reports',
+              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+            },
+            {
+              label: 'Trial Balance',
+              link: isCbs
+                ? '/reports/cbs/transactions/trial-sheet/new'
+                : '/accounting/reports/transactions/trial-sheet/new',
+            },
           ]}
         />
 

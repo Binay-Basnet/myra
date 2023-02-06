@@ -3,6 +3,7 @@ export * from './constants/DEFAULT_PAGE_SIZE';
 export * from './constants/FEATURE_CODE';
 export * from './hooks/useChakraToast';
 export * from './hooks/useDebounce';
+export * from './hooks/useIsCbs';
 export * from './hooks/useReplace';
 export * from './hooks/useSnap';
 export * from './hooks/useTranslation';

@@ -1,13 +1,14 @@
 import { useMemo } from 'react';
 
+import { DetailsCard } from '@myra-ui';
+import { Table } from '@myra-ui/table';
+
 import {
   DateType,
   useAccountDetails,
   useAppSelector,
   useGetAvailableSlipsListQuery,
 } from '@coop/cbs/data-access';
-import { Table } from '@myra-ui/table';
-import { DetailsCard } from '@myra-ui';
 
 export const AvailableWithdrawSlipList = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);

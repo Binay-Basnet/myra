@@ -14,7 +14,7 @@ import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type DayBookTable = {
   accountHead: string;
@@ -35,6 +35,8 @@ type ReportFilter = {
 
 export const DayBookReport = () => {
   const [filters, setFilters] = useState<ReportFilter | null>(null);
+
+  const { isCbs } = useIsCbs();
 
   const branchIDs =
     filters?.branchId && filters?.branchId.length !== 0
@@ -111,8 +113,16 @@ export const DayBookReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Day Book Report', link: '/reports/cbs/transactions/day-book/new' },
+            {
+              label: 'Transaction Reports',
+              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+            },
+            {
+              label: 'Day Book Report',
+              link: isCbs
+                ? '/reports/cbs/transactions/day-book/new'
+                : '/accounting/reports/transactions/day-book/new',
+            },
           ]}
         />
 
