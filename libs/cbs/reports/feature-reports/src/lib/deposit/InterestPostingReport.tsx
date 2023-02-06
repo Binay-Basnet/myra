@@ -39,10 +39,14 @@ export const InterestPostingReport = () => {
 
   return (
     <Report
-      defaultFilters={{
-        accountId: accountId as string,
-        memberId: memberId as string,
-      }}
+      defaultFilters={
+        accountId
+          ? {
+              accountId: accountId as string,
+              memberId: memberId as string,
+            }
+          : null
+      }
       data={interestStatementReport as unknown as InterestPostingReportEntry[]}
       filters={filters}
       setFilters={setFilters}
