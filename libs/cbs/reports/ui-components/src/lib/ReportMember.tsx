@@ -32,13 +32,25 @@ export const ReportMember = ({ member, accountCloseDate }: ReportMemberProps) =>
 
             <GridItem>
               <Box display="flex" flexDir="column">
-                <Text fontSize="r1" color="gray.700" textTransform="capitalize" fontWeight="500">
+                <Text
+                  noOfLines={1}
+                  fontSize="r1"
+                  color="gray.700"
+                  textTransform="capitalize"
+                  fontWeight="500"
+                >
                   {member?.name?.local === '' ? '-' : member?.name?.local}
                 </Text>
-                <Text fontSize="r1" color="gray.700" fontWeight="500">
+                <Text noOfLines={1} fontSize="r1" color="gray.700" fontWeight="500">
                   {formatAddress(member?.address)}
                 </Text>
-                <Text fontSize="r1" color="gray.700" fontWeight="500" textTransform="capitalize">
+                <Text
+                  noOfLines={1}
+                  fontSize="r1"
+                  color="gray.700"
+                  fontWeight="500"
+                  textTransform="capitalize"
+                >
                   {branch?.name}
                 </Text>
               </Box>
@@ -68,14 +80,14 @@ export const ReportMember = ({ member, accountCloseDate }: ReportMemberProps) =>
 
             <GridItem>
               <Box display="flex" flexDir="column">
-                <Text fontSize="r1" color="gray.700" fontWeight="500">
+                <Text noOfLines={1} fontSize="r1" color="gray.700" fontWeight="500">
                   {member?.code ?? '-'}
                 </Text>
-                <Text fontSize="r1" color="gray.700" fontWeight="500">
+                <Text noOfLines={1} fontSize="r1" color="gray.700" fontWeight="500">
                   {localizedDate(member?.activeDate)}
                 </Text>
                 {accountCloseDate && (
-                  <Text fontSize="r1" color="gray.700" fontWeight="500">
+                  <Text noOfLines={1} fontSize="r1" color="gray.700" fontWeight="500">
                     {accountCloseDate}
                   </Text>
                 )}

@@ -406,7 +406,7 @@ export const COATable = ({ data, type, total }: ICOATableProps) => {
                 target="_blank"
                 href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
                   props.row?.original?.ledgerId
-                }&branch=${JSON.stringify(branchList?.map((branch) => branch?.node?.id))}`}
+                }&branch=${JSON.stringify(branchIDs)}`}
               >
                 <Button variant="link" color="primary.500">
                   {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}

@@ -161,6 +161,7 @@ query getCOAAccountDetails($id: String!, $branch: String) {
             dr
             cr
             closingBalance
+            balanceType
           }
           totalNoOfTxns
           recentTxns {

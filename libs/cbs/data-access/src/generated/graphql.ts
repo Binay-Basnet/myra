@@ -3960,6 +3960,7 @@ export type DepositLoanAccountResult = {
 export type DepositLoanAccountSearchFilter = {
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
+  memberCode?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
   objState?: InputMaybe<ObjState>;
   productID?: InputMaybe<Scalars['String']>;
@@ -9559,6 +9560,8 @@ export type LoanAccountSearchFilter = {
   accountName?: InputMaybe<Scalars['String']>;
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
+  memberCode?: InputMaybe<Scalars['String']>;
+  memberId?: InputMaybe<Scalars['String']>;
   memberName?: InputMaybe<Scalars['String']>;
   objectState?: InputMaybe<LoanObjState>;
   productID?: InputMaybe<Scalars['ID']>;
@@ -17245,6 +17248,14 @@ export type GetMemberLoanAccountsQueryVariables = Exact<{
 
 export type GetMemberLoanAccountsQuery = { loanAccount: { memberDisbursedLoanAccounts?: Array<{ id?: string | null, name?: string | null } | null> | null } };
 
+export type GetMemberLoanAccountSearchQueryVariables = Exact<{
+  filter?: InputMaybe<LoanAccountSearchFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+
+export type GetMemberLoanAccountSearchQuery = { loanAccount: { list?: { edges?: Array<{ node?: { id: string, LoanAccountName?: string | null } | null }> | null } | null } };
+
 export type GetLoanPreviewQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -17655,6 +17666,13 @@ export type GetLoanStatementReportQueryVariables = Exact<{
 
 export type GetLoanStatementReportQuery = { report: { loanReport: { loanStatementReport?: { memberId?: string | null, member?: { name?: Record<"local"|"en"|"np",string> | null, code: string, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, statement?: { meta?: { accountNo?: string | null, approvedAmount?: string | null, interestRate?: number | null, loanType?: string | null, loanSubtype?: string | null, issuedDate?: Record<"local"|"en"|"np",string> | null, installment?: number | null, charge?: string | null } | null, loanStatement?: Array<{ date?: Record<"local"|"en"|"np",string> | null, particular?: string | null, txnId?: string | null, disbursePrinciple?: string | null, paidPrinciple?: string | null, interestPaid?: string | null, finePaid?: string | null, discount?: string | null, remainingPrinciple?: string | null } | null> | null } | {} | null } | null } } };
 
+export type GetClosedLoanAccountReportQueryVariables = Exact<{
+  data?: InputMaybe<ClosedLoanAccountFilter>;
+}>;
+
+
+export type GetClosedLoanAccountReportQuery = { report: { loanReport: { closedLoanAccountStatementReport?: { data?: Array<{ date?: Record<"local"|"en"|"np",string> | null, disbursedPrincipal?: string | null, discount?: string | null, finePaid?: string | null, interestPaid?: string | null, particular?: string | null, principalPaid?: string | null, remainingPrincipal?: string | null, transactionId?: string | null } | null> | null, meta?: { address?: Record<"local"|"en"|"np",string> | null, memberCode?: string | null, memberId?: string | null, memberName?: string | null, noOfInstallments?: number | null, approvedAmount?: string | null, branchName?: string | null, interestRate?: number | null, loanAccountNo?: string | null, loanClosedDate?: Record<"local"|"en"|"np",string> | null, loanIssuedDate?: Record<"local"|"en"|"np",string> | null, loanProcessingCharge?: string | null, loanSubtype?: string | null, loanType?: string | null } | null, summary?: { remainingPrincipal?: string | null, totalDisbursedPrincipal?: string | null, totalDiscount?: string | null, totalFinePaid?: string | null, totalInterestPaid?: string | null, totalPrincipalPaid?: string | null } | null } | null } } };
+
 export type GetMemberClassificationReportQueryVariables = Exact<{
   data: MemberClassificationFilter;
 }>;
@@ -17983,7 +18001,7 @@ export type GetCoaAccountDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetCoaAccountDetailsQuery = { settings: { chartsOfAccount?: { coaAccountDetails?: { data?: { totalNoOfTxns?: number | null, meta?: { accountName?: string | null, accountId?: string | null, accountType?: string | null, createdDate?: Record<"local"|"en"|"np",string> | null, isLoanAccount?: boolean | null, isSavingAccount?: boolean | null, parentId?: string | null } | null, overview?: { openingBalance?: string | null, dr?: string | null, cr?: string | null, closingBalance?: string | null } | null, recentTxns?: Array<{ date?: Record<"local"|"en"|"np",string> | null, txnId?: string | null, txnType?: string | null, particulars?: string | null, total?: string | null } | null> | null } | null } | null } | null } };
+export type GetCoaAccountDetailsQuery = { settings: { chartsOfAccount?: { coaAccountDetails?: { data?: { totalNoOfTxns?: number | null, meta?: { accountName?: string | null, accountId?: string | null, accountType?: string | null, createdDate?: Record<"local"|"en"|"np",string> | null, isLoanAccount?: boolean | null, isSavingAccount?: boolean | null, parentId?: string | null } | null, overview?: { openingBalance?: string | null, dr?: string | null, cr?: string | null, closingBalance?: string | null, balanceType?: BalanceType | null } | null, recentTxns?: Array<{ date?: Record<"local"|"en"|"np",string> | null, txnId?: string | null, txnType?: string | null, particulars?: string | null, total?: string | null } | null> | null } | null } | null } | null } };
 
 export type GetCoaLeafNodeDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -26150,6 +26168,32 @@ export const useGetMemberLoanAccountsQuery = <
       useAxios<GetMemberLoanAccountsQuery, GetMemberLoanAccountsQueryVariables>(GetMemberLoanAccountsDocument).bind(null, variables),
       options
     );
+export const GetMemberLoanAccountSearchDocument = `
+    query getMemberLoanAccountSearch($filter: LoanAccountSearchFilter, $pagination: Pagination) {
+  loanAccount {
+    list(filter: $filter, paginate: $pagination) {
+      edges {
+        node {
+          id
+          LoanAccountName
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberLoanAccountSearchQuery = <
+      TData = GetMemberLoanAccountSearchQuery,
+      TError = unknown
+    >(
+      variables?: GetMemberLoanAccountSearchQueryVariables,
+      options?: UseQueryOptions<GetMemberLoanAccountSearchQuery, TError, TData>
+    ) =>
+    useQuery<GetMemberLoanAccountSearchQuery, TError, TData>(
+      variables === undefined ? ['getMemberLoanAccountSearch'] : ['getMemberLoanAccountSearch', variables],
+      useAxios<GetMemberLoanAccountSearchQuery, GetMemberLoanAccountSearchQueryVariables>(GetMemberLoanAccountSearchDocument).bind(null, variables),
+      options
+    );
 export const GetLoanPreviewDocument = `
     query getLoanPreview($id: String!) {
   loanAccount {
@@ -29150,6 +29194,64 @@ export const useGetLoanStatementReportQuery = <
       useAxios<GetLoanStatementReportQuery, GetLoanStatementReportQueryVariables>(GetLoanStatementReportDocument).bind(null, variables),
       options
     );
+export const GetClosedLoanAccountReportDocument = `
+    query getClosedLoanAccountReport($data: ClosedLoanAccountFilter) {
+  report {
+    loanReport {
+      closedLoanAccountStatementReport(data: $data) {
+        data {
+          date
+          disbursedPrincipal
+          discount
+          finePaid
+          interestPaid
+          particular
+          principalPaid
+          remainingPrincipal
+          transactionId
+        }
+        meta {
+          address
+          memberCode
+          memberId
+          memberName
+          noOfInstallments
+          approvedAmount
+          branchName
+          interestRate
+          loanAccountNo
+          loanAccountNo
+          loanClosedDate
+          loanIssuedDate
+          loanProcessingCharge
+          loanSubtype
+          loanType
+        }
+        summary {
+          remainingPrincipal
+          totalDisbursedPrincipal
+          totalDiscount
+          totalFinePaid
+          totalInterestPaid
+          totalPrincipalPaid
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetClosedLoanAccountReportQuery = <
+      TData = GetClosedLoanAccountReportQuery,
+      TError = unknown
+    >(
+      variables?: GetClosedLoanAccountReportQueryVariables,
+      options?: UseQueryOptions<GetClosedLoanAccountReportQuery, TError, TData>
+    ) =>
+    useQuery<GetClosedLoanAccountReportQuery, TError, TData>(
+      variables === undefined ? ['getClosedLoanAccountReport'] : ['getClosedLoanAccountReport', variables],
+      useAxios<GetClosedLoanAccountReportQuery, GetClosedLoanAccountReportQueryVariables>(GetClosedLoanAccountReportDocument).bind(null, variables),
+      options
+    );
 export const GetMemberClassificationReportDocument = `
     query getMemberClassificationReport($data: MemberClassificationFilter!) {
   report {
@@ -31007,6 +31109,7 @@ export const GetCoaAccountDetailsDocument = `
             dr
             cr
             closingBalance
+            balanceType
           }
           totalNoOfTxns
           recentTxns {

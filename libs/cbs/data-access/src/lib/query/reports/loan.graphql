@@ -127,3 +127,48 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
     }
   }
 }
+
+query getClosedLoanAccountReport($data: ClosedLoanAccountFilter) {
+  report {
+    loanReport {
+      closedLoanAccountStatementReport(data: $data) {
+        data {
+          date
+          disbursedPrincipal
+          discount
+          finePaid
+          interestPaid
+          particular
+          principalPaid
+          remainingPrincipal
+          transactionId
+        }
+        meta {
+          address
+          memberCode
+          memberId
+          memberName
+          noOfInstallments
+          approvedAmount
+          branchName
+          interestRate
+          loanAccountNo
+          loanAccountNo
+          loanClosedDate
+          loanIssuedDate
+          loanProcessingCharge
+          loanSubtype
+          loanType
+        }
+        summary {
+          remainingPrincipal
+          totalDisbursedPrincipal
+          totalDiscount
+          totalFinePaid
+          totalInterestPaid
+          totalPrincipalPaid
+        }
+      }
+    }
+  }
+}

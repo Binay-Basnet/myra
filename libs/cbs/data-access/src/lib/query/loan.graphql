@@ -382,6 +382,19 @@ query getMemberLoanAccounts($memberId: ID!) {
   }
 }
 
+query getMemberLoanAccountSearch($filter: LoanAccountSearchFilter, $pagination: Pagination) {
+  loanAccount {
+    list(filter: $filter, paginate: $pagination) {
+      edges {
+        node {
+          id
+          LoanAccountName
+        }
+      }
+    }
+  }
+}
+
 query getLoanPreview($id: String!) {
   loanAccount {
     loanPreview(loanAccountId: $id) {

@@ -29,7 +29,10 @@ export const LeafNodeOverview = () => {
     },
     {
       title: 'Closing Balance',
-      value: debitCreditConverter(leafNodeData?.closingBalance, leafNodeData?.balanceType),
+      value: debitCreditConverter(
+        leafNodeData?.closingBalance ?? 0,
+        leafNodeData?.balanceType as string
+      ),
     },
   ];
 
