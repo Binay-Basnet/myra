@@ -5,29 +5,35 @@ import { GridItem } from '@myra-ui';
 
 import {
   SavingStatementReportSettings,
-  useGetMemberLoanAccountsQuery,
+  useGetMemberLoanAccountSearchQuery,
 } from '@coop/cbs/data-access';
 import { FormMemberSelect, FormSelect } from '@coop/shared/form';
 
 import { ReportDateRange } from '../components';
 
-export const LoanReportInputs = () => {
+interface LoanReportInputProps {
+  isClosed?: boolean;
+  accountName?: string;
+}
+
+export const LoanReportInputs = ({ isClosed, accountName }: LoanReportInputProps) => {
   const methods = useFormContext<SavingStatementReportSettings>();
   const router = useRouter();
   const loanAccountId = router.query?.['loanAccountId'];
 
   const memberId = methods.watch('memberId');
 
-  const { data: loanAccountData } = useGetMemberLoanAccountsQuery(
-    { memberId },
+  const { data: loanAccountData } = useGetMemberLoanAccountSearchQuery(
+    {
+      filter: { memberId, objectState: isClosed ? 'COMPLETED' : 'APPROVED' },
+      pagination: { first: -1, after: '' },
+    },
     { enabled: !!memberId }
   );
-  const loanAccounts = loanAccountData?.loanAccount?.memberDisbursedLoanAccounts?.map(
-    (account) => ({
-      label: account?.name as string,
-      value: account?.id as string,
-    })
-  ) as { label: string; value: string }[];
+  const loanAccounts = loanAccountData?.loanAccount?.list?.edges?.map((account) => ({
+    label: account?.node?.LoanAccountName as string,
+    value: account?.node?.id as string,
+  })) as { label: string; value: string }[];
 
   return (
     <>
@@ -36,7 +42,7 @@ export const LoanReportInputs = () => {
       </GridItem>
       <GridItem colSpan={1}>
         <FormSelect
-          name="loanAccountId"
+          name={accountName || 'loanAccountId'}
           options={loanAccounts}
           label="Select Account"
           isDisabled={!!loanAccountId}
