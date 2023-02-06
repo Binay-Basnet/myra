@@ -10730,6 +10730,7 @@ export type MemberAccountMinView = {
   interestBooked?: Maybe<Scalars['String']>;
   interestEarned?: Maybe<Scalars['String']>;
   interestRate?: Maybe<Scalars['String']>;
+  objState?: Maybe<ObjState>;
   productName?: Maybe<Scalars['String']>;
   productType?: Maybe<Scalars['String']>;
   subscriptionDate?: Maybe<Scalars['Localized']>;

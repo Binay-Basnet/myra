@@ -459,23 +459,8 @@ export const REPORTS = {
       link: 'profit-and-loss',
     },
     {
-      id: '7.2',
-      report: Report.TRANSACTION_ABBS_STATUS_REPORT,
-      link: 'abbs-status',
-    },
-    {
       id: '7.5',
       report: Report.TRANSACTION_APPROPRIATE_OF_PROFIT,
-    },
-    {
-      id: '7.2.2',
-      report: Report.TRANSACTION_SERVICE_CENTER_BALANCE_REPORT,
-      link: 'service-center-balance',
-    },
-    {
-      id: '7.2.2',
-      report: Report.TRANSACTION_SERVICE_CENTER_COA_WISE_BALANCE,
-      link: 'service-center-coa-wise-balance',
     },
     {
       id: '7.2.5.b',
@@ -543,12 +528,19 @@ export const REPORTS = {
       link: 'list-report',
     },
     {
-      id: '8',
-      report: Report.BRANCH_WISE_FINANCIAL_REPORT,
+      id: '7.2',
+      report: Report.TRANSACTION_ABBS_STATUS_REPORT,
+      link: 'abbs-status',
     },
     {
-      id: '8',
-      report: Report.BRANCH_WISE_TARGET_VS_ACHIEVEMENT,
+      id: '7.2.2',
+      report: Report.TRANSACTION_SERVICE_CENTER_BALANCE_REPORT,
+      link: 'service-center-balance',
+    },
+    {
+      id: '7.2.2',
+      report: Report.TRANSACTION_SERVICE_CENTER_COA_WISE_BALANCE,
+      link: 'service-center-coa-wise-balance',
     },
   ],
 
