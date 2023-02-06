@@ -3960,6 +3960,7 @@ export type DepositLoanAccountResult = {
 export type DepositLoanAccountSearchFilter = {
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
+  memberCode?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
   objState?: InputMaybe<ObjState>;
   productID?: InputMaybe<Scalars['String']>;
@@ -9559,6 +9560,8 @@ export type LoanAccountSearchFilter = {
   accountName?: InputMaybe<Scalars['String']>;
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
+  memberCode?: InputMaybe<Scalars['String']>;
+  memberId?: InputMaybe<Scalars['String']>;
   memberName?: InputMaybe<Scalars['String']>;
   objectState?: InputMaybe<LoanObjState>;
   productID?: InputMaybe<Scalars['ID']>;
