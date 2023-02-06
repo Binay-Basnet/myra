@@ -189,12 +189,14 @@ query getCOALeafNodeDetails($id: ID!, $branch: [String]) {
           drAmount
           crAmount
           closingBalance
+          balanceType
           ledgers {
             accountCode
             date
             ledgerName
             serviceCenter
             balance
+            balanceType
             status
           }
         }
@@ -222,6 +224,7 @@ query getLedgerList($id: ID!, $pagination: Pagination, $filter: COALedgerListFil
             ledgerName
             serviceCenter
             balance
+            balanceType
             status
           }
           cursor

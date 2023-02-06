@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Button, Text } from '@myra-ui';
 
 import { LedgerList } from '@coop/cbs/data-access';
-import { amountConverter, quantityConverter } from '@coop/shared/utils';
+import { amountConverter, debitCreditConverter, quantityConverter } from '@coop/shared/utils';
 
 import { BalanceCard } from '../details';
 import { LedgerLists } from '../details/LedgerList';
@@ -29,7 +29,7 @@ export const LeafNodeOverview = () => {
     },
     {
       title: 'Closing Balance',
-      value: leafNodeData?.closingBalance as string,
+      value: debitCreditConverter(leafNodeData?.closingBalance, leafNodeData?.balanceType),
     },
   ];
 

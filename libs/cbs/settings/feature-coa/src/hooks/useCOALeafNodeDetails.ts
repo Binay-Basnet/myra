@@ -11,7 +11,7 @@ export const useCOALeafNodeDetails = () => {
   const { data: leafNodeQueryData } = useGetCoaLeafNodeDetailsQuery(
     {
       id: id as string,
-      branch: JSON.parse(branch as string),
+      branch: branch ? JSON.parse(branch as string) : [],
     },
     {
       enabled: !!id,

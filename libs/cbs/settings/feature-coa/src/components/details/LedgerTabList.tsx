@@ -5,6 +5,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useUpdateLedgerStatusMutation } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { debitCreditConverter } from '@coop/shared/utils';
 
 import { useCOALeafNodeDetails } from '../../hooks';
 
@@ -46,7 +47,8 @@ export const LedgerTabList = () => {
       },
       {
         header: 'Balance',
-        accessorFn: (row) => row?.node?.balance as string,
+        accessorFn: (row) =>
+          debitCreditConverter(row?.node?.balance as string, row?.node?.balanceType as string),
       },
       {
         header: 'Status',
