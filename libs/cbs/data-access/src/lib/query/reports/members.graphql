@@ -186,6 +186,8 @@ query getMemberWiseBalanceReport($data: MemberBalanceFilter) {
           totalSavingBalance
           totalLoan
           totalShareBalance
+          branchName
+          totalSavingBalanceType
         }
         summary {
           totalLoan

@@ -44,9 +44,9 @@ export const CopomisImportMemberReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Report Group', link: '/reports/cbs/others' },
+            { label: 'Other Report', link: '/reports/cbs/others' },
             {
-              label: 'Saving Balance Report',
+              label: 'Copomis Import Member Report',
               link: '/reports/cbs/others/copomis-import-member/new',
             },
           ]}
@@ -82,7 +82,7 @@ export const CopomisImportMemberReport = () => {
               {
                 header: 'Membership Registration Date',
                 accessorFn: (row) => localizedDate(row?.memberRegistrationDate),
-                cell: (props) => localizedDate(props.row.original.dateOfBirth),
+                cell: (props) => localizedDate(props.row.original.memberRegistrationDate),
               },
               {
                 header: 'Gender Record',
