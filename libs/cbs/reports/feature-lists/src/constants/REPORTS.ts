@@ -1,7 +1,6 @@
 export enum ReportGroup {
   ORGANIZATIONS = 'Organizations',
   OTHERS = 'Others',
-
   MEMBERS = 'Members',
   SHARE = 'Share',
   SAVINGS = 'Savings',

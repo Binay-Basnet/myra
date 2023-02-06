@@ -54,6 +54,7 @@ export interface MemberCardProps {
         type: string | undefined;
         ID: string | undefined;
         currentBalance?: string | number;
+        actualBalance?: string | number;
         minimumBalance?: string | number;
         interestAccured?: string | number;
         guaranteeBalance?: string | number;
@@ -401,13 +402,21 @@ export const MemberCard = ({
                   {accountInfo.currentBalance && (
                     <Box display="flex" justifyContent="space-between">
                       <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
-                        Current Balance
+                        Available Balance
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {amountConverter(accountInfo.currentBalance)}
                       </Text>
                     </Box>
                   )}
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
+                      Actual Balance
+                    </Text>
+                    <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
+                      {amountConverter(accountInfo.actualBalance ?? 0)}
+                    </Text>
+                  </Box>
                   {accountInfo.minimumBalance && (
                     <Box display="flex" justifyContent="space-between">
                       <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">

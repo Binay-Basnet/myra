@@ -160,6 +160,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
                 returnAmount={returnAmount}
                 denominationTotal={denominationTotal}
                 disableDenomination={disableDenomination}
+                hideReturnAmount
               />
             </GridItem>
           </>
