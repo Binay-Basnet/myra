@@ -10,6 +10,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -105,6 +106,11 @@ export const MemberBalanceReport = () => {
                 {
                   header: 'Member Type',
                   accessorKey: 'memberType',
+                  cell: (props) => (
+                    <Box textTransform="capitalize">
+                      {props.row.original.memberType?.toLowerCase()?.replace(/_/g, ' ')}
+                    </Box>
+                  ),
                   meta: {
                     Footer: {
                       display: 'none',
@@ -114,6 +120,7 @@ export const MemberBalanceReport = () => {
                 {
                   header: 'Membership Date',
                   accessorFn: (row) => row?.membershipDate,
+                  cell: ({ row }) => localizedDate(row.original?.membershipDate),
                   meta: {
                     Footer: {
                       display: 'none',
@@ -141,17 +148,26 @@ export const MemberBalanceReport = () => {
                       memberBalanceReportSummary?.totalSavingBalance || '0.00',
                       memberBalanceReportSummary?.totalSavingBalanceType || ''
                     ),
+                  meta: {
+                    isNumeric: true,
+                  },
                 },
                 {
                   header: 'Total Loan',
                   accessorFn: (row) => amountConverter(row.totalLoan || '0.00'),
                   footer: () => amountConverter(memberBalanceReportSummary?.totalLoan || '0.00'),
+                  meta: {
+                    isNumeric: true,
+                  },
                 },
                 {
                   header: 'Total Share Balance',
                   accessorFn: (row) => amountConverter(row.totalShareBalance || '0.00'),
                   footer: () =>
                     amountConverter(memberBalanceReportSummary?.totalShareBalance || '0.00'),
+                  meta: {
+                    isNumeric: true,
+                  },
                 },
               ]}
               showFooter

@@ -163,7 +163,7 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
                     textAlign={header.column.columns.length !== 0 ? 'center' : 'left'}
                     position="sticky"
                     top={(header.depth - 1) * 35}
-                    zIndex="docked"
+                    zIndex={1}
                     // position={index === 0 ? 'sticky' : 'static'}
                     // top={0}
                     // left={0}
