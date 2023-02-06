@@ -17,6 +17,7 @@ import {
 } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormDatePicker, FormRadioGroup } from '@coop/shared/form';
+import { useIsCbs } from '@coop/shared/utils';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter' | 'branchId'> & {
   branchId: { label: string; value: string }[];
@@ -31,6 +32,8 @@ export const ProfitAndLossReport = () => {
     filters?.branchId && filters?.branchId.length !== 0
       ? filters?.branchId?.map((t) => t.value)
       : [];
+
+  const { isCbs } = useIsCbs();
 
   const { data, isFetching } = useGetTrialSheetReportQuery(
     {
@@ -73,8 +76,16 @@ export const ProfitAndLossReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Profit and Loss', link: '/reports/cbs/transactions/profile-and-loss/new' },
+            {
+              label: 'Transaction Reports',
+              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+            },
+            {
+              label: 'Profit and Loss',
+              link: isCbs
+                ? '/reports/cbs/transactions/profile-and-loss/new'
+                : '/accounting/reports/transactions/profit-and-loss/new',
+            },
           ]}
         />
 

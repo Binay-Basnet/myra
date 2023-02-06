@@ -10,6 +10,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
+import { useIsCbs } from '@coop/shared/utils';
 
 type AbbsReportFilters = Omit<AbbsReportFilter, 'branchId' | 'active' | 'abbs'> & {
   branchId: {
@@ -26,6 +27,8 @@ const activeIactive = [
 
 export const ABBSStatusReport = () => {
   const [filters, setFilters] = useState<AbbsReportFilters | null>(null);
+
+  const { isCbs } = useIsCbs();
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
@@ -60,10 +63,15 @@ export const ABBSStatusReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
+            {
+              label: 'Transaction Reports',
+              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+            },
             {
               label: 'ABBS Report',
-              link: '/reports/cbs/transactions/abbs-status/new',
+              link: isCbs
+                ? '/reports/cbs/transactions/abbs-status/new'
+                : '/accounting/reports/transactions/abbs-status/new',
             },
           ]}
         />

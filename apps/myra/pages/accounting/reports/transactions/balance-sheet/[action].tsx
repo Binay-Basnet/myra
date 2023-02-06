@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
-import { BalanceSheetReport } from '@coop/cbs/reports';
 import { AccountingLayout } from '@coop/accounting/ui-layouts';
+import { BalanceSheetReport } from '@coop/cbs/reports';
 
 const NewShareStatementReport = () => <BalanceSheetReport />;
 

@@ -11,7 +11,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormAmountFilter, FormBranchSelect } from '@coop/shared/form';
-import { amountConverter, debitCreditConverter } from '@coop/shared/utils';
+import { amountConverter, debitCreditConverter, useIsCbs } from '@coop/shared/utils';
 
 type BankGlBalanceFilters = Omit<BankGlBalanceFilter, 'branchId'> & {
   branchId: {
@@ -22,6 +22,7 @@ type BankGlBalanceFilters = Omit<BankGlBalanceFilter, 'branchId'> & {
 
 export const BankGLBalanceReport = () => {
   const [filters, setFilters] = useState<BankGlBalanceFilters | null>(null);
+  const { isCbs } = useIsCbs();
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
@@ -50,10 +51,15 @@ export const BankGLBalanceReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
+            {
+              label: 'Transaction Reports',
+              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+            },
             {
               label: 'Bank Gl Balance Report',
-              link: '/reports/cbs/transactions/bankGL-balance/new',
+              link: isCbs
+                ? '/reports/cbs/transactions/bankGL-balance/new'
+                : '/accounting/reports/transactions/bankGL-balance/new',
             },
           ]}
         />

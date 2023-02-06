@@ -13,7 +13,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type Filter = {
   branchId: string;
@@ -32,6 +32,8 @@ export const TellerReport = () => {
     filters?.filter?.tellerId && filters?.filter?.tellerId.length !== 0
       ? filters?.filter?.tellerId?.map((t) => t.value)
       : null;
+
+  const { isCbs } = useIsCbs();
 
   const { data: userListData } = useGetTellerListQuery();
   const userList = userListData?.settings?.myraUser?.tellers;
@@ -69,8 +71,16 @@ export const TellerReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Teller Report', link: '/reports/cbs/transactions/teller/new' },
+            {
+              label: 'Transaction Reports',
+              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+            },
+            {
+              label: 'Teller Report',
+              link: isCbs
+                ? '/reports/cbs/transactions/teller/new'
+                : '/accounting/reports/transactions/teller/new',
+            },
           ]}
         />
         <Report.Inputs>
