@@ -8,7 +8,10 @@ import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 
 const DepositDetailsPage = () => (
   <>
-    <TransactionDetailPathBar title="Transaction List" />
+    <TransactionDetailPathBar
+      title="Transaction List"
+      closeLink="/cbs/transactions/all-transactions/list"
+    />
     <AllTransactionDetailPage />
   </>
 );

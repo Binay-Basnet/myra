@@ -632,6 +632,8 @@ query getLoanAccountDetails(
           tenureUnit
           linkedAccountId
           linkedAccountName
+          installmentFrequency
+          disbursedAmount
         }
         loanSchedule {
           installments {

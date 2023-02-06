@@ -70,6 +70,8 @@ export const useLoanAccountDetailHooks = () => {
         'N/A',
     },
     { label: 'Linked Account', value: generalInfo?.linkedAccountName ?? 'N/A' },
+    { label: 'Installment Frequency', value: generalInfo?.installmentFrequency ?? 'N/A' },
+    { label: 'Disbursed Amount', value: generalInfo?.disbursedAmount ?? 'N/A' },
   ];
   const productId = generalInfo?.productId;
 

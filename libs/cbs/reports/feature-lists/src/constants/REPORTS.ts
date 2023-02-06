@@ -444,6 +444,11 @@ export const REPORTS = {
 
   [ReportGroup.TRANSACTION_REPORT]: [
     {
+      id: '7.8',
+      report: Report.TRANSACTION_DAY_BOOK_REPORT,
+      link: 'day-book',
+    },
+    {
       id: '7.1',
       report: Report.TRANSACTION_TRIAL_SHEET,
       link: 'trial-sheet',
@@ -503,11 +508,6 @@ export const REPORTS = {
       id: '7.7',
       report: Report.TRANSACTION_BANK_GL_REPORT,
       link: 'bank-gl-statement',
-    },
-    {
-      id: '7.8',
-      report: Report.TRANSACTION_DAY_BOOK_REPORT,
-      link: 'day-book',
     },
   ],
   [ReportGroup.BRANCHLESS_BANKING]: [
