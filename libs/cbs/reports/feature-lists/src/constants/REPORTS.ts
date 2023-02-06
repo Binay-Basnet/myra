@@ -375,6 +375,11 @@ export const REPORTS = {
       id: '6.15',
       report: Report.LOAN_UTILIZATION_INSPECTION,
     },
+    {
+      id: '6.16',
+      report: Report.CLOSED_LOAN_ACCOUNT_STATEMENT,
+      link: 'closed-loan-account-statement',
+    },
   ],
 
   [ReportGroup.MOBILE_BANKING]: [
