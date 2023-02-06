@@ -87,6 +87,9 @@ export const CBSLoanRepaymentList = () => {
       },
       {
         header: 'Amount',
+        meta: {
+          isNumeric: true,
+        },
         accessorFn: (row) => amountConverter(row?.node?.amount ?? 0),
       },
 

@@ -7,7 +7,7 @@ import { ShareBalanceTable, SharePageLayout } from '@coop/myra/components';
 
 const ShareBalance = () => (
   <Can I="SHOW_IN_MENU" a="CBS_SHARE_SHARE_BALANCE" showError>
-    <ShareBalanceTable />{' '}
+    <ShareBalanceTable />
   </Can>
 );
 

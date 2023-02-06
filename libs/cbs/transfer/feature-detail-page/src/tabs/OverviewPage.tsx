@@ -15,14 +15,29 @@ type OverviewProps = {
 export const OverviewPage = ({ data, cashTransitData, summary }: OverviewProps) => (
   <>
     <TabHeader heading="Overview" />
-    {data && <TxnDetails list={summary} status={data?.transferState} />}
+    {data && (
+      <>
+        <TxnDetails list={summary} status={data?.transferState} />
+        {data?.note && <Note note={data?.note} />}
+        <GlTransaction
+          data={data?.glTransaction}
+          totalDebit={String(amountConverter(data?.totalDebit ?? 0))}
+          totalCredit={String(amountConverter(data?.totalCredit ?? 0))}
+        />
+      </>
+    )}
 
-    {cashTransitData && <TxnDetails list={summary} status={cashTransitData?.transitStatus} />}
-    {data?.note && <Note note={data?.note} />}
-    <GlTransaction
-      data={data?.glTransaction}
-      totalDebit={String(amountConverter(data?.totalDebit ?? 0))}
-      totalCredit={String(amountConverter(data?.totalCredit ?? 0))}
-    />
+    {cashTransitData && (
+      <>
+        <TxnDetails list={summary} status={cashTransitData?.transitStatus} />
+        {cashTransitData?.note && <Note note={cashTransitData?.note} />}
+
+        <GlTransaction
+          data={cashTransitData?.glTransaction}
+          totalDebit={String(amountConverter(cashTransitData?.totalDebit ?? 0))}
+          totalCredit={String(amountConverter(cashTransitData?.totalCredit ?? 0))}
+        />
+      </>
+    )}
   </>
 );

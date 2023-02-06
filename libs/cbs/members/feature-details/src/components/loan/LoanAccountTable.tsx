@@ -15,11 +15,23 @@ interface ILoanPaymentScheduleTableProps {
         interestRate: string | null | undefined;
         accountNumber: string | null | undefined;
       }[];
-
+  // memberName?: string;
+  // accountNumber?: string;
+  // contactNo?: string;
+  accountName?: string;
   //   data: MemberPaymentView[] | null | undefined;
 }
 
-export const LoanTable = ({ data }: ILoanPaymentScheduleTableProps) => {
+export const LoanTable = ({
+  data,
+}: // memberName,
+// accountNumber,
+// contactNo,
+// accountName,
+ILoanPaymentScheduleTableProps) => {
+  // const { onClose: modalOnClose, isOpen, onToggle } = useDisclosure();
+  // const [qrData, setQrData] = useState();
+  // console.log({ qrData });
   const columns = React.useMemo<Column<typeof data[0]>[]>(
     () => [
       {
@@ -54,9 +66,40 @@ export const LoanTable = ({ data }: ILoanPaymentScheduleTableProps) => {
           isNumeric: true,
         },
       },
+      // {
+      //   header: 'QR',
+      //   accessorKey: 'interestRate',
+      //   cell: (props) => (
+      //     <IconButton
+      //       aria-label="qr-button"
+      //       cursor="pointer"
+      //       as={IoQrCode}
+      //       size="xs"
+      //       colorScheme="gray"
+      //       onClick={() => {
+      //         onToggle();
+      //         setQrData({ name: props?.row?.original?.accountName });
+      //       }}
+      //     />
+      //   ),
+      // },
     ],
     []
   );
 
-  return <Table<typeof data[0]> size="report" isStatic data={data ?? []} columns={columns} />;
+  return (
+    <>
+      {/* <AccountQRModal
+        account={{
+          name: memberName,
+          accountNo: accountNumber,
+          phoneNo: contactNo ?? 'N/A',
+          accountName,
+        }}
+        open={isOpen}
+        onClose={modalOnClose}
+      /> */}
+      <Table<typeof data[0]> isDetailPageTable isStatic data={data ?? []} columns={columns} />
+    </>
+  );
 };

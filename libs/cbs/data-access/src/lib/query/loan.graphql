@@ -229,6 +229,7 @@ query getLoanList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
           member {
             id
             name
+            code
             profilePicUrl
           }
           product {

@@ -348,6 +348,7 @@ query getAccountTableListMinimal($paginate: Pagination, $filter: DepositLoanAcco
           member {
             id
             name
+            code
             profilePicUrl
           }
           product {

@@ -18326,6 +18326,7 @@ export type GetAccountTableListMinimalQuery = {
           member?: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
+            code: string;
             profilePicUrl?: string | null;
           } | null;
           product: {
@@ -21050,6 +21051,7 @@ export type GetLoanListQuery = {
           member: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
+            code: string;
             profilePicUrl?: string | null;
           };
           product: { productName: string };
@@ -23460,6 +23462,7 @@ export type GetLoanBalanceReportQuery = {
           loanAccountId?: string | null;
           memberName?: Record<'local' | 'en' | 'np', string> | null;
           productName?: string | null;
+          productId?: string | null;
           productCode?: string | null;
           outstandingBalance?: string | null;
           remainingBalance?: string | null;
@@ -32704,6 +32707,7 @@ export const GetAccountTableListMinimalDocument = `
           member {
             id
             name
+            code
             profilePicUrl
           }
           product {
@@ -36216,6 +36220,7 @@ export const GetLoanListDocument = `
           member {
             id
             name
+            code
             profilePicUrl
           }
           product {
@@ -39351,6 +39356,7 @@ export const GetLoanBalanceReportDocument = `
           loanAccountId
           memberName
           productName
+          productId
           productCode
           outstandingBalance
           remainingBalance

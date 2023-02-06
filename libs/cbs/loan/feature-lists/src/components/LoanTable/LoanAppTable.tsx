@@ -37,6 +37,9 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
       {
         header: 'Account Name',
         accessorFn: (row) => row?.node?.LoanAccountName,
+        meta: {
+          width: '25%',
+        },
       },
       {
         header: 'Product Name',
@@ -73,6 +76,9 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
       },
       {
         header: 'Applied Amount',
+        meta: {
+          isNumeric: true,
+        },
         accessorFn: (row) => amountConverter(row?.node?.appliedLoanAmount as string),
       },
       {

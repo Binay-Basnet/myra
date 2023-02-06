@@ -91,11 +91,17 @@ export const DepositList = () => {
       {
         header: t['depositListPaymentMode'],
         accessorFn: (row) => row?.node?.paymentMode,
+        meta: {
+          width: '25%',
+        },
       },
       {
         header: t['depositListDepositedBy'],
         accessorFn: (row) =>
           row?.node?.processedBy ? depositedBy[row?.node?.processedBy as DepositedBy] : '',
+        meta: {
+          width: '25%',
+        },
       },
       {
         header: t['depositListAmount'],

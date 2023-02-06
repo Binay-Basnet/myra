@@ -82,19 +82,28 @@ export const WithdrawList = () => {
         ),
 
         meta: {
-          width: '60%',
+          width: '50%',
         },
       },
       {
         header: t['withdrawListPaymentMode'],
         accessorFn: (row) => row?.node?.paymentMode,
+        meta: {
+          width: '25%',
+        },
       },
       {
         header: t['withdrawListWithdrawBy'],
         accessorFn: (row) => row?.node?.name?.local,
+        meta: {
+          width: '25%',
+        },
       },
       {
         header: t['withdrawListAmount'],
+        meta: {
+          isNumeric: true,
+        },
         accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
       },
 

@@ -53,7 +53,9 @@ export const CashTransferList = () => {
       },
       {
         header: 'Cash Amount',
-
+        meta: {
+          isNumeric: true,
+        },
         accessorFn: (row) => amountConverter(row?.node?.amount as string),
       },
       // {

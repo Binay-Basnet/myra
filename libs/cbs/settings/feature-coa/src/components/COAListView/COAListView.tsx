@@ -88,6 +88,7 @@ export const COAListView = () => {
         accessorFn: (row) => amountConverter(row?.node?.balance as string),
         meta: {
           width: '200px',
+          isNumeric: true,
         },
       },
 

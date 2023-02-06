@@ -36,6 +36,10 @@ export const LoanClosedAccountTable = ({
         cell: (props) => localizedDate(props.row?.original?.node?.closedDate),
       },
       {
+        header: 'Member Code',
+        accessorFn: (row) => row?.node?.member?.code,
+      },
+      {
         header: 'Loan ID',
         accessorFn: (row) => row?.node?.id,
       },

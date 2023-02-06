@@ -29,10 +29,16 @@ export const AccountingFeatureBankAccountsList = () => {
       {
         accessorFn: (row) => row?.node?.displayName,
         header: 'Account Name',
+        meta: {
+          width: '15%',
+        },
       },
       {
         accessorFn: (row) => row?.node?.bankName,
         header: t['bankAccountsBankName'],
+        meta: {
+          width: '25%',
+        },
       },
       {
         accessorFn: (row) => row?.node?.branchName,
@@ -41,6 +47,9 @@ export const AccountingFeatureBankAccountsList = () => {
 
       {
         header: t['bankAccountsBankBalance'],
+        meta: {
+          isNumeric: true,
+        },
         accessorFn: (row) =>
           debitCreditConverter(row?.node?.balance as string, row?.node?.balanceType as string),
       },

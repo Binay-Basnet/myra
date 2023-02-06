@@ -22,6 +22,8 @@ export const ClosedLoanList = () => {
       accountName: searchTerm,
       productName: searchTerm,
       memberName: searchTerm,
+      memberCode: searchTerm,
+      memberId: searchTerm,
       filterMode: Filter_Mode.Or,
     },
   });

@@ -112,7 +112,7 @@ export const SavingProductBalanceReport = () => {
                 },
               },
               {
-                header: 'Prodcut Nature',
+                header: 'Product Nature',
                 accessorKey: 'nature',
                 cell: (props) => (
                   <Box textTransform="capitalize">

@@ -1,18 +1,5 @@
-import { useState } from 'react';
-import { IoList, IoLogoMicrosoft } from 'react-icons/io5';
-import { useRouter } from 'next/router';
+import { DetailsCard } from '@myra-ui';
 
-import { Button, DetailsCard, Icon } from '@myra-ui';
-
-import {
-  CooperativeBasicMinInfo,
-  CooperativeUnionBasicMinInfo,
-  IndividualBasicMinInfo,
-  InstitutionBasicMinInfo,
-  useGetMemberKymDetailsOverviewQuery,
-} from '@coop/cbs/data-access';
-
-import { AccountCard } from './AccountCard';
 import { AccountTable } from './AccountTable';
 import { ClosedAccountTable } from './ClosedAccountTable';
 
@@ -34,56 +21,74 @@ export const AccountList = ({
   title,
   accountList,
   isClosedAccounts = false,
-}: IAccountListProps) => {
-  const router = useRouter();
-  const [showGrid, setShowGrid] = useState(true);
+}: IAccountListProps) => (
+  // const router = useRouter();
+  // const [showGrid, setShowGrid] = useState(true);
 
-  const handleClick = () => {
-    setShowGrid(!showGrid);
-  };
+  // const handleClick = () => {
+  //   setShowGrid(!showGrid);
+  // };
 
-  const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
-    id: router.query['id'] as string,
-  });
+  // const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
+  //   id: router.query['id'] as string,
+  // });
 
-  const memberIndividual =
-    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
-      ?.__typename === 'IndividualBasicMinInfo'
-      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
-          ?.basicInformation as IndividualBasicMinInfo)
-      : null;
-  const memberBasicInstitution =
-    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
-      ?.__typename === 'InstitutionBasicMinInfo'
-      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
-          ?.basicInformation as InstitutionBasicMinInfo)
-      : null;
+  // // const memberIndividual =
+  // //   memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
+  // //     ?.__typename === 'IndividualBasicMinInfo'
+  // //     ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
+  // //         ?.basicInformation as IndividualBasicMinInfo)
+  // //     : null;
+  // // const memberBasicInstitution =
+  // //   memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
+  // //     ?.__typename === 'InstitutionBasicMinInfo'
+  // //     ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
+  // //         ?.basicInformation as InstitutionBasicMinInfo)
+  // //     : null;
 
-  const memberBasicCooperative =
-    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
-      ?.__typename === 'CooperativeBasicMinInfo'
-      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
-          ?.basicInformation as CooperativeBasicMinInfo)
-      : null;
-  const memberBasicCooperativeUnion =
-    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
-      ?.__typename === 'CooperativeUnionBasicMinInfo'
-      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
-          ?.basicInformation as CooperativeUnionBasicMinInfo)
-      : null;
+  // // const memberBasicCooperative =
+  // //   memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
+  // //     ?.__typename === 'CooperativeBasicMinInfo'
+  // //     ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
+  // //         ?.basicInformation as CooperativeBasicMinInfo)
+  // //     : null;
+  // // const memberBasicCooperativeUnion =
+  // //   memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
+  // //     ?.__typename === 'CooperativeUnionBasicMinInfo'
+  // //     ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
+  // //         ?.basicInformation as CooperativeUnionBasicMinInfo)
+  // //     : null;
 
-  const memberBasicDetails =
-    memberIndividual ??
-    memberBasicInstitution ??
-    memberBasicCooperative ??
-    memberBasicCooperativeUnion;
-  const contactNo = memberIndividual ? memberIndividual?.contactNumber : '-';
-  const memberName = memberBasicDetails?.memberName;
+  // const memberBasicDetails =
+  //   memberIndividual ??
+  //   memberBasicInstitution ??
+  //   memberBasicCooperative ??
+  //   memberBasicCooperativeUnion;
+  // const contactNo = memberIndividual ? memberIndividual?.contactNumber : '-';
+  // const memberName = memberBasicDetails?.memberName;
 
-  return (
-    <>
-      {' '}
-      {showGrid && (
+  <>
+    <DetailsCard
+      hasTable
+      bg="white"
+      title={title}
+      // leftBtn={
+      //   <Button
+      //     variant="ghost"
+      //     onClick={handleClick}
+      //     leftIcon={!showGrid ? <Icon as={IoLogoMicrosoft} /> : <Icon as={IoList} />}
+      //   >
+      //     {showGrid ? 'List' : 'Grid'}
+      //   </Button>
+      // }
+    >
+      {isClosedAccounts ? (
+        <ClosedAccountTable data={accountList} />
+      ) : (
+        <AccountTable data={accountList} />
+      )}
+    </DetailsCard>
+    {/* {showGrid && (
         <DetailsCard
           bg="white"
           title={title}
@@ -110,30 +115,6 @@ export const AccountList = ({
             />
           ))}
         </DetailsCard>
-      )}
-      {!showGrid && (
-        <DetailsCard
-          hasTable
-          bg="white"
-          // title={memberLength ? title : 'Saving Accounts List (0)'}
-          title={title}
-          leftBtn={
-            <Button
-              variant="ghost"
-              onClick={handleClick}
-              leftIcon={!showGrid ? <Icon as={IoLogoMicrosoft} /> : <Icon as={IoList} />}
-            >
-              {showGrid ? 'List' : 'Grid'}
-            </Button>
-          }
-        >
-          {isClosedAccounts ? (
-            <ClosedAccountTable data={accountList} />
-          ) : (
-            <AccountTable data={accountList} />
-          )}
-        </DetailsCard>
-      )}
-    </>
-  );
-};
+      )} */}
+  </>
+);

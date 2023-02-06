@@ -22,6 +22,7 @@ export const CBSAccountCloseList = () => {
         query: searchTerm,
         id: searchTerm,
         memberId: searchTerm,
+        memberCode: searchTerm,
         productID: searchTerm,
         filterMode: Filter_Mode.Or,
       },
@@ -47,7 +48,10 @@ export const CBSAccountCloseList = () => {
         accessorFn: (row) => row?.node?.createdAt,
         cell: (props) => <span>{props?.row?.original?.node?.closedAt} </span>,
       },
-
+      {
+        header: 'Member Code',
+        accessorFn: (row) => row?.node?.member?.code,
+      },
       {
         header: 'Account Name',
         accessorFn: (row) => row?.node?.accountName,
