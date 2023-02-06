@@ -1,4 +1,14 @@
+import { useRouter } from 'next/router';
+
 import { DetailsCard } from '@myra-ui';
+
+import {
+  CooperativeBasicMinInfo,
+  CooperativeUnionBasicMinInfo,
+  IndividualBasicMinInfo,
+  InstitutionBasicMinInfo,
+  useGetMemberKymDetailsOverviewQuery,
+} from '@coop/cbs/data-access';
 
 import { AccountTable } from './AccountTable';
 import { ClosedAccountTable } from './ClosedAccountTable';
@@ -21,100 +31,63 @@ export const AccountList = ({
   title,
   accountList,
   isClosedAccounts = false,
-}: IAccountListProps) => (
-  // const router = useRouter();
-  // const [showGrid, setShowGrid] = useState(true);
+}: IAccountListProps) => {
+  const router = useRouter();
 
-  // const handleClick = () => {
-  //   setShowGrid(!showGrid);
-  // };
+  const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
+    id: router.query['id'] as string,
+  });
 
-  // const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
-  //   id: router.query['id'] as string,
-  // });
+  const memberIndividual =
+    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
+      ?.__typename === 'IndividualBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
+          ?.basicInformation as IndividualBasicMinInfo)
+      : null;
+  const memberBasicInstitution =
+    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
+      ?.__typename === 'InstitutionBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
+          ?.basicInformation as InstitutionBasicMinInfo)
+      : null;
 
-  // // const memberIndividual =
-  // //   memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
-  // //     ?.__typename === 'IndividualBasicMinInfo'
-  // //     ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
-  // //         ?.basicInformation as IndividualBasicMinInfo)
-  // //     : null;
-  // // const memberBasicInstitution =
-  // //   memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
-  // //     ?.__typename === 'InstitutionBasicMinInfo'
-  // //     ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
-  // //         ?.basicInformation as InstitutionBasicMinInfo)
-  // //     : null;
+  const memberBasicCooperative =
+    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
+      ?.__typename === 'CooperativeBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
+          ?.basicInformation as CooperativeBasicMinInfo)
+      : null;
+  const memberBasicCooperativeUnion =
+    memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
+      ?.__typename === 'CooperativeUnionBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
+          ?.basicInformation as CooperativeUnionBasicMinInfo)
+      : null;
 
-  // // const memberBasicCooperative =
-  // //   memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
-  // //     ?.__typename === 'CooperativeBasicMinInfo'
-  // //     ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
-  // //         ?.basicInformation as CooperativeBasicMinInfo)
-  // //     : null;
-  // // const memberBasicCooperativeUnion =
-  // //   memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data?.basicInformation
-  // //     ?.__typename === 'CooperativeUnionBasicMinInfo'
-  // //     ? (memberDetailsData?.data?.members?.memberOverviewV2?.overview?.data
-  // //         ?.basicInformation as CooperativeUnionBasicMinInfo)
-  // //     : null;
+  const memberBasicDetails =
+    memberIndividual ??
+    memberBasicInstitution ??
+    memberBasicCooperative ??
+    memberBasicCooperativeUnion;
 
-  // const memberBasicDetails =
-  //   memberIndividual ??
-  //   memberBasicInstitution ??
-  //   memberBasicCooperative ??
-  //   memberBasicCooperativeUnion;
-  // const contactNo = memberIndividual ? memberIndividual?.contactNumber : '-';
-  // const memberName = memberBasicDetails?.memberName;
+  const contactNo = memberIndividual ? memberIndividual?.contactNumber : '-';
+  const memberName = memberBasicDetails?.memberName;
 
-  <>
-    <DetailsCard
-      hasTable
-      bg="white"
-      title={title}
-      // leftBtn={
-      //   <Button
-      //     variant="ghost"
-      //     onClick={handleClick}
-      //     leftIcon={!showGrid ? <Icon as={IoLogoMicrosoft} /> : <Icon as={IoList} />}
-      //   >
-      //     {showGrid ? 'List' : 'Grid'}
-      //   </Button>
-      // }
-    >
+  return (
+    <DetailsCard hasTable bg="white" title={title}>
       {isClosedAccounts ? (
-        <ClosedAccountTable data={accountList} />
+        <ClosedAccountTable
+          data={accountList}
+          memberName={memberName as string}
+          contactNo={contactNo as string}
+        />
       ) : (
-        <AccountTable data={accountList} />
+        <AccountTable
+          data={accountList}
+          memberName={memberName as string}
+          contactNo={contactNo as string}
+        />
       )}
     </DetailsCard>
-    {/* {showGrid && (
-        <DetailsCard
-          bg="white"
-          title={title}
-          leftBtn={
-            <Button
-              variant="ghost"
-              onClick={handleClick}
-              leftIcon={!showGrid ? <Icon as={IoLogoMicrosoft} /> : <Icon as={IoList} />}
-            >
-              {showGrid ? 'List' : 'Grid'}
-            </Button>
-          }
-        >
-          {accountList?.map((item) => (
-            <AccountCard
-              accountName={item?.accountName as string}
-              accountNumber={item?.accountNumber as string}
-              contactNo={contactNo as string}
-              interestRate={item?.interestRate as string}
-              memberName={memberName as string}
-              productName={item?.productName as string}
-              productType={item?.accountType as string}
-              totalBalance={item?.totalBalance}
-            />
-          ))}
-        </DetailsCard>
-      )} */}
-  </>
-);
+  );
+};
