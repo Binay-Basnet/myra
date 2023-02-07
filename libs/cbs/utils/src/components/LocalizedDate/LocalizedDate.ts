@@ -13,7 +13,7 @@ export const localizedDate = (date: Record<'local' | 'en' | 'np', string> | null
   if (date?.local === null) return '-';
   const dateType = store.getState().auth?.preference?.date || DateType.Ad;
   if (dateType === DateType.Bs) {
-    return dayjs(date?.np || date?.local).format('YYYY-MM-DD');
+    return date?.np || date?.local;
   }
 
   return dayjs(date?.en || date?.local).format('YYYY-MM-DD');
