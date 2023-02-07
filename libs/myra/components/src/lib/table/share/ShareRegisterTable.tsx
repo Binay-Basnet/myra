@@ -66,6 +66,9 @@ export const ShareRegisterTable = () => {
       {
         header: t['shareRegisterTableName'],
         accessorFn: (row) => row?.node?.member?.name?.local,
+        meta: {
+          width: '25%',
+        },
 
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="2">
@@ -82,6 +85,9 @@ export const ShareRegisterTable = () => {
       {
         header: t['shareRegisterTableNameToFrom'],
         accessorFn: (row) => row?.node.startNumber,
+        meta: {
+          width: '10%',
+        },
 
         cell: (props) => (
           <span>
@@ -94,7 +100,9 @@ export const ShareRegisterTable = () => {
         id: 'share-dr',
         header: t['shareRegisterTableNameShareDr'],
         accessorFn: (row) => row?.node.debit,
-
+        meta: {
+          width: '10%',
+        },
         cell: (props) => (
           <span>
             {props.getValue() ? `${Number(props?.getValue())?.toLocaleString('en-IN')}` : '-'}
@@ -105,7 +113,6 @@ export const ShareRegisterTable = () => {
         id: 'share-cr',
         header: t['shareRegisterTableNameShareCr'],
         accessorFn: (row) => row?.node.credit,
-
         cell: (props) => (
           <span>
             {props.getValue() ? `${Number(props.getValue()).toLocaleString('en-IN')}` : '-'}
@@ -115,7 +122,7 @@ export const ShareRegisterTable = () => {
       {
         header: t['shareRegisterTableNameBalance'],
         accessorFn: (row) => amountConverter(row?.node?.shareAmount as string),
-        // cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
+        meta: { isNumeric: true },
       },
       {
         id: '_actions',

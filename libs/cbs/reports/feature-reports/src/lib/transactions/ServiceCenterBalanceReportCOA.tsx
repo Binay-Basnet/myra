@@ -10,7 +10,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormDatePicker, FormSelect } from '@coop/shared/form';
-import { debitCreditConverter, useIsCbs } from '@coop/shared/utils';
+import { debitCreditConverter } from '@coop/shared/utils';
 
 type ServiceCenterBalanceFilters = {
   date: Record<'local' | 'en' | 'np', string>;
@@ -42,8 +42,6 @@ type ServicCenterBalanceResult = {
 
 export const ServiceCenterCOAWiseBalanceReport = () => {
   const [filters, setFilters] = useState<ServiceCenterBalanceFilters | null>(null);
-
-  const { isCbs } = useIsCbs();
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
@@ -85,13 +83,11 @@ export const ServiceCenterCOAWiseBalanceReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: '/reports/cbs/service-center',
             },
             {
               label: 'Service Center COA Wise Balance Report',
-              link: isCbs
-                ? '/reports/cbs/transactions/service-center-coa-wise-balance/new'
-                : '/accounting/reports/transactions/service-center-coa-wise-balance/new',
+              link: '/reports/cbs/service-center/service-center-coa-wise-balance/new',
             },
           ]}
         />
@@ -146,26 +142,25 @@ export const ServiceCenterCOAWiseBalanceReport = () => {
                   },
                 },
               },
-              ...(filters?.coaHead?.map(
-                (coaHead) =>
-                  ({
-                    header: `${coaHead.label}`,
-                    accessorFn: (row) =>
-                      debitCreditConverter(
-                        row.balanceMap[coaHead.label]?.Value || '0.00',
-                        row.balanceMap[coaHead.label]?.Type || ''
-                      ),
-                    footer: () =>
-                      debitCreditConverter(
-                        totals[coaHead.label]?.Value || '0.00',
-                        totals[coaHead.label]?.Type || ''
-                      ),
-                    meta: {
-                      width: '200px',
-                      isNumeric: true,
-                    },
-                  } as Column<ServicCenterBalanceResult['entries']>)
-              ) || []),
+              ...(filters?.coaHead?.map((coaHead) => {
+                const coaHeadArray = coaHead.value.split('_');
+                const value = Number(coaHeadArray[coaHeadArray.length - 1]);
+
+                return {
+                  header: `${coaHead.label}`,
+                  accessorFn: (row) =>
+                    debitCreditConverter(
+                      row.balanceMap[value]?.Value || '0.00',
+                      row.balanceMap[value]?.Type || ''
+                    ),
+                  footer: () =>
+                    debitCreditConverter(totals[value]?.Value || '0.00', totals[value]?.Type || ''),
+                  meta: {
+                    width: '200px',
+                    isNumeric: true,
+                  },
+                } as Column<ServicCenterBalanceResult['entries']>;
+              }) || []),
             ]}
           />
         </Report.Content>

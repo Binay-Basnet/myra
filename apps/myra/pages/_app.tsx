@@ -32,7 +32,7 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: false,
       refetchOnMount: true,
-      refetchOnReconnect: false,
+      refetchOnReconnect: true,
       retry: false,
       keepPreviousData: true,
       cacheTime: 0,

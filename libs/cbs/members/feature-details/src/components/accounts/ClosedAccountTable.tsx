@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { IoQrCode } from 'react-icons/io5';
+import { useDisclosure } from '@chakra-ui/react';
 
+import { AccountQRModal, IconButton } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
@@ -12,9 +15,10 @@ interface ILoanPaymentScheduleTableProps {
         accountName: string | null | undefined;
         totalBalance?: string | number | null | undefined;
         interestRate: string | number | null | undefined;
+        accountNumber?: string | null | undefined;
       }[];
-
-  //   data: MemberPaymentView[] | null | undefined;
+  memberName: string;
+  contactNo?: string;
 }
 
 const accountTypes = {
@@ -24,7 +28,19 @@ const accountTypes = {
   [NatureOfDepositProduct.Current]: 'Current Account',
 };
 
-export const ClosedAccountTable = ({ data }: ILoanPaymentScheduleTableProps) => {
+export const ClosedAccountTable = ({
+  data,
+  memberName,
+  contactNo,
+}: ILoanPaymentScheduleTableProps) => {
+  const { onClose: modalOnClose, isOpen, onToggle } = useDisclosure();
+  const [qrData, setQrData] = useState({
+    name: memberName ?? 'N/A',
+    accountNo: 'N/A',
+    phoneNo: contactNo ?? 'N/A',
+    accountName: 'N/A',
+  });
+
   const columns = React.useMemo<Column<typeof data[0]>[]>(
     () => [
       {
@@ -48,9 +64,45 @@ export const ClosedAccountTable = ({ data }: ILoanPaymentScheduleTableProps) => 
           isNumeric: true,
         },
       },
+      {
+        header: 'QR',
+        accessorKey: 'interestRate',
+        cell: (props) => (
+          <IconButton
+            aria-label="qr-button"
+            cursor="pointer"
+            as={IoQrCode}
+            size="xs"
+            colorScheme="gray"
+            onClick={() => {
+              onToggle();
+              setQrData({
+                name: memberName ?? 'N/A',
+                accountNo: props?.row?.original?.accountNumber ?? 'N/A',
+                phoneNo: contactNo ?? 'N/A',
+                accountName: props?.row?.original?.accountName ?? 'N/A',
+              });
+            }}
+          />
+        ),
+      },
     ],
     []
   );
 
-  return <Table<typeof data[0]> isStatic data={data ?? []} columns={columns} />;
+  return (
+    <>
+      <Table<typeof data[0]> isStatic data={data ?? []} columns={columns} />{' '}
+      <AccountQRModal
+        account={{
+          name: qrData?.name,
+          accountNo: qrData?.accountNo,
+          phoneNo: qrData?.phoneNo ?? 'N/A',
+          accountName: qrData?.accountName,
+        }}
+        open={isOpen}
+        onClose={modalOnClose}
+      />
+    </>
+  );
 };

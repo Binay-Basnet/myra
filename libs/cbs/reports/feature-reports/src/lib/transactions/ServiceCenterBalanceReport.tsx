@@ -10,7 +10,6 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect } from '@coop/shared/form';
-import { useIsCbs } from '@coop/shared/utils';
 
 type ServiceCenterBalanceFilters = Omit<ServiceCenterBalanceFilter, 'branchId'> & {
   branchId: {
@@ -21,7 +20,6 @@ type ServiceCenterBalanceFilters = Omit<ServiceCenterBalanceFilter, 'branchId'> 
 
 export const ServviceCenterBalanceReport = () => {
   const [filters, setFilters] = useState<ServiceCenterBalanceFilters | null>(null);
-  const { isCbs } = useIsCbs();
 
   const branchIds =
     filters?.branchId && filters?.branchId.length !== 0
@@ -52,13 +50,11 @@ export const ServviceCenterBalanceReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
+              link: '/reports/cbs/service-center',
             },
             {
               label: 'Service Center Wise Cash Bank Balance Report',
-              link: isCbs
-                ? '/reports/cbs/transactions/service-center-balance/new'
-                : '/accounting/reports/transactions/service-center-balance/new',
+              link: '/reports/cbs/service-center/service-center-balance/new',
             },
           ]}
         />

@@ -32,11 +32,18 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
         cell: (row) => localizedDate(row?.row?.original?.node?.approvedDate),
       },
       {
+        header: 'Member Code',
+        accessorFn: (row) => row?.node?.member?.code,
+      },
+      {
         header: 'Loan ID',
         accessorFn: (row) => row?.node?.id,
       },
       {
         header: 'Product Name',
+        meta: {
+          width: '25%',
+        },
         accessorFn: (row) => row?.node?.product.productName,
       },
       {
@@ -70,6 +77,9 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
       },
       {
         header: 'Loan Amount',
+        meta: {
+          isNumeric: true,
+        },
         accessorFn: (row) => amountConverter(row?.node?.totalSanctionedAmount as string),
       },
       {

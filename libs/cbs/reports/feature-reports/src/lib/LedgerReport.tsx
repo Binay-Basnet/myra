@@ -79,7 +79,7 @@ export const LedgerReport = () => {
                 ),
               },
               {
-                header: 'Account',
+                header: 'Particulars',
                 accessorFn: (row) => row?.account,
                 meta: {
                   width: '70%',

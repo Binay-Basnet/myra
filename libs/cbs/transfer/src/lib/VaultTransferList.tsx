@@ -46,6 +46,9 @@ export const VaultTransferList = () => {
       {
         header: 'Transfer Code',
         accessorFn: (row) => row?.node?.transferCode,
+        meta: {
+          width: '15%',
+        },
       },
       {
         accessorFn: (row) =>

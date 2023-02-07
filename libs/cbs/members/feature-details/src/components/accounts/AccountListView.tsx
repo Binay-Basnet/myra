@@ -1,8 +1,6 @@
-import { useState } from 'react';
-import { IoList, IoLogoMicrosoft } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Button, DetailsCard, Icon } from '@myra-ui';
+import { DetailsCard } from '@myra-ui';
 
 import {
   CooperativeBasicMinInfo,
@@ -12,7 +10,6 @@ import {
   useGetMemberKymDetailsOverviewQuery,
 } from '@coop/cbs/data-access';
 
-import { AccountCard } from './AccountCard';
 import { AccountTable } from './AccountTable';
 import { ClosedAccountTable } from './ClosedAccountTable';
 
@@ -36,11 +33,6 @@ export const AccountList = ({
   isClosedAccounts = false,
 }: IAccountListProps) => {
   const router = useRouter();
-  const [showGrid, setShowGrid] = useState(true);
-
-  const handleClick = () => {
-    setShowGrid(!showGrid);
-  };
 
   const memberDetailsData = useGetMemberKymDetailsOverviewQuery({
     id: router.query['id'] as string,
@@ -77,63 +69,25 @@ export const AccountList = ({
     memberBasicInstitution ??
     memberBasicCooperative ??
     memberBasicCooperativeUnion;
+
   const contactNo = memberIndividual ? memberIndividual?.contactNumber : '-';
   const memberName = memberBasicDetails?.memberName;
 
   return (
-    <>
-      {' '}
-      {showGrid && (
-        <DetailsCard
-          bg="white"
-          title={title}
-          leftBtn={
-            <Button
-              variant="ghost"
-              onClick={handleClick}
-              leftIcon={!showGrid ? <Icon as={IoLogoMicrosoft} /> : <Icon as={IoList} />}
-            >
-              {showGrid ? 'List' : 'Grid'}
-            </Button>
-          }
-        >
-          {accountList?.map((item) => (
-            <AccountCard
-              accountName={item?.accountName as string}
-              accountNumber={item?.accountNumber as string}
-              contactNo={contactNo as string}
-              interestRate={item?.interestRate as string}
-              memberName={memberName as string}
-              productName={item?.productName as string}
-              productType={item?.accountType as string}
-              totalBalance={item?.totalBalance}
-            />
-          ))}
-        </DetailsCard>
+    <DetailsCard hasTable bg="white" title={title}>
+      {isClosedAccounts ? (
+        <ClosedAccountTable
+          data={accountList}
+          memberName={memberName as string}
+          contactNo={contactNo as string}
+        />
+      ) : (
+        <AccountTable
+          data={accountList}
+          memberName={memberName as string}
+          contactNo={contactNo as string}
+        />
       )}
-      {!showGrid && (
-        <DetailsCard
-          hasTable
-          bg="white"
-          // title={memberLength ? title : 'Saving Accounts List (0)'}
-          title={title}
-          leftBtn={
-            <Button
-              variant="ghost"
-              onClick={handleClick}
-              leftIcon={!showGrid ? <Icon as={IoLogoMicrosoft} /> : <Icon as={IoList} />}
-            >
-              {showGrid ? 'List' : 'Grid'}
-            </Button>
-          }
-        >
-          {isClosedAccounts ? (
-            <ClosedAccountTable data={accountList} />
-          ) : (
-            <AccountTable data={accountList} />
-          )}
-        </DetailsCard>
-      )}
-    </>
+    </DetailsCard>
   );
 };

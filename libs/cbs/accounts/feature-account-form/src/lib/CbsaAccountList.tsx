@@ -58,6 +58,7 @@ export const CBSAccountList = () => {
         id: searchTerm,
         memberId: searchTerm,
         productID: searchTerm,
+        memberCode: searchTerm,
         filterMode: Filter_Mode.Or,
         objState: (router.query['objState'] ?? ObjState.Active) as ObjState,
       },
@@ -74,6 +75,10 @@ export const CBSAccountList = () => {
       {
         header: 'Account Open Date',
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.accountOpenedDate)}</Text>,
+      },
+      {
+        header: 'Member Code',
+        accessorFn: (row) => row?.node?.member?.code,
       },
       {
         header: 'Account ID',

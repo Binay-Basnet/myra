@@ -49,12 +49,12 @@ export const AccountingFeatureJournalVouchersList = () => {
       {
         header: 'Note',
         accessorFn: (row) => row?.node?.note,
-        meta: {
-          width: '50%',
-        },
       },
       {
         header: 'Amount',
+        meta: {
+          isNumeric: true,
+        },
         accessorFn: (row) => row?.node?.amount,
       },
       {

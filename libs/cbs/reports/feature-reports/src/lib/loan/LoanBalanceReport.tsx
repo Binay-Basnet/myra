@@ -14,7 +14,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -91,6 +91,12 @@ export const LoanBalanceReport = () => {
               {
                 header: 'Loan Account Number',
                 accessorKey: 'loanAccountId',
+                cell: (props) => (
+                  <RedirectButton
+                    label={props?.row?.original?.loanAccountId}
+                    link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props?.row?.original?.loanAccountId}`}
+                  />
+                ),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -100,6 +106,12 @@ export const LoanBalanceReport = () => {
               {
                 header: 'Member Id',
                 accessorKey: 'memberId',
+                cell: (props) => (
+                  <RedirectButton
+                    label={props?.row?.original?.memberId}
+                    link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${props?.row?.original?.memberId}`}
+                  />
+                ),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -140,6 +152,12 @@ export const LoanBalanceReport = () => {
               {
                 header: 'Product Code',
                 accessorKey: 'productCode',
+                cell: (props) => (
+                  <RedirectButton
+                    label={props?.row?.original?.productCode}
+                    link={`${ROUTES.CBS_LOAN_PRODUCTS_DETAILS}?id=${props?.row?.original?.productId}`}
+                  />
+                ),
                 meta: {
                   Footer: {
                     display: 'none',

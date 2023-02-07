@@ -51,20 +51,19 @@ export const ShareBalanceTable = () => {
           </Box>
         ),
         meta: {
-          width: '50%',
+          width: '25%',
         },
       },
 
       {
         header: t['shareTableShareCount'],
         accessorFn: (row) => row?.node.count,
-        isNumeric: true,
       },
       {
         header: t['shareTableShareAmount'],
         accessorFn: (row) => amountConverter(row?.node.amount),
+        meta: { isNumeric: true },
         // cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
-        isNumeric: true,
       },
 
       {

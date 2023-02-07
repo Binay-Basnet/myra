@@ -59,20 +59,26 @@ export const AccountTransferList = () => {
       {
         header: t['accountTransferListDate'],
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.date)}</Text>,
+        meta: {
+          width: '200px',
+        },
       },
       {
         header: t['accountTransferListTransactionId'],
         accessorFn: (row) => row?.node?.transactionCode,
+        meta: {
+          width: '300px',
+        },
       },
       {
         header: t['accountTransferListTransactionType'],
         accessorFn: (row) => (row?.node?.transferType ? transferType[row?.node?.transferType] : ''),
-        meta: {
-          width: '50%',
-        },
       },
       {
         header: t['accountTransferListAmount'],
+        meta: {
+          isNumeric: true,
+        },
         accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
       },
       // {
