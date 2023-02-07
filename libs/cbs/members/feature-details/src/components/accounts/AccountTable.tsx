@@ -147,7 +147,7 @@ export const AccountTable = ({ data, memberName, contactNo }: ILoanPaymentSchedu
         ),
       },
     ],
-    []
+    [memberName, contactNo]
   );
 
   return (

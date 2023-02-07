@@ -88,7 +88,7 @@ export const LoanTable = ({ data, memberName, contactNo }: ILoanPaymentScheduleT
         ),
       },
     ],
-    []
+    [memberName, contactNo]
   );
 
   return (
