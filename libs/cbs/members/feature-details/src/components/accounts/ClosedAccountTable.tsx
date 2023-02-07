@@ -118,7 +118,7 @@ export const ClosedAccountTable = ({
         ),
       },
     ],
-    []
+    [memberName, contactNo]
   );
 
   return (

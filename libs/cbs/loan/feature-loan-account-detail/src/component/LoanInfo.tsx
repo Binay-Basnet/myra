@@ -4,6 +4,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import { AccountQRModal, Avatar, Box, Icon, Text } from '@myra-ui';
 
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { copyToClipboard } from '@coop/shared/utils';
 
 import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
 
@@ -41,7 +42,12 @@ export const LoanInfo = () => {
               <Text fontSize="s3" fontWeight="Regular" color="gray.500" lineHeight="145%">
                 {generalInfo?.accountId}
               </Text>
-              <Icon size="sm" as={IoCopyOutline} />
+              <Icon
+                size="sm"
+                as={IoCopyOutline}
+                _hover={{ cursor: 'pointer' }}
+                onClick={() => copyToClipboard(generalInfo?.accountId ?? '0')}
+              />
             </Box>
             <Text fontSize="s3" fontWeight="Regular" color="gray.700" lineHeight="145%">
               {generalInfo?.productName}
