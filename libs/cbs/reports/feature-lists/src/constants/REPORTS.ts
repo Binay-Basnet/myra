@@ -249,6 +249,7 @@ export const REPORTS = {
     {
       id: '5.7',
       report: Report.DORMANT_AC_REPORT,
+      link: 'dormant-account',
     },
     {
       id: '5.8',
