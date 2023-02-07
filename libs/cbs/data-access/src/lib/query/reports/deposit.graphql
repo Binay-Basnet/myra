@@ -295,3 +295,27 @@ query getSavingProductBalance($data: SavingProductBalanceFilter!) {
     }
   }
 }
+
+query getDormantAccountReport($data: DormantAccountReportInput) {
+  report {
+    depositReport {
+      dormantAccountReport(data: $data) {
+        data {
+          memberID
+          memberCode
+          memberName
+          serviceCenter
+          memberRegistrationDate
+          mobileNo
+          productName
+          accountName
+          accountNo
+          accountOpenDate
+          balance
+          reason
+          remarks
+        }
+      }
+    }
+  }
+}
