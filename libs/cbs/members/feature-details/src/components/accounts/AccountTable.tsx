@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
+import { FiZap } from 'react-icons/fi';
 import { IoQrCode } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { AccountQRModal, Box, IconButton, Text } from '@myra-ui';
+import {
+  AccountQRModal,
+  AssociatedGuaranteeAccounts,
+  Box,
+  GuaranteeAccountsHoverCard,
+  Icon,
+  IconButton,
+  Text,
+  Tooltip,
+} from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
@@ -18,6 +28,11 @@ interface ILoanPaymentScheduleTableProps {
         totalBalance?: string | number | null | undefined;
         interestRate: string | number | null | undefined;
         accountNumber?: string | null | undefined;
+        guaranteeAccounts?:
+          | ({
+              loanId?: string | null;
+              loanAccountName?: string | null;
+            } | null)[];
       }[];
   memberName: string;
   contactNo?: string;
@@ -53,10 +68,21 @@ export const AccountTable = ({ data, memberName, contactNo }: ILoanPaymentSchedu
         header: 'Account Name',
         accessorKey: 'accountName',
         cell: (props) => (
-          <RedirectButton
-            label={props?.row?.original?.accountName as string}
-            link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${props?.row?.original?.accountNumber}`}
-          />
+          <Box display="flex" alignItems="center" gap="s4">
+            <RedirectButton
+              label={<Tooltip title={props?.row?.original?.accountName as string} />}
+              link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${props?.row?.original?.accountNumber}`}
+            />
+
+            {props?.row?.original?.guaranteeAccounts?.length ? (
+              <GuaranteeAccountsHoverCard
+                trigger={<Icon as={FiZap} color="warning.500" />}
+                associatedGuaranteeAccounts={
+                  props?.row?.original?.guaranteeAccounts as AssociatedGuaranteeAccounts
+                }
+              />
+            ) : null}
+          </Box>
         ),
       },
       {

@@ -5906,6 +5906,11 @@ export type GraphData = {
   time?: Maybe<Scalars['Int']>;
 };
 
+export type GuaranteeAccountsMinView = {
+  loanAccountName?: Maybe<Scalars['String']>;
+  loanId?: Maybe<Scalars['String']>;
+};
+
 export const GuaranteeStatus = {
   Active: 'ACTIVE',
   Released: 'RELEASED',
@@ -10540,6 +10545,8 @@ export type MemberAccountDetails = {
 export type MemberAccountMinView = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
+  guaranteeAccounts?: Maybe<Array<Maybe<GuaranteeAccountsMinView>>>;
   interestBooked?: Maybe<Scalars['String']>;
   interestEarned?: Maybe<Scalars['String']>;
   interestRate?: Maybe<Scalars['String']>;
@@ -10862,6 +10869,7 @@ export type MemberOverview = {
 
 export type MemberOverviewAccountsView = {
   accounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
+  closedAccounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
 };
 
@@ -22349,6 +22357,12 @@ export type GetMemberKymDetailsAccountsQuery = {
             productName?: string | null;
             productType?: string | null;
             interestRate?: string | null;
+            interestEarned?: string | null;
+            interestBooked?: string | null;
+            guaranteeAccounts?: Array<{
+              loanId?: string | null;
+              loanAccountName?: string | null;
+            } | null> | null;
           } | null> | null;
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
@@ -22358,6 +22372,20 @@ export type GetMemberKymDetailsAccountsQuery = {
             amount?: string | null;
             installmentNo?: string | null;
             interestRate?: string | null;
+          } | null> | null;
+          closedAccounts?: Array<{
+            accountName?: string | null;
+            accountNumber?: string | null;
+            totalBalance?: string | null;
+            productName?: string | null;
+            productType?: string | null;
+            interestRate?: string | null;
+            interestEarned?: string | null;
+            interestBooked?: string | null;
+            guaranteeAccounts?: Array<{
+              loanId?: string | null;
+              loanAccountName?: string | null;
+            } | null> | null;
           } | null> | null;
         } | null;
       } | null;
@@ -37940,6 +37968,12 @@ export const GetMemberKymDetailsAccountsDocument = `
             productName
             productType
             interestRate
+            interestEarned
+            interestBooked
+            guaranteeAccounts {
+              loanId
+              loanAccountName
+            }
           }
           payments {
             date
@@ -37949,6 +37983,20 @@ export const GetMemberKymDetailsAccountsDocument = `
             amount
             installmentNo
             interestRate
+          }
+          closedAccounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+            interestEarned
+            interestBooked
+            guaranteeAccounts {
+              loanId
+              loanAccountName
+            }
           }
         }
       }

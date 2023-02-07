@@ -2,12 +2,7 @@ import { useRouter } from 'next/router';
 
 import { Box, DetailPageQuickLinks, Text } from '@myra-ui';
 
-import {
-  NatureOfDepositProduct,
-  ObjState,
-  useGetAccountTableListMinimalQuery,
-  useGetMemberKymDetailsAccountsQuery,
-} from '@coop/cbs/data-access';
+import { NatureOfDepositProduct, useGetMemberKymDetailsAccountsQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -15,7 +10,7 @@ import { AccountList, SkeletonDetails, UpcomingPaymentTable } from '../component
 
 export const Accounts = () => {
   const router = useRouter();
-  const id = router.query['id'] as string;
+
   const links = [
     {
       title: 'Account Open',
@@ -58,37 +53,26 @@ export const Accounts = () => {
       interestRate:
         data?.productType !== NatureOfDepositProduct?.Current ? data?.interestRate : '-',
       productName: data?.productName,
+      guaranteeAccounts: data?.guaranteeAccounts ?? [],
     })) || [];
 
-  const { data: closedAccountListQueryData } = useGetAccountTableListMinimalQuery(
-    {
-      paginate: {
-        first: -1,
-        after: '',
-      },
-      filter: {
-        objState: ObjState.Inactive,
-        memberId: id,
-      },
-    },
-    {
-      enabled: !!id,
-    }
-  );
-
   const closedAccountTitle = `Closed Accounts List (${
-    closedAccountListQueryData?.account?.list?.edges?.length ?? 0
+    memberDetails?.data?.members?.memberOverviewV2?.accounts?.data?.closedAccounts?.length ?? 0
   })`;
 
   const closedAccountList =
-    closedAccountListQueryData?.account?.list?.edges?.map((account, index) => ({
-      sn: Number(index) + 1,
-      accountType: account?.node?.product?.nature,
-      accountName: account?.node?.accountName,
-      accountNumber: account?.node?.id,
-      interestRate: account?.node?.product?.interest,
-      productName: account?.node?.product?.productName,
-    })) || [];
+    memberDetails?.data?.members?.memberOverviewV2?.accounts?.data?.closedAccounts?.map(
+      (account, index) => ({
+        sn: Number(index) + 1,
+        accountType: account?.productType,
+        accountName: account?.accountName,
+        accountNumber: account?.accountNumber,
+        interestRate:
+          account?.productType !== NatureOfDepositProduct?.Current ? account?.interestRate : '-',
+        productName: account?.productName,
+        guaranteeAccounts: account?.guaranteeAccounts ?? [],
+      })
+    ) || [];
 
   return (
     <>
