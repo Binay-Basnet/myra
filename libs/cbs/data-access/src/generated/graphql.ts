@@ -9543,6 +9543,28 @@ export type LoanCollateralAndGuarantees = {
   valuation?: Maybe<Scalars['String']>;
 };
 
+export type LoanCollateralFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  collateralType?: InputMaybe<Array<Scalars['String']>>;
+  loanType?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+};
+
+export type LoanCollateralInformation = {
+  collateralDescription?: Maybe<Scalars['String']>;
+  collateralType?: Maybe<Scalars['String']>;
+  dvMinAmount?: Maybe<Scalars['String']>;
+  fmvMaxAmount?: Maybe<Scalars['String']>;
+  ownerName?: Maybe<Scalars['String']>;
+  valuationMethod?: Maybe<Scalars['String']>;
+  valuatorName?: Maybe<Scalars['String']>;
+};
+
+export type LoanCollateralReportResult = {
+  data?: Maybe<Array<Maybe<MemberLoanInformation>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanDisbursementInput = {
   accountPayment?: InputMaybe<LoanAccountDisbursement>;
   amount: Scalars['String'];
@@ -10240,6 +10262,7 @@ export type LoanReport = {
   closedLoanAccountStatementReport?: Maybe<ClosedLoanAccountReportResult>;
   loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
   loanBalanceReport: LoanBalanceReportResult;
+  loanCollateralReport?: Maybe<LoanCollateralReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
 };
 
@@ -10253,6 +10276,10 @@ export type LoanReportLoanAgingStatementReportArgs = {
 
 export type LoanReportLoanBalanceReportArgs = {
   data: LoanBalanceFilterData;
+};
+
+export type LoanReportLoanCollateralReportArgs = {
+  data?: InputMaybe<LoanCollateralFilter>;
 };
 
 export type LoanReportLoanStatementReportArgs = {
@@ -10783,6 +10810,16 @@ export type MemberIndividualData = {
   photo?: Maybe<Scalars['Boolean']>;
   profession?: Maybe<Scalars['String']>;
   shareInfo?: Maybe<ShareInformation>;
+};
+
+export type MemberLoanInformation = {
+  collateralInformation?: Maybe<Array<Maybe<LoanCollateralInformation>>>;
+  loanAccountNo?: Maybe<Scalars['String']>;
+  loanAccountType?: Maybe<Scalars['String']>;
+  loanDisbursedAmount?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  remainingPrincipal?: Maybe<Scalars['String']>;
 };
 
 export type MemberMutation = {
@@ -22224,6 +22261,7 @@ export type GetMemberDetailsShareBalanceQuery = {
         bankId?: string | null;
         voucherNumber?: string | null;
         accountId?: string | null;
+        noOfShare?: string | null;
         member?: { id: string; objState: ObjState; createdAt: string } | null;
         extraFee?: Array<{ name: string; value: number } | null> | null;
       } | null> | null;
@@ -37840,6 +37878,7 @@ export const GetMemberDetailsShareBalanceDocument = `
         bankId
         voucherNumber
         accountId
+        noOfShare
       }
     }
   }
