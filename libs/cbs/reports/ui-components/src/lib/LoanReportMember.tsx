@@ -6,7 +6,7 @@ import {
   Member,
   useAppSelector,
 } from '@coop/cbs/data-access';
-import { formatAddress, localizedDate } from '@coop/cbs/utils';
+import { formatAddress, localizedDate, localizedText } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ReportMemberProps {
@@ -107,7 +107,7 @@ export const ClosedLoanReportMeta = ({ meta }: ClosedLoanAccountMetaProps) => {
                 <Text noOfLines={1} textTransform="capitalize">
                   {meta?.memberName}
                 </Text>
-                <Text noOfLines={1}>{localizedDate(meta?.address)}</Text>
+                <Text noOfLines={1}>{localizedText(meta?.address)}</Text>
                 <Text noOfLines={1}>{profile?.currentBranch?.name}</Text>
                 <Text noOfLines={1}>{amountConverter(meta.approvedAmount ?? 0)}</Text>
                 <Text noOfLines={1}> {localizedDate(meta.loanIssuedDate)}</Text>
@@ -141,7 +141,6 @@ export const ClosedLoanReportMeta = ({ meta }: ClosedLoanAccountMetaProps) => {
                 <Text noOfLines={1}>{meta?.loanSubtype}</Text>
                 <Text noOfLines={1}>{meta?.noOfInstallments}</Text>
                 <Text noOfLines={1}>{meta?.loanProcessingCharge}</Text>
-                <Text>0</Text>
               </Box>
             </GridItem>
           </Grid>

@@ -23448,6 +23448,34 @@ export type GetSavingProductBalanceQuery = {
   };
 };
 
+export type GetDormantAccountReportQueryVariables = Exact<{
+  data?: InputMaybe<DormantAccountReportInput>;
+}>;
+
+export type GetDormantAccountReportQuery = {
+  report: {
+    depositReport: {
+      dormantAccountReport?: {
+        data?: Array<{
+          memberID?: string | null;
+          memberCode?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          serviceCenter?: string | null;
+          memberRegistrationDate?: Record<'local' | 'en' | 'np', string> | null;
+          mobileNo?: string | null;
+          productName?: string | null;
+          accountName?: string | null;
+          accountNo?: string | null;
+          accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
+          balance?: string | null;
+          reason?: string | null;
+          remarks?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
 export type GetUserReportQueryVariables = Exact<{
   data?: InputMaybe<UserReportFilter>;
 }>;
@@ -39355,6 +39383,45 @@ export const useGetSavingProductBalanceQuery = <
     ['getSavingProductBalance', variables],
     useAxios<GetSavingProductBalanceQuery, GetSavingProductBalanceQueryVariables>(
       GetSavingProductBalanceDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDormantAccountReportDocument = `
+    query getDormantAccountReport($data: DormantAccountReportInput) {
+  report {
+    depositReport {
+      dormantAccountReport(data: $data) {
+        data {
+          memberID
+          memberCode
+          memberName
+          serviceCenter
+          memberRegistrationDate
+          mobileNo
+          productName
+          accountName
+          accountNo
+          accountOpenDate
+          balance
+          reason
+          remarks
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDormantAccountReportQuery = <
+  TData = GetDormantAccountReportQuery,
+  TError = unknown
+>(
+  variables?: GetDormantAccountReportQueryVariables,
+  options?: UseQueryOptions<GetDormantAccountReportQuery, TError, TData>
+) =>
+  useQuery<GetDormantAccountReportQuery, TError, TData>(
+    variables === undefined ? ['getDormantAccountReport'] : ['getDormantAccountReport', variables],
+    useAxios<GetDormantAccountReportQuery, GetDormantAccountReportQueryVariables>(
+      GetDormantAccountReportDocument
     ).bind(null, variables),
     options
   );
