@@ -58,7 +58,10 @@ export const useLoanAccountDetailHooks = () => {
     { label: 'Payment Scheme', value: generalInfo?.repaymentScheme ?? 'N/A' },
     { label: 'Interest Rate', value: `${generalInfo?.interestRate}%` ?? 'N/A' },
     { label: 'Interest Accrued', value: generalInfo?.interestAccrued ?? 'N/A' },
-    { label: 'Sanctioned Amount', value: generalInfo?.sanctionedAmount ?? 'N/A' },
+    {
+      label: 'Sanctioned Amount',
+      value: amountConverter(generalInfo?.sanctionedAmount as string) ?? 'N/A',
+    },
     { label: 'Interest Grace Period', value: generalInfo?.interestGracePeriod ?? 'N/A' },
     { label: 'Principal Grace Period', value: generalInfo?.principalGracePeriod ?? 'N/A' },
     { label: 'Tenure', value: `${generalInfo?.tenure} ${generalInfo?.tenureUnit}` ?? 'N/A' },
