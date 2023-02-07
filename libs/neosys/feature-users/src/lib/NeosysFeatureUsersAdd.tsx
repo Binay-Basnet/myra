@@ -1,8 +1,12 @@
+import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
+import { asyncToast, Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
+
+import { NeosysUserInput, Role, useSetUserMutation } from '@coop/neosys-admin/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 import { NeosysUsersForm } from '../form/NeosysUsersForm';
@@ -13,6 +17,11 @@ export interface NeosysFeatureUsersAddProps {}
 export const NeosysFeatureUsersAdd = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const methods = useForm();
+  const { clearErrors } = methods;
+
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useSetUserMutation();
 
   return (
     <>
@@ -38,7 +47,9 @@ export const NeosysFeatureUsersAdd = () => {
               onClick={() => router.back()}
             />
           </Box>
-          <NeosysUsersForm />
+          <FormProvider {...methods}>
+            <NeosysUsersForm />
+          </FormProvider>
         </Box>
       </Container>
       <Box position="relative" margin="0px auto">
@@ -67,7 +78,38 @@ export const NeosysFeatureUsersAdd = () => {
                 </Button>
               }
               mainButtonLabel={t['next']}
-              mainButtonHandler={() => router.push(`/members/translation}`)}
+              mainButtonHandler={async () => {
+                const formValues = methods.getValues();
+
+                await asyncToast({
+                  id: 'new-client',
+                  msgs: {
+                    loading: 'Adding New User',
+                    success: 'New User Added',
+                  },
+                  onSuccess: () => {
+                    router.push('/users');
+                    queryClient.invalidateQueries(['getUserList']);
+                  },
+                  promise: mutateAsync({
+                    data: {
+                      ...formValues,
+                      dob: formValues?.['dob'].en,
+                      role: Role?.Superadmin,
+                    },
+                  }),
+                  onError: (error) => {
+                    if (error.__typename === 'ValidationError') {
+                      clearErrors();
+                      Object.keys(error.validationErrorMsg).map((key) =>
+                        methods.setError(key as keyof NeosysUserInput, {
+                          message: error.validationErrorMsg[key][0] as string,
+                        })
+                      );
+                    }
+                  },
+                });
+              }}
             />
           </Container>
         </Box>

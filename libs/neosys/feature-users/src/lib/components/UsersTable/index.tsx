@@ -1,40 +1,31 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 import { Avatar, Flex } from '@chakra-ui/react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
+import { useGetUserListQuery } from '@coop/neosys-admin/data-access';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const UsersTable = () => {
-  const router = useRouter();
-  const { data, isFetching } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
+  const { data, isFetching } = useGetUserListQuery({
+    paginate: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.neosys?.user?.list?.edges ?? [], [data]);
 
-  const popoverTitle = [
-    'memberListTableViewMemberProfile',
-    'memberListTableEditMember',
-    'memberListTableMakeInactive',
-  ];
+  const popoverTitle = ['memberListTableEditMember'];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         id: '1',
         header: 'User',
-        accessorFn: (row) => row?.node?.name,
+        accessorFn: (row) => row?.node?.username,
 
         cell: ({ getValue }) => (
           <Flex alignItems="center" gap="2">
-            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+            <Avatar name={getValue() as string} size="sm" />
             <span>{getValue() as string}</span>
           </Flex>
         ),
@@ -44,20 +35,15 @@ export const UsersTable = () => {
         id: '2',
 
         header: 'Role',
-        accessorFn: (row) => row?.node?.address?.locality?.local,
-
-        cell: ({ getValue, row }) => (
-          <span>
-            {getValue() as string}, {row?.original?.node?.address?.locality?.local}
-          </span>
-        ),
+        accessorFn: (row) => row?.node?.role,
+        cell: ({ getValue }) => <span>{(getValue() as string) || '-'}</span>,
       },
       {
         id: '3',
         header: 'Phone Number',
         accessorFn: (row) => row?.node?.contact,
 
-        cell: ({ getValue }) => <span>{getValue() as string}</span>,
+        cell: ({ getValue }) => <span>{(getValue() as string) || '-'}</span>,
       },
       {
         id: '4',
