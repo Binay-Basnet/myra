@@ -333,6 +333,7 @@ interface IReportTableProps<T extends Record<string, unknown>> {
   hasSNo?: boolean;
   showFooter?: boolean;
   tableTitle?: string;
+  getSubRows?: (row: T) => T[];
 }
 
 export const ReportTable = <T extends Record<string, unknown>>({
@@ -341,6 +342,7 @@ export const ReportTable = <T extends Record<string, unknown>>({
   hasSNo = true,
   showFooter = false,
   tableTitle,
+  getSubRows,
 }: IReportTableProps<T>) => {
   const { data } = useReport();
 
@@ -351,7 +353,7 @@ export const ReportTable = <T extends Record<string, unknown>>({
         variant="report"
         size="report"
         isStatic
-        getSubRows={(row) => row['children'] as T[]}
+        getSubRows={getSubRows || ((row) => row['children'] as T[])}
         data={
           tableData
             ? ((hasSNo

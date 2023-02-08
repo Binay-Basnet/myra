@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { DetailsCard, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
+import { BalanceType } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
@@ -14,6 +15,8 @@ type GlTransactionDetailProps = {
         debit?: string | null | undefined;
         credit?: string | null | undefined;
         ledgerId?: string | null | undefined;
+        balance?: string | null | undefined;
+        balanceType?: BalanceType | null | undefined;
       } | null)[]
     | null
     | undefined;
@@ -63,6 +66,17 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
         meta: {
           isNumeric: true,
         },
+      },
+      {
+        header: 'Balance',
+        accessorFn: (row) => amountConverter(row?.balance ?? 0),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Balance Type',
+        accessorFn: (row) => row?.balanceType ?? '-',
       },
     ],
     [totalDebit, totalCredit]

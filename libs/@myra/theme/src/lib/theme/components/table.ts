@@ -177,6 +177,7 @@ const sizes = {
     },
     td: {
       px: 's8',
+      py: 's4',
       lineHeight: '125%',
       fontSize: 's2',
       height: '26px',
@@ -194,6 +195,7 @@ const sizes = {
       lineHeight: '125%',
       fontSize: 's3',
       height: '35px',
+      minH: '35px',
     },
     tfoot: {
       th: {

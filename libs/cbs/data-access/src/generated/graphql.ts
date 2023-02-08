@@ -19171,6 +19171,8 @@ export type GetJournalVoucherDetailQuery = {
             serviceCenter?: string | null;
             debit?: string | null;
             credit?: string | null;
+            balance?: string | null;
+            balanceType?: BalanceType | null;
           } | null> | null;
         } | null;
       } | null;
@@ -23810,6 +23812,65 @@ export type GetClosedLoanAccountReportQuery = {
   };
 };
 
+export type GetLoanCollateralReportQueryVariables = Exact<{
+  data: LoanCollateralFilter;
+}>;
+
+export type GetLoanCollateralReportQuery = {
+  report: {
+    loanReport: {
+      loanCollateralReport?: {
+        data?: Array<{
+          loanAccountNo?: string | null;
+          loanAccountType?: string | null;
+          loanDisbursedAmount?: string | null;
+          memberId?: string | null;
+          memberName?: string | null;
+          remainingPrincipal?: string | null;
+          collateralInformation?: Array<{
+            collateralDescription?: string | null;
+            collateralType?: string | null;
+            dvMinAmount?: string | null;
+            fmvMaxAmount?: string | null;
+            ownerName?: string | null;
+            valuationMethod?: string | null;
+            valuatorName?: string | null;
+          } | null> | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetLoanPersonalGuranteeReportQueryVariables = Exact<{
+  data?: InputMaybe<LoanAccountGuaranteeReportInput>;
+}>;
+
+export type GetLoanPersonalGuranteeReportQuery = {
+  report: {
+    loanReport: {
+      personalGuaranteeReport?: {
+        data?: Array<{
+          disbursedAmount?: string | null;
+          loanAccountNo?: string | null;
+          memberCode?: string | null;
+          memberId?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          totalGuaranteeAmount?: string | null;
+          guarantorInformantion?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            depositAccountNo?: string | null;
+            guaranteeAmount?: string | null;
+            memCode?: string | null;
+            memId?: string | null;
+            memName?: string | null;
+          } | null> | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
 export type GetMemberClassificationReportQueryVariables = Exact<{
   data: MemberClassificationFilter;
 }>;
@@ -24123,7 +24184,12 @@ export type GetLedgerReportQuery = {
           credit?: string | null;
           debit?: string | null;
         } | null> | null;
-        summary?: { openingBalance?: string | null } | null;
+        summary?: {
+          openingBalance?: string | null;
+          openingBalanceType?: BalanceType | null;
+          closingBalance?: string | null;
+          closingBalanceType?: BalanceType | null;
+        } | null;
       };
     };
   };
@@ -25244,6 +25310,9 @@ export type GetCoaAccountDetailsQuery = {
             date?: Record<'local' | 'en' | 'np', string> | null;
             txnId?: string | null;
             txnType?: string | null;
+            debit?: string | null;
+            credit?: string | null;
+            balanceType?: BalanceType | null;
             particulars?: string | null;
             total?: string | null;
           } | null> | null;
@@ -27006,6 +27075,8 @@ export type GetShareDetailQuery = {
           serviceCenter?: string | null;
           debit?: string | null;
           credit?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
         } | null> | null;
       } | null;
     } | null;
@@ -27209,6 +27280,8 @@ export type TransactionDepositDetailQuery = {
           credit?: string | null;
           serviceCenter?: string | null;
           ledgerId?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
         } | null> | null;
       } | null;
     } | null;
@@ -27256,6 +27329,8 @@ export type TransactionWithdrawDetailQuery = {
           credit?: string | null;
           serviceCenter?: string | null;
           ledgerId?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
         } | null> | null;
       } | null;
     } | null;
@@ -27302,6 +27377,8 @@ export type TransactionAccountTransferDetailQuery = {
           credit?: string | null;
           serviceCenter?: string | null;
           ledgerId?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
         } | null> | null;
       } | null;
     } | null;
@@ -27394,6 +27471,8 @@ export type LoanRepaymentDetailQuery = {
           credit?: string | null;
           serviceCenter?: string | null;
           ledgerId?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
         } | null> | null;
       } | null;
     } | null;
@@ -27471,6 +27550,7 @@ export type GetAllTransactionsDetailQuery = {
     viewTransactionDetail?: {
       data?: {
         id: string;
+        user?: string | null;
         transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         txnType?: AllTransactionType | null;
         transactionMode?: string | null;
@@ -27492,6 +27572,8 @@ export type GetAllTransactionsDetailQuery = {
           debit?: string | null;
           credit?: string | null;
           ledgerId?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
         } | null> | null;
       } | null;
     } | null;
@@ -27631,6 +27713,8 @@ export type GetTransferDetailQuery = {
           serviceCenter?: string | null;
           debit?: string | null;
           credit?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
         } | null> | null;
       } | null;
     } | null;
@@ -27707,6 +27791,8 @@ export type GetCashInTransitDetailQuery = {
           serviceCenter?: string | null;
           debit?: string | null;
           credit?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
         } | null> | null;
       } | null;
     } | null;
@@ -33850,6 +33936,8 @@ export const GetJournalVoucherDetailDocument = `
             serviceCenter
             debit
             credit
+            balance
+            balanceType
           }
           totalDebit
           totalCredit
@@ -39819,6 +39907,89 @@ export const useGetClosedLoanAccountReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetLoanCollateralReportDocument = `
+    query getLoanCollateralReport($data: LoanCollateralFilter!) {
+  report {
+    loanReport {
+      loanCollateralReport(data: $data) {
+        data {
+          collateralInformation {
+            collateralDescription
+            collateralType
+            dvMinAmount
+            fmvMaxAmount
+            ownerName
+            valuationMethod
+            valuatorName
+          }
+          loanAccountNo
+          loanAccountType
+          loanDisbursedAmount
+          memberId
+          memberName
+          remainingPrincipal
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanCollateralReportQuery = <
+  TData = GetLoanCollateralReportQuery,
+  TError = unknown
+>(
+  variables: GetLoanCollateralReportQueryVariables,
+  options?: UseQueryOptions<GetLoanCollateralReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanCollateralReportQuery, TError, TData>(
+    ['getLoanCollateralReport', variables],
+    useAxios<GetLoanCollateralReportQuery, GetLoanCollateralReportQueryVariables>(
+      GetLoanCollateralReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanPersonalGuranteeReportDocument = `
+    query getLoanPersonalGuranteeReport($data: LoanAccountGuaranteeReportInput) {
+  report {
+    loanReport {
+      personalGuaranteeReport(data: $data) {
+        data {
+          disbursedAmount
+          guarantorInformantion {
+            date
+            depositAccountNo
+            guaranteeAmount
+            memCode
+            memId
+            memName
+          }
+          loanAccountNo
+          memberCode
+          memberId
+          memberName
+          totalGuaranteeAmount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanPersonalGuranteeReportQuery = <
+  TData = GetLoanPersonalGuranteeReportQuery,
+  TError = unknown
+>(
+  variables?: GetLoanPersonalGuranteeReportQueryVariables,
+  options?: UseQueryOptions<GetLoanPersonalGuranteeReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanPersonalGuranteeReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanPersonalGuranteeReport']
+      : ['getLoanPersonalGuranteeReport', variables],
+    useAxios<GetLoanPersonalGuranteeReportQuery, GetLoanPersonalGuranteeReportQueryVariables>(
+      GetLoanPersonalGuranteeReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMemberClassificationReportDocument = `
     query getMemberClassificationReport($data: MemberClassificationFilter!) {
   report {
@@ -40226,6 +40397,9 @@ export const GetLedgerReportDocument = `
         }
         summary {
           openingBalance
+          openingBalanceType
+          closingBalance
+          closingBalanceType
         }
       }
     }
@@ -41715,6 +41889,9 @@ export const GetCoaAccountDetailsDocument = `
             date
             txnId
             txnType
+            debit
+            credit
+            balanceType
             particulars
             total
           }
@@ -44101,6 +44278,8 @@ export const GetShareDetailDocument = `
           serviceCenter
           debit
           credit
+          balance
+          balanceType
         }
         totalCredit
         totalDebit
@@ -44362,6 +44541,8 @@ export const TransactionDepositDetailDocument = `
           credit
           serviceCenter
           ledgerId
+          balance
+          balanceType
         }
         totalDebit
         totalCredit
@@ -44420,6 +44601,8 @@ export const TransactionWithdrawDetailDocument = `
           credit
           serviceCenter
           ledgerId
+          balance
+          balanceType
         }
         totalDebit
         totalCredit
@@ -44484,6 +44667,8 @@ export const TransactionAccountTransferDetailDocument = `
           credit
           serviceCenter
           ledgerId
+          balance
+          balanceType
         }
         totalDebit
         totalCredit
@@ -44606,6 +44791,8 @@ export const LoanRepaymentDetailDocument = `
           credit
           serviceCenter
           ledgerId
+          balance
+          balanceType
         }
         totalDebit
         totalCredit
@@ -44714,6 +44901,7 @@ export const GetAllTransactionsDetailDocument = `
     viewTransactionDetail(transactionId: $id, txnType: $txnType) {
       data {
         id
+        user
         member {
           id
           code
@@ -44733,6 +44921,8 @@ export const GetAllTransactionsDetailDocument = `
           debit
           credit
           ledgerId
+          balance
+          balanceType
         }
         totalDebit
         totalCredit
@@ -44899,6 +45089,8 @@ export const GetTransferDetailDocument = `
           serviceCenter
           debit
           credit
+          balance
+          balanceType
         }
         totalCredit
         totalDebit
@@ -44994,6 +45186,8 @@ export const GetCashInTransitDetailDocument = `
           serviceCenter
           debit
           credit
+          balance
+          balanceType
         }
         totalCredit
         totalDebit

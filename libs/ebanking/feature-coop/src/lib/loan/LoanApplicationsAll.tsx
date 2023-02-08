@@ -3,11 +3,12 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
+import { Box, Button, Divider, PathBar, Text, VStack } from '@myra-ui';
+
 import { InfoCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
 import { EBankingServiceStatus, useGetLoanHistoryQuery } from '@coop/ebanking/data-access';
 import { FormSwitchTab } from '@coop/shared/form';
-import { Box, Button, Divider, PathBar, Text, VStack } from '@myra-ui';
 import { amountConverter, getLoggedInUserId } from '@coop/shared/utils';
 
 const LoanStatusOptions = [
