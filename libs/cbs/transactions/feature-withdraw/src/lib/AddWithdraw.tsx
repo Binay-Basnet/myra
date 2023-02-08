@@ -40,7 +40,12 @@ import {
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
-import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  amountToWordsConverter,
+  featureCode,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { Payment } from '../components';
 
@@ -518,6 +523,7 @@ export const AddWithdraw = () => {
                       return {
                         type: 'Withdraw',
                         total: amountConverter(result?.amount || 0) as string,
+                        totalWords: amountToWordsConverter(result?.amount || 0),
                         title: 'Withdraw Successful',
                         details: {
                           'Transaction Id': (

@@ -15,7 +15,7 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
     case 'saving-product':
       return (
         <Link target="_blank" href={`${ROUTES.CBS_ACCOUNT_SAVING_PRODUCT_DETAILS}?id=${id}`}>
-          <Button variant="link" color="primary.500" minW="auto" px={0}>
+          <Button variant="link" color="primary.500" minW="auto" px={0} fontSize="s3">
             {label}{' '}
           </Button>
         </Link>
@@ -23,7 +23,7 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
     case 'member':
       return (
         <Link target="_blank" href={`${ROUTES.CBS_MEMBER_DETAILS}?id=${id}`}>
-          <Button variant="link" color="primary.500" minW="auto" px={0}>
+          <Button variant="link" color="primary.500" minW="auto" px={0} fontSize="s3">
             {label}{' '}
           </Button>
         </Link>
@@ -31,7 +31,7 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
     case 'loan':
       return (
         <Link target="_blank" href={`${ROUTES.CBS_LOAN_ACCOUNTS_DETAILS}?id=${id}`}>
-          <Button variant="link" color="primary.500" minW="auto" px={0}>
+          <Button variant="link" color="primary.500" minW="auto" px={0} fontSize="s3">
             {label}{' '}
           </Button>
         </Link>
@@ -39,7 +39,7 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
     case 'savings':
       return (
         <Link target="_blank" href={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${id}`}>
-          <Button variant="link" color="primary.500" minW="auto" px={0}>
+          <Button variant="link" color="primary.500" minW="auto" px={0} fontSize="s3">
             {label}{' '}
           </Button>
         </Link>
@@ -47,7 +47,7 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
     case 'transactions':
       return (
         <Link target="_blank" href={`${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${id}`}>
-          <Button variant="link" color="primary.500" minW="auto" px={0}>
+          <Button variant="link" color="primary.500" minW="auto" px={0} fontSize="s3">
             {label}{' '}
           </Button>
         </Link>
@@ -55,7 +55,7 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
     case 'account-close':
       return (
         <Link target="_blank" href={`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${id}`}>
-          <Button variant="link" color="primary.500" minW="auto" px={0}>
+          <Button variant="link" color="primary.500" minW="auto" px={0} fontSize="s3">
             {label}{' '}
           </Button>
         </Link>
@@ -64,7 +64,7 @@ export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
     default:
       return (
         <Link target="_blank" href={`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${id}`}>
-          <Button variant="link" color="primary.500">
+          <Button variant="link" color="primary.500" fontSize="s3">
             {label}{' '}
           </Button>
         </Link>

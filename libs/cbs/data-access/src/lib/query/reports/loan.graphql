@@ -173,3 +173,54 @@ query getClosedLoanAccountReport($data: ClosedLoanAccountFilter) {
     }
   }
 }
+
+query getLoanCollateralReport($data: LoanCollateralFilter!) {
+  report {
+    loanReport {
+      loanCollateralReport(data: $data) {
+        data {
+          collateralInformation {
+            collateralDescription
+            collateralType
+            dvMinAmount
+            fmvMaxAmount
+            ownerName
+            valuationMethod
+            valuatorName
+          }
+          loanAccountNo
+          loanAccountType
+          loanDisbursedAmount
+          memberId
+          memberName
+          remainingPrincipal
+        }
+      }
+    }
+  }
+}
+
+query getLoanPersonalGuranteeReport($data: LoanAccountGuaranteeReportInput) {
+  report {
+    loanReport {
+      personalGuaranteeReport(data: $data) {
+        data {
+          disbursedAmount
+          guarantorInformantion {
+            date
+            depositAccountNo
+            guaranteeAmount
+            memCode
+            memId
+            memName
+          }
+          loanAccountNo
+          memberCode
+          memberId
+          memberName
+          totalGuaranteeAmount
+        }
+      }
+    }
+  }
+}

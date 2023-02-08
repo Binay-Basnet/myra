@@ -62,6 +62,8 @@ export enum Report {
   LOAN_INTEREST_REPORT = 'Interest Report',
   LOAN_MIS_ANALYSIS_REPORT = 'Loan MIS/Analysis Report',
   LOAN_COLLATERAL_VALUATION_REPORT = 'Collateral Valuation Report',
+  LOAN_COLLATERAL_REPORT = 'Loan Collateral Report',
+  LOAN_PERSONAL_GURANTEE_REPORT = 'Personal Guarantee Report',
   LOAN_WRITE_OFF_REPORT = 'Loan write off report',
   LOAN_PRE_INFORM_REPORT = 'Loan pre-inform report',
   LOAN_APPROVAL_REPORT_REJECT = 'Loan Approval Report / Reject Report',
@@ -379,6 +381,16 @@ export const REPORTS = {
       id: '6.16',
       report: Report.CLOSED_LOAN_ACCOUNT_STATEMENT,
       link: 'closed-loan-account-statement',
+    },
+    {
+      id: '14.2.5.a',
+      report: Report.LOAN_COLLATERAL_REPORT,
+      link: 'loan-collateral',
+    },
+    {
+      id: '14.2.6',
+      report: Report.LOAN_PERSONAL_GURANTEE_REPORT,
+      link: 'personal-gurantee',
     },
   ],
 

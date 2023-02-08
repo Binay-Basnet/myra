@@ -71,6 +71,7 @@ const TableExpanded = ({
         bg={isExpanded ? 'transparent' : 'gray.200'}
         _hover={{ bg: isExpanded ? 'gray.100' : 'gray.200' }}
         h="s20"
+        flexShrink={0}
         w="s20"
       >
         <Icon
