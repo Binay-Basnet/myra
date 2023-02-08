@@ -822,6 +822,7 @@ export type AllTransactionResult = {
   transactionMode?: Maybe<Scalars['String']>;
   transactionTime?: Maybe<Scalars['String']>;
   txnType?: Maybe<AllTransactionType>;
+  user?: Maybe<Scalars['String']>;
 };
 
 export const AllTransactionType = {
@@ -9189,6 +9190,26 @@ export type LoanAccountGuaranteeDetails = {
   totalGuaranteeValuation: Scalars['String'];
 };
 
+export type LoanAccountGuaranteeReport = {
+  disbursedAmount?: Maybe<Scalars['String']>;
+  guarantorInformantion?: Maybe<Array<Maybe<LoanGuarantorInfo>>>;
+  loanAccountNo?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  totalGuaranteeAmount?: Maybe<Scalars['String']>;
+};
+
+export type LoanAccountGuaranteeReportInput = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+};
+
+export type LoanAccountGuaranteeReportResult = {
+  data?: Maybe<Array<Maybe<LoanAccountGuaranteeReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanAccountGurantee = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
@@ -9634,6 +9655,16 @@ export type LoanGeneralSettingsInput = {
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
   flat?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type LoanGuarantorInfo = {
+  date?: Maybe<Scalars['Localized']>;
+  depositAccountNo?: Maybe<Scalars['String']>;
+  guaranteeAmount?: Maybe<Scalars['String']>;
+  guaranteeStatus?: Maybe<GuaranteeStatus>;
+  memCode?: Maybe<Scalars['String']>;
+  memId?: Maybe<Scalars['ID']>;
+  memName?: Maybe<Scalars['String']>;
 };
 
 export type LoanInstallment = {
@@ -10267,6 +10298,7 @@ export type LoanReport = {
   loanBalanceReport: LoanBalanceReportResult;
   loanCollateralReport?: Maybe<LoanCollateralReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
+  personalGuaranteeReport?: Maybe<LoanAccountGuaranteeReportResult>;
 };
 
 export type LoanReportClosedLoanAccountStatementReportArgs = {
@@ -10287,6 +10319,10 @@ export type LoanReportLoanCollateralReportArgs = {
 
 export type LoanReportLoanStatementReportArgs = {
   data: LoanStatementReportSettings;
+};
+
+export type LoanReportPersonalGuaranteeReportArgs = {
+  data?: InputMaybe<LoanAccountGuaranteeReportInput>;
 };
 
 export type LoanRequestConnection = {
@@ -10947,6 +10983,7 @@ export type MemberOverviewGraphs = {
 
 export type MemberOverviewLoanView = {
   accounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
+  closedAccounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
 };
 
@@ -21672,36 +21709,6 @@ export type GetLoanAccountLedgersListQuery = {
   };
 };
 
-export type GetLoanCollateralReportQueryVariables = Exact<{
-  data: LoanCollateralFilter;
-}>;
-
-export type GetLoanCollateralReportQuery = {
-  report: {
-    loanReport: {
-      loanCollateralReport?: {
-        data?: Array<{
-          loanAccountNo?: string | null;
-          loanAccountType?: string | null;
-          loanDisbursedAmount?: string | null;
-          memberId?: string | null;
-          memberName?: string | null;
-          remainingPrincipal?: string | null;
-          collateralInformation?: Array<{
-            collateralDescription?: string | null;
-            collateralType?: string | null;
-            dvMinAmount?: string | null;
-            fmvMaxAmount?: string | null;
-            ownerName?: string | null;
-            valuationMethod?: string | null;
-            valuatorName?: string | null;
-          } | null> | null;
-        } | null> | null;
-      } | null;
-    };
-  };
-};
-
 export type GetMemberListQueryVariables = Exact<{
   pagination: Pagination;
   filter?: InputMaybe<KymMemberDataFilter>;
@@ -23735,6 +23742,65 @@ export type GetClosedLoanAccountReportQuery = {
           totalInterestPaid?: string | null;
           totalPrincipalPaid?: string | null;
         } | null;
+      } | null;
+    };
+  };
+};
+
+export type GetLoanCollateralReportQueryVariables = Exact<{
+  data: LoanCollateralFilter;
+}>;
+
+export type GetLoanCollateralReportQuery = {
+  report: {
+    loanReport: {
+      loanCollateralReport?: {
+        data?: Array<{
+          loanAccountNo?: string | null;
+          loanAccountType?: string | null;
+          loanDisbursedAmount?: string | null;
+          memberId?: string | null;
+          memberName?: string | null;
+          remainingPrincipal?: string | null;
+          collateralInformation?: Array<{
+            collateralDescription?: string | null;
+            collateralType?: string | null;
+            dvMinAmount?: string | null;
+            fmvMaxAmount?: string | null;
+            ownerName?: string | null;
+            valuationMethod?: string | null;
+            valuatorName?: string | null;
+          } | null> | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetLoanPersonalGuranteeReportQueryVariables = Exact<{
+  data?: InputMaybe<LoanAccountGuaranteeReportInput>;
+}>;
+
+export type GetLoanPersonalGuranteeReportQuery = {
+  report: {
+    loanReport: {
+      personalGuaranteeReport?: {
+        data?: Array<{
+          disbursedAmount?: string | null;
+          loanAccountNo?: string | null;
+          memberCode?: string | null;
+          memberId?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          totalGuaranteeAmount?: string | null;
+          guarantorInformantion?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            depositAccountNo?: string | null;
+            guaranteeAmount?: string | null;
+            memCode?: string | null;
+            memId?: string | null;
+            memName?: string | null;
+          } | null> | null;
+        } | null> | null;
       } | null;
     };
   };
@@ -37083,47 +37149,6 @@ export const useGetLoanAccountLedgersListQuery = <
     ).bind(null, variables),
     options
   );
-export const GetLoanCollateralReportDocument = `
-    query getLoanCollateralReport($data: LoanCollateralFilter!) {
-  report {
-    loanReport {
-      loanCollateralReport(data: $data) {
-        data {
-          collateralInformation {
-            collateralDescription
-            collateralType
-            dvMinAmount
-            fmvMaxAmount
-            ownerName
-            valuationMethod
-            valuatorName
-          }
-          loanAccountNo
-          loanAccountType
-          loanDisbursedAmount
-          memberId
-          memberName
-          remainingPrincipal
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetLoanCollateralReportQuery = <
-  TData = GetLoanCollateralReportQuery,
-  TError = unknown
->(
-  variables: GetLoanCollateralReportQueryVariables,
-  options?: UseQueryOptions<GetLoanCollateralReportQuery, TError, TData>
-) =>
-  useQuery<GetLoanCollateralReportQuery, TError, TData>(
-    ['getLoanCollateralReport', variables],
-    useAxios<GetLoanCollateralReportQuery, GetLoanCollateralReportQueryVariables>(
-      GetLoanCollateralReportDocument
-    ).bind(null, variables),
-    options
-  );
 export const GetMemberListDocument = `
     query getMemberList($pagination: Pagination!, $filter: KymMemberDataFilter) {
   members {
@@ -39762,6 +39787,89 @@ export const useGetClosedLoanAccountReportQuery = <
       : ['getClosedLoanAccountReport', variables],
     useAxios<GetClosedLoanAccountReportQuery, GetClosedLoanAccountReportQueryVariables>(
       GetClosedLoanAccountReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanCollateralReportDocument = `
+    query getLoanCollateralReport($data: LoanCollateralFilter!) {
+  report {
+    loanReport {
+      loanCollateralReport(data: $data) {
+        data {
+          collateralInformation {
+            collateralDescription
+            collateralType
+            dvMinAmount
+            fmvMaxAmount
+            ownerName
+            valuationMethod
+            valuatorName
+          }
+          loanAccountNo
+          loanAccountType
+          loanDisbursedAmount
+          memberId
+          memberName
+          remainingPrincipal
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanCollateralReportQuery = <
+  TData = GetLoanCollateralReportQuery,
+  TError = unknown
+>(
+  variables: GetLoanCollateralReportQueryVariables,
+  options?: UseQueryOptions<GetLoanCollateralReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanCollateralReportQuery, TError, TData>(
+    ['getLoanCollateralReport', variables],
+    useAxios<GetLoanCollateralReportQuery, GetLoanCollateralReportQueryVariables>(
+      GetLoanCollateralReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanPersonalGuranteeReportDocument = `
+    query getLoanPersonalGuranteeReport($data: LoanAccountGuaranteeReportInput) {
+  report {
+    loanReport {
+      personalGuaranteeReport(data: $data) {
+        data {
+          disbursedAmount
+          guarantorInformantion {
+            date
+            depositAccountNo
+            guaranteeAmount
+            memCode
+            memId
+            memName
+          }
+          loanAccountNo
+          memberCode
+          memberId
+          memberName
+          totalGuaranteeAmount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanPersonalGuranteeReportQuery = <
+  TData = GetLoanPersonalGuranteeReportQuery,
+  TError = unknown
+>(
+  variables?: GetLoanPersonalGuranteeReportQueryVariables,
+  options?: UseQueryOptions<GetLoanPersonalGuranteeReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanPersonalGuranteeReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanPersonalGuranteeReport']
+      : ['getLoanPersonalGuranteeReport', variables],
+    useAxios<GetLoanPersonalGuranteeReportQuery, GetLoanPersonalGuranteeReportQueryVariables>(
+      GetLoanPersonalGuranteeReportDocument
     ).bind(null, variables),
     options
   );

@@ -7,11 +7,12 @@ import {
   LoanCollateralFilter,
   LocalizedDateFilter,
   useGetLoanCollateralReportQuery,
+  useGetLoanProductTypeQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type LoanCollateralData = Partial<{
@@ -33,8 +34,9 @@ type LoanCollateralData = Partial<{
   children: LoanCollateralData[];
 }>;
 
-type ReportFilter = Omit<LoanCollateralFilter, 'branchId'> & {
+type ReportFilter = Omit<LoanCollateralFilter, 'branchId' | 'loanType'> & {
   branchId: { label: string; value: string }[];
+  loanType: { label: string; value: string }[];
 };
 
 export const LoanCollateralReport = () => {
@@ -45,16 +47,24 @@ export const LoanCollateralReport = () => {
       ? filters?.branchId?.map((t) => t.value)
       : [];
 
+  const loanTypeIds =
+    filters?.loanType && filters?.loanType.length !== 0
+      ? filters?.loanType?.map((t) => t.value)
+      : [];
+
   const { data, isFetching } = useGetLoanCollateralReportQuery(
     {
       data: {
         ...filters,
         period: filters?.period as LocalizedDateFilter,
         branchId: branchIDs as string[],
+        loanType: loanTypeIds as string[],
       },
     },
     { enabled: !!filters }
   );
+  const { data: loanProductTypeData } = useGetLoanProductTypeQuery();
+  const loanTypes = loanProductTypeData?.settings?.general?.loan?.productType?.productTypes;
 
   const loanCollateralReport = data?.report?.loanReport?.loanCollateralReport?.data?.map((d) => ({
     ...d,
@@ -79,7 +89,7 @@ export const LoanCollateralReport = () => {
             },
             {
               label: 'Loan Collateral Report',
-              link: '/reports/cbs/transactions/day-book/new',
+              link: '/reports/cbs/loan/loan-collateral/new',
             },
           ]}
         />
@@ -186,6 +196,18 @@ export const LoanCollateralReport = () => {
             ]}
           />
         </Report.Content>
+        <Report.Filters>
+          <Report.Filter title="Loan Type">
+            <FormSelect
+              name="loanType"
+              isMulti
+              options={loanTypes?.map((product) => ({
+                label: product?.productType as string,
+                value: product?.id as string,
+              }))}
+            />
+          </Report.Filter>
+        </Report.Filters>
       </Report.Body>
     </Report>
   );

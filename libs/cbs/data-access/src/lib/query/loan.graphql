@@ -787,29 +787,3 @@ query getLoanAccountLedgersList($id: ID!) {
     }
   }
 }
-
-query getLoanCollateralReport($data: LoanCollateralFilter!) {
-  report {
-    loanReport {
-      loanCollateralReport(data: $data) {
-        data {
-          collateralInformation {
-            collateralDescription
-            collateralType
-            dvMinAmount
-            fmvMaxAmount
-            ownerName
-            valuationMethod
-            valuatorName
-          }
-          loanAccountNo
-          loanAccountType
-          loanDisbursedAmount
-          memberId
-          memberName
-          remainingPrincipal
-        }
-      }
-    }
-  }
-}
