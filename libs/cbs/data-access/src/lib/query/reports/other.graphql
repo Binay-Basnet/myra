@@ -12,6 +12,9 @@ query getLedgerReport($data: GeneralLedgerFilter!) {
         }
         summary {
           openingBalance
+          openingBalanceType
+          closingBalance
+          closingBalanceType
         }
       }
     }

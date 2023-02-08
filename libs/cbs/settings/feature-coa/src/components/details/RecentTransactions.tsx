@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { Button, DetailsCard } from '@myra-ui';
 import { BalanceAmountCell, Column, Table } from '@myra-ui/table';
 
+import { BalanceType } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 
 import { useCOAAccountDetails } from '../../hooks';
@@ -51,12 +52,28 @@ export const RecentTransactions = () => {
         },
       },
       {
-        header: 'Total',
+        header: 'Debit',
+        accessorKey: 'debit',
+        cell: (props) => (props.getValue() ? props.getValue() : '-'),
+        meta: {
+          width: '33%',
+        },
+      },
+      {
+        header: 'Credit',
+        accessorKey: 'credit',
+        cell: (props) => (props.getValue() ? props.getValue() : '-'),
+        meta: {
+          width: '33%',
+        },
+      },
+      {
+        header: 'Balance',
         accessorKey: 'total',
         cell: (props) => (
           <BalanceAmountCell
             amount={props?.row?.original?.total ?? 0}
-            type={props?.row?.original?.txnType?.toLowerCase()}
+            type={props?.row?.original?.balanceType as BalanceType}
           />
         ),
         meta: {

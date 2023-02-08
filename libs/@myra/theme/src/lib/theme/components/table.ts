@@ -194,6 +194,7 @@ const sizes = {
       px: 's16',
       lineHeight: '125%',
       fontSize: 's3',
+      height: '35px',
       minH: '35px',
     },
     tfoot: {
