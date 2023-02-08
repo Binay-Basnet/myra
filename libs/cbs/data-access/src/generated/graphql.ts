@@ -5739,7 +5739,10 @@ export type GlBalanceFilter = {
 };
 
 export type GlReportSummary = {
+  closingBalance?: Maybe<Scalars['String']>;
+  closingBalanceType?: Maybe<BalanceType>;
   openingBalance?: Maybe<Scalars['String']>;
+  openingBalanceType?: Maybe<BalanceType>;
 };
 
 export type GlStatementFilter = {
@@ -9543,6 +9546,28 @@ export type LoanCollateralAndGuarantees = {
   valuation?: Maybe<Scalars['String']>;
 };
 
+export type LoanCollateralFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  collateralType?: InputMaybe<Array<Scalars['String']>>;
+  loanType?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+};
+
+export type LoanCollateralInformation = {
+  collateralDescription?: Maybe<Scalars['String']>;
+  collateralType?: Maybe<Scalars['String']>;
+  dvMinAmount?: Maybe<Scalars['String']>;
+  fmvMaxAmount?: Maybe<Scalars['String']>;
+  ownerName?: Maybe<Scalars['String']>;
+  valuationMethod?: Maybe<Scalars['String']>;
+  valuatorName?: Maybe<Scalars['String']>;
+};
+
+export type LoanCollateralReportResult = {
+  data?: Maybe<Array<Maybe<MemberLoanInformation>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanDisbursementInput = {
   accountPayment?: InputMaybe<LoanAccountDisbursement>;
   amount: Scalars['String'];
@@ -10240,6 +10265,7 @@ export type LoanReport = {
   closedLoanAccountStatementReport?: Maybe<ClosedLoanAccountReportResult>;
   loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
   loanBalanceReport: LoanBalanceReportResult;
+  loanCollateralReport?: Maybe<LoanCollateralReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
 };
 
@@ -10253,6 +10279,10 @@ export type LoanReportLoanAgingStatementReportArgs = {
 
 export type LoanReportLoanBalanceReportArgs = {
   data: LoanBalanceFilterData;
+};
+
+export type LoanReportLoanCollateralReportArgs = {
+  data?: InputMaybe<LoanCollateralFilter>;
 };
 
 export type LoanReportLoanStatementReportArgs = {
@@ -10783,6 +10813,16 @@ export type MemberIndividualData = {
   photo?: Maybe<Scalars['Boolean']>;
   profession?: Maybe<Scalars['String']>;
   shareInfo?: Maybe<ShareInformation>;
+};
+
+export type MemberLoanInformation = {
+  collateralInformation?: Maybe<Array<Maybe<LoanCollateralInformation>>>;
+  loanAccountNo?: Maybe<Scalars['String']>;
+  loanAccountType?: Maybe<Scalars['String']>;
+  loanDisbursedAmount?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  remainingPrincipal?: Maybe<Scalars['String']>;
 };
 
 export type MemberMutation = {
@@ -21629,6 +21669,36 @@ export type GetLoanAccountLedgersListQuery = {
         balanceType?: string | null;
       } | null> | null;
     } | null;
+  };
+};
+
+export type GetLoanCollateralReportQueryVariables = Exact<{
+  data: LoanCollateralFilter;
+}>;
+
+export type GetLoanCollateralReportQuery = {
+  report: {
+    loanReport: {
+      loanCollateralReport?: {
+        data?: Array<{
+          loanAccountNo?: string | null;
+          loanAccountType?: string | null;
+          loanDisbursedAmount?: string | null;
+          memberId?: string | null;
+          memberName?: string | null;
+          remainingPrincipal?: string | null;
+          collateralInformation?: Array<{
+            collateralDescription?: string | null;
+            collateralType?: string | null;
+            dvMinAmount?: string | null;
+            fmvMaxAmount?: string | null;
+            ownerName?: string | null;
+            valuationMethod?: string | null;
+            valuatorName?: string | null;
+          } | null> | null;
+        } | null> | null;
+      } | null;
+    };
   };
 };
 
@@ -37010,6 +37080,47 @@ export const useGetLoanAccountLedgersListQuery = <
     ['getLoanAccountLedgersList', variables],
     useAxios<GetLoanAccountLedgersListQuery, GetLoanAccountLedgersListQueryVariables>(
       GetLoanAccountLedgersListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanCollateralReportDocument = `
+    query getLoanCollateralReport($data: LoanCollateralFilter!) {
+  report {
+    loanReport {
+      loanCollateralReport(data: $data) {
+        data {
+          collateralInformation {
+            collateralDescription
+            collateralType
+            dvMinAmount
+            fmvMaxAmount
+            ownerName
+            valuationMethod
+            valuatorName
+          }
+          loanAccountNo
+          loanAccountType
+          loanDisbursedAmount
+          memberId
+          memberName
+          remainingPrincipal
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanCollateralReportQuery = <
+  TData = GetLoanCollateralReportQuery,
+  TError = unknown
+>(
+  variables: GetLoanCollateralReportQueryVariables,
+  options?: UseQueryOptions<GetLoanCollateralReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanCollateralReportQuery, TError, TData>(
+    ['getLoanCollateralReport', variables],
+    useAxios<GetLoanCollateralReportQuery, GetLoanCollateralReportQueryVariables>(
+      GetLoanCollateralReportDocument
     ).bind(null, variables),
     options
   );

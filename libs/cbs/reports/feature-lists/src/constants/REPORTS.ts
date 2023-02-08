@@ -62,6 +62,7 @@ export enum Report {
   LOAN_INTEREST_REPORT = 'Interest Report',
   LOAN_MIS_ANALYSIS_REPORT = 'Loan MIS/Analysis Report',
   LOAN_COLLATERAL_VALUATION_REPORT = 'Collateral Valuation Report',
+  LOAN_COLLATERAL_REPORT = 'Loan Collateral Report',
   LOAN_WRITE_OFF_REPORT = 'Loan write off report',
   LOAN_PRE_INFORM_REPORT = 'Loan pre-inform report',
   LOAN_APPROVAL_REPORT_REJECT = 'Loan Approval Report / Reject Report',
