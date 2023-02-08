@@ -252,6 +252,7 @@ export type AccountOperatorDetailsType = {
 };
 
 export type AccountTransactionFilter = {
+  branchId?: InputMaybe<Scalars['String']>;
   depositedBy?: InputMaybe<Scalars['String']>;
   filterMode?: InputMaybe<Filter_Mode>;
   from?: InputMaybe<Scalars['String']>;
@@ -822,6 +823,7 @@ export type AllTransactionResult = {
   transactionMode?: Maybe<Scalars['String']>;
   transactionTime?: Maybe<Scalars['String']>;
   txnType?: Maybe<AllTransactionType>;
+  user?: Maybe<Scalars['String']>;
 };
 
 export const AllTransactionType = {
@@ -1865,7 +1867,10 @@ export type CoaDetailsMinOverview = {
 };
 
 export type CoaDetailsRecentTxns = {
+  balanceType?: Maybe<BalanceType>;
+  credit?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
+  debit?: Maybe<Scalars['String']>;
   particulars?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['String']>;
   txnId?: Maybe<Scalars['String']>;
@@ -5851,6 +5856,8 @@ export type GeneralSettingsQuery = {
 
 export type GlTransaction = {
   account: Scalars['String'];
+  balance?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   credit?: Maybe<Scalars['String']>;
   debit?: Maybe<Scalars['String']>;
   ledgerId?: Maybe<Scalars['String']>;
@@ -9189,6 +9196,26 @@ export type LoanAccountGuaranteeDetails = {
   totalGuaranteeValuation: Scalars['String'];
 };
 
+export type LoanAccountGuaranteeReport = {
+  disbursedAmount?: Maybe<Scalars['String']>;
+  guarantorInformantion?: Maybe<Array<Maybe<LoanGuarantorInfo>>>;
+  loanAccountNo?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  totalGuaranteeAmount?: Maybe<Scalars['String']>;
+};
+
+export type LoanAccountGuaranteeReportInput = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+};
+
+export type LoanAccountGuaranteeReportResult = {
+  data?: Maybe<Array<Maybe<LoanAccountGuaranteeReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanAccountGurantee = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
@@ -9636,6 +9663,16 @@ export type LoanGeneralSettingsInput = {
   flat?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type LoanGuarantorInfo = {
+  date?: Maybe<Scalars['Localized']>;
+  depositAccountNo?: Maybe<Scalars['String']>;
+  guaranteeAmount?: Maybe<Scalars['String']>;
+  guaranteeStatus?: Maybe<GuaranteeStatus>;
+  memCode?: Maybe<Scalars['String']>;
+  memId?: Maybe<Scalars['ID']>;
+  memName?: Maybe<Scalars['String']>;
+};
+
 export type LoanInstallment = {
   installmentDate: Scalars['Localized'];
   installmentNo: Scalars['Int'];
@@ -9866,6 +9903,35 @@ export type LoanProduct = Base & {
   typeOfMember: Array<Maybe<KymMemberTypesEnum>>;
   updateInterest?: Maybe<Scalars['Boolean']>;
   waiveInterest?: Maybe<Scalars['Boolean']>;
+};
+
+export type LoanProductBalanceReportFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+  productType?: InputMaybe<Array<Scalars['String']>>;
+  totalBalance?: InputMaybe<IntRange>;
+};
+
+export type LoanProductBalanceReportInformation = {
+  noOfOpeningAccounts?: Maybe<Scalars['Int']>;
+  noOfTotalAccounts?: Maybe<Scalars['Int']>;
+  openingLoanBalance?: Maybe<Scalars['String']>;
+  productCode?: Maybe<Scalars['String']>;
+  productType?: Maybe<Scalars['String']>;
+  totalLoanBalance?: Maybe<Scalars['String']>;
+};
+
+export type LoanProductBalanceReportResult = {
+  data?: Maybe<Array<Maybe<LoanProductBalanceReportInformation>>>;
+  error?: Maybe<QueryError>;
+  summary?: Maybe<LoanProductBalanceReportSummary>;
+};
+
+export type LoanProductBalanceReportSummary = {
+  noOfOpeningAccounts?: Maybe<Scalars['Int']>;
+  noOfTotalAccounts?: Maybe<Scalars['Int']>;
+  totalLoanBalance?: Maybe<Scalars['String']>;
+  totalOpeningLoanBalance?: Maybe<Scalars['String']>;
 };
 
 export type LoanProductConnection = {
@@ -10266,7 +10332,9 @@ export type LoanReport = {
   loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
   loanBalanceReport: LoanBalanceReportResult;
   loanCollateralReport?: Maybe<LoanCollateralReportResult>;
+  loanProductBalance?: Maybe<LoanProductBalanceReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
+  personalGuaranteeReport?: Maybe<LoanAccountGuaranteeReportResult>;
 };
 
 export type LoanReportClosedLoanAccountStatementReportArgs = {
@@ -10285,8 +10353,16 @@ export type LoanReportLoanCollateralReportArgs = {
   data?: InputMaybe<LoanCollateralFilter>;
 };
 
+export type LoanReportLoanProductBalanceArgs = {
+  data?: InputMaybe<LoanProductBalanceReportFilter>;
+};
+
 export type LoanReportLoanStatementReportArgs = {
   data: LoanStatementReportSettings;
+};
+
+export type LoanReportPersonalGuaranteeReportArgs = {
+  data?: InputMaybe<LoanAccountGuaranteeReportInput>;
 };
 
 export type LoanRequestConnection = {
@@ -14554,6 +14630,7 @@ export type TransactionQueryCashInTransitDetailArgs = {
 };
 
 export type TransactionQueryListAgentArgs = {
+  currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -19397,6 +19474,7 @@ export type GetAllLocalGovernmentQuery = {
 
 export type GetAgentListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
+  currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -34247,9 +34325,13 @@ export const useGetAllLocalGovernmentQuery = <TData = GetAllLocalGovernmentQuery
     options
   );
 export const GetAgentListDataDocument = `
-    query getAgentListData($filter: AccountTransactionFilter, $pagination: Pagination) {
+    query getAgentListData($filter: AccountTransactionFilter, $currentBranchOnly: Boolean, $pagination: Pagination) {
   transaction {
-    listAgent(filter: $filter, pagination: $pagination) {
+    listAgent(
+      filter: $filter
+      currentBranchOnly: $currentBranchOnly
+      pagination: $pagination
+    ) {
       totalCount
       edges {
         node {

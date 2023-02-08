@@ -50,6 +50,7 @@ export const AgentList = () => {
         marketRepId: searchTerm,
         filterMode: Filter_Mode.Or,
       },
+      currentBranchOnly: true,
       // filter: {
       //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
       // },

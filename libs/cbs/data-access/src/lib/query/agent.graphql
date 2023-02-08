@@ -1,6 +1,10 @@
-query getAgentListData($filter: AccountTransactionFilter, $pagination: Pagination) {
+query getAgentListData(
+  $filter: AccountTransactionFilter
+  $currentBranchOnly: Boolean
+  $pagination: Pagination
+) {
   transaction {
-    listAgent(filter: $filter, pagination: $pagination) {
+    listAgent(filter: $filter, currentBranchOnly: $currentBranchOnly, pagination: $pagination) {
       totalCount
       edges {
         node {
