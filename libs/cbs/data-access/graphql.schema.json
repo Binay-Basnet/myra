@@ -6798,6 +6798,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -49475,6 +49487,30 @@
             "deprecationReason": null
           },
           {
+            "name": "balance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "balanceType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "BalanceType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "credit",
             "description": null,
             "args": [],
@@ -82088,7 +82124,19 @@
             "deprecationReason": null
           },
           {
-            "name": "memberCode",
+            "name": "guaranteeStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "GuaranteeStatus",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "memCode",
             "description": null,
             "args": [],
             "type": {
@@ -82100,7 +82148,7 @@
             "deprecationReason": null
           },
           {
-            "name": "memberId",
+            "name": "memId",
             "description": null,
             "args": [],
             "type": {
@@ -82112,7 +82160,7 @@
             "deprecationReason": null
           },
           {
-            "name": "memberName",
+            "name": "memName",
             "description": null,
             "args": [],
             "type": {

@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Box, Text } from '@myra-ui';
+import { Box, Button, Text } from '@myra-ui';
 
 import {
   Filter_Mode,
@@ -17,6 +18,8 @@ type SelectType = {
 
 export const ReportOrganization = () => {
   const { getValues } = useFormContext();
+  const [showAllBranch, setShowAllBranch] = useState<boolean>(false);
+
   const user = useAppSelector((state) => state.auth.user);
 
   const period = getValues('period') as LocalizedDateFilter;
@@ -45,6 +48,9 @@ export const ReportOrganization = () => {
       : null;
 
   const nameList = typeof branchId === 'object' ? (branchId as SelectType) : null;
+  useEffect(() => {
+    setShowAllBranch(false);
+  }, [nameList?.length]);
 
   return (
     <Box
@@ -92,7 +98,26 @@ export const ReportOrganization = () => {
               {singleName}
             </Text>
           )}
-          {nameList?.length && (
+          {nameList?.length && !showAllBranch && (
+            <Box maxW="50ch">
+              {nameList?.map((data, index) => {
+                if (index === 0) {
+                  return (
+                    <Box display="flex" flexDirection="row" alignItems="center">
+                      <Text as="span" fontSize="r1" color="gray.700" fontWeight="500">
+                        {data?.label},{' '}
+                      </Text>
+                      <Button variant="link" onClick={() => setShowAllBranch(true)}>
+                        {`and ${nameList.length - 1} others`}
+                      </Button>
+                    </Box>
+                  );
+                }
+                return null;
+              })}
+            </Box>
+          )}
+          {nameList?.length && showAllBranch && (
             <Box maxW="50ch">
               {nameList?.map((data) => (
                 <Text as="span" fontSize="r1" color="gray.700" fontWeight="500">
