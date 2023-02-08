@@ -1885,6 +1885,18 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "branchId",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "depositedBy",
             "description": null,
             "type": {
@@ -123576,6 +123588,18 @@
             "name": "listAgent",
             "description": null,
             "args": [
+              {
+                "name": "currentBranchOnly",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
               {
                 "name": "filter",
                 "description": null,
