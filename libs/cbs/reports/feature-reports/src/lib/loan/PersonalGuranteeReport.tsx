@@ -77,7 +77,7 @@ export const LoanPersonalGuranteeReport = () => {
               link: '/reports/cbs/loan',
             },
             {
-              label: 'Loan Collateral Report',
+              label: 'Loan Personal Gurantee Report',
               link: '/reports/cbs/loan/personal-gurantee/new',
             },
           ]}
