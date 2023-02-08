@@ -5,14 +5,35 @@ query getUserList($paginate: Pagination, $filter: NeosysUserSearchFilter) {
         totalCount
         edges {
           node {
+            id
             username
             role
-            contact
+            contactNo
           }
           cursor
         }
         pageInfo {
           ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getUserEditData($id: ID!) {
+  neosys {
+    user {
+      get(id: $id) {
+        data {
+          name
+          gender
+          dob
+          contactNo
+          email
+          role
+        }
+        error {
+          ...MutationError
         }
       }
     }

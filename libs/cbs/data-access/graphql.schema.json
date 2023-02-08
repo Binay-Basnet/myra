@@ -15169,12 +15169,48 @@
         "description": null,
         "fields": [
           {
+            "name": "balanceType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "BalanceType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "credit",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "date",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
               "name": "Localized",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "debit",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -84481,6 +84517,278 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "LoanProductBalanceReportFilter",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "branchId",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "period",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "LocalizedDateFilter",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "productType",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalBalance",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "IntRange",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "LoanProductBalanceReportInformation",
+        "description": null,
+        "fields": [
+          {
+            "name": "noOfOpeningAccounts",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "noOfTotalAccounts",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "openingLoanBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "productCode",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "productType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalLoanBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "LoanProductBalanceReportResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "LoanProductBalanceReportInformation",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "summary",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "LoanProductBalanceReportSummary",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "LoanProductBalanceReportSummary",
+        "description": null,
+        "fields": [
+          {
+            "name": "noOfOpeningAccounts",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "noOfTotalAccounts",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalLoanBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalOpeningLoanBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "LoanProductConnection",
         "description": null,
@@ -88048,6 +88356,31 @@
             "type": {
               "kind": "OBJECT",
               "name": "LoanCollateralReportResult",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "loanProductBalance",
+            "description": null,
+            "args": [
+              {
+                "name": "data",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "LoanProductBalanceReportFilter",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "LoanProductBalanceReportResult",
               "ofType": null
             },
             "isDeprecated": false,

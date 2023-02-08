@@ -1,20 +1,19 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { Avatar, Flex } from '@chakra-ui/react';
 
-import { Column, PageHeader, Table } from '@myra-ui';
+import { Column, PageHeader, Table, TablePopover } from '@myra-ui';
 
-import { PopoverComponent } from '@coop/myra/components';
 import { useGetUserListQuery } from '@coop/neosys-admin/data-access';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const UsersTable = () => {
+  const router = useRouter();
   const { data, isFetching } = useGetUserListQuery({
     paginate: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
   const rowData = useMemo(() => data?.neosys?.user?.list?.edges ?? [], [data]);
-
-  const popoverTitle = ['memberListTableEditMember'];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -41,7 +40,7 @@ export const UsersTable = () => {
       {
         id: '3',
         header: 'Phone Number',
-        accessorFn: (row) => row?.node?.contact,
+        accessorFn: (row) => row?.node?.contactNo,
 
         cell: ({ getValue }) => <span>{(getValue() as string) || '-'}</span>,
       },
@@ -50,7 +49,19 @@ export const UsersTable = () => {
 
         header: '',
         accessor: 'actions',
-        cell: () => <PopoverComponent title={popoverTitle} />,
+        cell: (cell) => (
+          <TablePopover
+            node={cell.row.original?.node}
+            items={[
+              {
+                title: 'Edit User',
+                onClick: (node) => {
+                  router.push(`/users/edit/${node?.id}`);
+                },
+              },
+            ]}
+          />
+        ),
       },
     ],
     []
