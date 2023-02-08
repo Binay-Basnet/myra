@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Box, GridItem } from '@myra-ui';
+import { Box, GridItem, Text } from '@myra-ui';
 
 import {
   GeneralLedgerFilter,
@@ -29,6 +29,7 @@ export const LedgerReport = () => {
   );
   const ledgerReport = data?.report?.otherReport?.generalLedgerReport?.data;
   const openingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.openingBalance;
+  const closingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.closingBalance;
 
   return (
     <Report
@@ -57,8 +58,10 @@ export const LedgerReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization />
           <Box display="flex" flexDirection="row" justifyContent="flex-end" p="s12">
-            {' '}
-            Opening Balance {amountConverter(openingBalance as string)}
+            <Box display="flex" flexDirection="column">
+              <Text> Opening Balance {amountConverter(openingBalance as string)}</Text>
+              <Text> Closing Balance {amountConverter(closingBalance as string)}</Text>
+            </Box>
           </Box>
           <Report.Table<GeneralLedgerReportEntry>
             hasSNo={false}
