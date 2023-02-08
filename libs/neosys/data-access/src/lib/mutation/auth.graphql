@@ -37,3 +37,16 @@ mutation refresh($refreshToken: String!) {
     }
   }
 }
+
+mutation changePassword($data: NeosysUserPasswordInput) {
+  neosys {
+    user {
+      changePassword(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

@@ -833,6 +833,27 @@ export type RefreshMutation = {
   };
 };
 
+export type ChangePasswordMutationVariables = Exact<{
+  data?: InputMaybe<NeosysUserPasswordInput>;
+}>;
+
+export type ChangePasswordMutation = {
+  neosys: {
+    user?: {
+      changePassword?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type AddNewClientMutationVariables = Exact<{
   data?: InputMaybe<OrganizationClientInput>;
 }>;
@@ -1301,6 +1322,33 @@ export const useRefreshMutation = <TError = unknown, TContext = unknown>(
   useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
     ['refresh'],
     useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
+    options
+  );
+export const ChangePasswordDocument = `
+    mutation changePassword($data: NeosysUserPasswordInput) {
+  neosys {
+    user {
+      changePassword(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useChangePasswordMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ChangePasswordMutation,
+    TError,
+    ChangePasswordMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>(
+    ['changePassword'],
+    useAxios<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument),
     options
   );
 export const AddNewClientDocument = `

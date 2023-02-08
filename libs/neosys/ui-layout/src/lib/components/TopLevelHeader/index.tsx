@@ -3,8 +3,6 @@ import { MdOutlineHelpOutline } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { Image } from '@chakra-ui/react';
 
-import { useAppDispatch } from '@coop/cbs/data-access';
-import { logout } from '@coop/neosys-admin/data-access';
 import {
   Avatar,
   Box,
@@ -18,6 +16,9 @@ import {
   SwitchTabs,
   Text,
 } from '@myra-ui';
+
+import { useAppDispatch } from '@coop/cbs/data-access';
+import { logout } from '@coop/neosys-admin/data-access';
 
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {}
@@ -205,6 +206,26 @@ export const TopLevelHeader = () => {
                             color="neutralColorLight.Gray-80"
                           >
                             Profile Settings
+                          </Text>
+                        </Box>
+                        <Box
+                          _hover={{
+                            bg: 'background.500',
+                          }}
+                          h="40px"
+                          px="s16"
+                          display="flex"
+                          alignItems="center"
+                          cursor="pointer"
+                          onClick={() => router.push('/change-password')}
+                        >
+                          <Text
+                            textAlign="start"
+                            fontWeight="Regular"
+                            fontSize="r1"
+                            color="neutralColorLight.Gray-80"
+                          >
+                            Change Password
                           </Text>
                         </Box>
 
