@@ -5739,7 +5739,10 @@ export type GlBalanceFilter = {
 };
 
 export type GlReportSummary = {
+  closingBalance?: Maybe<Scalars['String']>;
+  closingBalanceType?: Maybe<BalanceType>;
   openingBalance?: Maybe<Scalars['String']>;
+  openingBalanceType?: Maybe<BalanceType>;
 };
 
 export type GlStatementFilter = {
@@ -9186,6 +9189,26 @@ export type LoanAccountGuaranteeDetails = {
   totalGuaranteeValuation: Scalars['String'];
 };
 
+export type LoanAccountGuaranteeReport = {
+  disbursedAmount?: Maybe<Scalars['String']>;
+  guarantorInformantion?: Maybe<Array<Maybe<LoanGuarantorInfo>>>;
+  loanAccountNo?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  totalGuaranteeAmount?: Maybe<Scalars['String']>;
+};
+
+export type LoanAccountGuaranteeReportInput = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+};
+
+export type LoanAccountGuaranteeReportResult = {
+  data?: Maybe<Array<Maybe<LoanAccountGuaranteeReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanAccountGurantee = {
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
@@ -9631,6 +9654,15 @@ export type LoanGeneralSettingsInput = {
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
   flat?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type LoanGuarantorInfo = {
+  date?: Maybe<Scalars['Localized']>;
+  depositAccountNo?: Maybe<Scalars['String']>;
+  guaranteeAmount?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['String']>;
 };
 
 export type LoanInstallment = {
@@ -10264,6 +10296,7 @@ export type LoanReport = {
   loanBalanceReport: LoanBalanceReportResult;
   loanCollateralReport?: Maybe<LoanCollateralReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
+  personalGuaranteeReport?: Maybe<LoanAccountGuaranteeReportResult>;
 };
 
 export type LoanReportClosedLoanAccountStatementReportArgs = {
@@ -10284,6 +10317,10 @@ export type LoanReportLoanCollateralReportArgs = {
 
 export type LoanReportLoanStatementReportArgs = {
   data: LoanStatementReportSettings;
+};
+
+export type LoanReportPersonalGuaranteeReportArgs = {
+  data?: InputMaybe<LoanAccountGuaranteeReportInput>;
 };
 
 export type LoanRequestConnection = {
@@ -10944,6 +10981,7 @@ export type MemberOverviewGraphs = {
 
 export type MemberOverviewLoanView = {
   accounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
+  closedAccounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
 };
 

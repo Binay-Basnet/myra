@@ -428,13 +428,12 @@ export type NeosysQuery = {
 };
 
 export type NeosysUser = Base & {
-  contact?: Maybe<Scalars['String']>;
+  contactNo?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
   dob?: Maybe<Scalars['Localized']>;
   email?: Maybe<Scalars['String']>;
   firstName: Scalars['Localized'];
-  fullname: Scalars['Localized'];
   gender?: Maybe<Gender>;
   id: Scalars['ID'];
   lastLoggedIn?: Maybe<Scalars['Time']>;
@@ -442,6 +441,7 @@ export type NeosysUser = Base & {
   middleName: Scalars['Localized'];
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
+  name: Scalars['String'];
   objState: ObjState;
   role?: Maybe<Role>;
   username: Scalars['String'];
@@ -460,7 +460,7 @@ export type NeosysUserEdge = {
 
 export type NeosysUserInput = {
   contactNo?: InputMaybe<Scalars['String']>;
-  dob?: InputMaybe<Scalars['String']>;
+  dob?: InputMaybe<Scalars['Localized']>;
   email?: InputMaybe<Scalars['String']>;
   gender?: InputMaybe<Gender>;
   name?: InputMaybe<Scalars['String']>;
@@ -1149,9 +1149,36 @@ export type GetUserListQuery = {
         totalCount: number;
         edges?: Array<{
           cursor: string;
-          node: { username: string; role?: Role | null; contact?: string | null };
+          node: { id: string; username: string; role?: Role | null; contactNo?: string | null };
         }> | null;
         pageInfo: PaginationFragment;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetUserEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetUserEditDataQuery = {
+  neosys: {
+    user?: {
+      get?: {
+        data?: {
+          name: string;
+          gender?: Gender | null;
+          dob?: Record<'local' | 'en' | 'np', string> | null;
+          contactNo?: string | null;
+          email?: string | null;
+          role?: Role | null;
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
       } | null;
     } | null;
   };
@@ -1637,9 +1664,10 @@ export const GetUserListDocument = `
         totalCount
         edges {
           node {
+            id
             username
             role
-            contact
+            contactNo
           }
           cursor
         }
@@ -1658,6 +1686,39 @@ export const useGetUserListQuery = <TData = GetUserListQuery, TError = unknown>(
   useQuery<GetUserListQuery, TError, TData>(
     variables === undefined ? ['getUserList'] : ['getUserList', variables],
     useAxios<GetUserListQuery, GetUserListQueryVariables>(GetUserListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetUserEditDataDocument = `
+    query getUserEditData($id: ID!) {
+  neosys {
+    user {
+      get(id: $id) {
+        data {
+          name
+          gender
+          dob
+          contactNo
+          email
+          role
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetUserEditDataQuery = <TData = GetUserEditDataQuery, TError = unknown>(
+  variables: GetUserEditDataQueryVariables,
+  options?: UseQueryOptions<GetUserEditDataQuery, TError, TData>
+) =>
+  useQuery<GetUserEditDataQuery, TError, TData>(
+    ['getUserEditData', variables],
+    useAxios<GetUserEditDataQuery, GetUserEditDataQueryVariables>(GetUserEditDataDocument).bind(
       null,
       variables
     ),

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
@@ -6,7 +7,12 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { asyncToast, Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
 
-import { NeosysUserInput, Role, useSetUserMutation } from '@coop/neosys-admin/data-access';
+import {
+  NeosysUserInput,
+  Role,
+  useGetUserEditDataQuery,
+  useSetUserMutation,
+} from '@coop/neosys-admin/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 import { NeosysUsersForm } from '../form/NeosysUsersForm';
@@ -18,10 +24,25 @@ export const NeosysFeatureUsersAdd = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const methods = useForm();
-  const { clearErrors } = methods;
+  const { clearErrors, reset } = methods;
+
+  const isEdit = router?.pathname?.includes('edit');
+
+  const { data: editData, refetch } = useGetUserEditDataQuery(
+    { id: router?.query?.['id'] as string },
+    {
+      enabled: !!isEdit,
+    }
+  );
 
   const queryClient = useQueryClient();
   const { mutateAsync } = useSetUserMutation();
+
+  useEffect(() => {
+    if (editData) {
+      reset({ ...editData?.neosys?.user?.get?.data });
+    }
+  }, [editData]);
 
   return (
     <>
@@ -84,17 +105,18 @@ export const NeosysFeatureUsersAdd = () => {
                 await asyncToast({
                   id: 'new-client',
                   msgs: {
-                    loading: 'Adding New User',
-                    success: 'New User Added',
+                    loading: isEdit ? 'Editing User' : 'Adding New User',
+                    success: isEdit ? 'User Edited' : 'New User Added',
                   },
                   onSuccess: () => {
                     router.push('/users');
                     queryClient.invalidateQueries(['getUserList']);
+                    refetch();
                   },
                   promise: mutateAsync({
+                    id: isEdit ? (router?.query?.['id'] as string) : undefined,
                     data: {
                       ...formValues,
-                      dob: formValues?.['dob'].en,
                       role: Role?.Superadmin,
                     },
                   }),
