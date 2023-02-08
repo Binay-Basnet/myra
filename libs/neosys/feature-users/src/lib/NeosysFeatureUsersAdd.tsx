@@ -5,7 +5,17 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Button,
+  Container,
+  FormFooter,
+  Icon,
+  IconButton,
+  Loader,
+  Text,
+} from '@myra-ui';
 
 import {
   NeosysUserInput,
@@ -28,10 +38,14 @@ export const NeosysFeatureUsersAdd = () => {
 
   const isEdit = router?.pathname?.includes('edit');
 
-  const { data: editData, refetch } = useGetUserEditDataQuery(
+  const {
+    data: editData,
+    isLoading: editDataLoading,
+    refetch,
+  } = useGetUserEditDataQuery(
     { id: router?.query?.['id'] as string },
     {
-      enabled: !!isEdit,
+      enabled: isEdit,
     }
   );
 
@@ -69,7 +83,13 @@ export const NeosysFeatureUsersAdd = () => {
             />
           </Box>
           <FormProvider {...methods}>
-            <NeosysUsersForm />
+            {editDataLoading && isEdit ? (
+              <Box display="flex" justifyContent="center" pt="100px">
+                <Loader />
+              </Box>
+            ) : (
+              <NeosysUsersForm />
+            )}
           </FormProvider>
         </Box>
       </Container>
