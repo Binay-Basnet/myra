@@ -52,11 +52,17 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
         header: t['transDetailDebit'],
         footer: totalDebit,
         accessorFn: (row) => amountConverter(row?.debit ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: t['transDetailCredit'],
         footer: totalCredit,
         accessorFn: (row) => amountConverter(row?.credit ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
     ],
     [totalDebit, totalCredit]
