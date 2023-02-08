@@ -37,7 +37,13 @@ import {
 import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { CashOptions } from '@coop/shared/components';
 import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
-import { amountConverter, decimalAdjust, featureCode, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  amountToWordsConverter,
+  decimalAdjust,
+  featureCode,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';
 
@@ -629,6 +635,7 @@ export const AddDeposit = () => {
                       return {
                         type: 'Deposit',
                         total: amountConverter(result?.amount || 0) as string,
+                        totalWords: amountToWordsConverter(result?.amount || 0),
                         title: 'Deposit Successful',
                         details: {
                           'Transaction Id': (
