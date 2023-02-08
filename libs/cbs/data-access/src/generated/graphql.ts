@@ -5739,7 +5739,10 @@ export type GlBalanceFilter = {
 };
 
 export type GlReportSummary = {
+  closingBalance?: Maybe<Scalars['String']>;
+  closingBalanceType?: Maybe<BalanceType>;
   openingBalance?: Maybe<Scalars['String']>;
+  openingBalanceType?: Maybe<BalanceType>;
 };
 
 export type GlStatementFilter = {
@@ -10944,6 +10947,7 @@ export type MemberOverviewGraphs = {
 
 export type MemberOverviewLoanView = {
   accounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
+  closedAccounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
 };
 
