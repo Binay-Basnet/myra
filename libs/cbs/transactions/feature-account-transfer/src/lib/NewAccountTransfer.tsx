@@ -41,7 +41,12 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  amountToWordsConverter,
+  featureCode,
+  useTranslation,
+} from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface NewAccountTransferProps {}
@@ -420,6 +425,7 @@ export const NewAccountTransfer = () => {
                     return {
                       type: 'Account Transfer',
                       total: amountConverter(result?.totalAmount || 0) as string,
+                      totalWords: amountToWordsConverter(result?.amount || 0),
                       title: 'Account Transfer Successful',
                       details: {
                         'Transaction Id': (
