@@ -80,7 +80,7 @@ export const DayBookReport = () => {
         receipt?.entries?.map((entry) => ({
           ...entry,
           children: [],
-          accountHead: '-',
+          accountHead: entry?.particular,
         })) as unknown as DayBookTable
       ),
     })) as unknown as DayBookTable;
@@ -89,14 +89,13 @@ export const DayBookReport = () => {
     data?.report?.transactionReport?.financial?.dayBookReport?.data?.payments?.map((receipt) => ({
       accountHead: receipt?.accountHead,
       amount: amountConverter(receipt?.amount as string),
-      particular: '-',
       voucherNo: '-',
       ledger: '-',
       children: sortParticular(
         receipt?.entries?.map((entry) => ({
           ...entry,
           children: [],
-          accountHead: '-',
+          accountHead: entry?.particular,
         })) as unknown as DayBookTable
       ),
     })) as unknown as DayBookTable;
@@ -161,28 +160,28 @@ export const DayBookReport = () => {
 
                   accessorKey: 'accountHead',
                   cell: (props) => (
-                    <ExpandedCell row={props.row} value={props.getValue() as string} />
+                    <Box whiteSpace="pre-line" my="s4">
+                      <ExpandedCell row={props.row} value={props.getValue() as string} />
+                    </Box>
                   ),
                   footer: () => <MultiFooter texts={['Total Receipts', 'Total Amount']} />,
                   meta: {
+                    width: '30%',
                     Footer: {
-                      colspan: 4,
-                    },
-                  },
-                },
-                {
-                  header: 'Particulars',
-                  accessorKey: 'particular',
-                  meta: {
-                    Footer: {
-                      display: 'none',
+                      colspan: 3,
                     },
                   },
                 },
                 {
                   header: 'Ledgers',
                   accessorKey: 'ledger',
+                  cell: (props) => (
+                    <Box whiteSpace="pre-line" w="100%" my="s4">
+                      {props.getValue() as string}
+                    </Box>
+                  ),
                   meta: {
+                    width: '40%',
                     Footer: {
                       display: 'none',
                     },
@@ -192,13 +191,16 @@ export const DayBookReport = () => {
                   header: 'Voucher No',
                   accessorKey: 'voucherNo',
                   cell: (props) => (
-                    <RouteToDetailsPage
-                      id={props?.row?.original?.voucherNo as string}
-                      type="transactions"
-                      label={props?.row?.original?.voucherNo as string}
-                    />
+                    <Box whiteSpace="pre-line" w="100%">
+                      <RouteToDetailsPage
+                        id={props?.row?.original?.voucherNo as string}
+                        type="transactions"
+                        label={props?.row?.original?.voucherNo as string}
+                      />
+                    </Box>
                   ),
                   meta: {
+                    width: '50px',
                     Footer: {
                       display: 'none',
                     },
@@ -207,7 +209,13 @@ export const DayBookReport = () => {
                 {
                   header: 'Detail Amount',
                   accessorKey: 'amount',
+                  cell: (props) => (
+                    <Box whiteSpace="pre-line" w="100%">
+                      {amountConverter(props.getValue() as string)}
+                    </Box>
+                  ),
                   meta: {
+                    width: '50px',
                     isNumeric: true,
                   },
                   footer: () => (
@@ -242,28 +250,28 @@ export const DayBookReport = () => {
 
                   accessorKey: 'accountHead',
                   cell: (props) => (
-                    <ExpandedCell row={props.row} value={props.getValue() as string} />
+                    <Box whiteSpace="pre-line" my="s4">
+                      <ExpandedCell row={props.row} value={props.getValue() as string} />
+                    </Box>
                   ),
-                  footer: () => <MultiFooter texts={['Total Payments', 'Closing Balance']} />,
+                  footer: () => <MultiFooter texts={['Total Receipts', 'Total Amount']} />,
                   meta: {
+                    width: '30%',
                     Footer: {
-                      colspan: 4,
-                    },
-                  },
-                },
-                {
-                  header: 'Particulars',
-                  accessorKey: 'particular',
-                  meta: {
-                    Footer: {
-                      display: 'none',
+                      colspan: 3,
                     },
                   },
                 },
                 {
                   header: 'Ledgers',
                   accessorKey: 'ledger',
+                  cell: (props) => (
+                    <Box whiteSpace="pre-line" w="100%" my="s4">
+                      {props.getValue() as string}
+                    </Box>
+                  ),
                   meta: {
+                    width: '40%',
                     Footer: {
                       display: 'none',
                     },
@@ -273,13 +281,16 @@ export const DayBookReport = () => {
                   header: 'Voucher No',
                   accessorKey: 'voucherNo',
                   cell: (props) => (
-                    <RouteToDetailsPage
-                      id={props?.row?.original?.voucherNo as string}
-                      type="transactions"
-                      label={props?.row?.original?.voucherNo as string}
-                    />
+                    <Box whiteSpace="pre-line" w="100%">
+                      <RouteToDetailsPage
+                        id={props?.row?.original?.voucherNo as string}
+                        type="transactions"
+                        label={props?.row?.original?.voucherNo as string}
+                      />
+                    </Box>
                   ),
                   meta: {
+                    width: '50px',
                     Footer: {
                       display: 'none',
                     },
@@ -288,7 +299,13 @@ export const DayBookReport = () => {
                 {
                   header: 'Detail Amount',
                   accessorKey: 'amount',
+                  cell: (props) => (
+                    <Box whiteSpace="pre-line" w="100%">
+                      {amountConverter(props.getValue() as string)}
+                    </Box>
+                  ),
                   meta: {
+                    width: '50px',
                     isNumeric: true,
                   },
                   footer: () => (

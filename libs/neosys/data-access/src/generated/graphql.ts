@@ -205,6 +205,13 @@ export type Filter = {
   orConditions: Array<OrConditions>;
 };
 
+export const Gender = {
+  Female: 'FEMALE',
+  Male: 'MALE',
+  Other: 'OTHER',
+} as const;
+
+export type Gender = typeof Gender[keyof typeof Gender];
 export type HeadOfficeDetailsInput = {
   emailAddress?: InputMaybe<Scalars['String']>;
   establishedDate?: InputMaybe<Scalars['Localized']>;
@@ -411,26 +418,106 @@ export type NeosysMeResult = {
 export type NeosysMutation = {
   auth?: Maybe<NeosysAuthMutation>;
   client?: Maybe<NeosysClientMutation>;
+  user?: Maybe<NeosysUserMutation>;
 };
 
 export type NeosysQuery = {
   auth?: Maybe<NeosysAuthQuery>;
   client?: Maybe<NeosysClientQuery>;
+  user?: Maybe<NeosysUserQuery>;
 };
 
 export type NeosysUser = Base & {
   contact?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
+  dob?: Maybe<Scalars['Localized']>;
   email?: Maybe<Scalars['String']>;
   firstName: Scalars['Localized'];
+  fullname: Scalars['Localized'];
+  gender?: Maybe<Gender>;
   id: Scalars['ID'];
+  lastLoggedIn?: Maybe<Scalars['Time']>;
   lastName: Scalars['Localized'];
   middleName: Scalars['Localized'];
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
+  role?: Maybe<Role>;
   username: Scalars['String'];
+};
+
+export type NeosysUserConnection = {
+  edges?: Maybe<Array<NeosysUserEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type NeosysUserEdge = {
+  cursor: Scalars['Cursor'];
+  node: NeosysUser;
+};
+
+export type NeosysUserInput = {
+  contactNo?: InputMaybe<Scalars['String']>;
+  dob?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  gender?: InputMaybe<Gender>;
+  name?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
+};
+
+export type NeosysUserMutation = {
+  add?: Maybe<NeosysUserMutationResult>;
+  changePassword?: Maybe<NeosysUserMutationResult>;
+};
+
+export type NeosysUserMutationAddArgs = {
+  data?: InputMaybe<NeosysUserInput>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type NeosysUserMutationChangePasswordArgs = {
+  data?: InputMaybe<NeosysUserPasswordInput>;
+};
+
+export type NeosysUserMutationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<NeosysUserQuery>;
+  record?: Maybe<NeosysUser>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type NeosysUserPasswordInput = {
+  newPassword: Scalars['String'];
+  oldPassword: Scalars['String'];
+  userId: Scalars['ID'];
+};
+
+export type NeosysUserQuery = {
+  get?: Maybe<NeosysUserQueryResult>;
+  list?: Maybe<NeosysUserConnection>;
+};
+
+export type NeosysUserQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type NeosysUserQueryListArgs = {
+  filter?: InputMaybe<NeosysUserSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type NeosysUserQueryResult = {
+  data?: Maybe<NeosysUser>;
+  error?: Maybe<QueryError>;
+};
+
+export type NeosysUserSearchFilter = {
+  contact?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
 };
 
 export type NewClientEnvironmentInput = {
@@ -665,6 +752,11 @@ export type Result = {
   nameNp: Scalars['String'];
 };
 
+export const Role = {
+  Superadmin: 'SUPERADMIN',
+} as const;
+
+export type Role = typeof Role[keyof typeof Role];
 export type ServerError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -854,6 +946,28 @@ export type SetUpEnvironmentDatabaseMutation = {
   };
 };
 
+export type SetUserMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  data?: InputMaybe<NeosysUserInput>;
+}>;
+
+export type SetUserMutation = {
+  neosys: {
+    user?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
 
 export type AllAdministrationQuery = {
@@ -1021,6 +1135,26 @@ export type PaginationFragment = {
   endCursor?: string | null;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
+};
+
+export type GetUserListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<NeosysUserSearchFilter>;
+}>;
+
+export type GetUserListQuery = {
+  neosys: {
+    user?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node: { username: string; role?: Role | null; contact?: string | null };
+        }> | null;
+        pageInfo: PaginationFragment;
+      } | null;
+    } | null;
+  };
 };
 
 export const MutationErrorFragmentDoc = `
@@ -1287,6 +1421,29 @@ export const useSetUpEnvironmentDatabaseMutation = <TError = unknown, TContext =
     ),
     options
   );
+export const SetUserDocument = `
+    mutation setUser($id: ID, $data: NeosysUserInput) {
+  neosys {
+    user {
+      add(id: $id, data: $data) {
+        recordId
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetUserMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetUserMutation, TError, SetUserMutationVariables, TContext>
+) =>
+  useMutation<SetUserMutation, TError, SetUserMutationVariables, TContext>(
+    ['setUser'],
+    useAxios<SetUserMutation, SetUserMutationVariables>(SetUserDocument),
+    options
+  );
 export const AllAdministrationDocument = `
     query allAdministration {
   administration {
@@ -1467,6 +1624,40 @@ export const useGetClientDetailsQuery = <TData = GetClientDetailsQuery, TError =
   useQuery<GetClientDetailsQuery, TError, TData>(
     ['getClientDetails', variables],
     useAxios<GetClientDetailsQuery, GetClientDetailsQueryVariables>(GetClientDetailsDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetUserListDocument = `
+    query getUserList($paginate: Pagination, $filter: NeosysUserSearchFilter) {
+  neosys {
+    user {
+      list(paginate: $paginate, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            username
+            role
+            contact
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetUserListQuery = <TData = GetUserListQuery, TError = unknown>(
+  variables?: GetUserListQueryVariables,
+  options?: UseQueryOptions<GetUserListQuery, TError, TData>
+) =>
+  useQuery<GetUserListQuery, TError, TData>(
+    variables === undefined ? ['getUserList'] : ['getUserList', variables],
+    useAxios<GetUserListQuery, GetUserListQueryVariables>(GetUserListDocument).bind(
       null,
       variables
     ),

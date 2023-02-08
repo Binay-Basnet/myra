@@ -34,7 +34,7 @@ import {
 } from '@coop/cbs/data-access';
 import { exportVisibleTableToExcel, localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
-import { amountConverter, featureCode } from '@coop/shared/utils';
+import { amountConverter, amountToWordsConverter, featureCode } from '@coop/shared/utils';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
@@ -407,6 +407,7 @@ export const LoanRepayment = () => {
                     return {
                       type: 'Loan Repayment',
                       total: amountConverter(result?.totalAmount || 0) as string,
+                      totalWords: amountToWordsConverter(result?.totalAmount || 0),
                       title: 'Loan Repayment Successful',
                       details: {
                         'Loan Repayment Id': (

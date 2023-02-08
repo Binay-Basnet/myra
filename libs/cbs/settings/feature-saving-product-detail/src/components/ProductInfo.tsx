@@ -2,6 +2,8 @@ import { IoCopyOutline } from 'react-icons/io5';
 
 import { Box, Icon, Text } from '@myra-ui';
 
+import { copyToClipboard } from '@coop/shared/utils';
+
 import { useSavingDepositHook } from '../hooks/useSavingDepositHook';
 
 export const ProductInfo = () => {
@@ -26,7 +28,16 @@ export const ProductInfo = () => {
         <Text fontSize="r1" fontWeight="Regular" color="gray.800" lineHeight="17px">
           {sidebarData?.productCode?.prefix}-{sidebarData?.productCode?.initialNo}
         </Text>
-        <Icon size="sm" as={IoCopyOutline} />
+        <Icon
+          size="sm"
+          as={IoCopyOutline}
+          _hover={{ cursor: 'pointer' }}
+          onClick={() =>
+            copyToClipboard(
+              `${sidebarData?.productCode?.prefix}-${sidebarData?.productCode?.initialNo}` ?? '0'
+            )
+          }
+        />
       </Box>
 
       <Text fontSize="r1" fontWeight="Regular" color="gray.700" lineHeight="150%">

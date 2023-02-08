@@ -27,6 +27,7 @@ query getMemberDetailsShareBalance($id: ID!) {
         bankId
         voucherNumber
         accountId
+        noOfShare
       }
     }
   }
@@ -153,6 +154,12 @@ query getMemberKYMDetailsAccounts($id: ID!) {
             productName
             productType
             interestRate
+            interestEarned
+            interestBooked
+            guaranteeAccounts {
+              loanId
+              loanAccountName
+            }
           }
           payments {
             date
@@ -162,6 +169,20 @@ query getMemberKYMDetailsAccounts($id: ID!) {
             amount
             installmentNo
             interestRate
+          }
+          closedAccounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+            interestEarned
+            interestBooked
+            guaranteeAccounts {
+              loanId
+              loanAccountName
+            }
           }
         }
       }

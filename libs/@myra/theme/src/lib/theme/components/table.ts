@@ -42,7 +42,7 @@ const variantSimple = definePartsStyle((props) => {
       color: mode('gray.800', 'gray.400')(props),
       borderBottom: '1px',
       borderColor: mode(`border.layout`, `${c}.700`)(props),
-      maxWidth: '300px',
+      // maxWidth: '300px',
       ...numericStyles,
     },
 
@@ -50,7 +50,7 @@ const variantSimple = definePartsStyle((props) => {
       color: mode('gray.800', 'gray.400')(props),
       borderBottom: '1px',
       borderColor: mode('border.layout', `${c}.700`)(props),
-      maxWidth: '300px',
+      // maxWidth: '300px',
       ...numericStyles,
     },
     caption: {
@@ -177,6 +177,7 @@ const sizes = {
     },
     td: {
       px: 's8',
+      py: 's4',
       lineHeight: '125%',
       fontSize: 's2',
       height: '26px',
@@ -193,7 +194,7 @@ const sizes = {
       px: 's16',
       lineHeight: '125%',
       fontSize: 's3',
-      height: '35px',
+      minH: '35px',
     },
     tfoot: {
       th: {

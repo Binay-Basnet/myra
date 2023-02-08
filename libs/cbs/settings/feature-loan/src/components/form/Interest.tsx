@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 
 import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
-import { LoanProductInput, LoanProductInstallment } from '@coop/cbs/data-access';
+import { LoanProductInput } from '@coop/cbs/data-access';
 import { SubText } from '@coop/shared/components';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { SubHeadingText } from '../formui';
@@ -26,28 +26,28 @@ export const Interest = () => {
     { label: t['no'], value: false, isDisabled: router?.asPath?.includes('/edit') },
   ];
 
-  const postingFrequency = [
-    {
-      label: t['daily'],
-      value: LoanProductInstallment.Daily,
-    },
-    {
-      label: t['monthly'],
-      value: LoanProductInstallment.Monthly,
-    },
-    {
-      label: t['quaterly'],
-      value: LoanProductInstallment.Quarterly,
-    },
-    {
-      label: t['halfYearly'],
-      value: LoanProductInstallment.HalfYearly,
-    },
-    {
-      label: t['yearly'],
-      value: LoanProductInstallment.Yearly,
-    },
-  ];
+  // const postingFrequency = [
+  //   {
+  //     label: t['daily'],
+  //     value: LoanProductInstallment.Daily,
+  //   },
+  //   {
+  //     label: t['monthly'],
+  //     value: LoanProductInstallment.Monthly,
+  //   },
+  //   {
+  //     label: t['quaterly'],
+  //     value: LoanProductInstallment.Quarterly,
+  //   },
+  //   {
+  //     label: t['halfYearly'],
+  //     value: LoanProductInstallment.HalfYearly,
+  //   },
+  //   {
+  //     label: t['yearly'],
+  //     value: LoanProductInstallment.Yearly,
+  //   },
+  // ];
 
   return (
     <FormSection header="loanProductInterest">
@@ -156,14 +156,14 @@ export const Interest = () => {
             </Box>
             <FormSwitchTab name="waiveInterest" options={yesNo} />
           </Box>
-          <Box w="35%">
+          {/* <Box w="35%">
             <FormSelect
               name="postingFrequency"
               label={t['loanProductPostingFrequency']}
               options={postingFrequency}
               isDisabled={router?.asPath?.includes('/edit')}
             />
-          </Box>
+          </Box> */}
         </Box>
       </GridItem>
     </FormSection>

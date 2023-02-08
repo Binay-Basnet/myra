@@ -1,0 +1,20 @@
+query getUserList($paginate: Pagination, $filter: NeosysUserSearchFilter) {
+  neosys {
+    user {
+      list(paginate: $paginate, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            username
+            role
+            contact
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}

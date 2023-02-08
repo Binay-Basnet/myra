@@ -13,6 +13,7 @@ interface ILoanPaymentScheduleTableProps {
         date: Record<'local' | 'en' | 'np', string> | null | undefined;
         type: string | null | undefined;
         toFrom: string | null | undefined;
+        count: string | null | undefined;
         shareCr: number | null | undefined;
         shareDr: number | null | undefined;
         balance: number | null | undefined;
@@ -41,6 +42,10 @@ export const ShareTableComponent = ({ data }: ILoanPaymentScheduleTableProps) =>
       {
         header: 'To-From',
         accessorKey: 'toFrom',
+      },
+      {
+        header: 'Share Count',
+        accessorKey: 'count',
       },
       {
         header: 'Share Cr',

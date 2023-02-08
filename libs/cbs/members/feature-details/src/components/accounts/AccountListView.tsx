@@ -23,6 +23,11 @@ interface IAccountListProps {
     interestRate: string | number | null | undefined;
     accountNumber: string | null | undefined;
     productName: string | null | undefined;
+    guaranteeAccounts?:
+      | ({
+          loanId?: string | null;
+          loanAccountName?: string | null;
+        } | null)[];
   }[];
   isClosedAccounts?: boolean;
 }

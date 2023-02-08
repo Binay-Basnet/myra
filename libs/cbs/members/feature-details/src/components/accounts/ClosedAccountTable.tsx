@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
+import { FiZap } from 'react-icons/fi';
 import { IoQrCode } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { AccountQRModal, IconButton } from '@myra-ui';
+import {
+  AccountQRModal,
+  AssociatedGuaranteeAccounts,
+  Box,
+  GuaranteeAccountsHoverCard,
+  Icon,
+  IconButton,
+  Text,
+} from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
@@ -16,6 +25,11 @@ interface ILoanPaymentScheduleTableProps {
         totalBalance?: string | number | null | undefined;
         interestRate: string | number | null | undefined;
         accountNumber?: string | null | undefined;
+        guaranteeAccounts?:
+          | ({
+              loanId?: string | null;
+              loanAccountName?: string | null;
+            } | null)[];
       }[];
   memberName: string;
   contactNo?: string;
@@ -56,7 +70,24 @@ export const ClosedAccountTable = ({
         header: 'Account Name',
         accessorKey: 'accountName',
       },
+      {
+        header: 'Account Name',
+        accessorKey: 'accountName',
+        cell: (props) => (
+          <Box display="flex" alignItems="center" gap="s4">
+            <Text>{props?.row?.original?.accountName}</Text>
 
+            {props?.row?.original?.guaranteeAccounts?.length ? (
+              <GuaranteeAccountsHoverCard
+                trigger={<Icon as={FiZap} color="warning.500" />}
+                associatedGuaranteeAccounts={
+                  props?.row?.original?.guaranteeAccounts as AssociatedGuaranteeAccounts
+                }
+              />
+            ) : null}
+          </Box>
+        ),
+      },
       {
         header: 'Interest',
         accessorKey: 'interestRate',
@@ -87,7 +118,7 @@ export const ClosedAccountTable = ({
         ),
       },
     ],
-    []
+    [memberName, contactNo]
   );
 
   return (

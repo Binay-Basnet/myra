@@ -16,6 +16,7 @@ export interface SuccessCardProps {
   subTitle: string;
   details: Record<string, React.ReactNode>;
   total?: string;
+  totalWords?: string;
   type: string;
   completeHandler?: () => void;
   newOpenHandler?: () => void;
@@ -52,6 +53,7 @@ export const SuccessCard = ({
   subTitle,
   details,
   total,
+  totalWords,
   type,
   completeHandler,
   newOpenHandler,
@@ -166,6 +168,7 @@ export const SuccessCard = ({
           meta={meta}
           showSignatures={showSignatures}
           total={total as string}
+          totalWords={totalWords as string}
           details={details}
           ref={componentRef}
         />
@@ -203,11 +206,22 @@ interface SuccessPrintProps {
   };
   details: Record<string, React.ReactNode>;
   total: string;
+  totalWords: string;
   showSignatures?: boolean;
+  glTransactions?:
+    | ({
+        account: string;
+        serviceCenter?: string | null | undefined;
+        debit?: string | null | undefined;
+        credit?: string | null | undefined;
+        ledgerId?: string | null | undefined;
+      } | null)[]
+    | null
+    | undefined;
 }
 
 export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
-  ({ details, total, meta, showSignatures }, ref) => {
+  ({ details, total, meta, showSignatures, glTransactions, totalWords }, ref) => {
     const user = useAppSelector((state) => state.auth.user);
 
     return (
@@ -355,6 +369,15 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             ))}
           </Box>
 
+          {glTransactions && (
+            <>
+              <Text fontSize="s1" fontWeight="600" pt="s10">
+                GL Transactions
+              </Text>
+              <GlTransactionJornalVoucherPrint data={glTransactions} total={total} />
+            </>
+          )}
+
           {total && (
             <Box display="flex" py="s8" justifyContent="space-between">
               <Box />
@@ -365,6 +388,9 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                 </Text>
                 <Text fontSize="r2" color="primary.500" fontWeight="500" lineHeight="125%">
                   Rs. {total}
+                </Text>
+                <Text fontSize="r2" color="primary.500" fontWeight="500" lineHeight="125%">
+                  {totalWords}
                 </Text>
               </Box>
             </Box>
