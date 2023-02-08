@@ -104,7 +104,6 @@ export const NewLoanApplication = () => {
     const promise = async () => {
       if (!id) {
         const responseId = await getId({});
-
         if (responseId?.newId) {
           const response = await applyLoan({
             id: responseId.newId,

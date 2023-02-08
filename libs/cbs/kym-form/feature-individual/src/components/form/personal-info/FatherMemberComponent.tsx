@@ -5,8 +5,6 @@ import { debounce } from 'lodash';
 
 import {
   FormFieldSearchTerm,
-  RootState,
-  useAppSelector,
   useGetIndividualKymFamilyMembersListQuery,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
@@ -38,6 +36,7 @@ export const FatherMemberComponent = () => {
   const fatherOption = relationshipData?.form?.options?.predefined?.data?.filter(
     (item) => item?.name?.local === 'Father'
   );
+
   const methods = useForm<FamMemberType>({
     defaultValues: {
       relationshipId: fatherOption && fatherOption[0]?.id,
@@ -54,16 +53,16 @@ export const FatherMemberComponent = () => {
     { enabled: !!id }
   );
 
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
   useEffect(() => {
     newIDMutate({});
   }, []);
 
   useEffect(() => {
     refetchEdit();
-  }, [preference?.date]);
+    reset({
+      relationshipId: fatherOption && fatherOption[0]?.id,
+    });
+  }, [watch]);
 
   const { mutate: newIDMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

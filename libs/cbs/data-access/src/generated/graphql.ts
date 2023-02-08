@@ -1866,7 +1866,10 @@ export type CoaDetailsMinOverview = {
 };
 
 export type CoaDetailsRecentTxns = {
+  balanceType?: Maybe<BalanceType>;
+  credit?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
+  debit?: Maybe<Scalars['String']>;
   particulars?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['String']>;
   txnId?: Maybe<Scalars['String']>;
@@ -9663,9 +9666,10 @@ export type LoanGuarantorInfo = {
   date?: Maybe<Scalars['Localized']>;
   depositAccountNo?: Maybe<Scalars['String']>;
   guaranteeAmount?: Maybe<Scalars['String']>;
-  memberCode?: Maybe<Scalars['String']>;
-  memberId?: Maybe<Scalars['ID']>;
-  memberName?: Maybe<Scalars['String']>;
+  guaranteeStatus?: Maybe<GuaranteeStatus>;
+  memCode?: Maybe<Scalars['String']>;
+  memId?: Maybe<Scalars['ID']>;
+  memName?: Maybe<Scalars['String']>;
 };
 
 export type LoanInstallment = {
@@ -9898,6 +9902,35 @@ export type LoanProduct = Base & {
   typeOfMember: Array<Maybe<KymMemberTypesEnum>>;
   updateInterest?: Maybe<Scalars['Boolean']>;
   waiveInterest?: Maybe<Scalars['Boolean']>;
+};
+
+export type LoanProductBalanceReportFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  period: LocalizedDateFilter;
+  productType?: InputMaybe<Array<Scalars['String']>>;
+  totalBalance?: InputMaybe<IntRange>;
+};
+
+export type LoanProductBalanceReportInformation = {
+  noOfOpeningAccounts?: Maybe<Scalars['Int']>;
+  noOfTotalAccounts?: Maybe<Scalars['Int']>;
+  openingLoanBalance?: Maybe<Scalars['String']>;
+  productCode?: Maybe<Scalars['String']>;
+  productType?: Maybe<Scalars['String']>;
+  totalLoanBalance?: Maybe<Scalars['String']>;
+};
+
+export type LoanProductBalanceReportResult = {
+  data?: Maybe<Array<Maybe<LoanProductBalanceReportInformation>>>;
+  error?: Maybe<QueryError>;
+  summary?: Maybe<LoanProductBalanceReportSummary>;
+};
+
+export type LoanProductBalanceReportSummary = {
+  noOfOpeningAccounts?: Maybe<Scalars['Int']>;
+  noOfTotalAccounts?: Maybe<Scalars['Int']>;
+  totalLoanBalance?: Maybe<Scalars['String']>;
+  totalOpeningLoanBalance?: Maybe<Scalars['String']>;
 };
 
 export type LoanProductConnection = {
@@ -10298,6 +10331,7 @@ export type LoanReport = {
   loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
   loanBalanceReport: LoanBalanceReportResult;
   loanCollateralReport?: Maybe<LoanCollateralReportResult>;
+  loanProductBalance?: Maybe<LoanProductBalanceReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
   personalGuaranteeReport?: Maybe<LoanAccountGuaranteeReportResult>;
 };
@@ -10316,6 +10350,10 @@ export type LoanReportLoanBalanceReportArgs = {
 
 export type LoanReportLoanCollateralReportArgs = {
   data?: InputMaybe<LoanCollateralFilter>;
+};
+
+export type LoanReportLoanProductBalanceArgs = {
+  data?: InputMaybe<LoanProductBalanceReportFilter>;
 };
 
 export type LoanReportLoanStatementReportArgs = {
@@ -24141,7 +24179,12 @@ export type GetLedgerReportQuery = {
           credit?: string | null;
           debit?: string | null;
         } | null> | null;
-        summary?: { openingBalance?: string | null } | null;
+        summary?: {
+          openingBalance?: string | null;
+          openingBalanceType?: BalanceType | null;
+          closingBalance?: string | null;
+          closingBalanceType?: BalanceType | null;
+        } | null;
       };
     };
   };
@@ -25262,6 +25305,9 @@ export type GetCoaAccountDetailsQuery = {
             date?: Record<'local' | 'en' | 'np', string> | null;
             txnId?: string | null;
             txnType?: string | null;
+            debit?: string | null;
+            credit?: string | null;
+            balanceType?: BalanceType | null;
             particulars?: string | null;
             total?: string | null;
           } | null> | null;
@@ -27489,6 +27535,7 @@ export type GetAllTransactionsDetailQuery = {
     viewTransactionDetail?: {
       data?: {
         id: string;
+        user?: string | null;
         transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         txnType?: AllTransactionType | null;
         transactionMode?: string | null;
@@ -40323,6 +40370,9 @@ export const GetLedgerReportDocument = `
         }
         summary {
           openingBalance
+          openingBalanceType
+          closingBalance
+          closingBalanceType
         }
       }
     }
@@ -41812,6 +41862,9 @@ export const GetCoaAccountDetailsDocument = `
             date
             txnId
             txnType
+            debit
+            credit
+            balanceType
             particulars
             total
           }
@@ -44811,6 +44864,7 @@ export const GetAllTransactionsDetailDocument = `
     viewTransactionDetail(transactionId: $id, txnType: $txnType) {
       data {
         id
+        user
         member {
           id
           code

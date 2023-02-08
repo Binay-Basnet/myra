@@ -82,6 +82,7 @@ export const AllTransactionDetailPage = () => {
             subtitle={amountConverter(allTransactionsData?.amount ?? 0)}
           />
           <DetailCardContent title="Transaction Branch" subtitle={allTransactionsData?.branch} />
+          <DetailCardContent title="User" subtitle={allTransactionsData?.user} />
           <DetailCardContent title={t['transDetailStatus']} status />
         </DetailsCard>
 

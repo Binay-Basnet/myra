@@ -407,6 +407,7 @@ query getAllTransactionsDetail($id: ID!, $txnType: AllTransactionType) {
     viewTransactionDetail(transactionId: $id, txnType: $txnType) {
       data {
         id
+        user
         member {
           id
           code

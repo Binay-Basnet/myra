@@ -168,6 +168,9 @@ query getCOAAccountDetails($id: String!, $branch: String) {
             date
             txnId
             txnType
+            debit
+            credit
+            balanceType
             particulars
             total
           }

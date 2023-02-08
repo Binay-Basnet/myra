@@ -1,8 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 
+import { Grid, GridItem, Text } from '@myra-ui';
+
 import { ValuationDocuments } from '@coop/cbs/loan';
 import { FormInput } from '@coop/shared/form';
-import { Grid, GridItem, Text } from '@myra-ui';
 
 import { ValuationRange } from './ValuationRange';
 import { ValuationStats } from './ValuationStats';
@@ -34,9 +35,9 @@ export const OtherCollateral = () => {
 
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap="s20">
-      <GridItem colSpan={2}>
+      {/* <GridItem colSpan={2}>
         <FormInput name="collateralName" label="Collateral Name" />
-      </GridItem>
+      </GridItem> */}
       <ValuatorSelect />
       <GridItem colSpan={2}>
         <FormInput name="valuationAmount" label="Valuation Amount" />
