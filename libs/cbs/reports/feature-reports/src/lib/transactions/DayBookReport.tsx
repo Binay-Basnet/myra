@@ -266,12 +266,12 @@ export const DayBookReport = () => {
                   header: 'Ledgers',
                   accessorKey: 'ledger',
                   cell: (props) => (
-                    <Box whiteSpace="pre-line" w="100%" my="s4">
+                    <Box whiteSpace="pre-line" my="s4">
                       {props.getValue() as string}
                     </Box>
                   ),
                   meta: {
-                    width: '40%',
+                    width: '30%',
                     Footer: {
                       display: 'none',
                     },

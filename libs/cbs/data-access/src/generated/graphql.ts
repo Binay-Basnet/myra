@@ -845,6 +845,7 @@ export type AllTransactionResult = {
   transactionMode?: Maybe<Scalars['String']>;
   transactionTime?: Maybe<Scalars['String']>;
   txnType?: Maybe<AllTransactionType>;
+  user?: Maybe<Scalars['String']>;
 };
 
 export const AllTransactionType = {
@@ -5992,6 +5993,8 @@ export type GeneralSettingsQuery = {
 
 export type GlTransaction = {
   account: Scalars['String'];
+  balance?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   credit?: Maybe<Scalars['String']>;
   debit?: Maybe<Scalars['String']>;
   ledgerId?: Maybe<Scalars['String']>;
@@ -9833,9 +9836,10 @@ export type LoanGuarantorInfo = {
   date?: Maybe<Scalars['Localized']>;
   depositAccountNo?: Maybe<Scalars['String']>;
   guaranteeAmount?: Maybe<Scalars['String']>;
-  memberCode?: Maybe<Scalars['String']>;
-  memberId?: Maybe<Scalars['ID']>;
-  memberName?: Maybe<Scalars['String']>;
+  guaranteeStatus?: Maybe<GuaranteeStatus>;
+  memCode?: Maybe<Scalars['String']>;
+  memId?: Maybe<Scalars['ID']>;
+  memName?: Maybe<Scalars['String']>;
 };
 
 export type LoanInstallment = {
