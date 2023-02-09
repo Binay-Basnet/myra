@@ -218,10 +218,14 @@ interface SuccessPrintProps {
       } | null)[]
     | null
     | undefined;
+  glTransactionsTotal?: string;
 }
 
 export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
-  ({ details, total, meta, showSignatures, glTransactions, totalWords }, ref) => {
+  (
+    { details, total, meta, showSignatures, glTransactions, glTransactionsTotal, totalWords },
+    ref
+  ) => {
     const user = useAppSelector((state) => state.auth.user);
 
     return (
@@ -374,7 +378,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
               <Text fontSize="s1" fontWeight="600" pt="s10">
                 GL Transactions
               </Text>
-              <GlTransactionJornalVoucherPrint data={glTransactions} total={total} />
+              <GlTransactionJornalVoucherPrint data={glTransactions} total={glTransactionsTotal} />
             </>
           )}
 

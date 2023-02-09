@@ -76,8 +76,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
             </Text>
           ),
           Date: localizedDate(depositDetailData?.transactionDate),
-          'Deposit Amount': depositDetailData?.amount,
-          Rebate: depositDetailData?.rebate ?? '0',
+          'Deposit Amount': amountConverter(depositDetailData?.amount || 0),
+          Rebate: amountConverter(depositDetailData?.rebate ?? '0'),
           'Payment Mode': depositDetailData?.paymentMode,
           'Deposited By': depositDetailData?.depositedBy,
         };
@@ -99,8 +99,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
             </Text>
           ),
           Date: localizedDate(withdrawDetailData?.transactionDate),
-          'Withdraw Amount': withdrawDetailData?.withdrawAmount,
-          Fine: withdrawDetailData?.fine ?? '0',
+          'Withdraw Amount': amountConverter(withdrawDetailData?.withdrawAmount || 0),
+          Fine: amountConverter(withdrawDetailData?.fine || 0),
           'Payment Mode': withdrawDetailData?.paymentMode,
           'Withdrawn By': withdrawDetailData?.withdrawnBy,
         };
@@ -126,7 +126,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           'Transfer Type': accountTransferDetailData?.transferType
             ? transferTypeObj[accountTransferDetailData?.transferType]
             : '',
-          'Transfer Amount': accountTransferDetailData?.transferAmount,
+          'Transfer Amount': amountConverter(accountTransferDetailData?.transferAmount || 0),
         };
 
         tempTotal = accountTransferDetailData?.transferAmount as string;
@@ -134,7 +134,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         tempGLTransactions = accountTransferDetailData?.glTransaction;
       }
 
-      if (router?.asPath?.includes('/repayments/')) {
+      if (router?.asPath?.includes('/repayments/') || router?.asPath?.includes('/loan-payment/')) {
         tempAccountName = loanRepaymentDetailData?.loanAccountName as string;
 
         tempAccountId = loanRepaymentDetailData?.loanAccountId as string;
@@ -152,10 +152,10 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           ),
           Date: localizedDate(loanRepaymentDetailData?.repaymentDate),
           'Installment No': loanRepaymentDetailData?.installmentNo,
-          'Principal Amount': loanRepaymentDetailData?.totalRepaymentAmount,
-          'Interest Amount': totalInterestAmount,
-          'Penalty Amount': loanRepaymentDetailData?.fine,
-          'Rebate Amount': loanRepaymentDetailData?.rebate,
+          'Principal Amount': amountConverter(loanRepaymentDetailData?.totalRepaymentAmount || 0),
+          'Interest Amount': amountConverter(totalInterestAmount || 0),
+          'Penalty Amount': amountConverter(loanRepaymentDetailData?.fine || 0),
+          'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
 
           'Payment Mode': loanRepaymentDetailData?.paymentMode,
         };
@@ -259,6 +259,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           details={details}
           showSignatures={showSignatures}
           glTransactions={glTransactions}
+          glTransactionsTotal={total}
           ref={voucherPrintRef}
         />
       ) : (
