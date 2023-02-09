@@ -186,6 +186,7 @@ query getLoanCollateralReport($data: LoanCollateralFilter!) {
             fmvMaxAmount
             ownerName
             valuationMethod
+            valuationAmount
             valuatorName
           }
           loanAccountNo
@@ -219,6 +220,30 @@ query getLoanPersonalGuranteeReport($data: LoanAccountGuaranteeReportInput) {
           memberId
           memberName
           totalGuaranteeAmount
+        }
+      }
+    }
+  }
+}
+
+query getLoanProductBalanceReport($data: LoanProductBalanceReportFilter) {
+  report {
+    loanReport {
+      loanProductBalance(data: $data) {
+        data {
+          productCode
+          productType
+          productName
+          noOfOpeningAccounts
+          noOfTotalAccounts
+          openingLoanBalance
+          totalLoanBalance
+        }
+        summary {
+          noOfOpeningAccounts
+          noOfTotalAccounts
+          totalLoanBalance
+          totalOpeningLoanBalance
         }
       }
     }

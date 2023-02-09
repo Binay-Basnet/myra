@@ -63,6 +63,8 @@ export enum Report {
   LOAN_MIS_ANALYSIS_REPORT = 'Loan MIS/Analysis Report',
   LOAN_COLLATERAL_VALUATION_REPORT = 'Collateral Valuation Report',
   LOAN_COLLATERAL_REPORT = 'Loan Collateral Report',
+  LOAN_PRODUCT_WISE_BALANCE_REPORT = 'Loan Product Wise Balance Report',
+
   LOAN_PERSONAL_GURANTEE_REPORT = 'Personal Guarantee Report',
   LOAN_WRITE_OFF_REPORT = 'Loan write off report',
   LOAN_PRE_INFORM_REPORT = 'Loan pre-inform report',
@@ -376,6 +378,11 @@ export const REPORTS = {
     {
       id: '6.15',
       report: Report.LOAN_UTILIZATION_INSPECTION,
+    },
+    {
+      id: '6.15.2.a',
+      report: Report.LOAN_PRODUCT_WISE_BALANCE_REPORT,
+      link: 'loan-product-balance',
     },
     {
       id: '6.16',

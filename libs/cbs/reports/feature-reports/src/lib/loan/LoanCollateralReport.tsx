@@ -30,6 +30,7 @@ type LoanCollateralData = Partial<{
   ownerName: string;
   valuationMethod: string;
   valuatorName: string;
+  valuationAmount: string;
 
   children: LoanCollateralData[];
 }>;
@@ -182,6 +183,15 @@ export const LoanCollateralReport = () => {
                   {
                     header: 'Valuation Method',
                     accessorKey: 'valuationMethod',
+                  },
+                  {
+                    header: 'Valuation Amount',
+                    accessorKey: 'valuationAmount',
+                    cell: (row) =>
+                      row.getValue() ? amountConverter(row.getValue() as string) : '',
+                    meta: {
+                      isNumeric: true,
+                    },
                   },
                   {
                     header: 'Valuator Name',

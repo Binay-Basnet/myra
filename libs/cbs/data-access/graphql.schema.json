@@ -773,6 +773,18 @@
             "deprecationReason": null
           },
           {
+            "name": "branchName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "id",
             "description": null,
             "args": [],
@@ -81441,6 +81453,18 @@
             "deprecationReason": null
           },
           {
+            "name": "valuationAmount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "valuationMethod",
             "description": null,
             "args": [],
@@ -81454,6 +81478,29 @@
           },
           {
             "name": "valuatorName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "LoanCollateralInformationSummary",
+        "description": null,
+        "fields": [
+          {
+            "name": "totalValuationAmount",
             "description": null,
             "args": [],
             "type": {
@@ -84650,6 +84697,18 @@
           },
           {
             "name": "productCode",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "productName",
             "description": null,
             "args": [],
             "type": {
@@ -93030,6 +93089,18 @@
                 "name": "LoanCollateralInformation",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "collateralSummary",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "LoanCollateralInformationSummary",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null

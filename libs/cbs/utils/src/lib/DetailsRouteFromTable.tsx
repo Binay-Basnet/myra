@@ -7,11 +7,26 @@ import { ROUTES } from '../constants/ROUTES';
 interface IProps {
   label?: string;
   id: string;
-  type: 'member' | 'loan' | 'savings' | 'transactions' | 'account-close' | 'saving-product';
+  type:
+    | 'member'
+    | 'loan'
+    | 'savings'
+    | 'transactions'
+    | 'account-close'
+    | 'saving-product'
+    | 'loan-product';
 }
 
 export const RouteToDetailsPage = ({ label, type, id }: IProps) => {
   switch (type) {
+    case 'loan-product':
+      return (
+        <Link target="_blank" href={`${ROUTES.CBS_LOAN_PRODUCTS_DETAILS}?id=${id}`}>
+          <Button variant="link" color="primary.500" minW="auto" px={0} fontSize="s3">
+            {label}{' '}
+          </Button>
+        </Link>
+      );
     case 'saving-product':
       return (
         <Link target="_blank" href={`${ROUTES.CBS_ACCOUNT_SAVING_PRODUCT_DETAILS}?id=${id}`}>

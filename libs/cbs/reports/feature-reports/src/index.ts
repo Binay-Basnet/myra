@@ -16,6 +16,7 @@ export * from './lib/loan/ClosedLoanAccountReport';
 export * from './lib/loan/LoanAgeingStatementReport';
 export * from './lib/loan/LoanBalanceReport';
 export * from './lib/loan/LoanCollateralReport';
+export * from './lib/loan/LoanProductWiseBalanceReport';
 export * from './lib/loan/LoanStatementReport';
 export * from './lib/loan/PersonalGuranteeReport';
 export * from './lib/members/KYMStatusReport';

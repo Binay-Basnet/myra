@@ -116,6 +116,7 @@ export type AccountActivityListEdges = {
 export type AccountAgent = {
   agentName?: Maybe<Scalars['String']>;
   assignedMember?: Maybe<Scalars['Int']>;
+  branchName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   phoneNo?: Maybe<Scalars['String']>;
   profilePic?: Maybe<Scalars['String']>;
@@ -9586,8 +9587,13 @@ export type LoanCollateralInformation = {
   dvMinAmount?: Maybe<Scalars['String']>;
   fmvMaxAmount?: Maybe<Scalars['String']>;
   ownerName?: Maybe<Scalars['String']>;
+  valuationAmount?: Maybe<Scalars['String']>;
   valuationMethod?: Maybe<Scalars['String']>;
   valuatorName?: Maybe<Scalars['String']>;
+};
+
+export type LoanCollateralInformationSummary = {
+  totalValuationAmount?: Maybe<Scalars['String']>;
 };
 
 export type LoanCollateralReportResult = {
@@ -9917,6 +9923,7 @@ export type LoanProductBalanceReportInformation = {
   noOfTotalAccounts?: Maybe<Scalars['Int']>;
   openingLoanBalance?: Maybe<Scalars['String']>;
   productCode?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
   productType?: Maybe<Scalars['String']>;
   totalLoanBalance?: Maybe<Scalars['String']>;
 };
@@ -10893,6 +10900,7 @@ export type MemberIndividualData = {
 
 export type MemberLoanInformation = {
   collateralInformation?: Maybe<Array<Maybe<LoanCollateralInformation>>>;
+  collateralSummary?: Maybe<LoanCollateralInformationSummary>;
   loanAccountNo?: Maybe<Scalars['String']>;
   loanAccountType?: Maybe<Scalars['String']>;
   loanDisbursedAmount?: Maybe<Scalars['String']>;
@@ -23834,6 +23842,7 @@ export type GetLoanCollateralReportQuery = {
             fmvMaxAmount?: string | null;
             ownerName?: string | null;
             valuationMethod?: string | null;
+            valuationAmount?: string | null;
             valuatorName?: string | null;
           } | null> | null;
         } | null> | null;
@@ -23866,6 +23875,34 @@ export type GetLoanPersonalGuranteeReportQuery = {
             memName?: string | null;
           } | null> | null;
         } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetLoanProductBalanceReportQueryVariables = Exact<{
+  data?: InputMaybe<LoanProductBalanceReportFilter>;
+}>;
+
+export type GetLoanProductBalanceReportQuery = {
+  report: {
+    loanReport: {
+      loanProductBalance?: {
+        data?: Array<{
+          productCode?: string | null;
+          productType?: string | null;
+          productName?: string | null;
+          noOfOpeningAccounts?: number | null;
+          noOfTotalAccounts?: number | null;
+          openingLoanBalance?: string | null;
+          totalLoanBalance?: string | null;
+        } | null> | null;
+        summary?: {
+          noOfOpeningAccounts?: number | null;
+          noOfTotalAccounts?: number | null;
+          totalLoanBalance?: string | null;
+          totalOpeningLoanBalance?: string | null;
+        } | null;
       } | null;
     };
   };
@@ -39920,6 +39957,7 @@ export const GetLoanCollateralReportDocument = `
             fmvMaxAmount
             ownerName
             valuationMethod
+            valuationAmount
             valuatorName
           }
           loanAccountNo
@@ -39987,6 +40025,47 @@ export const useGetLoanPersonalGuranteeReportQuery = <
       : ['getLoanPersonalGuranteeReport', variables],
     useAxios<GetLoanPersonalGuranteeReportQuery, GetLoanPersonalGuranteeReportQueryVariables>(
       GetLoanPersonalGuranteeReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanProductBalanceReportDocument = `
+    query getLoanProductBalanceReport($data: LoanProductBalanceReportFilter) {
+  report {
+    loanReport {
+      loanProductBalance(data: $data) {
+        data {
+          productCode
+          productType
+          productName
+          noOfOpeningAccounts
+          noOfTotalAccounts
+          openingLoanBalance
+          totalLoanBalance
+        }
+        summary {
+          noOfOpeningAccounts
+          noOfTotalAccounts
+          totalLoanBalance
+          totalOpeningLoanBalance
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductBalanceReportQuery = <
+  TData = GetLoanProductBalanceReportQuery,
+  TError = unknown
+>(
+  variables?: GetLoanProductBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetLoanProductBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductBalanceReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanProductBalanceReport']
+      : ['getLoanProductBalanceReport', variables],
+    useAxios<GetLoanProductBalanceReportQuery, GetLoanProductBalanceReportQueryVariables>(
+      GetLoanProductBalanceReportDocument
     ).bind(null, variables),
     options
   );
