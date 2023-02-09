@@ -33,6 +33,7 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
       {
         header: 'Ledger',
         footer: t['transDetailTotal'],
+        id: 'ledgerName',
         accessorFn: (row) => row?.account,
         cell: (props) => {
           const accountId = props.getValue() as string;
@@ -49,11 +50,15 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
       },
       {
         header: 'Service Center',
+        id: 'serviceCenterName',
+
         accessorFn: (row) => row?.serviceCenter,
       },
       {
         header: t['transDetailDebit'],
         footer: totalDebit,
+        id: 'debit',
+
         accessorFn: (row) => amountConverter(row?.debit ?? 0),
         meta: {
           isNumeric: true,
@@ -62,6 +67,8 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
       {
         header: t['transDetailCredit'],
         footer: totalCredit,
+        id: 'credit',
+
         accessorFn: (row) => amountConverter(row?.credit ?? 0),
         meta: {
           isNumeric: true,
@@ -69,13 +76,17 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
       },
       {
         header: 'Balance',
+        id: 'balance',
+
         accessorFn: (row) => amountConverter(row?.balance ?? 0),
         meta: {
           isNumeric: true,
         },
       },
       {
-        header: 'Balance Type',
+        header: '',
+        id: 'balanceType',
+
         accessorFn: (row) => row?.balanceType ?? '-',
       },
     ],
