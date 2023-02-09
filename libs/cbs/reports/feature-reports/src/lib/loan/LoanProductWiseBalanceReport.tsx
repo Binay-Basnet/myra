@@ -49,7 +49,7 @@ export const LoanProductWiseBalanceReport = () => {
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
-      report={ReportEnum.KYM_STATUS_REPORT}
+      report={ReportEnum.LOAN_PRODUCT_WISE_BALANCE_REPORT}
     >
       <Report.Header>
         <Report.PageHeader
@@ -85,7 +85,7 @@ export const LoanProductWiseBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 3,
+                    colspan: 4,
                   },
                 },
               },
