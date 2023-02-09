@@ -19476,6 +19476,7 @@ export type GetAllLocalGovernmentQuery = {
 
 export type GetAgentListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
+  currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -34412,9 +34413,13 @@ export const useGetAllLocalGovernmentQuery = <TData = GetAllLocalGovernmentQuery
     options
   );
 export const GetAgentListDataDocument = `
-    query getAgentListData($filter: AccountTransactionFilter, $pagination: Pagination) {
+    query getAgentListData($filter: AccountTransactionFilter, $currentBranchOnly: Boolean, $pagination: Pagination) {
   transaction {
-    listAgent(filter: $filter, pagination: $pagination) {
+    listAgent(
+      filter: $filter
+      currentBranchOnly: $currentBranchOnly
+      pagination: $pagination
+    ) {
       totalCount
       edges {
         node {

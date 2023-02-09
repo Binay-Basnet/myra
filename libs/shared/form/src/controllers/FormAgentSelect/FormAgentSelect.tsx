@@ -6,11 +6,17 @@ interface IFormAgentSelectProps {
   name: string;
   label: string;
   isRequired?: boolean;
+  currentBranchOnly?: boolean;
 }
 
 type OptionType = { label: string; value: string };
 
-export const FormAgentSelect = ({ name, label, isRequired }: IFormAgentSelectProps) => {
+export const FormAgentSelect = ({
+  name,
+  label,
+  isRequired,
+  currentBranchOnly = false,
+}: IFormAgentSelectProps) => {
   // const { watch } = useFormContext();
 
   const { data: agentListQueryData, isFetching } = useGetAgentListDataQuery({
@@ -18,6 +24,7 @@ export const FormAgentSelect = ({ name, label, isRequired }: IFormAgentSelectPro
       ...getRouterQuery({ type: ['PAGINATION'] }),
       first: -1,
     },
+    currentBranchOnly,
   });
 
   const agentList = agentListQueryData?.transaction?.listAgent?.edges;
