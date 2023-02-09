@@ -7,7 +7,7 @@ import { Column, Table, TablePopover } from '@myra-ui/table';
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { Filter_Mode, useGetJournalVoucherListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureJournalVouchersListProps {}
@@ -55,7 +55,7 @@ export const AccountingFeatureJournalVouchersList = () => {
         meta: {
           isNumeric: true,
         },
-        accessorFn: (row) => row?.node?.amount,
+        accessorFn: (row) => amountConverter(row?.node?.amount || 0),
       },
       {
         id: '_actions',
