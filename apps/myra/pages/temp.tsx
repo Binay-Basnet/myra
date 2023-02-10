@@ -1,5 +1,5 @@
-import { LoanCollateralReport } from '@coop/cbs/reports';
+import { CharKhataReport } from '@coop/cbs/reports';
 
-const Temp = () => <LoanCollateralReport />;
+const Temp = () => <CharKhataReport />;
 
 export default Temp;
