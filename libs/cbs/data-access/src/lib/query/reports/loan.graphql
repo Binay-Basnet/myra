@@ -232,6 +232,7 @@ query getLoanProductBalanceReport($data: LoanProductBalanceReportFilter) {
       loanProductBalance(data: $data) {
         data {
           productCode
+          productId
           productType
           productName
           noOfOpeningAccounts

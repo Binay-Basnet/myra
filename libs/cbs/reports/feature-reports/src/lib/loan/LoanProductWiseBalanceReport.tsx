@@ -94,7 +94,7 @@ export const LoanProductWiseBalanceReport = () => {
                 accessorKey: 'productName',
                 cell: (props) => (
                   <RouteToDetailsPage
-                    id={props?.row?.original?.productName as string}
+                    id={props?.row?.original?.productId as string}
                     type="loan-product"
                     label={props?.row?.original?.productName as string}
                   />
@@ -139,11 +139,13 @@ export const LoanProductWiseBalanceReport = () => {
                 header: 'Opening Loan Balance',
                 accessorKey: 'openingLoanBalance',
                 accessorFn: (row) => row?.openingLoanBalance ?? '-',
+                cell: (props) => amountConverter(props?.row?.original?.openingLoanBalance ?? '0'),
                 footer: () => amountConverter(summary?.totalOpeningLoanBalance || 0),
               },
               {
                 header: 'Total Loan Balance',
                 accessorKey: 'totalLoanBalance',
+                cell: (props) => amountConverter(props?.row?.original?.totalLoanBalance ?? '0'),
                 footer: () => amountConverter(summary?.totalLoanBalance || 0),
               },
             ]}

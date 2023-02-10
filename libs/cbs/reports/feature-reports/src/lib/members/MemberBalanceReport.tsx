@@ -10,7 +10,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -88,6 +88,13 @@ export const MemberBalanceReport = () => {
                   header: 'Member Code',
                   accessorKey: 'memberCode',
                   footer: () => <Box textAlign="right">Total Balance</Box>,
+                  cell: (props) => (
+                    <RouteToDetailsPage
+                      id={props?.row?.original?.memberId as string}
+                      type="member"
+                      label={props?.row?.original?.memberCode as string}
+                    />
+                  ),
                   meta: {
                     Footer: {
                       colspan: 5,

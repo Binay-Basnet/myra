@@ -12,7 +12,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate, localizedText } from '@coop/cbs/utils';
+import { localizedDate, localizedText, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -106,7 +106,16 @@ export const LoanPersonalGuranteeReport = () => {
 
                     accessorKey: 'memberCode',
                     cell: (props) => (
-                      <ExpandedCell row={props.row} value={props.getValue() as string} />
+                      <ExpandedCell
+                        row={props.row}
+                        value={
+                          <RouteToDetailsPage
+                            id={props?.row?.original?.memberId as string}
+                            type="member"
+                            label={props?.row?.original?.memberCode}
+                          />
+                        }
+                      />
                     ),
                   },
                   {
@@ -120,6 +129,13 @@ export const LoanPersonalGuranteeReport = () => {
                   {
                     header: 'Loan Account No.',
                     accessorKey: 'loanAccountNo',
+                    cell: (props) => (
+                      <RouteToDetailsPage
+                        id={props?.row?.original?.loanAccountNo as string}
+                        type="loan"
+                        label={props?.row?.original?.loanAccountNo}
+                      />
+                    ),
                   },
                   {
                     header: 'Loan Disbursed Amount',
@@ -147,7 +163,7 @@ export const LoanPersonalGuranteeReport = () => {
                     cell: (row) => (row.getValue() ? row.getValue() : '-'),
                   },
                   {
-                    header: 'Deposit Account No',
+                    header: 'Saving Account No',
                     accessorKey: 'depositAccountNo',
                     cell: (row) => (row.getValue() ? row.getValue() : '-'),
                   },

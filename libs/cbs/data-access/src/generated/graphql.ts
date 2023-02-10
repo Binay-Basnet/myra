@@ -23941,6 +23941,7 @@ export type GetLoanProductBalanceReportQuery = {
       loanProductBalance?: {
         data?: Array<{
           productCode?: string | null;
+          productId?: string | null;
           productType?: string | null;
           productName?: string | null;
           noOfOpeningAccounts?: number | null;
@@ -40199,6 +40200,7 @@ export const GetLoanProductBalanceReportDocument = `
       loanProductBalance(data: $data) {
         data {
           productCode
+          productId
           productType
           productName
           noOfOpeningAccounts

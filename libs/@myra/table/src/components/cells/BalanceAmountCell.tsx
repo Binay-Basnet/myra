@@ -18,7 +18,7 @@ export const BalanceAmountCell = ({ amount, type }: IBalanceAmountCellProps) => 
         return { color: 'accent.100', text: typeVariant };
 
       default:
-        return { color: '', text: '' };
+        return { color: '', text: '-' };
     }
   };
 
