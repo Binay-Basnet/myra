@@ -69,10 +69,6 @@ export const ClosedAccountTable = ({
       {
         header: 'Account Name',
         accessorKey: 'accountName',
-      },
-      {
-        header: 'Account Name',
-        accessorKey: 'accountName',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s4">
             <Text>{props?.row?.original?.accountName}</Text>

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { Column, DetailsCard, Table, Text } from '@myra-ui';
 
-import { EbankingTransaction, EbankingTransactionDirection } from '@coop/cbs/data-access';
+import { BalanceType, EbankingTransaction } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -21,6 +21,19 @@ export const RecentTransactions = ({ txnList, isClosed }: ITransactionTableProps
       index: index + 1,
       ...trans,
     })) ?? [];
+
+  const getTypeProps = (typeVariant: BalanceType | null | undefined) => {
+    switch (typeVariant) {
+      case 'DR':
+        return { color: 'accent.600', text: typeVariant };
+
+      case 'CR':
+        return { color: 'accent.100', text: typeVariant };
+
+      default:
+        return { color: '', text: '' };
+    }
+  };
 
   const columns = useMemo<Column<CustomTransactionItem>[]>(
     () => [
@@ -58,29 +71,64 @@ export const RecentTransactions = ({ txnList, isClosed }: ITransactionTableProps
         },
       },
       {
-        header: 'Total',
-        accessorKey: 'amount',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text
-              fontWeight="500"
-              fontSize="r1"
-              color={
-                props?.row?.original?.transactionDirection === EbankingTransactionDirection.Incoming
-                  ? 'primary.500'
-                  : 'danger.500'
-              }
-            >
-              {amountConverter(props?.getValue() as string)}
-            </Text>
-          ) : (
-            'N/A'
-          ),
+        header: 'Debit',
+        accessorFn: (row) => amountConverter(row?.debit ?? 0),
         meta: {
           isNumeric: true,
-          width: '33%',
         },
       },
+      {
+        header: 'Credit',
+        accessorFn: (row) => amountConverter(row?.credit ?? 0),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Balance',
+        id: 'balance',
+        accessorFn: (row) => amountConverter(row?.currentBalance ?? 0),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: ' ',
+        accessorFn: (row) => row?.balanceType,
+        cell: (props) => (
+          <Text
+            fontSize="s3"
+            fontWeight="Regular"
+            color={getTypeProps(props?.row?.original?.balanceType)?.color}
+          >
+            {getTypeProps(props?.row?.original?.balanceType)?.text}
+          </Text>
+        ),
+      },
+      // {
+      //   header: 'Total',
+      //   accessorKey: 'amount',
+      //   cell: (props) =>
+      //     props.getValue() ? (
+      //       <Text
+      //         fontWeight="500"
+      //         fontSize="r1"
+      //         color={
+      //           props?.row?.original?.transactionDirection === EbankingTransactionDirection.Incoming
+      //             ? 'primary.500'
+      //             : 'danger.500'
+      //         }
+      //       >
+      //         {amountConverter(props?.getValue() as string)}
+      //       </Text>
+      //     ) : (
+      //       'N/A'
+      //     ),
+      //   meta: {
+      //     isNumeric: true,
+      //     width: '33%',
+      //   },
+      // },
     ],
     []
   );

@@ -18719,6 +18719,9 @@ export type GetAccountTransactionListsQuery = {
           transactionType?: string | null;
           amount: string;
           currentBalance: string;
+          debit?: string | null;
+          credit?: string | null;
+          balanceType?: BalanceType | null;
         };
       } | null> | null;
       pageInfo?: {
@@ -21635,6 +21638,9 @@ export type GetLoanAccountDetailsQuery = {
               transactionType?: string | null;
               amount: string;
               currentBalance: string;
+              credit?: string | null;
+              debit?: string | null;
+              balanceType?: BalanceType | null;
             };
           } | null> | null;
           pageInfo?: { startCursor?: string | null; endCursor?: string | null } | null;
@@ -22559,6 +22565,23 @@ export type GetMemberKymDetailsLoanQuery = {
             amount?: string | null;
             installmentNo?: string | null;
             interestRate?: string | null;
+          } | null> | null;
+          closedAccounts?: Array<{
+            accountName?: string | null;
+            accountNumber?: string | null;
+            totalBalance?: string | null;
+            balanceType?: BalanceType | null;
+            productName?: string | null;
+            productType?: string | null;
+            interestRate?: string | null;
+            subscriptionDate?: Record<'local' | 'en' | 'np', string> | null;
+            interestEarned?: string | null;
+            interestBooked?: string | null;
+            objState?: ObjState | null;
+            guaranteeAccounts?: Array<{
+              loanId?: string | null;
+              loanAccountName?: string | null;
+            } | null> | null;
           } | null> | null;
         } | null;
       } | null;
@@ -33384,6 +33407,9 @@ export const GetAccountTransactionListsDocument = `
           transactionType
           amount
           currentBalance
+          debit
+          credit
+          balanceType
         }
       }
       pageInfo {
@@ -37121,6 +37147,9 @@ export const GetLoanAccountDetailsDocument = `
               transactionType
               amount
               currentBalance
+              credit
+              debit
+              balanceType
             }
           }
           totalCount
@@ -38356,6 +38385,23 @@ export const GetMemberKymDetailsLoanDocument = `
             amount
             installmentNo
             interestRate
+          }
+          closedAccounts {
+            accountName
+            accountNumber
+            totalBalance
+            balanceType
+            productName
+            productType
+            interestRate
+            subscriptionDate
+            interestEarned
+            interestBooked
+            objState
+            guaranteeAccounts {
+              loanId
+              loanAccountName
+            }
           }
         }
       }

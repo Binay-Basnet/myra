@@ -98,8 +98,7 @@ export const Accounts = () => {
               borderRadius="br2"
             >
               <Box display="flex" justifyContent="space-between" p="s16">
-                <Text fontSize="r1" fontWeight="600">
-                  {' '}
+                <Text fontSize="r1" fontWeight="SemiBold">
                   Upcoming Payments
                 </Text>
               </Box>

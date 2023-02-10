@@ -10,16 +10,22 @@ import {
   useGetMemberKymDetailsLoanQuery,
   useGetMemberKymDetailsOverviewQuery,
 } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 import { LoanTable } from './LoanAccountTable';
 
-export const LoanAccountList = () => {
+type LoanProps = {
+  isClosedAccount?: boolean;
+};
+
+export const LoanAccountList = ({ isClosedAccount }: LoanProps) => {
   const router = useRouter();
 
   const memberDetails = useGetMemberKymDetailsLoanQuery({
     id: router.query['id'] as string,
   });
+
   const memberDetailsBasic = useGetMemberKymDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
@@ -57,6 +63,8 @@ export const LoanAccountList = () => {
       : null;
 
   const memberAccountDetails = memberDetails?.data?.members?.memberOverviewV2?.loan?.data?.accounts;
+  const memberCloseAccountDetails =
+    memberDetails?.data?.members?.memberOverviewV2?.loan?.data?.closedAccounts;
 
   const memberBasicDetails =
     memberInfo ?? memberBasicInstitution ?? memberBasicCooperative ?? memberBasicCooperativeUnion;
@@ -65,6 +73,7 @@ export const LoanAccountList = () => {
 
   const memberName = memberBasicDetails?.memberName;
   const memberLength = memberAccountDetails?.length;
+  const closedAccountLength = memberCloseAccountDetails?.length;
   const title = `Loan Accounts List(${memberLength})`;
 
   const memberListData =
@@ -76,15 +85,47 @@ export const LoanAccountList = () => {
       totalBalance: amountConverter(data?.totalBalance as string),
       interestRate: data?.interestRate,
       accountNumber: data?.accountNumber,
+      subscriptionDate: localizedDate(data?.subscriptionDate),
+    })) || [];
+
+  const closedAccountData =
+    memberCloseAccountDetails?.map((data, index) => ({
+      sn: Number(index) + 1,
+      id: data?.accountNumber,
+      accountType: data?.productType,
+      accountName: data?.accountName,
+      totalBalance: amountConverter(data?.totalBalance as string),
+      interestRate: data?.interestRate,
+      accountNumber: data?.accountNumber,
+      subscriptionDate: localizedDate(data?.subscriptionDate),
     })) || [];
 
   return (
-    <DetailsCard hasTable bg="white" title={memberLength ? title : 'Loan Accounts List (0)'}>
-      <LoanTable
-        data={memberListData}
-        memberName={memberName as string}
-        contactNo={contactNo as string}
-      />
-    </DetailsCard>
+    <>
+      {!isClosedAccount && (
+        <DetailsCard hasTable bg="white" title={memberLength ? title : 'Loan Accounts List (0)'}>
+          <LoanTable
+            data={memberListData}
+            memberName={memberName as string}
+            contactNo={contactNo as string}
+          />
+        </DetailsCard>
+      )}
+
+      {isClosedAccount && (
+        <DetailsCard
+          hasTable
+          bg="white"
+          title={closedAccountLength ? title : 'Closed Accounts (0)'}
+        >
+          <LoanTable
+            isClosedAccount
+            data={closedAccountData}
+            memberName={memberName as string}
+            contactNo={contactNo as string}
+          />
+        </DetailsCard>
+      )}
+    </>
   );
 };

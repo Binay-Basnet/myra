@@ -17,12 +17,19 @@ interface ILoanPaymentScheduleTableProps {
         totalBalance: string | 0;
         interestRate: string | null | undefined;
         accountNumber: string | null | undefined;
+        subscriptionDate: string | null | undefined;
       }[];
   memberName: string;
   contactNo?: string;
+  isClosedAccount?: boolean;
 }
 
-export const LoanTable = ({ data, memberName, contactNo }: ILoanPaymentScheduleTableProps) => {
+export const LoanTable = ({
+  data,
+  memberName,
+  contactNo,
+  isClosedAccount,
+}: ILoanPaymentScheduleTableProps) => {
   const { onClose: modalOnClose, isOpen, onToggle } = useDisclosure();
   const [qrData, setQrData] = useState({
     name: memberName ?? 'N/A',
@@ -31,7 +38,7 @@ export const LoanTable = ({ data, memberName, contactNo }: ILoanPaymentScheduleT
     accountName: 'N/A',
   });
 
-  const columns = React.useMemo<Column<typeof data[0]>[]>(
+  const loanAccColumns = React.useMemo<Column<typeof data[0]>[]>(
     () => [
       {
         header: 'S.N.',
@@ -66,6 +73,75 @@ export const LoanTable = ({ data, memberName, contactNo }: ILoanPaymentScheduleT
         },
       },
       {
+        header: 'Closed Date',
+        accessorKey: 'subscriptionDate',
+      },
+      {
+        header: 'QR',
+        accessorKey: 'interestRate',
+        cell: (props) => (
+          <IconButton
+            aria-label="qr-button"
+            cursor="pointer"
+            as={IoQrCode}
+            size="xs"
+            colorScheme="gray"
+            onClick={() => {
+              onToggle();
+              setQrData({
+                name: memberName ?? 'N/A',
+                accountNo: props?.row?.original?.accountNumber ?? 'N/A',
+                phoneNo: contactNo ?? 'N/A',
+                accountName: props?.row?.original?.accountName ?? 'N/A',
+              });
+            }}
+          />
+        ),
+      },
+    ],
+    [memberName, contactNo]
+  );
+
+  const closedAccColumns = React.useMemo<Column<typeof data[0]>[]>(
+    () => [
+      {
+        header: 'S.N.',
+        accessorKey: 'sn',
+      },
+      {
+        header: 'Account Type',
+        accessorKey: 'accountType',
+      },
+      {
+        header: 'Account Name',
+        accessorKey: 'accountName',
+        cell: (props) => (
+          <RedirectButton
+            label={props?.row?.original?.accountName as string}
+            link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props?.row?.original?.id}`}
+          />
+        ),
+      },
+      {
+        header: 'Balance',
+        accessorKey: 'totalBalance',
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Interest',
+        accessorKey: 'interestRate',
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Disbursed Date',
+        accessorKey: 'subscriptionDate',
+        cell: (props) => props?.row?.original?.subscriptionDate,
+      },
+      {
         header: 'QR',
         accessorKey: 'interestRate',
         cell: (props) => (
@@ -93,7 +169,12 @@ export const LoanTable = ({ data, memberName, contactNo }: ILoanPaymentScheduleT
 
   return (
     <>
-      <Table<typeof data[0]> isDetailPageTable isStatic data={data ?? []} columns={columns} />
+      <Table<typeof data[0]>
+        isDetailPageTable
+        isStatic
+        data={data ?? []}
+        columns={isClosedAccount ? closedAccColumns : loanAccColumns}
+      />
       <AccountQRModal
         account={{
           name: qrData?.name,

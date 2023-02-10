@@ -559,6 +559,9 @@ query getAccountTransactionLists($filter: AccountsTransactionFilter!, $paginatio
           transactionType
           amount
           currentBalance
+          debit
+          credit
+          balanceType
         }
       }
       pageInfo {
