@@ -34,9 +34,12 @@ export const ChequeBookRequestList = () => {
   const router = useRouter();
   const modalProps = useDisclosure();
 
-  const { data, isFetching } = useGetChequeBookRequestsQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-  });
+  const { data, isFetching } = useGetChequeBookRequestsQuery(
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    },
+    { staleTime: 0 }
+  );
 
   const chequeBookRequests = React.useMemo(
     () => data?.requests?.list?.chequeBookRequest?.edges ?? [],

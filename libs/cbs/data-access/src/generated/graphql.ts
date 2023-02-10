@@ -10018,6 +10018,7 @@ export type LoanProductInput = {
   ledgerMapping?: InputMaybe<LedgerMapping>;
   loanProcessingCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   loanScheduleChangeOverride?: InputMaybe<Scalars['Boolean']>;
+  loanType?: InputMaybe<TypeOfLoan>;
   maritalStatusId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   maxAge?: InputMaybe<Scalars['Int']>;
   maxLoanAmount?: InputMaybe<Scalars['Amount']>;
@@ -14855,6 +14856,12 @@ export type TrialSheetReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export const TypeOfLoan = {
+  LineOfCredit: 'LINE_OF_CREDIT',
+  Normal: 'NORMAL',
+} as const;
+
+export type TypeOfLoan = typeof TypeOfLoan[keyof typeof TypeOfLoan];
 export const TypeOfOrganization = {
   Cooperative: 'COOPERATIVE',
   CooperativeUnion: 'COOPERATIVE_UNION',
