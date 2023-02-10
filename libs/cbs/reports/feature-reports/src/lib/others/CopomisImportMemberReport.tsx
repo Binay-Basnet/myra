@@ -68,7 +68,7 @@ export const CopomisImportMemberReport = () => {
           <Report.Table<CopomisReportData>
             columns={[
               {
-                header: 'Membership No,',
+                header: 'Membership No',
                 accessorKey: 'membershipNo',
               },
               {

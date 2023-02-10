@@ -40,6 +40,7 @@ export * from './lib/transactions/BalanceSheetReport';
 export * from './lib/transactions/BankGLBalanceReport';
 export * from './lib/transactions/BankGLStatementReport';
 export * from './lib/transactions/CashLedgerReport';
+export * from './lib/transactions/CharaKhataReport';
 export * from './lib/transactions/DayBookReport';
 export * from './lib/transactions/ProfitAndLossReport';
 export * from './lib/transactions/ServiceCenterBalanceReport';

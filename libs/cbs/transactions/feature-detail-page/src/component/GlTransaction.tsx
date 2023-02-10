@@ -37,7 +37,7 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
         return { color: 'accent.100', text: typeVariant };
 
       default:
-        return { color: '', text: '' };
+        return { color: '', text: '-' };
     }
   };
 

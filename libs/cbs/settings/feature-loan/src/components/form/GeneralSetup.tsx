@@ -6,11 +6,23 @@ import { FormSection, GridItem } from '@myra-ui';
 
 import {
   NatureOfLoanProduct,
+  TypeOfLoan,
   useGetLoanProductSettingsQuery,
   useGetLoanProductSubTypeQuery,
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
+
+const typeOfLoan = [
+  {
+    label: 'Normal',
+    value: TypeOfLoan.Normal,
+  },
+  {
+    label: 'Line of Credit',
+    value: TypeOfLoan.LineOfCredit,
+  },
+];
 
 export const GeneralSetup = () => {
   const { t } = useTranslation();
@@ -90,6 +102,9 @@ export const GeneralSetup = () => {
         options={productNature}
         label={t['loanProductNatureLoanProduct']}
       />
+      <GridItem colSpan={2}>
+        <FormSelect isRequired name="loanType" options={typeOfLoan} label="Type Of Loan" />
+      </GridItem>
       <GridItem colSpan={3}>
         <FormInput name="description" label={t['loanProductDescription']} />
       </GridItem>

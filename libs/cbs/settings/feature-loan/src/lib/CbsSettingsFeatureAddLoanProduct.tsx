@@ -14,6 +14,7 @@ import {
   LoanProductInstallment,
   LoanRepaymentScheme,
   PenaltyType,
+  TypeOfLoan,
   useGetLoanGeneralSettingsQuery,
   useGetLoanProductEditDataQuery,
   useGetNewIdMutation,
@@ -132,6 +133,7 @@ export const SettingsLoanProductForm = () => {
       penaltyType: PenaltyType.RemainingPrincipal,
       isPrematurePenaltyApplicable: false,
       postingFrequency: LoanProductInstallment.Daily,
+      loanType: TypeOfLoan.Normal,
     },
   });
 
@@ -305,6 +307,7 @@ export const SettingsLoanProductForm = () => {
       natureOfBusinessInstitution: natureOfBusinessInstitutionList,
       natureOFBusinessCoop: natureOFBusinessCoopList,
       cooperativeType: coopTypeList,
+      loanType: values?.loanType ?? null,
       loanProcessingCharge: loanProcessingChargeList,
       minAge: values?.minAge && criteria?.includes(CriteriaSection.Age) ? values?.minAge : null,
       maxAge: values?.maxAge && criteria?.includes(CriteriaSection.Age) ? values?.maxAge : null,

@@ -137,7 +137,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
                       temp[`${index + 1}. ${fee.name}`] = fee?.value?.includes('Dr') ? (
                         <Box display="flex" gap="s8">
                           <Text fontSize="s3" fontWeight="600">
-                            {fee?.value?.split('. ')[1]}
+                            {amountConverter(fee?.value?.split('. ')[1])}
                           </Text>
                           <Text fontSize="s3" color="accent.700" fontWeight="600">
                             DR
@@ -146,7 +146,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
                       ) : (
                         <Box display="flex" gap="s8">
                           <Text fontSize="s3" fontWeight="600">
-                            {fee?.value?.split('. ')[1]}
+                            {amountConverter(fee?.value?.split('. ')[1])}
                           </Text>
                           <Text fontSize="s3" color="accent.100" fontWeight="600">
                             CR

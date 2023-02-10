@@ -31,7 +31,7 @@ export const RecentTransactions = ({ txnList, isClosed }: ITransactionTableProps
         return { color: 'accent.100', text: typeVariant };
 
       default:
-        return { color: '', text: '' };
+        return { color: '', text: '-' };
     }
   };
 

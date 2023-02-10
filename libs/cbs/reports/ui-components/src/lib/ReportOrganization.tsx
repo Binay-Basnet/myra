@@ -117,7 +117,7 @@ export const ReportOrganization = () => {
               {singleName}
             </Text>
           )}
-          {nameList?.length && !showAllBranch && (
+          {nameList?.length && nameList?.length > 1 && !showAllBranch && (
             <Box maxW="50ch">
               {nameList?.map((data, index) => {
                 if (index === 0) {
@@ -136,7 +136,7 @@ export const ReportOrganization = () => {
               })}
             </Box>
           )}
-          {nameList?.length && showAllBranch && (
+          {((nameList?.length && showAllBranch) || (nameList?.length === 1 && !showAllBranch)) && (
             <Box maxW="50ch">
               {nameList?.map((data) => (
                 <Text as="span" fontSize="r1" color="gray.700" fontWeight="500">
