@@ -6,16 +6,21 @@ import { Box, GridItem } from '@myra-ui';
 import {
   LoanBalanceFilterData,
   LoanBalanceReport as LoanBalanceReportType,
+  LocalizedDateFilter,
   useGetLoanBalanceReportQuery,
   useGetLoanProductsFromSubTypeQuery,
   useGetLoanProductTypeQuery,
   useGetMultipleSubProductsQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { FormAmountFilter, FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
+import {
+  FormAmountFilter,
+  FormBranchSelect,
+  FormCheckboxGroup,
+  FormDatePicker,
+} from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type LoanBalanceReportFilters = Omit<LoanBalanceFilterData, 'branchId'> & {
@@ -35,7 +40,14 @@ export const LoanBalanceReport = () => {
 
   const { data, isFetching } = useGetLoanBalanceReportQuery(
     {
-      data: { ...filters, branchId: branchIds } as LoanBalanceFilterData,
+      data: {
+        ...filters,
+        branchId: branchIds,
+        period: {
+          from: filters?.period?.from,
+          to: filters?.period?.from,
+        } as LocalizedDateFilter,
+      } as LoanBalanceFilterData,
     },
     { enabled: !!filters }
   );
@@ -65,7 +77,7 @@ export const LoanBalanceReport = () => {
             <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange />
+            <FormDatePicker name="period.from" label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
