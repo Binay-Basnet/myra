@@ -8,6 +8,7 @@ import {
   LocalizedDateFilter,
   useAppSelector,
   useGetBranchListQuery,
+  useGetCoaAccountListQuery,
 } from '@coop/cbs/data-access';
 import { formatAddress, getLocalizedTodaysDate, localizedDate } from '@coop/cbs/utils';
 
@@ -21,6 +22,24 @@ export const ReportOrganization = () => {
   const [showAllBranch, setShowAllBranch] = useState<boolean>(false);
 
   const user = useAppSelector((state) => state.auth.user);
+
+  const { data: ledgerListData } = useGetCoaAccountListQuery(
+    {
+      pagination: {
+        after: '',
+        first: 1000,
+      },
+    },
+    {
+      enabled: !!getValues()?.['ledgerId'],
+    }
+  );
+
+  const ledgerList =
+    ledgerListData && ledgerListData?.settings?.chartsOfAccount?.coaAccountList?.edges;
+  const ledgerName = ledgerList?.filter(
+    (item) => item?.node?.accountCode === getValues()?.['ledgerId']
+  );
 
   const period = getValues('period') as LocalizedDateFilter;
   const branchId = getValues('branchId');
@@ -129,6 +148,16 @@ export const ReportOrganization = () => {
         </Box>
       </Box>
       <Box display="flex" flexDir="column" alignItems="flex-end">
+        {ledgerName && (
+          <Box display="flex" gap="s4">
+            <Text fontSize="r1" color="gray.700">
+              Ledger Name:
+            </Text>
+            <Text fontSize="r1" color="gray.700" fontWeight="500">
+              {ledgerName?.[0]?.node?.accountName?.local}
+            </Text>
+          </Box>
+        )}
         {period?.to ? (
           <Box display="flex" gap="s4">
             <Text fontSize="r1" color="gray.700">
