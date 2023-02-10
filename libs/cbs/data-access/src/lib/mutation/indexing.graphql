@@ -4,6 +4,12 @@ mutation searchIndexing {
   }
 }
 
+mutation searchInternalIndexing {
+  search {
+    indexData(tableName: ["internal"])
+  }
+}
+
 mutation resetTrialBalanceCache {
   settings {
     report {

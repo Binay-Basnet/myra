@@ -3,6 +3,7 @@ import { Box, Button, Text, toast } from '@myra-ui';
 import {
   useResetTrialBalanceCacheMutation,
   useSearchIndexingMutation,
+  useSearchInternalIndexingMutation,
 } from '@coop/cbs/data-access';
 import { SettingsGeneralLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
 import { Can } from '@coop/cbs/utils';
@@ -10,8 +11,13 @@ import { Can } from '@coop/cbs/utils';
 const Indexing = () => {
   const { mutateAsync: resetSearchIndexMutation, isLoading: resetSearchIndexLoading } =
     useSearchIndexingMutation({});
+  const {
+    mutateAsync: resetInternalSearchIndexMutation,
+    isLoading: resetInternalSearchIndexLoading,
+  } = useSearchInternalIndexingMutation({});
   const { mutateAsync: resetTrialBalanceCacheMutation, isLoading: resetTrialBalanceCacheLoading } =
     useResetTrialBalanceCacheMutation({});
+
   const resetSearchIndexHandler = () => {
     resetSearchIndexMutation({}).then(() => {
       toast({
@@ -21,6 +27,17 @@ const Indexing = () => {
       });
     });
   };
+
+  const resetInternalSearchIndexHandler = () => {
+    resetInternalSearchIndexMutation({}).then(() => {
+      toast({
+        id: 'internal-indexing',
+        type: 'success',
+        message: 'Internal Index reset successfully',
+      });
+    });
+  };
+
   const resetTrailBalanceCacheHandler = () => {
     resetTrialBalanceCacheMutation({})
       .then(() => {
@@ -53,6 +70,13 @@ const Indexing = () => {
           isLoading={resetTrialBalanceCacheLoading}
         >
           Reset trial balance cache
+        </Button>
+        <Button
+          onClick={resetInternalSearchIndexHandler}
+          width={200}
+          isLoading={resetInternalSearchIndexLoading}
+        >
+          Reset Internal Search index
         </Button>
       </Box>
     </Can>

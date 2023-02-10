@@ -4662,8 +4662,11 @@ export type EbankingReportResult = {
 export type EbankingTransaction = {
   accountId?: Maybe<Scalars['String']>;
   amount: Scalars['String'];
+  balanceType?: Maybe<BalanceType>;
+  credit?: Maybe<Scalars['String']>;
   currentBalance: Scalars['String'];
   date: Scalars['Localized'];
+  debit?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   month: Scalars['Localized'];
   name: Scalars['String'];
@@ -9923,6 +9926,7 @@ export type LoanProductBalanceReportInformation = {
   noOfTotalAccounts?: Maybe<Scalars['Int']>;
   openingLoanBalance?: Maybe<Scalars['String']>;
   productCode?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
   productType?: Maybe<Scalars['String']>;
   totalLoanBalance?: Maybe<Scalars['String']>;
@@ -16196,6 +16200,10 @@ export type AddProfitToFundManagementDataMutation = {
 export type SearchIndexingMutationVariables = Exact<{ [key: string]: never }>;
 
 export type SearchIndexingMutation = { search: { indexData?: string | null } };
+
+export type SearchInternalIndexingMutationVariables = Exact<{ [key: string]: never }>;
+
+export type SearchInternalIndexingMutation = { search: { indexData?: string | null } };
 
 export type ResetTrialBalanceCacheMutationVariables = Exact<{ [key: string]: never }>;
 
@@ -29487,6 +29495,33 @@ export const useSearchIndexingMutation = <TError = unknown, TContext = unknown>(
   useMutation<SearchIndexingMutation, TError, SearchIndexingMutationVariables, TContext>(
     ['searchIndexing'],
     useAxios<SearchIndexingMutation, SearchIndexingMutationVariables>(SearchIndexingDocument),
+    options
+  );
+export const SearchInternalIndexingDocument = `
+    mutation searchInternalIndexing {
+  search {
+    indexData(tableName: ["internal"])
+  }
+}
+    `;
+export const useSearchInternalIndexingMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SearchInternalIndexingMutation,
+    TError,
+    SearchInternalIndexingMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SearchInternalIndexingMutation,
+    TError,
+    SearchInternalIndexingMutationVariables,
+    TContext
+  >(
+    ['searchInternalIndexing'],
+    useAxios<SearchInternalIndexingMutation, SearchInternalIndexingMutationVariables>(
+      SearchInternalIndexingDocument
+    ),
     options
   );
 export const ResetTrialBalanceCacheDocument = `
