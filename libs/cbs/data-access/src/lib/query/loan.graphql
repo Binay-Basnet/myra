@@ -663,6 +663,9 @@ query getLoanAccountDetails(
               transactionType
               amount
               currentBalance
+              credit
+              debit
+              balanceType
             }
           }
           totalCount

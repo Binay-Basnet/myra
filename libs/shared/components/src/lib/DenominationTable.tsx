@@ -127,7 +127,6 @@ export const DenominationTable = ({
         ) : (
           <Box
             display="flex"
-            flexDirection="column"
             gap="s20"
             px="s8"
             py="s10"

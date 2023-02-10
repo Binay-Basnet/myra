@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 
-import { DetailsCard } from '@myra-ui';
+import { DetailsCard, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
+import { BalanceType } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
@@ -14,6 +15,8 @@ type GlTransactionDetailProps = {
         debit?: string | null | undefined;
         credit?: string | null | undefined;
         ledgerId?: string | null | undefined;
+        balance?: string | null | undefined;
+        balanceType?: BalanceType | null | undefined;
       } | null)[]
     | null
     | undefined;
@@ -24,6 +27,19 @@ type GlTransactionDetailProps = {
 export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDetailProps) => {
   const { t } = useTranslation();
   const rowData = useMemo(() => data ?? [], [data]);
+
+  const getTypeProps = (typeVariant: BalanceType | null | undefined) => {
+    switch (typeVariant) {
+      case 'DR':
+        return { color: 'accent.600', text: typeVariant };
+
+      case 'CR':
+        return { color: 'accent.100', text: typeVariant };
+
+      default:
+        return { color: '', text: '' };
+    }
+  };
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -52,11 +68,38 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
         header: t['transDetailDebit'],
         footer: totalDebit,
         accessorFn: (row) => amountConverter(row?.debit ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: t['transDetailCredit'],
         footer: totalCredit,
         accessorFn: (row) => amountConverter(row?.credit ?? 0),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Balance',
+        id: 'balance',
+        accessorFn: (row) => amountConverter(row?.balance ?? 0),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: ' ',
+        accessorFn: (row) => row?.balanceType,
+        cell: (props) => (
+          <Text
+            fontSize="s3"
+            fontWeight="Regular"
+            color={getTypeProps(props?.row?.original?.balanceType)?.color}
+          >
+            {getTypeProps(props?.row?.original?.balanceType)?.text}
+          </Text>
+        ),
       },
     ],
     [totalDebit, totalCredit]

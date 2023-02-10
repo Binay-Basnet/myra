@@ -215,6 +215,23 @@ query getMemberKYMDetailsLoan($id: ID!) {
             installmentNo
             interestRate
           }
+          closedAccounts {
+            accountName
+            accountNumber
+            totalBalance
+            balanceType
+            productName
+            productType
+            interestRate
+            subscriptionDate
+            interestEarned
+            interestBooked
+            objState
+            guaranteeAccounts {
+              loanId
+              loanAccountName
+            }
+          }
         }
       }
     }

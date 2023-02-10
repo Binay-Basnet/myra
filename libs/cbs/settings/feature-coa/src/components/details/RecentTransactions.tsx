@@ -1,15 +1,29 @@
 import { useMemo } from 'react';
 
-import { Button, DetailsCard } from '@myra-ui';
-import { BalanceAmountCell, Column, Table } from '@myra-ui/table';
+import { Button, DetailsCard, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { BalanceType } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 import { useCOAAccountDetails } from '../../hooks';
 
 export const RecentTransactions = () => {
   const { accountDetails } = useCOAAccountDetails();
+
+  const getTypeProps = (typeVariant: BalanceType | null | undefined) => {
+    switch (typeVariant) {
+      case 'DR':
+        return { color: 'accent.600', text: typeVariant };
+
+      case 'CR':
+        return { color: 'accent.100', text: typeVariant };
+
+      default:
+        return { color: '', text: '' };
+    }
+  };
 
   const recentTransactionsList =
     useMemo(
@@ -69,17 +83,24 @@ export const RecentTransactions = () => {
       },
       {
         header: 'Balance',
-        accessorKey: 'total',
-        cell: (props) => (
-          <BalanceAmountCell
-            amount={props?.row?.original?.total ?? 0}
-            type={props?.row?.original?.balanceType as BalanceType}
-          />
-        ),
+        id: 'balance',
+        accessorFn: (row) => amountConverter(row?.total ?? 0),
         meta: {
           isNumeric: true,
-          width: '33%',
         },
+      },
+      {
+        header: ' ',
+        accessorFn: (row) => row?.balanceType,
+        cell: (props) => (
+          <Text
+            fontSize="s3"
+            fontWeight="Regular"
+            color={getTypeProps(props?.row?.original?.balanceType)?.color}
+          >
+            {getTypeProps(props?.row?.original?.balanceType)?.text}
+          </Text>
+        ),
       },
     ],
     []

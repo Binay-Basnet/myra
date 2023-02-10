@@ -42,6 +42,7 @@ export const Loan = () => {
           </Box>
           <LoanAccountList />
           <LoanPaymentTable />
+          <LoanAccountList isClosedAccount />
         </Box>
       )}
     </>
