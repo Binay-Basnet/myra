@@ -143,6 +143,24 @@ export const ACCOUNTING: NavType = {
         },
       ],
 
+      reportPages: [
+        {
+          label: 'CharKahata Ledger Report',
+          aclKey: 'CBS_REPORTS',
+          route: ROUTES.ACCOUNTING_CHAR_KHATA_REPORT,
+        },
+        {
+          label: 'Day Book Report',
+          aclKey: 'CBS_REPORTS',
+          route: ROUTES.ACCOUNTING_DAY_BOOK_REPORT,
+        },
+        {
+          label: 'Trail Balance Report',
+          aclKey: 'CBS_REPORTS',
+          route: ROUTES.ACCOUNTING_TRAIL_BALANCE_REPORT,
+        },
+      ],
+
       forms: [
         {
           label: 'accountingAccountingSidebarJournalVouchers',
