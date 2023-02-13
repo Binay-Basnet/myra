@@ -199,7 +199,7 @@ export const CharkhataReportInputs = () => {
         <FormBranchSelect isMulti name="branchId" label="Service Center" />
       </GridItem>
       <GridItem colSpan={1}>
-        <FormSelect isMulti name="coaType" label="Types Options" options={coaTypeEnum} />
+        <FormSelect isMulti name="coaType" label="COA Types" options={coaTypeEnum} />
       </GridItem>
       <GridItem colSpan={1}>
         <FormSelect isMulti name="coaHead" label="Coa Head" options={combinedArray} />
