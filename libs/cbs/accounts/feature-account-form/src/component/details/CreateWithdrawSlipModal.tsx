@@ -151,8 +151,12 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
 
                 {pickupMethod === PickupMethod.MarketRepresentative && (
                   <>
-                    <FormBranchSelect name="branchId" label="Service Center" />
-                    <FormAgentSelect name="marketRepresentative" label="Market Representative" />
+                    <FormBranchSelect name="branchId" label="Service Center" menuPosition="fixed" />
+                    <FormAgentSelect
+                      name="marketRepresentative"
+                      label="Market Representative"
+                      menuPosition="fixed"
+                    />
                   </>
                 )}
               </>

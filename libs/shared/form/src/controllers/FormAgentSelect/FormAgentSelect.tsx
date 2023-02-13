@@ -1,8 +1,10 @@
+import { SelectProps } from '@myra-ui';
+
 import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
-interface IFormAgentSelectProps {
+interface IFormAgentSelectProps extends SelectProps {
   name: string;
   label: string;
   isRequired?: boolean;
@@ -16,6 +18,7 @@ export const FormAgentSelect = ({
   label,
   isRequired,
   currentBranchOnly = false,
+  ...rest
 }: IFormAgentSelectProps) => {
   // const { watch } = useFormContext();
 
@@ -57,6 +60,7 @@ export const FormAgentSelect = ({
       //   }
       // }, 800)}
       options={agentOptions}
+      {...rest}
     />
   );
 };
