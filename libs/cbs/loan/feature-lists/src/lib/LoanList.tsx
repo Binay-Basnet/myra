@@ -21,11 +21,13 @@ export const LOAN_LIST_TAB_ITEMS = [
 
 export const LoanList = () => {
   const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetLoanListQuery({
     paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
     filter: {
       objectState: (router.query['objState'] ?? ObjState.Approved) as LoanObjState,
+      query: searchTerm,
     },
   });
 
