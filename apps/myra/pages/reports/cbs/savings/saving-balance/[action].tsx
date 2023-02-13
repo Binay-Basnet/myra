@@ -4,10 +4,10 @@ import { MainLayout } from '@myra-ui';
 
 import { SavingBalanceReport } from '@coop/cbs/reports';
 
-export const LoanBalanceReportPage = () => <SavingBalanceReport />;
+export const SavingBalanceReportPage = () => <SavingBalanceReport />;
 
-export default LoanBalanceReportPage;
+export default SavingBalanceReportPage;
 
-LoanBalanceReportPage.getLayout = function getLayout(page: ReactElement) {
+SavingBalanceReportPage.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };
