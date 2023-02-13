@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Link from 'next/link';
 
-import { Box, Button, Column, ExpandedCell, ExpandedHeader, GridItem, Text } from '@myra-ui';
+import { Box, Button, Column, ExpandedCell, ExpandedHeader, Text } from '@myra-ui';
 
 import {
   CharKhataReportFilter,
@@ -14,11 +14,11 @@ import {
   useGetCharKhataReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
+import { CharkhataReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedText, ROUTES } from '@coop/cbs/utils';
 import { arrayToTree } from '@coop/shared/components';
-import { FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
+import { FormRadioGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type TrialSheetReportFilters = Omit<CharKhataReportFilter, 'filter' | 'branchId' | 'coaHead'> & {
@@ -53,70 +53,6 @@ type TrialSheetReportDataEntry = {
 
 export const CharKhataReport = () => {
   const [filters, setFilters] = useState<TrialSheetReportFilters | null>(null);
-
-  const coaHeadOptions = [
-    {
-      label: 'Share Capital  10',
-      value: CoaHead.TotalShareCapitalBalance_10,
-    },
-    {
-      label: 'Reserve and Surplus  20',
-      value: CoaHead?.TotalReserveAndSurplusBalance_20,
-    },
-    {
-      label: 'Saving  30',
-      value: CoaHead?.TotalSavingDepositBalance_30,
-    },
-    {
-      label: 'Loan Saving Account  40',
-      value: CoaHead?.TotalLoanSavingAccountBalance_40,
-    },
-    {
-      label: 'Capital Grant  50',
-      value: CoaHead?.TotalCapitalGrantBalance_50,
-    },
-    {
-      label: 'Current Liabilities and Payble  60',
-      value: CoaHead?.TotalCurrentLiabilitiesAndPayableBalance_60,
-    },
-    {
-      label: 'Non Current Liabilities  70',
-      value: CoaHead?.TotalNonCurrentLiabilitiesBalance_70,
-    },
-    {
-      label: 'Cash and Cash Equivalent  80',
-      value: CoaHead?.TotalCashAndCashEquivalentBalance_80,
-    },
-    { label: 'Bank  90', value: CoaHead?.TotalBankBalance_90 },
-    { label: 'Investment  100', value: CoaHead?.TotalInvestmentBalance_100 },
-    { label: 'Loan  110', value: CoaHead?.TotalLoanBalance_110 },
-    {
-      label: 'Other Assests  120',
-      value: CoaHead?.TotalOtherCurrentAssetsBalance_120,
-    },
-    {
-      label: 'Non Currrent Assets  130',
-      value: CoaHead?.TotalNonCurrentAssetsBalance_130,
-    },
-    {
-      label: 'Other Non Current Assests  140',
-      value: CoaHead?.TotalOtherNonCurrentAssetsBalance_140,
-    },
-    { label: 'Expenses  150', value: CoaHead?.TotalExpensesBalance_150 },
-    { label: 'Revinue  160', value: CoaHead?.TotalRevinueBalance_160 },
-    {
-      label: 'Off Balance Sheet  170',
-      value: CoaHead?.TotalOffBalanceSheetBalance_170,
-    },
-  ];
-
-  // const coaTypeEnum = [
-  //   { label: 'Equity and Liabilities', value: 'equityAndLiablities' },
-  //   { label: 'Assets', value: 'assests' },
-  //   { label: 'Expenses', value: 'expenses' },
-  //   { label: 'Income', value: 'income' },
-  //   { label: 'Off Balance Sheet', value: 'offBalanceSheet' },
-  // ];
 
   const branchIDs =
     filters?.branchId && filters?.branchId.length !== 0
@@ -209,16 +145,8 @@ export const CharKhataReport = () => {
           ]}
         />
 
-        <Report.Inputs>
-          <GridItem colSpan={2}>
-            <FormBranchSelect isMulti name="branchId" label="Service Center" />
-          </GridItem>
-          <GridItem colSpan={1}>
-            <FormSelect isMulti name="coaHead" label="Coa Head" options={coaHeadOptions} />
-          </GridItem>
-          <GridItem colSpan={1}>
-            <ReportDateRange />
-          </GridItem>{' '}
+        <Report.Inputs hideDate>
+          <CharkhataReportInputs />
         </Report.Inputs>
       </Report.Header>
       <Report.Body>
@@ -322,17 +250,6 @@ export const CharKhataReport = () => {
               />
             </Box>
           )}
-
-          {/* <CoaTotalTable
-            totals={[
-              data?.report?.transactionReport?.financial?.charKhataReport?.data?.totalProfitLoss ||
-                {},
-              data?.report?.transactionReport?.financial?.charKhataReport?.data
-                ?.totalAssetExpense || {},
-              data?.report?.transactionReport?.financial?.charKhataReport?.data
-                ?.totalLiablitiesIncome || {},
-            ]}
-          /> */}
         </Report.Content>
         <Report.Filters>
           <Report.Filter title="Zero Balance">
@@ -350,111 +267,6 @@ export const CharKhataReport = () => {
     </Report>
   );
 };
-
-// interface ICoaTotalTableProps {
-//   totals: Record<string, string>[];
-// }
-
-// const CoaTotalTable = ({ totals }: ICoaTotalTableProps) => {
-//   const { getValues } = useFormContext<TrialSheetReportFilters>();
-//   const branchIDs = getValues()?.branchId?.map((a) => a.value);
-
-//   const { data: branchListQueryData } = useGetBranchListQuery({
-//     paginate: {
-//       after: '',
-//       first: -1,
-//     },
-//   });
-
-//   const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
-//   const headers =
-//     branchIDs?.length === branchList?.length
-//       ? ['Total']
-//       : [
-//           ...((branchList
-//             ?.filter((a) => branchIDs.includes(a?.node?.id || ''))
-//             ?.map((a) => a.node?.id) || []) as string[]),
-//           branchIDs.length === 1 ? undefined : 'Total',
-//         ]?.filter(Boolean);
-
-//   const particularData: Record<string, string>[] = [
-//     {
-//       particular: 'Total Profit/Loss (Total Income - Total Expenses)',
-//     },
-//     {
-//       particular: 'Total Assets + Total Expenses + Dr of Off Balance',
-//     },
-//     {
-//       particular: 'Total Liabilities + Total Income + Cr of Off Balance',
-//     },
-//   ];
-
-//   const data = particularData?.map((d, index) => ({
-//     ...d,
-//     ...totals[index],
-//   })) as unknown as TrialBalance[];
-
-//   const baseColumn: Column<typeof data[0]>[] = [
-//     {
-//       header: 'Particulars',
-//       accessorKey: 'particular',
-//       cell: (props) => <Box fontWeight="600">{props.getValue() as string}</Box>,
-//       meta: {
-//         width: '80%',
-//       },
-//     },
-//   ];
-
-//   const columns: Column<typeof data[0]>[] = [
-//     ...baseColumn,
-//     ...headers.map(
-//       (header) =>
-//         ({
-//           header: branchList?.find((b) => b?.node?.id === header)?.node?.name || 'Total',
-//           columns: [
-//             {
-//               header: 'Debit (Dr.)',
-//               accessorFn: (row) => row?.[header || '']?.Dr,
-//               cell: (props) =>
-//                 header ? amountConverter(props?.row?.original?.[header]?.Dr || '0.00') : '0.00',
-//               meta: {
-//                 isNumeric: true,
-//               },
-//             },
-//             {
-//               header: 'Credit (Cr.)',
-//               accessorFn: (row) => row?.[header || '']?.Cr,
-//               cell: (props) =>
-//                 header ? amountConverter(props?.row?.original?.[header]?.Cr || '0.00') : '0.00',
-//               meta: {
-//                 isNumeric: true,
-//               },
-//             },
-//             {
-//               header: 'Balance',
-//               accessorFn: (row) => row?.[header || '']?.Total,
-
-//               cell: (props) =>
-//                 header ? amountConverter(props.row.original?.[header]?.Total || '0.00') : '0.00',
-//               meta: {
-//                 isNumeric: true,
-//               },
-//             },
-//             {
-//               header: '',
-//               id: 'cr',
-//               accessorFn: (row) => (header ? row?.[header]?.Type || '-' : '-'),
-//               meta: {
-//                 width: '10px',
-//               },
-//             },
-//           ],
-//         } as Column<typeof data[0]>)
-//     ),
-//   ];
-
-//   return <Report.Table data={data} columns={columns} tableTitle="Total" />;
-// };
 
 interface ICOATableProps {
   data: TrialSheetReportDataEntry[];
@@ -577,15 +389,7 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
                 isNumeric: true,
               },
             },
-            // {
-            //   header: '',
-            //   id: 'cr',
-            //   accessorFn: (row) => (header ? row.balance?.[header]?.Type || '-' : '-'),
-            //   footer: () => total?.[header || '']?.Type || '-',
-            //   meta: {
-            //     width: '10px',
-            //   },
-            // },
+
             {
               header: 'Closing Balance',
               accessorFn: (row) => row?.balance,

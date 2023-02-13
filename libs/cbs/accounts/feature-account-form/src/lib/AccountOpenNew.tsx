@@ -288,6 +288,8 @@ export const AccountOpenNew = () => {
   const withdrawSlipAmount = watch('openingPayment.withdrawSlip.amount');
 
   const bankVoucherAmount = watch('openingPayment.bankVoucher.amount');
+  const minorselectedValue = watch('minor');
+  const isForMinors = ProductData?.isForMinors as boolean;
 
   const selectedPaymentMode = watch('openingPayment.payment_type');
   const accountName = watch('accountName');
@@ -566,7 +568,7 @@ export const AccountOpenNew = () => {
                     <Box display="flex" flexDirection="column" gap="s32" w="100%">
                       <FormInput name="accountName" label="Account Name" />
                       {ProductData?.isForMinors && (
-                        <FormSelect name="minor" label="Minor" options={minorOptions} />
+                        <FormSelect name="minor" label="Minor" options={minorOptions} isRequired />
                       )}
                       {productType !== NatureOfDepositProduct?.Current &&
                         productType !== NatureOfDepositProduct?.Saving && <Tenure />}
@@ -701,7 +703,13 @@ export const AccountOpenNew = () => {
                   </Text>
                 </Box>
               }
-              isMainButtonDisabled={!!errors || !memberId || !productID || !accountName}
+              isMainButtonDisabled={
+                !!errors ||
+                !memberId ||
+                !productID ||
+                !accountName ||
+                (isForMinors && !minorselectedValue)
+              }
               mainButtonLabel={totalDeposit === 0 ? 'Open Account' : 'Proceed Transaction'}
               mainButtonHandler={totalDeposit === 0 ? submitForm : proceedToPaymentHandler}
             />
