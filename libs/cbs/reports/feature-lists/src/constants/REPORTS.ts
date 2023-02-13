@@ -522,10 +522,10 @@ export const REPORTS = {
       report: Report.TRANSACTION_CHANGE_OF_EQUITY,
     },
 
-    {
-      id: '7.5',
-      report: Report.TRANSACTION_APPROPRIATE_OF_PROFIT,
-    },
+    // {
+    //   id: '7.5',
+    //   report: Report.TRANSACTION_APPROPRIATE_OF_PROFIT,
+    // },
     // {
     //   id: '7.6',
     //   report: Report.TRANSACTION_BANK_GL_BALANCE,
