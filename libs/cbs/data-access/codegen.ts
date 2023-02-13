@@ -1,6 +1,8 @@
 import { CodegenConfig } from '@graphql-codegen/cli';
 import * as process from 'process';
 
+import { getDatabaseSlug } from '../../shared/utils/src/utilFunctions/getDatabaseSlug';
+
 const config: CodegenConfig = {
   overwrite: true,
   schema: [
@@ -8,6 +10,7 @@ const config: CodegenConfig = {
       [`${process.env['NX_SCHEMA_PATH']}/query` as string]: {
         headers: {
           schema: 'true',
+          slug: getDatabaseSlug(),
         },
       },
     },

@@ -126,7 +126,7 @@ export const ReportOrganization = () => {
                       <Text as="span" fontSize="r1" color="gray.700" fontWeight="500">
                         {data?.label},{' '}
                       </Text>
-                      <Button variant="link" onClick={() => setShowAllBranch(true)}>
+                      <Button variant="link" onClick={() => setShowAllBranch(true)} p="0">
                         {`and ${nameList.length - 1} others`}
                       </Button>
                     </Box>
@@ -138,11 +138,15 @@ export const ReportOrganization = () => {
           )}
           {((nameList?.length && showAllBranch) || (nameList?.length === 1 && !showAllBranch)) && (
             <Box maxW="50ch">
-              {nameList?.map((data) => (
+              {/* {nameList?.map((data) => (
                 <Text as="span" fontSize="r1" color="gray.700" fontWeight="500">
                   {data?.label},{' '}
                 </Text>
-              ))}
+              ))} */}
+
+              <Text fontSize="r1" color="gray.700" fontWeight="500">
+                {nameList?.map((data) => data.label).join(', ')}
+              </Text>
             </Box>
           )}
         </Box>
