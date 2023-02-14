@@ -14,7 +14,7 @@ const Indexing = () => {
   const {
     mutateAsync: resetInternalSearchIndexMutation,
     isLoading: resetInternalSearchIndexLoading,
-  } = useSearchInternalIndexingMutation({});
+  } = useSearchInternalIndexingMutation();
   const { mutateAsync: resetTrialBalanceCacheMutation, isLoading: resetTrialBalanceCacheLoading } =
     useResetTrialBalanceCacheMutation({});
 

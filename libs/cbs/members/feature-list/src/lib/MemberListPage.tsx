@@ -6,7 +6,6 @@ import { asyncToast, Avatar, Box, Modal, PageHeader, TablePopover, Text } from '
 import { Column, Table } from '@myra-ui/table';
 
 import {
-  Filter_Mode,
   ObjState,
   useDeleteDraftMutation,
   useGetGeneralMemberSettingsDataQuery,
@@ -63,10 +62,6 @@ export const MemberListPage = () => {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
       filter: {
         query: searchTerm,
-        id: searchTerm,
-        memberCode: searchTerm,
-        mobileNo: searchTerm,
-        filterMode: Filter_Mode.Or,
         objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
       },
     },

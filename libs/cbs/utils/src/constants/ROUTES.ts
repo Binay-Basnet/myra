@@ -250,6 +250,10 @@ export const ROUTES = {
   ACCOUNTING_INTER_SERVICE_TRANS_LIST: '/accounting/accounting/service-center-transactions/list',
   ACCOUNTING_INTER_SERVICE_TRANS_ADD: '/accounting/accounting/service-center-transactions/add',
 
+  ACCOUNTING_CHAR_KHATA_REPORT: '/accounting/reports/transactions/charkhata/new',
+  ACCOUNTING_DAY_BOOK_REPORT: '/accounting/reports/transactions/day-book/new',
+  ACCOUNTING_TRAIL_BALANCE_REPORT: '/accounting/reports/transactions/trial-sheet/new',
+
   ACCOUNTING_EXTERNAL_LOAN_LIST: '/accounting/loan/external-loan/list',
   ACCOUNTING_EXTERNAL_LOAN_ADD: '/accounting/loan/external-loan/new/add',
   ACCOUNTING_EXTERNAL_LOAN_ACCOUNTS_LIST: '/accounting/loan/external-loan-accounts/list',
