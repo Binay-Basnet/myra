@@ -163,7 +163,7 @@ export const BlockWithdrawSlipRequestsList = () => {
             subtitle={String(selectedRequest?.memberName?.local)}
           >
             <Text fontWeight="600" fontSize="r1" textTransform="capitalize" color="gray.800">
-              {selectedRequest?.memberId}
+              {selectedRequest?.memberCode}
             </Text>
           </DetailCardContent>
           <DetailCardContent title="Account">

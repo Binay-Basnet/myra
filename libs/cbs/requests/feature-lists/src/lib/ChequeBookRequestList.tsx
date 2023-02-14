@@ -174,7 +174,6 @@ export const ChequeBookRequestList = () => {
         requestType={RequestType.ChequeBookRequest}
         queryKey="getChequeBookRequests"
       >
-        Value
         <Box borderBottom="1px" borderBottomColor="border.layout">
           <DetailPageMemberCard
             id={selectedRequest?.memberId as string}
