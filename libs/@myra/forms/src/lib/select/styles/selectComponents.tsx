@@ -33,15 +33,18 @@ export const getComponents: (
       </chakraComponents.Placeholder>
     );
   },
-  DropdownIndicator: (props) => (
-    <chakraComponents.DropdownIndicator {...props}>
-      {props.options.length <= 5 ? (
-        <Icon as={IoChevronDownSharp} w="20px" h="20px" cursor="pointer" />
-      ) : (
-        <Icon as={IoSearch} w="20px" h="20px" cursor="pointer" />
-      )}
-    </chakraComponents.DropdownIndicator>
-  ),
+  DropdownIndicator: (props) => {
+    const { options } = props;
+    return (
+      <chakraComponents.DropdownIndicator {...props}>
+        {options.length <= 5 ? (
+          <Icon as={IoChevronDownSharp} w="20px" h="20px" cursor="pointer" />
+        ) : (
+          <Icon as={IoSearch} w="20px" h="20px" cursor="pointer" />
+        )}
+      </chakraComponents.DropdownIndicator>
+    );
+  },
   Option: ({ children, ...props }) =>
     hasRadio ? (
       <chakraComponents.Option {...props}>
@@ -94,4 +97,18 @@ export const getComponents: (
         ) : null}
       </chakraComponents.Option>
     ),
+  SingleValue: (props) => {
+    const { data, selectProps } = props;
+    return (
+      <chakraComponents.SingleValue {...props}>
+        <Text
+          fontSize="r1"
+          fontWeight={400}
+          color={selectProps?.menuIsOpen ? 'gray.500' : 'gray.800'}
+        >
+          {data?.label}
+        </Text>
+      </chakraComponents.SingleValue>
+    );
+  },
 });

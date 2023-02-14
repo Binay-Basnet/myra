@@ -148,7 +148,10 @@ export const FormAccountSelect = ({
             if (Array.isArray(newValue)) {
               onChange(newValue);
             } else {
-              const { value: newVal } = newValue as Option;
+              // const { value: newVal } = newValue as Option;
+
+              const newVal = (newValue as Option)?.value;
+
               onChange(newVal);
             }
           }}

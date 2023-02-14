@@ -62,7 +62,7 @@ export const AccountSelect = ({
         closeMenuOnSelect={!isMulti}
         isMulti={isMulti}
         hideSelectedOptions={false}
-        isClearable={false}
+        isClearable
         chakraStyles={chakraDefaultStyles as ChakraStylesConfig<Option, boolean, GroupBase<Option>>}
         components={
           customComponents as Partial<SelectComponentsConfig<Option, boolean, GroupBase<Option>>>

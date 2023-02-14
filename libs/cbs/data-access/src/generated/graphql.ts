@@ -3339,6 +3339,7 @@ export type CopomisReportData = {
   genderRecordId?: Maybe<Scalars['Int']>;
   grandfatherName?: Maybe<Scalars['String']>;
   maritalStatusId?: Maybe<Scalars['Int']>;
+  memberId?: Maybe<Scalars['String']>;
   memberNameEn?: Maybe<Scalars['String']>;
   memberNameNp?: Maybe<Scalars['String']>;
   memberRegistrationDate?: Maybe<Scalars['Localized']>;
@@ -9561,6 +9562,7 @@ export type LoanBalanceReport = {
   branchName?: Maybe<Scalars['String']>;
   lastPaymentDate?: Maybe<Scalars['Localized']>;
   loanAccountId?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
   outstandingBalance?: Maybe<Scalars['String']>;
@@ -10921,6 +10923,7 @@ export type MemberLoanInformation = {
   loanAccountNo?: Maybe<Scalars['String']>;
   loanAccountType?: Maybe<Scalars['String']>;
   loanDisbursedAmount?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
   remainingPrincipal?: Maybe<Scalars['String']>;
