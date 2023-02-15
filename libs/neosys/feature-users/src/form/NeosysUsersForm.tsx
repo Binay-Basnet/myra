@@ -1,4 +1,4 @@
-import { Box, Button, Grid, GridItem } from '@myra-ui';
+import { Box, Grid, GridItem } from '@myra-ui';
 
 import { FormDatePicker, FormEmailInput, FormInput, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
@@ -52,9 +52,9 @@ export const NeosysUsersForm = () => {
             </GridItem>
           </Grid>
         </Box>
-        <Box>
+        {/* <Box>
           <Button variant="ghost">{t['neoUsersViewEditFullPermission']}</Button>
-        </Box>
+        </Box> */}
       </Box>
     </form>
   );

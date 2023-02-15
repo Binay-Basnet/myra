@@ -1,21 +1,10 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import {
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  Icon,
-  IconButton,
-  Loader,
-  Text,
-} from '@myra-ui';
+import { asyncToast, Box, Container, FormFooter, IconButton, Loader, Text } from '@myra-ui';
 
 import {
   NeosysUserInput,
@@ -97,28 +86,28 @@ export const NeosysFeatureUsersAdd = () => {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100">
           <Container minW="container.lg" height="fit-content">
             <FormFooter
-              status={
-                <Box display="flex" gap="s8">
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                </Box>
-              }
-              draftButton={
-                <Button type="submit" variant="ghost">
-                  <Icon as={BiSave} color="primary.500" />
-                  <Text
-                    alignSelf="center"
-                    color="primary.500"
-                    fontWeight="Medium"
-                    fontSize="s2"
-                    ml="5px"
-                  >
-                    {t['saveDraft']}
-                  </Text>
-                </Button>
-              }
-              mainButtonLabel={t['next']}
+              // status={
+              //   <Box display="flex" gap="s8">
+              //     <Text as="i" fontSize="r1">
+              //       {t['formDetails']}
+              //     </Text>
+              //   </Box>
+              // }
+              // draftButton={
+              //   <Button type="submit" variant="ghost">
+              //     <Icon as={BiSave} color="primary.500" />
+              //     <Text
+              //       alignSelf="center"
+              //       color="primary.500"
+              //       fontWeight="Medium"
+              //       fontSize="s2"
+              //       ml="5px"
+              //     >
+              //       {t['saveDraft']}
+              //     </Text>
+              //   </Button>
+              // }
+              mainButtonLabel="Submit"
               mainButtonHandler={async () => {
                 const formValues = methods.getValues();
 
