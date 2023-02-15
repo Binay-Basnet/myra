@@ -84,6 +84,11 @@ export const LedgerReport = () => {
               {
                 header: 'Particulars',
                 accessorFn: (row) => row?.account,
+                cell: (props) => (
+                  <Box whiteSpace="pre-line" my="s4">
+                    {props?.row?.original?.account}{' '}
+                  </Box>
+                ),
                 meta: {
                   width: '70%',
                 },

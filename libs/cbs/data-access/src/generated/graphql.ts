@@ -3339,6 +3339,7 @@ export type CopomisReportData = {
   genderRecordId?: Maybe<Scalars['Int']>;
   grandfatherName?: Maybe<Scalars['String']>;
   maritalStatusId?: Maybe<Scalars['Int']>;
+  memberId?: Maybe<Scalars['String']>;
   memberNameEn?: Maybe<Scalars['String']>;
   memberNameNp?: Maybe<Scalars['String']>;
   memberRegistrationDate?: Maybe<Scalars['Localized']>;
@@ -9561,6 +9562,7 @@ export type LoanBalanceReport = {
   branchName?: Maybe<Scalars['String']>;
   lastPaymentDate?: Maybe<Scalars['Localized']>;
   loanAccountId?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
   outstandingBalance?: Maybe<Scalars['String']>;
@@ -10921,6 +10923,7 @@ export type MemberLoanInformation = {
   loanAccountNo?: Maybe<Scalars['String']>;
   loanAccountType?: Maybe<Scalars['String']>;
   loanDisbursedAmount?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
   remainingPrincipal?: Maybe<Scalars['String']>;
@@ -12067,6 +12070,29 @@ export const PaymentDepositedBy = {
 } as const;
 
 export type PaymentDepositedBy = typeof PaymentDepositedBy[keyof typeof PaymentDepositedBy];
+export type PearlsRecord = {
+  denominator: Scalars['String'];
+  description: Scalars['String'];
+  goal: Scalars['String'];
+  lastMonth: Scalars['String'];
+  numerator: Scalars['String'];
+  pearl: Scalars['String'];
+  thisMonth: Scalars['String'];
+};
+
+export type PearlsReportInput = {
+  period: LocalizedDateFilter;
+};
+
+export type PearlsReportResult = {
+  typeA?: Maybe<Array<Maybe<PearlsRecord>>>;
+  typeE?: Maybe<Array<Maybe<PearlsRecord>>>;
+  typeL?: Maybe<Array<Maybe<PearlsRecord>>>;
+  typeP?: Maybe<Array<Maybe<PearlsRecord>>>;
+  typeR?: Maybe<Array<Maybe<PearlsRecord>>>;
+  typeS?: Maybe<Array<Maybe<PearlsRecord>>>;
+};
+
 export type Penalty = {
   dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
   penaltyAmount?: Maybe<Scalars['Amount']>;
@@ -12633,6 +12659,7 @@ export type ReportQuery = {
   memberReport: MemberReport;
   mobileBankingReport: MobileBankingReport;
   otherReport: OtherReport;
+  pearlsReport?: Maybe<PearlsReportResult>;
   shareReport: ShareReport;
   transactionReport: TransactionReport;
 };
@@ -12645,6 +12672,10 @@ export type ReportQueryListReportsArgs = {
   filter?: InputMaybe<ReportListFilter>;
   organizationId?: InputMaybe<Scalars['ID']>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type ReportQueryPearlsReportArgs = {
+  data: PearlsReportInput;
 };
 
 export type ReportResult = {

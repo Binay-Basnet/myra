@@ -35,6 +35,7 @@ export const Interest = () => {
   );
 
   const ProductData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+  const [maxValue, setMaxValue] = useState(Number(ProductData?.interest?.defaultRate));
 
   useEffect(() => {
     if (products) {
@@ -53,12 +54,18 @@ export const Interest = () => {
     if (router.pathname.includes('add')) {
       setValue('interestRate', defaultRate);
     }
-  }, [defaultRate]);
+    if (interestAuth === InterestAuthority.Board) {
+      setMaxValue(
+        Number(ProductData?.interest?.boardAuthority) + Number(ProductData?.interest?.defaultRate)
+      );
+    }
+    if (interestAuth === InterestAuthority?.Ceo) {
+      setMaxValue(
+        Number(ProductData?.interest?.ceoAuthority) + Number(ProductData?.interest?.defaultRate)
+      );
+    }
+  }, [defaultRate, interestAuth, ProductData]);
 
-  const maxValue =
-    interestAuth === InterestAuthority.Board
-      ? Number(ProductData?.interest?.boardAuthority) + Number(ProductData?.interest?.defaultRate)
-      : Number(ProductData?.interest?.ceoAuthority) + Number(ProductData?.interest?.defaultRate);
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" w="100%" background="neutralColorLight.Gray-0">
