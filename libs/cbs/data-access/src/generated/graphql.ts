@@ -23353,6 +23353,7 @@ export type GetCopomisImportMemberReportQuery = {
           address?: Record<'local' | 'en' | 'np', string> | null;
           memberNameEn?: string | null;
           memberNameNp?: string | null;
+          memberId?: string | null;
           memberRegistrationDate?: Record<'local' | 'en' | 'np', string> | null;
           membershipNo?: string | null;
           shareCertificateNo?: string | null;
@@ -23771,6 +23772,7 @@ export type GetLoanBalanceReportQuery = {
         totalRemainingBalance?: string | null;
         data?: Array<{
           memberId?: string | null;
+          memberCode?: string | null;
           loanAccountId?: string | null;
           memberName?: Record<'local' | 'en' | 'np', string> | null;
           productName?: string | null;
@@ -23959,6 +23961,7 @@ export type GetLoanCollateralReportQuery = {
           loanAccountType?: string | null;
           loanDisbursedAmount?: string | null;
           memberId?: string | null;
+          memberCode?: string | null;
           memberName?: string | null;
           remainingPrincipal?: string | null;
           collateralInformation?: Array<{
@@ -24442,6 +24445,7 @@ export type GetShareStatementQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           activeDate?: Record<'local' | 'en' | 'np', string> | null;
           dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+          branch?: string | null;
           address?: {
             wardNo?: string | null;
             state?: Record<'local' | 'en' | 'np', string> | null;
@@ -39391,6 +39395,7 @@ export const GetCopomisImportMemberReportDocument = `
           address
           memberNameEn
           memberNameNp
+          memberId
           memberRegistrationDate
           membershipNo
           shareCertificateNo
@@ -39964,6 +39969,7 @@ export const GetLoanBalanceReportDocument = `
       loanBalanceReport(data: $data) {
         data {
           memberId
+          memberCode
           loanAccountId
           memberName
           productName
@@ -40210,6 +40216,7 @@ export const GetLoanCollateralReportDocument = `
           loanAccountType
           loanDisbursedAmount
           memberId
+          memberCode
           memberName
           remainingPrincipal
         }
@@ -40866,6 +40873,7 @@ export const GetShareStatementDocument = `
             localGovernment
           }
           dateJoined
+          branch
         }
         statement {
           ... on ShareStatementReport {

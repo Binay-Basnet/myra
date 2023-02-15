@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -31,7 +31,7 @@ export const AccountingFeatureAddBankAccount = () => {
   const router = useRouter();
   const { id } = router.query;
   const methods = useForm();
-  const { getValues, reset } = methods;
+  const { getValues, reset, watch, setValue } = methods;
 
   const accountTypeList = [
     {
@@ -55,6 +55,24 @@ export const AccountingFeatureAddBankAccount = () => {
       label: item?.name as string,
       value: item?.id as string,
     }));
+
+  const bankId = watch('bankId');
+  const accountName = watch('accountName');
+
+  const selectedBank = useMemo(
+    () => bankList?.find((bank) => bank.value === bankId),
+    [bankId, bankList]
+  );
+
+  useEffect(() => {
+    if (selectedBank && !accountName) {
+      setValue('accountName', `${selectedBank?.label} - `);
+    }
+
+    if (!selectedBank) {
+      setValue('accountName', '');
+    }
+  }, [selectedBank, accountName]);
 
   const { data: bankAccountDetail } = useGetBankAccountDetailsQuery({ id: id as string });
   const editedData = bankAccountDetail?.accounting?.bankAccounts?.details?.data;

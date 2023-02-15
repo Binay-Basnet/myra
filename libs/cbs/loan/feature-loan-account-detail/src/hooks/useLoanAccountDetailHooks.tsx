@@ -176,7 +176,7 @@ export const useLoanAccountDetailHooks = () => {
   const collateralSummary = [
     {
       title: 'No of Collateral',
-      value: amountConverter(collatData?.noOfCollateral ?? 0),
+      value: String(collatData?.noOfCollateral) ?? '0',
     },
     {
       title: 'Total Collateral Value',

@@ -22,7 +22,7 @@ import {
   useSetIssueNewSlipMutation,
   WithdrawSlipIssueInput,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { ROUTES, WITHDRAW_SLIP_COUNT_OPTIONS } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
   FormAgentSelect,
@@ -36,29 +36,6 @@ import { featureCode } from '@coop/shared/utils';
 interface CustomWithdrawSlipIssueInput extends WithdrawSlipIssueInput {
   memberId: string;
 }
-
-const totalNumberOptions = [
-  {
-    label: '5',
-    value: 5,
-  },
-  {
-    label: '10',
-    value: 10,
-  },
-  {
-    label: '25',
-    value: 25,
-  },
-  {
-    label: '50',
-    value: 50,
-  },
-  {
-    label: '100',
-    value: 100,
-  },
-];
 
 const pickupMethodOptions = [
   { label: 'Self', value: PickupMethod.Self },
@@ -165,7 +142,7 @@ export const AddWithdrawSlipBook = () => {
                     isRequired
                     name="count"
                     label="Total no of withdraw slip"
-                    options={totalNumberOptions}
+                    options={WITHDRAW_SLIP_COUNT_OPTIONS}
                   />
 
                   {count && to && from && (

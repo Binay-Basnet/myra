@@ -4,6 +4,7 @@ query getLoanBalanceReport($data: LoanBalanceFilterData!) {
       loanBalanceReport(data: $data) {
         data {
           memberId
+          memberCode
           loanAccountId
           memberName
           productName
@@ -193,6 +194,7 @@ query getLoanCollateralReport($data: LoanCollateralFilter!) {
           loanAccountType
           loanDisbursedAmount
           memberId
+          memberCode
           memberName
           remainingPrincipal
         }

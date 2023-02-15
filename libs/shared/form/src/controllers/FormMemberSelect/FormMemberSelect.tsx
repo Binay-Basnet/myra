@@ -20,6 +20,7 @@ interface IMemberSelectProps extends MemberSelectProps {
   placeholder?: string;
   allMembers?: boolean;
   excludeIds?: string[];
+  forceEnableAll?: boolean;
 }
 
 export const FormMemberSelect = ({
@@ -28,6 +29,7 @@ export const FormMemberSelect = ({
   placeholder,
   allMembers,
   excludeIds,
+  forceEnableAll,
   ...rest
 }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
@@ -37,6 +39,9 @@ export const FormMemberSelect = ({
 
   const memberId = watch(name);
   const isDisabledCheck = useMemo(() => {
+    if (forceEnableAll) {
+      return false;
+    }
     if (router?.asPath?.includes('/edit')) {
       return true;
     }
@@ -47,6 +52,9 @@ export const FormMemberSelect = ({
   }, [router?.asPath]);
 
   const isFetchEnabled = useMemo(() => {
+    if (forceEnableAll) {
+      return true;
+    }
     if (router?.asPath?.includes('/edit') || router?.asPath?.includes('/print')) {
       return !!IDMember;
     }
