@@ -55,7 +55,10 @@ export const AssociatedGuaranteeAccounts = () => {
       },
       {
         header: 'Amount',
-        accessorFn: (row) => amountConverter(row?.amount ?? 0),
+        cell: (props) => amountConverter(props?.row?.original?.amount ?? 0),
+        meta: {
+          isNumeric: true,
+        },
         footer: amountConverter(total ?? 0) as string,
       },
     ],

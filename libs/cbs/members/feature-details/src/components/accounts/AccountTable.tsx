@@ -53,6 +53,7 @@ export const AccountTable = ({ data, memberName, contactNo }: ILoanPaymentSchedu
     phoneNo: contactNo ?? 'N/A',
     accountName: 'N/A',
   });
+
   const columns = React.useMemo<Column<typeof data[0]>[]>(
     () => [
       {

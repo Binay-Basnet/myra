@@ -25,10 +25,14 @@ export const ShareStatementReport = () => {
     { data: filters as ShareStatementReportSettings },
     { enabled: !!filters }
   );
-
   const shareMember = data?.report?.shareReport?.shareStatementReport?.member;
-  // const branch = useAppSelector((state) => state?.auth?.user?.branch);
 
+  // const branchIds =
+  //   filters?.branchId && filters?.branchId.length !== 0
+  //     ? filters?.branchId?.map((t) => t.value)
+  //     : null;
+
+  // console.log('test', branchIds);
   // const member = {
   //   'Name of member': shareMember?.name?.local as string,
   //   Address: formatAddress(shareMember?.address) as string,

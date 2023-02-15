@@ -56,7 +56,7 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
       },
       {
         header: t['transDetailDebit'],
-        footer: totalDebit,
+        footer: amountConverter(totalDebit),
         id: 'debit',
 
         accessorFn: (row) => amountConverter(row?.debit ?? 0),
@@ -66,7 +66,7 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
       },
       {
         header: t['transDetailCredit'],
-        footer: totalCredit,
+        footer: amountConverter(totalCredit),
         id: 'credit',
 
         accessorFn: (row) => amountConverter(row?.credit ?? 0),
