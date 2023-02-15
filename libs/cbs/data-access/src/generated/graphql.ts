@@ -24398,6 +24398,7 @@ export type GetShareStatementQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           activeDate?: Record<'local' | 'en' | 'np', string> | null;
           dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+          branch?: string | null;
           address?: {
             wardNo?: string | null;
             state?: Record<'local' | 'en' | 'np', string> | null;
@@ -40816,6 +40817,7 @@ export const GetShareStatementDocument = `
             localGovernment
           }
           dateJoined
+          branch
         }
         statement {
           ... on ShareStatementReport {
