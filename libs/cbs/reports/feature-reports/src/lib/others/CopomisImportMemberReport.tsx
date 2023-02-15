@@ -10,7 +10,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect } from '@coop/shared/form';
 
 type CopomisFilters = Omit<CopomisReportFilter, 'branchId'> & {
@@ -70,6 +70,13 @@ export const CopomisImportMemberReport = () => {
               {
                 header: 'Membership No',
                 accessorKey: 'membershipNo',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.memberId as string}
+                    type="member"
+                    label={props?.row?.original?.membershipNo as string}
+                  />
+                ),
               },
               {
                 header: 'Member Name',

@@ -120,7 +120,7 @@ export const LoanBalanceReport = () => {
                 accessorKey: 'memberId',
                 cell: (props) => (
                   <RedirectButton
-                    label={props?.row?.original?.memberId}
+                    label={props?.row?.original?.memberCode}
                     link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${props?.row?.original?.memberId}`}
                   />
                 ),
