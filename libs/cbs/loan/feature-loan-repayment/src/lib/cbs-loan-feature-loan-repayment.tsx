@@ -215,9 +215,6 @@ export const LoanRepayment = () => {
       principal: value?.principal,
       remainingPrincipal: value?.remainingPrincipal,
       paid: nextInstallmentNumber > index + 1,
-      paidDate: value?.paidDate,
-      remainingInterest: value?.remainingInterest,
-      remainingCurrentInterest: value?.currentRemainingPrincipal,
     })) || [];
   const loanPaymentScheduleSplice =
     nextInstallmentNumber > 5
