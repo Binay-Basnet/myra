@@ -4,6 +4,7 @@ export * from './components/LocalizedTime';
 export * from './constants/EMPTYSTATE';
 export * from './constants/NAV';
 export * from './constants/ROUTES';
+export * from './constants/WITHDRAW_SLIP_COUNT_OPTIONS';
 export * from './lib/DetailsRouteFromTable';
 export * from './lib/exportVisibleTableToExcel';
 export * from './lib/formatAddress';

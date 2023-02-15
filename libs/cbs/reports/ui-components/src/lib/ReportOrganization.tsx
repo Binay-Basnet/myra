@@ -117,6 +117,7 @@ export const ReportOrganization = () => {
               {singleName}
             </Text>
           )}
+
           {nameList?.length && nameList?.length > 1 && !showAllBranch && (
             <Box maxW="50ch">
               {nameList?.map((data, index) => {
@@ -150,8 +151,6 @@ export const ReportOrganization = () => {
             </Box>
           )}
         </Box>
-      </Box>
-      <Box display="flex" flexDir="column" alignItems="flex-end">
         {ledgerName && (
           <Box display="flex" gap="s4">
             <Text fontSize="r1" color="gray.700">
@@ -162,6 +161,9 @@ export const ReportOrganization = () => {
             </Text>
           </Box>
         )}
+      </Box>
+
+      <Box display="flex" flexDir="column" alignItems="flex-end">
         {period?.to ? (
           <Box display="flex" gap="s4">
             <Text fontSize="r1" color="gray.700">

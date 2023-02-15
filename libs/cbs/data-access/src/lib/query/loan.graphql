@@ -260,6 +260,8 @@ query getLoanInstallments(
   $interest: Float!
   $repaymentScheme: LoanRepaymentScheme!
   $installmentFrequency: InstallmentFrequency
+  $disburseDate: Localized
+  $installmentBeginDate: Localized
 ) {
   loanAccount {
     getLoanInstallments(
@@ -270,6 +272,8 @@ query getLoanInstallments(
       sanctionAmount: $sanctionAmount
       tenure: $tenure
       installmentFrequency: $installmentFrequency
+      disburseDate: $disburseDate
+      installmentBeginDate: $installmentBeginDate
     ) {
       data {
         total
@@ -347,6 +351,8 @@ query getLoanApplicationDetails($id: ID!) {
           principalGracePeriod
           interestGracePeriod
         }
+        disbursementDate
+        installmentBeginDate
         linkedAccountId
         totalValuation
         totalSanctionedAmount
@@ -493,7 +499,10 @@ query getLoanPreview($id: String!) {
             payment
             principal
             remainingPrincipal
+            currentRemainingPrincipal
             paid
+            paidDate
+            remainingInterest
           }
         }
         statistics {
@@ -638,13 +647,16 @@ query getLoanAccountDetails(
         }
         loanSchedule {
           installments {
+            paidDate
             installmentNo
             installmentDate
             principal
             interest
             payment
             remainingPrincipal
+            remainingInterest
             paid
+            currentRemainingPrincipal
           }
           total
           totalInterest

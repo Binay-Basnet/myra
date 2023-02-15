@@ -67,6 +67,10 @@ export const LedgerReport = () => {
             hasSNo={false}
             columns={[
               {
+                header: 'S.N',
+                accessorFn: (__, index) => index + 1,
+              },
+              {
                 header: 'Date',
                 accessorFn: (row) => localizedDate(row?.date),
                 meta: {

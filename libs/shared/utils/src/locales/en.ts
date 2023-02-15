@@ -3601,8 +3601,8 @@ const en: Record<string, string> = {
   navbarTransfer: 'Transfers',
   newTransfer: 'New Transfer',
   transfer: 'Transfers',
-  transferVaultTransfer: 'Vault Transfer',
-  transferTellerTransfer: 'Teller Transfer',
+  transferVaultTransfer: 'Teller - Vault',
+  transferTellerTransfer: 'Teller - Teller',
   transferBranchTransfer: 'Branch Transfer',
 
   transferVaultBalanceReport: 'Vault Balance Report',

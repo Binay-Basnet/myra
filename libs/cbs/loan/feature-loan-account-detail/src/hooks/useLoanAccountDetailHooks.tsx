@@ -149,6 +149,9 @@ export const useLoanAccountDetailHooks = () => {
         interest: installment?.interest ?? '0',
         remainingPrincipal: installment?.remainingPrincipal,
         paid: installment?.paid,
+        paidDate: installment?.paidDate,
+        remainingIntrest: installment?.remainingInterest,
+        currentRemainingPrincipal: installment?.currentRemainingPrincipal,
       })) ?? [],
     [paymentsListInfo]
   );
@@ -163,6 +166,9 @@ export const useLoanAccountDetailHooks = () => {
         interest: installment?.interest ?? '0',
         remainingPrincipal: installment?.remainingPrincipal,
         paid: installment?.paid,
+        paidDate: installment?.paidDate,
+        remainingIntrest: installment?.remainingInterest,
+        currentRemainingPrincipal: installment?.currentRemainingPrincipal,
       })) ?? [],
     [paymentsListInfo]
   );

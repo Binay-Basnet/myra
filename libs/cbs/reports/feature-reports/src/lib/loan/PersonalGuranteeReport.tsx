@@ -154,7 +154,16 @@ export const LoanPersonalGuranteeReport = () => {
                   {
                     header: 'Member ID',
                     accessorKey: 'memCode',
-                    cell: (row) => (row.getValue() ? row.getValue() : '-'),
+                    cell: (row) =>
+                      row.getValue() ? (
+                        <RouteToDetailsPage
+                          id={row?.row?.original?.memId as string}
+                          type="member"
+                          label={row?.getValue()}
+                        />
+                      ) : (
+                        '-'
+                      ),
                   },
 
                   {
@@ -165,7 +174,16 @@ export const LoanPersonalGuranteeReport = () => {
                   {
                     header: 'Saving Account No',
                     accessorKey: 'depositAccountNo',
-                    cell: (row) => (row.getValue() ? row.getValue() : '-'),
+                    cell: (row) =>
+                      row.getValue() ? (
+                        <RouteToDetailsPage
+                          id={row?.row?.original?.depositAccountNo as string}
+                          type="savings"
+                          label={row?.getValue()}
+                        />
+                      ) : (
+                        '-'
+                      ),
                   },
                   {
                     header: 'Guarantee Amount',

@@ -12,7 +12,7 @@ import {
   useGetCashInTransitListQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
-import { getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
+import { amountConverter, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 import { CashInTransitTransferAproveModal } from '../components/cash-in-transit/CashInTransitTransferAproveModal';
 
@@ -104,6 +104,7 @@ export const CashTransitTransferList = () => {
       {
         header: 'Amount',
         accessorFn: (row) => row?.node?.cashAmount,
+        cell: (props) => amountConverter(props?.row?.original?.node?.cashAmount),
         meta: {
           isNumeric: true,
         },
