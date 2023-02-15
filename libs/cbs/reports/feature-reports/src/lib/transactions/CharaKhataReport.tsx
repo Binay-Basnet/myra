@@ -19,7 +19,7 @@ import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedText, ROUTES } from '@coop/cbs/utils';
 import { arrayToTree } from '@coop/shared/components';
 import { FormRadioGroup } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type TrialSheetReportFilters = Omit<CharKhataReportFilter, 'filter' | 'branchId' | 'coaHead'> & {
   branchId: { label: string; value: string }[];
@@ -53,6 +53,8 @@ type TrialSheetReportDataEntry = {
 
 export const CharKhataReport = () => {
   const [filters, setFilters] = useState<TrialSheetReportFilters | null>(null);
+
+  const { isCbs } = useIsCbs();
 
   const branchIDs =
     filters?.branchId && filters?.branchId.length !== 0
@@ -136,11 +138,13 @@ export const CharKhataReport = () => {
           paths={[
             {
               label: 'Transaction Reports',
-              link: '/reports/cbs/transactions',
+              link: isCbs ? '/reports/cbs/transactions' : '/accounting/reports/transactions',
             },
             {
               label: 'CharKhata Ledger Report',
-              link: '/reports/cbs/transactions/charkhata/new',
+              link: isCbs
+                ? '/reports/cbs/transactions/charkhata/new'
+                : '/accounting/reports/transactions/charkhata/new',
             },
           ]}
         />

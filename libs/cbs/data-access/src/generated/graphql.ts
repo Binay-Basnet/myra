@@ -624,6 +624,7 @@ export type AddCoaAccountInput = {
   accountClass: Scalars['String'];
   accountCode: Scalars['String'];
   accountType: CoaTypesOfAccount;
+  allowedBalance?: InputMaybe<CoaTypeOfTransaction>;
   bankAccountNumber?: InputMaybe<Scalars['String']>;
   bankGLCode?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['ID']>;
@@ -640,6 +641,7 @@ export type AddCoaAccountInput = {
   journalCode?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   openingBalance: Scalars['Float'];
+  typeOfTransaction?: InputMaybe<CoaTypeOfTransaction>;
   under?: InputMaybe<Scalars['ID']>;
 };
 
@@ -3859,6 +3861,7 @@ export type DepositLoanAccountQueryGetInstallmentsArgs = {
 
 export type DepositLoanAccountQueryListArgs = {
   filter?: InputMaybe<DepositLoanAccountSearchFilter>;
+  injectLoc?: InputMaybe<Scalars['Boolean']>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -9586,6 +9589,33 @@ export type LoanBankDisbursement = {
   note?: InputMaybe<Scalars['String']>;
 };
 
+export type LoanCallReport = {
+  installmentAmount?: Maybe<Scalars['String']>;
+  installmentDate?: Maybe<Scalars['Localized']>;
+  installmentDueAmount?: Maybe<Scalars['String']>;
+  installmentDueDays?: Maybe<Scalars['Int']>;
+  loanAccountNo?: Maybe<Scalars['String']>;
+  loanType?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  serviceCenter?: Maybe<Scalars['String']>;
+  totalInstallment?: Maybe<Scalars['String']>;
+};
+
+export type LoanCallReportFilter = {
+  accountTypeId?: InputMaybe<Array<Scalars['String']>>;
+  amountRange?: InputMaybe<MinMaxFilter>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  installmentDate?: InputMaybe<Scalars['Localized']>;
+  period: LocalizedDateFilter;
+};
+
+export type LoanCallReportResult = {
+  data?: Maybe<Array<Maybe<LoanCallReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanCollateralAndGuarantees = {
   name?: Maybe<Scalars['String']>;
   valuation?: Maybe<Scalars['String']>;
@@ -9697,12 +9727,15 @@ export type LoanGuarantorInfo = {
 };
 
 export type LoanInstallment = {
+  currentRemainingPrincipal: Scalars['String'];
   installmentDate: Scalars['Localized'];
   installmentNo: Scalars['Int'];
   interest: Scalars['String'];
   paid: Scalars['Boolean'];
+  paidDate: Scalars['Localized'];
   payment: Scalars['String'];
   principal: Scalars['String'];
+  remainingInterest: Scalars['String'];
   remainingPrincipal: Scalars['String'];
 };
 
@@ -10357,6 +10390,7 @@ export type LoanReport = {
   closedLoanAccountStatementReport?: Maybe<ClosedLoanAccountReportResult>;
   loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
   loanBalanceReport: LoanBalanceReportResult;
+  loanCallReport?: Maybe<LoanCallReportResult>;
   loanCollateralReport?: Maybe<LoanCollateralReportResult>;
   loanProductBalance?: Maybe<LoanProductBalanceReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
@@ -10373,6 +10407,10 @@ export type LoanReportLoanAgingStatementReportArgs = {
 
 export type LoanReportLoanBalanceReportArgs = {
   data: LoanBalanceFilterData;
+};
+
+export type LoanReportLoanCallReportArgs = {
+  data?: InputMaybe<LoanCallReportFilter>;
 };
 
 export type LoanReportLoanCollateralReportArgs = {
@@ -12070,6 +12108,29 @@ export const PaymentDepositedBy = {
 } as const;
 
 export type PaymentDepositedBy = typeof PaymentDepositedBy[keyof typeof PaymentDepositedBy];
+export type PearlsRecord = {
+  denominator: Scalars['String'];
+  description: Scalars['String'];
+  goal: Scalars['String'];
+  lastMonth: Scalars['String'];
+  numerator: Scalars['String'];
+  pearl: Scalars['String'];
+  thisMonth: Scalars['String'];
+};
+
+export type PearlsReportInput = {
+  period: LocalizedDateFilter;
+};
+
+export type PearlsReportResult = {
+  typeA?: Maybe<Array<Maybe<PearlsRecord>>>;
+  typeE?: Maybe<Array<Maybe<PearlsRecord>>>;
+  typeL?: Maybe<Array<Maybe<PearlsRecord>>>;
+  typeP?: Maybe<Array<Maybe<PearlsRecord>>>;
+  typeR?: Maybe<Array<Maybe<PearlsRecord>>>;
+  typeS?: Maybe<Array<Maybe<PearlsRecord>>>;
+};
+
 export type Penalty = {
   dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
   penaltyAmount?: Maybe<Scalars['Amount']>;
@@ -12636,6 +12697,7 @@ export type ReportQuery = {
   memberReport: MemberReport;
   mobileBankingReport: MobileBankingReport;
   otherReport: OtherReport;
+  pearlsReport?: Maybe<PearlsReportResult>;
   shareReport: ShareReport;
   transactionReport: TransactionReport;
 };
@@ -12648,6 +12710,10 @@ export type ReportQueryListReportsArgs = {
   filter?: InputMaybe<ReportListFilter>;
   organizationId?: InputMaybe<Scalars['ID']>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type ReportQueryPearlsReportArgs = {
+  data: PearlsReportInput;
 };
 
 export type ReportResult = {
@@ -21478,7 +21544,10 @@ export type GetLoanPreviewQuery = {
             payment: string;
             principal: string;
             remainingPrincipal: string;
+            currentRemainingPrincipal: string;
             paid: boolean;
+            paidDate: Record<'local' | 'en' | 'np', string>;
+            remainingInterest: string;
           } | null> | null;
         } | null;
         statistics?: {
@@ -21637,13 +21706,16 @@ export type GetLoanAccountDetailsQuery = {
           totalInterest?: string | null;
           totalPrincipal?: string | null;
           installments?: Array<{
+            paidDate: Record<'local' | 'en' | 'np', string>;
             installmentNo: number;
             installmentDate: Record<'local' | 'en' | 'np', string>;
             principal: string;
             interest: string;
             payment: string;
             remainingPrincipal: string;
+            remainingInterest: string;
             paid: boolean;
+            currentRemainingPrincipal: string;
           } | null> | null;
         } | null;
         transactions?: {
@@ -36996,7 +37068,10 @@ export const GetLoanPreviewDocument = `
             payment
             principal
             remainingPrincipal
+            currentRemainingPrincipal
             paid
+            paidDate
+            remainingInterest
           }
         }
         statistics {
@@ -37208,13 +37283,16 @@ export const GetLoanAccountDetailsDocument = `
         }
         loanSchedule {
           installments {
+            paidDate
             installmentNo
             installmentDate
             principal
             interest
             payment
             remainingPrincipal
+            remainingInterest
             paid
+            currentRemainingPrincipal
           }
           total
           totalInterest

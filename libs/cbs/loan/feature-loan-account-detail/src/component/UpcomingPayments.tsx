@@ -19,6 +19,9 @@ type CustomPaymentItem = {
   interest: string | undefined;
   remainingPrincipal: string | undefined;
   paid: boolean | undefined;
+  paidDate: Record<'local' | 'en' | 'np', string> | null | undefined;
+  remainingIntrest?: number | string;
+  currentRemainingPrincipal?: number | string;
 };
 
 interface IPaymentProps {
@@ -49,8 +52,8 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
   const columns = useMemo<Column<CustomPaymentItem>[]>(
     () => [
       {
-        header: 'Sn',
-        accessorKey: 'index',
+        header: 'Installment No',
+        accessorKey: 'installmentNo',
       },
       {
         header: 'Date',
@@ -62,8 +65,13 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
           ),
       },
       {
-        header: 'Installment No.',
-        accessorKey: 'installmentNo',
+        header: 'Paid Date',
+        accessorKey: 'paidDate',
+
+        cell: (props) =>
+          localizedDate(
+            props?.getValue() as Record<'local' | 'en' | 'np', string> | null | undefined
+          ),
       },
       {
         header: 'Installment Amount',
@@ -72,6 +80,20 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
       {
         header: 'Principal',
         accessorKey: 'principal',
+        cell: (props) => {
+          const data = props?.row?.original;
+          return (
+            <>
+              {data?.principal}
+              {data?.currentRemainingPrincipal !== '0' && (
+                <>(Current Remaining Principal: {data?.currentRemainingPrincipal})</>
+              )}
+              {data?.remainingIntrest !== '0' && (
+                <>(Remaining Interest: {data?.remainingIntrest})</>
+              )}
+            </>
+          );
+        },
       },
       {
         header: 'Interest',

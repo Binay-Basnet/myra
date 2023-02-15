@@ -342,7 +342,7 @@ export const CBS: NavType = {
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
         {
-          label: 'All Accounts',
+          label: 'All User Accounts',
           route: ROUTES.CBS_TRANS_ALL_ACCOUNTS_LIST,
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },

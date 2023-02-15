@@ -493,7 +493,10 @@ query getLoanPreview($id: String!) {
             payment
             principal
             remainingPrincipal
+            currentRemainingPrincipal
             paid
+            paidDate
+            remainingInterest
           }
         }
         statistics {
@@ -638,13 +641,16 @@ query getLoanAccountDetails(
         }
         loanSchedule {
           installments {
+            paidDate
             installmentNo
             installmentDate
             principal
             interest
             payment
             remainingPrincipal
+            remainingInterest
             paid
+            currentRemainingPrincipal
           }
           total
           totalInterest
