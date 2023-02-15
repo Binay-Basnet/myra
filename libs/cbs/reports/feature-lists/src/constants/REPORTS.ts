@@ -64,6 +64,7 @@ export enum Report {
   LOAN_COLLATERAL_VALUATION_REPORT = 'Collateral Valuation Report',
   LOAN_COLLATERAL_REPORT = 'Loan Collateral Report',
   LOAN_PRODUCT_WISE_BALANCE_REPORT = 'Loan Product Wise Balance Report',
+  LOAN_CALL_REPORT = 'Loan Call Sheet Report',
 
   LOAN_PERSONAL_GURANTEE_REPORT = 'Personal Guarantee Report',
   LOAN_WRITE_OFF_REPORT = 'Loan write off report',
@@ -399,6 +400,11 @@ export const REPORTS = {
       id: '14.2.6',
       report: Report.LOAN_PERSONAL_GURANTEE_REPORT,
       link: 'personal-gurantee',
+    },
+    {
+      id: '14.2.9',
+      report: Report.LOAN_CALL_REPORT,
+      link: 'call-sheet',
     },
   ],
 

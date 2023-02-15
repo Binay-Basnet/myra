@@ -250,3 +250,25 @@ query getLoanProductBalanceReport($data: LoanProductBalanceReportFilter) {
     }
   }
 }
+
+query getLoanCallSheetReport($data: LoanCallReportFilter) {
+  report {
+    loanReport {
+      loanCallReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          memberName
+          loanAccountNo
+          loanType
+          serviceCenter
+          installmentDate
+          installmentAmount
+          installmentDueAmount
+          installmentDueDays
+          totalInstallment
+        }
+      }
+    }
+  }
+}

@@ -31,6 +31,7 @@ interface IRangeDatePickerProps {
   showFiscalPeriod?: boolean;
   showTillDatePeriod?: boolean;
   showCustomPeriod?: boolean;
+  showPeriods?: boolean;
 }
 
 export const RangedDatePicker = ({
@@ -41,6 +42,8 @@ export const RangedDatePicker = ({
   calendarType = 'AD',
   locale = 'en',
   periods = DEFAULT_PERIODS,
+  showPeriods = true,
+
   showFiscalPeriod = true,
   showTillDatePeriod = true,
   showCustomPeriod = true,
@@ -79,6 +82,7 @@ export const RangedDatePicker = ({
     setRangeEndDate,
     setHoveredDate,
     selectedPeriod,
+    showPeriods,
     setSelectedPeriod,
     showFiscalPeriod,
     showCustomPeriod,
