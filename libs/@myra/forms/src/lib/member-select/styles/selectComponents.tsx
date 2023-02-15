@@ -127,10 +127,14 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
     );
   },
   SingleValue: (props) => {
-    const { data } = props;
+    const { data, selectProps } = props;
     return (
       <chakraComponents.SingleValue {...props}>
-        <Text>{`${data.memberInfo?.memberName} [${data.memberInfo?.code}]`}</Text>
+        <Text
+          fontSize="r1"
+          fontWeight={400}
+          color={selectProps?.menuIsOpen ? 'gray.500' : 'gray.800'}
+        >{`${data.memberInfo?.memberName} [${data.memberInfo?.code}]`}</Text>
       </chakraComponents.SingleValue>
     );
   },

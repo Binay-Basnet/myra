@@ -86,9 +86,16 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
       </Box>
     </chakraComponents.Option>
   ),
-  SingleValue: ({ data, ...props }) => (
-    <chakraComponents.SingleValue data={data} {...props}>
-      <Text>{`${data.bankInfo.displayName} [${data.bankInfo.accountNo}]`}</Text>
-    </chakraComponents.SingleValue>
-  ),
+  SingleValue: ({ data, ...props }) => {
+    const { selectProps } = props;
+    return (
+      <chakraComponents.SingleValue data={data} {...props}>
+        <Text
+          fontSize="r1"
+          fontWeight={400}
+          color={selectProps?.menuIsOpen ? 'gray.500' : 'gray.800'}
+        >{`${data.bankInfo.displayName} [${data.bankInfo.accountNo}]`}</Text>
+      </chakraComponents.SingleValue>
+    );
+  },
 };

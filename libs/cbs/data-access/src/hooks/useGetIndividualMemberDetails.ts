@@ -21,13 +21,13 @@ type MemberDetailData = Omit<Member, 'profile'> & {
 export const useGetIndividualMemberDetails = ({
   memberId,
 }: IUseGetIndividualMemberDetailsProps) => {
-  const { data: memberDetailQueryData, isLoading: memberDetailsLoading } =
+  const { data: memberDetailQueryData, isFetching: memberDetailsLoading } =
     useGetMemberIndividualDataQuery(
       { id: memberId },
       { enabled: !!memberId && memberId !== 'undefined' }
     );
 
-  const { data: identificationListData, isLoading: indentificationLoading } =
+  const { data: identificationListData, isFetching: indentificationLoading } =
     useGetIndividualKymIdentificationListQuery(
       {
         id: String(memberId),
@@ -36,7 +36,7 @@ export const useGetIndividualMemberDetails = ({
     );
 
   const memberDetailData = useMemo(() => {
-    if (!memberDetailQueryData?.members?.details?.data) {
+    if (!memberDetailQueryData?.members?.details?.data || !memberId) {
       return undefined;
     }
 
@@ -63,9 +63,9 @@ export const useGetIndividualMemberDetails = ({
       citizenship: citizenshipData,
       profilePicUrl: memberData?.profilePicUrl,
     };
-  }, [memberDetailQueryData, identificationListData]);
+  }, [memberDetailQueryData, identificationListData, memberId]);
 
-  const { data: documentListQueryData, isLoading: documentLoading } = useGetKymDocumentsListQuery(
+  const { data: documentListQueryData, isFetching: documentLoading } = useGetKymDocumentsListQuery(
     {
       memberId,
     },
@@ -73,7 +73,7 @@ export const useGetIndividualMemberDetails = ({
   );
 
   const memberSignatureUrl = useMemo(() => {
-    if (!documentListQueryData) {
+    if (!documentListQueryData || !memberId) {
       return undefined;
     }
 
@@ -83,7 +83,7 @@ export const useGetIndividualMemberDetails = ({
   }, [documentListQueryData]);
 
   const memberCitizenshipUrl = useMemo(() => {
-    if (!documentListQueryData) {
+    if (!documentListQueryData || !memberId) {
       return undefined;
     }
 

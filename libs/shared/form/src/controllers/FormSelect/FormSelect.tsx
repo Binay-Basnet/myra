@@ -80,6 +80,7 @@ const FormControl = <T extends Record<string, unknown>>({
       options={options}
       value={rest.isMulti ? filteredValue : foundValue}
       inputId={name}
+      isClearable
       {...rest}
       onChange={(newValue) => {
         if (errors[name as string]?.type === 'required') {
@@ -89,7 +90,10 @@ const FormControl = <T extends Record<string, unknown>>({
           onChange(newValue);
           onChangeAction && onChangeAction();
         } else {
-          const { value: newVal } = newValue as Option;
+          // const { value: newVal } = newValue as Option;
+
+          const newVal = (newValue as Option)?.value;
+
           onChange(newVal);
           onChangeAction && onChangeAction();
         }

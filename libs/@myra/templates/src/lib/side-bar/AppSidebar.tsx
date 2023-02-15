@@ -105,7 +105,6 @@ export const AppSidebar = ({ module = 'CBS', menu, forms }: ISidebarProps) => {
               <Divider my="s16" />
             </>
           )}
-
           <TabColumn list={appNav.menus[menu]?.pages || []} />
           <Divider my="s16" />
 
