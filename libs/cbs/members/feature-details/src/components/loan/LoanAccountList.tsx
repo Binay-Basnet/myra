@@ -74,7 +74,9 @@ export const LoanAccountList = ({ isClosedAccount }: LoanProps) => {
   const memberName = memberBasicDetails?.memberName;
   const memberLength = memberAccountDetails?.length;
   const closedAccountLength = memberCloseAccountDetails?.length;
-  const title = `Loan Accounts List(${memberLength})`;
+  const title = !isClosedAccount
+    ? `Loan Accounts List(${memberLength})`
+    : `Closed Account List(${closedAccountLength})`;
 
   const memberListData =
     memberAccountDetails?.map((data, index) => ({

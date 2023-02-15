@@ -6,6 +6,7 @@ query getCopomisImportMemberReport($data: CopomisReportFilter) {
           address
           memberNameEn
           memberNameNp
+          memberId
           memberRegistrationDate
           membershipNo
           shareCertificateNo

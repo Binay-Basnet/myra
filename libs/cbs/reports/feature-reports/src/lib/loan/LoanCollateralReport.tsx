@@ -21,6 +21,7 @@ type LoanCollateralData = Partial<{
   loanAccountType: string;
   loanDisbursedAmount: string;
   memberId: string;
+  memberCode: string;
   memberName: string;
   remainingPrincipal: string;
 
@@ -126,7 +127,7 @@ export const LoanCollateralReport = () => {
                           <RouteToDetailsPage
                             id={props?.row?.original?.memberId as string}
                             type="member"
-                            label={props?.row?.original?.memberId}
+                            label={props?.row?.original?.memberCode as string}
                           />
                         }
                       />

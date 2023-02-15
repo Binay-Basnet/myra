@@ -624,6 +624,7 @@ export type AddCoaAccountInput = {
   accountClass: Scalars['String'];
   accountCode: Scalars['String'];
   accountType: CoaTypesOfAccount;
+  allowedBalance?: InputMaybe<CoaTypeOfTransaction>;
   bankAccountNumber?: InputMaybe<Scalars['String']>;
   bankGLCode?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['ID']>;
@@ -640,6 +641,7 @@ export type AddCoaAccountInput = {
   journalCode?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   openingBalance: Scalars['Float'];
+  typeOfTransaction?: InputMaybe<CoaTypeOfTransaction>;
   under?: InputMaybe<Scalars['ID']>;
 };
 
@@ -3859,6 +3861,7 @@ export type DepositLoanAccountQueryGetInstallmentsArgs = {
 
 export type DepositLoanAccountQueryListArgs = {
   filter?: InputMaybe<DepositLoanAccountSearchFilter>;
+  injectLoc?: InputMaybe<Scalars['Boolean']>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -9586,6 +9589,33 @@ export type LoanBankDisbursement = {
   note?: InputMaybe<Scalars['String']>;
 };
 
+export type LoanCallReport = {
+  installmentAmount?: Maybe<Scalars['String']>;
+  installmentDate?: Maybe<Scalars['Localized']>;
+  installmentDueAmount?: Maybe<Scalars['String']>;
+  installmentDueDays?: Maybe<Scalars['Int']>;
+  loanAccountNo?: Maybe<Scalars['String']>;
+  loanType?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  serviceCenter?: Maybe<Scalars['String']>;
+  totalInstallment?: Maybe<Scalars['String']>;
+};
+
+export type LoanCallReportFilter = {
+  accountTypeId?: InputMaybe<Array<Scalars['String']>>;
+  amountRange?: InputMaybe<MinMaxFilter>;
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  installmentDate?: InputMaybe<Scalars['Localized']>;
+  period: LocalizedDateFilter;
+};
+
+export type LoanCallReportResult = {
+  data?: Maybe<Array<Maybe<LoanCallReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanCollateralAndGuarantees = {
   name?: Maybe<Scalars['String']>;
   valuation?: Maybe<Scalars['String']>;
@@ -9697,12 +9727,15 @@ export type LoanGuarantorInfo = {
 };
 
 export type LoanInstallment = {
+  currentRemainingPrincipal: Scalars['String'];
   installmentDate: Scalars['Localized'];
   installmentNo: Scalars['Int'];
   interest: Scalars['String'];
   paid: Scalars['Boolean'];
+  paidDate: Scalars['Localized'];
   payment: Scalars['String'];
   principal: Scalars['String'];
+  remainingInterest: Scalars['String'];
   remainingPrincipal: Scalars['String'];
 };
 
@@ -10357,6 +10390,7 @@ export type LoanReport = {
   closedLoanAccountStatementReport?: Maybe<ClosedLoanAccountReportResult>;
   loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
   loanBalanceReport: LoanBalanceReportResult;
+  loanCallReport?: Maybe<LoanCallReportResult>;
   loanCollateralReport?: Maybe<LoanCollateralReportResult>;
   loanProductBalance?: Maybe<LoanProductBalanceReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
@@ -10373,6 +10407,10 @@ export type LoanReportLoanAgingStatementReportArgs = {
 
 export type LoanReportLoanBalanceReportArgs = {
   data: LoanBalanceFilterData;
+};
+
+export type LoanReportLoanCallReportArgs = {
+  data?: InputMaybe<LoanCallReportFilter>;
 };
 
 export type LoanReportLoanCollateralReportArgs = {
@@ -23309,6 +23347,7 @@ export type GetCopomisImportMemberReportQuery = {
           address?: Record<'local' | 'en' | 'np', string> | null;
           memberNameEn?: string | null;
           memberNameNp?: string | null;
+          memberId?: string | null;
           memberRegistrationDate?: Record<'local' | 'en' | 'np', string> | null;
           membershipNo?: string | null;
           shareCertificateNo?: string | null;
@@ -23727,6 +23766,7 @@ export type GetLoanBalanceReportQuery = {
         totalRemainingBalance?: string | null;
         data?: Array<{
           memberId?: string | null;
+          memberCode?: string | null;
           loanAccountId?: string | null;
           memberName?: Record<'local' | 'en' | 'np', string> | null;
           productName?: string | null;
@@ -23915,6 +23955,7 @@ export type GetLoanCollateralReportQuery = {
           loanAccountType?: string | null;
           loanDisbursedAmount?: string | null;
           memberId?: string | null;
+          memberCode?: string | null;
           memberName?: string | null;
           remainingPrincipal?: string | null;
           collateralInformation?: Array<{
@@ -24398,6 +24439,7 @@ export type GetShareStatementQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           activeDate?: Record<'local' | 'en' | 'np', string> | null;
           dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+          branch?: string | null;
           address?: {
             wardNo?: string | null;
             state?: Record<'local' | 'en' | 'np', string> | null;
@@ -39341,6 +39383,7 @@ export const GetCopomisImportMemberReportDocument = `
           address
           memberNameEn
           memberNameNp
+          memberId
           memberRegistrationDate
           membershipNo
           shareCertificateNo
@@ -39914,6 +39957,7 @@ export const GetLoanBalanceReportDocument = `
       loanBalanceReport(data: $data) {
         data {
           memberId
+          memberCode
           loanAccountId
           memberName
           productName
@@ -40160,6 +40204,7 @@ export const GetLoanCollateralReportDocument = `
           loanAccountType
           loanDisbursedAmount
           memberId
+          memberCode
           memberName
           remainingPrincipal
         }
@@ -40816,6 +40861,7 @@ export const GetShareStatementDocument = `
             localGovernment
           }
           dateJoined
+          branch
         }
         statement {
           ... on ShareStatementReport {
