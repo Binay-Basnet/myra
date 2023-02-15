@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoClose } from 'react-icons/io5';
 
-import { Alert, Box, Button, Icon, IconButton, Text } from '@myra-ui';
+import { Alert, Box, Button, Grid, Icon, IconButton, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
@@ -12,7 +12,8 @@ import {
   LoanRepaymentScheme,
   useGetLoanInstallmentsQuery,
 } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
+import { localizedDate } from '@coop/cbs/utils';
+import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 export const LoanPaymentSchedule = () => {
@@ -32,6 +33,9 @@ export const LoanPaymentSchedule = () => {
   const gracePeriod = watch('gracePeriod');
   const installmentFrequency = watch('installmentFrequency');
 
+  const disburseDate = watch('disbursementDate');
+  const installmentBeginDate = watch('installmentBeginDate');
+
   const [isOpen, setIsOpen] = useState(false);
 
   const { data } = useGetLoanInstallmentsQuery(
@@ -48,6 +52,8 @@ export const LoanPaymentSchedule = () => {
             principalGracePeriod: Number(gracePeriod?.principalGracePeriod) ?? null,
           }
         : null,
+      disburseDate,
+      installmentBeginDate,
     },
     {
       enabled: trigger,
@@ -62,7 +68,9 @@ export const LoanPaymentSchedule = () => {
       !!sanctionAmount &&
       !!interest &&
       !!repaymentScheme &&
-      !!installmentFrequency
+      !!installmentFrequency &&
+      !!disburseDate &&
+      !!installmentBeginDate
     ) {
       setTrigger(true);
     }
@@ -76,6 +84,8 @@ export const LoanPaymentSchedule = () => {
     installmentFrequency,
     gracePeriod?.interestGracePeriod,
     gracePeriod?.principalGracePeriod,
+    disburseDate,
+    installmentBeginDate,
   ]);
 
   const loanInstallmentData = data?.loanAccount?.getLoanInstallments?.data
@@ -92,6 +102,10 @@ export const LoanPaymentSchedule = () => {
             colspan: 1,
           },
         },
+      },
+      {
+        header: 'Installment Date',
+        cell: (props) => localizedDate(props?.row?.original?.installmentDate),
       },
       {
         header: 'Principal',
@@ -133,6 +147,10 @@ export const LoanPaymentSchedule = () => {
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
+      <Grid templateColumns="repeat(2, 1fr)" gap="s16">
+        <FormDatePicker name="disbursementDate" label="Disburse Date" isRequired />
+        <FormDatePicker name="installmentBeginDate" label="Installment Begin Date" isRequired />
+      </Grid>
       <Box display="flex" flexDirection="column" gap="s8">
         <Text fontSize="r1" fontWeight="600">
           Loan Payment Schedule
