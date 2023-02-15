@@ -12,35 +12,13 @@ import {
   useSetIssueNewSlipMutation,
   WithdrawSlipIssueInput,
 } from '@coop/cbs/data-access';
+import { WITHDRAW_SLIP_COUNT_OPTIONS } from '@coop/cbs/utils';
 import { FormAgentSelect, FormBranchSelect, FormSelect, FormSwitchTab } from '@coop/shared/form';
 
 interface ICreateWithdrawSlipModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
-const totalNumberOptions = [
-  {
-    label: '5',
-    value: 5,
-  },
-  {
-    label: '10',
-    value: 10,
-  },
-  {
-    label: '25',
-    value: 25,
-  },
-  {
-    label: '50',
-    value: 50,
-  },
-  {
-    label: '100',
-    value: 100,
-  },
-];
 
 const pickupMethodOptions = [
   { label: 'Self', value: PickupMethod.Self },
@@ -118,7 +96,7 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
               name="count"
               menuPosition="fixed"
               label="Total no of withdraw slip"
-              options={totalNumberOptions}
+              options={WITHDRAW_SLIP_COUNT_OPTIONS}
             />
 
             {availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.length && (
