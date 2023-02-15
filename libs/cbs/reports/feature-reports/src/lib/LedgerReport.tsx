@@ -69,6 +69,10 @@ export const LedgerReport = () => {
               {
                 header: 'Date',
                 accessorFn: (row) => localizedDate(row?.date),
+                meta: {
+                  width: '40px',
+                  isNumeric: true,
+                },
               },
               {
                 header: 'ID ',
@@ -80,6 +84,9 @@ export const LedgerReport = () => {
                     label={props?.row?.original?.id as string}
                   />
                 ),
+                meta: {
+                  width: '50px',
+                },
               },
               {
                 header: 'Particulars',
@@ -90,7 +97,7 @@ export const LedgerReport = () => {
                   </Box>
                 ),
                 meta: {
-                  width: '70%',
+                  width: '20%',
                 },
               },
               {
@@ -98,6 +105,7 @@ export const LedgerReport = () => {
                 accessorFn: (row) => row?.debit,
                 cell: (props) => amountConverter(props.getValue() as string) || '-',
                 meta: {
+                  width: '40px',
                   isNumeric: true,
                 },
               },
@@ -107,14 +115,15 @@ export const LedgerReport = () => {
                 cell: (props) => amountConverter(props.getValue() as string) || '-',
 
                 meta: {
+                  width: '40px',
                   isNumeric: true,
                 },
               },
               {
                 header: 'Balance',
                 accessorFn: (row) => row?.balance,
-
                 meta: {
+                  width: '40px',
                   isNumeric: true,
                 },
               },

@@ -16,14 +16,26 @@ export const Statistics = ({ statsData }: StatsProps) => (
         <Text fontSize="s2" fontWeight="Medium" lineHeight="125%" color="neutralColorLight.Gray-50">
           {summary.title}
         </Text>
-        <Text
-          fontSize="r2"
-          fontWeight="SemiBold"
-          lineHeight="140%"
-          color="neutralColorLight.Gray-70"
-        >
-          Rs. {!isEmpty(summary.value) ? summary.value : '0'}
-        </Text>
+        {summary?.title !== 'No of Collateral' && (
+          <Text
+            fontSize="r2"
+            fontWeight="SemiBold"
+            lineHeight="140%"
+            color="neutralColorLight.Gray-70"
+          >
+            Rs. {!isEmpty(summary.value) ? summary.value : '0'}
+          </Text>
+        )}
+        {summary?.title === 'No of Collateral' && (
+          <Text
+            fontSize="r2"
+            fontWeight="SemiBold"
+            lineHeight="140%"
+            color="neutralColorLight.Gray-70"
+          >
+            {summary?.value}
+          </Text>
+        )}
       </Box>
     ))}
   </Grid>
