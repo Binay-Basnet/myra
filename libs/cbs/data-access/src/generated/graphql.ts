@@ -9157,9 +9157,11 @@ export type LoanAccountEdge = {
 export type LoanAccountFormState = {
   appliedLoanAmount?: Maybe<Scalars['String']>;
   collateralData?: Maybe<Array<Maybe<LoanAccountCollateral>>>;
+  disbursementDate?: Maybe<Scalars['Localized']>;
   fingerprintDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   gracePeriod?: Maybe<LoanAccountGrace>;
   gurantee_details?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
+  installmentBeginDate?: Maybe<Scalars['Localized']>;
   installmentFrequency?: Maybe<InstallmentFrequency>;
   interestAuthority?: Maybe<InterestAuthority>;
   interestDoc?: Maybe<Array<Maybe<PictureData>>>;
@@ -9268,9 +9270,11 @@ export type LoanAccountGuranteeResult = {
 export type LoanAccountInput = {
   appliedLoanAmount?: InputMaybe<Scalars['String']>;
   collateralData?: InputMaybe<Array<InputMaybe<LoanAccountCollateralData>>>;
+  disbursementDate?: InputMaybe<Scalars['Localized']>;
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
+  installmentBeginDate?: InputMaybe<Scalars['Localized']>;
   installmentFrequency?: InputMaybe<InstallmentFrequency>;
   interestAuthority?: InputMaybe<InterestAuthority>;
   interestDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -9385,7 +9389,9 @@ export type LoanAccountQueryFormStateArgs = {
 };
 
 export type LoanAccountQueryGetLoanInstallmentsArgs = {
+  disburseDate?: InputMaybe<Scalars['Localized']>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
+  installmentBeginDate?: InputMaybe<Scalars['Localized']>;
   installmentFrequency?: InputMaybe<InstallmentFrequency>;
   interest: Scalars['Float'];
   productId: Scalars['ID'];
@@ -9680,6 +9686,7 @@ export type LoanGeneralInformation = {
   accountName: Scalars['String'];
   accountOpenDate: Scalars['Localized'];
   disbursedAmount?: Maybe<Scalars['String']>;
+  installmentBeginDate: Scalars['Localized'];
   installmentFrequency?: Maybe<InstallmentFrequency>;
   interestAccrued?: Maybe<Scalars['String']>;
   interestEarned?: Maybe<Scalars['String']>;
@@ -21311,6 +21318,8 @@ export type GetLoanInstallmentsQueryVariables = Exact<{
   interest: Scalars['Float'];
   repaymentScheme: LoanRepaymentScheme;
   installmentFrequency?: InputMaybe<InstallmentFrequency>;
+  disburseDate?: InputMaybe<Scalars['Localized']>;
+  installmentBeginDate?: InputMaybe<Scalars['Localized']>;
 }>;
 
 export type GetLoanInstallmentsQuery = {
@@ -21354,6 +21363,8 @@ export type GetLoanApplicationDetailsQuery = {
         loanAccountName?: string | null;
         appliedLoanAmount?: string | null;
         installmentFrequency?: InstallmentFrequency | null;
+        disbursementDate?: Record<'local' | 'en' | 'np', string> | null;
+        installmentBeginDate?: Record<'local' | 'en' | 'np', string> | null;
         linkedAccountId?: string | null;
         totalValuation?: string | null;
         totalSanctionedAmount?: string | null;
@@ -36784,7 +36795,7 @@ export const useGetLoanListQuery = <TData = GetLoanListQuery, TError = unknown>(
     options
   );
 export const GetLoanInstallmentsDocument = `
-    query getLoanInstallments($productId: ID!, $gracePeriod: LoanAccountGraceInput, $sanctionAmount: Int!, $tenure: Int!, $interest: Float!, $repaymentScheme: LoanRepaymentScheme!, $installmentFrequency: InstallmentFrequency) {
+    query getLoanInstallments($productId: ID!, $gracePeriod: LoanAccountGraceInput, $sanctionAmount: Int!, $tenure: Int!, $interest: Float!, $repaymentScheme: LoanRepaymentScheme!, $installmentFrequency: InstallmentFrequency, $disburseDate: Localized, $installmentBeginDate: Localized) {
   loanAccount {
     getLoanInstallments(
       interest: $interest
@@ -36794,6 +36805,8 @@ export const GetLoanInstallmentsDocument = `
       sanctionAmount: $sanctionAmount
       tenure: $tenure
       installmentFrequency: $installmentFrequency
+      disburseDate: $disburseDate
+      installmentBeginDate: $installmentBeginDate
     ) {
       data {
         total
@@ -36883,6 +36896,8 @@ export const GetLoanApplicationDetailsDocument = `
           principalGracePeriod
           interestGracePeriod
         }
+        disbursementDate
+        installmentBeginDate
         linkedAccountId
         totalValuation
         totalSanctionedAmount

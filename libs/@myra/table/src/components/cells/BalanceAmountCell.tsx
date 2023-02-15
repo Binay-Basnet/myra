@@ -12,13 +12,13 @@ export const BalanceAmountCell = ({ amount, type }: IBalanceAmountCellProps) => 
   const getTypeProps = (typeVariant: string | undefined) => {
     switch (typeVariant) {
       case 'DR':
-        return { color: 'accent.600', text: typeVariant };
+        return { text: typeVariant };
 
       case 'CR':
-        return { color: 'accent.100', text: typeVariant };
+        return { text: typeVariant };
 
       default:
-        return { color: '', text: '-' };
+        return { text: '-' };
     }
   };
 
@@ -27,7 +27,7 @@ export const BalanceAmountCell = ({ amount, type }: IBalanceAmountCellProps) => 
       <Text fontSize="s3" color="gray.700" fontWeight="SemiBold" textTransform="capitalize">
         {amountConverter(amount)}
       </Text>
-      <Text fontSize="s3" fontWeight="Regular" color={getTypeProps(type)?.color}>
+      <Text fontSize="s3" fontWeight="Regular">
         {getTypeProps(type)?.text}
       </Text>
     </Box>

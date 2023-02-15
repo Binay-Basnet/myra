@@ -15,13 +15,13 @@ export const RecentTransactions = () => {
   const getTypeProps = (typeVariant: BalanceType | null | undefined) => {
     switch (typeVariant) {
       case 'DR':
-        return { color: 'accent.600', text: typeVariant };
+        return { text: typeVariant };
 
       case 'CR':
-        return { color: 'accent.100', text: typeVariant };
+        return { text: typeVariant };
 
       default:
-        return { color: '', text: '-' };
+        return { text: '-' };
     }
   };
 
@@ -93,11 +93,7 @@ export const RecentTransactions = () => {
         header: ' ',
         accessorFn: (row) => row?.balanceType,
         cell: (props) => (
-          <Text
-            fontSize="s3"
-            fontWeight="Regular"
-            color={getTypeProps(props?.row?.original?.balanceType)?.color}
-          >
+          <Text fontSize="s3" fontWeight="Regular">
             {getTypeProps(props?.row?.original?.balanceType)?.text}
           </Text>
         ),
