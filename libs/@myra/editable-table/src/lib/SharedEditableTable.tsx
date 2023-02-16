@@ -288,11 +288,12 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
             acc = {
               ...acc,
               [key]:
-                typeof value === 'number' || typeof value === 'string'
+                value &&
+                (typeof value === 'number' || typeof value === 'string'
                   ? value
                   : 'value' in value
                   ? value.value
-                  : value,
+                  : value),
             };
 
             return acc;

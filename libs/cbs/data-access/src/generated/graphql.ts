@@ -9014,6 +9014,7 @@ export type LoanAccReportDetails = {
   issuedDate?: Maybe<Scalars['Localized']>;
   loanSubtype?: Maybe<Scalars['String']>;
   loanType?: Maybe<Scalars['String']>;
+  openingBalance?: Maybe<Scalars['String']>;
 };
 
 export type LoanAccount = {
@@ -10696,6 +10697,7 @@ export type MemberAccountDetails = {
   alternativeChannel?: Maybe<Scalars['Boolean']>;
   atmFacility?: Maybe<Scalars['Boolean']>;
   autoOpen?: Maybe<Scalars['Boolean']>;
+  availableBalance?: Maybe<Scalars['String']>;
   chequeIssue?: Maybe<Scalars['Boolean']>;
   defaultAccountType?: Maybe<DefaultAccountType>;
   guaranteedAmount?: Maybe<Scalars['String']>;
