@@ -59,8 +59,7 @@ export const LedgerReport = () => {
           <Report.Organization />
           <Box display="flex" flexDirection="row" justifyContent="flex-end" p="s12">
             <Box display="flex" flexDirection="column">
-              <Text> Opening Balance {amountConverter(openingBalance as string)}</Text>
-              <Text> Closing Balance {amountConverter(closingBalance as string)}</Text>
+              <Text> Opening Balance: {amountConverter(openingBalance as string)}</Text>
             </Box>
           </Box>
           <Report.Table<GeneralLedgerReportEntry>
@@ -133,6 +132,11 @@ export const LedgerReport = () => {
               },
             ]}
           />
+          <Box display="flex" flexDirection="row" justifyContent="flex-end" p="s12">
+            <Box display="flex" flexDirection="column">
+              <Text> Closing Balance: {amountConverter(closingBalance as string)}</Text>
+            </Box>
+          </Box>
         </Report.Content>
       </Report.Body>
     </Report>
