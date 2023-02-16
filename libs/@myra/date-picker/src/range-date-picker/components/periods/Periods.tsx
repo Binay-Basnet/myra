@@ -41,7 +41,6 @@ export const Periods = ({
   locale,
   onToggle,
   calendarType,
-  showPeriods,
   setRangeStartDate,
   setRangeEndDate,
   setHoveredDate,
@@ -60,37 +59,36 @@ export const Periods = ({
 
   return (
     <Box flexShrink={0} w="240px" borderRight="1px" borderColor="border.layout" p="s8">
-      {showPeriods &&
-        periods.map((defaultPeriod) => (
-          <Fragment key={defaultPeriod.key}>
-            <PeriodWrapper
-              title={t[defaultPeriod.title as keyof typeof en] || defaultPeriod.title}
-              isSelected={selectedPeriod === defaultPeriod.key}
-              onClick={() => {
-                if (defaultPeriod.closePopover) {
-                  onChange({
-                    from: convertDate(
-                      getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate),
-                      calendarType
-                    ),
-                    to: convertDate(
-                      getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate),
-                      calendarType
-                    ),
-                  });
-                  onToggle();
-                } else {
-                  setRangeStartDate(getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate));
-                  setRangeEndDate(getPeriodDate(0, calendarType, baseDate));
-                  setHoveredDate(getPeriodDate(0, calendarType, baseDate));
-                }
+      {periods.map((defaultPeriod) => (
+        <Fragment key={defaultPeriod.key}>
+          <PeriodWrapper
+            title={t[defaultPeriod.title as keyof typeof en] || defaultPeriod.title}
+            isSelected={selectedPeriod === defaultPeriod.key}
+            onClick={() => {
+              if (defaultPeriod.closePopover) {
+                onChange({
+                  from: convertDate(
+                    getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate),
+                    calendarType
+                  ),
+                  to: convertDate(
+                    getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate),
+                    calendarType
+                  ),
+                });
+                onToggle();
+              } else {
+                setRangeStartDate(getPeriodDate(defaultPeriod.lastDays, calendarType, baseDate));
+                setRangeEndDate(getPeriodDate(0, calendarType, baseDate));
+                setHoveredDate(getPeriodDate(0, calendarType, baseDate));
+              }
 
-                setSelectedPeriod(defaultPeriod.key);
-                setState(todayDate);
-              }}
-            />
-          </Fragment>
-        ))}
+              setSelectedPeriod(defaultPeriod.key);
+              setState(todayDate);
+            }}
+          />
+        </Fragment>
+      ))}
 
       {showFiscalPeriod && (
         <PeriodWrapper
