@@ -209,10 +209,15 @@ query getCOALeafNodeDetails($id: ID!, $branch: [String]) {
   }
 }
 
-query getLedgerList($id: ID!, $pagination: Pagination, $filter: COALedgerListFilter) {
+query getLedgerList(
+  $id: ID!
+  $pagination: Pagination
+  $filter: COALedgerListFilter
+  $branchId: [String!]
+) {
   settings {
     chartsOfAccount {
-      coaLedgerList(id: $id, pagination: $pagination, filter: $filter) {
+      coaLedgerList(id: $id, pagination: $pagination, filter: $filter, branchId: $branchId) {
         totalCount
         pageInfo {
           hasNextPage

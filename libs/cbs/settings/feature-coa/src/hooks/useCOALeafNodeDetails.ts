@@ -20,6 +20,7 @@ export const useCOALeafNodeDetails = () => {
 
   const { data: list } = useGetLedgerListQuery({
     id: id as string,
+    branchId: branch ? JSON.parse(branch as string) : [],
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
