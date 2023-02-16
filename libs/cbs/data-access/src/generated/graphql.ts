@@ -1930,7 +1930,6 @@ export type CoaLeafNodeDetails = {
 };
 
 export type CoaLedgerListFilter = {
-  branch?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   filterMode?: InputMaybe<Filter_Mode>;
   ledgerId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -2344,6 +2343,7 @@ export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
 };
 
 export type ChartsOfAccountSettingsQueryCoaLedgerListArgs = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<CoaLedgerListFilter>;
   id: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
@@ -9014,6 +9014,7 @@ export type LoanAccReportDetails = {
   issuedDate?: Maybe<Scalars['Localized']>;
   loanSubtype?: Maybe<Scalars['String']>;
   loanType?: Maybe<Scalars['String']>;
+  openingBalance?: Maybe<Scalars['String']>;
 };
 
 export type LoanAccount = {
@@ -10696,6 +10697,7 @@ export type MemberAccountDetails = {
   alternativeChannel?: Maybe<Scalars['Boolean']>;
   atmFacility?: Maybe<Scalars['Boolean']>;
   autoOpen?: Maybe<Scalars['Boolean']>;
+  availableBalance?: Maybe<Scalars['String']>;
   chequeIssue?: Maybe<Scalars['Boolean']>;
   defaultAccountType?: Maybe<DefaultAccountType>;
   guaranteedAmount?: Maybe<Scalars['String']>;
@@ -13249,7 +13251,14 @@ export type SavingStatement = {
   withdrawDr?: Maybe<Scalars['String']>;
 };
 
+export type SavingStatementMeta = {
+  accountNo?: Maybe<Scalars['String']>;
+  currentInterestRate?: Maybe<Scalars['Float']>;
+  savingType?: Maybe<Scalars['String']>;
+};
+
 export type SavingStatementReport = {
+  meta?: Maybe<SavingStatementMeta>;
   savingStatement?: Maybe<Array<Maybe<SavingStatement>>>;
   totals?: Maybe<SavingTotalReport>;
 };
@@ -25627,6 +25636,7 @@ export type GetLedgerListQueryVariables = Exact<{
   id: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<CoaLedgerListFilter>;
+  branchId?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 export type GetLedgerListQuery = {
@@ -42436,10 +42446,15 @@ export const useGetCoaLeafNodeDetailsQuery = <TData = GetCoaLeafNodeDetailsQuery
     options
   );
 export const GetLedgerListDocument = `
-    query getLedgerList($id: ID!, $pagination: Pagination, $filter: COALedgerListFilter) {
+    query getLedgerList($id: ID!, $pagination: Pagination, $filter: COALedgerListFilter, $branchId: [String!]) {
   settings {
     chartsOfAccount {
-      coaLedgerList(id: $id, pagination: $pagination, filter: $filter) {
+      coaLedgerList(
+        id: $id
+        pagination: $pagination
+        filter: $filter
+        branchId: $branchId
+      ) {
         totalCount
         pageInfo {
           hasNextPage
