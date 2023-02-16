@@ -113,7 +113,7 @@ export const LoginPage = () => {
       })}
     >
       <AuthContainer
-        title="Welcome back to Myra!"
+        title="Welcome back to Myra!!"
         subtitle="Please enter your login credentials below to continue using the app."
       >
         <Box display="flex" flexDir="column" gap="s16">
