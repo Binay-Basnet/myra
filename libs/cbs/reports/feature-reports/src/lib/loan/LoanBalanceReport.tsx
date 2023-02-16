@@ -96,7 +96,7 @@ export const LoanBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 6,
+                    colspan: 7,
                   },
                 },
               },

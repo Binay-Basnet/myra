@@ -18,6 +18,15 @@ import { CalendarBuilderDate, DateRange, Period, TDateState } from '../../types/
 import { DEFAULT_PERIODS } from '../../utils/constants';
 import { convertTillDate, todayDate } from '../../utils/functions';
 
+const todayObj = [
+  {
+    title: 'today',
+    key: 'TODAY',
+    lastDays: 0,
+    closePopover: true,
+  },
+];
+
 interface IRangeDatePickerProps {
   tillDateStart: Date;
   calendarType: 'AD' | 'BS';
@@ -41,12 +50,13 @@ export const RangedDatePicker = ({
   label,
   calendarType = 'AD',
   locale = 'en',
-  periods = DEFAULT_PERIODS,
   showPeriods = true,
 
   showFiscalPeriod = true,
   showTillDatePeriod = true,
   showCustomPeriod = true,
+  periods = DEFAULT_PERIODS,
+
   baseDate,
 }: IRangeDatePickerProps) => {
   const { isOpen, onClose, onToggle } = useDisclosure();
@@ -73,7 +83,7 @@ export const RangedDatePicker = ({
   };
 
   const periodProps = {
-    periods,
+    periods: !showPeriods ? todayObj : periods,
     baseDate,
     locale,
     onToggle,

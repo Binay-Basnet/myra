@@ -145,7 +145,7 @@ export const ACCOUNTING: NavType = {
 
       reportPages: [
         {
-          label: 'CharKahata Ledger Report',
+          label: 'CharKhata Ledger Report',
           aclKey: 'CBS_REPORTS',
           route: ROUTES.ACCOUNTING_CHAR_KHATA_REPORT,
         },
