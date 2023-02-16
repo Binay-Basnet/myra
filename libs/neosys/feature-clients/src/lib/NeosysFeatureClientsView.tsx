@@ -20,10 +20,11 @@ import {
   NewClientEnvironmentInput,
   useDeleteEnvironementMutation,
   useGetClientDetailsQuery,
+  useGetVersionQuery,
   useSetEnvironementMutation,
   useSetUpEnvironmentDatabaseMutation,
 } from '@coop/neosys-admin/data-access';
-import { FormCheckbox, FormInput, FormTextArea } from '@coop/shared/form';
+import { FormCheckbox, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 
 export const NeosysFeatureClientView = () => {
   const router = useRouter();
@@ -34,6 +35,11 @@ export const NeosysFeatureClientView = () => {
   const { mutateAsync: setEnvironmentMutation } = useSetEnvironementMutation();
   const { mutateAsync: deleteEnvironmentMutation } = useDeleteEnvironementMutation();
   const { mutateAsync: setUpEnvironmentDatabaseMutation } = useSetUpEnvironmentDatabaseMutation();
+  const { data: versionData } = useGetVersionQuery();
+  const versionOption = versionData?.neosys?.versions?.map((item) => ({
+    label: item?.id as string,
+    value: item?.id as string,
+  }));
 
   const methods = useForm();
   const { getValues, reset, clearErrors, setError } = methods;
@@ -150,7 +156,7 @@ export const NeosysFeatureClientView = () => {
         <Table
           data={rowData}
           columns={columns}
-          getRowId={(row) => String(row?.id)}
+          getRowId={(row) => row?.id as string}
           isLoading={isLoading}
           // noDataTitle={t['member']}
           // pagination={{
@@ -174,6 +180,9 @@ export const NeosysFeatureClientView = () => {
             </GridItem>
             <GridItem>
               <FormInput name="otpToken" label="OTP Token" />
+            </GridItem>
+            <GridItem>
+              <FormSelect name="version" label="Select Versions" options={versionOption} />
             </GridItem>
             <GridItem colSpan={2}>
               <FormTextArea name="description" label="Description" />

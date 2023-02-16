@@ -84,6 +84,11 @@ export const AllModules = {
 } as const;
 
 export type AllModules = typeof AllModules[keyof typeof AllModules];
+export type ApplicationVersion = {
+  description: Scalars['ID'];
+  id: Scalars['ID'];
+};
+
 export const Arrange = {
   Asc: 'ASC',
   Desc: 'DESC',
@@ -425,6 +430,7 @@ export type NeosysQuery = {
   auth?: Maybe<NeosysAuthQuery>;
   client?: Maybe<NeosysClientQuery>;
   user?: Maybe<NeosysUserQuery>;
+  versions?: Maybe<Array<Maybe<ApplicationVersion>>>;
 };
 
 export type NeosysUser = Base & {
@@ -525,6 +531,7 @@ export type NewClientEnvironmentInput = {
   environmentName?: InputMaybe<Scalars['String']>;
   isForProduction?: InputMaybe<Scalars['Boolean']>;
   otpToken?: InputMaybe<Scalars['String']>;
+  version?: InputMaybe<Scalars['String']>;
 };
 
 export type NewClientEnvironmentResult = {
@@ -1083,6 +1090,10 @@ export type GetClientDetailsQuery = {
     } | null;
   };
 };
+
+export type GetVersionQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetVersionQuery = { neosys: { versions?: Array<{ id: string } | null> | null } };
 
 type MutationError_AuthorizationError_Fragment = {
   __typename: 'AuthorizationError';
@@ -1702,6 +1713,24 @@ export const useGetClientDetailsQuery = <TData = GetClientDetailsQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetVersionDocument = `
+    query getVersion {
+  neosys {
+    versions {
+      id
+    }
+  }
+}
+    `;
+export const useGetVersionQuery = <TData = GetVersionQuery, TError = unknown>(
+  variables?: GetVersionQueryVariables,
+  options?: UseQueryOptions<GetVersionQuery, TError, TData>
+) =>
+  useQuery<GetVersionQuery, TError, TData>(
+    variables === undefined ? ['getVersion'] : ['getVersion', variables],
+    useAxios<GetVersionQuery, GetVersionQueryVariables>(GetVersionDocument).bind(null, variables),
     options
   );
 export const GetUserListDocument = `
