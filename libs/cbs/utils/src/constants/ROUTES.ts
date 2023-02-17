@@ -74,6 +74,7 @@ export const ROUTES = {
   CBS_TRANSFER_CASH_IN_TRANSIT_LIST: '/cbs/transfers/cash-transit-transfer/list',
   CBS_TRANSFER_BANK_LIST: '/cbs/transfers/bank-transfer/list',
   CBS_TRANSFER_BANK_ADD: '/cbs/transfers/bank-transfer/add',
+  CBS_TRANSFER_CASH_IN_TRANSIT_DETAILS: '/cbs/transfers/cash-transit-transfer/details',
 
   CBS_REQUESTS_MEMBER_LIST: '/cbs/requests/member/list',
   CBS_REQUESTS_WITHDRAW_VIA_COLLECTOR_LIST: '/cbs/requests/withdraw-via-collector/list',

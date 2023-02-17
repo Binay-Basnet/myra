@@ -104,7 +104,7 @@ export const CashTransitTransferList = () => {
       {
         header: 'Amount',
         accessorFn: (row) => row?.node?.cashAmount,
-        cell: (props) => amountConverter(props?.row?.original?.node?.cashAmount),
+        cell: (props) => amountConverter(props?.row?.original?.node?.cashAmount || 0),
         meta: {
           isNumeric: true,
         },
