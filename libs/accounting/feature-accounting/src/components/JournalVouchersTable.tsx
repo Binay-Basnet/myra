@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { Box } from '@myra-ui';
 
@@ -18,10 +19,12 @@ type JournalVouchersTableType = {
 };
 
 export const JournalVouchersTable = () => {
+  const router = useRouter();
+
   // const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
-  const { watch } = useFormContext<CustomJournalVoucherInput>();
+  const { watch, setValue } = useFormContext<CustomJournalVoucherInput>();
 
   const entries = watch('entries');
 
@@ -55,6 +58,14 @@ export const JournalVouchersTable = () => {
     { label: String(drTotal), width: 'lg', isNumeric: true },
     { label: String(crTotal), width: 'lg', isNumeric: true },
   ];
+
+  const redirectEntries = router?.query['entries'];
+
+  useEffect(() => {
+    if (redirectEntries) {
+      setValue('entries', JSON.parse(redirectEntries as string));
+    }
+  }, [redirectEntries]);
 
   return (
     <Box display="flex" flexDir="column" gap="s12">

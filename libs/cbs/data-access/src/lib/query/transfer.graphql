@@ -110,9 +110,14 @@ query getCashInTransitDetail($transitID: ID!) {
 query getServiceCenterTransferList(
   $filter: ServiceCenterTransactionFilter
   $pagination: Pagination
+  $transferMode: IBTType!
 ) {
   transaction {
-    listServiceCenterCashTransfer(filter: $filter, pagination: $pagination) {
+    listServiceCenterCashTransfer(
+      filter: $filter
+      pagination: $pagination
+      transferMode: $transferMode
+    ) {
       totalCount
       pageInfo {
         startCursor
@@ -123,11 +128,16 @@ query getServiceCenterTransferList(
       edges {
         node {
           id
+          journalId
           sender
           senderId
           receiver
           amount
           transactionDate
+          ibtAccount
+          ibtCr
+          ibtDr
+          status
         }
         cursor
       }
