@@ -134,3 +134,30 @@ query getServiceCenterTransferList(
     }
   }
 }
+
+query getBankTransferList($filter: TellerBankTransferFilter, $pagination: Pagination) {
+  transaction {
+    tellerBankTransfer {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            transactionId
+            transactionDate
+            tellerName
+            transferType
+            amount
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}

@@ -17936,6 +17936,27 @@ export type ApproveCashInTransitTransferMutation = {
   };
 };
 
+export type SetBankTransferMutationVariables = Exact<{
+  data?: InputMaybe<TellerBankTransferInput>;
+}>;
+
+export type SetBankTransferMutation = {
+  transaction: {
+    tellerBankTransfer?: {
+      new?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetSettingsUserDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<MyraUserInput>;
@@ -28207,6 +28228,38 @@ export type GetServiceCenterTransferListQuery = {
   };
 };
 
+export type GetBankTransferListQueryVariables = Exact<{
+  filter?: InputMaybe<TellerBankTransferFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetBankTransferListQuery = {
+  transaction: {
+    tellerBankTransfer?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            transactionId?: string | null;
+            transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+            tellerName?: string | null;
+            transferType?: TellerBankTransferType | null;
+            amount?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetPastSlipsListQueryVariables = Exact<{
   accountId: Scalars['ID'];
 }>;
@@ -32427,6 +32480,34 @@ export const useApproveCashInTransitTransferMutation = <TError = unknown, TConte
     useAxios<ApproveCashInTransitTransferMutation, ApproveCashInTransitTransferMutationVariables>(
       ApproveCashInTransitTransferDocument
     ),
+    options
+  );
+export const SetBankTransferDocument = `
+    mutation setBankTransfer($data: TellerBankTransferInput) {
+  transaction {
+    tellerBankTransfer {
+      new(data: $data) {
+        recordId
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetBankTransferMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetBankTransferMutation,
+    TError,
+    SetBankTransferMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetBankTransferMutation, TError, SetBankTransferMutationVariables, TContext>(
+    ['setBankTransfer'],
+    useAxios<SetBankTransferMutation, SetBankTransferMutationVariables>(SetBankTransferDocument),
     options
   );
 export const SetSettingsUserDataDocument = `
@@ -45855,6 +45936,45 @@ export const useGetServiceCenterTransferListQuery = <
       : ['getServiceCenterTransferList', variables],
     useAxios<GetServiceCenterTransferListQuery, GetServiceCenterTransferListQueryVariables>(
       GetServiceCenterTransferListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetBankTransferListDocument = `
+    query getBankTransferList($filter: TellerBankTransferFilter, $pagination: Pagination) {
+  transaction {
+    tellerBankTransfer {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            transactionId
+            transactionDate
+            tellerName
+            transferType
+            amount
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBankTransferListQuery = <TData = GetBankTransferListQuery, TError = unknown>(
+  variables?: GetBankTransferListQueryVariables,
+  options?: UseQueryOptions<GetBankTransferListQuery, TError, TData>
+) =>
+  useQuery<GetBankTransferListQuery, TError, TData>(
+    variables === undefined ? ['getBankTransferList'] : ['getBankTransferList', variables],
+    useAxios<GetBankTransferListQuery, GetBankTransferListQueryVariables>(
+      GetBankTransferListDocument
     ).bind(null, variables),
     options
   );

@@ -375,6 +375,12 @@ export const CBS: NavType = {
           aclKey: 'CBS_TRANSFERS_VAULT_TRANSFER',
         },
         {
+          label: 'Teller - Bank',
+          route: ROUTES.CBS_TRANSFER_BANK_ADD,
+          aclKey: 'CBS_TRANSFERS_VAULT_TRANSFER',
+        },
+
+        {
           label: 'transferTellerTransfer',
           route: ROUTES.CBS_TRANSFER_TELLER_ADD,
           aclKey: 'CBS_TRANSFERS_TELLER_TRANSFER',
@@ -396,6 +402,12 @@ export const CBS: NavType = {
           route: ROUTES.CBS_TRANSFER_VAULT_LIST,
           aclKey: 'CBS_TRANSFERS_VAULT_TRANSFER',
           addRoute: ROUTES.CBS_TRANSFER_VAULT_ADD,
+        },
+        {
+          label: 'Teller - Bank',
+          route: ROUTES.CBS_TRANSFER_BANK_LIST,
+          aclKey: 'CBS_TRANSFERS_VAULT_TRANSFER',
+          addRoute: ROUTES.CBS_TRANSFER_BANK_ADD,
         },
         {
           label: 'transferTellerTransfer',
