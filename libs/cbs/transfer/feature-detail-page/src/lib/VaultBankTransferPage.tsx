@@ -3,18 +3,18 @@ import { useRouter } from 'next/router';
 import { Box } from '@myra-ui';
 
 import { SideBar } from '../component';
-import { useServiceCenterTransferDetailHooks } from '../hooks';
+import { useTransferDetailHooks } from '../hooks/useTransferDetailHooks';
 import { OverviewPage } from '../tabs/OverviewPage';
 
 /* eslint-disable-next-line */
-export interface InterServiceCenterPageProps {}
+export interface VaultBankTransferPageProps {}
 
-export const InterServiceCenterPage = () => {
+export const VaultBankTransferPage = () => {
   const router = useRouter();
   const tabQuery = router.query['tab'] as string;
 
-  const { serviceCenterTransferDetailData, serviceCenterSummary, sidebarData } =
-    useServiceCenterTransferDetailHooks();
+  const { tellerBankTransferData, tellerBankSidebarData, tellerBankTxnSummary } =
+    useTransferDetailHooks();
 
   return (
     <Box bg="gray.100">
@@ -26,17 +26,15 @@ export const InterServiceCenterPage = () => {
         borderRight="1px"
         borderRightColor="border.layout"
       >
-        <SideBar sidebarData={sidebarData} />
+        <SideBar sidebarData={tellerBankSidebarData} />
       </Box>
+
       <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && (
-          <OverviewPage
-            serviceCenterTransfer={serviceCenterTransferDetailData}
-            summary={serviceCenterSummary}
-          />
+          <OverviewPage tellerBankData={tellerBankTransferData} summary={tellerBankTxnSummary} />
         )}
       </Box>
     </Box>
   );
 };
-export default InterServiceCenterPage;
+export default VaultBankTransferPage;

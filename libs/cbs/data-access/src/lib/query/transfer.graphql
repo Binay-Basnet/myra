@@ -171,3 +171,37 @@ query getBankTransferList($filter: TellerBankTransferFilter, $pagination: Pagina
     }
   }
 }
+
+query getTellerBankDetails($transactionId: ID!) {
+  transaction {
+    tellerBankTransfer {
+      viewDetail(transactionId: $transactionId) {
+        data {
+          id
+          transactionId
+          transactionDate
+          transferType
+          profilePic
+          amount
+          tellerName
+          bankName
+          bankTransferType
+          status
+          glTransaction {
+            ledgerId
+            account
+            serviceCentreId
+            serviceCenter
+            debit
+            credit
+            balance
+            balanceType
+          }
+          totalDebit
+          totalCredit
+          note
+        }
+      }
+    }
+  }
+}

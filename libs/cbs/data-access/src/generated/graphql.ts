@@ -28337,6 +28337,43 @@ export type GetBankTransferListQuery = {
   };
 };
 
+export type GetTellerBankDetailsQueryVariables = Exact<{
+  transactionId: Scalars['ID'];
+}>;
+
+export type GetTellerBankDetailsQuery = {
+  transaction: {
+    tellerBankTransfer?: {
+      viewDetail?: {
+        data?: {
+          id?: string | null;
+          transactionId?: string | null;
+          transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+          transferType?: string | null;
+          amount?: string | null;
+          tellerName?: string | null;
+          bankName?: string | null;
+          bankTransferType?: TellerBankTransferType | null;
+          status?: string | null;
+          totalDebit?: string | null;
+          totalCredit?: string | null;
+          note?: string | null;
+          glTransaction?: Array<{
+            ledgerId?: string | null;
+            account: string;
+            serviceCentreId?: string | null;
+            serviceCenter?: string | null;
+            debit?: string | null;
+            credit?: string | null;
+            balance?: string | null;
+            balanceType?: BalanceType | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetPastSlipsListQueryVariables = Exact<{
   accountId: Scalars['ID'];
 }>;
@@ -46102,6 +46139,51 @@ export const useGetBankTransferListQuery = <TData = GetBankTransferListQuery, TE
     variables === undefined ? ['getBankTransferList'] : ['getBankTransferList', variables],
     useAxios<GetBankTransferListQuery, GetBankTransferListQueryVariables>(
       GetBankTransferListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetTellerBankDetailsDocument = `
+    query getTellerBankDetails($transactionId: ID!) {
+  transaction {
+    tellerBankTransfer {
+      viewDetail(transactionId: $transactionId) {
+        data {
+          id
+          transactionId
+          transactionDate
+          transferType
+          amount
+          tellerName
+          bankName
+          bankTransferType
+          status
+          glTransaction {
+            ledgerId
+            account
+            serviceCentreId
+            serviceCenter
+            debit
+            credit
+            balance
+            balanceType
+          }
+          totalDebit
+          totalCredit
+          note
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetTellerBankDetailsQuery = <TData = GetTellerBankDetailsQuery, TError = unknown>(
+  variables: GetTellerBankDetailsQueryVariables,
+  options?: UseQueryOptions<GetTellerBankDetailsQuery, TError, TData>
+) =>
+  useQuery<GetTellerBankDetailsQuery, TError, TData>(
+    ['getTellerBankDetails', variables],
+    useAxios<GetTellerBankDetailsQuery, GetTellerBankDetailsQueryVariables>(
+      GetTellerBankDetailsDocument
     ).bind(null, variables),
     options
   );

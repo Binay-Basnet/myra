@@ -1,16 +1,17 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
 import { useGetBankTransferListQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface BankTransferListProps {}
 
 export const BankTransferList = () => {
-  // const router = useRouter();
+  const router = useRouter();
   const { data, isFetching } = useGetBankTransferListQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -80,11 +81,9 @@ export const BankTransferList = () => {
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
-        // rowOnClick={(row) =>
-        //   router.push(
-        //     `${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${row?.node?.id}&txnType=${AllTransactionType.Transfer}`
-        //   )
-        // }
+        rowOnClick={(row) =>
+          router.push(`${ROUTES.CBS_TRANSFER_BANK_DETAILS}?id=${row?.node?.transactionId}`)
+        }
         isLoading={isFetching}
         columns={columns}
         pagination={{

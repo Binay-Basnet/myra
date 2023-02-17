@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
-import { useGetTransferDetailQuery } from '@coop/cbs/data-access';
+import { useGetTellerBankDetailsQuery, useGetTransferDetailQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 export const useTransferDetailHooks = () => {
@@ -72,5 +73,55 @@ export const useTransferDetailHooks = () => {
     srcTellerPic: transferDetailData?.srcProfilePicUrl,
   };
 
-  return { transferDetailData, vaultTxnSummary, tellerTxnSummary, sidebarData };
+  const { data: tellerBankTransfer } = useGetTellerBankDetailsQuery(
+    { transactionId: id as string }
+    // {
+    //   enabled: !router?.asPath?.includes('bank-transfer'),
+    // }
+  );
+
+  const tellerBankTransferData =
+    tellerBankTransfer?.transaction?.tellerBankTransfer?.viewDetail?.data;
+
+  const tellerBankSidebarData = {
+    code: tellerBankTransferData?.transactionId,
+    transferType: tellerBankTransferData?.transferType,
+    date: localizedDate(tellerBankTransferData?.transactionDate),
+    amount: tellerBankTransferData?.amount,
+    srcTellerName: tellerBankTransferData?.tellerName,
+    srcTellerPic: tellerBankTransferData?.profilePic,
+  };
+
+  const tellerBankTxnSummary = [
+    {
+      label: 'Teller Bank Transfer Code',
+      value: tellerBankTransferData?.transactionId,
+    },
+    {
+      label: 'Transfer Type',
+      value: tellerBankTransferData?.bankTransferType?.replace(/_/g, ' '),
+    },
+    {
+      label: 'Transfer Date',
+      value: localizedDate(tellerBankTransferData?.transactionDate),
+    },
+    {
+      label: 'Teller',
+      value: tellerBankTransferData?.tellerName,
+    },
+    {
+      label: 'Cash Amount',
+      value: amountConverter(tellerBankTransferData?.amount as string),
+    },
+  ];
+
+  return {
+    transferDetailData,
+    vaultTxnSummary,
+    tellerTxnSummary,
+    sidebarData,
+    tellerBankTransferData,
+    tellerBankSidebarData,
+    tellerBankTxnSummary,
+  };
 };

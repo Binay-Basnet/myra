@@ -18,6 +18,10 @@ export const TxnDetails = ({ status, list }: TxnProps) => (
           <Chips variant="solid" theme="success" size="md" type="label" label="Complete" />
         )}
 
+        {status === 'COMPLETED' && (
+          <Chips variant="solid" theme="success" size="md" type="label" label="Complete" />
+        )}
+
         {status === TellerActivityState.Pending && (
           <Chips variant="solid" theme="warning" size="md" type="label" label="Pending" />
         )}
