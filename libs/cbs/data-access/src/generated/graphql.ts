@@ -62,6 +62,38 @@ export type AbbsTransaction = {
   receivableAccountId?: Maybe<Scalars['String']>;
 };
 
+export const AbbsTransactionFilter = {
+  All: 'ALL',
+  PaymentPayable: 'PAYMENT_PAYABLE',
+  PaymentReceivable: 'PAYMENT_RECEIVABLE',
+} as const;
+
+export type AbbsTransactionFilter =
+  typeof AbbsTransactionFilter[keyof typeof AbbsTransactionFilter];
+export type AbbsTransactionReport = {
+  accountNo?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  memberBranch?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  paymentPayable?: Maybe<Scalars['String']>;
+  paymentReceivable?: Maybe<Scalars['String']>;
+  transactionBranch?: Maybe<Scalars['String']>;
+  typeOfTransaction?: Maybe<Scalars['String']>;
+};
+
+export type AbbsTransactionReportFilter = {
+  branchId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  period: LocalizedDateFilter;
+  transactionType?: InputMaybe<AbbsTransactionFilter>;
+};
+
+export type AbbsTransactionReportResult = {
+  data?: Maybe<Array<Maybe<AbbsTransactionReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type AccessLog = {
   bytesReceived?: Maybe<Scalars['Int']>;
   bytesSent?: Maybe<Scalars['Int']>;
@@ -5084,6 +5116,7 @@ export type FamilyMemberDetails = {
 };
 
 export type FianancialTransactionReport = {
+  abbsTransactionReport?: Maybe<AbbsTransactionReportResult>;
   bankGLBalanceReport: BankGlBalanceResult;
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
@@ -5092,6 +5125,10 @@ export type FianancialTransactionReport = {
   tellerReport: TellerReportResult;
   trialSheetReport: TrialSheetReportResult;
   vaultBalanceReport: VaultBalanceReportResult;
+};
+
+export type FianancialTransactionReportAbbsTransactionReportArgs = {
+  data?: InputMaybe<AbbsTransactionReportFilter>;
 };
 
 export type FianancialTransactionReportBankGlBalanceReportArgs = {
@@ -14546,6 +14583,7 @@ export type TellerBankTransferView = {
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id?: Maybe<Scalars['ID']>;
   note?: Maybe<Scalars['String']>;
+  profilePic?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   tellerName?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
@@ -28350,6 +28388,7 @@ export type GetTellerBankDetailsQuery = {
           transactionId?: string | null;
           transactionDate?: Record<'local' | 'en' | 'np', string> | null;
           transferType?: string | null;
+          profilePic?: string | null;
           amount?: string | null;
           tellerName?: string | null;
           bankName?: string | null;
@@ -46152,6 +46191,7 @@ export const GetTellerBankDetailsDocument = `
           transactionId
           transactionDate
           transferType
+          profilePic
           amount
           tellerName
           bankName
