@@ -8,7 +8,12 @@ export const useTransferDetailHooks = () => {
 
   const { id } = router.query;
 
-  const { data } = useGetTransferDetailQuery({ transferID: id as string });
+  const { data } = useGetTransferDetailQuery(
+    { transferID: id as string },
+    {
+      enabled: !router?.asPath?.includes('cash-transit-transfer'),
+    }
+  );
 
   const transferDetailData = data?.transaction?.transferDetail?.data;
 
