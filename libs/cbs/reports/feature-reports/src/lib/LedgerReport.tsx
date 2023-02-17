@@ -68,12 +68,16 @@ export const LedgerReport = () => {
               {
                 header: 'S.N',
                 accessorFn: (__, index) => index + 1,
+                meta: {
+                  width: '30px',
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Date',
                 accessorFn: (row) => localizedDate(row?.date),
                 meta: {
-                  width: '40px',
+                  width: '30px',
                   isNumeric: true,
                 },
               },
@@ -95,12 +99,12 @@ export const LedgerReport = () => {
                 header: 'Particulars',
                 accessorFn: (row) => row?.account,
                 cell: (props) => (
-                  <Box whiteSpace="pre-line" my="s4">
+                  <Box whiteSpace="pre-line" my="s4" width="200px">
                     {props?.row?.original?.account}{' '}
                   </Box>
                 ),
                 meta: {
-                  width: '20%',
+                  width: '200px',
                 },
               },
               {
@@ -108,7 +112,7 @@ export const LedgerReport = () => {
                 accessorFn: (row) => row?.debit,
                 cell: (props) => amountConverter(props.getValue() as string) || '-',
                 meta: {
-                  width: '40px',
+                  width: '30px',
                   isNumeric: true,
                 },
               },
@@ -118,7 +122,7 @@ export const LedgerReport = () => {
                 cell: (props) => amountConverter(props.getValue() as string) || '-',
 
                 meta: {
-                  width: '40px',
+                  width: '30px',
                   isNumeric: true,
                 },
               },
@@ -126,7 +130,7 @@ export const LedgerReport = () => {
                 header: 'Balance',
                 accessorFn: (row) => row?.balance,
                 meta: {
-                  width: '40px',
+                  width: '30px',
                   isNumeric: true,
                 },
               },

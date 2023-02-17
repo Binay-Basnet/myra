@@ -14444,6 +14444,98 @@ export const TellerActivityState = {
 } as const;
 
 export type TellerActivityState = typeof TellerActivityState[keyof typeof TellerActivityState];
+export type TellerBankTransfer = {
+  amount?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  tellerName?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
+  transactionId?: Maybe<Scalars['String']>;
+  transferType?: Maybe<TellerBankTransferType>;
+};
+
+export type TellerBankTransferActivity = {
+  edges?: Maybe<Array<Maybe<TellerBankTransferActivityListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type TellerBankTransferActivityListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<TellerBankTransfer>;
+};
+
+export type TellerBankTransferFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
+  id?: InputMaybe<Scalars['ID']>;
+  tellerName?: InputMaybe<Scalars['String']>;
+  transactionId?: InputMaybe<Scalars['String']>;
+  transferType?: InputMaybe<Scalars['String']>;
+};
+
+export type TellerBankTransferInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  bankId?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
+  tellerId?: InputMaybe<Scalars['ID']>;
+  transferType?: InputMaybe<TellerBankTransferType>;
+};
+
+export type TellerBankTransferMutation = {
+  new?: Maybe<TellerBankTransferResult>;
+};
+
+export type TellerBankTransferMutationNewArgs = {
+  data?: InputMaybe<TellerBankTransferInput>;
+};
+
+export type TellerBankTransferQuery = {
+  list?: Maybe<TellerBankTransferActivity>;
+  viewDetail?: Maybe<TellerBankTransferViewResult>;
+};
+
+export type TellerBankTransferQueryListArgs = {
+  filter?: InputMaybe<TellerBankTransferFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TellerBankTransferQueryViewDetailArgs = {
+  transactionId: Scalars['ID'];
+};
+
+export type TellerBankTransferResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<TellerBankTransfer>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export const TellerBankTransferType = {
+  Deposit: 'DEPOSIT',
+  Withdraw: 'WITHDRAW',
+} as const;
+
+export type TellerBankTransferType =
+  typeof TellerBankTransferType[keyof typeof TellerBankTransferType];
+export type TellerBankTransferView = {
+  amount?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
+  bankTransferType?: Maybe<TellerBankTransferType>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  id?: Maybe<Scalars['ID']>;
+  note?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  tellerName?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
+  transactionId?: Maybe<Scalars['String']>;
+  transferType?: Maybe<Scalars['String']>;
+};
+
+export type TellerBankTransferViewResult = {
+  data?: Maybe<TellerBankTransferView>;
+  error?: Maybe<QueryError>;
+};
+
 export type TellerDataEntry = {
   balance?: Maybe<Scalars['String']>;
   inAmount?: Maybe<Scalars['String']>;
@@ -14624,6 +14716,7 @@ export type TransactionMutation = {
   readyBranchEOD?: Maybe<Array<Maybe<Scalars['String']>>>;
   serviceCentreCashTransfer: ServiceCentreCashTransferResult;
   strTransactionAction?: Maybe<StrTransactionActionResult>;
+  tellerBankTransfer?: Maybe<TellerBankTransferMutation>;
   tellerTransfer: TellerTransferResult;
   tellerTransferAction: TellerTransferActionResult;
   transfer: TransferResult;
@@ -14711,6 +14804,7 @@ export type TransactionQuery = {
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
   strTransactionDetail?: Maybe<StrTransactionDetailQuery>;
+  tellerBankTransfer?: Maybe<TellerBankTransferQuery>;
   transferDetail?: Maybe<TransferDetailViewResult>;
   viewAccountTransfer?: Maybe<AccountTransferViewResult>;
   viewAgentList?: Maybe<AgentTransactionViewResult>;

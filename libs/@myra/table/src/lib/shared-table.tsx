@@ -122,9 +122,24 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
                 border: '1px',
                 borderColor: 'border.layout',
                 borderRadius: 'br2',
+                pageBreakInside: 'avoid',
+
                 scrollbarWidth: 'none',
                 '&::-webkit-scrollbar': {
                   display: 'none',
+                },
+                '@media print': {
+                  // display: 'flex',
+                  // flexDir: 'column',
+                  w: '100%',
+                  // h: '100%',
+                  // minW: '100%',
+                  // maxW: '100%',
+                  maxH: 'none',
+                  overflow: 'visible',
+                  // overflowX: 'visible',
+                  borderRadius: '0',
+                  pageBreakAfter: 'avoid',
                 },
               }
             : {}

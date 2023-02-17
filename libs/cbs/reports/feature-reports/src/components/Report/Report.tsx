@@ -92,15 +92,19 @@ export const ReportContent = ({ children }: { children: React.ReactNode }) => {
             display: 'flex',
             flexDir: 'column',
             w: '100%',
-            h: '100%',
-            overflowY: 'visible',
-            overflowX: 'visible',
+            h: 'auto',
+            // minW: '100%',
+            // maxW: '100%',
+            overflow: 'visible',
+            // overflowX: 'visible',
             borderRadius: '0',
           },
           '@page': {
             size: 'A4 portrait',
             margin: '0.2in',
             marginLeft: '0.4in',
+            zoom: '0.6',
+            scale: '0.2',
           },
         }}
       >
