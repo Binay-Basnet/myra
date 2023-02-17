@@ -68,7 +68,7 @@ export const RecentTransactions = () => {
       {
         header: 'Debit',
         accessorKey: 'debit',
-        cell: (props) => (props.getValue() ? props.getValue() : '-'),
+        cell: (props) => (props.getValue() ? amountConverter(props.getValue() as string) : '-'),
         meta: {
           width: '33%',
         },
@@ -76,7 +76,7 @@ export const RecentTransactions = () => {
       {
         header: 'Credit',
         accessorKey: 'credit',
-        cell: (props) => (props.getValue() ? props.getValue() : '-'),
+        cell: (props) => (props.getValue() ? amountConverter(props.getValue() as string) : '-'),
         meta: {
           width: '33%',
         },

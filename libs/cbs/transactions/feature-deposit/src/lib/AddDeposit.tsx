@@ -19,7 +19,6 @@ import {
 
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
-  DateType,
   DepositAccount,
   DepositedBy,
   DepositInput,
@@ -257,14 +256,8 @@ export const AddDeposit = () => {
     );
 
     return {
-      firstMonth:
-        preferenceDate === DateType.Bs
-          ? pendingInstallments[0]?.monthName?.np
-          : pendingInstallments[0]?.monthName?.en,
-      lastMonth:
-        preferenceDate === DateType.Bs
-          ? pendingInstallments[pendingInstallments.length - 1]?.monthName?.np
-          : pendingInstallments[pendingInstallments.length - 1]?.monthName?.en,
+      firstMonth: localizedDate(pendingInstallments[0]?.dueDate),
+      lastMonth: localizedDate(pendingInstallments[pendingInstallments.length - 1]?.dueDate),
       fine: decimalAdjust('ceil', tempFine, -2),
       rebate: decimalAdjust('floor', tempRebate, -2),
     };

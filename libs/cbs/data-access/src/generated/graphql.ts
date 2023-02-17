@@ -18861,6 +18861,7 @@ export type GetAccountDetailsDataQuery = {
         productId?: string | null;
         installmentAmount?: string | null;
         accountName?: string | null;
+        availableBalance?: string | null;
         accountTenure?: string | null;
         productName?: string | null;
         accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
@@ -23665,6 +23666,11 @@ export type GetSavingStatementQuery = {
                 totalWithdraw?: string | null;
                 totalDeposit?: string | null;
               } | null;
+              meta?: {
+                currentInterestRate?: number | null;
+                accountNo?: string | null;
+                savingType?: string | null;
+              } | null;
             }
           | {}
           | null;
@@ -23994,6 +24000,7 @@ export type GetLoanStatementReportQuery = {
                 issuedDate?: Record<'local' | 'en' | 'np', string> | null;
                 installment?: number | null;
                 charge?: string | null;
+                openingBalance?: string | null;
               } | null;
               loanStatement?: Array<{
                 date?: Record<'local' | 'en' | 'np', string> | null;
@@ -33654,6 +33661,7 @@ export const GetAccountDetailsDataDocument = `
         productId
         installmentAmount
         accountName
+        availableBalance
         accountTenure
         productName
         accountOpenDate
@@ -39810,6 +39818,11 @@ export const GetSavingStatementDocument = `
               totalWithdraw
               totalDeposit
             }
+            meta {
+              currentInterestRate
+              accountNo
+              savingType
+            }
           }
         }
       }
@@ -40246,6 +40259,7 @@ export const GetLoanStatementReportDocument = `
               issuedDate
               installment
               charge
+              openingBalance
             }
             loanStatement {
               date

@@ -29,6 +29,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => {
                 <Text>Approved Amount:</Text>
                 <Text>Loan Issued Date:</Text>
                 <Text>Membership No:</Text>
+                <Text>Opening Blance:</Text>
               </Box>
             </GridItem>
 
@@ -42,6 +43,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => {
                 <Text noOfLines={1}>{amountConverter(account?.approvedAmount ?? 0)}</Text>
                 <Text noOfLines={1}> {localizedDate(account?.issuedDate)}</Text>
                 <Text noOfLines={1}>{member?.code}</Text>
+                <Text noOfLines={1}>{amountConverter(account?.openingBalance ?? 0)}</Text>
               </Box>
             </GridItem>
           </Grid>

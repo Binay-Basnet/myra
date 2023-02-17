@@ -20,19 +20,16 @@ export const InstallmentData = ({ loanAccountId }: IProps) => {
     loanPreview?.data?.loanAccount?.loanPreview?.data?.repaymentDetails?.totalInstallmentAmount;
 
   // const loanCalculatedData = loanRepaymentData?.map((item) => {
-  //   let fineTemp = 0;
-  //   let interestTemp = 0;
-  //   let principalTemp = 0;
 
-  //   console.log(principalTemp, Number(item?.fine), amountPaid);
   //   if (principalTemp > Number(item?.fine)) {
   //     fineTemp = principalTemp - Number(item?.fine);
   //   } else if (Number(item?.fine) > 0) {
   //     fineTemp = Number(amountPaid) - Number(item?.fine);
-  //   } else {
+  //   } else if (principalTemp > 0) {
   //     fineTemp = principalTemp;
+  //   } else {
+  //     fineTemp = amountPaid;
   //   }
-
   //   if (fineTemp > Number(item?.interestAmount)) {
   //     interestTemp = fineTemp - Number(item?.interestAmount);
   //   } else {
@@ -52,6 +49,18 @@ export const InstallmentData = ({ loanAccountId }: IProps) => {
   //     principal: interestTemp > Number(item?.principal) ? item?.principal : principalTemp,
   //   };
   // });
+
+  // const intallmentsToRender = useMemo(() => {
+  //   if (!amountPaid) return [];
+
+  //   const temp=[]
+  //   const tempAmount = amountPaid
+
+  //   loanRepaymentData?.forEach((installment)=>{
+  //     if(tempAmount >(Number(installment?.fine)) )
+  //   })
+
+  // }, [amountPaid, loanRepaymentData]);
 
   return (
     <Box>

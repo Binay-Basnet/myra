@@ -6,4 +6,5 @@ export * from './loader-overlay/LoaderOverlay';
 export * from './modal/Modal';
 export * from './popover/Popover';
 export * from './response-dialog/ResponseDialog';
+export * from './success-card/GLTransJornalVoucherPrint';
 export * from './success-card/SuccessCard';

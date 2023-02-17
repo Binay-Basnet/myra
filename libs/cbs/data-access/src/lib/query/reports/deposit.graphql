@@ -158,6 +158,11 @@ query getSavingStatement($data: SavingStatementReportSettings!) {
               totalWithdraw
               totalDeposit
             }
+            meta {
+              currentInterestRate
+              accountNo
+              savingType
+            }
           }
         }
       }
