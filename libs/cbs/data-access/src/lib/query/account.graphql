@@ -515,6 +515,7 @@ query getAccountDetailsData($id: ID!) {
         productId
         installmentAmount
         accountName
+        availableBalance
         accountTenure
         productName
         accountOpenDate

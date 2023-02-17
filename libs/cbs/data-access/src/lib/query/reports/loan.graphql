@@ -110,6 +110,7 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
               issuedDate
               installment
               charge
+              openingBalance
             }
 
             loanStatement {

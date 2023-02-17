@@ -1,14 +1,17 @@
 import { Box, Grid, GridItem, Text } from '@myra-ui';
 
-import { Member } from '@coop/cbs/data-access';
+import { Member, SavingStatementMeta } from '@coop/cbs/data-access';
 import { formatAddress, localizedDate } from '@coop/cbs/utils';
 
 interface ReportMemberProps {
   member: Partial<Member> | undefined | null;
   accountCloseDate?: string;
+  savingData?: {
+    meta?: SavingStatementMeta;
+  };
 }
 
-export const ReportMember = ({ member, accountCloseDate }: ReportMemberProps) => (
+export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMemberProps) => (
   // const branch = useAppSelector((state) => state?.auth?.user?.currentBranch);
 
   <Box px="s16" pt="s16" display="flex" justifyContent="space-between">
@@ -25,6 +28,18 @@ export const ReportMember = ({ member, accountCloseDate }: ReportMemberProps) =>
               </Text>
               <Text fontSize="r1" color="gray.700">
                 Service Center Name:
+              </Text>
+              <Text fontSize="r1" color="gray.700">
+                Account No:
+              </Text>
+              {savingData?.meta?.currentInterestRate && (
+                <Text fontSize="r1" color="gray.700">
+                  Current Interest Rate:
+                </Text>
+              )}
+
+              <Text fontSize="r1" color="gray.700">
+                Saving Type:
               </Text>
             </Box>
           </GridItem>
@@ -51,6 +66,33 @@ export const ReportMember = ({ member, accountCloseDate }: ReportMemberProps) =>
                 textTransform="capitalize"
               >
                 {member?.branch}
+              </Text>
+              <Text
+                noOfLines={1}
+                fontSize="r1"
+                color="gray.700"
+                fontWeight="500"
+                textTransform="capitalize"
+              >
+                {savingData?.meta?.accountNo}
+              </Text>
+              <Text
+                noOfLines={1}
+                fontSize="r1"
+                color="gray.700"
+                fontWeight="500"
+                textTransform="capitalize"
+              >
+                {savingData?.meta?.currentInterestRate}
+              </Text>
+              <Text
+                noOfLines={1}
+                fontSize="r1"
+                color="gray.700"
+                fontWeight="500"
+                textTransform="capitalize"
+              >
+                {savingData?.meta?.savingType}
               </Text>
             </Box>
           </GridItem>

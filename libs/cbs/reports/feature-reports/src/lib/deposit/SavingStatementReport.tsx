@@ -73,7 +73,7 @@ export const SavingStatementReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
-          <ReportMember member={savingMember} />
+          <ReportMember member={savingMember} savingData={savingData || []} />
           <Report.Table<SavingStatement & { index: number }>
             showFooter
             columns={[

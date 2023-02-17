@@ -10,7 +10,9 @@ export const AccountStatistics = () => {
   const accountSummary = [
     {
       title: isClosed ? 'Closing Balance' : 'Available Balance',
-      value: amountConverter(accountDetails?.accountBalance ?? 0),
+      value: isClosed
+        ? amountConverter(accountDetails?.accountBalance ?? 0)
+        : amountConverter(accountDetails?.availableBalance ?? 0),
     },
     {
       title: isClosed ? 'Total Deposit Balance' : 'Actual Balance',
