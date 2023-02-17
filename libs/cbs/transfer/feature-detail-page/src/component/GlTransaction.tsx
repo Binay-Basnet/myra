@@ -104,7 +104,7 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
   if (data?.length === 0) return null;
   return (
     <DetailsCard
-      title={t['transDetailGLTransactions']}
+      title="My Ledger"
       hasTable
       // leftBtn={
       //   <Button variant="ghost" leftIcon={<IoPrintOutline />}>

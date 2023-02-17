@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { Box, Button, Column, Icon, Table, Text } from '@myra-ui';
 
-import { useGetSavingsAccountListQuery } from '@coop/cbs/data-access';
+import { ObjState, useGetSavingsAccountListQuery } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 
@@ -21,6 +21,7 @@ export const AccountListPage = () => {
     },
     filter: {
       productID: id as string,
+      objState: ObjState.Active,
     },
   });
   const rowData = useMemo(

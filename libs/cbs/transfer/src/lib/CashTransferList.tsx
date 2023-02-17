@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Column, PageHeader, Table } from '@myra-ui';
+import { Column, PageHeader, Table, TablePopover } from '@myra-ui';
 
 import { AllTransactionType, useGetServiceCenterTransferListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
@@ -58,19 +58,30 @@ export const CashTransferList = () => {
         },
         accessorFn: (row) => amountConverter(row?.node?.amount as string),
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
-      //   accessorKey: 'actions',
-      //   cell: (cell) => {
-      //     const member = cell?.row?.original?.node;
-      //     const memberData = { id: member?.ID };
-      //     return <PopoverComponent items={[]} member={memberData} />;
-      //   },
-      //   meta: {
-      //     width: '60px',
-      //   },
-      // },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) => (
+          <TablePopover
+            node={props?.row?.original?.node}
+            items={[
+              {
+                title: 'viewDetails',
+                // aclKey: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
+                action: 'VIEW',
+                onClick: () => {
+                  router.push(
+                    `/${ROUTES.CBS_TRANSFER_INTER_SERVICE_TRANS_DETAILS}?id=${props?.row?.original?.node?.id}`
+                  );
+                },
+              },
+            ]}
+          />
+        ),
+        meta: {
+          width: '50px',
+        },
+      },
     ],
     []
   );

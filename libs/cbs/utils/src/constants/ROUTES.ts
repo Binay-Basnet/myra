@@ -69,8 +69,10 @@ export const ROUTES = {
   CBS_TRANSFER_BRANCH_TRANSFER_ADD: '/cbs/transfers/branch-transfer/add',
   CBS_TRANSFER_INTER_SERVICE_TRANS_LIST: '/cbs/transfers/service-center-transactions/list',
   CBS_TRANSFER_INTER_SERVICE_TRANS_ADD: '/cbs/transfers/service-center-transactions/add',
+  CBS_TRANSFER_INTER_SERVICE_TRANS_DETAILS: '/cbs/transfers/service-center-transactions/details',
   CBS_TRANSFER_CASH_IN_TRANSIT_ADD: '/cbs/transfers/cash-transit-transfer/add',
   CBS_TRANSFER_CASH_IN_TRANSIT_LIST: '/cbs/transfers/cash-transit-transfer/list',
+  CBS_TRANSFER_CASH_IN_TRANSIT_DETAILS: '/cbs/transfers/cash-transit-transfer/details',
 
   CBS_REQUESTS_MEMBER_LIST: '/cbs/requests/member/list',
   CBS_REQUESTS_WITHDRAW_VIA_COLLECTOR_LIST: '/cbs/requests/withdraw-via-collector/list',
