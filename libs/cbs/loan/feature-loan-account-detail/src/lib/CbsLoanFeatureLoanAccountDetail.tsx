@@ -13,8 +13,8 @@ import { OverviewPage } from '../tabs/OverviewPage';
 
 /* eslint-disable-next-line */
 export interface CbsLoanFeatureLoanAccountDetailProps {
-  isLocModalOpen: boolean;
-  handleLocModalClose: () => void;
+  isLocModalOpen?: boolean;
+  handleLocModalClose?: () => void;
 }
 
 export const CbsLoanFeatureLoanAccountDetail = (props: CbsLoanFeatureLoanAccountDetailProps) => {

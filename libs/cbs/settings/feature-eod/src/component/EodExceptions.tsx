@@ -61,6 +61,7 @@ export const EodExceptions = () => {
       dormantCheck: false,
       maturityCheck: false,
       cashInHand: false,
+      loanRepayment: false,
     },
   });
   const { getValues, reset } = methods;
