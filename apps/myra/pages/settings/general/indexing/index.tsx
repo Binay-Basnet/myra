@@ -5,7 +5,6 @@ import {
   useSearchIndexingMutation,
   useSearchInternalIndexingMutation,
 } from '@coop/cbs/data-access';
-import { SettingsGeneralLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
 import { Can } from '@coop/cbs/utils';
 
 const Indexing = () => {
@@ -19,32 +18,32 @@ const Indexing = () => {
     useResetTrialBalanceCacheMutation({});
 
   const resetSearchIndexHandler = () => {
-    resetSearchIndexMutation({}).then(() => {
+    resetSearchIndexMutation({}).then((res) => {
       toast({
         id: 'indexing',
         type: 'success',
-        message: 'Index reset successfully',
+        message: res?.search?.indexData,
       });
     });
   };
 
   const resetInternalSearchIndexHandler = () => {
-    resetInternalSearchIndexMutation({}).then(() => {
+    resetInternalSearchIndexMutation({}).then((res) => {
       toast({
         id: 'internal-indexing',
         type: 'success',
-        message: 'Internal Index reset successfully',
+        message: res?.search?.indexData,
       });
     });
   };
 
   const resetTrailBalanceCacheHandler = () => {
     resetTrialBalanceCacheMutation({})
-      .then(() => {
+      .then((res) => {
         toast({
           id: 'reset-trial-balance-cache-success',
           type: 'success',
-          message: 'Trail balance reset successfully',
+          message: res?.settings?.report?.resetTrialCache,
         });
       })
       .catch(() => {
@@ -80,14 +79,6 @@ const Indexing = () => {
         </Button>
       </Box>
     </Can>
-  );
-};
-
-Indexing.getLayout = function getLayout(page) {
-  return (
-    <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
-    </SettingsLayout>
   );
 };
 
