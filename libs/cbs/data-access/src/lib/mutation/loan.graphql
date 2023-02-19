@@ -58,3 +58,9 @@ mutation setLoanRepayment($data: LoanRepaymentInput) {
     }
   }
 }
+
+mutation changeLOC($accountId: ID!, $newAmount: String!) {
+  loanAccount {
+    changeLOC(accountId: $accountId, newAmount: $newAmount)
+  }
+}

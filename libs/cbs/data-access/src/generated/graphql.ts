@@ -9363,6 +9363,7 @@ export type LoanAccountMinimal = {
 export type LoanAccountMutation = {
   add?: Maybe<LoanAccountResult>;
   approveOrCancel?: Maybe<LoanAccountResult>;
+  changeLOC?: Maybe<Scalars['String']>;
   disburse?: Maybe<LoanDisbursementResult>;
   repayment?: Maybe<LoanRepaymentResult>;
 };
@@ -9376,6 +9377,11 @@ export type LoanAccountMutationApproveOrCancelArgs = {
   action: LoanApproveOrCancel;
   loanAccountId: Scalars['String'];
   remarks?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanAccountMutationChangeLocArgs = {
+  accountId: Scalars['ID'];
+  newAmount: Scalars['String'];
 };
 
 export type LoanAccountMutationDisburseArgs = {
@@ -9429,6 +9435,7 @@ export type LoanAccountPreviewResult = {
 };
 
 export type LoanAccountQuery = {
+  accountLOC?: Maybe<Scalars['String']>;
   formState?: Maybe<LoanAccountFormStateResult>;
   getLoanInstallments?: Maybe<LoanInstallmentResult>;
   getProductCriteria?: Maybe<LoanProductCriteriaResult>;
@@ -9439,6 +9446,10 @@ export type LoanAccountQuery = {
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
   paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
   repaymentList?: Maybe<LoanRepaymentConnection>;
+};
+
+export type LoanAccountQueryAccountLocArgs = {
+  accountId: Scalars['ID'];
 };
 
 export type LoanAccountQueryFormStateArgs = {
@@ -16573,6 +16584,13 @@ export type SetLoanRepaymentMutation = {
     } | null;
   };
 };
+
+export type ChangeLocMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+  newAmount: Scalars['String'];
+}>;
+
+export type ChangeLocMutation = { loanAccount: { changeLOC?: string | null } };
 
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
@@ -30216,6 +30234,21 @@ export const useSetLoanRepaymentMutation = <TError = unknown, TContext = unknown
   useMutation<SetLoanRepaymentMutation, TError, SetLoanRepaymentMutationVariables, TContext>(
     ['setLoanRepayment'],
     useAxios<SetLoanRepaymentMutation, SetLoanRepaymentMutationVariables>(SetLoanRepaymentDocument),
+    options
+  );
+export const ChangeLocDocument = `
+    mutation changeLOC($accountId: ID!, $newAmount: String!) {
+  loanAccount {
+    changeLOC(accountId: $accountId, newAmount: $newAmount)
+  }
+}
+    `;
+export const useChangeLocMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<ChangeLocMutation, TError, ChangeLocMutationVariables, TContext>
+) =>
+  useMutation<ChangeLocMutation, TError, ChangeLocMutationVariables, TContext>(
+    ['changeLOC'],
+    useAxios<ChangeLocMutation, ChangeLocMutationVariables>(ChangeLocDocument),
     options
   );
 export const GetNewIdDocument = `

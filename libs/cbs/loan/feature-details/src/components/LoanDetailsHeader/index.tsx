@@ -4,9 +4,10 @@ import { useLoanDetails } from '../../hooks/useLoanDetails';
 
 interface ILoanDetailsHeaderProps {
   title: string;
+  options?: { label: string; handler: () => void }[];
 }
 
-export const LoanDetailsHeader = ({ title }: ILoanDetailsHeaderProps) => {
+export const LoanDetailsHeader = ({ title, options }: ILoanDetailsHeaderProps) => {
   const { loanPreview } = useLoanDetails();
 
   return (
@@ -16,6 +17,7 @@ export const LoanDetailsHeader = ({ title }: ILoanDetailsHeaderProps) => {
         member={{
           name: loanPreview?.member?.name?.local as string,
         }}
+        options={options}
       />
     </Box>
   );
