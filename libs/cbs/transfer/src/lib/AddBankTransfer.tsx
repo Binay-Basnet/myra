@@ -33,6 +33,7 @@ export const AddBankTransfer = () => {
 
   const { data } = useGetBankAccountListQuery({
     pagination: { first: 10, after: '' },
+    currentBranchOnly: true,
   });
 
   // const { data } = useGetBankListQuery();

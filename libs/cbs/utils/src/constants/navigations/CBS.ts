@@ -406,7 +406,7 @@ export const CBS: NavType = {
         {
           label: 'Teller - Bank',
           route: ROUTES.CBS_TRANSFER_BANK_LIST,
-          aclKey: 'CBS_TRANSFERS_VAULT_TRANSFER',
+          aclKey: 'CBS_TRANSFERS_TELLER_TRANSFER',
           addRoute: ROUTES.CBS_TRANSFER_BANK_ADD,
         },
         {
