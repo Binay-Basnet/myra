@@ -4641,6 +4641,7 @@ export type EodException = {
   branchReadiness: Scalars['Boolean'];
   cashInHand: Scalars['Boolean'];
   dormantCheck: Scalars['Boolean'];
+  loanRepayment: Scalars['Boolean'];
   maturityCheck: Scalars['Boolean'];
 };
 
@@ -4648,6 +4649,7 @@ export type EodExceptionInput = {
   branchReadiness: Scalars['Boolean'];
   cashInHand: Scalars['Boolean'];
   dormantCheck: Scalars['Boolean'];
+  loanRepayment: Scalars['Boolean'];
   maturityCheck: Scalars['Boolean'];
 };
 
@@ -26003,6 +26005,7 @@ export type GetEodExceptionsQuery = {
           dormantCheck: boolean;
           maturityCheck: boolean;
           cashInHand: boolean;
+          loanRepayment: boolean;
         } | null;
       };
     } | null;
@@ -43032,6 +43035,7 @@ export const GetEodExceptionsDocument = `
           dormantCheck
           maturityCheck
           cashInHand
+          loanRepayment
         }
       }
     }

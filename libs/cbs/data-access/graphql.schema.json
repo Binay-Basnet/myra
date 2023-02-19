@@ -40309,6 +40309,22 @@
             "deprecationReason": null
           },
           {
+            "name": "loanRepayment",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "maturityCheck",
             "description": null,
             "args": [],
@@ -40370,6 +40386,22 @@
           },
           {
             "name": "dormantCheck",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "loanRepayment",
             "description": null,
             "type": {
               "kind": "NON_NULL",
