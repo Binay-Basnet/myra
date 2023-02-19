@@ -43,6 +43,13 @@ const eodExeptionList = [
     title: 'Cash in Hand',
     subTitle: 'Pressing “Skip” will allow skipping Cash in Hand check during EOD Process.',
     fieldName: 'cashInHand',
+    border: true,
+  },
+
+  {
+    title: 'Loan Repayment',
+    subTitle: 'Pressing “Skip” will allow skipping Loan repayment check during EOD Process.',
+    fieldName: 'loanRepayment',
     border: false,
   },
 ];

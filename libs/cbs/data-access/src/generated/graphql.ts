@@ -4632,6 +4632,7 @@ export type EodErrors = {
   interestBooking?: Maybe<Array<Maybe<Scalars['String']>>>;
   interestPosting?: Maybe<Array<Maybe<Scalars['String']>>>;
   loanInterestBooking?: Maybe<Array<Maybe<Scalars['String']>>>;
+  loanRepayment?: Maybe<Array<Maybe<Scalars['String']>>>;
   maturity?: Maybe<Array<Maybe<Scalars['String']>>>;
   readiness?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
@@ -4682,6 +4683,7 @@ export type EodStates = {
   interestBooking?: Maybe<EodState>;
   interestPosting?: Maybe<EodState>;
   loanInterestBooking?: Maybe<EodState>;
+  loanRepayment?: Maybe<EodState>;
   maturity?: Maybe<EodState>;
   transactionDate?: Maybe<EodState>;
 };
@@ -28021,6 +28023,7 @@ export type GetEodStatusQuery = {
         cashInHand?: EodState | null;
         cashInVault?: EodState | null;
         loanInterestBooking?: EodState | null;
+        loanRepayment?: EodState | null;
       } | null;
       errors?: {
         readiness?: Array<string | null> | null;
@@ -28031,6 +28034,7 @@ export type GetEodStatusQuery = {
         cashInHand?: Array<string | null> | null;
         cashInVault?: Array<string | null> | null;
         loanInterestBooking?: Array<string | null> | null;
+        loanRepayment?: Array<string | null> | null;
       } | null;
     } | null;
   };
@@ -45743,6 +45747,7 @@ export const GetEodStatusDocument = `
         cashInHand
         cashInVault
         loanInterestBooking
+        loanRepayment
       }
       errors {
         readiness
@@ -45753,6 +45758,7 @@ export const GetEodStatusDocument = `
         cashInHand
         cashInVault
         loanInterestBooking
+        loanRepayment
       }
     }
   }

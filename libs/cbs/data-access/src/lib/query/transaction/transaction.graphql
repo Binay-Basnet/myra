@@ -370,6 +370,7 @@ query getEODStatus {
         cashInHand
         cashInVault
         loanInterestBooking
+        loanRepayment
       }
       errors {
         readiness
@@ -380,6 +381,7 @@ query getEODStatus {
         cashInHand
         cashInVault
         loanInterestBooking
+        loanRepayment
       }
     }
   }

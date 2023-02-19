@@ -40202,6 +40202,22 @@
             "deprecationReason": null
           },
           {
+            "name": "loanRepayment",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "maturity",
             "description": null,
             "args": [],
@@ -40602,6 +40618,18 @@
           },
           {
             "name": "loanInterestBooking",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "EODState",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "loanRepayment",
             "description": null,
             "args": [],
             "type": {
