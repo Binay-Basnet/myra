@@ -72,7 +72,7 @@ export const DayBookReport = () => {
   const receipts: DayBookTable =
     data?.report?.transactionReport?.financial?.dayBookReport?.data?.receipts?.map((receipt) => ({
       accountHead: receipt?.accountHead,
-      amount: amountConverter(receipt?.amount as string),
+      amount: receipt?.amount,
       particular: '-',
       voucherNo: '-',
       ledger: '-',
@@ -88,7 +88,7 @@ export const DayBookReport = () => {
   const payments: DayBookTable =
     data?.report?.transactionReport?.financial?.dayBookReport?.data?.payments?.map((receipt) => ({
       accountHead: receipt?.accountHead,
-      amount: amountConverter(receipt?.amount as string),
+      amount: receipt?.amount,
       voucherNo: '-',
       ledger: '-',
       children: sortParticular(

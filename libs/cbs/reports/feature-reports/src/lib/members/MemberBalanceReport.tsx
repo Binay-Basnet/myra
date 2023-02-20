@@ -17,7 +17,7 @@ import {
   FormDatePicker,
   FormRadioGroup,
 } from '@coop/shared/form';
-import { amountConverter, debitCreditConverter } from '@coop/shared/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 type MemberWiseBalanceFilters = Omit<MemberBalanceFilter, 'branchId'> & {
   branchId: {
@@ -145,16 +145,11 @@ export const MemberBalanceReport = () => {
                 },
                 {
                   header: 'Total Saving Balance',
-                  accessorFn: (row) =>
-                    debitCreditConverter(
-                      row.totalSavingBalance || '0.00',
-                      row.totalSavingBalanceType || ''
-                    ),
+                  accessorKey: 'totalSavingBalance',
+                  cell: (props) => amountConverter(props.getValue() as string),
+
                   footer: () =>
-                    debitCreditConverter(
-                      memberBalanceReportSummary?.totalSavingBalance || '0.00',
-                      memberBalanceReportSummary?.totalSavingBalanceType || ''
-                    ),
+                    amountConverter(memberBalanceReportSummary?.totalSavingBalance || '0.00'),
                   meta: {
                     isNumeric: true,
                   },
