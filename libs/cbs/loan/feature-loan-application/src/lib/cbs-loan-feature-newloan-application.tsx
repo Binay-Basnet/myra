@@ -19,6 +19,7 @@ import {
   LoanAccountInput,
   LoanRepaymentScheme,
   NatureOfDepositProduct,
+  TypeOfLoan,
   useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
@@ -374,7 +375,9 @@ export const NewLoanApplication = () => {
                     <Tenure />
                     <InstallmentFrequencyComp />
                     <LinkedAccounts />
-                    <LoanRepaymentSchemeComponent />
+                    {loanProductDetailsdata?.loanType === TypeOfLoan?.Normal && (
+                      <LoanRepaymentSchemeComponent />
+                    )}
                     <LoanPaymentSchedule />
                     <LoanProcessingCharge />
                     <RequiredDocuments />

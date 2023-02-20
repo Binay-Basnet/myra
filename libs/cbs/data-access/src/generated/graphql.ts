@@ -21322,6 +21322,7 @@ export type LoanProductFragment = {
   createdDate: string;
   productName: string;
   productType: string;
+  loanType: TypeOfLoan;
   productSubType: string;
   productNature: NatureOfLoanProduct;
   description?: string | null;
@@ -25264,6 +25265,7 @@ export type GetAbbsTransactionReportQuery = {
             memberName?: Record<'local' | 'en' | 'np', string> | null;
             accountNo?: string | null;
             typeOfTransaction?: string | null;
+            transactionId?: string | null;
             memberBranch?: string | null;
             transactionBranch?: string | null;
             paymentPayable?: string | null;
@@ -28673,6 +28675,7 @@ export const LoanProductFragmentDoc = `
   createdDate
   productName
   productType
+  loanType
   productSubType
   productNature
   description
@@ -42051,6 +42054,7 @@ export const GetAbbsTransactionReportDocument = `
             memberName
             accountNo
             typeOfTransaction
+            transactionId
             memberBranch
             transactionBranch
             paymentPayable

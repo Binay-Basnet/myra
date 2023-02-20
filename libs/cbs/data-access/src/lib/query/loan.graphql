@@ -6,6 +6,7 @@ fragment LoanProduct on LoanProduct {
   createdDate
   productName
   productType
+  loanType
   productSubType
   productNature
   description

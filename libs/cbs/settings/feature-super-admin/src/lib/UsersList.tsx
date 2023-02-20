@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Filter_Mode, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
+import { useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { ActionPopoverComponent } from '@coop/myra/components';
@@ -44,9 +44,6 @@ export const UsersList = () => {
       paginate: getRouterQuery({ type: ['PAGINATION'] }),
       filter: {
         query: searchTerm,
-        id: searchTerm,
-        branchId: searchTerm,
-        filterMode: Filter_Mode.And,
       },
     },
     { staleTime: 0, enabled: searchTerm !== 'undefined' }
