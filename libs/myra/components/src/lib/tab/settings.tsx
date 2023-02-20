@@ -106,3 +106,5 @@ export const SettingsLayout = () => {
     </Box>
   );
 };
+
+export default SettingsLayout;

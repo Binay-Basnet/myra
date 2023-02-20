@@ -5,6 +5,7 @@ import {
   useSearchIndexingMutation,
   useSearchInternalIndexingMutation,
 } from '@coop/cbs/data-access';
+import { SettingsGeneralLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
 import { Can } from '@coop/cbs/utils';
 
 const Indexing = () => {
@@ -79,6 +80,14 @@ const Indexing = () => {
         </Button>
       </Box>
     </Can>
+  );
+};
+
+Indexing.getLayout = function getLayout(page) {
+  return (
+    <SettingsLayout>
+      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+    </SettingsLayout>
   );
 };
 

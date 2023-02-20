@@ -4716,6 +4716,7 @@ export type EbankingTransaction = {
   accountId?: Maybe<Scalars['String']>;
   amount: Scalars['String'];
   balanceType?: Maybe<BalanceType>;
+  countAll?: Maybe<Scalars['String']>;
   credit?: Maybe<Scalars['String']>;
   currentBalance: Scalars['String'];
   date: Scalars['Localized'];
@@ -13488,6 +13489,7 @@ export type ServiceCenter = {
 export type ServiceCenterActivityDetails = {
   amount?: Maybe<Scalars['String']>;
   ibtAccount?: Maybe<Scalars['String']>;
+  ibtAccountName?: Maybe<Scalars['String']>;
   ibtCr?: Maybe<Scalars['String']>;
   ibtDr?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
