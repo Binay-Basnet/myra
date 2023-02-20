@@ -56,6 +56,15 @@ export const JournalVouchersTable = () => {
 
   const redirectEntries = JSON.parse(router?.query['entries'] as string);
 
+  const accountSearchOptions = useMemo(
+    () =>
+      accountListData?.map((account) => ({
+        label: account?.node?.accountName?.local as string,
+        value: account?.node?.accountCode as string,
+      })),
+    [accountListData]
+  );
+
   const tableSummaryColumns: TableOverviewColumnType[] = [
     { label: 'Total', width: 'auto', isNumeric: true },
     { label: String(drTotal), width: 'lg', isNumeric: true },
@@ -92,10 +101,7 @@ export const JournalVouchersTable = () => {
             accessor: 'accountId',
             header: 'Ledger',
             fieldType: 'search',
-            searchOptions: accountListData?.map((account) => ({
-              label: account?.node?.accountName?.local as string,
-              value: account?.node?.accountCode as string,
-            })),
+            searchOptions: accountSearchOptions,
             searchLoading: isFetching,
             searchCallback: (newSearch) => {
               setSearchTerm(newSearch);

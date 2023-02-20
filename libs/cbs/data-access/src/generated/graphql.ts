@@ -10001,6 +10001,7 @@ export type LoanProduct = Base & {
   ledgerMapping?: Maybe<LedgerMappingFormState>;
   loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   loanScheduleChangeOverride?: Maybe<Scalars['Boolean']>;
+  loanType: TypeOfLoan;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   maxAge?: Maybe<Scalars['Int']>;
   maxLoanAmount?: Maybe<Scalars['Amount']>;
