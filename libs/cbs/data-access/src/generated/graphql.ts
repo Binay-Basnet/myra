@@ -10001,6 +10001,7 @@ export type LoanProduct = Base & {
   ledgerMapping?: Maybe<LedgerMappingFormState>;
   loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   loanScheduleChangeOverride?: Maybe<Scalars['Boolean']>;
+  loanType: TypeOfLoan;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   maxAge?: Maybe<Scalars['Int']>;
   maxLoanAmount?: Maybe<Scalars['Amount']>;
@@ -21316,6 +21317,7 @@ export type LoanProductFragment = {
   createdDate: string;
   productName: string;
   productType: string;
+  loanType: TypeOfLoan;
   productSubType: string;
   productNature: NatureOfLoanProduct;
   description?: string | null;
@@ -28639,6 +28641,7 @@ export const LoanProductFragmentDoc = `
   createdDate
   productName
   productType
+  loanType
   productSubType
   productNature
   description

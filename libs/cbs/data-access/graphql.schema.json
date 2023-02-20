@@ -85207,6 +85207,22 @@
             "deprecationReason": null
           },
           {
+            "name": "loanType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "TypeOfLoan",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "maritalStatusId",
             "description": null,
             "args": [],
