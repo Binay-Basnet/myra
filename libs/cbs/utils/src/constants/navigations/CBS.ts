@@ -509,12 +509,12 @@ export const CBS: NavType = {
           aclKey: 'CBS_REPORTS',
           route: ROUTES.CBS_REPORT_LIST,
         },
-        {
-          label: 'reportsSavedReports',
-          aclKey: 'CBS_REPORTS',
+        // {
+        //   label: 'reportsSavedReports',
+        //   aclKey: 'CBS_REPORTS',
 
-          route: ROUTES.CBS_REPORT_SAVED,
-        },
+        //   route: ROUTES.CBS_REPORT_SAVED,
+        // },
       ],
     },
 

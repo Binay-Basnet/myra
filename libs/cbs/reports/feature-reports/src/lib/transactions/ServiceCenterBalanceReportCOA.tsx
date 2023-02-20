@@ -82,7 +82,7 @@ export const ServiceCenterCOAWiseBalanceReport = () => {
         <Report.PageHeader
           paths={[
             {
-              label: 'Transaction Reports',
+              label: 'Service Center Reports',
               link: '/reports/cbs/service-center',
             },
             {
@@ -110,7 +110,7 @@ export const ServiceCenterCOAWiseBalanceReport = () => {
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <FormDatePicker name="date" label="Select Date" />
+            <FormDatePicker name="date" label="Date" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
