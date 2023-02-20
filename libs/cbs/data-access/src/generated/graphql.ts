@@ -70,6 +70,10 @@ export const AbbsTransactionFilter = {
 
 export type AbbsTransactionFilter =
   typeof AbbsTransactionFilter[keyof typeof AbbsTransactionFilter];
+export type AbbsTransactionFilterType = {
+  transactionType?: InputMaybe<AbbsTransactionFilter>;
+};
+
 export type AbbsTransactionReport = {
   accountNo?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
@@ -80,13 +84,14 @@ export type AbbsTransactionReport = {
   paymentPayable?: Maybe<Scalars['String']>;
   paymentReceivable?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
   typeOfTransaction?: Maybe<Scalars['String']>;
 };
 
 export type AbbsTransactionReportFilter = {
   branchId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  filter?: InputMaybe<AbbsTransactionFilterType>;
   period: LocalizedDateFilter;
-  transactionType?: InputMaybe<AbbsTransactionFilter>;
 };
 
 export type AbbsTransactionReportResult = {
@@ -10001,6 +10006,7 @@ export type LoanProduct = Base & {
   ledgerMapping?: Maybe<LedgerMappingFormState>;
   loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   loanScheduleChangeOverride?: Maybe<Scalars['Boolean']>;
+  loanType: TypeOfLoan;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   maxAge?: Maybe<Scalars['Int']>;
   maxLoanAmount?: Maybe<Scalars['Amount']>;
@@ -25258,6 +25264,7 @@ export type GetAbbsTransactionReportQuery = {
             memberName?: Record<'local' | 'en' | 'np', string> | null;
             accountNo?: string | null;
             typeOfTransaction?: string | null;
+            transactionId?: string | null;
             memberBranch?: string | null;
             transactionBranch?: string | null;
             paymentPayable?: string | null;
@@ -42044,6 +42051,7 @@ export const GetAbbsTransactionReportDocument = `
             memberName
             accountNo
             typeOfTransaction
+            transactionId
             memberBranch
             transactionBranch
             paymentPayable
