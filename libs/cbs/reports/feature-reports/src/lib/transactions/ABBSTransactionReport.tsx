@@ -55,7 +55,7 @@ export const ABBSTransactionReport = () => {
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
-      report={ReportEnum.TRANSACTION_ABBS_STATUS_REPORT}
+      report={ReportEnum.TRANSACTION_ABBS_TRANSACTION_REPORT}
     >
       <Report.Header>
         <Report.PageHeader
