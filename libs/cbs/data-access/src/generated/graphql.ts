@@ -70,6 +70,10 @@ export const AbbsTransactionFilter = {
 
 export type AbbsTransactionFilter =
   typeof AbbsTransactionFilter[keyof typeof AbbsTransactionFilter];
+export type AbbsTransactionFilterType = {
+  transactionType?: InputMaybe<AbbsTransactionFilter>;
+};
+
 export type AbbsTransactionReport = {
   accountNo?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
@@ -80,13 +84,14 @@ export type AbbsTransactionReport = {
   paymentPayable?: Maybe<Scalars['String']>;
   paymentReceivable?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
   typeOfTransaction?: Maybe<Scalars['String']>;
 };
 
 export type AbbsTransactionReportFilter = {
   branchId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  filter?: InputMaybe<AbbsTransactionFilterType>;
   period: LocalizedDateFilter;
-  transactionType?: InputMaybe<AbbsTransactionFilter>;
 };
 
 export type AbbsTransactionReportResult = {
