@@ -4632,6 +4632,7 @@ export type EodErrors = {
   interestBooking?: Maybe<Array<Maybe<Scalars['String']>>>;
   interestPosting?: Maybe<Array<Maybe<Scalars['String']>>>;
   loanInterestBooking?: Maybe<Array<Maybe<Scalars['String']>>>;
+  loanRepayment?: Maybe<Array<Maybe<Scalars['String']>>>;
   maturity?: Maybe<Array<Maybe<Scalars['String']>>>;
   readiness?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
@@ -4640,6 +4641,7 @@ export type EodException = {
   branchReadiness: Scalars['Boolean'];
   cashInHand: Scalars['Boolean'];
   dormantCheck: Scalars['Boolean'];
+  loanRepayment: Scalars['Boolean'];
   maturityCheck: Scalars['Boolean'];
 };
 
@@ -4647,6 +4649,7 @@ export type EodExceptionInput = {
   branchReadiness: Scalars['Boolean'];
   cashInHand: Scalars['Boolean'];
   dormantCheck: Scalars['Boolean'];
+  loanRepayment: Scalars['Boolean'];
   maturityCheck: Scalars['Boolean'];
 };
 
@@ -4682,6 +4685,7 @@ export type EodStates = {
   interestBooking?: Maybe<EodState>;
   interestPosting?: Maybe<EodState>;
   loanInterestBooking?: Maybe<EodState>;
+  loanRepayment?: Maybe<EodState>;
   maturity?: Maybe<EodState>;
   transactionDate?: Maybe<EodState>;
 };
@@ -4712,6 +4716,7 @@ export type EbankingTransaction = {
   accountId?: Maybe<Scalars['String']>;
   amount: Scalars['String'];
   balanceType?: Maybe<BalanceType>;
+  countAll?: Maybe<Scalars['String']>;
   credit?: Maybe<Scalars['String']>;
   currentBalance: Scalars['String'];
   date: Scalars['Localized'];
@@ -9363,6 +9368,7 @@ export type LoanAccountMinimal = {
 export type LoanAccountMutation = {
   add?: Maybe<LoanAccountResult>;
   approveOrCancel?: Maybe<LoanAccountResult>;
+  changeLOC?: Maybe<Scalars['String']>;
   disburse?: Maybe<LoanDisbursementResult>;
   repayment?: Maybe<LoanRepaymentResult>;
 };
@@ -9376,6 +9382,11 @@ export type LoanAccountMutationApproveOrCancelArgs = {
   action: LoanApproveOrCancel;
   loanAccountId: Scalars['String'];
   remarks?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanAccountMutationChangeLocArgs = {
+  accountId: Scalars['ID'];
+  newAmount: Scalars['String'];
 };
 
 export type LoanAccountMutationDisburseArgs = {
@@ -9429,6 +9440,7 @@ export type LoanAccountPreviewResult = {
 };
 
 export type LoanAccountQuery = {
+  accountLOC?: Maybe<Scalars['String']>;
   formState?: Maybe<LoanAccountFormStateResult>;
   getLoanInstallments?: Maybe<LoanInstallmentResult>;
   getProductCriteria?: Maybe<LoanProductCriteriaResult>;
@@ -9439,6 +9451,10 @@ export type LoanAccountQuery = {
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
   paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
   repaymentList?: Maybe<LoanRepaymentConnection>;
+};
+
+export type LoanAccountQueryAccountLocArgs = {
+  accountId: Scalars['ID'];
 };
 
 export type LoanAccountQueryFormStateArgs = {
@@ -13473,6 +13489,7 @@ export type ServiceCenter = {
 export type ServiceCenterActivityDetails = {
   amount?: Maybe<Scalars['String']>;
   ibtAccount?: Maybe<Scalars['String']>;
+  ibtAccountName?: Maybe<Scalars['String']>;
   ibtCr?: Maybe<Scalars['String']>;
   ibtDr?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -28336,6 +28353,7 @@ export type GetServiceCenterTransferListQuery = {
           ibtAccount?: string | null;
           ibtCr?: string | null;
           ibtDr?: string | null;
+          ibtAccountName?: string | null;
           status?: IbtStatus | null;
         } | null;
       } | null> | null;
@@ -46120,6 +46138,7 @@ export const GetServiceCenterTransferListDocument = `
           ibtAccount
           ibtCr
           ibtDr
+          ibtAccountName
           status
         }
         cursor

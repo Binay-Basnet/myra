@@ -39,6 +39,7 @@ export const IBTCompleteModal = ({ transfer, approveModal }: IIBTCompleteModalPr
         entries: JSON.stringify([
           {
             accountId: transfer?.ibtAccount,
+            accountName: transfer?.ibtAccountName,
             drAmount: transfer?.ibtDr,
             crAmount: transfer?.ibtCr,
           },
