@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
 import { Box } from '@myra-ui';
@@ -53,17 +54,40 @@ export const JournalVouchersTable = () => {
 
   const accountListData = accountList?.settings?.chartsOfAccount?.ledgersForJVPosting?.edges;
 
+  const redirectEntries = JSON.parse(router?.query['entries'] as string);
+
+  const accountSearchOptions = useMemo(
+    () =>
+      accountListData?.map((account) => ({
+        label: account?.node?.accountName?.local as string,
+        value: account?.node?.accountCode as string,
+      })),
+    [accountListData]
+  );
+
   const tableSummaryColumns: TableOverviewColumnType[] = [
     { label: 'Total', width: 'auto', isNumeric: true },
     { label: String(drTotal), width: 'lg', isNumeric: true },
     { label: String(crTotal), width: 'lg', isNumeric: true },
   ];
 
-  const redirectEntries = router?.query['entries'];
-
-  useEffect(() => {
-    if (redirectEntries) {
-      setValue('entries', JSON.parse(redirectEntries as string));
+  useDeepCompareEffect(() => {
+    if (redirectEntries?.length) {
+      setValue(
+        'entries',
+        redirectEntries.map(
+          (entry: {
+            accountId: string;
+            accountName: string;
+            drAmount: string;
+            crAmount: string;
+          }) => ({
+            accountId: { label: entry.accountName, value: entry.accountId },
+            drAmount: entry.drAmount,
+            crAmount: entry.crAmount,
+          })
+        )
+      );
     }
   }, [redirectEntries]);
 
@@ -77,10 +101,7 @@ export const JournalVouchersTable = () => {
             accessor: 'accountId',
             header: 'Ledger',
             fieldType: 'search',
-            searchOptions: accountListData?.map((account) => ({
-              label: account?.node?.accountName?.local as string,
-              value: account?.node?.accountCode as string,
-            })),
+            searchOptions: accountSearchOptions,
             searchLoading: isFetching,
             searchCallback: (newSearch) => {
               setSearchTerm(newSearch);

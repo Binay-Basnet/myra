@@ -333,3 +333,26 @@ query getCharKhataReport($data: CharKhataReportFilter!) {
     }
   }
 }
+
+query getABBSTransactionReport($data: AbbsTransactionReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        abbsTransactionReport(data: $data) {
+          data {
+            date
+            memberId
+            memberCode
+            memberName
+            accountNo
+            typeOfTransaction
+            memberBranch
+            transactionBranch
+            paymentPayable
+            paymentReceivable
+          }
+        }
+      }
+    }
+  }
+}

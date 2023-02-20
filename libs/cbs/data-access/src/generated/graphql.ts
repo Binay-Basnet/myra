@@ -25244,6 +25244,33 @@ export type GetCharKhataReportQuery = {
   };
 };
 
+export type GetAbbsTransactionReportQueryVariables = Exact<{
+  data: AbbsTransactionReportFilter;
+}>;
+
+export type GetAbbsTransactionReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        abbsTransactionReport?: {
+          data?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            memberId?: string | null;
+            memberCode?: string | null;
+            memberName?: Record<'local' | 'en' | 'np', string> | null;
+            accountNo?: string | null;
+            typeOfTransaction?: string | null;
+            memberBranch?: string | null;
+            transactionBranch?: string | null;
+            paymentPayable?: string | null;
+            paymentReceivable?: string | null;
+          } | null> | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<RequestFilter>;
@@ -28365,6 +28392,7 @@ export type GetServiceCenterTransferListQuery = {
           ibtAccount?: string | null;
           ibtCr?: string | null;
           ibtDr?: string | null;
+          ibtAccountName?: string | null;
           status?: IbtStatus | null;
         } | null;
       } | null> | null;
@@ -42007,6 +42035,44 @@ export const useGetCharKhataReportQuery = <TData = GetCharKhataReportQuery, TErr
     ).bind(null, variables),
     options
   );
+export const GetAbbsTransactionReportDocument = `
+    query getABBSTransactionReport($data: AbbsTransactionReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        abbsTransactionReport(data: $data) {
+          data {
+            date
+            memberId
+            memberCode
+            memberName
+            accountNo
+            typeOfTransaction
+            memberBranch
+            transactionBranch
+            paymentPayable
+            paymentReceivable
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAbbsTransactionReportQuery = <
+  TData = GetAbbsTransactionReportQuery,
+  TError = unknown
+>(
+  variables: GetAbbsTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetAbbsTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetAbbsTransactionReportQuery, TError, TData>(
+    ['getABBSTransactionReport', variables],
+    useAxios<GetAbbsTransactionReportQuery, GetAbbsTransactionReportQueryVariables>(
+      GetAbbsTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetChequeBookRequestsDocument = `
     query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
   requests {
@@ -46168,6 +46234,7 @@ export const GetServiceCenterTransferListDocument = `
           ibtAccount
           ibtCr
           ibtDr
+          ibtAccountName
           status
         }
         cursor

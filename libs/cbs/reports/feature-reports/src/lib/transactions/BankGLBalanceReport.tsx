@@ -8,9 +8,8 @@ import {
   useGetBankGlBalanceReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormAmountFilter, FormBranchSelect } from '@coop/shared/form';
+import { FormAmountFilter, FormBranchSelect, FormDatePicker } from '@coop/shared/form';
 import { amountConverter, debitCreditConverter, useIsCbs } from '@coop/shared/utils';
 
 type BankGlBalanceFilters = Omit<BankGlBalanceFilter, 'branchId'> & {
@@ -31,7 +30,11 @@ export const BankGLBalanceReport = () => {
 
   const { data, isFetching } = useGetBankGlBalanceReportQuery(
     {
-      data: { ...filters, branchId: branchIds } as BankGlBalanceFilter,
+      data: {
+        ...filters,
+        period: { from: filters?.period.from, to: filters?.period.from },
+        branchId: branchIds,
+      } as BankGlBalanceFilter,
     },
     { enabled: !!filters }
   );
@@ -68,8 +71,8 @@ export const BankGLBalanceReport = () => {
             <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange />
-          </GridItem>{' '}
+            <FormDatePicker name="period.from" label="Date Period" />
+          </GridItem>
         </Report.Inputs>
       </Report.Header>
 

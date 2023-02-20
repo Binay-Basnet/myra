@@ -137,6 +137,7 @@ query getServiceCenterTransferList(
           ibtAccount
           ibtCr
           ibtDr
+          ibtAccountName
           status
         }
         cursor

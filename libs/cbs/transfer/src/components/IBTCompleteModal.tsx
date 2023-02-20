@@ -1,4 +1,4 @@
-import router from 'next/router';
+import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { omit } from 'lodash';
 
@@ -16,21 +16,11 @@ interface IIBTCompleteModalProps {
 export const IBTCompleteModal = ({ transfer, approveModal }: IIBTCompleteModalProps) => {
   const { isOpen, onClose } = approveModal;
 
-  const handleApprove = () => {
-    // router.push(`${ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD}`, {
-    //   query: {
-    //     redirectFrom: 'IBT',
-    //     requestId: transfer?.id,
-    //     entries: JSON.stringify([
-    //       {
-    //         accountId: transfer?.ibtAccount,
-    //         drAmount: transfer?.ibtDr,
-    //         crAmount: transfer?.ibtCr,
-    //       },
-    //     ]),
-    //   },
-    // });
+  const router = useRouter();
 
+  const objState = router?.query['objState'];
+
+  const handleApprove = () => {
     router.push({
       pathname: ROUTES.CBS_TRANS_JOURNAL_VOUCHER_ADD,
       query: {
@@ -39,6 +29,7 @@ export const IBTCompleteModal = ({ transfer, approveModal }: IIBTCompleteModalPr
         entries: JSON.stringify([
           {
             accountId: transfer?.ibtAccount,
+            accountName: transfer?.ibtAccountName,
             drAmount: transfer?.ibtDr,
             crAmount: transfer?.ibtCr,
           },
@@ -50,7 +41,9 @@ export const IBTCompleteModal = ({ transfer, approveModal }: IIBTCompleteModalPr
   return (
     <Modal
       width="2xl"
-      primaryButtonLabel={transfer?.status === IbtStatus.Pending ? 'Complete' : undefined}
+      primaryButtonLabel={
+        transfer?.status === IbtStatus.Pending && objState === 'RECEIVED' ? 'Complete' : undefined
+      }
       primaryButtonHandler={handleApprove}
       isSecondaryDanger
       onClose={() => {

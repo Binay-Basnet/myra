@@ -97,6 +97,7 @@ export enum Report {
   TRANSACTION_SERVICE_CENTER_COA_WISE_BALANCE = 'Service Center COA Head Wise Balance',
   TRANSACTION_BANK_GL_BALANCE_REPORT = 'Bank GL Balance Report',
   TRANSACTION_ABBS_STATUS_REPORT = 'ABBS Report',
+  TRANSACTION_ABBS_TRANSACTION_REPORT = 'ABBS Transaction Report',
   TRANSACTION_CHAR_KHATA_REPORT = 'Charkhata Ledger Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
@@ -540,6 +541,11 @@ export const REPORTS = {
       id: '7.7',
       report: Report.TRANSACTION_BANK_GL_REPORT,
       link: 'bank-gl-statement',
+    },
+    {
+      id: '7.7.1',
+      report: Report.TRANSACTION_ABBS_TRANSACTION_REPORT,
+      link: 'abbs-transaction',
     },
   ],
   [ReportGroup.BRANCHLESS_BANKING]: [
