@@ -254,7 +254,7 @@ export const DayBookReport = () => {
                       <ExpandedCell row={props.row} value={props.getValue() as string} />
                     </Box>
                   ),
-                  footer: () => <MultiFooter texts={['Total Receipts', 'Total Amount']} />,
+                  footer: () => <MultiFooter texts={['Total Payments', 'Total Amount']} />,
                   meta: {
                     width: '30%',
                     Footer: {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IoQrCode } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { AccountQRModal, IconButton } from '@myra-ui';
+import { AccountQRModal, Box, IconButton, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
@@ -68,12 +68,36 @@ export const LoanTable = ({
       {
         header: 'Interest',
         accessorKey: 'interestRate',
+        cell: (props) => (
+          <Box>
+            {props.getValue() !== '-' && (
+              <Text
+                fontSize="s3"
+                textTransform="capitalize"
+                textOverflow="ellipsis"
+                overflow="hidden"
+              >
+                {props.getValue() as string} %
+              </Text>
+            )}
+            {props.getValue() === '-' && (
+              <Text
+                fontSize="s3"
+                textTransform="capitalize"
+                textOverflow="ellipsis"
+                overflow="hidden"
+              >
+                {props.getValue() as string}
+              </Text>
+            )}
+          </Box>
+        ),
         meta: {
           isNumeric: true,
         },
       },
       {
-        header: 'Closed Date',
+        header: 'Disbursed Date',
         accessorKey: 'subscriptionDate',
       },
       {
@@ -118,7 +142,7 @@ export const LoanTable = ({
         cell: (props) => (
           <RedirectButton
             label={props?.row?.original?.accountName as string}
-            link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props?.row?.original?.id}`}
+            link={`${ROUTES.CBS_LOAN_ACCOUNT_CLOSED_DETAILS}?id=${props?.row?.original?.id}`}
           />
         ),
       },
@@ -132,12 +156,36 @@ export const LoanTable = ({
       {
         header: 'Interest',
         accessorKey: 'interestRate',
+        cell: (props) => (
+          <Box>
+            {props.getValue() !== '-' && (
+              <Text
+                fontSize="s3"
+                textTransform="capitalize"
+                textOverflow="ellipsis"
+                overflow="hidden"
+              >
+                {props.getValue() as string} %
+              </Text>
+            )}
+            {props.getValue() === '-' && (
+              <Text
+                fontSize="s3"
+                textTransform="capitalize"
+                textOverflow="ellipsis"
+                overflow="hidden"
+              >
+                {props.getValue() as string}
+              </Text>
+            )}
+          </Box>
+        ),
         meta: {
           isNumeric: true,
         },
       },
       {
-        header: 'Disbursed Date',
+        header: 'Closed Date',
         accessorKey: 'subscriptionDate',
         cell: (props) => props?.row?.original?.subscriptionDate,
       },
