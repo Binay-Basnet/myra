@@ -99,7 +99,7 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
               options={WITHDRAW_SLIP_COUNT_OPTIONS}
             />
 
-            {availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.length && (
+            {availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.length ? (
               <GridItem colSpan={2}>
                 <Alert
                   status="warning"
@@ -107,7 +107,7 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
                   hideCloseIcon
                 />
               </GridItem>
-            )}
+            ) : null}
 
             {count && from && to && (
               <>
