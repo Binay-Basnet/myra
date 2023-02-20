@@ -74,10 +74,10 @@ export const useTransferDetailHooks = () => {
   };
 
   const { data: tellerBankTransfer } = useGetTellerBankDetailsQuery(
-    { transactionId: id as string }
-    // {
-    //   enabled: !router?.asPath?.includes('bank-transfer'),
-    // }
+    { transactionId: id as string },
+    {
+      enabled: router?.asPath?.includes('bank-transfer'),
+    }
   );
 
   const tellerBankTransferData =

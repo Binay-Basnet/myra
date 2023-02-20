@@ -5,7 +5,6 @@ import { Box, Text } from '@myra-ui';
 import { Table } from '@myra-ui/table';
 
 import { PopoverComponent } from '@coop/myra/components';
-import { featureCode } from '@coop/shared/utils';
 
 import { ReportGroup, REPORTS } from '../constants/REPORTS';
 
@@ -20,7 +19,7 @@ export const ShareReportList = () => (
         link={report.link ? `/reports/cbs/share/${report.link}/new` : undefined}
       >
         {/* {report.id} -  */}
-        {report.report} - {featureCode?.shareRegisterList}
+        {report.report}
       </ReportLinkText>
     ))}
   </Box>

@@ -12,12 +12,13 @@ import { useTransferDetailHooks } from '../../hooks/useTransferDetailHooks';
 
 interface ITransferDetailsHeaderProps {
   title: string;
+  page?: string | undefined | null;
 }
 
-export const TransferDetailsHeader = ({ title }: ITransferDetailsHeaderProps) => {
+export const TransferDetailsHeader = ({ title, page }: ITransferDetailsHeaderProps) => {
   const router = useRouter();
 
-  const { transferDetailData } = useTransferDetailHooks();
+  const { transferDetailData, tellerBankTransferData } = useTransferDetailHooks();
 
   const { cashTransitTransferDetailData } = useCashTransitTransferDetailHooks();
 
@@ -45,6 +46,15 @@ export const TransferDetailsHeader = ({ title }: ITransferDetailsHeaderProps) =>
       };
     }
 
+    if (router?.asPath?.includes('bank-transfer')) {
+      tempDetail = {
+        'Transfer ID': `#${tellerBankTransferData?.transactionId}`,
+        'Transfer Date': localizedDate(tellerBankTransferData?.transactionDate),
+        Teller: tellerBankTransferData?.tellerName,
+        Type: tellerBankTransferData?.transferType,
+      };
+    }
+
     if (router?.asPath?.includes('teller-transfer')) {
       tempDetail = {
         'Transfer ID': `#${transferDetailData?.transferCode}`,
@@ -69,7 +79,7 @@ export const TransferDetailsHeader = ({ title }: ITransferDetailsHeaderProps) =>
     }
 
     return tempDetail;
-  }, [transferDetailData, router?.asPath]);
+  }, [transferDetailData, tellerBankTransferData, router?.asPath]);
 
   return (
     <>
@@ -81,17 +91,22 @@ export const TransferDetailsHeader = ({ title }: ITransferDetailsHeaderProps) =>
               (localizedText(transferDetailData?.srcTeller) as string) ||
               (localizedText(cashTransitTransferDetailData?.srcTeller) as string),
           }}
-          options={pageHeaderOptions}
+          options={page ? [{ label: 'Print Voucher', handler: handlePrint }] : pageHeaderOptions}
         />
       </Box>
       <TransferVoucherPrint
         details={transferDetail}
         note={transferDetailData?.note || cashTransitTransferDetailData?.note || ''}
         glTransactions={
-          transferDetailData?.glTransaction || cashTransitTransferDetailData?.glTransaction
+          transferDetailData?.glTransaction ||
+          tellerBankTransferData?.glTransaction ||
+          cashTransitTransferDetailData?.glTransaction
         }
         glTransactionsTotal={
-          transferDetailData?.totalDebit || cashTransitTransferDetailData?.totalDebit || '0'
+          transferDetailData?.totalDebit ||
+          tellerBankTransferData?.totalDebit ||
+          cashTransitTransferDetailData?.totalDebit ||
+          '0'
         }
         ref={printComponentRef}
       />

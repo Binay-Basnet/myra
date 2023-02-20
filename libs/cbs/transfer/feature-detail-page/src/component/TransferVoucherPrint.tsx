@@ -176,16 +176,7 @@ export const TransferVoucherPrint = forwardRef<HTMLInputElement, TransferVoucher
           )} */}
         </Box>
 
-        <Box
-          // position="fixed"
-          w="100%"
-          bottom="100px"
-          left={0}
-          display="grid"
-          gridTemplateColumns="repeat(3, 1fr)"
-          gap="s32"
-          px="s32"
-        >
+        <Box display="flex" justifyContent="space-around" mt="s48">
           <Box display="flex" flexDir="column" alignItems="center" gap="s12">
             <Divider borderTop="1px dotted black" />
             <Text fontSize="s2" color="gray.800" fontWeight="500">

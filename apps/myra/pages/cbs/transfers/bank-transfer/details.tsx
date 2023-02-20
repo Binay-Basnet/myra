@@ -8,7 +8,7 @@ import { VaultBankTransferPage } from '@coop/cbs/transfer/detail';
 
 const TransferView = () => (
   <>
-    <TransferDetailsHeader title="Teller - Bank Transfer" />
+    <TransferDetailsHeader title="Teller - Bank Transfer" page="Bank Transfer" />
     <VaultBankTransferPage />
   </>
 );
