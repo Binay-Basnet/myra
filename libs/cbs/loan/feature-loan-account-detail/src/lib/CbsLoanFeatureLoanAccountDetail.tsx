@@ -5,6 +5,7 @@ import { Alert, asyncToast, Box, Button, Modal, Text } from '@myra-ui';
 
 import { useChangeLocMutation, useGetLoanProductDetailQuery } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 import { SideBar } from '../component/SideBar';
 import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
@@ -82,8 +83,14 @@ export const CbsLoanFeatureLoanAccountDetail = (props: CbsLoanFeatureLoanAccount
           >
             <Box display="flex" flexDir="column" gap={5}>
               <Alert status="info" title="Loan Amount Limit" hideCloseIcon>
-                <Text>Minimun: {loanData?.minimumLoanAmount}</Text>
-                <Text>Maximun: {loanData?.maxLoanAmount}</Text>
+                <ul>
+                  <li>
+                    <Text>Minimun: {amountConverter(loanData?.minimumLoanAmount)}</Text>
+                  </li>
+                  <li>
+                    <Text>Maximun: {amountConverter(loanData?.maxLoanAmount)}</Text>
+                  </li>
+                </ul>
               </Alert>
               <FormInput type="number" label="Loan Amount" name="newLoanAmount" />
             </Box>
