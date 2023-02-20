@@ -117,6 +117,17 @@ export const ABBSTransactionReport = () => {
                 accessorKey: 'typeOfTransaction',
               },
               {
+                header: 'Transaction Code',
+                accessorKey: 'transactionId',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.transactionId as string}
+                    type="transactions"
+                    label={props?.row?.original?.transactionId as string}
+                  />
+                ),
+              },
+              {
                 header: 'Member Branch',
                 accessorKey: 'memberBranch',
               },
@@ -146,7 +157,7 @@ export const ABBSTransactionReport = () => {
         <Report.Filters>
           <Report.Filter title="Transaction Type">
             <FormRadioGroup
-              name="transactionType"
+              name="filter.transactionType"
               options={transactionOptions}
               direction="column"
             />

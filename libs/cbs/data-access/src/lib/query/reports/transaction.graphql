@@ -346,6 +346,7 @@ query getABBSTransactionReport($data: AbbsTransactionReportFilter!) {
             memberName
             accountNo
             typeOfTransaction
+            transactionId
             memberBranch
             transactionBranch
             paymentPayable
