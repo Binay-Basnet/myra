@@ -25242,6 +25242,33 @@ export type GetCharKhataReportQuery = {
   };
 };
 
+export type GetAbbsTransactionReportQueryVariables = Exact<{
+  data: AbbsTransactionReportFilter;
+}>;
+
+export type GetAbbsTransactionReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        abbsTransactionReport?: {
+          data?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            memberId?: string | null;
+            memberCode?: string | null;
+            memberName?: Record<'local' | 'en' | 'np', string> | null;
+            accountNo?: string | null;
+            typeOfTransaction?: string | null;
+            memberBranch?: string | null;
+            transactionBranch?: string | null;
+            paymentPayable?: string | null;
+            paymentReceivable?: string | null;
+          } | null> | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<RequestFilter>;
@@ -42001,6 +42028,44 @@ export const useGetCharKhataReportQuery = <TData = GetCharKhataReportQuery, TErr
     ['getCharKhataReport', variables],
     useAxios<GetCharKhataReportQuery, GetCharKhataReportQueryVariables>(
       GetCharKhataReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAbbsTransactionReportDocument = `
+    query getABBSTransactionReport($data: AbbsTransactionReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        abbsTransactionReport(data: $data) {
+          data {
+            date
+            memberId
+            memberCode
+            memberName
+            accountNo
+            typeOfTransaction
+            memberBranch
+            transactionBranch
+            paymentPayable
+            paymentReceivable
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAbbsTransactionReportQuery = <
+  TData = GetAbbsTransactionReportQuery,
+  TError = unknown
+>(
+  variables: GetAbbsTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetAbbsTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetAbbsTransactionReportQuery, TError, TData>(
+    ['getABBSTransactionReport', variables],
+    useAxios<GetAbbsTransactionReportQuery, GetAbbsTransactionReportQueryVariables>(
+      GetAbbsTransactionReportDocument
     ).bind(null, variables),
     options
   );
