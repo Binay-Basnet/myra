@@ -447,6 +447,7 @@ export const SettingsLoanProductForm = () => {
   }, [id, refetch]);
 
   const memberType = watch('typeOfMember');
+  const typeOfLoan = watch('loanType');
 
   return (
     <>
@@ -483,13 +484,13 @@ export const SettingsLoanProductForm = () => {
 
               <Tenure />
               <AmountLimit />
-              <LoanRepaymentSchemes />
-              <PartialPayment />
-              <Penalty />
-              <PrematurePenalty />
+              {typeOfLoan === TypeOfLoan?.Normal && <LoanRepaymentSchemes />}
+              {typeOfLoan === TypeOfLoan?.Normal && <PartialPayment />}
+              {typeOfLoan === TypeOfLoan?.Normal && <Penalty />}
+              {typeOfLoan === TypeOfLoan?.Normal && <PrematurePenalty />}
               {repaymentScheme && repaymentScheme?.includes(LoanRepaymentScheme.Epi) && <Rebate />}
 
-              <LoanRepayment />
+              {typeOfLoan === TypeOfLoan?.Normal && <LoanRepayment />}
               <NewQuestions />
               {/* <InstallmentFrequency /> */}
               <Interest />

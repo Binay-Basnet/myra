@@ -103,7 +103,13 @@ export const GeneralSetup = () => {
         label={t['loanProductNatureLoanProduct']}
       />
       <GridItem colSpan={2}>
-        <FormSelect isRequired name="loanType" options={typeOfLoan} label="Type Of Loan" />
+        <FormSelect
+          isRequired
+          name="loanType"
+          options={typeOfLoan}
+          label="Type Of Loan"
+          isDisabled={router?.asPath?.includes('/edit')}
+        />
       </GridItem>
       <GridItem colSpan={3}>
         <FormInput name="description" label={t['loanProductDescription']} />

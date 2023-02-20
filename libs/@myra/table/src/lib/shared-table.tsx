@@ -122,24 +122,18 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
                 border: '1px',
                 borderColor: 'border.layout',
                 borderRadius: 'br2',
-                pageBreakInside: 'avoid',
 
                 scrollbarWidth: 'none',
                 '&::-webkit-scrollbar': {
                   display: 'none',
                 },
                 '@media print': {
-                  // display: 'flex',
-                  // flexDir: 'column',
                   w: '100%',
-                  // h: '100%',
-                  // minW: '100%',
-                  // maxW: '100%',
+                  h: '100%',
+                  display: 'block',
                   maxH: 'none',
                   overflow: 'visible',
-                  // overflowX: 'visible',
                   borderRadius: '0',
-                  pageBreakAfter: 'avoid',
                 },
               }
             : {}
@@ -158,16 +152,17 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr
                 sx={{
-                  pageBreakInside: 'avoid',
-                  pageBreakAfter: 'auto',
+                  pageBreakBefore: 'always',
+                  pageBreakInside: 'auto !important',
+                  pageBreakAfter: 'auto !important',
                 }}
                 key={headerGroup.id}
               >
                 {headerGroup.headers.map((header) => (
                   <Th
                     sx={{
-                      pageBreakInside: 'avoid',
-                      pageBreakAfter: 'auto',
+                      pageBreakInside: 'auto !important',
+                      pageBreakAfter: 'auto !important',
                     }}
                     bg={isDetailPageTable ? 'highlight.500' : 'gray.0'}
                     key={header.id}
@@ -229,6 +224,10 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
             ))}
           </Thead>
           <Tbody
+            sx={{
+              pageBreakInside: 'auto !important',
+              pageBreakAfter: 'auto !important',
+            }}
             h={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
             position={isLoading || !data || data?.length === 0 ? 'relative' : 'static'}
           >

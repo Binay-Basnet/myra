@@ -19,32 +19,32 @@ const Indexing = () => {
     useResetTrialBalanceCacheMutation({});
 
   const resetSearchIndexHandler = () => {
-    resetSearchIndexMutation({}).then(() => {
+    resetSearchIndexMutation({}).then((res) => {
       toast({
         id: 'indexing',
         type: 'success',
-        message: 'Index reset successfully',
+        message: res?.search?.indexData,
       });
     });
   };
 
   const resetInternalSearchIndexHandler = () => {
-    resetInternalSearchIndexMutation({}).then(() => {
+    resetInternalSearchIndexMutation({}).then((res) => {
       toast({
         id: 'internal-indexing',
         type: 'success',
-        message: 'Internal Index reset successfully',
+        message: res?.search?.indexData,
       });
     });
   };
 
   const resetTrailBalanceCacheHandler = () => {
     resetTrialBalanceCacheMutation({})
-      .then(() => {
+      .then((res) => {
         toast({
           id: 'reset-trial-balance-cache-success',
           type: 'success',
-          message: 'Trail balance reset successfully',
+          message: res?.settings?.report?.resetTrialCache,
         });
       })
       .catch(() => {
@@ -62,21 +62,21 @@ const Indexing = () => {
           Indexing
         </Text>
         <Button onClick={resetSearchIndexHandler} width={150} isLoading={resetSearchIndexLoading}>
-          Reset Search index
+          Reset Search Index
         </Button>
         <Button
           onClick={resetTrailBalanceCacheHandler}
           width={200}
           isLoading={resetTrialBalanceCacheLoading}
         >
-          Reset trial balance cache
+          Reset Trial Balance Cache
         </Button>
         <Button
           onClick={resetInternalSearchIndexHandler}
           width={200}
           isLoading={resetInternalSearchIndexLoading}
         >
-          Reset Internal Search index
+          Reset Internal Search Index
         </Button>
       </Box>
     </Can>

@@ -8,6 +8,7 @@ query getEodExceptions {
           dormantCheck
           maturityCheck
           cashInHand
+          loanRepayment
         }
       }
     }

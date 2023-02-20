@@ -16591,6 +16591,13 @@ export type SetLoanRepaymentMutation = {
   };
 };
 
+export type ChangeLocMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+  newAmount: Scalars['String'];
+}>;
+
+export type ChangeLocMutation = { loanAccount: { changeLOC?: string | null } };
+
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
 }>;
@@ -25235,6 +25242,33 @@ export type GetCharKhataReportQuery = {
   };
 };
 
+export type GetAbbsTransactionReportQueryVariables = Exact<{
+  data: AbbsTransactionReportFilter;
+}>;
+
+export type GetAbbsTransactionReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        abbsTransactionReport?: {
+          data?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            memberId?: string | null;
+            memberCode?: string | null;
+            memberName?: Record<'local' | 'en' | 'np', string> | null;
+            accountNo?: string | null;
+            typeOfTransaction?: string | null;
+            memberBranch?: string | null;
+            transactionBranch?: string | null;
+            paymentPayable?: string | null;
+            paymentReceivable?: string | null;
+          } | null> | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<RequestFilter>;
@@ -26000,6 +26034,7 @@ export type GetEodExceptionsQuery = {
           dormantCheck: boolean;
           maturityCheck: boolean;
           cashInHand: boolean;
+          loanRepayment: boolean;
         } | null;
       };
     } | null;
@@ -28020,6 +28055,7 @@ export type GetEodStatusQuery = {
         cashInHand?: EodState | null;
         cashInVault?: EodState | null;
         loanInterestBooking?: EodState | null;
+        loanRepayment?: EodState | null;
       } | null;
       errors?: {
         readiness?: Array<string | null> | null;
@@ -28030,6 +28066,7 @@ export type GetEodStatusQuery = {
         cashInHand?: Array<string | null> | null;
         cashInVault?: Array<string | null> | null;
         loanInterestBooking?: Array<string | null> | null;
+        loanRepayment?: Array<string | null> | null;
       } | null;
     } | null;
   };
@@ -30234,6 +30271,21 @@ export const useSetLoanRepaymentMutation = <TError = unknown, TContext = unknown
   useMutation<SetLoanRepaymentMutation, TError, SetLoanRepaymentMutationVariables, TContext>(
     ['setLoanRepayment'],
     useAxios<SetLoanRepaymentMutation, SetLoanRepaymentMutationVariables>(SetLoanRepaymentDocument),
+    options
+  );
+export const ChangeLocDocument = `
+    mutation changeLOC($accountId: ID!, $newAmount: String!) {
+  loanAccount {
+    changeLOC(accountId: $accountId, newAmount: $newAmount)
+  }
+}
+    `;
+export const useChangeLocMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<ChangeLocMutation, TError, ChangeLocMutationVariables, TContext>
+) =>
+  useMutation<ChangeLocMutation, TError, ChangeLocMutationVariables, TContext>(
+    ['changeLOC'],
+    useAxios<ChangeLocMutation, ChangeLocMutationVariables>(ChangeLocDocument),
     options
   );
 export const GetNewIdDocument = `
@@ -41980,6 +42032,44 @@ export const useGetCharKhataReportQuery = <TData = GetCharKhataReportQuery, TErr
     ).bind(null, variables),
     options
   );
+export const GetAbbsTransactionReportDocument = `
+    query getABBSTransactionReport($data: AbbsTransactionReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        abbsTransactionReport(data: $data) {
+          data {
+            date
+            memberId
+            memberCode
+            memberName
+            accountNo
+            typeOfTransaction
+            memberBranch
+            transactionBranch
+            paymentPayable
+            paymentReceivable
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAbbsTransactionReportQuery = <
+  TData = GetAbbsTransactionReportQuery,
+  TError = unknown
+>(
+  variables: GetAbbsTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetAbbsTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetAbbsTransactionReportQuery, TError, TData>(
+    ['getABBSTransactionReport', variables],
+    useAxios<GetAbbsTransactionReportQuery, GetAbbsTransactionReportQueryVariables>(
+      GetAbbsTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetChequeBookRequestsDocument = `
     query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
   requests {
@@ -43013,6 +43103,7 @@ export const GetEodExceptionsDocument = `
           dormantCheck
           maturityCheck
           cashInHand
+          loanRepayment
         }
       }
     }
@@ -45728,6 +45819,7 @@ export const GetEodStatusDocument = `
         cashInHand
         cashInVault
         loanInterestBooking
+        loanRepayment
       }
       errors {
         readiness
@@ -45738,6 +45830,7 @@ export const GetEodStatusDocument = `
         cashInHand
         cashInVault
         loanInterestBooking
+        loanRepayment
       }
     }
   }

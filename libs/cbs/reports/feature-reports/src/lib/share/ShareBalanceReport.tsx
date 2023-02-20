@@ -9,10 +9,9 @@ import {
   useGetShareBalanceReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { formatAddress, localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormAmountFilter, FormBranchSelect } from '@coop/shared/form';
+import { FormAmountFilter, FormBranchSelect, FormDatePicker } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type ShareBalanceReportFilters = Omit<ShareBalanceReportFilter, 'branchId'> & {
@@ -32,7 +31,11 @@ export const ShareBalanceReport = () => {
 
   const { data, isFetching } = useGetShareBalanceReportQuery(
     {
-      data: { ...filters, branchId: branchIds } as ShareBalanceReportFilter,
+      data: {
+        ...filters,
+        period: { from: filters?.period.from, to: filters?.period.from },
+        branchId: branchIds,
+      } as ShareBalanceReportFilter,
     },
     { enabled: !!filters }
   );
@@ -61,8 +64,8 @@ export const ShareBalanceReport = () => {
             <FormBranchSelect isMulti name="branchId" label="Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange />
-          </GridItem>{' '}
+            <FormDatePicker name="period.from" label="Date Period" />
+          </GridItem>
         </Report.Inputs>
       </Report.Header>
 
