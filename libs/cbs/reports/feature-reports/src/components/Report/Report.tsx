@@ -89,10 +89,10 @@ export const ReportContent = ({ children }: { children: React.ReactNode }) => {
         h="100%"
         sx={{
           '@media print': {
-            display: 'flex',
-            flexDir: 'column',
+            display: 'block',
+            // flexDir: 'column',
             w: '100%',
-            h: 'auto',
+            h: '100%',
             // minW: '100%',
             // maxW: '100%',
             overflow: 'visible',
@@ -103,8 +103,9 @@ export const ReportContent = ({ children }: { children: React.ReactNode }) => {
             size: 'A4 portrait',
             margin: '0.2in',
             marginLeft: '0.4in',
-            zoom: '0.6',
-            scale: '0.2',
+            marginBottom: '0',
+            // zoom: '0.6',
+            // scale: '0.2',
           },
         }}
       >
