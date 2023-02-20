@@ -11,8 +11,8 @@ import {
   RequestStatus,
   useGetCashInTransitListQuery,
 } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
-import { amountConverter, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
+import { amountConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { CashInTransitTransferAproveModal } from '../components/cash-in-transit/CashInTransitTransferAproveModal';
 
@@ -104,7 +104,7 @@ export const CashTransitTransferList = () => {
       {
         header: 'Amount',
         accessorFn: (row) => row?.node?.cashAmount,
-        cell: (props) => amountConverter(props?.row?.original?.node?.cashAmount),
+        cell: (props) => amountConverter(props?.row?.original?.node?.cashAmount || 0),
         meta: {
           isNumeric: true,
         },
@@ -123,7 +123,7 @@ export const CashTransitTransferList = () => {
                 action: 'VIEW',
                 onClick: () => {
                   router.push(
-                    `/${getUrl(router.pathname, 3)}/view?id=${props?.row?.original?.node?.id}`
+                    `/${ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_DETAILS}?id=${props?.row?.original?.node?.id}`
                   );
                 },
               },

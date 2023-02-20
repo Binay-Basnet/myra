@@ -110,9 +110,14 @@ query getCashInTransitDetail($transitID: ID!) {
 query getServiceCenterTransferList(
   $filter: ServiceCenterTransactionFilter
   $pagination: Pagination
+  $transferMode: IBTType!
 ) {
   transaction {
-    listServiceCenterCashTransfer(filter: $filter, pagination: $pagination) {
+    listServiceCenterCashTransfer(
+      filter: $filter
+      pagination: $pagination
+      transferMode: $transferMode
+    ) {
       totalCount
       pageInfo {
         startCursor
@@ -123,13 +128,79 @@ query getServiceCenterTransferList(
       edges {
         node {
           id
+          journalId
           sender
           senderId
           receiver
           amount
           transactionDate
+          ibtAccount
+          ibtCr
+          ibtDr
+          status
         }
         cursor
+      }
+    }
+  }
+}
+
+query getBankTransferList($filter: TellerBankTransferFilter, $pagination: Pagination) {
+  transaction {
+    tellerBankTransfer {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            transactionId
+            transactionDate
+            tellerName
+            transferType
+            amount
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+
+query getTellerBankDetails($transactionId: ID!) {
+  transaction {
+    tellerBankTransfer {
+      viewDetail(transactionId: $transactionId) {
+        data {
+          id
+          transactionId
+          transactionDate
+          transferType
+          profilePic
+          amount
+          tellerName
+          bankName
+          bankTransferType
+          status
+          glTransaction {
+            ledgerId
+            account
+            serviceCentreId
+            serviceCenter
+            debit
+            credit
+            balance
+            balanceType
+          }
+          totalDebit
+          totalCredit
+          note
+        }
       }
     }
   }

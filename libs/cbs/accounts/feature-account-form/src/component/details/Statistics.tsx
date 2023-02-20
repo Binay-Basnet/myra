@@ -16,7 +16,7 @@ export const AccountStatistics = () => {
     },
     {
       title: isClosed ? 'Total Deposit Balance' : 'Actual Balance',
-      value: amountConverter(accountDetails?.totalDepositBalance ?? 0),
+      value: amountConverter(accountDetails?.accountBalance ?? 0),
     },
   ];
 

@@ -124,7 +124,7 @@ export const DetailPageHeader = ({
                       cursor="pointer"
                       onClick={handler}
                     >
-                      <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                      <Text fontSize="s3" color="neutralColorLight.Gray-80">
                         {label}
                       </Text>
                     </GridItem>

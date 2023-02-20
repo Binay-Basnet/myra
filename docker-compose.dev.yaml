@@ -24,7 +24,7 @@ services:
     restart: unless-stopped
     networks:
       - myra-frontend
-
+#DRONE TRIGGGER
   neosys-admin:
     build:
       context: apps/neosys-admin

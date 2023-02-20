@@ -157,3 +157,37 @@ mutation setSTRTransactionAction($data: StrTransactionActionInput!) {
     }
   }
 }
+
+mutation approveIBT($requestId: ID!, $data: JournalVoucherInput!) {
+  transaction {
+    approveIBT(requestId: $requestId, data: $data) {
+      recordId
+      record {
+        transactionId
+        creatorId
+        creatorName
+        reference
+        date
+        note
+        entries {
+          name
+          value
+        }
+        paymentMode
+        totalAmount
+        createdAt
+        glTransaction {
+          ledgerId
+          account
+          serviceCentreId
+          serviceCenter
+          debit
+          credit
+        }
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

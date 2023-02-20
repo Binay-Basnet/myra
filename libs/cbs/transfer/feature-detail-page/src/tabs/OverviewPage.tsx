@@ -1,18 +1,37 @@
-import { CashInTransitView, TellerTransferView } from '@coop/cbs/data-access';
+import {
+  CashInTransitView,
+  TellerBankTransferView,
+  TellerTransferView,
+} from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
-import { GlTransaction, Note, TabHeader, TxnDetails } from '../component';
+import {
+  GlTransaction,
+  MyLedger,
+  Note,
+  ServiceCenterList,
+  TabHeader,
+  TxnDetails,
+} from '../component';
 
 type OverviewProps = {
   data?: TellerTransferView | null | undefined;
+  tellerBankData?: TellerBankTransferView | null | undefined;
   cashTransitData?: CashInTransitView | null | undefined;
+  serviceCenterTransfer?: CashInTransitView | null | undefined;
   summary: {
     label: string;
     value: string | null | undefined | number;
   }[];
 };
 
-export const OverviewPage = ({ data, cashTransitData, summary }: OverviewProps) => (
+export const OverviewPage = ({
+  data,
+  cashTransitData,
+  serviceCenterTransfer,
+  summary,
+  tellerBankData,
+}: OverviewProps) => (
   <>
     <TabHeader heading="Overview" />
     {data && (
@@ -26,7 +45,6 @@ export const OverviewPage = ({ data, cashTransitData, summary }: OverviewProps) 
         />
       </>
     )}
-
     {cashTransitData && (
       <>
         <TxnDetails list={summary} status={cashTransitData?.transitStatus} />
@@ -36,6 +54,31 @@ export const OverviewPage = ({ data, cashTransitData, summary }: OverviewProps) 
           data={cashTransitData?.glTransaction}
           totalDebit={String(amountConverter(cashTransitData?.totalDebit ?? 0))}
           totalCredit={String(amountConverter(cashTransitData?.totalCredit ?? 0))}
+        />
+      </>
+    )}
+    {serviceCenterTransfer && (
+      <>
+        <TxnDetails list={summary} status={serviceCenterTransfer?.transitStatus} />
+        {serviceCenterTransfer?.note && <Note note={serviceCenterTransfer?.note} />}
+        <MyLedger data={serviceCenterTransfer?.glTransaction} />
+        <ServiceCenterList data={serviceCenterTransfer?.glTransaction} />
+        <GlTransaction
+          data={serviceCenterTransfer?.glTransaction}
+          totalDebit={String(amountConverter(serviceCenterTransfer?.totalDebit ?? 0))}
+          totalCredit={String(amountConverter(serviceCenterTransfer?.totalCredit ?? 0))}
+        />
+      </>
+    )}
+
+    {tellerBankData && (
+      <>
+        <TxnDetails list={summary} status={tellerBankData?.status} />
+        {/* {tellerBankData?.note && <Note note={tellerBankData?.note} />} */}
+        <GlTransaction
+          data={tellerBankData?.glTransaction}
+          totalDebit={String(amountConverter(tellerBankData?.totalDebit ?? 0))}
+          totalCredit={String(amountConverter(tellerBankData?.totalCredit ?? 0))}
         />
       </>
     )}

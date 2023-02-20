@@ -52,3 +52,17 @@ mutation approveCashInTransitTransfer($requestId: String!) {
     }
   }
 }
+
+mutation setBankTransfer($data: TellerBankTransferInput) {
+  transaction {
+    tellerBankTransfer {
+      new(data: $data) {
+        recordId
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

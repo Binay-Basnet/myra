@@ -152,6 +152,12 @@ export const CbsCloseDay = () => {
         status: eodError ? eodStatus?.loanInterestBooking : EodState.Completed,
         errors: eodError?.loanInterestBooking as string[],
       },
+      {
+        title: 'Loan Repayment',
+        subTitle: 'Loan Repayment should be done for all the loan accounts before closing the day.',
+        status: eodError ? eodStatus?.loanRepayment : EodState.Completed,
+        errors: eodError?.loanRepayment as string[],
+      },
     ];
   }, [eodStatusQueryData]);
 

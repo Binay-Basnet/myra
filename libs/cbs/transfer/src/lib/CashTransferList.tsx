@@ -1,20 +1,48 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
-import { Column, PageHeader, Table } from '@myra-ui';
+import { ApprovalStatusCell, Column, PageHeader, Table, TablePopover } from '@myra-ui';
 
-import { AllTransactionType, useGetServiceCenterTransferListQuery } from '@coop/cbs/data-access';
+import {
+  IbtStatus,
+  IbtType,
+  ServiceCenterActivityDetails,
+  useGetServiceCenterTransferListQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, featureCode, getRouterQuery } from '@coop/shared/utils';
+
+import { IBTCompleteModal } from '../components';
+
+const IBT_TABS = [
+  {
+    title: 'Sent',
+    key: 'SENT',
+  },
+  {
+    title: 'Received',
+    key: 'RECEIVED',
+  },
+];
+
+const ibtStatusVariant: Record<IbtStatus, 'success' | 'failure' | 'pending'> = {
+  COMPLETED: 'success',
+  PENDING: 'pending',
+};
 
 /* eslint-disable-next-line */
 export interface CashTransferListProps {}
 
 export const CashTransferList = () => {
   const router = useRouter();
+
+  const modalProps = useDisclosure();
+
   const { data, isFetching } = useGetServiceCenterTransferListQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      transferMode: (router?.query['objState'] ?? 'SENT') as IbtType,
     },
     {
       staleTime: 0,
@@ -35,7 +63,7 @@ export const CashTransferList = () => {
       },
       {
         header: 'ID',
-        accessorFn: (row) => row?.node?.id,
+        accessorFn: (row) => row?.node?.journalId,
       },
       {
         header: 'Sender Service Center',
@@ -52,43 +80,77 @@ export const CashTransferList = () => {
         },
       },
       {
+        header: 'Status',
+        accessorFn: (row) => row?.node?.status,
+        cell: (props) => (
+          <ApprovalStatusCell
+            status={props.row.original?.node?.status as string}
+            variant={ibtStatusVariant[props.row.original?.node?.status as IbtStatus]}
+          />
+        ),
+      },
+      {
         header: 'Cash Amount',
         meta: {
           isNumeric: true,
         },
         accessorFn: (row) => amountConverter(row?.node?.amount as string),
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
-      //   accessorKey: 'actions',
-      //   cell: (cell) => {
-      //     const member = cell?.row?.original?.node;
-      //     const memberData = { id: member?.ID };
-      //     return <PopoverComponent items={[]} member={memberData} />;
-      //   },
-      //   meta: {
-      //     width: '60px',
-      //   },
-      // },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) => (
+          <TablePopover
+            node={props?.row?.original?.node}
+            items={[
+              {
+                title: 'viewDetails',
+                // aclKey: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
+                action: 'VIEW',
+                onClick: () => {
+                  router.push(
+                    `/${ROUTES.CBS_TRANSFER_INTER_SERVICE_TRANS_DETAILS}?id=${props?.row?.original?.node?.id}`
+                  );
+                },
+              },
+            ]}
+          />
+        ),
+        meta: {
+          width: '50px',
+        },
+      },
     ],
     []
   );
+
+  const selectedTransfer = rowData?.find(
+    (transfer) => transfer?.node?.id === router.query['id']
+  )?.node;
+
   return (
     <>
       <PageHeader
         heading={`Inter Service Center Transaction - ${featureCode.serviceCenterTransferList}`}
-        // tabItems={tabList}
+        tabItems={IBT_TABS}
       />
 
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
-        rowOnClick={(row) =>
+        rowOnClick={(row) => {
           router.push(
-            `${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${row?.node?.id}&txnType=${AllTransactionType.Transfer}`
-          )
-        }
+            {
+              query: {
+                ...router.query,
+                id: row?.node?.id,
+              },
+            },
+            undefined,
+            { shallow: true }
+          );
+          modalProps.onToggle();
+        }}
         isLoading={isFetching}
         columns={columns}
         pagination={{
@@ -97,6 +159,11 @@ export const CashTransferList = () => {
         }}
         noDataTitle="service center cash transfer list"
         menu="TRANSFERS"
+      />
+
+      <IBTCompleteModal
+        transfer={selectedTransfer as ServiceCenterActivityDetails}
+        approveModal={modalProps}
       />
     </>
   );

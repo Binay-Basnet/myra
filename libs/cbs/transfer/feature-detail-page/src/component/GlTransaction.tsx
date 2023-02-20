@@ -104,7 +104,7 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
   if (data?.length === 0) return null;
   return (
     <DetailsCard
-      title={t['transDetailGLTransactions']}
+      title="GL Transactions"
       hasTable
       // leftBtn={
       //   <Button variant="ghost" leftIcon={<IoPrintOutline />}>

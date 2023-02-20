@@ -14,13 +14,13 @@ import {
   useGetSavingsBalanceReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
   FormCheckboxGroup,
+  FormDatePicker,
   FormMemberSelect,
   FormRadioGroup,
 } from '@coop/shared/form';
@@ -62,7 +62,14 @@ export const SavingBalanceReport = () => {
 
   const { data, isFetching } = useGetSavingsBalanceReportQuery(
     {
-      data: { ...filters, branchId: branchIds } as SavingsBalanceFilterData,
+      data: {
+        ...filters,
+        branchId: branchIds,
+        period: {
+          from: filters?.period?.from,
+          to: filters?.period?.from,
+        } as LocalizedDateFilter,
+      } as SavingsBalanceFilterData,
     },
     { enabled: !!filters }
   );
@@ -93,7 +100,7 @@ export const SavingBalanceReport = () => {
             <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange label="Date Period" />
+            <FormDatePicker name="period.from" label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>
