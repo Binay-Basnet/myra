@@ -873,6 +873,7 @@ export const AllTransactionType = {
   Ebanking: 'EBANKING',
   InterestBooking: 'INTEREST_BOOKING',
   InterestPosting: 'INTEREST_POSTING',
+  InterBranchTransfer: 'INTER_BRANCH_TRANSFER',
   JournalVoucher: 'JOURNAL_VOUCHER',
   LoanDisbursment: 'LOAN_DISBURSMENT',
   LoanRepayment: 'LOAN_REPAYMENT',
@@ -11827,6 +11828,7 @@ export const NatureOfTransaction = {
   Ebanking: 'EBANKING',
   InterestBooking: 'INTEREST_BOOKING',
   InterestPosting: 'INTEREST_POSTING',
+  InterBranchTransfer: 'INTER_BRANCH_TRANSFER',
   JournalVoucher: 'JOURNAL_VOUCHER',
   LoanDisbursment: 'LOAN_DISBURSMENT',
   LoanRepayment: 'LOAN_REPAYMENT',
@@ -26275,6 +26277,7 @@ export type GetLoanProductDetailQuery = {
             maxPercentOfGurantee?: number | null;
             collateralTypes?: Array<string | null> | null;
             isPrematurePenaltyApplicable?: boolean | null;
+            loanType: TypeOfLoan;
             productCode?: { prefix: string; initialNo: string; noOfDigits?: number | null } | null;
             penalty?: {
               penaltyType?: PenaltyType | null;
@@ -43450,6 +43453,7 @@ export const GetLoanProductDetailDocument = `
               penaltyAmount
               penaltyRate
             }
+            loanType
           }
         }
       }
