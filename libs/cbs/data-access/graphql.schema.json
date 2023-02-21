@@ -82052,7 +82052,7 @@
             "deprecationReason": null
           },
           {
-            "name": "remainingBalance",
+            "name": "remainingCrBalance",
             "description": null,
             "args": [],
             "type": {
@@ -82064,12 +82064,12 @@
             "deprecationReason": null
           },
           {
-            "name": "remainingBalanceType",
+            "name": "remainingDrBalance",
             "description": null,
             "args": [],
             "type": {
-              "kind": "ENUM",
-              "name": "BalanceType",
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -82151,7 +82151,7 @@
             "deprecationReason": null
           },
           {
-            "name": "totalRemainingBalance",
+            "name": "totalRemainingCrBalance",
             "description": null,
             "args": [],
             "type": {
@@ -82163,12 +82163,12 @@
             "deprecationReason": null
           },
           {
-            "name": "totalRemainingBalanceType",
+            "name": "totalRemainingDrBalance",
             "description": null,
             "args": [],
             "type": {
-              "kind": "ENUM",
-              "name": "BalanceType",
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -113543,30 +113543,6 @@
             "deprecationReason": null
           },
           {
-            "name": "balance",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "balanceType",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "BalanceType",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "branchId",
             "description": null,
             "args": [],
@@ -113580,6 +113556,18 @@
           },
           {
             "name": "branchName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "crBalance",
             "description": null,
             "args": [],
             "type": {
@@ -113609,6 +113597,30 @@
             "type": {
               "kind": "SCALAR",
               "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "currentInterestType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "BalanceType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "drBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -113722,18 +113734,6 @@
         "description": null,
         "fields": [
           {
-            "name": "balanceType",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "BalanceType",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "data",
             "description": null,
             "args": [],
@@ -113762,6 +113762,18 @@
             "deprecationReason": null
           },
           {
+            "name": "interestType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "BalanceType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "summary",
             "description": null,
             "args": [],
@@ -113774,7 +113786,31 @@
             "deprecationReason": null
           },
           {
-            "name": "totalBalance",
+            "name": "totalCrBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalDrBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalInterest",
             "description": null,
             "args": [],
             "type": {

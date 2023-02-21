@@ -9668,8 +9668,8 @@ export type LoanBalanceReport = {
   productCode?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
-  remainingBalance?: Maybe<Scalars['String']>;
-  remainingBalanceType?: Maybe<BalanceType>;
+  remainingCrBalance?: Maybe<Scalars['String']>;
+  remainingDrBalance?: Maybe<Scalars['String']>;
   remainingInterest?: Maybe<Scalars['String']>;
   remainingInterestType?: Maybe<BalanceType>;
 };
@@ -9678,8 +9678,8 @@ export type LoanBalanceReportResult = {
   data?: Maybe<Array<Maybe<LoanBalanceReport>>>;
   error?: Maybe<QueryError>;
   totalOutstandingBalance?: Maybe<Scalars['String']>;
-  totalRemainingBalance?: Maybe<Scalars['String']>;
-  totalRemainingBalanceType?: Maybe<BalanceType>;
+  totalRemainingCrBalance?: Maybe<Scalars['String']>;
+  totalRemainingDrBalance?: Maybe<Scalars['String']>;
   totalRemainingInterest?: Maybe<Scalars['String']>;
   totalRemainingInterestType?: Maybe<BalanceType>;
 };
@@ -13397,12 +13397,13 @@ export type SavingsBalanceFilterData = {
 export type SavingsBalanceReport = {
   accountId?: Maybe<Scalars['String']>;
   accountOpeningDate?: Maybe<Scalars['String']>;
-  balance?: Maybe<Scalars['String']>;
-  balanceType?: Maybe<BalanceType>;
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
+  crBalance?: Maybe<Scalars['String']>;
   currentInterest?: Maybe<Scalars['String']>;
   currentInterestRate?: Maybe<Scalars['Float']>;
+  currentInterestType?: Maybe<BalanceType>;
+  drBalance?: Maybe<Scalars['String']>;
   endDate?: Maybe<Scalars['Localized']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -13414,11 +13415,13 @@ export type SavingsBalanceReport = {
 };
 
 export type SavingsBalanceReportResult = {
-  balanceType?: Maybe<BalanceType>;
   data?: Maybe<Array<Maybe<SavingsBalanceReport>>>;
   error?: Maybe<QueryError>;
+  interestType?: Maybe<BalanceType>;
   summary?: Maybe<SavingBalanceReportSummary>;
-  totalBalance?: Maybe<Scalars['String']>;
+  totalCrBalance?: Maybe<Scalars['String']>;
+  totalDrBalance?: Maybe<Scalars['String']>;
+  totalInterest?: Maybe<Scalars['String']>;
 };
 
 export type SearchFilterData = {
@@ -24071,8 +24074,8 @@ export type GetLoanBalanceReportQuery = {
     loanReport: {
       loanBalanceReport: {
         totalOutstandingBalance?: string | null;
-        totalRemainingBalance?: string | null;
-        totalRemainingBalanceType?: BalanceType | null;
+        totalRemainingDrBalance?: string | null;
+        totalRemainingCrBalance?: string | null;
         totalRemainingInterest?: string | null;
         totalRemainingInterestType?: BalanceType | null;
         data?: Array<{
@@ -24084,7 +24087,8 @@ export type GetLoanBalanceReportQuery = {
           productId?: string | null;
           productCode?: string | null;
           disbursedBalance?: string | null;
-          remainingBalance?: string | null;
+          remainingCrBalance?: string | null;
+          remainingDrBalance?: string | null;
           remainingInterest?: string | null;
           lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
           branchId?: string | null;
@@ -24092,7 +24096,6 @@ export type GetLoanBalanceReportQuery = {
           loanEndDate?: Record<'local' | 'en' | 'np', string> | null;
           interestRate?: number | null;
           loanType?: AllLoanType | null;
-          remainingBalanceType?: BalanceType | null;
           remainingInterestType?: BalanceType | null;
         } | null> | null;
       };
@@ -24713,8 +24716,10 @@ export type GetSavingsBalanceReportQuery = {
   report: {
     otherReport: {
       savingsBalanceReport: {
-        balanceType?: BalanceType | null;
-        totalBalance?: string | null;
+        totalDrBalance?: string | null;
+        totalCrBalance?: string | null;
+        interestType?: BalanceType | null;
+        totalInterest?: string | null;
         data?: Array<{
           accountId?: string | null;
           memberId?: string | null;
@@ -24725,8 +24730,14 @@ export type GetSavingsBalanceReportQuery = {
           productCode?: string | null;
           accountOpeningDate?: string | null;
           memberType?: KymMemberTypesEnum | null;
-          balance?: string | null;
-          balanceType?: BalanceType | null;
+          drBalance?: string | null;
+          crBalance?: string | null;
+          currentInterestType?: BalanceType | null;
+          currentInterestRate?: number | null;
+          currentInterest?: string | null;
+          endDate?: Record<'local' | 'en' | 'np', string> | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
         summary?: {
           totalIndividualAccount?: number | null;
@@ -40526,7 +40537,8 @@ export const GetLoanBalanceReportDocument = `
           productId
           productCode
           disbursedBalance
-          remainingBalance
+          remainingCrBalance
+          remainingDrBalance
           remainingInterest
           lastPaymentDate
           branchId
@@ -40534,12 +40546,11 @@ export const GetLoanBalanceReportDocument = `
           loanEndDate
           interestRate
           loanType
-          remainingBalanceType
           remainingInterestType
         }
         totalOutstandingBalance
-        totalRemainingBalance
-        totalRemainingBalanceType
+        totalRemainingDrBalance
+        totalRemainingCrBalance
         totalRemainingInterest
         totalRemainingInterestType
       }
@@ -41365,16 +41376,24 @@ export const GetSavingsBalanceReportDocument = `
           productCode
           accountOpeningDate
           memberType
-          balance
-          balanceType
+          drBalance
+          crBalance
+          currentInterestType
+          currentInterestRate
+          currentInterest
+          endDate
+          branchId
+          branchName
         }
         summary {
           totalIndividualAccount
           totalMinorAccount
           totalOtherAccount
         }
-        balanceType
-        totalBalance
+        totalDrBalance
+        totalCrBalance
+        interestType
+        totalInterest
       }
     }
   }

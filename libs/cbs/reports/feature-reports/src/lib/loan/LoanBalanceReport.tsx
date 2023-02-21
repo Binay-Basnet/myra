@@ -54,9 +54,10 @@ export const LoanBalanceReport = () => {
 
   const loanReport = data?.report?.loanReport?.loanBalanceReport?.data;
   const outstandingTotal = data?.report?.loanReport?.loanBalanceReport?.totalOutstandingBalance;
-  const totalRemainingBalance = data?.report?.loanReport?.loanBalanceReport?.totalRemainingBalance;
-  const totalRemainingBalanceType =
-    data?.report?.loanReport?.loanBalanceReport?.totalRemainingBalanceType;
+  const totalRemainingCRBalance =
+    data?.report?.loanReport?.loanBalanceReport?.totalRemainingCrBalance;
+  const totalRemainingDRBalance =
+    data?.report?.loanReport?.loanBalanceReport?.totalRemainingDrBalance;
   const totalRemainingInterest =
     data?.report?.loanReport?.loanBalanceReport?.totalRemainingInterest;
   const totalRemainingInterestType =
@@ -208,21 +209,31 @@ export const LoanBalanceReport = () => {
               },
               {
                 header: 'Remaining Balance',
-                accessorKey: 'remainingBalance',
-                cell: (props) => amountConverter(props.getValue() as string),
-                footer: () => amountConverter(totalRemainingBalance || 0),
-                meta: {
-                  isNumeric: true,
-                },
-              },
-              {
-                header: '',
-                accessorKey: 'remainingBalanceType',
-                footer: () => totalRemainingBalanceType || '-',
-                meta: {
-                  width: '15px',
-                  isNumeric: true,
-                },
+                accessorKey: 'remainingCrBalance',
+                columns: [
+                  {
+                    header: 'Debit (Dr.)',
+                    accessorFn: (row) => row?.remainingDrBalance,
+                    cell: (props) =>
+                      amountConverter(props.row?.original?.remainingDrBalance || '0.00'),
+                    footer: () => amountConverter(totalRemainingDRBalance || 0),
+
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                  {
+                    header: 'Credit (Cr.)',
+                    accessorFn: (row) => row?.remainingCrBalance,
+                    cell: (props) =>
+                      amountConverter(props.row?.original?.remainingCrBalance || '0.00'),
+                    footer: () => amountConverter(totalRemainingCRBalance || 0),
+
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                ],
               },
               {
                 header: 'Interest Rate ',

@@ -15,7 +15,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { RouteToDetailsPage } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -76,8 +76,10 @@ export const SavingBalanceReport = () => {
 
   const savingBalanceData = data?.report?.otherReport?.savingsBalanceReport?.data;
   const summary = data?.report?.otherReport?.savingsBalanceReport?.summary;
-  const totalBalance = data?.report?.otherReport?.savingsBalanceReport?.totalBalance;
-  const totalBalanceType = data?.report?.otherReport?.savingsBalanceReport?.balanceType;
+  const totalCRBalance = data?.report?.otherReport?.savingsBalanceReport?.totalCrBalance;
+  const totalDRBalance = data?.report?.otherReport?.savingsBalanceReport?.totalDrBalance;
+  const totalInterest = data?.report?.otherReport?.savingsBalanceReport?.totalInterest;
+  const totalInterestType = data?.report?.otherReport?.savingsBalanceReport?.interestType;
 
   return (
     <Report
@@ -119,7 +121,7 @@ export const SavingBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 8,
+                    colspan: 9,
                   },
                 },
               },
@@ -187,6 +189,15 @@ export const SavingBalanceReport = () => {
                 },
               },
               {
+                header: 'End Date',
+                accessorFn: (row) => localizedDate(row?.endDate),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
                 header: 'Member Type',
                 accessorKey: 'memberType',
                 cell: (props) => (
@@ -203,18 +214,54 @@ export const SavingBalanceReport = () => {
               },
               {
                 header: 'Balance Amount',
-                accessorKey: 'balance',
+                accessorKey: 'crBalance',
+                columns: [
+                  {
+                    header: 'Debit (Dr.)',
+                    accessorFn: (row) => row?.drBalance,
+                    cell: (props) => amountConverter(props.row?.original?.drBalance || '0.00'),
+                    footer: () => amountConverter((totalDRBalance || 0) as string),
+
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                  {
+                    header: 'Credit (Cr.)',
+                    accessorFn: (row) => row?.crBalance,
+                    cell: (props) => amountConverter(props.row?.original?.crBalance || '0.00'),
+                    footer: () => amountConverter((totalCRBalance || 0) as string),
+
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                ],
+              },
+
+              {
+                header: 'Current Interest Rate',
+                accessorKey: 'currentInterestRate',
+                cell: (props) => props.getValue() || 0,
+
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Current Interest Amount',
+                accessorKey: 'currentInterest',
                 cell: (props) => amountConverter((props.getValue() || 0) as string),
-                footer: () => amountConverter((totalBalance || 0) as string),
+                footer: () => amountConverter((totalInterest || 0) as string),
                 meta: {
                   isNumeric: true,
                 },
               },
               {
                 header: '',
-                accessorKey: 'balanceType',
+                accessorKey: 'currentInterestType',
 
-                footer: () => totalBalanceType,
+                footer: () => totalInterestType,
                 meta: {
                   width: '15px',
                   isNumeric: true,
