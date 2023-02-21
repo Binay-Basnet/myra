@@ -33,8 +33,8 @@ import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { CashOptions } from '@coop/shared/components';
 import {
-  FormAccountSelect,
   FormAmountInput,
+  FormDepositWithdrawAccountSelect,
   FormInput,
   FormMemberSelect,
   FormSelect,
@@ -343,12 +343,12 @@ export const AddWithdraw = () => {
                     isDisabled={!!redirectMemberId}
                   />
                   {memberId && (
-                    <FormAccountSelect
+                    <FormDepositWithdrawAccountSelect
                       isRequired
                       name="accountId"
-                      label={t['addWithdrawSelectWithdrawAccount']}
+                      label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
-                      filterBy={ObjState.Active}
+                      isLinkedAccounts
                       isDisabled={!!redirectAccountId}
                     />
                   )}
