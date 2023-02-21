@@ -26304,6 +26304,7 @@ export type GetLoanProductDetailQuery = {
             maxPercentOfGurantee?: number | null;
             collateralTypes?: Array<string | null> | null;
             isPrematurePenaltyApplicable?: boolean | null;
+            loanType: TypeOfLoan;
             productCode?: { prefix: string; initialNo: string; noOfDigits?: number | null } | null;
             penalty?: {
               penaltyType?: PenaltyType | null;
@@ -43487,6 +43488,7 @@ export const GetLoanProductDetailDocument = `
               penaltyAmount
               penaltyRate
             }
+            loanType
           }
         }
       }
