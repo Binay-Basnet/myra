@@ -24177,6 +24177,12 @@ export type GetLoanStatementReportQuery = {
             }
           | {}
           | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
       } | null;
     };
   };
@@ -40630,11 +40636,14 @@ export const GetLoanStatementReportDocument = `
             }
           }
         }
+        error {
+          ...QueryError
+        }
       }
     }
   }
 }
-    `;
+    ${QueryErrorFragmentDoc}`;
 export const useGetLoanStatementReportQuery = <
   TData = GetLoanStatementReportQuery,
   TError = unknown
