@@ -14,7 +14,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -104,9 +104,10 @@ export const LoanBalanceReport = () => {
                 header: 'Loan Account Number',
                 accessorKey: 'loanAccountId',
                 cell: (props) => (
-                  <RedirectButton
-                    label={props?.row?.original?.loanAccountId}
-                    link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props?.row?.original?.loanAccountId}`}
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.loanAccountId as string}
+                    type="loan"
+                    label={props?.row?.original?.loanAccountId as string}
                   />
                 ),
                 meta: {
@@ -119,9 +120,10 @@ export const LoanBalanceReport = () => {
                 header: 'Member Id',
                 accessorKey: 'memberId',
                 cell: (props) => (
-                  <RedirectButton
-                    label={props?.row?.original?.memberCode}
-                    link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${props?.row?.original?.memberId}`}
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.memberId as string}
+                    type="member"
+                    label={props?.row?.original?.memberCode as string}
                   />
                 ),
                 meta: {
@@ -165,9 +167,10 @@ export const LoanBalanceReport = () => {
                 header: 'Product Code',
                 accessorKey: 'productCode',
                 cell: (props) => (
-                  <RedirectButton
-                    label={props?.row?.original?.productCode}
-                    link={`${ROUTES.CBS_LOAN_PRODUCTS_DETAILS}?id=${props?.row?.original?.productId}`}
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.productId as string}
+                    type="loan-product"
+                    label={props?.row?.original?.productCode as string}
                   />
                 ),
                 meta: {
@@ -178,8 +181,8 @@ export const LoanBalanceReport = () => {
                 },
               },
               {
-                header: 'Outstanding Balance',
-                accessorKey: 'outstandingBalance',
+                header: 'Disbursed Balance',
+                accessorKey: 'disbursedBalance',
                 cell: (props) => amountConverter(props.getValue() as string),
 
                 footer: () => amountConverter(outstandingTotal || 0),
@@ -197,12 +200,25 @@ export const LoanBalanceReport = () => {
                 },
               },
               {
+                header: 'Interest Rate ',
+                accessorKey: 'interestRate',
+                cell: (props) => (props?.getValue() ? props?.getValue() : 0),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
                 header: 'Remaining Interest',
                 accessorKey: 'remainingInterest',
                 cell: (props) => amountConverter((props.getValue() || 0) as string),
                 meta: {
                   isNumeric: true,
                 },
+              },
+              {
+                header: 'Loan End Date',
+
+                accessorFn: (row) => localizedDate(row?.loanEndDate),
               },
               {
                 header: 'Last Payment Date',

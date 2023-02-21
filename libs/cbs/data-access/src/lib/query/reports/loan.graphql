@@ -10,12 +10,14 @@ query getLoanBalanceReport($data: LoanBalanceFilterData!) {
           productName
           productId
           productCode
-          outstandingBalance
+          disbursedBalance
           remainingBalance
           remainingInterest
           lastPaymentDate
           branchId
           branchName
+          loanEndDate
+          interestRate
         }
         totalOutstandingBalance
         totalRemainingBalance
