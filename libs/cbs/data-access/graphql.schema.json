@@ -92585,6 +92585,18 @@
             "deprecationReason": null
           },
           {
+            "name": "remainingPrincipal",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "subscriptionDate",
             "description": null,
             "args": [],
@@ -93251,7 +93263,7 @@
             "deprecationReason": null
           },
           {
-            "name": "totalLoan",
+            "name": "totalLoanCrBalance",
             "description": null,
             "args": [],
             "type": {
@@ -93263,7 +93275,7 @@
             "deprecationReason": null
           },
           {
-            "name": "totalSavingBalance",
+            "name": "totalLoanDrBalance",
             "description": null,
             "args": [],
             "type": {
@@ -93275,19 +93287,43 @@
             "deprecationReason": null
           },
           {
-            "name": "totalSavingBalanceType",
+            "name": "totalSavingCrBalance",
             "description": null,
             "args": [],
             "type": {
-              "kind": "ENUM",
-              "name": "BalanceType",
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "totalShareBalance",
+            "name": "totalSavingDrBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalShareCrBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalShareDrBalance",
             "description": null,
             "args": [],
             "type": {
@@ -93361,7 +93397,7 @@
         "description": null,
         "fields": [
           {
-            "name": "totalLoan",
+            "name": "totalLoanCrBalance",
             "description": null,
             "args": [],
             "type": {
@@ -93373,7 +93409,7 @@
             "deprecationReason": null
           },
           {
-            "name": "totalSavingBalance",
+            "name": "totalLoanDrBalance",
             "description": null,
             "args": [],
             "type": {
@@ -93385,19 +93421,43 @@
             "deprecationReason": null
           },
           {
-            "name": "totalSavingBalanceType",
+            "name": "totalSavingCrBalance",
             "description": null,
             "args": [],
             "type": {
-              "kind": "ENUM",
-              "name": "BalanceType",
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "totalShareBalance",
+            "name": "totalSavingDrBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalShareCrBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalShareDrBalance",
             "description": null,
             "args": [],
             "type": {

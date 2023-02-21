@@ -10827,6 +10827,7 @@ export type MemberAccountMinView = {
   objState?: Maybe<ObjState>;
   productName?: Maybe<Scalars['String']>;
   productType?: Maybe<Scalars['String']>;
+  remainingPrincipal?: Maybe<Scalars['String']>;
   subscriptionDate?: Maybe<Scalars['Localized']>;
   totalBalance?: Maybe<Scalars['String']>;
 };
@@ -10911,10 +10912,12 @@ export type MemberBalanceReportData = {
   memberName?: Maybe<Scalars['String']>;
   memberType?: Maybe<Scalars['String']>;
   membershipDate?: Maybe<Scalars['Localized']>;
-  totalLoan?: Maybe<Scalars['String']>;
-  totalSavingBalance?: Maybe<Scalars['String']>;
-  totalSavingBalanceType?: Maybe<BalanceType>;
-  totalShareBalance?: Maybe<Scalars['String']>;
+  totalLoanCrBalance?: Maybe<Scalars['String']>;
+  totalLoanDrBalance?: Maybe<Scalars['String']>;
+  totalSavingCrBalance?: Maybe<Scalars['String']>;
+  totalSavingDrBalance?: Maybe<Scalars['String']>;
+  totalShareCrBalance?: Maybe<Scalars['String']>;
+  totalShareDrBalance?: Maybe<Scalars['String']>;
 };
 
 export type MemberBalanceReportResult = {
@@ -10924,10 +10927,12 @@ export type MemberBalanceReportResult = {
 };
 
 export type MemberBalanceReportResultSummary = {
-  totalLoan?: Maybe<Scalars['String']>;
-  totalSavingBalance?: Maybe<Scalars['String']>;
-  totalSavingBalanceType?: Maybe<BalanceType>;
-  totalShareBalance?: Maybe<Scalars['String']>;
+  totalLoanCrBalance?: Maybe<Scalars['String']>;
+  totalLoanDrBalance?: Maybe<Scalars['String']>;
+  totalSavingCrBalance?: Maybe<Scalars['String']>;
+  totalSavingDrBalance?: Maybe<Scalars['String']>;
+  totalShareCrBalance?: Maybe<Scalars['String']>;
+  totalShareDrBalance?: Maybe<Scalars['String']>;
 };
 
 export type MemberBasicInfoView =
@@ -24585,17 +24590,21 @@ export type GetMemberWiseBalanceReportQuery = {
           memberName?: string | null;
           memberType?: string | null;
           membershipDate?: Record<'local' | 'en' | 'np', string> | null;
-          totalSavingBalance?: string | null;
-          totalLoan?: string | null;
-          totalShareBalance?: string | null;
+          totalSavingDrBalance?: string | null;
+          totalSavingCrBalance?: string | null;
+          totalLoanDrBalance?: string | null;
+          totalLoanCrBalance?: string | null;
+          totalShareDrBalance?: string | null;
+          totalShareCrBalance?: string | null;
           branchName?: string | null;
-          totalSavingBalanceType?: BalanceType | null;
         } | null> | null;
         summary?: {
-          totalLoan?: string | null;
-          totalSavingBalance?: string | null;
-          totalSavingBalanceType?: BalanceType | null;
-          totalShareBalance?: string | null;
+          totalSavingDrBalance?: string | null;
+          totalSavingCrBalance?: string | null;
+          totalLoanDrBalance?: string | null;
+          totalLoanCrBalance?: string | null;
+          totalShareDrBalance?: string | null;
+          totalShareCrBalance?: string | null;
         } | null;
         error?:
           | QueryError_AuthorizationError_Fragment
@@ -41180,17 +41189,21 @@ export const GetMemberWiseBalanceReportDocument = `
           memberName
           memberType
           membershipDate
-          totalSavingBalance
-          totalLoan
-          totalShareBalance
+          totalSavingDrBalance
+          totalSavingCrBalance
+          totalLoanDrBalance
+          totalLoanCrBalance
+          totalShareDrBalance
+          totalShareCrBalance
           branchName
-          totalSavingBalanceType
         }
         summary {
-          totalLoan
-          totalSavingBalance
-          totalSavingBalanceType
-          totalShareBalance
+          totalSavingDrBalance
+          totalSavingCrBalance
+          totalLoanDrBalance
+          totalLoanCrBalance
+          totalShareDrBalance
+          totalShareCrBalance
         }
         error {
           ...QueryError

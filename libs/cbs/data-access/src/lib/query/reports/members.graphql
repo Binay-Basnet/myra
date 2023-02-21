@@ -183,17 +183,21 @@ query getMemberWiseBalanceReport($data: MemberBalanceFilter) {
           memberName
           memberType
           membershipDate
-          totalSavingBalance
-          totalLoan
-          totalShareBalance
+          totalSavingDrBalance
+          totalSavingCrBalance
+          totalLoanDrBalance
+          totalLoanCrBalance
+          totalShareDrBalance
+          totalShareCrBalance
           branchName
-          totalSavingBalanceType
         }
         summary {
-          totalLoan
-          totalSavingBalance
-          totalSavingBalanceType
-          totalShareBalance
+          totalSavingDrBalance
+          totalSavingCrBalance
+          totalLoanDrBalance
+          totalLoanCrBalance
+          totalShareDrBalance
+          totalShareCrBalance
         }
         error {
           ...QueryError

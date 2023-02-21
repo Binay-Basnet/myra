@@ -144,32 +144,95 @@ export const MemberBalanceReport = () => {
                   },
                 },
                 {
-                  header: 'Total Saving Balance',
-                  accessorKey: 'totalSavingBalance',
-                  cell: (props) => amountConverter(props.getValue() as string),
+                  header: 'Saving Balance',
+                  accessorKey: 'totalSavingCrBalance',
+                  columns: [
+                    {
+                      header: 'Debit (Dr.)',
+                      accessorFn: (row) => row?.totalSavingDrBalance,
+                      cell: (props) =>
+                        amountConverter(props.row?.original?.totalSavingDrBalance || '0.00'),
+                      footer: () =>
+                        amountConverter(memberBalanceReportSummary?.totalSavingDrBalance || 0),
 
-                  footer: () =>
-                    amountConverter(memberBalanceReportSummary?.totalSavingBalance || '0.00'),
-                  meta: {
-                    isNumeric: true,
-                  },
+                      meta: {
+                        isNumeric: true,
+                      },
+                    },
+                    {
+                      header: 'Credit (Cr.)',
+                      accessorFn: (row) => row?.totalSavingCrBalance,
+                      cell: (props) =>
+                        amountConverter(props.row?.original?.totalSavingCrBalance || '0.00'),
+                      footer: () =>
+                        amountConverter(memberBalanceReportSummary?.totalSavingCrBalance || 0),
+
+                      meta: {
+                        isNumeric: true,
+                      },
+                    },
+                  ],
                 },
                 {
-                  header: 'Total Loan',
-                  accessorFn: (row) => amountConverter(row.totalLoan || '0.00'),
-                  footer: () => amountConverter(memberBalanceReportSummary?.totalLoan || '0.00'),
-                  meta: {
-                    isNumeric: true,
-                  },
+                  header: 'Loan Balance',
+                  accessorFn: (row) => row?.totalLoanCrBalance,
+                  columns: [
+                    {
+                      header: 'Debit (Dr.)',
+                      accessorFn: (row) => row?.totalLoanDrBalance,
+                      cell: (props) =>
+                        amountConverter(props.row?.original?.totalLoanDrBalance || '0.00'),
+                      footer: () =>
+                        amountConverter(memberBalanceReportSummary?.totalLoanDrBalance || 0),
+
+                      meta: {
+                        isNumeric: true,
+                      },
+                    },
+                    {
+                      header: 'Credit (Cr.)',
+                      accessorFn: (row) => row?.totalLoanCrBalance,
+                      cell: (props) =>
+                        amountConverter(props.row?.original?.totalLoanCrBalance || '0.00'),
+                      footer: () =>
+                        amountConverter(memberBalanceReportSummary?.totalLoanCrBalance || 0),
+
+                      meta: {
+                        isNumeric: true,
+                      },
+                    },
+                  ],
                 },
                 {
-                  header: 'Total Share Balance',
-                  accessorFn: (row) => amountConverter(row.totalShareBalance || '0.00'),
-                  footer: () =>
-                    amountConverter(memberBalanceReportSummary?.totalShareBalance || '0.00'),
-                  meta: {
-                    isNumeric: true,
-                  },
+                  header: 'Share Balance',
+                  accessorKey: 'totalShareCrBalance',
+
+                  columns: [
+                    {
+                      header: 'Debit (Dr.)',
+                      accessorFn: (row) => row?.totalShareDrBalance,
+                      cell: (props) =>
+                        amountConverter(props.row?.original?.totalShareDrBalance || '0.00'),
+                      footer: () =>
+                        amountConverter(memberBalanceReportSummary?.totalShareDrBalance || 0),
+
+                      meta: {
+                        isNumeric: true,
+                      },
+                    },
+                    {
+                      header: 'Credit (Cr.)',
+                      accessorFn: (row) => row?.totalShareCrBalance,
+                      cell: (props) =>
+                        amountConverter(props.row?.original?.totalShareCrBalance || '0.00'),
+                      footer: () =>
+                        amountConverter(memberBalanceReportSummary?.totalShareCrBalance || 0),
+
+                      meta: {
+                        isNumeric: true,
+                      },
+                    },
+                  ],
                 },
               ]}
               showFooter
