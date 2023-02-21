@@ -54,7 +54,9 @@ export const JournalVouchersTable = () => {
 
   const accountListData = accountList?.settings?.chartsOfAccount?.ledgersForJVPosting?.edges;
 
-  const redirectEntries = JSON.parse(router?.query['entries'] as string);
+  const redirectEntries = router?.query['entries']
+    ? JSON.parse(router.query['entries'] as string)
+    : [];
 
   const accountSearchOptions = useMemo(
     () =>
