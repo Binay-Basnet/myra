@@ -215,6 +215,8 @@ export const LoanRepayment = () => {
       principal: value?.principal,
       remainingPrincipal: value?.remainingPrincipal,
       paid: nextInstallmentNumber > index + 1,
+      currentRemaingPrincipal: value?.currentRemainingPrincipal,
+      remainingInterest: value?.remainingInterest,
     })) || [];
   const loanPaymentScheduleSplice =
     nextInstallmentNumber > 5
@@ -297,7 +299,7 @@ export const LoanRepayment = () => {
                       </Button>
                     </Box>
                     <LoanPaymentScheduleTable
-                      data={loanPaymentScheduleSplice as LoanInstallment[]}
+                      data={loanPaymentScheduleSplice as unknown as LoanInstallment[]}
                       nextInstallmentNumber={nextInstallmentNumber}
                       total={loanData?.paymentSchedule?.total as string}
                       totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
@@ -325,7 +327,7 @@ export const LoanRepayment = () => {
                       }
                     >
                       <LoanPaymentScheduleTable
-                        data={loanPaymentSchedule as LoanInstallment[]}
+                        data={loanPaymentSchedule as unknown as LoanInstallment[]}
                         nextInstallmentNumber={nextInstallmentNumber}
                         total={loanData?.paymentSchedule?.total as string}
                         totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
