@@ -7,6 +7,7 @@
     "build": "nx build",
     "test": "nx test",
     "start:myra": "concurrently \"nx serve myra\" \"yarn graphql-cbs:codegen\"",
+    "start:migration": "nx serve migration",
     "start:neosys-admin": "concurrently \"nx serve neosys-admin\" \"yarn graphql-neosys:codegen\"",
     "start:ebanking": "concurrently \"nx serve ebanking\" \"yarn graphql-ebank:codegen\"",
     "start:all": "concurrently \"yarn start:myra\" \"yarn start:neosys-admin\" \"yarn start:ebanking\"",

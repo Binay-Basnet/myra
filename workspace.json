@@ -115,6 +115,7 @@
     "ebanking-ui-components": "libs/ebanking/ui-components",
     "ebanking-ui-layout": "libs/ebanking/ui-layout",
     "inventory-ui-layout": "libs/inventory/ui-layout",
+    "migration": "apps/migration",
     "myra": "apps/myra",
     "myra-components": "libs/myra/components",
     "myra-e2e": "apps/myra-e2e",
