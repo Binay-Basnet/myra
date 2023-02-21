@@ -5,6 +5,7 @@ import {
   LoanRepaymentScheme,
   NatureOfLoanProduct,
   ProductCodeType,
+  TypeOfLoan,
 } from '@coop/cbs/data-access';
 
 interface IProductGeneralInformation {
@@ -16,6 +17,7 @@ interface IProductGeneralInformation {
     productSubType: string | null | undefined;
     interestMethod: LoanInterestMethod | null | undefined;
     loanRepaymentScheme: (LoanRepaymentScheme | null)[] | null | undefined;
+    loanType?: string | null;
     // installmentFrequency: LoanProductInstallment | null | undefined;
   };
 }
@@ -40,14 +42,16 @@ export const ProductGeneralInformation = ({ generalInformation }: IProductGenera
           : 'N/A'
       }
     />
-    <DetailCardContent
-      title="Interest Method"
-      subtitle={
-        generalInformation?.interestMethod
-          ? generalInformation?.interestMethod?.toLowerCase()
-          : 'N/A'
-      }
-    />
+    {generalInformation?.loanType === TypeOfLoan?.Normal && (
+      <DetailCardContent
+        title="Interest Method"
+        subtitle={
+          generalInformation?.interestMethod
+            ? generalInformation?.interestMethod?.toLowerCase()
+            : 'N/A'
+        }
+      />
+    )}
     <DetailCardContent
       title="Loan Repayment Scheme"
       subtitle={

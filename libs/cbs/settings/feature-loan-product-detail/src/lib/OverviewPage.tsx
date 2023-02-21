@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { Box, DetailsCard } from '@myra-ui';
 
-import { ObjState } from '@coop/cbs/data-access';
+import { ObjState, TypeOfLoan } from '@coop/cbs/data-access';
 
 import {
   AlertEnable,
@@ -56,6 +56,7 @@ export const OverviewPage = () => {
               productSubType: detailData?.productSubType,
               interestMethod: detailData?.interestMethod,
               loanRepaymentScheme: detailData?.repaymentScheme,
+              loanType: detailData?.loanType,
             }}
           />
           <ProductCriteria criteria={criteriaData} memberType={detailData?.typeOfMember} />
@@ -65,9 +66,13 @@ export const OverviewPage = () => {
 
           <ProductRebate rebateData={detailData?.rebate} />
           <ProductInterestRate interestRate={detailData?.interest} />
-          <ProductPenalty penaltyData={detailData?.penalty} />
+          {detailData?.loanType === TypeOfLoan?.Normal && (
+            <>
+              <ProductPenalty penaltyData={detailData?.penalty} />
 
-          <ProductPrematurePenalty penaltyData={detailData?.prematurePenaltySetup} />
+              <ProductPrematurePenalty penaltyData={detailData?.prematurePenaltySetup} />
+            </>
+          )}
           <ProductTenure
             tenureUnit={detailData?.tenureUnit}
             maxTenure={detailData?.maxTenureUnitNumber}
@@ -75,10 +80,12 @@ export const OverviewPage = () => {
           />
 
           <ProductLoanProcessingCharge loanProcessingCharge={detailData?.loanProcessingCharge} />
-          <ProductLoanRepayment
-            principal={detailData?.principalMaxGraceNumber}
-            interest={detailData?.interestMaxGraceNumber}
-          />
+          {detailData?.loanType === TypeOfLoan?.Normal && (
+            <ProductLoanRepayment
+              principal={detailData?.principalMaxGraceNumber}
+              interest={detailData?.interestMaxGraceNumber}
+            />
+          )}
 
           <DetailsCard title="Features" hasTable>
             <ProductFeatures features={featureTable} />

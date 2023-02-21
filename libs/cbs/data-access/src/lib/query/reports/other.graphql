@@ -35,16 +35,24 @@ query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
           productCode
           accountOpeningDate
           memberType
-          balance
-          balanceType
+          drBalance
+          crBalance
+          currentInterestType
+          currentInterestRate
+          currentInterest
+          endDate
+          branchId
+          branchName
         }
         summary {
           totalIndividualAccount
           totalMinorAccount
           totalOtherAccount
         }
-        balanceType
-        totalBalance
+        totalDrBalance
+        totalCrBalance
+        interestType
+        totalInterest
       }
     }
   }

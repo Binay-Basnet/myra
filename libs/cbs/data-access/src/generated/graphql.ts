@@ -848,6 +848,14 @@ export type AllAccountsQueryListArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export const AllLoanType = {
+  Emi: 'EMI',
+  Epi: 'EPI',
+  Flat: 'FLAT',
+  Loc: 'LOC',
+} as const;
+
+export type AllLoanType = typeof AllLoanType[keyof typeof AllLoanType];
 export type AllTransactionFilter = {
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
@@ -9654,24 +9662,32 @@ export type LoanBalanceFilterData = {
 export type LoanBalanceReport = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
+  disbursedBalance?: Maybe<Scalars['String']>;
+  interestRate?: Maybe<Scalars['Float']>;
   lastPaymentDate?: Maybe<Scalars['Localized']>;
   loanAccountId?: Maybe<Scalars['String']>;
+  loanEndDate?: Maybe<Scalars['Localized']>;
+  loanType?: Maybe<AllLoanType>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
-  outstandingBalance?: Maybe<Scalars['String']>;
   productCode?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
-  remainingBalance?: Maybe<Scalars['String']>;
+  remainingCrBalance?: Maybe<Scalars['String']>;
+  remainingDrBalance?: Maybe<Scalars['String']>;
   remainingInterest?: Maybe<Scalars['String']>;
+  remainingInterestType?: Maybe<BalanceType>;
 };
 
 export type LoanBalanceReportResult = {
   data?: Maybe<Array<Maybe<LoanBalanceReport>>>;
   error?: Maybe<QueryError>;
   totalOutstandingBalance?: Maybe<Scalars['String']>;
-  totalRemainingBalance?: Maybe<Scalars['String']>;
+  totalRemainingCrBalance?: Maybe<Scalars['String']>;
+  totalRemainingDrBalance?: Maybe<Scalars['String']>;
+  totalRemainingInterest?: Maybe<Scalars['String']>;
+  totalRemainingInterestType?: Maybe<BalanceType>;
 };
 
 export type LoanBankDisbursement = {
@@ -13395,10 +13411,14 @@ export type SavingsBalanceFilterData = {
 export type SavingsBalanceReport = {
   accountId?: Maybe<Scalars['String']>;
   accountOpeningDate?: Maybe<Scalars['String']>;
-  balance?: Maybe<Scalars['String']>;
-  balanceType?: Maybe<BalanceType>;
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
+  crBalance?: Maybe<Scalars['String']>;
+  currentInterest?: Maybe<Scalars['String']>;
+  currentInterestRate?: Maybe<Scalars['Float']>;
+  currentInterestType?: Maybe<BalanceType>;
+  drBalance?: Maybe<Scalars['String']>;
+  endDate?: Maybe<Scalars['Localized']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -13409,11 +13429,13 @@ export type SavingsBalanceReport = {
 };
 
 export type SavingsBalanceReportResult = {
-  balanceType?: Maybe<BalanceType>;
   data?: Maybe<Array<Maybe<SavingsBalanceReport>>>;
   error?: Maybe<QueryError>;
+  interestType?: Maybe<BalanceType>;
   summary?: Maybe<SavingBalanceReportSummary>;
-  totalBalance?: Maybe<Scalars['String']>;
+  totalCrBalance?: Maybe<Scalars['String']>;
+  totalDrBalance?: Maybe<Scalars['String']>;
+  totalInterest?: Maybe<Scalars['String']>;
 };
 
 export type SearchFilterData = {
@@ -24116,7 +24138,10 @@ export type GetLoanBalanceReportQuery = {
     loanReport: {
       loanBalanceReport: {
         totalOutstandingBalance?: string | null;
-        totalRemainingBalance?: string | null;
+        totalRemainingDrBalance?: string | null;
+        totalRemainingCrBalance?: string | null;
+        totalRemainingInterest?: string | null;
+        totalRemainingInterestType?: BalanceType | null;
         data?: Array<{
           memberId?: string | null;
           memberCode?: string | null;
@@ -24125,12 +24150,17 @@ export type GetLoanBalanceReportQuery = {
           productName?: string | null;
           productId?: string | null;
           productCode?: string | null;
-          outstandingBalance?: string | null;
-          remainingBalance?: string | null;
+          disbursedBalance?: string | null;
+          remainingCrBalance?: string | null;
+          remainingDrBalance?: string | null;
           remainingInterest?: string | null;
           lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
           branchId?: string | null;
           branchName?: string | null;
+          loanEndDate?: Record<'local' | 'en' | 'np', string> | null;
+          interestRate?: number | null;
+          loanType?: AllLoanType | null;
+          remainingInterestType?: BalanceType | null;
         } | null> | null;
       };
     };
@@ -24750,8 +24780,10 @@ export type GetSavingsBalanceReportQuery = {
   report: {
     otherReport: {
       savingsBalanceReport: {
-        balanceType?: BalanceType | null;
-        totalBalance?: string | null;
+        totalDrBalance?: string | null;
+        totalCrBalance?: string | null;
+        interestType?: BalanceType | null;
+        totalInterest?: string | null;
         data?: Array<{
           accountId?: string | null;
           memberId?: string | null;
@@ -24762,8 +24794,14 @@ export type GetSavingsBalanceReportQuery = {
           productCode?: string | null;
           accountOpeningDate?: string | null;
           memberType?: KymMemberTypesEnum | null;
-          balance?: string | null;
-          balanceType?: BalanceType | null;
+          drBalance?: string | null;
+          crBalance?: string | null;
+          currentInterestType?: BalanceType | null;
+          currentInterestRate?: number | null;
+          currentInterest?: string | null;
+          endDate?: Record<'local' | 'en' | 'np', string> | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null> | null;
         summary?: {
           totalIndividualAccount?: number | null;
@@ -26341,6 +26379,7 @@ export type GetLoanProductDetailQuery = {
             maxPercentOfGurantee?: number | null;
             collateralTypes?: Array<string | null> | null;
             isPrematurePenaltyApplicable?: boolean | null;
+            loanType: TypeOfLoan;
             productCode?: { prefix: string; initialNo: string; noOfDigits?: number | null } | null;
             penalty?: {
               penaltyType?: PenaltyType | null;
@@ -40611,15 +40650,23 @@ export const GetLoanBalanceReportDocument = `
           productName
           productId
           productCode
-          outstandingBalance
-          remainingBalance
+          disbursedBalance
+          remainingCrBalance
+          remainingDrBalance
           remainingInterest
           lastPaymentDate
           branchId
           branchName
+          loanEndDate
+          interestRate
+          loanType
+          remainingInterestType
         }
         totalOutstandingBalance
-        totalRemainingBalance
+        totalRemainingDrBalance
+        totalRemainingCrBalance
+        totalRemainingInterest
+        totalRemainingInterestType
       }
     }
   }
@@ -41443,16 +41490,24 @@ export const GetSavingsBalanceReportDocument = `
           productCode
           accountOpeningDate
           memberType
-          balance
-          balanceType
+          drBalance
+          crBalance
+          currentInterestType
+          currentInterestRate
+          currentInterest
+          endDate
+          branchId
+          branchName
         }
         summary {
           totalIndividualAccount
           totalMinorAccount
           totalOtherAccount
         }
-        balanceType
-        totalBalance
+        totalDrBalance
+        totalCrBalance
+        interestType
+        totalInterest
       }
     }
   }
@@ -43566,6 +43621,7 @@ export const GetLoanProductDetailDocument = `
               penaltyAmount
               penaltyRate
             }
+            loanType
           }
         }
       }

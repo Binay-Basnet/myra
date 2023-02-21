@@ -29,18 +29,22 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
               <Text fontSize="r1" color="gray.700">
                 Service Center Name:
               </Text>
-              <Text fontSize="r1" color="gray.700">
-                Account No:
-              </Text>
+              {savingData?.meta?.accountNo && (
+                <Text fontSize="r1" color="gray.700">
+                  Account No:
+                </Text>
+              )}
+
               {savingData?.meta?.currentInterestRate && (
                 <Text fontSize="r1" color="gray.700">
                   Current Interest Rate:
                 </Text>
               )}
-
-              <Text fontSize="r1" color="gray.700">
-                Saving Type:
-              </Text>
+              {savingData?.meta?.savingType && (
+                <Text fontSize="r1" color="gray.700">
+                  Saving Type:
+                </Text>
+              )}
             </Box>
           </GridItem>
 

@@ -14,7 +14,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -54,7 +54,14 @@ export const LoanBalanceReport = () => {
 
   const loanReport = data?.report?.loanReport?.loanBalanceReport?.data;
   const outstandingTotal = data?.report?.loanReport?.loanBalanceReport?.totalOutstandingBalance;
-  const totalRemainingBalance = data?.report?.loanReport?.loanBalanceReport?.totalRemainingBalance;
+  const totalRemainingCRBalance =
+    data?.report?.loanReport?.loanBalanceReport?.totalRemainingCrBalance;
+  const totalRemainingDRBalance =
+    data?.report?.loanReport?.loanBalanceReport?.totalRemainingDrBalance;
+  const totalRemainingInterest =
+    data?.report?.loanReport?.loanBalanceReport?.totalRemainingInterest;
+  const totalRemainingInterestType =
+    data?.report?.loanReport?.loanBalanceReport?.totalRemainingInterestType;
 
   return (
     <Report
@@ -96,7 +103,7 @@ export const LoanBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 7,
+                    colspan: 8,
                   },
                 },
               },
@@ -104,9 +111,10 @@ export const LoanBalanceReport = () => {
                 header: 'Loan Account Number',
                 accessorKey: 'loanAccountId',
                 cell: (props) => (
-                  <RedirectButton
-                    label={props?.row?.original?.loanAccountId}
-                    link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props?.row?.original?.loanAccountId}`}
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.loanAccountId as string}
+                    type="loan"
+                    label={props?.row?.original?.loanAccountId as string}
                   />
                 ),
                 meta: {
@@ -119,9 +127,10 @@ export const LoanBalanceReport = () => {
                 header: 'Member Id',
                 accessorKey: 'memberId',
                 cell: (props) => (
-                  <RedirectButton
-                    label={props?.row?.original?.memberCode}
-                    link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${props?.row?.original?.memberId}`}
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.memberId as string}
+                    type="member"
+                    label={props?.row?.original?.memberCode as string}
                   />
                 ),
                 meta: {
@@ -165,9 +174,10 @@ export const LoanBalanceReport = () => {
                 header: 'Product Code',
                 accessorKey: 'productCode',
                 cell: (props) => (
-                  <RedirectButton
-                    label={props?.row?.original?.productCode}
-                    link={`${ROUTES.CBS_LOAN_PRODUCTS_DETAILS}?id=${props?.row?.original?.productId}`}
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.productId as string}
+                    type="loan-product"
+                    label={props?.row?.original?.productCode as string}
                   />
                 ),
                 meta: {
@@ -177,9 +187,19 @@ export const LoanBalanceReport = () => {
                   isNumeric: true,
                 },
               },
+
               {
-                header: 'Outstanding Balance',
-                accessorKey: 'outstandingBalance',
+                header: 'Loan Type',
+                accessorKey: 'loanType',
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Disbursed Balance',
+                accessorKey: 'disbursedBalance',
                 cell: (props) => amountConverter(props.getValue() as string),
 
                 footer: () => amountConverter(outstandingTotal || 0),
@@ -189,9 +209,36 @@ export const LoanBalanceReport = () => {
               },
               {
                 header: 'Remaining Balance',
-                accessorKey: 'remainingBalance',
-                cell: (props) => amountConverter(props.getValue() as string),
-                footer: () => amountConverter(totalRemainingBalance || 0),
+                accessorKey: 'remainingCrBalance',
+                columns: [
+                  {
+                    header: 'Debit (Dr.)',
+                    accessorFn: (row) => row?.remainingDrBalance,
+                    cell: (props) =>
+                      amountConverter(props.row?.original?.remainingDrBalance || '0.00'),
+                    footer: () => amountConverter(totalRemainingDRBalance || 0),
+
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                  {
+                    header: 'Credit (Cr.)',
+                    accessorFn: (row) => row?.remainingCrBalance,
+                    cell: (props) =>
+                      amountConverter(props.row?.original?.remainingCrBalance || '0.00'),
+                    footer: () => amountConverter(totalRemainingCRBalance || 0),
+
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                ],
+              },
+              {
+                header: 'Interest Rate ',
+                accessorKey: 'interestRate',
+                cell: (props) => (props?.getValue() ? props?.getValue() : 0),
                 meta: {
                   isNumeric: true,
                 },
@@ -200,9 +247,26 @@ export const LoanBalanceReport = () => {
                 header: 'Remaining Interest',
                 accessorKey: 'remainingInterest',
                 cell: (props) => amountConverter((props.getValue() || 0) as string),
+                footer: () => amountConverter(totalRemainingInterest || 0),
+
                 meta: {
                   isNumeric: true,
                 },
+              },
+              {
+                header: '',
+                accessorKey: 'remainingInterestType',
+                footer: () => totalRemainingInterestType || '-',
+
+                meta: {
+                  width: '15px',
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Loan End Date',
+
+                accessorFn: (row) => localizedDate(row?.loanEndDate),
               },
               {
                 header: 'Last Payment Date',
