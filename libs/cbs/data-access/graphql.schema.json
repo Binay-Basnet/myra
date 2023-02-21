@@ -1687,6 +1687,29 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "AccountObjState",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ACTIVE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INACTIVE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "AccountOpeningReport",
         "description": null,
@@ -91978,11 +92001,11 @@
                 "deprecationReason": null
               },
               {
-                "name": "includeActiveAccountsOnly",
+                "name": "objState",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
+                  "kind": "ENUM",
+                  "name": "AccountObjState",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -92060,6 +92083,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "accountExpiryDate",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Localized",
               "ofType": null
             },
             "isDeprecated": false,
@@ -92210,12 +92245,36 @@
             "deprecationReason": null
           },
           {
+            "name": "closedAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "defaultAccountType",
             "description": null,
             "args": [],
             "type": {
               "kind": "ENUM",
               "name": "DefaultAccountType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "dues",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Dues",
               "ofType": null
             },
             "isDeprecated": false,
@@ -92294,6 +92353,18 @@
             "deprecationReason": null
           },
           {
+            "name": "interestTax",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "isForMinors",
             "description": null,
             "args": [],
@@ -92312,6 +92383,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lastTransactionDate",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Localized",
               "ofType": null
             },
             "isDeprecated": false,
@@ -92372,6 +92455,42 @@
             "type": {
               "kind": "ENUM",
               "name": "ObjState",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "overDrawnBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "prematurePenalty",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "product",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "DepositProduct",
               "ofType": null
             },
             "isDeprecated": false,

@@ -27,7 +27,7 @@ import {
   DepositAccountClose,
   NatureOfDepositProduct,
   ObjState,
-  useGetAccountTableListQuery,
+  useGetAccountDetailsDataQuery,
   useGetIndividualMemberDetails,
   useSetAccountCloseDataMutation,
 } from '@coop/cbs/data-access';
@@ -119,21 +119,19 @@ export const CbsAccountClose = () => {
   const [totalDeposit, setTotalDeposit] = useState<number>(0);
 
   const { memberDetailData, memberCitizenshipUrl } = useGetIndividualMemberDetails({ memberId });
-  const { data: accountListData } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: -1,
-        after: '',
-      },
-      filter: { memberId, objState: ObjState.Active },
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId && memberId !== 'undefined',
-    }
-  );
 
   const accountId = watch('accountID');
+
+  const { data: accountDetailQueryData } = useGetAccountDetailsDataQuery(
+    { id: accountId as string },
+    { enabled: !!accountId }
+  );
+
+  const selectedAccount = useMemo(
+    () => accountDetailQueryData?.account?.accountDetails?.data,
+    [accountDetailQueryData]
+  );
+
   const radioOther = watch('reason');
   const totalAmount = watch('cash.cashPaid');
   const chequeNo = watch('bankCheque.cheque_no');
@@ -188,21 +186,14 @@ export const CbsAccountClose = () => {
       ? totalCashPaid - Math.floor(totalDeposit)
       : totalCashPaid - totalDeposit;
 
-  const selectedAccount = useMemo(
-    () =>
-      accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
-        ?.node,
-    [accountId]
-  );
-
   const adjustedInterest = watch('adjustedInterest');
 
   const netInterestPayable = useMemo(
     () =>
-      Number(selectedAccount?.interestAccured ?? 0) -
+      Number(selectedAccount?.interestAccrued ?? 0) -
         Number(selectedAccount?.interestTax ?? 0) -
         Number(adjustedInterest ?? 0) ?? 0,
-    [adjustedInterest, selectedAccount?.interestAccured, selectedAccount?.interestTax]
+    [adjustedInterest, selectedAccount?.interestAccrued, selectedAccount?.interestTax]
   );
 
   useEffect(() => {
@@ -497,7 +488,7 @@ export const CbsAccountClose = () => {
                               Interest Payable
                             </Text>
                             <Text color="gray.600" fontWeight="600" fontSize="r1">
-                              {amountConverter(selectedAccount?.interestAccured ?? 0)}
+                              {amountConverter(selectedAccount?.interestAccrued ?? 0)}
                             </Text>
                           </Box>
 
@@ -656,16 +647,16 @@ export const CbsAccountClose = () => {
                           type: selectedAccount?.product?.nature
                             ? accountTypes[selectedAccount?.product?.nature]
                             : '',
-                          ID: selectedAccount?.id,
+                          ID: selectedAccount?.accountId,
                           currentBalance: selectedAccount?.availableBalance ?? '0',
-                          actualBalance: selectedAccount?.balance ?? '0',
+                          actualBalance: selectedAccount?.accountBalance ?? '0',
                           minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
-                          interestAccured: selectedAccount?.interestAccured ?? '0',
+                          interestAccured: selectedAccount?.interestAccrued ?? '0',
                           guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                           overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                           fine: selectedAccount?.dues?.fine ?? 0,
                           // branch: 'Kumaripati',
-                          openDate: localizedDate(selectedAccount?.accountOpenedDate) ?? 'N/A',
+                          openDate: localizedDate(selectedAccount?.accountOpenDate) ?? 'N/A',
                           expiryDate: localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
                           lastTransactionDate:
                             localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
@@ -688,13 +679,21 @@ export const CbsAccountClose = () => {
             {mode === '0' && (
               <FormFooter
                 mainButtonLabel={
-                  Number(selectedAccount?.balance ?? 0) - netInterestPayable - totalCharge === 0
+                  Number(selectedAccount?.accountBalance ?? 0) -
+                    netInterestPayable -
+                    totalCharge ===
+                  0
                     ? 'Close Account'
                     : 'Proceed Transaction'
                 }
                 isMainButtonDisabled={!radioOther}
                 dangerButton={
-                  !!(Number(selectedAccount?.balance ?? 0) - netInterestPayable - totalCharge === 0)
+                  !!(
+                    Number(selectedAccount?.accountBalance ?? 0) -
+                      netInterestPayable -
+                      totalCharge ===
+                    0
+                  )
                 }
                 mainButtonHandler={mainButtonHandlermode0}
               />

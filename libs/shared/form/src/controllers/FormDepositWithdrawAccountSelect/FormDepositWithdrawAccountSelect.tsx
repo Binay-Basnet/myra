@@ -56,7 +56,7 @@ export const FormDepositWithdrawAccountSelect = ({
   const { data: linkedAccountData, isFetching } = useGetMemberLinkedAccountsQuery(
     {
       memberId,
-      includeActiveAccountsOnly: true,
+      objState: 'ACTIVE',
       filter: [
         NatureOfDepositProduct?.Current,
         NatureOfDepositProduct?.Saving,

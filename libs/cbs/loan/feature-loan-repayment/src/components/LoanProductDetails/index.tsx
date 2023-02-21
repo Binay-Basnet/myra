@@ -80,14 +80,14 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               {loanData?.loanDetails?.disburseDate}
             </Text>
           </Box>
-          <Box display="flex" flexDirection="column" gap="s4">
+          {/* <Box display="flex" flexDirection="column" gap="s4">
             <Text fontSize="s3" fontWeight="400">
               Expiry Date{' '}
             </Text>
             <Text fontSize="s3" fontWeight="600">
               {loanData?.loanDetails?.expiryDate ?? '-'}
             </Text>
-          </Box>
+          </Box> */}
           <Box display="flex" flexDirection="column" gap="s4">
             <Text fontSize="s3" fontWeight="400">
               Last Payment Date{' '}

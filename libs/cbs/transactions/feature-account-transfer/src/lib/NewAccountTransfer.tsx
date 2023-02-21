@@ -20,7 +20,7 @@ import {
   ObjState,
   TransferInput,
   TransferType,
-  useGetAccountTableListQuery,
+  useGetAccountDetailsDataQuery,
   useGetAvailableSlipsListQuery,
   useGetIndividualMemberDetails,
   useSetAccountTransferDataMutation,
@@ -93,20 +93,6 @@ export const NewAccountTransfer = () => {
 
   const memberId = watch('memberId');
 
-  const { data: accountListData } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: -1,
-        after: '',
-      },
-      filter: { memberId, objState: ObjState.Active },
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
-  );
-
   useEffect(() => {
     reset({
       memberId,
@@ -143,6 +129,16 @@ export const NewAccountTransfer = () => {
 
   const srcAccountId = watch('srcAccountId');
 
+  const { data: accountDetailQueryData } = useGetAccountDetailsDataQuery(
+    { id: srcAccountId as string },
+    { enabled: !!srcAccountId }
+  );
+
+  const sourceAccount = useMemo(
+    () => accountDetailQueryData?.account?.accountDetails?.data,
+    [accountDetailQueryData]
+  );
+
   const transferType = watch('transferType');
 
   const withdrawn = watch('withdrawWith');
@@ -159,13 +155,6 @@ export const NewAccountTransfer = () => {
         value: withdrawSlip?.slipNumber as string,
       })) ?? [],
     [availableSlipsListQueryData]
-  );
-
-  const sourceAccount = useMemo(
-    () =>
-      accountListData?.account?.list?.edges?.find((account) => account.node?.id === srcAccountId)
-        ?.node,
-    [srcAccountId, accountListData]
   );
 
   const totalDeposit = watch('amount') || 0;
@@ -264,6 +253,7 @@ export const NewAccountTransfer = () => {
                               name="destMemberId"
                               label={t['newAccountTransferReceipentMember']}
                               excludeIds={[memberId]}
+                              forceEnableAll
                             />
 
                             <FormAccountSelect
@@ -347,16 +337,16 @@ export const NewAccountTransfer = () => {
                               type: sourceAccount?.product?.nature
                                 ? accountTypes[sourceAccount?.product?.nature]
                                 : '',
-                              ID: sourceAccount?.id,
+                              ID: sourceAccount?.accountId,
                               currentBalance: sourceAccount?.availableBalance ?? '0',
-                              actualBalance: sourceAccount?.balance ?? '0',
+                              actualBalance: sourceAccount?.accountBalance ?? '0',
                               minimumBalance: sourceAccount?.product?.minimumBalance ?? '0',
-                              interestAccured: sourceAccount?.interestAccured ?? '0',
+                              interestAccured: sourceAccount?.interestAccrued ?? '0',
                               guaranteeBalance: sourceAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: sourceAccount?.overDrawnBalance ?? '0',
                               fine: sourceAccount?.dues?.fine ?? 0,
                               // branch: 'Kumaripati',
-                              openDate: localizedDate(sourceAccount?.accountOpenedDate) ?? 'N/A',
+                              openDate: localizedDate(sourceAccount?.accountOpenDate) ?? 'N/A',
                               expiryDate: localizedDate(sourceAccount?.accountExpiryDate) ?? 'N/A',
                               lastTransactionDate:
                                 localizedDate(sourceAccount?.lastTransactionDate) ?? 'N/A',

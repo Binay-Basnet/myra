@@ -550,12 +550,12 @@ query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) 
 query getMemberLinkedAccounts(
   $memberId: ID!
   $filter: [NatureOfDepositProduct]
-  $includeActiveAccountsOnly: Boolean
+  $objState: AccountObjState
 ) {
   members {
     getAllAccounts(memberId: $memberId) {
       data {
-        depositAccount(filter: $filter, includeActiveAccountsOnly: $includeActiveAccountsOnly) {
+        depositAccount(filter: $filter, objState: $objState) {
           id
           accountName
           member {
@@ -576,6 +576,11 @@ query getMemberLinkedAccounts(
           accountExpiryDate
           overDrawnBalance
           guaranteedAmount
+          dues {
+            fine
+            totalDue
+            dueInstallments
+          }
         }
       }
     }

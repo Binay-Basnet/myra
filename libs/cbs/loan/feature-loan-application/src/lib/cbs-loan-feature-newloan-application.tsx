@@ -238,7 +238,7 @@ export const NewLoanApplication = () => {
         memberId: String(memberId),
 
         filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
-        includeActiveAccountsOnly: true,
+        objState: 'ACTIVE',
       },
       {
         enabled: triggerAccountlist,

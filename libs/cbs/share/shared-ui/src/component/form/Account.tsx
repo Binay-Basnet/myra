@@ -1,10 +1,11 @@
+import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Alert, Box, DEFAULT_PAGE_SIZE, FormSection, GridItem } from '@myra-ui';
+import { Alert, Box, FormSection, GridItem } from '@myra-ui';
 
-import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { ObjState, useGetAccountDetailsDataQuery } from '@coop/cbs/data-access';
 import { FormAccountSelect, FormAmountInput } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type AmountType = {
   totalAmount: number;
@@ -18,22 +19,14 @@ export const Account = ({ totalAmount }: AmountType) => {
   const memberId = watch('memberId');
   const accountId = watch('account.accountId');
 
-  const { data: accountListData } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: DEFAULT_PAGE_SIZE,
-        after: '',
-      },
-      filter: { memberId },
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
+  const { data: accountDetailQueryData } = useGetAccountDetailsDataQuery(
+    { id: accountId as string },
+    { enabled: !!accountId }
   );
 
-  const availableBalance = accountListData?.account?.list?.edges?.filter(
-    (item) => item?.node?.id === accountId
+  const availableBalance = useMemo(
+    () => accountDetailQueryData?.account?.accountDetails?.data?.availableBalance,
+    [accountDetailQueryData]
   );
 
   return (
@@ -47,13 +40,13 @@ export const Account = ({ totalAmount }: AmountType) => {
           filterBy={ObjState.Active}
           isLinkedAccounts
         />
-        {availableBalance && availableBalance?.length > 0 && (
+        {availableBalance && (
           <Box mt="s8">
             <Alert
               status="info"
-              title={`${t['sharePurchaseAvailableBalance']} ${
-                (availableBalance && availableBalance[0]?.node?.balance) ?? 0
-              }`}
+              title={`${t['sharePurchaseAvailableBalance']} ${amountConverter(
+                availableBalance ?? 0
+              )}`}
               showUndo={false}
             />
           </Box>

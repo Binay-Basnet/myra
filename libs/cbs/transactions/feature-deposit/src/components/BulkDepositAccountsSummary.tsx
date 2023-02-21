@@ -1,7 +1,12 @@
 import { useFormContext } from 'react-hook-form';
 
-import { BulkDepositInput, ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { Box, Text } from '@myra-ui';
+
+import {
+  BulkDepositInput,
+  ObjState,
+  useGetAccountTableListMinimalQuery,
+} from '@coop/cbs/data-access';
 
 interface IBulkDepositAccountsSummaryProps {
   memberId: string;
@@ -18,7 +23,7 @@ export const BulkDepositAccountsSummary = ({
 
   const accounts = watch('accounts');
 
-  const { data: accountListData } = useGetAccountTableListQuery(
+  const { data: accountListData } = useGetAccountTableListMinimalQuery(
     {
       paginate: {
         first: -1,

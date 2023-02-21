@@ -19,8 +19,7 @@ import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
   KymMemberTypesEnum,
   NatureOfDepositProduct,
-  ObjState,
-  useGetAccountTableListQuery,
+  useGetAccountDetailsDataQuery,
   useGetAvailableSlipsListQuery,
   useGetIndividualMemberDetails,
   useSetWithdrawDataMutation,
@@ -33,8 +32,8 @@ import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { CashOptions } from '@coop/shared/components';
 import {
+  FormAccountSelect,
   FormAmountInput,
-  FormDepositWithdrawAccountSelect,
   FormInput,
   FormMemberSelect,
   FormSelect,
@@ -106,20 +105,6 @@ export const AddWithdraw = () => {
     resetField('accountId');
   }, [memberId]);
 
-  const { data: accountListData } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: -1,
-        after: '',
-      },
-      filter: { memberId, objState: ObjState.Active },
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
-  );
-
   const accountId = watch('accountId');
 
   const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
@@ -136,11 +121,14 @@ export const AddWithdraw = () => {
     [availableSlipsListQueryData]
   );
 
+  const { data: accountDetailQueryData } = useGetAccountDetailsDataQuery(
+    { id: accountId as string },
+    { enabled: !!accountId }
+  );
+
   const selectedAccount = useMemo(
-    () =>
-      accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
-        ?.node,
-    [accountId, accountListData]
+    () => accountDetailQueryData?.account?.accountDetails?.data,
+    [accountDetailQueryData]
   );
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
@@ -343,7 +331,7 @@ export const AddWithdraw = () => {
                     isDisabled={!!redirectMemberId}
                   />
                   {memberId && (
-                    <FormDepositWithdrawAccountSelect
+                    <FormAccountSelect
                       isRequired
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
@@ -468,16 +456,16 @@ export const AddWithdraw = () => {
                               type: selectedAccount?.product?.nature
                                 ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
-                              ID: selectedAccount?.id,
+                              ID: selectedAccount?.accountId,
                               currentBalance: selectedAccount?.availableBalance ?? '0',
-                              actualBalance: selectedAccount?.balance ?? '0',
+                              actualBalance: selectedAccount?.accountBalance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
-                              interestAccured: selectedAccount?.interestAccured ?? '0',
+                              interestAccured: selectedAccount?.interestAccrued ?? '0',
                               guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: selectedAccount?.dues?.fine ?? '0',
                               // branch: 'Kumaripati',
-                              openDate: localizedDate(selectedAccount?.accountOpenedDate) ?? 'N/A',
+                              openDate: localizedDate(selectedAccount?.accountOpenDate) ?? 'N/A',
                               expiryDate:
                                 localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
                               lastTransactionDate:

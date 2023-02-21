@@ -2,17 +2,18 @@ import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 
+import { Box, Text } from '@myra-ui';
+
 import {
   BulkDepositInput,
   Installment,
   InstallmentState,
   NatureOfDepositProduct,
   ObjState,
-  useGetAccountTableListQuery,
+  useGetAccountTableListMinimalQuery,
   useGetBulkInstallmentsDataQuery,
 } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { Box, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type DepositAccountTable = {
@@ -109,7 +110,7 @@ export const BulkDepositAccountsTable = ({
     [NatureOfDepositProduct.Current]: t['addDepositCurrent'],
   };
 
-  const { data: accountListData } = useGetAccountTableListQuery(
+  const { data: accountListData } = useGetAccountTableListMinimalQuery(
     {
       paginate: {
         first: -1,
