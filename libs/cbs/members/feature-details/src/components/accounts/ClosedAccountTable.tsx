@@ -11,10 +11,12 @@ import {
   Icon,
   IconButton,
   Text,
+  Tooltip,
 } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
@@ -71,8 +73,10 @@ export const ClosedAccountTable = ({
         accessorKey: 'accountName',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s4">
-            <Text>{props?.row?.original?.accountName}</Text>
-
+            <RedirectButton
+              label={<Tooltip title={props?.row?.original?.accountName as string} />}
+              link={`${ROUTES.CBS_ACCOUNT_CLOSED_DETAILS}?id=${props?.row?.original?.accountNumber}`}
+            />
             {props?.row?.original?.guaranteeAccounts?.length ? (
               <GuaranteeAccountsHoverCard
                 trigger={<Icon as={FiZap} color="warning.500" />}
@@ -87,6 +91,30 @@ export const ClosedAccountTable = ({
       {
         header: 'Interest',
         accessorKey: 'interestRate',
+        cell: (props) => (
+          <Box>
+            {props.getValue() !== '-' && (
+              <Text
+                fontSize="s3"
+                textTransform="capitalize"
+                textOverflow="ellipsis"
+                overflow="hidden"
+              >
+                {props.getValue() as string} %
+              </Text>
+            )}
+            {props.getValue() === '-' && (
+              <Text
+                fontSize="s3"
+                textTransform="capitalize"
+                textOverflow="ellipsis"
+                overflow="hidden"
+              >
+                {props.getValue() as string}
+              </Text>
+            )}
+          </Box>
+        ),
         meta: {
           isNumeric: true,
         },

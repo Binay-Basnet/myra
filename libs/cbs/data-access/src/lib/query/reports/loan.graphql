@@ -126,6 +126,9 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
             }
           }
         }
+        error {
+          ...QueryError
+        }
       }
     }
   }

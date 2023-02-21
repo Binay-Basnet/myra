@@ -49,154 +49,186 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     content: () => voucherPrintRef.current,
   });
 
-  const { accountId, accountName, total, details, showSignatures, jvDetails, glTransactions } =
-    useMemo(() => {
-      let tempAccountName = '';
-      let tempAccountId = '';
+  const {
+    accountId,
+    accountName,
+    total,
+    details,
+    voucherDetails,
+    showSignatures,
+    jvDetails,
+    glTransactions,
+  } = useMemo(() => {
+    let tempAccountName = '';
+    let tempAccountId = '';
 
-      let tempDetails = {};
+    let tempDetails = {};
 
-      let tempTotal = '';
+    let tempVoucherDetails = {};
 
-      let tempShowSignatures = false;
+    let tempTotal = '';
 
-      let tempJVDetails;
+    let tempShowSignatures = false;
 
-      let tempGLTransactions;
+    let tempJVDetails;
 
-      if (router?.asPath?.includes('/deposit/')) {
-        tempAccountName = depositDetailData?.accountName as string;
+    let tempGLTransactions;
 
-        tempAccountId = depositDetailData?.accountId as string;
+    if (router?.asPath?.includes('/deposit/')) {
+      tempAccountName = depositDetailData?.accountName as string;
 
-        tempDetails = {
-          'Transaction Id': (
-            <Text fontSize="s3" color="primary.500" fontWeight="600">
-              {depositDetailData?.transactionCode}
-            </Text>
-          ),
-          Date: localizedDate(depositDetailData?.transactionDate),
-          'Deposit Amount': amountConverter(depositDetailData?.amount || 0),
-          Rebate: amountConverter(depositDetailData?.rebate ?? '0'),
-          'Payment Mode': depositDetailData?.paymentMode,
-          'Deposited By': depositDetailData?.depositedBy,
-        };
+      tempAccountId = depositDetailData?.accountId as string;
 
-        tempTotal = depositDetailData?.totalDepositedAmount as string;
-
-        tempGLTransactions = depositDetailData?.glTransaction;
-      }
-
-      if (router?.asPath?.includes('/withdraw/')) {
-        tempAccountName = depositDetailData?.accountName as string;
-
-        tempAccountId = depositDetailData?.accountId as string;
-
-        tempDetails = {
-          'Transaction Id': (
-            <Text fontSize="s3" color="primary.500" fontWeight="600">
-              {withdrawDetailData?.transactionCode}
-            </Text>
-          ),
-          Date: localizedDate(withdrawDetailData?.transactionDate),
-          'Withdraw Amount': amountConverter(withdrawDetailData?.withdrawAmount || 0),
-          Fine: amountConverter(withdrawDetailData?.fine || 0),
-          'Payment Mode': withdrawDetailData?.paymentMode,
-          'Withdrawn By': withdrawDetailData?.withdrawnBy,
-        };
-
-        tempTotal = withdrawDetailData?.totalWithdrawnAmount as string;
-
-        tempGLTransactions = withdrawDetailData?.glTransaction;
-      }
-
-      if (router?.asPath?.includes('/account-transfer/')) {
-        tempAccountName = accountTransferDetailData?.sourceAccount?.accountName as string;
-
-        tempAccountId = accountTransferDetailData?.sourceAccount?.id as string;
-
-        tempDetails = {
-          'Transaction Id': (
-            <Text fontSize="s3" color="primary.500" fontWeight="600">
-              {accountTransferDetailData?.transactionCode}
-            </Text>
-          ),
-          Date: localizedDate(accountTransferDetailData?.transactionDate),
-          'Withdrawn By': accountTransferDetailData?.withdrawnBy,
-          'Transfer Type': accountTransferDetailData?.transferType
-            ? transferTypeObj[accountTransferDetailData?.transferType]
-            : '',
-          'Transfer Amount': amountConverter(accountTransferDetailData?.transferAmount || 0),
-        };
-
-        tempTotal = accountTransferDetailData?.transferAmount as string;
-
-        tempGLTransactions = accountTransferDetailData?.glTransaction;
-      }
-
-      if (router?.asPath?.includes('/repayments/') || router?.asPath?.includes('/loan-payment/')) {
-        tempAccountName = loanRepaymentDetailData?.loanAccountName as string;
-
-        tempAccountId = loanRepaymentDetailData?.loanAccountId as string;
-
-        const totalInterestAmount = loanRepaymentDetailData?.installmentDetails?.reduce(
-          (sum, installment) => sum + Number(installment?.interestAmount ?? 0),
-          0
-        );
-
-        tempDetails = {
-          'Loan Repayment Id': (
-            <Text fontSize="s3" color="primary.500" fontWeight="600">
-              {loanRepaymentDetailData?.transactionCode}
-            </Text>
-          ),
-          Date: localizedDate(loanRepaymentDetailData?.repaymentDate),
-          'Installment No': loanRepaymentDetailData?.installmentNo,
-          'Principal Amount': amountConverter(loanRepaymentDetailData?.totalRepaymentAmount || 0),
-          'Interest Amount': amountConverter(totalInterestAmount || 0),
-          'Penalty Amount': amountConverter(loanRepaymentDetailData?.fine || 0),
-          'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
-
-          'Payment Mode': loanRepaymentDetailData?.paymentMode,
-        };
-
-        tempTotal = loanRepaymentDetailData?.totalRepaymentAmount as string;
-
-        tempGLTransactions = loanRepaymentDetailData?.glTransaction;
-      }
-
-      if (router?.asPath?.includes('/journal-vouchers/')) {
-        tempTotal = voucherData?.amount as string;
-
-        tempShowSignatures = true;
-
-        tempJVDetails = {
-          glTransactions: voucherData?.glTransaction,
-          date: voucherData?.date?.local,
-          note: voucherData?.note,
-          refrence: voucherData?.reference,
-          totalDebit: voucherData?.amount,
-          transactionId: voucherData?.transactionCode,
-        };
-      }
-
-      return {
-        accountId: tempAccountId,
-        accountName: tempAccountName,
-        total: tempTotal,
-        details: tempDetails,
-        showSignatures: tempShowSignatures,
-        jvDetails: tempJVDetails,
-        glTransactions: tempGLTransactions,
+      tempDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {depositDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(depositDetailData?.transactionDate),
+        'Deposit Amount': amountConverter(depositDetailData?.amount || 0),
+        Rebate: amountConverter(depositDetailData?.rebate ?? '0'),
+        'Payment Mode': depositDetailData?.paymentMode,
+        'Deposited By': depositDetailData?.depositedBy,
       };
-    }, [
-      depositDetailData,
-      withdrawDetailData,
-      accountTransferDetailData,
-      loanRepaymentDetailData,
-      voucherData,
-      router?.asPath,
-    ]);
+
+      tempTotal = depositDetailData?.totalDepositedAmount as string;
+
+      tempGLTransactions = depositDetailData?.glTransaction;
+    }
+
+    if (router?.asPath?.includes('/withdraw/')) {
+      tempAccountName = depositDetailData?.accountName as string;
+
+      tempAccountId = depositDetailData?.accountId as string;
+
+      tempDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {withdrawDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(withdrawDetailData?.transactionDate),
+        'Withdraw Amount': amountConverter(withdrawDetailData?.withdrawAmount || 0),
+        Fine: amountConverter(withdrawDetailData?.fine || 0),
+        'Payment Mode': withdrawDetailData?.paymentMode,
+        'Withdrawn By': withdrawDetailData?.withdrawnBy,
+      };
+
+      tempTotal = withdrawDetailData?.totalWithdrawnAmount as string;
+
+      tempGLTransactions = withdrawDetailData?.glTransaction;
+    }
+
+    if (router?.asPath?.includes('/account-transfer/')) {
+      tempAccountName = accountTransferDetailData?.sourceAccount?.accountName as string;
+
+      tempAccountId = accountTransferDetailData?.sourceAccount?.id as string;
+
+      tempDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {accountTransferDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(accountTransferDetailData?.transactionDate),
+        'Withdrawn By': `${accountTransferDetailData?.withdrawnBy} (${
+          accountTransferDetailData?.withdrawnSlipNo ?? 'N/A'
+        })`,
+        'Transfer Type': accountTransferDetailData?.transferType
+          ? transferTypeObj[accountTransferDetailData?.transferType]
+          : '',
+        'Transfer Amount': amountConverter(accountTransferDetailData?.transferAmount || 0),
+        'Receiver Member': accountTransferDetailData?.recipientMember?.name?.local ?? 'N/A',
+        'Receivers Account name':
+          accountTransferDetailData?.destinationAccount?.accountName ?? 'N/A',
+      };
+
+      tempVoucherDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {accountTransferDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(accountTransferDetailData?.transactionDate),
+        'Withdrawn By': `${accountTransferDetailData?.withdrawnBy} (${
+          accountTransferDetailData?.withdrawnSlipNo ?? 'N/A'
+        })`,
+        'Transfer Type': accountTransferDetailData?.transferType
+          ? transferTypeObj[accountTransferDetailData?.transferType]
+          : '',
+        'Transfer Amount': amountConverter(accountTransferDetailData?.transferAmount || 0),
+      };
+
+      tempTotal = accountTransferDetailData?.transferAmount as string;
+
+      tempGLTransactions = accountTransferDetailData?.glTransaction;
+    }
+
+    if (router?.asPath?.includes('/repayments/') || router?.asPath?.includes('/loan-payment/')) {
+      tempAccountName = loanRepaymentDetailData?.loanAccountName as string;
+
+      tempAccountId = loanRepaymentDetailData?.loanAccountId as string;
+
+      const totalInterestAmount = loanRepaymentDetailData?.installmentDetails?.reduce(
+        (sum, installment) => sum + Number(installment?.interestAmount ?? 0),
+        0
+      );
+
+      tempDetails = {
+        'Loan Repayment Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {loanRepaymentDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(loanRepaymentDetailData?.repaymentDate),
+        'Installment No': loanRepaymentDetailData?.installmentNo,
+        'Principal Amount': amountConverter(loanRepaymentDetailData?.totalRepaymentAmount || 0),
+        'Interest Amount': amountConverter(totalInterestAmount || 0),
+        'Penalty Amount': amountConverter(loanRepaymentDetailData?.fine || 0),
+        'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
+
+        'Payment Mode': loanRepaymentDetailData?.paymentMode,
+      };
+
+      tempTotal = loanRepaymentDetailData?.totalRepaymentAmount as string;
+
+      tempGLTransactions = loanRepaymentDetailData?.glTransaction;
+    }
+
+    if (router?.asPath?.includes('/journal-vouchers/')) {
+      tempTotal = voucherData?.amount as string;
+
+      tempShowSignatures = true;
+
+      tempJVDetails = {
+        glTransactions: voucherData?.glTransaction,
+        date: voucherData?.date?.local,
+        note: voucherData?.note,
+        refrence: voucherData?.reference,
+        totalDebit: voucherData?.amount,
+        transactionId: voucherData?.transactionCode,
+      };
+    }
+
+    return {
+      accountId: tempAccountId,
+      accountName: tempAccountName,
+      total: tempTotal,
+      details: tempDetails,
+      voucherDetails: tempVoucherDetails,
+      showSignatures: tempShowSignatures,
+      jvDetails: tempJVDetails,
+      glTransactions: tempGLTransactions,
+    };
+  }, [
+    depositDetailData,
+    withdrawDetailData,
+    accountTransferDetailData,
+    loanRepaymentDetailData,
+    voucherData,
+    router?.asPath,
+  ]);
 
   const pageHeaderOptions =
     router?.asPath?.includes('/deposit') ||
@@ -207,7 +239,10 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     router?.asPath?.includes('/journal-vouchers/')
       ? [
           { label: 'Print', handler: handlePrint },
-          { label: 'Print Voucher', handler: handlePrintVoucher },
+          {
+            label: 'Print Voucher',
+            handler: handlePrintVoucher,
+          },
         ]
       : [];
 
@@ -256,7 +291,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           }}
           total={amountConverter(total)}
           totalWords={amountToWordsConverter(total)}
-          details={details}
+          details={voucherDetails}
           showSignatures={showSignatures}
           glTransactions={glTransactions}
           glTransactionsTotal={total}
