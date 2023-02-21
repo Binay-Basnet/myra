@@ -35,7 +35,12 @@ import {
 } from '@coop/cbs/data-access';
 import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { CashOptions } from '@coop/shared/components';
-import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
+import {
+  FormAmountInput,
+  FormDepositWithdrawAccountSelect,
+  FormInput,
+  FormMemberSelect,
+} from '@coop/shared/form';
 import {
   amountConverter,
   amountToWordsConverter,
@@ -386,12 +391,12 @@ export const AddDeposit = () => {
                   />
 
                   {memberId && (
-                    <FormAccountSelect
+                    <FormDepositWithdrawAccountSelect
                       isRequired
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
-                      filterBy={ObjState.Active}
+                      isLinkedAccounts
                       isDisabled={!!redirectAccountId}
                     />
                   )}
