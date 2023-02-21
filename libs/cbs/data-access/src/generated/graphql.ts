@@ -842,6 +842,14 @@ export type AllAccountsQueryListArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export const AllLoanType = {
+  Emi: 'EMI',
+  Epi: 'EPI',
+  Flat: 'FLAT',
+  Loc: 'LOC',
+} as const;
+
+export type AllLoanType = typeof AllLoanType[keyof typeof AllLoanType];
 export type AllTransactionFilter = {
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
@@ -873,6 +881,7 @@ export const AllTransactionType = {
   Ebanking: 'EBANKING',
   InterestBooking: 'INTEREST_BOOKING',
   InterestPosting: 'INTEREST_POSTING',
+  InterBranchTransfer: 'INTER_BRANCH_TRANSFER',
   JournalVoucher: 'JOURNAL_VOUCHER',
   LoanDisbursment: 'LOAN_DISBURSMENT',
   LoanRepayment: 'LOAN_REPAYMENT',
@@ -9652,6 +9661,7 @@ export type LoanBalanceReport = {
   lastPaymentDate?: Maybe<Scalars['Localized']>;
   loanAccountId?: Maybe<Scalars['String']>;
   loanEndDate?: Maybe<Scalars['Localized']>;
+  loanType?: Maybe<AllLoanType>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -9659,7 +9669,9 @@ export type LoanBalanceReport = {
   productId?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
   remainingBalance?: Maybe<Scalars['String']>;
+  remainingBalanceType?: Maybe<BalanceType>;
   remainingInterest?: Maybe<Scalars['String']>;
+  remainingInterestType?: Maybe<BalanceType>;
 };
 
 export type LoanBalanceReportResult = {
@@ -9667,6 +9679,9 @@ export type LoanBalanceReportResult = {
   error?: Maybe<QueryError>;
   totalOutstandingBalance?: Maybe<Scalars['String']>;
   totalRemainingBalance?: Maybe<Scalars['String']>;
+  totalRemainingBalanceType?: Maybe<BalanceType>;
+  totalRemainingInterest?: Maybe<Scalars['String']>;
+  totalRemainingInterestType?: Maybe<BalanceType>;
 };
 
 export type LoanBankDisbursement = {
@@ -11829,6 +11844,7 @@ export const NatureOfTransaction = {
   Ebanking: 'EBANKING',
   InterestBooking: 'INTEREST_BOOKING',
   InterestPosting: 'INTEREST_POSTING',
+  InterBranchTransfer: 'INTER_BRANCH_TRANSFER',
   JournalVoucher: 'JOURNAL_VOUCHER',
   LoanDisbursment: 'LOAN_DISBURSMENT',
   LoanRepayment: 'LOAN_REPAYMENT',
@@ -13385,6 +13401,9 @@ export type SavingsBalanceReport = {
   balanceType?: Maybe<BalanceType>;
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
+  currentInterest?: Maybe<Scalars['String']>;
+  currentInterestRate?: Maybe<Scalars['Float']>;
+  endDate?: Maybe<Scalars['Localized']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -24053,6 +24072,9 @@ export type GetLoanBalanceReportQuery = {
       loanBalanceReport: {
         totalOutstandingBalance?: string | null;
         totalRemainingBalance?: string | null;
+        totalRemainingBalanceType?: BalanceType | null;
+        totalRemainingInterest?: string | null;
+        totalRemainingInterestType?: BalanceType | null;
         data?: Array<{
           memberId?: string | null;
           memberCode?: string | null;
@@ -24069,6 +24091,9 @@ export type GetLoanBalanceReportQuery = {
           branchName?: string | null;
           loanEndDate?: Record<'local' | 'en' | 'np', string> | null;
           interestRate?: number | null;
+          loanType?: AllLoanType | null;
+          remainingBalanceType?: BalanceType | null;
+          remainingInterestType?: BalanceType | null;
         } | null> | null;
       };
     };
@@ -40507,9 +40532,15 @@ export const GetLoanBalanceReportDocument = `
           branchName
           loanEndDate
           interestRate
+          loanType
+          remainingBalanceType
+          remainingInterestType
         }
         totalOutstandingBalance
         totalRemainingBalance
+        totalRemainingBalanceType
+        totalRemainingInterest
+        totalRemainingInterestType
       }
     }
   }

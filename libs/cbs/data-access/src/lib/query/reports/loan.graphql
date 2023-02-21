@@ -18,9 +18,15 @@ query getLoanBalanceReport($data: LoanBalanceFilterData!) {
           branchName
           loanEndDate
           interestRate
+          loanType
+          remainingBalanceType
+          remainingInterestType
         }
         totalOutstandingBalance
         totalRemainingBalance
+        totalRemainingBalanceType
+        totalRemainingInterest
+        totalRemainingInterestType
       }
     }
   }

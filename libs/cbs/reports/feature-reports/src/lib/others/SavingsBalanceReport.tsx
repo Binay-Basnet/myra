@@ -24,7 +24,7 @@ import {
   FormMemberSelect,
   FormRadioGroup,
 } from '@coop/shared/form';
-import { debitCreditConverter } from '@coop/shared/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 const minorOptions = [
   {
@@ -204,14 +204,19 @@ export const SavingBalanceReport = () => {
               {
                 header: 'Balance Amount',
                 accessorKey: 'balance',
-                cell: (props) =>
-                  debitCreditConverter(
-                    props.getValue() as string,
-                    props?.row?.original?.balanceType as string
-                  ),
-                footer: () =>
-                  debitCreditConverter(totalBalance as string, totalBalanceType as string),
+                cell: (props) => amountConverter((props.getValue() || 0) as string),
+                footer: () => amountConverter((totalBalance || 0) as string),
                 meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: '',
+                accessorKey: 'balanceType',
+
+                footer: () => totalBalanceType,
+                meta: {
+                  width: '15px',
                   isNumeric: true,
                 },
               },

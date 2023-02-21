@@ -55,6 +55,12 @@ export const LoanBalanceReport = () => {
   const loanReport = data?.report?.loanReport?.loanBalanceReport?.data;
   const outstandingTotal = data?.report?.loanReport?.loanBalanceReport?.totalOutstandingBalance;
   const totalRemainingBalance = data?.report?.loanReport?.loanBalanceReport?.totalRemainingBalance;
+  const totalRemainingBalanceType =
+    data?.report?.loanReport?.loanBalanceReport?.totalRemainingBalanceType;
+  const totalRemainingInterest =
+    data?.report?.loanReport?.loanBalanceReport?.totalRemainingInterest;
+  const totalRemainingInterestType =
+    data?.report?.loanReport?.loanBalanceReport?.totalRemainingInterestType;
 
   return (
     <Report
@@ -96,7 +102,7 @@ export const LoanBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 7,
+                    colspan: 8,
                   },
                 },
               },
@@ -180,6 +186,16 @@ export const LoanBalanceReport = () => {
                   isNumeric: true,
                 },
               },
+
+              {
+                header: 'Loan Type',
+                accessorKey: 'loanType',
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
               {
                 header: 'Disbursed Balance',
                 accessorKey: 'disbursedBalance',
@@ -200,6 +216,15 @@ export const LoanBalanceReport = () => {
                 },
               },
               {
+                header: '',
+                accessorKey: 'remainingBalanceType',
+                footer: () => totalRemainingBalanceType || '-',
+                meta: {
+                  width: '15px',
+                  isNumeric: true,
+                },
+              },
+              {
                 header: 'Interest Rate ',
                 accessorKey: 'interestRate',
                 cell: (props) => (props?.getValue() ? props?.getValue() : 0),
@@ -211,7 +236,19 @@ export const LoanBalanceReport = () => {
                 header: 'Remaining Interest',
                 accessorKey: 'remainingInterest',
                 cell: (props) => amountConverter((props.getValue() || 0) as string),
+                footer: () => amountConverter(totalRemainingInterest || 0),
+
                 meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: '',
+                accessorKey: 'remainingInterestType',
+                footer: () => totalRemainingInterestType || '-',
+
+                meta: {
+                  width: '15px',
                   isNumeric: true,
                 },
               },
