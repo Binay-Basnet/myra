@@ -9647,12 +9647,14 @@ export type LoanBalanceFilterData = {
 export type LoanBalanceReport = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
+  disbursedBalance?: Maybe<Scalars['String']>;
+  interestRate?: Maybe<Scalars['Float']>;
   lastPaymentDate?: Maybe<Scalars['Localized']>;
   loanAccountId?: Maybe<Scalars['String']>;
+  loanEndDate?: Maybe<Scalars['Localized']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
-  outstandingBalance?: Maybe<Scalars['String']>;
   productCode?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
@@ -24059,12 +24061,14 @@ export type GetLoanBalanceReportQuery = {
           productName?: string | null;
           productId?: string | null;
           productCode?: string | null;
-          outstandingBalance?: string | null;
+          disbursedBalance?: string | null;
           remainingBalance?: string | null;
           remainingInterest?: string | null;
           lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
           branchId?: string | null;
           branchName?: string | null;
+          loanEndDate?: Record<'local' | 'en' | 'np', string> | null;
+          interestRate?: number | null;
         } | null> | null;
       };
     };
@@ -40495,12 +40499,14 @@ export const GetLoanBalanceReportDocument = `
           productName
           productId
           productCode
-          outstandingBalance
+          disbursedBalance
           remainingBalance
           remainingInterest
           lastPaymentDate
           branchId
           branchName
+          loanEndDate
+          interestRate
         }
         totalOutstandingBalance
         totalRemainingBalance
