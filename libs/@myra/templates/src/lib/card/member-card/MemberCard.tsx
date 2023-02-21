@@ -52,7 +52,7 @@ export interface MemberCardProps {
     | {
         name: string | undefined;
         type: string | undefined;
-        ID: string | undefined;
+        ID: string | undefined | null;
         currentBalance?: string | number;
         actualBalance?: string | number;
         minimumBalance?: string | number;
@@ -64,7 +64,7 @@ export interface MemberCardProps {
         openDate?: string;
         expiryDate?: string;
         lastTransactionDate?: string;
-        productName: string;
+        productName: string | undefined;
         installmentAmount: string | null | undefined;
       }
     | undefined

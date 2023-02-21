@@ -357,7 +357,9 @@ query getAccountTableListMinimal($paginate: Pagination, $filter: DepositLoanAcco
             productName
             nature
             interest
+            isMandatorySaving
           }
+          installmentAmount
         }
       }
     }
@@ -505,10 +507,25 @@ query getAccountDetailsData($id: ID!) {
         objState
         member {
           id
-          code
           name
+          code
           profilePicUrl
+          profilePic
+          signaturePicUrl
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
           contact
+          dateJoined
         }
         nomineeAccountNumber
         nomineeAccountName
@@ -540,6 +557,37 @@ query getAccountDetailsData($id: ID!) {
         autoOpen
         isMandatory
         interestRate
+        product {
+          id
+          productCode
+          productName
+          nature
+          minimumBalance
+          isMandatorySaving
+          withdrawRestricted
+          accountClosingCharge {
+            serviceName
+            ledgerName
+            amount
+          }
+          withdrawPenalty {
+            penaltyLedgerMapping
+            penaltyAmount
+            penaltyRate
+          }
+          interest
+        }
+        dues {
+          fine
+          totalDue
+          dueInstallments
+        }
+        prematurePenalty
+        interestTax
+        overDrawnBalance
+        lastTransactionDate
+        accountExpiryDate
+        closedAt
       }
     }
   }

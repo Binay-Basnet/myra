@@ -3,9 +3,8 @@ import { Controller } from 'react-hook-form';
 import { AccountSelect, AccountSelectProps } from '@myra-ui/forms';
 
 import {
+  AccountObjState,
   NatureOfDepositProduct,
-  ObjState,
-  useGetAccountTableListQuery,
   useGetMemberLinkedAccountsQuery,
 } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
@@ -30,7 +29,7 @@ interface IAccountSelectProps extends AccountSelectProps {
   memberId: string;
   placeholder?: string;
   isLinkedAccounts?: boolean;
-  filterBy?: ObjState;
+  filterBy?: AccountObjState;
   excludeIds?: string[];
   isRequired?: boolean;
 }
@@ -47,17 +46,14 @@ export const FormAccountSelect = ({
   ...rest
 }: IAccountSelectProps) => {
   const { t } = useTranslation();
-  const { data: accountListData, isFetching } = useGetAccountTableListQuery(
+  const { data: accountListData, isFetching } = useGetMemberLinkedAccountsQuery(
     {
-      paginate: {
-        first: -1,
-        after: '',
-      },
-      filter: { memberId, objState: filterBy ?? null },
+      memberId,
+      objState: filterBy ?? null,
     },
     {
       staleTime: 0,
-      enabled: !!memberId && memberId !== 'undefined',
+      enabled: !!memberId && memberId !== 'undefined' && !isLinkedAccounts,
     }
   );
 
@@ -68,12 +64,12 @@ export const FormAccountSelect = ({
     [NatureOfDepositProduct.Current]: t['addDepositCurrent'],
   };
 
-  const accountsList = accountListData?.account?.list?.edges;
+  const accountsList = accountListData?.members?.getAllAccounts?.data?.depositAccount;
 
   const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery(
     {
       memberId,
-      includeActiveAccountsOnly: true,
+      objState: 'ACTIVE',
       filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
     },
     {
@@ -108,24 +104,22 @@ export const FormAccountSelect = ({
 
   const accountOptions: Option[] =
     accountsList?.reduce((prevVal, curVal) => {
-      if (excludeIds?.includes(curVal?.node?.id as string) || !curVal) {
+      if (excludeIds?.includes(curVal?.id as string) || !curVal) {
         return prevVal;
       }
 
       return [
         ...prevVal,
         {
-          label: `${curVal?.node?.product?.productName} (ID:${curVal?.node?.id})`,
-          value: curVal?.node?.id as string,
+          label: `${curVal?.product?.productName} (ID:${curVal?.id})`,
+          value: curVal?.id as string,
           accountInfo: {
-            accountName: curVal?.node?.accountName,
-            accountId: curVal?.node?.id,
-            accountType: curVal?.node?.product?.nature
-              ? accountTypes[curVal?.node?.product?.nature]
-              : '',
-            balance: curVal?.node?.availableBalance as string,
-            fine: curVal?.node?.dues?.fine as string,
-            productName: curVal?.node?.product?.productName,
+            accountName: curVal?.accountName,
+            accountId: curVal?.id,
+            accountType: curVal?.product?.nature ? accountTypes[curVal?.product?.nature] : '',
+            balance: curVal?.availableBalance as string,
+            fine: curVal?.dues?.fine as string,
+            productName: curVal?.product?.productName,
           },
         } as Option,
       ];

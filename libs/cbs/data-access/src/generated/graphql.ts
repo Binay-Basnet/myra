@@ -233,6 +233,12 @@ export type AccountListFilter = {
   productID?: InputMaybe<Scalars['ID']>;
 };
 
+export const AccountObjState = {
+  Active: 'ACTIVE',
+  Inactive: 'INACTIVE',
+} as const;
+
+export type AccountObjState = typeof AccountObjState[keyof typeof AccountObjState];
 export type AccountOpeningReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
@@ -873,6 +879,7 @@ export const AllTransactionType = {
   Ebanking: 'EBANKING',
   InterestBooking: 'INTEREST_BOOKING',
   InterestPosting: 'INTEREST_POSTING',
+  InterBranchTransfer: 'INTER_BRANCH_TRANSFER',
   JournalVoucher: 'JOURNAL_VOUCHER',
   LoanDisbursment: 'LOAN_DISBURSMENT',
   LoanRepayment: 'LOAN_REPAYMENT',
@@ -10759,12 +10766,13 @@ export type MemberAccountData = {
 
 export type MemberAccountDataDepositAccountArgs = {
   filter?: InputMaybe<Array<InputMaybe<NatureOfDepositProduct>>>;
-  includeActiveAccountsOnly?: InputMaybe<Scalars['Boolean']>;
+  objState?: InputMaybe<AccountObjState>;
 };
 
 export type MemberAccountDetails = {
   accountBalance?: Maybe<Scalars['String']>;
   accountBranch?: Maybe<Scalars['String']>;
+  accountExpiryDate?: Maybe<Scalars['Localized']>;
   accountId?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
   accountOpenDate?: Maybe<Scalars['Localized']>;
@@ -10777,20 +10785,27 @@ export type MemberAccountDetails = {
   autoOpen?: Maybe<Scalars['Boolean']>;
   availableBalance?: Maybe<Scalars['String']>;
   chequeIssue?: Maybe<Scalars['Boolean']>;
+  closedAt?: Maybe<Scalars['String']>;
   defaultAccountType?: Maybe<DefaultAccountType>;
+  dues?: Maybe<Dues>;
   guaranteedAmount?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   insurance?: Maybe<Scalars['Boolean']>;
   interestAccrued?: Maybe<Scalars['String']>;
   interestEarned?: Maybe<Scalars['String']>;
   interestRate?: Maybe<Scalars['Float']>;
+  interestTax?: Maybe<Scalars['String']>;
   isForMinors?: Maybe<Scalars['Boolean']>;
   isMandatory?: Maybe<Scalars['Boolean']>;
+  lastTransactionDate?: Maybe<Scalars['Localized']>;
   member?: Maybe<Member>;
   monthlyInterestCompulsory?: Maybe<Scalars['Boolean']>;
   nomineeAccountName?: Maybe<Scalars['String']>;
   nomineeAccountNumber?: Maybe<Scalars['String']>;
   objState?: Maybe<ObjState>;
+  overDrawnBalance?: Maybe<Scalars['String']>;
+  prematurePenalty?: Maybe<Scalars['String']>;
+  product?: Maybe<DepositProduct>;
   productId?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
   staffProduct?: Maybe<Scalars['Boolean']>;
@@ -11827,6 +11842,7 @@ export const NatureOfTransaction = {
   Ebanking: 'EBANKING',
   InterestBooking: 'INTEREST_BOOKING',
   InterestPosting: 'INTEREST_POSTING',
+  InterBranchTransfer: 'INTER_BRANCH_TRANSFER',
   JournalVoucher: 'JOURNAL_VOUCHER',
   LoanDisbursment: 'LOAN_DISBURSMENT',
   LoanRepayment: 'LOAN_REPAYMENT',
@@ -18823,6 +18839,7 @@ export type GetAccountTableListMinimalQuery = {
           accountOpenedDate?: Record<'local' | 'en' | 'np', string> | null;
           accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
           closedAt?: string | null;
+          installmentAmount?: string | null;
           member?: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
@@ -18835,6 +18852,7 @@ export type GetAccountTableListMinimalQuery = {
             productName: string;
             nature: NatureOfDepositProduct;
             interest?: number | null;
+            isMandatorySaving?: boolean | null;
           };
         } | null;
       }> | null;
@@ -19046,12 +19064,55 @@ export type GetAccountDetailsDataQuery = {
         autoOpen?: boolean | null;
         isMandatory?: boolean | null;
         interestRate?: number | null;
+        prematurePenalty?: string | null;
+        interestTax?: string | null;
+        overDrawnBalance?: string | null;
+        lastTransactionDate?: Record<'local' | 'en' | 'np', string> | null;
+        accountExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
+        closedAt?: string | null;
         member?: {
           id: string;
-          code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
           profilePicUrl?: string | null;
+          profilePic?: string | null;
+          signaturePicUrl?: string | null;
           contact?: string | null;
+          dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+          address?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+        } | null;
+        product?: {
+          id: string;
+          productCode: string;
+          productName: string;
+          nature: NatureOfDepositProduct;
+          minimumBalance?: string | null;
+          isMandatorySaving?: boolean | null;
+          withdrawRestricted?: boolean | null;
+          interest?: number | null;
+          accountClosingCharge?: Array<{
+            serviceName?: string | null;
+            ledgerName?: string | null;
+            amount?: any | null;
+          } | null> | null;
+          withdrawPenalty?: {
+            penaltyLedgerMapping?: string | null;
+            penaltyAmount?: any | null;
+            penaltyRate?: number | null;
+          } | null;
+        } | null;
+        dues?: {
+          fine?: string | null;
+          totalDue?: string | null;
+          dueInstallments?: number | null;
         } | null;
       } | null;
     } | null;
@@ -21877,7 +21938,7 @@ export type GetMemberLinkedAccountsQueryVariables = Exact<{
   filter?: InputMaybe<
     Array<InputMaybe<NatureOfDepositProduct>> | InputMaybe<NatureOfDepositProduct>
   >;
-  includeActiveAccountsOnly?: InputMaybe<Scalars['Boolean']>;
+  objState?: InputMaybe<AccountObjState>;
 }>;
 
 export type GetMemberLinkedAccountsQuery = {
@@ -21900,6 +21961,11 @@ export type GetMemberLinkedAccountsQuery = {
           guaranteedAmount?: string | null;
           member?: { name?: Record<'local' | 'en' | 'np', string> | null } | null;
           product: { productName: string; nature: NatureOfDepositProduct };
+          dues?: {
+            fine?: string | null;
+            totalDue?: string | null;
+            dueInstallments?: number | null;
+          } | null;
         } | null> | null;
       } | null;
     } | null;
@@ -33745,7 +33811,9 @@ export const GetAccountTableListMinimalDocument = `
             productName
             nature
             interest
+            isMandatorySaving
           }
+          installmentAmount
         }
       }
     }
@@ -34013,10 +34081,25 @@ export const GetAccountDetailsDataDocument = `
         objState
         member {
           id
-          code
           name
+          code
           profilePicUrl
+          profilePic
+          signaturePicUrl
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
           contact
+          dateJoined
         }
         nomineeAccountNumber
         nomineeAccountName
@@ -34048,6 +34131,37 @@ export const GetAccountDetailsDataDocument = `
         autoOpen
         isMandatory
         interestRate
+        product {
+          id
+          productCode
+          productName
+          nature
+          minimumBalance
+          isMandatorySaving
+          withdrawRestricted
+          accountClosingCharge {
+            serviceName
+            ledgerName
+            amount
+          }
+          withdrawPenalty {
+            penaltyLedgerMapping
+            penaltyAmount
+            penaltyRate
+          }
+          interest
+        }
+        dues {
+          fine
+          totalDue
+          dueInstallments
+        }
+        prematurePenalty
+        interestTax
+        overDrawnBalance
+        lastTransactionDate
+        accountExpiryDate
+        closedAt
       }
     }
   }
@@ -37659,14 +37773,11 @@ export const useGetLoanRepaymentListQuery = <TData = GetLoanRepaymentListQuery, 
     options
   );
 export const GetMemberLinkedAccountsDocument = `
-    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $includeActiveAccountsOnly: Boolean) {
+    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $objState: AccountObjState) {
   members {
     getAllAccounts(memberId: $memberId) {
       data {
-        depositAccount(
-          filter: $filter
-          includeActiveAccountsOnly: $includeActiveAccountsOnly
-        ) {
+        depositAccount(filter: $filter, objState: $objState) {
           id
           accountName
           member {
@@ -37687,6 +37798,11 @@ export const GetMemberLinkedAccountsDocument = `
           accountExpiryDate
           overDrawnBalance
           guaranteedAmount
+          dues {
+            fine
+            totalDue
+            dueInstallments
+          }
         }
       }
     }

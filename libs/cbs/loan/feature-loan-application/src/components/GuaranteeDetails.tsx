@@ -3,19 +3,9 @@ import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook
 import { AiOutlinePlus } from 'react-icons/ai';
 import { omit } from 'lodash';
 
-import {
-  Box,
-  Button,
-  DEFAULT_PAGE_SIZE,
-  Divider,
-  GridItem,
-  Icon,
-  Modal,
-  Text,
-  VStack,
-} from '@myra-ui';
+import { Box, Button, Divider, GridItem, Icon, Modal, Text, VStack } from '@myra-ui';
 
-import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { ObjState, useGetAccountDetailsDataQuery } from '@coop/cbs/data-access';
 import { FormAccountSelect, FormMemberSelect, FormNumberInput } from '@coop/shared/form';
 
 import { useLoanProductContext } from '../hooks/useLoanProduct';
@@ -54,28 +44,21 @@ export const GuaranteeDetails = () => {
   // For Account Details
   const guaranteePercent = product?.maxPercentOfGurantee;
   const memberId = methods.watch('memberId');
-  const { data: accountListData } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: DEFAULT_PAGE_SIZE,
-        after: '',
-      },
-      filter: { memberId },
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
-  );
+
   const accountId = methods.watch('accountId');
   const totalGuarantee = methods.watch('guranteeAmount');
-  const selectedAccount = useMemo(
-    () =>
-      accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
-        ?.node,
-    [accountId]
+
+  const { data: accountDetailQueryData } = useGetAccountDetailsDataQuery(
+    { id: accountId as string },
+    { enabled: !!accountId }
   );
-  const currentBalance = selectedAccount?.balance ?? '0';
+
+  const selectedAccount = useMemo(
+    () => accountDetailQueryData?.account?.accountDetails?.data,
+    [accountDetailQueryData]
+  );
+
+  const currentBalance = selectedAccount?.accountBalance ?? '0';
   const maxGuarantee =
     currentBalance && guaranteePercent
       ? (Number(currentBalance) * Number(guaranteePercent)) / 100
