@@ -6009,6 +6009,11 @@ export type GuaranteeAccountsMinView = {
   loanId?: Maybe<Scalars['String']>;
 };
 
+export type GuaranteeLoanDetail = {
+  amount?: Maybe<Scalars['String']>;
+  loanAccountNo?: Maybe<Scalars['String']>;
+};
+
 export const GuaranteeStatus = {
   Active: 'ACTIVE',
   Released: 'RELEASED',
@@ -6163,6 +6168,39 @@ export type IndividualMember = {
   declaration?: Maybe<KymIndDeclarations>;
   personalInformation?: Maybe<KymIndPersonalInformation>;
   professionalInformation?: Maybe<KymIndProfessionalInformation>;
+};
+
+export type IndividualMemberProfileReportResult = {
+  data?: Maybe<IndividualMemberReportData>;
+  error?: Maybe<QueryError>;
+};
+
+export type IndividualMemberReport = {
+  address?: Maybe<Address>;
+  contactNo?: Maybe<Scalars['String']>;
+  kymExpiryDate?: Maybe<Scalars['Localized']>;
+  kymStatus?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  membershipDate?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['Localized']>;
+  panNo?: Maybe<Scalars['String']>;
+  profilePic?: Maybe<Scalars['String']>;
+  riskCategory?: Maybe<OfficialUseRiskCategory>;
+  shareCertificateNo?: Maybe<Scalars['String']>;
+  totalShareCount?: Maybe<Scalars['Int']>;
+};
+
+export type IndividualMemberReportData = {
+  closedAccountDetail?: Maybe<Array<Maybe<MemberClosedAccounts>>>;
+  header?: Maybe<IndividualMemberReport>;
+  loanDetail?: Maybe<Array<Maybe<MemberLoanDetail>>>;
+  recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactions>>>;
+  savingDetail?: Maybe<Array<Maybe<MemberSavingDetail>>>;
+  totalApprovedAmount?: Maybe<Scalars['String']>;
+  totalRemainingAmount?: Maybe<Scalars['String']>;
+  totalSavingBalance?: Maybe<Scalars['String']>;
+  totalTransactionAmount?: Maybe<Scalars['String']>;
 };
 
 export const IndividualRequiredDocument = {
@@ -11001,6 +11039,13 @@ export type MemberClassificationReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MemberClosedAccounts = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNo?: Maybe<Scalars['String']>;
+  accountType?: Maybe<Scalars['String']>;
+  closedDate?: Maybe<Scalars['Localized']>;
+};
+
 export type MemberCode = {
   initialNo?: Maybe<Scalars['String']>;
   noOfDigits?: Maybe<Scalars['Int']>;
@@ -11076,6 +11121,15 @@ export type MemberIndividualData = {
   photo?: Maybe<Scalars['Boolean']>;
   profession?: Maybe<Scalars['String']>;
   shareInfo?: Maybe<ShareInformation>;
+};
+
+export type MemberLoanDetail = {
+  approvedAmount?: Maybe<Scalars['String']>;
+  issuedDate?: Maybe<Scalars['Localized']>;
+  lastPaymentDate?: Maybe<Scalars['Localized']>;
+  loanAccountName?: Maybe<Scalars['String']>;
+  loanAccountNo?: Maybe<Scalars['String']>;
+  remainingAmount?: Maybe<Scalars['String']>;
 };
 
 export type MemberLoanInformation = {
@@ -11382,6 +11436,13 @@ export const MemberRecentTransactionViewTxnType = {
 
 export type MemberRecentTransactionViewTxnType =
   typeof MemberRecentTransactionViewTxnType[keyof typeof MemberRecentTransactionViewTxnType];
+export type MemberRecentTransactions = {
+  transactionAmount?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
+  transactionId?: Maybe<Scalars['String']>;
+  transactionType?: Maybe<Scalars['String']>;
+};
+
 export type MemberRegFilters = {
   gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   institutionType?: InputMaybe<Scalars['ID']>;
@@ -11408,6 +11469,7 @@ export type MemberReport = {
   activeInactiveMemberReport?: Maybe<ReportResult>;
   copomisReport?: Maybe<CopomisReportResult>;
   exportActiveInactiveMemberReport: Scalars['String'];
+  individualMemberReport?: Maybe<IndividualMemberProfileReportResult>;
   kymStatusReport?: Maybe<KymStatusReportResult>;
   memberBalanceReport?: Maybe<MemberBalanceReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
@@ -11424,6 +11486,10 @@ export type MemberReportCopomisReportArgs = {
 
 export type MemberReportExportActiveInactiveMemberReportArgs = {
   data?: InputMaybe<ActiveInactiveMemberReportData>;
+};
+
+export type MemberReportIndividualMemberReportArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberReportKymStatusReportArgs = {
@@ -11467,6 +11533,14 @@ export type MemberRiskInput = {
   generalRisk?: InputMaybe<Scalars['Int']>;
   highRisk?: InputMaybe<Scalars['Int']>;
   mediumRisk?: InputMaybe<Scalars['Int']>;
+};
+
+export type MemberSavingDetail = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNo?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
+  guaranteeLoanDetail?: Maybe<Array<Maybe<GuaranteeLoanDetail>>>;
+  transactionCount?: Maybe<Scalars['Int']>;
 };
 
 export type MemberShare = {
@@ -19154,6 +19228,7 @@ export type GetAccountTransactionListsQueryVariables = Exact<{
 export type GetAccountTransactionListsQuery = {
   account: {
     listTransactions?: {
+      totalCount?: number | null;
       edges?: Array<{
         node: {
           id: string;
@@ -23019,6 +23094,7 @@ export type GetMemberKymDetailsLoanQuery = {
             subscriptionDate?: Record<'local' | 'en' | 'np', string> | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
+            remainingPrincipal?: string | null;
           } | null> | null;
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
@@ -27418,6 +27494,7 @@ export type GetSettingsUserListDataQuery = {
             contactNo?: string | null;
             gender?: UserGender | null;
             dob?: string | null;
+            empCode?: string | null;
             profilePicUrl?: string | null;
             role?: Array<{ id: string; name: string } | null> | null;
             branch?: { id: string; name?: string | null } | null;
@@ -34247,6 +34324,7 @@ export const GetAccountTransactionListsDocument = `
           balanceType
         }
       }
+      totalCount
       pageInfo {
         endCursor
         startCursor
@@ -39223,6 +39301,7 @@ export const GetMemberKymDetailsLoanDocument = `
             subscriptionDate
             interestEarned
             interestBooked
+            remainingPrincipal
           }
           payments {
             date
@@ -44983,6 +45062,7 @@ export const GetSettingsUserListDataDocument = `
             contactNo
             gender
             dob
+            empCode
             role {
               id
               name

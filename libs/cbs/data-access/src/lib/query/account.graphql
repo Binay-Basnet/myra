@@ -613,6 +613,7 @@ query getAccountTransactionLists($filter: AccountsTransactionFilter!, $paginatio
           balanceType
         }
       }
+      totalCount
       pageInfo {
         endCursor
         startCursor

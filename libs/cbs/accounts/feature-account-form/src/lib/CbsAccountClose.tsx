@@ -453,26 +453,27 @@ export const CbsAccountClose = () => {
                     </Box>
                     <Box bg="background.500" borderRadius="br2" mt="s16">
                       <Box display="flex" flexDirection="column" gap="s16" p="s16">
-                        {selectedAccount?.guaranteedAmount && (
-                          <Box display="flex" flexDirection="column" gap="s8">
-                            <Text fontWeight="600" fontSize="s3">
-                              Loan
-                            </Text>
-                            <Box
-                              h="36px"
-                              display="flex"
-                              justifyContent="space-between"
-                              alignItems="center"
-                            >
-                              <Text color="gray.600" fontWeight="500" fontSize="s3">
-                                Loan Amount
+                        {selectedAccount?.guaranteedAmount &&
+                          selectedAccount?.guaranteedAmount !== '0' && (
+                            <Box display="flex" flexDirection="column" gap="s8">
+                              <Text fontWeight="600" fontSize="s3">
+                                Guarantee
                               </Text>
-                              <Text color="gray.600" fontWeight="600" fontSize="r1">
-                                {amountConverter(selectedAccount?.guaranteedAmount ?? 0)}
-                              </Text>
+                              <Box
+                                h="36px"
+                                display="flex"
+                                justifyContent="space-between"
+                                alignItems="center"
+                              >
+                                <Text color="gray.600" fontWeight="500" fontSize="s3">
+                                  Guarantee Amount
+                                </Text>
+                                <Text color="gray.600" fontWeight="600" fontSize="r1">
+                                  {amountConverter(selectedAccount?.guaranteedAmount ?? 0)}
+                                </Text>
+                              </Box>
                             </Box>
-                          </Box>
-                        )}
+                          )}
                         <Box display="flex" flexDirection="column" gap="s8">
                           <Text fontWeight="600" fontSize="s3">
                             Interest

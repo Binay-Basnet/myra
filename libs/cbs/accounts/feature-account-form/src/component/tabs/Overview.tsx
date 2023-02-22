@@ -99,6 +99,7 @@ export const Overview = () => {
     isMandatory: accountDetails?.isMandatory,
     nomineeAccountNumber: accountDetails?.nomineeAccountNumber,
     nomineeAccountName: accountDetails?.nomineeAccountName,
+    productMinimumBalance: accountDetails?.product?.minimumBalance,
   };
   return (
     <>

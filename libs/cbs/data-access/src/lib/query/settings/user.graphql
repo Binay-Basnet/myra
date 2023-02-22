@@ -16,6 +16,7 @@ query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilt
             contactNo
             gender
             dob
+            empCode
             role {
               id
               name
