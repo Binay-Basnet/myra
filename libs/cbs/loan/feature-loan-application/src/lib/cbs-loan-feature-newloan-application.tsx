@@ -17,9 +17,7 @@ import {
 
 import {
   LoanAccountInput,
-  LoanRepaymentScheme,
   NatureOfDepositProduct,
-  TypeOfLoan,
   useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
@@ -68,9 +66,6 @@ export const NewLoanApplication = () => {
 
   const methods = useForm<LoanAccountInput>({
     mode: 'onChange',
-    defaultValues: {
-      repaymentScheme: LoanRepaymentScheme.Epi,
-    },
   });
   const { watch, resetField, setValue } = methods;
 
@@ -195,6 +190,14 @@ export const NewLoanApplication = () => {
   // Get Currently Selected Loan Product
   const { loanProduct } = useLoanProductDetails({ productId: String(productId) });
   const loanProductDetailsdata = loanProduct?.product;
+
+  useEffect(() => {
+    if (loanProductDetailsdata?.loanType === 'LINE_OF_CREDIT') {
+      setValue('repaymentScheme', 'LOC');
+    } else {
+      setValue('repaymentScheme', 'EPI');
+    }
+  }, [loanProductDetailsdata?.loanType]);
 
   // Reset Fields
   useEffect(() => {
@@ -375,9 +378,9 @@ export const NewLoanApplication = () => {
                     <Tenure />
                     <InstallmentFrequencyComp />
                     <LinkedAccounts />
-                    {loanProductDetailsdata?.loanType === TypeOfLoan?.Normal && (
-                      <LoanRepaymentSchemeComponent />
-                    )}
+                    {/* {loanProductDetailsdata?.loanType === TypeOfLoan?.Normal && ( */}
+                    <LoanRepaymentSchemeComponent />
+                    {/* )} */}
                     <LoanPaymentSchedule />
                     <LoanProcessingCharge />
                     <RequiredDocuments />

@@ -5,10 +5,11 @@ import { FormSwitchTab } from '@coop/shared/form';
 
 import { useLoanProductContext } from '../hooks/useLoanProduct';
 
-const loanRepaymentObj = {
+const loanRepaymentObj: Record<LoanRepaymentScheme, string> = {
   [LoanRepaymentScheme.Emi]: 'EMI',
   [LoanRepaymentScheme.Epi]: 'EPI',
   [LoanRepaymentScheme.Flat]: 'FLAT',
+  LOC: 'LOC',
 };
 
 export const LoanRepaymentSchemeComponent = () => {
