@@ -6,7 +6,7 @@ import {
   Address,
   ShareBalanceReportData,
   ShareBalanceReportFilter,
-  useGetShareBalanceReportQuery,
+  useGetExceptionShareBalanceReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
@@ -29,7 +29,7 @@ export const ExceptionShareBalanceReport = () => {
       ? filters?.branchId?.map((t) => t.value)
       : null;
 
-  const { data, isFetching } = useGetShareBalanceReportQuery(
+  const { data, isFetching } = useGetExceptionShareBalanceReportQuery(
     {
       data: {
         ...filters,
@@ -40,8 +40,8 @@ export const ExceptionShareBalanceReport = () => {
     { enabled: !!filters }
   );
 
-  const shareBalanceData = data?.report?.shareReport?.shareBalanceReport?.data;
-  const totalShareBalance = data?.report?.shareReport?.shareBalanceReport?.totalBalance;
+  const shareBalanceData = data?.report?.exceptionReport?.shareBalanceReport?.data;
+  const totalShareBalance = data?.report?.exceptionReport?.shareBalanceReport?.totalBalance;
 
   return (
     <Report

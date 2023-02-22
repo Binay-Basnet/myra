@@ -1,0 +1,103 @@
+query getExceptionSavingsBalanceReport($data: SavingsBalanceFilterData!) {
+  report {
+    exceptionReport {
+      savingsBalanceReport(data: $data) {
+        data {
+          accountId
+          memberId
+          memberCode
+          memberName
+          productId
+          productName
+          productCode
+          accountOpeningDate
+          memberType
+          drBalance
+          crBalance
+          currentInterestType
+          currentInterestRate
+          currentInterest
+          endDate
+          branchId
+          branchName
+          isInactive
+          isClosed
+        }
+        summary {
+          totalIndividualAccount
+          totalMinorAccount
+          totalOtherAccount
+        }
+        totalDrBalance
+        totalCrBalance
+        interestType
+        totalInterest
+      }
+    }
+  }
+}
+
+query getExceptionLoanBalanceReport($data: LoanBalanceFilterData!) {
+  report {
+    exceptionReport {
+      loanBalanceReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          loanAccountId
+          memberName
+          productName
+          productId
+          productCode
+          disbursedBalance
+          remainingCrBalance
+          remainingDrBalance
+          remainingInterest
+          lastPaymentDate
+          branchId
+          branchName
+          loanEndDate
+          interestRate
+          loanType
+          isInactive
+          isClosed
+          remainingInterestType
+        }
+        totalOutstandingBalance
+        totalRemainingDrBalance
+        totalRemainingCrBalance
+        totalRemainingInterest
+        totalRemainingInterestType
+      }
+    }
+  }
+}
+
+query getExceptionShareBalanceReport($data: ShareBalanceReportFilter!) {
+  report {
+    exceptionReport {
+      shareBalanceReport(data: $data) {
+        data {
+          shareType
+          shareCertificateNo
+          memberId
+          memberCode
+          memberName
+          address {
+            ...Address
+          }
+          contactNo
+          membershipDate
+          noOfKitta
+          balance
+          branchId
+          branchName
+        }
+        totalBalance
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
