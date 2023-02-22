@@ -94,7 +94,8 @@ export const RecentLoanPaymentTable = React.forwardRef<
           cell: (props) => {
             const principalData = props?.row?.original;
 
-            return principalData?.currentRemainingPrincipal === '0' &&
+            return principalData?.paid &&
+              principalData?.currentRemainingPrincipal === '0' &&
               principalData?.remainingInterest === '0' ? (
               '0.00'
             ) : (
