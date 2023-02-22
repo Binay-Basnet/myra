@@ -3,7 +3,11 @@ import { useRouter } from 'next/router';
 
 import { Alert, asyncToast, Box, Button, Modal, Text } from '@myra-ui';
 
-import { useChangeLocMutation, useGetLoanProductDetailQuery } from '@coop/cbs/data-access';
+import {
+  TypeOfLoan,
+  useChangeLocMutation,
+  useGetLoanProductDetailQuery,
+} from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -65,36 +69,50 @@ export const CbsLoanFeatureLoanAccountDetail = (props: CbsLoanFeatureLoanAccount
       </Box>
       <FormProvider {...methods}>
         <form>
-          <Modal
-            open={isLocModalOpen}
-            onClose={handleLocModalClose}
-            isCentered
-            title={
-              <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
-                Update Loan Amount
-              </Text>
-            }
-            footer={
-              <Box display="flex" px={5} pb={5} justifyContent="flex-end">
-                <Button onClick={handleSubmit}>Save</Button>
+          {loanData?.loanType === TypeOfLoan?.Normal ? (
+            <Modal
+              open={isLocModalOpen}
+              onClose={handleLocModalClose}
+              title={
+                <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
+                  Update Loan Amount
+                </Text>
+              }
+            >
+              <Text>This is not a LOC loan account</Text>
+            </Modal>
+          ) : (
+            <Modal
+              open={isLocModalOpen}
+              onClose={handleLocModalClose}
+              isCentered
+              title={
+                <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
+                  Update Loan Amount
+                </Text>
+              }
+              footer={
+                <Box display="flex" px={5} pb={5} justifyContent="flex-end">
+                  <Button onClick={handleSubmit}>Save</Button>
+                </Box>
+              }
+              width="xl"
+            >
+              <Box display="flex" flexDir="column" gap={5}>
+                <Alert status="info" title="Loan Amount Limit" hideCloseIcon>
+                  <ul>
+                    <li>
+                      <Text>Minimum: {amountConverter(loanData?.minimumLoanAmount)}</Text>
+                    </li>
+                    <li>
+                      <Text>Maximum: {amountConverter(loanData?.maxLoanAmount)}</Text>
+                    </li>
+                  </ul>
+                </Alert>
+                <FormInput type="number" label="Loan Amount" name="newLoanAmount" />
               </Box>
-            }
-            width="xl"
-          >
-            <Box display="flex" flexDir="column" gap={5}>
-              <Alert status="info" title="Loan Amount Limit" hideCloseIcon>
-                <ul>
-                  <li>
-                    <Text>Minimun: {amountConverter(loanData?.minimumLoanAmount)}</Text>
-                  </li>
-                  <li>
-                    <Text>Maximun: {amountConverter(loanData?.maxLoanAmount)}</Text>
-                  </li>
-                </ul>
-              </Alert>
-              <FormInput type="number" label="Loan Amount" name="newLoanAmount" />
-            </Box>
-          </Modal>
+            </Modal>
+          )}
         </form>
       </FormProvider>
     </Box>

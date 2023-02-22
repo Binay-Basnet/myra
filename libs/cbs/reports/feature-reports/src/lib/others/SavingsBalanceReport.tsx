@@ -179,9 +179,8 @@ export const SavingBalanceReport = () => {
               },
               {
                 header: 'Account Open Date',
-                accessorKey: 'accountOpeningDate',
-                cell: (props: { getValue: () => unknown }) =>
-                  String(props?.getValue())?.split(' ')[0],
+                accessorFn: (row) => localizedDate(row?.accountOpeningDate),
+
                 meta: {
                   Footer: {
                     display: 'none',

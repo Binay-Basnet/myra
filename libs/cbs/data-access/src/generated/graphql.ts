@@ -2555,12 +2555,14 @@ export type ClosedSavingAccountResult = {
 };
 
 export type ClosedSavingAccountResultData = {
+  accountNo?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
   closedDate?: Maybe<Scalars['Localized']>;
   entries?: Maybe<Array<Maybe<ClosedSavingAccountData>>>;
   memberName?: Maybe<Scalars['Localized']>;
   memberShipCode?: Maybe<Scalars['String']>;
   membershipDate?: Maybe<Scalars['Localized']>;
+  savingType?: Maybe<Scalars['String']>;
   serviceCenterName?: Maybe<Scalars['String']>;
   totalDeposit?: Maybe<Scalars['String']>;
   totalWithdraw?: Maybe<Scalars['String']>;
@@ -4826,6 +4828,14 @@ export type ExampleMutation = {
 export type ExampleQuery = {
   localization: LocalizationExample;
   testDb: TestDbResult;
+};
+
+export type ExceptionReport = {
+  savingsBalanceReport: SavingsBalanceReportResult;
+};
+
+export type ExceptionReportSavingsBalanceReportArgs = {
+  data: SavingsBalanceFilterData;
 };
 
 export const ExpiryStatusFilter = {
@@ -11412,6 +11422,7 @@ export const MemberRecentTransactionViewTxnType = {
 export type MemberRecentTransactionViewTxnType =
   typeof MemberRecentTransactionViewTxnType[keyof typeof MemberRecentTransactionViewTxnType];
 export type MemberRegFilters = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   institutionType?: InputMaybe<Scalars['ID']>;
   memberType?: InputMaybe<Array<InputMaybe<MemberType>>>;
@@ -12844,6 +12855,7 @@ export type ReportQuery = {
   cashReport: CashReport;
   depositReport: DepositReport;
   employeeReport: EmployeeReport;
+  exceptionReport: ExceptionReport;
   getReport?: Maybe<SavedReportResponse>;
   listReports: ReportListConnection;
   loanReport: LoanReport;
@@ -13444,7 +13456,7 @@ export type SavingsBalanceFilterData = {
 
 export type SavingsBalanceReport = {
   accountId?: Maybe<Scalars['String']>;
-  accountOpeningDate?: Maybe<Scalars['String']>;
+  accountOpeningDate?: Maybe<Scalars['Localized']>;
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
   crBalance?: Maybe<Scalars['String']>;
@@ -13453,6 +13465,8 @@ export type SavingsBalanceReport = {
   currentInterestType?: Maybe<BalanceType>;
   drBalance?: Maybe<Scalars['String']>;
   endDate?: Maybe<Scalars['Localized']>;
+  isClosed?: Maybe<Scalars['Boolean']>;
+  isInactive?: Maybe<Scalars['Boolean']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -24832,7 +24846,7 @@ export type GetSavingsBalanceReportQuery = {
           productId?: string | null;
           productName?: string | null;
           productCode?: string | null;
-          accountOpeningDate?: string | null;
+          accountOpeningDate?: Record<'local' | 'en' | 'np', string> | null;
           memberType?: KymMemberTypesEnum | null;
           drBalance?: string | null;
           crBalance?: string | null;

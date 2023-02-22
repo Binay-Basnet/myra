@@ -319,7 +319,7 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
           </Tbody>
 
           {showFooter && (
-            <Tfoot display="table-footer-group">
+            <Tfoot display="table-header-group">
               {table.getFooterGroups().map((footerGroup, index) => {
                 if (index !== 0) return null;
 
