@@ -7,7 +7,7 @@ import { LoanInstallment } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
-interface ILoanPaymentScheduleTableProps {
+interface IRecentLoanPaymentTableProps {
   data: LoanInstallment[];
   nextInstallmentNumber?: number;
   total: string;
@@ -17,9 +17,9 @@ interface ILoanPaymentScheduleTableProps {
   // currentRemainingPrincipal?: string | number;
 }
 
-export const LoanPaymentScheduleTable = React.forwardRef<
+export const RecentLoanPaymentTable = React.forwardRef<
   HTMLTableElement,
-  ILoanPaymentScheduleTableProps
+  IRecentLoanPaymentTableProps
 >(
   (
     {
@@ -36,7 +36,7 @@ export const LoanPaymentScheduleTable = React.forwardRef<
     const columns = useMemo<Column<LoanInstallment>[]>(
       () => [
         {
-          header: 'S.N.',
+          header: 'Intallment No.',
           footer: 'Total Cost of Loan',
           accessorKey: 'installmentNo',
           meta: {
@@ -49,11 +49,16 @@ export const LoanPaymentScheduleTable = React.forwardRef<
 
         {
           header: 'Installment Date',
-          accessorFn: (row) => localizedDate(row?.installmentDate),
+          cell: (props) => localizedDate(props?.row?.original?.installmentDate),
         },
 
         {
-          header: 'Principal',
+          header: 'Last Paid Date',
+          cell: (props) => localizedDate(props?.row?.original?.paidDate),
+        },
+
+        {
+          header: 'Paid Principal',
           accessorKey: 'principal',
           cell: (props) => amountConverter(props.getValue() as string),
           footer: () => amountConverter(totalPrincipal),
@@ -62,7 +67,7 @@ export const LoanPaymentScheduleTable = React.forwardRef<
           },
         },
         {
-          header: 'Interest',
+          header: 'Paid Interest',
           accessorKey: 'interest',
           cell: (props) => amountConverter(props.getValue() as string),
           footer: () => amountConverter(totalInterest),
@@ -72,7 +77,7 @@ export const LoanPaymentScheduleTable = React.forwardRef<
         },
 
         {
-          header: 'Payment',
+          header: 'Total Payment',
           accessorKey: 'payment',
           cell: (props) => amountConverter(props.getValue() as string),
           footer: () => amountConverter(total) || '-',
@@ -88,6 +93,7 @@ export const LoanPaymentScheduleTable = React.forwardRef<
           accessorKey: 'remainingPrincipal',
           cell: (props) => {
             const principalData = props?.row?.original;
+
             return principalData?.currentRemainingPrincipal === '0' &&
               principalData?.remainingInterest === '0' ? (
               '0.00'
