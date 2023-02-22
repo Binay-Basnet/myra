@@ -92,7 +92,7 @@ export const AddBankTransfer = () => {
                       <FormInput
                         name="tellerId"
                         label="Teller Name"
-                        value={user?.username}
+                        value={[user?.firstName?.local, user?.lastName?.local].join(' ')}
                         isDisabled
                       />
                     </GridItem>

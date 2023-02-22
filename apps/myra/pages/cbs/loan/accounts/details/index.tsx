@@ -11,15 +11,26 @@ const LoanDetailsPage = () => {
   const handleModalClose = () => {
     setIsLocModalOpen(false);
   };
+
+  const [isLinkedAccountModalOpen, setIsLinkedAccountModalOpen] = useState(false);
+  const handleLinkedAccountModalClose = () => {
+    setIsLinkedAccountModalOpen(false);
+  };
+
   return (
     <>
       <LoanDetailsHeader
         title="Loan Account List"
-        options={[{ label: 'Update LOC amount', handler: () => setIsLocModalOpen(true) }]}
+        options={[
+          { label: 'Update LOC amount', handler: () => setIsLocModalOpen(true) },
+          { label: 'Update Linked Account', handler: () => setIsLinkedAccountModalOpen(true) },
+        ]}
       />
       <CbsLoanFeatureLoanAccountDetail
         isLocModalOpen={isLocModalOpen}
         handleLocModalClose={handleModalClose}
+        isLinkedAccountModalOpen={isLinkedAccountModalOpen}
+        handleLinkedAccountModalClose={handleLinkedAccountModalClose}
       />
     </>
   );

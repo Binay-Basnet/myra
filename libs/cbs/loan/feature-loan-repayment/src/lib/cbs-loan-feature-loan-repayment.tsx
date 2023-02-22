@@ -36,7 +36,13 @@ import { exportVisibleTableToExcel, localizedDate, localizedTime, ROUTES } from 
 import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter, amountToWordsConverter, featureCode } from '@coop/shared/utils';
 
-import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
+import {
+  InstallmentData,
+  LoanPaymentScheduleTable,
+  LoanProductCard,
+  Payment,
+  RecentLoanPaymentTable,
+} from '../components';
 
 export type LoanRepaymentInputType = Omit<LoanRepaymentInput, 'cash'> & {
   cash?:
@@ -215,12 +221,13 @@ export const LoanRepayment = () => {
       principal: value?.principal,
       remainingPrincipal: value?.remainingPrincipal,
       paid: nextInstallmentNumber > index + 1,
-      currentRemaingPrincipal: value?.currentRemainingPrincipal,
+      currentRemainingPrincipal: value?.currentRemainingPrincipal,
       remainingInterest: value?.remainingInterest,
+      paidDate: value?.paidDate,
     })) || [];
   const loanPaymentScheduleSplice =
     nextInstallmentNumber > 5
-      ? loanPaymentSchedule?.slice(nextInstallmentNumber - 5, nextInstallmentNumber + 5) || []
+      ? loanPaymentSchedule?.slice(nextInstallmentNumber - 5, nextInstallmentNumber) || []
       : loanPaymentSchedule?.slice(0, 11) || [];
 
   useEffect(() => {
@@ -292,13 +299,13 @@ export const LoanRepayment = () => {
                   <Box display="flex" flexDirection="column" gap="s16" w="100%">
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                       <Text fontSize="r1" fontWeight="600">
-                        Loan Payment Schedule
+                        Recent Loan Payment
                       </Text>
                       <Button variant="ghost" onClick={onToggle}>
-                        View full schedule{' '}
+                        View loan schedule
                       </Button>
                     </Box>
-                    <LoanPaymentScheduleTable
+                    <RecentLoanPaymentTable
                       data={loanPaymentScheduleSplice as unknown as LoanInstallment[]}
                       nextInstallmentNumber={nextInstallmentNumber}
                       total={loanData?.paymentSchedule?.total as string}
