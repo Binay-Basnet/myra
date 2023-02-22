@@ -11,6 +11,7 @@ const LoanDetailsPage = () => {
   const handleModalClose = () => {
     setIsLocModalOpen(false);
   };
+
   return (
     <>
       <LoanDetailsHeader
