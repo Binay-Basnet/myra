@@ -11,6 +11,7 @@ export * from './lib/deposit/SavingStatementReport';
 export * from './lib/deposit/STRDetail';
 export * from './lib/deposit/SuspiciousTransactionReport';
 export * from './lib/deposit/TTRReport';
+export * from './lib/exceptions';
 export * from './lib/LedgerReport';
 export * from './lib/loan/ClosedLoanAccountReport';
 export * from './lib/loan/LoanAgeingStatementReport';

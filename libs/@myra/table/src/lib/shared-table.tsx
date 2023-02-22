@@ -118,7 +118,7 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
           variant === 'report'
             ? {
                 maxH: '420px',
-                overflowY: 'auto',
+                overflowY: 'scroll',
                 border: '1px',
                 borderColor: 'border.layout',
                 borderRadius: 'br2',
@@ -319,7 +319,7 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
           </Tbody>
 
           {showFooter && (
-            <Tfoot display="table-header-group">
+            <Tfoot display="table-footer-group">
               {table.getFooterGroups().map((footerGroup, index) => {
                 if (index !== 0) return null;
 
@@ -328,6 +328,8 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
                     {footerGroup.headers.map((footer) =>
                       footer.column.columnDef.meta?.Footer?.display === 'none' ? null : (
                         <Th
+                          position="sticky"
+                          bottom="0"
                           key={footer.id}
                           isNumeric={footer.column.columnDef.meta?.isNumeric}
                           width={footer.column.columnDef.meta?.width}
