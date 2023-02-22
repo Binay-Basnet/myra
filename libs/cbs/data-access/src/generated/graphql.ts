@@ -4830,6 +4830,14 @@ export type ExampleQuery = {
   testDb: TestDbResult;
 };
 
+export type ExceptionReport = {
+  savingsBalanceReport: SavingsBalanceReportResult;
+};
+
+export type ExceptionReportSavingsBalanceReportArgs = {
+  data: SavingsBalanceFilterData;
+};
+
 export const ExpiryStatusFilter = {
   All: 'ALL',
   Expired: 'EXPIRED',
@@ -12847,6 +12855,7 @@ export type ReportQuery = {
   cashReport: CashReport;
   depositReport: DepositReport;
   employeeReport: EmployeeReport;
+  exceptionReport: ExceptionReport;
   getReport?: Maybe<SavedReportResponse>;
   listReports: ReportListConnection;
   loanReport: LoanReport;
@@ -13456,6 +13465,8 @@ export type SavingsBalanceReport = {
   currentInterestType?: Maybe<BalanceType>;
   drBalance?: Maybe<Scalars['String']>;
   endDate?: Maybe<Scalars['Localized']>;
+  isClosed?: Maybe<Scalars['Boolean']>;
+  isInactive?: Maybe<Scalars['Boolean']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
