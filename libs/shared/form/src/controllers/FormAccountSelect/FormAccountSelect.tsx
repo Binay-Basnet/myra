@@ -92,7 +92,7 @@ export const FormAccountSelect = ({
           value: curVal?.id as string,
           accountInfo: {
             accountName: curVal?.accountName,
-            accountId: curVal?.product?.nature,
+            accountId: curVal?.id,
             accountType: curVal?.product?.nature ? accountTypes[curVal?.product?.nature] : '',
             balance: curVal?.availableBalance as string,
             fine: '0',

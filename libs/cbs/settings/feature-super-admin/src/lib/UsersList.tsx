@@ -58,7 +58,7 @@ export const UsersList = () => {
     () => [
       {
         header: 'User ID',
-        accessorFn: (row) => row?.node?.id,
+        accessorFn: (row) => row?.node?.empCode,
       },
       {
         accessorFn: (row) => row?.node?.name,

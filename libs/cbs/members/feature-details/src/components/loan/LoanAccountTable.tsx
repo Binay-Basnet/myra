@@ -18,6 +18,7 @@ interface ILoanPaymentScheduleTableProps {
         interestRate: string | null | undefined;
         accountNumber: string | null | undefined;
         subscriptionDate: string | null | undefined;
+        remainingPrincipal?: string | 0;
       }[];
   memberName: string;
   contactNo?: string;
@@ -59,8 +60,15 @@ export const LoanTable = ({
         ),
       },
       {
-        header: 'Balance',
+        header: 'Sanctioned Balance',
         accessorKey: 'totalBalance',
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Remaining Balance',
+        accessorKey: 'remainingPrincipal',
         meta: {
           isNumeric: true,
         },
