@@ -3661,6 +3661,7 @@ export type DepositAccount = Base & {
   interestAccured?: Maybe<Scalars['String']>;
   interestTax?: Maybe<Scalars['String']>;
   lastTransactionDate?: Maybe<Scalars['Localized']>;
+  ledgerId?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -4828,14 +4829,6 @@ export type ExampleMutation = {
 export type ExampleQuery = {
   localization: LocalizationExample;
   testDb: TestDbResult;
-};
-
-export type ExceptionReport = {
-  savingsBalanceReport: SavingsBalanceReportResult;
-};
-
-export type ExceptionReportSavingsBalanceReportArgs = {
-  data: SavingsBalanceFilterData;
 };
 
 export const ExpiryStatusFilter = {
@@ -6037,6 +6030,11 @@ export type GuaranteeAccountsMinView = {
   loanId?: Maybe<Scalars['String']>;
 };
 
+export type GuaranteeLoanDetail = {
+  amount?: Maybe<Scalars['String']>;
+  loanAccountNo?: Maybe<Scalars['String']>;
+};
+
 export const GuaranteeStatus = {
   Active: 'ACTIVE',
   Released: 'RELEASED',
@@ -6191,6 +6189,39 @@ export type IndividualMember = {
   declaration?: Maybe<KymIndDeclarations>;
   personalInformation?: Maybe<KymIndPersonalInformation>;
   professionalInformation?: Maybe<KymIndProfessionalInformation>;
+};
+
+export type IndividualMemberProfileReportResult = {
+  data?: Maybe<IndividualMemberReportData>;
+  error?: Maybe<QueryError>;
+};
+
+export type IndividualMemberReport = {
+  address?: Maybe<Address>;
+  contactNo?: Maybe<Scalars['String']>;
+  kymExpiryDate?: Maybe<Scalars['Localized']>;
+  kymStatus?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  membershipDate?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['Localized']>;
+  panNo?: Maybe<Scalars['String']>;
+  profilePic?: Maybe<Scalars['String']>;
+  riskCategory?: Maybe<OfficialUseRiskCategory>;
+  shareCertificateNo?: Maybe<Scalars['String']>;
+  totalShareCount?: Maybe<Scalars['Int']>;
+};
+
+export type IndividualMemberReportData = {
+  closedAccountDetail?: Maybe<Array<Maybe<MemberClosedAccounts>>>;
+  header?: Maybe<IndividualMemberReport>;
+  loanDetail?: Maybe<Array<Maybe<MemberLoanDetail>>>;
+  recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactions>>>;
+  savingDetail?: Maybe<Array<Maybe<MemberSavingDetail>>>;
+  totalApprovedAmount?: Maybe<Scalars['String']>;
+  totalRemainingAmount?: Maybe<Scalars['String']>;
+  totalSavingBalance?: Maybe<Scalars['String']>;
+  totalTransactionAmount?: Maybe<Scalars['String']>;
 };
 
 export const IndividualRequiredDocument = {
@@ -9419,6 +9450,7 @@ export type LoanAccountMutation = {
   changeLOC?: Maybe<Scalars['String']>;
   disburse?: Maybe<LoanDisbursementResult>;
   repayment?: Maybe<LoanRepaymentResult>;
+  updateLinkedAccount?: Maybe<LoanAccountResult>;
 };
 
 export type LoanAccountMutationAddArgs = {
@@ -9444,6 +9476,11 @@ export type LoanAccountMutationDisburseArgs = {
 
 export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
+};
+
+export type LoanAccountMutationUpdateLinkedAccountArgs = {
+  loanAccountId: Scalars['ID'];
+  newLinkedAccountId: Scalars['ID'];
 };
 
 export type LoanAccountOverview = {
@@ -10811,6 +10848,7 @@ export type MemberAccountData = {
 
 export type MemberAccountDataDepositAccountArgs = {
   filter?: InputMaybe<Array<InputMaybe<NatureOfDepositProduct>>>;
+  includeLoc?: InputMaybe<Scalars['Boolean']>;
   objState?: InputMaybe<AccountObjState>;
 };
 
@@ -11031,6 +11069,13 @@ export type MemberClassificationReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MemberClosedAccounts = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNo?: Maybe<Scalars['String']>;
+  accountType?: Maybe<Scalars['String']>;
+  closedDate?: Maybe<Scalars['Localized']>;
+};
+
 export type MemberCode = {
   initialNo?: Maybe<Scalars['String']>;
   noOfDigits?: Maybe<Scalars['Int']>;
@@ -11114,6 +11159,15 @@ export type MemberIndividualData = {
   photo?: Maybe<Scalars['Boolean']>;
   profession?: Maybe<Scalars['String']>;
   shareInfo?: Maybe<ShareInformation>;
+};
+
+export type MemberLoanDetail = {
+  approvedAmount?: Maybe<Scalars['String']>;
+  issuedDate?: Maybe<Scalars['Localized']>;
+  lastPaymentDate?: Maybe<Scalars['Localized']>;
+  loanAccountName?: Maybe<Scalars['String']>;
+  loanAccountNo?: Maybe<Scalars['String']>;
+  remainingAmount?: Maybe<Scalars['String']>;
 };
 
 export type MemberLoanInformation = {
@@ -11421,6 +11475,14 @@ export const MemberRecentTransactionViewTxnType = {
 
 export type MemberRecentTransactionViewTxnType =
   typeof MemberRecentTransactionViewTxnType[keyof typeof MemberRecentTransactionViewTxnType];
+export type MemberRecentTransactions = {
+  accountType?: Maybe<Scalars['String']>;
+  transactionAmount?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
+  transactionId?: Maybe<Scalars['String']>;
+  transactionType?: Maybe<Scalars['String']>;
+};
+
 export type MemberRegFilters = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
   gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -11448,6 +11510,7 @@ export type MemberReport = {
   activeInactiveMemberReport?: Maybe<ReportResult>;
   copomisReport?: Maybe<CopomisReportResult>;
   exportActiveInactiveMemberReport: Scalars['String'];
+  individualMemberReport?: Maybe<IndividualMemberProfileReportResult>;
   kymStatusReport?: Maybe<KymStatusReportResult>;
   memberBalanceReport?: Maybe<MemberBalanceReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
@@ -11464,6 +11527,10 @@ export type MemberReportCopomisReportArgs = {
 
 export type MemberReportExportActiveInactiveMemberReportArgs = {
   data?: InputMaybe<ActiveInactiveMemberReportData>;
+};
+
+export type MemberReportIndividualMemberReportArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberReportKymStatusReportArgs = {
@@ -11507,6 +11574,15 @@ export type MemberRiskInput = {
   generalRisk?: InputMaybe<Scalars['Int']>;
   highRisk?: InputMaybe<Scalars['Int']>;
   mediumRisk?: InputMaybe<Scalars['Int']>;
+};
+
+export type MemberSavingDetail = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNo?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
+  guaranteeLoanDetail?: Maybe<Array<Maybe<GuaranteeLoanDetail>>>;
+  transactionCount?: Maybe<Scalars['Int']>;
 };
 
 export type MemberShare = {
@@ -11738,6 +11814,7 @@ export type MyraUser = {
   gender?: Maybe<UserGender>;
   id: Scalars['ID'];
   isCoreEmployee?: Maybe<Scalars['Boolean']>;
+  lastActiveDate?: Maybe<Scalars['Localized']>;
   linkedBranches?: Maybe<Array<Maybe<BranchMinimal>>>;
   modifiedAt: Scalars['Localized'];
   modifiedBy: Identity;
@@ -12855,7 +12932,6 @@ export type ReportQuery = {
   cashReport: CashReport;
   depositReport: DepositReport;
   employeeReport: EmployeeReport;
-  exceptionReport: ExceptionReport;
   getReport?: Maybe<SavedReportResponse>;
   listReports: ReportListConnection;
   loanReport: LoanReport;
@@ -13465,8 +13541,6 @@ export type SavingsBalanceReport = {
   currentInterestType?: Maybe<BalanceType>;
   drBalance?: Maybe<Scalars['String']>;
   endDate?: Maybe<Scalars['Localized']>;
-  isClosed?: Maybe<Scalars['Boolean']>;
-  isInactive?: Maybe<Scalars['Boolean']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -16689,6 +16763,26 @@ export type ChangeLocMutationVariables = Exact<{
 }>;
 
 export type ChangeLocMutation = { loanAccount: { changeLOC?: string | null } };
+
+export type UpdateLinkedAccountMutationVariables = Exact<{
+  loanAccountId: Scalars['ID'];
+  newLinkedAccountId: Scalars['ID'];
+}>;
+
+export type UpdateLinkedAccountMutation = {
+  loanAccount: {
+    updateLinkedAccount?: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
@@ -30461,6 +30555,36 @@ export const useChangeLocMutation = <TError = unknown, TContext = unknown>(
   useMutation<ChangeLocMutation, TError, ChangeLocMutationVariables, TContext>(
     ['changeLOC'],
     useAxios<ChangeLocMutation, ChangeLocMutationVariables>(ChangeLocDocument),
+    options
+  );
+export const UpdateLinkedAccountDocument = `
+    mutation updateLinkedAccount($loanAccountId: ID!, $newLinkedAccountId: ID!) {
+  loanAccount {
+    updateLinkedAccount(
+      loanAccountId: $loanAccountId
+      newLinkedAccountId: $newLinkedAccountId
+    ) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLinkedAccountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLinkedAccountMutation,
+    TError,
+    UpdateLinkedAccountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpdateLinkedAccountMutation, TError, UpdateLinkedAccountMutationVariables, TContext>(
+    ['updateLinkedAccount'],
+    useAxios<UpdateLinkedAccountMutation, UpdateLinkedAccountMutationVariables>(
+      UpdateLinkedAccountDocument
+    ),
     options
   );
 export const GetNewIdDocument = `
