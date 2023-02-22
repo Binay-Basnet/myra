@@ -328,8 +328,8 @@ const TableWithoutRef = <T extends Record<string, unknown>>(
                     {footerGroup.headers.map((footer) =>
                       footer.column.columnDef.meta?.Footer?.display === 'none' ? null : (
                         <Th
-                          position="sticky"
-                          bottom="0"
+                          // position="sticky"
+                          // bottom="0"
                           key={footer.id}
                           isNumeric={footer.column.columnDef.meta?.isNumeric}
                           width={footer.column.columnDef.meta?.width}
