@@ -225,6 +225,7 @@ query getMemberKYMDetailsLoan($id: ID!) {
             productType
             interestRate
             subscriptionDate
+            closedDate
             interestEarned
             interestBooked
             objState
