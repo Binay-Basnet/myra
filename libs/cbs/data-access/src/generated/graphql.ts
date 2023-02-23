@@ -22128,6 +22128,7 @@ export type GetMemberLinkedAccountsQueryVariables = Exact<{
     Array<InputMaybe<NatureOfDepositProduct>> | InputMaybe<NatureOfDepositProduct>
   >;
   objState?: InputMaybe<AccountObjState>;
+  includeLoc?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetMemberLinkedAccountsQuery = {
@@ -38134,11 +38135,11 @@ export const useGetLoanRepaymentListQuery = <TData = GetLoanRepaymentListQuery, 
     options
   );
 export const GetMemberLinkedAccountsDocument = `
-    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $objState: AccountObjState) {
+    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $objState: AccountObjState, $includeLoc: Boolean) {
   members {
     getAllAccounts(memberId: $memberId) {
       data {
-        depositAccount(filter: $filter, objState: $objState) {
+        depositAccount(filter: $filter, objState: $objState, includeLoc: $includeLoc) {
           id
           accountName
           member {

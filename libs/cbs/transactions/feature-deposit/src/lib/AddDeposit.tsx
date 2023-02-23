@@ -377,6 +377,7 @@ export const AddDeposit = () => {
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
                       isLinkedAccounts
+                      includeLoc
                       isDisabled={!!redirectAccountId}
                     />
                   )}
@@ -427,8 +428,8 @@ export const AddDeposit = () => {
                     (selectedAccount?.product?.nature === NatureOfDepositProduct.Current ||
                       (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
                         !selectedAccount?.product?.isMandatorySaving) ||
-                      selectedAccount?.product?.nature ===
-                        NatureOfDepositProduct.TermSavingOrFd) && (
+                      selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd ||
+                      !selectedAccount?.product?.nature) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
                           <FormInput isRequired name="voucherId" label="Deposit Slip No" />
