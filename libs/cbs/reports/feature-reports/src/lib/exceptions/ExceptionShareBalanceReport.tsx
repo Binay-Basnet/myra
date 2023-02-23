@@ -87,7 +87,7 @@ export const ExceptionShareBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 8,
+                    colspan: 9,
                   },
                 },
               },
@@ -120,6 +120,18 @@ export const ExceptionShareBalanceReport = () => {
                   },
                 },
               },
+              {
+                header: 'Member Status',
+                accessorKey: 'isInactive',
+                accessorFn: (row) => row?.isInactive,
+                cell: (props) => (props.getValue() ? 'Inactive' : 'Active'),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+
               {
                 header: 'Service Center',
                 accessorFn: (row) => row?.branchName,

@@ -13845,6 +13845,7 @@ export type ShareBalanceReportData = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
   contactNo?: Maybe<Scalars['String']>;
+  isInactive?: Maybe<Scalars['Boolean']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -24392,6 +24393,7 @@ export type GetExceptionShareBalanceReportQuery = {
           shareType?: string | null;
           shareCertificateNo?: string | null;
           memberId?: string | null;
+          isInactive?: boolean | null;
           memberCode?: string | null;
           memberName?: Record<'local' | 'en' | 'np', string> | null;
           contactNo?: string | null;
@@ -41072,6 +41074,7 @@ export const GetExceptionShareBalanceReportDocument = `
           shareType
           shareCertificateNo
           memberId
+          isInactive
           memberCode
           memberName
           address {

@@ -81,6 +81,7 @@ query getExceptionShareBalanceReport($data: ShareBalanceReportFilter!) {
           shareType
           shareCertificateNo
           memberId
+          isInactive
           memberCode
           memberName
           address {
