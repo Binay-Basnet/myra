@@ -6,7 +6,7 @@ import { LoanDetailsHeader } from '@coop/cbs/loan/details';
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
 import { CbsLoanFeatureLoanAccountDetail } from '@coop/loan/account-details';
 
-const LoanDetailsPage = () => {
+export const LoanDetailsPage = () => {
   const [isLocModalOpen, setIsLocModalOpen] = useState(false);
   const handleModalClose = () => {
     setIsLocModalOpen(false);
