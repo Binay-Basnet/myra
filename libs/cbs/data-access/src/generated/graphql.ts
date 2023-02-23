@@ -13845,6 +13845,7 @@ export type ShareBalanceReportData = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
   contactNo?: Maybe<Scalars['String']>;
+  isInactive?: Maybe<Scalars['Boolean']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -23200,6 +23201,7 @@ export type GetMemberKymDetailsLoanQuery = {
             productType?: string | null;
             interestRate?: string | null;
             subscriptionDate?: Record<'local' | 'en' | 'np', string> | null;
+            closedDate?: Record<'local' | 'en' | 'np', string> | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
             objState?: ObjState | null;
@@ -39554,6 +39556,7 @@ export const GetMemberKymDetailsLoanDocument = `
             productType
             interestRate
             subscriptionDate
+            closedDate
             interestEarned
             interestBooked
             objState
