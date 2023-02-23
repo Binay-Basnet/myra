@@ -37,10 +37,10 @@ const REPORTS_INNER_TAB_LINKS = [
     title: 'Service Center Report',
     to: '/reports/cbs/service-center',
   },
-  // {
-  //   title: 'Exception Reports',
-  //   to: '/reports/cbs/exceptions',
-  // },
+  {
+    title: 'Exception Reports',
+    to: '/reports/cbs/exceptions',
+  },
   {
     title: 'Others Report',
     to: '/reports/cbs/others',

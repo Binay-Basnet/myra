@@ -619,7 +619,7 @@ export const REPORTS = {
     {
       id: '',
       report: Report.EXCEPTION_MEMBER_WISE_BALANCE,
-      link: 'member-wise-balance',
+      // link: 'member-wise-balance',
     },
 
     {

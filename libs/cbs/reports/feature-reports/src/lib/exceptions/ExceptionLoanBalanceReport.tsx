@@ -7,7 +7,7 @@ import {
   LoanBalanceFilterData,
   LoanBalanceReport as LoanBalanceReportType,
   LocalizedDateFilter,
-  useGetLoanBalanceReportQuery,
+  useGetExceptionLoanBalanceReportQuery,
   useGetLoanProductsFromSubTypeQuery,
   useGetLoanProductTypeQuery,
   useGetMultipleSubProductsQuery,
@@ -38,7 +38,7 @@ export const ExceptionLoanBalanceReport = () => {
       ? filters?.branchId?.map((t) => t.value)
       : null;
 
-  const { data, isFetching } = useGetLoanBalanceReportQuery(
+  const { data, isFetching } = useGetExceptionLoanBalanceReportQuery(
     {
       data: {
         ...filters,
@@ -52,16 +52,17 @@ export const ExceptionLoanBalanceReport = () => {
     { enabled: !!filters }
   );
 
-  const loanReport = data?.report?.loanReport?.loanBalanceReport?.data;
-  const outstandingTotal = data?.report?.loanReport?.loanBalanceReport?.totalOutstandingBalance;
+  const loanReport = data?.report?.exceptionReport?.loanBalanceReport?.data;
+  const outstandingTotal =
+    data?.report?.exceptionReport?.loanBalanceReport?.totalOutstandingBalance;
   const totalRemainingCRBalance =
-    data?.report?.loanReport?.loanBalanceReport?.totalRemainingCrBalance;
+    data?.report?.exceptionReport?.loanBalanceReport?.totalRemainingCrBalance;
   const totalRemainingDRBalance =
-    data?.report?.loanReport?.loanBalanceReport?.totalRemainingDrBalance;
+    data?.report?.exceptionReport?.loanBalanceReport?.totalRemainingDrBalance;
   const totalRemainingInterest =
-    data?.report?.loanReport?.loanBalanceReport?.totalRemainingInterest;
+    data?.report?.exceptionReport?.loanBalanceReport?.totalRemainingInterest;
   const totalRemainingInterestType =
-    data?.report?.loanReport?.loanBalanceReport?.totalRemainingInterestType;
+    data?.report?.exceptionReport?.loanBalanceReport?.totalRemainingInterestType;
 
   return (
     <Report
@@ -106,7 +107,7 @@ export const ExceptionLoanBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 8,
+                    colspan: 10,
                   },
                 },
               },
@@ -127,6 +128,18 @@ export const ExceptionLoanBalanceReport = () => {
                 },
               },
               {
+                header: 'Account Status',
+                accessorKey: 'isClosed',
+                accessorFn: (row) => row?.isClosed,
+                cell: (props) => (props.getValue() ? 'Closed' : 'Active'),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+
+              {
                 header: 'Member Id',
                 accessorKey: 'memberId',
                 cell: (props) => (
@@ -142,7 +155,17 @@ export const ExceptionLoanBalanceReport = () => {
                   },
                 },
               },
-
+              {
+                header: 'Member Status',
+                accessorKey: 'isInactive',
+                accessorFn: (row) => row?.isInactive,
+                cell: (props) => (props.getValue() ? 'Inactive' : 'Active'),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
               {
                 header: 'Member Name',
                 accessorFn: (row) => row?.memberName?.local,
