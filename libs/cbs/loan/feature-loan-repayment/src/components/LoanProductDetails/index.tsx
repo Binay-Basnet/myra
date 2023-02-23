@@ -69,7 +69,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Interest Amount{' '}
             </Text>
             <Text fontSize="s3" fontWeight="600">
-              {loanData?.loanDetails?.interestAmount}
+              {amountConverter(loanData?.loanDetails?.interestAmount || 0)}
             </Text>
           </Box>
           <Box display="flex" flexDirection="column" gap="s4">
@@ -156,7 +156,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
                 Remaining Interest Amount{' '}
               </Text>
               <Text fontWeight="600" fontSize="s3">
-                {loanData?.repaymentDetails?.remainingInterest}
+                {amountConverter(loanData?.repaymentDetails?.remainingInterest)}
               </Text>
             </Box>
           )}
@@ -167,7 +167,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Total Remaining Amount
             </Text>
             <Text fontWeight="600" fontSize="s3">
-              {loanData?.repaymentDetails?.remainingTotal}
+              {amountConverter(loanData?.repaymentDetails?.remainingTotal)}
             </Text>
           </Box>
         )}

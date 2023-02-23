@@ -22128,6 +22128,7 @@ export type GetMemberLinkedAccountsQueryVariables = Exact<{
     Array<InputMaybe<NatureOfDepositProduct>> | InputMaybe<NatureOfDepositProduct>
   >;
   objState?: InputMaybe<AccountObjState>;
+  includeLoc?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetMemberLinkedAccountsQuery = {
@@ -23201,6 +23202,7 @@ export type GetMemberKymDetailsLoanQuery = {
             productType?: string | null;
             interestRate?: string | null;
             subscriptionDate?: Record<'local' | 'en' | 'np', string> | null;
+            closedDate?: Record<'local' | 'en' | 'np', string> | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
             objState?: ObjState | null;
@@ -38134,11 +38136,11 @@ export const useGetLoanRepaymentListQuery = <TData = GetLoanRepaymentListQuery, 
     options
   );
 export const GetMemberLinkedAccountsDocument = `
-    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $objState: AccountObjState) {
+    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $objState: AccountObjState, $includeLoc: Boolean) {
   members {
     getAllAccounts(memberId: $memberId) {
       data {
-        depositAccount(filter: $filter, objState: $objState) {
+        depositAccount(filter: $filter, objState: $objState, includeLoc: $includeLoc) {
           id
           accountName
           member {
@@ -39556,6 +39558,7 @@ export const GetMemberKymDetailsLoanDocument = `
             productType
             interestRate
             subscriptionDate
+            closedDate
             interestEarned
             interestBooked
             objState

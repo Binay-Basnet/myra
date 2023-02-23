@@ -5,7 +5,8 @@ import { MainLayout } from '@myra-ui';
 
 import { AccountDetails } from '@coop/cbs/accounts/account-form';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { CbsLoanFeatureLoanAccountDetail } from '@coop/loan/account-details';
+
+import LoanDetailsPage from '../../../loan/accounts/details';
 
 const AllAccountsDetails = () => {
   const router = useRouter();
@@ -14,7 +15,7 @@ const AllAccountsDetails = () => {
   if (accountType === 'SAVINGS') {
     return <AccountDetails />;
   }
-  return <CbsLoanFeatureLoanAccountDetail />;
+  return <LoanDetailsPage />;
 };
 
 AllAccountsDetails.getLayout = function getLayout(page: ReactElement) {
