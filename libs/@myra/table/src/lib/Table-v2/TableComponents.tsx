@@ -144,14 +144,12 @@ export const TableHeadCell = <T extends Record<string, unknown>>({
     zIndex={1}
     {...props}
   >
-    <Box display="flex" alignItems="center" gap="s12">
-      {header.isPlaceholder ? null : (
-        <Box>{flexRender(header.column.columnDef.header, header.getContext())}</Box>
-      )}
-      {header.column.getCanFilter() ? (
-        <TableListFilter data={header.column.columnDef.meta?.filters?.list} />
-      ) : null}
-    </Box>
+    {header.isPlaceholder ? null : (
+      <Box>{flexRender(header.column.columnDef.header, header.getContext())}</Box>
+    )}
+    {header.column.getCanFilter() ? (
+      <TableListFilter data={header.column.columnDef.meta?.filters?.list} />
+    ) : null}
 
     {children}
   </ChakraTable.Th>

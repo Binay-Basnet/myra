@@ -8,7 +8,6 @@ import { AvatarCell, Column, Table } from '@myra-ui/table';
 import {
   ObjState,
   useDeleteDraftMutation,
-  useGetBranchListQuery,
   useGetGeneralMemberSettingsDataQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
@@ -27,9 +26,9 @@ const memberTypeSlug = {
 
 export const MemberListPage = () => {
   const { t } = useTranslation();
-  const { data: serviceCenterList } = useGetBranchListQuery({
-    paginate: { first: -1, after: '' },
-  });
+  // const { data: serviceCenterList } = useGetBranchListQuery({
+  //   paginate: { first: -1, after: '' },
+  // });
 
   const [ID, setID] = useState('');
   const [openModal, setOpenModal] = useState(false);
@@ -144,12 +143,12 @@ export const MemberListPage = () => {
         enableColumnFilter: true,
         meta: {
           width: '120px',
-          filters: {
-            list: serviceCenterList?.settings?.general?.branch?.list?.edges?.map((e) => ({
-              label: e.node?.name as string,
-              value: e.node?.id as string,
-            })),
-          },
+          // filters: {
+          //   list: serviceCenterList?.settings?.general?.branch?.list?.edges?.map((e) => ({
+          //     label: e.node?.name as string,
+          //     value: e.node?.id as string,
+          //   })),
+          // },
         },
       },
 
@@ -255,7 +254,7 @@ export const MemberListPage = () => {
         },
       },
     ],
-    [t, objState, serviceCenterList]
+    [t, objState]
   );
 
   const deleteMember = useCallback(async () => {
