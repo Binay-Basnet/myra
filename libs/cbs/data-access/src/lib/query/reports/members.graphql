@@ -207,3 +207,75 @@ query getMemberWiseBalanceReport($data: MemberBalanceFilter) {
     }
   }
 }
+
+query getIndividualMemberReport($memberId: ID!) {
+  report {
+    memberReport {
+      individualMemberReport(memberId: $memberId) {
+        data {
+          header {
+            memberId
+            memberCode
+            name
+            profilePic
+            address {
+              ...Address
+            }
+            contactNo
+            panNo
+            membershipDate
+            shareCertificateNo
+            totalShareCount
+            riskCategory
+            kymStatus
+            kymExpiryDate
+          }
+          closedAccountDetail {
+            accountName
+            accountNo
+            closedDate
+            accountType
+          }
+
+          loanDetail {
+            loanAccountNo
+            loanAccountName
+            issuedDate
+            approvedAmount
+            remainingAmount
+            lastPaymentDate
+          }
+
+          recentTransactions {
+            transactionId
+            transactionDate
+            transactionType
+            transactionAmount
+          }
+
+          totalTransactionAmount
+
+          savingDetail {
+            accountNo
+            accountName
+            balance
+            balanceType
+            totalGuaranteeAmount
+            transactionCount
+
+            guaranteeLoanDetail {
+              loanAccountNo
+              amount
+            }
+          }
+
+          totalGuaranteeBalance
+          totalSavingBalance
+          totalApprovedAmount
+          totalRemainingAmount
+          totalTransactionAmount
+        }
+      }
+    }
+  }
+}
