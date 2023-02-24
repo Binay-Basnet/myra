@@ -1,9 +1,6 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { Box, Text } from '@myra-ui';
 
-import { asyncToast, Box, Button, Text } from '@myra-ui';
-
-import { EodOption, EodState, useSetEndOfDayDataMutation } from '@coop/cbs/data-access';
-import { FormCheckbox } from '@coop/shared/form';
+import { EodState } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 import { StatusList } from './StatusList';
@@ -37,13 +34,10 @@ interface IDayCloseProps {
     status: EodState | null | undefined;
     errors?: string[];
   }[];
-  showAdditionalFields: boolean;
 }
 
-export const DayClose = ({ dayCloseList, showAdditionalFields }: IDayCloseProps) => {
+export const DayClose = ({ dayCloseList }: IDayCloseProps) => {
   const { t } = useTranslation();
-
-  const queryClient = useQueryClient();
 
   // const showAdditionalFields = useMemo(() => {
   //   if (!eodStatusQueryData?.transaction?.eodStatus?.states?.currentBranchesReady) {
@@ -143,23 +137,6 @@ export const DayClose = ({ dayCloseList, showAdditionalFields }: IDayCloseProps)
   //   ];
   // }, [eodStatusQueryData]);
 
-  const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
-
-  const reinitiateCloseDay = () => {
-    asyncToast({
-      id: 'reinitiate-day-close',
-      msgs: {
-        loading: 'Reinitiating day close',
-        success: 'Day close reinitiated',
-      },
-      promise: closeDay({ option: EodOption.Reinitiate }),
-      onSuccess: () => {
-        queryClient.invalidateQueries(['getEndOfDayDateData']);
-        queryClient.invalidateQueries(['getEODStatus']);
-      },
-    });
-  };
-
   return (
     <Box display="flex" flexDirection="column" py="s16">
       <Box display="flex" flexDirection="column">
@@ -178,18 +155,6 @@ export const DayClose = ({ dayCloseList, showAdditionalFields }: IDayCloseProps)
         </Box>
 
         <StatusList statusList={dayCloseList} />
-
-        {showAdditionalFields && (
-          <Box display="flex" flexDirection="column" gap="s48" py="s32">
-            <Box>
-              <Button variant="outline" onClick={reinitiateCloseDay}>
-                {t['dayCloseReinitiateDayEnd']}
-              </Button>
-            </Box>
-
-            <FormCheckbox name="ignore" label={t['dayCloseIgnoreErrors']} />
-          </Box>
-        )}
       </Box>
     </Box>
   );

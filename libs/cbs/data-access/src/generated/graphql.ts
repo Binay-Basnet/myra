@@ -28636,6 +28636,9 @@ export type GetEodStatusQueryVariables = Exact<{ [key: string]: never }>;
 export type GetEodStatusQuery = {
   transaction: {
     eodStatus?: {
+      stage?: EodStage | null;
+      overAllStatus?: EodState | null;
+      eodDate?: Record<'local' | 'en' | 'np', string> | null;
       states?: {
         headOfficeReady?: boolean | null;
         currentBranchesReady?: boolean | null;
@@ -46845,6 +46848,9 @@ export const GetEodStatusDocument = `
     query getEODStatus {
   transaction {
     eodStatus {
+      stage
+      overAllStatus
+      eodDate
       states {
         headOfficeReady
         currentBranchesReady
