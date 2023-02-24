@@ -1,0 +1,71 @@
+mutation addNewClient($data: OrganizationClientInput) {
+  neosys {
+    client {
+      add(data: $data) {
+        error {
+          ...MutationError
+        }
+        recordId
+      }
+    }
+  }
+}
+
+mutation createDB($saccosID: ID!) {
+  neosys {
+    client {
+      createDB(saccosId: $saccosID) {
+        recordId
+
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setEnvironement($clientId: ID!, $data: NewClientEnvironmentInput!) {
+  neosys {
+    client {
+      environment {
+        new(clientId: $clientId, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation deleteEnvironement($environmentId: String!) {
+  neosys {
+    client {
+      environment {
+        delete(environmentId: $environmentId) {
+          success
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setUpEnvironmentDatabase($environmentId: ID!, $clientId: ID!) {
+  neosys {
+    client {
+      environment {
+        createDB(environmentId: $environmentId, clientId: $clientId) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

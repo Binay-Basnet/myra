@@ -26,6 +26,7 @@ query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilt
               name
             }
             profilePicUrl
+            lastActiveDate
           }
           cursor
         }

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
+import { useAppSelector, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { ActionPopoverComponent } from '@coop/myra/components';
@@ -28,6 +28,8 @@ import { NewUserModal } from '../components';
 // };
 
 export const UsersList = () => {
+  const datePreference = useAppSelector((state) => state?.auth?.preference?.date);
+
   const { t } = useTranslation();
 
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState<boolean>(false);
@@ -95,11 +97,11 @@ export const UsersList = () => {
       // },
       {
         header: 'Last Active Date',
-        accessorFn: (row) => localizedDate(row?.node?.modifiedAt),
+        cell: (props) => localizedDate(props?.row?.original?.node?.lastActiveDate),
       },
       {
         header: t['memberListDateJoined'],
-        accessorFn: (row) => localizedDate(row?.node?.createdAt),
+        cell: (props) => localizedDate(props?.row?.original?.node?.createdAt),
       },
       {
         id: '_actions',
@@ -125,7 +127,7 @@ export const UsersList = () => {
         },
       },
     ],
-    [t, searchTerm]
+    [t, searchTerm, datePreference]
   );
 
   const handleAddUserModalOpen = () => {
