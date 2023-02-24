@@ -2250,6 +2250,8 @@ export type CashTransferBranchView = {
 };
 
 export type CashTransferLedgerView = {
+  balance?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   cr?: Maybe<Scalars['String']>;
   dr?: Maybe<Scalars['String']>;
   ledgerId?: Maybe<Scalars['ID']>;
@@ -10070,7 +10072,7 @@ export type LoanPreviewInstallment = {
 
 export type LoanPreviewLoanDetails = {
   appliedLoanAmount?: Maybe<Scalars['String']>;
-  disburseDate?: Maybe<Scalars['String']>;
+  disburseDate?: Maybe<Scalars['Localized']>;
   expiryDate?: Maybe<Scalars['String']>;
   /**  Extra fields for repayment page */
   interestAmount?: Maybe<Scalars['String']>;
@@ -10091,7 +10093,7 @@ export type LoanPreviewLoanDetails = {
 };
 
 export type LoanPreviewRepaymentDetails = {
-  lastPaymentDate?: Maybe<Scalars['String']>;
+  lastPaymentDate?: Maybe<Scalars['Localized']>;
   nextInstallmentNo?: Maybe<Scalars['Int']>;
   remainingInstallments?: Maybe<Array<Maybe<LoanPreviewInstallment>>>;
   remainingInterest?: Maybe<Scalars['String']>;
@@ -10540,7 +10542,6 @@ export const LoanRepaymentMethod = {
   Account: 'ACCOUNT',
   BankVoucher: 'BANK_VOUCHER',
   Cash: 'CASH',
-  LocSaving: 'LOC_SAVING',
 } as const;
 
 export type LoanRepaymentMethod = typeof LoanRepaymentMethod[keyof typeof LoanRepaymentMethod];
@@ -22091,13 +22092,13 @@ export type GetLoanPreviewQuery = {
           principalGracePeriod?: number | null;
           interestGracePeriod?: number | null;
           interestAmount?: string | null;
-          disburseDate?: string | null;
+          disburseDate?: Record<'local' | 'en' | 'np', string> | null;
           expiryDate?: string | null;
           paymentFrequency?: LoanProductInstallment | null;
           processingCharges?: Array<{ name: string; amount?: any | null } | null> | null;
         } | null;
         repaymentDetails?: {
-          lastPaymentDate?: string | null;
+          lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
           remainingPrincipal?: string | null;
           remainingInterest?: string | null;
           remainingTotal?: string | null;
