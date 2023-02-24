@@ -5943,6 +5943,7 @@ export type GeneralLedgerReportEntry = {
 
 export type GeneralMemberData = {
   charge?: Maybe<Array<Maybe<MemberChargeData>>>;
+  isCodeSetup?: Maybe<Scalars['Boolean']>;
   memberCode?: Maybe<MemberCode>;
   memberType?: Maybe<MemberActiveData>;
   risk?: Maybe<MemberRiskData>;
@@ -6251,6 +6252,7 @@ export type IndividualMemberReportData = {
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactions>>>;
   savingDetail?: Maybe<Array<Maybe<MemberSavingDetail>>>;
   totalApprovedAmount?: Maybe<Scalars['String']>;
+  totalGuaranteeBalance?: Maybe<Scalars['String']>;
   totalRemainingAmount?: Maybe<Scalars['String']>;
   totalSavingBalance?: Maybe<Scalars['String']>;
   totalTransactionAmount?: Maybe<Scalars['String']>;
@@ -11623,6 +11625,7 @@ export type MemberSavingDetail = {
   balance?: Maybe<Scalars['String']>;
   balanceType?: Maybe<BalanceType>;
   guaranteeLoanDetail?: Maybe<Array<Maybe<GuaranteeLoanDetail>>>;
+  totalGuaranteeAmount?: Maybe<Scalars['String']>;
   transactionCount?: Maybe<Scalars['Int']>;
 };
 
@@ -25012,6 +25015,73 @@ export type GetMemberWiseBalanceReportQuery = {
           | QueryError_NotFoundError_Fragment
           | QueryError_ServerError_Fragment
           | null;
+      } | null;
+    };
+  };
+};
+
+export type GetIndividualMemberReportQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
+
+export type GetIndividualMemberReportQuery = {
+  report: {
+    memberReport: {
+      individualMemberReport?: {
+        data?: {
+          totalTransactionAmount?: string | null;
+          totalGuaranteeBalance?: string | null;
+          totalSavingBalance?: string | null;
+          totalApprovedAmount?: string | null;
+          totalRemainingAmount?: string | null;
+          header?: {
+            memberId?: string | null;
+            memberCode?: string | null;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePic?: string | null;
+            contactNo?: string | null;
+            panNo?: string | null;
+            membershipDate?: Record<'local' | 'en' | 'np', string> | null;
+            shareCertificateNo?: string | null;
+            totalShareCount?: number | null;
+            riskCategory?: OfficialUseRiskCategory | null;
+            kymStatus?: string | null;
+            kymExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
+            address?: AddressFragment | null;
+          } | null;
+          closedAccountDetail?: Array<{
+            accountName?: string | null;
+            accountNo?: string | null;
+            closedDate?: Record<'local' | 'en' | 'np', string> | null;
+            accountType?: string | null;
+          } | null> | null;
+          loanDetail?: Array<{
+            loanAccountNo?: string | null;
+            loanAccountName?: string | null;
+            issuedDate?: Record<'local' | 'en' | 'np', string> | null;
+            approvedAmount?: string | null;
+            remainingAmount?: string | null;
+            lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+          recentTransactions?: Array<{
+            transactionId?: string | null;
+            transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+            transactionType?: string | null;
+            transactionAmount?: string | null;
+          } | null> | null;
+          savingDetail?: Array<{
+            accountNo?: string | null;
+            accountName?: string | null;
+            balance?: string | null;
+            balanceType?: BalanceType | null;
+            totalGuaranteeAmount?: string | null;
+            transactionCount?: number | null;
+            guaranteeLoanDetail?: Array<{
+              loanAccountNo?: string | null;
+              amount?: string | null;
+            } | null> | null;
+          } | null> | null;
+        } | null;
       } | null;
     };
   };
@@ -41863,6 +41933,87 @@ export const useGetMemberWiseBalanceReportQuery = <
       : ['getMemberWiseBalanceReport', variables],
     useAxios<GetMemberWiseBalanceReportQuery, GetMemberWiseBalanceReportQueryVariables>(
       GetMemberWiseBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetIndividualMemberReportDocument = `
+    query getIndividualMemberReport($memberId: ID!) {
+  report {
+    memberReport {
+      individualMemberReport(memberId: $memberId) {
+        data {
+          header {
+            memberId
+            memberCode
+            name
+            profilePic
+            address {
+              ...Address
+            }
+            contactNo
+            panNo
+            membershipDate
+            shareCertificateNo
+            totalShareCount
+            riskCategory
+            kymStatus
+            kymExpiryDate
+          }
+          closedAccountDetail {
+            accountName
+            accountNo
+            closedDate
+            accountType
+          }
+          loanDetail {
+            loanAccountNo
+            loanAccountName
+            issuedDate
+            approvedAmount
+            remainingAmount
+            lastPaymentDate
+          }
+          recentTransactions {
+            transactionId
+            transactionDate
+            transactionType
+            transactionAmount
+          }
+          totalTransactionAmount
+          savingDetail {
+            accountNo
+            accountName
+            balance
+            balanceType
+            totalGuaranteeAmount
+            transactionCount
+            guaranteeLoanDetail {
+              loanAccountNo
+              amount
+            }
+          }
+          totalGuaranteeBalance
+          totalSavingBalance
+          totalApprovedAmount
+          totalRemainingAmount
+          totalTransactionAmount
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetIndividualMemberReportQuery = <
+  TData = GetIndividualMemberReportQuery,
+  TError = unknown
+>(
+  variables: GetIndividualMemberReportQueryVariables,
+  options?: UseQueryOptions<GetIndividualMemberReportQuery, TError, TData>
+) =>
+  useQuery<GetIndividualMemberReportQuery, TError, TData>(
+    ['getIndividualMemberReport', variables],
+    useAxios<GetIndividualMemberReportQuery, GetIndividualMemberReportQueryVariables>(
+      GetIndividualMemberReportDocument
     ).bind(null, variables),
     options
   );

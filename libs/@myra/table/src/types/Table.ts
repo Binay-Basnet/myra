@@ -18,16 +18,6 @@ declare module '@tanstack/table-core' {
   }
 }
 
-export type Column<TData extends Maybe<Record<string, unknown>>> = Omit<
-  ColumnDef<TData, unknown>,
-  'accessorKey' | 'accessorFn' | 'id'
-> & {
-  id?: string;
-  accessorFn?: AccessorFn<TData>;
-  accessorKey?: DeepKeys<TData> | 'actions';
-  columns?: Column<TData>[];
-};
-
 export type Pagination = {
   total: number | string;
   pageInfo?: {
@@ -75,6 +65,16 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
   showFooter?: boolean;
   isDetailPageTable?: boolean;
 }
+
+export type Column<TData extends Maybe<Record<string, unknown>>> = Omit<
+  ColumnDef<TData, unknown>,
+  'accessorKey' | 'accessorFn' | 'id'
+> & {
+  id?: string;
+  accessorFn?: AccessorFn<TData>;
+  accessorKey?: DeepKeys<TData> | 'actions';
+  columns?: Column<TData>[];
+};
 
 export type TableInstance<T> = Table<T>;
 export type { Row };
