@@ -108,49 +108,52 @@ export const ReportOrganization = () => {
             {user?.organization?.registrationDetails?.panOrVat ?? 'N/A'}
           </Text>
         </Box>
-        <Box display="flex" gap="s4">
-          <Text fontSize="r1" color="gray.700">
-            Service Center:
-          </Text>
-          {singleName?.length && (
-            <Text fontSize="r1" color="gray.700" fontWeight="500">
-              {singleName}
+        {branchId && (
+          <Box display="flex" gap="s4">
+            <Text fontSize="r1" color="gray.700">
+              Service Center:
             </Text>
-          )}
+            {singleName?.length && (
+              <Text fontSize="r1" color="gray.700" fontWeight="500">
+                {singleName}
+              </Text>
+            )}
 
-          {nameList?.length && nameList?.length > 1 && !showAllBranch && (
-            <Box maxW="50ch">
-              {nameList?.map((data, index) => {
-                if (index === 0) {
-                  return (
-                    <Box display="flex" flexDirection="row" alignItems="center">
-                      <Text as="span" fontSize="r1" color="gray.700" fontWeight="500">
-                        {data?.label},{' '}
-                      </Text>
-                      <Button variant="link" onClick={() => setShowAllBranch(true)} p="0">
-                        {`and ${nameList.length - 1} others`}
-                      </Button>
-                    </Box>
-                  );
-                }
-                return null;
-              })}
-            </Box>
-          )}
-          {((nameList?.length && showAllBranch) || (nameList?.length === 1 && !showAllBranch)) && (
-            <Box maxW="50ch">
-              {/* {nameList?.map((data) => (
+            {nameList?.length && nameList?.length > 1 && !showAllBranch && (
+              <Box maxW="50ch">
+                {nameList?.map((data, index) => {
+                  if (index === 0) {
+                    return (
+                      <Box display="flex" flexDirection="row" alignItems="center">
+                        <Text as="span" fontSize="r1" color="gray.700" fontWeight="500">
+                          {data?.label},{' '}
+                        </Text>
+                        <Button variant="link" onClick={() => setShowAllBranch(true)} p="0">
+                          {`and ${nameList.length - 1} others`}
+                        </Button>
+                      </Box>
+                    );
+                  }
+                  return null;
+                })}
+              </Box>
+            )}
+            {((nameList?.length && showAllBranch) ||
+              (nameList?.length === 1 && !showAllBranch)) && (
+              <Box maxW="50ch">
+                {/* {nameList?.map((data) => (
                 <Text as="span" fontSize="r1" color="gray.700" fontWeight="500">
                   {data?.label},{' '}
                 </Text>
               ))} */}
 
-              <Text fontSize="r1" color="gray.700" fontWeight="500">
-                {nameList?.map((data) => data.label).join(', ')}
-              </Text>
-            </Box>
-          )}
-        </Box>
+                <Text fontSize="r1" color="gray.700" fontWeight="500">
+                  {nameList?.map((data) => data.label).join(', ')}
+                </Text>
+              </Box>
+            )}
+          </Box>
+        )}
         {ledgerName && (
           <Box display="flex" gap="s4">
             <Text fontSize="r1" color="gray.700">

@@ -25,11 +25,11 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => {
               <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
                 <Text>Name of member:</Text>
                 <Text>Address:</Text>
-                <Text>Branch Name:</Text>
+                <Text>Service Center Name:</Text>
                 <Text>Approved Amount:</Text>
                 <Text>Loan Issued Date:</Text>
                 <Text>Membership No:</Text>
-                <Text>Opening Blance:</Text>
+                <Text>Opening Balance:</Text>
               </Box>
             </GridItem>
 

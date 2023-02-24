@@ -2293,7 +2293,7 @@ export const CashValue = {
 export type CashValue = typeof CashValue[keyof typeof CashValue];
 export type CharKhataReportFilter = {
   branchId: Array<InputMaybe<Scalars['String']>>;
-  coaHead?: InputMaybe<Array<InputMaybe<CoaHead>>>;
+  coaHead: Array<Scalars['String']>;
   filter?: InputMaybe<TrialSheetFilter>;
   period: LocalizedDateFilter;
 };
@@ -4687,6 +4687,7 @@ export type EodErrors = {
   dormancy?: Maybe<Array<Maybe<Scalars['String']>>>;
   interestBooking?: Maybe<Array<Maybe<Scalars['String']>>>;
   interestPosting?: Maybe<Array<Maybe<Scalars['String']>>>;
+  loanAccountMaturity?: Maybe<Array<Maybe<Scalars['String']>>>;
   loanInterestBooking?: Maybe<Array<Maybe<Scalars['String']>>>;
   loanRepayment?: Maybe<Array<Maybe<Scalars['String']>>>;
   maturity?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -4721,10 +4722,20 @@ export type EodResult = {
 };
 
 export type EodSatusResult = {
+  eodDate?: Maybe<Scalars['Localized']>;
   errors?: Maybe<EodErrors>;
+  overAllStatus?: Maybe<EodState>;
+  stage?: Maybe<EodStage>;
   states?: Maybe<EodStates>;
 };
 
+export const EodStage = {
+  Main: 'MAIN',
+  Post: 'POST',
+  Pre: 'PRE',
+} as const;
+
+export type EodStage = typeof EodStage[keyof typeof EodStage];
 export const EodState = {
   Completed: 'COMPLETED',
   CompletedWithErrors: 'COMPLETED_WITH_ERRORS',
@@ -4740,6 +4751,7 @@ export type EodStates = {
   headOfficeReady?: Maybe<Scalars['Boolean']>;
   interestBooking?: Maybe<EodState>;
   interestPosting?: Maybe<EodState>;
+  loanAccountMaturity?: Maybe<EodState>;
   loanInterestBooking?: Maybe<EodState>;
   loanRepayment?: Maybe<EodState>;
   maturity?: Maybe<EodState>;
@@ -24255,11 +24267,15 @@ export type GetClosedSavingAccountStatementQuery = {
     depositReport: {
       closedSavingAccountReport?: {
         data?: {
-          closedDate?: Record<'local' | 'en' | 'np', string> | null;
           memberName?: Record<'local' | 'en' | 'np', string> | null;
           memberShipCode?: string | null;
           membershipDate?: Record<'local' | 'en' | 'np', string> | null;
           serviceCenterName?: string | null;
+          accountNo?: string | null;
+          savingType?: string | null;
+          closedDate?: Record<'local' | 'en' | 'np', string> | null;
+          totalWithdraw?: string | null;
+          totalDeposit?: string | null;
           address?: AddressFragment | null;
           entries?: Array<{
             balanceAmount?: string | null;
@@ -41032,11 +41048,13 @@ export const GetClosedSavingAccountStatementDocument = `
           address {
             ...Address
           }
-          closedDate
           memberName
           memberShipCode
           membershipDate
           serviceCenterName
+          accountNo
+          savingType
+          closedDate
           entries {
             balanceAmount
             balanceType
@@ -41047,6 +41065,8 @@ export const GetClosedSavingAccountStatementDocument = `
             withdrawAmount
             particular
           }
+          totalWithdraw
+          totalDeposit
         }
       }
     }

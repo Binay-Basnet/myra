@@ -73,6 +73,12 @@ export const ClosedSavingAccountStatement = () => {
               activeDate: closedAccountReport?.closedDate,
             }}
             accountCloseDate={localizedDate(closedAccountReport?.closedDate)}
+            savingData={{
+              meta: {
+                accountNo: closedAccountReport?.accountNo,
+                savingType: closedAccountReport?.savingType,
+              },
+            }}
           />
           <Report.Table<ClosedSavingAccountData & { index: number }>
             showFooter
