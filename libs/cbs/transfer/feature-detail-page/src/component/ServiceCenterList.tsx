@@ -2,56 +2,40 @@ import { useMemo } from 'react';
 
 import { Column, DetailsCard, Table } from '@myra-ui';
 
-import { BalanceType } from '@coop/cbs/data-access';
+import { CashTransferBranchView } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 type ServiceCenterListProps = {
-  data:
-    | ({
-        account: string;
-        serviceCenter?: string | null | undefined;
-        debit?: string | null | undefined;
-        credit?: string | null | undefined;
-        ledgerId?: string | null | undefined;
-        balance?: string | null | undefined;
-        balanceType?: BalanceType | null | undefined;
-      } | null)[]
-    | null
-    | undefined;
+  data: [CashTransferBranchView] | null | undefined;
+  totalCr: string | null | undefined;
+  totalDr: string | null | undefined;
 };
 
-export const ServiceCenterList = ({ data }: ServiceCenterListProps) => {
+export const ServiceCenterList = ({ data, totalCr, totalDr }: ServiceCenterListProps) => {
   const rowData = useMemo(() => data ?? [], [data]);
+
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         header: 'Service Center',
-        accessorFn: (row) => row?.serviceCenter,
-      },
-      {
-        header: 'Account',
-        accessorFn: (row) => amountConverter(row?.debit ?? 0),
+        footer: 'Total',
+        cell: (props) => props?.row?.original?.branchName,
         meta: {
-          isNumeric: true,
-        },
-      },
-      {
-        header: 'Ledger',
-        accessorFn: (row) => amountConverter(row?.credit ?? 0),
-        meta: {
-          isNumeric: true,
+          width: '100%',
         },
       },
       {
         header: 'Debit',
-        accessorFn: (row) => amountConverter(row?.debit ?? 0),
+        footer: amountConverter(Number(totalDr)),
+        accessorFn: (row) => amountConverter(row?.dr ?? 0),
         meta: {
           isNumeric: true,
         },
       },
       {
         header: 'Credit',
-        accessorFn: (row) => amountConverter(row?.credit ?? 0),
+        footer: amountConverter(Number(totalCr)),
+        accessorFn: (row) => amountConverter(row?.cr ?? 0),
         meta: {
           isNumeric: true,
         },
@@ -60,9 +44,9 @@ export const ServiceCenterList = ({ data }: ServiceCenterListProps) => {
     []
   );
 
-  if (data?.length === 0) return null;
+  if (rowData?.length === 0) return null;
   return (
-    <DetailsCard title="Service Center" subTitle="Destination Service Center " hasTable>
+    <DetailsCard title="Service Center" subTitle="Destination Service Center" hasTable>
       <Table
         isDetailPageTable
         showFooter
