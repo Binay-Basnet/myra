@@ -1,33 +1,80 @@
-import { ColumnDef, DeepKeys } from '@tanstack/react-table';
+import { ChangeEventHandler, MouseEventHandler } from 'react';
+import { As } from '@chakra-ui/react';
+import { ColumnDef, Row, RowData, Table } from '@tanstack/react-table';
 
-export type Column<TData extends Record<string, unknown>> = Omit<
-  ColumnDef<TData, unknown>,
-  'accessorKey'
-> & {
-  accessorKey: DeepKeys<TData> | 'actions';
-};
+import { Id_Type } from '@coop/cbs/data-access';
+import { AclKey, MenuType, RouteValue } from '@coop/cbs/utils';
 
-type Pagination = {
-  total: number | string;
-  pageInfo?: {
-    startCursor?: string | null;
-    endCursor?: string | null;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-  } | null;
-};
+declare module '@tanstack/table-core' {
+  interface ColumnMeta<TData extends RowData, TValue> {
+    column?: ColumnDef<TData, TValue>;
+    isNumeric?: boolean;
+    width?: number | string;
+    Footer?: {
+      colspan?: number;
+      display?: 'none';
+    };
+  }
+}
 
-type TableSize = 'default' | 'compact';
-type TableVariant = 'simple' | 'report';
+export type Maybe<T> = T | null;
 
-export interface TableProps<TData extends Record<string, unknown>> {
-  data: TData[];
-  columns: Column<TData>[];
+export type Column<TData extends Maybe<Record<string, unknown>>> = {
+  accessorKey?: keyof TData | 'actions';
+  // cell?: (props1: CellContext<TData, unknown>) => JSX.Element;
+} & ColumnDef<TData>;
 
-  pagination?: Pagination;
-  size?: TableSize;
-  variant?: TableVariant;
+export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
+  data: Maybe<Array<Maybe<TData>>> | TData[];
+  columns: Maybe<Array<Maybe<Column<Maybe<TData>>>>> | Column<TData>[];
 
+  pagination?: {
+    total: number | string;
+    pageInfo?: {
+      startCursor?: string | null;
+      endCursor?: string | null;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+    } | null;
+  };
+
+  size?: 'default' | 'compact' | 'report' | 'small';
   isLoading?: boolean;
   isStatic?: boolean;
+  isDetailPageTable?: boolean;
+
+  searchPlaceholder?: string;
+
+  getRowId?: (originalRow: TData) => string;
+
+  variant?: 'simple' | 'report';
+  showFooter?: boolean;
+  noDataTitle?: string;
+
+  rowOnClick?: (row: TData) => void;
+
+  // Sorting Props
+  enableSorting?: boolean;
+  manualSorting?: boolean;
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+  nClick?: MouseEventHandler<HTMLInputElement> | undefined;
+
+  // Expand Props
+  getSubRows?: (row: TData) => TData[];
+
+  tableTitle?: string;
+
+  menuIcon?: As<any> | undefined;
+  type?: string;
+
+  menu?: MenuType;
+  forms?: {
+    label: string;
+    aclKey: AclKey;
+    route: RouteValue;
+    idType?: Id_Type;
+  }[];
 }
+
+export type TableInstance<T> = Table<T>;
+export type { Row };

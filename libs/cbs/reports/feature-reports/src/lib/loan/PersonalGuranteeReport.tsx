@@ -159,7 +159,7 @@ export const LoanPersonalGuranteeReport = () => {
                         <RouteToDetailsPage
                           id={row?.row?.original?.memId as string}
                           type="member"
-                          label={row?.getValue()}
+                          label={row?.getValue() as string}
                         />
                       ) : (
                         '-'
@@ -179,7 +179,7 @@ export const LoanPersonalGuranteeReport = () => {
                         <RouteToDetailsPage
                           id={row?.row?.original?.depositAccountNo as string}
                           type="savings"
-                          label={row?.getValue()}
+                          label={row?.getValue() as string}
                         />
                       ) : (
                         '-'
