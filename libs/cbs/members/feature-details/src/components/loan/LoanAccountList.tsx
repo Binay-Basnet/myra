@@ -85,6 +85,7 @@ export const LoanAccountList = ({ isClosedAccount }: LoanProps) => {
       accountType: data?.productType,
       accountName: data?.accountName,
       totalBalance: amountConverter(data?.totalBalance as string),
+      remainingPrincipal: amountConverter(data?.remainingPrincipal as string),
       interestRate: data?.interestRate,
       accountNumber: data?.accountNumber,
       subscriptionDate: localizedDate(data?.subscriptionDate),
@@ -99,7 +100,7 @@ export const LoanAccountList = ({ isClosedAccount }: LoanProps) => {
       totalBalance: amountConverter(data?.totalBalance as string),
       interestRate: data?.interestRate,
       accountNumber: data?.accountNumber,
-      subscriptionDate: localizedDate(data?.subscriptionDate),
+      subscriptionDate: localizedDate(data?.closedDate),
     })) || [];
 
   return (

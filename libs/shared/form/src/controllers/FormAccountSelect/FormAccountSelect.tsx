@@ -32,6 +32,7 @@ interface IAccountSelectProps extends AccountSelectProps {
   filterBy?: AccountObjState;
   excludeIds?: string[];
   isRequired?: boolean;
+  includeLoc?: boolean;
 }
 
 export const FormAccountSelect = ({
@@ -43,6 +44,7 @@ export const FormAccountSelect = ({
   filterBy,
   excludeIds,
   isRequired,
+  includeLoc,
   ...rest
 }: IAccountSelectProps) => {
   const { t } = useTranslation();
@@ -50,6 +52,7 @@ export const FormAccountSelect = ({
     {
       memberId,
       objState: filterBy ?? null,
+      includeLoc,
     },
     {
       staleTime: 0,
@@ -71,6 +74,7 @@ export const FormAccountSelect = ({
       memberId,
       objState: 'ACTIVE',
       filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
+      includeLoc,
     },
     {
       enabled: !!isLinkedAccounts,
@@ -92,7 +96,7 @@ export const FormAccountSelect = ({
           value: curVal?.id as string,
           accountInfo: {
             accountName: curVal?.accountName,
-            accountId: curVal?.product?.nature,
+            accountId: curVal?.id,
             accountType: curVal?.product?.nature ? accountTypes[curVal?.product?.nature] : '',
             balance: curVal?.availableBalance as string,
             fine: '0',

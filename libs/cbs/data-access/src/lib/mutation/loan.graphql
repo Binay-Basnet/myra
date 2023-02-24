@@ -64,3 +64,14 @@ mutation changeLOC($accountId: ID!, $newAmount: String!) {
     changeLOC(accountId: $accountId, newAmount: $newAmount)
   }
 }
+
+mutation updateLinkedAccount($loanAccountId: ID!, $newLinkedAccountId: ID!) {
+  loanAccount {
+    updateLinkedAccount(loanAccountId: $loanAccountId, newLinkedAccountId: $newLinkedAccountId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

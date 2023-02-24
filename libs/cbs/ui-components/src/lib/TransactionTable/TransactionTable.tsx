@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { Column, Table, Text, Tooltip } from '@myra-ui';
 
-import { BalanceType, EbankingTransaction } from '@coop/cbs/data-access';
+import { BalanceType, EbankingTransaction, PaginationFragment } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -14,6 +14,10 @@ interface ITransactionTableProps {
   data: CustomTransactionItem[];
   hasIndex?: boolean;
   isLoading?: boolean;
+  pagination?: {
+    total: string | number;
+    pageInfo: PaginationFragment | null | undefined;
+  };
 }
 // const routeObj = {
 //   DEPOSIT: ROUTES.CBS_TRANS_DEPOSIT_DETAILS,
@@ -22,7 +26,12 @@ interface ITransactionTableProps {
 //   LOAN_DISBURSMENT: ROUTES.CBS_TRANS_DEPOSIT_DETAILS,
 // };
 
-export const TransactionTable = ({ data, hasIndex = false, isLoading }: ITransactionTableProps) => {
+export const TransactionTable = ({
+  data,
+  hasIndex = false,
+  isLoading,
+  pagination,
+}: ITransactionTableProps) => {
   const transactionList = hasIndex
     ? data?.map((trans, index) => ({
         index: String(index + 1),
@@ -159,6 +168,7 @@ export const TransactionTable = ({ data, hasIndex = false, isLoading }: ITransac
       data={transactionList}
       columns={columns}
       isLoading={isLoading}
+      pagination={pagination}
     />
   );
 };

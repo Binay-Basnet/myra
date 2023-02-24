@@ -4831,6 +4831,24 @@ export type ExampleQuery = {
   testDb: TestDbResult;
 };
 
+export type ExceptionReport = {
+  loanBalanceReport: LoanBalanceReportResult;
+  savingsBalanceReport: SavingsBalanceReportResult;
+  shareBalanceReport: ShareBalanceReportResult;
+};
+
+export type ExceptionReportLoanBalanceReportArgs = {
+  data: LoanBalanceFilterData;
+};
+
+export type ExceptionReportSavingsBalanceReportArgs = {
+  data: SavingsBalanceFilterData;
+};
+
+export type ExceptionReportShareBalanceReportArgs = {
+  data?: InputMaybe<ShareBalanceReportFilter>;
+};
+
 export const ExpiryStatusFilter = {
   All: 'ALL',
   Expired: 'EXPIRED',
@@ -9729,6 +9747,8 @@ export type LoanBalanceReport = {
   branchName?: Maybe<Scalars['String']>;
   disbursedBalance?: Maybe<Scalars['String']>;
   interestRate?: Maybe<Scalars['Float']>;
+  isClosed?: Maybe<Scalars['Boolean']>;
+  isInactive?: Maybe<Scalars['Boolean']>;
   lastPaymentDate?: Maybe<Scalars['Localized']>;
   loanAccountId?: Maybe<Scalars['String']>;
   loanEndDate?: Maybe<Scalars['Localized']>;
@@ -12932,6 +12952,7 @@ export type ReportQuery = {
   cashReport: CashReport;
   depositReport: DepositReport;
   employeeReport: EmployeeReport;
+  exceptionReport: ExceptionReport;
   getReport?: Maybe<SavedReportResponse>;
   listReports: ReportListConnection;
   loanReport: LoanReport;
@@ -13541,6 +13562,8 @@ export type SavingsBalanceReport = {
   currentInterestType?: Maybe<BalanceType>;
   drBalance?: Maybe<Scalars['String']>;
   endDate?: Maybe<Scalars['Localized']>;
+  isClosed?: Maybe<Scalars['Boolean']>;
+  isInactive?: Maybe<Scalars['Boolean']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -13822,6 +13845,7 @@ export type ShareBalanceReportData = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
   contactNo?: Maybe<Scalars['String']>;
+  isInactive?: Maybe<Scalars['Boolean']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -16764,6 +16788,26 @@ export type ChangeLocMutationVariables = Exact<{
 
 export type ChangeLocMutation = { loanAccount: { changeLOC?: string | null } };
 
+export type UpdateLinkedAccountMutationVariables = Exact<{
+  loanAccountId: Scalars['ID'];
+  newLinkedAccountId: Scalars['ID'];
+}>;
+
+export type UpdateLinkedAccountMutation = {
+  loanAccount: {
+    updateLinkedAccount?: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
 }>;
@@ -19271,6 +19315,7 @@ export type GetAccountTransactionListsQueryVariables = Exact<{
 export type GetAccountTransactionListsQuery = {
   account: {
     listTransactions?: {
+      totalCount?: number | null;
       edges?: Array<{
         node: {
           id: string;
@@ -22083,6 +22128,7 @@ export type GetMemberLinkedAccountsQueryVariables = Exact<{
     Array<InputMaybe<NatureOfDepositProduct>> | InputMaybe<NatureOfDepositProduct>
   >;
   objState?: InputMaybe<AccountObjState>;
+  includeLoc?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetMemberLinkedAccountsQuery = {
@@ -23136,6 +23182,7 @@ export type GetMemberKymDetailsLoanQuery = {
             subscriptionDate?: Record<'local' | 'en' | 'np', string> | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
+            remainingPrincipal?: string | null;
           } | null> | null;
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
@@ -23155,6 +23202,7 @@ export type GetMemberKymDetailsLoanQuery = {
             productType?: string | null;
             interestRate?: string | null;
             subscriptionDate?: Record<'local' | 'en' | 'np', string> | null;
+            closedDate?: Record<'local' | 'en' | 'np', string> | null;
             interestEarned?: string | null;
             interestBooked?: string | null;
             objState?: ObjState | null;
@@ -24247,6 +24295,124 @@ export type GetUserReportQuery = {
           remarks?: string | null;
         } | null> | null;
       } | null;
+    };
+  };
+};
+
+export type GetExceptionSavingsBalanceReportQueryVariables = Exact<{
+  data: SavingsBalanceFilterData;
+}>;
+
+export type GetExceptionSavingsBalanceReportQuery = {
+  report: {
+    exceptionReport: {
+      savingsBalanceReport: {
+        totalDrBalance?: string | null;
+        totalCrBalance?: string | null;
+        interestType?: BalanceType | null;
+        totalInterest?: string | null;
+        data?: Array<{
+          accountId?: string | null;
+          memberId?: string | null;
+          memberCode?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          productId?: string | null;
+          productName?: string | null;
+          productCode?: string | null;
+          accountOpeningDate?: Record<'local' | 'en' | 'np', string> | null;
+          memberType?: KymMemberTypesEnum | null;
+          drBalance?: string | null;
+          crBalance?: string | null;
+          currentInterestType?: BalanceType | null;
+          currentInterestRate?: number | null;
+          currentInterest?: string | null;
+          endDate?: Record<'local' | 'en' | 'np', string> | null;
+          branchId?: string | null;
+          branchName?: string | null;
+          isInactive?: boolean | null;
+          isClosed?: boolean | null;
+        } | null> | null;
+        summary?: {
+          totalIndividualAccount?: number | null;
+          totalMinorAccount?: number | null;
+          totalOtherAccount?: number | null;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetExceptionLoanBalanceReportQueryVariables = Exact<{
+  data: LoanBalanceFilterData;
+}>;
+
+export type GetExceptionLoanBalanceReportQuery = {
+  report: {
+    exceptionReport: {
+      loanBalanceReport: {
+        totalOutstandingBalance?: string | null;
+        totalRemainingDrBalance?: string | null;
+        totalRemainingCrBalance?: string | null;
+        totalRemainingInterest?: string | null;
+        totalRemainingInterestType?: BalanceType | null;
+        data?: Array<{
+          memberId?: string | null;
+          memberCode?: string | null;
+          loanAccountId?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          productName?: string | null;
+          productId?: string | null;
+          productCode?: string | null;
+          disbursedBalance?: string | null;
+          remainingCrBalance?: string | null;
+          remainingDrBalance?: string | null;
+          remainingInterest?: string | null;
+          lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
+          branchId?: string | null;
+          branchName?: string | null;
+          loanEndDate?: Record<'local' | 'en' | 'np', string> | null;
+          interestRate?: number | null;
+          loanType?: AllLoanType | null;
+          isInactive?: boolean | null;
+          isClosed?: boolean | null;
+          remainingInterestType?: BalanceType | null;
+        } | null> | null;
+      };
+    };
+  };
+};
+
+export type GetExceptionShareBalanceReportQueryVariables = Exact<{
+  data: ShareBalanceReportFilter;
+}>;
+
+export type GetExceptionShareBalanceReportQuery = {
+  report: {
+    exceptionReport: {
+      shareBalanceReport: {
+        totalBalance?: string | null;
+        data?: Array<{
+          shareType?: string | null;
+          shareCertificateNo?: string | null;
+          memberId?: string | null;
+          isInactive?: boolean | null;
+          memberCode?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          contactNo?: string | null;
+          membershipDate?: Record<'local' | 'en' | 'np', string> | null;
+          noOfKitta?: number | null;
+          balance?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
+          address?: AddressFragment | null;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
     };
   };
 };
@@ -27535,6 +27701,7 @@ export type GetSettingsUserListDataQuery = {
             contactNo?: string | null;
             gender?: UserGender | null;
             dob?: string | null;
+            empCode?: string | null;
             profilePicUrl?: string | null;
             role?: Array<{ id: string; name: string } | null> | null;
             branch?: { id: string; name?: string | null } | null;
@@ -30532,6 +30699,36 @@ export const useChangeLocMutation = <TError = unknown, TContext = unknown>(
   useMutation<ChangeLocMutation, TError, ChangeLocMutationVariables, TContext>(
     ['changeLOC'],
     useAxios<ChangeLocMutation, ChangeLocMutationVariables>(ChangeLocDocument),
+    options
+  );
+export const UpdateLinkedAccountDocument = `
+    mutation updateLinkedAccount($loanAccountId: ID!, $newLinkedAccountId: ID!) {
+  loanAccount {
+    updateLinkedAccount(
+      loanAccountId: $loanAccountId
+      newLinkedAccountId: $newLinkedAccountId
+    ) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLinkedAccountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLinkedAccountMutation,
+    TError,
+    UpdateLinkedAccountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpdateLinkedAccountMutation, TError, UpdateLinkedAccountMutationVariables, TContext>(
+    ['updateLinkedAccount'],
+    useAxios<UpdateLinkedAccountMutation, UpdateLinkedAccountMutationVariables>(
+      UpdateLinkedAccountDocument
+    ),
     options
   );
 export const GetNewIdDocument = `
@@ -34364,6 +34561,7 @@ export const GetAccountTransactionListsDocument = `
           balanceType
         }
       }
+      totalCount
       pageInfo {
         endCursor
         startCursor
@@ -37938,11 +38136,11 @@ export const useGetLoanRepaymentListQuery = <TData = GetLoanRepaymentListQuery, 
     options
   );
 export const GetMemberLinkedAccountsDocument = `
-    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $objState: AccountObjState) {
+    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $objState: AccountObjState, $includeLoc: Boolean) {
   members {
     getAllAccounts(memberId: $memberId) {
       data {
-        depositAccount(filter: $filter, objState: $objState) {
+        depositAccount(filter: $filter, objState: $objState, includeLoc: $includeLoc) {
           id
           accountName
           member {
@@ -39340,6 +39538,7 @@ export const GetMemberKymDetailsLoanDocument = `
             subscriptionDate
             interestEarned
             interestBooked
+            remainingPrincipal
           }
           payments {
             date
@@ -39359,6 +39558,7 @@ export const GetMemberKymDetailsLoanDocument = `
             productType
             interestRate
             subscriptionDate
+            closedDate
             interestEarned
             interestBooked
             objState
@@ -40761,6 +40961,157 @@ export const useGetUserReportQuery = <TData = GetUserReportQuery, TError = unkno
       null,
       variables
     ),
+    options
+  );
+export const GetExceptionSavingsBalanceReportDocument = `
+    query getExceptionSavingsBalanceReport($data: SavingsBalanceFilterData!) {
+  report {
+    exceptionReport {
+      savingsBalanceReport(data: $data) {
+        data {
+          accountId
+          memberId
+          memberCode
+          memberName
+          productId
+          productName
+          productCode
+          accountOpeningDate
+          memberType
+          drBalance
+          crBalance
+          currentInterestType
+          currentInterestRate
+          currentInterest
+          endDate
+          branchId
+          branchName
+          isInactive
+          isClosed
+        }
+        summary {
+          totalIndividualAccount
+          totalMinorAccount
+          totalOtherAccount
+        }
+        totalDrBalance
+        totalCrBalance
+        interestType
+        totalInterest
+      }
+    }
+  }
+}
+    `;
+export const useGetExceptionSavingsBalanceReportQuery = <
+  TData = GetExceptionSavingsBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetExceptionSavingsBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetExceptionSavingsBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetExceptionSavingsBalanceReportQuery, TError, TData>(
+    ['getExceptionSavingsBalanceReport', variables],
+    useAxios<GetExceptionSavingsBalanceReportQuery, GetExceptionSavingsBalanceReportQueryVariables>(
+      GetExceptionSavingsBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetExceptionLoanBalanceReportDocument = `
+    query getExceptionLoanBalanceReport($data: LoanBalanceFilterData!) {
+  report {
+    exceptionReport {
+      loanBalanceReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          loanAccountId
+          memberName
+          productName
+          productId
+          productCode
+          disbursedBalance
+          remainingCrBalance
+          remainingDrBalance
+          remainingInterest
+          lastPaymentDate
+          branchId
+          branchName
+          loanEndDate
+          interestRate
+          loanType
+          isInactive
+          isClosed
+          remainingInterestType
+        }
+        totalOutstandingBalance
+        totalRemainingDrBalance
+        totalRemainingCrBalance
+        totalRemainingInterest
+        totalRemainingInterestType
+      }
+    }
+  }
+}
+    `;
+export const useGetExceptionLoanBalanceReportQuery = <
+  TData = GetExceptionLoanBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetExceptionLoanBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetExceptionLoanBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetExceptionLoanBalanceReportQuery, TError, TData>(
+    ['getExceptionLoanBalanceReport', variables],
+    useAxios<GetExceptionLoanBalanceReportQuery, GetExceptionLoanBalanceReportQueryVariables>(
+      GetExceptionLoanBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetExceptionShareBalanceReportDocument = `
+    query getExceptionShareBalanceReport($data: ShareBalanceReportFilter!) {
+  report {
+    exceptionReport {
+      shareBalanceReport(data: $data) {
+        data {
+          shareType
+          shareCertificateNo
+          memberId
+          isInactive
+          memberCode
+          memberName
+          address {
+            ...Address
+          }
+          contactNo
+          membershipDate
+          noOfKitta
+          balance
+          branchId
+          branchName
+        }
+        totalBalance
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${QueryErrorFragmentDoc}`;
+export const useGetExceptionShareBalanceReportQuery = <
+  TData = GetExceptionShareBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetExceptionShareBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetExceptionShareBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetExceptionShareBalanceReportQuery, TError, TData>(
+    ['getExceptionShareBalanceReport', variables],
+    useAxios<GetExceptionShareBalanceReportQuery, GetExceptionShareBalanceReportQueryVariables>(
+      GetExceptionShareBalanceReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetLoanBalanceReportDocument = `
@@ -45100,6 +45451,7 @@ export const GetSettingsUserListDataDocument = `
             contactNo
             gender
             dob
+            empCode
             role {
               id
               name

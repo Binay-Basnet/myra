@@ -11,7 +11,7 @@ import {
   SavingsBalanceFilterData,
   SavingsBalanceReport,
   SavingsBalanceReportResult,
-  useGetSavingsBalanceReportQuery,
+  useGetExceptionSavingsBalanceReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
@@ -52,7 +52,7 @@ type Filter = {
     amount?: MinMaxFilter;
   };
 };
-export const SavingBalanceReport = () => {
+export const ExceptionSavingBalanceReport = () => {
   const [filters, setFilters] = useState<Filter | null>(null);
 
   const branchIds =
@@ -60,7 +60,7 @@ export const SavingBalanceReport = () => {
       ? filters?.branchId?.map((t) => t.value)
       : null;
 
-  const { data, isFetching } = useGetSavingsBalanceReportQuery(
+  const { data, isFetching } = useGetExceptionSavingsBalanceReportQuery(
     {
       data: {
         ...filters,
@@ -74,12 +74,12 @@ export const SavingBalanceReport = () => {
     { enabled: !!filters }
   );
 
-  const savingBalanceData = data?.report?.otherReport?.savingsBalanceReport?.data;
-  const summary = data?.report?.otherReport?.savingsBalanceReport?.summary;
-  const totalCRBalance = data?.report?.otherReport?.savingsBalanceReport?.totalCrBalance;
-  const totalDRBalance = data?.report?.otherReport?.savingsBalanceReport?.totalDrBalance;
-  const totalInterest = data?.report?.otherReport?.savingsBalanceReport?.totalInterest;
-  const totalInterestType = data?.report?.otherReport?.savingsBalanceReport?.interestType;
+  const savingBalanceData = data?.report?.exceptionReport?.savingsBalanceReport?.data;
+  const summary = data?.report?.exceptionReport?.savingsBalanceReport?.summary;
+  const totalCRBalance = data?.report?.exceptionReport?.savingsBalanceReport?.totalCrBalance;
+  const totalDRBalance = data?.report?.exceptionReport?.savingsBalanceReport?.totalDrBalance;
+  const totalInterest = data?.report?.exceptionReport?.savingsBalanceReport?.totalInterest;
+  const totalInterestType = data?.report?.exceptionReport?.savingsBalanceReport?.interestType;
 
   return (
     <Report
@@ -88,13 +88,16 @@ export const SavingBalanceReport = () => {
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
-      report={ReportEnum.SAVING_BALANCE_REPORT}
+      report={ReportEnum.EXCEPTION_SAVING_BALANCE}
     >
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Report Group', link: '/reports/cbs/others' },
-            { label: 'Saving Balance Report', link: '/reports/cbs/others/saving-balance/new' },
+            { label: 'Exception Reports', link: '/reports/cbs/exceptions' },
+            {
+              label: 'Saving Balance Exception Report',
+              link: '/reports/cbs/exceptions/saving-balance/new',
+            },
           ]}
         />
         <Report.Inputs>
@@ -121,13 +124,20 @@ export const SavingBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 9,
+                    colspan: 11,
                   },
                 },
               },
               {
                 header: 'Account Number',
                 accessorKey: 'accountId',
+                cell: (props) => (
+                  <RouteToDetailsPage
+                    id={props?.row?.original?.accountId as string}
+                    type="savings"
+                    label={props?.row?.original?.accountId as string}
+                  />
+                ),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -135,7 +145,19 @@ export const SavingBalanceReport = () => {
                 },
               },
               {
-                header: 'Member COde',
+                header: 'Account Status',
+                accessorKey: 'isClosed',
+                accessorFn: (row) => row?.isClosed,
+                cell: (props) => (props.getValue() ? 'Closed' : 'Active'),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+
+              {
+                header: 'Member Code',
                 accessorKey: 'memberCode',
                 cell: (props) => (
                   <RouteToDetailsPage
@@ -144,6 +166,17 @@ export const SavingBalanceReport = () => {
                     label={props?.row?.original?.memberCode as string}
                   />
                 ),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Member Status',
+                accessorKey: 'isInactive',
+                accessorFn: (row) => row?.isInactive,
+                cell: (props) => (props.getValue() ? 'Inactive' : 'Active'),
                 meta: {
                   Footer: {
                     display: 'none',

@@ -36,7 +36,7 @@ export const ClosedLoanStatementReport = () => {
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
-      report={ReportEnum.LOAN_INDIVIDUAL_STATEMENT}
+      report={ReportEnum.CLOSED_LOAN_ACCOUNT_STATEMENT}
     >
       <Report.Header>
         <Report.PageHeader

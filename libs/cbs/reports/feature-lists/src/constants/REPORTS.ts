@@ -10,6 +10,7 @@ export enum ReportGroup {
   BRANCHLESS_BANKING = 'Branchless Banking',
   ATM = 'ATM',
   BRANCH = 'Branch',
+  EXCEPTION = 'Exception',
 }
 
 export enum Report {
@@ -126,6 +127,11 @@ export enum Report {
   USER_LIST_REPORT = 'User List Report',
   SAVING_BALANCE_REPORT = 'Saving Balance [Individual]',
   COPOMIS_IMPORT_MEMBER_REPORT = 'Copomis Import Member Report',
+
+  EXCEPTION_SAVING_BALANCE = 'Saving Balance Exception Report',
+  EXCEPTION_LOAN_BALANCE = 'Loan Balance Exception Report',
+  EXCEPTION_MEMBER_WISE_BALANCE = 'Member Wise Balance Execption Report',
+  EXCEPTION_SHARE_BALANCE = 'Share Balance Exception Report',
 }
 
 export const REPORTS = {
@@ -597,6 +603,29 @@ export const REPORTS = {
       id: '11',
       report: Report.COPOMIS_IMPORT_MEMBER_REPORT,
       link: 'copomis-import-member',
+    },
+  ],
+  [ReportGroup.EXCEPTION]: [
+    {
+      id: '',
+      report: Report.EXCEPTION_SAVING_BALANCE,
+      link: 'saving-balance',
+    },
+    {
+      id: '',
+      report: Report.EXCEPTION_LOAN_BALANCE,
+      link: 'loan-balance',
+    },
+    {
+      id: '',
+      report: Report.EXCEPTION_MEMBER_WISE_BALANCE,
+      // link: 'member-wise-balance',
+    },
+
+    {
+      id: '',
+      report: Report.EXCEPTION_SHARE_BALANCE,
+      link: 'share-balance',
     },
   ],
 };

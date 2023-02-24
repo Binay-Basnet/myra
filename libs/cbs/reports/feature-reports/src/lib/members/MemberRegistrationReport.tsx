@@ -281,7 +281,7 @@ export const MemberRegisterReport = () => {
                       accessorKey: 'other',
                     },
                   ]}
-                  tableTitle="Institutional, Cooperative, Cooperative Union"
+                  tableTitle="Other"
                 />
               </Box>
             ) : null}

@@ -2,6 +2,7 @@ import { DetailCardContent, DetailsCard } from '@myra-ui';
 
 import { DefaultAccountType, NatureOfDepositProduct } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 interface IGeneralInfoCardProps {
   title: string;
@@ -20,6 +21,7 @@ interface IGeneralInfoCardProps {
     isMandatory: boolean | null | undefined;
     nomineeAccountNumber: string | null | undefined;
     nomineeAccountName: string | null | undefined;
+    productMinimumBalance: string | null | undefined;
   };
   // accountTypes?: {
   //   SAVING: string;
@@ -80,6 +82,10 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => (
         />
       </DetailCardContent>
     ) : null}
+    <DetailCardContent
+      title="Minimum Balance"
+      subtitle={amountConverter(data?.productMinimumBalance || 0)}
+    />
   </DetailsCard>
 );
 

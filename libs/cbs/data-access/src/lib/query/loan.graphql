@@ -551,11 +551,12 @@ query getMemberLinkedAccounts(
   $memberId: ID!
   $filter: [NatureOfDepositProduct]
   $objState: AccountObjState
+  $includeLoc: Boolean
 ) {
   members {
     getAllAccounts(memberId: $memberId) {
       data {
-        depositAccount(filter: $filter, objState: $objState) {
+        depositAccount(filter: $filter, objState: $objState, includeLoc: $includeLoc) {
           id
           accountName
           member {
