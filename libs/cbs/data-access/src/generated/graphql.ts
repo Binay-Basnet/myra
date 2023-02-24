@@ -9391,6 +9391,10 @@ export type LoanAccountGuaranteeDetails = {
   totalGuaranteeValuation: Scalars['String'];
 };
 
+export type LoanAccountGuaranteeFilter = {
+  status?: InputMaybe<GuaranteeStatus>;
+};
+
 export type LoanAccountGuaranteeReport = {
   disbursedAmount?: Maybe<Scalars['String']>;
   guarantorInformantion?: Maybe<Array<Maybe<LoanGuarantorInfo>>>;
@@ -9403,6 +9407,7 @@ export type LoanAccountGuaranteeReport = {
 
 export type LoanAccountGuaranteeReportInput = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
+  filter?: InputMaybe<LoanAccountGuaranteeFilter>;
   period: LocalizedDateFilter;
 };
 
@@ -9832,6 +9837,7 @@ export type LoanCollateralFilter = {
   collateralType?: InputMaybe<Array<Scalars['String']>>;
   loanType?: InputMaybe<Array<Scalars['String']>>;
   period: LocalizedDateFilter;
+  status?: InputMaybe<GuaranteeStatus>;
 };
 
 export type LoanCollateralInformation = {
@@ -9840,6 +9846,7 @@ export type LoanCollateralInformation = {
   dvMinAmount?: Maybe<Scalars['String']>;
   fmvMaxAmount?: Maybe<Scalars['String']>;
   ownerName?: Maybe<Scalars['String']>;
+  status?: Maybe<GuaranteeStatus>;
   valuationAmount?: Maybe<Scalars['String']>;
   valuationMethod?: Maybe<Scalars['String']>;
   valuatorName?: Maybe<Scalars['String']>;
@@ -13758,8 +13765,10 @@ export type ServiceCenterCashTransferView = {
   status?: Maybe<IbtStatus>;
   totalCredit?: Maybe<Scalars['String']>;
   totalDebit?: Maybe<Scalars['String']>;
-  totalSenderAmount?: Maybe<Scalars['String']>;
-  totalServiceCenterAmount?: Maybe<Scalars['String']>;
+  totalSenderCr?: Maybe<Scalars['String']>;
+  totalSenderDr?: Maybe<Scalars['String']>;
+  totalServiceCenterCr?: Maybe<Scalars['String']>;
+  totalServiceCenterDr?: Maybe<Scalars['String']>;
   transactionID?: Maybe<Scalars['String']>;
   transferDate?: Maybe<Scalars['Localized']>;
   userName?: Maybe<Scalars['String']>;
@@ -27747,6 +27756,7 @@ export type GetSettingsUserListDataQuery = {
             dob?: string | null;
             empCode?: string | null;
             profilePicUrl?: string | null;
+            lastActiveDate?: Record<'local' | 'en' | 'np', string> | null;
             role?: Array<{ id: string; name: string } | null> | null;
             branch?: { id: string; name?: string | null } | null;
           } | null;
@@ -45505,6 +45515,7 @@ export const GetSettingsUserListDataDocument = `
               name
             }
             profilePicUrl
+            lastActiveDate
           }
           cursor
         }
