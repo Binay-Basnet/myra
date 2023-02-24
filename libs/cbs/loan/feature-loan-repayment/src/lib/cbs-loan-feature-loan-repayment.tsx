@@ -151,6 +151,9 @@ export const LoanRepayment = () => {
     let filteredValues = {
       ...values,
     };
+    if (values.paymentMethod === LoanRepaymentMethod.LocSaving) {
+      filteredValues = omit({ ...filteredValues }, ['account', 'bankVoucher', 'cash']);
+    }
     if (values.paymentMethod === LoanRepaymentMethod.Cash) {
       filteredValues = omit({ ...filteredValues }, ['account', 'bankVoucher']);
       filteredValues.cash = {
@@ -210,6 +213,8 @@ export const LoanRepayment = () => {
   );
 
   const loanData = loanPreview?.data?.loanAccount?.loanPreview?.data;
+  const hasLoC =
+    loanPreview?.data?.loanAccount?.loanPreview?.data?.loanDetails?.loanRepaymentScheme === 'LOC';
   const loanTry = loanData?.paymentSchedule?.installments;
   const nextInstallmentNumber = loanData?.repaymentDetails?.nextInstallmentNo as number;
   const loanPaymentSchedule =
@@ -357,7 +362,7 @@ export const LoanRepayment = () => {
                 )}
               </Box>
               <Box display={mode === '1' ? 'flex' : 'none'}>
-                <Payment loanTotal={amountPaid as string} />
+                <Payment loanTotal={amountPaid as string} hasLoc={hasLoC} />
               </Box>
             </form>
           </FormProvider>
