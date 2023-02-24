@@ -2250,6 +2250,8 @@ export type CashTransferBranchView = {
 };
 
 export type CashTransferLedgerView = {
+  balance?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   cr?: Maybe<Scalars['String']>;
   dr?: Maybe<Scalars['String']>;
   ledgerId?: Maybe<Scalars['ID']>;
@@ -5943,6 +5945,7 @@ export type GeneralLedgerReportEntry = {
 
 export type GeneralMemberData = {
   charge?: Maybe<Array<Maybe<MemberChargeData>>>;
+  isCodeSetup?: Maybe<Scalars['Boolean']>;
   memberCode?: Maybe<MemberCode>;
   memberType?: Maybe<MemberActiveData>;
   risk?: Maybe<MemberRiskData>;
@@ -6251,6 +6254,7 @@ export type IndividualMemberReportData = {
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactions>>>;
   savingDetail?: Maybe<Array<Maybe<MemberSavingDetail>>>;
   totalApprovedAmount?: Maybe<Scalars['String']>;
+  totalGuaranteeBalance?: Maybe<Scalars['String']>;
   totalRemainingAmount?: Maybe<Scalars['String']>;
   totalSavingBalance?: Maybe<Scalars['String']>;
   totalTransactionAmount?: Maybe<Scalars['String']>;
@@ -11623,6 +11627,7 @@ export type MemberSavingDetail = {
   balance?: Maybe<Scalars['String']>;
   balanceType?: Maybe<BalanceType>;
   guaranteeLoanDetail?: Maybe<Array<Maybe<GuaranteeLoanDetail>>>;
+  totalGuaranteeAmount?: Maybe<Scalars['String']>;
   transactionCount?: Maybe<Scalars['Int']>;
 };
 
@@ -26965,6 +26970,7 @@ export type GetGeneralMemberSettingsDataQuery = {
         general?: {
           generalMember?: {
             record?: {
+              isCodeSetup?: boolean | null;
               memberType?: {
                 individual?: boolean | null;
                 institution?: boolean | null;
@@ -44434,6 +44440,7 @@ export const GetGeneralMemberSettingsDataDocument = `
         general {
           generalMember {
             record {
+              isCodeSetup
               memberType {
                 individual
                 institution

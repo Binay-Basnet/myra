@@ -1,6 +1,8 @@
 export const ROUTES = {
   HOME: '/',
 
+  CBS_NO_MEMBER_CODE: '/no-member-code',
+
   CBS_MEMBER: '/cbs/members',
   CBS_MEMBER_IND_ADD: '/cbs/members/individual/add',
   CBS_MEMBER_INS_ADD: '/cbs/members/institution/add',
