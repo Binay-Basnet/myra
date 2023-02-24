@@ -42,8 +42,12 @@ export const forms: Record<string, Page> = {
     idType: Id_Type.Kymcooperativeunion,
   },
 };
+
 export const MemberPagesLayout = ({ children }: IMemberPagesLayoutProps) => {
   const { data: memberTypeData } = useGetGeneralMemberSettingsDataQuery();
+  const isMemberCodeSetup =
+    memberTypeData?.settings?.general?.KYM?.general?.generalMember?.record?.isCodeSetup;
+
   const memberTypes =
     memberTypeData?.settings?.general?.KYM?.general?.generalMember?.record?.memberType;
 
@@ -56,10 +60,14 @@ export const MemberPagesLayout = ({ children }: IMemberPagesLayoutProps) => {
     })
     ?.filter(Boolean) as Page[];
 
+  const alteredMemberForms = isMemberCodeSetup
+    ? memberForms?.map((item) => ({ ...item, route: ROUTES.CBS_NO_MEMBER_CODE }))
+    : memberForms;
+
   return (
     <Can I="SHOW_IN_MENU" a="CBS_MEMBERS_MEMBER" showError isErrorCentered>
       <MenuContainer>
-        <AppSidebar forms={memberForms} menu="MEMBERS" />
+        <AppSidebar forms={alteredMemberForms} menu="MEMBERS" />
         <PageContainer>
           <Scrollable>{children}</Scrollable>
         </PageContainer>

@@ -1,0 +1,44 @@
+query getClientsList {
+  neosys {
+    client {
+      list {
+        id
+        clientName
+        provinceId
+        districtId
+        localGovernmentId
+        locality
+        houseNo
+        wardNo
+        dateJoined
+        dbCreated
+      }
+    }
+  }
+}
+
+query getClientDetails($clientId: ID!) {
+  neosys {
+    client {
+      details(clientId: $clientId) {
+        organizationName
+        environments {
+          id
+          environmentName
+          environmentSlug
+          otpToken
+          description
+          isForProduction
+        }
+      }
+    }
+  }
+}
+
+query getVersion {
+  neosys {
+    versions {
+      id
+    }
+  }
+}

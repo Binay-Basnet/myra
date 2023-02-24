@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -17,33 +18,34 @@ import {
   TellerBankTransferInput,
   TellerBankTransferType,
   useAppSelector,
-  useGetBankAccountListQuery,
+  useGetUserAndBranchBalanceQuery,
   useSetBankTransferMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormInput, FormSelect, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import { FormBankSelect, FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+
+import { BalanceCard } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddBankTransferProps {}
 
 export const AddBankTransfer = () => {
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {
+      transferType: TellerBankTransferType?.Deposit,
+    },
+  });
   const router = useRouter();
   const user = useAppSelector((state) => state.auth?.user);
 
-  const { data } = useGetBankAccountListQuery({
-    pagination: { first: 10, after: '' },
-    currentBranchOnly: true,
-  });
+  const { data: balanceQueryData } = useGetUserAndBranchBalanceQuery();
+
+  const userBalance = useMemo(
+    () => balanceQueryData?.auth?.me?.data?.user?.userBalance,
+    [balanceQueryData]
+  );
 
   // const { data } = useGetBankListQuery();
-
-  const bankList =
-    data &&
-    data?.accounting?.bankAccounts?.list?.edges?.map((item) => ({
-      label: item?.node?.displayName as string,
-      value: item?.node?.id as string,
-    }));
 
   const booleanList = [
     {
@@ -56,7 +58,7 @@ export const AddBankTransfer = () => {
     },
   ];
 
-  const { getValues } = methods;
+  const { getValues, watch } = methods;
   const { mutateAsync } = useSetBankTransferMutation();
 
   const handleSubmit = () => {
@@ -74,6 +76,8 @@ export const AddBankTransfer = () => {
       },
     });
   };
+
+  const isDeposit = watch('transferType') === TellerBankTransferType?.Deposit;
 
   return (
     <>
@@ -98,11 +102,29 @@ export const AddBankTransfer = () => {
                     </GridItem>
                   </Grid>
                   <Divider />
+                  {isDeposit && (
+                    <>
+                      {' '}
+                      <GridItem colSpan={3}>
+                        <BalanceCard
+                          label="Teller Bank Available Cash"
+                          balance={userBalance ?? '0'}
+                        />
+                      </GridItem>
+                      <Divider />
+                    </>
+                  )}
+
                   <Text>Transfer Details</Text>
                   <FormSwitchTab label="Transfer Type" options={booleanList} name="transferType" />
                   <Grid templateColumns="repeat(3,1fr)" gap={2}>
                     <GridItem colSpan={2}>
-                      <FormSelect name="bankId" label="Select Bank" options={bankList} />
+                      <FormBankSelect
+                        isRequired
+                        name="bankId"
+                        label="Select Bank"
+                        currentBranchOnly
+                      />
                     </GridItem>
                     <GridItem colSpan={1}>
                       <FormInput name="amount" label="Amount" />

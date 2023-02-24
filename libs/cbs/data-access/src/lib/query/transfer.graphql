@@ -206,3 +206,52 @@ query getTellerBankDetails($transactionId: ID!) {
     }
   }
 }
+
+query getInterServiceCenterTransferDetail($entryID: ID!) {
+  transaction {
+    viewServiceCenterCashTransfer(entryID: $entryID) {
+      data {
+        id
+        transactionID
+        userName
+        userProfileUrl
+        senderServiceCenter
+        reveiverServiceCenter
+        transferDate
+        amount
+        status
+        srcLedgerInfo {
+          ledgerId
+          ledgerName
+          dr
+          cr
+          balance
+          balanceType
+        }
+        totalSenderCr
+        totalSenderDr
+        destinationBranchInfo {
+          branchId
+          branchName
+          dr
+          cr
+        }
+        totalServiceCenterCr
+        totalServiceCenterDr
+        glTransaction {
+          ledgerId
+          account
+          serviceCentreId
+          serviceCenter
+          debit
+          credit
+          balance
+          balanceType
+        }
+        totalDebit
+        totalCredit
+        note
+      }
+    }
+  }
+}

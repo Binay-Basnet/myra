@@ -2,8 +2,8 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Avatar, Box, Modal, PageHeader, TablePopover, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { asyncToast, Box, Modal, PageHeader, TablePopover } from '@myra-ui';
+import { AvatarCell, Column, Table } from '@myra-ui/table';
 
 import {
   ObjState,
@@ -26,6 +26,9 @@ const memberTypeSlug = {
 
 export const MemberListPage = () => {
   const { t } = useTranslation();
+  // const { data: serviceCenterList } = useGetBranchListQuery({
+  //   paginate: { first: -1, after: '' },
+  // });
 
   const [ID, setID] = useState('');
   const [openModal, setOpenModal] = useState(false);
@@ -47,6 +50,8 @@ export const MemberListPage = () => {
   const { data: memberTypeData } = useGetGeneralMemberSettingsDataQuery();
   const memberTypes =
     memberTypeData?.settings?.general?.KYM?.general?.generalMember?.record?.memberType;
+  const isMemberCodeSetup =
+    memberTypeData?.settings?.general?.KYM?.general?.generalMember?.record?.isCodeSetup;
 
   const memberForms = Object.keys(memberTypes || {})
     ?.map((memberType) => {
@@ -56,6 +61,10 @@ export const MemberListPage = () => {
       return false;
     })
     ?.filter(Boolean) as Page[];
+
+  const alteredMemberForms = isMemberCodeSetup
+    ? memberForms?.map((item) => ({ ...item, route: ROUTES.CBS_NO_MEMBER_CODE }))
+    : memberForms;
 
   const { data, isFetching, refetch } = useGetMemberListQuery(
     {
@@ -100,30 +109,20 @@ export const MemberListPage = () => {
         id: 'id',
         header:
           objState === 'DRAFT' ? t['memberListTableMemberId'] : t['memberListTableMemberCode'],
+
         accessorFn: (row) => (objState === 'DRAFT' ? row?.node?.id : row?.node?.code),
         // enableSorting: true,
       },
       {
         id: 'name',
-        accessorFn: (row) => row?.node?.name?.local,
+        accessorKey: 'node.name.local',
         header: t['memberListTableName'],
         // enableSorting: true,
         cell: (props) => (
-          <Box display="flex" alignItems="center" gap="s12">
-            <Avatar
-              name={props.getValue() as string}
-              size="sm"
-              src={props?.row?.original?.node?.profilePicUrl ?? ''}
-            />
-            <Text
-              fontSize="s3"
-              textTransform="capitalize"
-              textOverflow="ellipsis"
-              overflow="hidden"
-            >
-              {props.getValue() as string}
-            </Text>
-          </Box>
+          <AvatarCell
+            name={props.getValue() as string}
+            src={props.row.original?.node?.profilePicUrl}
+          />
         ),
 
         meta: {
@@ -147,8 +146,15 @@ export const MemberListPage = () => {
       {
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branch,
+        enableColumnFilter: true,
         meta: {
           width: '120px',
+          // filters: {
+          //   list: serviceCenterList?.settings?.general?.branch?.list?.edges?.map((e) => ({
+          //     label: e.node?.name as string,
+          //     value: e.node?.id as string,
+          //   })),
+          // },
         },
       },
 
@@ -299,7 +305,7 @@ export const MemberListPage = () => {
           pageInfo: data?.members?.list?.pageInfo,
         }}
         menu="MEMBERS"
-        forms={memberForms}
+        forms={alteredMemberForms}
       />
       <Modal
         open={openModal}

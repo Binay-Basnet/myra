@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@coop/neosys-admin/layout';
 import { Box } from '@myra-ui';
+
+import { MainLayout } from '@coop/neosys-admin/layout';
 
 const Index = () => <Box>Dashboard</Box>;
 

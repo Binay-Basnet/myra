@@ -1,7 +1,7 @@
 import { Box } from '@myra-ui';
 
 import { CBSSettingsAuditLog } from '@coop/cbs/audit-log';
-import { SettingsGeneralLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
+import { SettingsLayout, SettingsMonitorLayout } from '@coop/cbs/settings/ui-layout';
 import { Can } from '@coop/cbs/utils';
 
 const AuditLog = () => (
@@ -17,7 +17,7 @@ export default AuditLog;
 AuditLog.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+      <SettingsMonitorLayout>{page}</SettingsMonitorLayout>
     </SettingsLayout>
   );
 };

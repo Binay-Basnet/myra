@@ -1,0 +1,43 @@
+query allAdministration {
+  administration {
+    all {
+      id
+      name
+      districts {
+        id
+        name
+        municipalities {
+          id
+          name
+          wards
+        }
+      }
+    }
+  }
+}
+
+query getAllProvince {
+  administration {
+    provinces {
+      id
+      name
+    }
+  }
+}
+
+query getAllDistricts {
+  administration {
+    districts {
+      id
+      name
+    }
+  }
+}
+query getAllLocalGovernment {
+  administration {
+    municipalities {
+      id
+      name
+    }
+  }
+}

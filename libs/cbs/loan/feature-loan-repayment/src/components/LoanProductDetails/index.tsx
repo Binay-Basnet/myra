@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Box, Text } from '@myra-ui';
 
 import { LoanProductInstallment, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
-import { RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface IProductProps {
@@ -77,7 +77,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Disburse Date{' '}
             </Text>
             <Text fontSize="s3" fontWeight="600">
-              {loanData?.loanDetails?.disburseDate}
+              {localizedDate(loanData?.loanDetails?.disburseDate)}
             </Text>
           </Box>
           {/* <Box display="flex" flexDirection="column" gap="s4">
@@ -93,7 +93,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Last Payment Date{' '}
             </Text>
             <Text fontSize="s3" fontWeight="600">
-              {loanData?.repaymentDetails?.lastPaymentDate ?? '-'}
+              {localizedDate(loanData?.repaymentDetails?.lastPaymentDate)}
             </Text>
           </Box>
           <Box display="flex" flexDirection="column" gap="s4">

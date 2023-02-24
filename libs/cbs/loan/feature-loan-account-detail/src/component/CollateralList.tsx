@@ -8,7 +8,6 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Chips,
   Grid,
   Modal,
   Text,
@@ -280,7 +279,7 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
                       ? collatDataList?.documentName
                       : 'N/A'}
                   </Text>
-                  <Chips variant="solid" type="label" size="sm" theme="success" label="Active" />
+                  {/* <Chips variant="solid" type="label" size="sm" theme="success" label="Active" /> */}
                 </Box>
                 <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
                   {collatDataList?.collateralType}

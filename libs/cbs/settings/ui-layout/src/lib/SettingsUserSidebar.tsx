@@ -15,10 +15,6 @@ const tabList: TabList[] = [
     to: ROUTES.SETTINGS_USERS_LIST,
   },
   // {
-  //   title: 'settingsUserSidebarBranchManager',
-  //   to: '/settings/users/service-center-manager',
-  // },
-  // {
   //   title: 'settingsUserSidebarAgent',
   //   to: '/settings/users/agent',
   // },

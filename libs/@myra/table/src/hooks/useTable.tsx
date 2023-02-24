@@ -2,6 +2,7 @@ import {
   ColumnDef,
   getCoreRowModel,
   getExpandedRowModel,
+  getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
@@ -16,12 +17,9 @@ export const useTable = <T extends Record<string, unknown>>({
   isStatic,
   ...rest
 }: IUseTableProps<T>) => {
-  const columnsWithRowSelection = [
-    getCheckBoxColumn<T>(),
-    ...(columns as unknown as ColumnDef<T>[]),
-  ];
+  const columnsWithRowSelection = [getCheckBoxColumn<T>(), ...columns];
 
-  const columnsWithoutRowSelection = columns as unknown as ColumnDef<T>[];
+  const columnsWithoutRowSelection = columns;
 
   return useReactTable<T>({
     defaultColumn: {
@@ -29,17 +27,19 @@ export const useTable = <T extends Record<string, unknown>>({
       meta: {
         width: '100px',
       },
+      enableColumnFilter: false,
     },
 
     enableRowSelection: true,
 
-    data: data as unknown as T[],
-    columns: isStatic ? columnsWithoutRowSelection : columnsWithRowSelection,
+    data: data as T[],
+    columns: (isStatic ? columnsWithoutRowSelection : columnsWithRowSelection) as ColumnDef<T>[],
 
     ...rest,
 
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
   });
 };

@@ -154,6 +154,7 @@
       "@coop/neosys-admin/settings": ["libs/neosys/feature-settings/src/index.ts"],
       "@coop/neosys-admin/ui-components": ["libs/neosys/ui-components/src/index.ts"],
       "@coop/neosys-admin/users": ["libs/neosys/feature-users/src/index.ts"],
+      "@coop/settings/access-log": ["libs/cbs/settings/feature-access-log/src/index.ts"],
       "@coop/settings/alternative-channels": [
         "libs/cbs/settings/feature-alternative-channels/src/index.ts"
       ],
@@ -165,6 +166,9 @@
       "@coop/shared/components": ["libs/shared/components/src/index.ts"],
       "@coop/shared/form": ["libs/shared/form/src/index.ts"],
       "@coop/shared/utils": ["libs/shared/utils/src/index.ts"],
+      "@migration/data-access": ["libs/migration/data-access/src/index.ts"],
+      "@migration/ui-components": ["libs/migration/ui-components/src/index.ts"],
+      "@migration/ui-layout": ["libs/migration/ui-layout/src/index.ts"],
       "@myra-ui": ["libs/@myra/myra-ui/src/index.ts"],
       "@myra-ui/components": ["libs/@myra/components/src/index.ts"],
       "@myra-ui/date-picker": ["libs/@myra/date-picker/src/index.ts"],

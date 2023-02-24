@@ -17,7 +17,7 @@ export const GeneralInfoCard = ({ title, items, productId }: IGeneralInfoCardPro
     <DetailsCard title={title} bg="white" hasThreeRows>
       {items.map((item) => (
         <>
-          {!['Product Name', 'Linked Account'].includes(item?.label) && (
+          {!['Product Name', 'Linked Account Id'].includes(item?.label) && (
             <Box display="flex" flexDirection="column" gap="s4">
               <Text fontSize="s3" fontWeight="500" color="neutralColorLight.Gray-70">
                 {item.label}
@@ -38,9 +38,9 @@ export const GeneralInfoCard = ({ title, items, productId }: IGeneralInfoCardPro
               }
             />
           )}
-          {item?.label === 'Linked Account' && (
+          {item?.label === 'Linked Account Id' && (
             <DetailCardContent
-              title="Linked Account"
+              title="Linked Account Id"
               children={
                 <RedirectButton
                   link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${generalInfo?.linkedAccountId}`}
