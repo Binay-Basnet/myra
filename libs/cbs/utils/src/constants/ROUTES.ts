@@ -9,6 +9,7 @@ export const ROUTES = {
   CBS_MEMBER_COOP_ADD: '/cbs/members/coop/add',
   CBS_MEMBER_COOP_UNION_ADD: '/cbs/members/coop_union/add',
   CBS_MEMBER_LIST: '/cbs/members/list',
+  CBS_MEMBER_INACTIVE_LIST: '/cbs/members/inactive/list',
   CBS_MEMBER_DETAILS: '/cbs/members/details',
   CBS_MEMBER_ACTIVATION: '/cbs/members/activation',
   CBS_MEMBER_INACTIVATION: '/cbs/members/inactivation',
@@ -101,7 +102,7 @@ export const ROUTES = {
 
   SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
 
-  SETTINGS_GENERAL_AUDIT_LOG: '/settings/general/audit-log/list',
+  SETTINGS_GENERAL_AUDIT_LOG: '/settings/monitor/audit-log/list',
   SETTINGS_EOD_SETUP: '/settings/general/eod',
   SETTINGS_GENERAL_BANK: '/settings/general/bank/configure',
 
@@ -150,6 +151,8 @@ export const ROUTES = {
   SETTINGS_USERS_LIST: '/settings/users/super-admin/list',
   SETTINGS_USERS_ADD: '/settings/users/super-admin/add',
   SETTINGS_USERS_EDIT: '/settings/users/super-admin/edit',
+
+  SETTINGS_ACCESS_LOG: '/settings/monitor/access-log/list',
 
   /* NOT INDEXED BY GLOBAL SEARCH */
 

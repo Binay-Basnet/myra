@@ -10072,7 +10072,7 @@ export type LoanPreviewInstallment = {
 
 export type LoanPreviewLoanDetails = {
   appliedLoanAmount?: Maybe<Scalars['String']>;
-  disburseDate?: Maybe<Scalars['String']>;
+  disburseDate?: Maybe<Scalars['Localized']>;
   expiryDate?: Maybe<Scalars['String']>;
   /**  Extra fields for repayment page */
   interestAmount?: Maybe<Scalars['String']>;
@@ -10093,7 +10093,7 @@ export type LoanPreviewLoanDetails = {
 };
 
 export type LoanPreviewRepaymentDetails = {
-  lastPaymentDate?: Maybe<Scalars['String']>;
+  lastPaymentDate?: Maybe<Scalars['Localized']>;
   nextInstallmentNo?: Maybe<Scalars['Int']>;
   remainingInstallments?: Maybe<Array<Maybe<LoanPreviewInstallment>>>;
   remainingInterest?: Maybe<Scalars['String']>;
@@ -22092,13 +22092,13 @@ export type GetLoanPreviewQuery = {
           principalGracePeriod?: number | null;
           interestGracePeriod?: number | null;
           interestAmount?: string | null;
-          disburseDate?: string | null;
+          disburseDate?: Record<'local' | 'en' | 'np', string> | null;
           expiryDate?: string | null;
           paymentFrequency?: LoanProductInstallment | null;
           processingCharges?: Array<{ name: string; amount?: any | null } | null> | null;
         } | null;
         repaymentDetails?: {
-          lastPaymentDate?: string | null;
+          lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
           remainingPrincipal?: string | null;
           remainingInterest?: string | null;
           remainingTotal?: string | null;
@@ -25022,6 +25022,73 @@ export type GetMemberWiseBalanceReportQuery = {
   };
 };
 
+export type GetIndividualMemberReportQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
+
+export type GetIndividualMemberReportQuery = {
+  report: {
+    memberReport: {
+      individualMemberReport?: {
+        data?: {
+          totalTransactionAmount?: string | null;
+          totalGuaranteeBalance?: string | null;
+          totalSavingBalance?: string | null;
+          totalApprovedAmount?: string | null;
+          totalRemainingAmount?: string | null;
+          header?: {
+            memberId?: string | null;
+            memberCode?: string | null;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePic?: string | null;
+            contactNo?: string | null;
+            panNo?: string | null;
+            membershipDate?: Record<'local' | 'en' | 'np', string> | null;
+            shareCertificateNo?: string | null;
+            totalShareCount?: number | null;
+            riskCategory?: OfficialUseRiskCategory | null;
+            kymStatus?: string | null;
+            kymExpiryDate?: Record<'local' | 'en' | 'np', string> | null;
+            address?: AddressFragment | null;
+          } | null;
+          closedAccountDetail?: Array<{
+            accountName?: string | null;
+            accountNo?: string | null;
+            closedDate?: Record<'local' | 'en' | 'np', string> | null;
+            accountType?: string | null;
+          } | null> | null;
+          loanDetail?: Array<{
+            loanAccountNo?: string | null;
+            loanAccountName?: string | null;
+            issuedDate?: Record<'local' | 'en' | 'np', string> | null;
+            approvedAmount?: string | null;
+            remainingAmount?: string | null;
+            lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+          recentTransactions?: Array<{
+            transactionId?: string | null;
+            transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+            transactionType?: string | null;
+            transactionAmount?: string | null;
+          } | null> | null;
+          savingDetail?: Array<{
+            accountNo?: string | null;
+            accountName?: string | null;
+            balance?: string | null;
+            balanceType?: BalanceType | null;
+            totalGuaranteeAmount?: string | null;
+            transactionCount?: number | null;
+            guaranteeLoanDetail?: Array<{
+              loanAccountNo?: string | null;
+              amount?: string | null;
+            } | null> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    };
+  };
+};
+
 export type GetMBankingRegistrationReportQueryVariables = Exact<{
   data?: InputMaybe<EbankingReportFilter>;
 }>;
@@ -27121,6 +27188,42 @@ export type GetDeclarationQuery = {
   };
 };
 
+export type GetAccessLogListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetAccessLogListQuery = {
+  accessLog: {
+    raw: {
+      data?: Array<{
+        id?: string | null;
+        createdAt?: string | null;
+        requestBody?: unknown | null;
+        responseBody?: unknown | null;
+        elapsedTime?: string | null;
+        statusCode?: number | null;
+        ip?: string | null;
+        header?: unknown | null;
+        bytesReceived?: number | null;
+        bytesSent?: number | null;
+        userId?: string | null;
+        User?: {
+          id: string;
+          name?: string | null;
+          email?: string | null;
+          profilePicUrl?: string | null;
+        } | null;
+        AuditLog?: Array<{
+          timestamp?: string | null;
+          narration?: string | null;
+          extraData?: Array<string | null> | null;
+        } | null> | null;
+      } | null> | null;
+    };
+  };
+};
+
 export type GetDepositSettingsIroQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetDepositSettingsIroQuery = {
@@ -28935,6 +29038,59 @@ export type GetTellerBankDetailsQuery = {
             balanceType?: BalanceType | null;
           } | null> | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInterServiceCenterTransferDetailQueryVariables = Exact<{
+  entryID: Scalars['ID'];
+}>;
+
+export type GetInterServiceCenterTransferDetailQuery = {
+  transaction: {
+    viewServiceCenterCashTransfer?: {
+      data?: {
+        id?: string | null;
+        transactionID?: string | null;
+        userName?: string | null;
+        userProfileUrl?: string | null;
+        senderServiceCenter?: string | null;
+        reveiverServiceCenter?: string | null;
+        transferDate?: Record<'local' | 'en' | 'np', string> | null;
+        amount?: string | null;
+        status?: IbtStatus | null;
+        totalSenderCr?: string | null;
+        totalSenderDr?: string | null;
+        totalServiceCenterCr?: string | null;
+        totalServiceCenterDr?: string | null;
+        totalDebit?: string | null;
+        totalCredit?: string | null;
+        note?: string | null;
+        srcLedgerInfo?: Array<{
+          ledgerId?: string | null;
+          ledgerName?: string | null;
+          dr?: string | null;
+          cr?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
+        } | null> | null;
+        destinationBranchInfo?: Array<{
+          branchId?: string | null;
+          branchName?: string | null;
+          dr?: string | null;
+          cr?: string | null;
+        } | null> | null;
+        glTransaction?: Array<{
+          ledgerId?: string | null;
+          account: string;
+          serviceCentreId?: string | null;
+          serviceCenter?: string | null;
+          debit?: string | null;
+          credit?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -41872,6 +42028,87 @@ export const useGetMemberWiseBalanceReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetIndividualMemberReportDocument = `
+    query getIndividualMemberReport($memberId: ID!) {
+  report {
+    memberReport {
+      individualMemberReport(memberId: $memberId) {
+        data {
+          header {
+            memberId
+            memberCode
+            name
+            profilePic
+            address {
+              ...Address
+            }
+            contactNo
+            panNo
+            membershipDate
+            shareCertificateNo
+            totalShareCount
+            riskCategory
+            kymStatus
+            kymExpiryDate
+          }
+          closedAccountDetail {
+            accountName
+            accountNo
+            closedDate
+            accountType
+          }
+          loanDetail {
+            loanAccountNo
+            loanAccountName
+            issuedDate
+            approvedAmount
+            remainingAmount
+            lastPaymentDate
+          }
+          recentTransactions {
+            transactionId
+            transactionDate
+            transactionType
+            transactionAmount
+          }
+          totalTransactionAmount
+          savingDetail {
+            accountNo
+            accountName
+            balance
+            balanceType
+            totalGuaranteeAmount
+            transactionCount
+            guaranteeLoanDetail {
+              loanAccountNo
+              amount
+            }
+          }
+          totalGuaranteeBalance
+          totalSavingBalance
+          totalApprovedAmount
+          totalRemainingAmount
+          totalTransactionAmount
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetIndividualMemberReportQuery = <
+  TData = GetIndividualMemberReportQuery,
+  TError = unknown
+>(
+  variables: GetIndividualMemberReportQueryVariables,
+  options?: UseQueryOptions<GetIndividualMemberReportQuery, TError, TData>
+) =>
+  useQuery<GetIndividualMemberReportQuery, TError, TData>(
+    ['getIndividualMemberReport', variables],
+    useAxios<GetIndividualMemberReportQuery, GetIndividualMemberReportQueryVariables>(
+      GetIndividualMemberReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMBankingRegistrationReportDocument = `
     query getMBankingRegistrationReport($data: EbankingReportFilter) {
   report {
@@ -44636,6 +44873,50 @@ export const useGetDeclarationQuery = <TData = GetDeclarationQuery, TError = unk
     ),
     options
   );
+export const GetAccessLogListDocument = `
+    query getAccessLogList($pagination: Pagination, $filter: Filter) {
+  accessLog {
+    raw(pagination: $pagination, filter: $filter) {
+      data {
+        id
+        createdAt
+        requestBody
+        responseBody
+        elapsedTime
+        statusCode
+        ip
+        header
+        bytesReceived
+        bytesSent
+        userId
+        User {
+          id
+          name
+          email
+          profilePicUrl
+        }
+        AuditLog {
+          timestamp
+          narration
+          extraData
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccessLogListQuery = <TData = GetAccessLogListQuery, TError = unknown>(
+  variables?: GetAccessLogListQueryVariables,
+  options?: UseQueryOptions<GetAccessLogListQuery, TError, TData>
+) =>
+  useQuery<GetAccessLogListQuery, TError, TData>(
+    variables === undefined ? ['getAccessLogList'] : ['getAccessLogList', variables],
+    useAxios<GetAccessLogListQuery, GetAccessLogListQueryVariables>(GetAccessLogListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetDepositSettingsIroDocument = `
     query getDepositSettingsIro {
   settings {
@@ -47072,6 +47353,71 @@ export const useGetTellerBankDetailsQuery = <TData = GetTellerBankDetailsQuery, 
     useAxios<GetTellerBankDetailsQuery, GetTellerBankDetailsQueryVariables>(
       GetTellerBankDetailsDocument
     ).bind(null, variables),
+    options
+  );
+export const GetInterServiceCenterTransferDetailDocument = `
+    query getInterServiceCenterTransferDetail($entryID: ID!) {
+  transaction {
+    viewServiceCenterCashTransfer(entryID: $entryID) {
+      data {
+        id
+        transactionID
+        userName
+        userProfileUrl
+        senderServiceCenter
+        reveiverServiceCenter
+        transferDate
+        amount
+        status
+        srcLedgerInfo {
+          ledgerId
+          ledgerName
+          dr
+          cr
+          balance
+          balanceType
+        }
+        totalSenderCr
+        totalSenderDr
+        destinationBranchInfo {
+          branchId
+          branchName
+          dr
+          cr
+        }
+        totalServiceCenterCr
+        totalServiceCenterDr
+        glTransaction {
+          ledgerId
+          account
+          serviceCentreId
+          serviceCenter
+          debit
+          credit
+          balance
+          balanceType
+        }
+        totalDebit
+        totalCredit
+        note
+      }
+    }
+  }
+}
+    `;
+export const useGetInterServiceCenterTransferDetailQuery = <
+  TData = GetInterServiceCenterTransferDetailQuery,
+  TError = unknown
+>(
+  variables: GetInterServiceCenterTransferDetailQueryVariables,
+  options?: UseQueryOptions<GetInterServiceCenterTransferDetailQuery, TError, TData>
+) =>
+  useQuery<GetInterServiceCenterTransferDetailQuery, TError, TData>(
+    ['getInterServiceCenterTransferDetail', variables],
+    useAxios<
+      GetInterServiceCenterTransferDetailQuery,
+      GetInterServiceCenterTransferDetailQueryVariables
+    >(GetInterServiceCenterTransferDetailDocument).bind(null, variables),
     options
   );
 export const GetPastSlipsListDocument = `

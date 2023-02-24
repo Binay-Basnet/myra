@@ -30,6 +30,24 @@ const paymentModes = [
     value: LoanRepaymentMethod.BankVoucher,
   },
 ];
+const paymentModesWithLoc = [
+  {
+    label: 'Cash',
+    value: LoanRepaymentMethod.Cash,
+  },
+  {
+    label: 'Account',
+    value: LoanRepaymentMethod.Account,
+  },
+  {
+    label: 'Bank Cheque',
+    value: LoanRepaymentMethod.BankVoucher,
+  },
+  {
+    label: 'LOC Saving',
+    value: LoanRepaymentMethod.LocSaving,
+  },
+];
 
 const denominationsOptions = [
   { label: '1000x', value: '1000' },
@@ -48,6 +66,7 @@ const denominationsOptions = [
 /* eslint-disable-next-line */
 export interface PaymentProps {
   loanTotal: string | undefined;
+  hasLoc?: boolean;
 }
 
 type PaymentTableType = {
@@ -56,7 +75,7 @@ type PaymentTableType = {
   amount: string;
 };
 
-export const Payment = ({ loanTotal }: PaymentProps) => {
+export const Payment = ({ loanTotal, hasLoc }: PaymentProps) => {
   const { watch, setValue } = useFormContext();
 
   const selectedPaymentMode = watch('paymentMethod');
@@ -90,7 +109,11 @@ export const Payment = ({ loanTotal }: PaymentProps) => {
   return (
     <ContainerWithDivider borderRight="1px" borderColor="border.layout" p="s16" pb="100px">
       <BoxContainer>
-        <FormSwitchTab label="Payment Mode" options={paymentModes} name="paymentMethod" />
+        <FormSwitchTab
+          label="Payment Mode"
+          options={!hasLoc ? paymentModes : paymentModesWithLoc}
+          name="paymentMethod"
+        />
 
         {selectedPaymentMode === LoanRepaymentMethod?.Account && (
           <Grid templateColumns="repeat(2,1fr)" gap="s20">

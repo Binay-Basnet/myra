@@ -1,60 +1,86 @@
 import { useMemo } from 'react';
 
-import { Column, DetailsCard, Table } from '@myra-ui';
+import { Column, DetailsCard, Table, Text } from '@myra-ui';
 
-import { BalanceType } from '@coop/cbs/data-access';
+import { BalanceType, CashTransferLedgerView } from '@coop/cbs/data-access';
+import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 type MyLedgerListProps = {
-  data:
-    | ({
-        account: string;
-        serviceCenter?: string | null | undefined;
-        debit?: string | null | undefined;
-        credit?: string | null | undefined;
-        ledgerId?: string | null | undefined;
-        balance?: string | null | undefined;
-        balanceType?: BalanceType | null | undefined;
-      } | null)[]
-    | null
-    | undefined;
+  data: [CashTransferLedgerView] | null | undefined;
+  totalCr: string | null | undefined;
+  totalDr: string | null | undefined;
 };
 
-export const MyLedger = ({ data }: MyLedgerListProps) => {
+export const MyLedger = ({ data, totalCr, totalDr }: MyLedgerListProps) => {
+  const getTypeProps = (typeVariant: BalanceType | null | undefined) => {
+    switch (typeVariant) {
+      case 'DR':
+        return { text: typeVariant };
+
+      case 'CR':
+        return { text: typeVariant };
+
+      default:
+        return { text: '-' };
+    }
+  };
+
   const rowData = useMemo(() => data ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Account',
-        accessorFn: (row) => amountConverter(row?.debit ?? 0),
-      },
-      {
         header: 'Ledger',
-        accessorFn: (row) => amountConverter(row?.credit ?? 0),
-        meta: {
-          isNumeric: true,
+        footer: 'Total',
+        accessorFn: (row) => row?.ledgerName,
+        cell: (props) => {
+          const accountId = props.getValue() as string;
+          return (
+            <RedirectButton
+              link={`${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${props?.row?.original?.ledgerId}`}
+              label={accountId}
+            />
+          );
         },
       },
       {
         header: 'Debit',
-        accessorFn: (row) => amountConverter(row?.debit ?? 0),
+        footer: amountConverter(Number(totalDr)),
+        accessorFn: (row) => amountConverter(row?.dr ?? 0),
         meta: {
           isNumeric: true,
         },
       },
       {
         header: 'Credit',
-        accessorFn: (row) => amountConverter(row?.credit ?? 0),
+        footer: amountConverter(Number(totalCr)) as string,
+        accessorFn: (row) => amountConverter(row?.cr ?? 0),
         meta: {
           isNumeric: true,
         },
+      },
+      {
+        header: 'Balance',
+        accessorFn: (row) => amountConverter(row?.balance ?? 0),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: ' ',
+        accessorFn: (row) => row?.balanceType,
+        cell: (props) => (
+          <Text fontSize="s3" fontWeight="Regular">
+            {getTypeProps(props?.row?.original?.balanceType)?.text}
+          </Text>
+        ),
       },
     ],
     []
   );
 
-  if (data?.length === 0) return null;
+  if (rowData?.length === 0) return null;
   return (
     <DetailsCard title="My Ledger" subTitle="Source Ledger & account." hasTable>
       <Table

@@ -3418,6 +3418,8 @@ const ne: Record<string, string> = {
   transDetailAmountDeposited: 'Deposit Amount',
   transCashTransitTransfer: 'Cash in Transit Transfer',
   transServiceCenterTransfer: 'Service Center Cash Transfer',
+  settingsTabMenuMonitor: 'Monitor',
+  settingsAccessLog: 'Access Log',
 };
 
 export default ne;

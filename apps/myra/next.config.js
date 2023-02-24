@@ -78,6 +78,7 @@ const nextConfig = {
       'cdn.raralabs.live',
       'minio.migration.myraerp.com',
       'minio.myraerp.com',
+      'minio.dev.myraerp.com',
     ],
     // unoptimized: true,
   },

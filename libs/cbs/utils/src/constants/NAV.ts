@@ -29,7 +29,8 @@ export type MenuType =
   | 'INVENTORY'
   | 'ITEMS'
   | 'WAREHOUSE'
-  | 'SUPPLIERS';
+  | 'SUPPLIERS'
+  | 'MONITOR';
 
 export type Page = {
   label: string;

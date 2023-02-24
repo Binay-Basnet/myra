@@ -149,6 +149,7 @@ export const REPORTS = {
     {
       id: '2.1',
       report: Report.INDIVIDUAL_MEMBER_PROFILE,
+      link: 'individual-member-report',
     },
     {
       id: '2.2',

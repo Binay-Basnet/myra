@@ -23,11 +23,6 @@ const orgTabList: TabList[] = [
     route: ROUTES.SETTINGS_GENERAL_COA,
   },
   {
-    label: 'settingsAuditLog',
-    aclKey: 'SETTINGS_AUDIT_LOG',
-    route: ROUTES.SETTINGS_GENERAL_AUDIT_LOG,
-  },
-  {
     label: 'EOD Setup',
     aclKey: 'SETTINGS_SERVICE_CENTER',
     route: ROUTES.SETTINGS_EOD_SETUP,
