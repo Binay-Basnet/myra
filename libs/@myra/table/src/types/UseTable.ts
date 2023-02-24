@@ -8,7 +8,7 @@ export type IUseTableProps<T extends Record<string, unknown>> = Omit<
   TableOptions<T>,
   'data' | 'columns' | 'getCoreRowModel'
 > & {
-  data: Maybe<Array<Maybe<T>>> | T;
-  columns: Maybe<Array<Maybe<Column<Maybe<T>>>>> | Column<T>[];
+  data: Maybe<T>[];
+  columns: Column<Maybe<T>>[];
   isStatic: boolean;
 };

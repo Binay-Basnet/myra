@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { BsFilter } from 'react-icons/bs';
+import { useRouter } from 'next/router';
 import { SearchIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -15,7 +16,6 @@ import {
   Checkbox,
   Flex,
   Icon,
-  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
@@ -23,45 +23,66 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react';
+import qs from 'qs';
 
 import { PopoverContent, PopoverTrigger } from '@myra-ui/components';
 
-export interface TableListFilterProps {
-  name?: string;
-  data?: string[];
-  ref: React.MutableRefObject<HTMLInputElement | null>;
+type ListData = { label: string; value: string }[];
+
+export interface TableListFilterContentProps {
+  data?: ListData;
   onClose?: () => void;
-  filterValue?: string[];
-  setFilter?: (updater: string[]) => void;
+  filterValue?: ListData;
+  setFilter?: (updater: ListData) => void;
 }
 
-const dummyData = [
-  'Nepal Investment Bank',
-  'Prabhu Bank',
-  'NIC Asia',
-  'NIBL Bank',
-  'Ganapati Bank',
-  'Nabil Bank',
-  'ABCD Bank',
-  'Test Bank',
-];
+interface TableListFilterProps {
+  data?: ListData;
+}
 
-const BLANK_OPTION = '( Blank )';
-
-export const TableListFilter = () => {
+export const TableListFilter = ({ data }: TableListFilterProps) => {
+  const router = useRouter();
+  // const [filter, setFilter] = useState<ListData>([]);
   const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
   return (
-    <Popover isLazy placement="auto-end" initialFocusRef={initialFocusRef} colorScheme="primary">
-      {({ onClose }) => (
+    <Popover
+      isLazy
+      placement="bottom-start"
+      initialFocusRef={initialFocusRef}
+      colorScheme="primary"
+    >
+      {({ onClose, isOpen }) => (
         <>
           <PopoverTrigger>
-            <IconButton aria-label="open">
-              <Icon as={BsFilter} size="md" />
-            </IconButton>
+            <Box as="button" display="flex" alignItems="center">
+              <Icon
+                as={BsFilter}
+                w="s20"
+                h="s20"
+                p="s4"
+                rounded="br1"
+                bg={isOpen ? 'background.500' : 'transparent'}
+                color={isOpen ? 'primary.500' : ''}
+              />
+            </Box>
           </PopoverTrigger>
           <PopoverContent _focus={{ boxShadow: 'E2' }}>
-            {initialFocusRef && <TableListFilterContent onClose={onClose} ref={initialFocusRef} />}
+            {initialFocusRef && (
+              <TableListFilterContent
+                data={data}
+                setFilter={(newValue) => {
+                  router.push({
+                    query: {
+                      filter: qs.stringify(newValue.map((v) => v.value)),
+                    },
+                  });
+                }}
+                filterValue={[]}
+                onClose={onClose}
+                ref={initialFocusRef}
+              />
+            )}
           </PopoverContent>
         </>
       )}
@@ -71,14 +92,14 @@ export const TableListFilter = () => {
 
 export const TableListFilterContent = React.forwardRef(
   (
-    { data = dummyData, onClose, setFilter, filterValue }: TableListFilterProps,
+    { data, onClose, setFilter, filterValue }: TableListFilterContentProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const id = useId();
-    const [selectedData, setSelectedData] = useState<string[]>(filterValue ?? [BLANK_OPTION]);
+    const [selectedData, setSelectedData] = useState<ListData>(filterValue ?? []);
     const [searchTerm, setSearchTerm] = useState('');
 
-    const listData = useMemo(() => [BLANK_OPTION, ...data], []);
+    const listData = useMemo(() => (data ? [...data] : []), []);
 
     const isSelectionFull = useMemo(
       () => selectedData?.length === listData?.length,
@@ -122,7 +143,7 @@ export const TableListFilterContent = React.forwardRef(
               color={isSelectionFull ? 'gray.300' : 'gray.800'}
               fontWeight="medium"
               cursor={isSelectionFull ? 'not-allowed' : 'pointer'}
-              onClick={() => !isSelectionFull && setSelectedData([...data, BLANK_OPTION])}
+              onClick={() => !isSelectionFull && setSelectedData(data ? [...data] : [])}
             >
               Select All
             </Text>
@@ -178,7 +199,7 @@ export const TableListFilterContent = React.forwardRef(
             fontWeight="medium"
             paddingX="s8"
             cursor={isSelectionFull ? 'not-allowed' : 'pointer'}
-            onClick={() => setSelectedData([BLANK_OPTION])}
+            onClick={() => setSelectedData([])}
           >
             Reset To Default
           </Text>
@@ -186,13 +207,7 @@ export const TableListFilterContent = React.forwardRef(
           <Button
             paddingX="12"
             onClick={() => {
-              if (setFilter) {
-                if (selectedData?.length === 1 && selectedData.includes(BLANK_OPTION)) {
-                  setFilter([]);
-                } else {
-                  setFilter(selectedData.filter((data) => data !== BLANK_OPTION));
-                }
-              }
+              setFilter && setFilter(selectedData);
               onClose && onClose();
             }}
           >
@@ -206,8 +221,8 @@ export const TableListFilterContent = React.forwardRef(
 
 interface ITableListCheckboxProps {
   isChecked: boolean;
-  listItem: string;
-  setSelectedData: Dispatch<SetStateAction<string[]>>;
+  listItem: { label: string; value: string };
+  setSelectedData: Dispatch<SetStateAction<{ label: string; value: string }[]>>;
 }
 
 const TableListCheckbox = React.memo(
@@ -225,11 +240,11 @@ const TableListCheckbox = React.memo(
         e.stopPropagation();
         !isChecked
           ? setSelectedData((prev) => [...prev, listItem])
-          : setSelectedData((prev) => prev.filter((e) => e !== listItem));
+          : setSelectedData((prev) => prev.filter((item) => item !== listItem));
       }}
     >
       <Text cursor="pointer" paddingY="12px" fontWeight="normal" noOfLines={1} maxWidth={48}>
-        {listItem}
+        {listItem.label}
       </Text>
       <Checkbox colorScheme="green" isChecked={isChecked} />
     </Box>
