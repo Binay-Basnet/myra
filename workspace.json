@@ -117,6 +117,8 @@
     "inventory-ui-layout": "libs/inventory/ui-layout",
     "migration": "apps/migration",
     "migration-data-access": "libs/migration/data-access",
+    "migration-ui-components": "libs/migration/ui-components",
+    "migration-ui-layout": "libs/migration/ui-layout",
     "myra": "apps/myra",
     "myra-components": "libs/myra/components",
     "myra-e2e": "apps/myra-e2e",

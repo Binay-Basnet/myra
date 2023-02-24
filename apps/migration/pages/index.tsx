@@ -1,3 +1,6 @@
+import { MigrationUiComponents } from '@migration/ui-components';
+import { MigrationUiLayout } from '@migration/ui-layout';
+
 import { Box } from '@myra-ui';
 
 export const Index = () => (
@@ -6,7 +9,10 @@ export const Index = () => (
    *
    * Note: The corresponding styles are in the ./index.css file.
    */
-  <Box>Welcome to migration chiggas</Box>
+  <Box>
+    <MigrationUiLayout />
+    <MigrationUiComponents />
+  </Box>
 );
 
 export default Index;

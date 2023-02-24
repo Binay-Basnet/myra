@@ -27747,7 +27747,6 @@ export type GetSettingsUserListDataQuery = {
             dob?: string | null;
             empCode?: string | null;
             profilePicUrl?: string | null;
-            lastActiveDate?: Record<'local' | 'en' | 'np', string> | null;
             role?: Array<{ id: string; name: string } | null> | null;
             branch?: { id: string; name?: string | null } | null;
           } | null;
@@ -45506,7 +45505,6 @@ export const GetSettingsUserListDataDocument = `
               name
             }
             profilePicUrl
-            lastActiveDate
           }
           cursor
         }
