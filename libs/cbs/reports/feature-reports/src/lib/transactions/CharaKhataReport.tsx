@@ -349,6 +349,7 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
           columns: [
             {
               header: 'Opening Balance',
+              id: 'opening Balance',
               accessorFn: (row) => row?.balance,
               cell: (props) =>
                 amountConverter(
@@ -361,7 +362,24 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
               },
             },
             {
+              header: '',
+              id: 'opening Balance Type',
+
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                props.row?.original?.balance?.[header || '']?.OpeningBalanceType || '-',
+
+              footer: () => total?.[header || '']?.OpeningBalanceType || '-',
+
+              meta: {
+                width: '15px',
+                isNumeric: true,
+              },
+            },
+            {
               header: 'Amount (Dr)',
+              id: 'Amount(Dr)',
+
               accessorFn: (row) => row?.balance,
               cell: (props) =>
                 amountConverter(props.row?.original?.balance?.[header || '']?.Dr || '0.00'),
@@ -373,6 +391,8 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
             },
             {
               header: 'Amount (Cr)',
+              id: 'Amount(Cr)',
+
               accessorFn: (row) => row?.balance,
               cell: (props) =>
                 amountConverter(props.row?.original?.balance?.[header || '']?.Cr || '0.00'),
@@ -383,6 +403,7 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
             },
             {
               header: 'Net Balance',
+              id: 'Net Balance',
               accessorFn: (row) => row?.balance,
               cell: (props) =>
                 header
@@ -393,9 +414,25 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
                 isNumeric: true,
               },
             },
+            {
+              header: '',
+              id: 'Net Balance Type',
+
+              accessorFn: (row) => row?.balance,
+              cell: (props) => props.row?.original?.balance?.[header || '']?.Type || '-',
+
+              footer: () => total?.[header || '']?.Type || '-',
+
+              meta: {
+                width: '15px',
+                isNumeric: true,
+              },
+            },
 
             {
               header: 'Closing Balance',
+              id: 'Closing Balance',
+
               accessorFn: (row) => row?.balance,
               cell: (props) =>
                 header
@@ -405,6 +442,21 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
                   : '0.00',
               footer: () => amountConverter(total?.[header || '']?.ClosingBalance || '0.00'),
               meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              header: '',
+              id: 'Closing Balance Type',
+
+              accessorFn: (row) => row?.balance,
+              cell: (props) =>
+                props.row?.original?.balance?.[header || '']?.ClosingBalanceType || '-',
+
+              footer: () => total?.[header || '']?.ClosingBalanceType || '-',
+
+              meta: {
+                width: '15px',
                 isNumeric: true,
               },
             },
