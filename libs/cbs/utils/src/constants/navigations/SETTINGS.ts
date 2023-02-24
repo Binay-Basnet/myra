@@ -19,11 +19,6 @@ export const SETTINGS: NavType = {
           route: ROUTES.SETTINGS_GENERAL_COA,
         },
         {
-          label: 'settingsAuditLog',
-          aclKey: 'SETTINGS_AUDIT_LOG',
-          route: ROUTES.SETTINGS_GENERAL_AUDIT_LOG,
-        },
-        {
           label: 'bank',
           aclKey: 'SETTINGS_BANK',
           route: ROUTES.SETTINGS_GENERAL_BANK,
@@ -84,6 +79,22 @@ export const SETTINGS: NavType = {
           label: 'settingsUserSidebarSuperAdmin',
           route: ROUTES.SETTINGS_USERS_LIST,
           aclKey: 'SETTINGS_USERS',
+        },
+      ],
+    },
+    MONITOR: {
+      aclKey: 'SETTINGS_AUDIT_LOG',
+      label: 'Monitor',
+      pages: [
+        {
+          label: 'settingsAuditLog',
+          aclKey: 'SETTINGS_AUDIT_LOG',
+          route: ROUTES.SETTINGS_GENERAL_AUDIT_LOG,
+        },
+        {
+          label: 'settingsAccessLog',
+          route: ROUTES.SETTINGS_ACCESS_LOG,
+          aclKey: 'SETTINGS_AUDIT_LOG',
         },
       ],
     },

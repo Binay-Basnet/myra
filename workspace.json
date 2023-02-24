@@ -63,6 +63,7 @@
     "cbs-requests-feature-lists": "libs/cbs/requests/feature-lists",
     "cbs-requests-ui-layouts": "libs/cbs/requests/ui-layouts",
     "cbs-settings--feature-loan": "libs/cbs/settings/feature-loan",
+    "cbs-settings-feature-access-log": "libs/cbs/settings/feature-access-log",
     "cbs-settings-feature-alternative-channels": "libs/cbs/settings/feature-alternative-channels",
     "cbs-settings-feature-audit-log": "libs/cbs/settings/feature-audit-log",
     "cbs-settings-feature-bank": "libs/cbs/settings/feature-bank",

@@ -1,0 +1,30 @@
+query getAccessLogList($pagination: Pagination, $filter: Filter) {
+  accessLog {
+    raw(pagination: $pagination, filter: $filter) {
+      data {
+        id
+        createdAt
+        requestBody
+        responseBody
+        elapsedTime
+        statusCode
+        ip
+        header
+        bytesReceived
+        bytesSent
+        userId
+        User {
+          id
+          name
+          email
+          profilePicUrl
+        }
+        AuditLog {
+          timestamp
+          narration
+          extraData
+        }
+      }
+    }
+  }
+}

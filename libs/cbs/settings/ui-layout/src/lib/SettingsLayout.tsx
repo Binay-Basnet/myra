@@ -1,4 +1,5 @@
 import React from 'react';
+import { FiActivity } from 'react-icons/fi';
 import { IoGridOutline, IoPerson } from 'react-icons/io5';
 
 import { MainLayoutContainer, Scrollable, TabMenu, TopLevelHeader } from '@myra-ui';
@@ -30,6 +31,14 @@ export const SettingsLayout = ({ children }: ISettingsLayoutProps) => (
           match: ['users'],
           aclKey: 'SETTINGS_USERS',
           navMenu: 'USERS',
+        },
+        {
+          title: 'settingsTabMenuMonitor',
+          icon: FiActivity,
+          link: ROUTES.SETTINGS_GENERAL_AUDIT_LOG,
+          match: ['monitor'],
+          aclKey: 'SETTINGS_AUDIT_LOG',
+          navMenu: 'MONITOR',
         },
       ]}
     />
