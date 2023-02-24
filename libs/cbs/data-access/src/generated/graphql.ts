@@ -10542,6 +10542,7 @@ export const LoanRepaymentMethod = {
   Account: 'ACCOUNT',
   BankVoucher: 'BANK_VOUCHER',
   Cash: 'CASH',
+  LocSaving: 'LOC_SAVING',
 } as const;
 
 export type LoanRepaymentMethod = typeof LoanRepaymentMethod[keyof typeof LoanRepaymentMethod];
