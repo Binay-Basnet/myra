@@ -100,7 +100,7 @@ export type AbbsTransactionReportResult = {
 };
 
 export type AccessLog = {
-  AuditLog?: Maybe<Array<Maybe<AuditLog>>>;
+  AuditLog?: Maybe<Array<Maybe<HumanizeAuditLog>>>;
   User?: Maybe<MyraUser>;
   bytesReceived?: Maybe<Scalars['Int']>;
   bytesSent?: Maybe<Scalars['Int']>;
@@ -2240,6 +2240,20 @@ export type CashReport = {
 
 export type CashReportCashLedgerReportArgs = {
   data?: InputMaybe<CashLedgerReportFilterData>;
+};
+
+export type CashTransferBranchView = {
+  branchId?: Maybe<Scalars['ID']>;
+  branchName?: Maybe<Scalars['String']>;
+  cr?: Maybe<Scalars['String']>;
+  dr?: Maybe<Scalars['String']>;
+};
+
+export type CashTransferLedgerView = {
+  cr?: Maybe<Scalars['String']>;
+  dr?: Maybe<Scalars['String']>;
+  ledgerId?: Maybe<Scalars['ID']>;
+  ledgerName?: Maybe<Scalars['String']>;
 };
 
 export const CashTransferMode = {
@@ -13727,6 +13741,31 @@ export type ServiceCenterCoaWiseBalanceFilter = {
   date: Scalars['Localized'];
 };
 
+export type ServiceCenterCashTransferDetail = {
+  data?: Maybe<ServiceCenterCashTransferView>;
+  error?: Maybe<QueryError>;
+};
+
+export type ServiceCenterCashTransferView = {
+  amount?: Maybe<Scalars['String']>;
+  destinationBranchInfo?: Maybe<Array<Maybe<CashTransferBranchView>>>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  id?: Maybe<Scalars['ID']>;
+  note?: Maybe<Scalars['String']>;
+  reveiverServiceCenter?: Maybe<Scalars['String']>;
+  senderServiceCenter?: Maybe<Scalars['String']>;
+  srcLedgerInfo?: Maybe<Array<Maybe<CashTransferLedgerView>>>;
+  status?: Maybe<IbtStatus>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+  totalSenderAmount?: Maybe<Scalars['String']>;
+  totalServiceCenterAmount?: Maybe<Scalars['String']>;
+  transactionID?: Maybe<Scalars['String']>;
+  transferDate?: Maybe<Scalars['Localized']>;
+  userName?: Maybe<Scalars['String']>;
+  userProfileUrl?: Maybe<Scalars['String']>;
+};
+
 export type ServiceCenterTransactionFilter = {
   transactionId?: InputMaybe<Scalars['String']>;
 };
@@ -15085,6 +15124,7 @@ export type TransactionQuery = {
   viewAgentList?: Maybe<AgentTransactionViewResult>;
   viewDeposit?: Maybe<DepositTransactionViewResult>;
   viewLoanRepayment?: Maybe<LoanRepaymentViewResult>;
+  viewServiceCenterCashTransfer?: Maybe<ServiceCenterCashTransferDetail>;
   viewTransactionDetail?: Maybe<AllTransactionViewResult>;
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
 };
@@ -15172,6 +15212,10 @@ export type TransactionQueryViewDepositArgs = {
 
 export type TransactionQueryViewLoanRepaymentArgs = {
   paymentId: Scalars['ID'];
+};
+
+export type TransactionQueryViewServiceCenterCashTransferArgs = {
+  entryID: Scalars['ID'];
 };
 
 export type TransactionQueryViewTransactionDetailArgs = {
@@ -27703,6 +27747,7 @@ export type GetSettingsUserListDataQuery = {
             dob?: string | null;
             empCode?: string | null;
             profilePicUrl?: string | null;
+            lastActiveDate?: Record<'local' | 'en' | 'np', string> | null;
             role?: Array<{ id: string; name: string } | null> | null;
             branch?: { id: string; name?: string | null } | null;
           } | null;
@@ -45461,6 +45506,7 @@ export const GetSettingsUserListDataDocument = `
               name
             }
             profilePicUrl
+            lastActiveDate
           }
           cursor
         }

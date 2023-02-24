@@ -72,7 +72,7 @@ export const useLoanAccountDetailHooks = () => {
           localizedDate(paymentsListInfo?.installments[length - 1]?.installmentDate)) ??
         'N/A',
     },
-    { label: 'Linked Account', value: generalInfo?.linkedAccountName ?? 'N/A' },
+    { label: 'Linked Account Id', value: generalInfo?.linkedAccountId ?? 'N/A' },
     { label: 'Installment Frequency', value: generalInfo?.installmentFrequency ?? 'N/A' },
     {
       label: 'Disbursed Amount',
