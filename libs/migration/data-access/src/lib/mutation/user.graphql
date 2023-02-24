@@ -1,0 +1,13 @@
+mutation setUser($id: ID, $data: NeosysUserInput) {
+  neosys {
+    user {
+      add(id: $id, data: $data) {
+        recordId
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

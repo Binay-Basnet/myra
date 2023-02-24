@@ -25,7 +25,7 @@
       "options": {
         "buildTarget": "migration:build",
         "dev": true,
-        "port": 4201
+        "port": 5000
       },
       "configurations": {
         "development": {
