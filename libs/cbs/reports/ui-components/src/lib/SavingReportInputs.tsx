@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 
 import { GridItem } from '@myra-ui';
 
-import { ObjState, SavingStatementReportSettings } from '@coop/cbs/data-access';
-import { FormDepositWithdrawAccountSelect, FormMemberSelect } from '@coop/shared/form';
+import { SavingStatementReportSettings } from '@coop/cbs/data-access';
+import { FormAccountSelect, FormMemberSelect } from '@coop/shared/form';
 
 import { ReportDateRange } from '../components';
 
@@ -24,12 +24,10 @@ export const SavingReportInputs = () => {
         <FormMemberSelect name="memberId" label="Member Search" />
       </GridItem>
       <GridItem colSpan={1}>
-        <FormDepositWithdrawAccountSelect
+        <FormAccountSelect
           name="accountId"
-          isLinkedAccounts
           memberId={memberId}
           label="Select Account"
-          filterBy={ObjState?.Active}
           isDisabled={!!redirectAccountId}
         />
       </GridItem>

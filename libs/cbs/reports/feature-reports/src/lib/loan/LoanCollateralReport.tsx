@@ -1,10 +1,11 @@
 import { useState } from 'react';
 
-import { GridItem } from '@myra-ui/components';
+import { Box } from '@myra-ui';
+import { Chips, GridItem } from '@myra-ui/components';
 import { ExpandedCell, ExpandedHeader } from '@myra-ui/table';
 
 import {
-  LoanCollateralFilter,
+  GuaranteeStatus,
   LocalizedDateFilter,
   useGetLoanCollateralReportQuery,
   useGetLoanProductTypeQuery,
@@ -16,7 +17,7 @@ import { RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
-type LoanCollateralData = Partial<{
+type LoanCollateralData = {
   loanAccountNo: string;
   loanAccountType: string;
   loanDisbursedAmount: string;
@@ -33,13 +34,19 @@ type LoanCollateralData = Partial<{
   valuationMethod: string;
   valuatorName: string;
   valuationAmount: string;
+  status: string;
 
   children: LoanCollateralData[];
-}>;
+};
 
-type ReportFilter = Omit<LoanCollateralFilter, 'branchId' | 'loanType'> & {
+type ReportFilter = {
   branchId: { label: string; value: string }[];
-  loanType: { label: string; value: string }[];
+  filter?: {
+    loanType: { label: string; value: string }[];
+    // collateralType: [String!];
+    status: GuaranteeStatus;
+  };
+  period: LocalizedDateFilter;
 };
 
 export const LoanCollateralReport = () => {
@@ -51,17 +58,19 @@ export const LoanCollateralReport = () => {
       : [];
 
   const loanTypeIds =
-    filters?.loanType && filters?.loanType.length !== 0
-      ? filters?.loanType?.map((t) => t.value)
+    filters?.filter?.loanType && filters?.filter?.loanType.length !== 0
+      ? filters?.filter?.loanType?.map((t) => t.value)
       : [];
 
   const { data, isFetching } = useGetLoanCollateralReportQuery(
     {
       data: {
-        ...filters,
+        filter: {
+          ...filters?.filter,
+          loanType: loanTypeIds,
+        },
         period: filters?.period as LocalizedDateFilter,
         branchId: branchIDs as string[],
-        loanType: loanTypeIds as string[],
       },
     },
     { enabled: !!filters }
@@ -216,6 +225,35 @@ export const LoanCollateralReport = () => {
                     accessorKey: 'valuatorName',
                   },
                   {
+                    header: 'Status',
+                    accessorKey: 'status',
+                    cell: (row) => {
+                      const dataVal = row?.getValue() as string;
+                      return (
+                        <Box>
+                          {dataVal === 'ACTIVE' && (
+                            <Chips
+                              label="Active"
+                              theme="success"
+                              size="md"
+                              type="label"
+                              variant="outline"
+                            />
+                          )}
+                          {dataVal === 'RELEASED' && (
+                            <Chips
+                              label="Released"
+                              theme="info"
+                              size="md"
+                              type="label"
+                              variant="outline"
+                            />
+                          )}
+                        </Box>
+                      );
+                    },
+                  },
+                  {
                     header: 'Collateral Description',
                     accessorKey: 'collateralDescription',
                   },
@@ -227,12 +265,27 @@ export const LoanCollateralReport = () => {
         <Report.Filters>
           <Report.Filter title="Loan Type">
             <FormSelect
-              name="loanType"
+              name="filter.loanType"
               isMulti
               options={loanTypes?.map((product) => ({
                 label: product?.productType as string,
                 value: product?.id as string,
               }))}
+            />{' '}
+          </Report.Filter>
+          <Report.Filter title="Collateral Status">
+            <FormSelect
+              name="filter.status"
+              options={[
+                {
+                  label: 'Active',
+                  value: GuaranteeStatus?.Active,
+                },
+                {
+                  label: ' Released',
+                  value: GuaranteeStatus?.Released,
+                },
+              ]}
             />
           </Report.Filter>
         </Report.Filters>

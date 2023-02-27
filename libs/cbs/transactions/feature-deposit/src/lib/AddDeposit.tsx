@@ -376,7 +376,6 @@ export const AddDeposit = () => {
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
-                      isLinkedAccounts
                       includeLoc
                       isDisabled={!!redirectAccountId}
                     />
