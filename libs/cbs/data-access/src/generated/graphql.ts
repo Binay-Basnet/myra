@@ -2250,6 +2250,8 @@ export type CashTransferBranchView = {
 };
 
 export type CashTransferLedgerView = {
+  balance?: Maybe<Scalars['String']>;
+  balanceType?: Maybe<BalanceType>;
   cr?: Maybe<Scalars['String']>;
   dr?: Maybe<Scalars['String']>;
   ledgerId?: Maybe<Scalars['ID']>;
@@ -2291,7 +2293,7 @@ export const CashValue = {
 export type CashValue = typeof CashValue[keyof typeof CashValue];
 export type CharKhataReportFilter = {
   branchId: Array<InputMaybe<Scalars['String']>>;
-  coaHead?: InputMaybe<Array<InputMaybe<CoaHead>>>;
+  coaHead: Array<Scalars['String']>;
   filter?: InputMaybe<TrialSheetFilter>;
   period: LocalizedDateFilter;
 };
@@ -4685,6 +4687,7 @@ export type EodErrors = {
   dormancy?: Maybe<Array<Maybe<Scalars['String']>>>;
   interestBooking?: Maybe<Array<Maybe<Scalars['String']>>>;
   interestPosting?: Maybe<Array<Maybe<Scalars['String']>>>;
+  loanAccountMaturity?: Maybe<Array<Maybe<Scalars['String']>>>;
   loanInterestBooking?: Maybe<Array<Maybe<Scalars['String']>>>;
   loanRepayment?: Maybe<Array<Maybe<Scalars['String']>>>;
   maturity?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -4719,10 +4722,20 @@ export type EodResult = {
 };
 
 export type EodSatusResult = {
+  eodDate?: Maybe<Scalars['Localized']>;
   errors?: Maybe<EodErrors>;
+  overAllStatus?: Maybe<EodState>;
+  stage?: Maybe<EodStage>;
   states?: Maybe<EodStates>;
 };
 
+export const EodStage = {
+  Main: 'MAIN',
+  Post: 'POST',
+  Pre: 'PRE',
+} as const;
+
+export type EodStage = typeof EodStage[keyof typeof EodStage];
 export const EodState = {
   Completed: 'COMPLETED',
   CompletedWithErrors: 'COMPLETED_WITH_ERRORS',
@@ -4738,6 +4751,7 @@ export type EodStates = {
   headOfficeReady?: Maybe<Scalars['Boolean']>;
   interestBooking?: Maybe<EodState>;
   interestPosting?: Maybe<EodState>;
+  loanAccountMaturity?: Maybe<EodState>;
   loanInterestBooking?: Maybe<EodState>;
   loanRepayment?: Maybe<EodState>;
   maturity?: Maybe<EodState>;
@@ -10070,7 +10084,7 @@ export type LoanPreviewInstallment = {
 
 export type LoanPreviewLoanDetails = {
   appliedLoanAmount?: Maybe<Scalars['String']>;
-  disburseDate?: Maybe<Scalars['String']>;
+  disburseDate?: Maybe<Scalars['Localized']>;
   expiryDate?: Maybe<Scalars['String']>;
   /**  Extra fields for repayment page */
   interestAmount?: Maybe<Scalars['String']>;
@@ -10091,7 +10105,7 @@ export type LoanPreviewLoanDetails = {
 };
 
 export type LoanPreviewRepaymentDetails = {
-  lastPaymentDate?: Maybe<Scalars['String']>;
+  lastPaymentDate?: Maybe<Scalars['Localized']>;
   nextInstallmentNo?: Maybe<Scalars['Int']>;
   remainingInstallments?: Maybe<Array<Maybe<LoanPreviewInstallment>>>;
   remainingInterest?: Maybe<Scalars['String']>;
@@ -11528,7 +11542,6 @@ export type MemberRecentTransactions = {
 };
 
 export type MemberRegFilters = {
-  branchId?: InputMaybe<Array<Scalars['String']>>;
   gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   institutionType?: InputMaybe<Scalars['ID']>;
   memberType?: InputMaybe<Array<InputMaybe<MemberType>>>;
@@ -11541,6 +11554,7 @@ export type MemberRegistrationReport = {
 };
 
 export type MemberRegistrationReportData = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<MemberRegFilters>;
   period: LocalizedDateFilter;
 };
@@ -22091,13 +22105,13 @@ export type GetLoanPreviewQuery = {
           principalGracePeriod?: number | null;
           interestGracePeriod?: number | null;
           interestAmount?: string | null;
-          disburseDate?: string | null;
+          disburseDate?: Record<'local' | 'en' | 'np', string> | null;
           expiryDate?: string | null;
           paymentFrequency?: LoanProductInstallment | null;
           processingCharges?: Array<{ name: string; amount?: any | null } | null> | null;
         } | null;
         repaymentDetails?: {
-          lastPaymentDate?: string | null;
+          lastPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
           remainingPrincipal?: string | null;
           remainingInterest?: string | null;
           remainingTotal?: string | null;
