@@ -272,6 +272,13 @@ export const CbsCloseDay = () => {
       return false;
     }
 
+    if (eodStatus?.stage === 'POST') {
+      if (eodStatus?.overAllStatus === 'ONGOING') {
+        return true;
+      }
+      return false;
+    }
+
     if (
       eodStatusQueryData?.transaction?.eodStatus?.states?.transactionDate === EodState.Completed
     ) {
