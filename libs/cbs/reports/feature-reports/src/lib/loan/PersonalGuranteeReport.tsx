@@ -32,7 +32,7 @@ type LoanGuranteeData = Partial<{
   guaranteeAmount: string;
   date: Record<'local' | 'en' | 'np', string> | null | undefined;
   totalGuaranteeAmount: string;
-  status: string;
+  guaranteeStatus: string;
 }>;
 
 type ReportFilter = Omit<LoanAccountGuaranteeReportInput, 'branchId'> & {
@@ -205,7 +205,7 @@ export const LoanPersonalGuranteeReport = () => {
                   },
                   {
                     header: 'Status',
-                    accessorKey: 'status',
+                    accessorKey: 'guaranteeStatus',
                     cell: (row) => {
                       const dataVal = row?.getValue() as string;
                       return (
@@ -238,7 +238,7 @@ export const LoanPersonalGuranteeReport = () => {
           />
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="Collateral Status">
+          <Report.Filter title="Guarantee Status">
             <FormSelect
               name="filter.status"
               options={[

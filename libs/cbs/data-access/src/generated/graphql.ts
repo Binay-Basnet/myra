@@ -24757,6 +24757,7 @@ export type GetLoanPersonalGuranteeReportQuery = {
             memCode?: string | null;
             memId?: string | null;
             memName?: string | null;
+            guaranteeStatus?: GuaranteeStatus | null;
           } | null> | null;
         } | null> | null;
       } | null;
@@ -41664,6 +41665,7 @@ export const GetLoanPersonalGuranteeReportDocument = `
             memCode
             memId
             memName
+            guaranteeStatus
           }
           loanAccountNo
           memberCode

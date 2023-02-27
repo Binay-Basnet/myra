@@ -230,6 +230,7 @@ query getLoanPersonalGuranteeReport($data: LoanAccountGuaranteeReportInput) {
             memCode
             memId
             memName
+            guaranteeStatus
           }
           loanAccountNo
           memberCode
