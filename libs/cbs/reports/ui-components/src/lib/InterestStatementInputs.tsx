@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { GridItem } from '@myra-ui';
 
 import { InterestStatementFilter } from '@coop/cbs/data-access';
-import { FormDepositWithdrawAccountSelect, FormMemberSelect } from '@coop/shared/form';
+import { FormAccountSelect, FormMemberSelect } from '@coop/shared/form';
 
 import { ReportDateRange } from '../components';
 
@@ -43,9 +43,8 @@ export const InterestStatementInputs = () => {
         <FormMemberSelect name="memberId" label="Member Search" />
       </GridItem>
       <GridItem colSpan={1}>
-        <FormDepositWithdrawAccountSelect
+        <FormAccountSelect
           name="accountId"
-          isLinkedAccounts
           memberId={memberId}
           label="Select Account"
           isDisabled={!!redirectAccountId}

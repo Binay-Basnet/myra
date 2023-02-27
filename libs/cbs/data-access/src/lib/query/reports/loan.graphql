@@ -202,6 +202,7 @@ query getLoanCollateralReport($data: LoanCollateralFilter!) {
             valuationMethod
             valuationAmount
             valuatorName
+            status
           }
           loanAccountNo
           loanAccountType
@@ -229,6 +230,7 @@ query getLoanPersonalGuranteeReport($data: LoanAccountGuaranteeReportInput) {
             memCode
             memId
             memName
+            guaranteeStatus
           }
           loanAccountNo
           memberCode

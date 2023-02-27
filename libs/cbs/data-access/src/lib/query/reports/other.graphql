@@ -2,6 +2,7 @@ query getLedgerReport($data: GeneralLedgerFilter!) {
   report {
     otherReport {
       generalLedgerReport(data: $data) {
+        ledgerName
         data {
           id
           date

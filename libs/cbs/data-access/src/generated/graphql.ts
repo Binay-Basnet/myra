@@ -101,7 +101,12 @@ export type AbbsTransactionReportResult = {
 
 export type AccessLog = {
   AuditLog?: Maybe<Array<Maybe<HumanizeAuditLog>>>;
+  Namespace?: Maybe<Scalars['String']>;
+  Operation?: Maybe<Scalars['String']>;
+  OperationName?: Maybe<Scalars['String']>;
+  Slug?: Maybe<Scalars['String']>;
   User?: Maybe<MyraUser>;
+  Variables?: Maybe<Scalars['String']>;
   bytesReceived?: Maybe<Scalars['Int']>;
   bytesSent?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['String']>;
@@ -5914,6 +5919,7 @@ export type GlStatementFilter = {
 export type GenderLedgerReportResult = {
   data?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
   error?: Maybe<QueryError>;
+  ledgerName?: Maybe<Scalars['String']>;
   summary?: Maybe<GlReportSummary>;
 };
 
@@ -9850,9 +9856,13 @@ export type LoanCollateralAndGuarantees = {
 
 export type LoanCollateralFilter = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
+  filter?: InputMaybe<LoanCollateralFilterDetail>;
+  period: LocalizedDateFilter;
+};
+
+export type LoanCollateralFilterDetail = {
   collateralType?: InputMaybe<Array<Scalars['String']>>;
   loanType?: InputMaybe<Array<Scalars['String']>>;
-  period: LocalizedDateFilter;
   status?: InputMaybe<GuaranteeStatus>;
 };
 
@@ -10173,7 +10183,6 @@ export type LoanProduct = Base & {
   penaltyDayAfterInstallmentDate?: Maybe<Scalars['Int']>;
   penaltyRate?: Maybe<Scalars['Float']>;
   penaltyType?: Maybe<PenaltyType>;
-  postingFrequency?: Maybe<LoanProductInstallment>;
   prematurePenaltySetup?: Maybe<PrematurePenaltyFormState>;
   principalMaxGraceNumber?: Maybe<Scalars['Int']>;
   productCode?: Maybe<ProductCodeType>;
@@ -10312,7 +10321,6 @@ export type LoanProductInput = {
   penaltyDayAfterInstallmentDate?: InputMaybe<Scalars['Int']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
   penaltyType?: InputMaybe<PenaltyType>;
-  postingFrequency?: InputMaybe<LoanProductInstallment>;
   prematurePenaltySetup?: InputMaybe<PrematurePenalty>;
   principalMaxGraceNumber?: InputMaybe<Scalars['Int']>;
   productCode?: InputMaybe<ProductCode>;
@@ -21681,7 +21689,6 @@ export type LoanProductFragment = {
   isRebateApplicable?: boolean | null;
   updateInterest?: boolean | null;
   waiveInterest?: boolean | null;
-  postingFrequency?: LoanProductInstallment | null;
   isInsuranceApplicable?: boolean | null;
   isStaffProduct?: boolean | null;
   supportMultipleAccounts?: boolean | null;
@@ -24720,6 +24727,7 @@ export type GetLoanCollateralReportQuery = {
             valuationMethod?: string | null;
             valuationAmount?: string | null;
             valuatorName?: string | null;
+            status?: GuaranteeStatus | null;
           } | null> | null;
         } | null> | null;
       } | null;
@@ -24749,6 +24757,7 @@ export type GetLoanPersonalGuranteeReportQuery = {
             memCode?: string | null;
             memId?: string | null;
             memName?: string | null;
+            guaranteeStatus?: GuaranteeStatus | null;
           } | null> | null;
         } | null> | null;
       } | null;
@@ -25187,6 +25196,7 @@ export type GetLedgerReportQuery = {
   report: {
     otherReport: {
       generalLedgerReport: {
+        ledgerName?: string | null;
         data?: Array<{
           id?: string | null;
           date?: Record<'local' | 'en' | 'np', string> | null;
@@ -29368,7 +29378,6 @@ export const LoanProductFragmentDoc = `
   }
   updateInterest
   waiveInterest
-  postingFrequency
   loanProcessingCharge {
     serviceName
     ledgerName
@@ -41613,6 +41622,7 @@ export const GetLoanCollateralReportDocument = `
             valuationMethod
             valuationAmount
             valuatorName
+            status
           }
           loanAccountNo
           loanAccountType
@@ -41655,6 +41665,7 @@ export const GetLoanPersonalGuranteeReportDocument = `
             memCode
             memId
             memName
+            guaranteeStatus
           }
           loanAccountNo
           memberCode
@@ -42244,6 +42255,7 @@ export const GetLedgerReportDocument = `
   report {
     otherReport {
       generalLedgerReport(data: $data) {
+        ledgerName
         data {
           id
           date
