@@ -26689,7 +26689,6 @@ export type GetLoanProductEditDataQuery = {
             interestMaxGraceNumber?: number | null;
             updateInterest?: boolean | null;
             waiveInterest?: boolean | null;
-            postingFrequency?: LoanProductInstallment | null;
             isInsuranceApplicable?: boolean | null;
             isStaffProduct?: boolean | null;
             supportMultipleAccounts?: boolean | null;
@@ -26802,7 +26801,6 @@ export type GetLoanProductDetailQuery = {
             interestMaxGraceNumber?: number | null;
             updateInterest?: boolean | null;
             waiveInterest?: boolean | null;
-            postingFrequency?: LoanProductInstallment | null;
             isInsuranceApplicable?: boolean | null;
             isStaffProduct?: boolean | null;
             supportMultipleAccounts?: boolean | null;
@@ -44246,7 +44244,6 @@ export const GetLoanProductEditDataDocument = `
             }
             updateInterest
             waiveInterest
-            postingFrequency
             loanProcessingCharge {
               serviceName
               ledgerName
@@ -44381,7 +44378,6 @@ export const GetLoanProductDetailDocument = `
             }
             updateInterest
             waiveInterest
-            postingFrequency
             loanProcessingCharge {
               serviceName
               ledgerName

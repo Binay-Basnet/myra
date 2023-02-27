@@ -11,7 +11,6 @@ import {
   FrequencyTenure,
   Id_Type,
   LoanProductInput,
-  LoanProductInstallment,
   LoanRepaymentScheme,
   PenaltyType,
   TypeOfLoan,
@@ -132,7 +131,6 @@ export const SettingsLoanProductForm = () => {
       tenureUnit: FrequencyTenure.Day,
       penaltyType: PenaltyType.RemainingPrincipal,
       isPrematurePenaltyApplicable: false,
-      postingFrequency: LoanProductInstallment.Daily,
       loanType: TypeOfLoan.Normal,
     },
   });
@@ -312,7 +310,6 @@ export const SettingsLoanProductForm = () => {
       minAge: values?.minAge && criteria?.includes(CriteriaSection.Age) ? values?.minAge : null,
       maxAge: values?.maxAge && criteria?.includes(CriteriaSection.Age) ? values?.maxAge : null,
       interestMethod: values?.interestMethod ?? null,
-      postingFrequency: values?.postingFrequency ?? null,
       tenureUnit: values?.tenureUnit ? values?.tenureUnit : null,
       maxTenureUnitNumber: values?.maxTenureUnitNumber ? values?.maxTenureUnitNumber : null,
       minTenureUnitNumber: values?.minTenureUnitNumber ? values?.minTenureUnitNumber : null,

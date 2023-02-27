@@ -2,11 +2,18 @@ import { useMemo } from 'react';
 
 import { Column, DetailsCard, Table } from '@myra-ui';
 
-import { CashTransferBranchView } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 type ServiceCenterListProps = {
-  data: [CashTransferBranchView] | null | undefined;
+  data:
+    | ({
+        branchId?: string | null | undefined;
+        branchName?: string | null | undefined;
+        cr?: string | null | undefined;
+        dr?: string | null | undefined;
+      } | null)[]
+    | null
+    | undefined;
   totalCr: string | null | undefined;
   totalDr: string | null | undefined;
 };
