@@ -2,12 +2,23 @@ import { useMemo } from 'react';
 
 import { Column, DetailsCard, Table, Text } from '@myra-ui';
 
-import { BalanceType, CashTransferLedgerView } from '@coop/cbs/data-access';
+import { BalanceType } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 type MyLedgerListProps = {
-  data: [CashTransferLedgerView] | null | undefined;
+  // data: [CashTransferLedgerView] | null | undefined;
+  data:
+    | ({
+        balance?: string | null | undefined;
+        balanceType?: BalanceType | null | undefined;
+        cr?: string | null | undefined;
+        dr?: string | null | undefined;
+        ledgerId?: string | null | undefined;
+        ledgerName?: string | null | undefined;
+      } | null)[]
+    | null
+    | undefined;
   totalCr: string | null | undefined;
   totalDr: string | null | undefined;
 };
