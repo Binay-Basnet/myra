@@ -1,86 +1,45 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { login, ObjState, privateAgent, useAppDispatch } from '@migration/data-access';
-import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { login, useAppDispatch, useSetAuthMutation } from '@migration/data-access';
 
-import { Box, Button, toast } from '@myra-ui';
+import { asyncToast, Box, Button } from '@myra-ui';
 
 import { FormInput, FormPasswordInput } from '@coop/shared/form';
-
-type LoginResponse = {
-  recordId?: string | null;
-  record?: {
-    token: { access: string; refresh: string };
-    user: {
-      id: string;
-      objState: ObjState;
-      username: string;
-      firstName: Record<'local' | 'en' | 'np', string>;
-      middleName: Record<'local' | 'en' | 'np', string>;
-      lastName: Record<'local' | 'en' | 'np', string>;
-    };
-  };
-};
-
-type LoginBody = {
-  password: string;
-  username: string;
-};
-
-const loginUser = async (body: LoginBody) => {
-  const response = await privateAgent.post<LoginResponse>(
-    `${process.env['NX_SCHEMA_PATH']}/neosys/login`,
-    body
-  );
-
-  return response?.data;
-};
 
 export const Login = () => {
   const dispatch = useAppDispatch();
 
   const router = useRouter();
 
-  const methods = useForm<LoginBody>();
-  const { handleSubmit } = methods;
+  const methods = useForm();
+  const { getValues } = methods;
+  const { mutateAsync, isLoading } = useSetAuthMutation();
 
-  const { mutateAsync, isLoading } = useMutation(loginUser, {
-    onMutate: () => {
-      toast({
-        id: 'login',
-        type: 'success',
-        state: 'loading',
-        message: 'Logging In!!',
-      });
-    },
-    onError: (error: AxiosError<{ message: string }>) => {
-      toast({
-        id: 'login',
-        type: 'error',
-        message: error?.response?.data?.message || 'Server Error',
-      });
-    },
-    onSuccess: (res) => {
-      if (!res?.recordId) {
-        return;
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await asyncToast({
+      id: 'migration-login',
+      promise: mutateAsync({ userName: getValues()?.userName, password: getValues()?.password }),
+      msgs: {
+        loading: 'user loggin in',
+        success: 'user logged in',
+      },
+      onSuccess: (res) => {
+        if (!res?.userLogin?.accessToken) {
+          return;
+        }
 
-      const accessToken = res?.record?.token?.access;
-      const refreshToken = res?.record?.token?.refresh;
-      const user = res?.record?.user;
+        const accessToken = res?.userLogin?.accessToken;
+        const refreshToken = res?.userLogin?.refreshToken;
+        const user = { name: res?.userLogin?.name, email: res?.userLogin?.email };
 
-      dispatch(login({ user, token: accessToken }));
-      localStorage.setItem('refreshToken', refreshToken);
-      router.replace('/');
-      toast({
-        id: 'login',
-        type: 'success',
-        message: 'Logged In Successfully',
-      });
-    },
-  });
+        dispatch(login({ user, token: accessToken }));
+        localStorage.setItem('refreshToken', refreshToken);
+        router.replace('/');
+      },
+    });
+  };
 
   return (
     <Box
@@ -95,14 +54,10 @@ export const Login = () => {
       </Head>
 
       <FormProvider {...methods}>
-        <form
-          onSubmit={handleSubmit(async (data) => {
-            await mutateAsync(data);
-          })}
-        >
+        <form onSubmit={handleSubmit}>
           <Box display="flex" flexDir="column" gap="s20">
             <Box display="flex" flexDir="column" gap="s10">
-              <FormInput name="username" label="Username" placeholder="Enter Username" />
+              <FormInput name="userName" label="username" placeholder="Enter Username" />
               <FormPasswordInput placeholder="Enter password" name="password" />
             </Box>
 

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  authenticate,
   logout,
   useAppDispatch,
-  useGetMeQuery,
+  // useGetMeQuery,
   useRefreshToken,
 } from '@migration/data-access';
 
@@ -14,29 +13,29 @@ const url = getSchemaPath();
 export const useInit = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const [triggerQuery, setTriggerQuery] = React.useState(false);
+  // const [triggerQuery, setTriggerQuery] = React.useState(false);
   const dispatch = useAppDispatch();
   const replace = useReplace();
 
-  const getMe = useGetMeQuery(
-    {},
-    {
-      enabled: triggerQuery,
-    }
-  );
+  // const getMe = useGetMeQuery(
+  //   {},
+  //   {
+  //     enabled: triggerQuery,
+  //   }
+  // );
 
   const refreshToken = useRefreshToken(url);
 
-  const hasDataReturned = getMe?.data?.neosys?.auth;
-  const hasData = getMe?.data?.neosys?.auth?.me?.data;
-  const userData = getMe?.data?.neosys?.auth?.me?.data;
+  // const hasDataReturned = getMe?.data?.neosys?.auth;
+  // const hasData = getMe?.data?.neosys?.auth?.me?.data;
+  // const userData = getMe?.data?.neosys?.auth?.me?.data;
 
   useEffect(() => {
     refreshToken()
       .then((res) => {
         if (res) {
           setIsLoading(false);
-          setTriggerQuery(true);
+          // setTriggerQuery(true);
         }
       })
       .catch(() => {
@@ -45,17 +44,17 @@ export const useInit = () => {
       });
   }, [dispatch, refreshToken, replace]);
 
-  useEffect(() => {
-    if (hasDataReturned) {
-      if (userData) {
-        dispatch(authenticate({ user: userData }));
-        setIsLoading(false);
-      } else {
-        dispatch(logout());
-        replace('/login').then(() => setIsLoading(false));
-      }
-    }
-  }, [dispatch, hasDataReturned, hasData, userData, replace]);
+  // useEffect(() => {
+  //   if (hasDataReturned) {
+  //     if (userData) {
+  //       dispatch(authenticate({ user: userData }));
+  //       setIsLoading(false);
+  //     } else {
+  //       dispatch(logout());
+  //       replace('/login').then(() => setIsLoading(false));
+  //     }
+  //   }
+  // }, [dispatch, hasDataReturned, hasData, userData, replace]);
 
   return { isLoading };
 };

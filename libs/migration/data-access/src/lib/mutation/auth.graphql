@@ -1,6 +1,17 @@
-mutation setAuth($userName: UserName!, $password: password!) {
+mutation setAuth($userName: String!, $password: String!) {
   userLogin(input: { userName: $userName, password: $password }) {
     accessToken
     refreshToken
+    name
+    email
+  }
+}
+
+mutation refresh($refreshToken: String!) {
+  resetToken(refreshToken: $refreshToken) {
+    accessToken
+    refreshToken
+    name
+    email
   }
 }

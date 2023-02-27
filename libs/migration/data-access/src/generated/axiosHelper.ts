@@ -12,7 +12,7 @@ privateAgent.interceptors.request.use(
   (config) => {
     config.headers = {
       ...config.headers,
-      slug: 'nefscun-migration',
+      // slug: '',
     };
     return config;
   },
