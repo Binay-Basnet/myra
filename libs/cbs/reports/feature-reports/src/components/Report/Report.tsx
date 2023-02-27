@@ -341,6 +341,8 @@ interface IReportTableProps<T extends Record<string, unknown>> {
   getSubRows?: (row: T) => T[];
 }
 
+type Maybe<T> = T | null;
+
 export const ReportTable = <T extends Record<string, unknown>>({
   data: tableData,
   columns,
@@ -368,7 +370,7 @@ export const ReportTable = <T extends Record<string, unknown>>({
                 ? data?.map((d, index) => ({ ...d, index: index + 1 }))
                 : data) as unknown as T[])
         }
-        columns={columns}
+        columns={columns as Column<Maybe<T>>[]}
         tableTitle={tableTitle}
       />
     </Box>

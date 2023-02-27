@@ -37,10 +37,13 @@ const getCooperativeData = (data: GetCoOperativeKymEditDataQuery | undefined) =>
     ...editValueData,
     registeredAddress: {
       ...editValueData?.registeredAddress,
+      localGovernmentId: editValueData?.registeredAddress?.localGovernmentId || null,
       locality: registeredAddressLocality,
     },
     operatingAddress: {
       ...editValueData?.operatingAddress,
+      localGovernmentId: editValueData?.operatingAddress?.localGovernmentId || null,
+
       locality: operatingAddressLocality,
     },
     permanentRepresentativeAddress: {
@@ -67,7 +70,6 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
     data: editValues,
     isLoading: editLoading,
     isFetching,
-
     refetch,
   } = useGetCoOperativeKymEditDataQuery(
     {
@@ -108,7 +110,7 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, id, mutateAsync]);
+  }, [watch, id, mutateAsync, router.query]);
 
   useEffect(() => {
     if (editValues) {
