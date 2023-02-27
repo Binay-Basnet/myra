@@ -78,94 +78,152 @@ export const CbsCloseDay = () => {
       ];
     }
 
-    const statusArr = [];
-
     if (eodStatusQueryData?.transaction?.eodStatus?.stage === 'PRE') {
-      statusArr.push(
-        ...[
-          {
-            title: 'Branch Readiness',
-            subTitle: 'Check if all the branches have completed branch readiness or not.',
-            status: eodStatus?.currentBranchesReady
-              ? EodState.Completed
-              : EodState.CompletedWithErrors,
-            errors: eodError?.readiness as string[],
-          },
-          {
-            title: 'Cash with Teller',
-            subTitle:
-              'Check if the cash with teller at the start of day balances with the cash with teller at the end after all transactions have been completed.',
-            status: eodError ? eodStatus?.cashInHand : EodState.Completed,
-            errors: eodError?.cashInHand as string[],
-          },
-          {
-            title: 'dayCloseCashVault',
-            subTitle: 'dayCloseCheckCashVault',
-            status: eodError ? eodStatus?.cashInVault : EodState.Completed,
-            errors: eodError?.cashInVault as string[],
-          },
-        ]
-      );
+      return [
+        {
+          title: 'Branch Readiness',
+          subTitle: 'Check if all the branches have completed branch readiness or not.',
+          status: eodStatus?.currentBranchesReady
+            ? EodState.Completed
+            : EodState.CompletedWithErrors,
+          errors: eodError?.readiness as string[],
+        },
+        {
+          title: 'Cash with Teller',
+          subTitle:
+            'Check if the cash with teller at the start of day balances with the cash with teller at the end after all transactions have been completed.',
+          status: eodError ? eodStatus?.cashInHand : EodState.Completed,
+          errors: eodError?.cashInHand as string[],
+        },
+        {
+          title: 'dayCloseCashVault',
+          subTitle: 'dayCloseCheckCashVault',
+          status: eodError ? eodStatus?.cashInVault : EodState.Completed,
+          errors: eodError?.cashInVault as string[],
+        },
+      ];
     }
 
     if (eodStatusQueryData?.transaction?.eodStatus?.stage === 'MAIN') {
-      statusArr.push(
-        ...[
-          {
-            title: 'dayCloseDailyInterestBooking',
-            subTitle: 'dayCloseInterestBooking',
-            status: eodError ? eodStatus?.interestBooking : EodState.Completed,
-            errors: eodError?.interestBooking as string[],
-          },
-          {
-            title: 'dayCloseCheckFrequency',
-            subTitle: 'dayCloseImplementthedayend',
-            status: eodError ? eodStatus?.interestPosting : EodState.Completed,
-            errors: eodError?.interestPosting as string[],
-          },
-          {
-            title: 'Loan Interest Booking',
-            subTitle:
-              'Interest booking should be done for all the loan accounts before closing the day.',
-            status: eodError ? eodStatus?.loanInterestBooking : EodState.Completed,
-            errors: eodError?.loanInterestBooking as string[],
-          },
-          {
-            title: 'dayCloseTransactionDateProgress',
-            subTitle: 'dayCloseChecktransactiondate',
-            status: eodStatus?.transactionDate ?? EodState.Completed,
-          },
-        ]
-      );
+      return [
+        {
+          title: 'Branch Readiness',
+          subTitle: 'Check if all the branches have completed branch readiness or not.',
+          status: eodStatus?.currentBranchesReady
+            ? EodState.Completed
+            : EodState.CompletedWithErrors,
+          errors: eodError?.readiness as string[],
+        },
+        {
+          title: 'Cash with Teller',
+          subTitle:
+            'Check if the cash with teller at the start of day balances with the cash with teller at the end after all transactions have been completed.',
+          status: eodError ? eodStatus?.cashInHand : EodState.Completed,
+          errors: eodError?.cashInHand as string[],
+        },
+        {
+          title: 'dayCloseCashVault',
+          subTitle: 'dayCloseCheckCashVault',
+          status: eodError ? eodStatus?.cashInVault : EodState.Completed,
+          errors: eodError?.cashInVault as string[],
+        },
+        {
+          title: 'dayCloseDailyInterestBooking',
+          subTitle: 'dayCloseInterestBooking',
+          status: eodError ? eodStatus?.interestBooking : EodState.Completed,
+          errors: eodError?.interestBooking as string[],
+        },
+        {
+          title: 'dayCloseCheckFrequency',
+          subTitle: 'dayCloseImplementthedayend',
+          status: eodError ? eodStatus?.interestPosting : EodState.Completed,
+          errors: eodError?.interestPosting as string[],
+        },
+        {
+          title: 'Loan Interest Booking',
+          subTitle:
+            'Interest booking should be done for all the loan accounts before closing the day.',
+          status: eodError ? eodStatus?.loanInterestBooking : EodState.Completed,
+          errors: eodError?.loanInterestBooking as string[],
+        },
+        {
+          title: 'dayCloseTransactionDateProgress',
+          subTitle: 'dayCloseChecktransactiondate',
+          status: eodStatus?.transactionDate ?? EodState.Completed,
+        },
+      ];
     }
 
     if (eodStatusQueryData?.transaction?.eodStatus?.stage === 'POST') {
-      statusArr.push(
-        ...[
-          {
-            title: 'dayCloseCheckMaturity',
-            subTitle: 'dayCloseCheckAccount',
-            status: eodError ? eodStatus?.maturity : EodState.Completed,
-            errors: eodError?.maturity as string[],
-          },
-          {
-            title: 'Check Dormant',
-            subTitle: 'Check if the account is dormant or not.',
-            status: eodError ? eodStatus?.dormancy : EodState.Completed,
-            errors: eodError?.dormancy as string[],
-          },
-          {
-            title: 'Loan Repayment',
-            subTitle:
-              'Loan Repayment should be done for all the loan accounts before closing the day.',
-            status: eodError ? eodStatus?.loanRepayment : EodState.Completed,
-            errors: eodError?.loanRepayment as string[],
-          },
-        ]
-      );
+      return [
+        {
+          title: 'Branch Readiness',
+          subTitle: 'Check if all the branches have completed branch readiness or not.',
+          status: eodStatus?.currentBranchesReady
+            ? EodState.Completed
+            : EodState.CompletedWithErrors,
+          errors: eodError?.readiness as string[],
+        },
+        {
+          title: 'Cash with Teller',
+          subTitle:
+            'Check if the cash with teller at the start of day balances with the cash with teller at the end after all transactions have been completed.',
+          status: eodError ? eodStatus?.cashInHand : EodState.Completed,
+          errors: eodError?.cashInHand as string[],
+        },
+        {
+          title: 'dayCloseCashVault',
+          subTitle: 'dayCloseCheckCashVault',
+          status: eodError ? eodStatus?.cashInVault : EodState.Completed,
+          errors: eodError?.cashInVault as string[],
+        },
+        {
+          title: 'dayCloseDailyInterestBooking',
+          subTitle: 'dayCloseInterestBooking',
+          status: eodError ? eodStatus?.interestBooking : EodState.Completed,
+          errors: eodError?.interestBooking as string[],
+        },
+        {
+          title: 'dayCloseCheckFrequency',
+          subTitle: 'dayCloseImplementthedayend',
+          status: eodError ? eodStatus?.interestPosting : EodState.Completed,
+          errors: eodError?.interestPosting as string[],
+        },
+        {
+          title: 'Loan Interest Booking',
+          subTitle:
+            'Interest booking should be done for all the loan accounts before closing the day.',
+          status: eodError ? eodStatus?.loanInterestBooking : EodState.Completed,
+          errors: eodError?.loanInterestBooking as string[],
+        },
+        {
+          title: 'dayCloseTransactionDateProgress',
+          subTitle: 'dayCloseChecktransactiondate',
+          status: eodStatus?.transactionDate ?? EodState.Completed,
+        },
+        {
+          title: 'dayCloseCheckMaturity',
+          subTitle: 'dayCloseCheckAccount',
+          status: eodError ? eodStatus?.maturity : EodState.Completed,
+          errors: eodError?.maturity as string[],
+        },
+        {
+          title: 'Check Dormant',
+          subTitle: 'Check if the account is dormant or not.',
+          status: eodError ? eodStatus?.dormancy : EodState.Completed,
+          errors: eodError?.dormancy as string[],
+        },
+        {
+          title: 'Loan Repayment',
+          subTitle:
+            'Loan Repayment should be done for all the loan accounts before closing the day.',
+          status: eodError ? eodStatus?.loanRepayment : EodState.Completed,
+          errors: eodError?.loanRepayment as string[],
+        },
+      ];
     }
 
-    return statusArr;
+    return [];
   }, [eodStatusQueryData]);
 
   const eodStatus = eodStatusQueryData?.transaction?.eodStatus;
