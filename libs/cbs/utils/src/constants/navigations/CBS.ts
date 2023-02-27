@@ -13,6 +13,11 @@ export const CBS: NavType = {
           aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.CBS_MEMBER_LIST,
         },
+        {
+          label: 'Inactive',
+          aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.CBS_MEMBER_INACTIVE_LIST,
+        },
       ],
       settingPages: [
         {

@@ -50,6 +50,8 @@ export const MemberListPage = () => {
   const { data: memberTypeData } = useGetGeneralMemberSettingsDataQuery();
   const memberTypes =
     memberTypeData?.settings?.general?.KYM?.general?.generalMember?.record?.memberType;
+  const isMemberCodeSetup =
+    memberTypeData?.settings?.general?.KYM?.general?.generalMember?.record?.isCodeSetup;
 
   const memberForms = Object.keys(memberTypes || {})
     ?.map((memberType) => {
@@ -59,6 +61,10 @@ export const MemberListPage = () => {
       return false;
     })
     ?.filter(Boolean) as Page[];
+
+  const alteredMemberForms = isMemberCodeSetup
+    ? memberForms
+    : memberForms?.map((item) => ({ ...item, route: ROUTES.CBS_NO_MEMBER_CODE }));
 
   const { data, isFetching, refetch } = useGetMemberListQuery(
     {
@@ -299,7 +305,7 @@ export const MemberListPage = () => {
           pageInfo: data?.members?.list?.pageInfo,
         }}
         menu="MEMBERS"
-        forms={memberForms}
+        forms={alteredMemberForms}
       />
       <Modal
         open={openModal}

@@ -3858,6 +3858,8 @@ const en: Record<string, string> = {
   transCashTransitTransfer: 'Cash in Transit Transfer',
   transServiceCenterTransfer: 'Inter Service Center Transaction',
   viewDetails: 'View Details',
+  settingsTabMenuMonitor: 'Monitor',
+  settingsAccessLog: 'Access Log',
 };
 
 export default en;

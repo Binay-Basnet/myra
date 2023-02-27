@@ -9,6 +9,7 @@ import {
   setBranchReadinessErrors,
   useAppDispatch,
   useAppSelector,
+  useGetEodStatusQuery,
   useReadyBranchEodMutation,
 } from '@coop/cbs/data-access';
 
@@ -50,6 +51,8 @@ export const BranchReadiness = () => {
     readyBranch({});
   }, []);
 
+  const { refetch } = useGetEodStatusQuery();
+
   return (
     <>
       <Box bg="gray.100" width="100%" position="sticky" top={0} zIndex={10}>
@@ -84,7 +87,10 @@ export const BranchReadiness = () => {
           <Container minW="container.lg" height="fit-content" p="0">
             <FormFooter
               mainButtonLabel="Complete"
-              mainButtonHandler={() => router?.push('/')}
+              mainButtonHandler={() => {
+                refetch();
+                router?.push('/');
+              }}
               isMainButtonDisabled={!!branchReadinessErrors?.length}
             />
           </Container>

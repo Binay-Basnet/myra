@@ -109,7 +109,15 @@ export const CashTransferList = () => {
                 action: 'VIEW',
                 onClick: () => {
                   router.push(
-                    `/${ROUTES.CBS_TRANSFER_INTER_SERVICE_TRANS_DETAILS}?id=${props?.row?.original?.node?.id}`
+                    {
+                      pathname: `/${ROUTES.CBS_TRANSFER_INTER_SERVICE_TRANS_DETAILS}`,
+                      query: {
+                        id: props?.row?.original?.node?.id,
+                        objState: router?.query['objState'],
+                      },
+                    },
+                    undefined,
+                    { shallow: true }
                   );
                 },
               },
@@ -121,7 +129,7 @@ export const CashTransferList = () => {
         },
       },
     ],
-    []
+    [router]
   );
 
   const selectedTransfer = rowData?.find(

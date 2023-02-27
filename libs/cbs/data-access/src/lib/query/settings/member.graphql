@@ -5,6 +5,7 @@ query getGeneralMemberSettingsData {
         general {
           generalMember {
             record {
+              isCodeSetup
               memberType {
                 individual
                 institution

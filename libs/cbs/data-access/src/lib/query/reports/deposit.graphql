@@ -258,11 +258,13 @@ query getClosedSavingAccountStatement($data: ClosedSavingAccountInput!) {
           address {
             ...Address
           }
-          closedDate
           memberName
           memberShipCode
           membershipDate
           serviceCenterName
+          accountNo
+          savingType
+          closedDate
           entries {
             balanceAmount
             balanceType
@@ -273,6 +275,8 @@ query getClosedSavingAccountStatement($data: ClosedSavingAccountInput!) {
             withdrawAmount
             particular
           }
+          totalWithdraw
+          totalDeposit
         }
       }
     }

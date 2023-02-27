@@ -87,7 +87,7 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
                 fontWeight="500"
                 textTransform="capitalize"
               >
-                {savingData?.meta?.currentInterestRate}
+                {`${savingData?.meta?.currentInterestRate} %`}
               </Text>
               <Text
                 noOfLines={1}

@@ -1,5 +1,6 @@
 export * from './account-qr-modal/AccountQRModal';
 export * from './action-menu/ActionMenu';
+export * from './drawer/Drawer';
 export * from './error-card/ErrorCard';
 export * from './hover-card/HoverCard';
 export * from './loader-overlay/LoaderOverlay';

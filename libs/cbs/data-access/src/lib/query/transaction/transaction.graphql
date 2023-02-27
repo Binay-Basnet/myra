@@ -359,6 +359,9 @@ query loanRepaymentDetail($paymentId: ID!) {
 query getEODStatus {
   transaction {
     eodStatus {
+      stage
+      overAllStatus
+      eodDate
       states {
         headOfficeReady
         currentBranchesReady

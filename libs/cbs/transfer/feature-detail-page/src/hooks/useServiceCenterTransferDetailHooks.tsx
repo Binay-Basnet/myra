@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
-import { useGetCashInTransitDetailQuery } from '@coop/cbs/data-access';
+import { useGetInterServiceCenterTransferDetailQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 export const useServiceCenterTransferDetailHooks = () => {
@@ -8,35 +9,31 @@ export const useServiceCenterTransferDetailHooks = () => {
 
   const { id } = router.query;
 
-  const { data } = useGetCashInTransitDetailQuery(
-    { transitID: id as string },
+  const { data } = useGetInterServiceCenterTransferDetailQuery(
+    { entryID: id as string },
     {
-      enabled: router?.asPath?.includes('cash-transit-transfer'),
+      enabled: router?.asPath?.includes('service-center-transactions'),
     }
   );
 
-  const serviceCenterTransferDetailData = data?.transaction?.cashInTransitDetail?.data;
+  const serviceCenterTransferDetailData = data?.transaction?.viewServiceCenterCashTransfer?.data;
 
   const serviceCenterSummary = [
     {
       label: 'Cash Transfer Code',
-      value: serviceCenterTransferDetailData?.ID,
+      value: serviceCenterTransferDetailData?.transactionID,
     },
     {
       label: 'Sender Service Center',
-      value: serviceCenterTransferDetailData?.srcBranch,
+      value: serviceCenterTransferDetailData?.senderServiceCenter,
     },
     {
       label: 'Receiver Service Center',
-      value: serviceCenterTransferDetailData?.destBranch,
-    },
-    {
-      label: 'Sender Service Center Teller',
-      value: serviceCenterTransferDetailData?.srcTeller?.local,
+      value: serviceCenterTransferDetailData?.reveiverServiceCenter,
     },
     {
       label: 'Transfer Date',
-      value: serviceCenterTransferDetailData?.transferMode?.replace(/_/g, ' '),
+      value: localizedDate(serviceCenterTransferDetailData?.transferDate),
     },
     {
       label: 'Cash Amount',
@@ -45,11 +42,11 @@ export const useServiceCenterTransferDetailHooks = () => {
   ];
 
   const sidebarData = {
-    code: serviceCenterTransferDetailData?.ID,
-    date: serviceCenterTransferDetailData?.date?.local,
+    code: serviceCenterTransferDetailData?.transactionID,
+    date: localizedDate(serviceCenterTransferDetailData?.transferDate),
     amount: serviceCenterTransferDetailData?.amount,
-    srcTellerName: serviceCenterTransferDetailData?.srcTeller?.local,
-    srcTellerPic: serviceCenterTransferDetailData?.srcProfilePicUrl,
+    srcTellerName: serviceCenterTransferDetailData?.userName,
+    srcTellerPic: serviceCenterTransferDetailData?.userProfileUrl,
   };
 
   return { serviceCenterTransferDetailData, serviceCenterSummary, sidebarData };

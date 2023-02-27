@@ -24267,11 +24267,15 @@ export type GetClosedSavingAccountStatementQuery = {
     depositReport: {
       closedSavingAccountReport?: {
         data?: {
-          closedDate?: Record<'local' | 'en' | 'np', string> | null;
           memberName?: Record<'local' | 'en' | 'np', string> | null;
           memberShipCode?: string | null;
           membershipDate?: Record<'local' | 'en' | 'np', string> | null;
           serviceCenterName?: string | null;
+          accountNo?: string | null;
+          savingType?: string | null;
+          closedDate?: Record<'local' | 'en' | 'np', string> | null;
+          totalWithdraw?: string | null;
+          totalDeposit?: string | null;
           address?: AddressFragment | null;
           entries?: Array<{
             balanceAmount?: string | null;
@@ -27050,6 +27054,7 @@ export type GetGeneralMemberSettingsDataQuery = {
         general?: {
           generalMember?: {
             record?: {
+              isCodeSetup?: boolean | null;
               memberType?: {
                 individual?: boolean | null;
                 institution?: boolean | null;
@@ -27196,6 +27201,42 @@ export type GetDeclarationQuery = {
   settings: {
     declaration: {
       get?: { data?: { content: Record<'local' | 'en' | 'np', string> } | null } | null;
+    };
+  };
+};
+
+export type GetAccessLogListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetAccessLogListQuery = {
+  accessLog: {
+    raw: {
+      data?: Array<{
+        id?: string | null;
+        createdAt?: string | null;
+        requestBody?: unknown | null;
+        responseBody?: unknown | null;
+        elapsedTime?: string | null;
+        statusCode?: number | null;
+        ip?: string | null;
+        header?: unknown | null;
+        bytesReceived?: number | null;
+        bytesSent?: number | null;
+        userId?: string | null;
+        User?: {
+          id: string;
+          name?: string | null;
+          email?: string | null;
+          profilePicUrl?: string | null;
+        } | null;
+        AuditLog?: Array<{
+          timestamp?: string | null;
+          narration?: string | null;
+          extraData?: Array<string | null> | null;
+        } | null> | null;
+      } | null> | null;
     };
   };
 };
@@ -28595,6 +28636,9 @@ export type GetEodStatusQueryVariables = Exact<{ [key: string]: never }>;
 export type GetEodStatusQuery = {
   transaction: {
     eodStatus?: {
+      stage?: EodStage | null;
+      overAllStatus?: EodState | null;
+      eodDate?: Record<'local' | 'en' | 'np', string> | null;
       states?: {
         headOfficeReady?: boolean | null;
         currentBranchesReady?: boolean | null;
@@ -29014,6 +29058,59 @@ export type GetTellerBankDetailsQuery = {
             balanceType?: BalanceType | null;
           } | null> | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInterServiceCenterTransferDetailQueryVariables = Exact<{
+  entryID: Scalars['ID'];
+}>;
+
+export type GetInterServiceCenterTransferDetailQuery = {
+  transaction: {
+    viewServiceCenterCashTransfer?: {
+      data?: {
+        id?: string | null;
+        transactionID?: string | null;
+        userName?: string | null;
+        userProfileUrl?: string | null;
+        senderServiceCenter?: string | null;
+        reveiverServiceCenter?: string | null;
+        transferDate?: Record<'local' | 'en' | 'np', string> | null;
+        amount?: string | null;
+        status?: IbtStatus | null;
+        totalSenderCr?: string | null;
+        totalSenderDr?: string | null;
+        totalServiceCenterCr?: string | null;
+        totalServiceCenterDr?: string | null;
+        totalDebit?: string | null;
+        totalCredit?: string | null;
+        note?: string | null;
+        srcLedgerInfo?: Array<{
+          ledgerId?: string | null;
+          ledgerName?: string | null;
+          dr?: string | null;
+          cr?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
+        } | null> | null;
+        destinationBranchInfo?: Array<{
+          branchId?: string | null;
+          branchName?: string | null;
+          dr?: string | null;
+          cr?: string | null;
+        } | null> | null;
+        glTransaction?: Array<{
+          ledgerId?: string | null;
+          account: string;
+          serviceCentreId?: string | null;
+          serviceCenter?: string | null;
+          debit?: string | null;
+          credit?: string | null;
+          balance?: string | null;
+          balanceType?: BalanceType | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -40954,11 +41051,13 @@ export const GetClosedSavingAccountStatementDocument = `
           address {
             ...Address
           }
-          closedDate
           memberName
           memberShipCode
           membershipDate
           serviceCenterName
+          accountNo
+          savingType
+          closedDate
           entries {
             balanceAmount
             balanceType
@@ -40969,6 +41068,8 @@ export const GetClosedSavingAccountStatementDocument = `
             withdrawAmount
             particular
           }
+          totalWithdraw
+          totalDeposit
         }
       }
     }
@@ -44600,6 +44701,7 @@ export const GetGeneralMemberSettingsDataDocument = `
         general {
           generalMember {
             record {
+              isCodeSetup
               memberType {
                 individual
                 institution
@@ -44790,6 +44892,50 @@ export const useGetDeclarationQuery = <TData = GetDeclarationQuery, TError = unk
   useQuery<GetDeclarationQuery, TError, TData>(
     ['getDeclaration', variables],
     useAxios<GetDeclarationQuery, GetDeclarationQueryVariables>(GetDeclarationDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetAccessLogListDocument = `
+    query getAccessLogList($pagination: Pagination, $filter: Filter) {
+  accessLog {
+    raw(pagination: $pagination, filter: $filter) {
+      data {
+        id
+        createdAt
+        requestBody
+        responseBody
+        elapsedTime
+        statusCode
+        ip
+        header
+        bytesReceived
+        bytesSent
+        userId
+        User {
+          id
+          name
+          email
+          profilePicUrl
+        }
+        AuditLog {
+          timestamp
+          narration
+          extraData
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccessLogListQuery = <TData = GetAccessLogListQuery, TError = unknown>(
+  variables?: GetAccessLogListQueryVariables,
+  options?: UseQueryOptions<GetAccessLogListQuery, TError, TData>
+) =>
+  useQuery<GetAccessLogListQuery, TError, TData>(
+    variables === undefined ? ['getAccessLogList'] : ['getAccessLogList', variables],
+    useAxios<GetAccessLogListQuery, GetAccessLogListQueryVariables>(GetAccessLogListDocument).bind(
       null,
       variables
     ),
@@ -46702,6 +46848,9 @@ export const GetEodStatusDocument = `
     query getEODStatus {
   transaction {
     eodStatus {
+      stage
+      overAllStatus
+      eodDate
       states {
         headOfficeReady
         currentBranchesReady
@@ -47231,6 +47380,71 @@ export const useGetTellerBankDetailsQuery = <TData = GetTellerBankDetailsQuery, 
     useAxios<GetTellerBankDetailsQuery, GetTellerBankDetailsQueryVariables>(
       GetTellerBankDetailsDocument
     ).bind(null, variables),
+    options
+  );
+export const GetInterServiceCenterTransferDetailDocument = `
+    query getInterServiceCenterTransferDetail($entryID: ID!) {
+  transaction {
+    viewServiceCenterCashTransfer(entryID: $entryID) {
+      data {
+        id
+        transactionID
+        userName
+        userProfileUrl
+        senderServiceCenter
+        reveiverServiceCenter
+        transferDate
+        amount
+        status
+        srcLedgerInfo {
+          ledgerId
+          ledgerName
+          dr
+          cr
+          balance
+          balanceType
+        }
+        totalSenderCr
+        totalSenderDr
+        destinationBranchInfo {
+          branchId
+          branchName
+          dr
+          cr
+        }
+        totalServiceCenterCr
+        totalServiceCenterDr
+        glTransaction {
+          ledgerId
+          account
+          serviceCentreId
+          serviceCenter
+          debit
+          credit
+          balance
+          balanceType
+        }
+        totalDebit
+        totalCredit
+        note
+      }
+    }
+  }
+}
+    `;
+export const useGetInterServiceCenterTransferDetailQuery = <
+  TData = GetInterServiceCenterTransferDetailQuery,
+  TError = unknown
+>(
+  variables: GetInterServiceCenterTransferDetailQueryVariables,
+  options?: UseQueryOptions<GetInterServiceCenterTransferDetailQuery, TError, TData>
+) =>
+  useQuery<GetInterServiceCenterTransferDetailQuery, TError, TData>(
+    ['getInterServiceCenterTransferDetail', variables],
+    useAxios<
+      GetInterServiceCenterTransferDetailQuery,
+      GetInterServiceCenterTransferDetailQueryVariables
+    >(GetInterServiceCenterTransferDetailDocument).bind(null, variables),
     options
   );
 export const GetPastSlipsListDocument = `

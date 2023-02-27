@@ -12,6 +12,8 @@ export * from './lib/SettingsGeneralLayout';
 export * from './lib/SettingsLayout';
 export * from './lib/SettingsLoanLayout';
 export * from './lib/SettingsMemberLayout';
+export * from './lib/SettingsMonitorLayout';
+export * from './lib/SettingsMonitorSidebar';
 export * from './lib/SettingsPageHeader';
 export * from './lib/SettingsPrintPreferenceLayout';
 export * from './lib/SettingsShareLayout';
