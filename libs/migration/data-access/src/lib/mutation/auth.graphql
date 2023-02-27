@@ -1,52 +1,6 @@
-mutation login($data: NeosysLoginInput!) {
-  neosys {
-    auth {
-      login(data: $data) {
-        recordId
-        record {
-          token {
-            access
-            refresh
-          }
-          user {
-            id
-            objState
-            username
-            firstName
-            middleName
-            lastName
-          }
-        }
-      }
-    }
-  }
-}
-
-mutation refresh($refreshToken: String!) {
-  neosys {
-    auth {
-      token(refreshToken: $refreshToken) {
-        token {
-          access
-          refresh
-        }
-        error {
-          ...MutationError
-        }
-      }
-    }
-  }
-}
-
-mutation changePassword($data: NeosysUserPasswordInput) {
-  neosys {
-    user {
-      changePassword(data: $data) {
-        recordId
-        error {
-          ...MutationError
-        }
-      }
-    }
+mutation setAuth($userName: UserName!, $password: password!) {
+  userLogin(input: { userName: $userName, password: $password }) {
+    accessToken
+    refreshToken
   }
 }
