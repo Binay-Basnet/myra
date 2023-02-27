@@ -16,55 +16,7 @@ export const KymCoopRegdAddress = (props: IProps) => {
     defaultValues: {},
   });
   useCooperative({ methods });
-  // const router = useRouter();
-  // const id = String(router?.query?.['id']);
 
-  // const { mutate } = useSetCooperativeDataMutation();
-  // useCooperative({ methods });
-  // const {
-  //   data: editValues,
-  //   isLoading: editLoading,
-  //   refetch,
-  // } = useGetCoOperativeKymEditDataQuery(
-  //   {
-  //     id: id,
-  //   },
-  //   { enabled: id !== 'undefined' }
-  // );
-
-  // useEffect(() => {
-  //   const subscription = watch(
-  //     debounce((data) => {
-  //       if (editValues && data) {
-  //         mutate({ id: router.query['id'] as string, data });
-  //         refetch();
-  //       }
-  //     }, 800)
-  //   );
-
-  //   return () => subscription.unsubscribe();
-  // }, [watch, router.isReady, editValues]);
-
-  // useEffect(() => {
-  //   if (editValues) {
-  //     const editValueData =
-  //       editValues?.members?.cooperative?.formState?.data?.formData;
-
-  //     reset({
-  //       ...pickBy(
-  //         editValues?.members?.cooperative?.formState?.data?.formData ?? {},
-  //         (v) => v !== null
-  //       ),
-  //     });
-  //   }
-  // }, [editLoading]);
-
-  // useEffect(() => {
-  //   if (id) {
-  //     refetch();
-  //
-  //   }
-  // }, [id]);
   return (
     <FormProvider {...methods}>
       <form

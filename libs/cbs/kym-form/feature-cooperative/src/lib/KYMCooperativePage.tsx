@@ -97,8 +97,10 @@ export const KYMCooperativePage = () => {
                 {t['kymCoop1InformationofOrganization']}
               </Text>
               <KymCoopBasicInfo setSection={setKymCurrentSection} />
+
               <KymCoopRegdAddress setSection={setKymCurrentSection} />
               <KymCoopOpAddress setSection={setKymCurrentSection} />
+
               <KymCoopContactDetails setSection={setKymCurrentSection} />
               <KymCoopCurrentMembers setSection={setKymCurrentSection} />
               <KymCoopDate setSection={setKymCurrentSection} />
