@@ -63,8 +63,8 @@ export const MemberListPage = () => {
     ?.filter(Boolean) as Page[];
 
   const alteredMemberForms = isMemberCodeSetup
-    ? memberForms?.map((item) => ({ ...item, route: ROUTES.CBS_NO_MEMBER_CODE }))
-    : memberForms;
+    ? memberForms
+    : memberForms?.map((item) => ({ ...item, route: ROUTES.CBS_NO_MEMBER_CODE }));
 
   const { data, isFetching, refetch } = useGetMemberListQuery(
     {

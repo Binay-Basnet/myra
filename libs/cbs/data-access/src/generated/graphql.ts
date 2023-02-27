@@ -11542,7 +11542,6 @@ export type MemberRecentTransactions = {
 };
 
 export type MemberRegFilters = {
-  branchId?: InputMaybe<Array<Scalars['String']>>;
   gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   institutionType?: InputMaybe<Scalars['ID']>;
   memberType?: InputMaybe<Array<InputMaybe<MemberType>>>;
@@ -11555,6 +11554,7 @@ export type MemberRegistrationReport = {
 };
 
 export type MemberRegistrationReportData = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
   filter?: InputMaybe<MemberRegFilters>;
   period: LocalizedDateFilter;
 };

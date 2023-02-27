@@ -61,9 +61,8 @@ export const MemberPagesLayout = ({ children }: IMemberPagesLayoutProps) => {
     ?.filter(Boolean) as Page[];
 
   const alteredMemberForms = isMemberCodeSetup
-    ? memberForms?.map((item) => ({ ...item, route: ROUTES.CBS_NO_MEMBER_CODE }))
-    : memberForms;
-
+    ? memberForms
+    : memberForms?.map((item) => ({ ...item, route: ROUTES.CBS_NO_MEMBER_CODE }));
   return (
     <Can I="SHOW_IN_MENU" a="CBS_MEMBERS_MEMBER" showError isErrorCentered>
       <MenuContainer>
