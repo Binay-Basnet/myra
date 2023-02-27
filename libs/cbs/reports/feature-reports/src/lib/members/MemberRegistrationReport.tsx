@@ -7,6 +7,7 @@ import {
   LocalizedDateFilter,
   MemberIndividualData,
   MemberOtherData,
+  MemberRegistrationReportData,
   MemberType,
   useGetMemberRegistrationReportQuery,
 } from '@coop/cbs/data-access';
@@ -14,10 +15,14 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { formatAddress, localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormCheckboxGroup } from '@coop/shared/form';
+import { FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
-type Filter = {
+type Filter = Omit<MemberRegistrationReportData, 'branchId'> & {
+  branchId: {
+    label: string;
+    value: string;
+  }[];
   filter?: {
     gender?: string[];
     memberType?: MemberType[];
@@ -29,6 +34,11 @@ type Filter = {
 
 export const MemberRegisterReport = () => {
   const [filters, setFilters] = useState<Filter | null>(null);
+
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : null;
   const memberTypes =
     filters?.filter?.memberType && filters?.filter?.memberType.length !== 0
       ? filters?.filter?.memberType?.map((m) => m)
@@ -37,6 +47,7 @@ export const MemberRegisterReport = () => {
     {
       data: {
         period: filters?.period as LocalizedDateFilter,
+        branchId: branchIds,
         filter: {
           ...filters?.filter,
           memberType: memberTypes,
@@ -68,6 +79,9 @@ export const MemberRegisterReport = () => {
           ]}
         />
         <Report.Inputs>
+          <GridItem colSpan={3}>
+            <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
+          </GridItem>
           <GridItem colSpan={1}>
             <ReportDateRange label="Member Registration Date Period" />
           </GridItem>
