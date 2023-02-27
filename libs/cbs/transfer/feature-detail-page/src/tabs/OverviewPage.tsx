@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import {
   CashInTransitView,
   CashTransferBranchView,
-  CashTransferLedgerView,
   ServiceCenterCashTransferView,
   TellerBankTransferView,
   TellerTransferView,
@@ -72,7 +71,7 @@ export const OverviewPage = ({
           {router?.query['objState'] !== 'RECEIVED' && (
             <>
               <MyLedger
-                data={serviceCenterTransfer?.srcLedgerInfo as [CashTransferLedgerView]}
+                data={serviceCenterTransfer?.srcLedgerInfo}
                 totalCr={serviceCenterTransfer?.totalSenderCr}
                 totalDr={serviceCenterTransfer?.totalSenderDr}
               />

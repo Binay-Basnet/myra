@@ -8,7 +8,6 @@ import {
   LocalizedDateFilter,
   useAppSelector,
   useGetBranchListQuery,
-  useGetCoaAccountListQuery,
 } from '@coop/cbs/data-access';
 import { formatAddress, getLocalizedTodaysDate, localizedDate } from '@coop/cbs/utils';
 
@@ -16,30 +15,33 @@ type SelectType = {
   label: string;
   value: string;
 }[];
+interface IReportOranizationProps {
+  ledgerName?: string;
+}
 
-export const ReportOrganization = () => {
+export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
   const { getValues } = useFormContext();
   const [showAllBranch, setShowAllBranch] = useState<boolean>(false);
 
   const user = useAppSelector((state) => state.auth.user);
 
-  const { data: ledgerListData } = useGetCoaAccountListQuery(
-    {
-      pagination: {
-        after: '',
-        first: 1000,
-      },
-    },
-    {
-      enabled: !!getValues()?.['ledgerId'],
-    }
-  );
+  // const { data: ledgerListData } = useGetCoaAccountListQuery(
+  //   {
+  //     pagination: {
+  //       after: '',
+  //       first: 1000,
+  //     },
+  //   },
+  //   {
+  //     enabled: !!getValues()?.['ledgerId'],
+  //   }
+  // );
 
-  const ledgerList =
-    ledgerListData && ledgerListData?.settings?.chartsOfAccount?.coaAccountList?.edges;
-  const ledgerName = ledgerList?.filter(
-    (item) => item?.node?.accountCode === getValues()?.['ledgerId']
-  );
+  // const ledgerList =
+  //   ledgerListData && ledgerListData?.settings?.chartsOfAccount?.coaAccountList?.edges;
+  // const ledgerName = ledgerList?.filter(
+  //   (item) => item?.node?.accountCode === getValues()?.['ledgerId']
+  // );
 
   const period = getValues('period') as LocalizedDateFilter;
   const branchId = getValues('branchId');
@@ -160,7 +162,7 @@ export const ReportOrganization = () => {
               Ledger Name:
             </Text>
             <Text fontSize="r1" color="gray.700" fontWeight="500">
-              {ledgerName?.[0]?.node?.accountName?.local}
+              {ledgerName as string}
             </Text>
           </Box>
         )}

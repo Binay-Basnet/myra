@@ -154,7 +154,7 @@ export const LoanProductWiseBalanceReport = () => {
         <Report.Filters>
           <Report.Filter title="Loan Type">
             <FormSelect
-              name=""
+              name="productType"
               isMulti
               options={loanTypes?.map((product) => ({
                 label: product?.productType as string,

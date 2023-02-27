@@ -214,5 +214,8 @@ export const getKymCoopSection = (id: string) => {
       subSection: 'kymCoopAccDocumentDeclaration',
     };
   }
-  return null;
+  return {
+    section: '',
+    subSection: '',
+  };
 };

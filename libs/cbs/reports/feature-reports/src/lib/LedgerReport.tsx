@@ -28,6 +28,7 @@ export const LedgerReport = () => {
     { enabled: !!filters }
   );
   const ledgerReport = data?.report?.otherReport?.generalLedgerReport?.data;
+  const ledgerName = data?.report?.otherReport?.generalLedgerReport?.ledgerName;
   const openingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.openingBalance;
   const closingBalance = data?.report?.otherReport?.generalLedgerReport?.summary?.closingBalance;
 
@@ -56,7 +57,7 @@ export const LedgerReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization />
+          <Report.Organization ledgerName={ledgerName as string} />
           <Box display="flex" flexDirection="row" justifyContent="flex-end" p="s12">
             <Box display="flex" flexDirection="column">
               <Text> Opening Balance: {amountConverter(openingBalance as string)}</Text>

@@ -336,7 +336,6 @@ export const AddWithdraw = () => {
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
-                      isLinkedAccounts
                       includeLoc
                       isDisabled={!!redirectAccountId}
                     />

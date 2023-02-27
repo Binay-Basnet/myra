@@ -1,9 +1,11 @@
 import { useState } from 'react';
 
-import { GridItem } from '@myra-ui/components';
+import { Box } from '@myra-ui';
+import { Chips, GridItem } from '@myra-ui/components';
 import { ExpandedCell, ExpandedHeader } from '@myra-ui/table';
 
 import {
+  GuaranteeStatus,
   LoanAccountGuaranteeReportInput,
   LoanGuarantorInfo,
   LocalizedDateFilter,
@@ -13,7 +15,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, localizedText, RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormBranchSelect } from '@coop/shared/form';
+import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 type LoanGuranteeData = Partial<{
@@ -30,6 +32,7 @@ type LoanGuranteeData = Partial<{
   guaranteeAmount: string;
   date: Record<'local' | 'en' | 'np', string> | null | undefined;
   totalGuaranteeAmount: string;
+  guaranteeStatus: string;
 }>;
 
 type ReportFilter = Omit<LoanAccountGuaranteeReportInput, 'branchId'> & {
@@ -200,11 +203,57 @@ export const LoanPersonalGuranteeReport = () => {
                     cell: (props) =>
                       props.row?.original?.date ? localizedDate(props?.row?.original?.date) : '-',
                   },
+                  {
+                    header: 'Status',
+                    accessorKey: 'guaranteeStatus',
+                    cell: (row) => {
+                      const dataVal = row?.getValue() as string;
+                      return (
+                        <Box>
+                          {dataVal === 'ACTIVE' && (
+                            <Chips
+                              label="Active"
+                              theme="success"
+                              size="md"
+                              type="label"
+                              variant="outline"
+                            />
+                          )}
+                          {dataVal === 'RELEASED' && (
+                            <Chips
+                              label="Released"
+                              theme="info"
+                              size="md"
+                              type="label"
+                              variant="outline"
+                            />
+                          )}
+                        </Box>
+                      );
+                    },
+                  },
                 ],
               },
             ]}
           />
         </Report.Content>
+        <Report.Filters>
+          <Report.Filter title="Guarantee Status">
+            <FormSelect
+              name="filter.status"
+              options={[
+                {
+                  label: 'Active',
+                  value: GuaranteeStatus?.Active,
+                },
+                {
+                  label: ' Released',
+                  value: GuaranteeStatus?.Released,
+                },
+              ]}
+            />
+          </Report.Filter>
+        </Report.Filters>
       </Report.Body>
     </Report>
   );

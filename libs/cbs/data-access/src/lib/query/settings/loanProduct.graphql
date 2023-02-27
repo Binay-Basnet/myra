@@ -118,7 +118,6 @@ query getLoanProductEditData($id: ID!) {
             }
             updateInterest
             waiveInterest
-            postingFrequency
             loanProcessingCharge {
               serviceName
               ledgerName
@@ -240,7 +239,6 @@ query getLoanProductDetail($id: ID!) {
             }
             updateInterest
             waiveInterest
-            postingFrequency
             loanProcessingCharge {
               serviceName
               ledgerName

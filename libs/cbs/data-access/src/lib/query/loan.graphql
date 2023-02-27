@@ -61,7 +61,7 @@ fragment LoanProduct on LoanProduct {
   }
   updateInterest
   waiveInterest
-  postingFrequency
+  # postingFrequency
   loanProcessingCharge {
     serviceName
     ledgerName
