@@ -236,6 +236,11 @@ query getIndividualMemberReport($memberId: ID!) {
             closedDate
             accountType
           }
+          shareDetail {
+            shareKitta
+            count
+            shareBalance
+          }
 
           loanDetail {
             loanAccountNo
@@ -274,6 +279,8 @@ query getIndividualMemberReport($memberId: ID!) {
           totalApprovedAmount
           totalRemainingAmount
           totalTransactionAmount
+
+          totalShareBalance
         }
       }
     }

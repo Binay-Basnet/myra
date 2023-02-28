@@ -33,11 +33,10 @@ export const SidebarInfo = ({ sidebarData }: SidebarProps) => (
             </Text>
 
             <Box display="flex" justifyContent="space-between">
-              {sidebarData?.transferType && (
-                <Text fontSize="s3" fontWeight="Regular" color="gray.800" lineHeight="16px">
-                  {sidebarData?.transferType?.replace(/_/g, ' ')}
-                </Text>
-              )}
+              <Text fontSize="s3" fontWeight="Regular" color="gray.800" lineHeight="16px">
+                {sidebarData?.transferType?.replace(/_/g, ' ') ?? '-'}
+              </Text>
+
               <Text fontSize="r1" fontWeight="SemiBold" color="gray.800" lineHeight="150%">
                 {sidebarData?.amount}
               </Text>

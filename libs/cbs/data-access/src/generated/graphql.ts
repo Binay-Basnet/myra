@@ -6271,10 +6271,12 @@ export type IndividualMemberReportData = {
   loanDetail?: Maybe<Array<Maybe<MemberLoanDetail>>>;
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactions>>>;
   savingDetail?: Maybe<Array<Maybe<MemberSavingDetail>>>;
+  shareDetail?: Maybe<Array<Maybe<MemberShareDetail>>>;
   totalApprovedAmount?: Maybe<Scalars['String']>;
   totalGuaranteeBalance?: Maybe<Scalars['String']>;
   totalRemainingAmount?: Maybe<Scalars['String']>;
   totalSavingBalance?: Maybe<Scalars['String']>;
+  totalShareBalance?: Maybe<Scalars['String']>;
   totalTransactionAmount?: Maybe<Scalars['String']>;
 };
 
@@ -11655,6 +11657,12 @@ export type MemberSavingDetail = {
 export type MemberShare = {
   history?: Maybe<Array<Maybe<ShareRegister>>>;
   summary?: Maybe<ShareBalance>;
+};
+
+export type MemberShareDetail = {
+  count?: Maybe<Scalars['Int']>;
+  shareBalance?: Maybe<Scalars['String']>;
+  shareKitta?: Maybe<Scalars['String']>;
 };
 
 export type MemberStatisticsView = {
@@ -19505,6 +19513,7 @@ export type GetBankAccountListQuery = {
   accounting: {
     bankAccounts: {
       list?: {
+        totalCount: number;
         edges?: Array<{
           node?: {
             id?: string | null;
@@ -19518,6 +19527,12 @@ export type GetBankAccountListQuery = {
             branchName?: string | null;
           } | null;
         } | null> | null;
+        pageInfo?: {
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+          startCursor?: string | null;
+          endCursor?: string | null;
+        } | null;
       } | null;
     };
   };
@@ -25062,6 +25077,7 @@ export type GetIndividualMemberReportQuery = {
           totalSavingBalance?: string | null;
           totalApprovedAmount?: string | null;
           totalRemainingAmount?: string | null;
+          totalShareBalance?: string | null;
           header?: {
             memberId?: string | null;
             memberCode?: string | null;
@@ -25082,6 +25098,11 @@ export type GetIndividualMemberReportQuery = {
             accountNo?: string | null;
             closedDate?: Record<'local' | 'en' | 'np', string> | null;
             accountType?: string | null;
+          } | null> | null;
+          shareDetail?: Array<{
+            shareKitta?: string | null;
+            count?: number | null;
+            shareBalance?: string | null;
           } | null> | null;
           loanDetail?: Array<{
             loanAccountNo?: string | null;
@@ -34952,6 +34973,13 @@ export const GetBankAccountListDocument = `
             branchName
           }
         }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
       }
     }
   }
@@ -42090,6 +42118,11 @@ export const GetIndividualMemberReportDocument = `
             closedDate
             accountType
           }
+          shareDetail {
+            shareKitta
+            count
+            shareBalance
+          }
           loanDetail {
             loanAccountNo
             loanAccountName
@@ -42122,6 +42155,7 @@ export const GetIndividualMemberReportDocument = `
           totalApprovedAmount
           totalRemainingAmount
           totalTransactionAmount
+          totalShareBalance
         }
       }
     }

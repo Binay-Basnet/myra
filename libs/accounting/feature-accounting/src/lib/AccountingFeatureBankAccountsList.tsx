@@ -93,6 +93,10 @@ export const AccountingFeatureBankAccountsList = () => {
         // getRowId={(row) => String(row?.node?.id)}
         isLoading={isLoading}
         columns={columns}
+        pagination={{
+          total: data?.accounting?.bankAccounts?.list?.totalCount ?? 'Many',
+          pageInfo: data?.accounting?.bankAccounts?.list?.pageInfo,
+        }}
       />
     </>
   );

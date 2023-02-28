@@ -3,7 +3,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
-import { pickBy } from 'lodash';
+import { isEqual, omit, pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 
 import {
@@ -68,7 +68,6 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
 
   const {
     data: editValues,
-    isLoading: editLoading,
     isFetching,
     refetch,
   } = useGetCoOperativeKymEditDataQuery(
@@ -98,9 +97,11 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
   });
 
   useEffect(() => {
+    const filteredData = getCooperativeData(editValues);
+    const newfilteredData = omit({ ...filteredData }, ['hasTCAccepted']);
     const subscription = watch(
       debounce(async (data) => {
-        if (id) {
+        if (id && !isEqual(newfilteredData, data)) {
           await mutateAsync({
             id: router.query['id'] as string,
             data: pickBy(data, (v) => v !== null && v !== undefined),
@@ -110,7 +111,7 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, id, mutateAsync, router.query]);
+  }, [watch, id, mutateAsync, router.query, editValues]);
 
   useEffect(() => {
     if (editValues) {
@@ -124,7 +125,7 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
         });
       }
     }
-  }, [editLoading]);
+  }, [editValues]);
 
   useDeepCompareEffect(() => {
     // Cleanup Previous Errors

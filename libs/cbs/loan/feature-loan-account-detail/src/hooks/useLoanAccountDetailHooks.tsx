@@ -122,7 +122,7 @@ export const useLoanAccountDetailHooks = () => {
   const guaranteeSummary = [
     {
       title: 'No of Guarantee',
-      value: amountConverter(gauranteeData?.noOfGuarantee ?? 0),
+      value: Number(gauranteeData?.noOfGuarantee) ?? 0,
     },
     {
       title: 'Total Guarantee Value',
