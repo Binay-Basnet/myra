@@ -19,6 +19,13 @@ query getBankAccountList(
             branchName
           }
         }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
       }
     }
   }

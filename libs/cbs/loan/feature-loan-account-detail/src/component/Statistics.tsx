@@ -1,11 +1,9 @@
-import { isEmpty } from 'lodash';
-
 import { Box, Grid, Text } from '@myra-ui';
 
 type StatsProps = {
   statsData: {
     title: string;
-    value: string | 0;
+    value: number | string | 0;
   }[];
 };
 
@@ -23,7 +21,7 @@ export const Statistics = ({ statsData }: StatsProps) => (
             lineHeight="140%"
             color="neutralColorLight.Gray-70"
           >
-            Rs. {!isEmpty(summary.value) ? summary.value : '0'}
+            {summary.value}
           </Text>
         )}
         {summary?.title === 'No of Collateral' && (
