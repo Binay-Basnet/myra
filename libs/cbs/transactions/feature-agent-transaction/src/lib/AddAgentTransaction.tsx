@@ -168,12 +168,6 @@ export const AddAgentTransaction = () => {
                             fieldType: 'search',
                             searchOptions: memberListSearchOptions,
                             cell: (row) => (
-                              // const memberName = memberListSearchOptions?.find(
-                              //   (member) => member.value === row.member
-                              // )?.label;
-
-                              // console.log({ member: row?.member });
-
                               <Box display="flex" flexDirection="column" py="s4">
                                 <Text
                                   fontSize="r1"
@@ -201,7 +195,10 @@ export const AddAgentTransaction = () => {
                           {
                             accessor: 'account',
                             header: 'Account',
-                            loadOptions: (row) => getMemberAccounts(row?.member),
+                            loadOptions: (row) =>
+                              getMemberAccounts(
+                                (row?.member as unknown as { label: string; value: string })?.value
+                              ),
                             fieldType: 'select',
                             cellWidth: 'lg',
                           },

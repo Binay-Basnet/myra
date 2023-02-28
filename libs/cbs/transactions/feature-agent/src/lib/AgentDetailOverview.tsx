@@ -210,28 +210,25 @@ export const AgentDetailOverview = () => {
                     cellWidth: 'auto',
                     fieldType: 'search',
                     searchOptions: memberListSearchOptions,
-                    cell: (row) => {
-                      const memberName = memberListSearchOptions?.find(
-                        (member) => member.value === row.member
-                      )?.label;
-
-                      return (
-                        <Box display="flex" flexDirection="column" py="s4">
-                          <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
-                            {memberName}
-                          </Text>
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
-                            {row?.member}
-                          </Text>
-                        </Box>
-                      );
-                    },
+                    cell: (row) => (
+                      <Box display="flex" flexDirection="column" py="s4">
+                        <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
+                          {(row?.member as unknown as { label: string; value: string })?.label}
+                        </Text>
+                        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
+                          {(row?.member as unknown as { label: string; value: string })?.value}
+                        </Text>
+                      </Box>
+                    ),
                   },
                   {
                     accessor: 'account',
                     header: t['agentOverviewAccount'],
                     // isNumeric: true,
-                    loadOptions: (row) => getMemberAccounts(row?.member),
+                    loadOptions: (row) =>
+                      getMemberAccounts(
+                        (row?.member as unknown as { label: string; value: string })?.value
+                      ),
                     fieldType: 'select',
                     cellWidth: 'auto',
                   },
