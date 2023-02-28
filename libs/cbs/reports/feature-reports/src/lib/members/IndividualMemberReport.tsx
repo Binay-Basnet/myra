@@ -123,18 +123,18 @@ export const IndividualMemberReport = () => {
 
               <Box display="flex" flexDir="column" fontSize="r1" fontWeight="500" color="gray.700">
                 <Text noOfLines={1} textTransform="capitalize">
-                  {individualMemberReportHeader?.shareCertificateNo}
+                  {individualMemberReportHeader?.shareCertificateNo || '-'}
                 </Text>
-                <Text noOfLines={1}>{individualMemberReportHeader?.totalShareCount}</Text>
+                <Text noOfLines={1}>{individualMemberReportHeader?.totalShareCount || '-'}</Text>
                 <Text noOfLines={1}>
                   {individualMemberReportHeader?.riskCategory
                     ? riskCategory[individualMemberReportHeader?.riskCategory as RiskCategoryFilter]
                     : '-'}
                 </Text>
-                <Text noOfLines={1}>{individualMemberReportHeader?.kymStatus}</Text>
+                <Text noOfLines={1}>{individualMemberReportHeader?.kymStatus || '-'}</Text>
                 <Text noOfLines={1}>
                   {' '}
-                  {localizedDate(individualMemberReportHeader?.kymExpiryDate)}
+                  {localizedDate(individualMemberReportHeader?.kymExpiryDate) || '-'}
                 </Text>
               </Box>
             </Box>
