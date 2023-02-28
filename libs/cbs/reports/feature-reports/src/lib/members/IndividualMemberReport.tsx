@@ -9,6 +9,7 @@ import {
   MemberLoanDetail,
   MemberRecentTransactions,
   MemberSavingDetail,
+  MemberShareDetail,
   RiskCategoryFilter,
   useGetIndividualMemberReportQuery,
 } from '@coop/cbs/data-access';
@@ -22,7 +23,7 @@ import {
   RouteToDetailsPage,
 } from '@coop/cbs/utils';
 import { FormMemberSelect } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, quantityConverter } from '@coop/shared/utils';
 
 const riskCategory = {
   [RiskCategoryFilter.All]: 'All',
@@ -50,7 +51,8 @@ export const IndividualMemberReport = () => {
         (individualMemberReportData?.savingDetail ||
           individualMemberReportData?.loanDetail ||
           individualMemberReportData?.recentTransactions ||
-          individualMemberReportData?.closedAccountDetail) as MemberSavingDetail[]
+          individualMemberReportData?.closedAccountDetail ||
+          individualMemberReportData?.shareDetail) as MemberSavingDetail[]
       }
       filters={filters}
       setFilters={setFilters}
@@ -139,6 +141,62 @@ export const IndividualMemberReport = () => {
               </Box>
             </Box>
           </Box>
+          {individualMemberReportData?.shareDetail && (
+            <Box display="flex" py="s8" flexDir="column">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                Share details
+              </Text>
+              <Report.Table<MemberShareDetail & { index: number }>
+                data={
+                  individualMemberReportData?.shareDetail as MemberShareDetail & { index: number }[]
+                }
+                showFooter
+                columns={[
+                  {
+                    header: 'S.No.',
+                    accessorKey: 'index',
+                    footer: () => 'Total',
+                    meta: {
+                      width: '60px',
+                      isNumeric: true,
+                      Footer: {
+                        colspan: 2,
+                      },
+                    },
+                  },
+                  {
+                    header: 'Share Kitta(From - To)',
+                    accessorKey: 'shareKitta',
+                    meta: {
+                      Footer: {
+                        display: 'none',
+                      },
+                      width: '80%',
+                    },
+                  },
+                  {
+                    header: 'Share Count',
+                    accessorKey: 'count',
+                    footer: () =>
+                      quantityConverter(individualMemberReportHeader?.totalShareCount || 0),
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                  {
+                    header: 'Share Balance',
+                    accessorFn: (row) => amountConverter(row?.shareBalance || 0),
+
+                    footer: () =>
+                      amountConverter(individualMemberReportData?.totalShareBalance || 0),
+                    meta: {
+                      isNumeric: true,
+                    },
+                  },
+                ]}
+              />
+            </Box>
+          )}
 
           {individualMemberReportData?.savingDetail && (
             <Box display="flex" py="s8" flexDir="column">
@@ -335,7 +393,7 @@ export const IndividualMemberReport = () => {
           {individualMemberReportData?.recentTransactions && (
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Recenet Transaction (last 1 month)
+                Recent Transaction (last 1 month)
               </Text>
               <Report.Table<MemberRecentTransactions & { index: number }>
                 showFooter
