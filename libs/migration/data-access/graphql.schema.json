@@ -158,9 +158,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -977,6 +981,26 @@
             "deprecationReason": null
           },
           {
+            "name": "getProjects",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getTransformationData",
             "description": null,
             "args": [],
@@ -1058,7 +1082,7 @@
             "deprecationReason": null
           },
           {
-            "name": "dbName",
+            "name": "databaseType",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -1074,7 +1098,7 @@
             "deprecationReason": null
           },
           {
-            "name": "folderVersion",
+            "name": "dbName",
             "description": null,
             "type": {
               "kind": "NON_NULL",

@@ -13,11 +13,10 @@ export const Login = () => {
   const router = useRouter();
 
   const methods = useForm();
-  const { getValues } = methods;
+  const { getValues, handleSubmit } = methods;
   const { mutateAsync, isLoading } = useSetAuthMutation();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     await asyncToast({
       id: 'migration-login',
       promise: mutateAsync({ userName: getValues()?.userName, password: getValues()?.password }),
@@ -50,11 +49,11 @@ export const Login = () => {
       justifyContent="center"
     >
       <Head>
-        <title>Neosys | Login</title>
+        <title>Migration | Login</title>
       </Head>
 
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDir="column" gap="s20">
             <Box display="flex" flexDir="column" gap="s10">
               <FormInput name="userName" label="username" placeholder="Enter Username" />
