@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useRouter } from 'next/router';
 
 import { Alert, Box, Text } from '@myra-ui';
 
@@ -21,10 +20,9 @@ const radioGroupdata = [
 ];
 export const Interest = () => {
   const { t } = useTranslation();
-  const router = useRouter();
 
   const [triggerQuery, setTriggerQuery] = useState(false);
-  const { watch, setValue } = useFormContext();
+  const { watch } = useFormContext();
   const products = watch('productId');
 
   const poductDetails = useGetAccountOpenProductDetailsQuery(
@@ -51,9 +49,9 @@ export const Interest = () => {
   // }, [valueInput, setValue]);
 
   useEffect(() => {
-    if (router.pathname.includes('add')) {
-      setValue('interestRate', defaultRate);
-    }
+    // if (router.pathname.includes('add')) {
+    //   setValue('interestRate', defaultRate);
+    // }
     if (interestAuth === InterestAuthority.Board) {
       setMaxValue(
         Number(ProductData?.interest?.boardAuthority) + Number(ProductData?.interest?.defaultRate)
@@ -83,11 +81,11 @@ export const Interest = () => {
               rules={{
                 max: {
                   value: maxValue,
-                  message: 'Interest Rate is invalid',
+                  message: 'Interest Rate is max',
                 },
                 min: {
                   value: defaultRate,
-                  message: 'Interest Rate is invalid',
+                  message: 'Interest Rate is invalid and min',
                 },
               }}
               rightElement={
