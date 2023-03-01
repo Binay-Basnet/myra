@@ -72,32 +72,32 @@ export const CharkhataReportInputs = () => {
   const coaViews: { label: string; value: string; slug: string }[][] | null | undefined = useMemo(
     () =>
       coaFullList &&
-      coaFullList?.map((coaCLass) => {
-        if (coaCLass?.id?.length) {
-          let numDots = 0;
-          for (let i = 0; i < coaCLass?.id?.length; i += 1) {
-            if (coaCLass?.id[i] === '.') {
-              numDots += 1;
-            }
-          }
-          const spaces = '-'.repeat(numDots);
+      coaFullList?.map((coaCLass) =>
+        // if (coaCLass?.id?.length) {
+        //   let numDots = 0;
+        //   for (let i = 0; i < coaCLass?.id?.length; i += 1) {
+        //     if (coaCLass?.id[i] === '.') {
+        //       numDots += 1;
+        //     }
+        //   }
+        //   const spaces = '-'.repeat(numDots);
 
-          return [
-            {
-              label: `${spaces}${coaCLass?.id}-${coaCLass?.name?.local}`,
-              value: coaCLass?.id as string,
-              slug: coaCLass?.accountClass as string,
-            },
-          ];
-        }
-        return [
+        //   return [
+        //     {
+        //       label: `${spaces}${coaCLass?.id}-${coaCLass?.name?.local}`,
+        //       value: coaCLass?.id as string,
+        //       slug: coaCLass?.accountClass as string,
+        //     },
+        //   ];
+        // }
+        [
           {
             label: `${coaCLass?.id}-${coaCLass?.name?.local}`,
             value: coaCLass?.id as string,
             slug: coaCLass?.accountClass as string,
           },
-        ];
-      }),
+        ]
+      ),
 
     [isFetching]
   );

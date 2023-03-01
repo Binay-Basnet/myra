@@ -10895,6 +10895,7 @@ export type Member = Base & {
   createdBy: Identity;
   dateJoined?: Maybe<Scalars['Localized']>;
   id: Scalars['ID'];
+  inactiveDate?: Maybe<Scalars['Localized']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   name?: Maybe<Scalars['Localized']>;
@@ -15306,6 +15307,7 @@ export type TransferData = {
   senderAccountName?: Maybe<Scalars['String']>;
   senderMemberId?: Maybe<Scalars['String']>;
   senderMemberName?: Maybe<Scalars['Localized']>;
+  slipNo?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
   transactionAccount?: Maybe<Scalars['String']>;
   transactionMode?: Maybe<TransactionMode>;
@@ -15795,6 +15797,7 @@ export type WithdrawRecord = {
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<WithdrawPaymentType>;
+  slipNo?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
   transactionID?: Maybe<Scalars['ID']>;
   withdrawOther?: Maybe<Scalars['String']>;
@@ -18583,6 +18586,7 @@ export type SetWithdrawDataMutation = {
         withdrawOther?: string | null;
         withdrawWith?: WithdrawWith | null;
         paymentMode?: WithdrawPaymentType | null;
+        slipNo?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -18623,6 +18627,7 @@ export type SetAccountTransferDataMutation = {
         transactionMode?: TransactionMode | null;
         withdrawWith?: WithdrawWith | null;
         transferType?: TransferType | null;
+        slipNo?: string | null;
       } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -22517,6 +22522,7 @@ export type GetMemberListQuery = {
           createdAt: string;
           dateJoined?: Record<'local' | 'en' | 'np', string> | null;
           activeDate?: Record<'local' | 'en' | 'np', string> | null;
+          inactiveDate?: Record<'local' | 'en' | 'np', string> | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -33723,6 +33729,7 @@ export const SetWithdrawDataDocument = `
         withdrawOther
         withdrawWith
         paymentMode
+        slipNo
       }
       error {
         ...MutationError
@@ -33769,6 +33776,7 @@ export const SetAccountTransferDataDocument = `
         transactionMode
         withdrawWith
         transferType
+        slipNo
       }
       error {
         ...MutationError
@@ -38804,6 +38812,7 @@ export const GetMemberListDocument = `
           createdAt
           dateJoined
           activeDate
+          inactiveDate
           profile {
             ... on KymIndFormStateQuery {
               data {

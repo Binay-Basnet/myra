@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Link from 'next/link';
 
-import { Box, Button, Column, ExpandedCell, ExpandedHeader, Text } from '@myra-ui';
+import { Box, Button, Column, Text } from '@myra-ui';
 
 import {
   CharKhataReportFilter,
@@ -17,7 +17,6 @@ import { Report } from '@coop/cbs/reports';
 import { CharkhataReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedText, ROUTES } from '@coop/cbs/utils';
-import { arrayToTree } from '@coop/shared/components';
 import { FormRadioGroup } from '@coop/shared/form';
 import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
@@ -306,31 +305,20 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
 
   const baseColumn: Column<TrialSheetReportDataEntry>[] = [
     {
-      header: ({ table }) => <ExpandedHeader table={table} value={type} />,
+      header: 'Ledger Name',
       accessorKey: 'ledgerName',
       cell: (props) => (
-        <ExpandedCell
-          row={props.row}
-          value={
-            !props.row?.getCanExpand() ? (
-              <Link
-                target="_blank"
-                href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
-                  props.row?.original?.ledgerId
-                }&branch=${JSON.stringify(branchIDs)}`}
-              >
-                <Button variant="link" color="primary.500">
-                  {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
-                  {localizedText(props?.row?.original?.ledgerName)}
-                </Button>
-              </Link>
-            ) : (
-              ` ${props.row.original.ledgerId} ${
-                props?.row?.original?.ledgerName ? '-' : ''
-              } ${localizedText(props?.row?.original?.ledgerName)}`
-            )
-          }
-        />
+        <Link
+          target="_blank"
+          href={`${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${
+            props.row?.original?.ledgerId
+          }&branch=${JSON.stringify(branchIDs)}`}
+        >
+          <Button variant="link" color="primary.500">
+            {props.row.original.ledgerId} {props?.row?.original?.ledgerName ? '-' : ''}{' '}
+            {localizedText(props?.row?.original?.ledgerName)}
+          </Button>
+        </Link>
       ),
       meta: {
         width: '80%',
@@ -465,15 +453,15 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
     ),
   ];
 
-  const tree = arrayToTree(
-    data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
-    ''
-  );
+  // const tree = arrayToTree(
+  //   data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
+  //   ''
+  // );
 
   return (
     <Report.Table<TrialSheetReportDataEntry>
       showFooter
-      data={tree}
+      data={data}
       columns={columns}
       tableTitle={type}
     />

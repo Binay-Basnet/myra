@@ -11,6 +11,7 @@ export const LocalizedTime = ({ time }: ILocalizedTimeProps) => localizedTime(ti
 
 export const localizedTime = (time: Record<'local' | 'en' | 'np', string> | null | undefined) => {
   const lang = store.getState().auth?.preference?.languageCode || 'en';
+  if (time?.local === null || time?.local === undefined) return '-';
 
   if (lang === 'np') {
     return dayjs(time?.np || time?.local).format('hh:mm:ss A');

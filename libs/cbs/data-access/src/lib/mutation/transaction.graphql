@@ -53,6 +53,7 @@ mutation setWithdrawData($data: WithdrawInput!) {
         withdrawOther
         withdrawWith
         paymentMode
+        slipNo
       }
       error {
         ...MutationError
@@ -85,6 +86,7 @@ mutation setAccountTransferData($data: TransferInput!) {
         transactionMode
         withdrawWith
         transferType
+        slipNo
       }
       error {
         ...MutationError

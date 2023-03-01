@@ -112,12 +112,26 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         'Withdraw Amount': amountConverter(withdrawDetailData?.withdrawAmount || 0),
         Fine: amountConverter(withdrawDetailData?.fine || 0),
         'Payment Mode': withdrawDetailData?.paymentMode,
+        'Withdraw By': `${withdrawDetailData?.withdrawWith} (${
+          withdrawDetailData?.chequeNo?.padStart(10, '0') ?? 'N/A'
+        })`,
         'Withdrawn By': withdrawDetailData?.withdrawnBy,
       };
 
       tempTotal = withdrawDetailData?.totalWithdrawnAmount as string;
 
       tempGLTransactions = withdrawDetailData?.glTransaction;
+
+      tempVoucherDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="SemiBold">
+            {withdrawDetailData?.transactionCode}
+          </Text>
+        ),
+        'Transaction Date': localizedDate(withdrawDetailData?.transactionDate),
+        'Withdraw By': `${withdrawDetailData?.withdrawWith} (${withdrawDetailData?.chequeNo})`,
+        'Transfer Amount': withdrawDetailData?.totalWithdrawnAmount,
+      };
     }
 
     if (router?.asPath?.includes('/account-transfer/')) {
@@ -132,8 +146,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           </Text>
         ),
         Date: localizedDate(accountTransferDetailData?.transactionDate),
-        'Withdrawn By': `${accountTransferDetailData?.withdrawnBy} (${
-          accountTransferDetailData?.withdrawnSlipNo ?? 'N/A'
+        'Withdraw By': `${accountTransferDetailData?.withdrawnBy} (${
+          accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
         })`,
         'Transfer Type': accountTransferDetailData?.transferType
           ? transferTypeObj[accountTransferDetailData?.transferType]
@@ -151,8 +165,8 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           </Text>
         ),
         Date: localizedDate(accountTransferDetailData?.transactionDate),
-        'Withdrawn By': `${accountTransferDetailData?.withdrawnBy} (${
-          accountTransferDetailData?.withdrawnSlipNo ?? 'N/A'
+        'Withdraw By': `${accountTransferDetailData?.withdrawnBy} (${
+          accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
         })`,
         'Transfer Type': accountTransferDetailData?.transferType
           ? transferTypeObj[accountTransferDetailData?.transferType]

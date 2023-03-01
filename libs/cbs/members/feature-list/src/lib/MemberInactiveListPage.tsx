@@ -15,7 +15,6 @@ import { formatTableAddress, localizedDate, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { forms, Page } from './MemberLayout';
-import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
 
 const memberTypeSlug = {
   INDIVIDUAL: 'individual',
@@ -80,18 +79,9 @@ export const MemberInactiveListPage = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header:
-          objState === 'DRAFT' || objState === 'VALIDATED'
-            ? t['memberListDateJoined']
-            : t['memberListActiveDate'],
-        accessorFn: (row) =>
-          objState === 'DRAFT' || objState === 'VALIDATED'
-            ? localizedDate(row?.node?.dateJoined)
-            : localizedDate(row?.node?.activeDate),
-        cell: (row) =>
-          objState === 'DRAFT' || objState === 'VALIDATED'
-            ? localizedDate(row?.cell?.row?.original?.node?.dateJoined)
-            : localizedDate(row?.cell?.row?.original?.node?.activeDate),
+        header: 'Inactive Date',
+        accessorFn: (row) => localizedDate(row?.node?.inactiveDate),
+        cell: (row) => localizedDate(row?.cell?.row?.original?.node?.inactiveDate),
         meta: {
           width: '100px',
         },
@@ -277,10 +267,7 @@ export const MemberInactiveListPage = () => {
   return (
     <>
       <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader
-          heading={`${t['memberLayoutMembers']} - ${featureCode?.memberList}`}
-          tabItems={MEMBER_TAB_ITEMS}
-        />
+        <PageHeader heading={`Inactive Members - ${featureCode?.memberList}`} />
       </Box>
       <Table
         data={rowData}

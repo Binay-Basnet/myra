@@ -9,12 +9,12 @@ export const CBS: NavType = {
       aclKey: 'CBS_MEMBERS_MEMBER',
       pages: [
         {
-          label: 'Members',
+          label: 'Active Members',
           aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.CBS_MEMBER_LIST,
         },
         {
-          label: 'Inactive',
+          label: 'Inactive Members',
           aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.CBS_MEMBER_INACTIVE_LIST,
         },
