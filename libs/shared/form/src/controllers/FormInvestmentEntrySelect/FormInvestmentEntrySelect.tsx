@@ -21,7 +21,7 @@ export const FormInvestmentEntrySelect = ({
     {
       pagination: {
         ...getRouterQuery({ type: ['PAGINATION'] }),
-        first: 10,
+        first: 20,
       },
       filter: {
         // name: searchTerm,

@@ -4,12 +4,12 @@ import { TransferDetailsHeader } from 'libs/cbs/transfer/feature-detail-page/src
 import { MainLayout } from '@myra-ui';
 
 import { TransferLayout } from '@coop/cbs/transactions/ui-layouts';
-import { InterServiceCenterPage } from '@coop/cbs/transfer/detail';
+import { InterServiceCenterDetailPage } from '@coop/cbs/transfer/detail';
 
 const CashTransferDetail = () => (
   <>
     <TransferDetailsHeader title="Service Center Cash Transfer" />
-    <InterServiceCenterPage />
+    <InterServiceCenterDetailPage />
   </>
 );
 

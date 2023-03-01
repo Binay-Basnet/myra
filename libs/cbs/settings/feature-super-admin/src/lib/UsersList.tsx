@@ -141,7 +141,7 @@ export const UsersList = () => {
   return (
     <>
       <SettingsPageHeader
-        heading={`Roles - ${featureCode.userList}`}
+        heading={`Users - ${featureCode.userList}`}
         buttonLabel="New User"
         buttonHandler={handleAddUserModalOpen}
         // buttonHandler={() =>

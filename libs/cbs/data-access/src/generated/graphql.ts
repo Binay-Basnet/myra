@@ -19513,6 +19513,7 @@ export type GetBankAccountListQuery = {
   accounting: {
     bankAccounts: {
       list?: {
+        totalCount: number;
         edges?: Array<{
           node?: {
             id?: string | null;
@@ -19526,6 +19527,12 @@ export type GetBankAccountListQuery = {
             branchName?: string | null;
           } | null;
         } | null> | null;
+        pageInfo?: {
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+          startCursor?: string | null;
+          endCursor?: string | null;
+        } | null;
       } | null;
     };
   };
@@ -34965,6 +34972,13 @@ export const GetBankAccountListDocument = `
             balanceType
             branchName
           }
+        }
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
         }
       }
     }

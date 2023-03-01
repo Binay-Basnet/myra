@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { omit } from 'lodash';
@@ -17,6 +17,7 @@ type GuaranteeDetailForm = {
   accountName?: string | null;
   maxGuranteeAmount: number;
   guranteeAmount: number;
+  maxGuranteeAmountLimit: number;
 };
 
 export const GuaranteeDetails = () => {
@@ -46,7 +47,14 @@ export const GuaranteeDetails = () => {
   const memberId = methods.watch('memberId');
 
   const accountId = methods.watch('accountId');
+
   const totalGuarantee = methods.watch('guranteeAmount');
+
+  useEffect(() => {
+    methods.setValue('accountId', '');
+    methods.setValue('guranteeAmount', 0);
+    methods.setValue('maxGuranteeAmountLimit', 0);
+  }, [methods, memberId]);
 
   const { data: accountDetailQueryData } = useGetAccountDetailsDataQuery(
     { id: accountId as string },

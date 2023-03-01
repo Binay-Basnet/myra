@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
+import dayjs from 'dayjs';
+import { AUDIT_LOG_ICONS } from 'libs/cbs/settings/feature-audit-log/constants/AUDIT_LOG_ICONS';
 
-import { Box, Column, Drawer, Grid, GridItem, Table, Text } from '@myra-ui';
+import { Box, Column, Drawer, Grid, GridItem, Icon, Table, Text } from '@myra-ui';
 
 import { useGetAccessLogListQuery } from '@coop/cbs/data-access';
 import { getRouterQuery } from '@coop/shared/utils';
@@ -18,7 +20,20 @@ export const AccessLogList = () => {
 
   const accessLogList = accessList && accessList?.filter((item) => item?.id === accessLogId);
 
-  // const auditLogList = accessLogList?.AuditLog ?? [];
+  const filteredData = {
+    ...accessLogList,
+    AuditLog:
+      accessLogList &&
+      (accessLogList[0]?.AuditLog as
+        | ({
+            timestamp?: string | null;
+            narration?: string | null;
+            extraData?: string[];
+          } | null)[]
+        | null
+        | undefined),
+  };
+  const auditLogList = filteredData?.AuditLog ?? [];
 
   const rowData = useMemo(() => data?.accessLog?.raw?.data ?? [], [data]);
 
@@ -141,7 +156,7 @@ export const AccessLogList = () => {
             <Text fontWeight="Regular" color="gray.600" lineHeight="125%" fontSize="r1">
               Audit Logs
             </Text>
-            {/* <Box display="flex" flexDir="column" gap="s8">
+            <Box display="flex" flexDir="column" gap="s8">
               <Box display="flex" flexDir="column" gap="s16">
                 {auditLogList?.length !== 0 ? (
                   auditLogList?.map((audit) => (
@@ -170,7 +185,7 @@ export const AccessLogList = () => {
                   </Text>
                 )}
               </Box>
-            </Box> */}
+            </Box>
           </Box>
         </Box>
       </Drawer>

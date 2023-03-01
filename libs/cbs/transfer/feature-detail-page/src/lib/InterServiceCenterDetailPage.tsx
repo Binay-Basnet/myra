@@ -7,9 +7,9 @@ import { useServiceCenterTransferDetailHooks } from '../hooks';
 import { OverviewPage } from '../tabs/OverviewPage';
 
 /* eslint-disable-next-line */
-export interface InterServiceCenterPageProps {}
+export interface InterServiceCenterDetailPageProps {}
 
-export const InterServiceCenterPage = () => {
+export const InterServiceCenterDetailPage = () => {
   const router = useRouter();
   const tabQuery = router.query['tab'] as string;
 
@@ -39,4 +39,4 @@ export const InterServiceCenterPage = () => {
     </Box>
   );
 };
-export default InterServiceCenterPage;
+export default InterServiceCenterDetailPage;

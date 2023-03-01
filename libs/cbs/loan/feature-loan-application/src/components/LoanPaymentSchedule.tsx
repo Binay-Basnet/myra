@@ -148,8 +148,18 @@ export const LoanPaymentSchedule = () => {
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-        <FormDatePicker name="disbursementDate" label="Disburse Date" isRequired />
-        <FormDatePicker name="installmentBeginDate" label="Installment Begin Date" isRequired />
+        <FormDatePicker
+          name="disbursementDate"
+          label="Disburse Date"
+          minDate={new Date()}
+          isRequired
+        />
+        <FormDatePicker
+          name="installmentBeginDate"
+          label="Installment Begin Date"
+          minDate={new Date()}
+          isRequired
+        />
       </Grid>
       <Box display="flex" flexDirection="column" gap="s8">
         <Text fontSize="r1" fontWeight="600">
