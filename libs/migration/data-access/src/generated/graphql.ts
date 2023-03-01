@@ -175,6 +175,23 @@ export type RefreshMutation = {
   resetToken: { accessToken: string; refreshToken: string; name: string; email: string };
 };
 
+export type CreateProjectMutationVariables = Exact<{
+  input: ExtractionEnv;
+}>;
+
+export type CreateProjectMutation = {
+  protectedMutation: { startExtraction: { status: string; data?: Array<string | null> | null } };
+};
+
+export type SetMappingDataMutationVariables = Exact<{
+  input: Array<InputMaybe<LedgerMappingInput>> | InputMaybe<LedgerMappingInput>;
+  dbName: Scalars['String'];
+}>;
+
+export type SetMappingDataMutation = {
+  protectedMutation: { sendMappingData: { status: string; data?: Array<string | null> | null } };
+};
+
 export type GetProjectsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetProjectsQuery = { protectedQuery: { getProjects: Array<string | null> } };
@@ -193,6 +210,18 @@ export type GetDirectoryStructureQuery = {
         transformedCSV?: Record<string, string> | null;
       } | null> | null;
     } | null;
+  };
+};
+
+export type GetMappingDataQueryVariables = Exact<{
+  dbName: Scalars['String'];
+}>;
+
+export type GetMappingDataQuery = {
+  protectedQuery: {
+    getMappingData: {
+      data?: Array<{ newCode: string; oldCode: string; name: string; row: string } | null> | null;
+    };
   };
 };
 
@@ -230,6 +259,52 @@ export const useRefreshMutation = <TError = unknown, TContext = unknown>(
   useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
     ['refresh'],
     useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
+    options
+  );
+export const CreateProjectDocument = `
+    mutation createProject($input: ExtractionEnv!) {
+  protectedMutation {
+    startExtraction(input: $input) {
+      status
+      data
+    }
+  }
+}
+    `;
+export const useCreateProjectMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CreateProjectMutation,
+    TError,
+    CreateProjectMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<CreateProjectMutation, TError, CreateProjectMutationVariables, TContext>(
+    ['createProject'],
+    useAxios<CreateProjectMutation, CreateProjectMutationVariables>(CreateProjectDocument),
+    options
+  );
+export const SetMappingDataDocument = `
+    mutation setMappingData($input: [LedgerMappingInput]!, $dbName: String!) {
+  protectedMutation {
+    sendMappingData(input: $input, dbName: $dbName) {
+      status
+      data
+    }
+  }
+}
+    `;
+export const useSetMappingDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetMappingDataMutation,
+    TError,
+    SetMappingDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetMappingDataMutation, TError, SetMappingDataMutationVariables, TContext>(
+    ['setMappingData'],
+    useAxios<SetMappingDataMutation, SetMappingDataMutationVariables>(SetMappingDataDocument),
     options
   );
 export const GetProjectsDocument = `
@@ -274,5 +349,31 @@ export const useGetDirectoryStructureQuery = <TData = GetDirectoryStructureQuery
     useAxios<GetDirectoryStructureQuery, GetDirectoryStructureQueryVariables>(
       GetDirectoryStructureDocument
     ).bind(null, variables),
+    options
+  );
+export const GetMappingDataDocument = `
+    query getMappingData($dbName: String!) {
+  protectedQuery {
+    getMappingData(dbName: $dbName) {
+      data {
+        newCode
+        oldCode
+        name
+        row
+      }
+    }
+  }
+}
+    `;
+export const useGetMappingDataQuery = <TData = GetMappingDataQuery, TError = unknown>(
+  variables: GetMappingDataQueryVariables,
+  options?: UseQueryOptions<GetMappingDataQuery, TError, TData>
+) =>
+  useQuery<GetMappingDataQuery, TError, TData>(
+    ['getMappingData', variables],
+    useAxios<GetMappingDataQuery, GetMappingDataQueryVariables>(GetMappingDataDocument).bind(
+      null,
+      variables
+    ),
     options
   );

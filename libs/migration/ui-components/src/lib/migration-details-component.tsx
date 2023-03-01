@@ -4,7 +4,7 @@
 import { useRouter } from 'next/router';
 import { useGetDirectoryStructureQuery } from '@migration/data-access';
 
-import { Box, Text } from '@myra-ui';
+import { Box, Button, Text } from '@myra-ui';
 
 export const MigrationDetailsComponents = () => {
   const router = useRouter();
@@ -16,16 +16,21 @@ export const MigrationDetailsComponents = () => {
   const transformedCSVDataKeys = transformedCSVData && Object.keys(transformedCSVData);
   return (
     <Box display="flex" flexDir="column" gap={5}>
-      <Text fontSize="2xl" fontWeight="semibold">
-        Projects {'>'} {router?.query?.['name']}
-      </Text>
+      <Box display="flex" justifyContent="space-between">
+        <Text fontSize="2xl" fontWeight="semibold">
+          Projects {'>'} {router?.query?.['name']}
+        </Text>
+        <Button onClick={() => router.push(`/mapping/${router?.query?.['name']}`)}>
+          Mapping Data
+        </Button>
+      </Box>
       <Box display="flex" flexDir="column" p={5} gap={5} bg="whiteAlpha.900" borderRadius={6}>
         <Text fontSize="r3" fontWeight="medium">
           SourceCSV:
         </Text>
         {sourceCSVData?.map((item, index) => (
           <Text>
-            {index}. {item}
+            {index + 1}. {item}
           </Text>
         ))}
       </Box>
@@ -35,7 +40,7 @@ export const MigrationDetailsComponents = () => {
         </Text>
         {mapperCSVData?.map((item, index) => (
           <Text>
-            {index}. {item}
+            {index + 1}. {item}
           </Text>
         ))}
       </Box>
@@ -52,7 +57,7 @@ export const MigrationDetailsComponents = () => {
               </Text>
               {tableDataArray?.map((i, index) => (
                 <Text>
-                  {index}. {i}
+                  {index + 1}. {i}
                 </Text>
               ))}
             </>

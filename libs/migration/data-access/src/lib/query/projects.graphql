@@ -16,3 +16,16 @@ query getDirectoryStructure($dbName: String!) {
     }
   }
 }
+
+query getMappingData($dbName: String!) {
+  protectedQuery {
+    getMappingData(dbName: $dbName) {
+      data {
+        newCode
+        oldCode
+        name
+        row
+      }
+    }
+  }
+}

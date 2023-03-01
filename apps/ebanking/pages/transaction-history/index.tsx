@@ -4,15 +4,6 @@ import { IoFilter } from 'react-icons/io5';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { GridItem } from '@chakra-ui/react';
 
-import { InfoCard, TransactionCard, TransactionHeaderCard } from '@coop/ebanking/cards';
-import {
-  DateFilter,
-  EbankingTransactionCrOrDr,
-  EbankingTransactionFilter,
-  useGetTransactionListsQuery,
-} from '@coop/ebanking/data-access';
-import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Accordion,
   AccordionButton,
@@ -27,6 +18,16 @@ import {
   Loader,
   Text,
 } from '@myra-ui';
+
+import { InfoCard, TransactionCard, TransactionHeaderCard } from '@coop/ebanking/cards';
+import {
+  DateFilter,
+  EbankingTransactionCrOrDr,
+  EbankingTransactionFilter,
+  useGetTransactionListsQuery,
+} from '@coop/ebanking/data-access';
+import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
+import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 
 type TransactionFormFilters = {
   accounts: { label: string; value: string }[];

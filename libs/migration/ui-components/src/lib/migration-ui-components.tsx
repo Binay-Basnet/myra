@@ -1,13 +1,23 @@
 /* eslint-disable-next-line */
 // export interface MigrationUiComponentsProps {}
 
+import { FormProvider, useForm } from 'react-hook-form';
 import Link from 'next/link';
-import { useGetProjectsQuery } from '@migration/data-access';
+import { useCreateProjectMutation, useGetProjectsQuery } from '@migration/data-access';
 
-import { Box, Grid, GridItem, Text } from '@myra-ui';
+import { Box, Button, Grid, GridItem, Text } from '@myra-ui';
+
+import { FormInput } from '@coop/shared/form';
 
 export const MigrationUiComponents = () => {
-  const { data } = useGetProjectsQuery();
+  const { data, refetch } = useGetProjectsQuery();
+  const { mutateAsync } = useCreateProjectMutation();
+  const methods = useForm();
+  const { handleSubmit, getValues } = methods;
+  const onSubmit = () => {
+    mutateAsync({ input: { dbName: getValues()?.dbName } }).then(() => refetch());
+  };
+
   return (
     <Box display="flex" flexDir="column" gap={5}>
       <Text fontSize="3xl" fontWeight="semibold">
@@ -21,7 +31,7 @@ export const MigrationUiComponents = () => {
             </Text>
             {data?.protectedQuery?.getProjects?.map((item, index) => (
               <Link href={`/${item}`}>
-                {index}. {item}
+                {index + 1}. {item}
               </Link>
             ))}
           </Box>
@@ -31,6 +41,16 @@ export const MigrationUiComponents = () => {
             <Text fontSize="r3" fontWeight="medium">
               New Project
             </Text>
+            <FormProvider {...methods}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Box display="flex" flexDir="column" gap={5}>
+                  <FormInput name="dbName" label="DB Name" />
+                  <Button w={100} type="submit">
+                    Submit
+                  </Button>
+                </Box>
+              </form>
+            </FormProvider>
           </Box>
         </GridItem>
       </Grid>
