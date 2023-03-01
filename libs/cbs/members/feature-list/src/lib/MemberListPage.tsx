@@ -284,7 +284,7 @@ export const MemberListPage = () => {
     <>
       <Box position="sticky" top="0" zIndex={3}>
         <PageHeader
-          heading={`${t['memberLayoutMembers']} - ${featureCode?.memberList}`}
+          heading={`Active Members - ${featureCode?.memberList}`}
           tabItems={MEMBER_TAB_ITEMS}
         />
       </Box>
