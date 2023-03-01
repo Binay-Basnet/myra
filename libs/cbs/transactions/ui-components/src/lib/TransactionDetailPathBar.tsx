@@ -133,7 +133,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         ),
         Date: localizedDate(accountTransferDetailData?.transactionDate),
         'Withdrawn By': `${accountTransferDetailData?.withdrawnBy} (${
-          accountTransferDetailData?.withdrawnSlipNo ?? 'N/A'
+          accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
         })`,
         'Transfer Type': accountTransferDetailData?.transferType
           ? transferTypeObj[accountTransferDetailData?.transferType]
