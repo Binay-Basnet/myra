@@ -70,7 +70,7 @@ export const FormMemberSelect = ({
     {
       pagination: {
         ...getRouterQuery({ type: ['PAGINATION'] }),
-        first: 8,
+        first: 20,
       },
       filter: {
         query: IDMember,

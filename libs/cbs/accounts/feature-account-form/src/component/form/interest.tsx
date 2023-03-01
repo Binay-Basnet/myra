@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { Alert, Box, Text } from '@myra-ui';
 
@@ -20,9 +21,9 @@ const radioGroupdata = [
 ];
 export const Interest = () => {
   const { t } = useTranslation();
-
+  const router = useRouter();
   const [triggerQuery, setTriggerQuery] = useState(false);
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const products = watch('productId');
 
   const poductDetails = useGetAccountOpenProductDetailsQuery(
@@ -49,9 +50,9 @@ export const Interest = () => {
   // }, [valueInput, setValue]);
 
   useEffect(() => {
-    // if (router.pathname.includes('add')) {
-    //   setValue('interestRate', defaultRate);
-    // }
+    if (router.pathname.includes('add')) {
+      setValue('interestRate', defaultRate);
+    }
     if (interestAuth === InterestAuthority.Board) {
       setMaxValue(
         Number(ProductData?.interest?.boardAuthority) + Number(ProductData?.interest?.defaultRate)
@@ -63,6 +64,8 @@ export const Interest = () => {
       );
     }
   }, [defaultRate, interestAuth, ProductData]);
+
+  // console.log('test')
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -81,11 +84,11 @@ export const Interest = () => {
               rules={{
                 max: {
                   value: maxValue,
-                  message: 'Interest Rate is max',
+                  message: 'Interest Rate is invalid',
                 },
                 min: {
                   value: defaultRate,
-                  message: 'Interest Rate is invalid and min',
+                  message: 'Interest Rate is invalid',
                 },
               }}
               rightElement={
