@@ -2804,7 +2804,7 @@ const ne: Record<string, string> = {
 
   moreThan: 'More Than',
 
-  settingsUserSidebarSuperAdmin: 'Roles',
+  settingsUserSidebarSuperAdmin: 'Users',
   settingsUserSidebarBranchManager: 'Service Center Manager',
   settingsUserSidebarAgent: 'Market Representative',
   settingsUserSidebarOtherUsers: 'Other Users',

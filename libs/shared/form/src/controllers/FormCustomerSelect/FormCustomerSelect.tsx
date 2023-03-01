@@ -21,7 +21,7 @@ export const FormCustomerSelect = ({ name, label }: IFormCustomerSelectProps) =>
   const { data: customerListQueryData, isFetching } = useGetSalesCustomerListDataQuery({
     pagination: {
       ...getRouterQuery({ type: ['PAGINATION'] }),
-      first: 10,
+      first: 20,
     },
     filter: {
       name: searchTerm,

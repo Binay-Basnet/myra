@@ -3123,7 +3123,7 @@ const en: Record<string, string> = {
   kymIndCooperativeEnterServiceCenter: 'Enter Service Center',
   moreThan: 'More Than',
 
-  settingsUserSidebarSuperAdmin: 'Roles',
+  settingsUserSidebarSuperAdmin: 'Users',
   settingsUserSidebarBranchManager: 'Service Center Manager',
   settingsUserSidebarAgent: 'Market Representative',
   settingsUserSidebarOtherUsers: 'Other Users',

@@ -550,7 +550,7 @@ export const AccountOpenNew = () => {
                           {errors?.error?.map((item) => (
                             <li key={item}>
                               {' '}
-                              <Text fontWeight="400" fontSize="s2">
+                              <Text fontWeight="Regular" fontSize="s2">
                                 {item}
                               </Text>
                             </li>

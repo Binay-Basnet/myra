@@ -73,6 +73,7 @@
       "@coop/cbs/requests/layout": ["libs/cbs/requests/ui-layouts/src/index.ts"],
       "@coop/cbs/requests/lists": ["libs/cbs/requests/feature-lists/src/index.ts"],
       "@coop/cbs/settings//feature-loan": ["libs/cbs/settings/feature-loan/src/index.ts"],
+      "@coop/cbs/settings/accounting": ["libs/cbs/settings/feature-accounting/src/index.ts"],
       "@coop/cbs/settings/branches": ["libs/cbs/settings/feature-branches/src/index.ts"],
       "@coop/cbs/settings/coa": ["libs/cbs/settings/feature-coa/src/index.ts"],
       "@coop/cbs/settings/code-management": [

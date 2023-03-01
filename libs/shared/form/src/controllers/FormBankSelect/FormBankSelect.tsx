@@ -36,7 +36,7 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const { data: bankAccountListQueryData, isFetching } = useGetBankAccountListQuery({
-    pagination: { ...getRouterQuery({ type: ['PAGINATION'] }), first: 8 },
+    pagination: { ...getRouterQuery({ type: ['PAGINATION'] }), first: 20 },
     filter: {
       id: searchQuery,
       bankId: searchQuery,
