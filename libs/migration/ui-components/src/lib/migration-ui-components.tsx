@@ -9,30 +9,32 @@ import { Box, Grid, GridItem, Text } from '@myra-ui';
 export const MigrationUiComponents = () => {
   const { data } = useGetProjectsQuery();
   return (
-    <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-      <GridItem>
-        <Box display="flex" gap={5} flexDir="column">
-          <Text fontSize="r3" fontWeight="medium">
-            Projects
-          </Text>
-          <ul>
-            {data?.protectedQuery?.getProjects?.map((item) => (
+    <Box display="flex" flexDir="column" gap={5}>
+      <Text fontSize="3xl" fontWeight="semibold">
+        Migration
+      </Text>
+      <Grid templateColumns="repeat(2, 1fr)" gap="s32">
+        <GridItem>
+          <Box display="flex" flexDir="column" p={5} gap={5} bg="whiteAlpha.900" borderRadius={6}>
+            <Text fontSize="r3" fontWeight="medium">
+              Projects
+            </Text>
+            {data?.protectedQuery?.getProjects?.map((item, index) => (
               <Link href={`/${item}`}>
-                <li>{item}</li>
+                {index}. {item}
               </Link>
             ))}
-          </ul>
-        </Box>
-      </GridItem>
-      <GridItem>
-        {' '}
-        <Box display="flex" gap={5} flexDir="column">
-          <Text fontSize="r3" fontWeight="medium">
-            New Project
-          </Text>
-        </Box>
-      </GridItem>
-    </Grid>
+          </Box>
+        </GridItem>
+        <GridItem>
+          <Box display="flex" flexDir="column" p={5} gap={5} bg="whiteAlpha.900" borderRadius={6}>
+            <Text fontSize="r3" fontWeight="medium">
+              New Project
+            </Text>
+          </Box>
+        </GridItem>
+      </Grid>
+    </Box>
   );
 };
 

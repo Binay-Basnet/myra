@@ -100,19 +100,20 @@ export type Projects = {
 };
 
 export type ProtectedMutation = {
-  createExtractionEnv: ExtractionResponse;
   createFinalTable: ExtractionResponse;
   sendMappingData: ExtractionResponse;
+  startExtraction: ExtractionResponse;
   startTransform: ExtractionResponse;
   uploadCSV: Scalars['Boolean'];
 };
 
-export type ProtectedMutationCreateExtractionEnvArgs = {
-  input: ExtractionEnv;
+export type ProtectedMutationSendMappingDataArgs = {
+  dbName: Scalars['String'];
+  input: Array<InputMaybe<LedgerMappingInput>>;
 };
 
-export type ProtectedMutationSendMappingDataArgs = {
-  input: Array<InputMaybe<LedgerMappingInput>>;
+export type ProtectedMutationStartExtractionArgs = {
+  input: ExtractionEnv;
 };
 
 export type ProtectedMutationStartTransformArgs = {
@@ -129,6 +130,22 @@ export type ProtectedQuery = {
   getMappingData: LedgerMappingList;
   getProjects: Array<Maybe<Scalars['String']>>;
   getTransformationData: ExtractionResponse;
+};
+
+export type ProtectedQueryGetDirectoryStructureArgs = {
+  dbName: Scalars['String'];
+};
+
+export type ProtectedQueryGetExtractionDataArgs = {
+  dbName: Scalars['String'];
+};
+
+export type ProtectedQueryGetMappingDataArgs = {
+  dbName: Scalars['String'];
+};
+
+export type ProtectedQueryGetTransformationDataArgs = {
+  dbName: Scalars['String'];
 };
 
 export type Query = {
@@ -161,6 +178,23 @@ export type RefreshMutation = {
 export type GetProjectsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetProjectsQuery = { protectedQuery: { getProjects: Array<string | null> } };
+
+export type GetDirectoryStructureQueryVariables = Exact<{
+  dbName: Scalars['String'];
+}>;
+
+export type GetDirectoryStructureQuery = {
+  protectedQuery: {
+    getDirectoryStructure?: {
+      data?: Array<{
+        database?: string | null;
+        mapperCSV?: Array<string | null> | null;
+        sourceCSV?: Array<string | null> | null;
+        transformedCSV?: Record<string, string> | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
 export const SetAuthDocument = `
     mutation setAuth($userName: String!, $password: String!) {
@@ -215,5 +249,30 @@ export const useGetProjectsQuery = <TData = GetProjectsQuery, TError = unknown>(
       null,
       variables
     ),
+    options
+  );
+export const GetDirectoryStructureDocument = `
+    query getDirectoryStructure($dbName: String!) {
+  protectedQuery {
+    getDirectoryStructure(dbName: $dbName) {
+      data {
+        database
+        mapperCSV
+        sourceCSV
+        transformedCSV
+      }
+    }
+  }
+}
+    `;
+export const useGetDirectoryStructureQuery = <TData = GetDirectoryStructureQuery, TError = unknown>(
+  variables: GetDirectoryStructureQueryVariables,
+  options?: UseQueryOptions<GetDirectoryStructureQuery, TError, TData>
+) =>
+  useQuery<GetDirectoryStructureQuery, TError, TData>(
+    ['getDirectoryStructure', variables],
+    useAxios<GetDirectoryStructureQuery, GetDirectoryStructureQueryVariables>(
+      GetDirectoryStructureDocument
+    ).bind(null, variables),
     options
   );
