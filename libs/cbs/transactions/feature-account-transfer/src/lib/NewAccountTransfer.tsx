@@ -411,7 +411,6 @@ export const NewAccountTransfer = () => {
                   promise={() => mutateAsync({ data: handleSubmit() })}
                   successCardProps={(response) => {
                     const result = response?.transaction?.transfer?.record;
-
                     return {
                       type: 'Account Transfer',
                       total: amountConverter(result?.totalAmount || 0) as string,
@@ -424,7 +423,9 @@ export const NewAccountTransfer = () => {
                           </Text>
                         ),
                         Date: localizedDate(result?.date),
-                        'Withdrawn By': result?.withdrawWith,
+                        'Withdraw By': `${result?.withdrawWith}(${
+                          result?.slipNo?.padStart(10, '0') ?? 'N/A'
+                        })`,
                         'Transfer Type': result?.transferType
                           ? transferTypeObj[result.transferType]
                           : '',

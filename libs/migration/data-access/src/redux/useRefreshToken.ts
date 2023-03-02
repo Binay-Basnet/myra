@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
-import { privateAgent } from '@migration/data-access';
+import axios from 'axios';
 
 import { logout, saveToken } from './slices/auth-slice';
 
@@ -11,7 +11,13 @@ interface IToken {
 }
 
 interface RefreshTokenResponse {
-  token: IToken;
+  data: {
+    auth: {
+      token: {
+        token: IToken;
+      };
+    };
+  };
 }
 
 // https://github.com/vercel/next.js/issues/18127#issuecomment-950907739
@@ -29,45 +35,41 @@ function useReplace() {
 
 export const useRefreshToken = (url: string) => {
   const replace = useReplace();
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const refreshTokenPromise = useCallback(() => {
     const refreshToken = localStorage.getItem('refreshToken');
     // eslint-disable-next-line prefer-promise-reject-errors
     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
-    return privateAgent
-      .post<RefreshTokenResponse>(`${process.env['NX_SCHEMA_PATH']}/neosys/reset-token`, {
-        refreshToken,
+    return axios
+      .post<RefreshTokenResponse>(url, {
+        query: `mutation{
+            resetToken(refreshToken:"${refreshToken}"){
+              accessToken
+              refreshToken
+              name
+              email
+          }
+        }`,
       })
       .then((res) => {
-        const tokens = res.data?.token;
+        const tokens = res.data?.data?.auth?.token?.token;
 
-        if (tokens && tokens?.refresh && tokens?.access) {
-          localStorage.setItem('refreshToken', tokens.refresh);
-          dispatch(saveToken(tokens.access));
-          return tokens?.access;
+        if (tokens) {
+          dispatch(
+            saveToken({
+              accessToken: tokens.access,
+              refreshToken: tokens.refresh,
+            })
+          );
+
+          return tokens.access;
         }
-
-        replace(
-          {
-            query: {
-              redirect: router.asPath,
-            },
-          },
-          '/login'
-        );
+        replace('/login');
         throw new Error('Credentials are Expired!!');
       })
       .catch(() => {
-        replace(
-          {
-            query: {
-              redirect: router.asPath,
-            },
-          },
-          '/login'
-        );
+        replace('/login');
         dispatch(logout());
       });
   }, [dispatch, replace, url]);

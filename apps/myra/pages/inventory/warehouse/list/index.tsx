@@ -1,10 +1,11 @@
 import { ReactElement } from 'react';
 import { useRouter } from 'next/router';
 
+import { Box, MainLayoutInventory } from '@myra-ui';
+
 import { WarehouseListTable, WarehouseTreeView } from '@coop/inventory/warehouse';
 import { WarehouseLayout } from '@coop/myra/components';
 import { InventoryWarehouseHeader } from '@coop/myra/inventory/ui-layout';
-import { Box, MainLayoutInventory } from '@myra-ui';
 
 const InventoryWarehousePage = () => {
   const router = useRouter();

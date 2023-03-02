@@ -1,0 +1,17 @@
+mutation createProject($input: ExtractionEnv!) {
+  protectedMutation {
+    startExtraction(input: $input) {
+      status
+      data
+    }
+  }
+}
+
+mutation setMappingData($input: [LedgerMappingInput]!, $dbName: String!) {
+  protectedMutation {
+    sendMappingData(input: $input, dbName: $dbName) {
+      status
+      data
+    }
+  }
+}

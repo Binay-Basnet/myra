@@ -1,0 +1,31 @@
+query getProjects {
+  protectedQuery {
+    getProjects
+  }
+}
+
+query getDirectoryStructure($dbName: String!) {
+  protectedQuery {
+    getDirectoryStructure(dbName: $dbName) {
+      data {
+        database
+        mapperCSV
+        sourceCSV
+        transformedCSV
+      }
+    }
+  }
+}
+
+query getMappingData($dbName: String!) {
+  protectedQuery {
+    getMappingData(dbName: $dbName) {
+      data {
+        newCode
+        oldCode
+        name
+        row
+      }
+    }
+  }
+}

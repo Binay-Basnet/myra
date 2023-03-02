@@ -23,6 +23,7 @@ query getMemberList($pagination: Pagination!, $filter: KymMemberDataFilter) {
           createdAt
           dateJoined
           activeDate
+          inactiveDate
           profile {
             ... on KymIndFormStateQuery {
               data {
