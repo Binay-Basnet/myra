@@ -1,4 +1,4 @@
-import React, { Fragment, Reducer, useEffect, useReducer, useState } from 'react';
+import React, { Fragment, Reducer, useEffect, useMemo, useReducer, useState } from 'react';
 import { BsChevronRight } from 'react-icons/bs';
 import { IoAdd, IoCloseCircleOutline } from 'react-icons/io5';
 import { useDeepCompareEffect } from 'react-use';
@@ -20,8 +20,8 @@ import _, { debounce, uniqueId } from 'lodash';
 
 import { Checkbox, Grid, GridItem } from '@myra-ui';
 
-import { chakraDefaultStyles, searchBarStyle } from '../utils/ChakraSelectTheme';
-import { components } from '../utils/SelectComponents';
+import { chakraDefaultStyles, getSearchBarStyle } from '../utils/ChakraSelectTheme';
+import { getComponents } from '../utils/SelectComponents';
 
 export const isArrayEqual = <T,>(x: T[], y: T[]) => _(x).xorWith(y, _.isEqual).isEmpty();
 
@@ -76,6 +76,9 @@ export type Column<T extends RecordWithId & Record<string, EditableValue>> = {
 
   searchLoading?: boolean;
   searchCallback?: (newSearch: string) => void;
+
+  addItemHandler?: () => void;
+  addItemLabel?: string;
 };
 
 export interface EditableTableProps<T extends RecordWithId & Record<string, EditableValue>> {
@@ -316,6 +319,8 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
     }
   }, [defaultData]);
 
+  const searchColumn = useMemo(() => columns.find((column) => column.searchOptions), [columns]);
+
   return (
     <>
       <Flex flexDir="column">
@@ -387,13 +392,13 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
             borderBottomRadius="br2"
           >
             <Select
-              components={components}
+              components={getComponents(searchColumn?.addItemHandler, searchColumn?.addItemLabel)}
               placeholder={searchPlaceholder ?? 'Search for items'}
-              options={columns.find((column) => column.searchOptions)?.searchOptions}
-              chakraStyles={searchBarStyle}
+              options={searchColumn?.searchOptions}
+              chakraStyles={getSearchBarStyle(!!searchColumn?.addItemHandler)}
               value=""
               filterOption={() => true}
-              isLoading={columns.find((column) => column.searchOptions)?.searchLoading}
+              isLoading={searchColumn?.searchLoading}
               onInputChange={debounce((id) => {
                 if (id) {
                   columns.find((column) => column.searchCallback)?.searchCallback?.(id);

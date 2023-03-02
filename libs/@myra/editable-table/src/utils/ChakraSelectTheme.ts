@@ -8,9 +8,10 @@ export interface Option {
 export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
   menu: (provided) => ({
     ...provided,
-    mt: '0',
+    mt: '2px',
     maxHeight: '200px',
     boxShadow: 'E1',
+    borderRadius: 'br2',
     zIndex: '5',
   }),
   menuList: (provided) => ({
@@ -140,12 +141,15 @@ const optionColor = (state: any) => {
   return 'neutralColorLight.Gray-80';
 };
 
-export const searchBarStyle: ChakraStylesConfig<any> | undefined = {
+export const getSearchBarStyle: (hasAddItem?: boolean) => ChakraStylesConfig<any> | undefined = (
+  hasAddItem
+) => ({
   menu: (provided) => ({
     ...provided,
     mt: '0',
-    maxHeight: '200px',
+    maxHeight: hasAddItem ? '250px' : '200px',
     boxShadow: 'E1',
+    borderRadius: 'br2',
     zIndex: '5',
   }),
   menuList: (provided) => ({
@@ -248,4 +252,4 @@ export const searchBarStyle: ChakraStylesConfig<any> | undefined = {
     ...provided,
     fontSize: 'r1',
   }),
-};
+});

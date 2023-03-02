@@ -1,4 +1,5 @@
 import { IoCheckmarkSharp, IoChevronDownSharp, IoSearch } from 'react-icons/io5';
+import { AddIcon } from '@chakra-ui/icons';
 import { Box, Checkbox, Icon, Radio, Text } from '@chakra-ui/react';
 import { chakraComponents, GroupBase, SelectComponentsConfig } from 'chakra-react-select';
 
@@ -8,8 +9,41 @@ export interface Option {
 }
 
 export const getComponents: (
-  hasRadio?: boolean
-) => SelectComponentsConfig<Option, boolean, GroupBase<Option>> = (hasRadio) => ({
+  hasRadio?: boolean,
+  addItemHandler?: () => void,
+  addItemLabel?: string
+) => SelectComponentsConfig<Option, boolean, GroupBase<Option>> = (
+  hasRadio,
+  addItemHandler,
+  addItemLabel
+) => ({
+  Menu: ({ children, ...props }) => (
+    <chakraComponents.Menu {...props}>
+      <Box>
+        {children}
+        {addItemHandler && (
+          <Box
+            w="100%"
+            h="50px"
+            bg="white"
+            display="flex"
+            alignItems="center"
+            gap="s4"
+            px="12px"
+            py="14px"
+            color="primary.500"
+            cursor="pointer"
+            onClick={addItemHandler}
+          >
+            <Icon h="14px" w="14px" as={AddIcon} />
+            <Text fontSize="r1" fontWeight={500}>
+              {addItemLabel ?? 'Add Item'}
+            </Text>
+          </Box>
+        )}
+      </Box>
+    </chakraComponents.Menu>
+  ),
   Placeholder: ({ children, ...props }) => {
     const { value } = props.selectProps;
 

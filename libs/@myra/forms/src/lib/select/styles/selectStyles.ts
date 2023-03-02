@@ -3,8 +3,12 @@ import { ChakraStylesConfig, GroupBase } from 'chakra-react-select';
 import { Option } from './selectComponents';
 
 export const getChakraDefaultStyles: (
-  hasError?: boolean
-) => ChakraStylesConfig<Option, boolean, GroupBase<Option>> | undefined = (hasError) => ({
+  hasError?: boolean,
+  hasAddItem?: boolean
+) => ChakraStylesConfig<Option, boolean, GroupBase<Option>> | undefined = (
+  hasError,
+  hasAddItem
+) => ({
   inputContainer: () => ({
     alignItems: 'center',
     display: 'flex',
@@ -13,9 +17,10 @@ export const getChakraDefaultStyles: (
   }),
   menu: (provided) => ({
     ...provided,
-    mt: '0',
-    maxHeight: '200px',
+    mt: '2px',
+    maxHeight: hasAddItem ? '250px' : '200px',
     boxShadow: 'E1',
+    borderRadius: 'br2',
     zIndex: '5',
   }),
   menuList: (provided) => ({
@@ -23,6 +28,8 @@ export const getChakraDefaultStyles: (
     width: '100%',
     maxHeight: '200px',
     paddingY: '0',
+    border: 'none',
+    borderRadius: 'none',
     minWidth: 'none',
   }),
   option: (provided, state) => ({
