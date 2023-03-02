@@ -10,6 +10,7 @@ import {
   LoanAccountInput,
   LoanInstallment,
   LoanRepaymentScheme,
+  useGetEndOfDayDateDataQuery,
   useGetLoanInstallmentsQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
@@ -37,6 +38,10 @@ export const LoanPaymentSchedule = () => {
   const installmentBeginDate = watch('installmentBeginDate');
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+
+  const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
 
   const { data } = useGetLoanInstallmentsQuery(
     {
@@ -151,13 +156,13 @@ export const LoanPaymentSchedule = () => {
         <FormDatePicker
           name="disbursementDate"
           label="Disburse Date"
-          minDate={new Date()}
+          minDate={closingDate ? new Date(localizedDate(closingDate) as string) : new Date()}
           isRequired
         />
         <FormDatePicker
           name="installmentBeginDate"
           label="Installment Begin Date"
-          minDate={new Date()}
+          minDate={closingDate ? new Date(localizedDate(closingDate) as string) : new Date()}
           isRequired
         />
       </Grid>
