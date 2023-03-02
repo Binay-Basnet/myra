@@ -211,21 +211,23 @@ export const IndividualMemberReport = () => {
                     { index: number }[]
                 }
                 columns={[
-                  {
-                    header: 'S.No.',
-                    accessorKey: 'index',
-                    footer: () => 'Total',
-                    meta: {
-                      width: '60px',
-                      isNumeric: true,
-                      Footer: {
-                        colspan: 3,
-                      },
-                    },
-                  },
+                  // {
+                  //   header: 'S.No.',
+                  //   accessorKey: 'index',
+                  //   footer: () => 'Total',
+                  //   meta: {
+                  //     width: '60px',
+                  //     isNumeric: true,
+                  //     Footer: {
+                  //       colspan: 3,
+                  //     },
+                  //   },
+                  // },
                   {
                     header: 'Saving Account No.',
                     accessorKey: 'accountNo',
+                    footer: () => 'Total',
+
                     cell: (props) => (
                       <RouteToDetailsPage
                         type="savings"
@@ -235,15 +237,20 @@ export const IndividualMemberReport = () => {
                     ),
                     meta: {
                       Footer: {
-                        display: 'none',
+                        colspan: 2,
                       },
                     },
                   },
                   {
                     header: 'Saving Account Name',
                     accessorKey: 'accountName',
+                    cell: (props) => (
+                      <Box whiteSpace="pre-line" my="s4" width="200px">
+                        {props?.row?.original?.accountName}{' '}
+                      </Box>
+                    ),
                     meta: {
-                      width: '80%',
+                      width: '200px',
                       Footer: {
                         display: 'none',
                       },
@@ -277,12 +284,13 @@ export const IndividualMemberReport = () => {
                     ),
                   },
                   {
-                    header: 'Total Guarantee Balance',
+                    header: 'Guarantee Balance',
                     accessorKey: 'totalGuaranteeAmount',
                     footer: () =>
                       amountConverter(individualMemberReportData?.totalGuaranteeBalance || 0),
                     cell: (props) => amountConverter(props.getValue() as string),
                     meta: {
+                      width: '15px',
                       isNumeric: true,
                     },
                   },
@@ -294,6 +302,7 @@ export const IndividualMemberReport = () => {
 
                     cell: (props) => amountConverter(props.getValue() as string),
                     meta: {
+                      width: '15px',
                       isNumeric: true,
                     },
                   },
@@ -301,6 +310,7 @@ export const IndividualMemberReport = () => {
                     header: 'Transaction Count',
                     accessorKey: 'transactionCount',
                     meta: {
+                      width: '15px',
                       isNumeric: true,
                     },
                   },
@@ -350,8 +360,13 @@ export const IndividualMemberReport = () => {
                   {
                     header: 'Loan Account Name',
                     accessorKey: 'loanAccountName',
+                    cell: (props) => (
+                      <Box whiteSpace="pre-line" my="s4" width="200px">
+                        {props?.row?.original?.loanAccountName}{' '}
+                      </Box>
+                    ),
                     meta: {
-                      width: '80%',
+                      width: '200px',
                       Footer: {
                         display: 'none',
                       },
@@ -368,6 +383,7 @@ export const IndividualMemberReport = () => {
                       amountConverter(individualMemberReportData?.totalApprovedAmount || 0),
                     cell: (props) => amountConverter(props.getValue() as string),
                     meta: {
+                      width: '15px',
                       isNumeric: true,
                     },
                   },
@@ -379,12 +395,16 @@ export const IndividualMemberReport = () => {
 
                     cell: (props) => amountConverter(props.getValue() as string),
                     meta: {
+                      width: '15px',
                       isNumeric: true,
                     },
                   },
                   {
                     header: 'Last Payment Date',
                     accessorFn: (row) => localizedDate(row?.issuedDate),
+                    meta: {
+                      width: '15px',
+                    },
                   },
                 ]}
               />

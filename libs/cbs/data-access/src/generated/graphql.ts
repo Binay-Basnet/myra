@@ -10895,6 +10895,7 @@ export type Member = Base & {
   createdBy: Identity;
   dateJoined?: Maybe<Scalars['Localized']>;
   id: Scalars['ID'];
+  inactiveDate?: Maybe<Scalars['Localized']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   name?: Maybe<Scalars['Localized']>;
@@ -15306,6 +15307,7 @@ export type TransferData = {
   senderAccountName?: Maybe<Scalars['String']>;
   senderMemberId?: Maybe<Scalars['String']>;
   senderMemberName?: Maybe<Scalars['Localized']>;
+  slipNo?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
   transactionAccount?: Maybe<Scalars['String']>;
   transactionMode?: Maybe<TransactionMode>;
@@ -15795,6 +15797,7 @@ export type WithdrawRecord = {
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<WithdrawPaymentType>;
+  slipNo?: Maybe<Scalars['String']>;
   totalAmount?: Maybe<Scalars['String']>;
   transactionID?: Maybe<Scalars['ID']>;
   withdrawOther?: Maybe<Scalars['String']>;
