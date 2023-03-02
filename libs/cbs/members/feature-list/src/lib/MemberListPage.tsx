@@ -73,7 +73,7 @@ export const MemberListPage = () => {
   const { data, isFetching, refetch } = useGetMemberListQuery(
     {
       pagination: getPaginationQuery(),
-      filter: getFilterQuery(),
+      filter: getFilterQuery({ objState: { value: 'APPROVED', compare: '=' } }),
     },
     {
       staleTime: 0,

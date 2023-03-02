@@ -43,16 +43,17 @@ const mapFilterQuery = (filters: URLFilter) => {
   };
 };
 
-export const getFilterQuery = (): Filter => {
+export const getFilterQuery = (defaultFilter?: URLFilter): Filter => {
   const filter = Router.query['filter'] || '';
   const search = Router.query['search'] || '';
 
-  const parsedQuery = mapFilterQuery(
-    qs.parse(filter as string, {
+  const parsedQuery = mapFilterQuery({
+    ...(defaultFilter || {}),
+    ...(qs.parse(filter as string, {
       allowDots: true,
       parseArrays: true,
-    }) as URLFilter
-  );
+    }) as URLFilter),
+  });
 
   if (search) {
     return {
