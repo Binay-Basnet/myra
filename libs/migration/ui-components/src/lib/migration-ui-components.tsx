@@ -25,7 +25,15 @@ export const MigrationUiComponents = () => {
       </Text>
       <Grid templateColumns="repeat(2, 1fr)" gap="s32">
         <GridItem>
-          <Box display="flex" flexDir="column" p={5} gap={5} bg="whiteAlpha.900" borderRadius={6}>
+          <Box
+            display="flex"
+            flexDir="column"
+            p={5}
+            gap={5}
+            bg="whiteAlpha.900"
+            borderRadius={6}
+            boxShadow="lg"
+          >
             <Text fontSize="r3" fontWeight="medium">
               Projects
             </Text>
@@ -37,7 +45,15 @@ export const MigrationUiComponents = () => {
           </Box>
         </GridItem>
         <GridItem>
-          <Box display="flex" flexDir="column" p={5} gap={5} bg="whiteAlpha.900" borderRadius={6}>
+          <Box
+            display="flex"
+            flexDir="column"
+            p={5}
+            gap={5}
+            bg="whiteAlpha.900"
+            borderRadius={6}
+            boxShadow="lg"
+          >
             <Text fontSize="r3" fontWeight="medium">
               New Project
             </Text>

@@ -29,3 +29,21 @@ query getMappingData($dbName: String!) {
     }
   }
 }
+
+query getExtractionData($dbName: String!) {
+  protectedQuery {
+    getExtractionData(dbName: $dbName) {
+      status
+      data
+    }
+  }
+}
+
+query getTransformationData($dbName: String!) {
+  protectedQuery {
+    getTransformationData(dbName: $dbName) {
+      status
+      data
+    }
+  }
+}

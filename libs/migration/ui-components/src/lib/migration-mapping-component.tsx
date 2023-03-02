@@ -52,7 +52,15 @@ export const MigrationMappingComponent = () => {
             <Button type="submit">Edit</Button>
           </Box>
 
-          <Box display="flex" flexDir="column" p={5} gap={5} bg="whiteAlpha.900" borderRadius={6}>
+          <Box
+            display="flex"
+            flexDir="column"
+            p={5}
+            gap={5}
+            bg="whiteAlpha.900"
+            borderRadius={6}
+            boxShadow="lg"
+          >
             <FormEditableTable<LedgerMapping>
               name="data"
               canDeleteRow={false}
