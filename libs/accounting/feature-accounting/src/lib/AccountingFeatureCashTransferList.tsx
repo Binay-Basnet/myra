@@ -5,10 +5,10 @@ import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { useGetMemberListQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getFilterQuery, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureCashTransferListProps {}
@@ -19,10 +19,8 @@ export const AccountingFeatureCashTransferList = () => {
   const router = useRouter();
 
   const { data, isFetching } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
   });
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);

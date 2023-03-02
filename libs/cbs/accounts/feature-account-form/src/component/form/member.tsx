@@ -12,7 +12,7 @@ import { useGetMemberIndividualDataQuery, useGetMemberListQuery } from '@coop/cb
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { localizedDate } from '@coop/cbs/utils';
 import { FormSelect } from '@coop/shared/form';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 type OptionType = { label: string; value: string };
 
@@ -26,7 +26,7 @@ export const Member = () => {
 
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       filter: {
         query: IDMember,
       },

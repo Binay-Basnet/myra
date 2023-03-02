@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 import { useGetBranchListQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const SettingsServiceCenterTable = () => {
   const { t } = useTranslation();
@@ -16,7 +16,7 @@ export const SettingsServiceCenterTable = () => {
   const { data, isFetching } = useGetBranchListQuery(
     {
       paginate: {
-        ...getRouterQuery({ type: ['PAGINATION'] }),
+        ...getPaginationQuery(),
         order: null,
       },
     },

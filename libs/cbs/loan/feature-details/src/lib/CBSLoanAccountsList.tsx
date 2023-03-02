@@ -12,13 +12,14 @@ import {
   useGetLoanListQuery,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 export const LoanAccountList = () => {
   const router = useRouter();
 
   const { data, isFetching } = useGetLoanListQuery({
-    paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+    paginate: getPaginationQuery(),
+
     filter: {
       objectState: LoanObjState?.Disbursed,
     },

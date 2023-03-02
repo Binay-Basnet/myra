@@ -7,7 +7,12 @@ import { Column, Table } from '@myra-ui/table';
 import { Filter_Mode, useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 // const tabList = [
 //   {
@@ -34,7 +39,7 @@ export const WithdrawList = () => {
 
   const { data, isFetching } = useGetWithdrawListDataQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       filter: {
         id: searchTerm,
         memberId: searchTerm,

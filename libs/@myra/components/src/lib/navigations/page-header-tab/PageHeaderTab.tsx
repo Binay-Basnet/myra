@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { chakra, Tab, TabList, Tabs } from '@chakra-ui/react';
+import qs from 'qs';
 
 import { en, useTranslation } from '@coop/shared/utils';
 
@@ -28,26 +29,41 @@ export interface PageHeaderTabProps {
     title: string;
     key: string;
   }[];
+  showTabsInFilter?: boolean;
 }
 
-export const PageHeaderTab = ({ list }: PageHeaderTabProps) => {
+export const PageHeaderTab = ({ list, showTabsInFilter }: PageHeaderTabProps) => {
   const router = useRouter();
+
   const { t } = useTranslation();
 
-  const currentIndex = list.findIndex((value) => router?.query['objState'] === value.key);
+  const currentIndex = list.findIndex((value) => router?.query['filter']?.includes(value.key));
 
   return (
     <Tabs variant="unstyled" index={currentIndex === -1 ? 0 : currentIndex}>
       <TabList>
         {list.map((item) => (
           <TabElement
-            onClick={() =>
-              router?.push({
-                query: {
-                  objState: item.key,
-                },
-              })
-            }
+            onClick={() => {
+              if (showTabsInFilter) {
+                router.push({
+                  query: {
+                    filter: qs.stringify({
+                      objState: {
+                        value: item.key,
+                        compare: '=',
+                      },
+                    }),
+                  },
+                });
+              } else {
+                router?.push({
+                  query: {
+                    objState: item.key,
+                  },
+                });
+              }
+            }}
             key={`${item.key}`}
           >
             {t[item.title as keyof typeof en] ?? item.title}

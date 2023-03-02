@@ -7,14 +7,19 @@ import { Column, Table, TablePopover } from '@myra-ui/table';
 import { Filter_Mode, useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { TableListPageHeader } from '@coop/myra/components';
-import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
   const router = useRouter();
   const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching, refetch } = useGetShareBalanceListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
     filter: {
       memberName: searchTerm,
       memberCode: searchTerm,

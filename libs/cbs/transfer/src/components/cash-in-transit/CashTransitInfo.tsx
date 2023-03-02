@@ -2,13 +2,13 @@ import { FormSection } from '@myra-ui';
 
 import { useAppSelector, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 export const CashTransitInfo = () => {
   const user = useAppSelector((state) => state.auth?.user);
   const { data } = useGetBranchListQuery({
     paginate: {
-      ...getRouterQuery({ type: ['PAGINATION'] }),
+      ...getPaginationQuery(),
       order: null,
     },
   });

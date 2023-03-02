@@ -9,7 +9,7 @@ import {
   Filter_Mode,
   useGetBankAccountListQuery,
 } from '@coop/cbs/data-access';
-import { debitCreditConverter, getRouterQuery } from '@coop/shared/utils';
+import { debitCreditConverter, getPaginationQuery } from '@coop/shared/utils';
 
 interface Option {
   label?: string;
@@ -36,7 +36,7 @@ export const FormBankSelect = (props: IFormBankSelectProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const { data: bankAccountListQueryData, isFetching } = useGetBankAccountListQuery({
-    pagination: { ...getRouterQuery({ type: ['PAGINATION'] }), first: 20 },
+    pagination: { ...getPaginationQuery(), first: 20 },
     filter: {
       id: searchQuery,
       bankId: searchQuery,

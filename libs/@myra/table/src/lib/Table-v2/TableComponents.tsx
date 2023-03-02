@@ -119,12 +119,14 @@ export interface TableHeadCellProps<T extends Record<string, unknown>>
   children?: React.ReactNode;
   isDetailPageTable?: boolean;
   header: Header<T, unknown>;
+  variant: TableVariant;
 }
 
 export const TableHeadCell = <T extends Record<string, unknown>>({
   isDetailPageTable,
   header,
   children,
+  variant,
   ...props
 }: TableHeadCellProps<T>) => (
   <ChakraTable.Th
@@ -139,17 +141,24 @@ export const TableHeadCell = <T extends Record<string, unknown>>({
     minW={header.column.columnDef.meta?.width}
     w={header.column.columnDef.meta?.width}
     textAlign={header.column.columns.length !== 0 ? 'center' : 'left'}
-    position="sticky"
+    position={variant === 'report' ? 'sticky' : 'unset'}
     top={(header.depth - 1) * 35}
     zIndex={1}
     {...props}
   >
-    {header.isPlaceholder ? null : (
-      <Box>{flexRender(header.column.columnDef.header, header.getContext())}</Box>
-    )}
-    {header.column.getCanFilter() ? (
-      <TableListFilter data={header.column.columnDef.meta?.filters?.list} />
-    ) : null}
+    <Box display="flex" gap="s8" alignItems="center">
+      {header.isPlaceholder ? null : (
+        <Box display="inline">
+          {flexRender(header.column.columnDef.header, header.getContext())}
+        </Box>
+      )}
+      {header.column.getCanFilter() ? (
+        <TableListFilter
+          column={header.column.id}
+          data={header.column.columnDef.meta?.filterMaps?.list}
+        />
+      ) : null}
+    </Box>
 
     {children}
   </ChakraTable.Th>

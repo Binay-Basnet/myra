@@ -5,7 +5,7 @@ import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { Filter_Mode, useGetAgentListDataQuery } from '@coop/cbs/data-access';
-import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 // const MEMBER_TAB_ITEMS = [
 //   {
@@ -28,7 +28,7 @@ export const AgentList = () => {
   const router = useRouter();
 
   // const { data, isFetching } = useGetMemberListQuery({
-  //   pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  //   pagination: getPaginationQuery(),
   //   filter: {
   //     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
   //   },
@@ -36,7 +36,7 @@ export const AgentList = () => {
   const searchTerm = router?.query['search'] as string;
   const { data, isFetching } = useGetAgentListDataQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       filter: {
         id: searchTerm,
         // query: searchTerm,

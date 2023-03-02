@@ -2,7 +2,7 @@ import { FormSection, GridItem } from '@myra-ui';
 
 import { useAppSelector, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable, FormTextArea } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 import { CashTransferTotalCard } from './CashTransferTotalCard';
 
@@ -15,7 +15,7 @@ export const ServiceCenterTable = () => {
   const user = useAppSelector((state) => state.auth?.user);
   const { data: branchListQueryData } = useGetBranchListQuery({
     paginate: {
-      ...getRouterQuery({ type: ['PAGINATION'] }),
+      ...getPaginationQuery(),
       order: null,
     },
   });

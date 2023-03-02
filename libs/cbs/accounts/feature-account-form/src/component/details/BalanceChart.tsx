@@ -6,7 +6,7 @@ import subDays from 'date-fns/subDays';
 import { Box, DetailsCard, Text } from '@myra-ui';
 
 import { useAccountDetails, useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
-import { amountConverter, getRouterQuery } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -26,7 +26,7 @@ export const BalanceChart = () => {
           to: { en: format(new Date(), 'yyyy-MM-dd'), np: '', local: '' },
         },
       },
-      pagination: { ...getRouterQuery({ type: ['PAGINATION'] }), first: -1, after: '' },
+      pagination: { ...getPaginationQuery(), first: -1, after: '' },
     },
     {
       enabled: !!accountDetails?.accountId,

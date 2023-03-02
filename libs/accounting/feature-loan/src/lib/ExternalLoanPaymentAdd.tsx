@@ -22,7 +22,7 @@ import {
   useSetExternalPaymentMutation,
 } from '@coop/cbs/data-access';
 import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const ExternalLoanPaymentAdd = () => {
   const { t } = useTranslation();
@@ -43,7 +43,7 @@ export const ExternalLoanPaymentAdd = () => {
   ];
 
   const { data } = useExternalLoanListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const accountList = data?.accounting?.externalLoan?.loan?.list?.edges;

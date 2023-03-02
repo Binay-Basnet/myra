@@ -7,7 +7,12 @@ import { Column, Table } from '@myra-ui/table';
 import { DepositedBy, Filter_Mode, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 // const tabList = [
 //   {
@@ -36,7 +41,7 @@ export const DepositList = () => {
 
   const { data, isFetching } = useGetDepositListDataQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       filter: {
         id: searchTerm,
         memberId: searchTerm,

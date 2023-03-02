@@ -17,7 +17,7 @@ import {
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { FormTextArea } from '@coop/shared/form';
-import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 const DEPOSIT_TAB_ITEMS = [
   {
@@ -83,7 +83,8 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
   const { data, isLoading, refetch } = useGetDepositProductSettingsListQuery(
     {
       paginate: {
-        ...getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+        ...getPaginationQuery(),
+
         order: null,
       },
       filter: {

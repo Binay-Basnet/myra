@@ -6,7 +6,7 @@ import { Box, DetailPageQuickLinks, DetailsCard, Text } from '@myra-ui';
 import { TransactionTable } from '@coop/cbs/components';
 import { EbankingTransaction, useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 export const Transactions = () => {
   const router = useRouter();
@@ -29,7 +29,7 @@ export const Transactions = () => {
   const { data: transactionListQueryData } = useGetAccountTransactionListsQuery(
     {
       filter: { memberIds: [id as string] },
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
     },
     {
       enabled: !!id,

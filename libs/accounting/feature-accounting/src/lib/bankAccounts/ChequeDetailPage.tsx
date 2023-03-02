@@ -17,7 +17,7 @@ import { PopoverComponent } from '@coop/myra/components';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Column, Table } from '@myra-ui/table';
 import { Alert, Box, Button, Divider, Text } from '@myra-ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const ChequeDetailPage = () => {
   const { t } = useTranslation();
@@ -36,10 +36,7 @@ export const ChequeDetailPage = () => {
   };
 
   const { data, isFetching } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
+    pagination: getPaginationQuery(),
   });
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);

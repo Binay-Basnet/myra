@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useGetLoanAccountListQuery } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
 
@@ -18,7 +18,8 @@ export const AccountListPage = () => {
 
   const { data, isLoading } = useGetLoanAccountListQuery({
     paginate: {
-      ...getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+      ...getPaginationQuery(),
+
       order: null,
     },
     filter: {

@@ -11,7 +11,12 @@ import {
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { TableListPageHeader } from '@coop/myra/components';
-import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 export const ShareRegisterTable = () => {
   const { t } = useTranslation();
@@ -21,7 +26,7 @@ export const ShareRegisterTable = () => {
 
   const { data, isFetching, refetch } = useGetShareRegisterListQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       filter: {
         memberName: searchTerm,
         memberCode: searchTerm,

@@ -6,7 +6,7 @@ import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@m
 import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, RequestType, useGetBlockChequeListQuery } from '@coop/cbs/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
@@ -16,7 +16,7 @@ export const BlockChequeRequest = () => {
   const modalProps = useDisclosure();
 
   const { data, isFetching } = useGetBlockChequeListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const blockChequeRequests = React.useMemo(

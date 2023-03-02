@@ -6,7 +6,7 @@ import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@m
 import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, useGetLoanRequestsQuery } from '@coop/cbs/data-access';
-import { amountConverter, featureCode, getRouterQuery } from '@coop/shared/utils';
+import { amountConverter, featureCode, getPaginationQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { LoanApproveOrDeclineModal } from '../components/LoanApproveOrDeclineModal';
@@ -14,7 +14,7 @@ import { LoanApproveOrDeclineModal } from '../components/LoanApproveOrDeclineMod
 export const LoanRequestList = () => {
   const router = useRouter();
   const { data, isFetching } = useGetLoanRequestsQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
   const modalProps = useDisclosure();
 

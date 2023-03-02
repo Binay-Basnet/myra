@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 
 import { InvestmentType, useGetInvestmentAccountsListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 interface IFormInvestmentAccountSelectProps {
   name: string;
@@ -26,7 +26,7 @@ export const FormInvestmentAccountSelect = ({
   const { data: accountListQueryData, isFetching } = useGetInvestmentAccountsListDataQuery(
     {
       pagination: {
-        ...getRouterQuery({ type: ['PAGINATION'] }),
+        ...getPaginationQuery(),
         first: 20,
       },
       filter: {

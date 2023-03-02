@@ -12,7 +12,7 @@ import {
   useGetAccountTransactionListsQuery,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 import { TabHeader } from '../details';
 
@@ -24,7 +24,7 @@ export const Transactions = () => {
   const { data: transactionListQueryData, isFetching } = useGetAccountTransactionListsQuery(
     {
       filter: { accountIds: [accountDetails?.accountId as string] },
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
     },
     {
       enabled: !!accountDetails?.accountId,

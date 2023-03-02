@@ -5,7 +5,7 @@ import { Column, PageHeader, Table } from '@myra-ui';
 
 import { useGetBankTransferListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, getRouterQuery } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface BankTransferListProps {}
@@ -14,7 +14,7 @@ export const BankTransferList = () => {
   const router = useRouter();
   const { data, isFetching } = useGetBankTransferListQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
     },
     {
       staleTime: 0,

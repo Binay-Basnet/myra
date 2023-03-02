@@ -14,6 +14,7 @@ export interface PageHeaderProps {
     title: string;
     key: string;
   }[];
+  showTabsInFilter?: boolean;
 }
 
 export const PageHeader = ({
@@ -22,6 +23,7 @@ export const PageHeader = ({
   onClick,
   button,
   buttonTitle,
+  showTabsInFilter,
 }: PageHeaderProps) => (
   <Box
     h="50px"
@@ -40,7 +42,7 @@ export const PageHeader = ({
           </Text>
         </Box>
         <Box h="100%" ml="48px" display="flex" alignItems="flex-end">
-          <PageHeaderTab list={tabItems ?? []} />
+          <PageHeaderTab showTabsInFilter={showTabsInFilter} list={tabItems ?? []} />
         </Box>
       </Box>
       {button && (

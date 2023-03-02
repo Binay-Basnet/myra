@@ -20,38 +20,41 @@ import {
   InputGroup,
   InputLeftElement,
   Popover,
+  PopoverContent,
+  PopoverTrigger,
   Spacer,
   Text,
 } from '@chakra-ui/react';
 import qs from 'qs';
 
-import { PopoverContent, PopoverTrigger } from '@myra-ui/components';
-
-type ListData = { label: string; value: string }[];
+import { URLFilter } from '@coop/shared/utils';
 
 export interface TableListFilterContentProps {
-  data?: ListData;
+  data?: string[];
   onClose?: () => void;
-  filterValue?: ListData;
-  setFilter?: (updater: ListData) => void;
+  filterValue?: string[];
+  setFilter?: (updater: string[]) => void;
 }
 
 interface TableListFilterProps {
-  data?: ListData;
+  data?: string[];
+  column: string;
 }
 
-export const TableListFilter = ({ data }: TableListFilterProps) => {
+export const TableListFilter = ({ data, column }: TableListFilterProps) => {
   const router = useRouter();
-  // const [filter, setFilter] = useState<ListData>([]);
   const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
+  const parsedQuery = qs.parse(router.query['filter'] as string, {
+    allowDots: true,
+    parseArrays: true,
+    comma: true,
+  }) as URLFilter;
+
+  const filterCols = Object.keys(parsedQuery);
+
   return (
-    <Popover
-      isLazy
-      placement="bottom-start"
-      initialFocusRef={initialFocusRef}
-      colorScheme="primary"
-    >
+    <Popover isLazy placement="bottom" initialFocusRef={initialFocusRef} colorScheme="primary">
       {({ onClose, isOpen }) => (
         <>
           <PopoverTrigger>
@@ -62,7 +65,8 @@ export const TableListFilter = ({ data }: TableListFilterProps) => {
                 h="s20"
                 p="s4"
                 rounded="br1"
-                bg={isOpen ? 'background.500' : 'transparent'}
+                _hover={{ bg: 'background.500' }}
+                bg={isOpen || filterCols.includes(column) ? 'background.500' : 'transparent'}
                 color={isOpen ? 'primary.500' : ''}
               />
             </Box>
@@ -71,14 +75,38 @@ export const TableListFilter = ({ data }: TableListFilterProps) => {
             {initialFocusRef && (
               <TableListFilterContent
                 data={data}
-                setFilter={(newValue) => {
-                  router.push({
-                    query: {
-                      filter: qs.stringify(newValue.map((v) => v.value)),
-                    },
-                  });
+                setFilter={(newFilter) => {
+                  if (newFilter.length !== 0) {
+                    const queryString = qs.stringify(
+                      {
+                        ...parsedQuery,
+                        [column]: {
+                          value: newFilter,
+                          compare: '=',
+                        },
+                      },
+                      { allowDots: true, arrayFormat: 'brackets', encode: false }
+                    );
+
+                    router.push(
+                      {
+                        query: {
+                          filter: queryString,
+                        },
+                      },
+                      undefined,
+                      { shallow: true }
+                    );
+                  } else {
+                    router.push({
+                      query: {
+                        ...router.query,
+                        filter: [],
+                      },
+                    });
+                  }
                 }}
-                filterValue={[]}
+                filterValue={(parsedQuery?.[column]?.value as string[]) || []}
                 onClose={onClose}
                 ref={initialFocusRef}
               />
@@ -96,7 +124,7 @@ export const TableListFilterContent = React.forwardRef(
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const id = useId();
-    const [selectedData, setSelectedData] = useState<ListData>(filterValue ?? []);
+    const [selectedData, setSelectedData] = useState<string[]>(filterValue ?? []);
     const [searchTerm, setSearchTerm] = useState('');
 
     const listData = useMemo(() => (data ? [...data] : []), []);
@@ -221,8 +249,8 @@ export const TableListFilterContent = React.forwardRef(
 
 interface ITableListCheckboxProps {
   isChecked: boolean;
-  listItem: { label: string; value: string };
-  setSelectedData: Dispatch<SetStateAction<{ label: string; value: string }[]>>;
+  listItem: string;
+  setSelectedData: Dispatch<SetStateAction<string[]>>;
 }
 
 const TableListCheckbox = React.memo(
@@ -244,7 +272,7 @@ const TableListCheckbox = React.memo(
       }}
     >
       <Text cursor="pointer" paddingY="12px" fontWeight="normal" noOfLines={1} maxWidth={48}>
-        {listItem.label}
+        {listItem}
       </Text>
       <Checkbox colorScheme="green" isChecked={isChecked} />
     </Box>

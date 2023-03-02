@@ -3,7 +3,7 @@ import { debounce } from 'lodash';
 
 import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 interface IAgentSelectProps {
   name: string;
@@ -19,7 +19,7 @@ export const AgentSelect = ({ name, label, __placeholder }: IAgentSelectProps) =
 
   const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery(
     {
-      paginate: getRouterQuery({ type: ['PAGINATION'] }),
+      paginate: getPaginationQuery(),
       filter: {
         query: agentId,
         role: [Roles.Agent],

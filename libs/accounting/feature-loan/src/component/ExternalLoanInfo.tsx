@@ -4,7 +4,7 @@ import { FormSection, GridItem, Text } from '@myra-ui';
 
 import { ExternalLoanType, useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
 import { FormAmountInput, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 export const ExternalLoanInfo = () => {
   const { watch } = useFormContext();
@@ -12,7 +12,7 @@ export const ExternalLoanInfo = () => {
   const loanAppliedDate = watch('loanAppliedDate');
 
   const { data } = useExternalLoanAccountListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const accountList = data?.accounting?.externalLoan?.account?.list?.edges;

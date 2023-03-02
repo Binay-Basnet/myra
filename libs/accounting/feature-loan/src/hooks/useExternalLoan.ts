@@ -5,7 +5,7 @@ import {
   useExternalLoanListQuery,
   useExternalLoanPaymentListQuery,
 } from '@coop/cbs/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 export const useExternalLoan = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
@@ -15,7 +15,7 @@ export const useExternalLoan = () => {
     isLoading: isExternalLoanLoading,
     refetch: refetchExternalLoan,
   } = useExternalLoanListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const {
@@ -23,7 +23,7 @@ export const useExternalLoan = () => {
     isLoading: isLoanPaymentLoading,
     refetch: refetchLoanPayment,
   } = useExternalLoanPaymentListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const {
@@ -31,7 +31,7 @@ export const useExternalLoan = () => {
     isLoading: isLoanAccountLoading,
     refetch: refetchLoanAccount,
   } = useExternalLoanAccountListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const externalLoanList = externalLoanData?.accounting?.externalLoan?.loan?.list?.edges?.map(

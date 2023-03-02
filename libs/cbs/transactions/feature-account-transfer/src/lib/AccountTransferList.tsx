@@ -11,7 +11,12 @@ import {
 } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 // const tabList = [
 //   {
@@ -39,7 +44,7 @@ export const AccountTransferList = () => {
 
   const { data, isFetching } = useGetAccountTransferListDataQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       filter: {
         id: searchTerm,
         transactionId: searchTerm,

@@ -1,4 +1,4 @@
-query getMemberList($pagination: Pagination!, $filter: KymMemberDataFilter) {
+query getMemberList($pagination: Pagination!, $filter: Filter) {
   members {
     list(pagination: $pagination, filter: $filter) {
       totalCount
@@ -427,6 +427,15 @@ query getOfficialUse($id: ID!) {
       error {
         ...MutationError
       }
+    }
+  }
+}
+
+query getMemberFilterMapping {
+  members {
+    filterMapping {
+      serviceCenter
+      objState
     }
   }
 }

@@ -6,13 +6,13 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useGetAllSavedReportsQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { featureCode, getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery } from '@coop/shared/utils';
 
 export const SavedReportList = () => {
   const router = useRouter();
 
   const { data: reportListData, isFetching } = useGetAllSavedReportsQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const reportList = useMemo(

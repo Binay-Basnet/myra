@@ -7,7 +7,12 @@ import { Column, Table, TablePopover } from '@myra-ui/table';
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { Filter_Mode, useGetJournalVoucherListQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureJournalVouchersListProps {}
@@ -19,7 +24,7 @@ export const AccountingFeatureJournalVouchersList = () => {
   const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetJournalVoucherListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
     filter: {
       id: searchTerm,
       transactionId: searchTerm,

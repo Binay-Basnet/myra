@@ -5,7 +5,7 @@ import { debounce } from 'lodash';
 import { Filter_Mode, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { SelectProps } from '@myra-ui';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 interface IBranchSelectProps extends SelectProps {
   name: string;
@@ -25,7 +25,7 @@ export const BranchSelect = (props: IBranchSelectProps) => {
   const { data: branchListQueryData, isFetching } = useGetBranchListQuery(
     {
       paginate: {
-        ...getRouterQuery({ type: ['PAGINATION'] }),
+        ...getPaginationQuery(),
         order: null,
       },
       filter: {

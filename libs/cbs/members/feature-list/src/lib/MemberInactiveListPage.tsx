@@ -6,13 +6,12 @@ import { asyncToast, Avatar, Box, Modal, PageHeader, TablePopover, Text } from '
 import { Column, Table } from '@myra-ui/table';
 
 import {
-  ObjState,
   useDeleteDraftMutation,
   useGetGeneralMemberSettingsDataQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
 import { formatTableAddress, localizedDate, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { forms, Page } from './MemberLayout';
 
@@ -58,10 +57,20 @@ export const MemberInactiveListPage = () => {
 
   const { data, isFetching, refetch } = useGetMemberListQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       filter: {
         query: searchTerm,
-        objState: ObjState.Inactive,
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'objState',
+                comparator: 'EqualTo',
+                value: 'INACTIVE',
+              },
+            ],
+          },
+        ],
       },
     },
     {

@@ -4,7 +4,7 @@ import { PageHeader } from '@myra-ui';
 
 import { Filter_Mode, LoanObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery } from '@coop/shared/utils';
 
 import { LoanAccTable } from '../components/LoanTable';
 
@@ -13,7 +13,8 @@ export const LoanAccountList = () => {
   const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetLoanListQuery({
-    paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+    paginate: getPaginationQuery(),
+
     filter: {
       objectState: LoanObjState.Disbursed,
       id: searchTerm,

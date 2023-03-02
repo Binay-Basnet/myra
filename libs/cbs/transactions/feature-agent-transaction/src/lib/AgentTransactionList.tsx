@@ -9,7 +9,7 @@ import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
-  getRouterQuery,
+  getPaginationQuery,
   getUrl,
   useTranslation,
 } from '@coop/shared/utils';
@@ -34,7 +34,7 @@ export const AgentTransactionList = () => {
   const router = useRouter();
 
   // const { data, isFetching } = useGetMemberListQuery({
-  //   pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  //   pagination: getPaginationQuery(),
   //   filter: {
   //     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
   //   },
@@ -43,7 +43,7 @@ export const AgentTransactionList = () => {
 
   const { data, isFetching } = useGetDepositListDataQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       filter: {
         depositedBy: 'agent',
         marketRepName: searchTerm,

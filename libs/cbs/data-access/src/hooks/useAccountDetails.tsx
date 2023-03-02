@@ -8,7 +8,7 @@ import {
   useGetAccountDetailsDataQuery,
   useGetAccountTransactionListsQuery,
 } from '@coop/cbs/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 export const useAccountDetails = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
@@ -27,7 +27,7 @@ export const useAccountDetails = () => {
   const { data: transactionListQueryData, isFetching } = useGetAccountTransactionListsQuery(
     {
       filter: { accountIds: [id as string] },
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
     },
     {
       enabled: !!id,

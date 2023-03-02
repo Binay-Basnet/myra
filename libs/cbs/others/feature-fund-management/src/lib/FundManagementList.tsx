@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
 //   {
@@ -33,7 +33,7 @@ export const FundManagementList = () => {
   const router = useRouter();
 
   const { data, isFetching } = useGetDepositListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const rowData = useMemo(() => data?.transaction?.listDeposit?.edges ?? [], [data]);

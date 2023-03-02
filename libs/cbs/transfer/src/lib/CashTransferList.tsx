@@ -11,7 +11,7 @@ import {
   useGetServiceCenterTransferListQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, featureCode, getRouterQuery } from '@coop/shared/utils';
+import { amountConverter, featureCode, getPaginationQuery } from '@coop/shared/utils';
 
 import { IBTCompleteModal } from '../components';
 
@@ -41,7 +41,7 @@ export const CashTransferList = () => {
 
   const { data, isFetching } = useGetServiceCenterTransferListQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       transferMode: (router?.query['objState'] ?? 'SENT') as IbtType,
     },
     {

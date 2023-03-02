@@ -10,7 +10,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Column, Table } from '@myra-ui/table';
 import { TablePopover } from '@myra-ui';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 const investmentAccountType = {
   [InvestmentType.Share]: 'Share',
@@ -22,7 +22,7 @@ export const InvestmentTransactionList = () => {
   const preferenceDate = useAppSelector((state: RootState) => state?.auth?.preference?.date);
 
   const { data, isFetching } = useGetInvestmentTransactionsListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const rowData = useMemo(() => data?.accounting?.investment?.listTransaction?.edges ?? [], [data]);

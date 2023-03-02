@@ -10,7 +10,7 @@ import {
   useGetLoanAccountMemberDetailsQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
-import { amountConverter, getRouterQuery } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 export const useLoanAccountDetailHooks = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ export const useLoanAccountDetailHooks = () => {
 
   const { data: loanAccountDetailsQueryData } = useGetLoanAccountDetailsQuery({
     loanAccountId: id as string,
-    paginate: getRouterQuery({ type: ['PAGINATION'] }),
+    paginate: getPaginationQuery(),
   });
 
   const { data: loanAccountGuaranteeDetailsData } = useGetLoanAccountGuaranteeDetailsQuery({

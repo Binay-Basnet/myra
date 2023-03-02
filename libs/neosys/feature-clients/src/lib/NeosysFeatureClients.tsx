@@ -32,7 +32,7 @@ export const ClientsListPage = () => {
   // const router = useRouter();
   const { data, isFetching } = useGetClientsListQuery();
   // {
-  //   pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  //   pagination: getPaginationQuery(),
   //   filter: {
   //     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
   //   },

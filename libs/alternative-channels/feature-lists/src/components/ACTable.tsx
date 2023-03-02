@@ -10,7 +10,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Column, Table } from '@myra-ui/table';
 import { Box, Modal, DetailCardContent, Grid, SwitchTabs } from '@myra-ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 interface ACTableProps {
   serviceType: AlternativeChannelServiceType;
@@ -25,7 +25,7 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
     filter: {
       serviceType,
     },
-    paginate: getRouterQuery({ type: ['PAGINATION'] }),
+    paginate: getPaginationQuery(),
   });
 
   const alternativeList = data?.alternativeChannel?.list?.edges ?? [];

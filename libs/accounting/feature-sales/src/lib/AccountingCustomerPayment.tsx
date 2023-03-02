@@ -10,7 +10,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Column, Table } from '@myra-ui/table';
 import { TablePopover } from '@myra-ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 const PayementMode = {
   [CustomerPayment.BankTransfer]: 'Bank Transfer',
@@ -26,7 +26,7 @@ export const AccountingCustomerPayment = () => {
   const router = useRouter();
 
   const { data, isFetching } = useGetSalesCustomerPaymentListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const rowData = useMemo(() => data?.accounting?.sales?.listCustomerPayment?.edges ?? [], [data]);

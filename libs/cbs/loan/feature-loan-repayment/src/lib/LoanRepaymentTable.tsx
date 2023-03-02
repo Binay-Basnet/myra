@@ -9,7 +9,7 @@ import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
-  getRouterQuery,
+  getPaginationQuery,
   getUrl,
   useTranslation,
 } from '@coop/shared/utils';
@@ -22,7 +22,8 @@ export const CBSLoanRepaymentList = () => {
 
   const { data, isLoading } = useGetLoanRepaymentListQuery(
     {
-      paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+      paginate: getPaginationQuery(),
+
       filter: {
         loanAccountId: searchTerm,
         memberId: searchTerm,

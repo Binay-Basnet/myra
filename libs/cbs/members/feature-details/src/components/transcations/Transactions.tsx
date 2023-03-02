@@ -97,7 +97,7 @@ export const TransactionTable = () => {
   //         to: { en: format(new Date(), 'yyyy-MM-dd'), np: '', local: '' },
   //       },
   //     },
-  //     pagination: { ...getRouterQuery({ type: ['PAGINATION'] }), first: -1, after: '' },
+  //     pagination: { ...getPaginationQuery(), first: -1, after: '' },
   //   },
   //   {
   //     enabled: !!router.query['id'],

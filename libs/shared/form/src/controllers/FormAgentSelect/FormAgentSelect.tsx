@@ -2,7 +2,7 @@ import { SelectProps } from '@myra-ui';
 
 import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 interface IFormAgentSelectProps extends SelectProps {
   name: string;
@@ -24,7 +24,7 @@ export const FormAgentSelect = ({
 
   const { data: agentListQueryData, isFetching } = useGetAgentListDataQuery({
     pagination: {
-      ...getRouterQuery({ type: ['PAGINATION'] }),
+      ...getPaginationQuery(),
       first: -1,
     },
     currentBranchOnly,

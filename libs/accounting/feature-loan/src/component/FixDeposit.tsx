@@ -2,11 +2,11 @@ import { FormSection, GridItem } from '@myra-ui';
 
 import { InvestmentType, useGetInvestmentEntriesListDataQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 export const FixDeposit = () => {
   const { data: investmentData } = useGetInvestmentEntriesListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
     filter: { type: InvestmentType.FixedDeposit },
   });
 
@@ -21,7 +21,7 @@ export const FixDeposit = () => {
 
   // const { data: userListQueryData } = useGetSettingsUserListDataQuery(
   //   {
-  //     paginate: getRouterQuery({ type: ['PAGINATION'] }),
+  //     paginate: getPaginationQuery(),
   //   },
   //   { staleTime: 0 }
   // );

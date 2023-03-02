@@ -10,7 +10,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Column, Table } from '@myra-ui/table';
 import { TablePopover } from '@myra-ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingSalesListProps {}
@@ -23,7 +23,7 @@ export const AccountingSalesList = () => {
   const preferenceDate = useAppSelector((state: RootState) => state?.auth?.preference?.date);
 
   const { data, isFetching } = useGetSalesSaleEntryListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const rowData = useMemo(() => data?.accounting?.sales?.listSaleEntry?.edges ?? [], [data]);

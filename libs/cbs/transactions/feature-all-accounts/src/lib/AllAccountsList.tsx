@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { Filter_Mode, useGetAllAccountsQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AllAccountsListProps {}
@@ -16,7 +16,7 @@ export const AllAccountsList = () => {
   const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetAllAccountsQuery({
-    paginate: getRouterQuery({ type: ['PAGINATION'] }),
+    paginate: getPaginationQuery(),
     filter: {
       id: searchTerm,
       loanAccountName: searchTerm,

@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetBankAccountListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { debitCreditConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { debitCreditConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const AccountingFeatureBankAccountsList = () => {
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ export const AccountingFeatureBankAccountsList = () => {
   const router = useRouter();
 
   const { data, isLoading, refetch } = useGetBankAccountListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const rowData = useMemo(() => data?.accounting?.bankAccounts?.list?.edges ?? [], [data]);

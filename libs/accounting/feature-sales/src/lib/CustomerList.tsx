@@ -5,7 +5,7 @@ import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetSalesCustomerListDataQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@myra-ui/table';
 import { TablePopover } from '@myra-ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const CustomerList = () => {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ export const CustomerList = () => {
   const router = useRouter();
 
   const { data, isFetching } = useGetSalesCustomerListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const rowData = useMemo(() => data?.accounting?.sales?.listCustomer?.edges ?? [], [data]);

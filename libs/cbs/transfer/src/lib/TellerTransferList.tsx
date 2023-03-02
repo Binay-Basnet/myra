@@ -15,7 +15,7 @@ import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
-  getRouterQuery,
+  getPaginationQuery,
   getUrl,
   useTranslation,
 } from '@coop/shared/utils';
@@ -39,7 +39,7 @@ export const TellerTransferList = () => {
   const modalProps = useDisclosure();
 
   const { data, isFetching } = useGetTellerTransactionListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
     filter: {
       type: [TellerTransferType.TellerTransfer],
     },

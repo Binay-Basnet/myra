@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 import { useGetAgentAssignedMemberListDataQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { ActionPopoverComponent } from '@coop/myra/components';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { AddMemberModal } from '../components';
 
@@ -29,7 +29,7 @@ export const AgentAssignedMembers = () => {
     refetch: refetchAssignedMembersList,
   } = useGetAgentAssignedMemberListDataQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       filter: {
         agentId: id as string,
       },

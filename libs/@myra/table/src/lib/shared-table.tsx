@@ -92,7 +92,11 @@ export const TableWithoutRef = <T extends Record<string, unknown>>(
             {table.getHeaderGroups().map((headerGroup) => (
               <TableHeadRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHeadCell header={header} isDetailPageTable={isDetailPageTable} />
+                  <TableHeadCell
+                    variant={variant}
+                    header={header}
+                    isDetailPageTable={isDetailPageTable}
+                  />
                 ))}
               </TableHeadRow>
             ))}

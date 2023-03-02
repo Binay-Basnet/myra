@@ -13,7 +13,7 @@ import {
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput } from '@coop/shared/form';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 interface Iprops {
   setFileList: React.Dispatch<React.SetStateAction<FileListType>>;
@@ -137,7 +137,7 @@ export const RequiredDocuments = ({ setFileList, id, productId, memberId }: Ipro
 
   const { data: memberList } = useGetMemberListQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
     },
     {
       staleTime: 0,

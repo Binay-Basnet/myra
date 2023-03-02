@@ -5,7 +5,7 @@ import { TablePopover, Text, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { Filter_Mode, useGetCoaAccountListQuery } from '@coop/cbs/data-access';
-import { amountConverter, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 // const accountClass = {
 //   EQUITY_AND_LIABILITIES: 'Equity and Liabilities',
@@ -23,7 +23,7 @@ export const COAListView = () => {
 
   const { data: accountList, isFetching } = useGetCoaAccountListQuery({
     pagination: {
-      ...getRouterQuery({ type: ['PAGINATION'] }),
+      ...getPaginationQuery(),
     },
     filter: {
       name: searchTerm,

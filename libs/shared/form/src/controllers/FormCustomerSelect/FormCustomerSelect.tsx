@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 
 import { useGetSalesCustomerListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 interface IFormCustomerSelectProps {
   name: string;
@@ -20,7 +20,7 @@ export const FormCustomerSelect = ({ name, label }: IFormCustomerSelectProps) =>
 
   const { data: customerListQueryData, isFetching } = useGetSalesCustomerListDataQuery({
     pagination: {
-      ...getRouterQuery({ type: ['PAGINATION'] }),
+      ...getPaginationQuery(),
       first: 20,
     },
     filter: {

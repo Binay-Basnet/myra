@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, useAppSelector, useGetMemberRequestListQuery } from '@coop/cbs/data-access';
 import { localizedDate, localizedText } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { MemberApproveOrDeclineModal } from '../components/MemberApproveOrDeclineModal';
@@ -18,7 +18,7 @@ export const MemberRequestPage = () => {
   const preference = useAppSelector((state) => state?.auth?.preference?.date);
 
   const { data, isFetching } = useGetMemberRequestListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
   const memberRequests = data?.requests?.list?.membershipRequest?.edges || [];
 

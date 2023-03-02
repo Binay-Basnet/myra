@@ -12,7 +12,7 @@ import {
   useSetMakeDormantAccountActiveMutation,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 const ACCOUNT_TAB_ITEMS = [
   {
@@ -52,7 +52,7 @@ export const CBSAccountList = () => {
 
   const { data, isFetching } = useGetAccountTableListMinimalQuery(
     {
-      paginate: getRouterQuery({ type: ['PAGINATION'] }),
+      paginate: getPaginationQuery(),
       filter: {
         query: searchTerm,
         id: searchTerm,

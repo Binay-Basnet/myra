@@ -12,8 +12,8 @@ declare module '@tanstack/table-core' {
       colspan?: number;
       display?: 'none';
     };
-    filters?: {
-      list?: { label: string; value: string }[];
+    filterMaps?: {
+      list?: string[];
     };
   }
 }

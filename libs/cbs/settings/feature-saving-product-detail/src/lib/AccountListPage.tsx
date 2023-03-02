@@ -6,7 +6,7 @@ import { Box, Button, Column, Icon, Table, Text } from '@myra-ui';
 
 import { ObjState, useGetSavingsAccountListQuery } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, getRouterQuery } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
 
@@ -16,7 +16,8 @@ export const AccountListPage = () => {
 
   const { data, isLoading } = useGetSavingsAccountListQuery({
     paginate: {
-      ...getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+      ...getPaginationQuery(),
+
       order: null,
     },
     filter: {

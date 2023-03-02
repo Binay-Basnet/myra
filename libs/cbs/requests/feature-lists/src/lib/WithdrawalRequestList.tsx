@@ -6,7 +6,7 @@ import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@m
 import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, RequestType, useGetWithdrawViaCollectorQuery } from '@coop/cbs/data-access';
-import { amountConverter, featureCode, getRouterQuery } from '@coop/shared/utils';
+import { amountConverter, featureCode, getPaginationQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
@@ -16,7 +16,7 @@ export const WithdrawViaCollectorList = () => {
   const modalProps = useDisclosure();
 
   const { data, isFetching } = useGetWithdrawViaCollectorQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const withdrawalRequests = React.useMemo(

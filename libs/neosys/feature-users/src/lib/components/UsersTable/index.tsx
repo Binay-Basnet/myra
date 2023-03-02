@@ -5,12 +5,12 @@ import { Avatar, Flex } from '@chakra-ui/react';
 import { Column, PageHeader, Table, TablePopover } from '@myra-ui';
 
 import { useGetUserListQuery } from '@coop/neosys-admin/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 export const UsersTable = () => {
   const router = useRouter();
   const { data, isFetching } = useGetUserListQuery({
-    paginate: getRouterQuery({ type: ['PAGINATION'] }),
+    paginate: getPaginationQuery(),
   });
 
   const rowData = useMemo(() => data?.neosys?.user?.list?.edges ?? [], [data]);

@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, RequestType, useGetBlockChequeListQuery } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
@@ -17,7 +17,7 @@ export const BlockWithdrawSlipRequestsList = () => {
   const modalProps = useDisclosure();
 
   const { data, isFetching } = useGetBlockChequeListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const blockChequeRequests = React.useMemo(

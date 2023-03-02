@@ -20,7 +20,7 @@ import {
   useGetChequeBookRequestsQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
@@ -36,7 +36,7 @@ export const ChequeBookRequestList = () => {
 
   const { data, isFetching } = useGetChequeBookRequestsQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
     },
     { staleTime: 0 }
   );

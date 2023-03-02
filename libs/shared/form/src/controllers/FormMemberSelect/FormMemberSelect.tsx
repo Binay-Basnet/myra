@@ -5,14 +5,8 @@ import { debounce } from 'lodash';
 
 import { MemberSelect, MemberSelectProps, Option } from '@myra-ui/forms';
 
-import {
-  Arrange,
-  Filter_Mode,
-  KymIndFormStateQuery,
-  ObjState,
-  useGetMemberListQuery,
-} from '@coop/cbs/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { KymIndFormStateQuery, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { getPaginationQuery } from '@coop/shared/utils';
 // import FormCustomSelect from './FormCustomSelect';
 
 interface IMemberSelectProps extends MemberSelectProps {
@@ -70,20 +64,28 @@ export const FormMemberSelect = ({
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
       pagination: {
-        ...getRouterQuery({ type: ['PAGINATION'] }),
+        ...getPaginationQuery(),
         first: 20,
         order: {
-          arrange: Arrange.Asc,
+          arrange: 'ASC',
           column: 'ID',
         },
       },
       filter: {
         query: IDMember,
-        id: IDMember,
-        memberCode: IDMember,
-        mobileNo: IDMember,
-        filterMode: Filter_Mode.Or,
-        objState: allMembers ? null : ObjState?.Approved,
+        orConditions: allMembers
+          ? []
+          : [
+              {
+                andConditions: [
+                  {
+                    column: 'objState',
+                    comparator: 'EqualTo',
+                    value: 'APPROVED',
+                  },
+                ],
+              },
+            ],
       },
     },
     {

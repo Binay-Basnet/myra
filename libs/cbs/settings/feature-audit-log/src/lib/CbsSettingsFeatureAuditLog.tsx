@@ -13,7 +13,7 @@ import {
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { FormSelectPopout } from '@coop/shared/form';
-import { featureCode, getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery } from '@coop/shared/utils';
 
 import { AUDIT_LOG_ICONS } from '../../constants/AUDIT_LOG_ICONS';
 
@@ -48,7 +48,7 @@ export const CBSSettingsAuditLog = () => {
 
   const { data: userListQueryData } = useGetSettingsUserListDataQuery(
     {
-      paginate: getRouterQuery({ type: ['PAGINATION'] }),
+      paginate: getPaginationQuery(),
     },
     { staleTime: 0 }
   );

@@ -3,7 +3,7 @@ import {
   useAppSelector,
   useGetAccountTransactionListsQuery,
 } from '@coop/cbs/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 interface IUseGetAccountTransactionListProps {
   accountId: string | null | undefined;
@@ -15,7 +15,7 @@ export const useGetAccountTransactionList = ({ accountId }: IUseGetAccountTransa
   const { data: transactionListQueryData } = useGetAccountTransactionListsQuery(
     {
       filter: { accountIds: [accountId as string] },
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
     },
     {
       enabled: !!accountId,

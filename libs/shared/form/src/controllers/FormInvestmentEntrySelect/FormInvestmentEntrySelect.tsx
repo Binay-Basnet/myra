@@ -1,6 +1,6 @@
 import { InvestmentType, useGetInvestmentEntriesListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 interface IFormInvestmentEntrySelectProps {
   name: string;
@@ -20,7 +20,7 @@ export const FormInvestmentEntrySelect = ({
   const { data: entryListQueryData, isFetching } = useGetInvestmentEntriesListDataQuery(
     {
       pagination: {
-        ...getRouterQuery({ type: ['PAGINATION'] }),
+        ...getPaginationQuery(),
         first: 20,
       },
       filter: {

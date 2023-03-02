@@ -6,7 +6,7 @@ import { InvestmentType, useGetInvestmentAccountsListDataQuery } from '@coop/cbs
 import { formatTableAddress } from '@coop/cbs/utils';
 import { Column, Table } from '@myra-ui/table';
 import { TablePopover } from '@myra-ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 const investmentAccountType = {
   [InvestmentType.Share]: 'Share',
@@ -20,7 +20,7 @@ export const InvestmentAccountsList = () => {
   const router = useRouter();
 
   const { data, isFetching } = useGetInvestmentAccountsListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const rowData = useMemo(() => data?.accounting?.investment?.listAccount?.edges ?? [], [data]);

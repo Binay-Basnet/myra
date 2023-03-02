@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useGetDepositProductSettingsListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface CbsSettingsFeatureDocumentsProps {}
@@ -33,7 +33,7 @@ export const CbsSettingsFeatureDocuments = () => {
   const { data, isLoading } = useGetDepositProductSettingsListQuery(
     {
       paginate: {
-        ...getRouterQuery({ type: ['PAGINATION'] }),
+        ...getPaginationQuery(),
         order: null,
       },
     },

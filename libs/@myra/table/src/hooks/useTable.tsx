@@ -32,6 +32,8 @@ export const useTable = <T extends Record<string, unknown>>({
 
     enableRowSelection: true,
 
+  
+
     data: data as T[],
     columns: (isStatic ? columnsWithoutRowSelection : columnsWithRowSelection) as ColumnDef<T>[],
 

@@ -21,19 +21,12 @@ type Pagination = {
   };
 };
 
-type RouterQueryType = 'PAGINATION' | 'SORTING';
-
-interface GetRouterQuery {
-  type: RouterQueryType[];
-  query?: ParsedUrlQuery;
-}
-
 const DEFAULT_ORDER = {
   arrange: Arrange.Desc,
   column: 'ID',
 };
 
-export const getRouterQuery = ({ query }: GetRouterQuery): Pagination => {
+export const getPaginationQuery = (query?: ParsedUrlQuery): Pagination => {
   try {
     const router = Router;
 

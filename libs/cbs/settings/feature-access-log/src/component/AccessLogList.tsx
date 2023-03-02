@@ -6,14 +6,14 @@ import { AUDIT_LOG_ICONS } from 'libs/cbs/settings/feature-audit-log/constants/A
 import { Box, Column, Drawer, Grid, GridItem, Icon, Table, Text } from '@myra-ui';
 
 import { useGetAccessLogListQuery } from '@coop/cbs/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 export const AccessLogList = () => {
   const { onClose, onOpen, isOpen } = useDisclosure();
   const [accessLogId, setAccessLogId] = useState('');
 
   const { data } = useGetAccessLogListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
   });
 
   const accessList = data?.accessLog?.raw?.data;

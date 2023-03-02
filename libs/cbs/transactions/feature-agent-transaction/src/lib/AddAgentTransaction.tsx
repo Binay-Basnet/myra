@@ -11,7 +11,7 @@ import {
 } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormAgentSelect, FormEditableTable } from '@coop/shared/form';
-import { featureCode, getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery } from '@coop/shared/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface AddAgentTransactionProps {}
@@ -82,7 +82,7 @@ export const AddAgentTransaction = () => {
 
   const { data: memberListQueryData } = useGetAgentAssignedMemberListDataQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       filter: {
         agentId,
       },

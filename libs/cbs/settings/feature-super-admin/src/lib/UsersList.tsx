@@ -8,7 +8,7 @@ import { useAppSelector, useGetSettingsUserListDataQuery } from '@coop/cbs/data-
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { ActionPopoverComponent } from '@coop/myra/components';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { NewUserModal } from '../components';
 
@@ -43,7 +43,7 @@ export const UsersList = () => {
     refetch: refetchUserList,
   } = useGetSettingsUserListDataQuery(
     {
-      paginate: getRouterQuery({ type: ['PAGINATION'] }),
+      paginate: getPaginationQuery(),
       filter: {
         query: searchTerm,
       },

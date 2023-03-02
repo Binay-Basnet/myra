@@ -7,7 +7,12 @@ import { Column, Table } from '@myra-ui/table';
 import { Filter_Mode, useGetAllTransactionsListQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { ROUTES } from '@coop/cbs/utils';
-import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface DepositListProps {}
@@ -19,7 +24,7 @@ export const AllTransactionsList = () => {
   const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetAllTransactionsListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    pagination: getPaginationQuery(),
     filter: {
       id: searchTerm,
       transactionId: searchTerm,

@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
-import { PopoverComponent } from '@coop/myra/components';
-import { Column, Table } from '@myra-ui/table';
 import { Box, Text } from '@myra-ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { Column, Table } from '@myra-ui/table';
+
+import { useGetMemberListQuery } from '@coop/cbs/data-access';
+import { PopoverComponent } from '@coop/myra/components';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const BookStatDetailPage = () => {
   const { t } = useTranslation();
@@ -13,10 +14,7 @@ export const BookStatDetailPage = () => {
   const router = useRouter();
 
   const { data, isFetching } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
+    pagination: getPaginationQuery(),
   });
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);

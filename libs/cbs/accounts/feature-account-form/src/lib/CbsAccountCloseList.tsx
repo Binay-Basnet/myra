@@ -6,7 +6,7 @@ import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { Filter_Mode, ObjState, useGetAccountTableListMinimalQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const CBSAccountCloseList = () => {
   const router = useRouter();
@@ -16,7 +16,7 @@ export const CBSAccountCloseList = () => {
 
   const { data, isLoading } = useGetAccountTableListMinimalQuery(
     {
-      paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+      paginate: getPaginationQuery(),
       filter: {
         objState: ObjState.Inactive,
         query: searchTerm,

@@ -16,7 +16,7 @@ import {
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormTextArea } from '@coop/shared/form';
-import { featureCode, getRouterQuery, getUrl, useTranslation } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery, getUrl, useTranslation } from '@coop/shared/utils';
 
 const LOAN_TAB_ITEMS = [
   {
@@ -75,7 +75,8 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
     router.query['before']
       ? {
           paginate: {
-            ...getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+            ...getPaginationQuery(),
+
             order: null,
           },
           filter: {
@@ -90,7 +91,8 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
         }
       : {
           paginate: {
-            ...getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+            ...getPaginationQuery(),
+
             order: null,
           },
           filter: {

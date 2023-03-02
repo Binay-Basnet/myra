@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -6,13 +6,18 @@ import { asyncToast, Box, Modal, PageHeader, TablePopover } from '@myra-ui';
 import { AvatarCell, Column, Table } from '@myra-ui/table';
 
 import {
-  ObjState,
   useDeleteDraftMutation,
   useGetGeneralMemberSettingsDataQuery,
+  useGetMemberFilterMappingQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
 import { formatTableAddress, localizedDate, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import {
+  featureCode,
+  getFilterQuery,
+  getPaginationQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { forms, Page } from './MemberLayout';
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
@@ -26,17 +31,16 @@ const memberTypeSlug = {
 
 export const MemberListPage = () => {
   const { t } = useTranslation();
-  // const { data: serviceCenterList } = useGetBranchListQuery({
-  //   paginate: { first: -1, after: '' },
-  // });
 
   const [ID, setID] = useState('');
   const [openModal, setOpenModal] = useState(false);
+  const { data: memberFilterData } = useGetMemberFilterMappingQuery();
   const { mutateAsync } = useDeleteDraftMutation();
 
   const onOpenModal = () => {
     setOpenModal(true);
   };
+
   const onCloseModal = () => {
     setOpenModal(false);
   };
@@ -44,7 +48,7 @@ export const MemberListPage = () => {
   const queryClient = useQueryClient();
 
   const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
+
   const objState = router?.query['objState'];
 
   const { data: memberTypeData } = useGetGeneralMemberSettingsDataQuery();
@@ -68,21 +72,13 @@ export const MemberListPage = () => {
 
   const { data, isFetching, refetch } = useGetMemberListQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-      filter: {
-        query: searchTerm,
-        objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-      },
+      pagination: getPaginationQuery(),
+      filter: getFilterQuery(),
     },
     {
       staleTime: 0,
-      enabled: searchTerm !== 'undefined',
     }
   );
-
-  React.useEffect(() => {
-    refetch();
-  }, []);
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
@@ -132,6 +128,7 @@ export const MemberListPage = () => {
       {
         header: t['memberListTableAddress'],
         accessorFn: (row) => formatTableAddress(row?.node?.address),
+
         meta: {
           width: '220px',
         },
@@ -144,17 +141,15 @@ export const MemberListPage = () => {
         },
       },
       {
+        id: 'serviceCenter',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branch,
         enableColumnFilter: true,
         meta: {
           width: '120px',
-          // filters: {
-          //   list: serviceCenterList?.settings?.general?.branch?.list?.edges?.map((e) => ({
-          //     label: e.node?.name as string,
-          //     value: e.node?.id as string,
-          //   })),
-          // },
+          filterMaps: {
+            list: memberFilterData?.members?.filterMapping?.serviceCenter || [],
+          },
         },
       },
 
@@ -260,7 +255,7 @@ export const MemberListPage = () => {
         },
       },
     ],
-    [t, objState]
+    [objState, t, memberFilterData?.members?.filterMapping?.serviceCenter, router]
   );
 
   const deleteMember = useCallback(async () => {
@@ -279,11 +274,13 @@ export const MemberListPage = () => {
       }),
     });
   }, [ID, mutateAsync]);
+
   const onCancel = () => {};
   return (
     <>
       <Box position="sticky" top="0" zIndex={3}>
         <PageHeader
+          showTabsInFilter
           heading={`Active Members - ${featureCode?.memberList}`}
           tabItems={MEMBER_TAB_ITEMS}
         />

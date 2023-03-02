@@ -8,7 +8,7 @@ import { Column, Table } from '@myra-ui/table';
 import { useGetValuatorListQuery, ValuatorEdge } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { formatAddress, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 const CBSSettingsValuatorPopover = ({ cell }: CellContext<ValuatorEdge, unknown>) => {
   const router = useRouter();
@@ -35,7 +35,7 @@ export const CbsSettingsFeatureValuatorList = () => {
   const router = useRouter();
 
   const { data, isFetching } = useGetValuatorListQuery({
-    paginate: getRouterQuery({ type: ['PAGINATION'] }),
+    paginate: getPaginationQuery(),
   });
 
   const rowData = useMemo<ValuatorEdge[]>(

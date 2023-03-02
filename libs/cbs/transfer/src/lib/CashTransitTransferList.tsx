@@ -12,7 +12,7 @@ import {
   useGetCashInTransitListQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { amountConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { CashInTransitTransferAproveModal } from '../components/cash-in-transit/CashInTransitTransferAproveModal';
 
@@ -43,7 +43,7 @@ export const CashTransitTransferList = () => {
 
   const { data, isFetching } = useGetCashInTransitListQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: getPaginationQuery(),
       transferType: (router.query['objState'] ??
         CashInTransitTransferType.Sent) as CashInTransitTransferType,
     },

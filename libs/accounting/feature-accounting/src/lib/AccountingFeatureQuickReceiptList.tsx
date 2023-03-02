@@ -8,7 +8,7 @@ import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureQuickReceiptListProps {}
@@ -19,10 +19,7 @@ export const AccountingFeatureQuickReceiptList = () => {
   const router = useRouter();
 
   const { data, isFetching } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
+    pagination: getPaginationQuery(),
   });
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
