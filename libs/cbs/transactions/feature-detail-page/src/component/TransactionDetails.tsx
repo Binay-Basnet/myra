@@ -161,7 +161,11 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailWithdrawSlipNo']}
-            subtitle={String(accountTransferDetailData?.withdrawnSlipNo)?.padStart(10, '0')}
+            subtitle={
+              accountTransferDetailData?.withdrawnBy === WithdrawWith.WithdrawSlip
+                ? String(accountTransferDetailData?.withdrawnSlipNo)?.padStart(10, '0')
+                : accountTransferDetailData?.withdrawnSlipNo
+            }
           />
           <DetailCardContent
             title={t['transDetailTransferAmount']}

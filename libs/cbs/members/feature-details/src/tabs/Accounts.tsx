@@ -14,11 +14,11 @@ export const Accounts = () => {
   const links = [
     {
       title: 'Account Open',
-      link: ROUTES.CBS_ACCOUNT_OPEN_ADD,
+      link: `${ROUTES.CBS_ACCOUNT_OPEN_ADD}?memberId=${router.query['id']}`,
     },
     {
       title: 'Account Close',
-      link: ROUTES.CBS_ACCOUNT_CLOSE_ADD,
+      link: ` ${ROUTES.CBS_ACCOUNT_CLOSE_ADD}?memberId=${router.query['id']}`,
     },
   ];
   const memberDetails = useGetMemberKymDetailsAccountsQuery({

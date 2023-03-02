@@ -524,8 +524,10 @@ export const AddWithdraw = () => {
                           'Withdraw Amount': amountConverter(result?.amount || 0),
                           Fine: amountConverter(result?.fine || '0'),
                           'Payment Mode': result?.paymentMode,
-                          'Withdraw by': `${result?.withdrawWith} (${
-                            result?.slipNo?.padStart(10, '0') ?? 'N/A'
+                          'Withdraw By': `${result?.withdrawWith} (${
+                            result?.withdrawWith === WithdrawWith.WithdrawSlip
+                              ? result?.slipNo?.padStart(10, '0') ?? 'N/A'
+                              : result?.slipNo ?? 'N/A'
                           })`,
                           'Withdrawn By': !isWithdrawOther
                             ? result?.withdrawnBy

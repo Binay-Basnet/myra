@@ -423,8 +423,10 @@ export const NewAccountTransfer = () => {
                           </Text>
                         ),
                         Date: localizedDate(result?.date),
-                        'Withdraw By': `${result?.withdrawWith}(${
-                          result?.slipNo?.padStart(10, '0') ?? 'N/A'
+                        'Withdraw By': `${result?.withdrawWith} (${
+                          result?.withdrawWith === WithdrawWith.WithdrawSlip
+                            ? result?.slipNo?.padStart(10, '0') ?? 'N/A'
+                            : result?.slipNo
                         })`,
                         'Transfer Type': result?.transferType
                           ? transferTypeObj[result.transferType]
