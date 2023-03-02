@@ -71,6 +71,13 @@ Runs the myra ebanking app
 yarn start:ebanking
 ```
 
+Runs the migration app
+
+```
+yarn start:migration
+```
+
+
 ## Existing problem:
 
 From package.json file I've removed emotion dependency.
