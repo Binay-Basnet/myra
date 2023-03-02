@@ -6,6 +6,7 @@ import { debounce } from 'lodash';
 import { MemberSelect, MemberSelectProps, Option } from '@myra-ui/forms';
 
 import {
+  Arrange,
   Filter_Mode,
   KymIndFormStateQuery,
   ObjState,
@@ -71,6 +72,10 @@ export const FormMemberSelect = ({
       pagination: {
         ...getRouterQuery({ type: ['PAGINATION'] }),
         first: 20,
+        order: {
+          arrange: Arrange.Asc,
+          column: 'ID',
+        },
       },
       filter: {
         query: IDMember,

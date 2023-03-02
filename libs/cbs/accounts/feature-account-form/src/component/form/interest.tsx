@@ -23,7 +23,7 @@ export const Interest = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const [triggerQuery, setTriggerQuery] = useState(false);
-  const { watch, setValue } = useFormContext();
+  const { watch, setValue, clearErrors } = useFormContext();
   const products = watch('productId');
 
   const poductDetails = useGetAccountOpenProductDetailsQuery(
@@ -50,6 +50,7 @@ export const Interest = () => {
   // }, [valueInput, setValue]);
 
   useEffect(() => {
+    clearErrors();
     if (router.pathname.includes('add')) {
       setValue('interestRate', defaultRate);
     }
@@ -64,8 +65,6 @@ export const Interest = () => {
       );
     }
   }, [defaultRate, interestAuth, ProductData]);
-
-  // console.log('test')
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">

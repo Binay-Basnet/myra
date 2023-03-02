@@ -5,7 +5,7 @@ import { useTransactionDetailHooks } from 'libs/cbs/transactions/feature-detail-
 
 import { Box, DetailPageHeader, SuccessPrint, SuccessPrintJornalVoucher, Text } from '@myra-ui';
 
-import { TransferType, useGetJournalVoucherDetailQuery } from '@coop/cbs/data-access';
+import { TransferType, useGetJournalVoucherDetailQuery, WithdrawWith } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
 
@@ -113,7 +113,9 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         Fine: amountConverter(withdrawDetailData?.fine || 0),
         'Payment Mode': withdrawDetailData?.paymentMode,
         'Withdraw By': `${withdrawDetailData?.withdrawWith} (${
-          withdrawDetailData?.chequeNo?.padStart(10, '0') ?? 'N/A'
+          withdrawDetailData?.withdrawWith === WithdrawWith.WithdrawSlip
+            ? withdrawDetailData?.chequeNo?.padStart(10, '0') ?? 'N/A'
+            : withdrawDetailData?.chequeNo
         })`,
         'Withdrawn By': withdrawDetailData?.withdrawnBy,
       };
@@ -129,7 +131,11 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           </Text>
         ),
         'Transaction Date': localizedDate(withdrawDetailData?.transactionDate),
-        'Withdraw By': `${withdrawDetailData?.withdrawWith} (${withdrawDetailData?.chequeNo})`,
+        'Withdraw By': `${withdrawDetailData?.withdrawWith} (${
+          withdrawDetailData?.withdrawWith === WithdrawWith.WithdrawSlip
+            ? withdrawDetailData?.chequeNo?.padStart(10, '0') ?? 'N/A'
+            : withdrawDetailData?.chequeNo
+        })`,
         'Transfer Amount': withdrawDetailData?.totalWithdrawnAmount,
       };
     }
@@ -146,8 +152,13 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           </Text>
         ),
         Date: localizedDate(accountTransferDetailData?.transactionDate),
+        // 'Withdraw By': `${accountTransferDetailData?.withdrawnBy} (${
+        //   accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
+        // })`,
         'Withdraw By': `${accountTransferDetailData?.withdrawnBy} (${
-          accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
+          accountTransferDetailData?.withdrawnBy === WithdrawWith.WithdrawSlip
+            ? accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
+            : accountTransferDetailData?.withdrawnSlipNo
         })`,
         'Transfer Type': accountTransferDetailData?.transferType
           ? transferTypeObj[accountTransferDetailData?.transferType]
@@ -166,7 +177,9 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         ),
         Date: localizedDate(accountTransferDetailData?.transactionDate),
         'Withdraw By': `${accountTransferDetailData?.withdrawnBy} (${
-          accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
+          accountTransferDetailData?.withdrawnBy === WithdrawWith.WithdrawSlip
+            ? accountTransferDetailData?.withdrawnSlipNo?.padStart(10, '0') ?? 'N/A'
+            : accountTransferDetailData?.withdrawnSlipNo
         })`,
         'Transfer Type': accountTransferDetailData?.transferType
           ? transferTypeObj[accountTransferDetailData?.transferType]

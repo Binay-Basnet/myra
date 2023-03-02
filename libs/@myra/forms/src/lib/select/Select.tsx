@@ -34,6 +34,8 @@ export interface SelectProps
     actionMeta: ActionMeta<SingleValue<SelectOption> | MultiValue<SelectOption>>
   ) => void;
   hasRadioOption?: boolean;
+  addItemHandler?: () => void;
+  addItemLabel?: string;
   __placeholder?: string;
 }
 
@@ -55,6 +57,8 @@ export const Select = ({
   name,
   isRequired,
   onChange,
+  addItemHandler,
+  addItemLabel,
   ...rest
 }: SelectProps) => {
   const { t } = useTranslation();
@@ -93,8 +97,8 @@ export const Select = ({
         isOptionDisabled={(option) => !!option.disabled}
         isClearable={false}
         onChange={multiOnChange}
-        chakraStyles={getChakraDefaultStyles(!!errorText)}
-        components={getComponents(hasRadioOption)}
+        chakraStyles={getChakraDefaultStyles(!!errorText, !!addItemHandler)}
+        components={getComponents(hasRadioOption, addItemHandler, addItemLabel)}
         {...rest}
       />
 

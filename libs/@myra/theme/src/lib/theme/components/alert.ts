@@ -42,69 +42,61 @@ function getBg(props: StyleFunctionProps): string {
   return mode(lightBg, darkBg)(props);
 }
 
-const variantDanger: PartsStyleFunction<typeof parts> = () => {
-  return {
-    container: {
-      bg: 'danger.0',
-      border: '1px',
-      borderColor: 'danger.500',
-    },
-    title: {
-      color: 'danger.500',
-    },
-    icon: {
-      color: 'danger.500',
-    },
-  };
-};
+const variantDanger: PartsStyleFunction<typeof parts> = () => ({
+  container: {
+    bg: 'danger.0',
+    border: '1px',
+    borderColor: 'danger.500',
+  },
+  title: {
+    color: 'danger.500',
+  },
+  icon: {
+    color: 'danger.500',
+  },
+});
 
-const variantWarning: PartsStyleFunction<typeof parts> = () => {
-  return {
-    container: {
-      bg: 'warning.0',
-      border: '1px',
-      borderColor: 'warning.900',
-    },
-    title: {
-      color: 'warning.900',
-    },
-    icon: {
-      color: 'warning.900',
-    },
-  };
-};
+const variantWarning: PartsStyleFunction<typeof parts> = () => ({
+  container: {
+    bg: 'warning.0',
+    border: '1px',
+    borderColor: 'warning.900',
+  },
+  title: {
+    color: 'warning.900',
+  },
+  icon: {
+    color: 'warning.900',
+  },
+});
 
-const variantInfo: PartsStyleFunction<typeof parts> = () => {
-  return {
-    container: {
-      bg: 'info.0',
-      border: '1px',
-      borderColor: 'info.900',
-    },
-    title: {
-      color: 'info.900',
-    },
-    icon: {
-      color: 'info.900',
-    },
-  };
-};
+const variantInfo: PartsStyleFunction<typeof parts> = () => ({
+  container: {
+    bg: 'info.0',
+    border: '1px',
+    borderColor: 'info.900',
+  },
+  title: {
+    color: 'info.900',
+  },
+  icon: {
+    color: 'info.900',
+  },
+});
 
-const variantSuccess: PartsStyleFunction<typeof parts> = () => {
-  return {
-    container: {
-      bg: 'success.0',
-      border: '1px',
-      borderColor: 'success.500',
-    },
-    title: {
-      color: 'success.500',
-    },
-    icon: {
-      color: 'success.500',
-    },
-  };
-};
+const variantSuccess: PartsStyleFunction<typeof parts> = () => ({
+  container: {
+    bg: 'success.0',
+    border: '1px',
+    borderColor: 'success.500',
+  },
+  title: {
+    color: 'success.500',
+  },
+  icon: {
+    color: 'success.500',
+  },
+});
 
 const variantSubtle: PartsStyleFunction<typeof parts> = (props) => {
   const { colorScheme: c } = props;

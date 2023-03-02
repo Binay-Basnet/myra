@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
@@ -48,6 +49,7 @@ import {
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {
+  AddMinorModal,
   DepositFrequency,
   FeesAndCharge,
   Interest,
@@ -112,6 +114,12 @@ export const AccountOpenNew = () => {
 
   const [mode, setMode] = useState('0');
 
+  const {
+    isOpen: isMinorModalOpen,
+    onToggle: onToggleMinorModal,
+    onClose: onCloseMinorModal,
+  } = useDisclosure();
+
   const [totalCharge, setTotalCharge] = useState<number>(0);
 
   const [fileList, setFileList] = useState<FileListType>({
@@ -154,6 +162,7 @@ export const AccountOpenNew = () => {
     },
   });
   const { getValues, watch, reset, setValue } = methods;
+
   const memberId = watch('memberId');
   const redirectPath = router.query['redirect'];
 
@@ -494,236 +503,252 @@ export const AccountOpenNew = () => {
   }, [redirectMemberId]);
 
   return (
-    <Container minW="container.xl" p="0" bg="white">
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title={`${t['newAccountOpen']} - ${featureCode?.newSavingAccountOpen}`} />
-      </Box>
-      <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
-        <Box
-          display="flex"
-          flexDirection="column"
-          w="100%"
-          borderRight="1px solid"
-          borderColor="border.layout"
-        >
-          {editLoading &&
-          minorListLoading &&
-          defaultAccountLoading &&
-          productLoading &&
-          !memberLoading &&
-          router.pathname.includes('edit') ? (
-            <Box display="flex" justifyContent="center" pt="100px">
-              <Loader />
-            </Box>
-          ) : (
-            <FormProvider {...methods}>
-              <form>
-                <Box
-                  display={mode === '0' ? 'flex' : 'none'}
-                  flexDirection="column"
-                  gap="s32"
-                  p="s16"
-                  w="100%"
-                >
-                  <FormMemberSelect
-                    isRequired
-                    name="memberId"
-                    label="Member"
-                    isDisabled={!!redirectMemberId || !!routeId}
-                  />
-                  <FormSelect
-                    name="productId"
-                    label={t['accProductName']}
-                    isLoading={isFetching}
-                    options={productOptions}
-                  />
-                  {errors && (
-                    <Alert
-                      status="error"
-                      title="Error"
-                      bottomButtonlabel="View All Criteria"
-                      bottomButtonHandler={() => setShowCriteria((prev) => !prev)}
-                      hideCloseIcon
-                    >
-                      <Box pt="s8">
-                        <ul>
-                          {errors?.error?.map((item) => (
-                            <li key={item}>
-                              {' '}
-                              <Text fontWeight="Regular" fontSize="s2">
-                                {item}
-                              </Text>
-                            </li>
-                          ))}
-                        </ul>
-                      </Box>
-                    </Alert>
-                  )}
-                  {showCriteria && (
-                    <Box border="1px solid" borderColor="border.layout" borderRadius="br2" p="s16">
-                      <CriteriaCard productId={productID} />
-                    </Box>
-                  )}
-                  {memberId && productID && !errors && (
-                    <Box display="flex" flexDirection="column" gap="s32" w="100%">
-                      <FormInput name="accountName" label="Account Name" />
-                      {ProductData?.isForMinors && (
-                        <FormSelect name="minor" label="Minor" options={minorOptions} isRequired />
-                      )}
-                      {productType !== NatureOfDepositProduct?.Current &&
-                        productType !== NatureOfDepositProduct?.Saving && <Tenure />}
-                      <Divider />
-                      {productType !== NatureOfDepositProduct?.Current && <Interest />}
-                      {(productType === NatureOfDepositProduct?.RecurringSaving ||
-                        (productType === NatureOfDepositProduct.Saving && isMandatoryFlag)) && (
-                        <DepositFrequency />
-                      )}
-                      {(productType === NatureOfDepositProduct?.TermSavingOrFd ||
-                        productType === NatureOfDepositProduct?.RecurringSaving) && (
-                        <Box display="flex" flexDirection="column" gap="s16">
-                          <Box display="flex" flexDirection="column" gap="s4">
-                            <Text fontWeight="500" fontSize="r1">
-                              Nominee Account
-                            </Text>
-                            <Text fontWeight="400" fontSize="s2">
-                              If the member does not specify particular account for deposit, this
-                              mapped account will be set globally. Normally this is a compulsory
-                              account type.
-                            </Text>
-                          </Box>
-
-                          <FormSelect
-                            name="defaultAmountDepositAccountName"
-                            options={defaultDataOptions}
-                          />
-                        </Box>
-                      )}
-
-                      {(ProductData?.alternativeChannels ||
-                        ProductData?.atmFacility ||
-                        ProductData?.chequeIssue) && (
-                        <Box display="flex" flexDirection="column" gap="s16">
-                          <Text fontWeight="600" fontSize="r1">
-                            Other Services
-                          </Text>
-                          <Box display="flex" flexDirection="column" gap="s8">
-                            {ProductData?.atmFacility && (
-                              <FormCheckbox name="atmFacility" label="ATM Facility" />
-                            )}
-                            {ProductData?.chequeIssue && (
-                              <FormCheckbox name="chequeFacility" label="Cheque Facility" />
-                            )}
-                          </Box>
-                        </Box>
-                      )}
-                      <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
-                        <FormAmountInput
-                          type="number"
-                          name="initialDepositAmount"
-                          label="Initial Deposit Amount"
-                        />
-                      </Grid>
-                      {/* <Agent /> */}
-                      <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                        <FormAgentSelect
-                          name="agentId"
-                          label="Market Representative"
-                          currentBranchOnly
-                        />
-                      </Grid>
-                      <FeesAndCharge setTotalCharge={setTotalCharge} />
-                    </Box>
-                  )}
-                </Box>
-                <Box
-                  display={mode === '1' ? 'flex' : 'none'}
-                  flexDirection="column"
-                  gap="s32"
-                  p="s16"
-                  w="100%"
-                >
-                  <Payment mode={Number(mode)} totalAmount={totalDeposit} />
-                </Box>
-              </form>
-            </FormProvider>
-          )}
-          {memberId && productID && !errors && (
-            <Box display={mode === '0' ? 'flex' : 'none'} flexDirection="column">
-              <RequiredDocuments
-                setFileList={setFileList}
-                id={id}
-                productId={productID}
-                memberId={memberId}
-              />
-            </Box>
-          )}
+    <>
+      <Container minW="container.xl" p="0" bg="white">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
+          <FormHeader title={`${t['newAccountOpen']} - ${featureCode?.newSavingAccountOpen}`} />
         </Box>
+        <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
+          <Box
+            display="flex"
+            flexDirection="column"
+            w="100%"
+            borderRight="1px solid"
+            borderColor="border.layout"
+          >
+            {editLoading &&
+            minorListLoading &&
+            defaultAccountLoading &&
+            productLoading &&
+            !memberLoading &&
+            router.pathname.includes('edit') ? (
+              <Box display="flex" justifyContent="center" pt="100px">
+                <Loader />
+              </Box>
+            ) : (
+              <FormProvider {...methods}>
+                <form>
+                  <Box
+                    display={mode === '0' ? 'flex' : 'none'}
+                    flexDirection="column"
+                    gap="s32"
+                    p="s16"
+                    w="100%"
+                  >
+                    <FormMemberSelect
+                      isRequired
+                      name="memberId"
+                      label="Member"
+                      isDisabled={!!redirectMemberId || !!routeId}
+                    />
+                    <FormSelect
+                      name="productId"
+                      label={t['accProductName']}
+                      isLoading={isFetching}
+                      options={productOptions}
+                    />
+                    {errors && (
+                      <Alert
+                        status="error"
+                        title="Error"
+                        bottomButtonlabel="View All Criteria"
+                        bottomButtonHandler={() => setShowCriteria((prev) => !prev)}
+                        hideCloseIcon
+                      >
+                        <Box pt="s8">
+                          <ul>
+                            {errors?.error?.map((item) => (
+                              <li key={item}>
+                                {' '}
+                                <Text fontWeight="400" fontSize="s2">
+                                  {item}
+                                </Text>
+                              </li>
+                            ))}
+                          </ul>
+                        </Box>
+                      </Alert>
+                    )}
+                    {showCriteria && (
+                      <Box
+                        border="1px solid"
+                        borderColor="border.layout"
+                        borderRadius="br2"
+                        p="s16"
+                      >
+                        <CriteriaCard productId={productID} />
+                      </Box>
+                    )}
+                    {memberId && productID && !errors && (
+                      <Box display="flex" flexDirection="column" gap="s32" w="100%">
+                        <FormInput name="accountName" label="Account Name" />
+                        {ProductData?.isForMinors && (
+                          <FormSelect
+                            name="minor"
+                            label="Minor"
+                            options={minorOptions}
+                            addItemLabel="Add Minor"
+                            addItemHandler={onToggleMinorModal}
+                            isRequired
+                          />
+                        )}
+                        {productType !== NatureOfDepositProduct?.Current &&
+                          productType !== NatureOfDepositProduct?.Saving && <Tenure />}
+                        <Divider />
+                        {productType !== NatureOfDepositProduct?.Current && <Interest />}
+                        {(productType === NatureOfDepositProduct?.RecurringSaving ||
+                          (productType === NatureOfDepositProduct.Saving && isMandatoryFlag)) && (
+                          <DepositFrequency />
+                        )}
+                        {(productType === NatureOfDepositProduct?.TermSavingOrFd ||
+                          productType === NatureOfDepositProduct?.RecurringSaving) && (
+                          <Box display="flex" flexDirection="column" gap="s16">
+                            <Box display="flex" flexDirection="column" gap="s4">
+                              <Text fontWeight="500" fontSize="r1">
+                                Nominee Account
+                              </Text>
+                              <Text fontWeight="400" fontSize="s2">
+                                If the member does not specify particular account for deposit, this
+                                mapped account will be set globally. Normally this is a compulsory
+                                account type.
+                              </Text>
+                            </Box>
 
-        {memberId && (
-          <Box position="sticky" top="170px" right="0" w="320px">
-            <Box display="flex" flexDirection="column" gap="s16">
-              <MemberCard
-                memberDetails={{
-                  name: memberDetailData?.name,
-                  avatar: memberDetailData?.profilePicUrl ?? '',
-                  memberID: memberDetailData?.id,
-                  code: memberDetailData?.code,
-                  gender: memberDetailData?.gender,
-                  age: memberDetailData?.age,
-                  maritalStatus: memberDetailData?.maritalStatus,
-                  dateJoined: memberDetailData?.dateJoined?.en,
-                  phoneNo: memberDetailData?.contact,
-                  email: memberDetailData?.email,
-                  address: memberDetailData?.address,
-                }}
-                signaturePath={memberSignatureUrl}
-                citizenshipPath={memberCitizenshipUrl}
-              />
-            </Box>
-            <Box p="s16">{productID && <ProductCard productId={productID} />}</Box>
-            {productID && (
-              <Box p="s16">
-                <AccordianComponent productId={productID} />
+                            <FormSelect
+                              name="defaultAmountDepositAccountName"
+                              options={defaultDataOptions}
+                            />
+                          </Box>
+                        )}
+
+                        {(ProductData?.alternativeChannels ||
+                          ProductData?.atmFacility ||
+                          ProductData?.chequeIssue) && (
+                          <Box display="flex" flexDirection="column" gap="s16">
+                            <Text fontWeight="600" fontSize="r1">
+                              Other Services
+                            </Text>
+                            <Box display="flex" flexDirection="column" gap="s8">
+                              {ProductData?.atmFacility && (
+                                <FormCheckbox name="atmFacility" label="ATM Facility" />
+                              )}
+                              {ProductData?.chequeIssue && (
+                                <FormCheckbox name="chequeFacility" label="Cheque Facility" />
+                              )}
+                            </Box>
+                          </Box>
+                        )}
+                        <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
+                          <FormAmountInput
+                            type="number"
+                            name="initialDepositAmount"
+                            label="Initial Deposit Amount"
+                          />
+                        </Grid>
+                        {/* <Agent /> */}
+                        <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
+                          <FormAgentSelect
+                            name="agentId"
+                            label="Market Representative"
+                            currentBranchOnly
+                          />
+                        </Grid>
+                        <FeesAndCharge setTotalCharge={setTotalCharge} />
+                      </Box>
+                    )}
+                  </Box>
+                  <Box
+                    display={mode === '1' ? 'flex' : 'none'}
+                    flexDirection="column"
+                    gap="s32"
+                    p="s16"
+                    w="100%"
+                  >
+                    <Payment mode={Number(mode)} totalAmount={totalDeposit} />
+                  </Box>
+                </form>
+              </FormProvider>
+            )}
+            {memberId && productID && !errors && (
+              <Box display={mode === '0' ? 'flex' : 'none'} flexDirection="column">
+                <RequiredDocuments
+                  setFileList={setFileList}
+                  id={id}
+                  productId={productID}
+                  memberId={memberId}
+                />
               </Box>
             )}
           </Box>
-        )}
-      </Box>
-      <Box position="sticky" bottom={0}>
-        <Box>
-          {mode === '0' && (
-            <FormFooter
-              status={
-                <Box display="flex" gap="s32">
-                  <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
-                    Total Deposit Amount
-                  </Text>
-                  <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                    {totalDeposit ?? '---'}
-                  </Text>
+
+          {memberId && (
+            <Box position="sticky" top="170px" right="0" w="320px">
+              <Box display="flex" flexDirection="column" gap="s16">
+                <MemberCard
+                  memberDetails={{
+                    name: memberDetailData?.name,
+                    avatar: memberDetailData?.profilePicUrl ?? '',
+                    memberID: memberDetailData?.id,
+                    code: memberDetailData?.code,
+                    gender: memberDetailData?.gender,
+                    age: memberDetailData?.age,
+                    maritalStatus: memberDetailData?.maritalStatus,
+                    dateJoined: memberDetailData?.dateJoined?.en,
+                    phoneNo: memberDetailData?.contact,
+                    email: memberDetailData?.email,
+                    address: memberDetailData?.address,
+                  }}
+                  signaturePath={memberSignatureUrl}
+                  citizenshipPath={memberCitizenshipUrl}
+                />
+              </Box>
+              <Box p="s16">{productID && <ProductCard productId={productID} />}</Box>
+              {productID && (
+                <Box p="s16">
+                  <AccordianComponent productId={productID} />
                 </Box>
-              }
-              isMainButtonDisabled={
-                !!errors ||
-                !memberId ||
-                !productID ||
-                !accountName ||
-                (isForMinors && !minorselectedValue)
-              }
-              mainButtonLabel={totalDeposit === 0 ? 'Open Account' : 'Proceed Transaction'}
-              mainButtonHandler={totalDeposit === 0 ? submitForm : proceedToPaymentHandler}
-            />
-          )}
-          {mode === '1' && (
-            <FormFooter
-              status={<Button onClick={previousButtonHandler}> Previous</Button>}
-              mainButtonLabel="Confirm Payment"
-              mainButtonHandler={submitForm}
-              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
-            />
+              )}
+            </Box>
           )}
         </Box>
-      </Box>
-    </Container>
+        <Box position="sticky" bottom={0}>
+          <Box>
+            {mode === '0' && (
+              <FormFooter
+                status={
+                  <Box display="flex" gap="s32">
+                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
+                      Total Deposit Amount
+                    </Text>
+                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
+                      {totalDeposit ?? '---'}
+                    </Text>
+                  </Box>
+                }
+                isMainButtonDisabled={
+                  !!errors ||
+                  !memberId ||
+                  !productID ||
+                  !accountName ||
+                  (isForMinors && !minorselectedValue)
+                }
+                mainButtonLabel={totalDeposit === 0 ? 'Open Account' : 'Proceed Transaction'}
+                mainButtonHandler={totalDeposit === 0 ? submitForm : proceedToPaymentHandler}
+              />
+            )}
+            {mode === '1' && (
+              <FormFooter
+                status={<Button onClick={previousButtonHandler}> Previous</Button>}
+                mainButtonLabel="Confirm Payment"
+                mainButtonHandler={submitForm}
+                isMainButtonDisabled={checkIsSubmitButtonDisabled()}
+              />
+            )}
+          </Box>
+        </Box>
+      </Container>
+
+      <AddMinorModal isOpen={isMinorModalOpen} onClose={onCloseMinorModal} memberId={memberId} />
+    </>
   );
 };
