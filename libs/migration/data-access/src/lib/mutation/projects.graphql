@@ -15,3 +15,12 @@ mutation setMappingData($input: [LedgerMappingInput]!, $dbName: String!) {
     }
   }
 }
+
+mutation startTransform($input: Transform!) {
+  protectedMutation {
+    startTransform(input: $input) {
+      status
+      data
+    }
+  }
+}

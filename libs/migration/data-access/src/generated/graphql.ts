@@ -192,6 +192,14 @@ export type SetMappingDataMutation = {
   protectedMutation: { sendMappingData: { status: string; data?: Array<string | null> | null } };
 };
 
+export type StartTransformMutationVariables = Exact<{
+  input: Transform;
+}>;
+
+export type StartTransformMutation = {
+  protectedMutation: { startTransform: { status: string; data?: Array<string | null> | null } };
+};
+
 export type GetProjectsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetProjectsQuery = { protectedQuery: { getProjects: Array<string | null> } };
@@ -223,6 +231,22 @@ export type GetMappingDataQuery = {
       data?: Array<{ newCode: string; oldCode: string; name: string; row: string } | null> | null;
     };
   };
+};
+
+export type GetExtractionDataQueryVariables = Exact<{
+  dbName: Scalars['String'];
+}>;
+
+export type GetExtractionDataQuery = {
+  protectedQuery: { getExtractionData: { status: string; data?: Array<string | null> | null } };
+};
+
+export type GetTransformationDataQueryVariables = Exact<{
+  dbName: Scalars['String'];
+}>;
+
+export type GetTransformationDataQuery = {
+  protectedQuery: { getTransformationData: { status: string; data?: Array<string | null> | null } };
 };
 
 export const SetAuthDocument = `
@@ -307,6 +331,29 @@ export const useSetMappingDataMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetMappingDataMutation, SetMappingDataMutationVariables>(SetMappingDataDocument),
     options
   );
+export const StartTransformDocument = `
+    mutation startTransform($input: Transform!) {
+  protectedMutation {
+    startTransform(input: $input) {
+      status
+      data
+    }
+  }
+}
+    `;
+export const useStartTransformMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    StartTransformMutation,
+    TError,
+    StartTransformMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<StartTransformMutation, TError, StartTransformMutationVariables, TContext>(
+    ['startTransform'],
+    useAxios<StartTransformMutation, StartTransformMutationVariables>(StartTransformDocument),
+    options
+  );
 export const GetProjectsDocument = `
     query getProjects {
   protectedQuery {
@@ -375,5 +422,47 @@ export const useGetMappingDataQuery = <TData = GetMappingDataQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const GetExtractionDataDocument = `
+    query getExtractionData($dbName: String!) {
+  protectedQuery {
+    getExtractionData(dbName: $dbName) {
+      status
+      data
+    }
+  }
+}
+    `;
+export const useGetExtractionDataQuery = <TData = GetExtractionDataQuery, TError = unknown>(
+  variables: GetExtractionDataQueryVariables,
+  options?: UseQueryOptions<GetExtractionDataQuery, TError, TData>
+) =>
+  useQuery<GetExtractionDataQuery, TError, TData>(
+    ['getExtractionData', variables],
+    useAxios<GetExtractionDataQuery, GetExtractionDataQueryVariables>(
+      GetExtractionDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetTransformationDataDocument = `
+    query getTransformationData($dbName: String!) {
+  protectedQuery {
+    getTransformationData(dbName: $dbName) {
+      status
+      data
+    }
+  }
+}
+    `;
+export const useGetTransformationDataQuery = <TData = GetTransformationDataQuery, TError = unknown>(
+  variables: GetTransformationDataQueryVariables,
+  options?: UseQueryOptions<GetTransformationDataQuery, TError, TData>
+) =>
+  useQuery<GetTransformationDataQuery, TError, TData>(
+    ['getTransformationData', variables],
+    useAxios<GetTransformationDataQuery, GetTransformationDataQueryVariables>(
+      GetTransformationDataDocument
+    ).bind(null, variables),
     options
   );
