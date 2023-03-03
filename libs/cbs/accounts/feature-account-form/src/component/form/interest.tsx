@@ -18,6 +18,10 @@ const radioGroupdata = [
     label: 'Board Authority',
     value: InterestAuthority?.Board,
   },
+  {
+    label: 'Not Applicable',
+    value: 'Not Applicable',
+  },
 ];
 export const Interest = () => {
   const { t } = useTranslation();
@@ -79,7 +83,7 @@ export const Interest = () => {
               type="number"
               label={t['accountOpenInterestRate']}
               textAlign="right"
-              isDisabled={!interestAuth}
+              isDisabled={!interestAuth || interestAuth === 'Not Applicable'}
               rules={{
                 max: {
                   value: maxValue,
@@ -98,15 +102,17 @@ export const Interest = () => {
             />
           </InputGroupContainer>
 
-          <Box display="flex" flexDirection="row" justifyContent="space-between">
+          <Box display="flex" flexDirection="row" justifyContent="space-between" gap="s24">
             <FormRadioGroup name="interestAuthority" options={radioGroupdata} direction="row" />
           </Box>
+
           {interestAuth && (
             <Box display="flex" flexDirection="column" gap="s8">
               <Text fontWeight="500" fontSize="s3">
                 {' '}
                 Authority Document
               </Text>
+
               <Box w="125px">
                 {' '}
                 <FormFileInput name="interestDoc" size="md" />{' '}
