@@ -10,7 +10,12 @@ import {
 } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormNumberInput } from '@coop/shared/form';
-import { amountConverter, useDebounce, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  amountToWordsConverter,
+  useDebounce,
+  useTranslation,
+} from '@coop/shared/utils';
 
 type IPurchaseInfo = {
   totalAmount: number;
@@ -112,14 +117,24 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
                   );
                 })}
 
-              <GridItem display="flex" justifyContent="space-between" alignItems="center">
+              <GridItem display="flex" justifyContent="space-between">
                 <Text color="neutralLightColor.Gray-80" fontWeight="SemiBold" fontSize="s3">
                   {t['sharePurchaseTotalAmount']}
                 </Text>
 
-                <Text p="s12" color="neutralLightColor.Gray-80" fontWeight="SemiBold" fontSize="r1">
-                  {t['rs']} {amountConverter(totalAmount)}
-                </Text>
+                <Box display="flex" flexDirection="column" gap="s8">
+                  <Text
+                    p="s12"
+                    color="neutralLightColor.Gray-80"
+                    fontWeight="SemiBold"
+                    fontSize="r1"
+                  >
+                    {t['rs']} {amountConverter(totalAmount)}
+                  </Text>
+                  <Text p="s12" color="neutralLightColor.Gray-80" fontSize="r1" fontStyle="italic">
+                    {amountToWordsConverter(totalAmount)}
+                  </Text>
+                </Box>
               </GridItem>
             </FieldCardComponents>
           ) : null}

@@ -163,7 +163,6 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
             </GridItem>
 
             <FormInput
-              isRequired
               name="openingPayment.bankVoucher.voucherId"
               label={t['addDepositVoucherId']}
             />
