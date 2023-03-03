@@ -422,7 +422,7 @@ export const AccountOpenNew = () => {
       depositFrequencyWeekly: values?.depositFrequencyWeekly
         ? values?.depositFrequencyWeekly
         : null,
-      interestRate:
+      interestAuthority:
         values?.interestAuthority === 'Not Applicable' ? null : values?.interestAuthority,
       accountDocuments: tempDocuments,
     };
