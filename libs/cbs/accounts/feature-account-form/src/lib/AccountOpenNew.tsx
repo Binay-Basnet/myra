@@ -422,6 +422,8 @@ export const AccountOpenNew = () => {
       depositFrequencyWeekly: values?.depositFrequencyWeekly
         ? values?.depositFrequencyWeekly
         : null,
+      interestAuthority:
+        values?.interestAuthority === 'Not Applicable' ? null : values?.interestAuthority,
       accountDocuments: tempDocuments,
     };
 
