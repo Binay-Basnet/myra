@@ -26,6 +26,7 @@ import {
   DepositLoanAccountInput,
   DepositPaymentType,
   Id_Type,
+  InterestAuthority,
   NatureOfDepositProduct,
   useGetAccountOpenEditDataQuery,
   useGetAccountOpenMinorListQuery,
@@ -97,9 +98,13 @@ type CustomDepositInput = Omit<DepositInput, 'cash'> & {
     | null;
 };
 
-type CustomDepositLoanAccountInput = Omit<DepositLoanAccountInput, 'openingPayment'> & {
+type CustomDepositLoanAccountInput = Omit<
+  DepositLoanAccountInput,
+  'openingPayment' | 'interestAuthority'
+> & {
   // tenure?: FrequencyTenure | null | undefined;
   openingPayment: CustomDepositInput;
+  interestAuthority?: InterestAuthority | 'Not Applicable';
 };
 
 const accountTypes = {
@@ -154,6 +159,7 @@ export const AccountOpenNew = () => {
     mode: 'onChange',
 
     defaultValues: {
+      interestAuthority: 'Not Applicable',
       openingPayment: {
         payment_type: DepositPaymentType.Cash,
         cash: { disableDenomination: true },

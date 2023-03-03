@@ -16,6 +16,7 @@ import {
 } from '@myra-ui';
 
 import {
+  InterestAuthority,
   LoanAccountInput,
   NatureOfDepositProduct,
   useGetIndividualMemberDetails,
@@ -55,6 +56,12 @@ import { LoanPaymentSchedule } from '../components/LoanPaymentSchedule';
 import { LoanProductContext, useLoanProductDetails } from '../hooks/useLoanProduct';
 import { useLoanProductErrors } from '../hooks/useLoanProductListErrors';
 
+type CustomLoanAccountInput = Omit<LoanAccountInput, 'interestAuthority'> & {
+  // tenure?: FrequencyTenure | null | undefined;
+
+  interestAuthority?: InterestAuthority | 'Not Applicable';
+};
+
 export const NewLoanApplication = () => {
   const router = useRouter();
   const loanApplicationId = router.query['id'] as string;
@@ -64,8 +71,11 @@ export const NewLoanApplication = () => {
   const [showCriteria, setShowCriteria] = useState(false);
   const [triggerAccountlist, setTriggerAccountList] = useState(false);
 
-  const methods = useForm<LoanAccountInput>({
+  const methods = useForm<CustomLoanAccountInput>({
     mode: 'onChange',
+    defaultValues: {
+      interestAuthority: 'Not Applicable',
+    },
   });
   const { watch, resetField, setValue } = methods;
 
@@ -105,6 +115,10 @@ export const NewLoanApplication = () => {
             id: responseId.newId,
             data: {
               ...methods.getValues(),
+              interestAuthority:
+                methods?.getValues()?.interestAuthority === 'Not Applicable'
+                  ? null
+                  : (methods.getValues()?.interestAuthority as InterestAuthority),
               gurantee_details: methods
                 .getValues()
                 ?.gurantee_details?.map((col) => omit(col, 'index')),
@@ -131,6 +145,11 @@ export const NewLoanApplication = () => {
           id: id as string,
           data: {
             ...methods.getValues(),
+            interestAuthority:
+              methods?.getValues()?.interestAuthority === 'Not Applicable'
+                ? null
+                : (methods.getValues()?.interestAuthority as InterestAuthority),
+
             gurantee_details: methods
               .getValues()
               ?.gurantee_details?.map((col) => omit(col, 'index')),
@@ -214,6 +233,9 @@ export const NewLoanApplication = () => {
         ...loanApplication,
         collateralData: loanApplication.collateralData ?? [],
         gurantee_details: loanApplication.gurantee_details ?? [],
+        interestAuthority: !loanApplication?.interestAuthority
+          ? 'Not Applicable'
+          : loanApplication?.interestAuthority,
       });
     }
   }, [id, isLoanFetching, loanApplication, methods]);

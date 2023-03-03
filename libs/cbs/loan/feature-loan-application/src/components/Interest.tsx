@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { InterestAuthority, LoanAccountInput } from '@coop/cbs/data-access';
+import { Alert, Box, Text } from '@myra-ui';
+
+import { InterestAuthority } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Alert, Box, Text } from '@myra-ui';
 
 import { useLoanProductContext } from '../hooks/useLoanProduct';
 
@@ -18,18 +19,23 @@ const radioGroupdata = [
     label: 'Board Authority',
     value: InterestAuthority?.Board,
   },
+  {
+    label: 'Not Applicable',
+    value: 'Not Applicable',
+  },
 ];
 
 export const Interest = () => {
   const router = useRouter();
   const loanApplicationId = router.query['id'] as string;
-  const { watch, setValue } = useFormContext<LoanAccountInput>();
+  const { watch, setValue, clearErrors } = useFormContext();
 
   const { product } = useLoanProductContext();
 
   const interestAuth = watch('interestAuthority');
 
   const defaultInput = Number(product?.interest?.defaultRate);
+  const [minValue, setMinValue] = useState(Number(product?.interest?.defaultRate));
 
   useEffect(() => {
     if (!loanApplicationId) {
@@ -37,10 +43,25 @@ export const Interest = () => {
     }
   }, [defaultInput]);
 
-  const minRate =
-    interestAuth === InterestAuthority.Board
-      ? Number(product?.interest?.defaultRate) - Number(product?.interest?.boardAuthority)
-      : Number(product?.interest?.defaultRate) - Number(product?.interest?.ceoAuthority);
+  // const minRate =
+  //   interestAuth === InterestAuthority.Board
+  //     ? Number(product?.interest?.defaultRate) - Number(product?.interest?.boardAuthority)
+  //     : Number(product?.interest?.defaultRate) - Number(product?.interest?.ceoAuthority);
+
+  useEffect(() => {
+    clearErrors();
+    if (router.pathname.includes('add')) {
+      setValue('intrestRate', defaultInput);
+    }
+    if (interestAuth === InterestAuthority.Board) {
+      setMinValue(
+        Number(product?.interest?.defaultRate) - Number(product?.interest?.boardAuthority)
+      );
+    }
+    if (interestAuth === InterestAuthority?.Ceo) {
+      setMinValue(Number(product?.interest?.defaultRate) - Number(product?.interest?.ceoAuthority));
+    }
+  }, [defaultInput, interestAuth, product]);
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -55,14 +76,14 @@ export const Interest = () => {
               name="intrestRate"
               type="number"
               textAlign="right"
-              isDisabled={!interestAuth}
+              isDisabled={!interestAuth || interestAuth === 'Not Applicable'}
               rules={{
                 max: {
                   value: defaultInput,
                   message: 'Interest Rate is invalid',
                 },
                 min: {
-                  value: minRate,
+                  value: minValue,
                   message: 'Interest Rate is invalid',
                 },
               }}
