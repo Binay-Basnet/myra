@@ -1,10 +1,16 @@
 import { IconType } from 'react-icons';
-import { AiOutlineSend } from 'react-icons/ai';
-import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
-import { ImStack } from 'react-icons/im';
-import { IoIosList } from 'react-icons/io';
-import { IoCubeOutline, IoMailUnreadOutline, IoPerson, IoPrismOutline } from 'react-icons/io5';
-import { TbMailForward } from 'react-icons/tb';
+import {
+  FiBox,
+  FiCreditCard,
+  FiDisc,
+  FiFileText,
+  FiLayers,
+  FiMessageSquare,
+  FiRepeat,
+  FiSend,
+  FiTrendingUp,
+  FiUser,
+} from 'react-icons/fi';
 
 import { APP_NAVS, Page } from './NAV';
 
@@ -34,14 +40,14 @@ type Nodata = Record<
 
 export const EMPTYSTATE: Nodata = {
   MEMBERS: {
-    icon: IoPerson,
+    icon: FiUser,
     title: 'Member',
     subtitle: '',
     buttonLabel: '',
     docLink: 'https://docs.migration.myraerp.com/docs/CBS/Member/member_add',
   },
   SHARE: {
-    icon: IoCubeOutline,
+    icon: FiTrendingUp,
     title: 'Share',
     subtitle: '',
     buttonLabel: '',
@@ -49,7 +55,7 @@ export const EMPTYSTATE: Nodata = {
     buttonLink: APP_NAVS.CBS.menus.SHARE?.forms,
   },
   SAVINGS: {
-    icon: ImStack,
+    icon: FiLayers,
     title: 'Savings',
     subtitle: '',
     buttonLabel: '',
@@ -57,7 +63,7 @@ export const EMPTYSTATE: Nodata = {
     buttonLink: APP_NAVS.CBS.menus.SAVINGS?.forms,
   },
   LOAN: {
-    icon: BsArrowLeftRight,
+    icon: FiBox,
     title: 'Loan',
     subtitle: '',
     buttonLabel: '',
@@ -65,7 +71,7 @@ export const EMPTYSTATE: Nodata = {
     buttonLink: APP_NAVS.CBS.menus.LOAN?.forms,
   },
   TRANSACTIONS: {
-    icon: IoIosList,
+    icon: FiSend,
     title: 'Transactions',
     subtitle: '',
     buttonLabel: '',
@@ -74,7 +80,7 @@ export const EMPTYSTATE: Nodata = {
   },
 
   TRANSFERS: {
-    icon: AiOutlineSend,
+    icon: FiRepeat,
     title: 'Transfers',
     subtitle: '',
     buttonLabel: '',
@@ -82,14 +88,14 @@ export const EMPTYSTATE: Nodata = {
     buttonLink: APP_NAVS.CBS.menus.TRANSFERS?.forms,
   },
   REPORTS: {
-    icon: BsFileText,
+    icon: FiMessageSquare,
     title: 'Reports',
     subtitle: '',
     buttonLabel: '',
     docLink: 'https://docs.migration.myraerp.com/docs/CBS/Reports/',
   },
   WITHDRAW_SLIP: {
-    icon: TbMailForward,
+    icon: FiCreditCard,
     title: 'Withdraw slip',
     subtitle: '',
     buttonLabel: '',
@@ -98,14 +104,14 @@ export const EMPTYSTATE: Nodata = {
     buttonLink: APP_NAVS.CBS.menus.WITHDRAW_SLIP?.forms,
   },
   REQUESTS: {
-    icon: IoMailUnreadOutline,
+    icon: FiFileText,
     title: 'Requests',
     subtitle: '',
     buttonLabel: '',
     docLink: 'https://docs.migration.myraerp.com/docs/CBS/Requests/',
   },
   OTHERS: {
-    icon: IoPrismOutline,
+    icon: FiDisc,
     title: 'Reports',
     subtitle: '',
     buttonLabel: '',

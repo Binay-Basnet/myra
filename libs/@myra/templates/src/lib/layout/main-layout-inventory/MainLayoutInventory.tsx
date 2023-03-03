@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaShapes, FaTools, FaUserFriends } from 'react-icons/fa';
+import { FiList, FiMap, FiPackage, FiTruck } from 'react-icons/fi';
 import { Box } from '@chakra-ui/react';
 
 import { TabMenu } from '@myra-ui/components';
@@ -22,7 +22,7 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
           tabs={[
             {
               title: 'inventory',
-              icon: FaTools,
+              icon: FiPackage,
               link: '/inventory/register',
               match: ['register'],
               aclKey: 'CBS_MEMBERS_MEMBER',
@@ -30,7 +30,7 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
             },
             {
               title: 'items',
-              icon: FaShapes,
+              icon: FiList,
               link: '/inventory/items',
               match: ['items'],
               aclKey: 'CBS_MEMBERS_MEMBER',
@@ -38,7 +38,7 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
             },
             {
               title: 'warehouse',
-              icon: FaShapes,
+              icon: FiMap,
               link: '/inventory/warehouse/list',
               match: ['warehouse'],
               aclKey: 'CBS_MEMBERS_MEMBER',
@@ -46,7 +46,7 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
             },
             {
               title: 'suppliers',
-              icon: FaUserFriends,
+              icon: FiTruck,
               link: '/inventory/suppliers',
               match: ['suppliers'],
               aclKey: 'CBS_MEMBERS_MEMBER',
