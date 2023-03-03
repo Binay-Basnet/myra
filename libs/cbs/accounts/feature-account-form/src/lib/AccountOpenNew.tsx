@@ -548,6 +548,7 @@ export const AccountOpenNew = () => {
                       name="memberId"
                       label="Member"
                       isDisabled={!!redirectMemberId || !!routeId}
+                      isCurrentBranchMember
                     />
                     <FormSelect
                       name="productId"

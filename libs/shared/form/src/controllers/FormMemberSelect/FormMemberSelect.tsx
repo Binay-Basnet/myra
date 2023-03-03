@@ -5,7 +5,7 @@ import { debounce } from 'lodash';
 
 import { MemberSelect, MemberSelectProps, Option } from '@myra-ui/forms';
 
-import { KymIndFormStateQuery, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { KymIndFormStateQuery, useAppSelector, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
 // import FormCustomSelect from './FormCustomSelect';
 
@@ -16,6 +16,7 @@ interface IMemberSelectProps extends MemberSelectProps {
   allMembers?: boolean;
   excludeIds?: string[];
   forceEnableAll?: boolean;
+  isCurrentBranchMember?: boolean;
 }
 
 export const FormMemberSelect = ({
@@ -25,10 +26,12 @@ export const FormMemberSelect = ({
   allMembers,
   excludeIds,
   forceEnableAll,
+  isCurrentBranchMember,
   ...rest
 }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
   const { watch, control } = useFormContext();
+  const currrentBranch = useAppSelector((state) => state?.auth?.user?.currentBranch?.name);
 
   const router = useRouter();
 
@@ -72,7 +75,7 @@ export const FormMemberSelect = ({
         },
       },
       filter: {
-        query: IDMember,
+        query: isCurrentBranchMember ? (currrentBranch as unknown as string) : IDMember,
         orConditions: allMembers
           ? []
           : [
