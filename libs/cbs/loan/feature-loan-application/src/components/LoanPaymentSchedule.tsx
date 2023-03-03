@@ -2,14 +2,17 @@ import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoClose } from 'react-icons/io5';
+import NepaliDate from 'nepali-date-converter';
 
 import { Alert, Box, Button, Grid, Icon, IconButton, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
+  DateType,
   LoanAccountInput,
   LoanInstallment,
   LoanRepaymentScheme,
+  store,
   useGetEndOfDayDateDataQuery,
   useGetLoanInstallmentsQuery,
 } from '@coop/cbs/data-access';
@@ -18,6 +21,8 @@ import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 export const LoanPaymentSchedule = () => {
+  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
+
   const {
     watch,
     setValue,
@@ -156,13 +161,26 @@ export const LoanPaymentSchedule = () => {
         <FormDatePicker
           name="disbursementDate"
           label="Disburse Date"
-          minDate={closingDate ? new Date(localizedDate(closingDate) as string) : new Date()}
+          minDate={
+            closingDate
+              ? dateType === 'BS'
+                ? new NepaliDate(closingDate?.np).toJsDate()
+                : new Date(closingDate?.en)
+              : new Date()
+          }
           isRequired
         />
         <FormDatePicker
           name="installmentBeginDate"
           label="Installment Begin Date"
-          minDate={closingDate ? new Date(localizedDate(closingDate) as string) : new Date()}
+          // minDate={closingDate ? new Date(localizedDate(closingDate) as string) : new Date()}
+          minDate={
+            closingDate
+              ? dateType === 'BS'
+                ? new NepaliDate(closingDate?.np).toJsDate()
+                : new Date(closingDate?.en)
+              : new Date()
+          }
           isRequired
         />
       </Grid>

@@ -54,7 +54,12 @@ export const TableListFilter = ({ data, column }: TableListFilterProps) => {
   const filterCols = Object.keys(parsedQuery);
 
   return (
-    <Popover isLazy placement="bottom" initialFocusRef={initialFocusRef} colorScheme="primary">
+    <Popover
+      isLazy
+      placement="bottom-start"
+      initialFocusRef={initialFocusRef}
+      colorScheme="primary"
+    >
       {({ onClose, isOpen }) => (
         <>
           <PopoverTrigger>
@@ -98,12 +103,16 @@ export const TableListFilter = ({ data, column }: TableListFilterProps) => {
                       { shallow: true }
                     );
                   } else {
-                    router.push({
-                      query: {
-                        ...router.query,
-                        filter: [],
+                    router.push(
+                      {
+                        query: {
+                          ...router.query,
+                          filter: [],
+                        },
                       },
-                    });
+                      undefined,
+                      { shallow: true }
+                    );
                   }
                 }}
                 filterValue={(parsedQuery?.[column]?.value as string[]) || []}

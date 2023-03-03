@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 import { VscChromeClose } from 'react-icons/vsc';
 import { useRouter } from 'next/router';
@@ -17,9 +18,10 @@ import { Box, Button, Grid, Icon, IconButton } from '@myra-ui/foundations';
 
 export interface DetailPageHeaderProps {
   title: string;
-  member: {
+  member?: {
     name: string;
   };
+  name?: string | ReactNode;
   closeLink?: string;
   backLink?: string;
   options?: { label: string; handler: () => void }[];
@@ -48,6 +50,7 @@ export const DetailPageHeader = ({
   closeLink,
   backLink,
   options,
+  name,
 }: DetailPageHeaderProps) => {
   const router = useRouter();
 
@@ -90,7 +93,7 @@ export const DetailPageHeader = ({
         <Icon as={IoChevronForwardOutline} size="md" />
 
         <Text fontSize="r2" fontWeight="500" color="gray.700">
-          {member.name}
+          {member?.name ?? name}
         </Text>
       </Box>
 
