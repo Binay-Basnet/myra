@@ -14,6 +14,7 @@ export * from './utilFunctions/copyToClipboard';
 export * from './utilFunctions/debitCreditConverter';
 export * from './utilFunctions/decimalAdjust';
 export * from './utilFunctions/getDatabaseSlug';
+export * from './utilFunctions/getFilter';
 export * from './utilFunctions/getFilterQuery';
 export * from './utilFunctions/getKymCoopSection';
 export * from './utilFunctions/getKymSection';

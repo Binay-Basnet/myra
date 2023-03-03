@@ -1,9 +1,12 @@
 import React from 'react';
-import { AiOutlineAppstore } from 'react-icons/ai';
-import { BsFileText } from 'react-icons/bs';
-import { ImStack } from 'react-icons/im';
-import { IoIosList } from 'react-icons/io';
-import { IoCubeOutline, IoPerson } from 'react-icons/io5';
+import {
+  FiCodesandbox,
+  FiDatabase,
+  FiFileText,
+  FiPieChart,
+  FiShoppingBag,
+  FiShoppingCart,
+} from 'react-icons/fi';
 
 import { MainLayoutContainer, Scrollable, TabMenu, TopLevelHeader } from '@myra-ui';
 
@@ -23,7 +26,7 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
         tabs={[
           {
             title: 'sales',
-            icon: AiOutlineAppstore,
+            icon: FiShoppingBag,
             link: '/accounting/sales/list',
             match: ['sales'],
             aclKey: 'ACCOUNTING_SALES',
@@ -31,7 +34,7 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
           },
           {
             title: 'purchase',
-            icon: IoPerson,
+            icon: FiShoppingCart,
             link: '/accounting/purchase/list',
             match: ['purchase'],
             aclKey: 'ACCOUNTING_PURCHASE',
@@ -39,7 +42,7 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
           },
           {
             title: 'accounting',
-            icon: IoCubeOutline,
+            icon: FiDatabase,
             link: '/accounting/accounting/journal-vouchers/list',
             match: ['accounting'],
             aclKey: 'ACCOUNTING_ACCOUNTING',
@@ -47,7 +50,7 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
           },
           {
             title: 'loan',
-            icon: ImStack,
+            icon: FiCodesandbox,
             link: '/accounting/loan/external-loan/list',
             match: ['loan'],
             aclKey: 'ACCOUNTING_LOAN',
@@ -56,7 +59,7 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
 
           {
             title: 'investment',
-            icon: IoIosList,
+            icon: FiPieChart,
             link: '/accounting/investment/list',
             match: ['investment'],
             aclKey: 'ACCOUNTING_INVESTMENT',
@@ -64,7 +67,7 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
           },
           {
             title: 'reports',
-            icon: BsFileText,
+            icon: FiFileText,
             link: ROUTES.ACCOUNTING_REPORTS,
             match: ['reports'],
             aclKey: 'ACCOUNTING_INVESTMENT',

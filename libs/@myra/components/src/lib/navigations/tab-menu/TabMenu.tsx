@@ -1,10 +1,16 @@
 import { IconType } from 'react-icons';
-import { AiOutlineSend } from 'react-icons/ai';
-import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
-import { ImStack } from 'react-icons/im';
-import { IoIosList } from 'react-icons/io';
-import { IoCubeOutline, IoMailUnreadOutline, IoPerson, IoPrismOutline } from 'react-icons/io5';
-import { TbMailForward } from 'react-icons/tb';
+import {
+  FiBox,
+  FiCreditCard,
+  FiDisc,
+  FiFileText,
+  FiLayers,
+  FiMessageSquare,
+  FiRepeat,
+  FiSend,
+  FiTrendingUp,
+  FiUser,
+} from 'react-icons/fi';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
@@ -24,7 +30,7 @@ const cbsTabs: {
 }[] = [
   {
     title: 'members',
-    icon: IoPerson,
+    icon: FiUser,
     link: ROUTES.CBS_MEMBER_LIST,
     match: ['members'],
     aclKey: 'CBS_MEMBERS_MEMBER',
@@ -32,7 +38,7 @@ const cbsTabs: {
   },
   {
     title: 'share',
-    icon: IoCubeOutline,
+    icon: FiTrendingUp,
     link: ROUTES.CBS_SHARE_BALANCE,
     match: ['share'],
     aclKey: 'CBS_SHARE',
@@ -40,7 +46,7 @@ const cbsTabs: {
   },
   {
     title: 'savings',
-    icon: ImStack,
+    icon: FiLayers,
     link: ROUTES.CBS_ACCOUNT_LIST,
     match: ['savings'],
     aclKey: 'CBS_SAVINGS',
@@ -49,7 +55,7 @@ const cbsTabs: {
 
   {
     title: 'loan',
-    icon: BsArrowLeftRight,
+    icon: FiBox,
     link: ROUTES.CBS_LOAN_APPLICATIONS_LIST,
     match: ['loan'],
     aclKey: 'CBS_LOAN',
@@ -58,7 +64,7 @@ const cbsTabs: {
 
   {
     title: 'transactions',
-    icon: IoIosList,
+    icon: FiSend,
     link: ROUTES.CBS_TRANS_DEPOSIT_LIST,
     match: ['transactions'],
 
@@ -67,7 +73,7 @@ const cbsTabs: {
   },
   {
     title: 'transfer',
-    icon: AiOutlineSend,
+    icon: FiRepeat,
     link: ROUTES.CBS_TRANSFER_VAULT_LIST,
     match: ['transfers'],
     aclKey: 'CBS_TRANSFERS',
@@ -76,7 +82,7 @@ const cbsTabs: {
 
   {
     title: 'requests',
-    icon: IoMailUnreadOutline,
+    icon: FiMessageSquare,
     link: ROUTES.CBS_REQUESTS_MEMBER_LIST,
     match: ['requests'],
     aclKey: 'CBS_REQUESTS',
@@ -84,7 +90,7 @@ const cbsTabs: {
   },
   {
     title: 'withdrawSlip',
-    icon: TbMailForward,
+    icon: FiCreditCard,
     link: ROUTES.CBS_WITHDRAW_SLIP_BOOK_LIST,
     match: ['withdraw'],
     aclKey: 'CBS_WITHDRAW_SLIPS',
@@ -92,7 +98,7 @@ const cbsTabs: {
   },
   {
     title: 'reports',
-    icon: BsFileText,
+    icon: FiFileText,
     link: ROUTES.CBS_REPORT_LIST,
     match: ['cbs'],
     aclKey: 'CBS_REPORTS',
@@ -100,7 +106,7 @@ const cbsTabs: {
   },
   {
     title: 'others',
-    icon: IoPrismOutline,
+    icon: FiDisc,
     link: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_LIST,
     match: ['others'],
     aclKey: 'CBS_OTHERS',

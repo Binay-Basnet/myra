@@ -1,12 +1,12 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Modal, PageHeader, TablePopover } from '@myra-ui';
+import { Box, PageHeader, TablePopover } from '@myra-ui';
 import { AvatarCell, Column, Table } from '@myra-ui/table';
 
 import {
-  useDeleteDraftMutation,
   useGetGeneralMemberSettingsDataQuery,
   useGetMemberFilterMappingQuery,
   useGetMemberListQuery,
@@ -14,12 +14,14 @@ import {
 import { formatTableAddress, localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   featureCode,
+  getFilter,
   getFilterQuery,
   getPaginationQuery,
   useTranslation,
 } from '@coop/shared/utils';
 
 import { forms, Page } from './MemberLayout';
+import { MemberDeleteModal } from '../components/MemberDeleteModal';
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
 
 const memberTypeSlug = {
@@ -31,57 +33,47 @@ const memberTypeSlug = {
 
 export const MemberListPage = () => {
   const { t } = useTranslation();
-
-  const [ID, setID] = useState('');
-  const [openModal, setOpenModal] = useState(false);
-  const { data: memberFilterData } = useGetMemberFilterMappingQuery();
-  const { mutateAsync } = useDeleteDraftMutation();
-
-  const onOpenModal = () => {
-    setOpenModal(true);
-  };
-
-  const onCloseModal = () => {
-    setOpenModal(false);
-  };
-
-  const queryClient = useQueryClient();
+  const [memberId, setMemberId] = useState<string | null>(null);
+  const { isOpen, onClose, onToggle } = useDisclosure();
 
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const objState = getFilter('objState') || 'APPROVED';
 
-  const objState = router?.query['objState'];
-
+  const { data, isFetching } = useGetMemberListQuery({
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery({ objState: { value: 'APPROVED', compare: '=' } }),
+  });
+  const { data: memberFilterData } = useGetMemberFilterMappingQuery();
   const { data: memberTypeData } = useGetGeneralMemberSettingsDataQuery();
+
   const memberTypes =
     memberTypeData?.settings?.general?.KYM?.general?.generalMember?.record?.memberType;
   const isMemberCodeSetup =
     memberTypeData?.settings?.general?.KYM?.general?.generalMember?.record?.isCodeSetup;
 
-  const memberForms = Object.keys(memberTypes || {})
-    ?.map((memberType) => {
-      if (memberType && memberTypes?.[memberType as keyof typeof memberTypes]) {
-        return forms[memberType];
-      }
-      return false;
-    })
-    ?.filter(Boolean) as Page[];
+  const memberForms = useMemo(
+    () =>
+      Object.keys(memberTypes || {})
+        ?.map((memberType) => {
+          if (memberType && memberTypes?.[memberType as keyof typeof memberTypes]) {
+            return forms[memberType];
+          }
+          return false;
+        })
+        ?.filter(Boolean) as Page[],
+    [memberTypes]
+  );
 
-  const alteredMemberForms = isMemberCodeSetup
-    ? memberForms
-    : memberForms?.map((item) => ({ ...item, route: ROUTES.CBS_NO_MEMBER_CODE }));
-
-  const { data, isFetching, refetch } = useGetMemberListQuery(
-    {
-      pagination: getPaginationQuery(),
-      filter: getFilterQuery({ objState: { value: 'APPROVED', compare: '=' } }),
-    },
-    {
-      staleTime: 0,
-    }
+  const alteredMemberForms = useMemo(
+    () =>
+      isMemberCodeSetup
+        ? memberForms
+        : memberForms?.map((item) => ({ ...item, route: ROUTES.CBS_NO_MEMBER_CODE })),
+    [isMemberCodeSetup, memberForms]
   );
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -107,13 +99,11 @@ export const MemberListPage = () => {
           objState === 'DRAFT' ? t['memberListTableMemberId'] : t['memberListTableMemberCode'],
 
         accessorFn: (row) => (objState === 'DRAFT' ? row?.node?.id : row?.node?.code),
-        // enableSorting: true,
       },
       {
         id: 'name',
         accessorKey: 'node.name.local',
         header: t['memberListTableName'],
-        // enableSorting: true,
         cell: (props) => (
           <AvatarCell
             name={props.getValue() as string}
@@ -180,8 +170,8 @@ export const MemberListPage = () => {
                       {
                         title: t['memberDeleteMember'],
                         onClick: (node) => {
-                          onOpenModal();
-                          setID(node?.id);
+                          onToggle();
+                          setMemberId(node?.id);
                         },
                       },
                     ]
@@ -255,27 +245,9 @@ export const MemberListPage = () => {
         },
       },
     ],
-    [objState, t, memberFilterData?.members?.filterMapping?.serviceCenter, router]
+    [objState, t, memberFilterData?.members?.filterMapping?.serviceCenter, router, onToggle]
   );
 
-  const deleteMember = useCallback(async () => {
-    await asyncToast({
-      id: 'inactive-id',
-      msgs: {
-        success: 'Deleted member successfully',
-        loading: 'Deleting member',
-      },
-      onSuccess: () => {
-        refetch();
-        onCloseModal();
-      },
-      promise: mutateAsync({
-        memberId: ID,
-      }),
-    });
-  }, [ID, mutateAsync]);
-
-  const onCancel = () => {};
   return (
     <>
       <Box position="sticky" top="0" zIndex={3}>
@@ -304,17 +276,7 @@ export const MemberListPage = () => {
         menu="MEMBERS"
         forms={alteredMemberForms}
       />
-      <Modal
-        open={openModal}
-        onClose={onCloseModal}
-        primaryButtonLabel="yes"
-        secondaryButtonLabel="cancel"
-        width="600px"
-        primaryButtonHandler={deleteMember}
-        secondaryButtonHandler={onCancel}
-      >
-        {t['memberDeleteConfirm']}
-      </Modal>
+      <MemberDeleteModal isOpen={isOpen} onClose={onClose} memberId={memberId} />
     </>
   );
 };
