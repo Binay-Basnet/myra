@@ -46,16 +46,20 @@ export const PageHeaderTab = ({ list, showTabsInFilter }: PageHeaderTabProps) =>
           <TabElement
             onClick={() => {
               if (showTabsInFilter) {
-                router.push({
-                  query: {
-                    filter: qs.stringify({
-                      objState: {
-                        value: item.key,
-                        compare: '=',
-                      },
-                    }),
+                router.push(
+                  {
+                    query: {
+                      filter: qs.stringify({
+                        objState: {
+                          value: item.key,
+                          compare: '=',
+                        },
+                      }),
+                    },
                   },
-                });
+                  undefined,
+                  { shallow: true }
+                );
               } else {
                 router?.push({
                   query: {
