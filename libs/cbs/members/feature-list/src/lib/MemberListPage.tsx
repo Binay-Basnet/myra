@@ -77,6 +77,7 @@ export const MemberListPage = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: objState === 'DRAFT' || objState === 'VALIDATED' ? 'createdAtDate' : 'activeDate',
         header:
           objState === 'DRAFT' || objState === 'VALIDATED'
             ? t['memberListDateJoined']
@@ -89,6 +90,8 @@ export const MemberListPage = () => {
           objState === 'DRAFT' || objState === 'VALIDATED'
             ? localizedDate(row?.cell?.row?.original?.node?.dateJoined)
             : localizedDate(row?.cell?.row?.original?.node?.activeDate),
+        filterFn: 'dateTime',
+        enableColumnFilter: true,
         meta: {
           width: '100px',
         },

@@ -11,5 +11,8 @@
   },
   "graphql-config.load.rootDir": "./libs/cbs/data-access",
 
-  "githubPullRequests.ignoredPullRequestBranches": ["dev"]
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "dev"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

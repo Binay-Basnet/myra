@@ -141,6 +141,7 @@
       "@coop/inventory/inventory": ["libs/inventory/feature-inventory/src/index.ts"],
       "@coop/inventory/warehouse": ["libs/inventory/feature-warehouse/src/index.ts"],
       "@coop/loan/account-details": ["libs/cbs/loan/feature-loan-account-detail/src/index.ts"],
+      "@coop/loan/accounts/switch": ["libs/cbs/loan/feature-loan-switch/src/index.ts"],
       "@coop/members/activations": ["libs/cbs/members/feature-activations/src/index.ts"],
       "@coop/myra/components": ["libs/myra/components/src/index.ts"],
       "@coop/myra/inventory/item": ["libs/inventory/feature-item/src/index.ts"],

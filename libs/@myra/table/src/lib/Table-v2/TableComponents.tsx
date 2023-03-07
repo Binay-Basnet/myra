@@ -12,6 +12,7 @@ import { EmptyState, Loader, NoDataState } from '@myra-ui';
 import { Id_Type } from '@coop/cbs/data-access';
 import { AclKey, EMPTYSTATE, MenuType, RouteValue } from '@coop/cbs/utils';
 
+import { TableDateFilter } from '../../components/table-date-filter/TableDateFilter';
 import TableListFilter from '../../components/table-list-filter/TableListFilter';
 import { Maybe } from '../../types';
 import { TableSize, TableVariant } from '../../types/Table';
@@ -153,10 +154,14 @@ export const TableHeadCell = <T extends Record<string, unknown>>({
         </Box>
       )}
       {header.column.getCanFilter() ? (
-        <TableListFilter
-          column={header.column.id}
-          data={header.column.columnDef.meta?.filterMaps?.list}
-        />
+        header.column.columnDef.filterFn === 'dateTime' ? (
+          <TableDateFilter column={header.column.id} />
+        ) : (
+          <TableListFilter
+            column={header.column.id}
+            data={header.column.columnDef.meta?.filterMaps?.list}
+          />
+        )
       ) : null}
     </Box>
 

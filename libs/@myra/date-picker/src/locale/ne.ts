@@ -1,4 +1,4 @@
-export const ne = {
+export const ne: Record<string, string> = {
   today: 'आज',
   yesterday: 'हिजो',
   last7Days: 'पछिल्लो ७ दिन',

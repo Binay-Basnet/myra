@@ -213,7 +213,7 @@ export const convertTillDate = (date: Date, calendarType: 'AD' | 'BS') => {
   };
 };
 
-export const convertCalendarDate = (date: CalendarBuilderDate, calendarType: 'AD' | 'BS') => {
-  if (calendarType === 'AD') {
-  }
-};
+// export const convertCalendarDate = (date: CalendarBuilderDate, calendarType: 'AD' | 'BS') => {
+//   if (calendarType === 'AD') {
+//   }
+// };

@@ -17018,6 +17018,49 @@ export type UpdateLinkedAccountMutation = {
   };
 };
 
+export type ReleaseCollateralMutationVariables = Exact<{
+  data: LoanCollateralReleaseInput;
+}>;
+
+export type ReleaseCollateralMutation = {
+  loanAccount: {
+    loanCollateralActions?: {
+      releaseCollateral?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SwitchCollateralMutationVariables = Exact<{
+  data?: InputMaybe<LoanCollateralSwitchInput>;
+  input?: InputMaybe<LoanAccountCollateralData>;
+}>;
+
+export type SwitchCollateralMutation = {
+  loanAccount: {
+    loanCollateralActions?: {
+      switchCollateral?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type LoanAccountGuaranteeActionsMutationVariables = Exact<{
   actionType: GuaranteeActions;
   data: LoanGuaranteeActionsInput;
@@ -22567,6 +22610,7 @@ export type GetLoanAccountCollateralDetailsQuery = {
         totalCollateralValuation: string;
         totalCollateralRelease: string;
         collateralList?: Array<{
+          collateralID?: string | null;
           collateralType?: string | null;
           ownerName?: string | null;
           relation?: string | null;
@@ -22598,6 +22642,7 @@ export type GetLoanAccountCollateralDetailsQuery = {
           valuationAmount?: string | null;
           description?: string | null;
           allDocuments?: Array<string> | null;
+          status?: GuaranteeStatus | null;
           documents?: Array<{ id: string; url: string } | null> | null;
         } | null> | null;
       } | null;
@@ -31150,6 +31195,62 @@ export const useUpdateLinkedAccountMutation = <TError = unknown, TContext = unkn
     ),
     options
   );
+export const ReleaseCollateralDocument = `
+    mutation releaseCollateral($data: LoanCollateralReleaseInput!) {
+  loanAccount {
+    loanCollateralActions {
+      releaseCollateral(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useReleaseCollateralMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ReleaseCollateralMutation,
+    TError,
+    ReleaseCollateralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ReleaseCollateralMutation, TError, ReleaseCollateralMutationVariables, TContext>(
+    ['releaseCollateral'],
+    useAxios<ReleaseCollateralMutation, ReleaseCollateralMutationVariables>(
+      ReleaseCollateralDocument
+    ),
+    options
+  );
+export const SwitchCollateralDocument = `
+    mutation switchCollateral($data: LoanCollateralSwitchInput, $input: LoanAccountCollateralData) {
+  loanAccount {
+    loanCollateralActions {
+      switchCollateral(data: $data, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSwitchCollateralMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SwitchCollateralMutation,
+    TError,
+    SwitchCollateralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SwitchCollateralMutation, TError, SwitchCollateralMutationVariables, TContext>(
+    ['switchCollateral'],
+    useAxios<SwitchCollateralMutation, SwitchCollateralMutationVariables>(SwitchCollateralDocument),
+    options
+  );
 export const LoanAccountGuaranteeActionsDocument = `
     mutation loanAccountGuaranteeActions($actionType: GuaranteeActions!, $data: LoanGuaranteeActionsInput!) {
   loanAccount {
@@ -38857,6 +38958,7 @@ export const GetLoanAccountCollateralDetailsDocument = `
         totalCollateralValuation
         totalCollateralRelease
         collateralList {
+          collateralID
           collateralType
           ownerName
           relation
@@ -38892,6 +38994,7 @@ export const GetLoanAccountCollateralDetailsDocument = `
             id
             url
           }
+          status
         }
       }
     }

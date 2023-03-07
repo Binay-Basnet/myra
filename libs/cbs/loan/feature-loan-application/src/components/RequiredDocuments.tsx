@@ -1,5 +1,6 @@
-import { FormFileInput } from '@coop/shared/form';
 import { Box, Grid, Text } from '@myra-ui';
+
+import { FormFileInput } from '@coop/shared/form';
 
 export const RequiredDocuments = () => (
   <Box display="flex" flexDirection="column" gap="s16">
