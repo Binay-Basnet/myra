@@ -67,11 +67,10 @@ export const GuaranteeDetails = () => {
     [accountDetailQueryData]
   );
 
-  const currentBalance = selectedAccount?.accountBalance ?? '0';
-  const maxGuarantee =
-    currentBalance && guaranteePercent
-      ? (Number(currentBalance) * Number(guaranteePercent)) / 100
-      : 1000;
+  const currentBalance = selectedAccount?.availableBalance ?? '0';
+  const maxGuarantee = guaranteePercent
+    ? (Number(currentBalance) * Number(guaranteePercent)) / 100
+    : currentBalance;
 
   useEffect(() => {
     methods.setValue('maxGuranteeAmountLimit', String(maxGuarantee));

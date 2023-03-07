@@ -70,12 +70,12 @@ export const SwitchGuarantee = ({
     [accountDetailQueryData]
   );
 
-  const currentBalance = selectedAccount?.accountBalance ?? '0';
+  const currentBalance = selectedAccount?.availableBalance ?? '0';
 
   const { data: loanProductDetails } = useGetLoanProductDetailsDataQuery(
-    { id: guarantee?.productId },
+    { id: overviewData?.generalInformation?.productId },
     {
-      enabled: !!guarantee?.productId,
+      enabled: !!overviewData?.generalInformation?.productId,
     }
   );
   const loanProduct = useMemo(
@@ -83,10 +83,9 @@ export const SwitchGuarantee = ({
     [loanProductDetails?.settings?.general?.loanProducts?.formState?.data]
   );
 
-  const maxGuarantee =
-    currentBalance && loanProduct?.maxPercentOfGurantee
-      ? (Number(currentBalance) * Number(loanProduct?.maxPercentOfGurantee)) / 100
-      : 1000;
+  const maxGuarantee = loanProduct?.maxPercentOfGurantee
+    ? (Number(currentBalance) * Number(loanProduct?.maxPercentOfGurantee)) / 100
+    : currentBalance;
 
   const { mutateAsync: switchGuarantee } = useLoanAccountGuaranteeActionsMutation();
 
