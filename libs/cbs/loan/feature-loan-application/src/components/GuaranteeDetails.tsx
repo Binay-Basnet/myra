@@ -6,7 +6,8 @@ import { omit } from 'lodash';
 import { Box, Button, Divider, GridItem, Icon, Modal, Text, VStack } from '@myra-ui';
 
 import { ObjState, useGetAccountDetailsDataQuery } from '@coop/cbs/data-access';
-import { FormAccountSelect, FormMemberSelect, FormNumberInput } from '@coop/shared/form';
+import { FormAccountSelect, FormAmountInput, FormMemberSelect } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 import { useLoanProductContext } from '../hooks/useLoanProduct';
 
@@ -16,8 +17,8 @@ type GuaranteeDetailForm = {
   accountId: string;
   accountName?: string | null;
   maxGuranteeAmount: number;
-  guranteeAmount: number;
-  maxGuranteeAmountLimit: number;
+  guranteeAmount: string;
+  maxGuranteeAmountLimit: string;
 };
 
 export const GuaranteeDetails = () => {
@@ -52,8 +53,8 @@ export const GuaranteeDetails = () => {
 
   useEffect(() => {
     methods.setValue('accountId', '');
-    methods.setValue('guranteeAmount', 0);
-    methods.setValue('maxGuranteeAmountLimit', 0);
+    methods.setValue('guranteeAmount', '');
+    methods.setValue('maxGuranteeAmountLimit', '');
   }, [methods, memberId]);
 
   const { data: accountDetailQueryData } = useGetAccountDetailsDataQuery(
@@ -71,6 +72,10 @@ export const GuaranteeDetails = () => {
     currentBalance && guaranteePercent
       ? (Number(currentBalance) * Number(guaranteePercent)) / 100
       : 1000;
+
+  useEffect(() => {
+    methods.setValue('maxGuranteeAmountLimit', String(maxGuarantee));
+  }, [maxGuarantee]);
 
   if (!product?.allowGurantee) {
     return null;
@@ -136,13 +141,13 @@ export const GuaranteeDetails = () => {
               filterBy={ObjState.Active}
             />
             <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap="s16">
-              <FormNumberInput
+              <FormAmountInput
                 name="maxGuranteeAmountLimit"
                 label="Maximum Guarantee Amount Available"
                 value={maxGuarantee}
                 isDisabled
               />
-              <FormNumberInput
+              <FormAmountInput
                 name="guranteeAmount"
                 label="Guarantee Amount"
                 rules={{
@@ -168,7 +173,9 @@ export const GuaranteeDetails = () => {
               </Text>
 
               <Text color="gray.700" fontSize="r1" fontWeight="600">
-                {totalGuarantee}
+                {totalGuarantee && totalGuarantee !== 'undefined'
+                  ? amountConverter(totalGuarantee)
+                  : '0.00'}
               </Text>
             </GridItem>
           </Box>

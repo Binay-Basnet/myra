@@ -726,6 +726,7 @@ query getLoanAccountGuaranteeDetails($loanAccountId: ID!) {
           maxGuranteeAmountLimit
           guranteeAmount
           totalAmount
+          guaranteeId
         }
       }
     }
