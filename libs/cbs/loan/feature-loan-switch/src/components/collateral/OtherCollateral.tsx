@@ -1,12 +1,16 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Box, GridItem, Text } from '@myra-ui';
+import { FormSection, GridItem, Text } from '@myra-ui';
 
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { ValuationDocuments } from '@coop/cbs/loan';
+import { FormInput } from '@coop/shared/form';
 
+import { ValuationRange } from './ValuationRange';
+import { ValuationStats } from './ValuationStats';
+import { ValuatorSelect } from './ValuatorSelect';
 import { useLoanProductContext } from '../../hooks/useLoanProduct';
 
-export const ValuationMethods = () => {
+export const OtherCollateral = () => {
   const { watch } = useFormContext();
 
   const { product } = useLoanProductContext();
@@ -21,6 +25,7 @@ export const ValuationMethods = () => {
       : valuationMethod === 'DV'
       ? collateral?.maxDV
       : collateral?.maxValue;
+
   const minValue =
     valuationMethod === 'FMV'
       ? collateral?.minFMV
@@ -29,25 +34,15 @@ export const ValuationMethods = () => {
       : collateral?.minValue;
 
   return (
-    <GridItem
-      colSpan={4}
-      p="s16"
-      display="flex"
-      alignItems="center"
-      justifyContent="space-between"
-      border="1px"
-      borderColor="border.layout"
-      borderRadius="br2"
-    >
-      <FormSwitchTab
-        name="valuationMethod"
-        label="Valuation Method"
-        options={[
-          { label: 'FMV', value: 'FMV' },
-          { label: 'DV', value: 'DV' },
-        ]}
-      />
-      <Box>
+    <FormSection>
+      {/* <GridItem colSpan={2}>
+        <FormInput name="collateralName" label="Collateral Name" />
+      </GridItem> */}
+      <ValuatorSelect />
+      <GridItem colSpan={2}>
+        <FormInput name="valuationAmount" label="Valuation Amount" />
+      </GridItem>
+      <GridItem colSpan={2}>
         <FormInput
           name="valuationPercent"
           label="Valuation Percentage"
@@ -67,7 +62,10 @@ export const ValuationMethods = () => {
             </Text>
           }
         />
-      </Box>
-    </GridItem>
+      </GridItem>
+      <ValuationRange />
+      <ValuationStats />
+      <ValuationDocuments />
+    </FormSection>
   );
 };

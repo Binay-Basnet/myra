@@ -726,6 +726,7 @@ query getLoanAccountGuaranteeDetails($loanAccountId: ID!) {
           maxGuranteeAmountLimit
           guranteeAmount
           totalAmount
+          guaranteeId
         }
       }
     }
@@ -740,6 +741,7 @@ query getLoanAccountCollateralDetails($loanAccountId: ID!) {
         totalCollateralValuation
         totalCollateralRelease
         collateralList {
+          collateralID
           collateralType
           ownerName
           relation
@@ -775,6 +777,7 @@ query getLoanAccountCollateralDetails($loanAccountId: ID!) {
             id
             url
           }
+          status
         }
       }
     }

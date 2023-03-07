@@ -1,25 +1,32 @@
-import { useRef } from 'react';
-import { Flex } from '@chakra-ui/react';
+import { useMemo, useRef } from 'react';
+import { IoCheckmarkSharp, IoChevronDownSharp, IoSearch } from 'react-icons/io5';
+import { AddIcon } from '@chakra-ui/icons';
+import { Box, Checkbox, Flex, Icon, Radio, Text } from '@chakra-ui/react';
 import {
   ActionMeta,
+  chakraComponents,
   GroupBase,
   MultiValue,
   Props,
   Select as ChakraSelect,
+  SelectComponentsConfig,
   SingleValue,
 } from 'chakra-react-select';
 
-import { Text } from '@myra-ui/foundations';
-
 import { useTranslation } from '@coop/shared/utils';
 
-import { getComponents } from './styles/selectComponents';
+// import { getComponents } from './styles/selectComponents';
 import { getChakraDefaultStyles } from './styles/selectStyles';
 
 interface SelectOption {
   label: string | number;
   value: string | number;
   disabled?: boolean;
+}
+
+interface Option {
+  label: string | number;
+  value: string | number;
 }
 
 export interface SelectProps
@@ -75,6 +82,142 @@ export const Select = ({
     options,
   });
 
+  const components: SelectComponentsConfig<Option, boolean, GroupBase<Option>> = useMemo(
+    () => ({
+      Menu: ({ children, ...props }) => (
+        <chakraComponents.Menu {...props}>
+          <Box>
+            {children}
+            {addItemHandler && (
+              <Box
+                w="100%"
+                h="50px"
+                bg="white"
+                display="flex"
+                alignItems="center"
+                gap="s4"
+                px="12px"
+                py="14px"
+                color="primary.500"
+                cursor="pointer"
+                onClick={addItemHandler}
+              >
+                <Icon h="14px" w="14px" as={AddIcon} />
+                <Text fontSize="r1" fontWeight={500}>
+                  {addItemLabel ?? 'Add Item'}
+                </Text>
+              </Box>
+            )}
+          </Box>
+        </chakraComponents.Menu>
+      ),
+      Placeholder: ({ children, ...props }) => {
+        const { value: selectValue } = props.selectProps;
+
+        return (
+          <chakraComponents.Placeholder {...props}>
+            {props.isMulti ? (
+              Array.isArray(selectValue) ? (
+                (selectValue as Option[]).length === 0 || !selectValue ? (
+                  props.selectProps.placeholder
+                ) : selectValue[0].selectValue === '<SELECT_ALL>' ? (
+                  <Text color="gray.900">All items selected</Text>
+                ) : (
+                  <Text color="gray.900">{`${
+                    (selectValue as Option[]).length
+                  } items selected`}</Text>
+                )
+              ) : (
+                children
+              )
+            ) : (
+              children
+            )}
+          </chakraComponents.Placeholder>
+        );
+      },
+      DropdownIndicator: (props) => {
+        const { options: selectOptions } = props;
+        return (
+          <chakraComponents.DropdownIndicator {...props}>
+            {selectOptions.length <= 5 ? (
+              <Icon as={IoChevronDownSharp} w="20px" h="20px" cursor="pointer" />
+            ) : (
+              <Icon as={IoSearch} w="20px" h="20px" cursor="pointer" />
+            )}
+          </chakraComponents.DropdownIndicator>
+        );
+      },
+      Option: ({ children, ...props }) =>
+        hasRadioOption ? (
+          <chakraComponents.Option {...props}>
+            <Box display="flex" alignItems="center" gap="s8">
+              <Box
+                display="flex"
+                onClick={(e) => {
+                  props.selectOption({ ...props.data });
+                  e.stopPropagation();
+                  e.preventDefault();
+                }}
+              >
+                <Radio
+                  ref={props.innerRef}
+                  isDisabled={props.isDisabled}
+                  isChecked={props.isSelected}
+                />
+              </Box>
+
+              {children}
+            </Box>
+          </chakraComponents.Option>
+        ) : (
+          <chakraComponents.Option {...props}>
+            {children}
+            {props.isMulti ? (
+              <Box
+                display="flex"
+                onClick={(e) => {
+                  props.selectOption({ ...props.data });
+                  e.stopPropagation();
+                  e.preventDefault();
+                }}
+              >
+                <Checkbox
+                  ref={props.innerRef}
+                  isDisabled={props.isDisabled}
+                  isChecked={props.isSelected}
+                />
+              </Box>
+            ) : props.isSelected ? (
+              <Icon
+                as={IoCheckmarkSharp}
+                w="20px"
+                h="20px"
+                cursor="pointer"
+                color="primary.500"
+                className="multi-select-option"
+              />
+            ) : null}
+          </chakraComponents.Option>
+        ),
+      SingleValue: (props) => {
+        const { data, selectProps } = props;
+        return (
+          <chakraComponents.SingleValue {...props}>
+            <Text
+              fontSize="r1"
+              fontWeight={400}
+              color={selectProps?.menuIsOpen ? 'gray.500' : 'gray.800'}
+            >
+              {data?.label}
+            </Text>
+          </chakraComponents.SingleValue>
+        );
+      },
+    }),
+    []
+  );
+
   return (
     <Flex direction="column" gap="s4">
       <Text variant="formLabel" color="gray.700">
@@ -98,7 +241,7 @@ export const Select = ({
         isClearable={false}
         onChange={multiOnChange}
         chakraStyles={getChakraDefaultStyles(!!errorText, !!addItemHandler)}
-        components={getComponents(hasRadioOption, addItemHandler, addItemLabel)}
+        components={components}
         {...rest}
       />
 

@@ -1712,6 +1712,7 @@ export type BranchInput = {
 };
 
 export type BranchMinimal = {
+  branchCode?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   name: Scalars['String'];
 };
@@ -12052,6 +12053,7 @@ export type MyraUserQuery = {
   formState?: Maybe<MyraUserFormStateResult>;
   list?: Maybe<MyraUserConnection>;
   tellers?: Maybe<Array<Maybe<TellerInfo>>>;
+  userDetail?: Maybe<UserDetailQuery>;
 };
 
 export type MyraUserQueryFormStateArgs = {
@@ -12061,6 +12063,10 @@ export type MyraUserQueryFormStateArgs = {
 export type MyraUserQueryListArgs = {
   filter?: InputMaybe<MyraUserSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type MyraUserQueryUserDetailArgs = {
+  userID: Scalars['ID'];
 };
 
 export type MyraUserResult = {
@@ -15543,6 +15549,16 @@ export type User = {
   username: Scalars['String'];
 };
 
+export type UserBio = {
+  documents?: Maybe<Array<Maybe<Scalars['String']>>>;
+  identificationDetail?: Maybe<Array<Maybe<MyraUserIdentification>>>;
+  isTemporarySameAsPermanent?: Maybe<Scalars['Boolean']>;
+  landlordContact?: Maybe<Scalars['String']>;
+  landlordName?: Maybe<Scalars['String']>;
+  permanentAddress?: Maybe<Address>;
+  temporaryAddress?: Maybe<Address>;
+};
+
 export type UserData = {
   branches?: Maybe<Array<Maybe<BranchMinimal>>>;
   permission?: Maybe<PermissionQuery>;
@@ -15552,6 +15568,13 @@ export type UserData = {
   userId?: Maybe<Scalars['String']>;
 };
 
+export type UserDetailQuery = {
+  basicInfo?: Maybe<UserMinimal>;
+  error?: Maybe<QueryError>;
+  userBio?: Maybe<UserBio>;
+  userOverview?: Maybe<UserOverview>;
+};
+
 export const UserGender = {
   Female: 'FEMALE',
   Male: 'MALE',
@@ -15559,6 +15582,12 @@ export const UserGender = {
 } as const;
 
 export type UserGender = typeof UserGender[keyof typeof UserGender];
+export type UserMinimal = {
+  name: Scalars['Localized'];
+  profilePicUrl?: Maybe<Scalars['String']>;
+  userId: Scalars['ID'];
+};
+
 export type UserMutation = {
   passwordRecovery?: Maybe<PasswordRecoveryMutation>;
   preference?: Maybe<UserPreferenceMutation>;
@@ -15567,6 +15596,21 @@ export type UserMutation = {
 
 export type UserMutationResetPasswordArgs = {
   data: ResetPasswordData;
+};
+
+export type UserOverview = {
+  branches?: Maybe<Array<Maybe<BranchMinimal>>>;
+  contactNo?: Maybe<Scalars['String']>;
+  dateJoined?: Maybe<Scalars['Localized']>;
+  email?: Maybe<Scalars['String']>;
+  empCode?: Maybe<Scalars['String']>;
+  gender?: Maybe<UserGender>;
+  isCoreEmployee?: Maybe<Scalars['Boolean']>;
+  lastActiveDate?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['Localized']>;
+  role?: Maybe<Array<Maybe<RoleInfo>>>;
+  rolesCount?: Maybe<Scalars['Int']>;
+  serviceCenterCount?: Maybe<Scalars['Int']>;
 };
 
 export type UserPreference = {
@@ -16970,6 +17014,71 @@ export type UpdateLinkedAccountMutation = {
         | MutationError_ServerError_Fragment
         | MutationError_ValidationError_Fragment
         | null;
+    } | null;
+  };
+};
+
+export type ReleaseCollateralMutationVariables = Exact<{
+  data: LoanCollateralReleaseInput;
+}>;
+
+export type ReleaseCollateralMutation = {
+  loanAccount: {
+    loanCollateralActions?: {
+      releaseCollateral?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SwitchCollateralMutationVariables = Exact<{
+  data?: InputMaybe<LoanCollateralSwitchInput>;
+  input?: InputMaybe<LoanAccountCollateralData>;
+}>;
+
+export type SwitchCollateralMutation = {
+  loanAccount: {
+    loanCollateralActions?: {
+      switchCollateral?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type LoanAccountGuaranteeActionsMutationVariables = Exact<{
+  actionType: GuaranteeActions;
+  data: LoanGuaranteeActionsInput;
+}>;
+
+export type LoanAccountGuaranteeActionsMutation = {
+  loanAccount: {
+    loanGuaranteeActions?: {
+      guaranteeActions?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
     } | null;
   };
 };
@@ -22482,6 +22591,7 @@ export type GetLoanAccountGuaranteeDetailsQuery = {
           maxGuranteeAmountLimit?: any | null;
           guranteeAmount?: any | null;
           totalAmount?: any | null;
+          guaranteeId?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -22500,6 +22610,7 @@ export type GetLoanAccountCollateralDetailsQuery = {
         totalCollateralValuation: string;
         totalCollateralRelease: string;
         collateralList?: Array<{
+          collateralID?: string | null;
           collateralType?: string | null;
           ownerName?: string | null;
           relation?: string | null;
@@ -22531,6 +22642,7 @@ export type GetLoanAccountCollateralDetailsQuery = {
           valuationAmount?: string | null;
           description?: string | null;
           allDocuments?: Array<string> | null;
+          status?: GuaranteeStatus | null;
           documents?: Array<{ id: string; url: string } | null> | null;
         } | null> | null;
       } | null;
@@ -31083,6 +31195,96 @@ export const useUpdateLinkedAccountMutation = <TError = unknown, TContext = unkn
     ),
     options
   );
+export const ReleaseCollateralDocument = `
+    mutation releaseCollateral($data: LoanCollateralReleaseInput!) {
+  loanAccount {
+    loanCollateralActions {
+      releaseCollateral(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useReleaseCollateralMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ReleaseCollateralMutation,
+    TError,
+    ReleaseCollateralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ReleaseCollateralMutation, TError, ReleaseCollateralMutationVariables, TContext>(
+    ['releaseCollateral'],
+    useAxios<ReleaseCollateralMutation, ReleaseCollateralMutationVariables>(
+      ReleaseCollateralDocument
+    ),
+    options
+  );
+export const SwitchCollateralDocument = `
+    mutation switchCollateral($data: LoanCollateralSwitchInput, $input: LoanAccountCollateralData) {
+  loanAccount {
+    loanCollateralActions {
+      switchCollateral(data: $data, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSwitchCollateralMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SwitchCollateralMutation,
+    TError,
+    SwitchCollateralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SwitchCollateralMutation, TError, SwitchCollateralMutationVariables, TContext>(
+    ['switchCollateral'],
+    useAxios<SwitchCollateralMutation, SwitchCollateralMutationVariables>(SwitchCollateralDocument),
+    options
+  );
+export const LoanAccountGuaranteeActionsDocument = `
+    mutation loanAccountGuaranteeActions($actionType: GuaranteeActions!, $data: LoanGuaranteeActionsInput!) {
+  loanAccount {
+    loanGuaranteeActions {
+      guaranteeActions(actionType: $actionType, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useLoanAccountGuaranteeActionsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    LoanAccountGuaranteeActionsMutation,
+    TError,
+    LoanAccountGuaranteeActionsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    LoanAccountGuaranteeActionsMutation,
+    TError,
+    LoanAccountGuaranteeActionsMutationVariables,
+    TContext
+  >(
+    ['loanAccountGuaranteeActions'],
+    useAxios<LoanAccountGuaranteeActionsMutation, LoanAccountGuaranteeActionsMutationVariables>(
+      LoanAccountGuaranteeActionsDocument
+    ),
+    options
+  );
 export const GetNewIdDocument = `
     mutation getNewId($idType: ID_TYPE) {
   newId(idType: $idType)
@@ -38726,6 +38928,7 @@ export const GetLoanAccountGuaranteeDetailsDocument = `
           maxGuranteeAmountLimit
           guranteeAmount
           totalAmount
+          guaranteeId
         }
       }
     }
@@ -38755,6 +38958,7 @@ export const GetLoanAccountCollateralDetailsDocument = `
         totalCollateralValuation
         totalCollateralRelease
         collateralList {
+          collateralID
           collateralType
           ownerName
           relation
@@ -38790,6 +38994,7 @@ export const GetLoanAccountCollateralDetailsDocument = `
             id
             url
           }
+          status
         }
       }
     }
