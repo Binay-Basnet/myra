@@ -3,7 +3,6 @@ import { Box } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 
 import { PeriodWrapper } from './PeriodWrapper';
-import { en } from '../../../locale/en';
 import { useLocale } from '../../../locale/useLocale';
 import { CalendarBuilderDate, DateRange, Period, TDateState } from '../../../types/date';
 import { getPeriodDate } from '../../../utils/constants';
@@ -26,8 +25,10 @@ interface IPeriodsProps {
   showFiscalPeriod: boolean;
   showCustomPeriod: boolean;
   showTillDatePeriod: boolean;
+  // eslint-disable-next-line react/no-unused-prop-types
   showPeriods: boolean;
 
+  // eslint-disable-next-line react/no-unused-prop-types
   tillDate: { year: number; month: string; day: string; dayOfWeek: number };
 
   tillDateStart: Date;
@@ -49,7 +50,7 @@ export const Periods = ({
   showFiscalPeriod,
   showCustomPeriod,
   showTillDatePeriod,
-  tillDate,
+
   onChange,
   setState,
   baseDate,
@@ -62,7 +63,7 @@ export const Periods = ({
       {periods.map((defaultPeriod) => (
         <Fragment key={defaultPeriod.key}>
           <PeriodWrapper
-            title={t[defaultPeriod.title as keyof typeof en] || defaultPeriod.title}
+            title={t[defaultPeriod.title] || defaultPeriod.title}
             isSelected={selectedPeriod === defaultPeriod.key}
             onClick={() => {
               if (defaultPeriod.closePopover) {
@@ -92,7 +93,7 @@ export const Periods = ({
 
       {showFiscalPeriod && (
         <PeriodWrapper
-          title={t.fiscalYear}
+          title={t['fiscalYear']}
           isSelected={selectedPeriod === 'FISCAL_YEAR'}
           onClick={() => {
             setSelectedPeriod('FISCAL_YEAR');
@@ -104,7 +105,7 @@ export const Periods = ({
 
       {showCustomPeriod && (
         <PeriodWrapper
-          title={t.customPeriod}
+          title={t['customPeriod']}
           isSelected={selectedPeriod === 'CUSTOM_PERIOD'}
           onClick={() => {
             setSelectedPeriod('CUSTOM_PERIOD');
@@ -116,7 +117,7 @@ export const Periods = ({
 
       {showTillDatePeriod && (
         <PeriodWrapper
-          title={t.tillDate}
+          title={t['tillDate']}
           isSelected={selectedPeriod === 'TILL_DATE'}
           onClick={() => {
             const numberOfDays = dayjs(baseDate).diff(tillDateStart, 'day');

@@ -37,12 +37,12 @@ export type Period = {
 export type DateRange = {
   from: {
     date: Date;
-    en: string;
-    np: string;
+    en?: string;
+    np?: string;
   } | null;
   to: {
     date: Date;
-    en: string;
-    np: string;
+    en?: string;
+    np?: string;
   } | null;
 };

@@ -109,7 +109,7 @@ export const YearBaseSelect = ({
           borderRadius: 'br2',
           px: 's4',
           height: 's32',
-          w: '70px',
+          w: '71px',
 
           cursor: 'pointer',
           minH: '0',

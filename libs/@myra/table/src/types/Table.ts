@@ -1,9 +1,21 @@
-import { AccessorFn, ColumnDef, DeepKeys, Row, RowData, Table } from '@tanstack/react-table';
+import {
+  AccessorFn,
+  ColumnDef,
+  DeepKeys,
+  FilterFn,
+  Row,
+  RowData,
+  Table,
+} from '@tanstack/react-table';
 
 import { Id_Type } from '@coop/cbs/data-access';
 import { AclKey, MenuType, RouteValue } from '@coop/cbs/utils';
 
 declare module '@tanstack/table-core' {
+  interface FilterFns {
+    dateTime: FilterFn<unknown>;
+  }
+
   interface ColumnMeta<TData extends RowData, TValue> {
     column?: ColumnDef<TData, TValue>;
     isNumeric?: boolean;

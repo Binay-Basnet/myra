@@ -1,4 +1,4 @@
-export const en = {
+export const en: Record<string, string> = {
   today: 'Today',
   yesterday: 'Yesterday',
   last7Days: 'Last 7 Days',

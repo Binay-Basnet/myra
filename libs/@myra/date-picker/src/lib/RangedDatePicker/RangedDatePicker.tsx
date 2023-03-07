@@ -8,6 +8,7 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
+import dayjs from 'dayjs';
 
 import { Calendar } from '../../range-date-picker/components/Calendar';
 import { DateInput } from '../../range-date-picker/components/DateInput';
@@ -33,7 +34,7 @@ interface IRangeDatePickerProps {
   value: DateRange | undefined;
   locale?: 'en' | 'ne';
   onChange: (newDate: DateRange | undefined) => void;
-  label: string;
+  label?: string;
 
   periods?: Period[];
   baseDate?: Date;
@@ -41,6 +42,7 @@ interface IRangeDatePickerProps {
   showTillDatePeriod?: boolean;
   showCustomPeriod?: boolean;
   showPeriods?: boolean;
+  trigger?: (isOpen: boolean) => React.ReactNode;
 }
 
 export const RangedDatePicker = ({
@@ -58,6 +60,8 @@ export const RangedDatePicker = ({
   periods = DEFAULT_PERIODS,
 
   baseDate,
+
+  trigger,
 }: IRangeDatePickerProps) => {
   const { isOpen, onClose, onToggle } = useDisclosure();
 
@@ -120,16 +124,38 @@ export const RangedDatePicker = ({
     }
   }, [calendarType]);
 
+  useEffect(() => {
+    if (value && value?.from?.date && value?.to?.date) {
+      const diff = dayjs(value?.to?.date).diff(value?.from?.date, 'day');
+      const period = periods.find((p) => p.lastDays === diff);
+
+      if (period) {
+        setSelectedPeriod(period.key);
+      } else if (diff === 364 || diff === 365) {
+        setSelectedPeriod('FISCAL_YEAR');
+      } else if (diff === dayjs(value?.to?.date).diff(tillDateStart, 'day')) {
+        setSelectedPeriod('TILL_DATE');
+      } else {
+        setSelectedPeriod('CUSTOM_PERIOD');
+      }
+      setRangeStartDate(convertTillDate(value.from?.date, calendarType));
+      setRangeEndDate(convertTillDate(value.to?.date, calendarType));
+      setHoveredDate(convertTillDate(value.to?.date, calendarType));
+    }
+  }, [value]);
+
   return (
     <Box w="100%" display="flex" flexDir="column" gap="s4" mb="1px" alignItems="flex-start">
-      <Text fontWeight="500" lineHeight="1.5" fontSize="s3" color="gray.700">
-        {label}
-      </Text>
+      {label && (
+        <Text fontWeight="500" lineHeight="1.5" fontSize="s3" color="gray.700">
+          {label}
+        </Text>
+      )}
 
       <Popover placement="bottom-start" isOpen={isOpen} onClose={onClose} onOpen={onToggle}>
         <PopoverTrigger>
           <Box as="button" type="button" w="100%">
-            <DateInput {...inputProps} />
+            {trigger ? trigger(isOpen) : <DateInput {...inputProps} />}
           </Box>
         </PopoverTrigger>
 

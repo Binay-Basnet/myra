@@ -67,6 +67,11 @@ export const TableWithoutRef = <T extends Record<string, unknown>>(
     onRowSelectionChange: setRowSelection,
     getRowId,
 
+    filterFns: {
+      dateTime: () => true,
+    },
+    manualFiltering: true,
+
     enableSorting,
     manualSorting,
     getSubRows,
