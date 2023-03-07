@@ -446,7 +446,7 @@ export const NewLoanApplication = () => {
           </Box>
         )}
       </Box>
-      <Box position="sticky" bottom={0} zIndex="11">
+      <Box position="sticky" bottom={0} zIndex="3">
         <FormFooter
           status={
             <>
