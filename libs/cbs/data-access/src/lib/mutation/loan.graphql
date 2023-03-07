@@ -75,3 +75,19 @@ mutation updateLinkedAccount($loanAccountId: ID!, $newLinkedAccountId: ID!) {
     }
   }
 }
+
+mutation loanAccountGuaranteeActions(
+  $actionType: GuaranteeActions!
+  $data: LoanGuaranteeActionsInput!
+) {
+  loanAccount {
+    loanGuaranteeActions {
+      guaranteeActions(actionType: $actionType, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

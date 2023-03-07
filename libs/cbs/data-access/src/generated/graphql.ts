@@ -16974,6 +16974,28 @@ export type UpdateLinkedAccountMutation = {
   };
 };
 
+export type LoanAccountGuaranteeActionsMutationVariables = Exact<{
+  actionType: GuaranteeActions;
+  data: LoanGuaranteeActionsInput;
+}>;
+
+export type LoanAccountGuaranteeActionsMutation = {
+  loanAccount: {
+    loanGuaranteeActions?: {
+      guaranteeActions?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
 }>;
@@ -22482,6 +22504,7 @@ export type GetLoanAccountGuaranteeDetailsQuery = {
           maxGuranteeAmountLimit?: any | null;
           guranteeAmount?: any | null;
           totalAmount?: any | null;
+          guaranteeId?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -31083,6 +31106,40 @@ export const useUpdateLinkedAccountMutation = <TError = unknown, TContext = unkn
     ),
     options
   );
+export const LoanAccountGuaranteeActionsDocument = `
+    mutation loanAccountGuaranteeActions($actionType: GuaranteeActions!, $data: LoanGuaranteeActionsInput!) {
+  loanAccount {
+    loanGuaranteeActions {
+      guaranteeActions(actionType: $actionType, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useLoanAccountGuaranteeActionsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    LoanAccountGuaranteeActionsMutation,
+    TError,
+    LoanAccountGuaranteeActionsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    LoanAccountGuaranteeActionsMutation,
+    TError,
+    LoanAccountGuaranteeActionsMutationVariables,
+    TContext
+  >(
+    ['loanAccountGuaranteeActions'],
+    useAxios<LoanAccountGuaranteeActionsMutation, LoanAccountGuaranteeActionsMutationVariables>(
+      LoanAccountGuaranteeActionsDocument
+    ),
+    options
+  );
 export const GetNewIdDocument = `
     mutation getNewId($idType: ID_TYPE) {
   newId(idType: $idType)
@@ -38726,6 +38783,7 @@ export const GetLoanAccountGuaranteeDetailsDocument = `
           maxGuranteeAmountLimit
           guranteeAmount
           totalAmount
+          guaranteeId
         }
       }
     }
