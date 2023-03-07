@@ -144,7 +144,7 @@ export const GuaranteeDetails = () => {
               <FormAmountInput
                 name="maxGuranteeAmountLimit"
                 label="Maximum Guarantee Amount Available"
-                value={maxGuarantee}
+                // value={maxGuarantee}
                 isDisabled
               />
               <FormAmountInput
