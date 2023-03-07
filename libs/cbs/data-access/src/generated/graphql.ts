@@ -1712,6 +1712,7 @@ export type BranchInput = {
 };
 
 export type BranchMinimal = {
+  branchCode?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   name: Scalars['String'];
 };
@@ -12052,6 +12053,7 @@ export type MyraUserQuery = {
   formState?: Maybe<MyraUserFormStateResult>;
   list?: Maybe<MyraUserConnection>;
   tellers?: Maybe<Array<Maybe<TellerInfo>>>;
+  userDetail?: Maybe<UserDetailQuery>;
 };
 
 export type MyraUserQueryFormStateArgs = {
@@ -12061,6 +12063,10 @@ export type MyraUserQueryFormStateArgs = {
 export type MyraUserQueryListArgs = {
   filter?: InputMaybe<MyraUserSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type MyraUserQueryUserDetailArgs = {
+  userID: Scalars['ID'];
 };
 
 export type MyraUserResult = {
@@ -15543,6 +15549,16 @@ export type User = {
   username: Scalars['String'];
 };
 
+export type UserBio = {
+  documents?: Maybe<Array<Maybe<Scalars['String']>>>;
+  identificationDetail?: Maybe<Array<Maybe<MyraUserIdentification>>>;
+  isTemporarySameAsPermanent?: Maybe<Scalars['Boolean']>;
+  landlordContact?: Maybe<Scalars['String']>;
+  landlordName?: Maybe<Scalars['String']>;
+  permanentAddress?: Maybe<Address>;
+  temporaryAddress?: Maybe<Address>;
+};
+
 export type UserData = {
   branches?: Maybe<Array<Maybe<BranchMinimal>>>;
   permission?: Maybe<PermissionQuery>;
@@ -15552,6 +15568,13 @@ export type UserData = {
   userId?: Maybe<Scalars['String']>;
 };
 
+export type UserDetailQuery = {
+  basicInfo?: Maybe<UserMinimal>;
+  error?: Maybe<QueryError>;
+  userBio?: Maybe<UserBio>;
+  userOverview?: Maybe<UserOverview>;
+};
+
 export const UserGender = {
   Female: 'FEMALE',
   Male: 'MALE',
@@ -15559,6 +15582,12 @@ export const UserGender = {
 } as const;
 
 export type UserGender = typeof UserGender[keyof typeof UserGender];
+export type UserMinimal = {
+  name: Scalars['Localized'];
+  profilePicUrl?: Maybe<Scalars['String']>;
+  userId: Scalars['ID'];
+};
+
 export type UserMutation = {
   passwordRecovery?: Maybe<PasswordRecoveryMutation>;
   preference?: Maybe<UserPreferenceMutation>;
@@ -15567,6 +15596,21 @@ export type UserMutation = {
 
 export type UserMutationResetPasswordArgs = {
   data: ResetPasswordData;
+};
+
+export type UserOverview = {
+  branches?: Maybe<Array<Maybe<BranchMinimal>>>;
+  contactNo?: Maybe<Scalars['String']>;
+  dateJoined?: Maybe<Scalars['Localized']>;
+  email?: Maybe<Scalars['String']>;
+  empCode?: Maybe<Scalars['String']>;
+  gender?: Maybe<UserGender>;
+  isCoreEmployee?: Maybe<Scalars['Boolean']>;
+  lastActiveDate?: Maybe<Scalars['Localized']>;
+  name?: Maybe<Scalars['Localized']>;
+  role?: Maybe<Array<Maybe<RoleInfo>>>;
+  rolesCount?: Maybe<Scalars['Int']>;
+  serviceCenterCount?: Maybe<Scalars['Int']>;
 };
 
 export type UserPreference = {
