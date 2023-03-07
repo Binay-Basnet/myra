@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { HiOutlineSwitchHorizontal } from 'react-icons/hi';
+import { IoSendOutline } from 'react-icons/io5';
+import { useRouter } from 'next/router';
 
 import {
   Accordion,
@@ -7,16 +10,27 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  asyncToast,
   Box,
+  Button,
+  Chips,
   Grid,
   Modal,
   Text,
 } from '@myra-ui';
 
-import { LoanAccountCollateral } from '@coop/cbs/data-access';
+import {
+  GuaranteeStatus,
+  LoanAccountCollateral,
+  LoanCollateralReleaseInput,
+  useReleaseCollateralMutation,
+} from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
+import { FormFileInput, FormTextArea } from '@coop/shared/form';
 
 import { AccordianListCardComponent } from './AccordianCard';
 import { DocumentComponent } from './DocumentsCard';
+import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
 
 type CollateralProps = {
   collatDataList: LoanAccountCollateral | null;
@@ -24,10 +38,64 @@ type CollateralProps = {
 
 export const CollateralList = ({ collatDataList }: CollateralProps) => {
   const methods = useForm();
+  const router = useRouter();
+  const accountId = router?.query['id'];
+  const { getValues } = methods;
   const [openModal, setOpenModal] = useState(false);
+  const [openReleaseFormModal, setOpenReleaseFormModal] = useState(false);
+  const [openSwitchModal, setOpenSwitchModal] = useState(false);
+  const { refetch } = useLoanAccountDetailHooks();
 
-  const onCloseModal = () => {
+  const onCloseReleaseModal = () => {
     setOpenModal(false);
+  };
+
+  const onOpenReleaseModal = () => {
+    setOpenModal(true);
+  };
+
+  const onCloseReleaseFormModal = () => {
+    setOpenReleaseFormModal(false);
+  };
+
+  const onOpenReleaseFormModal = () => {
+    setOpenReleaseFormModal(true);
+  };
+
+  const onCloseSwitchModal = () => {
+    setOpenSwitchModal(false);
+  };
+
+  const onOpenSwitchModal = () => {
+    setOpenSwitchModal(true);
+  };
+
+  const { mutateAsync: releaseCollateralMutation } = useReleaseCollateralMutation();
+
+  const handelReleaseCollateral = () => {
+    const values = getValues();
+
+    const updatedValues = {
+      ...values,
+      loanAccountID: accountId,
+      collateralID: collatDataList?.collateralID,
+    };
+
+    asyncToast({
+      id: 'collat-release',
+      msgs: {
+        success: 'Collateral released succesfully',
+        loading: 'Releasing Collateral',
+      },
+      onSuccess: () => {
+        refetch();
+        onCloseReleaseModal();
+        onCloseReleaseFormModal();
+      },
+      promise: releaseCollateralMutation({
+        data: updatedValues as LoanCollateralReleaseInput,
+      }),
+    });
   };
 
   const landCollatList = [
@@ -254,7 +322,7 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
   ];
 
   return (
-    <Box>
+    <Box mb="s16">
       <Accordion defaultIndex={[0]} display="flex" flexDirection="column" gap="s16" allowToggle>
         <AccordionItem key={1}>
           <AccordionButton>
@@ -279,7 +347,15 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
                       ? collatDataList?.documentName
                       : 'N/A'}
                   </Text>
-                  {/* <Chips variant="solid" type="label" size="sm" theme="success" label="Active" /> */}
+                  <Chips
+                    variant="solid"
+                    type="label"
+                    size="sm"
+                    theme={
+                      collatDataList?.status === GuaranteeStatus.Released ? 'danger' : 'success'
+                    }
+                    label={collatDataList?.status}
+                  />
                 </Box>
                 <Text fontSize="s3" color="gray.500" lineHeight="125%" fontWeight="Regular">
                   {collatDataList?.collateralType}
@@ -289,54 +365,55 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
             <AccordionIcon />
           </AccordionButton>
           <AccordionPanel>
-            {collatDataList?.collateralType === 'Land' && (
-              <AccordianListCardComponent accordionCardDetails={landCollatList} />
-            )}
+            <Box borderBottom="1px solid" borderBottomColor="border.layout" mb="s16">
+              {collatDataList?.collateralType === 'Land' && (
+                <AccordianListCardComponent accordionCardDetails={landCollatList} />
+              )}
+              {collatDataList?.collateralType === 'Land and Building' && (
+                <AccordianListCardComponent accordionCardDetails={landAndBuildingCollatList} />
+              )}
+              {collatDataList?.collateralType === 'Vehicle' && (
+                <AccordianListCardComponent accordionCardDetails={vehicleCollatList} />
+              )}
+              {collatDataList?.collateralType === 'Documents' && (
+                <AccordianListCardComponent accordionCardDetails={docCollatList} />
+              )}
+              {collatDataList?.collateralType === 'Others' && (
+                <AccordianListCardComponent accordionCardDetails={othersCollatList} />
+              )}
+              <Grid templateColumns="repeat(2,1fr)" gap="s20">
+                {collatDataList?.documents?.map((docs) => (
+                  <DocumentComponent keyText={docs?.id} value={docs?.url} />
+                ))}
+              </Grid>
+            </Box>
 
-            {collatDataList?.collateralType === 'Land and Building' && (
-              <AccordianListCardComponent accordionCardDetails={landAndBuildingCollatList} />
-            )}
-
-            {collatDataList?.collateralType === 'Vehicle' && (
-              <AccordianListCardComponent accordionCardDetails={vehicleCollatList} />
-            )}
-
-            {collatDataList?.collateralType === 'Documents' && (
-              <AccordianListCardComponent accordionCardDetails={docCollatList} />
-            )}
-
-            {collatDataList?.collateralType === 'Others' && (
-              <AccordianListCardComponent accordionCardDetails={othersCollatList} />
-            )}
-
-            <Grid templateColumns="repeat(2,1fr)" gap="s20">
-              {collatDataList?.documents?.map((docs) => (
-                <DocumentComponent keyText={docs?.id} value={docs?.url} />
-              ))}
-            </Grid>
-            {/* <Divider />
-           <Box display="flex" w="50px" gap="s16" p="s16" onClick={() => setOpenModal(true)}>
-              <IconButton
-                colorScheme="transparent"
-                aria-label="Release"
-                icon={<IoTrash />}
-                color="danger.500"
-                size="sm"
-              />
-              <Button color="danger.500" variant="link">
+            {collatDataList?.status !== GuaranteeStatus.Released && (
+              <Button mr="s20" onClick={onOpenReleaseModal} leftIcon={<IoSendOutline />}>
                 Release
               </Button>
-            </Box> */}
+            )}
+
+            {collatDataList?.status !== GuaranteeStatus.Released && (
+              <Button
+                variant="ghost"
+                onClick={onOpenSwitchModal}
+                leftIcon={<HiOutlineSwitchHorizontal />}
+              >
+                Switch Collateral
+              </Button>
+            )}
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
 
       <Modal
         open={openModal}
-        onClose={onCloseModal}
+        onClose={onCloseReleaseModal}
         primaryButtonLabel="Confirm"
         secondaryButtonLabel="Cancel"
-        secondaryButtonHandler={onCloseModal}
+        primaryButtonHandler={onOpenReleaseFormModal}
+        secondaryButtonHandler={onCloseReleaseModal}
         title="Release Collateral"
       >
         <FormProvider {...methods}>
@@ -345,6 +422,44 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
               Your collateral will be realesed. Do you want to confirm?
             </Text>
           </Box>
+        </FormProvider>
+      </Modal>
+
+      <Modal
+        open={openReleaseFormModal}
+        onClose={onCloseReleaseFormModal}
+        primaryButtonLabel="Confirm"
+        secondaryButtonLabel="Cancel"
+        primaryButtonHandler={handelReleaseCollateral}
+        secondaryButtonHandler={onCloseReleaseFormModal}
+        title="Release Collateral"
+      >
+        <FormProvider {...methods}>
+          <Box display="flex" flexDir="column" gap="s16">
+            <FormFileInput multiple label="File Upload" name="files" />
+            <FormTextArea label="Note" name="note" />
+          </Box>
+        </FormProvider>
+      </Modal>
+
+      <Modal
+        open={openSwitchModal}
+        onClose={onCloseSwitchModal}
+        primaryButtonLabel="Confirm"
+        secondaryButtonLabel="Cancel"
+        primaryButtonHandler={() =>
+          router.push(
+            `${ROUTES.CBS_LOAN_ACCOUNTS_SWITCH_ADD}?id=${accountId}&collatId=${collatDataList?.collateralID}`
+          )
+        }
+        secondaryButtonHandler={onCloseSwitchModal}
+        title="Switch Collateral"
+      >
+        <FormProvider {...methods}>
+          <Text fontSize="r1" color="gray.800" lineHeight="20px" fontWeight="Regular">
+            All the details of the existing collateral will be lost and replaced by the new
+            collateral. Do you want to continue switching this collateral with a new one?
+          </Text>
         </FormProvider>
       </Modal>
     </Box>

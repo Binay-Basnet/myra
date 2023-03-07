@@ -76,6 +76,32 @@ mutation updateLinkedAccount($loanAccountId: ID!, $newLinkedAccountId: ID!) {
   }
 }
 
+mutation releaseCollateral($data: LoanCollateralReleaseInput!) {
+  loanAccount {
+    loanCollateralActions {
+      releaseCollateral(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation switchCollateral($data: LoanCollateralSwitchInput, $input: LoanAccountCollateralData) {
+  loanAccount {
+    loanCollateralActions {
+      switchCollateral(data: $data, input: $input) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
 mutation loanAccountGuaranteeActions(
   $actionType: GuaranteeActions!
   $data: LoanGuaranteeActionsInput!
