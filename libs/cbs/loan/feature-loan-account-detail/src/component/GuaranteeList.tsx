@@ -110,28 +110,32 @@ export const GuaranteeList = ({ gauranteeList }: GauranteeProps) => {
             </AccordionButton>
             <AccordionPanel p="0">
               <AccordianListCardComponent columns={3} accordionCardDetails={gauranteeListDetails} />
-              <Divider />
-              <Box display="flex" gap="s16" p="s16">
-                <Button leftIcon={<AiOutlineSend />} onClick={onReleaseAlertToggle}>
-                  Release
-                </Button>
+              {gauranteeList?.guaranteeStatus === GuaranteeStatus.Active && (
+                <>
+                  <Divider />
+                  <Box display="flex" gap="s16" p="s16">
+                    <Button leftIcon={<AiOutlineSend />} onClick={onReleaseAlertToggle}>
+                      Release
+                    </Button>
 
-                <Button
-                  leftIcon={<FiServer />}
-                  variant="outline"
-                  onClick={onPartialReleaseModalToggle}
-                >
-                  Partial Release
-                </Button>
+                    <Button
+                      leftIcon={<FiServer />}
+                      variant="outline"
+                      onClick={onPartialReleaseModalToggle}
+                    >
+                      Partial Release
+                    </Button>
 
-                <Button
-                  leftIcon={<HiOutlineSwitchHorizontal />}
-                  onClick={onSwitchAlertToggle}
-                  variant="ghost"
-                >
-                  Switch Guarantee
-                </Button>
-              </Box>
+                    <Button
+                      leftIcon={<HiOutlineSwitchHorizontal />}
+                      onClick={onSwitchAlertToggle}
+                      variant="ghost"
+                    >
+                      Switch Guarantee
+                    </Button>
+                  </Box>
+                </>
+              )}
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
