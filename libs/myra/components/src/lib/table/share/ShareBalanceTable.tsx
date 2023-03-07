@@ -55,9 +55,6 @@ export const ShareBalanceTable = () => {
             <span>{props.getValue() as string}</span>
           </Box>
         ),
-        meta: {
-          width: '25%',
-        },
       },
 
       {
@@ -67,7 +64,6 @@ export const ShareBalanceTable = () => {
       {
         header: t['shareTableShareAmount'],
         accessorFn: (row) => amountConverter(row?.node.amount),
-        meta: { isNumeric: true },
         // cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
       },
 
