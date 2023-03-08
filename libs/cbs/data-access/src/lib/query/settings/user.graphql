@@ -116,3 +116,57 @@ query getTellerList {
     }
   }
 }
+
+query getSettingsUserDetailsData($userID: ID!) {
+  settings {
+    myraUser {
+      userDetail(userID: $userID) {
+        basicInfo {
+          name
+          profilePicUrl
+          userId
+        }
+        userOverview {
+          rolesCount
+          serviceCenterCount
+          lastActiveDate
+          name
+          isCoreEmployee
+          empCode
+          gender
+          contactNo
+          email
+          dateJoined
+          role {
+            id
+            name
+          }
+          branches {
+            branchCode
+            id
+            name
+          }
+        }
+        userBio {
+          permanentAddress {
+            ...Address
+          }
+          isTemporarySameAsPermanent
+          temporaryAddress {
+            ...Address
+          }
+          identificationDetail {
+            id
+            idNo
+            idType
+            place
+            date
+          }
+          landlordName
+          landlordContact
+          documents
+        }
+      }
+    }
+  }
+}

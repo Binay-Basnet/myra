@@ -151,6 +151,7 @@ export const ROUTES = {
   SETTINGS_USERS_LIST: '/settings/users/super-admin/list',
   SETTINGS_USERS_ADD: '/settings/users/super-admin/add',
   SETTINGS_USERS_EDIT: '/settings/users/super-admin/edit',
+  SETTINGS_USERS_DETAILS: '/settings/users/super-admin/details',
 
   SETTINGS_ACCESS_LOG: '/settings/monitor/access-log/list',
 

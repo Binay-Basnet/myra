@@ -58,55 +58,56 @@ export const ProductDetailPathBar = ({
           </Text>
           {/* <Icon as={BsPinAngle} size="md" /> */}
         </Box>
+        {optionsHeader && (
+          <Box display="flex" gap="s32">
+            <Popover placement="bottom-end">
+              <PopoverTrigger>
+                <Box display="flex" alignItems="center" justifyContent="center">
+                  <Button
+                    variant="ghost"
+                    colorScheme="gray"
+                    color="gray.600"
+                    fontSize="r1"
+                    display="flex"
+                    alignItems="center"
+                    gap="s8"
+                  >
+                    <Icon as={OptionsIcon} size="sm" />
+                    <span>Options</span>
+                  </Button>
+                </Box>
+              </PopoverTrigger>
+              <PopoverContent minWidth="180px" w="180px" color="white" boxShadow="E2">
+                <PopoverBody px="0" py="0">
+                  <Grid>
+                    {optionsHeader?.map((item) => (
+                      <GridItem px="s16" py="s8" _hover={{ bg: 'gray.100' }} cursor="pointer">
+                        <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                          {item.label ?? '-'}
+                        </Text>
+                      </GridItem>
+                    ))}
+                  </Grid>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
 
-        <Box display="flex" gap="s32">
-          <Popover placement="bottom-end">
-            <PopoverTrigger>
-              <Box display="flex" alignItems="center" justifyContent="center">
-                <Button
-                  variant="ghost"
-                  colorScheme="gray"
-                  color="gray.600"
-                  fontSize="r1"
-                  display="flex"
-                  alignItems="center"
-                  gap="s8"
-                >
-                  <Icon as={OptionsIcon} size="sm" />
-                  <span>Options</span>
-                </Button>
-              </Box>
-            </PopoverTrigger>
-            <PopoverContent minWidth="180px" w="180px" color="white" boxShadow="E2">
-              <PopoverBody px="0" py="0">
-                <Grid>
-                  {optionsHeader?.map((item) => (
-                    <GridItem px="s16" py="s8" _hover={{ bg: 'gray.100' }} cursor="pointer">
-                      <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                        {item.label ?? '-'}
-                      </Text>
-                    </GridItem>
-                  ))}
-                </Grid>
-              </PopoverBody>
-            </PopoverContent>
-          </Popover>
-
-          <IconButton
-            variant="ghost"
-            aria-label="close"
-            color="gray.500"
-            height="40px"
-            icon={<Icon as={IoClose} size="lg" />}
-            onClick={() => {
-              if (closeLink) {
-                router.push(closeLink);
-              } else {
-                router.back();
-              }
-            }}
-          />
-        </Box>
+            <IconButton
+              variant="ghost"
+              aria-label="close"
+              color="gray.500"
+              height="40px"
+              icon={<Icon as={IoClose} size="lg" />}
+              onClick={() => {
+                if (closeLink) {
+                  router.push(closeLink);
+                } else {
+                  router.back();
+                }
+              }}
+            />
+          </Box>
+        )}
       </Box>
     </Box>
   );

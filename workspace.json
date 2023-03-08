@@ -83,6 +83,7 @@
     "cbs-settings-feature-saving-product-detail": "libs/cbs/settings/feature-saving-product-detail",
     "cbs-settings-feature-share": "libs/cbs/settings/feature-share",
     "cbs-settings-feature-super-admin": "libs/cbs/settings/feature-super-admin",
+    "cbs-settings-feature-user-details": "libs/cbs/settings/feature-user-details",
     "cbs-settings-feature-valuator": "libs/cbs/settings/feature-valuator",
     "cbs-settings-ui-components": "libs/cbs/settings/ui-components",
     "cbs-settings-ui-containers": "libs/cbs/settings/ui-containers",

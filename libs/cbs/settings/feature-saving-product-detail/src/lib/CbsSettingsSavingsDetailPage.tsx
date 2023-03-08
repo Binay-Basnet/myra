@@ -21,12 +21,6 @@ export const CbsSettingsSavingsDetailPage = () => {
       />
       {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <OverviewPage />}
       {tabQuery === 'account list' && <AccountListPage />}
-
-      {/* {tabQuery && !['tasks', 'documents', 'activity'].includes(tabQuery) && (
-        <Box h="calc(100vh - 110px)">
-          <WIPState />
-        </Box>
-      )} */}
     </>
   );
 };
