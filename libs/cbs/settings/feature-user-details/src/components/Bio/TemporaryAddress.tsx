@@ -9,7 +9,7 @@ export const UserTemporaryAddress = () => {
 
   return (
     <>
-      {detailData?.userBio?.isTemporarySameAsPermanent && (
+      {!detailData?.userBio?.isTemporarySameAsPermanent && (
         <DetailsCard title="Temporary Address" bg="white" hasThreeRows>
           <DetailCardContent
             title="Province"
@@ -37,7 +37,7 @@ export const UserTemporaryAddress = () => {
           />
         </DetailsCard>
       )}
-      {!detailData?.userBio?.isTemporarySameAsPermanent && (
+      {detailData?.userBio?.isTemporarySameAsPermanent && (
         <DetailsCard title="Temporary Address" bg="white" hasTable>
           <Text>Temporary Address Same As Permanent Address</Text>
         </DetailsCard>
