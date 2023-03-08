@@ -9,7 +9,7 @@ export const UserDocuments = () => {
   return (
     <DetailsCard title="Documents" bg="white">
       {detailData?.userBio?.documents?.map((docs) => (
-        <DocumentComponent keyText={docs as string} value={docs as string} />
+        <DocumentComponent keyText={docs?.identifier as string} value={docs?.url as string} />
       ))}
     </DetailsCard>
   );

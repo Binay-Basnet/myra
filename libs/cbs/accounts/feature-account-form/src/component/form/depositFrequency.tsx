@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Box, Text } from '@myra-ui';
+
 import {
   Frequency,
   FrequencyDay,
@@ -11,7 +13,6 @@ import {
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const DepositFrequency = () => {
@@ -77,6 +78,12 @@ export const DepositFrequency = () => {
         <Text fontWeight="SemiBold" fontSize="r1" color="neutralColorLight.Gray-60">
           {t['accDepositFrequency']}
         </Text>
+
+        {productDeposit === Frequency?.Daily && (
+          <Text fontWeight="SemiBold" fontSize="s3">
+            The Deposit Frequency is set to be Daily.
+          </Text>
+        )}
         {productDeposit === Frequency?.Weekly && (
           <Box
             display="flex"

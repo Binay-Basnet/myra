@@ -1,6 +1,7 @@
 import {
   GeneralInformationUsers,
   TabHeader,
+  UserDocuments,
   UserIdentificationDetails,
   UserPermanentAddress,
   UserTemporaryAddress,
@@ -13,6 +14,6 @@ export const Bio = () => (
     <UserPermanentAddress />
     <UserIdentificationDetails />
     <UserTemporaryAddress />
-    {/* <UserDocuments /> */}
+    <UserDocuments />
   </>
 );

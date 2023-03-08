@@ -256,6 +256,13 @@ export const AccountObjState = {
 } as const;
 
 export type AccountObjState = typeof AccountObjState[keyof typeof AccountObjState];
+export const AccountOpenDepositVerify = {
+  OtherDocument: 'OTHER_DOCUMENT',
+  WithdrawSlip: 'WITHDRAW_SLIP',
+} as const;
+
+export type AccountOpenDepositVerify =
+  typeof AccountOpenDepositVerify[keyof typeof AccountOpenDepositVerify];
 export type AccountOpeningReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
@@ -4459,11 +4466,13 @@ export type DepositTransactionView = {
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   depositedBy?: Maybe<DepositedBy>;
+  depositedDate?: Maybe<Scalars['Localized']>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
+  paymentFile?: Maybe<Array<Maybe<Scalars['String']>>>;
   paymentMode?: Maybe<DepositPaymentType>;
   rebate?: Maybe<Scalars['String']>;
   sourceOfFund?: Maybe<Scalars['String']>;
@@ -13919,12 +13928,14 @@ export type ServiceChargeInput = {
 export type ServiceType = {
   amount?: InputMaybe<Scalars['Amount']>;
   ledgerName?: InputMaybe<Scalars['String']>;
+  percentage?: InputMaybe<Scalars['Float']>;
   serviceName?: InputMaybe<Scalars['String']>;
 };
 
 export type ServiceTypeFormState = {
   amount?: Maybe<Scalars['Amount']>;
   ledgerName?: Maybe<Scalars['String']>;
+  percentage?: Maybe<Scalars['Float']>;
   serviceName?: Maybe<Scalars['String']>;
 };
 
@@ -15549,7 +15560,7 @@ export type User = {
 };
 
 export type UserBio = {
-  documents?: Maybe<Array<Maybe<Scalars['String']>>>;
+  documents?: Maybe<Array<Maybe<PictureData>>>;
   identificationDetail?: Maybe<Array<Maybe<MyraUserIdentification>>>;
   isTemporarySameAsPermanent?: Maybe<Scalars['Boolean']>;
   landlordContact?: Maybe<Scalars['String']>;
@@ -15936,6 +15947,7 @@ export type WithdrawSlip = {
   amount: Scalars['String'];
   isDifferentMember?: InputMaybe<Scalars['Boolean']>;
   memberId?: InputMaybe<Scalars['String']>;
+  verifyWith?: InputMaybe<AccountOpenDepositVerify>;
   withdrawSlipNo: Scalars['String'];
 };
 
@@ -28222,7 +28234,6 @@ export type GetSettingsUserDetailsDataQuery = {
           isTemporarySameAsPermanent?: boolean | null;
           landlordName?: string | null;
           landlordContact?: string | null;
-          documents?: Array<string | null> | null;
           permanentAddress?: AddressFragment | null;
           temporaryAddress?: AddressFragment | null;
           identificationDetail?: Array<{
@@ -28232,6 +28243,7 @@ export type GetSettingsUserDetailsDataQuery = {
             place?: string | null;
             date?: Record<'local' | 'en' | 'np', string> | null;
           } | null> | null;
+          documents?: Array<{ identifier?: string | null; url?: string | null } | null> | null;
         } | null;
       } | null;
     } | null;
@@ -46429,7 +46441,10 @@ export const GetSettingsUserDetailsDataDocument = `
           }
           landlordName
           landlordContact
-          documents
+          documents {
+            identifier
+            url
+          }
         }
       }
     }
