@@ -13928,14 +13928,12 @@ export type ServiceChargeInput = {
 export type ServiceType = {
   amount?: InputMaybe<Scalars['Amount']>;
   ledgerName?: InputMaybe<Scalars['String']>;
-  percentage?: InputMaybe<Scalars['Float']>;
   serviceName?: InputMaybe<Scalars['String']>;
 };
 
 export type ServiceTypeFormState = {
   amount?: Maybe<Scalars['Amount']>;
   ledgerName?: Maybe<Scalars['String']>;
-  percentage?: Maybe<Scalars['Float']>;
   serviceName?: Maybe<Scalars['String']>;
 };
 

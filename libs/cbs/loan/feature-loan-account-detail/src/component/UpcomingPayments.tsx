@@ -76,6 +76,8 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
       {
         header: 'Installment Amount',
         accessorKey: 'payment',
+        cell: (props) =>
+          props.getValue() ? <Text>{amountConverter(props.getValue() as string)}</Text> : 'N/A',
       },
       {
         header: 'Principal',
@@ -84,12 +86,14 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
           const data = props?.row?.original;
           return (
             <>
-              {data?.principal}
+              {amountConverter(data?.principal)}
               {data?.currentRemainingPrincipal !== '0' && (
-                <>(Current Remaining Principal: {data?.currentRemainingPrincipal})</>
+                <>
+                  (Current Remaining Principal: {amountConverter(data?.currentRemainingPrincipal)})
+                </>
               )}
               {data?.remainingIntrest !== '0' && (
-                <>(Remaining Interest: {data?.remainingIntrest})</>
+                <>(Remaining Interest: {amountConverter(data?.remainingIntrest)})</>
               )}
             </>
           );
@@ -98,6 +102,8 @@ export const UpcomingPayments = ({ paymentList, allList }: IPaymentProps) => {
       {
         header: 'Interest',
         accessorKey: 'interest',
+        cell: (props) =>
+          props.getValue() ? <Text>{amountConverter(props.getValue() as string)}</Text> : 'N/A',
       },
       {
         header: 'Remaining Principal',
