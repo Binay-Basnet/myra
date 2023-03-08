@@ -233,7 +233,7 @@ export const LoanRepayment = () => {
   const loanPaymentScheduleSplice =
     nextInstallmentNumber > 5
       ? loanPaymentSchedule?.slice(nextInstallmentNumber - 5, nextInstallmentNumber) || []
-      : loanPaymentSchedule?.slice(0, 11) || [];
+      : loanPaymentSchedule?.slice(0, nextInstallmentNumber) || [];
 
   useEffect(() => {
     if (loanAccountId) {
