@@ -4692,6 +4692,7 @@ export type Dues = {
 
 export type EodDate = {
   hasErrors: Scalars['Boolean'];
+  headOfficeReady?: Maybe<Scalars['Boolean']>;
   isInitialized: Scalars['Boolean'];
   value: Scalars['Localized'];
 };
@@ -4761,7 +4762,7 @@ export type EodState = typeof EodState[keyof typeof EodState];
 export type EodStates = {
   cashInHand?: Maybe<EodState>;
   cashInVault?: Maybe<EodState>;
-  currentBranchesReady?: Maybe<Scalars['Boolean']>;
+  currentBranchesReady?: Maybe<EodState>;
   dormancy?: Maybe<EodState>;
   headOfficeReady?: Maybe<Scalars['Boolean']>;
   interestBooking?: Maybe<EodState>;
@@ -28928,7 +28929,7 @@ export type GetEodStatusQuery = {
       eodDate?: Record<'local' | 'en' | 'np', string> | null;
       states?: {
         headOfficeReady?: boolean | null;
-        currentBranchesReady?: boolean | null;
+        currentBranchesReady?: EodState | null;
         interestBooking?: EodState | null;
         interestPosting?: EodState | null;
         transactionDate?: EodState | null;

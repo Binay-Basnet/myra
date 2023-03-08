@@ -139,7 +139,7 @@ export const DayClose = ({ dayCloseList }: IDayCloseProps) => {
 
   return (
     <Box display="flex" flexDirection="column" py="s16">
-      <Box display="flex" flexDirection="column">
+      <Box display="flex" flexDirection="column" gap="s16">
         <Box display="flex" py="s16" justifyContent="space-between" alignItems="center">
           <Text
             fontSize="r2"
