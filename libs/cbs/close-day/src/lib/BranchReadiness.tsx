@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
 
@@ -20,6 +21,8 @@ export interface BranchReadinessProps {}
 
 export const BranchReadiness = () => {
   const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   const dispatch = useAppDispatch();
 
@@ -89,6 +92,7 @@ export const BranchReadiness = () => {
               mainButtonLabel="Complete"
               mainButtonHandler={() => {
                 refetch();
+                queryClient.invalidateQueries(['getEndOfDayDateData']);
                 router?.push('/');
               }}
               isMainButtonDisabled={!!branchReadinessErrors?.length}

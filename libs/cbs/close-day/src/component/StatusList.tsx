@@ -17,6 +17,19 @@ interface IStatusListProps {
   }[];
 }
 
+const eodStatusIcon = (status: EodState | undefined | null) => {
+  switch (status) {
+    case EodState.Completed:
+      return <Icon color="primary.500" as={BsCheckCircleFill} />;
+    case EodState.CompletedWithErrors:
+      return <Icon color="warning.500" as={BsCheckCircleFill} />;
+    case EodState.Ongoing:
+      return <Spinner size="sm" />;
+    default:
+      return <Icon color="danger.500" as={IoClose} />;
+  }
+};
+
 export const StatusList = ({ statusList }: IStatusListProps) => {
   const { t } = useTranslation();
 
@@ -25,19 +38,6 @@ export const StatusList = ({ statusList }: IStatusListProps) => {
   const [selectedErrors, setSelectedErrors] = useState<string[]>([]);
 
   const [selectedTitle, setSelectedTitle] = useState<string>('');
-
-  const eodStatusIcon = (status: EodState | undefined | null) => {
-    switch (status) {
-      case EodState.Completed:
-        return <Icon color="primary.500" as={BsCheckCircleFill} />;
-      case EodState.CompletedWithErrors:
-        return <Icon color="warning.500" as={BsCheckCircleFill} />;
-      case EodState.Ongoing:
-        return <Spinner size="sm" />;
-      default:
-        return <Icon color="danger.500" as={IoClose} />;
-    }
-  };
 
   const eodStatusText = (status: EodState | undefined | null, title: string) => {
     let statusText = '';
@@ -99,6 +99,7 @@ export const StatusList = ({ statusList }: IStatusListProps) => {
           </Box>
         </Box>
       ))}
+
       <DayEndErrorsModal
         isOpen={isOpen}
         onClose={onClose}

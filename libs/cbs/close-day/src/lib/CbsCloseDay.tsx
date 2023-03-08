@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -26,6 +26,8 @@ export const CbsCloseDay = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
+
+  const [stopFetch, setStopFetch] = useState<boolean>(false);
 
   // const queryClient = useQueryClient();
 
@@ -55,9 +57,13 @@ export const CbsCloseDay = () => {
         ) {
           refetchEndOfDay();
         }
+
+        if (res?.transaction?.eodStatus?.overAllStatus !== 'ONGOING') {
+          setStopFetch(true);
+        }
       },
-      // refetchInterval: stopFetch ? false : 2000,
-      refetchInterval: 2000,
+      refetchInterval: stopFetch ? false : 2000,
+      // refetchInterval: 2000,
       enabled: user?.currentBranch?.category === BranchCategory.HeadOffice,
     }
   );
@@ -67,38 +73,36 @@ export const CbsCloseDay = () => {
 
     const eodError = eodStatusQueryData?.transaction?.eodStatus?.errors;
 
-    if (!eodStatus?.currentBranchesReady) {
-      return [
-        {
-          title: 'Branch Readiness',
-          subTitle: 'Check if all the branches have completed branch readiness or not.',
-          status: EodState.CompletedWithErrors,
-          errors: eodError?.readiness as string[],
-        },
-      ];
-    }
+    // if (!eodStatus?.currentBranchesReady) {
+    //   return [
+    //     {
+    //       title: 'Branch Readiness',
+    //       subTitle: 'Check if all the branches have completed branch readiness or not.',
+    //       status: EodState.CompletedWithErrors,
+    //       errors: eodError?.readiness as string[],
+    //     },
+    //   ];
+    // }
 
     if (eodStatusQueryData?.transaction?.eodStatus?.stage === 'PRE') {
       return [
         {
           title: 'Branch Readiness',
           subTitle: 'Check if all the branches have completed branch readiness or not.',
-          status: eodStatus?.currentBranchesReady
-            ? EodState.Completed
-            : EodState.CompletedWithErrors,
+          status: eodStatus?.currentBranchesReady,
           errors: eodError?.readiness as string[],
         },
         {
           title: 'Cash with Teller',
           subTitle:
             'Check if the cash with teller at the start of day balances with the cash with teller at the end after all transactions have been completed.',
-          status: eodError ? eodStatus?.cashInHand : EodState.Completed,
+          status: eodStatus?.cashInHand,
           errors: eodError?.cashInHand as string[],
         },
         {
           title: 'dayCloseCashVault',
           subTitle: 'dayCloseCheckCashVault',
-          status: eodError ? eodStatus?.cashInVault : EodState.Completed,
+          status: eodStatus?.cashInVault,
           errors: eodError?.cashInVault as string[],
         },
       ];
@@ -109,41 +113,39 @@ export const CbsCloseDay = () => {
         {
           title: 'Branch Readiness',
           subTitle: 'Check if all the branches have completed branch readiness or not.',
-          status: eodStatus?.currentBranchesReady
-            ? EodState.Completed
-            : EodState.CompletedWithErrors,
+          status: eodStatus?.currentBranchesReady,
           errors: eodError?.readiness as string[],
         },
         {
           title: 'Cash with Teller',
           subTitle:
             'Check if the cash with teller at the start of day balances with the cash with teller at the end after all transactions have been completed.',
-          status: eodError ? eodStatus?.cashInHand : EodState.Completed,
+          status: eodStatus?.cashInHand,
           errors: eodError?.cashInHand as string[],
         },
         {
           title: 'dayCloseCashVault',
           subTitle: 'dayCloseCheckCashVault',
-          status: eodError ? eodStatus?.cashInVault : EodState.Completed,
+          status: eodStatus?.cashInVault,
           errors: eodError?.cashInVault as string[],
         },
         {
           title: 'dayCloseDailyInterestBooking',
           subTitle: 'dayCloseInterestBooking',
-          status: eodError ? eodStatus?.interestBooking : EodState.Completed,
+          status: eodStatus?.interestBooking,
           errors: eodError?.interestBooking as string[],
         },
         {
           title: 'dayCloseCheckFrequency',
           subTitle: 'dayCloseImplementthedayend',
-          status: eodError ? eodStatus?.interestPosting : EodState.Completed,
+          status: eodStatus?.interestPosting,
           errors: eodError?.interestPosting as string[],
         },
         {
           title: 'Loan Interest Booking',
           subTitle:
             'Interest booking should be done for all the loan accounts before closing the day.',
-          status: eodError ? eodStatus?.loanInterestBooking : EodState.Completed,
+          status: eodStatus?.loanInterestBooking,
           errors: eodError?.loanInterestBooking as string[],
         },
         {
@@ -154,119 +156,29 @@ export const CbsCloseDay = () => {
         {
           title: 'dayCloseCheckMaturity',
           subTitle: 'dayCloseCheckAccount',
-          status: eodError ? eodStatus?.maturity : EodState.Completed,
+          status: eodStatus?.maturity,
           errors: eodError?.maturity as string[],
         },
         {
           title: 'Check Dormant',
           subTitle: 'Check if the account is dormant or not.',
-          status: eodError ? eodStatus?.dormancy : EodState.Completed,
+          status: eodStatus?.dormancy,
           errors: eodError?.dormancy as string[],
         },
         {
           title: 'Loan Repayment',
           subTitle:
             'Loan Repayment should be done for all the loan accounts before closing the day.',
-          status: eodError ? eodStatus?.loanRepayment : EodState.Completed,
+          status: eodStatus?.loanRepayment,
           errors: eodError?.loanRepayment as string[],
         },
       ];
     }
 
-    // if (eodStatusQueryData?.transaction?.eodStatus?.stage === 'POST') {
-    //   return [
-    //     {
-    //       title: 'Branch Readiness',
-    //       subTitle: 'Check if all the branches have completed branch readiness or not.',
-    //       status: eodStatus?.currentBranchesReady
-    //         ? EodState.Completed
-    //         : EodState.CompletedWithErrors,
-    //       errors: eodError?.readiness as string[],
-    //     },
-    //     {
-    //       title: 'Cash with Teller',
-    //       subTitle:
-    //         'Check if the cash with teller at the start of day balances with the cash with teller at the end after all transactions have been completed.',
-    //       status: eodError ? eodStatus?.cashInHand : EodState.Completed,
-    //       errors: eodError?.cashInHand as string[],
-    //     },
-    //     {
-    //       title: 'dayCloseCashVault',
-    //       subTitle: 'dayCloseCheckCashVault',
-    //       status: eodError ? eodStatus?.cashInVault : EodState.Completed,
-    //       errors: eodError?.cashInVault as string[],
-    //     },
-    //     {
-    //       title: 'dayCloseDailyInterestBooking',
-    //       subTitle: 'dayCloseInterestBooking',
-    //       status: eodError ? eodStatus?.interestBooking : EodState.Completed,
-    //       errors: eodError?.interestBooking as string[],
-    //     },
-    //     {
-    //       title: 'dayCloseCheckFrequency',
-    //       subTitle: 'dayCloseImplementthedayend',
-    //       status: eodError ? eodStatus?.interestPosting : EodState.Completed,
-    //       errors: eodError?.interestPosting as string[],
-    //     },
-    //     {
-    //       title: 'Loan Interest Booking',
-    //       subTitle:
-    //         'Interest booking should be done for all the loan accounts before closing the day.',
-    //       status: eodError ? eodStatus?.loanInterestBooking : EodState.Completed,
-    //       errors: eodError?.loanInterestBooking as string[],
-    //     },
-    //     {
-    //       title: 'dayCloseTransactionDateProgress',
-    //       subTitle: 'dayCloseChecktransactiondate',
-    //       status: eodStatus?.transactionDate ?? EodState.Completed,
-    //     },
-    //     {
-    //       title: 'dayCloseCheckMaturity',
-    //       subTitle: 'dayCloseCheckAccount',
-    //       status: eodError ? eodStatus?.maturity : EodState.Completed,
-    //       errors: eodError?.maturity as string[],
-    //     },
-    //     {
-    //       title: 'Check Dormant',
-    //       subTitle: 'Check if the account is dormant or not.',
-    //       status: eodError ? eodStatus?.dormancy : EodState.Completed,
-    //       errors: eodError?.dormancy as string[],
-    //     },
-    //     {
-    //       title: 'Loan Repayment',
-    //       subTitle:
-    //         'Loan Repayment should be done for all the loan accounts before closing the day.',
-    //       status: eodError ? eodStatus?.loanRepayment : EodState.Completed,
-    //       errors: eodError?.loanRepayment as string[],
-    //     },
-    //   ];
-    // }
-
     return [];
   }, [eodStatusQueryData]);
 
   const eodStatus = eodStatusQueryData?.transaction?.eodStatus;
-
-  // const handleDayClose = () => {
-  //   asyncToast({
-  //     id: 'set-close-day-with-error',
-  //     promise: closeDay({ option: EodOption.CompleteWithError }),
-  //     msgs: {
-  //       loading: 'Closing the Day',
-  //       success: 'Day closed',
-  //     },
-  //     onSuccess: () => {
-  //       queryClient.invalidateQueries(['getEndOfDayDateData']);
-  //       queryClient.invalidateQueries(['getEODStatus']);
-  //       // router.push('/');
-  //     },
-  //     onError: () => {
-  //       queryClient.invalidateQueries(['getEndOfDayDateData']);
-  //       queryClient.invalidateQueries(['getEODStatus']);
-  //       // router.push('/');
-  //     },
-  //   });
-  // };
 
   const isDayCloseDisabled = () => {
     if (!eodStatus?.states) {
@@ -291,13 +203,6 @@ export const CbsCloseDay = () => {
       return false;
     }
 
-    // if (eodStatus?.stage === 'POST') {
-    //   if (eodStatus?.overAllStatus === 'ONGOING') {
-    //     return true;
-    //   }
-    //   return false;
-    // }
-
     if (
       eodStatusQueryData?.transaction?.eodStatus?.states?.transactionDate === EodState.Completed
     ) {
@@ -319,7 +224,7 @@ export const CbsCloseDay = () => {
 
   const getMainButtonLabel = () => {
     if (eodStatus?.stage === 'PRE' && eodStatus?.overAllStatus === 'COMPLETED_WITH_ERRORS') {
-      return 'Reinitiate pre stage';
+      return 'Ignore and proceed';
     }
 
     if (eodStatus?.stage === 'PRE' && eodStatus?.overAllStatus === 'COMPLETED') {
@@ -342,13 +247,13 @@ export const CbsCloseDay = () => {
   };
 
   const getDraftButton = () => {
-    // if (eodStatus?.stage === 'PRE' && eodStatus?.overAllStatus === 'COMPLETED_WITH_ERRORS') {
-    //   return (
-    //     <Button variant="ghost" shade="neutral" onClick={handleReinitiate}>
-    //       Reinitiate pre stage
-    //     </Button>
-    //   );
-    // }
+    if (eodStatus?.stage === 'PRE' && eodStatus?.overAllStatus === 'COMPLETED_WITH_ERRORS') {
+      return (
+        <Button variant="ghost" shade="neutral" onClick={handleReinitiate}>
+          Reinitiate pre stage
+        </Button>
+      );
+    }
 
     if (eodStatus?.stage === 'MAIN' && eodStatus?.overAllStatus === 'COMPLETED_WITH_ERRORS') {
       return (
@@ -363,10 +268,12 @@ export const CbsCloseDay = () => {
 
   const handleReinitiate = () => {
     closeDay({ option: EodOption.Reinitiate });
+    setStopFetch(false);
   };
 
   const handleCompleteWithError = () => {
     closeDay({ option: EodOption.CompleteWithError });
+    setStopFetch(false);
   };
 
   const mainButtonHandler = () => {
@@ -378,7 +285,8 @@ export const CbsCloseDay = () => {
     }
 
     if (eodStatus?.stage === 'PRE' && eodStatus?.overAllStatus === 'COMPLETED') {
-      return closeDay({});
+      closeDay({});
+      return setStopFetch(false);
     }
 
     return router?.push('/');

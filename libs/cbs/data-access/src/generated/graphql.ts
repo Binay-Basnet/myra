@@ -28630,6 +28630,7 @@ export type GetEndOfDayDateDataQuery = {
       value: Record<'local' | 'en' | 'np', string>;
       hasErrors: boolean;
       isInitialized: boolean;
+      headOfficeReady?: boolean | null;
     };
   };
 };
@@ -28928,7 +28929,6 @@ export type GetEodStatusQuery = {
       overAllStatus?: EodState | null;
       eodDate?: Record<'local' | 'en' | 'np', string> | null;
       states?: {
-        headOfficeReady?: boolean | null;
         currentBranchesReady?: EodState | null;
         interestBooking?: EodState | null;
         interestPosting?: EodState | null;
@@ -46957,6 +46957,7 @@ export const GetEndOfDayDateDataDocument = `
       value
       hasErrors
       isInitialized
+      headOfficeReady
     }
   }
 }
@@ -47345,7 +47346,6 @@ export const GetEodStatusDocument = `
       overAllStatus
       eodDate
       states {
-        headOfficeReady
         currentBranchesReady
         interestBooking
         interestPosting

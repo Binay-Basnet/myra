@@ -102,6 +102,7 @@ export const SharePurchasePayment = ({
               </GridItem>
               <GridItem mt="s10" colSpan={2}>
                 <FormFileInput
+                  size="lg"
                   name="bankVoucher.citizenshipDocument"
                   label={t['sharePurchaseCitizenshipDocument']}
                 />

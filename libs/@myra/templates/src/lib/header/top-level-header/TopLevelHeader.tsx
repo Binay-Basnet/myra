@@ -32,7 +32,6 @@ import {
   useAppDispatch,
   useAppSelector,
   useGetEndOfDayDateDataQuery,
-  useGetEodStatusQuery,
   useSetEndOfDayDataMutation,
   useSetPreferenceMutation,
   useSwitchRoleMutation,
@@ -139,16 +138,8 @@ export const TopLevelHeader = () => {
   const userId = user?.id;
 
   const { mutateAsync } = useSetPreferenceMutation();
-  const { data: eodStatusQueryData, refetch } = useGetEodStatusQuery(
-    {},
-    {
-      enabled: user?.currentBranch?.category === BranchCategory.HeadOffice,
-    }
-  );
 
   const { mutateAsync: switchRole } = useSwitchRoleMutation();
-
-  const isHeadOfficeReady = eodStatusQueryData?.transaction?.eodStatus?.states?.headOfficeReady;
 
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
@@ -231,10 +222,11 @@ export const TopLevelHeader = () => {
 
   const { data: endOfDayData, refetch: refetchEndOfDay } = useGetEndOfDayDateDataQuery();
 
-  const { closingDate, hasEodErrors } = useMemo(
+  const { closingDate, hasEodErrors, isHeadOfficeReady } = useMemo(
     () => ({
       closingDate: endOfDayData?.transaction?.endOfDayDate?.value,
       hasEodErrors: endOfDayData?.transaction?.endOfDayDate?.hasErrors,
+      isHeadOfficeReady: endOfDayData?.transaction?.endOfDayDate?.headOfficeReady,
     }),
     [endOfDayData]
   );
@@ -264,7 +256,7 @@ export const TopLevelHeader = () => {
 
   const handleBranchReadiness = () => {
     router.push('/branch-readiness');
-    refetch();
+    refetchEndOfDay();
     // readyBranch(
     //   {},
     //   {

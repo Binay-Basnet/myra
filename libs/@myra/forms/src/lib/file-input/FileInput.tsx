@@ -197,7 +197,7 @@ type FilePreviewProps =
 
 export const FilePreview = ({
   file,
-  size,
+  // size,
   remove,
   setFileNames,
   generateFileUrls,
@@ -303,28 +303,28 @@ export const FilePreview = ({
               <Icon as={DefaultFileIcon} size="lg" />
             )}
           </Box>
-          {size === 'lg' && (
-            <Box>
-              <Text
-                variant="bodyRegular"
-                fontWeight="500"
-                color="gray.800"
-                noOfLines={1}
-                width="100%"
-              >
-                {file.name}
+          {/* {size === 'lg' && ( */}
+          <Box>
+            <Text
+              variant="bodyRegular"
+              fontWeight="500"
+              color="gray.800"
+              noOfLines={1}
+              width="100%"
+            >
+              {file.name}
+            </Text>
+            {!error ? (
+              <Text variant="formLabel" color="gray.600">
+                {file?.size && (Number(file?.size) / 1000 / 1000).toPrecision(2)} MB
               </Text>
-              {!error ? (
-                <Text variant="formLabel" color="gray.600">
-                  {file?.size && (Number(file?.size) / 1000 / 1000).toPrecision(2)} MB
-                </Text>
-              ) : (
-                <Text variant="formLabel" color="danger.500">
-                  Upload Failed
-                </Text>
-              )}
-            </Box>
-          )}
+            ) : (
+              <Text variant="formLabel" color="danger.500">
+                Upload Failed
+              </Text>
+            )}
+          </Box>
+          {/* )} */}
         </Box>
         <Icon
           as={IoClose}
@@ -384,7 +384,7 @@ type FileUrlPreviewProps =
 export const FileUrlPreview = ({
   fileUrl,
   identifier,
-  size,
+  // size,
   remove,
   setFileNames,
   generateFileUrls,
@@ -453,22 +453,22 @@ export const FileUrlPreview = ({
               <Icon as={DefaultFileIcon} size="lg" />
             )}
           </Box>
-          {size === 'lg' && (
-            <Box>
-              <Text
-                variant="bodyRegular"
-                fontWeight="500"
-                color="gray.800"
-                noOfLines={1}
-                width="100%"
-              >
-                {file?.name}
-              </Text>
-              <Text variant="formLabel" color="gray.600">
-                {file?.size && (Number(file?.size) / 1000 / 1000).toPrecision(2)} MB
-              </Text>
-            </Box>
-          )}
+          {/* {size === 'lg' && ( */}
+          <Box>
+            <Text
+              variant="bodyRegular"
+              fontWeight="500"
+              color="gray.800"
+              noOfLines={1}
+              width="100%"
+            >
+              {file?.name}
+            </Text>
+            <Text variant="formLabel" color="gray.600">
+              {file?.size && (Number(file?.size) / 1000 / 1000).toPrecision(2)} MB
+            </Text>
+          </Box>
+          {/* )} */}
         </Box>
         <Icon
           as={IoClose}
