@@ -40641,6 +40641,18 @@
             "deprecationReason": null
           },
           {
+            "name": "headOfficeReady",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "isInitialized",
             "description": null,
             "args": [],
@@ -41252,8 +41264,8 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
+              "kind": "ENUM",
+              "name": "EODState",
               "ofType": null
             },
             "isDeprecated": false,

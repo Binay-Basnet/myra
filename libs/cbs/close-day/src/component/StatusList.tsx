@@ -15,46 +15,46 @@ interface IStatusListProps {
   }[];
 }
 
+const eodStatusIcon = (status: EodState | undefined | null) => {
+  switch (status) {
+    case EodState.Completed:
+      return <Icon color="primary.500" as={IoCheckmarkDone} />;
+    case EodState.CompletedWithErrors:
+      return <Icon color="danger.500" as={IoClose} />;
+    case EodState.Ongoing:
+      return <Spinner size="sm" />;
+    default:
+      return <Icon color="danger.500" as={IoClose} />;
+  }
+};
+
+const eodStatusText = (status: EodState | undefined | null) => {
+  let statusText = '';
+  switch (status) {
+    case EodState.Completed:
+      statusText = 'Completed';
+      break;
+    case EodState.CompletedWithErrors:
+      statusText = 'Not completed';
+      break;
+    case EodState.Ongoing:
+      statusText = 'Ongoing';
+      break;
+    default:
+      statusText = 'Not completed';
+  }
+
+  return statusText;
+};
+
 export const StatusList = ({ statusList }: IStatusListProps) => {
   const { t } = useTranslation();
-
-  const eodStatusIcon = (status: EodState | undefined | null) => {
-    switch (status) {
-      case EodState.Completed:
-        return <Icon color="primary.500" as={IoCheckmarkDone} />;
-      case EodState.CompletedWithErrors:
-        return <Icon color="danger.500" as={IoClose} />;
-      case EodState.Ongoing:
-        return <Spinner size="sm" />;
-      default:
-        return <Icon color="danger.500" as={IoClose} />;
-    }
-  };
-
-  const eodStatusText = (status: EodState | undefined | null) => {
-    let statusText = '';
-    switch (status) {
-      case EodState.Completed:
-        statusText = 'Completed';
-        break;
-      case EodState.CompletedWithErrors:
-        statusText = 'Not completed';
-        break;
-      case EodState.Ongoing:
-        statusText = 'Ongoing';
-        break;
-      default:
-        statusText = 'Not completed';
-    }
-
-    return statusText;
-  };
 
   return (
     <>
       {statusList.map(({ title, subTitle, status, errors }, index) => (
-        <>
-          <Box display="flex" gap="s16" py="s16" key={title}>
+        <Box key={title}>
+          <Box display="flex" gap="s16" py="s16">
             <NumberStatus number={index + 1} active={status === EodState.Completed} />
             <Box display="flex" flexDirection="column" gap="s16">
               <Box>
@@ -114,7 +114,7 @@ export const StatusList = ({ statusList }: IStatusListProps) => {
             </Box>
           </Box>
           <Divider />
-        </>
+        </Box>
       ))}
     </>
   );
