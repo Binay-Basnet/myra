@@ -2,12 +2,11 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import { useAppSelector, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { NewUserModal } from '../components';
@@ -109,16 +108,21 @@ export const UsersList = () => {
         accessorKey: 'actions',
 
         cell: (props) => (
-          <ActionPopoverComponent
-            id={props?.row?.original?.node?.id as string}
+          <TablePopover
             items={[
               {
-                title: 'settingsUserUserListEdit',
+                title: 'Edit',
                 onClick: () => {
                   router.push(`${ROUTES.SETTINGS_USERS_EDIT}?id=${props?.row?.original?.node?.id}`);
                 },
               },
+              {
+                title: 'Details',
+
+                onClick: (row) => router.push(`${ROUTES.SETTINGS_USERS_DETAILS}?id=${row['id']}`),
+              },
             ]}
+            node={props?.row?.original?.node}
           />
         ),
 
@@ -159,6 +163,9 @@ export const UsersList = () => {
         isLoading={isFetching}
         columns={columns}
         noDataTitle="User"
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.SETTINGS_USERS_DETAILS}?id=${row?.node?.id}`);
+        }}
         pagination={{
           total: userListQueryData?.settings?.myraUser?.list?.totalCount ?? 'Many',
           pageInfo: userListQueryData?.settings?.myraUser?.list?.pageInfo,

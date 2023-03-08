@@ -164,6 +164,7 @@
       "@coop/settings/saving-product": [
         "libs/cbs/settings/feature-saving-product-detail/src/index.ts"
       ],
+      "@coop/settings/users/details": ["libs/cbs/settings/feature-user-details/src/index.ts"],
       "@coop/share/register/detail": ["libs/cbs/share/feature-share-register-detail/src/index.ts"],
       "@coop/shared/components": ["libs/shared/components/src/index.ts"],
       "@coop/shared/form": ["libs/shared/form/src/index.ts"],

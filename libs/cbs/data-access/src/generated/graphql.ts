@@ -10998,7 +10998,6 @@ export type MemberAccountDetails = {
   closedAt?: Maybe<Scalars['String']>;
   defaultAccountType?: Maybe<DefaultAccountType>;
   dues?: Maybe<Dues>;
-  expiryDate?: Maybe<Scalars['Localized']>;
   guaranteedAmount?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   insurance?: Maybe<Scalars['Boolean']>;
@@ -28188,6 +28187,53 @@ export type GetTellerListQuery = {
   settings: {
     myraUser?: {
       tellers?: Array<{ id?: string | null; name?: string | null } | null> | null;
+    } | null;
+  };
+};
+
+export type GetSettingsUserDetailsDataQueryVariables = Exact<{
+  userID: Scalars['ID'];
+}>;
+
+export type GetSettingsUserDetailsDataQuery = {
+  settings: {
+    myraUser?: {
+      userDetail?: {
+        basicInfo?: {
+          name: Record<'local' | 'en' | 'np', string>;
+          profilePicUrl?: string | null;
+          userId: string;
+        } | null;
+        userOverview?: {
+          rolesCount?: number | null;
+          serviceCenterCount?: number | null;
+          lastActiveDate?: Record<'local' | 'en' | 'np', string> | null;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          isCoreEmployee?: boolean | null;
+          empCode?: string | null;
+          gender?: UserGender | null;
+          contactNo?: string | null;
+          email?: string | null;
+          dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+          role?: Array<{ id: string; name: string } | null> | null;
+          branches?: Array<{ branchCode?: string | null; id: string; name: string } | null> | null;
+        } | null;
+        userBio?: {
+          isTemporarySameAsPermanent?: boolean | null;
+          landlordName?: string | null;
+          landlordContact?: string | null;
+          documents?: Array<string | null> | null;
+          permanentAddress?: AddressFragment | null;
+          temporaryAddress?: AddressFragment | null;
+          identificationDetail?: Array<{
+            id?: string | null;
+            idNo?: string | null;
+            idType?: string | null;
+            place?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+          } | null> | null;
+        } | null;
+      } | null;
     } | null;
   };
 };
@@ -46333,6 +46379,75 @@ export const useGetTellerListQuery = <TData = GetTellerListQuery, TError = unkno
       null,
       variables
     ),
+    options
+  );
+export const GetSettingsUserDetailsDataDocument = `
+    query getSettingsUserDetailsData($userID: ID!) {
+  settings {
+    myraUser {
+      userDetail(userID: $userID) {
+        basicInfo {
+          name
+          profilePicUrl
+          userId
+        }
+        userOverview {
+          rolesCount
+          serviceCenterCount
+          lastActiveDate
+          name
+          isCoreEmployee
+          empCode
+          gender
+          contactNo
+          email
+          dateJoined
+          role {
+            id
+            name
+          }
+          branches {
+            branchCode
+            id
+            name
+          }
+        }
+        userBio {
+          permanentAddress {
+            ...Address
+          }
+          isTemporarySameAsPermanent
+          temporaryAddress {
+            ...Address
+          }
+          identificationDetail {
+            id
+            idNo
+            idType
+            place
+            date
+          }
+          landlordName
+          landlordContact
+          documents
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetSettingsUserDetailsDataQuery = <
+  TData = GetSettingsUserDetailsDataQuery,
+  TError = unknown
+>(
+  variables: GetSettingsUserDetailsDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsUserDetailsDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsUserDetailsDataQuery, TError, TData>(
+    ['getSettingsUserDetailsData', variables],
+    useAxios<GetSettingsUserDetailsDataQuery, GetSettingsUserDetailsDataQueryVariables>(
+      GetSettingsUserDetailsDataDocument
+    ).bind(null, variables),
     options
   );
 export const GetValuatorDocument = `
