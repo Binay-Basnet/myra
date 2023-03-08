@@ -226,6 +226,8 @@ export const LoanPaymentSchedule = () => {
                 label="Grace Period On Principal"
                 name="gracePeriod.principalGracePeriod"
                 type="number"
+                rightAddonText="installment"
+                textAlign="right"
               />
             </Box>
 
@@ -234,6 +236,8 @@ export const LoanPaymentSchedule = () => {
                 label="Grace Period On Interest"
                 name="gracePeriod.interestGracePeriod"
                 type="number"
+                rightAddonText="installment"
+                textAlign="right"
               />
             </Box>
           </Box>

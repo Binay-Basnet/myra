@@ -71,33 +71,39 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
               >
                 {member?.branch}
               </Text>
-              <Text
-                noOfLines={1}
-                fontSize="r1"
-                color="gray.700"
-                fontWeight="500"
-                textTransform="capitalize"
-              >
-                {savingData?.meta?.accountNo}
-              </Text>
-              <Text
-                noOfLines={1}
-                fontSize="r1"
-                color="gray.700"
-                fontWeight="500"
-                textTransform="capitalize"
-              >
-                {`${savingData?.meta?.currentInterestRate} %`}
-              </Text>
-              <Text
-                noOfLines={1}
-                fontSize="r1"
-                color="gray.700"
-                fontWeight="500"
-                textTransform="capitalize"
-              >
-                {savingData?.meta?.savingType}
-              </Text>
+              {savingData?.meta?.accountNo && (
+                <Text
+                  noOfLines={1}
+                  fontSize="r1"
+                  color="gray.700"
+                  fontWeight="500"
+                  textTransform="capitalize"
+                >
+                  {savingData?.meta?.accountNo}
+                </Text>
+              )}
+              {savingData?.meta?.currentInterestRate && (
+                <Text
+                  noOfLines={1}
+                  fontSize="r1"
+                  color="gray.700"
+                  fontWeight="500"
+                  textTransform="capitalize"
+                >
+                  {`${savingData?.meta?.currentInterestRate} %`}
+                </Text>
+              )}
+              {savingData?.meta?.savingType && (
+                <Text
+                  noOfLines={1}
+                  fontSize="r1"
+                  color="gray.700"
+                  fontWeight="500"
+                  textTransform="capitalize"
+                >
+                  {savingData?.meta?.savingType}
+                </Text>
+              )}
             </Box>
           </GridItem>
         </Grid>
