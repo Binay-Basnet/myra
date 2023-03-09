@@ -4755,6 +4755,7 @@ export type EodStage = typeof EodStage[keyof typeof EodStage];
 export const EodState = {
   Completed: 'COMPLETED',
   CompletedWithErrors: 'COMPLETED_WITH_ERRORS',
+  NotStarted: 'NOT_STARTED',
   Ongoing: 'ONGOING',
 } as const;
 
