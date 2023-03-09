@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { Box, Grid, GridItem } from '@myra-ui';
 
 import {
+  AccountOpenDepositVerify,
   DepositedBy,
   DepositPaymentType,
   ObjState,
@@ -55,13 +56,14 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
       label: t['depositPaymentCash'],
       value: DepositPaymentType.Cash,
     },
-    {
-      label: 'Withdraw Slip',
-      value: DepositPaymentType.WithdrawSlip,
-    },
+
     {
       label: t['depositPaymentBankVoucher'],
       value: DepositPaymentType.BankVoucher,
+    },
+    {
+      label: 'Account',
+      value: DepositPaymentType.WithdrawSlip,
     },
   ];
 
@@ -103,6 +105,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
   const denominations = watch('openingPayment.cash.denominations');
 
   const withdrawSlipAccountId = watch('openingPayment.withdrawSlip.accId');
+  const verifyWith = watch('openingPayment.withdrawSlip.verifyWith');
 
   const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
     { accountId: withdrawSlipAccountId },
@@ -213,13 +216,25 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
                 filterBy={ObjState.Active}
               />
             </GridItem>
-
-            <FormSelect
-              isRequired
-              name="openingPayment.withdrawSlip.withdrawSlipNo"
-              label="Withdraw Slip No"
-              options={availableSlipListOptions}
-            />
+            <GridItem colSpan={1}>
+              <FormSelect
+                isRequired
+                name="openingPayment.withdrawSlip.verifyWith"
+                label="Verfiy with"
+                options={[
+                  { label: 'Withdraw Slip', value: AccountOpenDepositVerify?.WithdrawSlip },
+                  { label: 'Other documents', value: AccountOpenDepositVerify?.OtherDocument },
+                ]}
+              />
+            </GridItem>
+            {verifyWith === AccountOpenDepositVerify?.WithdrawSlip && (
+              <FormSelect
+                isRequired
+                name="openingPayment.withdrawSlip.withdrawSlipNo"
+                label="Withdraw Slip No"
+                options={availableSlipListOptions}
+              />
+            )}
 
             <FormAmountInput
               isRequired

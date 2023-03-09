@@ -1,6 +1,6 @@
-import { DetailCardContent, DetailsCard } from '@myra-ui';
+import { Box, DetailCardContent, DetailsCard, Text } from '@myra-ui';
 
-import { WithdrawPaymentType } from '@coop/cbs/data-access';
+import { AlternativeChannelPaymentMode, WithdrawPaymentType } from '@coop/cbs/data-access';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
@@ -39,6 +39,16 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
                 : depositDetailData?.depositedBy
             }
           />
+          {depositDetailData?.paymentMode === AlternativeChannelPaymentMode?.BankVoucher && (
+            <Box>
+              <Text fontWeight="500" fontSize="s3" color="gray.700">
+                File upload
+              </Text>
+              <Text fontWeight="600" fontSize="r1" color="gray.900">
+                -
+              </Text>
+            </Box>
+          )}
         </>
       )}
 
