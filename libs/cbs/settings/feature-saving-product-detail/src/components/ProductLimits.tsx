@@ -24,7 +24,7 @@ export const ProductLimits = ({ limits }: IProductLimits) => {
         accessorKey: 'minAmount',
         meta: {
           isNumeric: true,
-          width: '75%',
+          width: '15%',
         },
         cell: (props) => (props.getValue() ? amountConverter(props.getValue() as string) : 'N/A'),
       },
@@ -33,6 +33,7 @@ export const ProductLimits = ({ limits }: IProductLimits) => {
         accessorKey: 'maxAmount',
         meta: {
           isNumeric: true,
+          width: '15%',
         },
         cell: (props) => (props.getValue() ? amountConverter(props.getValue() as string) : 'N/A'),
       },

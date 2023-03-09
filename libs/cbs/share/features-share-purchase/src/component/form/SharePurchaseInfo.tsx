@@ -128,6 +128,7 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
                     color="neutralLightColor.Gray-80"
                     fontWeight="SemiBold"
                     fontSize="r1"
+                    textAlign="right"
                   >
                     {t['rs']} {amountConverter(totalAmount)}
                   </Text>
