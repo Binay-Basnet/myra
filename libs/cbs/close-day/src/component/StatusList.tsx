@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BsCheckCircleFill } from 'react-icons/bs';
-import { IoClose } from 'react-icons/io5';
+import { FiLoader } from 'react-icons/fi';
 import { Spinner, useDisclosure } from '@chakra-ui/react';
 
 import { Alert, Box, Icon, Modal, Text } from '@myra-ui';
@@ -25,8 +25,10 @@ const eodStatusIcon = (status: EodState | undefined | null) => {
       return <Icon color="warning.500" as={BsCheckCircleFill} />;
     case EodState.Ongoing:
       return <Spinner size="sm" />;
+    case EodState.NotStarted:
+      return <Icon color="gray.600" as={FiLoader} />;
     default:
-      return <Icon color="danger.500" as={IoClose} />;
+      return <Icon color="gray.600" as={FiLoader} />;
   }
 };
 
@@ -49,7 +51,10 @@ export const StatusList = ({ statusList }: IStatusListProps) => {
         statusText = `${t[title] ?? title} Completed with Exception`;
         break;
       case EodState.Ongoing:
-        statusText = `${t[title] ?? title} in Progress Successfully`;
+        statusText = `${t[title] ?? title} in Progress`;
+        break;
+      case EodState.NotStarted:
+        statusText = `${t[title] ?? title} not Started`;
         break;
       default:
         statusText = '';
