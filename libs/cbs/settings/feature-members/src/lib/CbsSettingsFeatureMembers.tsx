@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import omit from 'lodash/omit';
 
 import { asyncToast, Box, SettingsFooter, Text } from '@myra-ui';
 
@@ -65,10 +66,9 @@ export const CbsSettingsFeatureMembers = () => {
   useEffect(() => {
     if (editValues) {
       const editValueData = editValues?.settings?.general?.KYM?.general?.generalMember?.record;
-
       if (editValueData) {
         reset({
-          ...editValueData,
+          ...omit({ ...editValueData }, ['isCodeSetup']),
         });
       }
     }
