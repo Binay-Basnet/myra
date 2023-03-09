@@ -66,7 +66,15 @@ const Indexing = () => {
         <Box p={2} borderX="1px" borderTop="1px" borderColor="border.layout" borderTopRadius={5}>
           <Text>Indexing Setup</Text>
         </Box>
-        <Box gap={5} display="flex" flexDir="column" p={5} border="1px" borderColor="border.layout">
+        <Box
+          gap={5}
+          display="flex"
+          flexDir="column"
+          p={5}
+          border="1px"
+          borderColor="border.layout"
+          borderBottomRadius={5}
+        >
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Text>Reset Search Index</Text>
             <Button
