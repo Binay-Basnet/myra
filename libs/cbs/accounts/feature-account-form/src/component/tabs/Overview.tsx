@@ -100,6 +100,7 @@ export const Overview = () => {
     nomineeAccountNumber: accountDetails?.nomineeAccountNumber,
     nomineeAccountName: accountDetails?.nomineeAccountName,
     productMinimumBalance: accountDetails?.product?.minimumBalance,
+    accountExpiryDate: accountDetails?.accountExpiryDate,
   };
   return (
     <>
