@@ -22,6 +22,11 @@ interface IGeneralInfoCardProps {
     nomineeAccountNumber: string | null | undefined;
     nomineeAccountName: string | null | undefined;
     productMinimumBalance: string | null | undefined;
+    accountExpiryDate: {
+      en: string | null | undefined;
+      local: string | null | undefined;
+      np: string | null | undefined;
+    };
   };
   // accountTypes?: {
   //   SAVING: string;
@@ -48,11 +53,10 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => (
       <DetailCardContent
         title="Default Amount Deposit Account"
         subtitle={
-          data?.nomineeAccount 
+          data?.nomineeAccount
         }
       />
     )} */}
-
     <DetailCardContent
       title="Interest Accrued"
       subtitle={
@@ -73,6 +77,10 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => (
     />
     <DetailCardContent title="Guarantee Amount" subtitle={data?.guaranteedAmount ?? '0'} />
     <DetailCardContent title="Tenure" subtitle={data?.accountTenure ?? '-'} />
+    <DetailCardContent
+      title="Account Expiry Date"
+      subtitle={data?.accountExpiryDate?.local ?? '-'}
+    />
 
     {data?.nomineeAccountName && data?.nomineeAccountNumber ? (
       <DetailCardContent title="Nominee Account">

@@ -1,7 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { IoCheckmarkSharp, IoChevronDownSharp, IoSearch } from 'react-icons/io5';
 import { AddIcon } from '@chakra-ui/icons';
-import { Box, Checkbox, Flex, Icon, Radio, Text } from '@chakra-ui/react';
+import { Box, Checkbox, Flex, Icon, Radio } from '@chakra-ui/react';
 import {
   ActionMeta,
   chakraComponents,
@@ -12,6 +12,8 @@ import {
   SelectComponentsConfig,
   SingleValue,
 } from 'chakra-react-select';
+
+import { Text } from '@myra-ui';
 
 import { useTranslation } from '@coop/shared/utils';
 
@@ -220,7 +222,7 @@ export const Select = ({
 
   return (
     <Flex direction="column" gap="s4">
-      <Text variant="formLabel" color="gray.700">
+      <Text fontSize="s3" fontWeight="medium" color="gray.700">
         {isRequired ? `${label} *` : label}
       </Text>
 

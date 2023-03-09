@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { Box, FormSection, GridItem } from '@myra-ui';
+import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import { COASelectModal } from '@coop/shared/components';
 import { FormEditableTable } from '@coop/shared/form';
@@ -10,6 +10,7 @@ type LoanProcessingTable = {
   serviceName: string;
   ledgerName: string;
   amount: number;
+  percentage: number;
 };
 
 export const LoanProcessing = () => {
@@ -23,7 +24,7 @@ export const LoanProcessing = () => {
       subHeader="loanProductAdddifferentservicecharges"
     >
       <GridItem colSpan={3} cursor={router?.asPath?.includes('/edit') ? 'not-allowed' : 'auto'}>
-        <Box pointerEvents={router?.asPath?.includes('/edit') ? 'none' : 'auto'}>
+        <Box pointerEvents={router?.asPath?.includes('/edit') ? 'none' : 'auto'} mb={2}>
           <FormEditableTable<LoanProcessingTable>
             name="loanProcessingCharge"
             debug={false}
@@ -41,6 +42,11 @@ export const LoanProcessing = () => {
                 modal: COASelectModal,
               },
               {
+                accessor: 'percentage',
+                header: 'Rate',
+                cellWidth: 'auto',
+              },
+              {
                 accessor: 'amount',
                 header: t['loanAccServiceTableAmount'],
                 cellWidth: 'auto',
@@ -49,6 +55,12 @@ export const LoanProcessing = () => {
             ]}
           />
         </Box>
+
+        <Alert status="warning">
+          <Text fontWeight="Medium" fontSize="r1">
+            If both amount and rate is filled, the total chage is the total sum of the two.
+          </Text>
+        </Alert>
       </GridItem>
     </FormSection>
   );
