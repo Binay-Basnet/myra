@@ -28702,6 +28702,7 @@ export type TransactionDepositDetailQuery = {
         paymentFile?: Array<string | null> | null;
         sourceOfFund?: string | null;
         depositedBy?: DepositedBy | null;
+        depositedDate?: Record<'local' | 'en' | 'np', string> | null;
         transactionBranch?: string | null;
         teller?: string | null;
         totalDebit?: string | null;
@@ -47061,6 +47062,8 @@ export const TransactionDepositDetailDocument = `
         paymentFile
         sourceOfFund
         depositedBy
+        depositedDate
+        paymentFile
         transactionBranch
         teller
         glTransaction {

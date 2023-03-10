@@ -1,6 +1,6 @@
-import { Box, DetailCardContent, DetailsCard, Text } from '@myra-ui';
+import { Box, DetailCardContent, DetailsCard, FileViewer, Text } from '@myra-ui';
 
-import { AlternativeChannelPaymentMode, WithdrawPaymentType } from '@coop/cbs/data-access';
+import { WithdrawPaymentType } from '@coop/cbs/data-access';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
@@ -18,6 +18,9 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
 
   const { depositDetailData, withdrawDetailData, loanRepaymentDetailData } =
     useTransactionDetailHooks();
+  const depositVoucherUrl = depositDetailData?.paymentFile
+    ? (depositDetailData?.paymentFile[0] as string)
+    : undefined;
 
   return (
     <DetailsCard title={t['transDetailPaymentDetails']} hasThreeRows>
@@ -39,14 +42,14 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
                 : depositDetailData?.depositedBy
             }
           />
-          {depositDetailData?.paymentMode === AlternativeChannelPaymentMode?.BankVoucher && (
-            <Box>
-              <Text fontWeight="500" fontSize="s3" color="gray.700">
-                File upload
-              </Text>
-              <Text fontWeight="600" fontSize="r1" color="gray.900">
-                -
-              </Text>
+          {depositDetailData?.paymentMode === 'BANK_VOUCHER' && depositDetailData?.paymentFile && (
+            <Box display="flex" flexDirection="column">
+              <Text fontSize="s3">File Upload</Text>
+              <FileViewer
+                fileName={depositVoucherUrl}
+                fileUrl={depositVoucherUrl}
+                type="Bank Voucher"
+              />
             </Box>
           )}
         </>

@@ -161,6 +161,8 @@ query transactionDepositDetail($transactionId: ID!) {
         paymentFile
         sourceOfFund
         depositedBy
+        depositedDate
+        paymentFile
         transactionBranch
         teller
         glTransaction {

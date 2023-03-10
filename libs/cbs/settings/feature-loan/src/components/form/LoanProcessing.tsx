@@ -43,7 +43,7 @@ export const LoanProcessing = () => {
               },
               {
                 accessor: 'percentage',
-                header: 'Rate',
+                header: 'Rate (%)',
                 cellWidth: 'auto',
               },
               {
