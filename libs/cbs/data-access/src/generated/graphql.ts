@@ -15950,7 +15950,7 @@ export type WithdrawSlip = {
   isDifferentMember?: InputMaybe<Scalars['Boolean']>;
   memberId?: InputMaybe<Scalars['String']>;
   verifyWith?: InputMaybe<AccountOpenDepositVerify>;
-  withdrawSlipNo: Scalars['String'];
+  withdrawSlipNo?: InputMaybe<Scalars['String']>;
 };
 
 export type WithdrawSlipDepositData = {

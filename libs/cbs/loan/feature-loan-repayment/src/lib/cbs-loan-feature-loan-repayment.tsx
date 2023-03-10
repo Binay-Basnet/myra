@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
@@ -13,7 +13,6 @@ import {
   FormHeader,
   Grid,
   MemberCard,
-  Modal,
   ResponseDialog,
   Text,
 } from '@myra-ui';
@@ -32,16 +31,17 @@ import {
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
-import { exportVisibleTableToExcel, localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
+import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter, amountToWordsConverter, featureCode } from '@coop/shared/utils';
 
 import {
+  AllPaymentsModal,
+  FullLoanSchedule,
   InstallmentData,
-  LoanPaymentScheduleTable,
   LoanProductCard,
+  PartialLoanPaymentSchedule,
   Payment,
-  RecentLoanPaymentTable,
 } from '../components';
 
 export type LoanRepaymentInputType = Omit<LoanRepaymentInput, 'cash'> & {
@@ -74,12 +74,24 @@ export const LoanRepayment = () => {
   const [triggerQuery, setTriggerQuery] = useState(false);
   const queryClient = useQueryClient();
 
-  const { isOpen, onClose, onToggle } = useDisclosure();
+  // const { isOpen, onClose, onToggle } = useDisclosure();
+
+  const {
+    isOpen: isRecentPaymentOpen,
+    onClose: onRecentPaymentClose,
+    onToggle: onRecentPaymentToggle,
+  } = useDisclosure();
+
+  const {
+    isOpen: isFullScheduleOpen,
+    onClose: onFullScheduleClose,
+    onToggle: onFullScheduleToggle,
+  } = useDisclosure();
 
   const [triggerLoanQuery, setTriggerLoanQuery] = useState(false);
   const { mutateAsync } = useSetLoanRepaymentMutation();
 
-  const tableRef = useRef<HTMLTableElement>(null);
+  // const tableRef = useRef<HTMLTableElement>(null);
 
   const router = useRouter();
 
@@ -263,205 +275,252 @@ export const LoanRepayment = () => {
 
   const suspicionRemarks = watch('suspicionRemarks');
 
+  const partialPaidInstallments = loanPaymentSchedule.filter(
+    (installment) =>
+      installment?.currentRemainingPrincipal !== '0' || installment?.remainingInterest !== '0'
+  );
+
+  const partialLoanPaymentSchedule = partialPaidInstallments?.length
+    ? [
+        ...partialPaidInstallments,
+        ...loanPaymentSchedule.slice(nextInstallmentNumber, nextInstallmentNumber + 2),
+      ]
+    : loanPaymentSchedule.slice(nextInstallmentNumber - 1, nextInstallmentNumber + 1);
+
+  const paidInstallments = loanPaymentSchedule.filter((installment) => installment?.paid);
+
   return (
-    <Container minW="container.xl" p="0" bg="white">
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title={`New Loan Repayment - ${featureCode.newLoanRepayment} `} />
-      </Box>
-      <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
-        <Box
-          display="flex"
-          flexDirection="column"
-          w="100%"
-          borderRight="1px solid"
-          borderColor="border.layout"
-        >
-          <FormProvider {...methods}>
-            <form>
-              <Box
-                flexDirection="column"
-                gap="s16"
-                p="s20"
-                w="100%"
-                display={mode === '0' ? 'flex' : 'none'}
-              >
-                <FormMemberSelect
-                  isRequired
-                  name="memberId"
-                  label="Member"
-                  isDisabled={!!redirectMemberId}
-                />
-                {memberId && (
-                  <FormSelect
-                    name="loanAccountId"
-                    label="Loan Account Name"
-                    isLoading={isFetching}
-                    options={loanAccountOptions}
-                    isDisabled={!!redirectloanAccountId}
+    <>
+      <Container minW="container.xl" p="0" bg="white">
+        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
+          <FormHeader title={`New Loan Repayment - ${featureCode.newLoanRepayment} `} />
+        </Box>
+        <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
+          <Box
+            display="flex"
+            flexDirection="column"
+            w="100%"
+            borderRight="1px solid"
+            borderColor="border.layout"
+          >
+            <FormProvider {...methods}>
+              <form>
+                <Box
+                  flexDirection="column"
+                  gap="s16"
+                  p="s20"
+                  w="100%"
+                  display={mode === '0' ? 'flex' : 'none'}
+                >
+                  <FormMemberSelect
+                    isRequired
+                    name="memberId"
+                    label="Member"
+                    isDisabled={!!redirectMemberId}
                   />
-                )}
-                {memberId && loanAccountId && loanPaymentScheduleSplice && loanPaymentSchedule && (
-                  <Box display="flex" flexDirection="column" gap="s16" w="100%">
-                    <Box display="flex" justifyContent="space-between" alignItems="center">
-                      <Text fontSize="r1" fontWeight="600">
-                        Recent Loan Payment
-                      </Text>
-                      <Button variant="ghost" onClick={onToggle}>
-                        View loan schedule
-                      </Button>
-                    </Box>
-                    <RecentLoanPaymentTable
+                  {memberId && (
+                    <FormSelect
+                      name="loanAccountId"
+                      label="Loan Account Name"
+                      isLoading={isFetching}
+                      options={loanAccountOptions}
+                      isDisabled={!!redirectloanAccountId}
+                    />
+                  )}
+                  {memberId && loanAccountId && loanPaymentScheduleSplice && loanPaymentSchedule && (
+                    <Box display="flex" flexDirection="column" gap="s16" w="100%">
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Text fontSize="r1" fontWeight="600">
+                          Loan Payment Schedule
+                        </Text>
+                        <Box display="flex" gap="s16">
+                          <Button variant="ghost" onClick={onRecentPaymentToggle}>
+                            View all payments
+                          </Button>
+                          <Button variant="ghost" onClick={onFullScheduleToggle}>
+                            View loan schedule
+                          </Button>
+                        </Box>
+                      </Box>
+                      {/* <RecentLoanPaymentTable
                       data={loanPaymentScheduleSplice as unknown as LoanInstallment[]}
                       nextInstallmentNumber={nextInstallmentNumber}
                       total={loanData?.paymentSchedule?.total as string}
                       totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
                       totalPrincipal={loanData?.paymentSchedule?.totalPrincipal ?? 0}
-                    />
-                    <Modal
-                      onClose={onClose}
-                      open={isOpen}
-                      title="Payment Schedule"
-                      scrollBehavior="inside"
-                      blockScrollOnMount
-                      width="4xl"
-                      headerButton={
-                        <Button
-                          variant="ghost"
-                          onClick={() =>
-                            exportVisibleTableToExcel(
-                              `${loanData?.generalInformation?.loanName} - Payment Schedule`,
-                              tableRef
-                            )
-                          }
-                        >
-                          Export
-                        </Button>
-                      }
-                    >
-                      <LoanPaymentScheduleTable
-                        data={loanPaymentSchedule as unknown as LoanInstallment[]}
-                        nextInstallmentNumber={nextInstallmentNumber}
+                    /> */}
+
+                      <PartialLoanPaymentSchedule
+                        data={(partialLoanPaymentSchedule ?? []) as LoanInstallment[]}
                         total={loanData?.paymentSchedule?.total as string}
+                        nextInstallmentNumber={nextInstallmentNumber}
                         totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
                         totalPrincipal={loanData?.paymentSchedule?.totalPrincipal ?? 0}
-                        ref={tableRef}
                       />
-                    </Modal>
-                    <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
-                    </Grid>
 
-                    {memberDetailData?.type === KymMemberTypesEnum.Individual && (
-                      <SuspiciousTransaction />
-                    )}
+                      {/* <Modal
+                        onClose={onClose}
+                        open={isOpen}
+                        title="Payment Schedule"
+                        scrollBehavior="inside"
+                        blockScrollOnMount
+                        width="4xl"
+                        headerButton={
+                          <Button
+                            variant="ghost"
+                            onClick={() =>
+                              exportVisibleTableToExcel(
+                                `${loanData?.generalInformation?.loanName} - Payment Schedule`,
+                                tableRef
+                              )
+                            }
+                          >
+                            Export
+                          </Button>
+                        }
+                      >
+                        <LoanPaymentScheduleTable
+                          data={loanPaymentSchedule as unknown as LoanInstallment[]}
+                          nextInstallmentNumber={nextInstallmentNumber}
+                          total={loanData?.paymentSchedule?.total as string}
+                          totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
+                          totalPrincipal={loanData?.paymentSchedule?.totalPrincipal ?? 0}
+                          ref={tableRef}
+                        />
+                      </Modal> */}
+                      <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
+                        <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
+                      </Grid>
 
-                    <Box mt="s20">
-                      <InstallmentData loanAccountId={loanAccountId} />
+                      {memberDetailData?.type === KymMemberTypesEnum.Individual && (
+                        <SuspiciousTransaction />
+                      )}
+
+                      <Box mt="s20">
+                        <InstallmentData loanAccountId={loanAccountId} />
+                      </Box>
                     </Box>
-                  </Box>
-                )}
+                  )}
+                </Box>
+                <Box display={mode === '1' ? 'flex' : 'none'}>
+                  <Payment loanTotal={amountPaid as string} hasLoc={hasLoC} />
+                </Box>
+              </form>
+            </FormProvider>
+          </Box>
+          {memberId && (
+            <Box position="sticky" top="170px" right="0" w="320px">
+              <Box display="flex" flexDirection="column" gap="s16">
+                <MemberCard
+                  memberDetails={{
+                    name: memberDetailData?.name,
+                    avatar: memberDetailData?.profilePicUrl ?? '',
+                    memberID: memberDetailData?.id,
+                    code: memberDetailData?.code,
+                    gender: memberDetailData?.gender,
+                    age: memberDetailData?.age,
+                    maritalStatus: memberDetailData?.maritalStatus,
+                    dateJoined: memberDetailData?.dateJoined,
+                    phoneNo: memberDetailData?.contact,
+                    email: memberDetailData?.email,
+                    address: memberDetailData?.address,
+                  }}
+                  signaturePath={memberSignatureUrl}
+                  citizenshipPath={memberCitizenshipUrl}
+                />
               </Box>
-              <Box display={mode === '1' ? 'flex' : 'none'}>
-                <Payment loanTotal={amountPaid as string} hasLoc={hasLoC} />
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-        {memberId && (
-          <Box position="sticky" top="170px" right="0" w="320px">
-            <Box display="flex" flexDirection="column" gap="s16">
-              <MemberCard
-                memberDetails={{
-                  name: memberDetailData?.name,
-                  avatar: memberDetailData?.profilePicUrl ?? '',
-                  memberID: memberDetailData?.id,
-                  code: memberDetailData?.code,
-                  gender: memberDetailData?.gender,
-                  age: memberDetailData?.age,
-                  maritalStatus: memberDetailData?.maritalStatus,
-                  dateJoined: memberDetailData?.dateJoined,
-                  phoneNo: memberDetailData?.contact,
-                  email: memberDetailData?.email,
-                  address: memberDetailData?.address,
-                }}
-                signaturePath={memberSignatureUrl}
-                citizenshipPath={memberCitizenshipUrl}
-              />
+              {loanAccountId && (
+                <Box p="s16">
+                  <LoanProductCard loanAccountId={loanAccountId} />
+                </Box>
+              )}
             </Box>
-            {loanAccountId && (
-              <Box p="s16">
-                <LoanProductCard loanAccountId={loanAccountId} />
-              </Box>
+          )}
+        </Box>
+        <Box position="sticky" bottom={0}>
+          <Box>
+            {mode === '0' && (
+              <FormFooter
+                mainButtonLabel="Proceed Transaction"
+                mainButtonHandler={proceedButtonHandler}
+                isMainButtonDisabled={Boolean(!amountPaid || (isSuspicious && !suspicionRemarks))}
+              />
+            )}
+            {mode === '1' && (
+              <FormFooter
+                mainButton={
+                  <ResponseDialog
+                    onSuccess={() => {
+                      queryClient.invalidateQueries(['getLoanPreview']);
+                      router.push(ROUTES.CBS_LOAN_REPAYMENTS_LIST);
+                    }}
+                    promise={() => mutateAsync({ data: handleSubmit() })}
+                    successCardProps={(response) => {
+                      const result = response?.loanAccount?.repayment?.record;
+
+                      return {
+                        type: 'Loan Repayment',
+                        total: amountConverter(result?.totalAmount || 0) as string,
+                        totalWords: amountToWordsConverter(result?.totalAmount || 0),
+                        title: 'Loan Repayment Successful',
+                        details: {
+                          'Loan Repayment Id': (
+                            <Text fontSize="s3" color="primary.500" fontWeight="600">
+                              {result?.transactionId}
+                            </Text>
+                          ),
+                          Date: localizedDate(result?.date),
+                          'Transaction Time': localizedTime(result?.createdAt),
+                          'Installment No': result?.installmentNo,
+                          'Principal Amount': amountConverter(result?.principalAmount ?? '0'),
+                          'Interest Amount': amountConverter(result?.interestAmount ?? '0'),
+                          'Penalty Amount': amountConverter(result?.penaltyAmount ?? '0'),
+                          'Rebate Amount': amountConverter(result?.rebateAmount ?? '0'),
+
+                          'Payment Mode': result?.paymentMethod,
+                        },
+                        subTitle:
+                          'Loan amount has been repayed successfully. Details of the transaction is listed below.',
+                        meta: {
+                          memberId: result?.memberId,
+                          member: result?.memberName?.local,
+                          accountId: result?.accountId,
+                          accountName: result?.accountName,
+                        },
+                      };
+                    }}
+                    errorCardProps={{
+                      title: 'Loan Repayment Failed',
+                    }}
+                  >
+                    <Button width="160px">Confirm Payment</Button>
+                  </ResponseDialog>
+                }
+                status={<Button onClick={previousButtonHandler}> Previous</Button>}
+                mainButtonLabel="Confirm Payment"
+                mainButtonHandler={handleSubmit}
+              />
             )}
           </Box>
-        )}
-      </Box>
-      <Box position="sticky" bottom={0}>
-        <Box>
-          {mode === '0' && (
-            <FormFooter
-              mainButtonLabel="Proceed Transaction"
-              mainButtonHandler={proceedButtonHandler}
-              isMainButtonDisabled={Boolean(!amountPaid || (isSuspicious && !suspicionRemarks))}
-            />
-          )}
-          {mode === '1' && (
-            <FormFooter
-              mainButton={
-                <ResponseDialog
-                  onSuccess={() => {
-                    queryClient.invalidateQueries(['getLoanPreview']);
-                    router.push(ROUTES.CBS_LOAN_REPAYMENTS_LIST);
-                  }}
-                  promise={() => mutateAsync({ data: handleSubmit() })}
-                  successCardProps={(response) => {
-                    const result = response?.loanAccount?.repayment?.record;
-
-                    return {
-                      type: 'Loan Repayment',
-                      total: amountConverter(result?.totalAmount || 0) as string,
-                      totalWords: amountToWordsConverter(result?.totalAmount || 0),
-                      title: 'Loan Repayment Successful',
-                      details: {
-                        'Loan Repayment Id': (
-                          <Text fontSize="s3" color="primary.500" fontWeight="600">
-                            {result?.transactionId}
-                          </Text>
-                        ),
-                        Date: localizedDate(result?.date),
-                        'Transaction Time': localizedTime(result?.createdAt),
-                        'Installment No': result?.installmentNo,
-                        'Principal Amount': amountConverter(result?.principalAmount ?? '0'),
-                        'Interest Amount': amountConverter(result?.interestAmount ?? '0'),
-                        'Penalty Amount': amountConverter(result?.penaltyAmount ?? '0'),
-                        'Rebate Amount': amountConverter(result?.rebateAmount ?? '0'),
-
-                        'Payment Mode': result?.paymentMethod,
-                      },
-                      subTitle:
-                        'Loan amount has been repayed successfully. Details of the transaction is listed below.',
-                      meta: {
-                        memberId: result?.memberId,
-                        member: result?.memberName?.local,
-                        accountId: result?.accountId,
-                        accountName: result?.accountName,
-                      },
-                    };
-                  }}
-                  errorCardProps={{
-                    title: 'Loan Repayment Failed',
-                  }}
-                >
-                  <Button width="160px">Confirm Payment</Button>
-                </ResponseDialog>
-              }
-              status={<Button onClick={previousButtonHandler}> Previous</Button>}
-              mainButtonLabel="Confirm Payment"
-              mainButtonHandler={handleSubmit}
-            />
-          )}
         </Box>
-      </Box>
-    </Container>
+      </Container>
+      <AllPaymentsModal
+        isOpen={isRecentPaymentOpen}
+        onClose={onRecentPaymentClose}
+        data={paidInstallments as LoanInstallment[]}
+        total={loanData?.paymentSchedule?.total as string}
+        totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
+        totalPrincipal={loanData?.paymentSchedule?.totalPrincipal ?? 0}
+      />
+      <FullLoanSchedule
+        isOpen={isFullScheduleOpen}
+        onClose={onFullScheduleClose}
+        data={loanPaymentSchedule as LoanInstallment[]}
+        total={loanData?.paymentSchedule?.total as string}
+        totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
+        totalPrincipal={loanData?.paymentSchedule?.totalPrincipal ?? 0}
+        loanName={loanData?.generalInformation?.loanName as string}
+      />
+    </>
   );
 };
