@@ -638,7 +638,7 @@ steps:
       - docker compose -f docker-compose.migration.yaml push
 
 volumes:
-  - name: migration-env
+  - name: env file
     host:
       path: /build-cache/migration/fe/.env
   - name: docker-sock
