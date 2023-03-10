@@ -28699,10 +28699,10 @@ export type TransactionDepositDetailQuery = {
         totalDepositedAmount?: string | null;
         status?: ObjState | null;
         paymentMode?: DepositPaymentType | null;
-        paymentFile?: Array<string | null> | null;
         sourceOfFund?: string | null;
         depositedBy?: DepositedBy | null;
         depositedDate?: Record<'local' | 'en' | 'np', string> | null;
+        paymentFile?: Array<string | null> | null;
         transactionBranch?: string | null;
         teller?: string | null;
         totalDebit?: string | null;
@@ -47059,7 +47059,6 @@ export const TransactionDepositDetailDocument = `
         totalDepositedAmount
         status
         paymentMode
-        paymentFile
         sourceOfFund
         depositedBy
         depositedDate

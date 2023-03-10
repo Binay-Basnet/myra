@@ -158,7 +158,7 @@ query transactionDepositDetail($transactionId: ID!) {
         totalDepositedAmount
         status
         paymentMode
-        paymentFile
+        # paymentFile
         sourceOfFund
         depositedBy
         depositedDate
