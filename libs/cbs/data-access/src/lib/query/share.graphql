@@ -143,8 +143,10 @@ query getShareDetail($transactionID: ID!) {
           paymentMode
           amount
           sourceOfFund
+          depositedDate
         }
         transactionCode
+        paymentFile
         transactionBranch
         teller
         glTransactions {

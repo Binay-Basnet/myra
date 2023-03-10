@@ -10575,7 +10575,10 @@ export type LoanRepaymentAccountMode = {
 };
 
 export type LoanRepaymentBankVoucher = {
+  amount?: InputMaybe<Scalars['String']>;
   bank: Scalars['ID'];
+  depositedBy?: InputMaybe<Scalars['String']>;
+  depositedDate?: InputMaybe<Scalars['Localized']>;
   note?: InputMaybe<Scalars['String']>;
   voucher_no?: InputMaybe<Scalars['String']>;
 };
@@ -10670,6 +10673,8 @@ export const LoanRepaymentScheme = {
 
 export type LoanRepaymentScheme = typeof LoanRepaymentScheme[keyof typeof LoanRepaymentScheme];
 export type LoanRepaymentView = {
+  depositedBy?: Maybe<Scalars['String']>;
+  depositedDate?: Maybe<Scalars['Localized']>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   installmentAmount?: Maybe<Scalars['String']>;
@@ -14091,6 +14096,7 @@ export type ShareDetailData = {
   noOfShare?: Maybe<Scalars['Int']>;
   note?: Maybe<Scalars['String']>;
   paymentDetail?: Maybe<SharePaymentDetail>;
+  paymentFile?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   teller?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['String']>;
@@ -14228,6 +14234,7 @@ export type ShareNumber = {
 
 export type SharePaymentDetail = {
   amount?: Maybe<Scalars['String']>;
+  depositedDate?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<SharePaymentMode>;
   sourceOfFund?: Maybe<Scalars['String']>;
 };
@@ -16031,6 +16038,7 @@ export type WithdrawTransactionView = {
   marketRepName?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   note?: Maybe<Scalars['String']>;
+  paymentFile?: Maybe<Array<Maybe<Scalars['String']>>>;
   paymentMode?: Maybe<WithdrawPaymentType>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
@@ -28490,6 +28498,7 @@ export type GetShareDetailQuery = {
         total?: string | null;
         status?: string | null;
         transactionCode?: string | null;
+        paymentFile?: string | null;
         transactionBranch?: string | null;
         teller?: string | null;
         totalCredit?: string | null;
@@ -28508,6 +28517,7 @@ export type GetShareDetailQuery = {
           paymentMode?: SharePaymentMode | null;
           amount?: string | null;
           sourceOfFund?: string | null;
+          depositedDate?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
         glTransactions?: Array<{
           ledgerId?: string | null;
@@ -46794,8 +46804,10 @@ export const GetShareDetailDocument = `
           paymentMode
           amount
           sourceOfFund
+          depositedDate
         }
         transactionCode
+        paymentFile
         transactionBranch
         teller
         glTransactions {

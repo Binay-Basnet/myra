@@ -32,7 +32,10 @@ export const Overview = () => {
       <DetailPageQuickLinks links={links} />
       <ShareDetails shareDetails={shareDetailsData} />
       <FeesAndCharges charges={shareDetails?.charges} />
-      <PaymentDetails paymentData={shareDetails?.paymentDetail} />
+      <PaymentDetails
+        paymentData={shareDetails?.paymentDetail}
+        paymentFile={shareDetails?.paymentFile}
+      />
       <OtherDetails txnBranch={shareDetails?.transactionBranch} teller={shareDetails?.teller} />
       {shareDetails?.note && <Note note={shareDetails?.note} />}
       <GlTransaction
