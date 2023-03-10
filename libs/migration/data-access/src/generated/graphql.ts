@@ -19,6 +19,10 @@ export type Scalars = {
   Upload: any;
 };
 
+export type CsvFileDetails = {
+  data?: Maybe<Scalars['Map']>;
+};
+
 export type Credentials = {
   password: Scalars['String'];
   userName: Scalars['String'];
@@ -38,11 +42,24 @@ export type ExtractionResponse = {
   status: Scalars['String'];
 };
 
+export type FileDetails = {
+  data?: InputMaybe<Scalars['Map']>;
+  dbName: Scalars['String'];
+  fileName: Scalars['String'];
+  folderName: Array<InputMaybe<Scalars['String']>>;
+  pageNo: Scalars['String'];
+};
+
 export type FileUpload = {
   dbName: Scalars['String'];
   file: Scalars['Upload'];
   fileName: Scalars['String'];
   folder: Scalars['String'];
+};
+
+export type Insertion = {
+  choices: Scalars['String'];
+  dbName: Scalars['String'];
 };
 
 export type LedgerMapping = {
@@ -101,10 +118,16 @@ export type Projects = {
 
 export type ProtectedMutation = {
   createFinalTable: ExtractionResponse;
+  sendFileData: ExtractionResponse;
   sendMappingData: ExtractionResponse;
   startExtraction: ExtractionResponse;
+  startInsertion: ExtractionResponse;
   startTransform: ExtractionResponse;
   uploadCSV: Scalars['Boolean'];
+};
+
+export type ProtectedMutationSendFileDataArgs = {
+  input: FileDetails;
 };
 
 export type ProtectedMutationSendMappingDataArgs = {
@@ -114,6 +137,10 @@ export type ProtectedMutationSendMappingDataArgs = {
 
 export type ProtectedMutationStartExtractionArgs = {
   input: ExtractionEnv;
+};
+
+export type ProtectedMutationStartInsertionArgs = {
+  input: Insertion;
 };
 
 export type ProtectedMutationStartTransformArgs = {
@@ -127,6 +154,7 @@ export type ProtectedMutationUploadCsvArgs = {
 export type ProtectedQuery = {
   getDirectoryStructure?: Maybe<ProjectList>;
   getExtractionData: ExtractionResponse;
+  getFileData?: Maybe<CsvFileDetails>;
   getMappingData: LedgerMappingList;
   getProjects: Array<Maybe<Scalars['String']>>;
   getTransformationData: ExtractionResponse;
@@ -138,6 +166,10 @@ export type ProtectedQueryGetDirectoryStructureArgs = {
 
 export type ProtectedQueryGetExtractionDataArgs = {
   dbName: Scalars['String'];
+};
+
+export type ProtectedQueryGetFileDataArgs = {
+  input: FileDetails;
 };
 
 export type ProtectedQueryGetMappingDataArgs = {
@@ -247,6 +279,14 @@ export type GetTransformationDataQueryVariables = Exact<{
 
 export type GetTransformationDataQuery = {
   protectedQuery: { getTransformationData: { status: string; data?: Array<string | null> | null } };
+};
+
+export type GetCsvDataQueryVariables = Exact<{
+  input: FileDetails;
+}>;
+
+export type GetCsvDataQuery = {
+  protectedQuery: { getFileData?: { data?: Record<string, string> | null } | null };
 };
 
 export const SetAuthDocument = `
@@ -464,5 +504,23 @@ export const useGetTransformationDataQuery = <TData = GetTransformationDataQuery
     useAxios<GetTransformationDataQuery, GetTransformationDataQueryVariables>(
       GetTransformationDataDocument
     ).bind(null, variables),
+    options
+  );
+export const GetCsvDataDocument = `
+    query getCSVData($input: FileDetails!) {
+  protectedQuery {
+    getFileData(input: $input) {
+      data
+    }
+  }
+}
+    `;
+export const useGetCsvDataQuery = <TData = GetCsvDataQuery, TError = unknown>(
+  variables: GetCsvDataQueryVariables,
+  options?: UseQueryOptions<GetCsvDataQuery, TError, TData>
+) =>
+  useQuery<GetCsvDataQuery, TError, TData>(
+    ['getCSVData', variables],
+    useAxios<GetCsvDataQuery, GetCsvDataQueryVariables>(GetCsvDataDocument).bind(null, variables),
     options
   );

@@ -90,7 +90,12 @@ export const MigrationDetailsComponents = () => {
               </Text>
               <Collapse in={sourceCollapse}>
                 {sourceCSVData?.map((item, index) => (
-                  <Text>
+                  <Text
+                    cursor="pointer"
+                    onClick={() =>
+                      router.push(`/${router?.query['name']}/${item}?csvType=sourceCSV`)
+                    }
+                  >
                     {index + 1}. {item}
                   </Text>
                 ))}
