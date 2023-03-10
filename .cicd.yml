@@ -610,11 +610,13 @@ steps:
     volumes:
       - name: env file
         path: /drone/src/apps/migration/.env
-      - name: migration dist
-        path: /drone/src/migration/dist
+      - name: env file
+        path: /drone/src/apps/.env
+      - name: migration-app
+        path: /drone/src/apps/migration/dist
     commands:
       - yarn
-      - npx nx run migration:build:production
+      - npx nx run migration:build --configuration=production
 
 
   - name: Publish migration-ui to ECR
