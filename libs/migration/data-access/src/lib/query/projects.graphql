@@ -47,3 +47,11 @@ query getTransformationData($dbName: String!) {
     }
   }
 }
+
+query getCSVData($input: FileDetails!) {
+  protectedQuery {
+    getFileData(input: $input) {
+      data
+    }
+  }
+}
