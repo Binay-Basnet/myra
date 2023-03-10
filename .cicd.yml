@@ -617,7 +617,7 @@ steps:
       - npx nx run migration:build:production
 
 
-  - name: Publish migration-ui
+  - name: Publish migration-ui to ECR
     image: bentolor/docker-dind-awscli:dind
     environment:
       aws_access_key:
