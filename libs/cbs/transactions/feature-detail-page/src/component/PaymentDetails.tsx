@@ -1,6 +1,7 @@
 import { Box, DetailCardContent, DetailsCard, Text } from '@myra-ui';
 
 import { AlternativeChannelPaymentMode, WithdrawPaymentType } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
@@ -40,6 +41,12 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
             }
           />
           {depositDetailData?.paymentMode === AlternativeChannelPaymentMode?.BankVoucher && (
+            <DetailCardContent
+              title={t['transDetailDepositedDate']}
+              subtitle={localizedDate(depositDetailData?.depositedDate)}
+            />
+          )}
+          {depositDetailData?.paymentFile !== null && (
             <Box>
               <Text fontWeight="500" fontSize="s3" color="gray.700">
                 File upload
