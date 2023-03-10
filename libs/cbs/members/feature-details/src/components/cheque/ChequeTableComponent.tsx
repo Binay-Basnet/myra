@@ -33,15 +33,13 @@ export const ReportTableComponent = ({ data }: ILoanPaymentScheduleTableProps) =
             link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${props?.row?.original?.id}`}
           />
         ),
-        meta: {
-          width: '40%',
-        },
       },
       {
         header: 'No- of leaves used',
         accessorKey: 'used',
         meta: {
           isNumeric: true,
+          width: '10%',
         },
       },
       {
@@ -49,6 +47,7 @@ export const ReportTableComponent = ({ data }: ILoanPaymentScheduleTableProps) =
         accessorKey: 'left',
         meta: {
           isNumeric: true,
+          width: '10%',
         },
       },
     ],
