@@ -7,62 +7,63 @@ platform:
   os: linux
 
 steps:
-  - name: build affected modules
-    image: node:16
-    volumes:
-      - name: node_modules
-        path: /drone/src/node_modules
-      - name: commit-sha
-        path: /drone/previous-success-build-commit-sha
-      - name: env-file-erp
-        path: /drone/src/apps/myra/.env
-      - name: env-file-ebanking
-        path: /drone/src/apps/ebanking/.env
-      - name: env-file-neosys
-        path: /drone/src/apps/neosys-admin/.env
-      - name: ebanking-app
-        path: /drone/src/apps/ebanking/dist
-      - name: myra-app
-        path: /drone/src/apps/myra/dist
-      - name: neosys-admin-app
-        path: /drone/src/apps/neosys-admin/dist
-    commands:
-      - yarn
-      - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
+- name: build affected modules
+  image: node:16
+  volumes:
+  - name: node_modules
+    path: /drone/src/node_modules
+  - name: commit-sha
+    path: /drone/previous-success-build-commit-sha
+  - name: env-file-erp
+    path: /drone/src/apps/myra/.env
+  - name: env-file-ebanking
+    path: /drone/src/apps/ebanking/.env
+  - name: env-file-neosys
+    path: /drone/src/apps/neosys-admin/.env
+  - name: ebanking-app
+    path: /drone/src/apps/ebanking/dist
+  - name: myra-app
+    path: /drone/src/apps/myra/dist
+  - name: neosys-admin-app
+    path: /drone/src/apps/neosys-admin/dist
+  commands:
+  - yarn
+  - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
 
 volumes:
-  - name: node_modules
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/node_modules
-  - name: commit-sha
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/previous-success-build-commit-sha
-  - name: env-file-erp
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.erp
-  - name: env-file-ebanking
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.ebanking
-  - name: env-file-neosys
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.neosys
-  - name: ebanking-app
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/ebanking-app
-  - name: myra-app
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/myra-app
-  - name: neosys-admin-app
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/neosys-admin-app
+- name: node_modules
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/node_modules
+- name: commit-sha
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/previous-success-build-commit-sha
+- name: env-file-erp
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.erp
+- name: env-file-ebanking
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.ebanking
+- name: env-file-neosys
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/.env.neosys
+- name: ebanking-app
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/ebanking-app
+- name: myra-app
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/myra-app
+- name: neosys-admin-app
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/neosys-admin-app
 
 trigger:
   branch:
-    - dev
+  - dev
   event:
-    - push
+  - push
 
 ---
+
 kind: pipeline
 name: Build storybook
 type: docker
@@ -72,39 +73,40 @@ platform:
   os: linux
 
 steps:
-  - name: build storybook
-    image: node:16
-    volumes:
-      - name: node_modules
-        path: /drone/src/node_modules
-      - name: commit-sha
-        path: /drone/previous-success-build-commit-sha
-      - name: storybook-build
-        path: /drone/src/dist
-    commands:
-      - yarn
-      - npx nx affected --target=build-storybook --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
+- name: build storybook
+  image: node:16
+  volumes:
+  - name: node_modules
+    path: /drone/src/node_modules
+  - name: commit-sha
+    path: /drone/previous-success-build-commit-sha
+  - name: storybook-build
+    path: /drone/src/dist
+  commands:
+  - yarn
+  - npx nx affected --target=build-storybook --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
 
 volumes:
-  - name: node_modules
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/node_modules
-  - name: commit-sha
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/previous-success-build-commit-sha
-  - name: storybook-build
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/storybook
+- name: node_modules
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/node_modules
+- name: commit-sha
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/previous-success-build-commit-sha
+- name: storybook-build
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/storybook
 depends_on:
-  - Build all the apps
+- Build all the apps
 
 trigger:
   branch:
-    - dev
+  - dev
   event:
-    - push
+  - push
 
 ---
+
 kind: pipeline
 name: Publish myra-app
 type: docker
@@ -114,43 +116,44 @@ platform:
   os: linux
 
 steps:
-  - name: publishing myra-app
-    image: bentolor/docker-dind-awscli:dind
-    environment:
-      aws_access_key:
-        from_secret: aws_access_key
-      aws_secret_key:
-        from_secret: aws_secret_key
-    commands:
-      - aws configure set aws_access_key_id $aws_access_key
-      - aws configure set aws_secret_access_key $aws_secret_key
-      - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
-      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build myra
-      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push myra
-    volumes:
-      - name: myra-app
-        path: /drone/src/apps/myra/dist
-      - name: docker-sock
-        path: /var/run/docker.sock
+- name: publishing myra-app
+  image: bentolor/docker-dind-awscli:dind
+  environment:
+    aws_access_key:
+      from_secret: aws_access_key
+    aws_secret_key:
+      from_secret: aws_secret_key
+  commands:
+  - aws configure set aws_access_key_id $aws_access_key
+  - aws configure set aws_secret_access_key $aws_secret_key
+  - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
+  - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build myra
+  - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push myra
+  volumes:
+  - name: myra-app
+    path: /drone/src/apps/myra/dist
+  - name: docker-sock
+    path: /var/run/docker.sock
 
 volumes:
-  - name: myra-app
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/myra-app
-  - name: docker-sock
-    host:
-      path: /var/run/docker.sock
+- name: myra-app
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/myra-app
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
 
 depends_on:
-  - Build all the apps
+- Build all the apps
 
 trigger:
   branch:
-    - dev
+  - dev
   event:
-    - push
+  - push
 
 ---
+
 kind: pipeline
 name: Publish neosys-admin-app
 type: docker
@@ -160,43 +163,44 @@ platform:
   os: linux
 
 steps:
-  - name: publishing neosys-admin-app
-    image: bentolor/docker-dind-awscli:dind
-    environment:
-      aws_access_key:
-        from_secret: aws_access_key
-      aws_secret_key:
-        from_secret: aws_secret_key
-    commands:
-      - aws configure set aws_access_key_id $aws_access_key
-      - aws configure set aws_secret_access_key $aws_secret_key
-      - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
-      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build neosys-admin
-      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push neosys-admin
-    volumes:
-      - name: neosys-admin-app
-        path: /drone/src/apps/neosys-admin/dist
-      - name: docker-sock
-        path: /var/run/docker.sock
+- name: publishing neosys-admin-app
+  image: bentolor/docker-dind-awscli:dind
+  environment:
+    aws_access_key:
+      from_secret: aws_access_key
+    aws_secret_key:
+      from_secret: aws_secret_key
+  commands:
+  - aws configure set aws_access_key_id $aws_access_key
+  - aws configure set aws_secret_access_key $aws_secret_key
+  - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
+  - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build neosys-admin
+  - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push neosys-admin
+  volumes:
+  - name: neosys-admin-app
+    path: /drone/src/apps/neosys-admin/dist
+  - name: docker-sock
+    path: /var/run/docker.sock
 
 volumes:
-  - name: neosys-admin-app
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/neosys-admin-app
-  - name: docker-sock
-    host:
-      path: /var/run/docker.sock
+- name: neosys-admin-app
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/neosys-admin-app
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
 
 depends_on:
-  - Build all the apps
+- Build all the apps
 
 trigger:
   branch:
-    - dev
+  - dev
   event:
-    - push
+  - push
 
 ---
+
 kind: pipeline
 name: Publish ebanking-app
 type: docker
@@ -206,43 +210,44 @@ platform:
   os: linux
 
 steps:
-  - name: publishing ebanking-app
-    image: bentolor/docker-dind-awscli:dind
-    environment:
-      aws_access_key:
-        from_secret: aws_access_key
-      aws_secret_key:
-        from_secret: aws_secret_key
-    commands:
-      - aws configure set aws_access_key_id $aws_access_key
-      - aws configure set aws_secret_access_key $aws_secret_key
-      - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
-      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build ebanking
-      - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push ebanking
-    volumes:
-      - name: ebanking-app
-        path: /drone/src/apps/ebanking/dist
-      - name: docker-sock
-        path: /var/run/docker.sock
+- name: publishing ebanking-app
+  image: bentolor/docker-dind-awscli:dind
+  environment:
+    aws_access_key:
+      from_secret: aws_access_key
+    aws_secret_key:
+      from_secret: aws_secret_key
+  commands:
+  - aws configure set aws_access_key_id $aws_access_key
+  - aws configure set aws_secret_access_key $aws_secret_key
+  - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
+  - docker compose -f docker-compose.${DRONE_BRANCH}.yaml build ebanking
+  - docker compose -f docker-compose.${DRONE_BRANCH}.yaml push ebanking
+  volumes:
+  - name: ebanking-app
+    path: /drone/src/apps/ebanking/dist
+  - name: docker-sock
+    path: /var/run/docker.sock
 
 volumes:
-  - name: ebanking-app
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/ebanking-app
-  - name: docker-sock
-    host:
-      path: /var/run/docker.sock
+- name: ebanking-app
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/ebanking-app
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
 
 depends_on:
-  - Build all the apps
+- Build all the apps
 
 trigger:
   branch:
-    - dev
+  - dev
   event:
-    - push
+  - push
 
 ---
+
 kind: pipeline
 name: Publish storybook
 type: docker
@@ -252,44 +257,45 @@ platform:
   os: linux
 
 steps:
-  - name: publishing storybook
-    image: plugins/ecr
-    settings:
-      cache_from:
-        - 110278083494.dkr.ecr.ap-south-1.amazonaws.com/storybook:${DRONE_BRANCH}
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      repo: storybook
-      registry: 110278083494.dkr.ecr.ap-south-1.amazonaws.com
-      region: ap-south-1
-      tags: dev
-      dockerfile: /drone/src/Dockerfile.storybook
-    volumes:
-      - name: storybook
-        path: /drone/src/dist
-      - name: docker-sock
-        path: /var/run/docker.sock
+- name: publishing storybook
+  image: plugins/ecr
+  settings:
+    cache_from:
+    - 110278083494.dkr.ecr.ap-south-1.amazonaws.com/storybook:${DRONE_BRANCH}
+    access_key:
+      from_secret: aws_access_key
+    secret_key:
+      from_secret: aws_secret_key
+    repo: storybook
+    registry: 110278083494.dkr.ecr.ap-south-1.amazonaws.com
+    region: ap-south-1
+    tags: dev
+    dockerfile: /drone/src/Dockerfile.storybook
+  volumes:
+  - name: storybook
+    path: /drone/src/dist
+  - name: docker-sock
+    path: /var/run/docker.sock
 
 volumes:
-  - name: storybook
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/storybook
-  - name: docker-sock
-    host:
-      path: /var/run/docker.sock
+- name: storybook
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/storybook
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
 
 depends_on:
-  - Build storybook
+- Build storybook
 
 trigger:
   branch:
-    - dev
+  - dev
   event:
-    - push
+  - push
 
 ---
+
 kind: pipeline
 type: exec
 name: Deploy new build
@@ -299,29 +305,30 @@ platform:
   os: linux
 
 steps:
-  - name: Run the script to deploy new build
-    commands:
-      - cd /drone
-      - ./cd.fe.sh $DRONE_COMMIT_SHA
-    when:
-      branch:
-        - dev
-      event:
-        - push
+- name: Run the script to deploy new build
+  commands:
+  - cd /drone
+  - ./cd.fe.sh $DRONE_COMMIT_SHA
+  when:
+    branch:
+    - dev
+    event:
+    - push
 
 depends_on:
-  - Publish myra-app
-  - Publish neosys-admin-app
-  - Publish ebanking-app
-  - Publish storybook
+- Publish myra-app
+- Publish neosys-admin-app
+- Publish ebanking-app
+- Publish storybook
 
 trigger:
   branch:
-    - dev
+  - dev
   event:
-    - push
+  - push
 
 ---
+
 #kind: pipeline
 #type: ssh
 #name: Pull images and deploy all the apps
@@ -333,7 +340,7 @@ trigger:
 #    from_secret: host_user
 #  ssh_key:
 #    from_secret: ssh_key
-##
+#
 #steps:
 #  - name: deploy all the apps
 #    environment:
@@ -376,26 +383,26 @@ type: docker
 name: Update last successful build commit SHA
 
 steps:
-  - name: update content in host file
-    image: alpine:latest
-    volumes:
-      - name: commit-sha
-        path: /drone/previous-success-build-commit-sha
-    commands:
-      - echo $DRONE_COMMIT_SHA > /drone/previous-success-build-commit-sha
+- name: update content in host file
+  image: alpine:latest
+  volumes:
+  - name: commit-sha
+    path: /drone/previous-success-build-commit-sha
+  commands:
+  - echo $DRONE_COMMIT_SHA > /drone/previous-success-build-commit-sha
 
 volumes:
-  - name: commit-sha
-    host:
-      path: /build-cache/myra-ui-${DRONE_BRANCH}/previous-success-build-commit-sha
+- name: commit-sha
+  host:
+    path: /build-cache/myra-ui-${DRONE_BRANCH}/previous-success-build-commit-sha
 
 depends_on:
-  - Deploy new build
+- Deploy new build
 trigger:
   branch:
-    - dev
+  - dev
   event:
-    - push
+  - push
 
 ---
 #########################################################################################################
@@ -462,6 +469,7 @@ trigger:
     - tag
 
 ---
+
 kind: pipeline
 name: Build and Push neosys
 type: docker
@@ -520,6 +528,7 @@ trigger:
     - tag
 
 ---
+
 kind: pipeline
 name: Build and Push ebanking
 type: docker
@@ -576,3 +585,70 @@ trigger:
     - main
   event:
     - tag
+
+
+
+#########################################################################################################
+#########################################################################################################
+###############                               M I G R A T I O N                               ###########
+#########################################################################################################
+#########################################################################################################
+
+---
+
+kind: pipeline
+name: Build and Push ebanking
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+  - name: build from dev
+    image: node:16-alpine
+    volumes:
+      - name: env file
+        path: /drone/src/apps/migration/.env
+      - name: migration dist
+        path: /drone/src/migration/dist
+    commands:
+      - yarn
+      - npx nx run migration:build:production
+
+
+  - name: Publish ebanking-ui
+    image: bentolor/docker-dind-awscli:dind
+    environment:
+      aws_access_key:
+        from_secret: aws_access_key
+      aws_secret_key:
+        from_secret: aws_secret_key
+    volumes:
+      - name: docker-sock
+        path: /var/run/docker.sock
+      - name: migration-app
+        path: /drone/src/apps/migration/dist
+
+    commands:
+      - aws configure set aws_access_key_id $aws_access_key
+      - aws configure set aws_secret_access_key $aws_secret_key
+      - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
+      - docker compose -f docker-compose-migration.yaml build
+      - docker compose -f docker-compose-migration.yaml push
+
+volumes:
+  - name: migration-env
+    host:
+      path: /build-cache/migration/fe/.env
+  - name: docker-sock
+    host:
+      path: /var/run/docker.sock
+  - name: migration-app
+    temp: {}
+
+trigger:
+  branch:
+    - migration
+  event:
+    - push
