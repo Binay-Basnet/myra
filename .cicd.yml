@@ -597,7 +597,7 @@ trigger:
 ---
 
 kind: pipeline
-name: Build and Push ebanking
+name: Build and Push migration
 type: docker
 
 platform:
@@ -605,7 +605,7 @@ platform:
   os: linux
 
 steps:
-  - name: build from dev
+  - name: build from migration
     image: node:16-alpine
     volumes:
       - name: env file
@@ -617,7 +617,7 @@ steps:
       - npx nx run migration:build:production
 
 
-  - name: Publish ebanking-ui
+  - name: Publish migration-ui
     image: bentolor/docker-dind-awscli:dind
     environment:
       aws_access_key:
