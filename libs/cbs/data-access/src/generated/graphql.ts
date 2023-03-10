@@ -28762,6 +28762,7 @@ export type TransactionWithdrawDetailQuery = {
         totalWithdrawnAmount?: string | null;
         status?: ObjState | null;
         paymentMode?: WithdrawPaymentType | null;
+        paymentFile?: Array<string | null> | null;
         withdrawnBy?: WithdrawBy | null;
         marketRepId?: string | null;
         marketRepName?: string | null;
@@ -28902,6 +28903,8 @@ export type LoanRepaymentDetailQuery = {
         totalRepaymentAmount?: string | null;
         objState: string;
         paymentMode?: string | null;
+        depositedBy?: string | null;
+        depositedDate?: Record<'local' | 'en' | 'np', string> | null;
         transactionBranch?: string | null;
         teller?: string | null;
         totalDebit?: string | null;
@@ -47132,6 +47135,7 @@ export const TransactionWithdrawDetailDocument = `
         totalWithdrawnAmount
         status
         paymentMode
+        paymentFile
         withdrawnBy
         marketRepId
         marketRepName
@@ -47325,6 +47329,8 @@ export const LoanRepaymentDetailDocument = `
           interestAmount
         }
         paymentMode
+        depositedBy
+        depositedDate
         transactionBranch
         teller
         glTransaction {

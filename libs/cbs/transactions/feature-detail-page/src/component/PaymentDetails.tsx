@@ -20,6 +20,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
   const { depositDetailData, withdrawDetailData, loanRepaymentDetailData } =
     useTransactionDetailHooks();
   const depositVoucherUrl = depositDetailData?.paymentFile?.[0] || undefined;
+  const withdrawVoucherUrl = withdrawDetailData?.paymentFile?.[0] || undefined;
 
   return (
     <DetailsCard title={t['transDetailPaymentDetails']} hasThreeRows>
@@ -96,6 +97,18 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
               title={t['transDetailWithdrawnBy']}
               subtitle={withdrawDetailData?.withdrawnBy?.replace(/_/g, ' ')}
             />
+            {withdrawDetailData?.paymentFile && (
+              <Box display="flex" flexDirection="column" gap="s4">
+                <Text fontWeight="500" fontSize="s3" color="gray.700">
+                  File Upload
+                </Text>
+                <FileViewer
+                  fileName={withdrawVoucherUrl}
+                  fileUrl={withdrawVoucherUrl}
+                  type="Bank Voucher"
+                />
+              </Box>
+            )}
           </>
         )}
 
@@ -109,6 +122,18 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
             title={t['transDetailAmount']}
             subtitle={amountConverter(loanRepaymentDetailData?.totalRepaymentAmount ?? 0)}
           />
+          {loanRepaymentDetailData?.depositedDate && (
+            <DetailCardContent
+              title="Deposited Date"
+              subtitle={localizedDate(loanRepaymentDetailData?.depositedDate)}
+            />
+          )}
+          {loanRepaymentDetailData?.depositedBy && (
+            <DetailCardContent
+              title="Deposited By"
+              subtitle={loanRepaymentDetailData?.depositedBy}
+            />
+          )}
         </>
       )}
     </DetailsCard>

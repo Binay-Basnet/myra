@@ -205,6 +205,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
         totalWithdrawnAmount
         status
         paymentMode
+        paymentFile
         withdrawnBy
         marketRepId
         marketRepName
@@ -341,6 +342,8 @@ query loanRepaymentDetail($paymentId: ID!) {
           interestAmount
         }
         paymentMode
+        depositedBy
+        depositedDate
         transactionBranch
         teller
         glTransaction {
