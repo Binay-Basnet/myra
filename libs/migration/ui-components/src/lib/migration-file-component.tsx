@@ -90,8 +90,8 @@ export const MigrationFileComponent = () => {
             <Box overflowY="auto">
               <FormEditableTable
                 name="data"
-                // canDeleteRow={false}
-                columns={columns.concat({ accessor: 'row', header: 'row' })}
+                hideSN
+                columns={[{ accessor: 'row', header: 'Row' }].concat(columns)}
               />
             </Box>
           )}
