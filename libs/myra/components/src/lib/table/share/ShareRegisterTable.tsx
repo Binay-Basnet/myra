@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, Text } from '@myra-ui';
@@ -23,19 +23,14 @@ export const ShareRegisterTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const { data: shareFilterMapping, isFetching: isShareFilterMappingFetching } =
-    useGetShareFilterMappingQuery();
-  const { data, isFetching, refetch } = useGetShareRegisterListQuery({
+  const { data: shareFilterMapping } = useGetShareFilterMappingQuery();
+
+  const { data, isFetching } = useGetShareRegisterListQuery({
     pagination: getPaginationQuery(),
     filter: getFilterQuery(),
   });
 
-  useEffect(() => {
-    refetch();
-  }, [router]);
-
   const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -170,7 +165,7 @@ export const ShareRegisterTable = () => {
         },
       },
     ],
-    [router.locale, isShareFilterMappingFetching]
+    [t, shareFilterMapping?.share?.filterMapping?.transactionDirection, router]
   );
 
   return (

@@ -25,7 +25,6 @@ export const ShareBalanceTable = () => {
   });
 
   const rowData = useMemo(() => data?.share?.balance?.edges ?? [], [data]);
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -84,7 +83,7 @@ export const ShareBalanceTable = () => {
         ),
       },
     ],
-    [router.locale]
+    [router, t]
   );
 
   return (
