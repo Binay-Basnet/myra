@@ -482,6 +482,7 @@ export const AddWithdraw = () => {
                             }
                           : null
                       }
+                      redirectUrl={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedAccount?.accountId}`}
                     />
                   </Box>
                 )}
