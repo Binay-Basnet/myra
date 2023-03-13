@@ -17,18 +17,18 @@ query getDirectoryStructure($dbName: String!) {
   }
 }
 
-query getMappingData($dbName: String!) {
-  protectedQuery {
-    getMappingData(dbName: $dbName) {
-      data {
-        newCode
-        oldCode
-        name
-        row
-      }
-    }
-  }
-}
+#query getMappingData($dbName: String!) {
+#  protectedQuery {
+#    getMappingData(dbName: $dbName) {
+#      data {
+#        newCode
+#        oldCode
+#        name
+#        row
+#      }
+#    }
+#  }
+#}
 
 query getExtractionData($dbName: String!) {
   protectedQuery {
@@ -51,6 +51,7 @@ query getTransformationData($dbName: String!) {
 query getCSVData($input: FileDetails!) {
   protectedQuery {
     getFileData(input: $input) {
+      row
       data
     }
   }

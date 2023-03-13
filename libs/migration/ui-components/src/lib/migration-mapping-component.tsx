@@ -1,45 +1,48 @@
-import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import {
   LedgerMapping,
-  useGetMappingDataQuery,
-  useSetMappingDataMutation,
+  // useGetMappingDataQuery,
+  // useSetMappingDataMutation,
 } from '@migration/data-access';
-import differenceWith from 'lodash/differenceWith';
-import isEqual from 'lodash/isEqual';
 
-import { Box, Button, Loader, Text } from '@myra-ui';
+import { Box, Button, Text } from '@myra-ui';
 
 import { FormEditableTable } from '@coop/shared/form';
 
 export const MigrationMappingComponent = () => {
   const router = useRouter();
-  const { data, isLoading } = useGetMappingDataQuery({ dbName: router?.query?.['name'] as string });
+  // const { data, isLoading } = useGetMappingDataQuery({ dbName: router?.query?.['name'] as string });
   const methods = useForm();
-  const { reset, handleSubmit, getValues } = methods;
-  const tableData = data?.protectedQuery?.getMappingData?.data;
-  const { mutateAsync } = useSetMappingDataMutation();
+  const {
+    // reset
+    // ,
+    handleSubmit,
+    // getValues
+  } = methods;
+  // const tableData = data?.protectedQuery?.getMappingData?.data;
+  // const { mutateAsync } = useSetMappingDataMutation();
 
-  useEffect(() => {
-    if (tableData) {
-      reset({
-        data: tableData,
-      });
-    }
-  }, [tableData]);
+  // useEffect(() => {
+  //   if (tableData) {
+  //     reset({
+  //       data: tableData,
+  //     });
+  //   }
+  // }, [tableData]);
 
-  if (isLoading) {
-    return (
-      <Box display="flex">
-        <Loader />
-      </Box>
-    );
-  }
-  const onSubmit = () => {
-    const dataToBeSent = differenceWith(getValues()?.data, tableData, isEqual);
-    mutateAsync({ input: dataToBeSent, dbName: router?.query?.['name'] as string });
-  };
+  // if (isLoading) {
+  //   return (
+  //     <Box display="flex">
+  //       <Loader />
+  //     </Box>
+  //   );
+  // }
+  // const onSubmit = () => {
+  //   const dataToBeSent = differenceWith(getValues()?.data, tableData, isEqual);
+  //   mutateAsync({ input: dataToBeSent, dbName: router?.query?.['name'] as string });
+  // };
+  const onSubmit = () => {};
 
   return (
     <FormProvider {...methods}>

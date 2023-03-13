@@ -21,6 +21,7 @@ export type Scalars = {
 
 export type CsvFileDetails = {
   data?: Maybe<Scalars['Map']>;
+  row?: Maybe<Scalars['String']>;
 };
 
 export type Credentials = {
@@ -43,7 +44,7 @@ export type ExtractionResponse = {
 };
 
 export type FileDetails = {
-  data?: InputMaybe<Scalars['Map']>;
+  data?: InputMaybe<Array<InputMaybe<InputCsvFileDetails>>>;
   dbName: Scalars['String'];
   fileName: Scalars['String'];
   folderName: Array<InputMaybe<Scalars['String']>>;
@@ -57,9 +58,9 @@ export type FileUpload = {
   folder: Scalars['String'];
 };
 
-export type Insertion = {
-  choices: Scalars['String'];
-  dbName: Scalars['String'];
+export type InputCsvFileDetails = {
+  data?: InputMaybe<Scalars['Map']>;
+  row?: InputMaybe<Scalars['String']>;
 };
 
 export type LedgerMapping = {
@@ -117,11 +118,8 @@ export type Projects = {
 };
 
 export type ProtectedMutation = {
-  createFinalTable: ExtractionResponse;
   sendFileData: ExtractionResponse;
-  sendMappingData: ExtractionResponse;
   startExtraction: ExtractionResponse;
-  startInsertion: ExtractionResponse;
   startTransform: ExtractionResponse;
   uploadCSV: Scalars['Boolean'];
 };
@@ -130,17 +128,8 @@ export type ProtectedMutationSendFileDataArgs = {
   input: FileDetails;
 };
 
-export type ProtectedMutationSendMappingDataArgs = {
-  dbName: Scalars['String'];
-  input: Array<InputMaybe<LedgerMappingInput>>;
-};
-
 export type ProtectedMutationStartExtractionArgs = {
   input: ExtractionEnv;
-};
-
-export type ProtectedMutationStartInsertionArgs = {
-  input: Insertion;
 };
 
 export type ProtectedMutationStartTransformArgs = {
@@ -154,8 +143,7 @@ export type ProtectedMutationUploadCsvArgs = {
 export type ProtectedQuery = {
   getDirectoryStructure?: Maybe<ProjectList>;
   getExtractionData: ExtractionResponse;
-  getFileData?: Maybe<CsvFileDetails>;
-  getMappingData: LedgerMappingList;
+  getFileData?: Maybe<Array<Maybe<CsvFileDetails>>>;
   getProjects: Array<Maybe<Scalars['String']>>;
   getTransformationData: ExtractionResponse;
 };
@@ -170,10 +158,6 @@ export type ProtectedQueryGetExtractionDataArgs = {
 
 export type ProtectedQueryGetFileDataArgs = {
   input: FileDetails;
-};
-
-export type ProtectedQueryGetMappingDataArgs = {
-  dbName: Scalars['String'];
 };
 
 export type ProtectedQueryGetTransformationDataArgs = {
@@ -215,21 +199,20 @@ export type CreateProjectMutation = {
   protectedMutation: { startExtraction: { status: string; data?: Array<string | null> | null } };
 };
 
-export type SetMappingDataMutationVariables = Exact<{
-  input: Array<InputMaybe<LedgerMappingInput>> | InputMaybe<LedgerMappingInput>;
-  dbName: Scalars['String'];
-}>;
-
-export type SetMappingDataMutation = {
-  protectedMutation: { sendMappingData: { status: string; data?: Array<string | null> | null } };
-};
-
 export type StartTransformMutationVariables = Exact<{
   input: Transform;
 }>;
 
 export type StartTransformMutation = {
   protectedMutation: { startTransform: { status: string; data?: Array<string | null> | null } };
+};
+
+export type SetCsvDataMutationVariables = Exact<{
+  input: FileDetails;
+}>;
+
+export type SetCsvDataMutation = {
+  protectedMutation: { sendFileData: { status: string; data?: Array<string | null> | null } };
 };
 
 export type GetProjectsQueryVariables = Exact<{ [key: string]: never }>;
@@ -250,18 +233,6 @@ export type GetDirectoryStructureQuery = {
         transformedCSV?: Record<string, string> | null;
       } | null> | null;
     } | null;
-  };
-};
-
-export type GetMappingDataQueryVariables = Exact<{
-  dbName: Scalars['String'];
-}>;
-
-export type GetMappingDataQuery = {
-  protectedQuery: {
-    getMappingData: {
-      data?: Array<{ newCode: string; oldCode: string; name: string; row: string } | null> | null;
-    };
   };
 };
 
@@ -286,7 +257,12 @@ export type GetCsvDataQueryVariables = Exact<{
 }>;
 
 export type GetCsvDataQuery = {
-  protectedQuery: { getFileData?: { data?: Record<string, string> | null } | null };
+  protectedQuery: {
+    getFileData?: Array<{
+      row?: string | null;
+      data?: Record<string, string> | null;
+    } | null> | null;
+  };
 };
 
 export const SetAuthDocument = `
@@ -348,29 +324,6 @@ export const useCreateProjectMutation = <TError = unknown, TContext = unknown>(
     useAxios<CreateProjectMutation, CreateProjectMutationVariables>(CreateProjectDocument),
     options
   );
-export const SetMappingDataDocument = `
-    mutation setMappingData($input: [LedgerMappingInput]!, $dbName: String!) {
-  protectedMutation {
-    sendMappingData(input: $input, dbName: $dbName) {
-      status
-      data
-    }
-  }
-}
-    `;
-export const useSetMappingDataMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetMappingDataMutation,
-    TError,
-    SetMappingDataMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<SetMappingDataMutation, TError, SetMappingDataMutationVariables, TContext>(
-    ['setMappingData'],
-    useAxios<SetMappingDataMutation, SetMappingDataMutationVariables>(SetMappingDataDocument),
-    options
-  );
 export const StartTransformDocument = `
     mutation startTransform($input: Transform!) {
   protectedMutation {
@@ -392,6 +345,24 @@ export const useStartTransformMutation = <TError = unknown, TContext = unknown>(
   useMutation<StartTransformMutation, TError, StartTransformMutationVariables, TContext>(
     ['startTransform'],
     useAxios<StartTransformMutation, StartTransformMutationVariables>(StartTransformDocument),
+    options
+  );
+export const SetCsvDataDocument = `
+    mutation setCSVData($input: FileDetails!) {
+  protectedMutation {
+    sendFileData(input: $input) {
+      status
+      data
+    }
+  }
+}
+    `;
+export const useSetCsvDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetCsvDataMutation, TError, SetCsvDataMutationVariables, TContext>
+) =>
+  useMutation<SetCsvDataMutation, TError, SetCsvDataMutationVariables, TContext>(
+    ['setCSVData'],
+    useAxios<SetCsvDataMutation, SetCsvDataMutationVariables>(SetCsvDataDocument),
     options
   );
 export const GetProjectsDocument = `
@@ -436,32 +407,6 @@ export const useGetDirectoryStructureQuery = <TData = GetDirectoryStructureQuery
     useAxios<GetDirectoryStructureQuery, GetDirectoryStructureQueryVariables>(
       GetDirectoryStructureDocument
     ).bind(null, variables),
-    options
-  );
-export const GetMappingDataDocument = `
-    query getMappingData($dbName: String!) {
-  protectedQuery {
-    getMappingData(dbName: $dbName) {
-      data {
-        newCode
-        oldCode
-        name
-        row
-      }
-    }
-  }
-}
-    `;
-export const useGetMappingDataQuery = <TData = GetMappingDataQuery, TError = unknown>(
-  variables: GetMappingDataQueryVariables,
-  options?: UseQueryOptions<GetMappingDataQuery, TError, TData>
-) =>
-  useQuery<GetMappingDataQuery, TError, TData>(
-    ['getMappingData', variables],
-    useAxios<GetMappingDataQuery, GetMappingDataQueryVariables>(GetMappingDataDocument).bind(
-      null,
-      variables
-    ),
     options
   );
 export const GetExtractionDataDocument = `
@@ -510,6 +455,7 @@ export const GetCsvDataDocument = `
     query getCSVData($input: FileDetails!) {
   protectedQuery {
     getFileData(input: $input) {
+      row
       data
     }
   }
