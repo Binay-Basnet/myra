@@ -501,7 +501,7 @@ export const AccountOpenNew = () => {
       setValue('accountName', defaultAccountName);
     }
   }, [defaultAccountName]);
-  //  get redirect id from url
+  // get redirect id from url
   const redirectMemberId = router.query['memberId'];
   // redirect from member details
   useEffect(() => {

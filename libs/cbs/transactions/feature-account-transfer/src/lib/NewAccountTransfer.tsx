@@ -361,6 +361,7 @@ export const NewAccountTransfer = () => {
                             }
                           : null
                       }
+                      redirectUrl={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${sourceAccount?.accountId}`}
                     />
 
                     {destMemberId && (
