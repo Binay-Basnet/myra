@@ -1,40 +1,74 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { useGetCsvDataQuery } from '@migration/data-access';
-import isArray from 'lodash/isArray';
+import { useGetCsvDataQuery, useSetCsvDataMutation } from '@migration/data-access';
+import { differenceWith, isEqual, omit } from 'lodash';
 
-import { Box } from '@myra-ui';
+import { Box, Button, Text } from '@myra-ui';
 
 import { FormEditableTable } from '@coop/shared/form';
 
 export const MigrationFileComponent = () => {
   const router = useRouter();
+
   const methods = useForm();
-  const { reset } = methods;
-  const { data } = useGetCsvDataQuery({
+  const { reset, handleSubmit, getValues } = methods;
+
+  const { data, refetch } = useGetCsvDataQuery({
     input: {
       fileName: router?.query['filename'] as string,
       dbName: router?.query['name'] as string,
-      folderName: [router?.query['csvType'] as string],
+      folderName:
+        router?.query['csvType'] !== 'transformedCSV'
+          ? ([router?.query['csvType']] as string[])
+          : ([router?.query['csvType'], router?.query['folderName']] as unknown as string[]),
       pageNo: 1 as unknown as string,
       data: null,
     },
   });
-  const tableData = data?.protectedQuery?.getFileData?.data;
+
+  const { mutateAsync } = useSetCsvDataMutation();
+
+  const tableData = data?.protectedQuery?.getFileData;
+  const alteredTableData = tableData?.reduce(
+    (acc, curr) => [...acc, { ...curr?.data, row: curr?.row }],
+    []
+  );
   useEffect(() => {
-    if (isArray(tableData)) {
+    if (alteredTableData) {
       reset({
-        data: [...tableData],
+        data: [...alteredTableData],
       });
     }
   }, [tableData]);
+
   const columns =
-    tableData && Object?.keys(tableData?.[0])?.map((item) => ({ accessor: item, header: item }));
+    tableData &&
+    Object?.keys(tableData?.[0]?.data)?.map((item) => ({ accessor: item, header: item }));
+
+  const onSubmit = () => {
+    const dataToBeSent = differenceWith(getValues()?.data, alteredTableData, isEqual);
+    mutateAsync({
+      input: {
+        fileName: router?.query['filename'] as string,
+        dbName: router?.query['name'] as string,
+        folderName:
+          router?.query['csvType'] !== 'transformedCSV'
+            ? ([router?.query['csvType']] as string[])
+            : ([router?.query['csvType'], router?.query['folderName']] as unknown as string[]),
+        pageNo: 1 as unknown as string,
+        data: dataToBeSent?.reduce(
+          (acc, curr) => [...acc, { row: curr?.row, data: omit({ curr }, ['row']) }],
+          []
+        ),
+      },
+    }).then(() => refetch());
+    // mutateAsync({ input: dataToBeSent, dbName: router?.query?.['name'] as string });
+  };
 
   return (
     <FormProvider {...methods}>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box
           display="flex"
           flexDir="column"
@@ -44,8 +78,22 @@ export const MigrationFileComponent = () => {
           borderRadius={6}
           boxShadow="lg"
         >
+          <Box display="flex" justifyContent="space-between">
+            <Text fontSize="r3" fontWeight="medium">
+              CSV Data
+            </Text>
+            <Button type="submit" w={100}>
+              Edit
+            </Button>
+          </Box>
           {columns && tableData && (
-            <FormEditableTable name="data" canDeleteRow={false} columns={columns} />
+            <Box overflowY="auto">
+              <FormEditableTable
+                name="data"
+                // canDeleteRow={false}
+                columns={columns.concat({ accessor: 'row', header: 'row' })}
+              />
+            </Box>
           )}
         </Box>
       </form>

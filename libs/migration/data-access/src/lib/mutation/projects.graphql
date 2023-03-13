@@ -7,18 +7,27 @@ mutation createProject($input: ExtractionEnv!) {
   }
 }
 
-mutation setMappingData($input: [LedgerMappingInput]!, $dbName: String!) {
+#mutation setMappingData($input: [LedgerMappingInput]!, $dbName: String!) {
+#  protectedMutation {
+#    sendMappingData(input: $input, dbName: $dbName) {
+#      status
+#      data
+#    }
+#  }
+#}
+
+mutation startTransform($input: Transform!) {
   protectedMutation {
-    sendMappingData(input: $input, dbName: $dbName) {
+    startTransform(input: $input) {
       status
       data
     }
   }
 }
 
-mutation startTransform($input: Transform!) {
+mutation setCSVData($input: FileDetails!) {
   protectedMutation {
-    startTransform(input: $input) {
+    sendFileData(input: $input) {
       status
       data
     }

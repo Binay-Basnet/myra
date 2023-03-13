@@ -16,9 +16,9 @@ import { Box, Button, Collapse, Grid, GridItem, Text } from '@myra-ui';
 import { FormSelect } from '@coop/shared/form';
 
 export const MigrationDetailsComponents = () => {
-  const [sourceCollapse, setSourceCollapse] = useState(true);
-  const [mapperCollapse, setMapperCollapse] = useState(true);
-  const [transformCollapse, setTransformCollapse] = useState(true);
+  const [sourceCollapse, setSourceCollapse] = useState(false);
+  const [mapperCollapse, setMapperCollapse] = useState(false);
+  const [transformCollapse, setTransformCollapse] = useState(false);
   const [extractionCollapse, setExtractionCollapse] = useState(true);
   const [transformationCollapse, setTransformationCollapse] = useState(true);
 
@@ -64,9 +64,9 @@ export const MigrationDetailsComponents = () => {
         <Text fontSize="2xl" fontWeight="semibold">
           Projects {'>'} {router?.query?.['name']}
         </Text>
-        <Button onClick={() => router.push(`/mapping/${router?.query?.['name']}`)}>
+        {/* <Button onClick={() => router.push(`/mapping/${router?.query?.['name']}`)}>
           Mapping Data
-        </Button>
+        </Button> */}
       </Box>
       <Grid templateColumns="repeat(2, 1fr)" gap="s32">
         <GridItem>
@@ -120,7 +120,12 @@ export const MigrationDetailsComponents = () => {
               </Text>
               <Collapse in={mapperCollapse}>
                 {mapperCSVData?.map((item, index) => (
-                  <Text>
+                  <Text
+                    cursor="pointer"
+                    onClick={() =>
+                      router.push(`/${router?.query['name']}/${item}?csvType=mapperCSV`)
+                    }
+                  >
                     {index + 1}. {item}
                   </Text>
                 ))}
@@ -173,7 +178,14 @@ export const MigrationDetailsComponents = () => {
                         {item} :
                       </Text>
                       {tableDataArray?.map((i, index) => (
-                        <Text>
+                        <Text
+                          cursor="pointer"
+                          onClick={() =>
+                            router.push(
+                              `/${router?.query['name']}/${i}?csvType=transformedCSV&&folderName=${item}`
+                            )
+                          }
+                        >
                           {index + 1}. {i}
                         </Text>
                       ))}
