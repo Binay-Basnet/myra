@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useGetCsvDataQuery, useSetCsvDataMutation } from '@migration/data-access';
 import { differenceWith, isEqual, omit } from 'lodash';
 
-import { Box, Button, Text } from '@myra-ui';
+import { Box, Button, Loader, Text } from '@myra-ui';
 
 import { FormEditableTable } from '@coop/shared/form';
 
@@ -14,7 +14,7 @@ export const MigrationFileComponent = () => {
   const methods = useForm();
   const { reset, handleSubmit, getValues } = methods;
 
-  const { data, refetch } = useGetCsvDataQuery({
+  const { data, refetch, isLoading } = useGetCsvDataQuery({
     input: {
       fileName: router?.query['filename'] as string,
       dbName: router?.query['name'] as string,
@@ -64,6 +64,13 @@ export const MigrationFileComponent = () => {
       },
     }).then(() => refetch());
   };
+  if (isLoading) {
+    return (
+      <Box>
+        <Loader />
+      </Box>
+    );
+  }
 
   return (
     <FormProvider {...methods}>
