@@ -14,7 +14,7 @@ const TabCol = chakra(Tab, {
     minHeight: '40px',
     maxHeight: '56px',
     fontSize: '14px',
-    fontWeight: '500',
+    fontWeight: '400',
     lineHeight: '1.25',
     width: '100%',
     display: 'flex',
@@ -27,7 +27,7 @@ const TabCol = chakra(Tab, {
     _focus: {
       boxShadow: 'none',
     },
-    _selected: { color: '#37474F', bg: 'gray.200', borderRadius: 'br2' },
+    _selected: { color: '#37474F', bg: 'gray.200', borderRadius: 'br2', fontWeight: '500' },
   },
 });
 

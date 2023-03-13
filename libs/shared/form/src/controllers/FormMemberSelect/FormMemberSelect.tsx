@@ -75,7 +75,7 @@ export const FormMemberSelect = ({
         },
       },
       filter: {
-        query: isCurrentBranchMember ? (currrentBranch as unknown as string) : IDMember,
+        query: isCurrentBranchMember ? `${currrentBranch} ${IDMember}` : IDMember,
         orConditions: allMembers
           ? []
           : [

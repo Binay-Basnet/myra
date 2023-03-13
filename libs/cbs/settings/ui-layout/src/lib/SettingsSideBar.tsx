@@ -1,6 +1,15 @@
-import { Box, Text } from '@chakra-ui/react';
+import { IoChevronDownSharp, IoChevronUpSharp } from 'react-icons/io5';
+import { useRouter } from 'next/router';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Text,
+} from '@chakra-ui/react';
 
-import { Divider, TabColumn } from '@myra-ui';
+import { Icon, TabColumn } from '@myra-ui';
 
 import { AclKey, ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
@@ -98,6 +107,7 @@ const otherTabList: TabList[] = [
 
 export const SettingSideBar = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   return (
     <Box position="sticky">
       <Box
@@ -115,12 +125,174 @@ export const SettingSideBar = () => {
             {t['settingsGeneral']}
           </Text>
         </Box>
-        <Box p="s16">
-          <TabColumn list={orgTabList} />
-          <Divider my="s16" />
-          <TabColumn list={tabList} />
-          <Divider my="s16" />
-          <TabColumn list={otherTabList} />
+        <Box py="s16" px="s16">
+          <Accordion allowToggle defaultIndex={0}>
+            <AccordionItem bg="transparent" border="none">
+              {({ isExpanded }) => (
+                <>
+                  <AccordionButton
+                    border="none"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    // _hover={{
+                    //   bg: 'highlight.500',
+                    //   borderRadius: 'br2',
+                    // }}
+                    _expanded={{}}
+                    pl="s8"
+                    w="100%"
+                    h="40px"
+                    pr="0"
+                  >
+                    <Text
+                      color="gray.800"
+                      fontWeight="500"
+                      w="fit-content"
+                      fontSize="r1"
+                      _hover={{
+                        cursor: 'pointer',
+                        textDecoration: 'underline',
+                      }}
+                      onClick={() => router.push(ROUTES?.SETTINGS_GENERAL_SERVICE_CENTER_LIST)}
+                    >
+                      Organization
+                    </Text>
+                    <Box flex={1} pointerEvents="none" />
+                    <Box
+                      _hover={{
+                        bg: 'gray.200',
+                        borderRadius: 'br2',
+                      }}
+                      p="s8"
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <Icon
+                        as={isExpanded ? IoChevronUpSharp : IoChevronDownSharp}
+                        color="gray.800"
+                        flexShrink={0}
+                      />
+                    </Box>
+                  </AccordionButton>
+
+                  <AccordionPanel px="s8" py="s4">
+                    <TabColumn list={orgTabList} />
+                  </AccordionPanel>
+                </>
+              )}
+            </AccordionItem>
+
+            <AccordionItem bg="transparent" border="none">
+              {({ isExpanded }) => (
+                <>
+                  <AccordionButton
+                    border="none"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    // _hover={{
+                    //   bg: 'highlight.500',
+                    //   borderRadius: 'br2',
+                    // }}
+                    _expanded={{}}
+                    pl="s8"
+                    w="100%"
+                    h="40px"
+                    pr="0"
+                  >
+                    <Text
+                      color="gray.800"
+                      fontWeight="500"
+                      fontSize="r1"
+                      _hover={{
+                        cursor: 'pointer',
+                        textDecoration: 'underline',
+                      }}
+                      onClick={() => router.push(ROUTES?.SETTINGS_GENERAL_MEMBERS)}
+                    >
+                      Core Banking System
+                    </Text>
+                    <Box flex={1} pointerEvents="none" />
+                    <Box
+                      _hover={{
+                        bg: 'gray.200',
+                        borderRadius: 'br2',
+                      }}
+                      p="s8"
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <Icon
+                        as={isExpanded ? IoChevronUpSharp : IoChevronDownSharp}
+                        color="gray.800"
+                        flexShrink={0}
+                      />
+                    </Box>
+                  </AccordionButton>
+                  <AccordionPanel px="s8" py="s4">
+                    <TabColumn list={tabList} />
+                  </AccordionPanel>
+                </>
+              )}
+            </AccordionItem>
+
+            {/* <Divider my="s16" /> */}
+
+            {/* <Divider my="s16" /> */}
+            <AccordionItem bg="transparent" border="none">
+              {({ isExpanded }) => (
+                <>
+                  <AccordionButton
+                    border="none"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    // _hover={{
+                    //   bg: 'highlight.500',
+                    //   borderRadius: 'br2',
+                    // }}
+                    _expanded={{}}
+                    pl="s8"
+                    w="100%"
+                    h="40px"
+                    pr="0"
+                  >
+                    <Text
+                      color="gray.800"
+                      fontWeight="500"
+                      fontSize="r1"
+                      _hover={{
+                        cursor: 'pointer',
+                        textDecoration: 'underline',
+                      }}
+                      onClick={() => router.push(ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS)}
+                    >
+                      Others
+                    </Text>
+                    <Box
+                      _hover={{
+                        bg: 'gray.200',
+                        borderRadius: 'br2',
+                      }}
+                      p="s8"
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <Icon
+                        as={isExpanded ? IoChevronUpSharp : IoChevronDownSharp}
+                        color="gray.800"
+                        flexShrink={0}
+                      />
+                    </Box>
+                  </AccordionButton>
+                  <AccordionPanel px="s8" py="s4">
+                    <TabColumn list={otherTabList} />
+                  </AccordionPanel>
+                </>
+              )}
+            </AccordionItem>
+          </Accordion>
         </Box>
       </Box>
     </Box>
