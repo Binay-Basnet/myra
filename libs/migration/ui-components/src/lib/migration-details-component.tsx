@@ -189,6 +189,7 @@ export const MigrationDetailsComponents = () => {
                           {index + 1}. {i}
                         </Text>
                       ))}
+                      <br />
                     </>
                   );
                 })}

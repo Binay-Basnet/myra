@@ -58,12 +58,11 @@ export const MigrationFileComponent = () => {
             : ([router?.query['csvType'], router?.query['folderName']] as unknown as string[]),
         pageNo: 1 as unknown as string,
         data: dataToBeSent?.reduce(
-          (acc, curr) => [...acc, { row: curr?.row, data: omit({ curr }, ['row']) }],
+          (acc, curr) => [...acc, { row: curr?.row, data: omit({ ...curr }, ['row']) }],
           []
         ),
       },
     }).then(() => refetch());
-    // mutateAsync({ input: dataToBeSent, dbName: router?.query?.['name'] as string });
   };
 
   return (
@@ -87,7 +86,7 @@ export const MigrationFileComponent = () => {
             </Button>
           </Box>
           {columns && tableData && (
-            <Box overflowY="auto">
+            <Box overflowX="scroll">
               <FormEditableTable
                 name="data"
                 hideSN
