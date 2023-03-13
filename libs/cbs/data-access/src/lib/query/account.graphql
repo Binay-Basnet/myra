@@ -231,7 +231,7 @@ query getAccountOpenEditData($id: ID!) {
   }
 }
 
-query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSearchFilter) {
+query getAccountTableList($paginate: Pagination, $filter: Filter) {
   account {
     list(paginate: $paginate, filter: $filter) {
       totalCount
@@ -325,7 +325,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
   }
 }
 
-query getAccountTableListMinimal($paginate: Pagination, $filter: DepositLoanAccountSearchFilter) {
+query getAccountTableListMinimal($paginate: Pagination, $filter: Filter) {
   account {
     list(paginate: $paginate, filter: $filter) {
       totalCount
@@ -643,7 +643,7 @@ query getAccountLedgersList($accountId: ID!) {
   }
 }
 
-query getAllAccounts($paginate: Pagination, $filter: AllAccountsFilter) {
+query getAllAccounts($paginate: Pagination, $filter: Filter) {
   allAccounts {
     list(paginate: $paginate, filter: $filter) {
       totalCount

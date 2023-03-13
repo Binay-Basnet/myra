@@ -1,4 +1,4 @@
-query getDepositListData($filter: AccountTransactionFilter, $pagination: Pagination) {
+query getDepositListData($filter: Filter, $pagination: Pagination) {
   transaction {
     listDeposit(filter: $filter, pagination: $pagination) {
       totalCount
@@ -29,7 +29,7 @@ query getDepositListData($filter: AccountTransactionFilter, $pagination: Paginat
   }
 }
 
-query getWithdrawListData($filter: AccountTransactionFilter, $pagination: Pagination) {
+query getWithdrawListData($filter: Filter, $pagination: Pagination) {
   transaction {
     listWithdraw(filter: $filter, pagination: $pagination) {
       totalCount
@@ -57,7 +57,7 @@ query getWithdrawListData($filter: AccountTransactionFilter, $pagination: Pagina
   }
 }
 
-query getAccountTransferListData($filter: AccountTransactionFilter, $pagination: Pagination) {
+query getAccountTransferListData($filter: Filter, $pagination: Pagination) {
   transaction {
     listTransfer(filter: $filter, pagination: $pagination) {
       totalCount
@@ -396,7 +396,7 @@ query getEODStatus {
   }
 }
 
-query getAllTransactionsList($filter: AllTransactionFilter, $pagination: Pagination) {
+query getAllTransactionsList($filter: Filter, $pagination: Pagination) {
   transaction {
     listAllTransactions(filter: $filter, pagination: $pagination) {
       totalCount

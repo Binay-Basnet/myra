@@ -4,7 +4,7 @@ import { Box } from '@chakra-ui/react';
 import { TableCheckbox } from '../components';
 import { Column } from '../types/Table';
 
-export const getCheckBoxColumn = <T extends Record<string, unknown>>(): Column<T> => ({
+export const getCheckBoxColumn = <T,>(): Column<T> => ({
   id: '_selector',
   header: ({ table }) => (
     <Box p={1}>

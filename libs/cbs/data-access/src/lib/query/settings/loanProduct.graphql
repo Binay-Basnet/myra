@@ -1,351 +1,351 @@
-query getLoanProductList($paginate: Pagination, $filter: LoanProductSearchFilter) {
-  settings {
-    general {
-      loanProducts {
-        list(paginate: $paginate, filter: $filter) {
-          totalCount
-          pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
-          }
-          edges {
-            node {
-              id
-              objState
-              createdBy {
-                id
-                name
-                username
-                userType
-              }
-              createdDate
-              modifiedBy {
-                id
-                name
-                username
-                userType
-              }
-              productName
-              productCodeString
-              productCode {
-                prefix
-                initialNo
-              }
-              productType
-              productSubType
-              interest {
-                minRate
-                maxRate
-                defaultRate
-                ceoAuthority
-                boardAuthority
-              }
-            }
-          }
-          totalCount
-        }
-      }
-    }
-  }
-}
-
-query getLoanProductEditData($id: ID!) {
-  settings {
-    general {
-      loanProducts {
-        formState(id: $id) {
-          data {
-            id
-            objState
-            createdAt
-            modifiedAt
-            productName
-            productType
-            productSubType
-            productNature
-            productCode {
-              prefix
-              initialNo
-              noOfDigits
-            }
-            description
-            typeOfMember
-            criteria
-            minAge
-            maxAge
-            genderId
-            maritalStatusId
-            educationQualification
-            ethnicity
-            occupation
-            foreignEmployment
-            natureOfBusinessInstitution
-            natureOFBusinessCoop
-            cooperativeType
-            isTenureApplicable
-            tenureUnit
-            minTenureUnitNumber
-            maxTenureUnitNumber
-            minimumLoanAmount
-            maxLoanAmount
-            repaymentScheme
-            allowPartialInstallment
-            # installmentFrequency
-            isMonthlyInstallmentCompulsory
-            interestMethod
-            isPenaltyApplicable
-            penaltyType
-            penaltyDayAfterInstallmentDate
-            penaltyRate
-            penaltyAmount
-            isRebateApplicable
-            rebate {
-              dayBeforeInstallmentDate
-              rebateRate
-              rebateAmount
-              rebateLedgerMapping
-            }
-            principalMaxGraceNumber
-            interestMaxGraceNumber
-            interest {
-              minRate
-              maxRate
-              defaultRate
-              ceoAuthority
-              boardAuthority
-            }
-            updateInterest
-            waiveInterest
-            loanProcessingCharge {
-              serviceName
-              ledgerName
-              amount
-            }
-            isInsuranceApplicable
-            insuranceType {
-              type
-              amount
-              rate
-            }
-            ledgerMapping {
-              principal
-              interestAccuredDaily
-              interestIncome
-            }
-            isStaffProduct
-            supportMultipleAccounts
-            loanScheduleChangeOverride
-            requiredDocuments
-            isCollateralRequired
-            allowGurantee
-            maxPercentOfGurantee
-            collateralTypes
-            collateralValue {
-              type
-              minFMV
-              maxFMV
-              minDV
-              maxDV
-              minValue
-              maxValue
-            }
-            isPrematurePenaltyApplicable
-            prematurePenaltySetup {
-              penaltyDateType
-              noOfDays
-              penaltyLedgerMapping
-              penaltyAmount
-              penaltyRate
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-query getLoanProductDetail($id: ID!) {
-  settings {
-    general {
-      loanProducts {
-        getProductDetail(id: $id) {
-          data {
-            id
-            noOfaccount
-            noOfMember
-            objState
-            createdAt
-            modifiedAt
-            productName
-            productType
-            productSubType
-            productNature
-            productCode {
-              prefix
-              initialNo
-              noOfDigits
-            }
-            description
-            typeOfMember
-            criteria
-            minAge
-            maxAge
-            genderId
-            maritalStatusId
-            educationQualification
-            ethnicity
-            occupation
-            foreignEmployment
-            natureOfBusinessInstitution
-            natureOFBusinessCoop
-            cooperativeType
-            isTenureApplicable
-            tenureUnit
-            minTenureUnitNumber
-            maxTenureUnitNumber
-            minimumLoanAmount
-            maxLoanAmount
-            repaymentScheme
-            allowPartialInstallment
-            # installmentFrequency
-            isMonthlyInstallmentCompulsory
-            interestMethod
-            isPenaltyApplicable
-            #savingCharge
-            penalty {
-              penaltyType
-              penaltyDayAfterInstallmentDate
-              penaltyRate
-              penaltyAmount
-            }
-            isRebateApplicable
-            rebate {
-              dayBeforeInstallmentDate
-              rebateRate
-              rebateAmount
-              rebateLedgerMapping
-              noOfInstallment
-            }
-            principalMaxGraceNumber
-            interestMaxGraceNumber
-            interest {
-              minRate
-              maxRate
-              defaultRate
-              ceoAuthority
-              boardAuthority
-            }
-            updateInterest
-            waiveInterest
-            loanProcessingCharge {
-              serviceName
-              ledgerName
-              amount
-            }
-            isInsuranceApplicable
-            insuranceType {
-              type
-              amount
-              rate
-            }
-            ledgerMapping {
-              principal
-              interestAccuredDaily
-              interestIncome
-            }
-            isStaffProduct
-            supportMultipleAccounts
-            loanScheduleChangeOverride
-            requiredDocuments
-            isCollateralRequired
-            allowGurantee
-            maxPercentOfGurantee
-            collateralTypes
-            collateralValue {
-              type
-              minFMV
-              maxFMV
-              minDV
-              maxDV
-              minValue
-              maxValue
-            }
-            isPrematurePenaltyApplicable
-            prematurePenaltySetup {
-              penaltyDateType
-              noOfDays
-              penaltyLedgerMapping
-              penaltyAmount
-              penaltyRate
-            }
-            loanType
-          }
-        }
-      }
-    }
-  }
-}
-
-query getLoanAccountList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
-  settings {
-    general {
-      loanProducts {
-        getLoanAccountlist(paginate: $paginate, filter: $filter) {
-          totalCount
-          pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
-          }
-          edges {
-            node {
-              id
-              objState
-              approvedDate
-              member {
-                code
-                name
-              }
-              productType
-              productSubType {
-                id
-                productSubType
-                productTypeID
-              }
-              LoanAccountName
-              appliedLoanAmount
-              approvedDate
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-query getLoanProductCriteria($productId: ID!) {
-  settings {
-    general {
-      loanProducts {
-        getProductCriteria(productId: $productId) {
-          data {
-            gender
-            minAge
-            maxAge
-            ethnicity
-            educationQualification
-            maritalStatus
-            foreignEmployment
-            occupation
-            institutionType
-            cooperativeUnion
-            cooperativeType
-          }
-        }
-      }
-    }
-  }
-}
+#query getLoanProductList($paginate: Pagination, $filter: LoanProductSearchFilter) {
+#  settings {
+#    general {
+#      loanProducts {
+#        list(paginate: $paginate, filter: $filter) {
+#          totalCount
+#          pageInfo {
+#            hasNextPage
+#            hasPreviousPage
+#            startCursor
+#            endCursor
+#          }
+#          edges {
+#            node {
+#              id
+#              objState
+#              createdBy {
+#                id
+#                name
+#                username
+#                userType
+#              }
+#              createdDate
+#              modifiedBy {
+#                id
+#                name
+#                username
+#                userType
+#              }
+#              productName
+#              productCodeString
+#              productCode {
+#                prefix
+#                initialNo
+#              }
+#              productType
+#              productSubType
+#              interest {
+#                minRate
+#                maxRate
+#                defaultRate
+#                ceoAuthority
+#                boardAuthority
+#              }
+#            }
+#          }
+#          totalCount
+#        }
+#      }
+#    }
+#  }
+#}
+#
+#query getLoanProductEditData($id: ID!) {
+#  settings {
+#    general {
+#      loanProducts {
+#        formState(id: $id) {
+#          data {
+#            id
+#            objState
+#            createdAt
+#            modifiedAt
+#            productName
+#            productType
+#            productSubType
+#            productNature
+#            productCode {
+#              prefix
+#              initialNo
+#              noOfDigits
+#            }
+#            description
+#            typeOfMember
+#            criteria
+#            minAge
+#            maxAge
+#            genderId
+#            maritalStatusId
+#            educationQualification
+#            ethnicity
+#            occupation
+#            foreignEmployment
+#            natureOfBusinessInstitution
+#            natureOFBusinessCoop
+#            cooperativeType
+#            isTenureApplicable
+#            tenureUnit
+#            minTenureUnitNumber
+#            maxTenureUnitNumber
+#            minimumLoanAmount
+#            maxLoanAmount
+#            repaymentScheme
+#            allowPartialInstallment
+#            # installmentFrequency
+#            isMonthlyInstallmentCompulsory
+#            interestMethod
+#            isPenaltyApplicable
+#            penaltyType
+#            penaltyDayAfterInstallmentDate
+#            penaltyRate
+#            penaltyAmount
+#            isRebateApplicable
+#            rebate {
+#              dayBeforeInstallmentDate
+#              rebateRate
+#              rebateAmount
+#              rebateLedgerMapping
+#            }
+#            principalMaxGraceNumber
+#            interestMaxGraceNumber
+#            interest {
+#              minRate
+#              maxRate
+#              defaultRate
+#              ceoAuthority
+#              boardAuthority
+#            }
+#            updateInterest
+#            waiveInterest
+#            loanProcessingCharge {
+#              serviceName
+#              ledgerName
+#              amount
+#            }
+#            isInsuranceApplicable
+#            insuranceType {
+#              type
+#              amount
+#              rate
+#            }
+#            ledgerMapping {
+#              principal
+#              interestAccuredDaily
+#              interestIncome
+#            }
+#            isStaffProduct
+#            supportMultipleAccounts
+#            loanScheduleChangeOverride
+#            requiredDocuments
+#            isCollateralRequired
+#            allowGurantee
+#            maxPercentOfGurantee
+#            collateralTypes
+#            collateralValue {
+#              type
+#              minFMV
+#              maxFMV
+#              minDV
+#              maxDV
+#              minValue
+#              maxValue
+#            }
+#            isPrematurePenaltyApplicable
+#            prematurePenaltySetup {
+#              penaltyDateType
+#              noOfDays
+#              penaltyLedgerMapping
+#              penaltyAmount
+#              penaltyRate
+#            }
+#          }
+#        }
+#      }
+#    }
+#  }
+#}
+#
+#query getLoanProductDetail($id: ID!) {
+#  settings {
+#    general {
+#      loanProducts {
+#        getProductDetail(id: $id) {
+#          data {
+#            id
+#            noOfaccount
+#            noOfMember
+#            objState
+#            createdAt
+#            modifiedAt
+#            productName
+#            productType
+#            productSubType
+#            productNature
+#            productCode {
+#              prefix
+#              initialNo
+#              noOfDigits
+#            }
+#            description
+#            typeOfMember
+#            criteria
+#            minAge
+#            maxAge
+#            genderId
+#            maritalStatusId
+#            educationQualification
+#            ethnicity
+#            occupation
+#            foreignEmployment
+#            natureOfBusinessInstitution
+#            natureOFBusinessCoop
+#            cooperativeType
+#            isTenureApplicable
+#            tenureUnit
+#            minTenureUnitNumber
+#            maxTenureUnitNumber
+#            minimumLoanAmount
+#            maxLoanAmount
+#            repaymentScheme
+#            allowPartialInstallment
+#            # installmentFrequency
+#            isMonthlyInstallmentCompulsory
+#            interestMethod
+#            isPenaltyApplicable
+#            #savingCharge
+#            penalty {
+#              penaltyType
+#              penaltyDayAfterInstallmentDate
+#              penaltyRate
+#              penaltyAmount
+#            }
+#            isRebateApplicable
+#            rebate {
+#              dayBeforeInstallmentDate
+#              rebateRate
+#              rebateAmount
+#              rebateLedgerMapping
+#              noOfInstallment
+#            }
+#            principalMaxGraceNumber
+#            interestMaxGraceNumber
+#            interest {
+#              minRate
+#              maxRate
+#              defaultRate
+#              ceoAuthority
+#              boardAuthority
+#            }
+#            updateInterest
+#            waiveInterest
+#            loanProcessingCharge {
+#              serviceName
+#              ledgerName
+#              amount
+#            }
+#            isInsuranceApplicable
+#            insuranceType {
+#              type
+#              amount
+#              rate
+#            }
+#            ledgerMapping {
+#              principal
+#              interestAccuredDaily
+#              interestIncome
+#            }
+#            isStaffProduct
+#            supportMultipleAccounts
+#            loanScheduleChangeOverride
+#            requiredDocuments
+#            isCollateralRequired
+#            allowGurantee
+#            maxPercentOfGurantee
+#            collateralTypes
+#            collateralValue {
+#              type
+#              minFMV
+#              maxFMV
+#              minDV
+#              maxDV
+#              minValue
+#              maxValue
+#            }
+#            isPrematurePenaltyApplicable
+#            prematurePenaltySetup {
+#              penaltyDateType
+#              noOfDays
+#              penaltyLedgerMapping
+#              penaltyAmount
+#              penaltyRate
+#            }
+#            loanType
+#          }
+#        }
+#      }
+#    }
+#  }
+#}
+#
+#query getLoanAccountList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
+#  settings {
+#    general {
+#      loanProducts {
+#        getLoanAccountlist(paginate: $paginate, filter: $filter) {
+#          totalCount
+#          pageInfo {
+#            hasNextPage
+#            hasPreviousPage
+#            startCursor
+#            endCursor
+#          }
+#          edges {
+#            node {
+#              id
+#              objState
+#              approvedDate
+#              member {
+#                code
+#                name
+#              }
+#              productType
+#              productSubType {
+#                id
+#                productSubType
+#                productTypeID
+#              }
+#              LoanAccountName
+#              appliedLoanAmount
+#              approvedDate
+#            }
+#          }
+#        }
+#      }
+#    }
+#  }
+#}
+#
+#query getLoanProductCriteria($productId: ID!) {
+#  settings {
+#    general {
+#      loanProducts {
+#        getProductCriteria(productId: $productId) {
+#          data {
+#            gender
+#            minAge
+#            maxAge
+#            ethnicity
+#            educationQualification
+#            maritalStatus
+#            foreignEmployment
+#            occupation
+#            institutionType
+#            cooperativeUnion
+#            cooperativeType
+#          }
+#        }
+#      }
+#    }
+#  }
+#}

@@ -29,15 +29,20 @@ import qs from 'qs';
 
 import { URLFilter } from '@coop/shared/utils';
 
+type Option = {
+  label: string;
+  value: string;
+};
+
 export interface TableListFilterContentProps {
-  data?: string[];
+  data?: Option[];
   onClose?: () => void;
-  filterValue?: string[];
-  setFilter?: (updater: string[]) => void;
+  filterValue?: Option[];
+  setFilter?: (updater: Option[]) => void;
 }
 
 interface TableListFilterProps {
-  data?: string[];
+  data?: Option[];
   column: string;
 }
 
@@ -86,7 +91,7 @@ export const TableListFilter = ({ data, column }: TableListFilterProps) => {
                       {
                         ...parsedQuery,
                         [column]: {
-                          value: newFilter,
+                          value: newFilter.map((f) => f.value),
                           compare: '=',
                         },
                       },
@@ -115,7 +120,11 @@ export const TableListFilter = ({ data, column }: TableListFilterProps) => {
                     );
                   }
                 }}
-                filterValue={(parsedQuery?.[column]?.value as string[]) || []}
+                filterValue={
+                  data?.filter((d) =>
+                    (parsedQuery?.[column]?.value as string[])?.includes(d.value)
+                  ) || []
+                }
                 onClose={onClose}
                 ref={initialFocusRef}
               />
@@ -133,7 +142,7 @@ export const TableListFilterContent = React.forwardRef(
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const id = useId();
-    const [selectedData, setSelectedData] = useState<string[]>(filterValue ?? []);
+    const [selectedData, setSelectedData] = useState<Option[]>(filterValue ?? []);
     const [searchTerm, setSearchTerm] = useState('');
 
     const listData = useMemo(() => (data ? [...data] : []), []);
@@ -258,8 +267,8 @@ export const TableListFilterContent = React.forwardRef(
 
 interface ITableListCheckboxProps {
   isChecked: boolean;
-  listItem: string;
-  setSelectedData: Dispatch<SetStateAction<string[]>>;
+  listItem: Option;
+  setSelectedData: Dispatch<SetStateAction<Option[]>>;
 }
 
 const TableListCheckbox = React.memo(
@@ -277,11 +286,11 @@ const TableListCheckbox = React.memo(
         e.stopPropagation();
         !isChecked
           ? setSelectedData((prev) => [...prev, listItem])
-          : setSelectedData((prev) => prev.filter((item) => item !== listItem));
+          : setSelectedData((prev) => prev.filter((item) => item.value !== listItem.value));
       }}
     >
       <Text cursor="pointer" paddingY="12px" fontWeight="normal" noOfLines={1} maxWidth={48}>
-        {listItem}
+        {listItem.label}
       </Text>
       <Checkbox colorScheme="green" isChecked={isChecked} />
     </Box>

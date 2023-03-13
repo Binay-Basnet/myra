@@ -4,11 +4,12 @@ import { Column } from './Table';
 
 export type Maybe<T> = T | null;
 
-export type IUseTableProps<T extends Record<string, unknown>> = Omit<
-  TableOptions<T>,
+export type IUseTableProps<TData> = Omit<
+  TableOptions<TData>,
   'data' | 'columns' | 'getCoreRowModel'
 > & {
-  data: Maybe<T>[];
-  columns: Column<Maybe<T>>[];
+  data: TData[];
+  columns: Column<TData>[];
+
   isStatic: boolean;
 };

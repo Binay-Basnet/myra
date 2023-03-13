@@ -1,4 +1,4 @@
-query getShareBalanceList($pagination: Pagination, $filter: ShareBalanceFilter) {
+query getShareBalanceList($pagination: Pagination, $filter: Filter) {
   share {
     balance(pagination: $pagination, filter: $filter) {
       totalCount
@@ -25,7 +25,7 @@ query getShareBalanceList($pagination: Pagination, $filter: ShareBalanceFilter) 
   }
 }
 
-query getShareRegisterList($pagination: Pagination, $filter: ShareRegisterFilter) {
+query getShareRegisterList($pagination: Pagination, $filter: Filter) {
   share {
     register(pagination: $pagination, filter: $filter) {
       edges {
@@ -163,6 +163,22 @@ query getShareDetail($transactionID: ID!) {
         totalDebit
         note
       }
+    }
+  }
+}
+
+query getShareFilterMapping {
+  share {
+    filterMapping {
+      status {
+        label
+        value
+      }
+      transactionDirection {
+        label
+        value
+      }
+      
     }
   }
 }

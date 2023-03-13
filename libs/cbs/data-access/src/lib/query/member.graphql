@@ -45,7 +45,6 @@ query getMemberList($pagination: Pagination!, $filter: Filter) {
             }
           }
         }
-        cursor
       }
       pageInfo {
         ...Pagination
@@ -434,7 +433,10 @@ query getOfficialUse($id: ID!) {
 query getMemberFilterMapping {
   members {
     filterMapping {
-      serviceCenter
+      serviceCenter {
+        label
+        value
+      }
       objState
     }
   }

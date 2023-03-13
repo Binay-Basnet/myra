@@ -5,11 +5,12 @@ import { Filter } from '@coop/cbs/data-access';
 
 const URLComparatorMap = {
   '=': 'EqualTo',
-  '<': 'GreaterThan',
-  '>': 'LessThan',
+  '<': 'LessThan',
+  '>': 'GreaterThan',
+  '< >': 'BETWEEN',
 } as const;
 
-type URLFilterComparator = '=' | '<' | '>';
+type URLFilterComparator = '=' | '<' | '>' | '< >';
 type URLFilterValue = string | string[] | { from: string; to: string };
 
 export type URLFilter = Record<
@@ -20,25 +21,37 @@ export type URLFilter = Record<
   }
 >;
 
-const mapFilterQuery = (filters: URLFilter) => {
-  const tempFilters = Object.keys(filters)
-    .map((column) => ({
-      column,
-      value: Array.isArray(filters[column].value)
-        ? (filters[column].value as string[])
-        : ([filters[column].value] as string[]),
+function combinations<T>(...arrays: T[][]): T[][] {
+  return arrays.reduce(
+    (acc, arr) => acc.flatMap((combination) => arr.map((element) => combination.concat(element))),
+    [[]] as T[][]
+  );
+}
 
-      comparator: URLComparatorMap[filters[column].compare],
-    }))
-    .sort((a, b) => b.value.length - a.value.length);
+const mapFilterQuery = (filters: URLFilter) => {
+  const tempFilters = Object.keys(filters).map((column) => {
+    const value = Array.isArray(filters[column].value)
+      ? (filters[column].value as string[])
+      : ([filters[column].value] as string[]);
+
+    const comparator = URLComparatorMap[filters[column].compare];
+
+    return value.map((v) => ({
+      value: v,
+      column,
+      comparator,
+    }));
+  });
 
   if (tempFilters.length === 0) {
     return {};
   }
 
+  const combinationsArray = combinations(...tempFilters);
+
   return {
-    orConditions: tempFilters[0].value.map((_, i) => ({
-      andConditions: tempFilters.map((t) => ({ ...t, value: t.value[i] || t.value[0] })),
+    orConditions: combinationsArray.map((arr) => ({
+      andConditions: arr,
     })),
   };
 };
@@ -52,6 +65,7 @@ export const getFilterQuery = (defaultFilter?: URLFilter): Filter => {
     ...(qs.parse(filter as string, {
       allowDots: true,
       parseArrays: true,
+      comma: true,
     }) as URLFilter),
   });
 
