@@ -501,10 +501,16 @@ query getLoanPreview($id: String!) {
             principal
             remainingPrincipal
             currentRemainingPrincipal
-            paid
             paidDate
             remainingInterest
+            status
+            overDueDays
+            penalty
+            isPartial
+            overdueAmount
+            fullPrincipal
           }
+          totalRemainingPayable
         }
         statistics {
           remainingPayableAmount
@@ -662,8 +668,9 @@ query getLoanAccountDetails(
             payment
             remainingPrincipal
             remainingInterest
-            paid
             currentRemainingPrincipal
+            status
+            overDueDays
           }
           total
           totalInterest

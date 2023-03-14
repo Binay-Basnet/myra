@@ -76228,9 +76228,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "OBJECT",
-              "name": "Member",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Member",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -85309,6 +85313,18 @@
             "deprecationReason": null
           },
           {
+            "name": "fullPrincipal",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "installmentDate",
             "description": null,
             "args": [],
@@ -85357,17 +85373,37 @@
             "deprecationReason": null
           },
           {
-            "name": "paid",
+            "name": "isPartial",
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "overDueDays",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "overdueAmount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -85400,6 +85436,18 @@
                 "name": "String",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penalty",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -85451,6 +85499,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "status",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "LoanInstallmentStatus",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -85491,6 +85551,41 @@
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "LoanInstallmentStatus",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "CURRENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OVERDUE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PAID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PARTIAL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -85544,6 +85639,18 @@
           },
           {
             "name": "totalPrincipal",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalRemainingPayable",
             "description": null,
             "args": [],
             "type": {
@@ -137156,18 +137263,14 @@
         "name": "asBase",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "OBJECT"
-        ],
+        "locations": ["OBJECT"],
         "args": []
       },
       {
         "name": "checkPermission",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION"],
         "args": [
           {
             "name": "permission",
@@ -137215,10 +137318,7 @@
         "name": "date",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "after",
@@ -137287,10 +137387,7 @@
         "name": "email",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "required",
@@ -137322,9 +137419,7 @@
         "name": "faker",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION"],
         "args": [
           {
             "name": "tag",
@@ -137344,10 +137439,7 @@
         "name": "goField",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "forceResolver",
@@ -137379,11 +137471,7 @@
         "name": "include",
         "description": "The @include directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional inclusion during execution as described by the if argument.",
         "isRepeatable": false,
-        "locations": [
-          "FIELD",
-          "FRAGMENT_SPREAD",
-          "INLINE_FRAGMENT"
-        ],
+        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
         "args": [
           {
             "name": "if",
@@ -137407,10 +137495,7 @@
         "name": "localized",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "format",
@@ -137478,10 +137563,7 @@
         "name": "nestedField",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "section_name",
@@ -137513,10 +137595,7 @@
         "name": "number",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "max",
@@ -137572,11 +137651,7 @@
         "name": "skip",
         "description": "The @skip directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional exclusion during execution as described by the if argument.",
         "isRepeatable": false,
-        "locations": [
-          "FIELD",
-          "FRAGMENT_SPREAD",
-          "INLINE_FRAGMENT"
-        ],
+        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
         "args": [
           {
             "name": "if",
@@ -137600,9 +137675,7 @@
         "name": "specifiedBy",
         "description": "The @specifiedBy built-in directive is used within the type system definition language to provide a scalar specification URL for specifying the behavior of custom scalar types.",
         "isRepeatable": false,
-        "locations": [
-          "SCALAR"
-        ],
+        "locations": ["SCALAR"],
         "args": [
           {
             "name": "url",
@@ -137626,10 +137699,7 @@
         "name": "text",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "format",
@@ -137697,9 +137767,7 @@
         "name": "translate",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "lang",
@@ -137723,10 +137791,7 @@
         "name": "validate",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "INPUT_OBJECT",
-          "OBJECT"
-        ],
+        "locations": ["INPUT_OBJECT", "OBJECT"],
         "args": []
       }
     ]
