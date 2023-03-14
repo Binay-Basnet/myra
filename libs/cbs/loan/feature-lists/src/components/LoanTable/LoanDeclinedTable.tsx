@@ -25,10 +25,12 @@ export const LoanDeclinedTable = ({ data, isLoading, type, viewLink }: ILoanDecl
   const columns = useMemo<Column<LoanAccountEdge>[]>(
     () => [
       {
-        id: 'loan Account Creation Date id',
+        id: 'appliedDate',
         header: () => 'Loan Applied Date',
         accessorFn: (row) => row?.node?.appliedDate,
         cell: (props) => localizedDate(props?.row?.original?.node?.appliedDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Loan ID',
@@ -39,8 +41,10 @@ export const LoanDeclinedTable = ({ data, isLoading, type, viewLink }: ILoanDecl
         accessorFn: (row) => row?.node?.LoanAccountName,
       },
       {
+        id: 'productName',
         header: 'Product Name',
         accessorFn: (row) => row?.node?.product.productName,
+        enableColumnFilter: true,
       },
       {
         header: 'Member',

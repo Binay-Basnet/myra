@@ -30,10 +30,12 @@ export const LoanClosedAccountTable = ({
   const columns = useMemo<Column<LoanAccountEdge>[]>(
     () => [
       {
-        id: 'loan Account Creation Date id',
+        id: 'closedDate',
         header: () => 'Loan Close Date',
         accessorFn: (row) => row?.node?.closedDate,
         cell: (props) => localizedDate(props.row?.original?.node?.closedDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Member Code',
@@ -48,8 +50,10 @@ export const LoanClosedAccountTable = ({
         accessorFn: (row) => row?.node?.LoanAccountName,
       },
       {
+        id: 'productName',
         header: 'Product Name',
         accessorFn: (row) => row?.node?.product.productName,
+        enableColumnFilter: true,
       },
       {
         header: 'Member',

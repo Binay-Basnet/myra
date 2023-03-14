@@ -558,3 +558,74 @@ query getSTRTransactionDetail($transactionId: ID!) {
     }
   }
 }
+
+fragment OptionType on LabelValueArray {
+  label
+  value
+}
+
+query getDepositFilterMapping {
+  transaction {
+    filterMapping {
+      deposit {
+        depositedBy {
+          ...OptionType
+        }
+        paymentMode {
+          ...OptionType
+        }
+      }
+    }
+  }
+}
+
+query getWithdrawFilterMapping {
+  transaction {
+    filterMapping {
+      withdraw {
+        paymentMode {
+          ...OptionType
+        }
+      }
+    }
+  }
+}
+
+query getAccountTransferFilterMapping {
+  transaction {
+    filterMapping {
+      transfer {
+        type {
+          ...OptionType
+        }
+      }
+    }
+  }
+}
+
+query getAgentFilterMapping {
+  transaction {
+    filterMapping {
+      agent {
+        branchId {
+          ...OptionType
+        }
+      }
+    }
+  }
+}
+
+query getAllTransactionFilterMapping {
+  transaction {
+    filterMapping {
+      allTransaction {
+        branchId {
+          ...OptionType
+        }
+        txnType {
+          ...OptionType
+        }
+      }
+    }
+  }
+}

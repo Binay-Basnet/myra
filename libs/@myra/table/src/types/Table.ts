@@ -21,7 +21,12 @@ declare module '@tanstack/table-core' {
       display?: 'none';
     };
     filterMaps?: {
-      list?: { label?: string | null | undefined; value?: unknown }[];
+      list?:
+        | ({
+            label?: string | null | undefined;
+            value?: unknown;
+          } | null)[]
+        | undefined;
     };
   }
 

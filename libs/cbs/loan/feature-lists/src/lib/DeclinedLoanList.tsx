@@ -1,23 +1,17 @@
-import { useRouter } from 'next/router';
-
 import { PageHeader } from '@myra-ui';
 
 import { LoanObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { featureCode, getPaginationQuery } from '@coop/shared/utils';
+import { featureCode, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 import { LoanDeclinedTable } from '../components/LoanTable';
 
 export const DeclinedLoanList = () => {
-  const router = useRouter();
-
   const { data, isFetching } = useGetLoanListQuery({
     paginate: getPaginationQuery(),
-
-    filter: {
-      objectState: LoanObjState.Cancelled,
-    },
+    filter: getFilterQuery({ objState: { value: LoanObjState.Cancelled, compare: '=' } }),
   });
+  
   return (
     <>
       <PageHeader heading={`Declined Loan - ${featureCode.declinedLoanList}`} />

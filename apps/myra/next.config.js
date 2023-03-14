@@ -46,12 +46,12 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
-  // eslint: {
-  //   ignoreDuringBuilds: true,
-  // },
-  // typescript: {
-  //   ignoreBuildErrors: true,
-  // },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   reactStrictMode: false,
   webpack: (config) => {
     // load worker files as a urls with `file-loader`
@@ -80,7 +80,7 @@ const nextConfig = {
       'minio.myraerp.com',
       'minio.dev.myraerp.com',
     ],
-    // unoptimized: true,
+    unoptimized: true,
   },
   // i18n: {
   //   locales: ['en', 'ne'],

@@ -4,33 +4,16 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Filter_Mode, useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
+import { useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
+  getFilterQuery,
   getPaginationQuery,
   useTranslation,
 } from '@coop/shared/utils';
-
-// const tabList = [
-//   {
-//     title: 'memberNavActive',
-//     key: 'APPROVED',
-//   },
-//   {
-//     title: 'memberNavInactive',
-//     key: 'VALIDATED',
-//   },
-//   {
-//     title: 'memberNavDraft',
-//     key: 'DRAFT',
-//   },
-// ];
-
-/* eslint-disable-next-line */
-export interface WithdrawListProps {}
 
 export const WithdrawList = () => {
   const { t } = useTranslation();
@@ -40,13 +23,7 @@ export const WithdrawList = () => {
   const { data, isFetching } = useGetWithdrawListDataQuery(
     {
       pagination: getPaginationQuery(),
-      filter: {
-        id: searchTerm,
-        memberId: searchTerm,
-        memberName: searchTerm,
-        transactionId: searchTerm,
-        filterMode: Filter_Mode.Or,
-      },
+      filter: getFilterQuery(),
     },
     {
       enabled: searchTerm !== 'undefined',
@@ -58,8 +35,12 @@ export const WithdrawList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'date',
         header: t['withdrawListWithdrawnDate'],
+        accessorKey: 'node.date.local',
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.date)}</Text>,
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: t['withdrawListTransactionId'],
@@ -91,8 +72,10 @@ export const WithdrawList = () => {
         },
       },
       {
+        id: 'paymentMode',
         header: t['withdrawListPaymentMode'],
         accessorFn: (row) => row?.node?.paymentMode,
+        enableColumnFilter: true,
         meta: {
           width: '25%',
         },
@@ -105,10 +88,15 @@ export const WithdrawList = () => {
         },
       },
       {
+        id: 'amount',
         header: t['withdrawListAmount'],
+        filterFn: 'amount',
+
         meta: {
           isNumeric: true,
         },
+        enableColumnFilter: true,
+
         accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
       },
 

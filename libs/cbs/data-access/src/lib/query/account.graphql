@@ -684,3 +684,15 @@ query listAssociatedGuaranteeAccounts($accountId: ID!) {
     }
   }
 }
+
+query getSavingFilterMapping {
+  account {
+    filterMapping {
+      
+      productID {
+        label
+        value
+      }
+    }
+  }
+}

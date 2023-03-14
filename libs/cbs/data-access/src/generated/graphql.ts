@@ -56,6 +56,11 @@ export const Action = {
 } as const;
 
 export type Action = typeof Action[keyof typeof Action];
+export type AllTransactionFilterMapping = {
+  branchId: Array<LabelValueArray>;
+  txnType: Array<LabelValueArray>;
+};
+
 export type AbbsTransaction = {
   abbsStatus?: Maybe<Scalars['Boolean']>;
   payableAccountId?: Maybe<Scalars['String']>;
@@ -257,11 +262,10 @@ export const AccountObjState = {
 export type AccountObjState = typeof AccountObjState[keyof typeof AccountObjState];
 export const AccountOpenDepositVerify = {
   OtherDocument: 'OTHER_DOCUMENT',
-  WithdrawSlip: 'WITHDRAW_SLIP',
+  WithdrawSlip: 'WITHDRAW_SLIP'
 } as const;
 
-export type AccountOpenDepositVerify =
-  typeof AccountOpenDepositVerify[keyof typeof AccountOpenDepositVerify];
+export type AccountOpenDepositVerify = typeof AccountOpenDepositVerify[keyof typeof AccountOpenDepositVerify];
 export type AccountOpeningReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
@@ -793,6 +797,10 @@ export type AgentDetails = {
   name?: Maybe<Scalars['String']>;
   profilePicUrl?: Maybe<Scalars['String']>;
   totalMembers?: Maybe<Scalars['Int']>;
+};
+
+export type AgentFilterMapping = {
+  branchId: Array<LabelValueArray>;
 };
 
 export type AgentRecord = {
@@ -2694,6 +2702,7 @@ export type CombinedAccountDetail = {
 
 export const ComparatorType = {
   Between: 'BETWEEN',
+  Contains: 'CONTAINS',
   EqualTo: 'EqualTo',
   GreaterThan: 'GreaterThan',
   In: 'IN',
@@ -3778,6 +3787,11 @@ export type DepositCash = {
   total: Scalars['String'];
 };
 
+export type DepositFilterMapping = {
+  depositedBy?: Maybe<Array<LabelValueArray>>;
+  paymentMode: Array<LabelValueArray>;
+};
+
 export const DepositFrequency = {
   Daily: 'DAILY',
   HalfYearly: 'HALF_YEARLY',
@@ -3894,6 +3908,14 @@ export type DepositLoanAccountEdge = {
   node?: Maybe<DepositAccount>;
 };
 
+export type DepositLoanAccountFilterMapping = {
+  id?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  objState: Array<ObjState>;
+  productID: Array<Maybe<LabelValueArray>>;
+};
+
 export type DepositLoanAccountFormStateResult = {
   data?: Maybe<DepositLoanAccount>;
   error?: Maybe<QueryError>;
@@ -3967,6 +3989,7 @@ export type DepositLoanAccountMutationMakeActiveArgs = {
 
 export type DepositLoanAccountQuery = {
   accountDetails?: Maybe<AccountDetailsQueryResult>;
+  filterMapping?: Maybe<DepositLoanAccountFilterMapping>;
   formState?: Maybe<DepositLoanAccountFormStateResult>;
   get?: Maybe<DepositLoanAccount>;
   getBulkInstallments?: Maybe<Array<Maybe<BulkInstallmentResult>>>;
@@ -4820,7 +4843,7 @@ export const EodState = {
   Completed: 'COMPLETED',
   CompletedWithErrors: 'COMPLETED_WITH_ERRORS',
   NotStarted: 'NOT_STARTED',
-  Ongoing: 'ONGOING',
+  Ongoing: 'ONGOING'
 } as const;
 
 export type EodState = typeof EodState[keyof typeof EodState];
@@ -15336,6 +15359,14 @@ export type TransactionDetail = {
   transactionCode?: Maybe<Scalars['String']>;
 };
 
+export type TransactionFilterMapping = {
+  agent?: Maybe<AgentFilterMapping>;
+  allTransaction?: Maybe<AllTransactionFilterMapping>;
+  deposit?: Maybe<DepositFilterMapping>;
+  transfer?: Maybe<TransferFilterMapping>;
+  withdraw?: Maybe<WithdrawFilterMapping>;
+};
+
 export type TransactionInfo = {
   amount: Scalars['String'];
   branchId: Scalars['String'];
@@ -15471,6 +15502,7 @@ export type TransactionQuery = {
   cashInTransitDetail?: Maybe<CashInTransitViewResult>;
   endOfDayDate: EodDate;
   eodStatus?: Maybe<EodSatusResult>;
+  filterMapping?: Maybe<TransactionFilterMapping>;
   listAgent: AccountAgentListConnection;
   listAgentTask?: Maybe<AgentTodayListData>;
   listAllTransactions?: Maybe<AllTransactionsConnection>;
@@ -15656,6 +15688,10 @@ export type TransferData = {
 export type TransferDetailViewResult = {
   data?: Maybe<TellerTransferView>;
   error?: Maybe<QueryError>;
+};
+
+export type TransferFilterMapping = {
+  type: Array<LabelValueArray>;
 };
 
 export type TransferInput = {
@@ -16127,6 +16163,10 @@ export const WithdrawBy = {
 } as const;
 
 export type WithdrawBy = typeof WithdrawBy[keyof typeof WithdrawBy];
+export type WithdrawFilterMapping = {
+  paymentMode: Array<LabelValueArray>;
+};
+
 export type WithdrawInput = {
   accountId: Scalars['String'];
   agentId?: InputMaybe<Scalars['String']>;
@@ -17590,6 +17630,11 @@ export type ListAssociatedGuaranteeAccountsQueryVariables = Exact<{
 
 
 export type ListAssociatedGuaranteeAccountsQuery = { account: { listAssociatedGuaranteeAccounts?: { total?: string | null, data?: Array<{ memberName?: string | null, memberId?: string | null, accountName?: string | null, loanAccountId?: string | null, amount?: string | null } | null> | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
+
+export type GetSavingFilterMappingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSavingFilterMappingQuery = { account: { filterMapping?: { productID: Array<{ label?: string | null, value?: unknown | null } | null> } | null } };
 
 export type GetBankAccountListQueryVariables = Exact<{
   filter?: InputMaybe<BankAccountFilter>;
@@ -19066,6 +19111,43 @@ export type GetDepositSettingsTdsQueryVariables = Exact<{ [key: string]: never; 
 
 export type GetDepositSettingsTdsQuery = { settings: { general?: { deposit?: { tdsFormState?: { data?: { individual?: number | null, institution?: number | null, cooperative?: number | null, coopUnion?: number | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | null } | null } | null } | null } };
 
+export type GetDepositProductSettingsListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<DepositProductSearchFilter>;
+}>;
+
+
+export type GetDepositProductSettingsListQuery = { settings: { general?: { depositProduct?: { list?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { id: string, objState: ObjState, productCode: string, productName: string, nature: NatureOfDepositProduct, interest?: number | null, createdDate?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, createdAt: Record<"local"|"en"|"np",string>, modifiedAt: string, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType } } }> } | null } | null } | null } };
+
+export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, description?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, transactionAllowed?: DepositFrequency | null, noOftransactionAllowed?: number | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, isForMinors?: boolean | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, isTenureApplicable?: boolean | null, tenureUnit?: FrequencyTenure | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: DefaultAccountType | null, isMandatorySaving?: boolean | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, isPrematurePenaltyApplicable?: boolean | null, productCode: { prefix: string, initialNo: string, noOfDigits?: number | null }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, fixedDepositAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type: string, amount: any, rate: number } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, chequeCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: DormantDuration | null, condition?: DormantCondition | null } | null> | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+
+export type GetSavingsProductDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetSavingsProductDetailQuery = { settings: { general?: { depositProduct?: { depositProductDetail?: { data?: { id?: string | null, noOfAccounts?: number | null, noOfMembers?: number | null, objState?: ObjState | null, supportMultiple?: boolean | null, productName?: string | null, nature?: NatureOfDepositProduct | null, description?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, transactionAllowed?: DepositFrequency | null, noOftransactionAllowed?: number | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, isForMinors?: boolean | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, isTenureApplicable?: boolean | null, tenureUnit?: FrequencyTenure | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: DefaultAccountType | null, isMandatorySaving?: boolean | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, isPrematurePenaltyApplicable?: boolean | null, productCode: { prefix: string, initialNo: string, noOfDigits?: number | null }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, fixedDepositAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type: string, amount: any, rate: number } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, chequeCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: DormantDuration | null, condition?: DormantCondition | null } | null> | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, savingCharges?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null } | null } | null } | null } | null } };
+
+export type GetSavingsProductCriteriaQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+
+export type GetSavingsProductCriteriaQuery = { settings: { general?: { depositProduct?: { getProductCriteria?: { data?: { gender?: Array<string | null> | null, minAge?: number | null, maxAge?: number | null, ethnicity?: Array<string | null> | null, educationQualification?: Array<string | null> | null, maritalStatus?: Array<string | null> | null, foreignEmployment?: boolean | null, occupation?: Array<string | null> | null, institutionType?: Array<string | null> | null, cooperativeUnion?: Array<string | null> | null, cooperativeType?: Array<string | null> | null } | null } | null } | null } | null } };
+
+export type GetSavingsAccountListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+
+export type GetSavingsAccountListQuery = { settings: { general?: { depositProduct?: { getAccountlist?: { totalCount: number, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ node?: { id: string, objState: ObjState, closedAt?: string | null, accountName?: string | null, balance?: string | null, interestAccured?: string | null, interestTax?: string | null, prematurePenalty?: string | null, lastTransactionDate?: Record<"local"|"en"|"np",string> | null, accountOpenedDate?: Record<"local"|"en"|"np",string> | null, installmentAmount?: string | null, accountExpiryDate?: Record<"local"|"en"|"np",string> | null, overDrawnBalance?: string | null, guaranteedAmount?: string | null, member?: { code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null } | null, product: { productCode: string, productName: string, nature: NatureOfDepositProduct }, dues?: { fine?: string | null, totalDue?: string | null, dueInstallments?: number | null } | null } | null }> | null } | null } | null } | null } };
+
 export type GetSettingsOptionsFieldsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
   category: FormCategory;
@@ -19138,48 +19220,8 @@ export type GetSettingsUserDetailsDataQueryVariables = Exact<{
   userID: Scalars['ID'];
 }>;
 
-export type GetSettingsUserDetailsDataQuery = {
-  settings: {
-    myraUser?: {
-      userDetail?: {
-        basicInfo?: {
-          name: Record<'local' | 'en' | 'np', string>;
-          profilePicUrl?: string | null;
-          userId: string;
-        } | null;
-        userOverview?: {
-          rolesCount?: number | null;
-          serviceCenterCount?: number | null;
-          lastActiveDate?: Record<'local' | 'en' | 'np', string> | null;
-          name?: Record<'local' | 'en' | 'np', string> | null;
-          isCoreEmployee?: boolean | null;
-          empCode?: string | null;
-          gender?: UserGender | null;
-          contactNo?: string | null;
-          email?: string | null;
-          dateJoined?: Record<'local' | 'en' | 'np', string> | null;
-          role?: Array<{ id: string; name: string } | null> | null;
-          branches?: Array<{ branchCode?: string | null; id: string; name: string } | null> | null;
-        } | null;
-        userBio?: {
-          isTemporarySameAsPermanent?: boolean | null;
-          landlordName?: string | null;
-          landlordContact?: string | null;
-          permanentAddress?: AddressFragment | null;
-          temporaryAddress?: AddressFragment | null;
-          identificationDetail?: Array<{
-            id?: string | null;
-            idNo?: string | null;
-            idType?: string | null;
-            place?: string | null;
-            date?: Record<'local' | 'en' | 'np', string> | null;
-          } | null> | null;
-          documents?: Array<{ identifier?: string | null; url?: string | null } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetSettingsUserDetailsDataQuery = { settings: { myraUser?: { userDetail?: { basicInfo?: { name: Record<"local"|"en"|"np",string>, profilePicUrl?: string | null, userId: string } | null, userOverview?: { rolesCount?: number | null, serviceCenterCount?: number | null, lastActiveDate?: Record<"local"|"en"|"np",string> | null, name?: Record<"local"|"en"|"np",string> | null, isCoreEmployee?: boolean | null, empCode?: string | null, gender?: UserGender | null, contactNo?: string | null, email?: string | null, dateJoined?: Record<"local"|"en"|"np",string> | null, role?: Array<{ id: string, name: string } | null> | null, branches?: Array<{ branchCode?: string | null, id: string, name: string } | null> | null } | null, userBio?: { isTemporarySameAsPermanent?: boolean | null, landlordName?: string | null, landlordContact?: string | null, permanentAddress?: AddressFragment | null, temporaryAddress?: AddressFragment | null, identificationDetail?: Array<{ id?: string | null, idNo?: string | null, idType?: string | null, place?: string | null, date?: Record<"local"|"en"|"np",string> | null } | null> | null, documents?: Array<{ identifier?: string | null, url?: string | null } | null> | null } | null } | null } | null } };
 
 export type GetValuatorQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -19235,55 +19277,13 @@ export type GetShareDetailQueryVariables = Exact<{
   transactionID: Scalars['ID'];
 }>;
 
-export type GetShareDetailQuery = {
-  share: {
-    shareDetail?: {
-      data?: {
-        id: string;
-        totalShareCount?: number | null;
-        totalShareAmount?: string | null;
-        date?: Record<'local' | 'en' | 'np', string> | null;
-        type?: string | null;
-        noOfShare?: number | null;
-        amount?: string | null;
-        total?: string | null;
-        status?: string | null;
-        transactionCode?: string | null;
-        paymentFile?: string | null;
-        transactionBranch?: string | null;
-        teller?: string | null;
-        totalCredit?: string | null;
-        totalDebit?: string | null;
-        note?: string | null;
-        member?: {
-          id: string;
-          name?: Record<'local' | 'en' | 'np', string> | null;
-          code: string;
-          type: KymMemberTypesEnum;
-          profilePicUrl?: string | null;
-        } | null;
-        fromTo?: { start?: number | null; end?: number | null } | null;
-        charges?: Array<{ name?: string | null; value?: string | null } | null> | null;
-        paymentDetail?: {
-          paymentMode?: SharePaymentMode | null;
-          amount?: string | null;
-          sourceOfFund?: string | null;
-          depositedDate?: Record<'local' | 'en' | 'np', string> | null;
-        } | null;
-        glTransactions?: Array<{
-          ledgerId?: string | null;
-          account: string;
-          serviceCentreId?: string | null;
-          serviceCenter?: string | null;
-          debit?: string | null;
-          credit?: string | null;
-          balance?: string | null;
-          balanceType?: BalanceType | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type GetShareDetailQuery = { share: { shareDetail?: { data?: { id: string, totalShareCount?: number | null, totalShareAmount?: string | null, date?: Record<"local"|"en"|"np",string> | null, type?: string | null, noOfShare?: number | null, amount?: string | null, total?: string | null, status?: string | null, transactionCode?: string | null, paymentFile?: string | null, transactionBranch?: string | null, teller?: string | null, totalCredit?: string | null, totalDebit?: string | null, note?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, profilePicUrl?: string | null } | null, fromTo?: { start?: number | null, end?: number | null } | null, charges?: Array<{ name?: string | null, value?: string | null } | null> | null, paymentDetail?: { paymentMode?: SharePaymentMode | null, amount?: string | null, sourceOfFund?: string | null, depositedDate?: Record<"local"|"en"|"np",string> | null } | null, glTransactions?: Array<{ ledgerId?: string | null, account: string, serviceCentreId?: string | null, serviceCenter?: string | null, debit?: string | null, credit?: string | null, balance?: string | null, balanceType?: BalanceType | null } | null> | null } | null } | null } };
+
+export type GetShareFilterMappingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetShareFilterMappingQuery = { share: { filterMapping?: { status?: Array<{ label?: string | null, value?: unknown | null }> | null, transactionDirection?: Array<{ label?: string | null, value?: unknown | null }> | null } | null } };
 
 export type GetDepositListDataQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
@@ -19309,16 +19309,10 @@ export type GetAccountTransferListDataQueryVariables = Exact<{
 
 export type GetAccountTransferListDataQuery = { transaction: { listTransfer: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, transactionCode?: string | null, amount?: string | null, state: TransactionState, transferType: TransferType, date?: Record<"local"|"en"|"np",string> | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
 
-export type GetEndOfDayDateDataQuery = {
-  transaction: {
-    endOfDayDate: {
-      value: Record<'local' | 'en' | 'np', string>;
-      hasErrors: boolean;
-      isInitialized: boolean;
-      headOfficeReady?: boolean | null;
-    };
-  };
-};
+export type GetEndOfDayDateDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetEndOfDayDateDataQuery = { transaction: { endOfDayDate: { value: Record<"local"|"en"|"np",string>, hasErrors: boolean, isInitialized: boolean, headOfficeReady?: boolean | null } } };
 
 export type GetTellerTransactionListDataQueryVariables = Exact<{
   filter?: InputMaybe<TellerTransactionFilter>;
@@ -19332,104 +19326,15 @@ export type TransactionDepositDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
 }>;
 
-export type TransactionDepositDetailQuery = {
-  transaction: {
-    viewDeposit?: {
-      data?: {
-        id: string;
-        transactionCode?: string | null;
-        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
-        accountId?: string | null;
-        accountName?: string | null;
-        voucherId?: string | null;
-        amount?: string | null;
-        fine?: string | null;
-        rebate?: string | null;
-        totalDepositedAmount?: string | null;
-        status?: ObjState | null;
-        paymentMode?: DepositPaymentType | null;
-        sourceOfFund?: string | null;
-        depositedBy?: DepositedBy | null;
-        depositedDate?: Record<'local' | 'en' | 'np', string> | null;
-        paymentFile?: Array<string | null> | null;
-        transactionBranch?: string | null;
-        teller?: string | null;
-        totalDebit?: string | null;
-        totalCredit?: string | null;
-        note?: string | null;
-        member?: {
-          id: string;
-          code: string;
-          objState: ObjState;
-          type: KymMemberTypesEnum;
-          name?: Record<'local' | 'en' | 'np', string> | null;
-          contact?: string | null;
-          profilePic?: string | null;
-          profilePicUrl?: string | null;
-        } | null;
-        glTransaction?: Array<{
-          account: string;
-          debit?: string | null;
-          credit?: string | null;
-          serviceCenter?: string | null;
-          ledgerId?: string | null;
-          balance?: string | null;
-          balanceType?: BalanceType | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type TransactionDepositDetailQuery = { transaction: { viewDeposit?: { data?: { id: string, transactionCode?: string | null, transactionDate?: Record<"local"|"en"|"np",string> | null, accountId?: string | null, accountName?: string | null, voucherId?: string | null, amount?: string | null, fine?: string | null, rebate?: string | null, totalDepositedAmount?: string | null, status?: ObjState | null, paymentMode?: DepositPaymentType | null, sourceOfFund?: string | null, depositedBy?: DepositedBy | null, depositedDate?: Record<"local"|"en"|"np",string> | null, paymentFile?: Array<string | null> | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, note?: string | null, member?: { id: string, code: string, objState: ObjState, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null, ledgerId?: string | null, balance?: string | null, balanceType?: BalanceType | null } | null> | null } | null } | null } };
 
 export type TransactionWithdrawDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
 }>;
 
-export type TransactionWithdrawDetailQuery = {
-  transaction: {
-    viewWithdraw?: {
-      data?: {
-        id: string;
-        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
-        transactionCode?: string | null;
-        accountId?: string | null;
-        accountName?: string | null;
-        chequeNo?: string | null;
-        withdrawAmount?: string | null;
-        withdrawWith?: WithdrawWith | null;
-        fine?: string | null;
-        totalWithdrawnAmount?: string | null;
-        status?: ObjState | null;
-        paymentMode?: WithdrawPaymentType | null;
-        paymentFile?: Array<string | null> | null;
-        withdrawnBy?: WithdrawBy | null;
-        marketRepId?: string | null;
-        marketRepName?: string | null;
-        transactionBranch?: string | null;
-        teller?: string | null;
-        totalDebit?: string | null;
-        totalCredit?: string | null;
-        note?: string | null;
-        member?: {
-          id: string;
-          code: string;
-          name?: Record<'local' | 'en' | 'np', string> | null;
-          profilePic?: string | null;
-          profilePicUrl?: string | null;
-        } | null;
-        glTransaction?: Array<{
-          account: string;
-          debit?: string | null;
-          credit?: string | null;
-          serviceCenter?: string | null;
-          ledgerId?: string | null;
-          balance?: string | null;
-          balanceType?: BalanceType | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  };
-};
+
+export type TransactionWithdrawDetailQuery = { transaction: { viewWithdraw?: { data?: { id: string, transactionDate?: Record<"local"|"en"|"np",string> | null, transactionCode?: string | null, accountId?: string | null, accountName?: string | null, chequeNo?: string | null, withdrawAmount?: string | null, withdrawWith?: WithdrawWith | null, fine?: string | null, totalWithdrawnAmount?: string | null, status?: ObjState | null, paymentMode?: WithdrawPaymentType | null, paymentFile?: Array<string | null> | null, withdrawnBy?: WithdrawBy | null, marketRepId?: string | null, marketRepName?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, note?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null, ledgerId?: string | null, balance?: string | null, balanceType?: BalanceType | null } | null> | null } | null } | null } };
 
 export type TransactionAccountTransferDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
@@ -19457,90 +19362,13 @@ export type LoanRepaymentDetailQueryVariables = Exact<{
   paymentId: Scalars['ID'];
 }>;
 
-export type LoanRepaymentDetailQuery = {
-  transaction: {
-    viewLoanRepayment?: {
-      data?: {
-        repaymentId: string;
-        transactionCode?: string | null;
-        loanSubType?: string | null;
-        loanAccountId?: string | null;
-        loanAccountName?: string | null;
-        repaymentDate?: Record<'local' | 'en' | 'np', string> | null;
-        installmentNo?: string | null;
-        installmentAmount?: string | null;
-        fine?: string | null;
-        rebate?: string | null;
-        totalRepaymentAmount?: string | null;
-        objState: string;
-        paymentMode?: string | null;
-        depositedBy?: string | null;
-        depositedDate?: Record<'local' | 'en' | 'np', string> | null;
-        transactionBranch?: string | null;
-        teller?: string | null;
-        totalDebit?: string | null;
-        totalCredit?: string | null;
-        note?: string | null;
-        member?: {
-          id: string;
-          code: string;
-          name?: Record<'local' | 'en' | 'np', string> | null;
-          profilePicUrl?: string | null;
-        } | null;
-        installmentDetails?: Array<{
-          installmentNo?: number | null;
-          payment?: string | null;
-          principalAmount?: string | null;
-          interestAmount?: string | null;
-        } | null> | null;
-        glTransaction?: Array<{
-          account: string;
-          debit?: string | null;
-          credit?: string | null;
-          serviceCenter?: string | null;
-          ledgerId?: string | null;
-          balance?: string | null;
-          balanceType?: BalanceType | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  };
-};
 
-export type LoanRepaymentDetailQuery = { transaction: { viewLoanRepayment?: { data?: { repaymentId: string, transactionCode?: string | null, loanSubType?: string | null, loanAccountId?: string | null, loanAccountName?: string | null, repaymentDate?: Record<"local"|"en"|"np",string> | null, installmentNo?: string | null, installmentAmount?: string | null, fine?: string | null, rebate?: string | null, totalRepaymentAmount?: string | null, objState: string, paymentMode?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, note?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, installmentDetails?: Array<{ installmentNo?: number | null, payment?: string | null, principalAmount?: string | null, interestAmount?: string | null } | null> | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null, ledgerId?: string | null, balance?: string | null, balanceType?: BalanceType | null } | null> | null } | null } | null } };
+export type LoanRepaymentDetailQuery = { transaction: { viewLoanRepayment?: { data?: { repaymentId: string, transactionCode?: string | null, loanSubType?: string | null, loanAccountId?: string | null, loanAccountName?: string | null, repaymentDate?: Record<"local"|"en"|"np",string> | null, installmentNo?: string | null, installmentAmount?: string | null, fine?: string | null, rebate?: string | null, totalRepaymentAmount?: string | null, objState: string, paymentMode?: string | null, depositedBy?: string | null, depositedDate?: Record<"local"|"en"|"np",string> | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, note?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, installmentDetails?: Array<{ installmentNo?: number | null, payment?: string | null, principalAmount?: string | null, interestAmount?: string | null } | null> | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null, ledgerId?: string | null, balance?: string | null, balanceType?: BalanceType | null } | null> | null } | null } | null } };
 
-export type GetEodStatusQuery = {
-  transaction: {
-    eodStatus?: {
-      stage?: EodStage | null;
-      overAllStatus?: EodState | null;
-      eodDate?: Record<'local' | 'en' | 'np', string> | null;
-      states?: {
-        currentBranchesReady?: EodState | null;
-        interestBooking?: EodState | null;
-        interestPosting?: EodState | null;
-        transactionDate?: EodState | null;
-        maturity?: EodState | null;
-        dormancy?: EodState | null;
-        cashInHand?: EodState | null;
-        cashInVault?: EodState | null;
-        loanInterestBooking?: EodState | null;
-        loanRepayment?: EodState | null;
-      } | null;
-      errors?: {
-        readiness?: Array<string | null> | null;
-        interestBooking?: Array<string | null> | null;
-        interestPosting?: Array<string | null> | null;
-        maturity?: Array<string | null> | null;
-        dormancy?: Array<string | null> | null;
-        cashInHand?: Array<string | null> | null;
-        cashInVault?: Array<string | null> | null;
-        loanInterestBooking?: Array<string | null> | null;
-        loanRepayment?: Array<string | null> | null;
-      } | null;
-    } | null;
-  };
-};
+export type GetEodStatusQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetEodStatusQuery = { transaction: { eodStatus?: { stage?: EodStage | null, overAllStatus?: EodState | null, eodDate?: Record<"local"|"en"|"np",string> | null, states?: { currentBranchesReady?: EodState | null, interestBooking?: EodState | null, interestPosting?: EodState | null, transactionDate?: EodState | null, maturity?: EodState | null, dormancy?: EodState | null, cashInHand?: EodState | null, cashInVault?: EodState | null, loanInterestBooking?: EodState | null, loanRepayment?: EodState | null } | null, errors?: { readiness?: Array<string | null> | null, interestBooking?: Array<string | null> | null, interestPosting?: Array<string | null> | null, maturity?: Array<string | null> | null, dormancy?: Array<string | null> | null, cashInHand?: Array<string | null> | null, cashInVault?: Array<string | null> | null, loanInterestBooking?: Array<string | null> | null, loanRepayment?: Array<string | null> | null } | null } | null } };
 
 export type GetAllTransactionsListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
@@ -19564,6 +19392,33 @@ export type GetStrTransactionDetailQueryVariables = Exact<{
 
 
 export type GetStrTransactionDetailQuery = { transaction: { strTransactionDetail?: { data?: { memberType?: KymMemberTypesEnum | null, strStatus?: boolean | null, strReason?: string | null, strTopology?: string | null, bio?: { memberName?: string | null, profilePic?: string | null, memberCode?: string | null, memberJoined?: Record<"local"|"en"|"np",string> | null, dob?: Record<"local"|"en"|"np",string> | null, gender?: Record<"local"|"en"|"np",string> | null, mobile?: string | null, email?: string | null, currentAddress?: Record<"local"|"en"|"np",string> | null, permanentAddress?: Record<"local"|"en"|"np",string> | null, maritalStatus?: Record<"local"|"en"|"np",string> | null, profession?: string | null, nationality?: string | null, familyMembers?: Array<{ relationship?: string | null, fullName?: string | null, dob?: Record<"local"|"en"|"np",string> | null } | null> | null, identificationDetail?: Array<{ id: string, idNo?: string | null, idType: string, place?: Record<"local"|"en"|"np",string> | null, date?: Record<"local"|"en"|"np",string> | null, additionalFields?: Array<{ id?: string | null, fieldId?: string | null, value?: Record<"local"|"en"|"np",string> | null } | null> | null } | null> | null, docs?: Array<{ key?: string | null, value?: string | null } | null> | null } | null, strAccountDetails?: { id?: string | null, natureOfAccount?: string | null, natureOfOwnership?: string | null, nameOfDirector?: string | null, accountOpenDate?: Record<"local"|"en"|"np",string> | null } | null, savingAccounts?: Array<{ id: string, accountName?: string | null, balance?: string | null, product: { nature: NatureOfDepositProduct } } | null> | null, transactionDetails?: Array<{ accountNo?: string | null, year?: string | null, drTransactionNo?: string | null, drTransactionAmount?: string | null, crTransactionNo?: string | null, crTransactionAmount?: string | null, closingBalance?: string | null } | null> | null, deposits?: Array<{ id?: string | null, date?: Record<"local"|"en"|"np",string> | null, transactionCode?: string | null, depositer?: string | null, amount?: string | null, remarks?: string | null } | null> | null, withdraw?: Array<{ id?: string | null, date?: Record<"local"|"en"|"np",string> | null, transactionCode?: string | null, depositer?: string | null, amount?: string | null, remarks?: string | null } | null> | null, loanAccount?: Array<{ id: string, LoanAccountName?: string | null, totalSanctionedAmount?: string | null, remainingBalance?: string | null, remainingInterestTillDate?: string | null, product: { id: string, productName: string } } | null> | null } | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
+
+export type OptionTypeFragment = { label?: string | null, value?: unknown | null };
+
+export type GetDepositFilterMappingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDepositFilterMappingQuery = { transaction: { filterMapping?: { deposit?: { depositedBy?: Array<OptionTypeFragment> | null, paymentMode: Array<OptionTypeFragment> } | null } | null } };
+
+export type GetWithdrawFilterMappingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetWithdrawFilterMappingQuery = { transaction: { filterMapping?: { withdraw?: { paymentMode: Array<OptionTypeFragment> } | null } | null } };
+
+export type GetAccountTransferFilterMappingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAccountTransferFilterMappingQuery = { transaction: { filterMapping?: { transfer?: { type: Array<OptionTypeFragment> } | null } | null } };
+
+export type GetAgentFilterMappingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAgentFilterMappingQuery = { transaction: { filterMapping?: { agent?: { branchId: Array<OptionTypeFragment> } | null } | null } };
+
+export type GetAllTransactionFilterMappingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllTransactionFilterMappingQuery = { transaction: { filterMapping?: { allTransaction?: { branchId: Array<OptionTypeFragment>, txnType: Array<OptionTypeFragment> } | null } | null } };
 
 export type GetTransferDetailQueryVariables = Exact<{
   transferID: Scalars['ID'];
@@ -19884,6 +19739,12 @@ export const LoanProductFragmentDoc = `
     penaltyRate
   }
   requiredDocuments
+}
+    `;
+export const OptionTypeFragmentDoc = `
+    fragment OptionType on LabelValueArray {
+  label
+  value
 }
     `;
 export const SetBankAccountsDocument = `
@@ -24439,6 +24300,30 @@ export const useListAssociatedGuaranteeAccountsQuery = <
     useQuery<ListAssociatedGuaranteeAccountsQuery, TError, TData>(
       ['listAssociatedGuaranteeAccounts', variables],
       useAxios<ListAssociatedGuaranteeAccountsQuery, ListAssociatedGuaranteeAccountsQueryVariables>(ListAssociatedGuaranteeAccountsDocument).bind(null, variables),
+      options
+    );
+export const GetSavingFilterMappingDocument = `
+    query getSavingFilterMapping {
+  account {
+    filterMapping {
+      productID {
+        label
+        value
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingFilterMappingQuery = <
+      TData = GetSavingFilterMappingQuery,
+      TError = unknown
+    >(
+      variables?: GetSavingFilterMappingQueryVariables,
+      options?: UseQueryOptions<GetSavingFilterMappingQuery, TError, TData>
+    ) =>
+    useQuery<GetSavingFilterMappingQuery, TError, TData>(
+      variables === undefined ? ['getSavingFilterMapping'] : ['getSavingFilterMapping', variables],
+      useAxios<GetSavingFilterMappingQuery, GetSavingFilterMappingQueryVariables>(GetSavingFilterMappingDocument).bind(null, variables),
       options
     );
 export const GetBankAccountListDocument = `
@@ -33933,6 +33818,494 @@ export const useGetDepositSettingsTdsQuery = <
       useAxios<GetDepositSettingsTdsQuery, GetDepositSettingsTdsQueryVariables>(GetDepositSettingsTdsDocument).bind(null, variables),
       options
     );
+export const GetDepositProductSettingsListDocument = `
+    query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProductSearchFilter) {
+  settings {
+    general {
+      depositProduct {
+        list(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              objState
+              productCode
+              productName
+              nature
+              interest
+              interest
+              createdDate
+              typeOfMember
+              createdAt
+              createdBy {
+                id
+                name
+                username
+                userType
+              }
+              modifiedAt
+              modifiedBy {
+                id
+                name
+                username
+                userType
+              }
+            }
+          }
+          totalCount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositProductSettingsListQuery = <
+      TData = GetDepositProductSettingsListQuery,
+      TError = unknown
+    >(
+      variables?: GetDepositProductSettingsListQueryVariables,
+      options?: UseQueryOptions<GetDepositProductSettingsListQuery, TError, TData>
+    ) =>
+    useQuery<GetDepositProductSettingsListQuery, TError, TData>(
+      variables === undefined ? ['getDepositProductSettingsList'] : ['getDepositProductSettingsList', variables],
+      useAxios<GetDepositProductSettingsListQuery, GetDepositProductSettingsListQueryVariables>(GetDepositProductSettingsListDocument).bind(null, variables),
+      options
+    );
+export const GetDepositProductSettingsEditDataDocument = `
+    query getDepositProductSettingsEditData($id: ID!) {
+  settings {
+    general {
+      depositProduct {
+        formState(id: $id) {
+          data {
+            productName
+            nature
+            productCode {
+              prefix
+              initialNo
+              noOfDigits
+            }
+            description
+            typeOfMember
+            criteria
+            minAge
+            maxAge
+            genderId
+            maritalStatusId
+            educationQualification
+            transactionAllowed
+            noOftransactionAllowed
+            ethnicity
+            occupation
+            foreignEmployment
+            natureOfBusinessInstitution
+            natureOFBusinessCoop
+            cooperativeType
+            isForMinors
+            depositAmount {
+              minAmount
+              maxAmount
+            }
+            withdrawAmountLimit {
+              minAmount
+              maxAmount
+            }
+            fixedDepositAmountLimit {
+              minAmount
+              maxAmount
+            }
+            depositFrequency
+            penalty
+            penaltyData {
+              dayAfterInstallmentDate
+              penaltyRate
+              penaltyAmount
+              penaltyLedgerMapping
+            }
+            rebate
+            rebateData {
+              dayBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              rebateRate
+              rebateLedgerMapping
+            }
+            isTenureApplicable
+            tenureUnit
+            minTenureUnitNumber
+            maxTenureUnitNumber
+            balanceLimit {
+              minAmount
+              maxAmount
+            }
+            interest {
+              minRate
+              maxRate
+              defaultRate
+              ceoAuthority
+              boardAuthority
+              additionalRate
+            }
+            ladderRate
+            ladderRateData {
+              type
+              amount
+              rate
+            }
+            postingFrequency
+            maxPostingFreqDifference
+            accountType
+            serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            accountCloseCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            chequeCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            atmCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            alternativeChannelCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            dormantSetup {
+              duration
+              condition
+            }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+            isMandatorySaving
+            autoOpen
+            allowLoan
+            percentageOfDeposit
+            alternativeChannels
+            atmFacility
+            chequeIssue
+            supportMultiple
+            staffProduct
+            withdrawRestricted
+            specifyWithdrawRestriction
+            wealthBuildingProduct
+            individualDocuments
+            institutionDocuments
+            isPrematurePenaltyApplicable
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositProductSettingsEditDataQuery = <
+      TData = GetDepositProductSettingsEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetDepositProductSettingsEditDataQueryVariables,
+      options?: UseQueryOptions<GetDepositProductSettingsEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetDepositProductSettingsEditDataQuery, TError, TData>(
+      ['getDepositProductSettingsEditData', variables],
+      useAxios<GetDepositProductSettingsEditDataQuery, GetDepositProductSettingsEditDataQueryVariables>(GetDepositProductSettingsEditDataDocument).bind(null, variables),
+      options
+    );
+export const GetSavingsProductDetailDocument = `
+    query getSavingsProductDetail($id: ID!) {
+  settings {
+    general {
+      depositProduct {
+        depositProductDetail(id: $id) {
+          data {
+            id
+            noOfAccounts
+            noOfMembers
+            objState
+            supportMultiple
+            productName
+            nature
+            productCode {
+              prefix
+              initialNo
+              noOfDigits
+            }
+            description
+            typeOfMember
+            criteria
+            minAge
+            maxAge
+            genderId
+            maritalStatusId
+            educationQualification
+            transactionAllowed
+            noOftransactionAllowed
+            ethnicity
+            occupation
+            foreignEmployment
+            natureOfBusinessInstitution
+            natureOFBusinessCoop
+            cooperativeType
+            isForMinors
+            depositAmount {
+              minAmount
+              maxAmount
+            }
+            withdrawAmountLimit {
+              minAmount
+              maxAmount
+            }
+            fixedDepositAmountLimit {
+              minAmount
+              maxAmount
+            }
+            depositFrequency
+            penalty
+            penaltyData {
+              dayAfterInstallmentDate
+              penaltyRate
+              penaltyAmount
+              penaltyLedgerMapping
+            }
+            rebate
+            rebateData {
+              dayBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              rebateRate
+              rebateLedgerMapping
+            }
+            isTenureApplicable
+            tenureUnit
+            minTenureUnitNumber
+            maxTenureUnitNumber
+            balanceLimit {
+              minAmount
+              maxAmount
+            }
+            interest {
+              minRate
+              maxRate
+              defaultRate
+              ceoAuthority
+              boardAuthority
+              additionalRate
+            }
+            ladderRate
+            ladderRateData {
+              type
+              amount
+              rate
+            }
+            postingFrequency
+            maxPostingFreqDifference
+            accountType
+            serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            accountCloseCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            chequeCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            atmCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            alternativeChannelCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            dormantSetup {
+              duration
+              condition
+            }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+            isMandatorySaving
+            autoOpen
+            allowLoan
+            percentageOfDeposit
+            alternativeChannels
+            atmFacility
+            chequeIssue
+            supportMultiple
+            staffProduct
+            withdrawRestricted
+            specifyWithdrawRestriction
+            wealthBuildingProduct
+            individualDocuments
+            institutionDocuments
+            isPrematurePenaltyApplicable
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+            savingCharges {
+              serviceName
+              ledgerName
+              amount
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingsProductDetailQuery = <
+      TData = GetSavingsProductDetailQuery,
+      TError = unknown
+    >(
+      variables: GetSavingsProductDetailQueryVariables,
+      options?: UseQueryOptions<GetSavingsProductDetailQuery, TError, TData>
+    ) =>
+    useQuery<GetSavingsProductDetailQuery, TError, TData>(
+      ['getSavingsProductDetail', variables],
+      useAxios<GetSavingsProductDetailQuery, GetSavingsProductDetailQueryVariables>(GetSavingsProductDetailDocument).bind(null, variables),
+      options
+    );
+export const GetSavingsProductCriteriaDocument = `
+    query getSavingsProductCriteria($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getProductCriteria(productId: $productId) {
+          data {
+            gender
+            minAge
+            maxAge
+            ethnicity
+            educationQualification
+            maritalStatus
+            foreignEmployment
+            occupation
+            institutionType
+            cooperativeUnion
+            cooperativeType
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingsProductCriteriaQuery = <
+      TData = GetSavingsProductCriteriaQuery,
+      TError = unknown
+    >(
+      variables: GetSavingsProductCriteriaQueryVariables,
+      options?: UseQueryOptions<GetSavingsProductCriteriaQuery, TError, TData>
+    ) =>
+    useQuery<GetSavingsProductCriteriaQuery, TError, TData>(
+      ['getSavingsProductCriteria', variables],
+      useAxios<GetSavingsProductCriteriaQuery, GetSavingsProductCriteriaQueryVariables>(GetSavingsProductCriteriaDocument).bind(null, variables),
+      options
+    );
+export const GetSavingsAccountListDocument = `
+    query getSavingsAccountList($paginate: Pagination, $filter: Filter) {
+  settings {
+    general {
+      depositProduct {
+        getAccountlist(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              objState
+              closedAt
+              accountName
+              member {
+                code
+                type
+                name
+              }
+              balance
+              interestAccured
+              interestTax
+              prematurePenalty
+              lastTransactionDate
+              accountOpenedDate
+              installmentAmount
+              product {
+                productCode
+                productName
+                nature
+              }
+              accountExpiryDate
+              overDrawnBalance
+              guaranteedAmount
+              dues {
+                fine
+                totalDue
+                dueInstallments
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingsAccountListQuery = <
+      TData = GetSavingsAccountListQuery,
+      TError = unknown
+    >(
+      variables?: GetSavingsAccountListQueryVariables,
+      options?: UseQueryOptions<GetSavingsAccountListQuery, TError, TData>
+    ) =>
+    useQuery<GetSavingsAccountListQuery, TError, TData>(
+      variables === undefined ? ['getSavingsAccountList'] : ['getSavingsAccountList', variables],
+      useAxios<GetSavingsAccountListQuery, GetSavingsAccountListQueryVariables>(GetSavingsAccountListDocument).bind(null, variables),
+      options
+    );
 export const GetSettingsOptionsFieldsDocument = `
     query getSettingsOptionsFields($searchTerm: FormFieldSearchTerm!, $category: FormCategory!) {
   form {
@@ -34358,18 +34731,18 @@ export const GetTellerListDocument = `
   }
 }
     `;
-export const useGetTellerListQuery = <TData = GetTellerListQuery, TError = unknown>(
-  variables?: GetTellerListQueryVariables,
-  options?: UseQueryOptions<GetTellerListQuery, TError, TData>
-) =>
-  useQuery<GetTellerListQuery, TError, TData>(
-    variables === undefined ? ['getTellerList'] : ['getTellerList', variables],
-    useAxios<GetTellerListQuery, GetTellerListQueryVariables>(GetTellerListDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetTellerListQuery = <
+      TData = GetTellerListQuery,
+      TError = unknown
+    >(
+      variables?: GetTellerListQueryVariables,
+      options?: UseQueryOptions<GetTellerListQuery, TError, TData>
+    ) =>
+    useQuery<GetTellerListQuery, TError, TData>(
+      variables === undefined ? ['getTellerList'] : ['getTellerList', variables],
+      useAxios<GetTellerListQuery, GetTellerListQueryVariables>(GetTellerListDocument).bind(null, variables),
+      options
+    );
 export const GetSettingsUserDetailsDataDocument = `
     query getSettingsUserDetailsData($userID: ID!) {
   settings {
@@ -34429,19 +34802,17 @@ export const GetSettingsUserDetailsDataDocument = `
 }
     ${AddressFragmentDoc}`;
 export const useGetSettingsUserDetailsDataQuery = <
-  TData = GetSettingsUserDetailsDataQuery,
-  TError = unknown
->(
-  variables: GetSettingsUserDetailsDataQueryVariables,
-  options?: UseQueryOptions<GetSettingsUserDetailsDataQuery, TError, TData>
-) =>
-  useQuery<GetSettingsUserDetailsDataQuery, TError, TData>(
-    ['getSettingsUserDetailsData', variables],
-    useAxios<GetSettingsUserDetailsDataQuery, GetSettingsUserDetailsDataQueryVariables>(
-      GetSettingsUserDetailsDataDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetSettingsUserDetailsDataQuery,
+      TError = unknown
+    >(
+      variables: GetSettingsUserDetailsDataQueryVariables,
+      options?: UseQueryOptions<GetSettingsUserDetailsDataQuery, TError, TData>
+    ) =>
+    useQuery<GetSettingsUserDetailsDataQuery, TError, TData>(
+      ['getSettingsUserDetailsData', variables],
+      useAxios<GetSettingsUserDetailsDataQuery, GetSettingsUserDetailsDataQueryVariables>(GetSettingsUserDetailsDataDocument).bind(null, variables),
+      options
+    );
 export const GetValuatorDocument = `
     query getValuator($id: ID!) {
   settings {
@@ -35586,6 +35957,137 @@ export const useGetStrTransactionDetailQuery = <
     useQuery<GetStrTransactionDetailQuery, TError, TData>(
       ['getSTRTransactionDetail', variables],
       useAxios<GetStrTransactionDetailQuery, GetStrTransactionDetailQueryVariables>(GetStrTransactionDetailDocument).bind(null, variables),
+      options
+    );
+export const GetDepositFilterMappingDocument = `
+    query getDepositFilterMapping {
+  transaction {
+    filterMapping {
+      deposit {
+        depositedBy {
+          ...OptionType
+        }
+        paymentMode {
+          ...OptionType
+        }
+      }
+    }
+  }
+}
+    ${OptionTypeFragmentDoc}`;
+export const useGetDepositFilterMappingQuery = <
+      TData = GetDepositFilterMappingQuery,
+      TError = unknown
+    >(
+      variables?: GetDepositFilterMappingQueryVariables,
+      options?: UseQueryOptions<GetDepositFilterMappingQuery, TError, TData>
+    ) =>
+    useQuery<GetDepositFilterMappingQuery, TError, TData>(
+      variables === undefined ? ['getDepositFilterMapping'] : ['getDepositFilterMapping', variables],
+      useAxios<GetDepositFilterMappingQuery, GetDepositFilterMappingQueryVariables>(GetDepositFilterMappingDocument).bind(null, variables),
+      options
+    );
+export const GetWithdrawFilterMappingDocument = `
+    query getWithdrawFilterMapping {
+  transaction {
+    filterMapping {
+      withdraw {
+        paymentMode {
+          ...OptionType
+        }
+      }
+    }
+  }
+}
+    ${OptionTypeFragmentDoc}`;
+export const useGetWithdrawFilterMappingQuery = <
+      TData = GetWithdrawFilterMappingQuery,
+      TError = unknown
+    >(
+      variables?: GetWithdrawFilterMappingQueryVariables,
+      options?: UseQueryOptions<GetWithdrawFilterMappingQuery, TError, TData>
+    ) =>
+    useQuery<GetWithdrawFilterMappingQuery, TError, TData>(
+      variables === undefined ? ['getWithdrawFilterMapping'] : ['getWithdrawFilterMapping', variables],
+      useAxios<GetWithdrawFilterMappingQuery, GetWithdrawFilterMappingQueryVariables>(GetWithdrawFilterMappingDocument).bind(null, variables),
+      options
+    );
+export const GetAccountTransferFilterMappingDocument = `
+    query getAccountTransferFilterMapping {
+  transaction {
+    filterMapping {
+      transfer {
+        type {
+          ...OptionType
+        }
+      }
+    }
+  }
+}
+    ${OptionTypeFragmentDoc}`;
+export const useGetAccountTransferFilterMappingQuery = <
+      TData = GetAccountTransferFilterMappingQuery,
+      TError = unknown
+    >(
+      variables?: GetAccountTransferFilterMappingQueryVariables,
+      options?: UseQueryOptions<GetAccountTransferFilterMappingQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountTransferFilterMappingQuery, TError, TData>(
+      variables === undefined ? ['getAccountTransferFilterMapping'] : ['getAccountTransferFilterMapping', variables],
+      useAxios<GetAccountTransferFilterMappingQuery, GetAccountTransferFilterMappingQueryVariables>(GetAccountTransferFilterMappingDocument).bind(null, variables),
+      options
+    );
+export const GetAgentFilterMappingDocument = `
+    query getAgentFilterMapping {
+  transaction {
+    filterMapping {
+      agent {
+        branchId {
+          ...OptionType
+        }
+      }
+    }
+  }
+}
+    ${OptionTypeFragmentDoc}`;
+export const useGetAgentFilterMappingQuery = <
+      TData = GetAgentFilterMappingQuery,
+      TError = unknown
+    >(
+      variables?: GetAgentFilterMappingQueryVariables,
+      options?: UseQueryOptions<GetAgentFilterMappingQuery, TError, TData>
+    ) =>
+    useQuery<GetAgentFilterMappingQuery, TError, TData>(
+      variables === undefined ? ['getAgentFilterMapping'] : ['getAgentFilterMapping', variables],
+      useAxios<GetAgentFilterMappingQuery, GetAgentFilterMappingQueryVariables>(GetAgentFilterMappingDocument).bind(null, variables),
+      options
+    );
+export const GetAllTransactionFilterMappingDocument = `
+    query getAllTransactionFilterMapping {
+  transaction {
+    filterMapping {
+      allTransaction {
+        branchId {
+          ...OptionType
+        }
+        txnType {
+          ...OptionType
+        }
+      }
+    }
+  }
+}
+    ${OptionTypeFragmentDoc}`;
+export const useGetAllTransactionFilterMappingQuery = <
+      TData = GetAllTransactionFilterMappingQuery,
+      TError = unknown
+    >(
+      variables?: GetAllTransactionFilterMappingQueryVariables,
+      options?: UseQueryOptions<GetAllTransactionFilterMappingQuery, TError, TData>
+    ) =>
+    useQuery<GetAllTransactionFilterMappingQuery, TError, TData>(
+      variables === undefined ? ['getAllTransactionFilterMapping'] : ['getAllTransactionFilterMapping', variables],
+      useAxios<GetAllTransactionFilterMappingQuery, GetAllTransactionFilterMappingQueryVariables>(GetAllTransactionFilterMappingDocument).bind(null, variables),
       options
     );
 export const GetTransferDetailDocument = `

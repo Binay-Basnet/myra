@@ -25,10 +25,12 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
   const columns = useMemo<Column<LoanAccountEdge>[]>(
     () => [
       {
-        id: 'loan Account Creation Date id',
+        id: 'appliedDate',
         header: () => 'Loan Applied Date',
         accessorFn: (row) => row?.node?.appliedDate,
         cell: (props) => localizedDate(props?.row?.original?.node?.appliedDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Loan Account ID',
@@ -42,8 +44,10 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
         },
       },
       {
+        id: 'productName',
         header: 'Product Name',
         accessorFn: (row) => row?.node?.product.productName,
+        enableColumnFilter: true,
       },
       {
         header: 'Member',
@@ -75,11 +79,14 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
         ),
       },
       {
+        id: 'appliedAmount',
         header: 'Applied Amount',
         meta: {
           isNumeric: true,
         },
         accessorFn: (row) => amountConverter(row?.node?.appliedLoanAmount as string),
+        enableColumnFilter: true,
+        filterFn: 'amount',
       },
       {
         id: '_actions',

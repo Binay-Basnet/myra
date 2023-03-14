@@ -4,30 +4,16 @@ import { useRouter } from 'next/router';
 import { TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import {
-  Filter_Mode,
-  TransferType,
-  useGetAccountTransferListDataQuery,
-} from '@coop/cbs/data-access';
+import { TransferType, useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
+  getFilterQuery,
   getPaginationQuery,
   useTranslation,
 } from '@coop/shared/utils';
-
-// const tabList = [
-//   {
-//     title: 'memberNavActive',
-//     key: 'ACTIVE',
-//   },
-//   {
-//     title: 'memberNavInactive',
-//     key: 'SUBMITTED',
-//   },
-// ];
 
 const transferType = {
   [TransferType.Self]: 'Self Transfer',
@@ -40,30 +26,23 @@ export interface AccountTransferListProps {}
 export const AccountTransferList = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
 
-  const { data, isFetching } = useGetAccountTransferListDataQuery(
-    {
-      pagination: getPaginationQuery(),
-      filter: {
-        id: searchTerm,
-        transactionId: searchTerm,
-        filterMode: Filter_Mode.Or,
-      },
-    },
-    {
-      staleTime: 0,
-      enabled: searchTerm !== 'undefined',
-    }
-  );
+  const { data, isFetching } = useGetAccountTransferListDataQuery({
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
+  });
 
   const rowData = useMemo(() => data?.transaction?.listTransfer?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'date',
         header: t['accountTransferListDate'],
+        accessorKey: 'node.date.local',
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.date)}</Text>,
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
         meta: {
           width: '200px',
         },
@@ -76,29 +55,22 @@ export const AccountTransferList = () => {
         },
       },
       {
+        id: 'transferType',
+        enableColumnFilter: true,
         header: t['accountTransferListTransactionType'],
         accessorFn: (row) => (row?.node?.transferType ? transferType[row?.node?.transferType] : ''),
       },
       {
+        id: 'amount',
         header: t['accountTransferListAmount'],
         meta: {
           isNumeric: true,
         },
+        enableColumnFilter: true,
+        filterFn: 'amount',
         accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
       },
-      // {
-      //   header: 'Payment Mode',
-      //   accessorFn: (row) => row?.node?.paymentMode,
-      // },
-      // {
-      //   header: 'Deposited By',
-      //   accessorFn: (row) => row?.node?.processedBy,
-      // },
 
-      // {
-      //   header: 'Deposit Date',
-      //   accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
-      // },
       {
         id: '_actions',
         header: '',

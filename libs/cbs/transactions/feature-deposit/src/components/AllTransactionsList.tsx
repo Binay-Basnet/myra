@@ -4,12 +4,13 @@ import { useRouter } from 'next/router';
 import { Box, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Filter_Mode, useGetAllTransactionsListQuery } from '@coop/cbs/data-access';
+import { useGetAllTransactionsListQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
+  getFilterQuery,
   getPaginationQuery,
   useTranslation,
 } from '@coop/shared/utils';
@@ -21,16 +22,9 @@ export const AllTransactionsList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const searchTerm = router?.query['search'] as string;
-
   const { data, isFetching } = useGetAllTransactionsListQuery({
     pagination: getPaginationQuery(),
-    filter: {
-      id: searchTerm,
-      transactionId: searchTerm,
-      txnType: searchTerm,
-      filterMode: Filter_Mode.Or,
-    },
+    filter: getFilterQuery(),
   });
 
   const rowData = useMemo(() => data?.transaction?.listAllTransactions?.edges ?? [], [data]);
@@ -40,6 +34,9 @@ export const AllTransactionsList = () => {
       {
         header: 'Date',
         cell: (props) => props?.row?.original?.node?.date?.local?.split(' ')[0] ?? 'N/A',
+        accessorKey: 'node.date.local',
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Transaction Id',
@@ -53,6 +50,7 @@ export const AllTransactionsList = () => {
             {props?.cell?.row?.original?.node?.transactionType?.toLowerCase()?.replace(/_/g, ' ')}
           </Box>
         ),
+        enableColumnFilter: true,
       },
       {
         header: 'Note',
@@ -65,6 +63,7 @@ export const AllTransactionsList = () => {
       {
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branchName,
+        enableColumnFilter: true,
       },
 
       {
@@ -76,6 +75,8 @@ export const AllTransactionsList = () => {
           isNumeric: true,
           width: '2%',
         },
+        enableColumnFilter: true,
+        filterFn: 'amount',
       },
     ],
     [t]
