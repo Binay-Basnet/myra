@@ -34,9 +34,13 @@ export const MigrationUiComponents = () => {
             borderRadius={6}
             boxShadow="lg"
           >
-            <Text fontSize="r3" fontWeight="medium">
-              Projects
-            </Text>
+            <Box display="flex" justifyContent="space-between">
+              <Text fontSize="r3" fontWeight="medium">
+                Projects
+              </Text>
+              <Button onClick={() => refetch()}>Reload</Button>
+            </Box>
+
             {data?.protectedQuery?.getProjects?.map((item, index) => (
               <Link href={`/${item}`}>
                 {index + 1}. {item}
