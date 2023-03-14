@@ -89,7 +89,7 @@ export const MigrationFileComponent = () => {
               CSV Data
             </Text>
             <Button type="submit" w={100}>
-              Edit
+              Submit
             </Button>
           </Box>
           {columns && tableData && (
