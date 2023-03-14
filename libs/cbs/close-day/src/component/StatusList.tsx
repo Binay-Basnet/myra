@@ -71,39 +71,42 @@ export const StatusList = ({ statusList }: IStatusListProps) => {
 
   return (
     <>
-      {statusList.map(({ title, status, errors }) => (
-        <Box
-          display="flex"
-          flexDirection="column"
-          key={title}
-          border="1px"
-          borderColor="border.layout"
-          borderRadius="br2"
-        >
-          <Box bg="highlight.500" borderBottom="1px" borderColor="border.layout" p="s12">
-            <Text fontSize="r1" color="gray.800" fontWeight={500}>
-              {t[title] ?? title}
-            </Text>
-          </Box>
-          <Box display="flex" flexDirection="column" p="s16" gap="s16">
-            {errors?.length ? (
-              <Text
-                fontSize="r1"
-                color="danger.500"
-                fontWeight={400}
-                cursor="pointer"
-                onClick={() => handleShowErrors(errors, t[title] ?? title)}
-              >{`${errors.length} Errors in ${t[title] ?? title}`}</Text>
-            ) : null}
-            <Box display="flex" gap="s8" alignItems="center">
-              {eodStatusIcon(status)}
-              <Text fontSize="r1" fontWeight={400} color="gray.700" lineHeight="150%">
-                {eodStatusText(status, title)}
-              </Text>
+      {statusList.map(
+        ({ title, status, errors }) =>
+          status !== 'NOT_STARTED' && (
+            <Box
+              display="flex"
+              flexDirection="column"
+              key={title}
+              border="1px"
+              borderColor="border.layout"
+              borderRadius="br2"
+            >
+              <Box bg="highlight.500" borderBottom="1px" borderColor="border.layout" p="s12">
+                <Text fontSize="r1" color="gray.800" fontWeight={500}>
+                  {t[title] ?? title}
+                </Text>
+              </Box>
+              <Box display="flex" flexDirection="column" p="s16" gap="s16">
+                {errors?.length ? (
+                  <Text
+                    fontSize="r1"
+                    color="danger.500"
+                    fontWeight={400}
+                    cursor="pointer"
+                    onClick={() => handleShowErrors(errors, t[title] ?? title)}
+                  >{`${errors.length} Errors in ${t[title] ?? title}`}</Text>
+                ) : null}
+                <Box display="flex" gap="s8" alignItems="center">
+                  {eodStatusIcon(status)}
+                  <Text fontSize="r1" fontWeight={400} color="gray.700" lineHeight="150%">
+                    {eodStatusText(status, title)}
+                  </Text>
+                </Box>
+              </Box>
             </Box>
-          </Box>
-        </Box>
-      ))}
+          )
+      )}
 
       <DayEndErrorsModal
         isOpen={isOpen}

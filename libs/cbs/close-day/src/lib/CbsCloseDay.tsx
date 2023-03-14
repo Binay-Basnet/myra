@@ -7,13 +7,14 @@ import { Box, Button, Container, FormFooter, FormHeader, Loader, toast } from '@
 import {
   BranchCategory,
   EodOption,
+  EodStage,
   EodState,
   useAppSelector,
   useGetEndOfDayDateDataQuery,
   useGetEodStatusQuery,
   useSetEndOfDayDataMutation,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 import { DayClose } from '../component/DayClose';
@@ -29,6 +30,10 @@ export const CbsCloseDay = () => {
 
   const [stopFetch, setStopFetch] = useState<boolean>(false);
 
+  const [stageInitiated, setStageInitiated] = useState<EodStage | null>(null);
+
+  const [isPreStageIgnoreInitiated, setIsPreStageIgnoreInitiated] = useState<boolean>(false);
+
   // const queryClient = useQueryClient();
 
   const user = useAppSelector((state) => state?.auth?.user);
@@ -43,19 +48,42 @@ export const CbsCloseDay = () => {
         router.push('/');
       }
     },
+    onMutate: () => setStopFetch(false),
   });
 
-  const { refetch: refetchEndOfDay } = useGetEndOfDayDateDataQuery();
+  const {
+    data: endOfDayData,
+    refetch: refetchEndOfDay,
+    isFetching,
+  } = useGetEndOfDayDateDataQuery();
+
+  const transactionDate = endOfDayData?.transaction?.endOfDayDate?.value;
 
   const { data: eodStatusQueryData } = useGetEodStatusQuery(
     {},
     {
       onSuccess: async (res) => {
+        // change transaction date refetch
         if (
-          res?.transaction?.eodStatus?.stage === 'MAIN' &&
-          res?.transaction?.eodStatus?.overAllStatus === 'COMPLETED'
+          res?.transaction?.eodStatus?.states?.transactionDate === 'COMPLETED' &&
+          localizedDate(transactionDate) === localizedDate(res?.transaction?.eodStatus?.eodDate) &&
+          !isFetching
         ) {
           refetchEndOfDay();
+        }
+
+        if (stageInitiated && res?.transaction?.eodStatus?.stage === stageInitiated) {
+          setStageInitiated(null);
+        }
+
+        if (
+          isPreStageIgnoreInitiated &&
+          res?.transaction?.eodStatus?.stage === 'PRE' &&
+          res?.transaction?.eodStatus?.overAllStatus === 'COMPLETED'
+        ) {
+          closeDay({}, {});
+          setStageInitiated('MAIN');
+          setIsPreStageIgnoreInitiated(false);
         }
 
         if (res?.transaction?.eodStatus?.overAllStatus !== 'ONGOING') {
@@ -130,16 +158,15 @@ export const CbsCloseDay = () => {
           errors: eodError?.cashInVault as string[],
         },
         {
+          title: 'dayCloseTransactionDateProgress',
+          subTitle: 'dayCloseChecktransactiondate',
+          status: eodStatus?.transactionDate ?? EodState.Completed,
+        },
+        {
           title: 'dayCloseDailyInterestBooking',
           subTitle: 'dayCloseInterestBooking',
           status: eodStatus?.interestBooking,
           errors: eodError?.interestBooking as string[],
-        },
-        {
-          title: 'dayCloseCheckFrequency',
-          subTitle: 'dayCloseImplementthedayend',
-          status: eodStatus?.interestPosting,
-          errors: eodError?.interestPosting as string[],
         },
         {
           title: 'Loan Interest Booking',
@@ -149,10 +176,12 @@ export const CbsCloseDay = () => {
           errors: eodError?.loanInterestBooking as string[],
         },
         {
-          title: 'dayCloseTransactionDateProgress',
-          subTitle: 'dayCloseChecktransactiondate',
-          status: eodStatus?.transactionDate ?? EodState.Completed,
+          title: 'dayCloseCheckFrequency',
+          subTitle: 'dayCloseImplementthedayend',
+          status: eodStatus?.interestPosting,
+          errors: eodError?.interestPosting as string[],
         },
+
         {
           title: 'dayCloseCheckMaturity',
           subTitle: 'dayCloseCheckAccount',
@@ -193,14 +222,14 @@ export const CbsCloseDay = () => {
       if (eodStatus?.overAllStatus === 'ONGOING') {
         return true;
       }
-      return false;
+      return !!stageInitiated;
     }
 
     if (eodStatus?.stage === 'MAIN') {
       if (eodStatus?.overAllStatus === 'ONGOING') {
         return true;
       }
-      return false;
+      return !!stageInitiated;
     }
 
     if (
@@ -249,7 +278,12 @@ export const CbsCloseDay = () => {
   const getDraftButton = () => {
     if (eodStatus?.stage === 'PRE' && eodStatus?.overAllStatus === 'COMPLETED_WITH_ERRORS') {
       return (
-        <Button variant="ghost" shade="neutral" onClick={handleReinitiate}>
+        <Button
+          variant="ghost"
+          shade="neutral"
+          onClick={handleReinitiate}
+          isDisabled={!!stageInitiated}
+        >
           Reinitiate pre stage
         </Button>
       );
@@ -257,7 +291,12 @@ export const CbsCloseDay = () => {
 
     if (eodStatus?.stage === 'MAIN' && eodStatus?.overAllStatus === 'COMPLETED_WITH_ERRORS') {
       return (
-        <Button variant="ghost" shade="neutral" onClick={handleReinitiate}>
+        <Button
+          variant="ghost"
+          shade="neutral"
+          onClick={handleReinitiate}
+          isDisabled={!!stageInitiated}
+        >
           Reinitiate main stage
         </Button>
       );
@@ -268,25 +307,26 @@ export const CbsCloseDay = () => {
 
   const handleReinitiate = () => {
     closeDay({ option: EodOption.Reinitiate });
-    setStopFetch(false);
   };
 
-  const handleCompleteWithError = () => {
+  const handleCompleteWithError = (stage: EodStage) => {
     closeDay({ option: EodOption.CompleteWithError });
-    setStopFetch(false);
+    setStageInitiated(stage);
   };
 
   const mainButtonHandler = () => {
-    if (
-      (eodStatus?.stage === 'PRE' && eodStatus?.overAllStatus === 'COMPLETED_WITH_ERRORS') ||
-      (eodStatus?.stage === 'MAIN' && eodStatus?.overAllStatus === 'COMPLETED_WITH_ERRORS')
-    ) {
-      return handleCompleteWithError();
+    if (eodStatus?.stage === 'PRE' && eodStatus?.overAllStatus === 'COMPLETED_WITH_ERRORS') {
+      handleCompleteWithError('PRE');
+      return setIsPreStageIgnoreInitiated(true);
+    }
+    5;
+    if (eodStatus?.stage === 'MAIN' && eodStatus?.overAllStatus === 'COMPLETED_WITH_ERRORS') {
+      return handleCompleteWithError('MAIN');
     }
 
     if (eodStatus?.stage === 'PRE' && eodStatus?.overAllStatus === 'COMPLETED') {
       closeDay({});
-      return setStopFetch(false);
+      return setStageInitiated('MAIN');
     }
 
     return router?.push('/');
