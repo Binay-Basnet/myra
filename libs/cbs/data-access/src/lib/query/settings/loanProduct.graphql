@@ -121,6 +121,7 @@ query getLoanProductEditData($id: ID!) {
             loanProcessingCharge {
               serviceName
               ledgerName
+              percentage
               amount
             }
             isInsuranceApplicable
