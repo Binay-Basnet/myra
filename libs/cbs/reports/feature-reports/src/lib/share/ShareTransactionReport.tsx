@@ -233,16 +233,16 @@ export const ShareTransactionsReport = () => {
                       isNumeric: true,
                     },
                   },
-                  {
-                    header: 'Balance',
-                    accessorKey: 'balance',
-                    cell: (props) => amountConverter(props.getValue() as string),
-                    footer: () => amountConverter(footerData?.totalBalance as string),
+                  // {
+                  //   header: 'Balance',
+                  //   accessorKey: 'balance',
+                  //   cell: (props) => amountConverter(props.getValue() as string),
+                  //   footer: () => amountConverter(footerData?.totalBalance as string),
 
-                    meta: {
-                      isNumeric: true,
-                    },
-                  },
+                  //   meta: {
+                  //     isNumeric: true,
+                  //   },
+                  // },
                 ],
               },
             ]}

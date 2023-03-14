@@ -210,6 +210,7 @@ export const SettingsLoanProductForm = () => {
     const loanProcessingChargeList = values?.loanProcessingCharge?.map((data) => ({
       serviceName: data?.serviceName,
       ledgerName: data?.ledgerName,
+      percentage: data?.percentage,
       amount: data?.amount.toString(),
     }));
 
