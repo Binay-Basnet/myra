@@ -30,12 +30,24 @@ export const AllPaymentsModal = ({
 }: IAllPaymentsModalProps) => {
   const tableRef = useRef<HTMLTableElement>(null);
 
+  const totalFine = useMemo(
+    () =>
+      data?.reduce(
+        (sum, installment) =>
+          sum +
+          Number(installment?.currentRemainingPrincipal ?? 0) +
+          Number(installment?.remainingInterest ?? 0),
+        0
+      ),
+    [data]
+  );
+
   const columns = useMemo<Column<LoanInstallment>[]>(
     () => [
       {
         header: 'Ins. No.',
         accessorKey: 'installmentNo',
-        footer: 'Total Cost of Loan',
+        footer: 'Total',
 
         meta: {
           width: '50px',
@@ -90,6 +102,15 @@ export const AllPaymentsModal = ({
           isNumeric: true,
         },
       },
+      {
+        header: 'Fine',
+        accessorKey: 'penalty',
+        cell: (props) => amountConverter(props.getValue() as string),
+        footer: () => amountConverter(totalFine),
+        meta: {
+          isNumeric: true,
+        },
+      },
 
       {
         header: 'Total',
@@ -101,7 +122,7 @@ export const AllPaymentsModal = ({
         },
       },
     ],
-    [total]
+    [total, totalFine]
   );
   return (
     <Modal

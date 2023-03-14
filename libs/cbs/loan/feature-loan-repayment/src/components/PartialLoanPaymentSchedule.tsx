@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { Box, Chips, Text } from '@myra-ui';
+import { Box, Chips } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { LoanInstallment } from '@coop/cbs/data-access';
@@ -9,10 +9,11 @@ import { amountConverter } from '@coop/shared/utils';
 
 interface IPartialLoanPaymentScheduleProps {
   data: LoanInstallment[];
-  nextInstallmentNumber?: number;
+  nextInstallmentNumber?: number | null;
   total: string;
   totalInterest: string | number;
   totalPrincipal: string | number;
+  isLoading?: boolean;
   // remainingInterest?: string | number;
   // currentRemainingPrincipal?: string | number;
 }
@@ -30,6 +31,7 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
       // remainingInterest,
       // currentRemainingPrincipal,
       nextInstallmentNumber,
+      isLoading,
     },
     ref
   ) => {
@@ -37,7 +39,8 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
       () => [
         {
           header: 'Ins. No.',
-          accessorKey: 'installmentNo',
+          // accessorKey: 'installmentNo',
+          accessorFn: (row) => row?.installmentNo,
           meta: {
             width: '50px',
           },
@@ -61,9 +64,8 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
           accessorKey: 'principal',
           cell: (props) =>
             amountConverter(
-              props?.row?.original?.currentRemainingPrincipal !== '0'
-                ? Number(props?.row?.original?.principal ?? 0) +
-                    Number(props?.row?.original?.currentRemainingPrincipal ?? 0)
+              props?.row?.original?.isPartial
+                ? props?.row?.original?.fullPrincipal ?? 0
                 : props?.row?.original?.principal ?? 0
             ),
           footer: () => amountConverter(totalPrincipal),
@@ -76,7 +78,7 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
           accessorKey: 'interest',
           cell: (props) =>
             amountConverter(
-              props?.row?.original?.remainingInterest !== '0'
+              props?.row?.original?.isPartial
                 ? Number(props?.row?.original?.interest ?? 0) +
                     Number(props?.row?.original?.remainingInterest ?? 0)
                 : props?.row?.original?.interest ?? 0
@@ -90,7 +92,7 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
         {
           header: 'Total',
           accessorKey: 'payment',
-          cell: (props) => amountConverter(props.getValue() as string),
+          cell: (props) => amountConverter((props?.row?.original?.payment as string) ?? 0),
           footer: () => amountConverter(total) || '-',
           meta: {
             isNumeric: true,
@@ -98,34 +100,34 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
         },
         {
           header: 'Status',
-          accessorKey: 'paid',
+          accessorKey: 'status',
 
           cell: (props) => {
-            const installmentNo = props?.row?.original?.installmentNo;
-            const value = props.getValue();
+            switch (props?.row?.original?.status) {
+              case 'OVERDUE':
+                return (
+                  <Chips
+                    variant="solid"
+                    theme="danger"
+                    size="md"
+                    type="label"
+                    label={`Overdue By ${props?.row?.original?.overDueDays} Days`}
+                  />
+                );
 
-            return (
-              <Text
-                textAlign="center"
-                fontSize="s3"
-                fontWeight="500"
-                color={
-                  installmentNo === nextInstallmentNumber
-                    ? 'info.500'
-                    : value
-                    ? 'primary.500'
-                    : 'gray.600'
-                }
-              >
-                {installmentNo === nextInstallmentNumber ? (
-                  <Chips variant="solid" theme="success" size="md" type="label" label="Current" />
-                ) : value ? (
-                  <Chips variant="solid" theme="info" size="md" type="label" label="Paid" />
-                ) : (
-                  '-'
-                )}
-              </Text>
-            );
+              case 'PARTIAL':
+                return (
+                  <Chips variant="solid" theme="warning" size="md" type="label" label="Partial" />
+                );
+
+              case 'CURRENT':
+                return (
+                  <Chips variant="solid" theme="info" size="md" type="label" label="Current" />
+                );
+
+              default:
+                return '';
+            }
           },
         },
       ],
@@ -140,6 +142,7 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
           showFooter
           data={data ?? []}
           columns={columns}
+          isLoading={isLoading}
           ref={ref}
         />
       </Box>

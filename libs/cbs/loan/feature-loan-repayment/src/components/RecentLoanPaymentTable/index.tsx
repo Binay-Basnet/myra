@@ -94,7 +94,7 @@ export const RecentLoanPaymentTable = React.forwardRef<
           cell: (props) => {
             const principalData = props?.row?.original;
 
-            return principalData?.paid &&
+            return principalData?.status === 'PAID' &&
               principalData?.currentRemainingPrincipal === '0' &&
               principalData?.remainingInterest === '0' ? (
               '0.00'
@@ -121,7 +121,7 @@ export const RecentLoanPaymentTable = React.forwardRef<
         },
         {
           header: 'Status',
-          accessorKey: 'paid',
+          accessorKey: 'status',
 
           cell: (props) => {
             const installmentNo = props?.row?.original?.installmentNo;

@@ -9056,7 +9056,7 @@ export type KymMemberListConnection = {
 
 export type KymMemberListEdges = {
   cursor: Scalars['Cursor'];
-  node?: Maybe<Member>;
+  node: Member;
 };
 
 export type KymMemberTypes = {
@@ -10039,15 +10039,20 @@ export type LoanGuarantorInfo = {
 
 export type LoanInstallment = {
   currentRemainingPrincipal: Scalars['String'];
+  fullPrincipal?: Maybe<Scalars['String']>;
   installmentDate: Scalars['Localized'];
   installmentNo: Scalars['Int'];
   interest: Scalars['String'];
-  paid: Scalars['Boolean'];
+  isPartial?: Maybe<Scalars['Boolean']>;
+  overDueDays?: Maybe<Scalars['Int']>;
+  overdueAmount?: Maybe<Scalars['String']>;
   paidDate: Scalars['Localized'];
   payment: Scalars['String'];
+  penalty?: Maybe<Scalars['String']>;
   principal: Scalars['String'];
   remainingInterest: Scalars['String'];
   remainingPrincipal: Scalars['String'];
+  status?: Maybe<LoanInstallmentStatus>;
 };
 
 export type LoanInstallmentResult = {
@@ -10055,11 +10060,21 @@ export type LoanInstallmentResult = {
   error?: Maybe<QueryError>;
 };
 
+export const LoanInstallmentStatus = {
+  Current: 'CURRENT',
+  Overdue: 'OVERDUE',
+  Paid: 'PAID',
+  Partial: 'PARTIAL',
+} as const;
+
+export type LoanInstallmentStatus =
+  typeof LoanInstallmentStatus[keyof typeof LoanInstallmentStatus];
 export type LoanInstallments = {
   installments?: Maybe<Array<Maybe<LoanInstallment>>>;
   total: Scalars['String'];
   totalInterest?: Maybe<Scalars['String']>;
   totalPrincipal?: Maybe<Scalars['String']>;
+  totalRemainingPayable?: Maybe<Scalars['String']>;
 };
 
 export const LoanInsurancePaymentType = {
@@ -19001,7 +19016,7 @@ export type GetAccountMemberListQuery = {
       totalCount: number;
       edges?: Array<{
         cursor: string;
-        node?: {
+        node: {
           id: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
@@ -19016,7 +19031,7 @@ export type GetAccountMemberListQuery = {
             wardNo?: string | null;
             locality?: Record<'local' | 'en' | 'np', string> | null;
           } | null;
-        } | null;
+        };
       } | null> | null;
       pageInfo?: { startCursor?: string | null; endCursor?: string | null } | null;
     };
@@ -22367,6 +22382,7 @@ export type GetLoanPreviewQuery = {
           total: string;
           totalInterest?: string | null;
           totalPrincipal?: string | null;
+          totalRemainingPayable?: string | null;
           installments?: Array<{
             installmentDate: Record<'local' | 'en' | 'np', string>;
             installmentNo: number;
@@ -22375,9 +22391,14 @@ export type GetLoanPreviewQuery = {
             principal: string;
             remainingPrincipal: string;
             currentRemainingPrincipal: string;
-            paid: boolean;
             paidDate: Record<'local' | 'en' | 'np', string>;
             remainingInterest: string;
+            status?: LoanInstallmentStatus | null;
+            overDueDays?: number | null;
+            penalty?: string | null;
+            isPartial?: boolean | null;
+            overdueAmount?: string | null;
+            fullPrincipal?: string | null;
           } | null> | null;
         } | null;
         statistics?: {
@@ -22550,8 +22571,9 @@ export type GetLoanAccountDetailsQuery = {
             payment: string;
             remainingPrincipal: string;
             remainingInterest: string;
-            paid: boolean;
             currentRemainingPrincipal: string;
+            status?: LoanInstallmentStatus | null;
+            overDueDays?: number | null;
           } | null> | null;
         } | null;
         transactions?: {
@@ -22719,7 +22741,7 @@ export type GetMemberListQuery = {
       totalCount: number;
       edges?: Array<{
         cursor: string;
-        node?: {
+        node: {
           id: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
@@ -22760,7 +22782,7 @@ export type GetMemberListQuery = {
               }
             | {}
             | null;
-        } | null;
+        };
       } | null> | null;
       pageInfo?: PaginationFragment | null;
     };
@@ -38703,10 +38725,16 @@ export const GetLoanPreviewDocument = `
             principal
             remainingPrincipal
             currentRemainingPrincipal
-            paid
             paidDate
             remainingInterest
+            status
+            overDueDays
+            penalty
+            isPartial
+            overdueAmount
+            fullPrincipal
           }
+          totalRemainingPayable
         }
         statistics {
           remainingPayableAmount
@@ -38927,8 +38955,9 @@ export const GetLoanAccountDetailsDocument = `
             payment
             remainingPrincipal
             remainingInterest
-            paid
             currentRemainingPrincipal
+            status
+            overDueDays
           }
           total
           totalInterest
