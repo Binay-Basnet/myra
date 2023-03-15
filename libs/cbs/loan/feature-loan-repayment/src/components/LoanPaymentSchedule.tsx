@@ -116,10 +116,10 @@ export const LoanPaymentSchedule = () => {
         </Text>
         <Box display="flex" gap="s16">
           <Button variant="ghost" onClick={onRecentPaymentToggle}>
-            View all payments
+            View All Payments
           </Button>
           <Button variant="ghost" onClick={onFullScheduleToggle}>
-            View loan schedule
+            View Full Schedule
           </Button>
         </Box>
       </Box>
@@ -299,7 +299,10 @@ export const LoanPaymentSchedule = () => {
       <FullLoanSchedule
         isOpen={isFullScheduleOpen}
         onClose={onFullScheduleClose}
-        data={paymentSchedule?.installments as LoanInstallment[]}
+        data={
+          (paymentSchedule?.installments?.filter((installment) => installment?.status !== 'PAID') ??
+            []) as LoanInstallment[]
+        }
         total={paymentSchedule?.total as string}
         totalInterest={paymentSchedule?.totalInterest ?? 0}
         totalPrincipal={paymentSchedule?.totalPrincipal ?? 0}
