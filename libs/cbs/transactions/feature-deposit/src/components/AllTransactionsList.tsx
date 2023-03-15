@@ -15,14 +15,12 @@ import {
   featureCode,
   getFilterQuery,
   getPaginationQuery,
-  useTranslation,
 } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface DepositListProps {}
 
 export const AllTransactionsList = () => {
-  const { t } = useTranslation();
   const router = useRouter();
 
   const { data: allTransactionFilterMapping } = useGetAllTransactionFilterMappingQuery();
@@ -48,7 +46,7 @@ export const AllTransactionsList = () => {
         accessorFn: (row) => row?.node?.id,
       },
       {
-        id: 'transactionType',
+        id: 'txnType',
         accessorFn: (row) => row?.node?.transactionType,
         header: 'Type',
         cell: (props) => (
@@ -72,7 +70,7 @@ export const AllTransactionsList = () => {
         },
       },
       {
-        id: 'branchName',
+        id: 'branchId',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branchName,
         enableColumnFilter: true,
@@ -97,7 +95,10 @@ export const AllTransactionsList = () => {
         filterFn: 'amount',
       },
     ],
-    [t]
+    [
+      allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.branchId,
+      allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.txnType,
+    ]
   );
 
   return (

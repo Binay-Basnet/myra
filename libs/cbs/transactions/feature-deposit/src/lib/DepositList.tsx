@@ -88,12 +88,13 @@ export const DepositList = () => {
         meta: {
           width: '25%',
           filterMaps: {
+            comparator: 'CONTAINS',
             list: depositFilterMapping?.transaction?.filterMapping?.deposit?.paymentMode,
           },
         },
       },
       {
-        id: 'processedBy',
+        id: 'depositedBy',
         header: t['depositListDepositedBy'],
         enableColumnFilter: true,
 

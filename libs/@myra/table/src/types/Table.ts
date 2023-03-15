@@ -21,6 +21,7 @@ declare module '@tanstack/table-core' {
       display?: 'none';
     };
     filterMaps?: {
+      comparator?: '=' | '<' | '>' | '< >' | 'CONTAINS';
       list?:
         | ({
             label?: string | null | undefined;

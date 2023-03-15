@@ -77,6 +77,7 @@ export const WithdrawList = () => {
         meta: {
           width: '25%',
           filterMaps: {
+            comparator: 'CONTAINS',
             list: withdrawFilterMapping?.transaction?.filterMapping?.withdraw?.paymentMode?.map(
               (p) => ({
                 label: p.label as string,

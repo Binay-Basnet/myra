@@ -166,23 +166,25 @@ export const TableHeadCell = <T,>({
           {flexRender(header.column.columnDef.header, header.getContext())}
         </Box>
       )}
-      {header.column.getCanFilter() ? (
-        header.column.columnDef.filterFn === 'dateTime' ? (
-          <TableDateFilter column={header.column.id} />
-        ) : header.column.columnDef.filterFn === 'amount' ? (
-          <TableAmountFilter column={header.column.id} />
-        ) : (
-          <TableListFilter
-            column={header.column.id}
-            data={
-              header.column.columnDef.meta?.filterMaps?.list as unknown as {
-                label: string;
-                value: string;
-              }[]
-            }
-          />
-        )
-      ) : null}
+      {(() => {
+        if (header.column.getCanFilter()) {
+          if (header.column.columnDef.filterFn === 'dateTime') {
+            return <TableDateFilter column={header.column.id} />;
+          }
+          if (header.column.columnDef.filterFn === 'amount') {
+            return <TableAmountFilter column={header.column.id} />;
+          }
+          return (
+            <TableListFilter
+              comparator={header.column.columnDef.meta?.filterMaps?.comparator}
+              column={header.column.id}
+              data={header.column.columnDef.meta?.filterMaps?.list}
+            />
+          );
+        }
+
+        return null;
+      })()}
     </Box>
 
     {children}

@@ -4,7 +4,11 @@ import { useRouter } from 'next/router';
 import { TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { TransferType, useGetAccountTransferFilterMappingQuery, useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
+import {
+  TransferType,
+  useGetAccountTransferFilterMappingQuery,
+  useGetAccountTransferListDataQuery,
+} from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
@@ -27,7 +31,7 @@ export const AccountTransferList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const {data: accountTransferFilterMapping} = useGetAccountTransferFilterMappingQuery();
+  const { data: accountTransferFilterMapping } = useGetAccountTransferFilterMappingQuery();
   const { data, isFetching } = useGetAccountTransferListDataQuery({
     pagination: getPaginationQuery(),
     filter: getFilterQuery(),
@@ -62,9 +66,10 @@ export const AccountTransferList = () => {
         accessorFn: (row) => (row?.node?.transferType ? transferType[row?.node?.transferType] : ''),
         meta: {
           filterMaps: {
+            comparator: 'CONTAINS',
             list: accountTransferFilterMapping?.transaction?.filterMapping?.transfer?.type,
-          }
-        }
+          },
+        },
       },
       {
         id: 'amount',

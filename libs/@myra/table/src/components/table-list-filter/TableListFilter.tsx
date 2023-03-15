@@ -44,9 +44,10 @@ export interface TableListFilterContentProps {
 interface TableListFilterProps {
   data?: Option[];
   column: string;
+  comparator?: '=' | '<' | '>' | '< >' | 'CONTAINS';
 }
 
-export const TableListFilter = ({ data, column }: TableListFilterProps) => {
+export const TableListFilter = ({ data, column, comparator }: TableListFilterProps) => {
   const router = useRouter();
   const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -92,7 +93,7 @@ export const TableListFilter = ({ data, column }: TableListFilterProps) => {
                         ...parsedQuery,
                         [column]: {
                           value: newFilter.map((f) => f.value),
-                          compare: '=',
+                          compare: comparator || '=',
                         },
                       },
                       { allowDots: true, arrayFormat: 'brackets', encode: false }
