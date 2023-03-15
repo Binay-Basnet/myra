@@ -26990,6 +26990,7 @@ export type GetLoanProductEditDataQuery = {
             loanProcessingCharge?: Array<{
               serviceName?: string | null;
               ledgerName?: string | null;
+              percentage?: number | null;
               amount?: any | null;
             } | null> | null;
             insuranceType?: {
@@ -44717,6 +44718,7 @@ export const GetLoanProductEditDataDocument = `
             loanProcessingCharge {
               serviceName
               ledgerName
+              percentage
               amount
             }
             isInsuranceApplicable
