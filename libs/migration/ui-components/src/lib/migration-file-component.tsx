@@ -1,20 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useGetCsvDataQuery, useSetCsvDataMutation } from '@migration/data-access';
 import { differenceWith, isEqual, omit } from 'lodash';
 
-import { Box, Button, Text } from '@myra-ui';
+import { Box, Button, Loader, Text } from '@myra-ui';
 
 import { FormEditableTable } from '@coop/shared/form';
 
 export const MigrationFileComponent = () => {
   const router = useRouter();
+  const [changedRows, setChangedRows] = useState([]);
 
   const methods = useForm();
-  const { reset, handleSubmit, getValues } = methods;
+  const { reset, handleSubmit, getValues, watch } = methods;
 
-  const { data, refetch } = useGetCsvDataQuery({
+  const { data, refetch, isLoading } = useGetCsvDataQuery({
     input: {
       fileName: router?.query['filename'] as string,
       dbName: router?.query['name'] as string,
@@ -34,6 +35,7 @@ export const MigrationFileComponent = () => {
     (acc, curr) => [...acc, { ...curr?.data, row: curr?.row }],
     []
   );
+
   useEffect(() => {
     if (alteredTableData) {
       reset({
@@ -64,10 +66,22 @@ export const MigrationFileComponent = () => {
       },
     }).then(() => refetch());
   };
+  if (isLoading) {
+    return (
+      <Box>
+        <Loader />
+      </Box>
+    );
+  }
 
+  const onChange = () => {
+    const watchedData = watch('data');
+    const dataToBeSent = differenceWith(watchedData, alteredTableData, isEqual);
+    setChangedRows(dataToBeSent);
+  };
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} onChange={onChange}>
         <Box
           display="flex"
           flexDir="column"
@@ -78,12 +92,32 @@ export const MigrationFileComponent = () => {
           boxShadow="lg"
         >
           <Box display="flex" justifyContent="space-between">
-            <Text fontSize="r3" fontWeight="medium">
-              CSV Data
-            </Text>
+            <Box display="flex" flexDir="column">
+              <Text fontSize="r3" fontWeight="medium">
+                Project: {router?.query['name']}
+              </Text>
+              <Text fontSize="r3" fontWeight="medium">
+                CSV type: {router?.query['csvType']}
+              </Text>
+              <Text fontSize="r3" fontWeight="medium">
+                Migration File: {router?.query['filename']}
+              </Text>
+            </Box>
             <Button type="submit" w={100}>
-              Edit
+              Submit
             </Button>
+          </Box>
+          <Box
+            display="flex"
+            p={2}
+            bg="gray.500"
+            borderRadius={5}
+            w="-webkit-fit-content"
+            position="fixed"
+            top={90}
+            left={500}
+          >
+            Changed Rows: {changedRows?.map((item) => `${item?.row}, `)}
           </Box>
           {columns && tableData && (
             <Box overflowX="scroll">

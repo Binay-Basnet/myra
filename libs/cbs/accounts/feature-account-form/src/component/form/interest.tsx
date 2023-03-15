@@ -106,7 +106,7 @@ export const Interest = () => {
             <FormRadioGroup name="interestAuthority" options={radioGroupdata} direction="row" />
           </Box>
 
-          {interestAuth && (
+          {interestAuth !== 'Not Applicable' && (
             <Box display="flex" flexDirection="column" gap="s8">
               <Text fontWeight="500" fontSize="s3">
                 {' '}

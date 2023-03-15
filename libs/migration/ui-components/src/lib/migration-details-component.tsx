@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import {
   useGetDirectoryStructureQuery,
   useGetExtractionDataQuery,
@@ -16,25 +17,29 @@ import { Box, Button, Collapse, Grid, GridItem, Text } from '@myra-ui';
 import { FormSelect } from '@coop/shared/form';
 
 export const MigrationDetailsComponents = () => {
-  const [sourceCollapse, setSourceCollapse] = useState(false);
-  const [mapperCollapse, setMapperCollapse] = useState(false);
-  const [transformCollapse, setTransformCollapse] = useState(false);
+  const [sourceCollapse, setSourceCollapse] = useState(true);
+  const [mapperCollapse, setMapperCollapse] = useState(true);
+  const [transformCollapse, setTransformCollapse] = useState(true);
   const [extractionCollapse, setExtractionCollapse] = useState(true);
   const [transformationCollapse, setTransformationCollapse] = useState(true);
 
   const router = useRouter();
   const methods = useForm();
   const { getValues, handleSubmit } = methods;
-  const { data: directoryStructureData, refetch } = useGetDirectoryStructureQuery({
-    dbName: router?.query?.['name'] as string,
-  });
-  const { data: extractionData } = useGetExtractionDataQuery({
+  const { data: directoryStructureData, refetch: directoryRefetch } = useGetDirectoryStructureQuery(
+    {
+      dbName: router?.query?.['name'] as string,
+    }
+  );
+  const { data: extractionData, refetch: extractionRefetch } = useGetExtractionDataQuery({
     dbName: router?.query?.['name'] as string,
   });
 
-  const { data: tansformationData } = useGetTransformationDataQuery({
-    dbName: router?.query?.['name'] as string,
-  });
+  const { data: tansformationData, refetch: transformationRefetch } = useGetTransformationDataQuery(
+    {
+      dbName: router?.query?.['name'] as string,
+    }
+  );
 
   const { mutateAsync } = useStartTransformMutation();
 
@@ -55,7 +60,7 @@ export const MigrationDetailsComponents = () => {
         choices: 'all',
         databaseType: getValues()?.databaseType,
       },
-    }).then(() => refetch());
+    }).then(() => directoryRefetch());
   };
 
   return (
@@ -64,6 +69,7 @@ export const MigrationDetailsComponents = () => {
         <Text fontSize="2xl" fontWeight="semibold">
           Projects {'>'} {router?.query?.['name']}
         </Text>
+
         {/* <Button onClick={() => router.push(`/mapping/${router?.query?.['name']}`)}>
           Mapping Data
         </Button> */}
@@ -80,25 +86,43 @@ export const MigrationDetailsComponents = () => {
               borderRadius={6}
               boxShadow="lg"
             >
-              <Text
-                fontSize="r3"
-                fontWeight="medium"
-                onClick={() => setSourceCollapse(!sourceCollapse)}
-                cursor="pointer"
-              >
-                Source CSV:
-              </Text>
+              <Box display="flex" justifyContent="space-between">
+                <Text
+                  fontSize="r3"
+                  fontWeight="medium"
+                  onClick={() => setSourceCollapse(!sourceCollapse)}
+                  cursor="pointer"
+                >
+                  Source CSV:
+                </Text>
+                <Button onClick={() => directoryRefetch()}>Reload</Button>
+              </Box>
               <Collapse in={sourceCollapse}>
-                {sourceCSVData?.map((item, index) => (
-                  <Text
-                    cursor="pointer"
-                    onClick={() =>
-                      router.push(`/${router?.query['name']}/${item}?csvType=sourceCSV`)
-                    }
-                  >
-                    {index + 1}. {item}
-                  </Text>
-                ))}
+                <Box maxH="35vh" overflowY="scroll">
+                  <TableContainer>
+                    <Table size="sm">
+                      <Thead>
+                        <Tr>
+                          <Th>S.N</Th>
+                          <Th>Filename</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {sourceCSVData?.map((item, index) => (
+                          <Tr
+                            cursor="pointer"
+                            onClick={() =>
+                              router.push(`/${router?.query['name']}/${item}?csvType=sourceCSV`)
+                            }
+                          >
+                            <Td>{index + 1}</Td>
+                            <Td>{item}</Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                </Box>
               </Collapse>
             </Box>
             <Box
@@ -110,25 +134,43 @@ export const MigrationDetailsComponents = () => {
               borderRadius={6}
               boxShadow="lg"
             >
-              <Text
-                fontSize="r3"
-                fontWeight="medium"
-                onClick={() => setMapperCollapse(!mapperCollapse)}
-                cursor="pointer"
-              >
-                Mapper CSV:{' '}
-              </Text>
+              <Box display="flex" justifyContent="space-between">
+                <Text
+                  fontSize="r3"
+                  fontWeight="medium"
+                  onClick={() => setMapperCollapse(!mapperCollapse)}
+                  cursor="pointer"
+                >
+                  Mapper CSV:
+                </Text>
+                <Button onClick={() => directoryRefetch()}>Reload</Button>
+              </Box>
               <Collapse in={mapperCollapse}>
-                {mapperCSVData?.map((item, index) => (
-                  <Text
-                    cursor="pointer"
-                    onClick={() =>
-                      router.push(`/${router?.query['name']}/${item}?csvType=mapperCSV`)
-                    }
-                  >
-                    {index + 1}. {item}
-                  </Text>
-                ))}
+                <Box maxH="35vh" overflowY="scroll">
+                  <TableContainer>
+                    <Table size="sm">
+                      <Thead>
+                        <Tr>
+                          <Th>S.N</Th>
+                          <Th>Filename</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {mapperCSVData?.map((item, index) => (
+                          <Tr
+                            cursor="pointer"
+                            onClick={() =>
+                              router.push(`/${router?.query['name']}/${item}?csvType=mapperCSV`)
+                            }
+                          >
+                            <Td>{index + 1}</Td>
+                            <Td>{item}</Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                </Box>
               </Collapse>
             </Box>
             <Box
@@ -140,14 +182,17 @@ export const MigrationDetailsComponents = () => {
               borderRadius={6}
               boxShadow="lg"
             >
-              <Text
-                fontSize="r3"
-                fontWeight="medium"
-                onClick={() => setTransformCollapse(!transformCollapse)}
-                cursor="pointer"
-              >
-                Transformed CSV:{' '}
-              </Text>
+              <Box display="flex" justifyContent="space-between">
+                <Text
+                  fontSize="r3"
+                  fontWeight="medium"
+                  onClick={() => setTransformCollapse(!transformCollapse)}
+                  cursor="pointer"
+                >
+                  Transformed CSV:{' '}
+                </Text>
+                <Button onClick={() => directoryRefetch()}>Reload</Button>
+              </Box>
               <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Box display="flex" flexDir="column" bg="gray.200" p={5} borderRadius={5} gap={5}>
@@ -177,18 +222,35 @@ export const MigrationDetailsComponents = () => {
                       <Text fontSize="r2" fontWeight="medium">
                         {item} :
                       </Text>
-                      {tableDataArray?.map((i, index) => (
-                        <Text
-                          cursor="pointer"
-                          onClick={() =>
-                            router.push(
-                              `/${router?.query['name']}/${i}?csvType=transformedCSV&&folderName=${item}`
-                            )
-                          }
-                        >
-                          {index + 1}. {i}
-                        </Text>
-                      ))}
+
+                      <Box maxH="35vh" overflowY="scroll">
+                        <TableContainer>
+                          <Table size="sm">
+                            <Thead>
+                              <Tr>
+                                <Th>S.N</Th>
+                                <Th>Filename</Th>
+                              </Tr>
+                            </Thead>
+                            <Tbody>
+                              {tableDataArray?.map((i, index) => (
+                                <Tr
+                                  cursor="pointer"
+                                  onClick={() =>
+                                    router.push(
+                                      `/${router?.query['name']}/${i}?csvType=transformedCSV&&folderName=${item}`
+                                    )
+                                  }
+                                >
+                                  <Td>{index + 1}</Td>
+                                  <Td>{i}</Td>
+                                </Tr>
+                              ))}
+                            </Tbody>
+                          </Table>
+                        </TableContainer>
+                      </Box>
+
                       <br />
                     </>
                   );
@@ -208,20 +270,38 @@ export const MigrationDetailsComponents = () => {
               borderRadius={6}
               boxShadow="lg"
             >
-              <Text
-                fontSize="r3"
-                fontWeight="medium"
-                onClick={() => setExtractionCollapse(!extractionCollapse)}
-                cursor="pointer"
-              >
-                Extraction Data:{' '}
-              </Text>
+              <Box display="flex" justifyContent="space-between">
+                <Text
+                  fontSize="r3"
+                  fontWeight="medium"
+                  onClick={() => setExtractionCollapse(!extractionCollapse)}
+                  cursor="pointer"
+                >
+                  Extraction Data:{' '}
+                </Text>
+                <Button onClick={() => extractionRefetch()}>Reload</Button>
+              </Box>
               <Collapse in={extractionCollapse}>
-                {extractedData?.map((item, index) => (
-                  <Text>
-                    {index + 1}. {item}
-                  </Text>
-                ))}
+                <Box maxH="35vh" overflowY="scroll">
+                  <TableContainer>
+                    <Table size="sm">
+                      <Thead>
+                        <Tr>
+                          <Th>S.N</Th>
+                          <Th>Status</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {extractedData?.map((i, index) => (
+                          <Tr>
+                            <Td>{index + 1}</Td>
+                            <Td>{i}</Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                </Box>
               </Collapse>
             </Box>
             <Box
@@ -233,20 +313,38 @@ export const MigrationDetailsComponents = () => {
               borderRadius={6}
               boxShadow="lg"
             >
-              <Text
-                fontSize="r3"
-                fontWeight="medium"
-                cursor="pointer"
-                onClick={() => setTransformationCollapse(!transformationCollapse)}
-              >
-                Transformation Data:{' '}
-              </Text>
+              <Box display="flex" justifyContent="space-between">
+                <Text
+                  fontSize="r3"
+                  fontWeight="medium"
+                  cursor="pointer"
+                  onClick={() => setTransformationCollapse(!transformationCollapse)}
+                >
+                  Transformation Data:{' '}
+                </Text>
+                <Button onClick={() => transformationRefetch()}>Reload</Button>
+              </Box>
               <Collapse in={transformationCollapse}>
-                {transformedData?.map((item, index) => (
-                  <Text>
-                    {index + 1}. {item}
-                  </Text>
-                ))}
+                <Box maxH="35vh" overflowY="scroll">
+                  <TableContainer>
+                    <Table size="sm">
+                      <Thead>
+                        <Tr>
+                          <Th>S.N</Th>
+                          <Th>Status</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {transformedData?.map((i, index) => (
+                          <Tr>
+                            <Td>{index + 1}</Td>
+                            <Td>{i}</Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                </Box>
               </Collapse>
             </Box>
           </Box>

@@ -1,29 +1,32 @@
+import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { Alert, FormSection, Grid, GridItem, Text } from '@myra-ui';
+import { Alert, Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 
 import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/shared/components';
-import { FormAmountInput, FormInput, FormSelect } from '@coop/shared/form';
+import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
+
+import { SubHeadingText, TextBoxContainer } from '../formui';
 
 export const PrematuredPenalty = () => {
   const { t } = useTranslation();
-
+  const { watch } = useFormContext();
   const router = useRouter();
 
-  // const prematurePenaltyEnable = watch('isPrematurePenaltyApplicable');
+  const prematurePenaltyEnable = watch('isPrematurePenaltyApplicable');
 
-  // const enableSwitch = [
-  //   {
-  //     label: t['enable'],
-  //     value: true,
-  //   },
-  //   {
-  //     label: t['disable'],
-  //     value: false,
-  //   },
-  // ];
+  const enableSwitch = [
+    {
+      label: t['enable'],
+      value: true,
+    },
+    {
+      label: t['disable'],
+      value: false,
+    },
+  ];
 
   const penaltyDataType = [
     {
@@ -53,50 +56,57 @@ export const PrematuredPenalty = () => {
     <FormSection header="depositProductPrematuredPenaltySetup">
       <GridItem colSpan={3}>
         <BoxContainer>
-          {/* <Box display="flex" justifyContent="space-between">
-            <Text>{t['prematurePenaltyEnable']}</Text>
+          <Box display="flex" justifyContent="space-between">
+            <TextBoxContainer>
+              <SubHeadingText>{t['prematurePenaltyEnable']} </SubHeadingText>
+              {/* <SubText>{t['depositProductEnterPenaltydetails']} </SubText> */}
+            </TextBoxContainer>
             <FormSwitchTab name="isPrematurePenaltyApplicable" options={enableSwitch} />
+          </Box>
+          {/* <Box display="flex" justifyContent="space-between">
+            <Text></Text>
           </Box> */}
+          {prematurePenaltyEnable && (
+            <Grid templateColumns="repeat(3,1fr)" gap="s16">
+              <FormSelect
+                name="prematurePenalty.penaltyDateType"
+                label={t['depositProductPenaltyDateType']}
+                options={penaltyDataType}
+                isDisabled={router?.asPath?.includes('/edit')}
+              />
+              <FormInput
+                name="prematurePenalty.noOfDays"
+                label={t['depositProductNumberofDays']}
+                isDisabled={router?.asPath?.includes('/edit')}
+              />
 
-          <Grid templateColumns="repeat(3,1fr)" gap="s16">
-            <FormSelect
-              name="prematurePenalty.penaltyDateType"
-              label={t['depositProductPenaltyDateType']}
-              options={penaltyDataType}
-              isDisabled={router?.asPath?.includes('/edit')}
-            />
-            <FormInput
-              name="prematurePenalty.noOfDays"
-              label={t['depositProductNumberofDays']}
-              isDisabled={router?.asPath?.includes('/edit')}
-            />
-
-            <FormInput
-              isRequired
-              name="prematurePenalty.penaltyRate"
-              label={t['depositProductPenaltyRate']}
-              rightElement={
-                <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-                  %
-                </Text>
-              }
-              textAlign="right"
-              isDisabled={router?.asPath?.includes('/edit')}
-            />
-            <FormAmountInput
-              type="number"
-              name="prematurePenalty.penaltyAmount"
-              label={t['depositProductPenaltyAmount']}
-              isDisabled={router?.asPath?.includes('/edit')}
-            />
-            <GridItem colSpan={3}>
-              <Alert status="warning">
-                <Text fontWeight="Medium" fontSize="r1">
-                  {t['penaltyAlert']}
-                </Text>
-              </Alert>
-            </GridItem>
-          </Grid>
+              <FormInput
+                isRequired
+                name="prematurePenalty.penaltyRate"
+                label={t['depositProductPenaltyRate']}
+                rightElement={
+                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                    %
+                  </Text>
+                }
+                textAlign="right"
+                isDisabled={router?.asPath?.includes('/edit')}
+              />
+              <FormAmountInput
+                type="number"
+                name="prematurePenalty.penaltyAmount"
+                label={t['depositProductPenaltyAmount']}
+                isDisabled={router?.asPath?.includes('/edit')}
+              />
+              <GridItem colSpan={3}>
+                <Alert status="warning">
+                  <Text fontWeight="Medium" fontSize="r1">
+                    {t['penaltyAlert']}
+                  </Text>
+                </Alert>
+              </GridItem>
+            </Grid>
+          )}
           {/* {prematurePenaltyEnable && (
             <Grid templateColumns="repeat(3,1fr)" gap="s16">
               <FormSelect

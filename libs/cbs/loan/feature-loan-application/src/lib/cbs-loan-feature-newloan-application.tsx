@@ -83,6 +83,7 @@ export const NewLoanApplication = () => {
   const loanType = watch('productType');
   const loanSubType = watch('productSubType');
   const productId = watch('productId');
+  const sanctionedAmount = watch('totalSanctionedAmount');
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({
@@ -405,7 +406,7 @@ export const NewLoanApplication = () => {
                     <LoanRepaymentSchemeComponent />
                     {/* )} */}
                     <LoanPaymentSchedule />
-                    <LoanProcessingCharge />
+                    {sanctionedAmount && <LoanProcessingCharge />}
                     <RequiredDocuments />
                     <FormTextArea name="note" label="Notes" />
                   </LoanProductContext.Provider>

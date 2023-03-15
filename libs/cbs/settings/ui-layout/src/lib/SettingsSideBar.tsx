@@ -105,6 +105,33 @@ const otherTabList: TabList[] = [
   },
 ];
 
+const accountingTabList: TabList[] = [
+  {
+    label: 'General',
+    route: '/settings/general/accounting/general',
+    aclKey: 'SETTINGS_INDEXING',
+  },
+  {
+    label: 'Credit Terms',
+    route: '/settings/general/accounting/credit-terms',
+    aclKey: 'SETTINGS_INDEXING',
+  },
+  {
+    label: 'Custom Fields',
+    route: '/settings/general/accounting/custom-fields',
+    aclKey: 'SETTINGS_INDEXING',
+  },
+  {
+    label: 'Default Ledger Mapping',
+    route: '/settings/general/accounting/default-ledger-mapping',
+    aclKey: 'SETTINGS_INDEXING',
+  },
+  {
+    label: 'Tax',
+    route: '/settings/general/accounting/tax',
+    aclKey: 'SETTINGS_INDEXING',
+  },
+];
 export const SettingSideBar = () => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -288,6 +315,58 @@ export const SettingSideBar = () => {
                   </AccordionButton>
                   <AccordionPanel px="s8" py="s4">
                     <TabColumn list={otherTabList} />
+                  </AccordionPanel>
+                </>
+              )}
+            </AccordionItem>
+            <AccordionItem bg="transparent" border="none">
+              {({ isExpanded }) => (
+                <>
+                  <AccordionButton
+                    border="none"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    // _hover={{
+                    //   bg: 'highlight.500',
+                    //   borderRadius: 'br2',
+                    // }}
+                    _expanded={{}}
+                    pl="s8"
+                    w="100%"
+                    h="40px"
+                    pr="0"
+                  >
+                    <Text
+                      color="gray.800"
+                      fontWeight="500"
+                      fontSize="r1"
+                      _hover={{
+                        cursor: 'pointer',
+                        textDecoration: 'underline',
+                      }}
+                      onClick={() => router.push('/settings/general/accounting/general')}
+                    >
+                      Accounting{' '}
+                    </Text>
+                    <Box
+                      _hover={{
+                        bg: 'gray.200',
+                        borderRadius: 'br2',
+                      }}
+                      p="s8"
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <Icon
+                        as={isExpanded ? IoChevronUpSharp : IoChevronDownSharp}
+                        color="gray.800"
+                        flexShrink={0}
+                      />
+                    </Box>
+                  </AccordionButton>
+                  <AccordionPanel px="s8" py="s4">
+                    <TabColumn list={accountingTabList} />
                   </AccordionPanel>
                 </>
               )}

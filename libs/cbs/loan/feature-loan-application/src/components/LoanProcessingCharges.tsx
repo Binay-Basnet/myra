@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Box, Text } from '@myra-ui';
@@ -10,13 +11,38 @@ import { useLoanProductContext } from '../hooks/useLoanProduct';
 
 export const LoanProcessingCharge = () => {
   const { product } = useLoanProductContext();
-  const { watch, register } = useFormContext<LoanAccountInput>();
-  const serviceCharge = watch('loanProcessingCharge');
 
   const loanProcessingCharges = product?.loanProcessingCharge;
+
+  const { watch, register, setValue } = useFormContext<LoanAccountInput>();
+  const sactionAmount = watch('totalSanctionedAmount');
+
+  useEffect(() => {
+    loanProcessingCharges?.map((val, index) =>
+      setValue(
+        `loanProcessingCharge.${index}.amount`,
+        calculateAmount(val?.percentage, val?.amount)
+      )
+    );
+  }, [loanProcessingCharges, setValue, sactionAmount]);
+
+  const serviceCharge = watch('loanProcessingCharge');
+  const calculateAmount = (x: number | null | undefined, y: number | null): string => {
+    if (x && y) {
+      const value = (x / 100) * Number(sactionAmount);
+      const amount = value + Number(y);
+      return String(amount);
+    }
+    if (y) {
+      return String(y);
+    }
+    return '0';
+  };
+
   if (!product) {
     return null;
   }
+
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" gap="s4">
@@ -41,7 +67,7 @@ export const LoanProcessingCharge = () => {
           });
 
           register(`loanProcessingCharge.${index}.amount`, {
-            value: val?.amount,
+            value: calculateAmount(val?.percentage, val?.amount),
           });
           register(`loanProcessingCharge.${index}.ledgerName`, {
             value: val?.ledgerName,
@@ -67,7 +93,7 @@ export const LoanProcessingCharge = () => {
               <Box w="250px">
                 <FormAmountInput
                   name={`loanProcessingCharge.${index}.amount`}
-                  defaultValue={val?.amount}
+                  defaultValue={calculateAmount(val?.percentage, val?.amount)}
                 />
               </Box>
             </Box>
