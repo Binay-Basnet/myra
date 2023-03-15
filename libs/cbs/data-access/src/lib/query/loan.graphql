@@ -813,3 +813,13 @@ query getLoanAccountLedgersList($id: ID!) {
   }
 }
 
+query getLoanFilterMapping {
+  loanAccount {
+    filterMapping {
+      productName {
+        label
+        value
+      }
+    }
+  }
+}

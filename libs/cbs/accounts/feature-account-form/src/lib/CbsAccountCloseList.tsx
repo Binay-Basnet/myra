@@ -98,7 +98,7 @@ export const CBSAccountCloseList = () => {
         ),
       },
     ],
-    [t]
+    [router, savingFilterMapping?.account.filterMapping?.productID]
   );
 
   return (

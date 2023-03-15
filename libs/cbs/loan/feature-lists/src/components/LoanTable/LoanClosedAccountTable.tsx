@@ -4,7 +4,12 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
+import {
+  GetLoanListQuery,
+  LoanAccountEdge,
+  LoanObjState,
+  useGetLoanFilterMappingQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 
 interface ILoanClosedAccountTable {
@@ -21,6 +26,8 @@ export const LoanClosedAccountTable = ({
   viewLink,
 }: ILoanClosedAccountTable) => {
   const router = useRouter();
+
+  const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
 
   const rowData = useMemo<LoanAccountEdge[]>(
     () => (data?.loanAccount?.list?.edges as LoanAccountEdge[]) ?? [],
@@ -54,6 +61,11 @@ export const LoanClosedAccountTable = ({
         header: 'Product Name',
         accessorFn: (row) => row?.node?.product.productName,
         enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: loanFilterMapping?.loanAccount?.filterMapping?.productName,
+          },
+        },
       },
       {
         header: 'Member',

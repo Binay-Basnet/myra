@@ -4,7 +4,12 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
+import {
+  GetLoanListQuery,
+  LoanAccountEdge,
+  LoanObjState,
+  useGetLoanFilterMappingQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -17,6 +22,8 @@ interface ILoanAppTable {
 
 export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable) => {
   const router = useRouter();
+
+  const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
 
   const rowData = useMemo<LoanAccountEdge[]>(
     () => (data?.loanAccount?.list?.edges as LoanAccountEdge[]) ?? [],
@@ -48,6 +55,11 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
         header: 'Product Name',
         accessorFn: (row) => row?.node?.product.productName,
         enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: loanFilterMapping?.loanAccount?.filterMapping?.productName,
+          },
+        },
       },
       {
         header: 'Member',
@@ -135,7 +147,7 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
         },
       },
     ],
-    [router]
+    [loanFilterMapping?.loanAccount?.filterMapping?.productName, router, type, viewLink]
   );
 
   return (
