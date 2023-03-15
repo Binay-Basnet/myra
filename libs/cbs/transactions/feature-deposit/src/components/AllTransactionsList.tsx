@@ -4,7 +4,10 @@ import { useRouter } from 'next/router';
 import { Box, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetAllTransactionsListQuery } from '@coop/cbs/data-access';
+import {
+  useGetAllTransactionFilterMappingQuery,
+  useGetAllTransactionsListQuery,
+} from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { ROUTES } from '@coop/cbs/utils';
 import {
@@ -22,6 +25,7 @@ export const AllTransactionsList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  const { data: allTransactionFilterMapping } = useGetAllTransactionFilterMappingQuery();
   const { data, isFetching } = useGetAllTransactionsListQuery({
     pagination: getPaginationQuery(),
     filter: getFilterQuery(),
@@ -32,6 +36,7 @@ export const AllTransactionsList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'date',
         header: 'Date',
         cell: (props) => props?.row?.original?.node?.date?.local?.split(' ')[0] ?? 'N/A',
         accessorKey: 'node.date.local',
@@ -43,6 +48,7 @@ export const AllTransactionsList = () => {
         accessorFn: (row) => row?.node?.id,
       },
       {
+        id: 'transactionType',
         accessorFn: (row) => row?.node?.transactionType,
         header: 'Type',
         cell: (props) => (
@@ -51,6 +57,11 @@ export const AllTransactionsList = () => {
           </Box>
         ),
         enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.txnType,
+          },
+        },
       },
       {
         header: 'Note',
@@ -61,12 +72,19 @@ export const AllTransactionsList = () => {
         },
       },
       {
+        id: 'branchName',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branchName,
         enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.branchId,
+          },
+        },
       },
 
       {
+        id: 'amount',
         header: 'Amount',
         accessorFn: (row) => row?.node?.amount,
         cell: (props) => amountConverter(props.getValue() as string),

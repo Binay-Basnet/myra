@@ -9512,6 +9512,16 @@ export type LoanAccountEdge = {
   node?: Maybe<LoanAccount>;
 };
 
+export type LoanAccountFilterMapping = {
+  id?: Maybe<Scalars['ID']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  objState?: Maybe<LoanObjState>;
+  productID?: Maybe<Scalars['ID']>;
+  productName: Array<LabelValueArray>;
+};
+
 export type LoanAccountFormState = {
   appliedLoanAmount?: Maybe<Scalars['String']>;
   collateralData?: Maybe<Array<Maybe<LoanAccountCollateral>>>;
@@ -9759,6 +9769,7 @@ export type LoanAccountPreviewResult = {
 
 export type LoanAccountQuery = {
   accountLOC?: Maybe<Scalars['String']>;
+  filterMapping?: Maybe<LoanAccountFilterMapping>;
   formState?: Maybe<LoanAccountFormStateResult>;
   getLoanInstallments?: Maybe<LoanInstallmentResult>;
   getProductCriteria?: Maybe<LoanProductCriteriaResult>;

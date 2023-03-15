@@ -36,6 +36,8 @@ export const CBSAccountCloseList = () => {
         header: 'Account Closed Date',
         accessorFn: (row) => row?.node?.createdAt,
         cell: (props) => <span>{props?.row?.original?.node?.closedAt} </span>,
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Member Code',

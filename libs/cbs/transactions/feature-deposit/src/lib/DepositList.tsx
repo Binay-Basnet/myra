@@ -143,7 +143,12 @@ export const DepositList = () => {
           ),
       },
     ],
-    [t, rowData]
+    [
+      t,
+      depositFilterMapping?.transaction?.filterMapping?.deposit?.paymentMode,
+      depositFilterMapping?.transaction?.filterMapping?.deposit?.depositedBy,
+      router,
+    ]
   );
 
   return (

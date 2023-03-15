@@ -4,7 +4,10 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
+import {
+  useGetWithdrawFilterMappingQuery,
+  useGetWithdrawListDataQuery,
+} from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
@@ -18,17 +21,12 @@ import {
 export const WithdrawList = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
 
-  const { data, isFetching } = useGetWithdrawListDataQuery(
-    {
-      pagination: getPaginationQuery(),
-      filter: getFilterQuery(),
-    },
-    {
-      enabled: searchTerm !== 'undefined',
-    }
-  );
+  const { data: withdrawFilterMapping } = useGetWithdrawFilterMappingQuery();
+  const { data, isFetching } = useGetWithdrawListDataQuery({
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
+  });
 
   const rowData = useMemo(() => data?.transaction?.listWithdraw?.edges ?? [], [data]);
 
@@ -78,6 +76,14 @@ export const WithdrawList = () => {
         enableColumnFilter: true,
         meta: {
           width: '25%',
+          filterMaps: {
+            list: withdrawFilterMapping?.transaction?.filterMapping?.withdraw?.paymentMode?.map(
+              (p) => ({
+                label: p.label as string,
+                value: p.value as string,
+              })
+            ),
+          },
         },
       },
       {
