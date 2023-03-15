@@ -250,7 +250,7 @@ export const Select = React.forwardRef(
           chakraStyles={getChakraDefaultStyles(!!errorText, !!addItemHandler)}
           components={components}
           ref={
-            ref as Ref<SelectInstance<SelectOption, boolean, GroupBase<SelectOption>>> | undefined
+            ref as unknown as Ref<SelectInstance<SelectOption, boolean, GroupBase<SelectOption>>> | undefined
           }
           {...rest}
         />

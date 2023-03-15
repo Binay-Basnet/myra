@@ -45,6 +45,7 @@ query getMemberList($pagination: Pagination!, $filter: Filter) {
             }
           }
         }
+        cursor
       }
       pageInfo {
         ...Pagination

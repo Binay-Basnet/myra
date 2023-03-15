@@ -501,7 +501,7 @@ query getLoanPreview($id: String!) {
             principal
             remainingPrincipal
             currentRemainingPrincipal
-            paid
+            # paid
             paidDate
             remainingInterest
           }
@@ -662,7 +662,7 @@ query getLoanAccountDetails(
             payment
             remainingPrincipal
             remainingInterest
-            paid
+            # paid
             currentRemainingPrincipal
           }
           total

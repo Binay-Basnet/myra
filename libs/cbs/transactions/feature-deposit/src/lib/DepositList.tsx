@@ -113,6 +113,7 @@ export const DepositList = () => {
         },
       },
       {
+        id: 'amount',
         header: t['depositListAmount'],
 
         accessorFn: (row) => amountConverter(row?.node?.amount as string),

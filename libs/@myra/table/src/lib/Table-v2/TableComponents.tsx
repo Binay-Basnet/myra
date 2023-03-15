@@ -124,6 +124,11 @@ export const TableHeadRow = (props: TableHeadRowProps) => (
 
 /* ===================================== */
 
+type Option = {
+  label: string;
+  value: string;
+};
+
 export interface TableHeadCellProps<T> extends ChakraTable.TableCellProps {
   children?: React.ReactNode;
   isDetailPageTable?: boolean;
@@ -178,7 +183,7 @@ export const TableHeadCell = <T,>({
             <TableListFilter
               comparator={header.column.columnDef.meta?.filterMaps?.comparator}
               column={header.column.id}
-              data={header.column.columnDef.meta?.filterMaps?.list}
+              data={header.column.columnDef.meta?.filterMaps?.list as Option[]}
             />
           );
         }

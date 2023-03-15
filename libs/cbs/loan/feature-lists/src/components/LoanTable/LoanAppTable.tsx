@@ -91,7 +91,7 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
         ),
       },
       {
-        id: 'appliedAmount',
+        id: 'appliedLoanAmount',
         header: 'Applied Amount',
         meta: {
           isNumeric: true,

@@ -1,5 +1,6 @@
-import { FormInput } from '@coop/shared/form';
 import { Box, Grid, Text } from '@myra-ui';
+
+import { FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const DepositSaving = () => {

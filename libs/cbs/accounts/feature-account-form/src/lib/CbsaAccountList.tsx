@@ -63,7 +63,7 @@ export const CBSAccountList = () => {
       {
         id: 'accountOpenedDate',
         header: 'Account Open Date',
-        accessorKey: 'node.accountOpenedDate',
+        accessorFn: (row) => row?.node?.accountOpenedDate?.local,
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.accountOpenedDate)}</Text>,
         filterFn: 'dateTime',
         enableColumnFilter: true,

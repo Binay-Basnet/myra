@@ -23,8 +23,7 @@ export const AccountListPage = () => {
       order: null,
     },
     filter: {
-      accountName: searchTerm,
-      productID: id,
+      query: `${searchTerm} ${id}`,
     },
   });
   const rowData = useMemo(
