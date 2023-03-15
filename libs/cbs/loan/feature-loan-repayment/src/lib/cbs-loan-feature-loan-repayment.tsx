@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   FormFooter,
   FormHeader,
   Grid,
@@ -33,7 +34,7 @@ import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter, amountToWordsConverter, featureCode } from '@coop/shared/utils';
 
-import { LoanPaymentSchedule, LoanProductCard, Payment } from '../components';
+import { InstallmentData, LoanPaymentSchedule, LoanProductCard, Payment } from '../components';
 
 export type LoanRepaymentInputType = Omit<LoanRepaymentInput, 'cash'> & {
   cash?:
@@ -69,6 +70,8 @@ export const LoanRepayment = () => {
 
   const [triggerLoanQuery, setTriggerLoanQuery] = useState(false);
   const { mutateAsync } = useSetLoanRepaymentMutation();
+
+  const [totalPayableAmount, setTotalPayableAmount] = useState<number>(0);
 
   // const tableRef = useRef<HTMLTableElement>(null);
 
@@ -294,6 +297,9 @@ export const LoanRepayment = () => {
                 {memberId && loanAccountId && loanPaymentScheduleSplice && loanPaymentSchedule && (
                   <Box display="flex" flexDirection="column" gap="s16" w="100%">
                     <LoanPaymentSchedule />
+
+                    <Divider />
+
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
                       <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
                     </Grid>
@@ -302,14 +308,25 @@ export const LoanRepayment = () => {
                       <SuspiciousTransaction />
                     )}
 
-                    {/* <Box mt="s20">
-                      <InstallmentData loanAccountId={loanAccountId} />
-                    </Box> */}
+                    <Divider />
+
+                    <InstallmentData
+                      loanAccountId={loanAccountId}
+                      totalPayableAmount={totalPayableAmount}
+                      setTotalPayableAmount={setTotalPayableAmount}
+                    />
                   </Box>
                 )}
               </Box>
               <Box display={mode === '1' ? 'flex' : 'none'}>
-                <Payment loanTotal={amountPaid as string} hasLoc={hasLoC} />
+                <Payment
+                  amountPaid={String(amountPaid)}
+                  loanTotal={String(totalPayableAmount)}
+                  hasLoc={hasLoC}
+                  loanAccountId={loanAccountId}
+                  totalPayableAmount={totalPayableAmount}
+                  setTotalPayableAmount={setTotalPayableAmount}
+                />
               </Box>
             </form>
           </FormProvider>
@@ -350,6 +367,16 @@ export const LoanRepayment = () => {
               mainButtonLabel="Proceed Transaction"
               mainButtonHandler={proceedButtonHandler}
               isMainButtonDisabled={Boolean(!amountPaid || (isSuspicious && !suspicionRemarks))}
+              status={
+                <Box display="flex" gap="s32">
+                  <Text fontSize="r1" fontWeight={600} color="gray.500">
+                    Total Payable Amount
+                  </Text>
+                  <Text fontSize="r1" fontWeight={600} color="gray.700">
+                    {amountConverter(totalPayableAmount)}
+                  </Text>
+                </Box>
+              }
             />
           )}
           {mode === '1' && (

@@ -15,7 +15,7 @@ interface IFullLoanScheduleProps {
   isOpen: boolean;
   onClose: () => void;
   loanName: string;
-  totalRemainingPayable: string;
+  totalRemainingPayable?: string | null;
   // remainingInterest?: string | number;
   // currentRemainingPrincipal?: string | number;
 }
@@ -196,7 +196,7 @@ export const FullLoanSchedule = ({
               Total Payable Amount
             </Text>
             <Text flexBasis="25%" display="flex" justifyContent="flex-end">
-              {amountConverter(totalRemainingPayable)}
+              {amountConverter(totalRemainingPayable ?? 0)}
             </Text>
           </Box>
         </Box>
