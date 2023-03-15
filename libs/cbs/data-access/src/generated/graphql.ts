@@ -4694,6 +4694,7 @@ export type EodDate = {
   hasErrors: Scalars['Boolean'];
   headOfficeReady?: Maybe<Scalars['Boolean']>;
   isInitialized: Scalars['Boolean'];
+  recentHistory?: Maybe<Array<Maybe<EodHistory>>>;
   value: Scalars['Localized'];
 };
 
@@ -4726,12 +4727,28 @@ export type EodExceptionInput = {
   maturityCheck: Scalars['Boolean'];
 };
 
+export type EodHistory = {
+  completedBy?: Maybe<Scalars['String']>;
+  completedTime?: Maybe<Scalars['Time']>;
+  eodDate: Scalars['String'];
+  errorCount?: Maybe<Scalars['Int']>;
+  status: EodState;
+};
+
 export const EodOption = {
   CompleteWithError: 'COMPLETE_WITH_ERROR',
   Reinitiate: 'REINITIATE',
 } as const;
 
 export type EodOption = typeof EodOption[keyof typeof EodOption];
+export type EodQuery = {
+  history?: Maybe<Array<Maybe<EodHistory>>>;
+};
+
+export type EodQueryHistoryArgs = {
+  transactionDate?: InputMaybe<Scalars['Localized']>;
+};
+
 export type EodResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<Scalars['ID']>;
@@ -12843,6 +12860,7 @@ export type Query = {
   config: ConfigQuery;
   dashboard: DashboardQuery;
   document: DocumentQuery;
+  endOfDay: EodQuery;
   example: ExampleQuery;
   form: FormQuery;
   inventory: InventoryQuery;
@@ -21956,6 +21974,7 @@ export type LoanProductFragment = {
   loanProcessingCharge?: Array<{
     serviceName?: string | null;
     ledgerName?: string | null;
+    percentage?: number | null;
     amount?: any | null;
   } | null> | null;
   insuranceType?: { type?: string | null; amount?: any | null; rate?: number | null } | null;
@@ -29700,6 +29719,7 @@ export const LoanProductFragmentDoc = `
   loanProcessingCharge {
     serviceName
     ledgerName
+    percentage
     amount
   }
   isInsuranceApplicable

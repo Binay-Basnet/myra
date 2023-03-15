@@ -65,6 +65,7 @@ fragment LoanProduct on LoanProduct {
   loanProcessingCharge {
     serviceName
     ledgerName
+    percentage
     amount
   }
   isInsuranceApplicable
