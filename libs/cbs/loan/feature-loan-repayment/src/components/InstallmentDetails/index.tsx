@@ -1,119 +1,337 @@
-import { Box, Text } from '@myra-ui';
+import { Dispatch, SetStateAction, useMemo } from 'react';
+import { useFormContext } from 'react-hook-form';
+
+import { Box, Chips, Divider, Text } from '@myra-ui';
 
 import { useGetLoanPreviewQuery } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 interface IProps {
   loanAccountId: string;
+  totalPayableAmount: number;
+  setTotalPayableAmount: Dispatch<SetStateAction<number>>;
 }
 
-export const InstallmentData = ({ loanAccountId }: IProps) => {
-  // const methods = useFormContext();
-  // const { watch } = methods;
+type CoveredInstallment = {
+  principal: number;
+  interest: number;
+  fine: number;
+  isPrincipalPartial: boolean;
+  isInterestPartial: boolean;
+  isFinePartial: boolean;
+  installmentNo: number;
+};
 
-  // const amountPaid = watch('amountPaid');
+export const InstallmentData = ({
+  loanAccountId,
+  totalPayableAmount,
+  setTotalPayableAmount,
+}: IProps) => {
+  const methods = useFormContext();
+  const { watch } = methods;
 
-  const loanPreview = useGetLoanPreviewQuery({ id: loanAccountId });
-  const loanRepaymentData =
-    loanPreview?.data?.loanAccount?.loanPreview?.data?.repaymentDetails?.remainingInstallments;
-  const loanTotal =
-    loanPreview?.data?.loanAccount?.loanPreview?.data?.repaymentDetails?.totalInstallmentAmount;
+  const amountPaid = Number(watch('amountPaid')) ?? 0;
 
-  // const loanCalculatedData = loanRepaymentData?.map((item) => {
+  const { data: loanPreviewData } = useGetLoanPreviewQuery({ id: loanAccountId });
 
-  //   if (principalTemp > Number(item?.fine)) {
-  //     fineTemp = principalTemp - Number(item?.fine);
-  //   } else if (Number(item?.fine) > 0) {
-  //     fineTemp = Number(amountPaid) - Number(item?.fine);
-  //   } else if (principalTemp > 0) {
-  //     fineTemp = principalTemp;
-  //   } else {
-  //     fineTemp = amountPaid;
-  //   }
-  //   if (fineTemp > Number(item?.interestAmount)) {
-  //     interestTemp = fineTemp - Number(item?.interestAmount);
-  //   } else {
-  //     interestTemp = fineTemp;
-  //   }
+  const loanInstallments =
+    loanPreviewData?.loanAccount?.loanPreview?.data?.paymentSchedule?.installments;
 
-  //   if (interestTemp > Number(item?.principal)) {
-  //     principalTemp = interestTemp - Number(item?.principal);
-  //   } else {
-  //     principalTemp = interestTemp;
-  //   }
+  const remainingInstallments = useMemo(() => {
+    const lastUnpaidInstallment = loanInstallments?.find(
+      (installment) => installment?.status && installment?.status !== 'PAID'
+    )?.installmentNo;
 
-  //   return {
-  //     installmentNo: item?.installmentNo,
-  //     fine: principalTemp > Number(item?.fine) ? item?.fine : fineTemp,
-  //     interestAmount: fineTemp > Number(item?.interestAmount) ? item?.interestAmount : interestTemp,
-  //     principal: interestTemp > Number(item?.principal) ? item?.principal : principalTemp,
-  //   };
-  // });
+    return lastUnpaidInstallment
+      ? loanInstallments?.slice(lastUnpaidInstallment - 1, -1)
+      : loanInstallments;
+  }, [loanInstallments]);
 
-  // const intallmentsToRender = useMemo(() => {
-  //   if (!amountPaid) return [];
+  const coveredInstallments: CoveredInstallment[] = useMemo(() => {
+    let tempAmount = Number(amountPaid);
 
-  //   const temp=[]
-  //   const tempAmount = amountPaid
+    if (!tempAmount || !remainingInstallments?.length) return [];
 
-  //   loanRepaymentData?.forEach((installment)=>{
-  //     if(tempAmount >(Number(installment?.fine)) )
-  //   })
+    const temp: CoveredInstallment[] = [];
 
-  // }, [amountPaid, loanRepaymentData]);
+    for (let index = 0; index < remainingInstallments.length; index += 1) {
+      if (!tempAmount) break;
 
-  return (
-    <Box>
-      <Box display="flex" flexDirection="column" gap="s16" bg="border.layout">
-        {loanRepaymentData?.map((data) => (
-          <Box
-            display="flex"
-            flexDirection="column"
-            p="s16"
-            gap="s16"
-            key={`${data?.installmentNo}${data?.interestAmount}`}
-          >
-            <Box display="flex" justifyContent="space-between">
-              <Text fontWeight="600" fontSize="s3">
-                Installment No.{data?.installmentNo}
-              </Text>
-            </Box>
-            <Box display="flex" justifyContent="space-between">
-              <Text fontWeight="400" fontSize="s3">
-                Principal Amount
-              </Text>
-              <Text fontWeight="600" fontSize="s3">
-                {amountConverter(data?.principal ?? 0)}
-              </Text>
-            </Box>
-            <Box display="flex" justifyContent="space-between">
-              <Text fontWeight="400" fontSize="s3">
-                Interest Amount
-              </Text>
-              <Text fontWeight="600" fontSize="s3">
-                {amountConverter(data?.interestAmount ?? 0)}
-              </Text>
-            </Box>
-            <Box display="flex" justifyContent="space-between">
-              <Text fontWeight="400" fontSize="s3">
-                Fine
-              </Text>
-              <Text fontWeight="600" fontSize="s3">
-                {amountConverter(data?.fine ?? 0)}
-              </Text>
-            </Box>
+      const installment = remainingInstallments[index];
+
+      if (!installment) break;
+
+      const tempInst: CoveredInstallment = {
+        principal: 0,
+        interest: 0,
+        fine: 0,
+        isPrincipalPartial: false,
+        isInterestPartial: false,
+        isFinePartial: false,
+        installmentNo: installment.installmentNo,
+      };
+
+      const penalty = Number(installment?.penalty);
+      const principal = installment?.isPartial
+        ? Number(installment?.principal) + Number(installment?.currentRemainingPrincipal)
+        : Number(installment?.fullPrincipal);
+
+      const interest = installment?.isPartial
+        ? Number(installment?.interest) + Number(installment?.remainingInterest)
+        : Number(installment?.interest);
+
+      if (penalty) {
+        if (tempAmount > penalty) {
+          tempInst.fine = penalty;
+          tempInst.isFinePartial = false;
+          tempAmount -= penalty;
+        } else {
+          tempInst.fine = tempAmount;
+          tempInst.isFinePartial = true;
+
+          temp.push(tempInst);
+          break;
+        }
+      }
+
+      if (interest) {
+        if (tempAmount > interest) {
+          tempInst.interest = interest;
+          tempInst.isInterestPartial = false;
+          tempAmount -= interest;
+        } else {
+          tempInst.interest = tempAmount;
+          tempInst.isInterestPartial = true;
+
+          temp.push(tempInst);
+          break;
+        }
+      }
+
+      if (principal) {
+        if (tempAmount > principal) {
+          tempInst.principal = principal;
+          tempInst.isPrincipalPartial = false;
+          tempAmount -= principal;
+        } else {
+          tempInst.principal = tempAmount;
+          tempInst.isPrincipalPartial = true;
+
+          temp.push(tempInst);
+          break;
+        }
+      }
+
+      temp.push(tempInst);
+    }
+
+    return temp;
+  }, [amountPaid, remainingInstallments]);
+
+  const { totalCoveredPrincipal, totalCoveredInterest, totalCoveredFine, returnAmount } =
+    useMemo(() => {
+      const tempPrincipal = coveredInstallments?.reduce(
+        (sum, installment) => sum + Number(installment.principal),
+        0
+      );
+
+      const tempInterest = coveredInstallments?.reduce(
+        (sum, installment) => sum + Number(installment.interest),
+        0
+      );
+
+      const tempFine = coveredInstallments?.reduce(
+        (sum, installment) => sum + Number(installment.fine),
+        0
+      );
+
+      setTotalPayableAmount(tempPrincipal + tempInterest + tempFine);
+
+      return {
+        totalCoveredPrincipal: tempPrincipal,
+        totalCoveredInterest: tempInterest,
+        totalCoveredFine: tempFine,
+        returnAmount: amountPaid - tempPrincipal - tempInterest - tempFine,
+      };
+    }, [coveredInstallments, amountPaid]);
+
+  return amountPaid ? (
+    <Box display="flex" flexDirection="column" gap="s16">
+      <Box display="flex" flexDirection="column" gap="s8">
+        <Text fontSize="s3" fontWeight={500} color="gray.700">
+          Payment Details
+        </Text>
+        {coveredInstallments?.map(
+          (installment) =>
+            installment && (
+              <Box
+                display="flex"
+                flexDirection="column"
+                gap="s16"
+                p="s16"
+                bg="highlight.500"
+                borderRadius="br3"
+                key={installment.installmentNo}
+              >
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontWeight="400" fontSize="s3" color="gray.600">
+                      Installment No
+                    </Text>
+                    <Text fontWeight="500" fontSize="s3" color="gray.700">
+                      {installment.installmentNo}
+                    </Text>
+                  </Box>
+                  {installment.principal ? (
+                    <Box display="flex" justifyContent="space-between">
+                      <Box display="flex" alignItems="center" gap="s4">
+                        <Text fontWeight="400" fontSize="s3" color="gray.600">
+                          Principal
+                        </Text>
+
+                        {installment.isPrincipalPartial && (
+                          <Chips
+                            variant="solid"
+                            theme="warning"
+                            size="md"
+                            type="label"
+                            label="Partial"
+                          />
+                        )}
+                      </Box>
+
+                      <Text fontWeight="500" fontSize="s3" color="gray.700">
+                        {amountConverter(installment.principal)}
+                      </Text>
+                    </Box>
+                  ) : null}
+                  {installment.interest ? (
+                    <Box display="flex" justifyContent="space-between">
+                      <Box display="flex" alignItems="center" gap="s4">
+                        <Text fontWeight="400" fontSize="s3" color="gray.600">
+                          Interest
+                        </Text>
+
+                        {installment.isInterestPartial && (
+                          <Chips
+                            variant="solid"
+                            theme="warning"
+                            size="md"
+                            type="label"
+                            label="Partial"
+                          />
+                        )}
+                      </Box>
+                      <Text fontWeight="500" fontSize="s3" color="gray.700">
+                        {amountConverter(installment.interest)}
+                      </Text>
+                    </Box>
+                  ) : null}
+                  {installment.fine ? (
+                    <Box display="flex" justifyContent="space-between">
+                      <Box display="flex" alignItems="center" gap="s4">
+                        <Text fontWeight="400" fontSize="s3" color="gray.600">
+                          Fine
+                        </Text>
+
+                        {installment.isFinePartial && (
+                          <Chips
+                            variant="solid"
+                            theme="warning"
+                            size="md"
+                            type="label"
+                            label="Partial"
+                          />
+                        )}
+                      </Box>
+                      <Text fontWeight="500" fontSize="s3" color="gray.700">
+                        {amountConverter(installment.fine)}
+                      </Text>
+                    </Box>
+                  ) : null}
+                </Box>
+
+                <Box display="flex" justifyContent="space-between">
+                  <Text fontWeight="500" fontSize="r1" color="gray.800">
+                    Total
+                  </Text>
+                  <Text fontWeight="500" fontSize="r1" color="gray.800">
+                    {amountConverter(
+                      installment.principal + installment.interest + installment.fine
+                    )}
+                  </Text>
+                </Box>
+              </Box>
+            )
+        )}
+      </Box>
+
+      <Divider />
+
+      <Box
+        display="flex"
+        flexDirection="column"
+        gap="s4"
+        px="s16"
+        py="s18"
+        border="1px"
+        borderColor="border.layout"
+        borderRadius="br3"
+      >
+        {totalCoveredPrincipal ? (
+          <Box display="flex" justifyContent="space-between">
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              Total Principal
+            </Text>
+
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              {amountConverter(totalCoveredPrincipal)}
+            </Text>
           </Box>
-        ))}
+        ) : null}
+        {totalCoveredInterest ? (
+          <Box display="flex" justifyContent="space-between">
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              Total Interest
+            </Text>
 
-        <Box display="flex" justifyContent="space-between" p="s16">
-          <Text fontWeight="600" fontSize="s3">
-            Total Amount
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              {amountConverter(totalCoveredInterest)}
+            </Text>
+          </Box>
+        ) : null}
+        {totalCoveredFine ? (
+          <Box display="flex" justifyContent="space-between">
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              Total Fine
+            </Text>
+
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              {amountConverter(totalCoveredFine)}
+            </Text>
+          </Box>
+        ) : null}
+        <Box display="flex" justifyContent="space-between">
+          <Text fontSize="s3" fontWeight={500} color="gray.700">
+            Total Payable Amount
           </Text>
-          <Text fontWeight="600" fontSize="s3">
-            {amountConverter(loanTotal as string)}
+
+          <Text fontSize="s3" fontWeight={500} color="gray.700">
+            {amountConverter(totalPayableAmount)}
           </Text>
         </Box>
+        {returnAmount > 0 ? (
+          <Box display="flex" justifyContent="space-between">
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              Return
+            </Text>
+
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              {amountConverter(returnAmount)}
+            </Text>
+          </Box>
+        ) : null}
       </Box>
     </Box>
-  );
+  ) : null;
 };

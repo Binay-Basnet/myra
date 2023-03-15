@@ -1,20 +1,23 @@
-import { useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Box, Grid, GridItem, Text } from '@myra-ui';
+import { Box, Divider, Grid, GridItem, Text } from '@myra-ui';
 
 import { LoanRepaymentMethod, ObjState } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
   FormAccountSelect,
+  FormAmountInput,
   FormBankSelect,
   FormEditableTable,
   FormInput,
-  FormNumberInput,
   FormSwitch,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
+
+import { InstallmentData } from '../InstallmentDetails';
 
 const paymentModes = [
   {
@@ -65,8 +68,12 @@ const denominationsOptions = [
 
 /* eslint-disable-next-line */
 export interface PaymentProps {
+  amountPaid: string;
   loanTotal: string | undefined;
   hasLoc?: boolean;
+  loanAccountId: string;
+  totalPayableAmount: number;
+  setTotalPayableAmount: Dispatch<SetStateAction<number>>;
 }
 
 type PaymentTableType = {
@@ -75,7 +82,14 @@ type PaymentTableType = {
   amount: string;
 };
 
-export const Payment = ({ loanTotal, hasLoc }: PaymentProps) => {
+export const Payment = ({
+  amountPaid,
+  loanTotal,
+  hasLoc,
+  loanAccountId,
+  totalPayableAmount,
+  setTotalPayableAmount,
+}: PaymentProps) => {
   const { watch, setValue } = useFormContext();
 
   const selectedPaymentMode = watch('paymentMethod');
@@ -98,9 +112,9 @@ export const Payment = ({ loanTotal, hasLoc }: PaymentProps) => {
   const returnAmount = watch('cash.returned_amount');
 
   useEffect(() => {
-    setValue('cash.cashPaid', String(Math.ceil(Number(loanTotal))));
-    setValue('cash.returned_amount', Math.ceil(Number(loanTotal)) - Number(loanTotal));
-  }, [loanTotal, setValue]);
+    setValue('cash.cashPaid', String(Math.ceil(Number(amountPaid))));
+    setValue('cash.returned_amount', Math.ceil(Number(amountPaid)) - Number(loanTotal));
+  }, [amountPaid, loanTotal, setValue]);
 
   useEffect(() => {
     setValue('cash.returned_amount', Number(cashPaid) - Number(loanTotal));
@@ -128,6 +142,22 @@ export const Payment = ({ loanTotal, hasLoc }: PaymentProps) => {
             </GridItem>
             <FormInput name="account.amount" value={loanTotal} isDisabled label="Amount" />
 
+            <GridItem colSpan={2}>
+              <Divider />
+            </GridItem>
+
+            <GridItem colSpan={2}>
+              <InstallmentData
+                loanAccountId={loanAccountId}
+                totalPayableAmount={totalPayableAmount}
+                setTotalPayableAmount={setTotalPayableAmount}
+              />
+            </GridItem>
+
+            <GridItem colSpan={2}>
+              <Divider />
+            </GridItem>
+
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
               <FormTextArea name="account.note" label="Note" />
             </GridItem>
@@ -146,23 +176,23 @@ export const Payment = ({ loanTotal, hasLoc }: PaymentProps) => {
             </GridItem>
             <FormInput isRequired name="bankVoucher.voucher_no" label="Voucher Number" />
             <FormInput name="bankVoucher.amount" value={loanTotal} isDisabled label="Amount" />
-            {/* <FormInput
-              name="amount"
-              type="number"
-              label="Amount"
-              textAlign="right"
-              placeholder="0.00"
-            /> */}
-            {/* <FormInput
-              type="date"
-              name="cheque.depositedAt"
-              label="Deposited Date"
-            />
-            <FormInput
-              type="text"
-              name="cheque.depositedBy"
-              label="Deposited By"
-            /> */}
+
+            <GridItem colSpan={2}>
+              <Divider />
+            </GridItem>
+
+            <GridItem colSpan={2}>
+              <InstallmentData
+                loanAccountId={loanAccountId}
+                totalPayableAmount={totalPayableAmount}
+                setTotalPayableAmount={setTotalPayableAmount}
+              />
+            </GridItem>
+
+            <GridItem colSpan={2}>
+              <Divider />
+            </GridItem>
+
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
               <FormTextArea name="bankVoucher.note" label="Note" />
             </GridItem>
@@ -172,13 +202,7 @@ export const Payment = ({ loanTotal, hasLoc }: PaymentProps) => {
         {selectedPaymentMode === LoanRepaymentMethod?.Cash && (
           <>
             <Grid templateColumns="repeat(2,1fr)" gap="s20">
-              <FormInput
-                isRequired
-                name="cash.cashPaid"
-                type="number"
-                label="Cash"
-                textAlign="right"
-              />
+              <FormAmountInput isRequired name="cash.cashPaid" label="Cash" />
             </Grid>
 
             <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />
@@ -244,7 +268,7 @@ export const Payment = ({ loanTotal, hasLoc }: PaymentProps) => {
                   Total
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {totalCashPaid}
+                  {amountConverter(totalCashPaid)}
                 </Text>
               </Box>
 
@@ -254,11 +278,8 @@ export const Payment = ({ loanTotal, hasLoc }: PaymentProps) => {
                 </Text>
 
                 <Box>
-                  <FormNumberInput name="cash.returned_amount" />
+                  <FormAmountInput name="cash.returned_amount" />
                 </Box>
-                {/* <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {returnAmount.toFixed(2)}
-                </Text> */}
               </Box>
 
               <Box display="flex" justifyContent="space-between">
@@ -266,122 +287,27 @@ export const Payment = ({ loanTotal, hasLoc }: PaymentProps) => {
                   Grand Total
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {totalCashPaid - returnAmount}
+                  {amountConverter(totalCashPaid - returnAmount)}
                 </Text>
               </Box>
             </Box>
+
+            <Divider />
+
+            <InstallmentData
+              loanAccountId={loanAccountId}
+              totalPayableAmount={totalPayableAmount}
+              setTotalPayableAmount={setTotalPayableAmount}
+            />
+
+            <Divider />
+
             <Box display="flex" flexDirection="column" gap="s4">
               <FormTextArea name="cash.note" label="Note" rows={5} />
             </Box>
           </>
         )}
       </BoxContainer>
-      {/* {selectedPaymentMode === LoanRepaymentMethod.BankVoucher && (
-          <FormSection templateColumns={2}>
-            <GridItem colSpan={2}>
-              <FormSelect
-                name="bankVoucher.bankId"
-                label={t['sharePurchaseBankName']}
-                options={bankList}
-              />
-            </GridItem>
-
-            <GridItem colSpan={1}>
-              <FormInput
-                type="text"
-                name="bankVoucher.voucherId"
-                label={t['sharePurchaseVoucherId']}
-              />
-            </GridItem>
-
-            <GridItem colSpan={1}>
-              <FormAmountInput
-              type="number"
-                defaultValue={loanTotal}
-                name="amount"
-                isDisabled
-                label={t['sharePurchaseAmount']}
-              />
-            </GridItem>
-
-            <GridItem colSpan={1}>
-              <FormDatePicker
-                name="bankVoucher.depositedDate"
-                label={t['sharePurchaseDepositedDate']}
-              />
-            </GridItem>
-            <GridItem colSpan={1}>
-              <FormInput name="bankVoucher.depositedBy" label={t['loanRepaymentDepositedBy']} />
-            </GridItem>
-            <GridItem colSpan={1}>
-              <FormInput name="bankVoucher.sourceOfFund" label={t['sharePurchaseSourceofFund']} />
-            </GridItem>
-            <GridItem colSpan={1}>
-              <FormFileInput name="bankVoucher.fileUpload" label={t['sharePurchaseFileUpload']} />
-            </GridItem>
-          </FormSection>
-        )}
-
-        {selectedPaymentMode === LoanRepaymentMethod.Account && (
-          <ShareAccount totalAmount={Number(loanTotal)} />
-        )}
-
-        {selectedPaymentMode === LoanRepaymentMethod.Cash && (
-          <ShareCash
-            totalAmount={Number(loanTotal)}
-            denominationTotal={denominationTotal}
-            totalCashPaid={totalCashPaid}
-            returnAmount={returnAmount}
-          />
-        )}
-
-        {selectedPaymentMode === LoanRepaymentMethod.Cash && (
-          <FormSection>
-            <GridItem colSpan={3}>
-              <Grid mt="s16" templateColumns="repeat(2,1fr)" gap="s20">
-                <GridItem colSpan={1}>
-                  <FormInput name="cash.sourceOfFund" label={t['sharePurchaseSourceofFund']} />
-                </GridItem>
-                <GridItem colSpan={1}>
-                  <FormFileInput name="cash.fileUpload" label={t['sharePurchaseFileUpload']} />
-                </GridItem>
-              </Grid>
-            </GridItem>
-          </FormSection>
-        )}
-
-        {selectedPaymentMode === LoanRepaymentMethod.BankVoucher && (
-          <FormSection>
-            <GridItem colSpan={3}>
-              <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
-                {t['sharePurchaseNote']}
-              </Text>
-              <FormTextArea name="bankVoucher.note" />
-            </GridItem>
-          </FormSection>
-        )}
-
-        {selectedPaymentMode === LoanRepaymentMethod.Account && (
-          <FormSection>
-            <GridItem colSpan={3}>
-              <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
-                {t['sharePurchaseNote']}
-              </Text>
-              <FormTextArea name="account.note" />
-            </GridItem>
-          </FormSection>
-        )}
-
-        {selectedPaymentMode === LoanRepaymentMethod.Cash && (
-          <FormSection>
-            <GridItem colSpan={3}>
-              <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
-                {t['sharePurchaseNote']}
-              </Text>
-              <FormTextArea name="cash.note" />
-            </GridItem>
-          </FormSection>
-        )} */}
     </ContainerWithDivider>
   );
 };

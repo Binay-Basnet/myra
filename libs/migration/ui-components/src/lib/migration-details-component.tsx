@@ -282,11 +282,26 @@ export const MigrationDetailsComponents = () => {
                 <Button onClick={() => extractionRefetch()}>Reload</Button>
               </Box>
               <Collapse in={extractionCollapse}>
-                {extractedData?.map((item, index) => (
-                  <Text>
-                    {index + 1}. {item}
-                  </Text>
-                ))}
+                <Box maxH="35vh" overflowY="scroll">
+                  <TableContainer>
+                    <Table size="sm">
+                      <Thead>
+                        <Tr>
+                          <Th>S.N</Th>
+                          <Th>Status</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {extractedData?.map((i, index) => (
+                          <Tr>
+                            <Td>{index + 1}</Td>
+                            <Td>{i}</Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                </Box>
               </Collapse>
             </Box>
             <Box
@@ -310,11 +325,26 @@ export const MigrationDetailsComponents = () => {
                 <Button onClick={() => transformationRefetch()}>Reload</Button>
               </Box>
               <Collapse in={transformationCollapse}>
-                {transformedData?.map((item, index) => (
-                  <Text>
-                    {index + 1}. {item}
-                  </Text>
-                ))}
+                <Box maxH="35vh" overflowY="scroll">
+                  <TableContainer>
+                    <Table size="sm">
+                      <Thead>
+                        <Tr>
+                          <Th>S.N</Th>
+                          <Th>Status</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {transformedData?.map((i, index) => (
+                          <Tr>
+                            <Td>{index + 1}</Td>
+                            <Td>{i}</Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                </Box>
               </Collapse>
             </Box>
           </Box>
