@@ -434,7 +434,10 @@ query getOfficialUse($id: ID!) {
 query getMemberFilterMapping {
   members {
     filterMapping {
-      serviceCenter
+      serviceCenter {
+        label
+        value
+      }
       objState
     }
   }

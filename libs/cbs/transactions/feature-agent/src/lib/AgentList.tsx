@@ -4,59 +4,25 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import { Filter_Mode, useGetAgentListDataQuery } from '@coop/cbs/data-access';
-import { featureCode, getPaginationQuery, getUrl, useTranslation } from '@coop/shared/utils';
-
-// const MEMBER_TAB_ITEMS = [
-//   {
-//     title: 'memberNavActive',
-//     key: 'APPROVED',
-//   },
-//   {
-//     title: 'memberNavInactive',
-//     key: 'VALIDATED',
-//   },
-//   {
-//     title: 'memberNavDraft',
-//     key: 'DRAFT',
-//   },
-// ];
+import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
+import {
+  featureCode,
+  getFilterQuery,
+  getPaginationQuery,
+  getUrl,
+  useTranslation,
+} from '@coop/shared/utils';
 
 export const AgentList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
 
-  // const { data, isFetching } = useGetMemberListQuery({
-  //   pagination: getPaginationQuery(),
-  //   filter: {
-  //     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-  //   },
-  // });
-  const searchTerm = router?.query['search'] as string;
-  const { data, isFetching } = useGetAgentListDataQuery(
-    {
-      pagination: getPaginationQuery(),
-      filter: {
-        id: searchTerm,
-        // query: searchTerm,
-        // from: searchTerm,
-        // to: searchTerm,
-        // memberId: searchTerm,
-        // memberName: searchTerm,
-        // transactionId: searchTerm,
-        // depositedBy: searchTerm,
-        marketRepName: searchTerm,
-        marketRepId: searchTerm,
-        filterMode: Filter_Mode.Or,
-      },
-      currentBranchOnly: true,
-      // filter: {
-      //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-      // },
-    },
-    { staleTime: 0 }
-  );
+  const { data, isFetching } = useGetAgentListDataQuery({
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
+    currentBranchOnly: true,
+  });
 
   const rowData = useMemo(() => data?.transaction?.listAgent?.edges ?? [], [data]);
 

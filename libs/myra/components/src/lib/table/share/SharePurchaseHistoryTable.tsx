@@ -17,9 +17,6 @@ export const SharePurchaseHistoryTable = ({ id }: IShareHistoryProps) => {
   const { data: shareHistoryTableData, isFetching } = useGetShareHistoryQuery(
     {
       memberId: id,
-    },
-    {
-      staleTime: 0,
     }
   );
 

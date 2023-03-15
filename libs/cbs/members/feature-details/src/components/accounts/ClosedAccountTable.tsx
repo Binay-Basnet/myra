@@ -142,7 +142,7 @@ export const ClosedAccountTable = ({
         ),
       },
     ],
-    [memberName, contactNo]
+    [onToggle, memberName, contactNo]
   );
 
   return (

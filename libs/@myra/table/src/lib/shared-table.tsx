@@ -23,7 +23,7 @@ import { TableSearch, TableSelectionBar } from '../components';
 import { useTable } from '../hooks/useTable';
 import { Column, TableProps } from '../types/Table';
 
-export const TableWithoutRef = <T extends Record<string, unknown>>(
+export const TableWithoutRef = <T,>(
   props: TableProps<T>,
   ref: React.ForwardedRef<HTMLTableElement>
 ) => {
@@ -69,6 +69,7 @@ export const TableWithoutRef = <T extends Record<string, unknown>>(
 
     filterFns: {
       dateTime: () => true,
+      amount: () => true,
     },
     manualFiltering: true,
 
@@ -134,7 +135,7 @@ export const TableWithoutRef = <T extends Record<string, unknown>>(
   );
 };
 
-export const Table = React.forwardRef(TableWithoutRef) as <T extends Record<string, unknown>>(
+export const Table = React.forwardRef(TableWithoutRef) as <T>(
   props: TableProps<T> & { ref?: React.ForwardedRef<HTMLTableElement> }
 ) => ReturnType<typeof TableWithoutRef>;
 

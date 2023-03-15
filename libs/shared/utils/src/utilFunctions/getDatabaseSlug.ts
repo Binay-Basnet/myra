@@ -3,5 +3,5 @@ export const getDatabaseSlug = () => {
 
   const slug = window.location.host.split('.')[0];
   if (slug.includes('localhost')) return 'myra-prod';
-  return slug;
+  return 'myra-prod';
 };

@@ -218,7 +218,7 @@ query getCollateralList {
   }
 }
 
-query getLoanList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
+query getLoanList($paginate: Pagination, $filter: Filter) {
   loanAccount {
     list(paginate: $paginate, filter: $filter) {
       totalCount
@@ -391,7 +391,7 @@ query getMemberLoanAccounts($memberId: ID!) {
   }
 }
 
-query getMemberLoanAccountSearch($filter: LoanAccountSearchFilter, $pagination: Pagination) {
+query getMemberLoanAccountSearch($filter: Filter, $pagination: Pagination) {
   loanAccount {
     list(filter: $filter, paginate: $pagination) {
       edges {
@@ -816,6 +816,17 @@ query getLoanAccountLedgersList($id: ID!) {
         accountType
         balance
         balanceType
+      }
+    }
+  }
+}
+
+query getLoanFilterMapping {
+  loanAccount {
+    filterMapping {
+      productName {
+        label
+        value
       }
     }
   }

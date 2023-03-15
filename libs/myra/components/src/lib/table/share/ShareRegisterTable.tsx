@@ -1,12 +1,12 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
-  Filter_Mode,
   Share_Transaction_Direction,
+  useGetShareFilterMappingQuery,
   useGetShareRegisterListQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
@@ -14,6 +14,7 @@ import { TableListPageHeader } from '@coop/myra/components';
 import {
   amountConverter,
   featureCode,
+  getFilterQuery,
   getPaginationQuery,
   useTranslation,
 } from '@coop/shared/utils';
@@ -22,36 +23,27 @@ export const ShareRegisterTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const searchTerm = router?.query['search'] as string;
+  const { data: shareFilterMapping } = useGetShareFilterMappingQuery();
 
-  const { data, isFetching, refetch } = useGetShareRegisterListQuery(
-    {
-      pagination: getPaginationQuery(),
-      filter: {
-        memberName: searchTerm,
-        memberCode: searchTerm,
-        filterMode: Filter_Mode.Or,
-      },
-    },
-    {
-      staleTime: 0,
-    }
-  );
-
-  useEffect(() => {
-    refetch();
-  }, [router]);
+  const { data, isFetching } = useGetShareRegisterListQuery({
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
+  });
 
   const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'transactionDate',
         header: t['shareRegisterDate'],
+        accessorKey: 'node.transactionDate',
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.transactionDate)}</Text>,
+        filterFn: 'dateTime',
+        enableColumnFilter: true,
       },
 
       {
+        id: 'transactionDirection',
         header: t['shareRegisterType'],
         accessorFn: (row) => row?.node.transactionDirection,
         cell: (props) => (
@@ -62,6 +54,12 @@ export const ShareRegisterTable = () => {
                 t['shareRegisterTableReturn'])}
           </span>
         ),
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: shareFilterMapping?.share?.filterMapping?.transactionDirection || [],
+          },
+        },
       },
       {
         header: t['shareRegisterTableMemberID'],
@@ -102,12 +100,14 @@ export const ShareRegisterTable = () => {
       },
 
       {
-        id: 'share-dr',
+        id: 'debit',
         header: t['shareRegisterTableNameShareDr'],
         accessorFn: (row) => row?.node.debit,
         meta: {
           width: '10%',
         },
+        enableColumnFilter: true,
+        filterFn: 'amount',
         cell: (props) => (
           <span>
             {props.getValue() ? `${Number(props?.getValue())?.toLocaleString('en-IN')}` : '-'}
@@ -115,7 +115,7 @@ export const ShareRegisterTable = () => {
         ),
       },
       {
-        id: 'share-cr',
+        id: 'credit',
         header: t['shareRegisterTableNameShareCr'],
         accessorFn: (row) => row?.node.credit,
         cell: (props) => (
@@ -123,11 +123,16 @@ export const ShareRegisterTable = () => {
             {props.getValue() ? `${Number(props.getValue()).toLocaleString('en-IN')}` : '-'}
           </span>
         ),
+        enableColumnFilter: true,
+        filterFn: 'amount',
       },
       {
+        id: 'shareAmount',
         header: t['shareRegisterTableNameBalance'],
         accessorFn: (row) => amountConverter(row?.node?.shareAmount as string),
         meta: { isNumeric: true },
+        enableColumnFilter: true,
+        filterFn: 'amount',
       },
       {
         id: '_actions',
@@ -160,7 +165,7 @@ export const ShareRegisterTable = () => {
         },
       },
     ],
-    [router.locale]
+    [t, shareFilterMapping?.share?.filterMapping?.transactionDirection, router]
   );
 
   return (
@@ -172,7 +177,7 @@ export const ShareRegisterTable = () => {
       </Box>
       <Table
         isLoading={isFetching}
-        data={rowData ?? []}
+        data={rowData}
         columns={columns}
         rowOnClick={(row) =>
           router.push(`${ROUTES.CBS_SHARE_REGISTER_DETAILS}?id=${row?.node?.id}`)

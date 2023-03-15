@@ -4,57 +4,25 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Filter_Mode, useGetDepositListDataQuery } from '@coop/cbs/data-access';
+import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
+  getFilterQuery,
   getPaginationQuery,
   getUrl,
   useTranslation,
 } from '@coop/shared/utils';
 
-// const MEMBER_TAB_ITEMS = [
-//   {
-//     title: 'memberNavActive',
-//     key: 'APPROVED',
-//   },
-//   {
-//     title: 'memberNavInactive',
-//     key: 'VALIDATED',
-//   },
-//   {
-//     title: 'memberNavDraft',
-//     key: 'DRAFT',
-//   },
-// ];
-
 export const AgentTransactionList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  // const { data, isFetching } = useGetMemberListQuery({
-  //   pagination: getPaginationQuery(),
-  //   filter: {
-  //     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-  //   },
-  // });
-  const searchTerm = router?.query['search'] as string;
-
-  const { data, isFetching } = useGetDepositListDataQuery(
-    {
-      pagination: getPaginationQuery(),
-      filter: {
-        depositedBy: 'agent',
-        marketRepName: searchTerm,
-        marketRepId: searchTerm,
-        filterMode: Filter_Mode.Or,
-      },
-    },
-    {
-      staleTime: 0,
-    }
-  );
+  const { data, isFetching } = useGetDepositListDataQuery({
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
+  });
 
   const rowData = useMemo(() => data?.transaction?.listDeposit?.edges ?? [], [data]);
 
@@ -94,12 +62,16 @@ export const AgentTransactionList = () => {
         },
       },
       {
+        id: 'amount',
         header: 'Amount',
         accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
+        filterFn: 'amount',
+        enableColumnFilter: true,
       },
       {
         id: '_actions',
         header: '',
+
         cell: (props) =>
           props?.row?.original?.node && (
             <TablePopover
