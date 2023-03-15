@@ -1,4 +1,5 @@
 export * from './accounts';
+export * from './AddMinorDetails';
 export * from './BasicDetails';
 export * from './bio';
 export * from './cheque';

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { Box } from '@myra-ui';
 
-import { MemberDetailsPathBar, MemberDetailsSidebar } from '../components';
+import { AddMinorModal, MemberDetailsSidebar } from '../components';
 import {
   Accounts,
   Activity,
@@ -17,14 +17,22 @@ import {
   WithdrawSlip,
 } from '../tabs';
 
-export const MemberDetails = () => {
+export interface CbsMemberDetailsProps {
+  isAddMinorModalOpen?: boolean;
+  handleMinorAccountClose: () => void;
+}
+export const MemberDetails = ({
+  isAddMinorModalOpen,
+  handleMinorAccountClose,
+}: CbsMemberDetailsProps) => {
   const router = useRouter();
 
+  const memberId = router.query['id'] as string;
   const tabQuery = router.query['tab'] as string;
 
   return (
     <>
-      <MemberDetailsPathBar title="Member List" />
+      {/* <MemberDetailsPathBar title="Member List" /> */}
       <Box
         w="320px"
         position="fixed"
@@ -59,6 +67,12 @@ export const MemberDetails = () => {
         {tabQuery === 'transactions' && <Transactions />}
         {tabQuery === 'withdraw slip' && <WithdrawSlip />}
       </Box>
+
+      <AddMinorModal
+        isOpen={isAddMinorModalOpen as boolean}
+        onClose={handleMinorAccountClose}
+        memberId={memberId}
+      />
     </>
   );
 };
