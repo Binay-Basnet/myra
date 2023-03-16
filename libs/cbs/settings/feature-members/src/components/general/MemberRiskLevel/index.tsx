@@ -37,7 +37,7 @@ export const MemberRiskLevel = () => {
         display="flex"
         alignItems="center"
         px="s12"
-        height="s60"
+        height="60px"
       >
         <Box display="flex" flexDir="column" gap="s4">
           <Text fontSize="r1" color="gray.800" fontWeight="SemiBold" lineHeight="16.25px">

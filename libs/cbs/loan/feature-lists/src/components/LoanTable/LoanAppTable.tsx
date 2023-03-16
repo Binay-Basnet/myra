@@ -143,7 +143,7 @@ export const LoanAppTable = ({ data, isLoading, type, viewLink }: ILoanAppTable)
             />
           ),
         meta: {
-          width: '50px',
+          width: '3.125rem',
         },
       },
     ],

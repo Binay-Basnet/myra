@@ -48,7 +48,7 @@ export const SettingsLayout = () => {
 
   return (
     <Box
-      height="50px"
+      height="3.125rem"
       p="0 s16"
       background="secondary.700"
       alignItems="center"
@@ -82,7 +82,7 @@ export const SettingsLayout = () => {
                     color: 'gray.800',
                   }}
                   fontSize="r1"
-                  height="50px"
+                  height="3.125rem"
                   color={isActive ? 'gray.800' : 'gray.0'}
                   display="flex"
                   justifyContent="flex-start"

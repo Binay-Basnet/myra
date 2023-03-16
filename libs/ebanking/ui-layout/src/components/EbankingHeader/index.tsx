@@ -102,7 +102,7 @@ export const EbankingHeader = () => {
               <Box
                 key={coop?.id}
                 cursor="pointer"
-                h="50px"
+                h="3.125rem"
                 display="flex"
                 alignItems="center"
                 justifyContent="space-between"
@@ -130,7 +130,7 @@ export const EbankingHeader = () => {
               borderTop="1px"
               borderTopColor="border.layout"
               cursor="pointer"
-              h="50px"
+              h="3.125rem"
               display="flex"
               alignItems="center"
               px="s12"

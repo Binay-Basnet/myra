@@ -266,7 +266,7 @@ export const SharePurchaseForm = () => {
               {mode === 'shareInfo' && (
                 <GridItem colSpan={memberDetailData ? 4 : 6}>
                   <Box
-                    mb="50px"
+                    mb="3.125rem"
                     display="flex"
                     width="100%"
                     h="100%"

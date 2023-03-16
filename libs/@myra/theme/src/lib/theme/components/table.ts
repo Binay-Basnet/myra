@@ -210,13 +210,13 @@ const sizes = {
       px: 's16',
       lineHeight: '125%',
       fontSize: 's3',
-      height: '50px',
+      height: '3.125rem',
     },
     td: {
       px: 's16',
       lineHeight: '125%',
       fontSize: 's3',
-      height: '50px',
+      height: '3.125rem',
     },
   }),
   default: definePartsStyle({
@@ -224,7 +224,7 @@ const sizes = {
       px: 's16',
       lineHeight: '125%',
       fontSize: 's3',
-      height: '50px',
+      height: '3.125rem',
     },
     td: {
       px: 's16',

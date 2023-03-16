@@ -16,7 +16,7 @@ export const ShareRegister = () => {
 
   return (
     <Box p="s16" bg="white">
-      <Box display="flex" justifyContent="space-between" alignItems="center" h="50px">
+      <Box display="flex" justifyContent="space-between" alignItems="center" h="3.125rem">
         <Text fontWeight="600" fontSize="r1">
           Share Register
         </Text>

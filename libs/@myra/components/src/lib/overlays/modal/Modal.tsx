@@ -81,7 +81,7 @@ export const Modal = (props: ModalProps) => {
             p="s16"
             borderBottom="1px solid"
             borderColor="border.layout"
-            minH="50px"
+            minH="3.125rem"
             display="flex"
             alignItems="center"
             justifyContent="space-between"

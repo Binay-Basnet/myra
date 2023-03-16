@@ -56,7 +56,7 @@ export const DetailPageHeader = ({
 
   return (
     <Box
-      h="50px"
+      h="3.125rem"
       bg="white"
       zIndex="10"
       w="100%"

@@ -85,7 +85,7 @@ export const AccorrdianAddCOOPUnion = ({ kymCurrentSection }: AccordianProps) =>
       <Box
         display="flex"
         justifyContent="space-between"
-        minH="50px"
+        minH="3.125rem"
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenOrganizational(!isOpenOrganizational)}
@@ -134,7 +134,7 @@ export const AccorrdianAddCOOPUnion = ({ kymCurrentSection }: AccordianProps) =>
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenDirector(!isOpenDirector)}
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopUnionAcc2Detailsofdirectorsboardmemberspartners']}
@@ -174,7 +174,7 @@ export const AccorrdianAddCOOPUnion = ({ kymCurrentSection }: AccordianProps) =>
         alignItems="center"
         onClick={() => setIsOpenAccountOperators(!isOpenAccountOperators)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopUnionAcc3AccountOperators']}
@@ -215,7 +215,7 @@ export const AccorrdianAddCOOPUnion = ({ kymCurrentSection }: AccordianProps) =>
         alignItems="center"
         onClick={() => setIsOpenCentralRepresentatives(!isOpenCentralRepresentatives)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopUnionAcc4DetailsofCentralRepresentative']}
@@ -249,7 +249,7 @@ export const AccorrdianAddCOOPUnion = ({ kymCurrentSection }: AccordianProps) =>
         onClick={() => setIsOpenMemberDetails(!isOpenmemberDetails)}
         cursor="pointer"
 
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc5Detailsofmember']}
@@ -287,7 +287,7 @@ export const AccorrdianAddCOOPUnion = ({ kymCurrentSection }: AccordianProps) =>
         alignItems="center"
         onClick={() => setIsOpenEconomicDetails(!isOpenEconomicDetails)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopUnionAcc6EconomicDetails']}
@@ -320,7 +320,7 @@ export const AccorrdianAddCOOPUnion = ({ kymCurrentSection }: AccordianProps) =>
         alignItems="center"
         onClick={() => setIsOpenDeclaration(!isOpenDeclaration)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopUnionAcc7Declaration']}

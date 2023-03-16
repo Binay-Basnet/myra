@@ -100,7 +100,7 @@ export const CBSLoanDisburse = () => {
 export const CBSLoanDisburseSuccess = () => {
   const router = useRouter();
   return (
-    <Container minW="container.lg" p="0" bg="white" pt="50px">
+    <Container minW="container.lg" p="0" bg="white" pt="3.125rem">
       <Box display="flex" flexDirection="column" gap="s32" p="s16" minH="calc(100vh - 220px)">
         <Box display="flex" flexDir="column" justifyContent="center" alignItems="center" gap="s16">
           <Icon as={AiFillCheckCircle} size="xl" color="primary.500" />

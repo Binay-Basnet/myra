@@ -74,7 +74,7 @@ export const AccorrdianAddInstitution = (props: AccordianProps) => {
       <Box
         display="flex"
         justifyContent="space-between"
-        minH="50px"
+        minH="3.125rem"
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenOrganizational(!isOpenOrganizational)}
@@ -120,7 +120,7 @@ export const AccorrdianAddInstitution = (props: AccordianProps) => {
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenTransaction(!isOpenTransaction)}
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
           {t['kymIns2TransactionProfile']}
@@ -154,7 +154,7 @@ export const AccorrdianAddInstitution = (props: AccordianProps) => {
         alignItems="center"
         onClick={() => setIsOpenDetails(!isOpenDetails)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
           {t['kymIns3DetailsofProprietorpartnersDirectors']}
@@ -188,7 +188,7 @@ export const AccorrdianAddInstitution = (props: AccordianProps) => {
         alignItems="center"
         onClick={() => setIsOpenAccountOperations(!isOpenAccountOperations)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
           {t['kymIns4AccountOperations']}
@@ -221,7 +221,7 @@ export const AccorrdianAddInstitution = (props: AccordianProps) => {
         alignItems="center"
         onClick={() => setIsOpenDeclaration(!isOpenDeclaration)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
           {t['kymIns5Declaration']}

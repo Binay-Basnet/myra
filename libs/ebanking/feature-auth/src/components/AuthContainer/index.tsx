@@ -1,8 +1,9 @@
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 
-import { GoBack } from '@coop/ebanking/components';
 import { Box, LocaleSwitcher, Text } from '@myra-ui';
+
+import { GoBack } from '@coop/ebanking/components';
 
 interface IAuthContainerProps {
   children: React.ReactNode;
@@ -27,7 +28,7 @@ export const AuthContainer = ({
       <Box
         w="65%"
         bg="primary.0"
-        pl={{ '2xl': '170px', xl: '100px', lg: '50px' }}
+        pl={{ '2xl': '170px', xl: '100px', lg: '3.125rem' }}
         display="flex"
         flexDir="column"
         justifyContent="center"

@@ -24,7 +24,7 @@ export const DetailsCard = ({
   leftBtn = null,
 }: DetailsCardProps) => (
   <Box borderRadius="br2" boxShadow="E0" bg={bg ?? 'white'}>
-    <Box px="s16" h="50px" display="flex" alignItems="center">
+    <Box px="s16" h="3.125rem" display="flex" alignItems="center">
       <Box w="100%" display="flex" alignItems="center" justifyContent="space-between">
         <Box display="flex" flexDir="column">
           <Text fontSize="r1" fontWeight="SemiBold">

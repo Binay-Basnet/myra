@@ -10,7 +10,7 @@ export interface ModalHeaderProps {
 
 export const ModalHeader = ({ heading, onClose }: ModalHeaderProps) => (
   <Box
-    h="50px"
+    h="3.125rem"
     bg="white"
     zIndex="10"
     w="100%"

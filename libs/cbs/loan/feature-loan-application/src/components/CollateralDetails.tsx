@@ -153,7 +153,7 @@ export const CollateralDetails = () => {
       {fields?.length !== 0 && (
         <Box mt="-s16" border="1px" borderColor="border.layout" borderRadius="br2">
           <Box
-            h="s60"
+            h="60px"
             borderBottom="1px"
             borderBottomColor="border.layout"
             display="flex"
@@ -171,7 +171,7 @@ export const CollateralDetails = () => {
           <Box
             borderBottom="1px"
             borderBottomColor="border.layout"
-            h="50px"
+            h="3.125rem"
             display="flex"
             alignItems="center"
             px="s12"

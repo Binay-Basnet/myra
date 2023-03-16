@@ -8,7 +8,7 @@ interface IDetailPageContentCard {
 export const DetailPageContentCard = ({ header, children }: IDetailPageContentCard) => (
   // const { t } = useTranslation();
   <Box display="flex" flexDirection="column" borderRadius="br2" bg="gray.0">
-    <Box px="s16" height="50px">
+    <Box px="s16" height="3.125rem">
       <Text color="neutralColorLight.Gray-80" fontWeight="SemiBold" fontSize="r1">
         {header}
       </Text>

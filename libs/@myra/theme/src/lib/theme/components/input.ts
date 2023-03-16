@@ -25,7 +25,7 @@ const size: Record<string, SystemStyleObject> = {
     fontWeight: '400',
     lineHeight: '1.5',
     px: 's12',
-    h: '44px',
+    h: 's44',
   },
   sm: {
     borderRadius: 'br2',

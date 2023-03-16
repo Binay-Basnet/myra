@@ -166,6 +166,7 @@ export const TableListFilterContent = React.forwardRef(
             </InputLeftElement>
             <Input
               bg="white"
+              size="md"
               borderRadius="br2"
               py="12px"
               focusBorderColor="primary.500"

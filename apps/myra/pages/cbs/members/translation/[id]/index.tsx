@@ -173,7 +173,7 @@ const Translation = () => {
                 <AccordionItem>
                   {({ isExpanded }) => (
                     <>
-                      <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="60px">
+                      <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="s60">
                         <Box flex="1" textAlign="left">
                           <Text fontSize="r2" fontWeight="600" textTransform="capitalize">
                             {translationDataArray?.length} texts needs to be translated to Nepali

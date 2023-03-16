@@ -142,7 +142,7 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
             />
           ),
         meta: {
-          width: '50px',
+          width: '3.125rem',
         },
       },
     ],

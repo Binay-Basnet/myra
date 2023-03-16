@@ -129,7 +129,7 @@ export const AccountingFeatureAddBankAccount = () => {
 
   return (
     <>
-      <Container minW="container.lg" height="fit-content" pb="60px">
+      <Container minW="container.lg" height="fit-content" pb="s60">
         <FormHeader title={t['accountingBankAccountAddNewBankAccount']} />
 
         <FormProvider {...methods}>

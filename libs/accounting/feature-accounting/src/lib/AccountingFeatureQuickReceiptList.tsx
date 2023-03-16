@@ -5,7 +5,7 @@ import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { useGetMemberListQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
@@ -96,7 +96,7 @@ export const AccountingFeatureQuickReceiptList = () => {
           <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
         ),
         meta: {
-          width: '60px',
+          width: 's60',
         },
       },
     ],

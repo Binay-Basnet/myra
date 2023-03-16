@@ -23,7 +23,7 @@ const InventoryWarehousePage = () => {
   return (
     <Box>
       <InventoryWarehouseHeader heading="warehouseLayoutWarehouse" tabItems={tabList} />
-      <Box mt="50px">
+      <Box mt="3.125rem">
         {(router.query['objState'] === 'listView' || !router.query['objState']) && (
           <WarehouseListTable />
         )}

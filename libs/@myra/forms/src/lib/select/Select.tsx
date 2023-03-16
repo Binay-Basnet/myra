@@ -98,7 +98,7 @@ export const Select = React.forwardRef(
               {addItemHandler && (
                 <Box
                   w="100%"
-                  h="50px"
+                  h="3.125rem"
                   bg="white"
                   display="flex"
                   alignItems="center"
@@ -250,7 +250,9 @@ export const Select = React.forwardRef(
           chakraStyles={getChakraDefaultStyles(!!errorText, !!addItemHandler)}
           components={components}
           ref={
-            ref as unknown as Ref<SelectInstance<SelectOption, boolean, GroupBase<SelectOption>>> | undefined
+            ref as unknown as
+              | Ref<SelectInstance<SelectOption, boolean, GroupBase<SelectOption>>>
+              | undefined
           }
           {...rest}
         />

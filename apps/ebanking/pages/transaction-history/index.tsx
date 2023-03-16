@@ -58,7 +58,7 @@ const TransactionHistoryPage = () => {
           {({ isExpanded }) => (
             <>
               <AccordionButton
-                h="50px"
+                h="3.125rem"
                 // bg={isExpanded ? 'red' : 'white'}
                 borderRadius="br2"
                 p="s16"

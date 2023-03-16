@@ -99,7 +99,7 @@ export const AccountingFeatureCashTransferList = () => {
           />
         ),
         meta: {
-          width: '60px',
+          width: 's60',
         },
       },
     ],

@@ -55,7 +55,7 @@ export const WarehouseListTable = () => {
         accessorKey: 'actions',
         cell: () => <PopoverComponent items={popoverTitle} />,
         meta: {
-          width: '60px',
+          width: 's60',
         },
       },
     ],

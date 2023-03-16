@@ -161,7 +161,7 @@ export const ShareRegisterTable = () => {
           />
         ),
         meta: {
-          width: '60px',
+          width: 's60',
         },
       },
     ],

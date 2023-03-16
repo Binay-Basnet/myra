@@ -52,7 +52,7 @@ export const NeosysFeatureUsersAdd = () => {
       <Container minW="container.lg" height="fit-content" paddingBottom="55px">
         <Box margin="0px auto" bg="gray.0" width="100%" zIndex="10">
           <Box
-            height="60px"
+            height="s60"
             display="flex"
             justifyContent="space-between"
             alignItems="center"

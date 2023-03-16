@@ -24,7 +24,7 @@ export const getComponents: (
         {addItemHandler && (
           <Box
             w="100%"
-            h="50px"
+            h="3.125rem"
             bg="white"
             display="flex"
             alignItems="center"

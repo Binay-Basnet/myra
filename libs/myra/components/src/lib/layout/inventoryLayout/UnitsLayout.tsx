@@ -59,19 +59,19 @@ export const InventoryUnitsLayout = ({ children }: IInventoryPageLayoutProps) =>
               <Text fontSize="r2" color="gray.800" fontWeight="500">
                 Name
               </Text>
-              <Input type="text" h="44px" w="100%" variant="outline" __placeholder="NIBL Bank" />
+              <Input type="text" h="s44" w="100%" variant="outline" __placeholder="NIBL Bank" />
             </Box>
             <Box display="flex" flexDirection="column" gap="s4">
               <Text fontSize="r2" color="gray.800" fontWeight="500">
                 Short Name
               </Text>
-              <Input type="text" h="44px" w="100%" variant="outline" __placeholder="NIBL Bank" />
+              <Input type="text" h="s44" w="100%" variant="outline" __placeholder="NIBL Bank" />
             </Box>
             <Box display="flex" flexDirection="column" gap="s4">
               <Text fontSize="r2" color="gray.800" fontWeight="500">
                 Description
               </Text>
-              <Input type="text" h="44px" w="100%" variant="outline" __placeholder="NIBL Bank" />
+              <Input type="text" h="s44" w="100%" variant="outline" __placeholder="NIBL Bank" />
             </Box>
             <Box display="flex" flexDirection="row" gap="s16">
               <Switch />

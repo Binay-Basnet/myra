@@ -70,7 +70,7 @@ export const CalendarBase = ({
   };
 
   return (
-    <Box w="304px" display="flex" flexDir="column" gap="s4" fontSize="s2" alignItems="center">
+    <Box w="19rem" display="flex" flexDir="column" gap="s4" fontSize="s2" alignItems="center">
       <CalendarWeek locale={locale} calendarType={calendarType} />
 
       <Grid templateColumns="repeat(7, 1fr)" rowGap="s4" w="100%" placeItems="center">

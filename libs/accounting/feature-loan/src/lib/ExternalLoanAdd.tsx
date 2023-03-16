@@ -1,6 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
+
 import {
   asyncToast,
   Box,
@@ -99,7 +100,7 @@ export const ExternalLoanAdd = () => {
 
   return (
     <>
-      <Container minW="container.lg" height="fit-content" pb="60px">
+      <Container minW="container.lg" height="fit-content" pb="s60">
         <FormHeader title="New External Loan" />
 
         <FormProvider {...methods}>

@@ -138,7 +138,7 @@ export const LoanTable = ({
             />
           ),
         meta: {
-          width: '50px',
+          width: '3.125rem',
         },
       },
     ],

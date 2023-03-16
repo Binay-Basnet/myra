@@ -136,7 +136,7 @@ const AddNewAccount = () => {
           <FormProvider {...methods}>
             <form>
               <Box
-                height="60px"
+                height="s60"
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"

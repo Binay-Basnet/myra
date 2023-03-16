@@ -76,7 +76,7 @@ export const AccountListPage = () => {
       //       <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
       //     ),
       //     meta: {
-      //       width: '50px',
+      //       width: '3.125rem',
       //     },
       //   },
     ],

@@ -32,16 +32,16 @@ const typography = {
   },
 
   fontSizes: {
-    s1: '10px',
-    s2: '12px',
-    s3: '13px',
-    r1: '14px',
-    r2: '16px',
-    r3: '20px',
-    l1: '24px',
-    l2: '28px',
-    m1: '32px',
-    m2: '48px',
+    s1: '0.625rem',
+    s2: '0.75rem',
+    s3: '0.8125rem',
+    r1: '0.875rem',
+    r2: '1rem',
+    r3: '1.25rem',
+    l1: '1.5rem',
+    l2: '1.75rem',
+    m1: '2rem',
+    m2: '3rem',
   },
 };
 

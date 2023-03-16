@@ -101,7 +101,7 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
 
         {noOfShares ? (
           <GridItem colSpan={3}>
-            <Box display="flex" borderRadius="br2" gap="s60" p="s16" bg="background.500">
+            <Box display="flex" borderRadius="br2" gap="60px" p="s16" bg="background.500">
               <Box>
                 <Text fontWeight="Regular" fontSize="s2">
                   {t['shareReturnRemainingShare']}

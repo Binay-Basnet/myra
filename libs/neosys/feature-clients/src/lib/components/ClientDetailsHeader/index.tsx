@@ -9,7 +9,7 @@ export interface ClientDetailHeaderProps {
 }
 
 export const ClientDetailHeader = ({ title, button }: ClientDetailHeaderProps) => (
-  <Box height="50px" display="flex" justifyContent="space-between" alignItems="center" p="s16">
+  <Box height="3.125rem" display="flex" justifyContent="space-between" alignItems="center" p="s16">
     <Text fontSize="r1" fontWeight={600}>
       {title}
     </Text>

@@ -3,6 +3,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 import { Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 import { AddSupplierForm } from '../component/form/AddSupplierForm';
@@ -18,7 +19,7 @@ export const InventoryFeatureSuppliers = () => {
       <Container minW="container.lg" height="fit-content" pb="55px">
         <Box margin="0px auto" bg="gray.0" width="100%" zIndex="10">
           <Box
-            height="60px"
+            height="s60"
             display="flex"
             justifyContent="space-between"
             alignItems="center"

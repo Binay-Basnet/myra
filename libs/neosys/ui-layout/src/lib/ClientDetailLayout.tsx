@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { chakra, Image, Tab, Tabs } from '@chakra-ui/react';
 
 import { Box, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {
@@ -74,7 +75,7 @@ export const ClientDetailLayout = (props: ClientDetailLayoutProps) => {
   return (
     <Box>
       <Box
-        height="50px"
+        height="3.125rem"
         p="s16"
         borderBottom="1px solid"
         borderColor="border.layout"
@@ -96,7 +97,7 @@ export const ClientDetailLayout = (props: ClientDetailLayoutProps) => {
       </Box>
       <Box width="300px" position="fixed">
         <Box display="flex" gap="s16" borderBottom="1px solid" borderColor="border.layout" p="s16">
-          <Box boxSize="60px">
+          <Box boxSize="s60">
             <Image src="/client-avatar.png" alt="Dan Abramov" borderRadius="s4" />
           </Box>
 

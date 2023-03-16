@@ -37,7 +37,7 @@ export const InfoCard = ({
         justifyContent="space-between"
         px="s16"
         py={subtitle ? 's16' : 's0'}
-        minH="50px"
+        minH="3.125rem"
       >
         <Box display="flex" flexDir="column" gap="s4">
           <Text fontSize="r1" color="gray.800" fontWeight="600" lineHeight="125%">
