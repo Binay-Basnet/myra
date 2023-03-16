@@ -2,7 +2,7 @@ import { ReactElement, useState } from 'react';
 
 import { MainLayout } from '@myra-ui';
 
-import { MemberDetails, MemberDetailsPathBar } from '@coop/cbs/members/details';
+import { MemberDetails } from '@coop/cbs/members/details';
 import { MemberPagesLayout } from '@coop/cbs/members/list';
 
 const MemberDEtailsPage = () => {
@@ -12,16 +12,11 @@ const MemberDEtailsPage = () => {
   };
 
   return (
-    <>
-      <MemberDetailsPathBar
-        title="Member List"
-        options={[{ label: 'Add Minor', handler: () => setIsAddMinorAccountModalOpen(true) }]}
-      />
-      <MemberDetails
-        isAddMinorModalOpen={isAddMinorModalOpen}
-        handleMinorAccountClose={handleMinorAccountClose}
-      />
-    </>
+    <MemberDetails
+      isAddMinorModalOpen={isAddMinorModalOpen}
+      handleMinorAccountClose={handleMinorAccountClose}
+      options={[{ label: 'Add Minor', handler: () => setIsAddMinorAccountModalOpen(true) }]}
+    />
   );
 };
 MemberDEtailsPage.getLayout = function getLayout(page: ReactElement) {
