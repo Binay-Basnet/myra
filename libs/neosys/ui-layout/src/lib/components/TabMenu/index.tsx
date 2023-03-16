@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { Tab, TabList, Tabs } from '@chakra-ui/react';
 
 import { Box, Icon, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -55,7 +56,7 @@ export const TabMenu = () => {
     ];
 
   return (
-    <Box height="50px" px="s16" py="s4" alignItems="center" display="flex">
+    <Box height="3.125rem" px="s16" py="s4" alignItems="center" display="flex">
       <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
         <TabList border="none" height="100%">
           {demotabs.map(({ title, icon, link }) => {

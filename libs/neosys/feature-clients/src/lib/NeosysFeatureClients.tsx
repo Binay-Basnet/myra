@@ -121,7 +121,7 @@ export const ClientsListPage = () => {
             />
           ) : null,
         meta: {
-          width: '60px',
+          width: 's60',
         },
       },
     ],

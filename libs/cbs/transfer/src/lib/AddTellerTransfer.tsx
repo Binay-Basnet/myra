@@ -109,7 +109,7 @@ export const AddTellerTransfer = () => {
         <Box bg="white">
           <FormProvider {...methods}>
             <form>
-              <Box minH="calc(100vh - 170px)" pb="s60">
+              <Box minH="calc(100vh - 170px)" pb="60px">
                 <FormSection templateColumns={2}>
                   <FormInput name="srcTellerID" label="Sender" isDisabled />
 

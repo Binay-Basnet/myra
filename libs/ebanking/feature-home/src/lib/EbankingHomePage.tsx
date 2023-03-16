@@ -119,7 +119,7 @@ export const EbankingHomePage = () => {
        </Collapse>
        {utilityPayments.length > 10 && (
             <Box
-              h="50px"
+              h="3.125rem"
               display="flex"
               alignItems="center"
               justifyContent="center"

@@ -4,7 +4,12 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
+import {
+  GetLoanListQuery,
+  LoanAccountEdge,
+  LoanObjState,
+  useGetLoanFilterMappingQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 
 interface ILoanClosedAccountTable {
@@ -22,6 +27,8 @@ export const LoanClosedAccountTable = ({
 }: ILoanClosedAccountTable) => {
   const router = useRouter();
 
+  const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
+
   const rowData = useMemo<LoanAccountEdge[]>(
     () => (data?.loanAccount?.list?.edges as LoanAccountEdge[]) ?? [],
     [data]
@@ -30,10 +37,12 @@ export const LoanClosedAccountTable = ({
   const columns = useMemo<Column<LoanAccountEdge>[]>(
     () => [
       {
-        id: 'loan Account Creation Date id',
+        id: 'closedDate',
         header: () => 'Loan Close Date',
         accessorFn: (row) => row?.node?.closedDate,
         cell: (props) => localizedDate(props.row?.original?.node?.closedDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Member Code',
@@ -48,8 +57,15 @@ export const LoanClosedAccountTable = ({
         accessorFn: (row) => row?.node?.LoanAccountName,
       },
       {
+        id: 'productName',
         header: 'Product Name',
         accessorFn: (row) => row?.node?.product.productName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: loanFilterMapping?.loanAccount?.filterMapping?.productName,
+          },
+        },
       },
       {
         header: 'Member',
@@ -123,7 +139,7 @@ export const LoanClosedAccountTable = ({
             />
           ),
         meta: {
-          width: '50px',
+          width: '3.125rem',
         },
       },
     ],

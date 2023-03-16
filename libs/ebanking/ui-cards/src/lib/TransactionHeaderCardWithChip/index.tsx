@@ -17,7 +17,7 @@ export const TransactionHeaderCardWithChip = ({
 }: TransactionHeaderCardWithChipProps) => (
   <Box
     display="flex"
-    h="50px"
+    h="3.125rem"
     bg="white"
     px="s16"
     alignItems="center"

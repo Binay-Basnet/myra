@@ -42,7 +42,7 @@ export const AlternativeChannels = () => {
       <FormProvider {...methods}>
         <Box p="s16" display="flex" flexDir="column" gap="s16">
           <Box display="flex" flexDir="column" gap="s16">
-            <Box h="s60" display="flex" flexDir="column" gap="s4" justifyContent="center">
+            <Box h="60px" display="flex" flexDir="column" gap="s4" justifyContent="center">
               <Text fontSize="r1" fontWeight="600" color="gray.800">
                 {t['acFeeAndCharges']}
               </Text>

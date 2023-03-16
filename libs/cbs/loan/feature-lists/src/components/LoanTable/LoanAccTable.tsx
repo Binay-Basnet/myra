@@ -4,7 +4,12 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
+import {
+  GetLoanListQuery,
+  LoanAccountEdge,
+  LoanObjState,
+  useGetLoanFilterMappingQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -18,6 +23,8 @@ interface ILoanAccTable {
 export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable) => {
   const router = useRouter();
 
+  const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
+
   const rowData = useMemo<LoanAccountEdge[]>(
     () => (data?.loanAccount?.list?.edges as LoanAccountEdge[]) ?? [],
     [data]
@@ -26,10 +33,12 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
   const columns = useMemo<Column<LoanAccountEdge>[]>(
     () => [
       {
-        id: 'loan Account Creation Date id',
+        id: 'approvedDate',
         header: () => 'Loan disbursed date',
         accessorFn: (row) => localizedDate(row?.node?.approvedDate),
         cell: (row) => localizedDate(row?.row?.original?.node?.approvedDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Member Code',
@@ -40,11 +49,16 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
         accessorFn: (row) => row?.node?.id,
       },
       {
+        id: 'productName',
         header: 'Product Name',
         meta: {
           width: '25%',
+          filterMaps: {
+            list: loanFilterMapping?.loanAccount?.filterMapping?.productName,
+          },
         },
         accessorFn: (row) => row?.node?.product.productName,
+        enableColumnFilter: true,
       },
       {
         header: 'Member',
@@ -76,10 +90,13 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
         ),
       },
       {
+        id: 'totalSanctionedAmount',
         header: 'Loan Amount',
         meta: {
           isNumeric: true,
         },
+        enableColumnFilter: true,
+        filterFn: 'amount',
         accessorFn: (row) => amountConverter(row?.node?.totalSanctionedAmount as string),
       },
       {
@@ -125,7 +142,7 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
             />
           ),
         meta: {
-          width: '50px',
+          width: '3.125rem',
         },
       },
     ],

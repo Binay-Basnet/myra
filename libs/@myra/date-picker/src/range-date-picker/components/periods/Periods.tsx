@@ -59,7 +59,7 @@ export const Periods = ({
   const { t } = useLocale(locale);
 
   return (
-    <Box flexShrink={0} w="240px" borderRight="1px" borderColor="border.layout" p="s8">
+    <Box flexShrink={0} w="12rem" borderRight="1px" borderColor="border.layout" p="s8">
       {periods.map((defaultPeriod) => (
         <Fragment key={defaultPeriod.key}>
           <PeriodWrapper

@@ -9,10 +9,10 @@ export const ReportOrganizationHeader = ({ reportType }: { reportType: Report })
   return (
     <Box px="s16" py="s16" display="flex" alignItems="center" justifyContent="space-between">
       <Box display="flex" alignItems="center" gap="s16">
-        <Box position="relative" w="s60" h="s60">
+        <Box position="relative" w="60px" h="60px">
           <Avatar
-            w="s60"
-            h="s60"
+            w="60px"
+            h="60px"
             name={user?.organization?.basicDetails?.name as string}
             src={user?.organization?.basicDetails?.logo as string}
           />

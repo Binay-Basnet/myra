@@ -100,7 +100,7 @@ export const STRDetail = () => {
         </Box>
 
         <Box bg="white" minH="calc(100vh - 170px)">
-          <VStack divider={<Divider />} alignItems="stretch" justifyContent="center" pb="s60">
+          <VStack divider={<Divider />} alignItems="stretch" justifyContent="center" pb="60px">
             <MemberDetails />
 
             <MemberDocuments />

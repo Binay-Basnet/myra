@@ -26,7 +26,7 @@ export const PageHeader = ({
   showTabsInFilter,
 }: PageHeaderProps) => (
   <Box
-    h="50px"
+    h="3.125rem"
     bg="white"
     zIndex="10"
     w="100%"
@@ -35,7 +35,7 @@ export const PageHeader = ({
     pl="s16"
   >
     <Box display="flex" justifyContent="space-between" alignItems="center">
-      <Box display="flex" alignItems="center" h="50px">
+      <Box display="flex" alignItems="center" h="3.125rem">
         <Box display="flex" justifyContent="center" alignItems="center">
           <Text fontSize="r2" fontWeight="SemiBold" color="gray.800">
             {heading}

@@ -4,7 +4,12 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
+import {
+  GetLoanListQuery,
+  LoanAccountEdge,
+  LoanObjState,
+  useGetLoanFilterMappingQuery,
+} from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 
 interface ILoanDeclinedTable {
@@ -17,6 +22,8 @@ interface ILoanDeclinedTable {
 export const LoanDeclinedTable = ({ data, isLoading, type, viewLink }: ILoanDeclinedTable) => {
   const router = useRouter();
 
+  const { data: loanFilterMapping } = useGetLoanFilterMappingQuery();
+
   const rowData = useMemo<LoanAccountEdge[]>(
     () => (data?.loanAccount?.list?.edges as LoanAccountEdge[]) ?? [],
     [data]
@@ -25,10 +32,12 @@ export const LoanDeclinedTable = ({ data, isLoading, type, viewLink }: ILoanDecl
   const columns = useMemo<Column<LoanAccountEdge>[]>(
     () => [
       {
-        id: 'loan Account Creation Date id',
+        id: 'appliedDate',
         header: () => 'Loan Applied Date',
         accessorFn: (row) => row?.node?.appliedDate,
         cell: (props) => localizedDate(props?.row?.original?.node?.appliedDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Loan ID',
@@ -39,8 +48,15 @@ export const LoanDeclinedTable = ({ data, isLoading, type, viewLink }: ILoanDecl
         accessorFn: (row) => row?.node?.LoanAccountName,
       },
       {
+        id: 'productName',
         header: 'Product Name',
         accessorFn: (row) => row?.node?.product.productName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: loanFilterMapping?.loanAccount?.filterMapping?.productName,
+          },
+        },
       },
       {
         header: 'Member',
@@ -114,7 +130,7 @@ export const LoanDeclinedTable = ({ data, isLoading, type, viewLink }: ILoanDecl
             />
           ),
         meta: {
-          width: '50px',
+          width: '3.125rem',
         },
       },
     ],

@@ -3,6 +3,8 @@ import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautif
 import { IoClose } from 'react-icons/io5';
 import { AddIcon } from '@chakra-ui/icons';
 
+import { AccordionPanel, Box, Button, Icon } from '@myra-ui';
+
 import {
   FormCategory,
   FormField,
@@ -10,7 +12,6 @@ import {
   useDeleteFieldMutation,
   useMoveFieldMutation,
 } from '@coop/cbs/data-access';
-import { AccordionPanel, Box, Button, Icon } from '@myra-ui';
 
 import { KYMFileSize } from '../KYMFileSize';
 import { KYMSectionNewOption } from '../KYMSectionNewOption';

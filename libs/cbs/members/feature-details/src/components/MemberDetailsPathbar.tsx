@@ -13,9 +13,10 @@ import { ROUTES } from '@coop/cbs/utils';
 
 interface PathBarProps {
   title: string;
+  options?: { label: string; handler: () => void }[];
 }
 
-export const MemberDetailsPathBar = ({ title }: PathBarProps) => {
+export const MemberDetailsPathBar = ({ title, options }: PathBarProps) => {
   const router = useRouter();
   const memberDetails = useGetMemberKymDetailsOverviewQuery({
     id: router.query['id'] as string,
@@ -52,6 +53,7 @@ export const MemberDetailsPathBar = ({ title }: PathBarProps) => {
       <DetailPageHeader
         title={title}
         backLink={ROUTES.CBS_MEMBER_LIST}
+        options={options}
         member={{
           name: memberInfo?.memberName
             ? (memberInfo?.memberName as string)

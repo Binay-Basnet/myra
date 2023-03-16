@@ -138,7 +138,7 @@ export const CbsSettingsFeatureOrganization = () => {
                 <Box w="100%" mt="s16" h="500px">
                   {/* ==========================TODO ADD DROPDOWN HERE ===================== */}
                   <FormFileInput name="documents" size="lg" />
-                  <Box mt="s60" display="flex" justifyContent="flex-end">
+                  <Box mt="60px" display="flex" justifyContent="flex-end">
                     {' '}
                     <Button size="md" type="submit">
                       {t['settingsOrganizationSaveChanges']}

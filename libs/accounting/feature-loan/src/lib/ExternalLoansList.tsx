@@ -1,9 +1,10 @@
 import { useEffect, useMemo } from 'react';
+
 import { TablePopover, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ExternalLoanType } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
 import { useTranslation } from '@coop/shared/utils';
 
 import { useExternalLoan } from '../hooks/useExternalLoan';
@@ -87,7 +88,7 @@ export const ExternalLoansList = () => {
             />
           ),
         meta: {
-          width: '50px',
+          width: '3.125rem',
         },
       },
     ],

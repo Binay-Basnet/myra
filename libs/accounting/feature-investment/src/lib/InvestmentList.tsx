@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { TablePopover } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import {
   DateType,
@@ -9,8 +12,6 @@ import {
   useAppSelector,
   useGetInvestmentEntriesListDataQuery,
 } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
-import { TablePopover } from '@myra-ui';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 const investmentAccountType = {
@@ -103,7 +104,7 @@ export const InvestmentList = () => {
             />
           ),
         meta: {
-          width: '60px',
+          width: 's60',
         },
       },
     ],

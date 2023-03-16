@@ -63,7 +63,7 @@ export const TransactionTabMenu = () => {
 
   return (
     <Box
-      height="50px"
+      height="3.125rem"
       px="s16"
       pt="s4"
       pb="5px"

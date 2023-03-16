@@ -11,9 +11,9 @@ import { en, useTranslation } from '@coop/shared/utils';
 const TabCol = chakra(Tab, {
   baseStyle: {
     color: 'gray.600',
-    minHeight: '40px',
-    maxHeight: '56px',
-    fontSize: '14px',
+    minHeight: 's40',
+    maxHeight: 's56',
+    fontSize: 'r1',
     fontWeight: '400',
     lineHeight: '1.25',
     width: '100%',
@@ -70,6 +70,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
                           color: '#37474F',
                           bg: 'gray.200',
                           borderRadius: 'br2',
+                          fontWeight: '500',
                         }
                       : {
                           bg: 'transparent',

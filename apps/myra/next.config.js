@@ -80,7 +80,7 @@ const nextConfig = {
       'minio.myraerp.com',
       'minio.dev.myraerp.com',
     ],
-    // unoptimized: true,
+    unoptimized: true,
   },
   // i18n: {
   //   locales: ['en', 'ne'],

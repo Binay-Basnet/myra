@@ -182,6 +182,7 @@ export const RangedDatePicker = ({
                   borderBottom="1px"
                   borderColor="border.layout"
                   py="s16"
+                  w="100%"
                 >
                   <Calendar calendarProps={calendarProps} />
                   <Calendar calendarProps={calendarProps} nextMonth />

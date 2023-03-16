@@ -38,7 +38,7 @@ export const TopLevelHeader = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <Box px="s16" py="s10" h="60px">
+    <Box px="s16" py="s10" h="s60">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Image src="/logo.svg" alt="neosys" />
 

@@ -66,7 +66,7 @@ export const BookStatDetailPage = () => {
           <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
         ),
         meta: {
-          width: '60px',
+          width: 's60',
         },
       },
     ],

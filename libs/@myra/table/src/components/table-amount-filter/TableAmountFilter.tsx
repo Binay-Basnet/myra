@@ -1,40 +1,136 @@
 /* eslint-disable-next-line */
-import {
-  Box,
-  Flex,
-  HStack,
-  IconButton,
-  Input,
-  Popover,
-  Select,
-  Spacer,
-  Button,
-  Icon,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Icon, Input, Popover, Spacer, Text } from '@chakra-ui/react';
 import { BsFilter } from 'react-icons/bs';
-import React, { ForwardedRef, useEffect, useState } from 'react';
-import { HeaderGroup } from 'react-table';
+import React, { ForwardedRef, useState } from 'react';
 import { PopoverContent, PopoverTrigger } from '@myra-ui/components';
+import qs from 'qs';
+import { URLFilter } from '@coop/shared/utils';
+import { useRouter } from 'next/router';
+import { AmountFilter } from '@coop/shared/form';
+
+type Condition = '=' | '<' | '>' | '< >';
 
 export interface TableAmountFilterProps {
-  data?: string;
+  column: string;
 }
 
-export const TableAmountFilter = () => {
+export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
+  const router = useRouter();
   const initialFocusRef = React.useRef<HTMLSelectElement | null>(null);
 
+  const parsedQuery = qs.parse(router.query['filter'] as string, {
+    allowDots: true,
+    parseArrays: true,
+    comma: true,
+  }) as URLFilter;
+
+  const { value, compare } = parsedQuery[column] || {};
+
+  const filterCols = Object.keys(parsedQuery);
+
   return (
-    <Popover isLazy placement="auto-end" initialFocusRef={initialFocusRef} colorScheme="primary">
-      {({ onClose }) => (
+    <Popover
+      isLazy
+      placement="bottom-start"
+      initialFocusRef={initialFocusRef}
+      colorScheme="primary"
+    >
+      {({ onClose, isOpen }) => (
         <>
           <PopoverTrigger>
-            <IconButton aria-label="open">
-              <Icon as={BsFilter} size="md" />
-            </IconButton>
+            <Box as="button" display="flex" alignItems="center">
+              <Icon
+                as={BsFilter}
+                w="s20"
+                h="s20"
+                p="s4"
+                rounded="br1"
+                _hover={{ bg: 'background.500' }}
+                bg={isOpen || filterCols.includes(column) ? 'background.500' : 'transparent'}
+                color={isOpen ? 'primary.500' : ''}
+              />
+            </Box>
           </PopoverTrigger>
-          <PopoverContent _focus={{ boxShadow: 'E2' }}>
-            <TableAmountFilterContent ref={initialFocusRef} onClose={onClose} />
+          <PopoverContent w="100%" boxShadow="E2" border="none" borderRadius="br2">
+            <TableAmountFilterContent
+              value={
+                compare === '< >' && typeof value !== 'string' && 'to' in value
+                  ? {
+                      max: value.to,
+                      min: value.from,
+                      conditon: compare,
+                    }
+                  : compare === '=' && typeof value === 'string'
+                  ? { max: value, min: value, conditon: '=' }
+                  : compare === '<' && typeof value === 'string'
+                  ? { max: undefined, min: value, conditon: '<' }
+                  : compare === '>' && typeof value === 'string'
+                  ? { max: value, min: undefined, conditon: '>' }
+                  : undefined
+              }
+              onClose={onClose}
+              onChange={(newValue) => {
+                let queryString;
+                if (newValue.conditon === '=') {
+                  queryString = qs.stringify(
+                    {
+                      ...parsedQuery,
+                      [column]: {
+                        value: newValue.max,
+                        compare: '=',
+                      },
+                    },
+                    { allowDots: true, arrayFormat: 'brackets', encode: false }
+                  );
+                } else if (newValue.conditon === '<') {
+                  queryString = qs.stringify(
+                    {
+                      ...parsedQuery,
+                      [column]: {
+                        value: newValue.min,
+                        compare: '<',
+                      },
+                    },
+                    { allowDots: true, arrayFormat: 'brackets', encode: false }
+                  );
+                } else if (newValue.conditon === '>') {
+                  queryString = qs.stringify(
+                    {
+                      ...parsedQuery,
+                      [column]: {
+                        value: newValue.max,
+                        compare: '>',
+                      },
+                    },
+                    { allowDots: true, arrayFormat: 'brackets', encode: false }
+                  );
+                } else if (newValue.conditon === '< >') {
+                  queryString = qs.stringify(
+                    {
+                      ...parsedQuery,
+                      [column]: {
+                        value: {
+                          from: newValue.min,
+                          to: newValue.max,
+                        },
+                        compare: '< >',
+                      },
+                    },
+                    { allowDots: true, arrayFormat: 'brackets', encode: false }
+                  );
+                }
+
+                router.push(
+                  {
+                    query: {
+                      filter: queryString,
+                    },
+                  },
+                  undefined,
+                  { shallow: true }
+                );
+              }}
+            />
           </PopoverContent>
         </>
       )}
@@ -44,34 +140,25 @@ export const TableAmountFilter = () => {
 
 export interface TableAmountFilterContentProps {
   onClose?: () => void;
-  column?: HeaderGroup<Record<string, unknown>>;
+
+  value: { min: string | undefined; max: string | undefined; conditon: Condition } | undefined;
+  onChange: (newValue: {
+    min: string | undefined;
+    max: string | undefined;
+    conditon: Condition;
+  }) => void;
 }
 
 export default TableAmountFilter;
 
-enum AmountCondition {
-  amt_between = 'amt_between',
-  amt_less = 'amt_less',
-  amt_more = 'amt_more',
-  amt_equal = 'amt_equal',
-}
-
 export const TableAmountFilterContent = React.forwardRef(
-  ({ onClose, column }: TableAmountFilterContentProps, ref: ForwardedRef<HTMLSelectElement>) => {
-    const [min, setMin] = useState<number | string>(column?.filterValue?.value?.[0] ?? '');
-    const [max, setMax] = useState<number | string>(column?.filterValue?.value?.[1] ?? '');
-    const [amt, setAmt] = useState<number | string>(column?.filterValue?.value ?? '');
-    const [amountCondition, setAmountCondition] = useState(
-      column?.filterValue?.type ?? AmountCondition.amt_between
-    );
-
-    useEffect(() => {
-      if (amountCondition === column?.filterValue?.type) {
-        setAmt(column?.filterValue?.value);
-      } else {
-        setAmt('');
-      }
-    }, [amountCondition]);
+  (
+    { onClose, value, onChange }: TableAmountFilterContentProps,
+    ref: ForwardedRef<HTMLSelectElement>
+  ) => {
+    const [min, setMin] = useState<string | undefined>(value?.min || undefined);
+    const [max, setMax] = useState<string | undefined>(value?.max || undefined);
+    const [amountCondition, setAmountCondition] = useState<Condition>(value?.conditon || '< >');
 
     return (
       <Box
@@ -84,36 +171,21 @@ export const TableAmountFilterContent = React.forwardRef(
         padding="s16"
         bg="white"
       >
-        <Select
-          fontSize="r1"
-          borderColor="gray.500"
-          borderRadius="br1"
-          focusBorderColor="primary.500"
-          value={amountCondition}
+        <AmountFilter
           ref={ref}
-          onChange={(e) => setAmountCondition(e.target.value as AmountCondition)}
-        >
-          <option value={AmountCondition.amt_between}>Amount Between ({' <> '})</option>
-          <option value={AmountCondition.amt_less}>Amount Less Than ({' < '})</option>
-          <option value={AmountCondition.amt_more}>Amount Greater Than ({' > '})</option>
-          <option value={AmountCondition.amt_equal}>Amount Equal To ({' = '})</option>
-        </Select>
-
-        {amountCondition === 'amt_more' ? (
-          <AmountInput placeholder="Maximum Amount" value={amt} setValue={setAmt} />
-        ) : amountCondition === 'amt_less' ? (
-          <AmountInput placeholder="Minimum Amount" value={amt} setValue={setAmt} />
-        ) : amountCondition === 'amt_equal' ? (
-          <AmountInput value={amt} setValue={setAmt} placeholder="Amount" />
-        ) : (
-          <HStack>
-            <AmountInput value={min} setValue={setMin} placeholder="Minimum Amount" />
-
-            <span>to</span>
-
-            <AmountInput value={max} setValue={setMax} placeholder="Maximum Amount" />
-          </HStack>
-        )}
+          value={{
+            min,
+            max,
+            condition: amountCondition,
+          }}
+          onChange={(newValue, conditon) => {
+            if (conditon) {
+              setAmountCondition(conditon);
+            }
+            setMin(newValue.min);
+            setMax(newValue.max);
+          }}
+        />
 
         <Flex alignItems="center" fontSize="r1">
           <Text
@@ -122,7 +194,6 @@ export const TableAmountFilterContent = React.forwardRef(
             paddingX="s8"
             cursor="pointer"
             onClick={() => {
-              column?.setFilter(undefined);
               onClose && onClose();
             }}
           >
@@ -132,18 +203,7 @@ export const TableAmountFilterContent = React.forwardRef(
           <Button
             paddingX="12"
             onClick={() => {
-              if (amountCondition === 'amt_between') {
-                column?.setFilter({
-                  type: amountCondition,
-                  value: [min, max],
-                });
-              } else {
-                column?.setFilter({
-                  type: amountCondition,
-                  value: amt,
-                });
-              }
-
+              onChange({ min, max, conditon: amountCondition });
               onClose && onClose();
             }}
           >

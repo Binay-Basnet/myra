@@ -17,13 +17,13 @@ import { uniqBy } from 'lodash';
 
 // eslint-disable-next-line import/no-cycle
 import { Table } from '../../lib/shared-table';
-import { Column, Maybe, Row, TableInstance } from '../../types/Table';
+import { Column, Row, TableInstance } from '../../types/Table';
 
-interface TableSelectionBarProps<T extends Maybe<Record<string, unknown>>> {
+interface TableSelectionBarProps<T> {
   tableInstance: TableInstance<T>;
   columns: Column<T>[];
 }
-export const TableSelectionBar = <T extends Record<string, unknown>>({
+export const TableSelectionBar = <T,>({
   tableInstance: table,
   columns,
 }: TableSelectionBarProps<T>) => {
@@ -46,7 +46,7 @@ export const TableSelectionBar = <T extends Record<string, unknown>>({
   return (
     <Box
       bg="primary.0"
-      h="50px"
+      h="3.125rem"
       px="s8"
       display="flex"
       alignItems="center"
@@ -89,7 +89,13 @@ export const TableSelectionBar = <T extends Record<string, unknown>>({
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent w="60vw" maxW="60vw">
-          <Box h="50px" px="s16" display="flex" alignItems="center" justifyContent="space-between">
+          <Box
+            h="3.125rem"
+            px="s16"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <Text fontSize="r2" fontWeight="600">
               Selected Items
             </Text>
@@ -97,7 +103,7 @@ export const TableSelectionBar = <T extends Record<string, unknown>>({
           </Box>
           <Box
             bg="primary.0"
-            h="50px"
+            h="3.125rem"
             px="s16"
             display="flex"
             alignItems="center"

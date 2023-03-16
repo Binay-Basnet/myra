@@ -359,7 +359,7 @@ export const GeneratePin = ({ pin, setPin }: IGeneratePinProps) => {
             flexDir="column"
             justifyContent="center"
             color="gray.700"
-            h="60px"
+            h="s60"
           >
             <Text fontSize="s3">{t['acGeneratedPin']}</Text>
             <Text fontWeight="600" fontSize="r1" textTransform="capitalize">

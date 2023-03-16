@@ -1,7 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 
-import { NeosysPageHeaderTab } from '@coop/neosys-admin/ui-components';
 import { Box, Text } from '@myra-ui';
+
+import { NeosysPageHeaderTab } from '@coop/neosys-admin/ui-components';
 
 interface INeosysTableListPageHeader {
   heading: string;
@@ -13,7 +14,7 @@ interface INeosysTableListPageHeader {
 
 export const NeosysTableListPageHeader = ({ tabItems, heading }: INeosysTableListPageHeader) => (
   <Box
-    h="50px"
+    h="3.125rem"
     bg="white"
     zIndex="10"
     w="100%"
@@ -22,7 +23,7 @@ export const NeosysTableListPageHeader = ({ tabItems, heading }: INeosysTableLis
     px="s16"
   >
     <Flex justify="flex-start" alignItems="center" h="100%">
-      <Box display="flex" justifyContent="center" alignItems="center" maxH="50px">
+      <Box display="flex" justifyContent="center" alignItems="center" maxH="3.125rem">
         <Text fontSize="r2" fontWeight="600" color="gray.800">
           {heading}
         </Text>

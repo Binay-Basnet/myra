@@ -23,8 +23,7 @@ export const AccountListPage = () => {
       order: null,
     },
     filter: {
-      accountName: searchTerm,
-      productID: id,
+      query: `${searchTerm} ${id}`,
     },
   });
   const rowData = useMemo(
@@ -68,7 +67,7 @@ export const AccountListPage = () => {
       //       <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
       //     ),
       //     meta: {
-      //       width: '50px',
+      //       width: '3.125rem',
       //     },
       //   },
     ],

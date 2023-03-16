@@ -16,7 +16,7 @@ export const FormHeader = ({ title, closeLink, buttonLabel, buttonHandler }: For
   return (
     <Box
       w="100%"
-      h="50px"
+      h="3.125rem"
       display="flex"
       alignItems="center"
       justifyContent="space-between"

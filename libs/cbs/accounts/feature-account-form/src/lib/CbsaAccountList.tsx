@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -6,13 +6,13 @@ import { Avatar, Box, PageHeader, TablePopover, Text, toast, Tooltip } from '@my
 import { Column, Table } from '@myra-ui/table';
 
 import {
-  Filter_Mode,
   ObjState,
   useGetAccountTableListMinimalQuery,
+  useGetSavingFilterMappingQuery,
   useSetMakeDormantAccountActiveMutation,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getFilter, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 const ACCOUNT_TAB_ITEMS = [
   {
@@ -33,48 +33,40 @@ export const CBSAccountList = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { t } = useTranslation();
-  const searchTerm = router?.query['search'] as string;
-  const objState = router?.query['objState'];
+  const objState = getFilter('objState') || 'ACTIVE';
   const { mutateAsync: makeActiveMutation } = useSetMakeDormantAccountActiveMutation();
 
-  const makeActiveHandler = (id: string) => {
-    makeActiveMutation({ accountId: id }).then(() => {
-      toast({
-        id: 'Making Account Active',
-        type: 'success',
-        message: 'Account Activated Successfully',
+  const makeActiveHandler = useCallback(
+    (id: string) => {
+      makeActiveMutation({ accountId: id }).then(() => {
+        toast({
+          id: 'Making Account Active',
+          type: 'success',
+          message: 'Account Activated Successfully',
+        });
+        queryClient.invalidateQueries(['getAccountTableListMinimal']);
+        router.push(ROUTES.CBS_ACCOUNT_LIST);
       });
-      queryClient.invalidateQueries(['getAccountTableListMinimal']);
-      router.push(ROUTES.CBS_ACCOUNT_LIST);
-    });
-  };
-
-  const { data, isFetching } = useGetAccountTableListMinimalQuery(
-    {
-      paginate: getPaginationQuery(),
-      filter: {
-        query: searchTerm,
-        id: searchTerm,
-        memberId: searchTerm,
-        productID: searchTerm,
-        memberCode: searchTerm,
-        filterMode: Filter_Mode.Or,
-        objState: (router.query['objState'] ?? ObjState.Active) as ObjState,
-      },
     },
-    {
-      enabled: searchTerm !== 'undefined',
-    }
+    [makeActiveMutation, queryClient, router]
   );
 
-  const rowData = useMemo(() => data?.account?.list?.edges ?? [], [data]);
+  const { data: savingFilterMapping } = useGetSavingFilterMappingQuery();
+  const { data, isFetching } = useGetAccountTableListMinimalQuery({
+    paginate: getPaginationQuery(),
+    filter: getFilterQuery({ objState: { value: 'ACTIVE', compare: '=' } }),
+  });
 
+  const rowData = useMemo(() => data?.account?.list?.edges ?? [], [data]);
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'accountOpenedDate',
         header: 'Account Open Date',
+        accessorFn: (row) => row?.node?.accountOpenedDate?.local,
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.accountOpenedDate)}</Text>,
+        filterFn: 'dateTime',
+        enableColumnFilter: true,
       },
       {
         header: 'Member Code',
@@ -90,8 +82,15 @@ export const CBSAccountList = () => {
         cell: (props) => <Tooltip title={props?.row?.original?.node?.accountName as string} />,
       },
       {
+        id: 'productName',
         header: 'Product Name',
         accessorFn: (row) => row?.node?.product?.productName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: savingFilterMapping?.account.filterMapping?.productID,
+          },
+        },
       },
       {
         header: 'Member Name',
@@ -166,11 +165,11 @@ export const CBSAccountList = () => {
             />
           ),
         meta: {
-          width: '50px',
+          width: '3.125rem',
         },
       },
     ],
-    [t, objState]
+    [savingFilterMapping?.account.filterMapping?.productID, objState, router, makeActiveHandler]
   );
 
   return (
@@ -179,6 +178,7 @@ export const CBSAccountList = () => {
         <PageHeader
           heading={`Saving Accounts - ${featureCode?.savingAccountList}`}
           tabItems={ACCOUNT_TAB_ITEMS}
+          showTabsInFilter
         />
       </Box>
 

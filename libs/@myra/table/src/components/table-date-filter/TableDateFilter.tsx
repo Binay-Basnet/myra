@@ -64,7 +64,7 @@ export const TableDateFilter = ({ column }: TableDateFilterProps) => {
                   from: newDate?.from?.en,
                   to: newDate?.to?.en,
                 },
-                compare: '=',
+                compare: '< >',
               },
             },
             { allowDots: true, arrayFormat: 'brackets', encode: false }

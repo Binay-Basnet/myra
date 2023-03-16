@@ -2,11 +2,11 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Box, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { DetailPageTopCard } from '@coop/accounting/ui-components';
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { Column, Table } from '@myra-ui/table';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const OverviewDetailPage = () => {
@@ -72,7 +72,7 @@ export const OverviewDetailPage = () => {
           <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
         ),
         meta: {
-          width: '60px',
+          width: 's60',
         },
       },
     ],

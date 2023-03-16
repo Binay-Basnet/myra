@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { TablePopover } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { InvestmentType, useGetInvestmentAccountsListDataQuery } from '@coop/cbs/data-access';
 import { formatTableAddress } from '@coop/cbs/utils';
-import { Column, Table } from '@myra-ui/table';
-import { TablePopover } from '@myra-ui';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 const investmentAccountType = {
@@ -79,7 +80,7 @@ export const InvestmentAccountsList = () => {
             />
           ),
         meta: {
-          width: '60px',
+          width: 's60',
         },
       },
     ],

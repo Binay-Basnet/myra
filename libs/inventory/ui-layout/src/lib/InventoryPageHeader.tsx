@@ -1,6 +1,7 @@
 import { AddIcon } from '@chakra-ui/icons';
 
 import { Box, Button, PageHeaderTab, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 interface ITablePageHeader {
@@ -32,7 +33,7 @@ export const InventoryPageHeader = ({
       alignItems="center"
       px="s16"
       py="s8"
-      height="60px"
+      height="s60"
       gap="s48"
     >
       <Text fontSize="r2" fontWeight="600" color="gray.800">

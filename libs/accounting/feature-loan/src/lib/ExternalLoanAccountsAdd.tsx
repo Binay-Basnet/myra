@@ -4,12 +4,6 @@ import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
 import {
-  ExternalLoanAccountMutation,
-  useAllAdministrationQuery,
-  useSetExternalAccountMutation,
-} from '@coop/cbs/data-access';
-import { FormInput, FormMap, FormSelect, FormTextArea } from '@coop/shared/form';
-import {
   asyncToast,
   Box,
   Button,
@@ -21,6 +15,13 @@ import {
   Icon,
   Text,
 } from '@myra-ui';
+
+import {
+  ExternalLoanAccountMutation,
+  useAllAdministrationQuery,
+  useSetExternalAccountMutation,
+} from '@coop/cbs/data-access';
+import { FormInput, FormMap, FormSelect, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -90,7 +91,7 @@ export const ExternalLoanAccountsAdd = () => {
 
   return (
     <>
-      <Container minW="container.lg" height="fit-content" pb="60px">
+      <Container minW="container.lg" height="fit-content" pb="s60">
         <FormHeader title="New External Loan Account" />
 
         <FormProvider {...methods}>

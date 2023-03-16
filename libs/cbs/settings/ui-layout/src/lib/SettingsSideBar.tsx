@@ -147,7 +147,7 @@ export const SettingSideBar = () => {
         height="calc(100vh - 110px)"
         overflowY="auto"
       >
-        <Box height="50px" py="s12" px="s16">
+        <Box height="3.125rem" py="s12" px="s16">
           <Text fontSize="l1" fontWeight="600" color="gray.800">
             {t['settingsGeneral']}
           </Text>

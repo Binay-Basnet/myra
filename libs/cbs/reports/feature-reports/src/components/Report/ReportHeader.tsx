@@ -63,7 +63,7 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
 
   return (
     <Box
-      h="50px"
+      h="3.125rem"
       display="flex"
       alignItems="center"
       justifyContent="space-between"

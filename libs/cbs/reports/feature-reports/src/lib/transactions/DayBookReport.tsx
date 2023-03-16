@@ -200,7 +200,7 @@ export const DayBookReport = () => {
                     </Box>
                   ),
                   meta: {
-                    width: '50px',
+                    width: '3.125rem',
                     Footer: {
                       display: 'none',
                     },
@@ -215,7 +215,7 @@ export const DayBookReport = () => {
                     </Box>
                   ),
                   meta: {
-                    width: '50px',
+                    width: '3.125rem',
                     isNumeric: true,
                   },
                   footer: () => (
@@ -290,7 +290,7 @@ export const DayBookReport = () => {
                     </Box>
                   ),
                   meta: {
-                    width: '50px',
+                    width: '3.125rem',
                     Footer: {
                       display: 'none',
                     },
@@ -305,7 +305,7 @@ export const DayBookReport = () => {
                     </Box>
                   ),
                   meta: {
-                    width: '50px',
+                    width: '3.125rem',
                     isNumeric: true,
                   },
                   footer: () => (

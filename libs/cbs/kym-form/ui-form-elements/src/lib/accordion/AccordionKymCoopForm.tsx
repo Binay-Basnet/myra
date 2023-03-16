@@ -81,7 +81,7 @@ export const AccordionKymCoopForm = (props: AccordianProps) => {
       <Box
         display="flex"
         justifyContent="space-between"
-        minH="50px"
+        minH="3.125rem"
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenOrganization(!isOpenOrganization)}
@@ -127,7 +127,7 @@ export const AccordionKymCoopForm = (props: AccordianProps) => {
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenEconomic(!isOpenEconomic)}
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopAcc2EconomicDetails']}
@@ -161,7 +161,7 @@ export const AccordionKymCoopForm = (props: AccordianProps) => {
         alignItems="center"
         onClick={() => setIsOpenBoardOfDirectors(!isOpenBoardOfDirectors)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopAcc3DetailsofBoardDirectors']}
@@ -195,7 +195,7 @@ export const AccordionKymCoopForm = (props: AccordianProps) => {
         alignItems="center"
         onClick={() => setIsOpenAccountOperator(!isOpenAccountOperator)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopAcc4DetailsofAccountOperators']}
@@ -229,7 +229,7 @@ export const AccordionKymCoopForm = (props: AccordianProps) => {
         alignItems="center"
         onClick={() => setIsOpenDeclaration(!isOpenDeclaration)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopAcc5Declaration']}

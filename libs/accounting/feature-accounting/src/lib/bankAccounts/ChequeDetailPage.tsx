@@ -11,12 +11,13 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
+import { Alert, Box, Button, Divider, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { DetailPageTopCard } from '@coop/accounting/ui-components';
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Column, Table } from '@myra-ui/table';
-import { Alert, Box, Button, Divider, Text } from '@myra-ui';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const ChequeDetailPage = () => {
@@ -100,7 +101,7 @@ export const ChequeDetailPage = () => {
           <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
         ),
         meta: {
-          width: '60px',
+          width: 's60',
         },
       },
     ],

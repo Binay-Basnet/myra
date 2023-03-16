@@ -42,7 +42,7 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
           // accessorKey: 'installmentNo',
           accessorFn: (row) => row?.installmentNo,
           meta: {
-            width: '50px',
+            width: '3.125rem',
           },
         },
 
@@ -52,7 +52,7 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
           cell: (props) => localizedDate(props?.row?.original?.installmentDate),
           footer: 'Total Cost of Loan',
           meta: {
-            width: '50px',
+            width: '3.125rem',
             Footer: {
               colspan: 1,
             },

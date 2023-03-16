@@ -363,7 +363,7 @@ export const KYMCustomFieldAdd = ({ kymType }: { kymType: KYMCategory }) => {
                 onClick={async () => {
                   setHasNewField(false);
                 }}
-                h="44px"
+                h="s44"
                 display="flex"
                 alignItems="center"
                 justifyContent="center"

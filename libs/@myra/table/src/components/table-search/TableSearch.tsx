@@ -99,9 +99,9 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
   }, []);
 
   return (
-    <Box h="50px" bg="white" display="flex" borderBottom="1px" borderColor="border.layout">
-      <InputGroup h="50px" bg="white" borderBottom="1px" borderColor="border.layout">
-        <InputLeftElement h="50px">
+    <Box h="3.125rem" bg="white" display="flex" borderBottom="1px" borderColor="border.layout">
+      <InputGroup h="3.125rem" bg="white" borderBottom="1px" borderColor="border.layout">
+        <InputLeftElement h="3.124rem">
           <Icon as={SearchIcon} size="sm" color="gray.500" />
         </InputLeftElement>
         <Input

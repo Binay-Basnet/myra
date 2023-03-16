@@ -1,40 +1,30 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import { Filter_Mode, useGetShareBalanceListQuery } from '@coop/cbs/data-access';
+import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { TableListPageHeader } from '@coop/myra/components';
 import {
   amountConverter,
   featureCode,
+  getFilterQuery,
   getPaginationQuery,
   useTranslation,
 } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
   const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
-
-  const { data, isFetching, refetch } = useGetShareBalanceListQuery({
-    pagination: getPaginationQuery(),
-    filter: {
-      memberName: searchTerm,
-      memberCode: searchTerm,
-      filterMode: Filter_Mode.Or,
-    },
-  });
-
   const { t } = useTranslation();
 
-  useEffect(() => {
-    refetch();
-  }, [router]);
+  const { data, isFetching } = useGetShareBalanceListQuery({
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
+  });
 
   const rowData = useMemo(() => data?.share?.balance?.edges ?? [], [data]);
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -58,13 +48,19 @@ export const ShareBalanceTable = () => {
       },
 
       {
+        id: 'count',
         header: t['shareTableShareCount'],
         accessorFn: (row) => row?.node.count,
+        filterFn: 'amount',
+        enableColumnFilter: true,
       },
       {
+        id: 'amount',
         header: t['shareTableShareAmount'],
-        accessorFn: (row) => amountConverter(row?.node.amount),
+        accessorFn: (row) => amountConverter(row?.node?.amount || 0),
         // cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
+        filterFn: 'amount',
+        enableColumnFilter: true,
       },
 
       {
@@ -72,7 +68,7 @@ export const ShareBalanceTable = () => {
         header: '',
         cell: (props) => (
           <TablePopover
-            node={props?.row?.original.node}
+            node={props?.row?.original?.node}
             items={[
               {
                 title: t['shareRegisterTableViewMemberProfile'],
@@ -87,7 +83,7 @@ export const ShareBalanceTable = () => {
         ),
       },
     ],
-    [router.locale]
+    [router, t]
   );
 
   return (
@@ -99,7 +95,7 @@ export const ShareBalanceTable = () => {
       </Box>
       <Table
         isLoading={isFetching}
-        data={rowData ?? []}
+        data={rowData}
         columns={columns}
         rowOnClick={(row) =>
           router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${row?.node?.member?.id}&tab=share`)

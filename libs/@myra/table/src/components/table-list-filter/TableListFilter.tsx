@@ -29,19 +29,25 @@ import qs from 'qs';
 
 import { URLFilter } from '@coop/shared/utils';
 
+type Option = {
+  label: string;
+  value: string;
+};
+
 export interface TableListFilterContentProps {
-  data?: string[];
+  data?: Option[];
   onClose?: () => void;
-  filterValue?: string[];
-  setFilter?: (updater: string[]) => void;
+  filterValue?: Option[];
+  setFilter?: (updater: Option[]) => void;
 }
 
 interface TableListFilterProps {
-  data?: string[];
+  data?: Option[];
   column: string;
+  comparator?: '=' | '<' | '>' | '< >' | 'CONTAINS';
 }
 
-export const TableListFilter = ({ data, column }: TableListFilterProps) => {
+export const TableListFilter = ({ data, column, comparator }: TableListFilterProps) => {
   const router = useRouter();
   const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -76,7 +82,7 @@ export const TableListFilter = ({ data, column }: TableListFilterProps) => {
               />
             </Box>
           </PopoverTrigger>
-          <PopoverContent _focus={{ boxShadow: 'E2' }}>
+          <PopoverContent w="100%" boxShadow="E2" border="none" borderRadius="br2">
             {initialFocusRef && (
               <TableListFilterContent
                 data={data}
@@ -86,8 +92,8 @@ export const TableListFilter = ({ data, column }: TableListFilterProps) => {
                       {
                         ...parsedQuery,
                         [column]: {
-                          value: newFilter,
-                          compare: '=',
+                          value: newFilter.map((f) => f.value),
+                          compare: comparator || '=',
                         },
                       },
                       { allowDots: true, arrayFormat: 'brackets', encode: false }
@@ -115,7 +121,11 @@ export const TableListFilter = ({ data, column }: TableListFilterProps) => {
                     );
                   }
                 }}
-                filterValue={(parsedQuery?.[column]?.value as string[]) || []}
+                filterValue={
+                  data?.filter((d) =>
+                    (parsedQuery?.[column]?.value as string[])?.includes(d.value)
+                  ) || []
+                }
                 onClose={onClose}
                 ref={initialFocusRef}
               />
@@ -133,71 +143,99 @@ export const TableListFilterContent = React.forwardRef(
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const id = useId();
-    const [selectedData, setSelectedData] = useState<string[]>(filterValue ?? []);
+    const [selectedData, setSelectedData] = useState<Option[]>(filterValue ?? []);
     const [searchTerm, setSearchTerm] = useState('');
 
-    const listData = useMemo(() => (data ? [...data] : []), []);
+    const listData = useMemo(
+      () => (data ? data?.filter((item) => item.label.match(new RegExp(searchTerm, 'i'))) : []),
+      [data, searchTerm]
+    );
 
     const isSelectionFull = useMemo(
       () => selectedData?.length === listData?.length,
-      [selectedData?.length]
+      [listData?.length, selectedData?.length]
     );
     const isSelectionEmpty = useMemo(() => selectedData?.length === 0, [selectedData?.length]);
 
     return (
-      <Box
-        borderRadius="br1"
-        shadow="E2"
-        width="360px"
-        display="flex"
-        flexDirection="column"
-        gap="s16"
-        padding="s16"
-        bg="white"
-      >
-        <InputGroup color="neutralColorLight.Gray-50">
-          <InputLeftElement>
-            <Icon as={SearchIcon} size="sm" />
-          </InputLeftElement>
-          <Input
-            type="search"
-            bg="white"
-            borderRadius="br1"
-            py="12px"
-            focusBorderColor="primary.500"
-            fontSize="r1"
-            border="1px"
-            borderColor="gray.500"
-            placeholder="Search"
-            value={searchTerm}
-            ref={ref}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </InputGroup>
-        <Box display="flex" flexDirection="column" gap="s8">
-          <Box gap="s20" display="flex" justifyContent="flex-end" color="gray.800" fontSize="r1">
-            <Text
-              color={isSelectionFull ? 'gray.300' : 'gray.800'}
-              fontWeight="medium"
-              cursor={isSelectionFull ? 'not-allowed' : 'pointer'}
-              onClick={() => !isSelectionFull && setSelectedData(data ? [...data] : [])}
+      <Box borderRadius="br1" width="350px" display="flex" flexDirection="column" bg="white">
+        <Box px="s8" py="s12" borderBottom="1px" borderBottomColor="border.layout">
+          <InputGroup color={searchTerm ? 'gray.500' : 'gray.300'}>
+            <InputLeftElement>
+              <Icon as={SearchIcon} size="sm" />
+            </InputLeftElement>
+            <Input
+              bg="white"
+              size="md"
+              borderRadius="br2"
+              py="12px"
+              focusBorderColor="primary.500"
+              fontSize="r1"
+              border="1px"
+              borderColor="gray.300"
+              placeholder="Search"
+              value={searchTerm}
+              ref={ref}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </InputGroup>
+        </Box>
+
+        <Box display="flex" flexDirection="column" p="s8" gap="s12">
+          {listData.length === 0 ? (
+            <Box
+              pt="s32"
+              h="230px"
+              fontSize="s3"
+              color="gray.500"
+              fontWeight={400}
+              textAlign="center"
+              whiteSpace="break-spaces"
+              overflowY="auto"
+              css={{
+                '&::-webkit-scrollbar': {
+                  width: '7px',
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '7px',
+                  background: '#EEF1F7',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: '#006837',
+                  borderRadius: '24px',
+                },
+              }}
             >
-              Select All
-            </Text>
-            <Text
-              color={isSelectionEmpty ? 'gray.300' : 'gray.800'}
-              fontWeight="medium"
-              cursor={isSelectionEmpty ? 'not-allowed' : 'pointer'}
-              onClick={() => setSelectedData([])}
-            >
-              Deselect All
-            </Text>
-          </Box>
+              No Search result for &quot;{searchTerm}&quot;
+            </Box>
+          ) : (
+            <Box gap="s12" display="flex" justifyContent="flex-end">
+              <Text
+                color={isSelectionFull ? 'gray.300' : 'gray.700'}
+                fontSize="s3"
+                fontWeight="400"
+                cursor={isSelectionFull ? 'not-allowed' : 'pointer'}
+                onClick={() => !isSelectionFull && setSelectedData(data ? [...data] : [])}
+              >
+                Select All
+              </Text>
+              <Text
+                color={isSelectionEmpty ? 'gray.300' : 'gray.700'}
+                fontSize="s3"
+                fontWeight="400"
+                cursor={isSelectionEmpty ? 'not-allowed' : 'pointer'}
+                onClick={() => setSelectedData([])}
+              >
+                Deselect All
+              </Text>
+            </Box>
+          )}
+
           <Box
             fontSize="s3"
             bg="white"
             borderRadius="br2"
-            border="1px"
+            border="0px"
             maxHeight="230px"
             borderColor="border.layout"
             overflowY="auto"
@@ -230,11 +268,18 @@ export const TableListFilterContent = React.forwardRef(
             })}
           </Box>
         </Box>
-        <Flex alignItems="center" fontSize="r1">
+
+        <Flex
+          p="s8"
+          borderTop="1px"
+          borderTopColor="border.layout"
+          alignItems="center"
+          fontSize="r1"
+        >
           <Text
-            color="gray.800"
-            fontWeight="medium"
-            paddingX="s8"
+            color="gray.500"
+            fontWeight="400"
+            fontSize="s3"
             cursor={isSelectionFull ? 'not-allowed' : 'pointer'}
             onClick={() => setSelectedData([])}
           >
@@ -242,7 +287,7 @@ export const TableListFilterContent = React.forwardRef(
           </Text>
           <Spacer />
           <Button
-            paddingX="12"
+            w="100px"
             onClick={() => {
               setFilter && setFilter(selectedData);
               onClose && onClose();
@@ -258,8 +303,8 @@ export const TableListFilterContent = React.forwardRef(
 
 interface ITableListCheckboxProps {
   isChecked: boolean;
-  listItem: string;
-  setSelectedData: Dispatch<SetStateAction<string[]>>;
+  listItem: Option;
+  setSelectedData: Dispatch<SetStateAction<Option[]>>;
 }
 
 const TableListCheckbox = React.memo(
@@ -267,8 +312,8 @@ const TableListCheckbox = React.memo(
     <Box
       display="flex"
       alignItems="center"
+      px="s12"
       justifyContent="space-between"
-      paddingX="20px"
       bg={isChecked ? 'highlight.500' : 'inherit'}
       _hover={{ background: 'highlight.500' }}
       cursor="pointer"
@@ -277,11 +322,11 @@ const TableListCheckbox = React.memo(
         e.stopPropagation();
         !isChecked
           ? setSelectedData((prev) => [...prev, listItem])
-          : setSelectedData((prev) => prev.filter((item) => item !== listItem));
+          : setSelectedData((prev) => prev.filter((item) => item.value !== listItem.value));
       }}
     >
       <Text cursor="pointer" paddingY="12px" fontWeight="normal" noOfLines={1} maxWidth={48}>
-        {listItem}
+        {listItem.label}
       </Text>
       <Checkbox colorScheme="green" isChecked={isChecked} />
     </Box>
