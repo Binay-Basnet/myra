@@ -12,12 +12,8 @@ import { Id_Type } from '@coop/cbs/data-access';
 import { AclKey, MenuType, RouteValue } from '@coop/cbs/utils';
 
 declare module '@tanstack/table-core' {
-  interface FilterFns {
-    dateTime: FilterFn<unknown>;
-  }
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
   interface ColumnMeta<TData extends RowData, TValue> {
-    column?: ColumnDef<TData, TValue>;
     isNumeric?: boolean;
     width?: number | string;
     Footer?: {
@@ -25,8 +21,19 @@ declare module '@tanstack/table-core' {
       display?: 'none';
     };
     filterMaps?: {
-      list?: string[];
+      comparator?: '=' | '<' | '>' | '< >' | 'CONTAINS';
+      list?:
+        | ({
+            label?: string | null | undefined;
+            value?: unknown;
+          } | null)[]
+        | undefined;
     };
+  }
+
+  interface FilterFns {
+    dateTime: FilterFn<unknown>;
+    amount: FilterFn<unknown>;
   }
 }
 
@@ -44,9 +51,9 @@ export type Maybe<T> = T | null;
 export type TableSize = 'default' | 'compact' | 'small' | 'report';
 export type TableVariant = 'simple' | 'report';
 
-export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
-  data: Maybe<TData>[];
-  columns: Column<Maybe<TData>>[];
+export interface TableProps<TData> {
+  data: TData[];
+  columns: Column<TData>[];
 
   pagination?: Pagination;
   size?: TableSize;
@@ -78,10 +85,7 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
   isDetailPageTable?: boolean;
 }
 
-export type Column<TData extends Maybe<Record<string, unknown>>> = Omit<
-  ColumnDef<TData, unknown>,
-  'accessorKey' | 'accessorFn' | 'id'
-> & {
+export type Column<TData> = Omit<ColumnDef<TData, unknown>, 'accessorKey' | 'accessorFn' | 'id'> & {
   id?: string;
   accessorFn?: AccessorFn<TData>;
   accessorKey?: DeepKeys<TData> | 'actions';

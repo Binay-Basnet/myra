@@ -1,10 +1,8 @@
-import { useRouter } from 'next/router';
-
 import { PageHeader } from '@myra-ui';
 
 import { LoanObjState, ObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { featureCode, getPaginationQuery } from '@coop/shared/utils';
+import { featureCode, getFilter, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 import { LoanAppTable } from '../components/LoanTable';
 
@@ -20,16 +18,10 @@ export const LOAN_LIST_TAB_ITEMS = [
 ];
 
 export const LoanList = () => {
-  const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
-
+  const objState = getFilter('objState');
   const { data, isFetching } = useGetLoanListQuery({
     paginate: getPaginationQuery(),
-
-    filter: {
-      objectState: (router.query['objState'] ?? ObjState.Approved) as LoanObjState,
-      query: searchTerm,
-    },
+    filter: getFilterQuery({ objState: { value: 'APPROVED', compare: '=' } }),
   });
 
   return (
@@ -37,12 +29,13 @@ export const LoanList = () => {
       <PageHeader
         heading={`Loan Application - ${featureCode.loanApplicationList}`}
         tabItems={LOAN_LIST_TAB_ITEMS}
+        showTabsInFilter
       />
       <LoanAppTable
         data={data}
         viewLink={ROUTES.CBS_LOAN_APPLICATION_DETAILS}
         isLoading={isFetching}
-        type={(router.query['objState'] ?? ObjState.Approved) as LoanObjState}
+        type={(objState ?? ObjState.Approved) as LoanObjState}
       />
     </>
   );

@@ -21,8 +21,18 @@ export const AccountListPage = () => {
       order: null,
     },
     filter: {
-      productID: id as string,
-      objState: ObjState.Active,
+      query: id as string,
+      orConditions: [
+        {
+          andConditions: [
+            {
+              column: 'objState',
+              comparator: 'EqualTo',
+              value: ObjState.Active,
+            },
+          ],
+        },
+      ],
     },
   });
   const rowData = useMemo(

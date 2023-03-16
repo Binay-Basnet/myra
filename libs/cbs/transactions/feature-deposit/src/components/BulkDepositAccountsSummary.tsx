@@ -29,7 +29,20 @@ export const BulkDepositAccountsSummary = ({
         first: -1,
         after: '',
       },
-      filter: { memberId, objState: ObjState.Active },
+      filter: {
+        query: memberId,
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'objState',
+                comparator: 'EqualTo',
+                value: ObjState.Active,
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       staleTime: 0,

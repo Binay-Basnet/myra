@@ -4,29 +4,19 @@ import { useRouter } from 'next/router';
 import { Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Filter_Mode, useGetAllAccountsQuery } from '@coop/cbs/data-access';
+import { useGetAllAccountsQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AllAccountsListProps {}
 
 export const AllAccountsList = () => {
   const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetAllAccountsQuery({
     paginate: getPaginationQuery(),
-    filter: {
-      id: searchTerm,
-      loanAccountName: searchTerm,
-      loanProductName: searchTerm,
-      savingAccountName: searchTerm,
-      savingProductName: searchTerm,
-      loanMemberName: searchTerm,
-      savingMemberName: searchTerm,
-      filterMode: Filter_Mode.Or,
-    },
+    filter: getFilterQuery(),
   });
 
   const rowData = useMemo(() => data?.allAccounts?.list?.edges ?? [], [data]);
@@ -37,6 +27,8 @@ export const AllAccountsList = () => {
         header: 'Account Open Date',
         accessorFn: (row) => localizedDate(row?.node?.accountOpenDate),
         cell: (props) => localizedDate(props?.row?.original?.node?.accountOpenDate),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Account Id',
@@ -52,12 +44,16 @@ export const AllAccountsList = () => {
         cell: (props) => <Tooltip title={props?.row?.original?.node?.accountName as string} />,
       },
       {
+        id: 'productName',
         header: 'Product',
         accessorFn: (row) => row?.node?.productName,
+        enableColumnFilter: true,
       },
       {
+        id: 'accountType',
         header: 'Account Type',
         accessorFn: (row) => row?.node?.accountType,
+        enableColumnFilter: true,
       },
     ],
     []

@@ -25,7 +25,25 @@ export const LoanReportInputs = ({ isClosed, accountName }: LoanReportInputProps
 
   const { data: loanAccountData } = useGetMemberLoanAccountSearchQuery(
     {
-      filter: { memberId, objectState: isClosed ? 'COMPLETED' : 'DISBURSED' },
+      filter: {
+        query: memberId,
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'objState',
+                comparator: 'EqualTo',
+                value: isClosed ? 'COMPLETED' : 'DISBURSED',
+              },
+              {
+                column: 'memberId',
+                comparator: 'EqualTo',
+                value: memberId
+              }
+            ],
+          },
+        ],
+      },
       pagination: { first: -1, after: '' },
     },
     { enabled: !!memberId }

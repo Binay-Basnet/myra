@@ -267,7 +267,7 @@ export const MemberListPage = () => {
         rowOnClick={(row) => {
           queryClient.invalidateQueries(['getMemberDetailsOverview']);
           if (objState !== 'VALIDATED' && objState !== 'DRAFT') {
-            router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${row?.node?.id}`);
+            router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${row?.['node']?.id}`);
           }
         }}
         isLoading={isFetching}

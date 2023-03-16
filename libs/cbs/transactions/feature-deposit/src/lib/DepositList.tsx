@@ -4,26 +4,20 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { DepositedBy, Filter_Mode, useGetDepositListDataQuery } from '@coop/cbs/data-access';
+import {
+  DepositedBy,
+  useGetDepositFilterMappingQuery,
+  useGetDepositListDataQuery,
+} from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
+  getFilterQuery,
   getPaginationQuery,
   useTranslation,
 } from '@coop/shared/utils';
-
-// const tabList = [
-//   {
-//     title: 'memberNavActive',
-//     key: 'ACTIVE',
-//   },
-//   {
-//     title: 'memberNavInactive',
-//     key: 'SUBMITTED',
-//   },
-// ];
 
 const depositedBy: Record<DepositedBy, string> = {
   [DepositedBy.Agent]: 'Market Representative',
@@ -37,33 +31,24 @@ export interface DepositListProps {}
 export const DepositList = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
 
-  const { data, isFetching } = useGetDepositListDataQuery(
-    {
-      pagination: getPaginationQuery(),
-      filter: {
-        id: searchTerm,
-        memberId: searchTerm,
-        memberName: searchTerm,
-        transactionId: searchTerm,
-        depositedBy: searchTerm,
-        filterMode: Filter_Mode.Or,
-      },
-    },
-
-    {
-      enabled: searchTerm !== 'undefined',
-    }
-  );
+  const { data: depositFilterMapping } = useGetDepositFilterMappingQuery();
+  const { data, isFetching } = useGetDepositListDataQuery({
+    pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
+  });
 
   const rowData = useMemo(() => data?.transaction?.listDeposit?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'date',
         header: t['depositListDepositDate'],
+        accessorKey: 'node.date.en',
         cell: (row) => <Text>{localizedDate(row?.row?.original?.node?.date)}</Text>,
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: t['depositListTransactionId'],
@@ -94,24 +79,46 @@ export const DepositList = () => {
         },
       },
       {
+        id: 'paymentMode',
+
         header: t['depositListPaymentMode'],
+        enableColumnFilter: true,
+
         accessorFn: (row) => row?.node?.paymentMode,
         meta: {
           width: '25%',
+          filterMaps: {
+            comparator: 'CONTAINS',
+            list: depositFilterMapping?.transaction?.filterMapping?.deposit?.paymentMode,
+          },
         },
       },
       {
+        id: 'depositedBy',
         header: t['depositListDepositedBy'],
+        enableColumnFilter: true,
+
         accessorFn: (row) =>
           row?.node?.processedBy ? depositedBy[row?.node?.processedBy as DepositedBy] : '',
         meta: {
           width: '25%',
+          filterMaps: {
+            list: depositFilterMapping?.transaction?.filterMapping?.deposit?.depositedBy?.map(
+              (d) => ({
+                label: d.label,
+                value: d.value,
+              })
+            ),
+          },
         },
       },
       {
+        id: 'amount',
         header: t['depositListAmount'],
 
         accessorFn: (row) => amountConverter(row?.node?.amount as string),
+        enableColumnFilter: true,
+        filterFn: 'amount',
         meta: {
           isNumeric: true,
         },
@@ -138,7 +145,12 @@ export const DepositList = () => {
           ),
       },
     ],
-    [t, rowData]
+    [
+      t,
+      depositFilterMapping?.transaction?.filterMapping?.deposit?.paymentMode,
+      depositFilterMapping?.transaction?.filterMapping?.deposit?.depositedBy,
+      router,
+    ]
   );
 
   return (

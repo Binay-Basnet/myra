@@ -17,13 +17,13 @@ import { uniqBy } from 'lodash';
 
 // eslint-disable-next-line import/no-cycle
 import { Table } from '../../lib/shared-table';
-import { Column, Maybe, Row, TableInstance } from '../../types/Table';
+import { Column, Row, TableInstance } from '../../types/Table';
 
-interface TableSelectionBarProps<T extends Maybe<Record<string, unknown>>> {
+interface TableSelectionBarProps<T> {
   tableInstance: TableInstance<T>;
   columns: Column<T>[];
 }
-export const TableSelectionBar = <T extends Record<string, unknown>>({
+export const TableSelectionBar = <T,>({
   tableInstance: table,
   columns,
 }: TableSelectionBarProps<T>) => {

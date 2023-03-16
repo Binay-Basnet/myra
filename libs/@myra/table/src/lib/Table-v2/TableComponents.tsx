@@ -12,19 +12,24 @@ import { EmptyState, Loader, NoDataState } from '@myra-ui';
 import { Id_Type } from '@coop/cbs/data-access';
 import { AclKey, EMPTYSTATE, MenuType, RouteValue } from '@coop/cbs/utils';
 
+import TableAmountFilter from '../../components/table-amount-filter/TableAmountFilter';
 import { TableDateFilter } from '../../components/table-date-filter/TableDateFilter';
 import TableListFilter from '../../components/table-list-filter/TableListFilter';
-import { Maybe } from '../../types';
 import { TableSize, TableVariant } from '../../types/Table';
 
-export interface TableContainerProps {
+export interface TableContainerProps<T> {
   children: React.ReactNode;
   isLoading?: boolean;
-  data: Maybe<Record<string, unknown>>[];
+  data: T[];
   variant: TableVariant;
 }
 
-export const TableContainer = ({ children, isLoading, data, variant }: TableContainerProps) => (
+export const TableContainer = <T,>({
+  children,
+  isLoading,
+  data,
+  variant,
+}: TableContainerProps<T>) => (
   <ChakraTable.TableContainer
     minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
     sx={
@@ -57,6 +62,7 @@ export const TableContainer = ({ children, isLoading, data, variant }: TableCont
 
 /* ===================================== */
 /* =========== Table Root ============== */
+
 /* ===================================== */
 
 export interface TableRootProps extends ChakraTable.TableProps {
@@ -82,6 +88,7 @@ export const TableRoot = React.forwardRef<HTMLTableElement, TableRootProps>(
 
 /* ===================================== */
 /* =========== Table Head ============== */
+
 /* ===================================== */
 
 export interface TableHeaderProps extends ChakraTable.TableHeadProps {
@@ -94,6 +101,7 @@ export const TableHeader = (props: TableHeaderProps) => (
 
 /* ===================================== */
 /* =========== Table Head Row ============== */
+
 /* ===================================== */
 
 export interface TableHeadRowProps extends ChakraTable.TableRowProps {
@@ -113,17 +121,22 @@ export const TableHeadRow = (props: TableHeadRowProps) => (
 
 /* ===================================== */
 /* =========== Table Head Row ============== */
+
 /* ===================================== */
 
-export interface TableHeadCellProps<T extends Record<string, unknown>>
-  extends ChakraTable.TableCellProps {
+type Option = {
+  label: string;
+  value: string;
+};
+
+export interface TableHeadCellProps<T> extends ChakraTable.TableCellProps {
   children?: React.ReactNode;
   isDetailPageTable?: boolean;
   header: Header<T, unknown>;
   variant: TableVariant;
 }
 
-export const TableHeadCell = <T extends Record<string, unknown>>({
+export const TableHeadCell = <T,>({
   isDetailPageTable,
   header,
   children,
@@ -147,22 +160,36 @@ export const TableHeadCell = <T extends Record<string, unknown>>({
     zIndex={1}
     {...props}
   >
-    <Box display="flex" gap="s8" alignItems="center">
+    <Box
+      display="flex"
+      gap="s8"
+      justifyContent={header.column.columnDef.meta?.isNumeric ? 'end' : 'start'}
+      alignItems="center"
+    >
       {header.isPlaceholder ? null : (
         <Box display="inline">
           {flexRender(header.column.columnDef.header, header.getContext())}
         </Box>
       )}
-      {header.column.getCanFilter() ? (
-        header.column.columnDef.filterFn === 'dateTime' ? (
-          <TableDateFilter column={header.column.id} />
-        ) : (
-          <TableListFilter
-            column={header.column.id}
-            data={header.column.columnDef.meta?.filterMaps?.list}
-          />
-        )
-      ) : null}
+      {(() => {
+        if (header.column.getCanFilter()) {
+          if (header.column.columnDef.filterFn === 'dateTime') {
+            return <TableDateFilter column={header.column.id} />;
+          }
+          if (header.column.columnDef.filterFn === 'amount') {
+            return <TableAmountFilter column={header.column.id} />;
+          }
+          return (
+            <TableListFilter
+              comparator={header.column.columnDef.meta?.filterMaps?.comparator}
+              column={header.column.id}
+              data={header.column.columnDef.meta?.filterMaps?.list as Option[]}
+            />
+          );
+        }
+
+        return null;
+      })()}
     </Box>
 
     {children}
@@ -171,14 +198,15 @@ export const TableHeadCell = <T extends Record<string, unknown>>({
 
 /* ===================================== */
 /* =========== Table Head Row ============== */
+
 /* ===================================== */
 
-export interface TableBodyProps extends ChakraTable.TableBodyProps {
+export interface TableBodyProps<T> extends ChakraTable.TableBodyProps {
   isLoading?: boolean;
-  data: Maybe<Record<string, unknown>>[];
+  data: T[];
 }
 
-export const TableBody = ({ isLoading, data, ...props }: TableBodyProps) => (
+export const TableBody = <T,>({ isLoading, data, ...props }: TableBodyProps<T>) => (
   <ChakraTable.Tbody
     sx={{
       pageBreakInside: 'auto !important',
@@ -217,8 +245,8 @@ export const TableLoader = ({ isLoading }: TableLoaderProps) => {
   return null;
 };
 
-export interface TableEmptyStateProps {
-  data: Maybe<Record<string, unknown>>[];
+export interface TableEmptyStateProps<T> {
+  data: T[];
   menu?: MenuType;
   forms?: {
     label: string;
@@ -229,7 +257,12 @@ export interface TableEmptyStateProps {
   noDataTitle?: string;
 }
 
-export const TableEmptyState = ({ menu, forms, data, noDataTitle }: TableEmptyStateProps) => {
+export const TableEmptyState = <T,>({
+  menu,
+  forms,
+  data,
+  noDataTitle,
+}: TableEmptyStateProps<T>) => {
   const emptyStateData = EMPTYSTATE[menu as keyof typeof EMPTYSTATE];
 
   const sidebarForms = forms || EMPTYSTATE[menu as keyof typeof EMPTYSTATE]?.buttonLink;
@@ -262,19 +295,13 @@ export const TableEmptyState = ({ menu, forms, data, noDataTitle }: TableEmptySt
   return null;
 };
 
-export interface TableBodyRowProps<T extends Record<string, unknown>>
-  extends ChakraTable.TableRowProps {
+export interface TableBodyRowProps<T> extends ChakraTable.TableRowProps {
   row: Row<T>;
   isStatic: boolean;
   rowOnClick?: (row: T) => void;
 }
 
-export const TableBodyRow = <T extends Record<string, unknown>>({
-  row,
-  isStatic,
-  rowOnClick,
-  ...props
-}: TableBodyRowProps<T>) => (
+export const TableBodyRow = <T,>({ row, isStatic, rowOnClick, ...props }: TableBodyRowProps<T>) => (
   <ChakraTable.Tr
     key={row.id}
     sx={{
@@ -292,15 +319,11 @@ export const TableBodyRow = <T extends Record<string, unknown>>({
   />
 );
 
-export interface TableBodyCellProps<T extends Record<string, unknown>>
-  extends ChakraTable.TableCellProps {
+export interface TableBodyCellProps<T> extends ChakraTable.TableCellProps {
   cell: Cell<T, unknown>;
 }
 
-export const TableBodyCell = <T extends Record<string, unknown>>({
-  cell,
-  ...props
-}: TableBodyCellProps<T>) => (
+export const TableBodyCell = <T,>({ cell, ...props }: TableBodyCellProps<T>) => (
   <ChakraTable.Td
     key={cell.id}
     isNumeric={cell.column.columnDef.meta?.isNumeric}
@@ -319,17 +342,12 @@ export const TableBodyCell = <T extends Record<string, unknown>>({
   </ChakraTable.Td>
 );
 
-export interface TableFooterProps<T extends Record<string, unknown>>
-  extends ChakraTable.TableFooterProps {
+export interface TableFooterProps<T> extends ChakraTable.TableFooterProps {
   showFooter?: boolean;
   table: Table<T>;
 }
 
-export const TableFooter = <T extends Record<string, unknown>>({
-  showFooter,
-  table,
-  ...props
-}: TableFooterProps<T>) => {
+export const TableFooter = <T,>({ showFooter, table, ...props }: TableFooterProps<T>) => {
   if (showFooter) {
     return (
       <ChakraTable.Tfoot display="table-header-group" {...props}>

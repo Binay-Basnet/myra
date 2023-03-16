@@ -4,33 +4,29 @@ import { useRouter } from 'next/router';
 import { Box, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Filter_Mode, useGetAllTransactionsListQuery } from '@coop/cbs/data-access';
+import {
+  useGetAllTransactionFilterMappingQuery,
+  useGetAllTransactionsListQuery,
+} from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { ROUTES } from '@coop/cbs/utils';
 import {
   amountConverter,
   featureCode,
+  getFilterQuery,
   getPaginationQuery,
-  useTranslation,
 } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface DepositListProps {}
 
 export const AllTransactionsList = () => {
-  const { t } = useTranslation();
   const router = useRouter();
 
-  const searchTerm = router?.query['search'] as string;
-
+  const { data: allTransactionFilterMapping } = useGetAllTransactionFilterMappingQuery();
   const { data, isFetching } = useGetAllTransactionsListQuery({
     pagination: getPaginationQuery(),
-    filter: {
-      id: searchTerm,
-      transactionId: searchTerm,
-      txnType: searchTerm,
-      filterMode: Filter_Mode.Or,
-    },
+    filter: getFilterQuery(),
   });
 
   const rowData = useMemo(() => data?.transaction?.listAllTransactions?.edges ?? [], [data]);
@@ -38,14 +34,19 @@ export const AllTransactionsList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'date',
         header: 'Date',
         cell: (props) => props?.row?.original?.node?.date?.local?.split(' ')[0] ?? 'N/A',
+        accessorKey: 'node.date.local',
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Transaction Id',
         accessorFn: (row) => row?.node?.id,
       },
       {
+        id: 'txnType',
         accessorFn: (row) => row?.node?.transactionType,
         header: 'Type',
         cell: (props) => (
@@ -53,6 +54,12 @@ export const AllTransactionsList = () => {
             {props?.cell?.row?.original?.node?.transactionType?.toLowerCase()?.replace(/_/g, ' ')}
           </Box>
         ),
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.txnType,
+          },
+        },
       },
       {
         header: 'Note',
@@ -63,11 +70,19 @@ export const AllTransactionsList = () => {
         },
       },
       {
+        id: 'branchId',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.branchName,
+        enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.branchId,
+          },
+        },
       },
 
       {
+        id: 'amount',
         header: 'Amount',
         accessorFn: (row) => row?.node?.amount,
         cell: (props) => amountConverter(props.getValue() as string),
@@ -76,9 +91,14 @@ export const AllTransactionsList = () => {
           isNumeric: true,
           width: '2%',
         },
+        enableColumnFilter: true,
+        filterFn: 'amount',
       },
     ],
-    [t]
+    [
+      allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.branchId,
+      allTransactionFilterMapping?.transaction?.filterMapping?.allTransaction?.txnType,
+    ]
   );
 
   return (
