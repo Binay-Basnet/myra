@@ -29,7 +29,12 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
   const filterCols = Object.keys(parsedQuery);
 
   return (
-    <Popover isLazy placement="bottom" initialFocusRef={initialFocusRef} colorScheme="primary">
+    <Popover
+      isLazy
+      placement="bottom-start"
+      initialFocusRef={initialFocusRef}
+      colorScheme="primary"
+    >
       {({ onClose, isOpen }) => (
         <>
           <PopoverTrigger>
@@ -46,7 +51,7 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
               />
             </Box>
           </PopoverTrigger>
-          <PopoverContent _focus={{ boxShadow: 'E2' }}>
+          <PopoverContent w="100%" boxShadow="E2" border="none" borderRadius="br2">
             <TableAmountFilterContent
               value={
                 compare === '< >' && typeof value !== 'string' && 'to' in value
