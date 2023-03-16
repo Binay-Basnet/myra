@@ -7,6 +7,7 @@ import {
   FiShoppingBag,
   FiShoppingCart,
 } from 'react-icons/fi';
+import { SiRoundcube } from 'react-icons/si';
 
 import { MainLayoutContainer, Scrollable, TabMenu, TopLevelHeader } from '@myra-ui';
 
@@ -39,6 +40,14 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
             match: ['purchase'],
             aclKey: 'ACCOUNTING_PURCHASE',
             navMenu: 'PURCHASE',
+          },
+          {
+            title: 'inventory',
+            icon: SiRoundcube,
+            link: '/accounting/inventory/items/list',
+            match: ['inventory'],
+            aclKey: 'ACCOUNTING_ACCOUNTING',
+            navMenu: 'ACCOUNTING',
           },
           {
             title: 'accounting',

@@ -101,6 +101,14 @@ export const ROUTES = {
 
   /* SETTINGS APP & NOT INDEXED BY GLOBAL SEARCH */
 
+  SETTINGS_GENERAL_ACCOUNTING_GENERAL: '/settings/general/accounting/general',
+  SETTINGS_GENERAL_ACCOUNTING_CREDIT_TERMS: '/settings/general/accounting/credit-terms',
+  SETTINGS_GENERAL_ACCOUTING_CUSTOM_FIELDS: '/settings/general/accounting/custom-fields',
+  SETTINGS_GENERAL_ACCOUNTING_LEDGER_MAPPINGS:
+    '/settings/general/accounting/default-ledger-mapping',
+  SETTINGS_GENERAL_ACCOUNTING_CUSTOM_FIELDS: '/settings/general/accounting/custom-fields',
+  SETTINGS_GENERAL_ACCOUNTING_TAX: '/settings/general/accounting/default-ledger-mapping',
+
   SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
 
   SETTINGS_GENERAL_AUDIT_LOG: '/settings/monitor/audit-log/list',
