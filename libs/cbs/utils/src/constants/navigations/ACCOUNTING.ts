@@ -108,6 +108,36 @@ export const ACCOUNTING: NavType = {
         },
       ],
     },
+    INVENTORY: {
+      label: 'INVENTORY',
+      aclKey: 'ACCOUNTING_ACCOUNTING',
+      pages: [
+        {
+          label: 'Items',
+          route: ROUTES.ACCOUNTING_INVENTORY_ITEMS_LIST,
+          aclKey: 'ACCOUNTING_SYSTEM_ACCOUNTING_JOURNAL_ENTRY',
+          // addRoute: ROUTES.ACCOUNTING_JOURNAL_VOUCHER_ADD,
+        },
+        {
+          label: 'Item Category',
+          route: ROUTES.ACCOUNTING_INVENTORY_ITEM_CATEGORY,
+          aclKey: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
+          // addRoute: ROUTES.ACCOUNTING_INTER_SERVICE_TRANS_ADD,
+        },
+        {
+          label: 'Units',
+          route: ROUTES.ACCOUNTING_INVENTORY_UNITS_LIST,
+          aclKey: 'ACCOUNTING_SYSTEM_ACCOUNTING_CASH_TRANSFER',
+          // addRoute: ROUTES.ACCOUNTING_CASH_TRANSFER_ADD,
+        },
+        {
+          label: 'Warehouse',
+          route: ROUTES.ACCOUNTING_INVENTORY_WAREHOUSE_LIST,
+          aclKey: 'ACCOUNTING_SYSTEM_ACCOUNTING_BANK_ACCOUNTS',
+          // addRoute: ROUTES.ACCOUNTING_BANK_ACCOUNTS_ADD,
+        },
+      ],
+    },
     ACCOUNTING: {
       label: 'Accounting',
       aclKey: 'ACCOUNTING_ACCOUNTING',

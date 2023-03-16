@@ -3,11 +3,11 @@ import {
   FiCodesandbox,
   FiDatabase,
   FiFileText,
+  FiPackage,
   FiPieChart,
   FiShoppingBag,
   FiShoppingCart,
 } from 'react-icons/fi';
-import { SiRoundcube } from 'react-icons/si';
 
 import { MainLayoutContainer, Scrollable, TabMenu, TopLevelHeader } from '@myra-ui';
 
@@ -43,11 +43,11 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
           },
           {
             title: 'inventory',
-            icon: SiRoundcube,
+            icon: FiPackage,
             link: '/accounting/inventory/items/list',
             match: ['inventory'],
             aclKey: 'ACCOUNTING_ACCOUNTING',
-            navMenu: 'ACCOUNTING',
+            navMenu: 'INVENTORY',
           },
           {
             title: 'accounting',
