@@ -31,10 +31,22 @@ export const MigrationFileComponent = () => {
   const { mutateAsync } = useSetCsvDataMutation();
 
   const tableData = data?.protectedQuery?.getFileData;
-  const alteredTableData = tableData?.reduce(
-    (acc, curr) => [...acc, { ...curr?.data, row: curr?.row }],
-    []
-  );
+  const alteredTableData = tableData?.reduce((acc, curr) => {
+    const temp = curr?.data;
+
+    Object.keys(temp).forEach((key) => {
+      temp[key] = curr.data[key] || '-';
+    });
+    return [
+      ...acc,
+      {
+        ...temp,
+        row: curr?.row || '-',
+      },
+    ];
+  }, []);
+
+  console.log({ alteredTableData });
 
   useEffect(() => {
     if (alteredTableData) {
@@ -46,7 +58,11 @@ export const MigrationFileComponent = () => {
 
   const columns =
     tableData &&
-    Object?.keys(tableData?.[0]?.data)?.map((item) => ({ accessor: item, header: item }));
+    Object?.keys(tableData?.[0]?.data)?.map((item) => ({
+      accessor: item,
+      header: item,
+      // cellWidth: 'xl',
+    }));
 
   const onSubmit = () => {
     const dataToBeSent = differenceWith(getValues()?.data, alteredTableData, isEqual);
@@ -86,6 +102,7 @@ export const MigrationFileComponent = () => {
           display="flex"
           flexDir="column"
           p={5}
+          w="100%"
           gap={5}
           bg="whiteAlpha.900"
           borderRadius={6}
@@ -124,7 +141,13 @@ export const MigrationFileComponent = () => {
               <FormEditableTable
                 name="data"
                 hideSN
-                columns={[{ accessor: 'row', header: 'Row' }].concat(columns)}
+                columns={[
+                  {
+                    accessor: 'row',
+                    header: 'Row',
+                    // , cellWidth: 'md'
+                  },
+                ].concat(columns)}
               />
             </Box>
           )}

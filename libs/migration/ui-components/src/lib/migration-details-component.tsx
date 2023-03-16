@@ -217,12 +217,14 @@ export const MigrationDetailsComponents = () => {
               <Collapse in={transformCollapse}>
                 {transformedCSVDataKeys?.map((item) => {
                   const tableDataArray = transformedCSVData?.[item] as unknown as string[];
+                  console.log('hello', tableDataArray);
                   return (
                     <>
                       <Text fontSize="r2" fontWeight="medium">
                         {item} :
                       </Text>
 
+                      {/*
                       <Box maxH="35vh" overflowY="scroll">
                         <TableContainer>
                           <Table size="sm">
@@ -249,7 +251,7 @@ export const MigrationDetailsComponents = () => {
                             </Tbody>
                           </Table>
                         </TableContainer>
-                      </Box>
+                      </Box> */}
 
                       <br />
                     </>
