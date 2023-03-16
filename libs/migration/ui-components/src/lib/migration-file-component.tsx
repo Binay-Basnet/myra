@@ -22,7 +22,11 @@ export const MigrationFileComponent = () => {
       folderName:
         router?.query['csvType'] !== 'transformedCSV'
           ? ([router?.query['csvType']] as string[])
-          : ([router?.query['csvType'], router?.query['folderName']] as unknown as string[]),
+          : ([
+              router?.query['csvType'],
+              router?.query['folderName'],
+              router?.query['subfolder'],
+            ] as unknown as string[]),
       pageNo: 1 as unknown as string,
       data: null,
     },
@@ -45,8 +49,6 @@ export const MigrationFileComponent = () => {
       },
     ];
   }, []);
-
-  console.log({ alteredTableData });
 
   useEffect(() => {
     if (alteredTableData) {
@@ -73,7 +75,11 @@ export const MigrationFileComponent = () => {
         folderName:
           router?.query['csvType'] !== 'transformedCSV'
             ? ([router?.query['csvType']] as string[])
-            : ([router?.query['csvType'], router?.query['folderName']] as unknown as string[]),
+            : ([
+                router?.query['csvType'],
+                router?.query['folderName'],
+                router?.query['subfolder'],
+              ] as unknown as string[]),
         pageNo: 1 as unknown as string,
         data: dataToBeSent?.reduce(
           (acc, curr) => [...acc, { row: curr?.row, data: omit({ ...curr }, ['row']) }],
