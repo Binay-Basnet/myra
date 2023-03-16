@@ -17,7 +17,7 @@ export const theme = extendTheme({
         scrollBehavior: 'smooth',
         fontFamily: 'Inter',
       },
-      '@media only screen and (max-width: 1280px)': {
+      '@media only screen and (max-width: 1536px)': {
         html: {
           fontSize: '87.5%',
         },
