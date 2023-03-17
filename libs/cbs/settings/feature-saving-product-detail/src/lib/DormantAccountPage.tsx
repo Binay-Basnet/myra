@@ -1,37 +1,33 @@
 import { useMemo } from 'react';
-import { IoAdd } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Button, Icon, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Box, Column, Table, Text } from '@myra-ui';
 
-import { LoanObjState, useGetLoanAccountListQuery } from '@coop/cbs/data-access';
-import { RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { ObjState, useGetSavingsAccountListQuery } from '@coop/cbs/data-access';
+import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
 
-export const AccountListPage = () => {
+export const DormantAccountListPage = () => {
   const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
-  const searchText = searchTerm ?? '';
-  const id = router?.query['id'] as string;
+  const { id } = router.query;
 
-  const { data, isLoading } = useGetLoanAccountListQuery({
+  const { data, isLoading } = useGetSavingsAccountListQuery({
     paginate: {
       ...getPaginationQuery(),
 
       order: null,
     },
     filter: {
-      query: `${searchText} ${id}`,
+      query: id as string,
       orConditions: [
         {
           andConditions: [
             {
               column: 'objState',
               comparator: 'EqualTo',
-              value: LoanObjState?.Disbursed,
+              value: ObjState.Dormant,
             },
           ],
         },
@@ -39,7 +35,7 @@ export const AccountListPage = () => {
     },
   });
   const rowData = useMemo(
-    () => data?.settings?.general?.loanProducts?.getLoanAccountlist?.edges ?? [],
+    () => data?.settings?.general?.depositProduct?.getAccountlist?.edges ?? [],
     [data]
   );
 
@@ -50,7 +46,7 @@ export const AccountListPage = () => {
         accessorFn: (row) => row?.node?.id,
         cell: (props) => (
           <RedirectButton
-            link={`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${props?.row?.original?.node?.id}`}
+            link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${props?.row?.original?.node?.id}`}
             label={props?.row?.original?.node?.id as string}
           />
         ),
@@ -58,19 +54,19 @@ export const AccountListPage = () => {
 
       {
         header: 'Account Name',
-        accessorFn: (row) => row?.node?.LoanAccountName,
+        accessorFn: (row) => row?.node?.accountName,
       },
       {
         header: 'Member',
         accessorFn: (row) => row?.node?.member?.name?.local,
       },
       {
-        header: 'Approved Loan',
-        accessorFn: (row) => row?.node?.appliedLoanAmount,
+        header: 'Balance',
+        accessorFn: (row) => amountConverter(row?.node?.balance ?? 0),
       },
       {
         header: 'Open Date',
-        accessorFn: (row) => row?.node?.approvedDate?.local || '-',
+        accessorFn: (row) => localizedDate(row?.node?.accountOpenedDate),
       },
       //   {
       //     id: '_actions',
@@ -101,14 +97,14 @@ export const AccountListPage = () => {
       <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
         <Box display="flex" justifyContent="space-between" w="100%">
           <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
-            Account List
+            Dormant Account List
           </Text>
-          <Button
-            onClick={() => router.push(ROUTES.CBS_LOAN_APPLICATIONS_ADD)}
+          {/* <Button
             leftIcon={<Icon as={IoAdd} size="md" />}
+            onClick={() => router.push(`${ROUTES.CBS_ACCOUNT_OPEN_ADD}`)}
           >
             Add Account
-          </Button>
+          </Button> */}
         </Box>
       </Box>
       <Box bg="background.500" ml="320px" p="s16" minH="100vh">
@@ -117,8 +113,8 @@ export const AccountListPage = () => {
           data={rowData}
           columns={columns}
           pagination={{
-            total: data?.settings?.general?.loanProducts?.getLoanAccountlist?.totalCount ?? 'Many',
-            pageInfo: data?.settings?.general?.loanProducts?.getLoanAccountlist?.pageInfo,
+            total: data?.settings?.general?.depositProduct?.getAccountlist?.totalCount ?? 'Many',
+            pageInfo: data?.settings?.general?.depositProduct?.getAccountlist?.pageInfo,
           }}
         />
       </Box>

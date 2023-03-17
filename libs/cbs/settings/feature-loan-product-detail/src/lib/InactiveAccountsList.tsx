@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
-import { IoAdd } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Button, Icon, Text } from '@myra-ui';
+import { Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { LoanObjState, useGetLoanAccountListQuery } from '@coop/cbs/data-access';
@@ -11,10 +10,9 @@ import { getPaginationQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
 
-export const AccountListPage = () => {
+export const InactiveLoanAccountListPage = () => {
   const router = useRouter();
-  const searchTerm = router?.query['search'] as string;
-  const searchText = searchTerm ?? '';
+  // const searchTerm = router?.query['search'] as string;
   const id = router?.query['id'] as string;
 
   const { data, isLoading } = useGetLoanAccountListQuery({
@@ -24,14 +22,14 @@ export const AccountListPage = () => {
       order: null,
     },
     filter: {
-      query: `${searchText} ${id}`,
+      query: id as string,
       orConditions: [
         {
           andConditions: [
             {
               column: 'objState',
               comparator: 'EqualTo',
-              value: LoanObjState?.Disbursed,
+              value: LoanObjState?.Completed,
             },
           ],
         },
@@ -101,14 +99,14 @@ export const AccountListPage = () => {
       <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
         <Box display="flex" justifyContent="space-between" w="100%">
           <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
-            Account List
+            Inactive Account List
           </Text>
-          <Button
+          {/* <Button
             onClick={() => router.push(ROUTES.CBS_LOAN_APPLICATIONS_ADD)}
             leftIcon={<Icon as={IoAdd} size="md" />}
           >
             Add Account
-          </Button>
+          </Button> */}
         </Box>
       </Box>
       <Box bg="background.500" ml="320px" p="s16" minH="100vh">

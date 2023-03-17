@@ -4101,6 +4101,8 @@ export type DepositProductFormStateData = {
   natureOFBusinessCoop?: Maybe<Array<Maybe<Scalars['ID']>>>;
   natureOfBusinessInstitution?: Maybe<Array<Maybe<Scalars['ID']>>>;
   noOfAccounts?: Maybe<Scalars['Int']>;
+  noOfDormantAccounts?: Maybe<Scalars['Int']>;
+  noOfInactiveAccounts?: Maybe<Scalars['Int']>;
   noOfMembers?: Maybe<Scalars['Int']>;
   noOftransactionAllowed?: Maybe<Scalars['Int']>;
   objState?: Maybe<ObjState>;
@@ -4687,6 +4689,12 @@ export type EodDate = {
   value: Scalars['Localized'];
 };
 
+export type EodDetailsFilter = {
+  eodDate?: InputMaybe<Scalars['String']>;
+  jobType?: InputMaybe<EodJob>;
+  success?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type EodErrors = {
   cashInHand?: Maybe<Array<Maybe<Scalars['String']>>>;
   cashInVault?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -4724,6 +4732,17 @@ export type EodHistory = {
   status: EodState;
 };
 
+export const EodJob = {
+  AccountDormancy: 'ACCOUNT_DORMANCY',
+  InterestPosting: 'INTEREST_POSTING',
+  LoanAccountMaturity: 'LOAN_ACCOUNT_MATURITY',
+  LoanInterestBooking: 'LOAN_INTEREST_BOOKING',
+  LoanRepayment: 'LOAN_REPAYMENT',
+  SavingAccountMaturity: 'SAVING_ACCOUNT_MATURITY',
+  SavingInterestBooking: 'SAVING_INTEREST_BOOKING',
+} as const;
+
+export type EodJob = typeof EodJob[keyof typeof EodJob];
 export const EodOption = {
   CompleteWithError: 'COMPLETE_WITH_ERROR',
   Reinitiate: 'REINITIATE',
@@ -4731,7 +4750,13 @@ export const EodOption = {
 
 export type EodOption = typeof EodOption[keyof typeof EodOption];
 export type EodQuery = {
+  details?: Maybe<EndOfDayDetailsConnection>;
   history?: Maybe<Array<Maybe<EodHistory>>>;
+};
+
+export type EodQueryDetailsArgs = {
+  filter: EodDetailsFilter;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type EodQueryHistoryArgs = {
@@ -4858,6 +4883,26 @@ export type EmployeeReport = {
 
 export type EmployeeReportUserReportArgs = {
   data?: InputMaybe<UserReportFilter>;
+};
+
+export type EndOfDayDetail = {
+  accountNumber: Scalars['String'];
+  id: Scalars['String'];
+  jobType: EodJob;
+  narration: Scalars['String'];
+  payload?: Maybe<Scalars['Map']>;
+  success: Scalars['Boolean'];
+};
+
+export type EndOfDayDetailsConnection = {
+  edges?: Maybe<Array<Maybe<EndOfDayDetailsEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type EndOfDayDetailsEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<EndOfDayDetail>;
 };
 
 export type Example = {
@@ -10280,6 +10325,7 @@ export type LoanProduct = Base & {
   modifiedBy: Identity;
   natureOFBusinessCoop?: Maybe<Array<Maybe<Scalars['ID']>>>;
   natureOfBusinessInstitution?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  noOfInactiveAccounts?: Maybe<Scalars['Int']>;
   noOfMember?: Maybe<Scalars['Int']>;
   noOfaccount?: Maybe<Scalars['Int']>;
   objState: ObjState;
@@ -27132,6 +27178,7 @@ export type GetLoanProductDetailQuery = {
           data?: {
             id: string;
             noOfaccount?: number | null;
+            noOfInactiveAccounts?: number | null;
             noOfMember?: number | null;
             objState: ObjState;
             createdAt: string;
@@ -27838,6 +27885,8 @@ export type GetSavingsProductDetailQuery = {
           data?: {
             id?: string | null;
             noOfAccounts?: number | null;
+            noOfDormantAccounts?: number | null;
+            noOfInactiveAccounts?: number | null;
             noOfMembers?: number | null;
             objState?: ObjState | null;
             supportMultiple?: boolean | null;
@@ -45063,6 +45112,7 @@ export const GetLoanProductDetailDocument = `
           data {
             id
             noOfaccount
+            noOfInactiveAccounts
             noOfMember
             objState
             createdAt
@@ -45986,6 +46036,8 @@ export const GetSavingsProductDetailDocument = `
           data {
             id
             noOfAccounts
+            noOfDormantAccounts
+            noOfInactiveAccounts
             noOfMembers
             objState
             supportMultiple

@@ -67,7 +67,7 @@ export const MemberStatistics = () => {
       {memberShareDetails?.totalLoanInterest && (
         <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
           <Text fontSize="s3" fontWeight="500">
-            Total Loan Amount
+            Total Loan Accured
           </Text>
           <Text fontSize="r3" fontWeight="600">
             {amountConverter(memberShareDetails?.totalLoanInterest as string)}

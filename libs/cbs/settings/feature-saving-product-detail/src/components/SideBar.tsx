@@ -8,7 +8,9 @@ export const SideBar = () => (
     <DetailPageTabs
       tabs={[
         'OVERVIEW',
-        'Account List',
+        'Active Accounts',
+        'Inactive Accounts',
+        'Dormant Accounts',
         // 'ACTIVITY', 'DOCUMENTS', 'TASKS'
       ]}
     />

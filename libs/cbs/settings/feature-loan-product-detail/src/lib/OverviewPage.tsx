@@ -45,7 +45,10 @@ export const OverviewPage = () => {
       <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
         <Box display="flex" flexDirection="column" gap="s16">
           {detailData?.objState === ObjState.Inactive && <AlertEnable id={id as string} />}
-          <Overview noOfAccounts={detailData?.noOfaccount} noOfMembers={detailData?.noOfMember} />
+          <Overview
+            noOfAccounts={detailData?.noOfaccount}
+            noOfInactiveMembers={detailData?.noOfInactiveAccounts}
+          />
           <ProductDescription description={detailData?.description} />
           <ProductGeneralInformation
             generalInformation={{
