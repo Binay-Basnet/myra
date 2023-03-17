@@ -6,6 +6,7 @@ export * from './lib/ProductDetailPathBar';
 export * from './lib/SettingsAccountingLayout';
 export * from './lib/SettingsAlternativeChannelLayout';
 export * from './lib/SettingsCodeManagementLayout';
+export * from './lib/SettingsDayEndLayout';
 export * from './lib/SettingsDepositLayout';
 export * from './lib/SettingsDetailPageLayout';
 export * from './lib/SettingsDocumentsLayout';

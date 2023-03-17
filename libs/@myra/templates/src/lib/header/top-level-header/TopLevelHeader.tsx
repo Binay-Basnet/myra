@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { CgMenuGridO } from 'react-icons/cg';
@@ -19,25 +19,23 @@ import {
   ShortcutTab,
 } from '@myra-ui/components';
 import { Select, SwitchTabs } from '@myra-ui/forms';
-import { Avatar, Box, Button, Divider, Grid, Icon, IconButton, Text } from '@myra-ui/foundations';
+import { Avatar, Box, Divider, Grid, Icon, IconButton, Text } from '@myra-ui/foundations';
 
 import {
-  BranchCategory,
   DateType,
-  EodOption,
   logout,
   RootState,
   saveToken,
   setPreference,
   useAppDispatch,
   useAppSelector,
-  useGetEndOfDayDateDataQuery,
-  useSetEndOfDayDataMutation,
   useSetPreferenceMutation,
   useSwitchRoleMutation,
 } from '@coop/cbs/data-access';
-import { getLocalizedTodaysDate, localizedDate, ROUTES } from '@coop/cbs/utils';
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
+
+import { HeaderTransactionDate } from './HeaderTransactionDate';
 
 // const ROLE_SLUG: Record<string, string> = {
 //   SUPERADMIN: 'Super Admin',
@@ -220,75 +218,6 @@ export const TopLevelHeader = () => {
     },
   };
 
-  const { data: endOfDayData, refetch: refetchEndOfDay } = useGetEndOfDayDateDataQuery();
-
-  const { closingDate, hasEodErrors, isHeadOfficeReady } = useMemo(
-    () => ({
-      closingDate: endOfDayData?.transaction?.endOfDayDate?.value,
-      hasEodErrors: endOfDayData?.transaction?.endOfDayDate?.hasErrors,
-      isHeadOfficeReady: endOfDayData?.transaction?.endOfDayDate?.headOfficeReady,
-    }),
-    [endOfDayData]
-  );
-
-  const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
-
-  const closeDayFxn = () => {
-    closeDay({});
-
-    refetchEndOfDay();
-
-    router.push('/day-close');
-
-    // asyncToast({
-    //   id: 'set-close-day',
-    //   promise: closeDay({}),
-    //   msgs: {
-    //     loading: 'Closing the Day',
-    //     success: 'Day close initiated',
-    //   },
-    //   onSuccess: () => {
-    //     refetchEndOfDay();
-    //     router.push('/day-close');
-    //   },
-    // });
-  };
-
-  const handleBranchReadiness = () => {
-    router.push('/branch-readiness');
-    refetchEndOfDay();
-    // readyBranch(
-    //   {},
-    //   {
-    //     onSuccess: (res) => {
-    //       if (res?.transaction?.readyBranchEOD?.length) {
-    //         dispatch(setBranchReadinessErrors({ errors: res.transaction.readyBranchEOD }));
-    //         router?.push('/branch-readiness');
-    //       } else {
-    //         dispatch(clearBranchReadinessErrors());
-    //         router?.push('/branch-readiness');
-    //       }
-    //     },
-    //   }
-    // );
-  };
-
-  const reinitiateCloseDay = () => {
-    closeDay({ option: EodOption.Reinitiate });
-
-    refetchEndOfDay();
-
-    router.push('/day-close');
-  };
-
-  const ignoreAndCloseDay = () => {
-    closeDay({ option: EodOption.CompleteWithError });
-
-    refetchEndOfDay();
-
-    router.push('/day-close');
-  };
-
   const switchRoleOrBranch = async (
     label: string,
     value: string,
@@ -413,118 +342,7 @@ export const TopLevelHeader = () => {
             <SearchBar />
           </Box>
           <Box gap="s8" flex={1} display="flex" justifyContent="flex-end" alignItems="center">
-            <Popover placement="bottom-end" arrowPadding={0} gutter={3}>
-              {({ isOpen }) => (
-                <>
-                  <PopoverTrigger>
-                    <Box
-                      as="button"
-                      bg={isOpen ? 'secondary.900' : 'secondary.700'}
-                      _hover={{ backgroundColor: 'secondary.900' }}
-                      px="s12"
-                      py="s10"
-                      borderRadius="br1"
-                    >
-                      <Text p="s10 s12" fontSize="s3" fontWeight="500" color="gray.0">
-                        Date: {localizedDate(closingDate)}
-                      </Text>
-                    </Box>
-                  </PopoverTrigger>
-                  <Box zIndex={15}>
-                    <PopoverContent
-                      bg="gray.0"
-                      w="260px"
-                      border="none"
-                      boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
-                      outline="none"
-                      _focus={{
-                        boxShadow:
-                          '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
-                      }}
-                    >
-                      <PopoverBody borderBottom="1px" borderColor="border.layout">
-                        <Text fontSize="s3" fontWeight="500" color="gray.700">
-                          Transaction Date
-                        </Text>
-                        <Text fontSize="s3" fontWeight="500" color="gray.800">
-                          {localizedDate(closingDate)}
-                        </Text>
-                      </PopoverBody>
-                      <PopoverBody borderBottom="1px" borderColor="border.layout">
-                        <Text fontSize="s3" fontWeight="500" color="gray.700">
-                          Calender Date
-                        </Text>
-                        <Text fontSize="s3" fontWeight="500" color="gray.800">
-                          {getLocalizedTodaysDate()}
-                        </Text>
-                      </PopoverBody>
-                      <PopoverBody p="s8">
-                        <Box display="flex" flexDirection="column" gap="s8">
-                          {user?.currentBranch?.category === BranchCategory.HeadOffice ? (
-                            hasEodErrors ? (
-                              <>
-                                <Button
-                                  variant="outline"
-                                  display="flex"
-                                  justifyContent="center"
-                                  w="100%"
-                                  onClick={reinitiateCloseDay}
-                                >
-                                  Reinitiate
-                                </Button>
-                                <Button
-                                  variant="solid"
-                                  display="flex"
-                                  justifyContent="center"
-                                  w="100%"
-                                  onClick={ignoreAndCloseDay}
-                                >
-                                  Ignore and Close Day
-                                </Button>
-                              </>
-                            ) : (
-                              <>
-                                <Button
-                                  variant="outline"
-                                  display="flex"
-                                  justifyContent="center"
-                                  w="100%"
-                                  onClick={handleBranchReadiness}
-                                >
-                                  Branch Readiness
-                                </Button>
-                                {isHeadOfficeReady && (
-                                  <Button
-                                    variant="solid"
-                                    display="flex"
-                                    justifyContent="center"
-                                    w="100%"
-                                    // onClick={() => router.push('/day-close')}
-                                    onClick={closeDayFxn}
-                                  >
-                                    Close Day
-                                  </Button>
-                                )}
-                              </>
-                            )
-                          ) : (
-                            <Button
-                              variant="solid"
-                              display="flex"
-                              justifyContent="center"
-                              w="100%"
-                              onClick={handleBranchReadiness}
-                            >
-                              Branch Readiness
-                            </Button>
-                          )}
-                        </Box>
-                      </PopoverBody>
-                    </PopoverContent>
-                  </Box>
-                </>
-              )}
-            </Popover>
+            <HeaderTransactionDate />
 
             <FloatingShortcutButton />
 

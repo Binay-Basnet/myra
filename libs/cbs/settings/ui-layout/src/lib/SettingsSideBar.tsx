@@ -32,9 +32,9 @@ const orgTabList: TabList[] = [
     route: ROUTES.SETTINGS_GENERAL_COA,
   },
   {
-    label: 'EOD Setup',
+    label: 'Day End',
     aclKey: 'SETTINGS_SERVICE_CENTER',
-    route: ROUTES.SETTINGS_EOD_SETUP,
+    route: ROUTES.SETTINGS_EOD_HISTORY,
   },
   {
     label: 'bank',
