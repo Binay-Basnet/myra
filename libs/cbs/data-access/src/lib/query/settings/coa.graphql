@@ -242,3 +242,32 @@ query getLedgerList(
     }
   }
 }
+
+query getCOAAccountsAllTransactionList($id: ID!, $pagination: Pagination) {
+  settings {
+    chartsOfAccount {
+      ledgerAllTransactionsList(ledgerId: $id, pagination: $pagination) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        edges {
+          node {
+            date
+            txnId
+            txnType
+            particulars
+            debit
+            credit
+            total
+            balanceType
+          }
+          cursor
+        }
+      }
+    }
+  }
+}

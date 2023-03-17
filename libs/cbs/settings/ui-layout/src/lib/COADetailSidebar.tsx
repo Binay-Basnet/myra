@@ -1,10 +1,10 @@
 import { IoCopyOutline } from 'react-icons/io5';
+import { useCOAAccountDetails } from 'libs/cbs/settings/feature-coa/src/hooks';
 
 import { Box, DetailPageTabs, Icon, Text } from '@myra-ui';
 
-import { copyToClipboard } from '@coop/shared/utils';
-import { useCOAAccountDetails } from 'libs/cbs/settings/feature-coa/src/hooks';
 import { localizedDate } from '@coop/cbs/utils';
+import { copyToClipboard } from '@coop/shared/utils';
 
 export const COADetailSidebar = () => {
   const { accountDetails } = useCOAAccountDetails();
@@ -72,7 +72,7 @@ export const COADetailSidebar = () => {
       <DetailPageTabs
         tabs={[
           'Overview',
-          // 'Sub-Ledger',
+          'Transactions',
           // 'ATM',
           // 'Activity',
           // 'Documents',

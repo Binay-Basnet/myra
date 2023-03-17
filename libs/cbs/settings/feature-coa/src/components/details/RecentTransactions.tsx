@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Button, DetailsCard, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -11,7 +12,7 @@ import { useCOAAccountDetails } from '../../hooks';
 
 export const RecentTransactions = () => {
   const { accountDetails } = useCOAAccountDetails();
-
+  const router = useRouter();
   const getTypeProps = (typeVariant: BalanceType | null | undefined) => {
     switch (typeVariant) {
       case 'DR':
@@ -107,7 +108,18 @@ export const RecentTransactions = () => {
       title="Recent Transactions"
       bg="white"
       hasTable
-      leftBtn={<Button variant="ghost">View All Transactions</Button>}
+      leftBtn={
+        <Button
+          variant="ghost"
+          onClick={() =>
+            router.push(
+              `${ROUTES.SETTINGS_GENERAL_COA_DETAILS}?id=${router.query['id']}&tab=transactions`
+            )
+          }
+        >
+          View All Transactions
+        </Button>
+      }
     >
       <Table isDetailPageTable isStatic data={recentTransactionsList} columns={columns} />
     </DetailsCard>

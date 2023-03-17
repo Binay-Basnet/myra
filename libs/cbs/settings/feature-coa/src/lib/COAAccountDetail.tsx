@@ -6,7 +6,7 @@ import { Box, Text, WIPState } from '@myra-ui';
 import { COADetailSidebar, ProductDetailPathBar } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
 
-import { Overview } from '../components/detail-tabs';
+import { Overview, Transactions } from '../components/detail-tabs';
 import { useCOAAccountDetails } from '../hooks';
 
 export const COAAccountDetail = () => {
@@ -70,6 +70,7 @@ export const COAAccountDetail = () => {
         minH="calc(100vh - 170px)"
       >
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
+        {tabQuery === 'transactions' && <Transactions />}
 
         {tabQuery &&
           !['undefined', 'overview', 'transactions', 'withdraw slip'].includes(tabQuery) && (
