@@ -1,4 +1,4 @@
-import { Box, FormHeader } from '@myra-ui';
+import { Box } from '@myra-ui';
 
 import { EodExceptions, TxnDate } from '../component';
 
@@ -7,7 +7,6 @@ export interface CbsSettingsFeatureEodProps {}
 
 export const CbsSettingsFeatureEod = () => (
   <Box display="flex" flexDirection="column">
-    <FormHeader title=" EOD Setup" />
     <TxnDate />
     <EodExceptions />
   </Box>
