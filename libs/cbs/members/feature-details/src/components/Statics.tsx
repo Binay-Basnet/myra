@@ -34,13 +34,43 @@ export const MemberStatistics = () => {
           </Text>
         </Box>
       )}
-      {memberShareDetails?.accountBalance && (
+      {memberShareDetails?.loanBalance && (
         <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
           <Text fontSize="s3" fontWeight="500">
             Total Loan Amount
           </Text>
           <Text fontSize="r3" fontWeight="600">
             {amountConverter(memberShareDetails?.loanBalance as string)}
+          </Text>
+        </Box>
+      )}
+      {memberShareDetails?.totalSavingInterestAccured && (
+        <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
+          <Text fontSize="s3" fontWeight="500">
+            Total Saving Interest Accured
+          </Text>
+          <Text fontSize="r3" fontWeight="600">
+            {amountConverter(memberShareDetails?.totalSavingInterestAccured)}
+          </Text>
+        </Box>
+      )}
+      {memberShareDetails?.totalSavingInterestPosted && (
+        <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
+          <Text fontSize="s3" fontWeight="500">
+            Total Saving Interest Posted
+          </Text>
+          <Text fontSize="r3" fontWeight="600">
+            {amountConverter(memberShareDetails?.totalSavingInterestPosted)}
+          </Text>
+        </Box>
+      )}
+      {memberShareDetails?.totalLoanInterest && (
+        <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
+          <Text fontSize="s3" fontWeight="500">
+            Total Loan Amount
+          </Text>
+          <Text fontSize="r3" fontWeight="600">
+            {amountConverter(memberShareDetails?.totalLoanInterest as string)}
           </Text>
         </Box>
       )}

@@ -11779,6 +11779,9 @@ export type MemberShareDetail = {
 export type MemberStatisticsView = {
   accountBalance?: Maybe<Scalars['String']>;
   loanBalance?: Maybe<Scalars['String']>;
+  totalLoanInterest?: Maybe<Scalars['String']>;
+  totalSavingInterestAccured?: Maybe<Scalars['String']>;
+  totalSavingInterestPosted?: Maybe<Scalars['String']>;
   totalShareValue?: Maybe<Scalars['String']>;
 };
 
@@ -23479,6 +23482,9 @@ export type GetMemberKymDetailsOverviewQuery = {
             totalShareValue?: string | null;
             accountBalance?: string | null;
             loanBalance?: string | null;
+            totalSavingInterestAccured?: string | null;
+            totalSavingInterestPosted?: string | null;
+            totalLoanInterest?: string | null;
           } | null;
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
@@ -40326,6 +40332,9 @@ export const GetMemberKymDetailsOverviewDocument = `
             totalShareValue
             accountBalance
             loanBalance
+            totalSavingInterestAccured
+            totalSavingInterestPosted
+            totalLoanInterest
           }
           payments {
             date
