@@ -22,7 +22,17 @@ export const Transactions = () => {
   const transactionList = useMemo(
     () =>
       transactionListQueryData?.settings?.chartsOfAccount?.ledgerAllTransactionsList?.edges?.map(
-        (item) => item?.node as EbankingTransaction
+        (item) =>
+          ({
+            date: item?.node?.date,
+            transactionId: item?.node?.txnId,
+            transactionType: item?.node?.txnType,
+            name: item?.node?.particulars,
+            debit: item?.node?.debit,
+            credit: item?.node?.credit,
+            currentBalance: item?.node?.total,
+            balanceType: item?.node?.balanceType,
+          } as EbankingTransaction)
       ) ?? [],
     [transactionListQueryData]
   );
