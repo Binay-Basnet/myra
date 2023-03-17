@@ -116,25 +116,33 @@ export const ACCOUNTING: NavType = {
           label: 'Items',
           route: ROUTES.ACCOUNTING_INVENTORY_ITEMS_LIST,
           aclKey: 'ACCOUNTING_SYSTEM_ACCOUNTING_JOURNAL_ENTRY',
-          // addRoute: ROUTES.ACCOUNTING_JOURNAL_VOUCHER_ADD,
+          addRoute: ROUTES.ACCOUNTING_INVENTORY_ITEMS_ADD,
         },
         {
           label: 'Item Category',
           route: ROUTES.ACCOUNTING_INVENTORY_ITEM_CATEGORY,
           aclKey: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
-          // addRoute: ROUTES.ACCOUNTING_INTER_SERVICE_TRANS_ADD,
+          addRoute: ROUTES.ACCOUNTING_INVENTORY_ITEM_CATEGORY_ADD,
         },
         {
           label: 'Units',
           route: ROUTES.ACCOUNTING_INVENTORY_UNITS_LIST,
-          aclKey: 'ACCOUNTING_SYSTEM_ACCOUNTING_CASH_TRANSFER',
-          // addRoute: ROUTES.ACCOUNTING_CASH_TRANSFER_ADD,
+          aclKey: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
+          addRoute: ROUTES.ACCOUNTING_INVENTORY_UNITS_LIST_ADD,
         },
+
         {
           label: 'Warehouse',
           route: ROUTES.ACCOUNTING_INVENTORY_WAREHOUSE_LIST,
           aclKey: 'ACCOUNTING_SYSTEM_ACCOUNTING_BANK_ACCOUNTS',
-          // addRoute: ROUTES.ACCOUNTING_BANK_ACCOUNTS_ADD,
+          addRoute: ROUTES.ACCOUNTING_INVENTORY_WAREHOUSE_ADD,
+        },
+      ],
+      forms: [
+        {
+          label: 'New Item',
+          route: ROUTES.ACCOUNTING_PURCHASE_LIST,
+          aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_PURCHASE_ENTRY',
         },
       ],
     },

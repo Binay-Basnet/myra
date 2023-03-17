@@ -251,9 +251,15 @@ export const ROUTES = {
   ACCOUNTING_SALES_CUSTOMER_ADD: '/accounting/sales/customer/add',
 
   ACCOUNTING_INVENTORY_ITEMS_LIST: '/accounting/inventory/items/list',
+  ACCOUNTING_INVENTORY_ITEMS_ADD: '/accounting/inventory/items/add',
   ACCOUNTING_INVENTORY_ITEM_CATEGORY: '/accounting/inventory/item-category/list',
+  ACCOUNTING_INVENTORY_ITEM_CATEGORY_ADD: '/accounting/inventory/item-category/ass',
+
   ACCOUNTING_INVENTORY_UNITS_LIST: '/accounting/inventory/units/list',
+  ACCOUNTING_INVENTORY_UNITS_LIST_ADD: '/accounting/inventory/units/add',
+
   ACCOUNTING_INVENTORY_WAREHOUSE_LIST: '/accounting/inventory/warehouse/list',
+  ACCOUNTING_INVENTORY_WAREHOUSE_ADD: '/accounting/inventory/warehouse/add',
 
   ACCOUNTING_PURCHASE_LIST: '/accounting/purchase/list',
   ACCOUNTING_PURCHASE_LIST_ADD: '/accounting/purchase/add',
