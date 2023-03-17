@@ -1,19 +1,14 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { Spreadsheet } from 'react-spreadsheet';
 import { useRouter } from 'next/router';
 import { useGetCsvDataQuery, useSetCsvDataMutation } from '@migration/data-access';
-import { differenceWith, isEqual, omit } from 'lodash';
+import { differenceWith, isEmpty, isEqual, omit } from 'lodash';
 
-import { Box, Button, Loader, Text } from '@myra-ui';
-
-import { FormEditableTable } from '@coop/shared/form';
+import { Box, Button, Loader, Text, toast } from '@myra-ui';
 
 export const MigrationFileComponent = () => {
   const router = useRouter();
   const [changedRows, setChangedRows] = useState([]);
-
-  const methods = useForm();
-  const { reset, handleSubmit, getValues, watch } = methods;
 
   const { data, refetch, isLoading } = useGetCsvDataQuery({
     input: {
@@ -32,42 +27,34 @@ export const MigrationFileComponent = () => {
     },
   });
 
-  const { mutateAsync } = useSetCsvDataMutation();
+  const tableData = data?.protectedQuery?.getFileData || [];
+  const tableDataArray =
+    tableData && tableData?.reduce((acc, curr) => [...acc, { row: curr?.row, ...curr?.data }], []);
+  const columnLabel = !isEmpty(tableData) && Object?.keys(tableDataArray?.[0]);
 
-  const tableData = data?.protectedQuery?.getFileData;
-  const alteredTableData = tableData?.reduce((acc, curr) => {
-    const temp = curr?.data;
-
-    Object.keys(temp).forEach((key) => {
-      temp[key] = curr.data[key] || '-';
-    });
-    return [
-      ...acc,
-      {
-        ...temp,
-        row: curr?.row || '-',
-      },
-    ];
-  }, []);
+  const outputArray =
+    tableData &&
+    tableDataArray?.map((obj) => Object?.values(obj)?.map((value) => ({ value: String(value) })));
+  const [csvData, setCsvData] = useState([]);
 
   useEffect(() => {
-    if (alteredTableData) {
-      reset({
-        data: [...alteredTableData],
-      });
-    }
-  }, [tableData]);
+    setCsvData(outputArray);
+  }, [JSON.stringify(tableDataArray)]);
 
-  const columns =
-    tableData &&
-    Object?.keys(tableData?.[0]?.data)?.map((item) => ({
-      accessor: item,
-      header: item,
-      // cellWidth: 'xl',
-    }));
+  const { mutateAsync } = useSetCsvDataMutation();
+  const dataToBeSent = csvData?.map((innerArr) =>
+    innerArr.reduce((acc, curr, index) => {
+      acc[columnLabel[index]] = curr.value;
+      return acc;
+    }, {})
+  );
+  const finalData = differenceWith(dataToBeSent, tableDataArray, isEqual);
+  useEffect(() => {
+    const changedData = finalData?.map((item) => item?.row);
+    setChangedRows(changedData);
+  }, [JSON.stringify(csvData)]);
 
   const onSubmit = () => {
-    const dataToBeSent = differenceWith(getValues()?.data, alteredTableData, isEqual);
     mutateAsync({
       input: {
         fileName: router?.query['filename'] as string,
@@ -81,13 +68,21 @@ export const MigrationFileComponent = () => {
                 router?.query['subfolder'],
               ] as unknown as string[]),
         pageNo: 1 as unknown as string,
-        data: dataToBeSent?.reduce(
+        data: finalData?.reduce(
           (acc, curr) => [...acc, { row: curr?.row, data: omit({ ...curr }, ['row']) }],
           []
         ),
       },
-    }).then(() => refetch());
+    }).then((res) => {
+      refetch();
+      toast({
+        id: 'csv-file',
+        type: 'success',
+        message: res?.protectedMutation?.sendFileData?.status,
+      });
+    });
   };
+
   if (isLoading) {
     return (
       <Box>
@@ -95,27 +90,12 @@ export const MigrationFileComponent = () => {
       </Box>
     );
   }
-
-  const onChange = () => {
-    const watchedData = watch('data');
-    const dataToBeSent = differenceWith(watchedData, alteredTableData, isEqual);
-    setChangedRows(dataToBeSent);
-  };
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} onChange={onChange}>
-        <Box
-          display="flex"
-          flexDir="column"
-          p={5}
-          w="100%"
-          gap={5}
-          bg="whiteAlpha.900"
-          borderRadius={6}
-          boxShadow="lg"
-        >
-          <Box display="flex" justifyContent="space-between">
-            <Box display="flex" flexDir="column">
+    <Box p={5}>
+      {tableData && (
+        <Box display="flex" flexDir="column">
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box>
               <Text fontSize="r3" fontWeight="medium">
                 Project: {router?.query['name']}
               </Text>
@@ -125,10 +105,12 @@ export const MigrationFileComponent = () => {
               <Text fontSize="r3" fontWeight="medium">
                 Migration File: {router?.query['filename']}
               </Text>
+              <br />
             </Box>
-            <Button type="submit" w={100}>
+            <Button width="-webkit-fit-content" onClick={onSubmit}>
               Submit
             </Button>
+            <br />
           </Box>
           <Box
             display="flex"
@@ -139,27 +121,21 @@ export const MigrationFileComponent = () => {
             position="fixed"
             top={90}
             left={500}
+            zIndex={1}
           >
-            Changed Rows: {changedRows?.map((item) => `${item?.row}, `)}
+            Changed Rows: {changedRows?.map((item) => `${item}, `)}
           </Box>
-          {columns && tableData && (
-            <Box overflowX="scroll">
-              <FormEditableTable
-                name="data"
-                hideSN
-                columns={[
-                  {
-                    accessor: 'row',
-                    header: 'Row',
-                    // , cellWidth: 'md'
-                  },
-                ].concat(columns)}
-              />
-            </Box>
-          )}
+          <Box width="-webkit-fit-content">
+            <Spreadsheet
+              data={csvData}
+              columnLabels={columnLabel}
+              hideRowIndicators
+              onChange={setCsvData}
+            />
+          </Box>
         </Box>
-      </form>
-    </FormProvider>
+      )}
+    </Box>
   );
 };
 
