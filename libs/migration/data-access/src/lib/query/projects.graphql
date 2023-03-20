@@ -56,3 +56,9 @@ query getCSVData($input: FileDetails!) {
     }
   }
 }
+
+query getTransformedDirStructure($folderPath: [String]!) {
+  protectedQuery {
+    getTransformedDirStruct(folderPath: $folderPath)
+  }
+}

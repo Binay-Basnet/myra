@@ -270,6 +270,14 @@ export type GetCsvDataQuery = {
   };
 };
 
+export type GetTransformedDirStructureQueryVariables = Exact<{
+  folderPath: Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>;
+}>;
+
+export type GetTransformedDirStructureQuery = {
+  protectedQuery: { getTransformedDirStruct?: Array<string> | null };
+};
+
 export const SetAuthDocument = `
     mutation setAuth($userName: String!, $password: String!) {
   userLogin(input: {userName: $userName, password: $password}) {
@@ -473,5 +481,26 @@ export const useGetCsvDataQuery = <TData = GetCsvDataQuery, TError = unknown>(
   useQuery<GetCsvDataQuery, TError, TData>(
     ['getCSVData', variables],
     useAxios<GetCsvDataQuery, GetCsvDataQueryVariables>(GetCsvDataDocument).bind(null, variables),
+    options
+  );
+export const GetTransformedDirStructureDocument = `
+    query getTransformedDirStructure($folderPath: [String]!) {
+  protectedQuery {
+    getTransformedDirStruct(folderPath: $folderPath)
+  }
+}
+    `;
+export const useGetTransformedDirStructureQuery = <
+  TData = GetTransformedDirStructureQuery,
+  TError = unknown
+>(
+  variables: GetTransformedDirStructureQueryVariables,
+  options?: UseQueryOptions<GetTransformedDirStructureQuery, TError, TData>
+) =>
+  useQuery<GetTransformedDirStructureQuery, TError, TData>(
+    ['getTransformedDirStructure', variables],
+    useAxios<GetTransformedDirStructureQuery, GetTransformedDirStructureQueryVariables>(
+      GetTransformedDirStructureDocument
+    ).bind(null, variables),
     options
   );

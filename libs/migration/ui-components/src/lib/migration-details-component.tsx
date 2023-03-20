@@ -216,7 +216,6 @@ export const MigrationDetailsComponents = () => {
 
               <Collapse in={transformCollapse}>
                 {transformedCSVDataKeys?.map((item) => {
-                  const tableData = transformedCSVData?.[item];
                   const tableDataArray = Object.keys(
                     transformedCSVData?.[item]
                   ) as unknown as string[];
@@ -226,41 +225,32 @@ export const MigrationDetailsComponents = () => {
                       <Text fontSize="r2" fontWeight="medium">
                         {item} :
                       </Text>
-                      {tableDataArray?.map((i) => (
-                        <>
-                          <Text fontSize="r2" fontWeight="medium">
-                            {i}
-                          </Text>
 
-                          <Box maxH="35vh" overflowY="scroll">
-                            <TableContainer border="1px" borderColor="gray.100">
-                              <Table size="sm">
-                                <Thead>
-                                  <Tr>
-                                    <Th>S.N</Th>
-                                    <Th>Filename</Th>
-                                  </Tr>
-                                </Thead>
-                                <Tbody>
-                                  {tableData?.[i]?.map((j, index) => (
-                                    <Tr
-                                      cursor="pointer"
-                                      onClick={() =>
-                                        router.push(
-                                          `/${router?.query['name']}/${j}?csvType=transformedCSV&&folderName=${item}&&subfolder=${i}`
-                                        )
-                                      }
-                                    >
-                                      <Td>{index + 1}</Td>
-                                      <Td>{j}</Td>
-                                    </Tr>
-                                  ))}
-                                </Tbody>
-                              </Table>
-                            </TableContainer>
-                          </Box>
-                        </>
-                      ))}
+                      <TableContainer border="1px" borderColor="gray.100">
+                        <Table size="sm">
+                          <Thead>
+                            <Tr>
+                              <Th>S.N</Th>
+                              <Th>Filename</Th>
+                            </Tr>
+                          </Thead>
+                          <Tbody>
+                            {tableDataArray?.map((i, index) => (
+                              <Tr
+                                cursor="pointer"
+                                onClick={() =>
+                                  router.push(
+                                    `/${router?.query['name']}/details?folderName=${item}&&subfolder=${i}&&csvType=transformedCSV`
+                                  )
+                                }
+                              >
+                                <Td>{index + 1}</Td>
+                                <Td>{i}</Td>
+                              </Tr>
+                            ))}
+                          </Tbody>
+                        </Table>
+                      </TableContainer>
                       <br />
                     </>
                   );
