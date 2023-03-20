@@ -29,6 +29,7 @@ query getClientDetails($clientId: ID!) {
           otpToken
           description
           isForProduction
+          version
         }
       }
     }
