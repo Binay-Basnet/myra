@@ -23,6 +23,7 @@ import {
   useGetVersionQuery,
   useSetEnvironementMutation,
   useSetUpEnvironmentDatabaseMutation,
+  useUpdateVersionMutation,
 } from '@coop/neosys-admin/data-access';
 import { FormCheckbox, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 
@@ -30,6 +31,8 @@ export const NeosysFeatureClientView = () => {
   const router = useRouter();
   const clientId = router?.query['id'] as string;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentId, setCurrentId] = useState('');
+  const [isUpdateEnvironmentOpen, setIsUpdateEnvironmentOpen] = useState(false);
   const { data, isLoading, refetch } = useGetClientDetailsQuery({ clientId });
 
   const { mutateAsync: setEnvironmentMutation } = useSetEnvironementMutation();
@@ -42,7 +45,14 @@ export const NeosysFeatureClientView = () => {
   }));
 
   const methods = useForm();
+
   const { getValues, reset, clearErrors, setError } = methods;
+
+  const updateEnvironmentMethods = useForm();
+
+  const { getValues: updateEnvGetValues, handleSubmit: updateEnvHandleSubmit } =
+    updateEnvironmentMethods;
+  const { mutateAsync: updateEnvMutateAsync } = useUpdateVersionMutation();
 
   const rowData = React.useMemo(() => data?.neosys?.client?.details?.environments ?? [], [data]);
 
@@ -57,6 +67,11 @@ export const NeosysFeatureClientView = () => {
         id: 'Otp_Token',
         header: 'OTP Token',
         accessorFn: (row) => row?.otpToken,
+      },
+      {
+        id: 'version',
+        header: 'Version',
+        accessorFn: (row) => row?.version,
       },
       {
         id: 'Is_for_production',
@@ -102,6 +117,13 @@ export const NeosysFeatureClientView = () => {
                     });
                   },
                 },
+                {
+                  title: 'Update Environment',
+                  onClick: (node) => {
+                    setCurrentId(node?.id);
+                    setIsUpdateEnvironmentOpen(true);
+                  },
+                },
               ]}
             />
           ) : null,
@@ -115,6 +137,11 @@ export const NeosysFeatureClientView = () => {
   };
   const handleModalClose = () => {
     setIsModalOpen(false);
+  };
+
+  const handleUpgradeEnvironmentClose = () => {
+    setCurrentId('');
+    setIsUpdateEnvironmentOpen(false);
   };
 
   const onFormSubmit = async () => {
@@ -146,6 +173,32 @@ export const NeosysFeatureClientView = () => {
     });
   };
 
+  const onSubmitEnvUpdate = () => {
+    updateEnvMutateAsync({
+      environmentId: currentId,
+      version: updateEnvGetValues()?.['version'],
+    })
+      .then(() => {
+        toast({
+          id: 'update-env',
+          type: 'success',
+          state: 'success',
+          message: 'Environment version update successsful',
+        });
+        setCurrentId('');
+        setIsUpdateEnvironmentOpen(false);
+        refetch();
+      })
+      .catch(() => {
+        toast({
+          id: 'update-env',
+          type: 'error',
+          state: 'error',
+          message: 'Environment version update unsuccessful',
+        });
+      });
+  };
+
   return (
     <Box p="s8" display="flex" flexDirection="column" gap={2}>
       <Box display="flex" justifyContent="space-between">
@@ -165,6 +218,25 @@ export const NeosysFeatureClientView = () => {
           // }}
         />
       </Box>
+      <Modal
+        open={isUpdateEnvironmentOpen}
+        onClose={handleUpgradeEnvironmentClose}
+        isCentered
+        title="Update Environment"
+        width="3xl"
+      >
+        <FormProvider {...updateEnvironmentMethods}>
+          <form onSubmit={updateEnvHandleSubmit(onSubmitEnvUpdate)}>
+            <Box display="flex" flexDir="column" gap={5}>
+              <FormSelect name="version" label="Select Versions" options={versionOption} />
+
+              <Button type="submit" w="-webkit-fit-content">
+                Submit
+              </Button>
+            </Box>
+          </form>
+        </FormProvider>
+      </Modal>
 
       <Modal
         open={isModalOpen}
