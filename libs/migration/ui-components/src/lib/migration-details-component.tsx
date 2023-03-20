@@ -231,7 +231,7 @@ export const MigrationDetailsComponents = () => {
                           <Thead>
                             <Tr>
                               <Th>S.N</Th>
-                              <Th>Filename</Th>
+                              <Th>Foldername</Th>
                             </Tr>
                           </Thead>
                           <Tbody>
