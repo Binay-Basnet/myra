@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { Box, Button, Grid, GridItem, Text } from '@myra-ui';
 
-import { ROUTES } from '@coop/cbs/utils';
+import { getUrl } from '@coop/shared/utils';
 
 type NumbersType = {
   noOfAccounts: number | null | undefined;
@@ -34,7 +34,7 @@ export const Overview = ({
             p="0"
             onClick={() =>
               router.push({
-                pathname: ROUTES?.SETTINGS_GENERAL_SAVING_PRODUCTS_DETAILS,
+                pathname: `/${getUrl(router.pathname, 3)}/details`,
                 query: {
                   tab: 'active accounts',
                   id: router.query['id'],
@@ -59,7 +59,7 @@ export const Overview = ({
             p="0"
             onClick={() =>
               router.push({
-                pathname: ROUTES?.SETTINGS_GENERAL_SAVING_PRODUCTS_DETAILS,
+                pathname: `/${getUrl(router.pathname, 3)}/details`,
                 query: {
                   tab: 'inactive accounts',
                   id: router.query['id'],
@@ -84,7 +84,7 @@ export const Overview = ({
             p="0"
             onClick={() =>
               router.push({
-                pathname: ROUTES?.SETTINGS_GENERAL_SAVING_PRODUCTS_DETAILS,
+                pathname: `/${getUrl(router.pathname, 3)}/details`,
                 query: {
                   tab: 'dormant accounts',
                   id: router.query['id'],
