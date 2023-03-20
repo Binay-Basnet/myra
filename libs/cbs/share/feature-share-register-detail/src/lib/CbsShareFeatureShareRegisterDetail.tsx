@@ -124,6 +124,7 @@ export const CbsShareFeatureShareRegisterDetail = () => {
         totalWords={amountToWordsConverter(total)}
         details={details}
         showSignatures={false}
+        dublicate
         ref={printComponentRef}
       />
 

@@ -43,7 +43,7 @@ export const Overview = ({ noOfAccounts, noOfInactiveMembers }: NumbersType) => 
         </GridItem>
         <GridItem p="s16" bg="gray.0">
           <Text fontWeight="Medium" fontSize="s2" color="gray.500" lineHeight="125%">
-            No. of Inactive Members
+            No. of Inactive Accounts
           </Text>
           <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
             {noOfInactiveMembers}

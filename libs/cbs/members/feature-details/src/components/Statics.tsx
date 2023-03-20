@@ -47,7 +47,7 @@ export const MemberStatistics = () => {
       {memberShareDetails?.totalSavingInterestAccured && (
         <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
           <Text fontSize="s3" fontWeight="500">
-            Total Saving Interest Accured
+            Total Saving Interest Accrued
           </Text>
           <Text fontSize="r3" fontWeight="600">
             {amountConverter(memberShareDetails?.totalSavingInterestAccured)}
@@ -67,7 +67,7 @@ export const MemberStatistics = () => {
       {memberShareDetails?.totalLoanInterest && (
         <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
           <Text fontSize="s3" fontWeight="500">
-            Total Loan Accured
+            Total Loan Accrued
           </Text>
           <Text fontSize="r3" fontWeight="600">
             {amountConverter(memberShareDetails?.totalLoanInterest as string)}
