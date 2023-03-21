@@ -92,7 +92,7 @@ export const TableWithoutRef = <T,>(
         />
       )}
 
-      <TableContainer variant={variant}>
+      <TableContainer data={data} variant={variant}>
         <TableRoot ref={ref} size={tableSize} variant={variant} name={tableTitle}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

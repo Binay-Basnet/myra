@@ -58,3 +58,64 @@ query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
     }
   }
 }
+
+query getPearlsReport($data: PearlsReportInput!) {
+  report {
+    pearlsReport(data: $data) {
+      typeP {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+      typeE {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+      typeA {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+      typeR {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+      typeL {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+      typeS {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+    }
+  }
+}
