@@ -153,9 +153,11 @@ export const ReportOrganization = ({ ledgerName }: IReportOranizationProps) => {
                 <Text fontSize="r1" color="gray.700" fontWeight="500">
                   {nameList?.map((data) => data.label).join(', ')}
                 </Text>
-                <Button variant="link" onClick={() => setShowAllBranch(false)} p="0">
-                  Show Less
-                </Button>
+                {nameList?.length !== 1 && (
+                  <Button variant="link" onClick={() => setShowAllBranch(false)} p="0">
+                    Show Less
+                  </Button>
+                )}
               </Box>
             )}
           </Box>
