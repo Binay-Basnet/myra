@@ -32,6 +32,7 @@ export * from './lib/mobile-banking/MBExpiryReport';
 export * from './lib/mobile-banking/MBRegistrationReport';
 export * from './lib/mobile-banking/MBTransactionReport';
 export * from './lib/others/CopomisImportMemberReport';
+export * from './lib/others/PearlsReport';
 export * from './lib/others/SavingsBalanceReport';
 export * from './lib/service-center/ServiceCenterListReport';
 export * from './lib/share/ShareBalanceReport';

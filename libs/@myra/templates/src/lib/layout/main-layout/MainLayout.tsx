@@ -2,7 +2,7 @@ import React from 'react';
 
 import { TabMenu } from '@myra-ui/components';
 
-import { MainLayoutContainer, Scrollable } from '../containers/Container';
+import { MainLayoutContainer } from '../containers/Container';
 import { TopLevelHeader } from '../../header';
 
 export interface MainLayoutProps {
@@ -13,7 +13,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => (
   <MainLayoutContainer>
     <TopLevelHeader />
     <TabMenu module="CBS" />
-    <Scrollable>{children}</Scrollable>
+    {children}
   </MainLayoutContainer>
 );
 

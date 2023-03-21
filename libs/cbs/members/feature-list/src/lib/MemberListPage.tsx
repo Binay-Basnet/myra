@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Box, PageHeader, TablePopover } from '@myra-ui';
+import { PageHeader, TablePopover } from '@myra-ui';
 import { AvatarCell, Column, Table } from '@myra-ui/table';
 
 import {
@@ -253,13 +253,12 @@ export const MemberListPage = () => {
 
   return (
     <>
-      <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader
-          showTabsInFilter
-          heading={`Active Members - ${featureCode?.memberList}`}
-          tabItems={MEMBER_TAB_ITEMS}
-        />
-      </Box>
+      <PageHeader
+        showTabsInFilter
+        heading={`Active Members - ${featureCode?.memberList}`}
+        tabItems={MEMBER_TAB_ITEMS}
+      />
+
       <Table
         data={rowData}
         columns={columns}
