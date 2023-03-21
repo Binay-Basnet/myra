@@ -51,9 +51,11 @@ export const MigrationFileComponent = () => {
   const finalData = differenceWith(dataToBeSent, tableDataArray, isEqual);
 
   const rowLabel = useMemo(
-    () => tableData?.map((item) => (changedRows.includes(item?.row) ? 'Edited' : '')),
+    () => tableDataArray?.map((item) => (changedRows.includes(item?.row) ? 'Edited' : '')),
     [changedRows]
   );
+
+  // const rowLabel = tableData?.map((item) => (changedRows.includes(item?.row) ? 'Edited' : ''));
 
   useEffect(() => {
     const changedData = finalData?.map((item) => item?.row);
@@ -96,6 +98,7 @@ export const MigrationFileComponent = () => {
       </Box>
     );
   }
+
   return (
     <Box p={5}>
       {tableData && (
