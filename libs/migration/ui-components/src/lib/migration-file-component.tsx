@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Spreadsheet } from 'react-spreadsheet';
 import { useRouter } from 'next/router';
 import { useGetCsvDataQuery, useSetCsvDataMutation } from '@migration/data-access';
@@ -49,6 +49,12 @@ export const MigrationFileComponent = () => {
     }, {})
   );
   const finalData = differenceWith(dataToBeSent, tableDataArray, isEqual);
+
+  const rowLabel = useMemo(
+    () => tableData?.map((item) => (changedRows.includes(item?.row) ? 'Edited' : '')),
+    [changedRows]
+  );
+
   useEffect(() => {
     const changedData = finalData?.map((item) => item?.row);
     setChangedRows(changedData);
@@ -123,14 +129,15 @@ export const MigrationFileComponent = () => {
             left={500}
             zIndex={1}
           >
-            Changed Rows: {changedRows?.map((item) => `${item}, `)}
+            Changed Row: {changedRows?.map((item) => `${item}, `)}
           </Box>
           <Box width="-webkit-fit-content">
             <Spreadsheet
               data={csvData}
               columnLabels={columnLabel}
-              hideRowIndicators
+              // hideRowIndicators
               onChange={setCsvData}
+              rowLabels={rowLabel}
             />
           </Box>
         </Box>
