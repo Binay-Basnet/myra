@@ -17,17 +17,19 @@ import { TableDateFilter } from '../../components/table-date-filter/TableDateFil
 import TableListFilter from '../../components/table-list-filter/TableListFilter';
 import { TableSize, TableVariant } from '../../types/Table';
 
-export interface TableContainerProps {
+export interface TableContainerProps<T> {
   children: React.ReactNode;
   variant: TableVariant;
+  data: T[];
 }
 
-export const TableContainer = ({ children, variant }: TableContainerProps) => (
+export const TableContainer = <T,>({ children, variant, data }: TableContainerProps<T>) => (
   <ChakraTable.TableContainer
     sx={
       variant === 'report'
         ? {
             maxH: '420px',
+            h: data && data?.length !== 0 ? 'auto' : '420px',
             overflowY: 'auto',
             border: '1px',
             borderColor: 'border.layout',
@@ -290,7 +292,14 @@ export const TableEmptyState = <T,>({
 
   if (!data || data?.length === 0) {
     return (
-      <Box position="absolute" width="70vw" as="tr" display="flex" justifyContent="center">
+      <Box
+        position="absolute"
+        width="70vw"
+        height="300px"
+        as="tr"
+        display="flex"
+        justifyContent="center"
+      >
         <Flex as="td" justifyContent="center" height="300px" alignItems="center">
           {menu ? (
             <EmptyState

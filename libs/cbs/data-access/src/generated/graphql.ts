@@ -25628,6 +25628,71 @@ export type GetSavingsBalanceReportQuery = {
   };
 };
 
+export type GetPearlsReportQueryVariables = Exact<{
+  data: PearlsReportInput;
+}>;
+
+export type GetPearlsReportQuery = {
+  report: {
+    pearlsReport?: {
+      typeP?: Array<{
+        pearl: string;
+        description: string;
+        numerator: string;
+        denominator: string;
+        goal: string;
+        thisMonth: string;
+        lastMonth: string;
+      } | null> | null;
+      typeE?: Array<{
+        pearl: string;
+        description: string;
+        numerator: string;
+        denominator: string;
+        goal: string;
+        thisMonth: string;
+        lastMonth: string;
+      } | null> | null;
+      typeA?: Array<{
+        pearl: string;
+        description: string;
+        numerator: string;
+        denominator: string;
+        goal: string;
+        thisMonth: string;
+        lastMonth: string;
+      } | null> | null;
+      typeR?: Array<{
+        pearl: string;
+        description: string;
+        numerator: string;
+        denominator: string;
+        goal: string;
+        thisMonth: string;
+        lastMonth: string;
+      } | null> | null;
+      typeL?: Array<{
+        pearl: string;
+        description: string;
+        numerator: string;
+        denominator: string;
+        goal: string;
+        thisMonth: string;
+        lastMonth: string;
+      } | null> | null;
+      typeS?: Array<{
+        pearl: string;
+        description: string;
+        numerator: string;
+        denominator: string;
+        goal: string;
+        thisMonth: string;
+        lastMonth: string;
+      } | null> | null;
+    } | null;
+  };
+};
+
 export type GetAllSavedReportsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -43078,6 +43143,80 @@ export const useGetSavingsBalanceReportQuery = <
     useAxios<GetSavingsBalanceReportQuery, GetSavingsBalanceReportQueryVariables>(
       GetSavingsBalanceReportDocument
     ).bind(null, variables),
+    options
+  );
+export const GetPearlsReportDocument = `
+    query getPearlsReport($data: PearlsReportInput!) {
+  report {
+    pearlsReport(data: $data) {
+      typeP {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+      typeE {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+      typeA {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+      typeR {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+      typeL {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+      typeS {
+        pearl
+        description
+        numerator
+        denominator
+        goal
+        thisMonth
+        lastMonth
+      }
+    }
+  }
+}
+    `;
+export const useGetPearlsReportQuery = <TData = GetPearlsReportQuery, TError = unknown>(
+  variables: GetPearlsReportQueryVariables,
+  options?: UseQueryOptions<GetPearlsReportQuery, TError, TData>
+) =>
+  useQuery<GetPearlsReportQuery, TError, TData>(
+    ['getPearlsReport', variables],
+    useAxios<GetPearlsReportQuery, GetPearlsReportQueryVariables>(GetPearlsReportDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetAllSavedReportsDocument = `
