@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MenuContainer, PageContainer, Scrollable } from '@myra-ui/templates';
+import { MenuContainer, PageContainer } from '@myra-ui/templates';
 
 import { Can } from '@coop/cbs/utils';
 
@@ -14,9 +14,7 @@ export const SettingsUserLayout = ({ children }: ISettingsUserLayoutProps) => (
   <Can I="SHOW_IN_MENU" a="SETTINGS_USERS" showError isErrorCentered>
     <MenuContainer>
       <SettingsUserSideBar />
-      <PageContainer>
-        <Scrollable>{children}</Scrollable>
-      </PageContainer>
+      <PageContainer>{children}</PageContainer>
     </MenuContainer>
   </Can>
 );

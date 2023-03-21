@@ -29,11 +29,9 @@ interface IHoverCardContentProps {
 }
 
 const HoverCardContent = ({ children }: IHoverCardContentProps) => (
-  <Box zIndex={10}>
-    <PopoverContent bg="white" boxShadow="E2" borderRadius="br2" w="350px">
-      <PopoverBody p={0}>{children}</PopoverBody>
-    </PopoverContent>
-  </Box>
+  <PopoverContent bg="white" boxShadow="E2" borderRadius="br2" w="350px">
+    <PopoverBody p={0}>{children}</PopoverBody>
+  </PopoverContent>
 );
 
 interface IHoverCardHeaderProps {

@@ -92,8 +92,8 @@ export const TableWithoutRef = <T,>(
         />
       )}
 
-      <TableContainer isLoading={isLoading} data={data} variant={variant}>
-        <TableRoot ref={ref} size={size} variant={variant} name={tableTitle}>
+      <TableContainer variant={variant}>
+        <TableRoot ref={ref} size={tableSize} variant={variant} name={tableTitle}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableHeadRow key={headerGroup.id}>
@@ -109,7 +109,13 @@ export const TableWithoutRef = <T,>(
           </TableHeader>
           <TableBody isLoading={isLoading} data={data}>
             <TableLoader isLoading={isLoading} />
-            <TableEmptyState data={data} menu={menu} forms={forms} noDataTitle={noDataTitle} />
+            <TableEmptyState
+              isLoading={isLoading}
+              data={data}
+              menu={menu}
+              forms={forms}
+              noDataTitle={noDataTitle}
+            />
 
             {table.getRowModel().rows.map((row) => (
               <TableBodyRow isStatic={isStatic} row={row} rowOnClick={rowOnClick}>
@@ -122,15 +128,14 @@ export const TableWithoutRef = <T,>(
 
           <TableFooter table={table} showFooter={showFooter} />
         </TableRoot>
+        {pagination && data && data?.length !== 0 && (
+          <Pagination
+            total={pagination.total}
+            pageInfo={pagination.pageInfo}
+            pageSizeOptions={[100, 300, 500, 1000]}
+          />
+        )}
       </TableContainer>
-
-      {pagination && data && data?.length !== 0 && (
-        <Pagination
-          total={pagination.total}
-          pageInfo={pagination.pageInfo}
-          pageSizeOptions={[100, 300, 500, 1000]}
-        />
-      )}
     </>
   );
 };

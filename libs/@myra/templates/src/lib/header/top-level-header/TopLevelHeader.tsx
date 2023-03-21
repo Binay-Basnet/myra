@@ -277,7 +277,7 @@ export const TopLevelHeader = () => {
     <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
       <Box
         w="100%"
-        h="60px"
+        h="3.75rem"
         zIndex="20"
         background="secondary.700"
         display="flex"

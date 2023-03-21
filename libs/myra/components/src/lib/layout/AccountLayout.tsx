@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AppSidebar, MenuContainer, PageContainer, Scrollable } from '@myra-ui';
+import { AppSidebar, MenuContainer, PageContainer } from '@myra-ui';
 
 import { Can } from '@coop/cbs/utils';
 
@@ -12,9 +12,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => (
   <Can I="SHOW_IN_MENU" a="CBS_SAVINGS" showError isErrorCentered>
     <MenuContainer>
       <AppSidebar menu="SAVINGS" />
-      <PageContainer>
-        <Scrollable>{children}</Scrollable>
-      </PageContainer>
+      <PageContainer>{children}</PageContainer>
     </MenuContainer>
   </Can>
 );

@@ -2,7 +2,7 @@ import React from 'react';
 import { FiActivity } from 'react-icons/fi';
 import { IoGridOutline, IoPerson } from 'react-icons/io5';
 
-import { MainLayoutContainer, Scrollable, TabMenu, TopLevelHeader } from '@myra-ui';
+import { MainLayoutContainer, TabMenu, TopLevelHeader } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
 
@@ -42,6 +42,6 @@ export const SettingsLayout = ({ children }: ISettingsLayoutProps) => (
         },
       ]}
     />
-    <Scrollable>{children}</Scrollable>
+    {children}
   </MainLayoutContainer>
 );
