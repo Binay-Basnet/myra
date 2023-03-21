@@ -141,12 +141,18 @@ export const LoanProductWiseBalanceReport = () => {
                 accessorFn: (row) => row?.openingLoanBalance ?? '-',
                 cell: (props) => amountConverter(props?.row?.original?.openingLoanBalance ?? '0'),
                 footer: () => amountConverter(summary?.totalOpeningLoanBalance || 0),
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Total Loan Balance',
                 accessorKey: 'totalLoanBalance',
                 cell: (props) => amountConverter(props?.row?.original?.totalLoanBalance ?? '0'),
                 footer: () => amountConverter(summary?.totalLoanBalance || 0),
+                meta: {
+                  isNumeric: true,
+                },
               },
             ]}
           />
