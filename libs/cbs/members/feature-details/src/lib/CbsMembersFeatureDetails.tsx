@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { Box } from '@myra-ui';
+import { Box, Scrollable } from '@myra-ui';
 
 import {
   CooperativeBasicMinInfo,
@@ -89,39 +89,34 @@ export const MemberDetails = ({
         title="Member List"
         options={memberType === 'individual' ? options : undefined}
       />
-      <Box
-        w="320px"
-        position="fixed"
-        h="calc(100vh - 110px)"
-        overflowY="auto"
-        sx={{
-          '&::-webkit-scrollbar': {
-            display: 'none',
-          },
-        }}
-      >
-        <MemberDetailsSidebar />
-      </Box>
-      <Box
-        display="flex"
-        p="s16"
-        flexDir="column"
-        ml="320px"
-        gap="s16"
-        bg="background.500"
-        minH="calc(100vh - 110px)"
-      >
-        {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
-        {tabQuery === 'saving accounts' && <Accounts />}
-        {tabQuery === 'activity' && <Activity />}
-        {tabQuery === 'loan' && <Loan />}
-        {tabQuery === 'bio' && <Bio />}
-        {tabQuery === 'documents' && <Documents />}
-        {tabQuery === 'reports' && <Reports />}
-        {tabQuery === 'tasks' && <Tasks />}
-        {tabQuery === 'share' && <MemberShareInfo />}
-        {tabQuery === 'transactions' && <Transactions />}
-        {tabQuery === 'withdraw slip' && <WithdrawSlip />}
+      <Box display="flex">
+        <Box
+          w="320px"
+          h="100%"
+          sx={{
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+          }}
+        >
+          <MemberDetailsSidebar />
+        </Box>
+
+        <Scrollable detailPage>
+          <Box display="flex" p="s16" flexDir="column" gap="s16" bg="background.500">
+            {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
+            {tabQuery === 'saving accounts' && <Accounts />}
+            {tabQuery === 'activity' && <Activity />}
+            {tabQuery === 'loan' && <Loan />}
+            {tabQuery === 'bio' && <Bio />}
+            {tabQuery === 'documents' && <Documents />}
+            {tabQuery === 'reports' && <Reports />}
+            {tabQuery === 'tasks' && <Tasks />}
+            {tabQuery === 'share' && <MemberShareInfo />}
+            {tabQuery === 'transactions' && <Transactions />}
+            {tabQuery === 'withdraw slip' && <WithdrawSlip />}
+          </Box>
+        </Scrollable>
       </Box>
 
       <AddMinorModal

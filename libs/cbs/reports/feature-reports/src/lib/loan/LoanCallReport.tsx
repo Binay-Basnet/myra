@@ -118,7 +118,7 @@ export const LoanCallSheetReport = () => {
                     ),
                   },
                   {
-                    header: 'Member ID',
+                    header: 'Member Name',
                     accessorFn: (row) => localizedText(row?.memberName),
                   },
                   {

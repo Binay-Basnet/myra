@@ -7,7 +7,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { LoanObjState, useGetLoanAccountListQuery } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
 
@@ -66,7 +66,10 @@ export const AccountListPage = () => {
       },
       {
         header: 'Approved Loan',
-        accessorFn: (row) => row?.node?.appliedLoanAmount,
+        accessorFn: (row) => amountConverter(row?.node?.appliedLoanAmount || '0'),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Open Date',

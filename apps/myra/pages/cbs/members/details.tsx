@@ -22,7 +22,7 @@ const MemberDEtailsPage = () => {
 MemberDEtailsPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
-      <MemberPagesLayout>{page}</MemberPagesLayout>{' '}
+      <MemberPagesLayout>{page}</MemberPagesLayout>
     </MainLayout>
   );
 };

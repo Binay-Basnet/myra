@@ -27,7 +27,7 @@ interface IAmountFilterProps {
 export const AmountFilter = React.forwardRef(
   ({ placeholder, value, onChange }: IAmountFilterProps, ref: ForwardedRef<HTMLSelectElement>) => {
     const [amountCondition, setAmountCondition] = useState(
-      value.condition || AmountConditions.amt_between
+      value?.condition || AmountConditions.amt_between
     );
 
     const options = [
