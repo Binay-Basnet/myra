@@ -49,7 +49,7 @@ export const AppSidebar = ({ module = 'CBS', menu, forms }: ISidebarProps) => {
   const { link } = useMenuLink(menu);
 
   return (
-    <Box width="260px" height="calc(100vh - 110px)" flexShrink={0}>
+    <Box width="260px" h="100%" flexShrink={0}>
       <Scrollable>
         <Box
           display="flex"

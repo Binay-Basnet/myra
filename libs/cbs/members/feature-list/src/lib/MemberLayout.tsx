@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AppSidebar, MenuContainer, PageContainer, Scrollable } from '@myra-ui/templates';
+import { AppSidebar, MenuContainer, PageContainer } from '@myra-ui/templates';
 
 import { Id_Type, useGetGeneralMemberSettingsDataQuery } from '@coop/cbs/data-access';
 import { AclKey, Can, ROUTES, RouteValue } from '@coop/cbs/utils';
@@ -63,13 +63,12 @@ export const MemberPagesLayout = ({ children }: IMemberPagesLayoutProps) => {
   const alteredMemberForms = isMemberCodeSetup
     ? memberForms
     : memberForms?.map((item) => ({ ...item, route: ROUTES.CBS_NO_MEMBER_CODE }));
+
   return (
     <Can I="SHOW_IN_MENU" a="CBS_MEMBERS_MEMBER" showError isErrorCentered>
       <MenuContainer>
         <AppSidebar forms={alteredMemberForms} menu="MEMBERS" />
-        <PageContainer>
-          <Scrollable>{children}</Scrollable>
-        </PageContainer>
+        <PageContainer>{children}</PageContainer>
       </MenuContainer>
     </Can>
   );

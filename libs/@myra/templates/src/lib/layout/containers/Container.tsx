@@ -8,13 +8,22 @@ interface IContainer {
 
 export const MainLayoutContainer = ({ children }: IContainer) => <Box h="100vh">{children}</Box>;
 
-export const MenuContainer = ({ children }: IContainer) => <Box display="flex">{children}</Box>;
+export const MenuContainer = ({ children }: IContainer) => (
+  <Box display="flex" height="calc(100vh - 6.875rem)">
+    {children}
+  </Box>
+);
 
 export const PageContainer = ({ children }: IContainer) => (
-  <Box width="calc(100% - 260px)" boxShadow="E1">
-    <Box minHeight="calc(100vh - 110px)" width="100%" bg="white">
-      {children}
-    </Box>
+  <Box
+    width="calc(100% - 260px)"
+    height="100%"
+    display="flex"
+    flexDir="column"
+    boxShadow="E1"
+    bg="white"
+  >
+    {children}
   </Box>
 );
 

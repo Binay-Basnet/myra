@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiOutlineCloudDownload, AiOutlineUser } from 'react-icons/ai';
 
-import { MainLayoutContainer, Scrollable, TabMenu, TopLevelHeader } from '@myra-ui';
+import { MainLayoutContainer, TabMenu, TopLevelHeader } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
 
@@ -36,7 +36,7 @@ export const ACMainLayout = (props: ACMainLayoutProps) => {
           },
         ]}
       />
-      <Scrollable>{children}</Scrollable>
+      {children}
     </MainLayoutContainer>
   );
 };
