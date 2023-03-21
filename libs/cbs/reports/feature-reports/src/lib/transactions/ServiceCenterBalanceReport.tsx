@@ -83,34 +83,58 @@ export const ServviceCenterBalanceReport = () => {
               {
                 header: 'Today Cash Balance(80)',
                 accessorKey: 'todayCashBalance',
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Today Bank Balance(90)',
                 accessorKey: 'todayBankBalance',
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Today’s Total Cash & Bank(80+90)',
                 accessorKey: 'todayTotalBalance',
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Today Saving Balance(30)',
                 accessorKey: 'todaySavingBalance',
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Total Cash Balance(80)',
                 accessorKey: 'totalCashBalance',
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Total Bank Balance (90)',
                 accessorKey: 'totalBankBalance',
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Total Cash &  Bank(80+90)',
                 accessorKey: 'totalTotalBalance',
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Total Saving Balance(30)',
                 accessorKey: 'totalSavingBalance',
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Deposit to Liquidity Ratio',
