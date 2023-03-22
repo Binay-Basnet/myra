@@ -15,3 +15,4 @@ export * from './roles/ability';
 export * from './roles/Can';
 export * from './roles/permissions';
 export * from './roles/types';
+export * from './types';

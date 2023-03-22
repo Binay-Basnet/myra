@@ -350,3 +350,42 @@ query getLoanProductCriteria($productId: ID!) {
     }
   }
 }
+
+query getLoanProductInterestRateList($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        listProductInterestRates(productId: $productId) {
+          data {
+            id
+            rate
+            effectiveDate
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLoanProductInterestRateDetail($id: ID!, $productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        getProductInterestRate(id: $id, productId: $productId) {
+          data {
+            id
+            rate
+            effectiveDate
+            fileUploads {
+              identifier
+              url
+            }
+            note
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { useMemo, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
 
-import { Box, DetailPageHeader, SuccessPrint, Text } from '@myra-ui';
+import { Box, DetailPageHeader, Scrollable, SuccessPrint, Text } from '@myra-ui';
 
 import { localizedDate, localizedText } from '@coop/cbs/utils';
 import { amountConverter, amountToWordsConverter, quantityConverter } from '@coop/shared/utils';
@@ -100,19 +100,22 @@ export const CbsShareFeatureShareRegisterDetail = () => {
             options={headerOptions}
           />
         </Box>
-        <Box
-          w="320px"
-          position="fixed"
-          h="calc(100vh - 110px)"
-          borderRight="1px"
-          borderRightColor="border.layout"
-          bg="gray.0"
-        >
-          <SideBar />
-        </Box>
-
-        <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
-          {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
+        <Box display="flex">
+          <Box
+            w="320px"
+            position="fixed"
+            h="calc(100vh - 110px)"
+            borderRight="1px"
+            borderRightColor="border.layout"
+            bg="gray.0"
+          >
+            <SideBar />
+          </Box>
+          <Scrollable detailPage>
+            <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+              {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
+            </Box>
+          </Scrollable>
         </Box>
       </Box>
       <SuccessPrint

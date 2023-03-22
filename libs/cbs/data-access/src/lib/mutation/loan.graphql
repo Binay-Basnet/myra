@@ -117,3 +117,25 @@ mutation loanAccountGuaranteeActions(
     }
   }
 }
+
+mutation updateLoanAccountInterest($accountId: ID!, $data: InterestRateSetupInput!) {
+  loanAccount {
+    updateAccountInterest(accountId: $accountId, data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation editLoanAccountInterest($id: ID!, $accountId: ID!, $data: InterestRateSetupInput!) {
+  loanAccount {
+    editAccountInterest(id: $id, accountId: $accountId, data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

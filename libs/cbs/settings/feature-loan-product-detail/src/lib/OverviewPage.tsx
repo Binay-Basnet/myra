@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { Box, DetailsCard } from '@myra-ui';
+import { Box, DetailsCard, Scrollable } from '@myra-ui';
 
 import { ObjState, TypeOfLoan } from '@coop/cbs/data-access';
 
@@ -30,7 +30,7 @@ export const OverviewPage = () => {
   const { detailData, criteriaData, featureTable, productLimits } = useLoanProductDepositHook();
 
   return (
-    <>
+    <Box display="flex">
       <Box
         bg="gray.0"
         w="320px"
@@ -42,63 +42,65 @@ export const OverviewPage = () => {
         <SideBar />
       </Box>
 
-      <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
-        <Box display="flex" flexDirection="column" gap="s16">
-          {detailData?.objState === ObjState.Inactive && <AlertEnable id={id as string} />}
-          <Overview
-            noOfAccounts={detailData?.noOfaccount}
-            noOfInactiveMembers={detailData?.noOfInactiveAccounts}
-          />
-          <ProductDescription description={detailData?.description} />
-          <ProductGeneralInformation
-            generalInformation={{
-              productName: detailData?.productName,
-              productCode: detailData?.productCode,
-              productType: detailData?.productType,
-              nature: detailData?.productNature,
-              productSubType: detailData?.productSubType,
-              interestMethod: detailData?.interestMethod,
-              loanRepaymentScheme: detailData?.repaymentScheme,
-              loanType: detailData?.loanType,
-            }}
-          />
-          <ProductCriteria criteria={criteriaData} memberType={detailData?.typeOfMember} />
-          <ProductDocuments requiredDocuments={detailData?.requiredDocuments} />
-
-          <ProductLimits limits={productLimits} />
-
-          <ProductRebate rebateData={detailData?.rebate} />
-          <ProductInterestRate interestRate={detailData?.interest} />
-          {detailData?.loanType === TypeOfLoan?.Normal && (
-            <>
-              <ProductPenalty penaltyData={detailData?.penalty} />
-
-              <ProductPrematurePenalty penaltyData={detailData?.prematurePenaltySetup} />
-            </>
-          )}
-          <ProductTenure
-            tenureUnit={detailData?.tenureUnit}
-            maxTenure={detailData?.maxTenureUnitNumber}
-            minTenure={detailData?.minTenureUnitNumber}
-          />
-
-          <ProductLoanProcessingCharge loanProcessingCharge={detailData?.loanProcessingCharge} />
-          {detailData?.loanType === TypeOfLoan?.Normal && (
-            <ProductLoanRepayment
-              principal={detailData?.principalMaxGraceNumber}
-              interest={detailData?.interestMaxGraceNumber}
+      <Scrollable detailPage>
+        <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+          <Box display="flex" flexDirection="column" gap="s16">
+            {detailData?.objState === ObjState.Inactive && <AlertEnable id={id as string} />}
+            <Overview
+              noOfAccounts={detailData?.noOfaccount}
+              noOfInactiveMembers={detailData?.noOfInactiveAccounts}
             />
-          )}
+            <ProductDescription description={detailData?.description} />
+            <ProductGeneralInformation
+              generalInformation={{
+                productName: detailData?.productName,
+                productCode: detailData?.productCode,
+                productType: detailData?.productType,
+                nature: detailData?.productNature,
+                productSubType: detailData?.productSubType,
+                interestMethod: detailData?.interestMethod,
+                loanRepaymentScheme: detailData?.repaymentScheme,
+                loanType: detailData?.loanType,
+              }}
+            />
+            <ProductCriteria criteria={criteriaData} memberType={detailData?.typeOfMember} />
+            <ProductDocuments requiredDocuments={detailData?.requiredDocuments} />
 
-          <DetailsCard title="Features" hasTable>
-            <ProductFeatures features={featureTable} />
-          </DetailsCard>
+            <ProductLimits limits={productLimits} />
 
-          {/* <DetailsCard title="Insurance Details" hasTable>
+            <ProductRebate rebateData={detailData?.rebate} />
+            <ProductInterestRate interestRate={detailData?.interest} />
+            {detailData?.loanType === TypeOfLoan?.Normal && (
+              <>
+                <ProductPenalty penaltyData={detailData?.penalty} />
+
+                <ProductPrematurePenalty penaltyData={detailData?.prematurePenaltySetup} />
+              </>
+            )}
+            <ProductTenure
+              tenureUnit={detailData?.tenureUnit}
+              maxTenure={detailData?.maxTenureUnitNumber}
+              minTenure={detailData?.minTenureUnitNumber}
+            />
+
+            <ProductLoanProcessingCharge loanProcessingCharge={detailData?.loanProcessingCharge} />
+            {detailData?.loanType === TypeOfLoan?.Normal && (
+              <ProductLoanRepayment
+                principal={detailData?.principalMaxGraceNumber}
+                interest={detailData?.interestMaxGraceNumber}
+              />
+            )}
+
+            <DetailsCard title="Features" hasTable>
+              <ProductFeatures features={featureTable} />
+            </DetailsCard>
+
+            {/* <DetailsCard title="Insurance Details" hasTable>
             <ProductInsurance insurance={detailData?.insuranceType as Insurance} />
           </DetailsCard> */}
+          </Box>
         </Box>
-      </Box>
-    </>
+      </Scrollable>
+    </Box>
   );
 };

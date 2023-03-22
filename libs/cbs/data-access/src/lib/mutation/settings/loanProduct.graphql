@@ -45,3 +45,33 @@ mutation setProductActive($productId: ID!, $productType: AccountTypeFilter!, $re
     }
   }
 }
+
+mutation updateLoanProductInterestRate($productId: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      loanProducts {
+        updateProductInterest(productId: $productId, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation editLoanProductInterestRate($id: ID!, $productId: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      loanProducts {
+        editProductInterest(id: $id, productId: $productId, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

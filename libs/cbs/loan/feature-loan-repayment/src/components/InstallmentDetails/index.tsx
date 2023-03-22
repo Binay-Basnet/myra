@@ -37,6 +37,9 @@ export const InstallmentData = ({
   const loanInstallments =
     loanPreviewData?.loanAccount?.loanPreview?.data?.paymentSchedule?.installments;
 
+  const loanType =
+    loanPreviewData?.loanAccount?.loanPreview?.data?.loanDetails?.loanRepaymentScheme;
+
   const remainingInstallments = useMemo(() => {
     const lastUnpaidInstallment = loanInstallments?.find(
       (installment) => installment?.status && installment?.status !== 'PAID'
@@ -80,7 +83,7 @@ export const InstallmentData = ({
         ? Number(installment?.interest) + Number(installment?.remainingInterest)
         : Number(installment?.interest);
 
-      if (penalty) {
+      if (penalty && (loanType !== 'EPI' || (loanType === 'EPI' && installment?.status))) {
         if (tempAmount > penalty) {
           tempInst.fine = penalty;
           tempInst.isFinePartial = false;
@@ -94,7 +97,7 @@ export const InstallmentData = ({
         }
       }
 
-      if (interest) {
+      if (interest && (loanType !== 'EPI' || (loanType === 'EPI' && installment?.status))) {
         if (tempAmount > interest) {
           tempInst.interest = interest;
           tempInst.isInterestPartial = false;
@@ -126,7 +129,7 @@ export const InstallmentData = ({
     }
 
     return temp;
-  }, [amountPaid, remainingInstallments]);
+  }, [amountPaid, remainingInstallments, loanType]);
 
   const { totalCoveredPrincipal, totalCoveredInterest, totalCoveredFine, returnAmount } =
     useMemo(() => {

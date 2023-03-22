@@ -426,3 +426,42 @@ query getSavingsAccountList($paginate: Pagination, $filter: Filter) {
     }
   }
 }
+
+query getSavingProductInterestRateList($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        listProductInterestRates(productId: $productId) {
+          data {
+            id
+            rate
+            effectiveDate
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSavingProductInterestRateDetail($id: ID!, $productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getProductInterestRate(id: $id, productId: $productId) {
+          data {
+            id
+            rate
+            effectiveDate
+            fileUploads {
+              identifier
+              url
+            }
+            note
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}

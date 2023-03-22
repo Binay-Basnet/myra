@@ -89,18 +89,18 @@ export const InterestPostingReport = () => {
                 header: 'Date',
                 accessorFn: (row) => localizedDate(row?.date),
               },
-              {
-                header: 'Days',
-                accessorKey: 'days',
-              },
-              {
-                header: 'Balance',
-                accessorKey: 'balance',
-                cell: (props) => amountConverter(props.getValue() as string),
-                meta: {
-                  isNumeric: true,
-                },
-              },
+              // {
+              //   header: 'Days',
+              //   accessorKey: 'days',
+              // },
+              // {
+              //   header: 'Balance',
+              //   accessorKey: 'balance',
+              //   cell: (props) => amountConverter(props.getValue() as string),
+              //   meta: {
+              //     isNumeric: true,
+              //   },
+              // },
               {
                 header: 'Interest Rate',
                 accessorKey: 'rate',

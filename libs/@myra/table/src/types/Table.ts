@@ -76,8 +76,9 @@ export interface TableProps<TData> {
   forms?: {
     label: string;
     aclKey: AclKey;
-    route: RouteValue;
+    route?: RouteValue;
     idType?: Id_Type;
+    onClick?: () => void;
   }[];
 
   tableTitle?: string;

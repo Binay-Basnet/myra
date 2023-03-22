@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { Box, Text, WIPState } from '@myra-ui';
+import { Box, Scrollable, Text, WIPState } from '@myra-ui';
 
 import { COADetailSidebar, ProductDetailPathBar } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
@@ -50,36 +50,38 @@ export const COAAccountDetail = () => {
           </Link>
         }
       />
-      <Box
-        w="320px"
-        position="fixed"
-        h="calc(100vh - 110px)"
-        borderRight="1px"
-        borderRightColor="border.layout"
-        overflowY="auto"
-      >
-        <COADetailSidebar />
-      </Box>
-      <Box
-        display="flex"
-        p="s16"
-        flexDir="column"
-        gap="s16"
-        ml="320px"
-        bg="background.500"
-        minH="calc(100vh - 170px)"
-      >
-        {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
-        {tabQuery === 'transactions' && <Transactions />}
+      <Box display="flex">
+        <Box
+          w="320px"
+          position="fixed"
+          h="calc(100vh - 110px)"
+          borderRight="1px"
+          borderRightColor="border.layout"
+          overflowY="auto"
+        >
+          <COADetailSidebar />
+        </Box>
+        <Scrollable detailPage>
+          <Box
+            display="flex"
+            p="s16"
+            flexDir="column"
+            gap="s16"
+            ml="320px"
+            bg="background.500"
+            minH="calc(100vh - 170px)"
+          >
+            {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
+            {tabQuery === 'transactions' && <Transactions />}
 
-        {tabQuery &&
-          !['undefined', 'overview', 'transactions', 'withdraw slip'].includes(tabQuery) && (
-            <Box h="calc(100vh - 110px)">
-              <WIPState />
-            </Box>
-          )}
+            {tabQuery &&
+              !['undefined', 'overview', 'transactions', 'withdraw slip'].includes(tabQuery) && (
+                <Box h="calc(100vh - 110px)">
+                  <WIPState />
+                </Box>
+              )}
 
-        {/* {tabQuery === 'accounts' && <Account />}
+            {/* {tabQuery === 'accounts' && <Account />}
         {tabQuery === 'activity' && <Activity />}
         {tabQuery === 'bio' && <Bio />}
         {tabQuery === 'cheque' && <Cheque />}
@@ -88,6 +90,8 @@ export const COAAccountDetail = () => {
         {tabQuery === 'share' && <Share />}
         {tabQuery === 'tasks' && <Tasks />}
         {tabQuery === 'transactions' && <Transactions />} */}
+          </Box>
+        </Scrollable>
       </Box>
     </>
   );

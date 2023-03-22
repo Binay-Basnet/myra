@@ -3,7 +3,7 @@ import { BsArrowUpRight } from 'react-icons/bs';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { AddButtonList, Box, Icon, PopOverComponentForButtonList, Text } from '@myra-ui';
+import { AddButtonList, Box, Button, Icon, PopOverComponentForButtonList, Text } from '@myra-ui';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { AclKey, Can, RouteValue } from '@coop/cbs/utils';
@@ -16,8 +16,9 @@ interface IEmptyStateProps {
   forms?: {
     label: string;
     aclKey: AclKey;
-    route: RouteValue;
+    route?: RouteValue;
     idType?: Id_Type;
+    onClick?: () => void;
   }[];
   docLink?: string;
 }
@@ -30,7 +31,7 @@ export const EmptyState = (props: IEmptyStateProps) => {
 
   return (
     <Box p="s24" display="flex" flexDir="column" w={480} h={208} gap="s16" boxShadow="md">
-      <Icon as={menuIcon} size="xl" color="primary" />
+      {menuIcon && <Icon as={menuIcon} size="xl" color="primary" />}
       <Text fontSize="r3" fontWeight="medium">
         No &apos;{menu}&apos; Data
       </Text>
@@ -38,8 +39,25 @@ export const EmptyState = (props: IEmptyStateProps) => {
         Create New &apos;{menu}&apos;. Or learn more with Myra tutorial resources.
       </Text>
       <Box display="flex" gap="s40" alignItems="center">
-        {/* <Button onClick={onClick}>New {type}</Button> */}
-        {forms && (
+        {forms && forms?.length === 1 ? (
+          <Can I="CREATE" a={forms[0].aclKey} key={forms[0]?.label}>
+            <Button
+              onClick={() => {
+                if (forms[0].onClick) {
+                  forms[0].onClick();
+                } else if (forms[0].idType) {
+                  mutateAsync({ idType: forms[0]?.idType ?? null }).then((res) =>
+                    router.push(`${forms[0].route}/${res?.newId}`)
+                  );
+                } else {
+                  router.push(forms[0].route as string);
+                }
+              }}
+            >
+              {t[forms[0].label] || forms[0]?.label}
+            </Button>
+          </Can>
+        ) : (
           <Box>
             <PopOverComponentForButtonList buttonLabel={`New ${menu}`}>
               {forms?.map((item) => (
@@ -47,12 +65,14 @@ export const EmptyState = (props: IEmptyStateProps) => {
                   <AddButtonList
                     label={t[item.label] || item?.label}
                     onClick={() => {
-                      if (item.idType) {
+                      if (item.onClick) {
+                        item.onClick();
+                      } else if (item.idType) {
                         mutateAsync({ idType: item?.idType ?? null }).then((res) =>
                           router.push(`${item.route}/${res?.newId}`)
                         );
                       } else {
-                        router.push(item.route);
+                        router.push(item.route as string);
                       }
                     }}
                   />

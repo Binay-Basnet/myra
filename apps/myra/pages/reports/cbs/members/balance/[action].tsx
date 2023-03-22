@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 import { MemberBalanceReport } from '@coop/cbs/reports';
 
@@ -9,5 +9,9 @@ const MemberBalanceReportPage = () => <MemberBalanceReport />;
 export default MemberBalanceReportPage;
 
 MemberBalanceReportPage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };

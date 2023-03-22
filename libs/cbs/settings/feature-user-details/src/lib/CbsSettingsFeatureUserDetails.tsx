@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { Box } from '@myra-ui';
+import { Box, Scrollable } from '@myra-ui';
 
 import { ProductDetailPathBar } from '@coop/cbs/settings/ui-layout';
 import { localizedText } from '@coop/cbs/utils';
@@ -23,31 +23,35 @@ export const CbsSettingsUserDetailsPage = () => {
         name={localizedText(sidebarData?.userName) ?? ''}
         title={`User List `}
       />
-      <Box
-        w="320px"
-        position="fixed"
-        h="calc(100vh - 110px)"
-        borderRight="1px"
-        borderRightColor="border.layout"
-        overflowY="auto"
-      >
-        <UsersDetailsSideBar />
-      </Box>
-      <Box
-        display="flex"
-        p="s16"
-        flexDir="column"
-        gap="s16"
-        ml="320px"
-        bg="background.500"
-        minH="calc(100vh - 170px)"
-      >
-        {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
+      <Box display="flex">
+        <Box
+          w="320px"
+          position="fixed"
+          h="calc(100vh - 110px)"
+          borderRight="1px"
+          borderRightColor="border.layout"
+          overflowY="auto"
+        >
+          <UsersDetailsSideBar />
+        </Box>
+        <Scrollable detailPage>
+          <Box
+            display="flex"
+            p="s16"
+            flexDir="column"
+            gap="s16"
+            ml="320px"
+            bg="background.500"
+            minH="calc(100vh - 170px)"
+          >
+            {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
 
-        {tabQuery === 'bio' && <Bio />}
-        {tabQuery === 'service center' && <ServiceCenterTab />}
+            {tabQuery === 'bio' && <Bio />}
+            {tabQuery === 'service center' && <ServiceCenterTab />}
 
-        {tabQuery === 'roles' && <RolesTab />}
+            {tabQuery === 'roles' && <RolesTab />}
+          </Box>
+        </Scrollable>
       </Box>
     </>
   );

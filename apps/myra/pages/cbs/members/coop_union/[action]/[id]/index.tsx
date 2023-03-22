@@ -1,13 +1,17 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 import { KYMCooperativeUnionPage } from '@coop/cbs/kym-form/cooperative-union';
 
 const AddMember = () => <KYMCooperativeUnionPage />;
 
 AddMember.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };
 
 export default AddMember;

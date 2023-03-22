@@ -242,6 +242,7 @@ export const SettingsDepositProductsAdd = () => {
           : null,
       postingFrequency: values?.postingFrequency ? values?.postingFrequency : null,
       accountType: values?.accountType ? values?.accountType : null,
+      productPremiumInterest: values?.productPremiumInterest ?? null,
       interest: {
         additionalRate: values?.interest?.additionalRate ?? null,
         boardAuthority: values?.interest?.boardAuthority ?? null,
@@ -249,6 +250,8 @@ export const SettingsDepositProductsAdd = () => {
         defaultRate: values?.interest?.defaultRate ?? null,
         maxRate: values?.interest?.maxRate ?? null,
         minRate: values?.interest?.minRate ?? null,
+        changeMin: values?.interest?.changeMin ?? null,
+        changeMax: values?.interest?.changeMax ?? null,
       },
       penaltyData: {
         dayAfterInstallmentDate: penalty ? values?.penaltyData?.dayAfterInstallmentDate : null,
