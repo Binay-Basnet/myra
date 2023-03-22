@@ -49,7 +49,7 @@ export const ServviceCenterBalanceReport = () => {
         <Report.PageHeader
           paths={[
             {
-              label: 'Transaction Reports',
+              label: 'Service Center Reports',
               link: '/reports/cbs/service-center',
             },
             {

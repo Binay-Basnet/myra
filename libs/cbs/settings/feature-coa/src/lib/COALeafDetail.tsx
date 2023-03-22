@@ -1,7 +1,7 @@
 import { IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Icon, IconButton, PathBar } from '@myra-ui';
+import { Box, Icon, IconButton, PathBar, Scrollable } from '@myra-ui';
 
 import { COALeafDetailSidebar } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
@@ -42,29 +42,33 @@ export const COALeafDetail = () => {
           }
         />
       </Box>
-      <Box
-        w="320px"
-        position="fixed"
-        h="calc(100vh - 110px)"
-        borderRight="1px"
-        borderRightColor="border.layout"
-        overflowY="auto"
-      >
-        <COALeafDetailSidebar />
-      </Box>
-      <Box
-        display="flex"
-        p="s16"
-        flexDir="column"
-        gap="s16"
-        ml="320px"
-        bg="background.500"
-        minH="calc(100vh - 170px)"
-      >
-        {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <LeafNodeOverview />}
-        {tabQuery === 'ledger' && <LedgerTab />}
+      <Box display="flex">
+        <Box
+          w="320px"
+          position="fixed"
+          h="calc(100vh - 110px)"
+          borderRight="1px"
+          borderRightColor="border.layout"
+          overflowY="auto"
+        >
+          <COALeafDetailSidebar />
+        </Box>
+        <Scrollable detailPage>
+          <Box
+            display="flex"
+            p="s16"
+            flexDir="column"
+            gap="s16"
+            ml="320px"
+            bg="background.500"
+            minH="calc(100vh - 170px)"
+          >
+            {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && (
+              <LeafNodeOverview />
+            )}
+            {tabQuery === 'ledger' && <LedgerTab />}
 
-        {/* {tabQuery === 'accounts' && <Account />}
+            {/* {tabQuery === 'accounts' && <Account />}
         {tabQuery === 'activity' && <Activity />}
         {tabQuery === 'bio' && <Bio />}
         {tabQuery === 'cheque' && <Cheque />}
@@ -73,6 +77,8 @@ export const COALeafDetail = () => {
         {tabQuery === 'share' && <Share />}
         {tabQuery === 'tasks' && <Tasks />}
         {tabQuery === 'transactions' && <Transactions />} */}
+          </Box>
+        </Scrollable>
       </Box>
     </>
   );

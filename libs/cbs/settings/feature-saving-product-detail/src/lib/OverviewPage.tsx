@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { Box, DetailsCard } from '@myra-ui';
+import { Box, DetailsCard, Scrollable } from '@myra-ui';
 
 import { NatureOfDepositProduct, ObjState } from '@coop/cbs/data-access';
 
@@ -40,7 +40,7 @@ export const OverviewPage = () => {
   } = useSavingDepositHook();
 
   return (
-    <>
+    <Box display="flex">
       <Box
         bg="gray.0"
         w="320px"
@@ -51,100 +51,101 @@ export const OverviewPage = () => {
       >
         <SideBar />
       </Box>
-
-      <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
-        <Box display="flex" flexDirection="column" gap="s16">
-          {detailData?.objState === ObjState.Inactive && <AlertEnable id={id as string} />}
-          <Overview
-            noOfAccounts={detailData?.noOfAccounts}
-            noOfDormantMembers={detailData?.noOfDormantAccounts}
-            noOfInactiveMembers={detailData?.noOfInactiveAccounts}
-          />
-          <ProductDescription description={detailData?.description} />
-          <ProductGeneralInformation
-            generalInformation={{
-              productCode: detailData?.productCode,
-              postingFrequency: detailData?.postingFrequency,
-              productName: detailData?.productName,
-              accountType: detailData?.accountType,
-              nature: detailData?.nature,
-            }}
-          />
-          <ProductCriteria criteria={criteriaData} memberType={detailData?.typeOfMember} />
-
-          {(detailData?.individualDocuments || detailData?.institutionDocuments) && (
-            <ProductDocuments
-              individualDocuments={detailData?.individualDocuments}
-              institutionDocuments={detailData?.institutionDocuments}
+      <Scrollable detailPage>
+        <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+          <Box display="flex" flexDirection="column" gap="s16">
+            {detailData?.objState === ObjState.Inactive && <AlertEnable id={id as string} />}
+            <Overview
+              noOfAccounts={detailData?.noOfAccounts}
+              noOfDormantMembers={detailData?.noOfDormantAccounts}
+              noOfInactiveMembers={detailData?.noOfInactiveAccounts}
             />
-          )}
-
-          <ProductServiceCharge serviceCharge={detailData?.serviceCharge} />
-          <AccountCloseCharge accountCloseCharge={detailData?.accountCloseCharge} />
-          <ProductLimits limits={productLimits} />
-
-          {detailData?.nature !== NatureOfDepositProduct.Current && (
-            <ProductInterestRate interestRate={detailData?.interest} />
-          )}
-
-          {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
-            detailData?.nature === NatureOfDepositProduct.Current) && (
-            <>
-              <ProductPenalty penaltyData={detailData?.penaltyData} />
-              <ProductRebate rebateData={detailData?.rebateData} />
-            </>
-          )}
-
-          {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
-            detailData?.nature === NatureOfDepositProduct.TermSavingOrFd) && (
-            <ProductTenure
-              tenureUnit={detailData?.tenureUnit}
-              maxTenure={detailData?.maxTenureUnitNumber}
-              minTenure={detailData?.minTenureUnitNumber}
+            <ProductDescription description={detailData?.description} />
+            <ProductGeneralInformation
+              generalInformation={{
+                productCode: detailData?.productCode,
+                postingFrequency: detailData?.postingFrequency,
+                productName: detailData?.productName,
+                accountType: detailData?.accountType,
+                nature: detailData?.nature,
+              }}
             />
-          )}
+            <ProductCriteria criteria={criteriaData} memberType={detailData?.typeOfMember} />
 
-          {(detailData?.nature === NatureOfDepositProduct.Current ||
-            detailData?.nature === NatureOfDepositProduct.Saving) && (
-            <ProductDormantSetup dormantSetup={detailData?.dormantSetup} />
-          )}
+            {(detailData?.individualDocuments || detailData?.institutionDocuments) && (
+              <ProductDocuments
+                individualDocuments={detailData?.individualDocuments}
+                institutionDocuments={detailData?.institutionDocuments}
+              />
+            )}
 
-          {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
-            detailData?.nature === NatureOfDepositProduct.TermSavingOrFd) && (
-            <>
-              <ProductPrematurePenalty penaltyData={detailData?.prematurePenalty} />
-              <ProductWithdrawPenalty penaltyData={detailData?.withdrawPenalty} />
-            </>
-          )}
+            <ProductServiceCharge serviceCharge={detailData?.serviceCharge} />
+            <AccountCloseCharge accountCloseCharge={detailData?.accountCloseCharge} />
+            <ProductLimits limits={productLimits} />
 
-          {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
-            detailData?.nature === NatureOfDepositProduct.Saving) && (
-            <ProductLadderRate ladderRate={detailData?.ladderRateData} />
-          )}
+            {detailData?.nature !== NatureOfDepositProduct.Current && (
+              <ProductInterestRate interestRate={detailData?.interest} />
+            )}
 
-          {(detailData?.nature === NatureOfDepositProduct.Current ||
-            detailData?.nature === NatureOfDepositProduct.TermSavingOrFd) && (
-            <DetailsCard title="Features " hasTable>
-              <ProductFeatures features={currentTermSavingFeatureTable} />
-            </DetailsCard>
-          )}
+            {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
+              detailData?.nature === NatureOfDepositProduct.Current) && (
+              <>
+                <ProductPenalty penaltyData={detailData?.penaltyData} />
+                <ProductRebate rebateData={detailData?.rebateData} />
+              </>
+            )}
 
-          {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
-            detailData?.nature === NatureOfDepositProduct.Saving) && (
-            <DetailsCard title="Features " hasTable>
-              <ProductFeatures features={savingRecurringFeatureTable} />
-            </DetailsCard>
-          )}
+            {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
+              detailData?.nature === NatureOfDepositProduct.TermSavingOrFd) && (
+              <ProductTenure
+                tenureUnit={detailData?.tenureUnit}
+                maxTenure={detailData?.maxTenureUnitNumber}
+                minTenure={detailData?.minTenureUnitNumber}
+              />
+            )}
 
-          {(detailData?.nature === NatureOfDepositProduct.Current ||
-            detailData?.nature === NatureOfDepositProduct.Saving) && (
-            <DetailsCard title="Others Details" hasTable>
-              <ProductServiceTable serviceList={detailData?.savingCharges ?? []} />
-            </DetailsCard>
-          )}
-          {/* <TextAreaInput name="note" label="note" /> */}
+            {(detailData?.nature === NatureOfDepositProduct.Current ||
+              detailData?.nature === NatureOfDepositProduct.Saving) && (
+              <ProductDormantSetup dormantSetup={detailData?.dormantSetup} />
+            )}
+
+            {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
+              detailData?.nature === NatureOfDepositProduct.TermSavingOrFd) && (
+              <>
+                <ProductPrematurePenalty penaltyData={detailData?.prematurePenalty} />
+                <ProductWithdrawPenalty penaltyData={detailData?.withdrawPenalty} />
+              </>
+            )}
+
+            {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
+              detailData?.nature === NatureOfDepositProduct.Saving) && (
+              <ProductLadderRate ladderRate={detailData?.ladderRateData} />
+            )}
+
+            {(detailData?.nature === NatureOfDepositProduct.Current ||
+              detailData?.nature === NatureOfDepositProduct.TermSavingOrFd) && (
+              <DetailsCard title="Features " hasTable>
+                <ProductFeatures features={currentTermSavingFeatureTable} />
+              </DetailsCard>
+            )}
+
+            {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||
+              detailData?.nature === NatureOfDepositProduct.Saving) && (
+              <DetailsCard title="Features " hasTable>
+                <ProductFeatures features={savingRecurringFeatureTable} />
+              </DetailsCard>
+            )}
+
+            {(detailData?.nature === NatureOfDepositProduct.Current ||
+              detailData?.nature === NatureOfDepositProduct.Saving) && (
+              <DetailsCard title="Others Details" hasTable>
+                <ProductServiceTable serviceList={detailData?.savingCharges ?? []} />
+              </DetailsCard>
+            )}
+            {/* <TextAreaInput name="note" label="note" /> */}
+          </Box>
         </Box>
-      </Box>
-    </>
+      </Scrollable>
+    </Box>
   );
 };

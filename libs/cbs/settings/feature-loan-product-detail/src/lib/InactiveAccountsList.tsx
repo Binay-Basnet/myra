@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box, Text } from '@myra-ui';
+import { Box, Scrollable, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { LoanObjState, useGetLoanAccountListQuery } from '@coop/cbs/data-access';
@@ -88,7 +88,7 @@ export const InactiveLoanAccountListPage = () => {
   );
 
   return (
-    <>
+    <Box display="flex">
       <Box
         bg="gray.0"
         w="320px"
@@ -99,30 +99,33 @@ export const InactiveLoanAccountListPage = () => {
       >
         <SideBar />
       </Box>
-      <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
-        <Box display="flex" justifyContent="space-between" w="100%">
-          <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
-            Inactive Account List
-          </Text>
-          {/* <Button
+      <Scrollable detailPage>
+        <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+          <Box display="flex" justifyContent="space-between" w="100%">
+            <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
+              Inactive Account List
+            </Text>
+            {/* <Button
             onClick={() => router.push(ROUTES.CBS_LOAN_APPLICATIONS_ADD)}
             leftIcon={<Icon as={IoAdd} size="md" />}
           >
             Add Account
           </Button> */}
+          </Box>
         </Box>
-      </Box>
-      <Box bg="background.500" ml="320px" p="s16" minH="100vh">
-        <Table
-          isLoading={isLoading}
-          data={rowData}
-          columns={columns}
-          pagination={{
-            total: data?.settings?.general?.loanProducts?.getLoanAccountlist?.totalCount ?? 'Many',
-            pageInfo: data?.settings?.general?.loanProducts?.getLoanAccountlist?.pageInfo,
-          }}
-        />
-      </Box>
-    </>
+        <Box bg="background.500" ml="320px" p="s16" minH="100vh">
+          <Table
+            isLoading={isLoading}
+            data={rowData}
+            columns={columns}
+            pagination={{
+              total:
+                data?.settings?.general?.loanProducts?.getLoanAccountlist?.totalCount ?? 'Many',
+              pageInfo: data?.settings?.general?.loanProducts?.getLoanAccountlist?.pageInfo,
+            }}
+          />
+        </Box>
+      </Scrollable>
+    </Box>
   );
 };

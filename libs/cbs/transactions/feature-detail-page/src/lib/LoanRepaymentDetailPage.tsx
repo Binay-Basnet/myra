@@ -1,4 +1,4 @@
-import { Box, Text } from '@myra-ui';
+import { Box, Scrollable, Text } from '@myra-ui';
 
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
@@ -33,34 +33,37 @@ export const LoanRepaymentDetailPage = () => {
   };
   return (
     <Box bg="gray.100">
-      <Box
-        bg="gray.0"
-        w="320px"
-        position="fixed"
-        h="calc(100vh - 110px)"
-        borderRight="1px"
-        borderRightColor="border.layout"
-      >
-        <SideBar summary={summary} detailPage="loanRepayment" />
-      </Box>
-
-      <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
-        <Text color="gray.800" fontWeight="SemiBold" fontSize="r3">
-          {t['transDetailOverview']}
-        </Text>
-        <LoanRepaymentDetails />
-        <InstallmentDetails data={loanRepaymentData ?? []} />
-        <PaymentDetails detailPage="loanRepayment" />
-        <OtherDetails
-          branch={loanRepaymentDetailData?.transactionBranch as string}
-          teller={loanRepaymentDetailData?.teller as string}
-        />
-        {loanRepaymentDetailData?.note && <Note note={loanRepaymentDetailData?.note} />}
-        <GlTransaction
-          data={glTransData ?? []}
-          totalCredit={String(amountConverter(loanRepaymentDetailData?.totalCredit ?? 0))}
-          totalDebit={String(amountConverter(loanRepaymentDetailData?.totalDebit ?? 0))}
-        />
+      <Box display="flex">
+        <Box
+          bg="gray.0"
+          w="320px"
+          position="fixed"
+          h="calc(100vh - 110px)"
+          borderRight="1px"
+          borderRightColor="border.layout"
+        >
+          <SideBar summary={summary} detailPage="loanRepayment" />
+        </Box>
+        <Scrollable detailPage>
+          <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
+            <Text color="gray.800" fontWeight="SemiBold" fontSize="r3">
+              {t['transDetailOverview']}
+            </Text>
+            <LoanRepaymentDetails />
+            <InstallmentDetails data={loanRepaymentData ?? []} />
+            <PaymentDetails detailPage="loanRepayment" />
+            <OtherDetails
+              branch={loanRepaymentDetailData?.transactionBranch as string}
+              teller={loanRepaymentDetailData?.teller as string}
+            />
+            {loanRepaymentDetailData?.note && <Note note={loanRepaymentDetailData?.note} />}
+            <GlTransaction
+              data={glTransData ?? []}
+              totalCredit={String(amountConverter(loanRepaymentDetailData?.totalCredit ?? 0))}
+              totalDebit={String(amountConverter(loanRepaymentDetailData?.totalDebit ?? 0))}
+            />
+          </Box>
+        </Scrollable>
       </Box>
     </Box>
   );
