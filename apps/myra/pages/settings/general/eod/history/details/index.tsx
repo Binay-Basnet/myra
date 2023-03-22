@@ -1,7 +1,7 @@
-import { EodHistoryDetail } from '@coop/cbs/settings/eod';
+import { EodHistory } from '@coop/cbs/settings/eod';
 import { SettingsGeneralLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
 
-const EOD = () => <EodHistoryDetail />;
+const EOD = () => <EodHistory />;
 
 export default EOD;
 EOD.getLayout = function getLayout(page) {
