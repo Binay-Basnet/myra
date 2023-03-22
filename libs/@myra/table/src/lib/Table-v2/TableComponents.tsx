@@ -268,8 +268,9 @@ export interface TableEmptyStateProps<T> {
   forms?: {
     label: string;
     aclKey: AclKey;
-    route: RouteValue;
+    route?: RouteValue;
     idType?: Id_Type;
+    onClick?: () => void;
   }[];
   noDataTitle?: string;
   isLoading?: boolean;

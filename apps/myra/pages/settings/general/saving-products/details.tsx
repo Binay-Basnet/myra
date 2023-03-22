@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout, Scrollable } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
 import { SettingsGeneralLayout } from '@coop/cbs/settings/ui-layout';
 import { CbsSettingsSavingsDetailPage } from '@coop/settings/saving-product';

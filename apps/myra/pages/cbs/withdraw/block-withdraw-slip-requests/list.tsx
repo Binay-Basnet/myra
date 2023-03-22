@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout, Scrollable } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
 import { BlockWithdrawSlipRequestsList } from '@coop/cbs/requests/lists';
 import { WithdrawSlipLayout } from '@coop/myra/components';

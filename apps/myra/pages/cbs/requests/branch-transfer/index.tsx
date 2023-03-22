@@ -1,8 +1,9 @@
 import { ReactElement } from 'react';
 
+import { MainLayout } from '@myra-ui';
+
 import { RequestListLayout } from '@coop/cbs/requests/layout';
 import { BranchTransferRequstList } from '@coop/cbs/requests/lists';
-import { MainLayout, Scrollable } from '@myra-ui';
 
 const BranchTransferRequestPage = () => <BranchTransferRequstList />;
 

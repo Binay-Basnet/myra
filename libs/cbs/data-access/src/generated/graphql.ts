@@ -3917,8 +3917,10 @@ export type DepositLoanAccountListResult = {
 export type DepositLoanAccountMutation = {
   add?: Maybe<DepositLoanAccountResult>;
   close?: Maybe<DepositAccountCloseResult>;
+  editAccountInterest: InterestSetupMutationResult;
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
   makeActive?: Maybe<Scalars['String']>;
+  updateAccountInterest: InterestSetupMutationResult;
 };
 
 export type DepositLoanAccountMutationAddArgs = {
@@ -3930,6 +3932,12 @@ export type DepositLoanAccountMutationCloseArgs = {
   data?: InputMaybe<DepositAccountClose>;
 };
 
+export type DepositLoanAccountMutationEditAccountInterestArgs = {
+  accountId: Scalars['ID'];
+  data: InterestRateSetupInput;
+  id: Scalars['ID'];
+};
+
 export type DepositLoanAccountMutationForgiveInstallmentArgs = {
   id: Scalars['ID'];
   installmentDate: Array<Scalars['String']>;
@@ -3939,14 +3947,21 @@ export type DepositLoanAccountMutationMakeActiveArgs = {
   accountID: Scalars['ID'];
 };
 
+export type DepositLoanAccountMutationUpdateAccountInterestArgs = {
+  accountId: Scalars['ID'];
+  data: InterestRateSetupInput;
+};
+
 export type DepositLoanAccountQuery = {
   accountDetails?: Maybe<AccountDetailsQueryResult>;
   filterMapping?: Maybe<DepositLoanAccountFilterMapping>;
   formState?: Maybe<DepositLoanAccountFormStateResult>;
   get?: Maybe<DepositLoanAccount>;
+  getAccountInterestRate: InterestSetupQueryResult;
   getBulkInstallments?: Maybe<Array<Maybe<BulkInstallmentResult>>>;
   getInstallments?: Maybe<InstallmentResult>;
   list?: Maybe<DepositLoanAccountConnection>;
+  listAccountInterestRates: InterestSetupListResult;
   listAccountLedgers?: Maybe<AccountLedgerListResult>;
   listAssociatedGuaranteeAccounts?: Maybe<AssociatedGuaranteeAccountListResult>;
   listDefaultAccounts?: Maybe<DepositLoanAccountListResult>;
@@ -3966,6 +3981,11 @@ export type DepositLoanAccountQueryGetArgs = {
   id: Scalars['ID'];
 };
 
+export type DepositLoanAccountQueryGetAccountInterestRateArgs = {
+  accountID: Scalars['String'];
+  id: Scalars['ID'];
+};
+
 export type DepositLoanAccountQueryGetBulkInstallmentsArgs = {
   ids: Array<InputMaybe<Scalars['ID']>>;
 };
@@ -3982,6 +4002,10 @@ export type DepositLoanAccountQueryListArgs = {
   filter?: InputMaybe<Filter>;
   injectLoc?: InputMaybe<Scalars['Boolean']>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type DepositLoanAccountQueryListAccountInterestRatesArgs = {
+  accountId: Scalars['ID'];
 };
 
 export type DepositLoanAccountQueryListAccountLedgersArgs = {
@@ -4210,6 +4234,7 @@ export type DepositProductInput = {
   prematurePenalty?: InputMaybe<PrematurePenalty>;
   productCode?: InputMaybe<ProductCode>;
   productName?: InputMaybe<Scalars['String']>;
+  productPremiumInterest?: InputMaybe<Scalars['Float']>;
   rebate?: InputMaybe<Scalars['Boolean']>;
   rebateData?: InputMaybe<RebateTypeInput>;
   serviceCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
@@ -4261,7 +4286,9 @@ export type DepositProductSearchFilter = {
 export type DepositProductSettingsMutation = {
   activateProduct?: Maybe<ProductActivateResult>;
   add?: Maybe<DepositProductResult>;
+  editProductInterest: InterestSetupMutationResult;
   makeInactive?: Maybe<DepositProductInactiveResult>;
+  updateProductInterest: InterestSetupMutationResult;
 };
 
 export type DepositProductSettingsMutationActivateProductArgs = {
@@ -4276,8 +4303,19 @@ export type DepositProductSettingsMutationAddArgs = {
   id: Scalars['ID'];
 };
 
+export type DepositProductSettingsMutationEditProductInterestArgs = {
+  data: InterestRateSetupInput;
+  id: Scalars['ID'];
+  productId: Scalars['ID'];
+};
+
 export type DepositProductSettingsMutationMakeInactiveArgs = {
   data?: InputMaybe<DepositProductInactiveData>;
+};
+
+export type DepositProductSettingsMutationUpdateProductInterestArgs = {
+  data: InterestRateSetupInput;
+  productId: Scalars['ID'];
 };
 
 export type DepositProductSettingsQuery = {
@@ -4287,8 +4325,10 @@ export type DepositProductSettingsQuery = {
   getAccountlist?: Maybe<DepositLoanAccountConnection>;
   getPenaltyRebateInfo?: Maybe<PenaltyRebateResult>;
   getProductCriteria?: Maybe<DepositProductCriteriaResult>;
+  getProductInterestRate: InterestSetupQueryResult;
   getProductList?: Maybe<DepositProductList>;
   list?: Maybe<DepositProductConnection>;
+  listProductInterestRates: InterestSetupListResult;
 };
 
 export type DepositProductSettingsQueryDepositProductDetailArgs = {
@@ -4316,6 +4356,11 @@ export type DepositProductSettingsQueryGetProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
 
+export type DepositProductSettingsQueryGetProductInterestRateArgs = {
+  id: Scalars['ID'];
+  productId: Scalars['ID'];
+};
+
 export type DepositProductSettingsQueryGetProductListArgs = {
   memberId: Scalars['ID'];
 };
@@ -4323,6 +4368,10 @@ export type DepositProductSettingsQueryGetProductListArgs = {
 export type DepositProductSettingsQueryListArgs = {
   filter?: InputMaybe<DepositProductSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type DepositProductSettingsQueryListProductInterestRatesArgs = {
+  productId: Scalars['ID'];
 };
 
 export const DepositProductStatus = {
@@ -4414,12 +4463,23 @@ export type DepositResult = {
 };
 
 export type DepositSettingsMutation = {
+  editOrganizationRate: InterestSetupMutationResult;
   iroSetup?: Maybe<DepositIroResult>;
+  setOrganizationRate: InterestSetupMutationResult;
   tdsSetup?: Maybe<DepositTdsResult>;
+};
+
+export type DepositSettingsMutationEditOrganizationRateArgs = {
+  data: InterestRateSetupInput;
+  id: Scalars['ID'];
 };
 
 export type DepositSettingsMutationIroSetupArgs = {
   data?: InputMaybe<DepositIroInput>;
+};
+
+export type DepositSettingsMutationSetOrganizationRateArgs = {
+  data: InterestRateSetupInput;
 };
 
 export type DepositSettingsMutationTdsSetupArgs = {
@@ -4427,8 +4487,14 @@ export type DepositSettingsMutationTdsSetupArgs = {
 };
 
 export type DepositSettingsQuery = {
+  getOrganizationRate: InterestSetupQueryResult;
   iroFormState?: Maybe<DepositIroFormStateResult>;
+  listOrganizationRate: InterestSetupListResult;
   tdsFormState?: Maybe<DepositTdsFormStateResult>;
+};
+
+export type DepositSettingsQueryGetOrganizationRateArgs = {
+  id: Scalars['ID'];
 };
 
 export type DepositTds = {
@@ -6626,6 +6692,8 @@ export type InterestFormState = {
   additionalRate?: Maybe<Scalars['Float']>;
   boardAuthority?: Maybe<Scalars['Float']>;
   ceoAuthority?: Maybe<Scalars['Float']>;
+  changeMax?: Maybe<Scalars['Float']>;
+  changeMin?: Maybe<Scalars['Float']>;
   defaultRate?: Maybe<Scalars['Float']>;
   interestMethod?: Maybe<InterestMethod>;
   maxRate?: Maybe<Scalars['Float']>;
@@ -6666,10 +6734,28 @@ export type InterestRate = {
   additionalRate?: InputMaybe<Scalars['Float']>;
   boardAuthority?: InputMaybe<Scalars['Float']>;
   ceoAuthority?: InputMaybe<Scalars['Float']>;
+  changeMax?: InputMaybe<Scalars['Float']>;
+  changeMin?: InputMaybe<Scalars['Float']>;
   defaultRate?: InputMaybe<Scalars['Float']>;
   interestMethod?: InputMaybe<InterestMethod>;
   maxRate?: InputMaybe<Scalars['Float']>;
   minRate?: InputMaybe<Scalars['Float']>;
+};
+
+export type InterestRateSetup = {
+  createdAt: Scalars['Localized'];
+  effectiveDate: Scalars['Localized'];
+  fileUploads?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  id: Scalars['ID'];
+  note?: Maybe<Scalars['String']>;
+  rate: Scalars['Float'];
+};
+
+export type InterestRateSetupInput = {
+  effectiveDate: Scalars['Localized'];
+  fileUploads?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  note?: InputMaybe<Scalars['String']>;
+  rate: Scalars['Float'];
 };
 
 export type InterestRateType = {
@@ -6678,6 +6764,21 @@ export type InterestRateType = {
   defaultRate: Scalars['Float'];
   maxRate?: Maybe<Scalars['Float']>;
   minRate?: Maybe<Scalars['Float']>;
+};
+
+export type InterestSetupListResult = {
+  data?: Maybe<Array<Maybe<InterestRateSetup>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type InterestSetupMutationResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['ID']>;
+};
+
+export type InterestSetupQueryResult = {
+  data?: Maybe<InterestRateSetup>;
+  error?: Maybe<QueryError>;
 };
 
 export type InterestStatementFilter = {
@@ -6734,13 +6835,13 @@ export type InvItemsAddResult = {
   error?: Maybe<InvItemsError>;
   query?: Maybe<InvItemsQuery>;
   record?: Maybe<InvItems>;
-  recordId: Scalars['ID'];
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type InvItemsConnection = {
-  edges: Array<Maybe<InvItemsEdge>>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  edges?: Maybe<Array<Maybe<InvItemsEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
 };
 
 export type InvItemsDataFilter = {
@@ -6749,8 +6850,8 @@ export type InvItemsDataFilter = {
 };
 
 export type InvItemsEdge = {
-  cursor: Scalars['Cursor'];
-  node: InvItems;
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<InvItems>;
 };
 
 export type InvItemsError = InvItemsInvalidDataError;
@@ -6763,15 +6864,15 @@ export type InvItemsGroup = {
 };
 
 export type InvItemsGroupAddResult = {
-  error?: Maybe<InvItemsGroupError>;
+  error?: Maybe<MutationError>;
   query?: Maybe<InvItemsGroupQuery>;
   record?: Maybe<InvItemsGroup>;
-  recordId: Scalars['ID'];
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type InvItemsGroupConnection = {
-  edges: Array<Maybe<InvItemsGroupEdge>>;
-  pageInfo: PageInfo;
+  edges?: Maybe<Array<Maybe<InvItemsGroupEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -6781,20 +6882,14 @@ export type InvItemsGroupDataFilter = {
 };
 
 export type InvItemsGroupEdge = {
-  cursor: Scalars['Cursor'];
-  node: InvItemsGroup;
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<InvItemsGroup>;
 };
-
-export type InvItemsGroupError = InvItemsGroupInvalidDataError;
 
 export type InvItemsGroupInput = {
-  description: Scalars['String'];
-  name: Scalars['String'];
-  parentCategory: Scalars['String'];
-};
-
-export type InvItemsGroupInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  parentCategory?: InputMaybe<Scalars['String']>;
 };
 
 export type InvItemsGroupMutation = {
@@ -6820,14 +6915,14 @@ export type InvItemsGroupQueryListArgs = {
 };
 
 export type InvItemsInput = {
-  itemCode: Scalars['String'];
-  itemGroup: Scalars['String'];
-  itemQuantity: Scalars['Float'];
-  name: Scalars['String'];
-  primaryUnit: Scalars['String'];
-  tax: Scalars['String'];
-  type: Scalars['String'];
-  unitPrice: Scalars['Float'];
+  itemCode?: InputMaybe<Scalars['String']>;
+  itemGroup?: InputMaybe<Scalars['String']>;
+  itemQuantity?: InputMaybe<Scalars['Float']>;
+  name?: InputMaybe<Scalars['String']>;
+  primaryUnit?: InputMaybe<Scalars['String']>;
+  tax?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+  unitPrice?: InputMaybe<Scalars['Float']>;
 };
 
 export type InvItemsInvalidDataError = {
@@ -6835,7 +6930,7 @@ export type InvItemsInvalidDataError = {
 };
 
 export type InvItemsMutation = {
-  add: InvItemsAddResult;
+  add?: Maybe<InvItemsAddResult>;
 };
 
 export type InvItemsMutationAddArgs = {
@@ -6863,21 +6958,22 @@ export type InvItemsQueryListArgs = {
 
 export type InvUnitOfMeasure = {
   acceptFraction: Scalars['Boolean'];
+  description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   name: Scalars['String'];
   shortName: Scalars['String'];
 };
 
 export type InvUnitOfMeasureAddResult = {
-  error?: Maybe<InvUnitOfMeasureError>;
+  error?: Maybe<MutationError>;
   query?: Maybe<InvUnitOfMeasureQuery>;
   record?: Maybe<InvUnitOfMeasure>;
-  recordId: Scalars['ID'];
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type InvUnitOfMeasureConnection = {
-  edges: Array<Maybe<InvUnitOfMeasureEdge>>;
-  pageInfo: PageInfo;
+  edges?: Maybe<Array<Maybe<InvUnitOfMeasureEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -6887,21 +6983,15 @@ export type InvUnitOfMeasureDataFilter = {
 };
 
 export type InvUnitOfMeasureEdge = {
-  cursor: Scalars['Cursor'];
-  node: InvUnitOfMeasure;
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<InvUnitOfMeasure>;
 };
-
-export type InvUnitOfMeasureError = InvUnitOfMeasureInvalidDataError;
 
 export type InvUnitOfMeasureInput = {
-  acceptFraction: Scalars['Boolean'];
-  description: Scalars['String'];
-  name: Scalars['String'];
-  shortName: Scalars['String'];
-};
-
-export type InvUnitOfMeasureInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
+  acceptFraction?: InputMaybe<Scalars['Boolean']>;
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  shortName?: InputMaybe<Scalars['String']>;
 };
 
 export type InvUnitOfMeasureMutation = {
@@ -8252,6 +8342,7 @@ export type KymCooperativeFormData = {
   totalAssets?: Maybe<Scalars['Float']>;
   totalEmployee?: Maybe<Scalars['Int']>;
   totalEquityAndLiabilities?: Maybe<Scalars['Float']>;
+  vatNo?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
 
@@ -8299,6 +8390,7 @@ export type KymCooperativeFormInput = {
   totalAssets?: InputMaybe<Scalars['Float']>;
   totalEmployee?: InputMaybe<Scalars['Int']>;
   totalEquityLiabilities?: InputMaybe<Scalars['Float']>;
+  vatNo?: InputMaybe<Scalars['String']>;
   website?: InputMaybe<Scalars['String']>;
 };
 
@@ -9616,9 +9708,11 @@ export type LoanAccountMutation = {
   changeLOC?: Maybe<Scalars['String']>;
   close?: Maybe<LoanCloseResult>;
   disburse?: Maybe<LoanDisbursementResult>;
+  editAccountInterest: InterestSetupMutationResult;
   loanCollateralActions?: Maybe<LoanCollateralActionsMutation>;
   loanGuaranteeActions?: Maybe<LoanGuaranteeActionsMutation>;
   repayment?: Maybe<LoanRepaymentResult>;
+  updateAccountInterest: InterestSetupMutationResult;
   updateLinkedAccount?: Maybe<LoanAccountResult>;
 };
 
@@ -9638,19 +9732,28 @@ export type LoanAccountMutationChangeLocArgs = {
   newAmount: Scalars['String'];
 };
 
-
 export type LoanAccountMutationCloseArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
 };
-
 
 export type LoanAccountMutationDisburseArgs = {
   data: LoanDisbursementInput;
   loanAccount: Scalars['ID'];
 };
 
+export type LoanAccountMutationEditAccountInterestArgs = {
+  accountId: Scalars['ID'];
+  data: InterestRateSetupInput;
+  id: Scalars['ID'];
+};
+
 export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
+};
+
+export type LoanAccountMutationUpdateAccountInterestArgs = {
+  accountId: Scalars['ID'];
+  data: InterestRateSetupInput;
 };
 
 export type LoanAccountMutationUpdateLinkedAccountArgs = {
@@ -9703,10 +9806,12 @@ export type LoanAccountQuery = {
   accountLOC?: Maybe<Scalars['String']>;
   filterMapping?: Maybe<LoanAccountFilterMapping>;
   formState?: Maybe<LoanAccountFormStateResult>;
+  getAccountInterestRate: InterestSetupQueryResult;
   getLoanInstallments?: Maybe<LoanInstallmentResult>;
   getProductCriteria?: Maybe<LoanProductCriteriaResult>;
   getProductList?: Maybe<LoanProductList>;
   list?: Maybe<LoanAccountConnection>;
+  listAccountInterestRates: InterestSetupListResult;
   loanAccountDetails?: Maybe<LoanAccountDetailsResult>;
   loanPreview?: Maybe<LoanAccountPreviewResult>;
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
@@ -9720,6 +9825,11 @@ export type LoanAccountQueryAccountLocArgs = {
 };
 
 export type LoanAccountQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+export type LoanAccountQueryGetAccountInterestRateArgs = {
+  accountID: Scalars['String'];
   id: Scalars['ID'];
 };
 
@@ -9750,6 +9860,10 @@ export type LoanAccountQueryListArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export type LoanAccountQueryListAccountInterestRatesArgs = {
+  accountId: Scalars['ID'];
+};
+
 export type LoanAccountQueryLoanAccountDetailsArgs = {
   loanAccountId: Scalars['ID'];
 };
@@ -9766,11 +9880,9 @@ export type LoanAccountQueryPaymentScheduleArgs = {
   loanAccountId: Scalars['ID'];
 };
 
-
 export type LoanAccountQueryRemainingPaymentsArgs = {
   loanAccountId: Scalars['ID'];
 };
-
 
 export type LoanAccountQueryRepaymentListArgs = {
   filter?: InputMaybe<LoanRepaymentFilter>;
@@ -10113,7 +10225,7 @@ export type LoanGeneralInformation = {
 export type LoanGeneralSettings = {
   /** accepted collateral list */
   collateralList?: Maybe<Array<Maybe<CollateralListData>>>;
-  /**  loan repayment  */
+  /** loan repayment */
   emi?: Maybe<Scalars['Boolean']>;
   epi?: Maybe<Scalars['Boolean']>;
   flat?: Maybe<Scalars['Boolean']>;
@@ -10122,7 +10234,7 @@ export type LoanGeneralSettings = {
 export type LoanGeneralSettingsInput = {
   /** accepted collateral list */
   collateralList?: InputMaybe<Array<InputMaybe<CollateralListInputData>>>;
-  /**  loan repayment  */
+  /** loan repayment */
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
   flat?: InputMaybe<Scalars['Boolean']>;
@@ -10536,6 +10648,7 @@ export type LoanProductInput = {
   productCode?: InputMaybe<ProductCode>;
   productName?: InputMaybe<Scalars['String']>;
   productNature?: InputMaybe<NatureOfLoanProduct>;
+  productPremiumInterest?: InputMaybe<Scalars['Float']>;
   productSubType?: InputMaybe<Scalars['String']>;
   productType?: InputMaybe<Scalars['ID']>;
   rebate?: InputMaybe<RebateTypeInput>;
@@ -10657,12 +10770,25 @@ export type LoanProductTypeInput = {
 };
 
 export type LoanProductsMutation = {
+  editProductInterest: InterestSetupMutationResult;
   makeInactive?: Maybe<LoanProductInactiveResult>;
+  updateProductInterest: InterestSetupMutationResult;
   upsert?: Maybe<LoanProductsResult>;
+};
+
+export type LoanProductsMutationEditProductInterestArgs = {
+  data: InterestRateSetupInput;
+  id: Scalars['ID'];
+  productId: Scalars['ID'];
 };
 
 export type LoanProductsMutationMakeInactiveArgs = {
   data?: InputMaybe<LoanProductInactiveData>;
+};
+
+export type LoanProductsMutationUpdateProductInterestArgs = {
+  data: InterestRateSetupInput;
+  productId: Scalars['ID'];
 };
 
 export type LoanProductsMutationUpsertArgs = {
@@ -10676,7 +10802,9 @@ export type LoanProductsQuery = {
   getLoanAccountlist?: Maybe<LoanAccountConnection>;
   getProductCriteria?: Maybe<LoanProductCriteriaResult>;
   getProductDetail?: Maybe<LoanProductData>;
+  getProductInterestRate: InterestSetupQueryResult;
   list?: Maybe<LoanProductConnection>;
+  listProductInterestRates: InterestSetupListResult;
 };
 
 export type LoanProductsQueryFormStateArgs = {
@@ -10696,9 +10824,18 @@ export type LoanProductsQueryGetProductDetailArgs = {
   id: Scalars['ID'];
 };
 
+export type LoanProductsQueryGetProductInterestRateArgs = {
+  id: Scalars['ID'];
+  productId: Scalars['ID'];
+};
+
 export type LoanProductsQueryListArgs = {
   filter?: InputMaybe<LoanProductSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type LoanProductsQueryListProductInterestRatesArgs = {
+  productId: Scalars['ID'];
 };
 
 export type LoanProductsResult = {
@@ -10923,9 +11060,16 @@ export const LoanRequiredDocuments = {
 export type LoanRequiredDocuments =
   typeof LoanRequiredDocuments[keyof typeof LoanRequiredDocuments];
 export type LoanSettingsMutation = {
+  editOrganizationRate: InterestSetupMutationResult;
   general?: Maybe<LoanSettingsResult>;
   insuranceScheme?: Maybe<LoanSettingsResult>;
   productType?: Maybe<LoanSettingsResult>;
+  setOrganizationRate: InterestSetupMutationResult;
+};
+
+export type LoanSettingsMutationEditOrganizationRateArgs = {
+  data: InterestRateSetupInput;
+  id: Scalars['ID'];
 };
 
 export type LoanSettingsMutationGeneralArgs = {
@@ -10938,6 +11082,10 @@ export type LoanSettingsMutationInsuranceSchemeArgs = {
 
 export type LoanSettingsMutationProductTypeArgs = {
   data?: InputMaybe<LoanSettingsProductTypeInput>;
+};
+
+export type LoanSettingsMutationSetOrganizationRateArgs = {
+  data: InterestRateSetupInput;
 };
 
 export type LoanSettingsNatureOfProductData = {
@@ -10986,8 +11134,14 @@ export type LoanSettingsProductTypeInput = {
 
 export type LoanSettingsQuery = {
   general?: Maybe<LoanGeneralSettings>;
+  getOrganizationRate: InterestSetupQueryResult;
   insuranceSchemes?: Maybe<Array<Maybe<LoanInsuranceScheme>>>;
+  listOrganizationRate: InterestSetupListResult;
   productType?: Maybe<LoanSettingsProductType>;
+};
+
+export type LoanSettingsQueryGetOrganizationRateArgs = {
+  id: Scalars['ID'];
 };
 
 export type LoanSettingsResult = {
@@ -16649,6 +16803,47 @@ export type SetMakeDormantAccountActiveMutationVariables = Exact<{
 
 export type SetMakeDormantAccountActiveMutation = { account: { makeActive?: string | null } };
 
+export type UpdateAccountInterestMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type UpdateAccountInterestMutation = {
+  account: {
+    updateAccountInterest: {
+      record?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type EditAccountInterestMutationVariables = Exact<{
+  id: Scalars['ID'];
+  accountId: Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type EditAccountInterestMutation = {
+  account: {
+    editAccountInterest: {
+      record?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
 export type SetIssueNewSlipMutationVariables = Exact<{
   data: WithdrawSlipIssueInput;
 }>;
@@ -17295,6 +17490,47 @@ export type LoanAccountGuaranteeActionsMutation = {
   };
 };
 
+export type UpdateLoanAccountInterestMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type UpdateLoanAccountInterestMutation = {
+  loanAccount: {
+    updateAccountInterest: {
+      record?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type EditLoanAccountInterestMutationVariables = Exact<{
+  id: Scalars['ID'];
+  accountId: Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type EditLoanAccountInterestMutation = {
+  loanAccount: {
+    editAccountInterest: {
+      record?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
 }>;
@@ -17885,6 +18121,55 @@ export type ActivateSavingsProductMutation = {
   };
 };
 
+export type UpdateSavingProductInterestRateMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type UpdateSavingProductInterestRateMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        updateProductInterest: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type EditSavingProductInterestRateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  productId: Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type EditSavingProductInterestRateMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        editProductInterest: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type SetDepositIroMutationVariables = Exact<{
   data?: InputMaybe<DepositIroInput>;
 }>;
@@ -17939,6 +18224,53 @@ export type SetDepositTdsMutation = {
             | { __typename: 'ValidationError' }
             | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSavingsOrganizationRateMutationVariables = Exact<{
+  data: InterestRateSetupInput;
+}>;
+
+export type SetSavingsOrganizationRateMutation = {
+  settings: {
+    general?: {
+      deposit?: {
+        setOrganizationRate: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type EditSavingsOrganizationRateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type EditSavingsOrganizationRateMutation = {
+  settings: {
+    general?: {
+      deposit?: {
+        editOrganizationRate: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
       } | null;
     } | null;
   };
@@ -18026,6 +18358,55 @@ export type SetProductActiveMutation = {
   };
 };
 
+export type UpdateLoanProductInterestRateMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type UpdateLoanProductInterestRateMutation = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        updateProductInterest: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type EditLoanProductInterestRateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  productId: Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type EditLoanProductInterestRateMutation = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        editProductInterest: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type SetLoanGeneralSettingsMutationVariables = Exact<{
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
@@ -18102,6 +18483,53 @@ export type SetProductTypeMutation = {
             | MutationError_ValidationError_Fragment
             | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetLoanOrganizationRateMutationVariables = Exact<{
+  data: InterestRateSetupInput;
+}>;
+
+export type SetLoanOrganizationRateMutation = {
+  settings: {
+    general?: {
+      loan?: {
+        setOrganizationRate: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type EditLoanOrganizationRateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: InterestRateSetupInput;
+}>;
+
+export type EditLoanOrganizationRateMutation = {
+  settings: {
+    general?: {
+      loan?: {
+        editOrganizationRate: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
       } | null;
     } | null;
   };
@@ -19912,6 +20340,43 @@ export type GetSavingFilterMappingQuery = {
     filterMapping?: {
       productID: Array<{ label?: string | null; value?: unknown | null } | null>;
     } | null;
+  };
+};
+
+export type ListAccountInterestRateListQueryVariables = Exact<{
+  accountId: Scalars['ID'];
+}>;
+
+export type ListAccountInterestRateListQuery = {
+  account: {
+    listAccountInterestRates: {
+      data?: Array<{
+        id: string;
+        rate: number;
+        createdAt: Record<'local' | 'en' | 'np', string>;
+        effectiveDate: Record<'local' | 'en' | 'np', string>;
+      } | null> | null;
+    };
+  };
+};
+
+export type GetAccountInterestRateDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+  accountId: Scalars['String'];
+}>;
+
+export type GetAccountInterestRateDetailQuery = {
+  account: {
+    getAccountInterestRate: {
+      data?: {
+        id: string;
+        rate: number;
+        createdAt: Record<'local' | 'en' | 'np', string>;
+        effectiveDate: Record<'local' | 'en' | 'np', string>;
+        note?: string | null;
+        fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+      } | null;
+    };
   };
 };
 
@@ -21966,9 +22431,15 @@ export type GetInventoryItemsQuery = {
   inventory: {
     items?: {
       list?: {
-        edges: Array<{
-          node: { id: string; name: string; type: string; unitPrice: number; itemQuantity: number };
-        } | null>;
+        edges?: Array<{
+          node?: {
+            id: string;
+            name: string;
+            type: string;
+            unitPrice: number;
+            itemQuantity: number;
+          } | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -21980,9 +22451,9 @@ export type GetInventoryItemGroupQuery = {
   inventory: {
     itemsGroup?: {
       list?: {
-        edges: Array<{
-          node: { name: string; id: string; description: string; parentCategory: string };
-        } | null>;
+        edges?: Array<{
+          node?: { name: string; id: string; description: string; parentCategory: string } | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -22008,7 +22479,9 @@ export type GetInventoryUnitOfMeasureQuery = {
   inventory: {
     unitOfMeasure?: {
       list?: {
-        edges: Array<{ node: { name: string; shortName: string; acceptFraction: boolean } } | null>;
+        edges?: Array<{
+          node?: { name: string; shortName: string; acceptFraction: boolean } | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -22924,6 +23397,43 @@ export type GetLoanFilterMappingQuery = {
     filterMapping?: {
       productName: Array<{ label?: string | null; value?: unknown | null }>;
     } | null;
+  };
+};
+
+export type ListLoanAccountInterestRateListQueryVariables = Exact<{
+  accountId: Scalars['ID'];
+}>;
+
+export type ListLoanAccountInterestRateListQuery = {
+  loanAccount: {
+    listAccountInterestRates: {
+      data?: Array<{
+        id: string;
+        rate: number;
+        createdAt: Record<'local' | 'en' | 'np', string>;
+        effectiveDate: Record<'local' | 'en' | 'np', string>;
+      } | null> | null;
+    };
+  };
+};
+
+export type GetLoanAccountInterestRateDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+  accountId: Scalars['String'];
+}>;
+
+export type GetLoanAccountInterestRateDetailQuery = {
+  loanAccount: {
+    getAccountInterestRate: {
+      data?: {
+        id: string;
+        rate: number;
+        createdAt: Record<'local' | 'en' | 'np', string>;
+        effectiveDate: Record<'local' | 'en' | 'np', string>;
+        note?: string | null;
+        fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+      } | null;
+    };
   };
 };
 
@@ -27517,6 +28027,51 @@ export type GetLoanProductCriteriaQuery = {
   };
 };
 
+export type GetLoanProductInterestRateListQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetLoanProductInterestRateListQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        listProductInterestRates: {
+          data?: Array<{
+            id: string;
+            rate: number;
+            effectiveDate: Record<'local' | 'en' | 'np', string>;
+            createdAt: Record<'local' | 'en' | 'np', string>;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanProductInterestRateDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+  productId: Scalars['ID'];
+}>;
+
+export type GetLoanProductInterestRateDetailQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        getProductInterestRate: {
+          data?: {
+            id: string;
+            rate: number;
+            effectiveDate: Record<'local' | 'en' | 'np', string>;
+            note?: string | null;
+            createdAt: Record<'local' | 'en' | 'np', string>;
+            fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetLoanGeneralSettingsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetLoanGeneralSettingsQuery = {
@@ -27617,6 +28172,47 @@ export type GetLoanProductTypeQuery = {
             productTypeID?: string | null;
           } | null> | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanOrganizationRateListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetLoanOrganizationRateListQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        listOrganizationRate: {
+          data?: Array<{
+            id: string;
+            rate: number;
+            effectiveDate: Record<'local' | 'en' | 'np', string>;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanOrganizationRateDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetLoanOrganizationRateDetailQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        getOrganizationRate: {
+          data?: {
+            id: string;
+            rate: number;
+            effectiveDate: Record<'local' | 'en' | 'np', string>;
+            note?: string | null;
+            createdAt: Record<'local' | 'en' | 'np', string>;
+            fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+          } | null;
+        };
       } | null;
     } | null;
   };
@@ -27862,6 +28458,47 @@ export type GetDepositSettingsTdsQuery = {
             | { __typename: 'ServerError' }
             | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSavingsOrganizationRateListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetSavingsOrganizationRateListQuery = {
+  settings: {
+    general?: {
+      deposit?: {
+        listOrganizationRate: {
+          data?: Array<{
+            id: string;
+            rate: number;
+            effectiveDate: Record<'local' | 'en' | 'np', string>;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSavingsOrganizationRateDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSavingsOrganizationRateDetailQuery = {
+  settings: {
+    general?: {
+      deposit?: {
+        getOrganizationRate: {
+          data?: {
+            id: string;
+            rate: number;
+            effectiveDate: Record<'local' | 'en' | 'np', string>;
+            note?: string | null;
+            createdAt: Record<'local' | 'en' | 'np', string>;
+            fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+          } | null;
+        };
       } | null;
     } | null;
   };
@@ -28252,6 +28889,51 @@ export type GetSavingsAccountListQuery = {
             } | null;
           }> | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSavingProductInterestRateListQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetSavingProductInterestRateListQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        listProductInterestRates: {
+          data?: Array<{
+            id: string;
+            rate: number;
+            effectiveDate: Record<'local' | 'en' | 'np', string>;
+            createdAt: Record<'local' | 'en' | 'np', string>;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSavingProductInterestRateDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+  productId: Scalars['ID'];
+}>;
+
+export type GetSavingProductInterestRateDetailQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        getProductInterestRate: {
+          data?: {
+            id: string;
+            rate: number;
+            effectiveDate: Record<'local' | 'en' | 'np', string>;
+            note?: string | null;
+            createdAt: Record<'local' | 'en' | 'np', string>;
+            fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+          } | null;
+        };
       } | null;
     } | null;
   };
@@ -30685,6 +31367,65 @@ export const useSetMakeDormantAccountActiveMutation = <TError = unknown, TContex
     ),
     options
   );
+export const UpdateAccountInterestDocument = `
+    mutation updateAccountInterest($accountId: ID!, $data: InterestRateSetupInput!) {
+  account {
+    updateAccountInterest(accountId: $accountId, data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateAccountInterestMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateAccountInterestMutation,
+    TError,
+    UpdateAccountInterestMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateAccountInterestMutation,
+    TError,
+    UpdateAccountInterestMutationVariables,
+    TContext
+  >(
+    ['updateAccountInterest'],
+    useAxios<UpdateAccountInterestMutation, UpdateAccountInterestMutationVariables>(
+      UpdateAccountInterestDocument
+    ),
+    options
+  );
+export const EditAccountInterestDocument = `
+    mutation editAccountInterest($id: ID!, $accountId: ID!, $data: InterestRateSetupInput!) {
+  account {
+    editAccountInterest(id: $id, accountId: $accountId, data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useEditAccountInterestMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EditAccountInterestMutation,
+    TError,
+    EditAccountInterestMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<EditAccountInterestMutation, TError, EditAccountInterestMutationVariables, TContext>(
+    ['editAccountInterest'],
+    useAxios<EditAccountInterestMutation, EditAccountInterestMutationVariables>(
+      EditAccountInterestDocument
+    ),
+    options
+  );
 export const SetIssueNewSlipDocument = `
     mutation setIssueNewSlip($data: WithdrawSlipIssueInput!) {
   withdrawSlip {
@@ -31770,6 +32511,70 @@ export const useLoanAccountGuaranteeActionsMutation = <TError = unknown, TContex
     ['loanAccountGuaranteeActions'],
     useAxios<LoanAccountGuaranteeActionsMutation, LoanAccountGuaranteeActionsMutationVariables>(
       LoanAccountGuaranteeActionsDocument
+    ),
+    options
+  );
+export const UpdateLoanAccountInterestDocument = `
+    mutation updateLoanAccountInterest($accountId: ID!, $data: InterestRateSetupInput!) {
+  loanAccount {
+    updateAccountInterest(accountId: $accountId, data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLoanAccountInterestMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLoanAccountInterestMutation,
+    TError,
+    UpdateLoanAccountInterestMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateLoanAccountInterestMutation,
+    TError,
+    UpdateLoanAccountInterestMutationVariables,
+    TContext
+  >(
+    ['updateLoanAccountInterest'],
+    useAxios<UpdateLoanAccountInterestMutation, UpdateLoanAccountInterestMutationVariables>(
+      UpdateLoanAccountInterestDocument
+    ),
+    options
+  );
+export const EditLoanAccountInterestDocument = `
+    mutation editLoanAccountInterest($id: ID!, $accountId: ID!, $data: InterestRateSetupInput!) {
+  loanAccount {
+    editAccountInterest(id: $id, accountId: $accountId, data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useEditLoanAccountInterestMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EditLoanAccountInterestMutation,
+    TError,
+    EditLoanAccountInterestMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    EditLoanAccountInterestMutation,
+    TError,
+    EditLoanAccountInterestMutationVariables,
+    TContext
+  >(
+    ['editLoanAccountInterest'],
+    useAxios<EditLoanAccountInterestMutation, EditLoanAccountInterestMutationVariables>(
+      EditLoanAccountInterestDocument
     ),
     options
   );
@@ -32890,6 +33695,79 @@ export const useActivateSavingsProductMutation = <TError = unknown, TContext = u
     ),
     options
   );
+export const UpdateSavingProductInterestRateDocument = `
+    mutation updateSavingProductInterestRate($productId: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      depositProduct {
+        updateProductInterest(productId: $productId, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateSavingProductInterestRateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateSavingProductInterestRateMutation,
+    TError,
+    UpdateSavingProductInterestRateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateSavingProductInterestRateMutation,
+    TError,
+    UpdateSavingProductInterestRateMutationVariables,
+    TContext
+  >(
+    ['updateSavingProductInterestRate'],
+    useAxios<
+      UpdateSavingProductInterestRateMutation,
+      UpdateSavingProductInterestRateMutationVariables
+    >(UpdateSavingProductInterestRateDocument),
+    options
+  );
+export const EditSavingProductInterestRateDocument = `
+    mutation editSavingProductInterestRate($id: ID!, $productId: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      depositProduct {
+        editProductInterest(id: $id, productId: $productId, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useEditSavingProductInterestRateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EditSavingProductInterestRateMutation,
+    TError,
+    EditSavingProductInterestRateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    EditSavingProductInterestRateMutation,
+    TError,
+    EditSavingProductInterestRateMutationVariables,
+    TContext
+  >(
+    ['editSavingProductInterestRate'],
+    useAxios<EditSavingProductInterestRateMutation, EditSavingProductInterestRateMutationVariables>(
+      EditSavingProductInterestRateDocument
+    ),
+    options
+  );
 export const SetDepositIroDocument = `
     mutation setDepositIro($data: DepositIroInput) {
   settings {
@@ -32963,6 +33841,78 @@ export const useSetDepositTdsMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetDepositTdsMutation, TError, SetDepositTdsMutationVariables, TContext>(
     ['setDepositTds'],
     useAxios<SetDepositTdsMutation, SetDepositTdsMutationVariables>(SetDepositTdsDocument),
+    options
+  );
+export const SetSavingsOrganizationRateDocument = `
+    mutation setSavingsOrganizationRate($data: InterestRateSetupInput!) {
+  settings {
+    general {
+      deposit {
+        setOrganizationRate(data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSavingsOrganizationRateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSavingsOrganizationRateMutation,
+    TError,
+    SetSavingsOrganizationRateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSavingsOrganizationRateMutation,
+    TError,
+    SetSavingsOrganizationRateMutationVariables,
+    TContext
+  >(
+    ['setSavingsOrganizationRate'],
+    useAxios<SetSavingsOrganizationRateMutation, SetSavingsOrganizationRateMutationVariables>(
+      SetSavingsOrganizationRateDocument
+    ),
+    options
+  );
+export const EditSavingsOrganizationRateDocument = `
+    mutation editSavingsOrganizationRate($id: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      deposit {
+        editOrganizationRate(id: $id, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useEditSavingsOrganizationRateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EditSavingsOrganizationRateMutation,
+    TError,
+    EditSavingsOrganizationRateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    EditSavingsOrganizationRateMutation,
+    TError,
+    EditSavingsOrganizationRateMutationVariables,
+    TContext
+  >(
+    ['editSavingsOrganizationRate'],
+    useAxios<EditSavingsOrganizationRateMutation, EditSavingsOrganizationRateMutationVariables>(
+      EditSavingsOrganizationRateDocument
+    ),
     options
   );
 export const EodDateSetupDocument = `
@@ -33116,6 +34066,78 @@ export const useSetProductActiveMutation = <TError = unknown, TContext = unknown
     useAxios<SetProductActiveMutation, SetProductActiveMutationVariables>(SetProductActiveDocument),
     options
   );
+export const UpdateLoanProductInterestRateDocument = `
+    mutation updateLoanProductInterestRate($productId: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      loanProducts {
+        updateProductInterest(productId: $productId, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLoanProductInterestRateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLoanProductInterestRateMutation,
+    TError,
+    UpdateLoanProductInterestRateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateLoanProductInterestRateMutation,
+    TError,
+    UpdateLoanProductInterestRateMutationVariables,
+    TContext
+  >(
+    ['updateLoanProductInterestRate'],
+    useAxios<UpdateLoanProductInterestRateMutation, UpdateLoanProductInterestRateMutationVariables>(
+      UpdateLoanProductInterestRateDocument
+    ),
+    options
+  );
+export const EditLoanProductInterestRateDocument = `
+    mutation editLoanProductInterestRate($id: ID!, $productId: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      loanProducts {
+        editProductInterest(id: $id, productId: $productId, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useEditLoanProductInterestRateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EditLoanProductInterestRateMutation,
+    TError,
+    EditLoanProductInterestRateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    EditLoanProductInterestRateMutation,
+    TError,
+    EditLoanProductInterestRateMutationVariables,
+    TContext
+  >(
+    ['editLoanProductInterestRate'],
+    useAxios<EditLoanProductInterestRateMutation, EditLoanProductInterestRateMutationVariables>(
+      EditLoanProductInterestRateDocument
+    ),
+    options
+  );
 export const SetLoanGeneralSettingsDocument = `
     mutation setLoanGeneralSettings($emi: Boolean, $epi: Boolean, $flat: Boolean, $collateralList: [CollateralListInputData]) {
   settings {
@@ -33219,6 +34241,78 @@ export const useSetProductTypeMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetProductTypeMutation, TError, SetProductTypeMutationVariables, TContext>(
     ['setProductType'],
     useAxios<SetProductTypeMutation, SetProductTypeMutationVariables>(SetProductTypeDocument),
+    options
+  );
+export const SetLoanOrganizationRateDocument = `
+    mutation setLoanOrganizationRate($data: InterestRateSetupInput!) {
+  settings {
+    general {
+      loan {
+        setOrganizationRate(data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetLoanOrganizationRateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetLoanOrganizationRateMutation,
+    TError,
+    SetLoanOrganizationRateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetLoanOrganizationRateMutation,
+    TError,
+    SetLoanOrganizationRateMutationVariables,
+    TContext
+  >(
+    ['setLoanOrganizationRate'],
+    useAxios<SetLoanOrganizationRateMutation, SetLoanOrganizationRateMutationVariables>(
+      SetLoanOrganizationRateDocument
+    ),
+    options
+  );
+export const EditLoanOrganizationRateDocument = `
+    mutation editLoanOrganizationRate($id: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      loan {
+        editOrganizationRate(id: $id, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useEditLoanOrganizationRateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EditLoanOrganizationRateMutation,
+    TError,
+    EditLoanOrganizationRateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    EditLoanOrganizationRateMutation,
+    TError,
+    EditLoanOrganizationRateMutationVariables,
+    TContext
+  >(
+    ['editLoanOrganizationRate'],
+    useAxios<EditLoanOrganizationRateMutation, EditLoanOrganizationRateMutationVariables>(
+      EditLoanOrganizationRateDocument
+    ),
     options
   );
 export const AddGeneralMemberDocument = `
@@ -35754,6 +36848,67 @@ export const useGetSavingFilterMappingQuery = <
     variables === undefined ? ['getSavingFilterMapping'] : ['getSavingFilterMapping', variables],
     useAxios<GetSavingFilterMappingQuery, GetSavingFilterMappingQueryVariables>(
       GetSavingFilterMappingDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListAccountInterestRateListDocument = `
+    query listAccountInterestRateList($accountId: ID!) {
+  account {
+    listAccountInterestRates(accountId: $accountId) {
+      data {
+        id
+        rate
+        createdAt
+        effectiveDate
+      }
+    }
+  }
+}
+    `;
+export const useListAccountInterestRateListQuery = <
+  TData = ListAccountInterestRateListQuery,
+  TError = unknown
+>(
+  variables: ListAccountInterestRateListQueryVariables,
+  options?: UseQueryOptions<ListAccountInterestRateListQuery, TError, TData>
+) =>
+  useQuery<ListAccountInterestRateListQuery, TError, TData>(
+    ['listAccountInterestRateList', variables],
+    useAxios<ListAccountInterestRateListQuery, ListAccountInterestRateListQueryVariables>(
+      ListAccountInterestRateListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountInterestRateDetailDocument = `
+    query getAccountInterestRateDetail($id: ID!, $accountId: String!) {
+  account {
+    getAccountInterestRate(id: $id, accountID: $accountId) {
+      data {
+        id
+        rate
+        createdAt
+        effectiveDate
+        fileUploads {
+          identifier
+          url
+        }
+        note
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountInterestRateDetailQuery = <
+  TData = GetAccountInterestRateDetailQuery,
+  TError = unknown
+>(
+  variables: GetAccountInterestRateDetailQueryVariables,
+  options?: UseQueryOptions<GetAccountInterestRateDetailQuery, TError, TData>
+) =>
+  useQuery<GetAccountInterestRateDetailQuery, TError, TData>(
+    ['getAccountInterestRateDetail', variables],
+    useAxios<GetAccountInterestRateDetailQuery, GetAccountInterestRateDetailQueryVariables>(
+      GetAccountInterestRateDetailDocument
     ).bind(null, variables),
     options
   );
@@ -39615,6 +40770,67 @@ export const useGetLoanFilterMappingQuery = <TData = GetLoanFilterMappingQuery, 
     variables === undefined ? ['getLoanFilterMapping'] : ['getLoanFilterMapping', variables],
     useAxios<GetLoanFilterMappingQuery, GetLoanFilterMappingQueryVariables>(
       GetLoanFilterMappingDocument
+    ).bind(null, variables),
+    options
+  );
+export const ListLoanAccountInterestRateListDocument = `
+    query listLoanAccountInterestRateList($accountId: ID!) {
+  loanAccount {
+    listAccountInterestRates(accountId: $accountId) {
+      data {
+        id
+        rate
+        createdAt
+        effectiveDate
+      }
+    }
+  }
+}
+    `;
+export const useListLoanAccountInterestRateListQuery = <
+  TData = ListLoanAccountInterestRateListQuery,
+  TError = unknown
+>(
+  variables: ListLoanAccountInterestRateListQueryVariables,
+  options?: UseQueryOptions<ListLoanAccountInterestRateListQuery, TError, TData>
+) =>
+  useQuery<ListLoanAccountInterestRateListQuery, TError, TData>(
+    ['listLoanAccountInterestRateList', variables],
+    useAxios<ListLoanAccountInterestRateListQuery, ListLoanAccountInterestRateListQueryVariables>(
+      ListLoanAccountInterestRateListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanAccountInterestRateDetailDocument = `
+    query getLoanAccountInterestRateDetail($id: ID!, $accountId: String!) {
+  loanAccount {
+    getAccountInterestRate(id: $id, accountID: $accountId) {
+      data {
+        id
+        rate
+        createdAt
+        effectiveDate
+        fileUploads {
+          identifier
+          url
+        }
+        note
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanAccountInterestRateDetailQuery = <
+  TData = GetLoanAccountInterestRateDetailQuery,
+  TError = unknown
+>(
+  variables: GetLoanAccountInterestRateDetailQueryVariables,
+  options?: UseQueryOptions<GetLoanAccountInterestRateDetailQuery, TError, TData>
+) =>
+  useQuery<GetLoanAccountInterestRateDetailQuery, TError, TData>(
+    ['getLoanAccountInterestRateDetail', variables],
+    useAxios<GetLoanAccountInterestRateDetailQuery, GetLoanAccountInterestRateDetailQueryVariables>(
+      GetLoanAccountInterestRateDetailDocument
     ).bind(null, variables),
     options
   );
@@ -45562,6 +46778,75 @@ export const useGetLoanProductCriteriaQuery = <
     ).bind(null, variables),
     options
   );
+export const GetLoanProductInterestRateListDocument = `
+    query getLoanProductInterestRateList($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        listProductInterestRates(productId: $productId) {
+          data {
+            id
+            rate
+            effectiveDate
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductInterestRateListQuery = <
+  TData = GetLoanProductInterestRateListQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductInterestRateListQueryVariables,
+  options?: UseQueryOptions<GetLoanProductInterestRateListQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductInterestRateListQuery, TError, TData>(
+    ['getLoanProductInterestRateList', variables],
+    useAxios<GetLoanProductInterestRateListQuery, GetLoanProductInterestRateListQueryVariables>(
+      GetLoanProductInterestRateListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanProductInterestRateDetailDocument = `
+    query getLoanProductInterestRateDetail($id: ID!, $productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        getProductInterestRate(id: $id, productId: $productId) {
+          data {
+            id
+            rate
+            effectiveDate
+            fileUploads {
+              identifier
+              url
+            }
+            note
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductInterestRateDetailQuery = <
+  TData = GetLoanProductInterestRateDetailQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductInterestRateDetailQueryVariables,
+  options?: UseQueryOptions<GetLoanProductInterestRateDetailQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductInterestRateDetailQuery, TError, TData>(
+    ['getLoanProductInterestRateDetail', variables],
+    useAxios<GetLoanProductInterestRateDetailQuery, GetLoanProductInterestRateDetailQueryVariables>(
+      GetLoanProductInterestRateDetailDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanGeneralSettingsDocument = `
     query getLoanGeneralSettings {
   settings {
@@ -45721,6 +47006,76 @@ export const useGetLoanProductTypeQuery = <TData = GetLoanProductTypeQuery, TErr
     variables === undefined ? ['getLoanProductType'] : ['getLoanProductType', variables],
     useAxios<GetLoanProductTypeQuery, GetLoanProductTypeQueryVariables>(
       GetLoanProductTypeDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanOrganizationRateListDocument = `
+    query getLoanOrganizationRateList {
+  settings {
+    general {
+      loan {
+        listOrganizationRate {
+          data {
+            id
+            rate
+            effectiveDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanOrganizationRateListQuery = <
+  TData = GetLoanOrganizationRateListQuery,
+  TError = unknown
+>(
+  variables?: GetLoanOrganizationRateListQueryVariables,
+  options?: UseQueryOptions<GetLoanOrganizationRateListQuery, TError, TData>
+) =>
+  useQuery<GetLoanOrganizationRateListQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanOrganizationRateList']
+      : ['getLoanOrganizationRateList', variables],
+    useAxios<GetLoanOrganizationRateListQuery, GetLoanOrganizationRateListQueryVariables>(
+      GetLoanOrganizationRateListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanOrganizationRateDetailDocument = `
+    query getLoanOrganizationRateDetail($id: ID!) {
+  settings {
+    general {
+      loan {
+        getOrganizationRate(id: $id) {
+          data {
+            id
+            rate
+            effectiveDate
+            fileUploads {
+              identifier
+              url
+            }
+            note
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanOrganizationRateDetailQuery = <
+  TData = GetLoanOrganizationRateDetailQuery,
+  TError = unknown
+>(
+  variables: GetLoanOrganizationRateDetailQueryVariables,
+  options?: UseQueryOptions<GetLoanOrganizationRateDetailQuery, TError, TData>
+) =>
+  useQuery<GetLoanOrganizationRateDetailQuery, TError, TData>(
+    ['getLoanOrganizationRateDetail', variables],
+    useAxios<GetLoanOrganizationRateDetailQuery, GetLoanOrganizationRateDetailQueryVariables>(
+      GetLoanOrganizationRateDetailDocument
     ).bind(null, variables),
     options
   );
@@ -46036,6 +47391,76 @@ export const useGetDepositSettingsTdsQuery = <TData = GetDepositSettingsTdsQuery
     variables === undefined ? ['getDepositSettingsTds'] : ['getDepositSettingsTds', variables],
     useAxios<GetDepositSettingsTdsQuery, GetDepositSettingsTdsQueryVariables>(
       GetDepositSettingsTdsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavingsOrganizationRateListDocument = `
+    query getSavingsOrganizationRateList {
+  settings {
+    general {
+      deposit {
+        listOrganizationRate {
+          data {
+            id
+            rate
+            effectiveDate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingsOrganizationRateListQuery = <
+  TData = GetSavingsOrganizationRateListQuery,
+  TError = unknown
+>(
+  variables?: GetSavingsOrganizationRateListQueryVariables,
+  options?: UseQueryOptions<GetSavingsOrganizationRateListQuery, TError, TData>
+) =>
+  useQuery<GetSavingsOrganizationRateListQuery, TError, TData>(
+    variables === undefined
+      ? ['getSavingsOrganizationRateList']
+      : ['getSavingsOrganizationRateList', variables],
+    useAxios<GetSavingsOrganizationRateListQuery, GetSavingsOrganizationRateListQueryVariables>(
+      GetSavingsOrganizationRateListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavingsOrganizationRateDetailDocument = `
+    query getSavingsOrganizationRateDetail($id: ID!) {
+  settings {
+    general {
+      deposit {
+        getOrganizationRate(id: $id) {
+          data {
+            id
+            rate
+            effectiveDate
+            fileUploads {
+              identifier
+              url
+            }
+            note
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingsOrganizationRateDetailQuery = <
+  TData = GetSavingsOrganizationRateDetailQuery,
+  TError = unknown
+>(
+  variables: GetSavingsOrganizationRateDetailQueryVariables,
+  options?: UseQueryOptions<GetSavingsOrganizationRateDetailQuery, TError, TData>
+) =>
+  useQuery<GetSavingsOrganizationRateDetailQuery, TError, TData>(
+    ['getSavingsOrganizationRateDetail', variables],
+    useAxios<GetSavingsOrganizationRateDetailQuery, GetSavingsOrganizationRateDetailQueryVariables>(
+      GetSavingsOrganizationRateDetailDocument
     ).bind(null, variables),
     options
   );
@@ -46537,6 +47962,76 @@ export const useGetSavingsAccountListQuery = <TData = GetSavingsAccountListQuery
     useAxios<GetSavingsAccountListQuery, GetSavingsAccountListQueryVariables>(
       GetSavingsAccountListDocument
     ).bind(null, variables),
+    options
+  );
+export const GetSavingProductInterestRateListDocument = `
+    query getSavingProductInterestRateList($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        listProductInterestRates(productId: $productId) {
+          data {
+            id
+            rate
+            effectiveDate
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingProductInterestRateListQuery = <
+  TData = GetSavingProductInterestRateListQuery,
+  TError = unknown
+>(
+  variables: GetSavingProductInterestRateListQueryVariables,
+  options?: UseQueryOptions<GetSavingProductInterestRateListQuery, TError, TData>
+) =>
+  useQuery<GetSavingProductInterestRateListQuery, TError, TData>(
+    ['getSavingProductInterestRateList', variables],
+    useAxios<GetSavingProductInterestRateListQuery, GetSavingProductInterestRateListQueryVariables>(
+      GetSavingProductInterestRateListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavingProductInterestRateDetailDocument = `
+    query getSavingProductInterestRateDetail($id: ID!, $productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getProductInterestRate(id: $id, productId: $productId) {
+          data {
+            id
+            rate
+            effectiveDate
+            fileUploads {
+              identifier
+              url
+            }
+            note
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingProductInterestRateDetailQuery = <
+  TData = GetSavingProductInterestRateDetailQuery,
+  TError = unknown
+>(
+  variables: GetSavingProductInterestRateDetailQueryVariables,
+  options?: UseQueryOptions<GetSavingProductInterestRateDetailQuery, TError, TData>
+) =>
+  useQuery<GetSavingProductInterestRateDetailQuery, TError, TData>(
+    ['getSavingProductInterestRateDetail', variables],
+    useAxios<
+      GetSavingProductInterestRateDetailQuery,
+      GetSavingProductInterestRateDetailQueryVariables
+    >(GetSavingProductInterestRateDetailDocument).bind(null, variables),
     options
   );
 export const GetSettingsOptionsFieldsDocument = `

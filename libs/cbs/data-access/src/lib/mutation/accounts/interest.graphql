@@ -1,0 +1,21 @@
+mutation updateAccountInterest($accountId: ID!, $data: InterestRateSetupInput!) {
+  account {
+    updateAccountInterest(accountId: $accountId, data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation editAccountInterest($id: ID!, $accountId: ID!, $data: InterestRateSetupInput!) {
+  account {
+    editAccountInterest(id: $id, accountId: $accountId, data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

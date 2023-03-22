@@ -5,6 +5,7 @@ import { featureCode } from '@coop/shared/utils';
 
 import { AccountListPage } from './AccountListPage';
 import { InactiveLoanAccountListPage } from './InactiveAccountsList';
+import { InterestUpdatePage } from './InteretUpdatePage';
 import { OverviewPage } from './OverviewPage';
 import { useLoanProductDepositHook } from '../hooks/useLoanProductDepositHook';
 
@@ -24,6 +25,8 @@ export const LoanProductDetail = () => {
         title={`Loan Product - ${featureCode.loanProductDetail}`}
       />
       {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <OverviewPage />}
+      {tabQuery === 'account list' && <AccountListPage />}
+      {tabQuery === 'interest update' && <InterestUpdatePage />}
       {tabQuery === 'active accounts' && <AccountListPage />}
       {tabQuery === 'inactive accounts' && <InactiveLoanAccountListPage />}
     </>

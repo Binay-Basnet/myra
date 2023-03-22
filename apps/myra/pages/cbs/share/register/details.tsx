@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout, Scrollable } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
 import { SharePageLayout } from '@coop/myra/components';
 import { CbsShareFeatureShareRegisterDetail } from '@coop/share/register/detail';

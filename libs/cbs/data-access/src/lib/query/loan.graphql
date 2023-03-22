@@ -831,3 +831,34 @@ query getLoanFilterMapping {
     }
   }
 }
+
+query listLoanAccountInterestRateList($accountId: ID!) {
+  loanAccount {
+    listAccountInterestRates(accountId: $accountId) {
+      data {
+        id
+        rate
+        createdAt
+        effectiveDate
+      }
+    }
+  }
+}
+
+query getLoanAccountInterestRateDetail($id: ID!, $accountId: String!) {
+  loanAccount {
+    getAccountInterestRate(id: $id, accountID: $accountId) {
+      data {
+        id
+        rate
+        createdAt
+        effectiveDate
+        fileUploads {
+          identifier
+          url
+        }
+        note
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { Box } from '@myra-ui';
+import { Box, Scrollable } from '@myra-ui';
 
 import { MainLayout } from '@coop/neosys-admin/layout';
 

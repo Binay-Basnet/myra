@@ -15,7 +15,13 @@ import { amountConverter } from '@coop/shared/utils';
 
 import { SideBar } from '../component/SideBar';
 import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
-import { CollateralPage, DocumentPage, GuaranteePage, LedgerPage } from '../tabs';
+import {
+  CollateralPage,
+  DocumentPage,
+  GuaranteePage,
+  InterestUpdatePage,
+  LedgerPage,
+} from '../tabs';
 import { OverviewPage } from '../tabs/OverviewPage';
 
 /* eslint-disable-next-line */
@@ -103,6 +109,7 @@ export const CbsLoanFeatureLoanAccountDetail = (props: CbsLoanFeatureLoanAccount
             {tabQuery === 'guarantee' && <GuaranteePage />}
             {tabQuery === 'documents' && <DocumentPage />}
             {tabQuery === 'ledger' && <LedgerPage />}
+            {tabQuery === 'interest update' && <InterestUpdatePage />}
           </Box>
         </Scrollable>
       </Box>

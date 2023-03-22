@@ -24,12 +24,13 @@ type MenuType =
   | 'REQUESTS'
   | 'WITHDRAW_SLIP'
   | 'REPORTS'
-  | 'OTHERS';
+  | 'OTHERS'
+  | 'SETTINGS_SAVINGS_ORGANIZATION_RATE';
 
 type Nodata = Record<
   MenuType,
   {
-    icon: IconType;
+    icon?: IconType;
     title: string;
     subtitle?: string;
     buttonLabel?: string;
@@ -117,6 +118,12 @@ export const EMPTYSTATE: Nodata = {
     buttonLabel: '',
     docLink: 'https://docs.migration.myraerp.com/docs/CBS/Others/Market_representative_list',
     buttonLink: APP_NAVS.CBS.menus.OTHERS?.forms,
+  },
+  SETTINGS_SAVINGS_ORGANIZATION_RATE: {
+    title: 'Interest Rate',
+    subtitle: '',
+    buttonLabel: '',
+    docLink: 'https://docs.migration.myraerp.com/docs/CBS/Others/Market_representative_list',
   },
 };
 

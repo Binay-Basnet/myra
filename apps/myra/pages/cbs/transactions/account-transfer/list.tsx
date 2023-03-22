@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout, Scrollable } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
 import { AccountTransferList } from '@coop/cbs/transactions/account-transfer';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';

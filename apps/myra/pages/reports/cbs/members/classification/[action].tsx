@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { MemberClassificationReport } from '@coop/cbs/reports';
 import { MainLayout, Scrollable } from '@myra-ui';
+
+import { MemberClassificationReport } from '@coop/cbs/reports';
 
 export const SavingStatementReportPage = () => <MemberClassificationReport />;
 

@@ -1,5 +1,7 @@
 import { ReactElement } from 'react';
 
+import { Scrollable } from '@myra-ui';
+
 import { MainLayout } from '@coop/neosys-admin/layout';
 import { NeosysFeatureUsersAdd } from '@coop/neosys-admin/users';
 

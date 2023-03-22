@@ -1,8 +1,9 @@
 import { ReactElement } from 'react';
 
+import { MainLayout } from '@myra-ui';
+
 import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
 import { LoanReportList } from '@coop/cbs/reports/list';
-import { MainLayout, Scrollable } from '@myra-ui';
 
 const LoanReports = () => <LoanReportList />;
 

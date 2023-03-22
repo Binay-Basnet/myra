@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout, Scrollable } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
 import { LoanProductDetail } from '@coop/cbs/settings/loan-product';

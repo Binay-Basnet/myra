@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { CBSLoanDisburse } from '@coop/cbs/loan/details';
 import { MainLayout, Scrollable } from '@myra-ui';
+
+import { CBSLoanDisburse } from '@coop/cbs/loan/details';
 
 const DisburseLoan = () => <CBSLoanDisburse />;
 

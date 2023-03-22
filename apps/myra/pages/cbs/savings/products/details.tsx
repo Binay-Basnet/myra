@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout, Scrollable } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
 import { AccountPagesLayout } from '@coop/myra/components';
 import { CbsSettingsSavingsDetailPage } from '@coop/settings/saving-product';

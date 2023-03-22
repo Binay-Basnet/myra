@@ -1,3 +1,5 @@
+export * from './AccountInterestDetailModal';
+export * from './AccountInterestUpdateModal';
 export * from './Accounts';
 export * from './Activity';
 export * from './AdditionalInfoCard';
@@ -9,6 +11,7 @@ export * from './Cheque';
 export * from './CreateWithdrawSlipModal';
 export * from './Documents';
 export * from './GeneralInfoCard';
+export * from './InterestUpdateTab';
 export * from './LedgerListTab';
 export * from './PastWithdrawSlipList';
 export * from './RecentTransactions';

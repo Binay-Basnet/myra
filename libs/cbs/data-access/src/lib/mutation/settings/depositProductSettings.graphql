@@ -50,3 +50,33 @@ mutation activateSavingsProduct(
     }
   }
 }
+
+mutation updateSavingProductInterestRate($productId: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      depositProduct {
+        updateProductInterest(productId: $productId, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation editSavingProductInterestRate($id: ID!, $productId: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      depositProduct {
+        editProductInterest(id: $id, productId: $productId, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

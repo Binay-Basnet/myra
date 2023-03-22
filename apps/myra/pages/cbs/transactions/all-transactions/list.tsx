@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { AllTransactionsList } from 'libs/cbs/transactions/feature-deposit/src/components';
 
-import { MainLayout, Scrollable } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 

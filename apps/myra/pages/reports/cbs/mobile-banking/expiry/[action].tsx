@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { MBExpiryReport } from '@coop/cbs/reports';
 import { MainLayout, Scrollable } from '@myra-ui';
+
+import { MBExpiryReport } from '@coop/cbs/reports';
 
 const MBankingExpiryReport = () => <MBExpiryReport />;
 

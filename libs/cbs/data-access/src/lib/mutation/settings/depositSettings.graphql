@@ -44,3 +44,33 @@ mutation setDepositTds($data: DepositTdsInput) {
     }
   }
 }
+
+mutation setSavingsOrganizationRate($data: InterestRateSetupInput!) {
+  settings {
+    general {
+      deposit {
+        setOrganizationRate(data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation editSavingsOrganizationRate($id: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      deposit {
+        editOrganizationRate(id: $id, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

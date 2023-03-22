@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { AddBulkDeposit } from '@coop/cbs/transactions/deposit';
 import { MainLayout, Scrollable } from '@myra-ui';
+
+import { AddBulkDeposit } from '@coop/cbs/transactions/deposit';
 
 const TransactionsAddBulkDeposit = () => <AddBulkDeposit />;
 
