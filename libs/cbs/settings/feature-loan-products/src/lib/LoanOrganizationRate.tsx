@@ -225,6 +225,7 @@ export const LoanOrganizationRate = () => {
           methods={methods}
           rate={organizationRateDetailData?.settings?.general?.loan?.getOrganizationRate?.data}
           onEdit={handleEditInterestRate}
+          rateLabel="Organization Rate"
         />
       )}
 

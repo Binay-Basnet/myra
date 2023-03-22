@@ -228,6 +228,7 @@ export const SavingsOrganizationRate = () => {
           onEdit={handleEditInterestRate}
           methods={methods}
           rate={organizationRateDetailData?.settings?.general?.deposit?.getOrganizationRate?.data}
+          rateLabel="Organization Rate"
         />
       )}
 

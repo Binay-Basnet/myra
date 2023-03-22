@@ -186,7 +186,7 @@ export const InterestUpdatePage = () => {
             Interest Update
           </Text>
           <Button leftIcon={<Icon as={HiOutlineRefresh} size="md" />} onClick={onUpdateModalToggle}>
-            Update Interest Interest
+            Update Interest
           </Button>
         </Box>
       </Box>

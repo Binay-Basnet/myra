@@ -187,7 +187,7 @@ export const InterestUpdatePage = () => {
         heading="Interest Update"
         headerButton={
           <Button leftIcon={<Icon as={HiOutlineRefresh} size="md" />} onClick={onUpdateModalToggle}>
-            Update Interest Interest
+            Update Interest
           </Button>
         }
       />
