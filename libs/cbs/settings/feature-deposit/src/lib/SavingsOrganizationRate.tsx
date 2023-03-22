@@ -195,7 +195,7 @@ export const SavingsOrganizationRate = () => {
               ) : null}
             </Box>
             <Box mt="s12">
-              <Box border="1px" borderColor="border.layout" w="100%">
+              <Box border="1px" borderColor="border.layout" w="100%" height="30rem">
                 <Table
                   data={organizationRateList}
                   isStatic
