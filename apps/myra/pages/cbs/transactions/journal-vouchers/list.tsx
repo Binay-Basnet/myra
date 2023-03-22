@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 import { AccountingFeatureJournalVouchersList } from '@coop/accounting/accounting';
 // import { LoanPaymentList } from '@coop/cbs/transactions/loan-payment';

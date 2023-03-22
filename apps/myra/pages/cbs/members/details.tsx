@@ -1,6 +1,6 @@
 import { ReactElement, useState } from 'react';
 
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 import { MemberDetails } from '@coop/cbs/members/details';
 import { MemberPagesLayout } from '@coop/cbs/members/list';

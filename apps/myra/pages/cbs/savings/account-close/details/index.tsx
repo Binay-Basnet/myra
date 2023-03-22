@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 import { AccountDetails } from '@coop/cbs/accounts/account-form';
 import { AccountPagesLayout } from '@coop/myra/components';

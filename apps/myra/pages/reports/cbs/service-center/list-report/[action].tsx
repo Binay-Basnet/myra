@@ -1,12 +1,16 @@
 import { ReactElement } from 'react';
 
 import { ServiceCenterListReport } from '@coop/cbs/reports';
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 const NewShareStatementReport = () => <ServiceCenterListReport />;
 
 export default NewShareStatementReport;
 
 NewShareStatementReport.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };

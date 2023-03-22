@@ -1,9 +1,8 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { BsPrinter } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 
-import { useGetMemberPdfQuery } from '@coop/cbs/data-access';
 import {
   Box,
   Button,
@@ -13,7 +12,10 @@ import {
   Loader,
   MainLayout,
   PDFViewer,
+  Scrollable,
 } from '@myra-ui';
+
+import { useGetMemberPdfQuery } from '@coop/cbs/data-access';
 
 export const Pdf = () => {
   const router = useRouter();
@@ -79,5 +81,9 @@ export const Pdf = () => {
 export default Pdf;
 
 Pdf.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };

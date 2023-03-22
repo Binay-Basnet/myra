@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 import { JournalVoucerDetailPage } from '@coop/accounting/details';
 import { TransactionDetailPathBar } from '@coop/cbs/transactions/ui-components';

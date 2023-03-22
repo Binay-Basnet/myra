@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 // import { AgentList } from '@coop/cbs/transactions/agent';
-import { Box, MainLayout, WIPState } from '@myra-ui';
+import { Box, MainLayout, Scrollable, WIPState } from '@myra-ui';
 
 const TransactionsAddAgent = () => (
   // <AgentList />
@@ -11,6 +11,10 @@ const TransactionsAddAgent = () => (
 );
 
 TransactionsAddAgent.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };
 export default TransactionsAddAgent;

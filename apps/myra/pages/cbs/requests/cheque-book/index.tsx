@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { RequestListLayout } from '@coop/cbs/requests/layout';
 import { ChequeBookRequestList } from '@coop/cbs/requests/lists';
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 const ChequeBookRequestPage = () => <ChequeBookRequestList />;
 

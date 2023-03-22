@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 import { ReportMainLayout } from '@coop/cbs/reports/layout';
 import { SavedReportList } from '@coop/cbs/reports/list';

@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
 import { OthersReportList } from '@coop/cbs/reports/list';
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 const OrganizationReportListPage = () => <OthersReportList />;
 

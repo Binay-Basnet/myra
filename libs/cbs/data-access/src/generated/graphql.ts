@@ -726,6 +726,19 @@ export type AddChartsOfAccountResult = {
   recordId: Scalars['ID'];
 };
 
+export type AddWarehouseInput = {
+  address?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+};
+
+export type AddWarehouseResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<WarehouseQuery>;
+  record?: Maybe<WarehouseInfo>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type Address = {
   coordinates?: Maybe<Coordinate>;
   district?: Maybe<Scalars['Localized']>;
@@ -7152,6 +7165,7 @@ export type InventoryMutation = {
   itemsGroup?: Maybe<InvItemsGroupMutation>;
   unitOfMeasure?: Maybe<InvUnitOfMeasureMutation>;
   vendors?: Maybe<InvVendorsMutation>;
+  warehouse?: Maybe<WarehouseMutation>;
 };
 
 export type InventoryQuery = {
@@ -7159,6 +7173,7 @@ export type InventoryQuery = {
   itemsGroup?: Maybe<InvItemsGroupQuery>;
   unitOfMeasure?: Maybe<InvUnitOfMeasureQuery>;
   vendors?: Maybe<InvVendorsQuery>;
+  warehouse?: Maybe<WarehouseQuery>;
 };
 
 export type InvestmentAccount = {
@@ -9764,6 +9779,7 @@ export type LoanAccountMutation = {
   add?: Maybe<LoanAccountResult>;
   approveOrCancel?: Maybe<LoanAccountResult>;
   changeLOC?: Maybe<Scalars['String']>;
+  close?: Maybe<LoanCloseResult>;
   disburse?: Maybe<LoanDisbursementResult>;
   loanCollateralActions?: Maybe<LoanCollateralActionsMutation>;
   loanGuaranteeActions?: Maybe<LoanGuaranteeActionsMutation>;
@@ -9788,6 +9804,11 @@ export type LoanAccountMutationApproveOrCancelArgs = {
 export type LoanAccountMutationChangeLocArgs = {
   accountId: Scalars['ID'];
   newAmount: Scalars['String'];
+};
+
+
+export type LoanAccountMutationCloseArgs = {
+  data?: InputMaybe<LoanRepaymentInput>;
 };
 
 
@@ -9861,6 +9882,7 @@ export type LoanAccountQuery = {
   loanPreview?: Maybe<LoanAccountPreviewResult>;
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
   paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
+  remainingPayments?: Maybe<LoanAccountRemainingPaymentData>;
   repaymentList?: Maybe<LoanRepaymentConnection>;
 };
 
@@ -9926,9 +9948,26 @@ export type LoanAccountQueryPaymentScheduleArgs = {
 };
 
 
+export type LoanAccountQueryRemainingPaymentsArgs = {
+  loanAccountId: Scalars['ID'];
+};
+
+
 export type LoanAccountQueryRepaymentListArgs = {
   filter?: InputMaybe<LoanRepaymentFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type LoanAccountRemainingPayment = {
+  totalInterest?: Maybe<Scalars['String']>;
+  totalPayableAmount?: Maybe<Scalars['String']>;
+  totalPenalty?: Maybe<Scalars['String']>;
+  totalPrincipal?: Maybe<Scalars['String']>;
+};
+
+export type LoanAccountRemainingPaymentData = {
+  data?: Maybe<LoanAccountRemainingPayment>;
+  error?: Maybe<QueryError>;
 };
 
 export type LoanAccountResult = {
@@ -10112,6 +10151,23 @@ export type LoanCallReportFilter = {
 export type LoanCallReportResult = {
   data?: Maybe<Array<Maybe<LoanCallReport>>>;
   error?: Maybe<QueryError>;
+};
+
+export type LoanCloseResponse = {
+  accountID?: Maybe<Scalars['ID']>;
+  accountName?: Maybe<Scalars['String']>;
+  closedDate?: Maybe<Scalars['Localized']>;
+  paymentMode?: Maybe<AccountClosePaymentMode>;
+  totalAmount?: Maybe<Scalars['String']>;
+  totalFine?: Maybe<Scalars['String']>;
+  totalInterest?: Maybe<Scalars['String']>;
+  totalPrincipal?: Maybe<Scalars['String']>;
+};
+
+export type LoanCloseResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<LoanCloseResponse>;
+  recordID?: Maybe<Scalars['ID']>;
 };
 
 export type LoanCollateralActionsMutation = {
@@ -10893,6 +10949,7 @@ export type LoanRepaymentInput = {
   amountPaid: Scalars['String'];
   bankVoucher?: InputMaybe<LoanRepaymentBankVoucher>;
   cash?: InputMaybe<DepositCash>;
+  closeNotes?: InputMaybe<Scalars['String']>;
   isSuspicious?: InputMaybe<Scalars['Boolean']>;
   loanAccountId: Scalars['ID'];
   memberId: Scalars['ID'];
@@ -16243,6 +16300,47 @@ export type VaultBalanceReportFilter = {
 export type VaultBalanceReportResult = {
   data?: Maybe<VaultBalanceReportData>;
   error?: Maybe<QueryError>;
+};
+
+export type WarehouseConnection = {
+  edges?: Maybe<Array<Maybe<WarehouseEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type WarehouseEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<WarehouseInfo>;
+};
+
+export type WarehouseFilter = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type WarehouseInfo = {
+  address?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+};
+
+export type WarehouseMutation = {
+  add?: Maybe<AddWarehouseResult>;
+};
+
+
+export type WarehouseMutationAddArgs = {
+  data?: InputMaybe<AddWarehouseInput>;
+};
+
+export type WarehouseQuery = {
+  listWarehouses?: Maybe<WarehouseConnection>;
+};
+
+
+export type WarehouseQueryListWarehousesArgs = {
+  filter?: InputMaybe<WarehouseFilter>;
+  paginate: Pagination;
 };
 
 export const Week = {

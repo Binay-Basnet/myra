@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { CBSLoanApprove } from '@coop/cbs/loan/details';
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 const ApproveLoan = () => <CBSLoanApprove />;
 

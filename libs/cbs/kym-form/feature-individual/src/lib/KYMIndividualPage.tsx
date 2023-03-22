@@ -117,6 +117,7 @@ export const KYMIndividualPage = () => {
             <AccorrdianAddMember formStatus={kymFormStatus} kymCurrentSection={kymCurrentSection} />
           </Box>
 
+          
           <Box zIndex={1} background="gray.0" ml="320" pb="120px">
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">

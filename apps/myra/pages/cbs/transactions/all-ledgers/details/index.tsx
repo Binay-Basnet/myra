@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { useRouter } from 'next/router';
 
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 import { COAAccountDetail, COALeafDetail } from '@coop/cbs/settings/coa';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';

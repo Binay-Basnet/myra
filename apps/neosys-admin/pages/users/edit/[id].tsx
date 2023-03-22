@@ -6,7 +6,11 @@ import { NeosysFeatureUsersAdd } from '@coop/neosys-admin/users';
 const AddUser = () => <NeosysFeatureUsersAdd />;
 
 AddUser.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };
 
 export default AddUser;

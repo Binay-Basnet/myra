@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 import { OthersPageLayout } from '@coop/cbs/others/ui-layouts';
 import { AgentTransactionDetailPage } from '@coop/cbs/transactions/feature-detail-page';

@@ -7,7 +7,11 @@ import { MainLayout } from '@coop/neosys-admin/layout';
 const Index = () => <Box>Dashboard</Box>;
 
 Index.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };
 
 export default Index;

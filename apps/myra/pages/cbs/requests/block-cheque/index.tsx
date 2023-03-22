@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { RequestListLayout } from '@coop/cbs/requests/layout';
 import { BlockChequeRequest } from '@coop/cbs/requests/lists';
-import { MainLayout } from '@myra-ui';
+import { MainLayout, Scrollable } from '@myra-ui';
 
 const BlockChequeRequestPage = () => <BlockChequeRequest />;
 
