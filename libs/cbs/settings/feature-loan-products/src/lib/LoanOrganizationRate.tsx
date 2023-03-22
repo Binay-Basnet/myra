@@ -88,7 +88,7 @@ export const LoanOrganizationRate = () => {
         success: 'Interest Rate Updated',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(['getSavingsOrganizationRateList']);
+        queryClient.invalidateQueries(['getLoanOrganizationRateList']);
         handleUpdateModalClose();
       },
       promise: editOrganizationRate({
@@ -192,7 +192,7 @@ export const LoanOrganizationRate = () => {
               ) : null}
             </Box>
             <Box mt="s12">
-              <Box border="1px" borderColor="border.layout" w="100%">
+              <Box border="1px" borderColor="border.layout" w="100%" h="30rem">
                 <Table
                   data={organizationRateList}
                   isStatic
@@ -223,8 +223,13 @@ export const LoanOrganizationRate = () => {
           onClose={handleUpdateModalClose}
           onSave={handleSaveInterestRate}
           methods={methods}
-          rate={organizationRateDetailData?.settings?.general?.loan?.getOrganizationRate?.data}
+          rate={
+            selectedRateId
+              ? organizationRateDetailData?.settings?.general?.loan?.getOrganizationRate?.data
+              : null
+          }
           onEdit={handleEditInterestRate}
+          rateLabel="Organization Rate"
         />
       )}
 

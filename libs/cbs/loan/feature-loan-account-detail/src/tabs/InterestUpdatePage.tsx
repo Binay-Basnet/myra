@@ -187,7 +187,7 @@ export const InterestUpdatePage = () => {
         heading="Interest Update"
         headerButton={
           <Button leftIcon={<Icon as={HiOutlineRefresh} size="md" />} onClick={onUpdateModalToggle}>
-            Update Interest Interest
+            Update Interest
           </Button>
         }
       />
@@ -212,7 +212,11 @@ export const InterestUpdatePage = () => {
           onSave={handleSaveInterestRate}
           onEdit={handleEditInterestRate}
           methods={methods}
-          rate={interestRateDetailData?.loanAccount?.getAccountInterestRate?.data}
+          rate={
+            selectedRateId
+              ? interestRateDetailData?.loanAccount?.getAccountInterestRate?.data
+              : null
+          }
         />
       )}
 

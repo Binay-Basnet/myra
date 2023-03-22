@@ -195,7 +195,7 @@ export const SavingsOrganizationRate = () => {
               ) : null}
             </Box>
             <Box mt="s12">
-              <Box border="1px" borderColor="border.layout" w="100%">
+              <Box border="1px" borderColor="border.layout" w="100%" height="30rem">
                 <Table
                   data={organizationRateList}
                   isStatic
@@ -227,7 +227,12 @@ export const SavingsOrganizationRate = () => {
           onSave={handleSaveInterestRate}
           onEdit={handleEditInterestRate}
           methods={methods}
-          rate={organizationRateDetailData?.settings?.general?.deposit?.getOrganizationRate?.data}
+          rate={
+            selectedRateId
+              ? organizationRateDetailData?.settings?.general?.deposit?.getOrganizationRate?.data
+              : null
+          }
+          rateLabel="Organization Rate"
         />
       )}
 
