@@ -215,7 +215,9 @@ export const InterestUpdateTab = () => {
           onSave={handleSaveInterestRate}
           onEdit={handleEditInterestRate}
           methods={methods}
-          rate={interestRateDetailData?.account?.getAccountInterestRate?.data}
+          rate={
+            selectedRateId ? interestRateDetailData?.account?.getAccountInterestRate?.data : null
+          }
         />
       )}
 

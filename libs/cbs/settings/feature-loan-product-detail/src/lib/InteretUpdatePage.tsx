@@ -211,7 +211,10 @@ export const InterestUpdatePage = () => {
           onEdit={handleEditInterestRate}
           methods={methods}
           rate={
-            interestRateDetailData?.settings?.general?.loanProducts?.getProductInterestRate?.data
+            selectedRateId
+              ? interestRateDetailData?.settings?.general?.loanProducts?.getProductInterestRate
+                  ?.data
+              : null
           }
         />
       )}
