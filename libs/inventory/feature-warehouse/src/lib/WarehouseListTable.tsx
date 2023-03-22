@@ -22,7 +22,7 @@ export const WarehouseListTable = () => {
   const { t } = useTranslation();
   const { data, isFetching } = useGetInventoryItemGroupQuery();
 
-  const rowItems = data?.inventory.itemsGroup?.list?.edges ?? [];
+  const rowItems = data?.inventory?.itemsGroup?.list?.edges ?? [];
 
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [

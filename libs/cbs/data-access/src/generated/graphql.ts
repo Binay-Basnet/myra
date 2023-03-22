@@ -17302,6 +17302,48 @@ export type ResetTrialBalanceCacheMutation = {
   settings: { report?: { resetTrialCache?: string | null } | null };
 };
 
+export type SetItemCategoryMutationVariables = Exact<{
+  data: InvItemsGroupInput;
+}>;
+
+export type SetItemCategoryMutation = {
+  inventory: {
+    itemsGroup?: {
+      add: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type SetUnitsMutationVariables = Exact<{
+  data: InvUnitOfMeasureInput;
+}>;
+
+export type SetUnitsMutation = {
+  inventory: {
+    unitOfMeasure?: {
+      add: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
 export type SendLoanApplicationForApprovalMutationVariables = Exact<{
   id: Scalars['ID'];
   data: LoanAccountInput;
@@ -22482,6 +22524,77 @@ export type GetInventoryUnitOfMeasureQuery = {
         edges?: Array<{
           node?: { name: string; shortName: string; acceptFraction: boolean } | null;
         } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetItemCategoryListQueryVariables = Exact<{
+  filter?: InputMaybe<InvItemsGroupDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetItemCategoryListQuery = {
+  inventory: {
+    itemsGroup?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: { id: string; name: string; parentCategory: string; description: string } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetUnitsListQueryVariables = Exact<{
+  filter?: InputMaybe<InvUnitOfMeasureDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetUnitsListQuery = {
+  inventory: {
+    unitOfMeasure?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id: string;
+            name: string;
+            shortName: string;
+            description?: string | null;
+            acceptFraction: boolean;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetWarehouseListQueryVariables = Exact<{
+  paginate: Pagination;
+  filter?: InputMaybe<WarehouseFilter>;
+}>;
+
+export type GetWarehouseListQuery = {
+  inventory: {
+    warehouse?: {
+      listWarehouses?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            name?: string | null;
+            phoneNumber?: string | null;
+            address?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
       } | null;
     } | null;
   };
@@ -32253,6 +32366,55 @@ export const useResetTrialBalanceCacheMutation = <TError = unknown, TContext = u
     ),
     options
   );
+export const SetItemCategoryDocument = `
+    mutation setItemCategory($data: InvItemsGroupInput!) {
+  inventory {
+    itemsGroup {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetItemCategoryMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetItemCategoryMutation,
+    TError,
+    SetItemCategoryMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetItemCategoryMutation, TError, SetItemCategoryMutationVariables, TContext>(
+    ['setItemCategory'],
+    useAxios<SetItemCategoryMutation, SetItemCategoryMutationVariables>(SetItemCategoryDocument),
+    options
+  );
+export const SetUnitsDocument = `
+    mutation setUnits($data: InvUnitOfMeasureInput!) {
+  inventory {
+    unitOfMeasure {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetUnitsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetUnitsMutation, TError, SetUnitsMutationVariables, TContext>
+) =>
+  useMutation<SetUnitsMutation, TError, SetUnitsMutationVariables, TContext>(
+    ['setUnits'],
+    useAxios<SetUnitsMutation, SetUnitsMutationVariables>(SetUnitsDocument),
+    options
+  );
 export const SendLoanApplicationForApprovalDocument = `
     mutation sendLoanApplicationForApproval($id: ID!, $data: LoanAccountInput!) {
   loanAccount {
@@ -39652,6 +39814,111 @@ export const useGetInventoryUnitOfMeasureQuery = <
     useAxios<GetInventoryUnitOfMeasureQuery, GetInventoryUnitOfMeasureQueryVariables>(
       GetInventoryUnitOfMeasureDocument
     ).bind(null, variables),
+    options
+  );
+export const GetItemCategoryListDocument = `
+    query getItemCategoryList($filter: InvItemsGroupDataFilter, $pagination: Pagination) {
+  inventory {
+    itemsGroup {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            parentCategory
+            description
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetItemCategoryListQuery = <TData = GetItemCategoryListQuery, TError = unknown>(
+  variables?: GetItemCategoryListQueryVariables,
+  options?: UseQueryOptions<GetItemCategoryListQuery, TError, TData>
+) =>
+  useQuery<GetItemCategoryListQuery, TError, TData>(
+    variables === undefined ? ['getItemCategoryList'] : ['getItemCategoryList', variables],
+    useAxios<GetItemCategoryListQuery, GetItemCategoryListQueryVariables>(
+      GetItemCategoryListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetUnitsListDocument = `
+    query getUnitsList($filter: InvUnitOfMeasureDataFilter, $pagination: Pagination) {
+  inventory {
+    unitOfMeasure {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            shortName
+            description
+            acceptFraction
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetUnitsListQuery = <TData = GetUnitsListQuery, TError = unknown>(
+  variables?: GetUnitsListQueryVariables,
+  options?: UseQueryOptions<GetUnitsListQuery, TError, TData>
+) =>
+  useQuery<GetUnitsListQuery, TError, TData>(
+    variables === undefined ? ['getUnitsList'] : ['getUnitsList', variables],
+    useAxios<GetUnitsListQuery, GetUnitsListQueryVariables>(GetUnitsListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetWarehouseListDocument = `
+    query getWarehouseList($paginate: Pagination!, $filter: WarehouseFilter) {
+  inventory {
+    warehouse {
+      listWarehouses(paginate: $paginate, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            phoneNumber
+            address
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetWarehouseListQuery = <TData = GetWarehouseListQuery, TError = unknown>(
+  variables: GetWarehouseListQueryVariables,
+  options?: UseQueryOptions<GetWarehouseListQuery, TError, TData>
+) =>
+  useQuery<GetWarehouseListQuery, TError, TData>(
+    ['getWarehouseList', variables],
+    useAxios<GetWarehouseListQuery, GetWarehouseListQueryVariables>(GetWarehouseListDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetIndividualKymOptionsDocument = `

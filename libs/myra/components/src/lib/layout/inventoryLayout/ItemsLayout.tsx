@@ -13,8 +13,9 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
-import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Button, Divider, Icon, Text } from '@myra-ui';
+
+import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../../tab/TabforMemberPage';
