@@ -123,6 +123,7 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
                 router.push(
                   {
                     query: {
+                      ...router.query,
                       filter: queryString,
                     },
                   },

@@ -2001,10 +2001,8 @@ export type CoaLeafNodeDetails = {
   noOfAccounts?: Maybe<Scalars['String']>;
 };
 
-export type CoaLedgerListFilter = {
-  filterMode?: InputMaybe<Filter_Mode>;
-  ledgerId?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+export type CoaLedgerListFilterMap = {
+  serviceCenter: Array<LabelValueArray>;
 };
 
 export type CoaLedgerListResult = {
@@ -2395,6 +2393,7 @@ export type ChartsOfAccountSettingsQuery = {
   coaAccountList?: Maybe<CoaAccountListResult>;
   coaLeafNodeDetails?: Maybe<CoaLeafNodeDetailView>;
   coaLedgerList?: Maybe<CoaLedgerListResult>;
+  filterMapping?: Maybe<CoaLedgerListFilterMap>;
   fullView: CoaFullView;
   ledgerAllTransactionsList?: Maybe<LedgerAllTransactionConnection>;
   ledgersForJVPosting?: Maybe<LedgersForJvListResult>;
@@ -2433,7 +2432,7 @@ export type ChartsOfAccountSettingsQueryCoaLeafNodeDetailsArgs = {
 
 export type ChartsOfAccountSettingsQueryCoaLedgerListArgs = {
   branchId?: InputMaybe<Array<Scalars['String']>>;
-  filter?: InputMaybe<CoaLedgerListFilter>;
+  filter?: InputMaybe<Filter>;
   id: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
 };
@@ -27523,7 +27522,7 @@ export type GetCoaLeafNodeDetailsQuery = {
 export type GetLedgerListQueryVariables = Exact<{
   id: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
-  filter?: InputMaybe<CoaLedgerListFilter>;
+  filter?: InputMaybe<Filter>;
   branchId?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
@@ -46135,7 +46134,7 @@ export const useGetCoaLeafNodeDetailsQuery = <TData = GetCoaLeafNodeDetailsQuery
     options
   );
 export const GetLedgerListDocument = `
-    query getLedgerList($id: ID!, $pagination: Pagination, $filter: COALedgerListFilter, $branchId: [String!]) {
+    query getLedgerList($id: ID!, $pagination: Pagination, $filter: Filter, $branchId: [String!]) {
   settings {
     chartsOfAccount {
       coaLedgerList(

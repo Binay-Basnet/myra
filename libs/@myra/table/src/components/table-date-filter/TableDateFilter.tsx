@@ -73,6 +73,7 @@ export const TableDateFilter = ({ column }: TableDateFilterProps) => {
           router.push(
             {
               query: {
+                ...router.query,
                 filter: queryString,
               },
             },

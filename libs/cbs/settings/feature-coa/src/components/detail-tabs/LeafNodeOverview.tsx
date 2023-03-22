@@ -12,7 +12,7 @@ import { useCOALeafNodeDetails } from '../../hooks';
 export const LeafNodeOverview = () => {
   const router = useRouter();
 
-  const { leafNodeData } = useCOALeafNodeDetails();
+  const { leafNodeData, ledgerList } = useCOALeafNodeDetails();
 
   const accountSummary = [
     {
@@ -45,7 +45,13 @@ export const LeafNodeOverview = () => {
       <BalanceCard summary={accountSummary} />
 
       <LedgerLists
-        ledgers={leafNodeData?.ledgers?.slice(0, 5) as LedgerList[]}
+        ledgers={
+          ledgerList?.edges
+            ?.map((edge) => ({
+              ...edge?.node,
+            }))
+            .slice(0, 5) as LedgerList[]
+        }
         headerButton={
           <Button
             variant="ghost"
