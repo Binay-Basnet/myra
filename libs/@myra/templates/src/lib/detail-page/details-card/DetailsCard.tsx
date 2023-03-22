@@ -49,7 +49,11 @@ export const DetailsCard = ({
         {children}
       </Grid>
     )}
-    {hasTable && children && <Box p="s16">{children}</Box>}
+    {hasTable && children && (
+      <Box h="30rem" p="s16">
+        {children}
+      </Box>
+    )}
   </Box>
 );
 

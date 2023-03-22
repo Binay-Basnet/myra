@@ -12,7 +12,6 @@ import {
 } from '@coop/cbs/data-access';
 import { CustomInterestRateSetupInput } from '@coop/cbs/utils';
 import { FormDatePicker, FormFileInput, FormInput, FormTextArea } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
 
 interface IUpdateRateModalProps {
   isOpen: boolean;
@@ -21,6 +20,7 @@ interface IUpdateRateModalProps {
   onEdit?: () => void;
   methods: UseFormReturn<CustomInterestRateSetupInput>;
   rate?: InterestRateSetup | null | undefined;
+  rateLabel?: string;
 }
 
 export const UpdateRateModal = ({
@@ -30,10 +30,9 @@ export const UpdateRateModal = ({
   onEdit,
   methods,
   rate,
+  rateLabel,
 }: IUpdateRateModalProps) => {
   const dateType = store.getState().auth?.preference?.date || DateType.Ad;
-
-  const { t } = useTranslation();
 
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
 
@@ -68,7 +67,7 @@ export const UpdateRateModal = ({
           <FormInput
             name="rate"
             type="number"
-            label={t['depositProductMinimumRate']}
+            label={rateLabel ?? 'New Product Premium'}
             textAlign="right"
             rightElement={
               <Text fontWeight="Medium" fontSize="r1" color="primary.500">

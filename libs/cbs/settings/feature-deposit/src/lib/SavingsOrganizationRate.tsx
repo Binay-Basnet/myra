@@ -227,7 +227,12 @@ export const SavingsOrganizationRate = () => {
           onSave={handleSaveInterestRate}
           onEdit={handleEditInterestRate}
           methods={methods}
-          rate={organizationRateDetailData?.settings?.general?.deposit?.getOrganizationRate?.data}
+          rate={
+            selectedRateId
+              ? organizationRateDetailData?.settings?.general?.deposit?.getOrganizationRate?.data
+              : null
+          }
+          rateLabel="Organization Rate"
         />
       )}
 

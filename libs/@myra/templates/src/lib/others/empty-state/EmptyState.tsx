@@ -10,7 +10,7 @@ import { AclKey, Can, RouteValue } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IEmptyStateProps {
-  menuIcon: IconType;
+  menuIcon: IconType | undefined;
   menu: string;
   // onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
   forms?: {
