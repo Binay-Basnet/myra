@@ -17,17 +17,17 @@ export const SupplierTable = () => {
     () => [
       {
         header: t['supplierName'],
-        accessorFn: (row) => row?.node.name,
+        accessorFn: (row) => row?.node?.name,
       },
       {
         header: t['supplierLocation'],
-        accessorFn: (row) => row?.node.type,
+        accessorFn: (row) => row?.node?.type,
       },
 
-      {
-        header: t['supplierPhoneNumber'],
-        accessorFn: (row) => row?.node.unitPrice,
-      },
+      // {
+      //   header: t['supplierPhoneNumber'],
+      //   accessorFn: (row) => row?.node.unitPrice,
+      // },
 
       {
         accessorKey: 'actions',
