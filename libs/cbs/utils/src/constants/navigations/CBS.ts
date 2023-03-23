@@ -229,6 +229,7 @@ export const CBS: NavType = {
           label: 'Closed Accounts',
           route: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS,
           aclKey: 'CBS_LOAN_LOAN_ACCOUNT_CLOSE',
+          addRoute: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS_ADD,
         },
       ],
       settingPages: [

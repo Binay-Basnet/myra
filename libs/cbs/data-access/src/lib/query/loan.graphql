@@ -831,3 +831,16 @@ query getLoanFilterMapping {
     }
   }
 }
+
+query getLoanCloseData($loanAccountId: ID!) {
+  loanAccount {
+    remainingPayments(loanAccountId: $loanAccountId) {
+      data {
+        totalInterest
+        totalPayableAmount
+        totalPenalty
+        totalPrincipal
+      }
+    }
+  }
+}

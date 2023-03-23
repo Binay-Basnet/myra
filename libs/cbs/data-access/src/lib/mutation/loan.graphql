@@ -117,3 +117,23 @@ mutation loanAccountGuaranteeActions(
     }
   }
 }
+
+mutation setLoanClose($data: LoanRepaymentInput) {
+  loanAccount {
+    close(data: $data) {
+      error {
+        ...MutationError
+      }
+      record {
+        accountID
+        closedDate
+        accountName
+        totalPrincipal
+        totalInterest
+        totalFine
+        paymentMode
+        totalAmount
+      }
+    }
+  }
+}
