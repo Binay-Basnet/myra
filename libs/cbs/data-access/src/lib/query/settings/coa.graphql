@@ -212,7 +212,7 @@ query getCOALeafNodeDetails($id: ID!, $branch: [String]) {
 query getLedgerList(
   $id: ID!
   $pagination: Pagination
-  $filter: COALedgerListFilter
+  $filter: Filter
   $branchId: [String!]
 ) {
   settings {

@@ -30,7 +30,8 @@ export type MenuType =
   | 'ITEMS'
   | 'WAREHOUSE'
   | 'SUPPLIERS'
-  | 'MONITOR';
+  | 'MONITOR'
+  | 'SETTINGS_SAVINGS_ORGANIZATION_RATE';
 
 export type Page = {
   label: string;

@@ -32,13 +32,13 @@ export const MigrationFileComponent = () => {
     tableData && tableData?.reduce((acc, curr) => [...acc, { row: curr?.row, ...curr?.data }], []);
   const columnLabel = !isEmpty(tableData) && Object?.keys(tableDataArray?.[0]);
 
-  const outputArray =
+  const csvArray =
     tableData &&
     tableDataArray?.map((obj) => Object?.values(obj)?.map((value) => ({ value: String(value) })));
   const [csvData, setCsvData] = useState([]);
 
   useEffect(() => {
-    setCsvData(outputArray);
+    setCsvData(csvArray);
   }, [JSON.stringify(tableDataArray)]);
 
   const { mutateAsync } = useSetCsvDataMutation();
@@ -54,8 +54,6 @@ export const MigrationFileComponent = () => {
     () => tableDataArray?.map((item) => (changedRows.includes(item?.row) ? 'Edited' : '')),
     [changedRows]
   );
-
-  // const rowLabel = tableData?.map((item) => (changedRows.includes(item?.row) ? 'Edited' : ''));
 
   useEffect(() => {
     const changedData = finalData?.map((item) => item?.row);
@@ -121,7 +119,7 @@ export const MigrationFileComponent = () => {
             </Button>
             <br />
           </Box>
-          <Box
+          {/* <Box
             display="flex"
             p={2}
             bg="gray.500"
@@ -133,7 +131,7 @@ export const MigrationFileComponent = () => {
             zIndex={1}
           >
             Changed Row: {changedRows?.map((item) => `${item}, `)}
-          </Box>
+          </Box> */}
           <Box width="-webkit-fit-content">
             <Spreadsheet
               data={csvData}

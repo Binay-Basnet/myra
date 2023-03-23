@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { debounce } from 'lodash';
 
-import { Box, Container, FormFooter, FormHeader, MainLayout, Text } from '@myra-ui';
+import { Box, Container, FormFooter, FormHeader, MainLayout, Scrollable, Text } from '@myra-ui';
 
 import {
   OfficialUseRiskCategory,
@@ -254,7 +254,11 @@ const Translation = () => {
 };
 
 Translation.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };
 
 export default Translation;

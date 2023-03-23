@@ -1,11 +1,16 @@
 import { ReactElement } from 'react';
 
+import { MainLayout, Scrollable } from '@myra-ui';
+
 import { AddBulkDeposit } from '@coop/cbs/transactions/deposit';
-import { MainLayout } from '@myra-ui';
 
 const TransactionsAddBulkDeposit = () => <AddBulkDeposit />;
 
 TransactionsAddBulkDeposit.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };
 export default TransactionsAddBulkDeposit;

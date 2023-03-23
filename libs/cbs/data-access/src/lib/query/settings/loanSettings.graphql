@@ -90,3 +90,41 @@ query getLoanProductType {
     }
   }
 }
+
+query getLoanOrganizationRateList {
+  settings {
+    general {
+      loan {
+        listOrganizationRate {
+          data {
+            id
+            rate
+            effectiveDate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLoanOrganizationRateDetail($id: ID!) {
+  settings {
+    general {
+      loan {
+        getOrganizationRate(id: $id) {
+          data {
+            id
+            rate
+            effectiveDate
+            fileUploads {
+              identifier
+              url
+            }
+            note
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}

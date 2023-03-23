@@ -37,7 +37,7 @@ export const FileViewer = ({ fileName, fileUrl, type }: FileViewerProps) => {
       <Box display="flex" px="s16" py="s8" gap="s20" alignItems="center" flex={1}>
         <Icon as={RiFile3Fill} size="lg" color="primary.500" />
         <Box display="flex" flexDirection="column" gap="s4" maxW="250px">
-          <Text fontSize="r1" fontWeight="500" noOfLines={1}>
+          <Text fontSize="r1" fontWeight="500" noOfLines={1} wordBreak="break-all">
             {fileName}
           </Text>
           {type && <Text fontSize="r1" fontWeight="500">{`${type}`}</Text>}

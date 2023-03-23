@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { useGetCoaLeafNodeDetailsQuery, useGetLedgerListQuery } from '@coop/cbs/data-access';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 export const useCOALeafNodeDetails = () => {
   const router = useRouter();
@@ -22,6 +22,7 @@ export const useCOALeafNodeDetails = () => {
     id: id as string,
     branchId: branch ? JSON.parse(branch as string) : [],
     pagination: getPaginationQuery(),
+    filter: getFilterQuery(),
   });
 
   const ledgerList = list?.settings?.chartsOfAccount?.coaLedgerList;

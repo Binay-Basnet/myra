@@ -102,6 +102,7 @@ export const TableListFilter = ({ data, column, comparator }: TableListFilterPro
                     router.push(
                       {
                         query: {
+                          ...router.query,
                           filter: queryString,
                         },
                       },

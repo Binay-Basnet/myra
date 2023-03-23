@@ -1,3 +1,5 @@
+export * from './AccountInterestDetailModal';
+export * from './AccountInterestUpdateModal';
 export * from './AlertEnable';
 export * from './Overview';
 export * from './ProductCriteria';

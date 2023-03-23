@@ -296,6 +296,10 @@ export const ROUTES = {
   SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/general/print-preference/withdraw-slip',
 
   SETTINGS_EOD_HISTORY: '/settings/general/eod/history',
+
+  SETTINGS_GENERAL_SAVINGS_ORGANIZATION_RATE: '/settings/general/savings/organization-rate',
+
+  SETTINGS_GENERAL_LOAN_ORGANIZATION_RATE: '/settings/general/loan/organization-rate',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

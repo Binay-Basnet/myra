@@ -14,7 +14,7 @@ import {
 
 import { Box, Button, Collapse, Grid, GridItem, Text } from '@myra-ui';
 
-import { FormSelect } from '@coop/shared/form';
+import { FormDatePicker, FormSelect } from '@coop/shared/form';
 
 export const MigrationDetailsComponents = () => {
   const [sourceCollapse, setSourceCollapse] = useState(true);
@@ -59,6 +59,7 @@ export const MigrationDetailsComponents = () => {
         dbName: router?.query?.['name'] as string,
         choices: 'all',
         databaseType: getValues()?.databaseType,
+        reportDate: getValues()?.reportDate?.en,
       },
     }).then(() => directoryRefetch());
   };
@@ -207,6 +208,7 @@ export const MigrationDetailsComponents = () => {
                         { label: 'Cooperative Union', value: 'COOPERATIVE_UNION' },
                       ]}
                     />
+                    <FormDatePicker name="reportDate" label="Report date" />
                     <Button type="submit" w={100}>
                       Submit
                     </Button>

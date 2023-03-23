@@ -1,4 +1,6 @@
 export * from './AccordianCard';
+export * from './AccountInterestDetailModal';
+export * from './AccountInterestUpdateModal';
 export * from './CollateralTable';
 export * from './DocumentsCard';
 export * from './GeneralInfoCard';

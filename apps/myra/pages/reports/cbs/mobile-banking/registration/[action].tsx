@@ -1,12 +1,17 @@
 import { ReactElement } from 'react';
 
+import { MainLayout, Scrollable } from '@myra-ui';
+
 import { MBRegistrationReport } from '@coop/cbs/reports';
-import { MainLayout } from '@myra-ui';
 
 const MBankingRegistrationReportPage = () => <MBRegistrationReport />;
 
 export default MBankingRegistrationReportPage;
 
 MBankingRegistrationReportPage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };
