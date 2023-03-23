@@ -37,7 +37,9 @@ export const PageHeaderTab = ({ list, showTabsInFilter }: PageHeaderTabProps) =>
 
   const { t } = useTranslation();
 
-  const currentIndex = list.findIndex((value) => router?.query['filter']?.includes(value.key));
+  const currentIndex = showTabsInFilter
+    ? list.findIndex((value) => router?.query['filter']?.includes(value.key))
+    : list.findIndex((value) => router?.query['objState']?.includes(value.key));
 
   return (
     <Tabs variant="unstyled" index={currentIndex === -1 ? 0 : currentIndex}>
@@ -63,6 +65,7 @@ export const PageHeaderTab = ({ list, showTabsInFilter }: PageHeaderTabProps) =>
               } else {
                 router?.push({
                   query: {
+                    ...router.query,
                     objState: item.key,
                   },
                 });
