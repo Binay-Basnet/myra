@@ -6821,6 +6821,13 @@ export type InterestTaxReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export type InvAddSupplierResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<InvSuppliersQuery>;
+  record?: Maybe<InvSupplier>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type InvItems = {
   id: Scalars['ID'];
   itemCode: Scalars['String'];
@@ -6914,18 +6921,28 @@ export type InvItemsGroupQueryListArgs = {
 };
 
 export type InvItemsInput = {
+  costPrice?: InputMaybe<Scalars['String']>;
   itemCode?: InputMaybe<Scalars['String']>;
   itemGroup?: InputMaybe<Scalars['String']>;
-  itemQuantity?: InputMaybe<Scalars['Float']>;
-  name?: InputMaybe<Scalars['String']>;
+  itemName?: InputMaybe<Scalars['String']>;
+  ledgers?: InputMaybe<InvItemsLedger>;
   primaryUnit?: InputMaybe<Scalars['String']>;
+  reorderLevel?: InputMaybe<Scalars['String']>;
+  sellingPrice?: InputMaybe<Scalars['String']>;
   tax?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  unitPrice?: InputMaybe<Scalars['Float']>;
+  valuationMethod?: InputMaybe<InvItemsValuationMethod>;
+  variants?: InputMaybe<Array<InputMaybe<InvItemsVariant>>>;
 };
 
 export type InvItemsInvalidDataError = {
   error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InvItemsLedger = {
+  purchaseLedger?: InputMaybe<Scalars['String']>;
+  purchaseReturnLedger?: InputMaybe<Scalars['String']>;
+  salesLedger?: InputMaybe<Scalars['String']>;
+  salesReturnLedger?: InputMaybe<Scalars['String']>;
 };
 
 export type InvItemsMutation = {
@@ -6952,6 +6969,78 @@ export type InvItemsQueryGetNewItemCodeArgs = {
 
 export type InvItemsQueryListArgs = {
   filter?: InputMaybe<InvItemsDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export const InvItemsValuationMethod = {
+  Fifo: 'FIFO',
+  Lifo: 'LIFO',
+} as const;
+
+export type InvItemsValuationMethod =
+  typeof InvItemsValuationMethod[keyof typeof InvItemsValuationMethod];
+export type InvItemsVariant = {
+  options?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  variantList?: InputMaybe<Array<InputMaybe<ItemVariantDetail>>>;
+  variantName?: InputMaybe<Scalars['String']>;
+};
+
+export type InvSupplier = {
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  location?: Maybe<Address>;
+  name?: Maybe<Scalars['String']>;
+  phoneNo?: Maybe<Scalars['String']>;
+};
+
+export type InvSupplierConnection = {
+  edges?: Maybe<Array<Maybe<InvSuppliersEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type InvSupplierFilter = {
+  id?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type InvSupplierInput = {
+  address?: InputMaybe<KymAddressInput>;
+  applicationDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contactNo?: InputMaybe<Scalars['String']>;
+  contactPersonName?: InputMaybe<Scalars['String']>;
+  contactPersonPhoneNo?: InputMaybe<Scalars['String']>;
+  creditLimit?: InputMaybe<Scalars['Float']>;
+  creditTerms?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  legalStatusDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Scalars['String']>;
+  openingBalance?: InputMaybe<Scalars['String']>;
+  othersDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  panNo?: InputMaybe<Scalars['String']>;
+  registrationDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  supplierCode?: InputMaybe<Scalars['String']>;
+};
+
+export type InvSupplierMutation = {
+  add?: Maybe<InvAddSupplierResult>;
+};
+
+export type InvSupplierMutationAddArgs = {
+  data?: InputMaybe<InvSupplierInput>;
+};
+
+export type InvSuppliersEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<InvSupplier>;
+};
+
+export type InvSuppliersQuery = {
+  list?: Maybe<InvSupplierConnection>;
+};
+
+export type InvSuppliersQueryListArgs = {
+  filter?: InputMaybe<InvSupplierFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -7095,6 +7184,7 @@ export type InvalidDataError = {
 export type InventoryMutation = {
   items?: Maybe<InvItemsMutation>;
   itemsGroup?: Maybe<InvItemsGroupMutation>;
+  suppliers?: Maybe<InvSupplierMutation>;
   unitOfMeasure?: Maybe<InvUnitOfMeasureMutation>;
   vendors?: Maybe<InvVendorsMutation>;
   warehouse?: Maybe<WarehouseMutation>;
@@ -7103,6 +7193,7 @@ export type InventoryMutation = {
 export type InventoryQuery = {
   items?: Maybe<InvItemsQuery>;
   itemsGroup?: Maybe<InvItemsGroupQuery>;
+  suppliers?: Maybe<InvSuppliersQuery>;
   unitOfMeasure?: Maybe<InvUnitOfMeasureQuery>;
   vendors?: Maybe<InvVendorsQuery>;
   warehouse?: Maybe<WarehouseQuery>;
@@ -7233,6 +7324,13 @@ export const InvestmentType = {
 } as const;
 
 export type InvestmentType = typeof InvestmentType[keyof typeof InvestmentType];
+export type ItemVariantDetail = {
+  costPrice?: InputMaybe<Scalars['String']>;
+  itemName?: InputMaybe<Scalars['String']>;
+  sellingPrice?: InputMaybe<Scalars['String']>;
+  sku?: InputMaybe<Scalars['String']>;
+};
+
 export type JournalChartsOfAccount = {
   journalCode: Scalars['String'];
 };
@@ -17343,6 +17441,27 @@ export type SetUnitsMutation = {
   };
 };
 
+export type SetWareHouseMutationVariables = Exact<{
+  data?: InputMaybe<AddWarehouseInput>;
+}>;
+
+export type SetWareHouseMutation = {
+  inventory: {
+    warehouse?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SendLoanApplicationForApprovalMutationVariables = Exact<{
   id: Scalars['ID'];
   data: LoanAccountInput;
@@ -17526,6 +17645,34 @@ export type LoanAccountGuaranteeActionsMutation = {
           | MutationError_ServerError_Fragment
           | MutationError_ValidationError_Fragment
           | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetLoanCloseMutationVariables = Exact<{
+  data?: InputMaybe<LoanRepaymentInput>;
+}>;
+
+export type SetLoanCloseMutation = {
+  loanAccount: {
+    close?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+      record?: {
+        accountID?: string | null;
+        closedDate?: Record<'local' | 'en' | 'np', string> | null;
+        accountName?: string | null;
+        totalPrincipal?: string | null;
+        totalInterest?: string | null;
+        totalFine?: string | null;
+        paymentMode?: AccountClosePaymentMode | null;
+        totalAmount?: string | null;
       } | null;
     } | null;
   };
@@ -23508,6 +23655,23 @@ export type GetLoanFilterMappingQuery = {
   loanAccount: {
     filterMapping?: {
       productName: Array<{ label?: string | null; value?: unknown | null }>;
+    } | null;
+  };
+};
+
+export type GetLoanCloseDataQueryVariables = Exact<{
+  loanAccountId: Scalars['ID'];
+}>;
+
+export type GetLoanCloseDataQuery = {
+  loanAccount: {
+    remainingPayments?: {
+      data?: {
+        totalInterest?: string | null;
+        totalPayableAmount?: string | null;
+        totalPenalty?: string | null;
+        totalPrincipal?: string | null;
+      } | null;
     } | null;
   };
 };
@@ -32414,6 +32578,33 @@ export const useSetUnitsMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetUnitsMutation, SetUnitsMutationVariables>(SetUnitsDocument),
     options
   );
+export const SetWareHouseDocument = `
+    mutation setWareHouse($data: AddWarehouseInput) {
+  inventory {
+    warehouse {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetWareHouseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetWareHouseMutation,
+    TError,
+    SetWareHouseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetWareHouseMutation, TError, SetWareHouseMutationVariables, TContext>(
+    ['setWareHouse'],
+    useAxios<SetWareHouseMutation, SetWareHouseMutationVariables>(SetWareHouseDocument),
+    options
+  );
 export const SendLoanApplicationForApprovalDocument = `
     mutation sendLoanApplicationForApproval($id: ID!, $data: LoanAccountInput!) {
   loanAccount {
@@ -32673,6 +32864,40 @@ export const useLoanAccountGuaranteeActionsMutation = <TError = unknown, TContex
     useAxios<LoanAccountGuaranteeActionsMutation, LoanAccountGuaranteeActionsMutationVariables>(
       LoanAccountGuaranteeActionsDocument
     ),
+    options
+  );
+export const SetLoanCloseDocument = `
+    mutation setLoanClose($data: LoanRepaymentInput) {
+  loanAccount {
+    close(data: $data) {
+      error {
+        ...MutationError
+      }
+      record {
+        accountID
+        closedDate
+        accountName
+        totalPrincipal
+        totalInterest
+        totalFine
+        paymentMode
+        totalAmount
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetLoanCloseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetLoanCloseMutation,
+    TError,
+    SetLoanCloseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetLoanCloseMutation, TError, SetLoanCloseMutationVariables, TContext>(
+    ['setLoanClose'],
+    useAxios<SetLoanCloseMutation, SetLoanCloseMutationVariables>(SetLoanCloseDocument),
     options
   );
 export const UpdateLoanAccountInterestDocument = `
@@ -41037,6 +41262,32 @@ export const useGetLoanFilterMappingQuery = <TData = GetLoanFilterMappingQuery, 
     useAxios<GetLoanFilterMappingQuery, GetLoanFilterMappingQueryVariables>(
       GetLoanFilterMappingDocument
     ).bind(null, variables),
+    options
+  );
+export const GetLoanCloseDataDocument = `
+    query getLoanCloseData($loanAccountId: ID!) {
+  loanAccount {
+    remainingPayments(loanAccountId: $loanAccountId) {
+      data {
+        totalInterest
+        totalPayableAmount
+        totalPenalty
+        totalPrincipal
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanCloseDataQuery = <TData = GetLoanCloseDataQuery, TError = unknown>(
+  variables: GetLoanCloseDataQueryVariables,
+  options?: UseQueryOptions<GetLoanCloseDataQuery, TError, TData>
+) =>
+  useQuery<GetLoanCloseDataQuery, TError, TData>(
+    ['getLoanCloseData', variables],
+    useAxios<GetLoanCloseDataQuery, GetLoanCloseDataQueryVariables>(GetLoanCloseDataDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const ListLoanAccountInterestRateListDocument = `

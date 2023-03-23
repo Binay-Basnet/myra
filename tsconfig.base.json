@@ -52,6 +52,7 @@
       "@coop/cbs/kym-form/institution": ["libs/cbs/kym-form/feature-institution/src/index.ts"],
       "@coop/cbs/kym-form/ui-containers": ["libs/cbs/kym-form/ui-containers/src/index.ts"],
       "@coop/cbs/loan": ["libs/cbs/loan/feature-loan-application/src/index.ts"],
+      "@coop/cbs/loan/close": ["libs/cbs/loan/feature-loan-close/src/index.ts"],
       "@coop/cbs/loan/details": ["libs/cbs/loan/feature-details/src/index.ts"],
       "@coop/cbs/loan/layouts": ["libs/cbs/loan/ui-layouts/src/index.ts"],
       "@coop/cbs/loan/lists": ["libs/cbs/loan/feature-lists/src/index.ts"],
