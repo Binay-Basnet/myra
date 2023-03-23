@@ -23,7 +23,7 @@ export const CbsSettingsSavingsDetailPage = () => {
         title={`Savings Product - ${featureCode.savingProductDetail}`}
       />
       {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <OverviewPage />}
-      {tabQuery === 'account list' && <AccountListPage />}
+      {/* {tabQuery === 'account list' && <AccountListPage />} */}
       {tabQuery === 'interest update' && <InterestUpdatePage />}
       {tabQuery === 'dormant accounts' && <DormantAccountListPage />}
       {tabQuery === 'inactive accounts' && <InactiveAccountListPage />}
