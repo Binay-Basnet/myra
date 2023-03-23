@@ -162,6 +162,8 @@ export const SavingsOrganizationRate = () => {
   );
 
   const handleUpdateModalClose = () => {
+    methods.reset({ rate: null, effectiveDate: null, fileUploads: [], note: '' });
+
     setSelectedRateId('');
     onUpdateModalClose();
   };

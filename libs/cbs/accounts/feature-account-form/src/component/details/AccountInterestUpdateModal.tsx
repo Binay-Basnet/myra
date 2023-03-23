@@ -8,7 +8,6 @@ import {
   DateType,
   InterestRateSetup,
   store,
-  useAccountDetails,
   useGetEndOfDayDateDataQuery,
 } from '@coop/cbs/data-access';
 import { CustomInterestRateSetupInput } from '@coop/cbs/utils';
@@ -21,6 +20,7 @@ interface IAccountInterestUpdateModalProps {
   onEdit?: () => void;
   methods: UseFormReturn<CustomInterestRateSetupInput>;
   rate?: InterestRateSetup | null | undefined;
+  baseRate: number;
 }
 
 export const AccountInterestUpdateModal = ({
@@ -30,9 +30,8 @@ export const AccountInterestUpdateModal = ({
   onEdit,
   methods,
   rate,
+  baseRate,
 }: IAccountInterestUpdateModalProps) => {
-  const { accountDetails } = useAccountDetails();
-
   const dateType = store.getState().auth?.preference?.date || DateType.Ad;
 
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
@@ -44,7 +43,7 @@ export const AccountInterestUpdateModal = ({
   useEffect(() => {
     if (rate) {
       methods.reset({
-        rate: Number(rate.rate) - Number(accountDetails?.interestRate),
+        rate: null,
         effectiveDate: rate.effectiveDate,
         fileUploads: rate.fileUploads as unknown as string[],
         note: rate.note,
@@ -95,9 +94,7 @@ export const AccountInterestUpdateModal = ({
             <GridItem colSpan={2}>
               <Alert
                 status="info"
-                title={`New Account Premium is ${
-                  Number(rateDiff) + Number(accountDetails?.interestRate ?? 0)
-                } %`}
+                title={`New Account Premium is ${Number(rateDiff) + baseRate} %`}
                 hideCloseIcon
               />
             </GridItem>
