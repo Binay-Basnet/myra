@@ -3920,6 +3920,7 @@ export type DepositLoanAccountMutation = {
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
   makeActive?: Maybe<Scalars['String']>;
   updateAccountInterest: InterestSetupMutationResult;
+  updateNomineeAccount?: Maybe<NomineeAccountUpdateResult>;
 };
 
 export type DepositLoanAccountMutationAddArgs = {
@@ -3949,6 +3950,10 @@ export type DepositLoanAccountMutationMakeActiveArgs = {
 export type DepositLoanAccountMutationUpdateAccountInterestArgs = {
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
+};
+
+export type DepositLoanAccountMutationUpdateNomineeAccountArgs = {
+  data: NomineeAccountUpdateInput;
 };
 
 export type DepositLoanAccountQuery = {
@@ -12591,6 +12596,16 @@ export type Nominee = {
   title?: Maybe<Scalars['String']>;
 };
 
+export type NomineeAccountUpdateInput = {
+  accountID: Scalars['ID'];
+  updatedAccountID: Scalars['ID'];
+};
+
+export type NomineeAccountUpdateResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type NomineeInNepali = {
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
@@ -16899,6 +16914,25 @@ export type SetMakeDormantAccountActiveMutationVariables = Exact<{
 }>;
 
 export type SetMakeDormantAccountActiveMutation = { account: { makeActive?: string | null } };
+
+export type SetupdateSavingsNomineeAccountMutationVariables = Exact<{
+  NomineeAccountUpdateInput: NomineeAccountUpdateInput;
+}>;
+
+export type SetupdateSavingsNomineeAccountMutation = {
+  account: {
+    updateNomineeAccount?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type UpdateAccountInterestMutationVariables = Exact<{
   accountId: Scalars['ID'];
@@ -31641,6 +31675,39 @@ export const useSetMakeDormantAccountActiveMutation = <TError = unknown, TContex
     useAxios<SetMakeDormantAccountActiveMutation, SetMakeDormantAccountActiveMutationVariables>(
       SetMakeDormantAccountActiveDocument
     ),
+    options
+  );
+export const SetupdateSavingsNomineeAccountDocument = `
+    mutation setupdateSavingsNomineeAccount($NomineeAccountUpdateInput: NomineeAccountUpdateInput!) {
+  account {
+    updateNomineeAccount(data: $NomineeAccountUpdateInput) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetupdateSavingsNomineeAccountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetupdateSavingsNomineeAccountMutation,
+    TError,
+    SetupdateSavingsNomineeAccountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetupdateSavingsNomineeAccountMutation,
+    TError,
+    SetupdateSavingsNomineeAccountMutationVariables,
+    TContext
+  >(
+    ['setupdateSavingsNomineeAccount'],
+    useAxios<
+      SetupdateSavingsNomineeAccountMutation,
+      SetupdateSavingsNomineeAccountMutationVariables
+    >(SetupdateSavingsNomineeAccountDocument),
     options
   );
 export const UpdateAccountInterestDocument = `

@@ -28,3 +28,13 @@ mutation setMakeDormantAccountActive($accountId: ID!) {
     makeActive(accountID: $accountId)
   }
 }
+mutation setupdateSavingsNomineeAccount($NomineeAccountUpdateInput: NomineeAccountUpdateInput!) {
+  account {
+    updateNomineeAccount(data: $NomineeAccountUpdateInput) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

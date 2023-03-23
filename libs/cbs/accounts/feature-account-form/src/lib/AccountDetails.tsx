@@ -4,8 +4,10 @@ import { Box, Scrollable, WIPState } from '@myra-ui';
 
 import { AccountDetailsPathBar } from '@coop/cbs/accounts/ui-components';
 import { AccountDetailsSidebar } from '@coop/cbs/accounts/ui-layouts';
+import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
 
 import {
+  AddNomineeModal,
   InterestUpdateTab,
   LedgerListTab,
   Overview,
@@ -13,14 +15,33 @@ import {
   WithdrawSlip,
 } from '../component';
 
-export const AccountDetails = () => {
+interface IAccountDetailsProps {
+  pathbarOptions?: { label: string; handler: () => void }[];
+  isNomineeAccountModalOpen?: boolean;
+  handleNomineeModalClose?: () => void;
+}
+
+export const AccountDetails = ({
+  pathbarOptions,
+  handleNomineeModalClose,
+  isNomineeAccountModalOpen,
+}: IAccountDetailsProps) => {
   const router = useRouter();
 
   const tabQuery = router.query['tab'] as string;
+  const { accountDetails } = useAccountDetails();
 
   return (
     <>
-      <AccountDetailsPathBar title="Savings Account List" />
+      <AccountDetailsPathBar
+        title="Savings Account List"
+        options={
+          accountDetails?.accountType === NatureOfDepositProduct?.TermSavingOrFd ||
+          accountDetails?.accountType === NatureOfDepositProduct?.RecurringSaving
+            ? pathbarOptions
+            : undefined
+        }
+      />
       <Box display="flex">
         <Box
           w="320px"
@@ -78,6 +99,10 @@ export const AccountDetails = () => {
           </Box>
         </Scrollable>
       </Box>
+      <AddNomineeModal
+        isOpen={isNomineeAccountModalOpen as boolean}
+        onClose={handleNomineeModalClose as () => void}
+      />
     </>
   );
 };
