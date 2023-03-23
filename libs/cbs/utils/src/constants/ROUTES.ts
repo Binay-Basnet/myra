@@ -300,6 +300,8 @@ export const ROUTES = {
   SETTINGS_GENERAL_SAVINGS_ORGANIZATION_RATE: '/settings/general/savings/organization-rate',
 
   SETTINGS_GENERAL_LOAN_ORGANIZATION_RATE: '/settings/general/loan/organization-rate',
+
+  SETTINGS_EOD_HISTORY_DETAILS: '/settings/general/eod/history/details',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

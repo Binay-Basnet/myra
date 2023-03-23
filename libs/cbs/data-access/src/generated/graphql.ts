@@ -6841,16 +6841,17 @@ export type InvAddSupplierResult = {
 };
 
 export type InvItems = {
+  costPrice: Scalars['String'];
   id: Scalars['ID'];
   itemCode: Scalars['String'];
-  itemQuantity: Scalars['Float'];
+  itemQuantity: Scalars['String'];
   name: Scalars['String'];
+  sellingPrice: Scalars['String'];
   type: Scalars['String'];
-  unitPrice: Scalars['Float'];
 };
 
 export type InvItemsAddResult = {
-  error?: Maybe<InvItemsError>;
+  error?: Maybe<MutationError>;
   query?: Maybe<InvItemsQuery>;
   record?: Maybe<InvItems>;
   recordId?: Maybe<Scalars['ID']>;
@@ -6859,7 +6860,7 @@ export type InvItemsAddResult = {
 export type InvItemsConnection = {
   edges?: Maybe<Array<Maybe<InvItemsEdge>>>;
   pageInfo?: Maybe<PageInfo>;
-  totalCount?: Maybe<Scalars['Int']>;
+  totalCount: Scalars['Int'];
 };
 
 export type InvItemsDataFilter = {
@@ -6871,8 +6872,6 @@ export type InvItemsEdge = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<InvItems>;
 };
-
-export type InvItemsError = InvItemsInvalidDataError;
 
 export type InvItemsGroup = {
   description: Scalars['String'];
@@ -6934,6 +6933,7 @@ export type InvItemsGroupQueryListArgs = {
 
 export type InvItemsInput = {
   costPrice?: InputMaybe<Scalars['String']>;
+  isVariantItem: Scalars['Boolean'];
   itemCode?: InputMaybe<Scalars['String']>;
   itemGroup?: InputMaybe<Scalars['String']>;
   itemName?: InputMaybe<Scalars['String']>;
@@ -6944,10 +6944,6 @@ export type InvItemsInput = {
   tax?: InputMaybe<Scalars['String']>;
   valuationMethod?: InputMaybe<InvItemsValuationMethod>;
   variants?: InputMaybe<Array<InputMaybe<InvItemsVariant>>>;
-};
-
-export type InvItemsInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
 };
 
 export type InvItemsLedger = {
@@ -6986,7 +6982,6 @@ export type InvItemsQueryListArgs = {
 
 export const InvItemsValuationMethod = {
   Fifo: 'FIFO',
-  Lifo: 'LIFO',
 } as const;
 
 export type InvItemsValuationMethod =
@@ -16932,6 +16927,25 @@ export type SetMakeDormantAccountActiveMutationVariables = Exact<{
 
 export type SetMakeDormantAccountActiveMutation = { account: { makeActive?: string | null } };
 
+export type SetupdateSavingsNomineeAccountMutationVariables = Exact<{
+  NomineeAccountUpdateInput: NomineeAccountUpdateInput;
+}>;
+
+export type SetupdateSavingsNomineeAccountMutation = {
+  account: {
+    updateNomineeAccount?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type UpdateAccountInterestMutationVariables = Exact<{
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
@@ -17480,6 +17494,27 @@ export type SetWareHouseMutationVariables = Exact<{
 export type SetWareHouseMutation = {
   inventory: {
     warehouse?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSuppliersMutationVariables = Exact<{
+  data?: InputMaybe<InvSupplierInput>;
+}>;
+
+export type SetSuppliersMutation = {
+  inventory: {
+    suppliers?: {
       add?: {
         recordId?: string | null;
         error?:
@@ -22656,38 +22691,10 @@ export type GetInventoryItemsQuery = {
             id: string;
             name: string;
             type: string;
-            unitPrice: number;
-            itemQuantity: number;
+            costPrice: string;
+            itemQuantity: string;
           } | null;
         } | null> | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetInventoryItemGroupQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetInventoryItemGroupQuery = {
-  inventory: {
-    itemsGroup?: {
-      list?: {
-        edges?: Array<{
-          node?: { name: string; id: string; description: string; parentCategory: string } | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetInventoryVendorQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetInventoryVendorQuery = {
-  inventory: {
-    vendors?: {
-      list?: {
-        edges: Array<{
-          node: { name: string; location: string; email: string; phoneNumber: string };
-        } | null>;
       } | null;
     } | null;
   };
@@ -22770,6 +22777,40 @@ export type GetWarehouseListQuery = {
             name?: string | null;
             phoneNumber?: string | null;
             address?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSuppliersListQueryVariables = Exact<{
+  filter?: InputMaybe<InvSupplierFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSuppliersListQuery = {
+  inventory: {
+    suppliers?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            name?: string | null;
+            phoneNo?: string | null;
+            email?: string | null;
+            location?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
           } | null;
         } | null> | null;
         pageInfo?: PaginationFragment | null;
@@ -30493,6 +30534,36 @@ export type EodHistoryQuery = {
   };
 };
 
+export type EodHistoryDetailsQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter: EodDetailsFilter;
+}>;
+
+export type EodHistoryDetailsQuery = {
+  endOfDay: {
+    details?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          jobType: EodJob;
+          success: boolean;
+          accountNumber: string;
+          narration: string;
+          payload?: Record<string, string> | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type OptionTypeFragment = { label?: string | null; value?: unknown | null };
 
 export type GetDepositFilterMappingQueryVariables = Exact<{ [key: string]: never }>;
@@ -31679,6 +31750,39 @@ export const useSetMakeDormantAccountActiveMutation = <TError = unknown, TContex
     ),
     options
   );
+export const SetupdateSavingsNomineeAccountDocument = `
+    mutation setupdateSavingsNomineeAccount($NomineeAccountUpdateInput: NomineeAccountUpdateInput!) {
+  account {
+    updateNomineeAccount(data: $NomineeAccountUpdateInput) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetupdateSavingsNomineeAccountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetupdateSavingsNomineeAccountMutation,
+    TError,
+    SetupdateSavingsNomineeAccountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetupdateSavingsNomineeAccountMutation,
+    TError,
+    SetupdateSavingsNomineeAccountMutationVariables,
+    TContext
+  >(
+    ['setupdateSavingsNomineeAccount'],
+    useAxios<
+      SetupdateSavingsNomineeAccountMutation,
+      SetupdateSavingsNomineeAccountMutationVariables
+    >(SetupdateSavingsNomineeAccountDocument),
+    options
+  );
 export const UpdateAccountInterestDocument = `
     mutation updateAccountInterest($accountId: ID!, $data: InterestRateSetupInput!) {
   account {
@@ -32639,6 +32743,33 @@ export const useSetWareHouseMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetWareHouseMutation, TError, SetWareHouseMutationVariables, TContext>(
     ['setWareHouse'],
     useAxios<SetWareHouseMutation, SetWareHouseMutationVariables>(SetWareHouseDocument),
+    options
+  );
+export const SetSuppliersDocument = `
+    mutation setSuppliers($data: InvSupplierInput) {
+  inventory {
+    suppliers {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSuppliersMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSuppliersMutation,
+    TError,
+    SetSuppliersMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetSuppliersMutation, TError, SetSuppliersMutationVariables, TContext>(
+    ['setSuppliers'],
+    useAxios<SetSuppliersMutation, SetSuppliersMutationVariables>(SetSuppliersDocument),
     options
   );
 export const SendLoanApplicationForApprovalDocument = `
@@ -39965,7 +40096,7 @@ export const GetInventoryItemsDocument = `
             id
             name
             type
-            unitPrice
+            costPrice
             itemQuantity
           }
         }
@@ -39982,64 +40113,6 @@ export const useGetInventoryItemsQuery = <TData = GetInventoryItemsQuery, TError
     variables === undefined ? ['getInventoryItems'] : ['getInventoryItems', variables],
     useAxios<GetInventoryItemsQuery, GetInventoryItemsQueryVariables>(
       GetInventoryItemsDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetInventoryItemGroupDocument = `
-    query getInventoryItemGroup {
-  inventory {
-    itemsGroup {
-      list {
-        edges {
-          node {
-            name
-            id
-            description
-            parentCategory
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetInventoryItemGroupQuery = <TData = GetInventoryItemGroupQuery, TError = unknown>(
-  variables?: GetInventoryItemGroupQueryVariables,
-  options?: UseQueryOptions<GetInventoryItemGroupQuery, TError, TData>
-) =>
-  useQuery<GetInventoryItemGroupQuery, TError, TData>(
-    variables === undefined ? ['getInventoryItemGroup'] : ['getInventoryItemGroup', variables],
-    useAxios<GetInventoryItemGroupQuery, GetInventoryItemGroupQueryVariables>(
-      GetInventoryItemGroupDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetInventoryVendorDocument = `
-    query getInventoryVendor {
-  inventory {
-    vendors {
-      list {
-        edges {
-          node {
-            name
-            location
-            email
-            phoneNumber
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetInventoryVendorQuery = <TData = GetInventoryVendorQuery, TError = unknown>(
-  variables?: GetInventoryVendorQueryVariables,
-  options?: UseQueryOptions<GetInventoryVendorQuery, TError, TData>
-) =>
-  useQuery<GetInventoryVendorQuery, TError, TData>(
-    variables === undefined ? ['getInventoryVendor'] : ['getInventoryVendor', variables],
-    useAxios<GetInventoryVendorQuery, GetInventoryVendorQueryVariables>(
-      GetInventoryVendorDocument
     ).bind(null, variables),
     options
   );
@@ -40176,6 +40249,53 @@ export const useGetWarehouseListQuery = <TData = GetWarehouseListQuery, TError =
   useQuery<GetWarehouseListQuery, TError, TData>(
     ['getWarehouseList', variables],
     useAxios<GetWarehouseListQuery, GetWarehouseListQueryVariables>(GetWarehouseListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetSuppliersListDocument = `
+    query getSuppliersList($filter: InvSupplierFilter, $pagination: Pagination) {
+  inventory {
+    suppliers {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            location {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            phoneNo
+            email
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSuppliersListQuery = <TData = GetSuppliersListQuery, TError = unknown>(
+  variables?: GetSuppliersListQueryVariables,
+  options?: UseQueryOptions<GetSuppliersListQuery, TError, TData>
+) =>
+  useQuery<GetSuppliersListQuery, TError, TData>(
+    variables === undefined ? ['getSuppliersList'] : ['getSuppliersList', variables],
+    useAxios<GetSuppliersListQuery, GetSuppliersListQueryVariables>(GetSuppliersListDocument).bind(
       null,
       variables
     ),
@@ -50310,6 +50430,43 @@ export const useEodHistoryQuery = <TData = EodHistoryQuery, TError = unknown>(
   useQuery<EodHistoryQuery, TError, TData>(
     variables === undefined ? ['eodHistory'] : ['eodHistory', variables],
     useAxios<EodHistoryQuery, EodHistoryQueryVariables>(EodHistoryDocument).bind(null, variables),
+    options
+  );
+export const EodHistoryDetailsDocument = `
+    query eodHistoryDetails($pagination: Pagination, $filter: EODDetailsFilter!) {
+  endOfDay {
+    details(pagination: $pagination, filter: $filter) {
+      edges {
+        node {
+          id
+          jobType
+          success
+          accountNumber
+          narration
+          payload
+        }
+        cursor
+      }
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useEodHistoryDetailsQuery = <TData = EodHistoryDetailsQuery, TError = unknown>(
+  variables: EodHistoryDetailsQueryVariables,
+  options?: UseQueryOptions<EodHistoryDetailsQuery, TError, TData>
+) =>
+  useQuery<EodHistoryDetailsQuery, TError, TData>(
+    ['eodHistoryDetails', variables],
+    useAxios<EodHistoryDetailsQuery, EodHistoryDetailsQueryVariables>(
+      EodHistoryDetailsDocument
+    ).bind(null, variables),
     options
   );
 export const GetDepositFilterMappingDocument = `

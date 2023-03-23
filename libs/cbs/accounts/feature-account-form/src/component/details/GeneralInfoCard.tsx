@@ -22,11 +22,7 @@ interface IGeneralInfoCardProps {
     nomineeAccountNumber: string | null | undefined;
     nomineeAccountName: string | null | undefined;
     productMinimumBalance: string | null | undefined;
-    accountExpiryDate: {
-      en: string | null | undefined;
-      local: string | null | undefined;
-      np: string | null | undefined;
-    };
+    accountExpiryDate: Record<'local' | 'en' | 'np', string> | null | undefined;
   };
   // accountTypes?: {
   //   SAVING: string;

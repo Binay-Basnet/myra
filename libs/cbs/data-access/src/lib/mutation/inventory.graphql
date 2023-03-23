@@ -36,3 +36,16 @@ mutation setWareHouse($data: AddWarehouseInput) {
     }
   }
 }
+
+mutation setSuppliers($data: InvSupplierInput) {
+  inventory {
+    suppliers {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

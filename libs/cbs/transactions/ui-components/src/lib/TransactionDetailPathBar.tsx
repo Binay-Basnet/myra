@@ -299,7 +299,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
               member: memberDetail?.name,
             }}
             total={amountConverter(total)}
-            totalWords={amountToWordsConverter(total)}
+            totalWords={amountToWordsConverter(Number(total || '0'))}
             details={details}
             dublicate={dublicate}
             showSignatures={showSignatures}

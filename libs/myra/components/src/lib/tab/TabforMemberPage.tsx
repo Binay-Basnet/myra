@@ -47,6 +47,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
   const { t } = useTranslation();
 
   const router = useRouter();
+
   const newId = useGetNewIdMutation();
 
   // const currentIndex = useMemo(
@@ -54,64 +55,81 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
   //   [router.pathname]
   // );
   return (
-    <Tabs
-      variant="unstyled"
-      index={list.findIndex((value) => router.asPath.includes(value.link)) ?? 0}
-    >
-      {list.map((item) => (
-        <Box
-          display="flex"
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          key={item.link}
-        >
-          <Link href={item.link} style={{ width: '100%' }}>
-            <TabCol>
-              <Text align="left" title={t[item.title as keyof typeof en]}>
-                {t[item.title as keyof typeof en] ?? item.title}
-              </Text>
-            </TabCol>
-          </Link>
-          {item.addLinkId && (
-            // <Link href={item.addLink}>
-            <IconButton
-              aria-label="add-Button"
-              size="md"
-              height="40px"
-              variant="ghost"
-              icon={<Icon as={IoAdd} />}
-              onClick={() =>
-                newId
-                  .mutateAsync({ idType: item?.idType })
-                  .then((res) => router.push(`${item.addLinkId}/add/${res?.newId}`))
-              }
-            />
-            // </Link>
-          )}
-          {item.addLink && (
-            // <Link href={item.addLink}>
-            <IconButton
-              aria-label="add-Button"
-              size="md"
-              height="40px"
-              variant="ghost"
-              icon={<Icon as={IoAdd} />}
-              onClick={() => router.push(`${item.addLink}`)}
-            />
-          )}
-          {item.modalOpen && (
-            // <Link href={item.addLink}>
-            <IconButton
-              aria-label="add-Button"
-              size="lg"
-              variant="ghost"
-              icon={<Icon as={IoAdd} />}
-              onClick={item.modalOpen}
-            />
-          )}
-        </Box>
-      ))}
+    <Tabs variant="unstyled">
+      {list.map((item) => {
+        const isActive =
+          router.asPath.split('/')[3] === item.link.split('/')[3] &&
+          router.asPath.split('/')[2] === item.link.split('/')[2];
+
+        return (
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            key={item.link}
+          >
+            <Link href={item.link} style={{ width: '100%' }}>
+              <TabCol
+                sx={
+                  isActive
+                    ? {
+                        color: '#37474F',
+                        bg: 'gray.200',
+                        borderRadius: 'br2',
+                        fontWeight: '500',
+                      }
+                    : {
+                        bg: 'transparent',
+                        borderRadius: 'none',
+                      }
+                }
+              >
+                <Text align="left" title={t[item.title as keyof typeof en]}>
+                  {t[item.title as keyof typeof en] ?? item.title}
+                </Text>
+              </TabCol>
+            </Link>
+            {item.addLinkId && (
+              // <Link href={item.addLink}>
+              <IconButton
+                aria-label="add-Button"
+                size="md"
+                height="40px"
+                variant="ghost"
+                icon={<Icon as={IoAdd} />}
+                onClick={() =>
+                  newId
+                    .mutateAsync({ idType: item?.idType })
+                    .then((res) => router.push(`${item.addLinkId}/add/${res?.newId}`))
+                }
+              />
+              // </Link>
+            )}
+            {item.addLink && (
+              // <Link href={item.addLink}>
+              <IconButton
+                aria-label="add-Button"
+                size="md"
+                height="40px"
+                variant="ghost"
+                icon={<Icon as={IoAdd} />}
+                onClick={() => router.push(`${item.addLink}`)}
+              />
+            )}
+            {item.modalOpen && (
+              // <Link href={item.addLink}>
+              <IconButton
+                aria-label="add-Button"
+                size="lg"
+                variant="ghost"
+                icon={<Icon as={IoAdd} />}
+                onClick={item.modalOpen}
+              />
+            )}
+          </Box>
+        );
+      })}
     </Tabs>
   );
 };
