@@ -7,7 +7,7 @@ query getInventoryItems {
             id
             name
             type
-            unitPrice
+            costPrice
             itemQuantity
           }
         }

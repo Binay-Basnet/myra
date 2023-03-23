@@ -3921,6 +3921,7 @@ export type DepositLoanAccountMutation = {
   makeActive?: Maybe<Scalars['String']>;
   updateAccountInterest: InterestSetupMutationResult;
   updateNomineeAccount?: Maybe<NomineeAccountUpdateResult>;
+  updateTenure?: Maybe<SavingsTenureUpdateResult>;
 };
 
 export type DepositLoanAccountMutationAddArgs = {
@@ -3954,6 +3955,10 @@ export type DepositLoanAccountMutationUpdateAccountInterestArgs = {
 
 export type DepositLoanAccountMutationUpdateNomineeAccountArgs = {
   data: NomineeAccountUpdateInput;
+};
+
+export type DepositLoanAccountMutationUpdateTenureArgs = {
+  data: SavingsTenureUpdateInput;
 };
 
 export type DepositLoanAccountQuery = {
@@ -6765,6 +6770,8 @@ export type InterestRateSetupInput = {
 export type InterestRateType = {
   boardAuthority?: Maybe<Scalars['Float']>;
   ceoAuthority?: Maybe<Scalars['Float']>;
+  changeMax?: Maybe<Scalars['Float']>;
+  changeMin?: Maybe<Scalars['Float']>;
   defaultRate: Scalars['Float'];
   maxRate?: Maybe<Scalars['Float']>;
   minRate?: Maybe<Scalars['Float']>;
@@ -6834,16 +6841,17 @@ export type InvAddSupplierResult = {
 };
 
 export type InvItems = {
+  costPrice: Scalars['String'];
   id: Scalars['ID'];
   itemCode: Scalars['String'];
-  itemQuantity: Scalars['Float'];
+  itemQuantity: Scalars['String'];
   name: Scalars['String'];
+  sellingPrice: Scalars['String'];
   type: Scalars['String'];
-  unitPrice: Scalars['Float'];
 };
 
 export type InvItemsAddResult = {
-  error?: Maybe<InvItemsError>;
+  error?: Maybe<MutationError>;
   query?: Maybe<InvItemsQuery>;
   record?: Maybe<InvItems>;
   recordId?: Maybe<Scalars['ID']>;
@@ -6852,7 +6860,7 @@ export type InvItemsAddResult = {
 export type InvItemsConnection = {
   edges?: Maybe<Array<Maybe<InvItemsEdge>>>;
   pageInfo?: Maybe<PageInfo>;
-  totalCount?: Maybe<Scalars['Int']>;
+  totalCount: Scalars['Int'];
 };
 
 export type InvItemsDataFilter = {
@@ -6864,8 +6872,6 @@ export type InvItemsEdge = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<InvItems>;
 };
-
-export type InvItemsError = InvItemsInvalidDataError;
 
 export type InvItemsGroup = {
   description: Scalars['String'];
@@ -6927,6 +6933,7 @@ export type InvItemsGroupQueryListArgs = {
 
 export type InvItemsInput = {
   costPrice?: InputMaybe<Scalars['String']>;
+  isVariantItem: Scalars['Boolean'];
   itemCode?: InputMaybe<Scalars['String']>;
   itemGroup?: InputMaybe<Scalars['String']>;
   itemName?: InputMaybe<Scalars['String']>;
@@ -6937,10 +6944,6 @@ export type InvItemsInput = {
   tax?: InputMaybe<Scalars['String']>;
   valuationMethod?: InputMaybe<InvItemsValuationMethod>;
   variants?: InputMaybe<Array<InputMaybe<InvItemsVariant>>>;
-};
-
-export type InvItemsInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
 };
 
 export type InvItemsLedger = {
@@ -6979,7 +6982,6 @@ export type InvItemsQueryListArgs = {
 
 export const InvItemsValuationMethod = {
   Fifo: 'FIFO',
-  Lifo: 'LIFO',
 } as const;
 
 export type InvItemsValuationMethod =
@@ -14138,6 +14140,16 @@ export type SavingsBalanceReportResult = {
   totalCrBalance?: Maybe<Scalars['String']>;
   totalDrBalance?: Maybe<Scalars['String']>;
   totalInterest?: Maybe<Scalars['String']>;
+};
+
+export type SavingsTenureUpdateInput = {
+  accountId: Scalars['ID'];
+  updatedTenure: Scalars['Int'];
+};
+
+export type SavingsTenureUpdateResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type SearchFilterData = {
@@ -22679,8 +22691,8 @@ export type GetInventoryItemsQuery = {
             id: string;
             name: string;
             type: string;
-            unitPrice: number;
-            itemQuantity: number;
+            costPrice: string;
+            itemQuantity: string;
           } | null;
         } | null> | null;
       } | null;
@@ -40080,7 +40092,7 @@ export const GetInventoryItemsDocument = `
             id
             name
             type
-            unitPrice
+            costPrice
             itemQuantity
           }
         }
