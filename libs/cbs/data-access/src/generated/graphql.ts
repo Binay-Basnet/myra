@@ -30491,6 +30491,36 @@ export type EodHistoryQuery = {
   };
 };
 
+export type EodHistoryDetailsQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter: EodDetailsFilter;
+}>;
+
+export type EodHistoryDetailsQuery = {
+  endOfDay: {
+    details?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          jobType: EodJob;
+          success: boolean;
+          accountNumber: string;
+          narration: string;
+          payload?: Record<string, string> | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type OptionTypeFragment = { label?: string | null; value?: unknown | null };
 
 export type GetDepositFilterMappingQueryVariables = Exact<{ [key: string]: never }>;
@@ -50337,6 +50367,43 @@ export const useEodHistoryQuery = <TData = EodHistoryQuery, TError = unknown>(
   useQuery<EodHistoryQuery, TError, TData>(
     variables === undefined ? ['eodHistory'] : ['eodHistory', variables],
     useAxios<EodHistoryQuery, EodHistoryQueryVariables>(EodHistoryDocument).bind(null, variables),
+    options
+  );
+export const EodHistoryDetailsDocument = `
+    query eodHistoryDetails($pagination: Pagination, $filter: EODDetailsFilter!) {
+  endOfDay {
+    details(pagination: $pagination, filter: $filter) {
+      edges {
+        node {
+          id
+          jobType
+          success
+          accountNumber
+          narration
+          payload
+        }
+        cursor
+      }
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useEodHistoryDetailsQuery = <TData = EodHistoryDetailsQuery, TError = unknown>(
+  variables: EodHistoryDetailsQueryVariables,
+  options?: UseQueryOptions<EodHistoryDetailsQuery, TError, TData>
+) =>
+  useQuery<EodHistoryDetailsQuery, TError, TData>(
+    ['eodHistoryDetails', variables],
+    useAxios<EodHistoryDetailsQuery, EodHistoryDetailsQueryVariables>(
+      EodHistoryDetailsDocument
+    ).bind(null, variables),
     options
   );
 export const GetDepositFilterMappingDocument = `

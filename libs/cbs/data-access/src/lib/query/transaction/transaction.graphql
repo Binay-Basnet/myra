@@ -571,6 +571,31 @@ query eodHistory($transactionDate: Localized) {
   }
 }
 
+query eodHistoryDetails($pagination: Pagination, $filter: EODDetailsFilter!) {
+  endOfDay {
+    details(pagination: $pagination, filter: $filter) {
+      edges {
+        node {
+          id
+          jobType
+          success
+          accountNumber
+          narration
+          payload
+        }
+        cursor
+      }
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+
 fragment OptionType on LabelValueArray {
   label
   value
