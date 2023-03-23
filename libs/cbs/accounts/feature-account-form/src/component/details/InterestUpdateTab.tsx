@@ -73,6 +73,16 @@ export const InterestUpdateTab = () => {
     [interestRateListData]
   );
 
+  const baseRate = useMemo(
+    () =>
+      Number(
+        selectedRateId
+          ? interestRateDetailData?.account?.getAccountInterestRate?.data?.rate
+          : interestRateListData?.account?.listAccountInterestRates?.data?.[0]?.rate ?? 0
+      ),
+    [interestRateListData, selectedRateId, interestRateDetailData]
+  );
+
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -147,7 +157,7 @@ export const InterestUpdateTab = () => {
         accountId: id as string,
         data: {
           ...values,
-          rate: Number(accountDetails?.interestRate) + Number(values.rate),
+          rate: baseRate + Number(values.rate),
         } as InterestRateSetupInput,
       }),
     });
@@ -180,6 +190,8 @@ export const InterestUpdateTab = () => {
   };
 
   const handleUpdateModalClose = () => {
+    methods.reset({ rate: null, effectiveDate: null, fileUploads: [], note: '' });
+
     setSelectedRateId('');
     onUpdateModalClose();
   };
@@ -218,6 +230,7 @@ export const InterestUpdateTab = () => {
           rate={
             selectedRateId ? interestRateDetailData?.account?.getAccountInterestRate?.data : null
           }
+          baseRate={baseRate}
         />
       )}
 
