@@ -22,6 +22,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Portal,
   Spacer,
   Text,
 } from '@chakra-ui/react';
@@ -82,56 +83,58 @@ export const TableListFilter = ({ data, column, comparator }: TableListFilterPro
               />
             </Box>
           </PopoverTrigger>
-          <PopoverContent w="100%" boxShadow="E2" border="none" borderRadius="br2">
-            {initialFocusRef && (
-              <TableListFilterContent
-                data={data}
-                setFilter={(newFilter) => {
-                  if (newFilter.length !== 0) {
-                    const queryString = qs.stringify(
-                      {
-                        ...parsedQuery,
-                        [column]: {
-                          value: newFilter.map((f) => f.value),
-                          compare: comparator || '=',
+          <Portal>
+            <PopoverContent w="100%" boxShadow="E2" border="none" borderRadius="br2">
+              {initialFocusRef && (
+                <TableListFilterContent
+                  data={data}
+                  setFilter={(newFilter) => {
+                    if (newFilter.length !== 0) {
+                      const queryString = qs.stringify(
+                        {
+                          ...parsedQuery,
+                          [column]: {
+                            value: newFilter.map((f) => f.value),
+                            compare: comparator || '=',
+                          },
                         },
-                      },
-                      { allowDots: true, arrayFormat: 'brackets', encode: false }
-                    );
+                        { allowDots: true, arrayFormat: 'brackets', encode: false }
+                      );
 
-                    router.push(
-                      {
-                        query: {
-                          ...router.query,
-                          filter: queryString,
+                      router.push(
+                        {
+                          query: {
+                            ...router.query,
+                            filter: queryString,
+                          },
                         },
-                      },
-                      undefined,
-                      { shallow: true }
-                    );
-                  } else {
-                    router.push(
-                      {
-                        query: {
-                          ...router.query,
-                          filter: [],
+                        undefined,
+                        { shallow: true }
+                      );
+                    } else {
+                      router.push(
+                        {
+                          query: {
+                            ...router.query,
+                            filter: [],
+                          },
                         },
-                      },
-                      undefined,
-                      { shallow: true }
-                    );
+                        undefined,
+                        { shallow: true }
+                      );
+                    }
+                  }}
+                  filterValue={
+                    data?.filter((d) =>
+                      (parsedQuery?.[column]?.value as string[])?.includes(d.value)
+                    ) || []
                   }
-                }}
-                filterValue={
-                  data?.filter((d) =>
-                    (parsedQuery?.[column]?.value as string[])?.includes(d.value)
-                  ) || []
-                }
-                onClose={onClose}
-                ref={initialFocusRef}
-              />
-            )}
-          </PopoverContent>
+                  onClose={onClose}
+                  ref={initialFocusRef}
+                />
+              )}
+            </PopoverContent>
+          </Portal>
         </>
       )}
     </Popover>

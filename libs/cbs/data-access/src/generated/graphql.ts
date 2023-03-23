@@ -3920,6 +3920,7 @@ export type DepositLoanAccountMutation = {
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
   makeActive?: Maybe<Scalars['String']>;
   updateAccountInterest: InterestSetupMutationResult;
+  updateNomineeAccount?: Maybe<NomineeAccountUpdateResult>;
 };
 
 export type DepositLoanAccountMutationAddArgs = {
@@ -3949,6 +3950,10 @@ export type DepositLoanAccountMutationMakeActiveArgs = {
 export type DepositLoanAccountMutationUpdateAccountInterestArgs = {
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
+};
+
+export type DepositLoanAccountMutationUpdateNomineeAccountArgs = {
+  data: NomineeAccountUpdateInput;
 };
 
 export type DepositLoanAccountQuery = {
@@ -12589,6 +12594,16 @@ export type Nominee = {
   middleName?: Maybe<Scalars['String']>;
   relation?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
+};
+
+export type NomineeAccountUpdateInput = {
+  accountID: Scalars['ID'];
+  updatedAccountID: Scalars['ID'];
+};
+
+export type NomineeAccountUpdateResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type NomineeInNepali = {

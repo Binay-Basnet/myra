@@ -229,7 +229,7 @@ export const TableBody = <T,>({ isLoading, data, ...props }: TableBodyProps<T>) 
       pageBreakInside: 'auto !important',
       pageBreakAfter: 'auto !important',
     }}
-    // h={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
+    h={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
     position={isLoading || !data || data?.length === 0 ? 'relative' : 'static'}
     {...props}
   />
@@ -295,9 +295,9 @@ export const TableEmptyState = <T,>({
     return (
       <Box
         position="absolute"
-        width="70vw"
         height="300px"
         as="tr"
+        w={menu ? '80%' : '100%'}
         display="flex"
         justifyContent="center"
       >
