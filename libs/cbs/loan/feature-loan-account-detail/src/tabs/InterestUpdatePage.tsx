@@ -17,13 +17,10 @@ import {
 import { CustomInterestRateSetupInput, localizedDate } from '@coop/cbs/utils';
 
 import { AccountInterestDetailModal, AccountInterestUpdateModal, TabHeader } from '../component';
-import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
 
 export const InterestUpdatePage = () => {
   const router = useRouter();
   const { id } = router.query;
-
-  const { overviewData } = useLoanAccountDetailHooks();
 
   const [selectedRateId, setSelectedRateId] = useState('');
 
@@ -68,6 +65,16 @@ export const InterestUpdatePage = () => {
   const rowData = useMemo(
     () => interestRateListData?.loanAccount?.listAccountInterestRates?.data ?? [],
     [interestRateListData]
+  );
+
+  const baseRate = useMemo(
+    () =>
+      Number(
+        selectedRateId
+          ? interestRateDetailData?.loanAccount?.getAccountInterestRate?.data?.rate
+          : interestRateListData?.loanAccount?.listAccountInterestRates?.data?.[0]?.rate ?? 0
+      ),
+    [interestRateListData, selectedRateId, interestRateDetailData]
   );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -144,7 +151,7 @@ export const InterestUpdatePage = () => {
         accountId: id as string,
         data: {
           ...values,
-          rate: Number(overviewData?.generalInformation?.interestRate) + Number(values.rate),
+          rate: baseRate + Number(values.rate),
         },
       }),
     });
@@ -170,13 +177,19 @@ export const InterestUpdatePage = () => {
         accountId: id as string,
         data: {
           ...values,
-          rate: Number(overviewData?.generalInformation?.interestRate) + Number(values.rate),
+          rate: baseRate + Number(values.rate),
         },
       }),
     });
   };
 
   const handleUpdateModalClose = () => {
+    methods.reset({
+      rate: null,
+      effectiveDate: null,
+      fileUploads: [],
+      note: '',
+    });
     setSelectedRateId('');
     onUpdateModalClose();
   };
@@ -217,6 +230,7 @@ export const InterestUpdatePage = () => {
               ? interestRateDetailData?.loanAccount?.getAccountInterestRate?.data
               : null
           }
+          baseRate={baseRate}
         />
       )}
 
