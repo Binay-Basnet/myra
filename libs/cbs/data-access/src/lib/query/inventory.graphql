@@ -16,40 +16,6 @@ query getInventoryItems {
   }
 }
 
-query getInventoryItemGroup {
-  inventory {
-    itemsGroup {
-      list {
-        edges {
-          node {
-            name
-            id
-            description
-            parentCategory
-          }
-        }
-      }
-    }
-  }
-}
-
-query getInventoryVendor {
-  inventory {
-    vendors {
-      list {
-        edges {
-          node {
-            name
-            location
-            email
-            phoneNumber
-          }
-        }
-      }
-    }
-  }
-}
-
 query getInventoryUnitOfMeasure {
   inventory {
     unitOfMeasure {
@@ -122,6 +88,40 @@ query getWarehouseList($paginate: Pagination!, $filter: WarehouseFilter) {
             name
             phoneNumber
             address
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getSuppliersList($filter: InvSupplierFilter, $pagination: Pagination) {
+  inventory {
+    suppliers {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            location {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            phoneNo
+            email
           }
           cursor
         }

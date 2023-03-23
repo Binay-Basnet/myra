@@ -4,31 +4,27 @@ import { IconButton } from '@chakra-ui/react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
-import { useTranslation } from '@coop/shared/utils';
+import { useGetItemCategoryListQuery } from '@coop/cbs/data-access';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const InventoryItemCategoryTable = () => {
   const { t } = useTranslation();
 
-  const { data, isFetching } = useGetInventoryItemsQuery();
+  const { data, isFetching } = useGetItemCategoryListQuery({ pagination: getPaginationQuery() });
 
-  const rowItems = data?.inventory.items?.list?.edges ?? [];
+  const rowItems = data?.inventory?.itemsGroup?.list?.edges ?? [];
 
   const columns = useMemo<Column<typeof rowItems[0] | any>[]>(
     () => [
       {
         header: t['catgName'],
-        accessorFn: ({ row }) => row?.node.name,
+        accessorKey: 'node.name',
       },
       {
         header: t['catgParentCategory'],
-        accessorFn: ({ row }) => row?.node.type,
+        accessorKey: 'node.description',
       },
 
-      {
-        header: t['catgDescriptional'],
-        accessorFn: ({ row }) => row?.node.unitPrice,
-      },
       {
         accessorKey: 'actions',
         cell: () => (
@@ -41,7 +37,7 @@ export const InventoryItemCategoryTable = () => {
 
   return (
     <>
-      <PageHeader heading="catgItemsCategory" />
+      <PageHeader heading="Item Category" />
 
       <Table isLoading={isFetching} data={rowItems} columns={columns} />
     </>

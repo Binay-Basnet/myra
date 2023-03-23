@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetInventoryItemGroupQuery } from '@coop/cbs/data-access';
+import { useGetWarehouseListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { useTranslation } from '@coop/shared/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 const popoverTitle = [
   {
@@ -20,22 +20,22 @@ const popoverTitle = [
 
 export const WarehouseListTable = () => {
   const { t } = useTranslation();
-  const { data, isFetching } = useGetInventoryItemGroupQuery();
+  const { data, isFetching } = useGetWarehouseListQuery({ paginate: getPaginationQuery() });
 
-  const rowItems = data?.inventory?.itemsGroup?.list?.edges ?? [];
+  const rowItems = data?.inventory?.warehouse?.listWarehouses?.edges ?? [];
 
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
         header: t['warehouseTableName'],
-        accessorFn: (row) => row?.node?.name,
+        accessorKey: 'node.name',
         meta: {
           width: '80%',
         },
       },
       {
         header: t['warehouseTableLocation'],
-        accessorFn: (row) => row?.node?.parentCategory,
+        accessorKey: 'node.address',
         meta: {
           width: '40%',
         },
@@ -43,7 +43,7 @@ export const WarehouseListTable = () => {
 
       {
         header: t['warehouseTablePhoneNumber'],
-        accessorFn: (row) => row?.node?.description,
+        accessorKey: 'node.phoneNumber',
         meta: {
           width: '40%',
         },

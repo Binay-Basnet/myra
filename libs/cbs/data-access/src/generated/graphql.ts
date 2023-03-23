@@ -3920,6 +3920,7 @@ export type DepositLoanAccountMutation = {
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
   makeActive?: Maybe<Scalars['String']>;
   updateAccountInterest: InterestSetupMutationResult;
+  updateNomineeAccount?: Maybe<NomineeAccountUpdateResult>;
 };
 
 export type DepositLoanAccountMutationAddArgs = {
@@ -3949,6 +3950,10 @@ export type DepositLoanAccountMutationMakeActiveArgs = {
 export type DepositLoanAccountMutationUpdateAccountInterestArgs = {
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
+};
+
+export type DepositLoanAccountMutationUpdateNomineeAccountArgs = {
+  data: NomineeAccountUpdateInput;
 };
 
 export type DepositLoanAccountQuery = {
@@ -6821,6 +6826,13 @@ export type InterestTaxReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export type InvAddSupplierResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<InvSuppliersQuery>;
+  record?: Maybe<InvSupplier>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type InvItems = {
   id: Scalars['ID'];
   itemCode: Scalars['String'];
@@ -6914,18 +6926,28 @@ export type InvItemsGroupQueryListArgs = {
 };
 
 export type InvItemsInput = {
+  costPrice?: InputMaybe<Scalars['String']>;
   itemCode?: InputMaybe<Scalars['String']>;
   itemGroup?: InputMaybe<Scalars['String']>;
-  itemQuantity?: InputMaybe<Scalars['Float']>;
-  name?: InputMaybe<Scalars['String']>;
+  itemName?: InputMaybe<Scalars['String']>;
+  ledgers?: InputMaybe<InvItemsLedger>;
   primaryUnit?: InputMaybe<Scalars['String']>;
+  reorderLevel?: InputMaybe<Scalars['String']>;
+  sellingPrice?: InputMaybe<Scalars['String']>;
   tax?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  unitPrice?: InputMaybe<Scalars['Float']>;
+  valuationMethod?: InputMaybe<InvItemsValuationMethod>;
+  variants?: InputMaybe<Array<InputMaybe<InvItemsVariant>>>;
 };
 
 export type InvItemsInvalidDataError = {
   error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InvItemsLedger = {
+  purchaseLedger?: InputMaybe<Scalars['String']>;
+  purchaseReturnLedger?: InputMaybe<Scalars['String']>;
+  salesLedger?: InputMaybe<Scalars['String']>;
+  salesReturnLedger?: InputMaybe<Scalars['String']>;
 };
 
 export type InvItemsMutation = {
@@ -6952,6 +6974,78 @@ export type InvItemsQueryGetNewItemCodeArgs = {
 
 export type InvItemsQueryListArgs = {
   filter?: InputMaybe<InvItemsDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export const InvItemsValuationMethod = {
+  Fifo: 'FIFO',
+  Lifo: 'LIFO',
+} as const;
+
+export type InvItemsValuationMethod =
+  typeof InvItemsValuationMethod[keyof typeof InvItemsValuationMethod];
+export type InvItemsVariant = {
+  options?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  variantList?: InputMaybe<Array<InputMaybe<ItemVariantDetail>>>;
+  variantName?: InputMaybe<Scalars['String']>;
+};
+
+export type InvSupplier = {
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  location?: Maybe<Address>;
+  name?: Maybe<Scalars['String']>;
+  phoneNo?: Maybe<Scalars['String']>;
+};
+
+export type InvSupplierConnection = {
+  edges?: Maybe<Array<Maybe<InvSuppliersEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type InvSupplierFilter = {
+  id?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type InvSupplierInput = {
+  address?: InputMaybe<KymAddressInput>;
+  applicationDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contactNo?: InputMaybe<Scalars['String']>;
+  contactPersonName?: InputMaybe<Scalars['String']>;
+  contactPersonPhoneNo?: InputMaybe<Scalars['String']>;
+  creditLimit?: InputMaybe<Scalars['Float']>;
+  creditTerms?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  legalStatusDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Scalars['String']>;
+  openingBalance?: InputMaybe<Scalars['String']>;
+  othersDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  panNo?: InputMaybe<Scalars['String']>;
+  registrationDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  supplierCode?: InputMaybe<Scalars['String']>;
+};
+
+export type InvSupplierMutation = {
+  add?: Maybe<InvAddSupplierResult>;
+};
+
+export type InvSupplierMutationAddArgs = {
+  data?: InputMaybe<InvSupplierInput>;
+};
+
+export type InvSuppliersEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<InvSupplier>;
+};
+
+export type InvSuppliersQuery = {
+  list?: Maybe<InvSupplierConnection>;
+};
+
+export type InvSuppliersQueryListArgs = {
+  filter?: InputMaybe<InvSupplierFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -7095,6 +7189,7 @@ export type InvalidDataError = {
 export type InventoryMutation = {
   items?: Maybe<InvItemsMutation>;
   itemsGroup?: Maybe<InvItemsGroupMutation>;
+  suppliers?: Maybe<InvSupplierMutation>;
   unitOfMeasure?: Maybe<InvUnitOfMeasureMutation>;
   vendors?: Maybe<InvVendorsMutation>;
   warehouse?: Maybe<WarehouseMutation>;
@@ -7103,6 +7198,7 @@ export type InventoryMutation = {
 export type InventoryQuery = {
   items?: Maybe<InvItemsQuery>;
   itemsGroup?: Maybe<InvItemsGroupQuery>;
+  suppliers?: Maybe<InvSuppliersQuery>;
   unitOfMeasure?: Maybe<InvUnitOfMeasureQuery>;
   vendors?: Maybe<InvVendorsQuery>;
   warehouse?: Maybe<WarehouseQuery>;
@@ -7233,6 +7329,13 @@ export const InvestmentType = {
 } as const;
 
 export type InvestmentType = typeof InvestmentType[keyof typeof InvestmentType];
+export type ItemVariantDetail = {
+  costPrice?: InputMaybe<Scalars['String']>;
+  itemName?: InputMaybe<Scalars['String']>;
+  sellingPrice?: InputMaybe<Scalars['String']>;
+  sku?: InputMaybe<Scalars['String']>;
+};
+
 export type JournalChartsOfAccount = {
   journalCode: Scalars['String'];
 };
@@ -12493,6 +12596,16 @@ export type Nominee = {
   title?: Maybe<Scalars['String']>;
 };
 
+export type NomineeAccountUpdateInput = {
+  accountID: Scalars['ID'];
+  updatedAccountID: Scalars['ID'];
+};
+
+export type NomineeAccountUpdateResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type NomineeInNepali = {
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
@@ -17339,6 +17452,48 @@ export type SetUnitsMutation = {
           | MutationError_ValidationError_Fragment
           | null;
       };
+    } | null;
+  };
+};
+
+export type SetWareHouseMutationVariables = Exact<{
+  data?: InputMaybe<AddWarehouseInput>;
+}>;
+
+export type SetWareHouseMutation = {
+  inventory: {
+    warehouse?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSuppliersMutationVariables = Exact<{
+  data?: InputMaybe<InvSupplierInput>;
+}>;
+
+export type SetSuppliersMutation = {
+  inventory: {
+    suppliers?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
     } | null;
   };
 };
@@ -22486,34 +22641,6 @@ export type GetInventoryItemsQuery = {
   };
 };
 
-export type GetInventoryItemGroupQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetInventoryItemGroupQuery = {
-  inventory: {
-    itemsGroup?: {
-      list?: {
-        edges?: Array<{
-          node?: { name: string; id: string; description: string; parentCategory: string } | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetInventoryVendorQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetInventoryVendorQuery = {
-  inventory: {
-    vendors?: {
-      list?: {
-        edges: Array<{
-          node: { name: string; location: string; email: string; phoneNumber: string };
-        } | null>;
-      } | null;
-    } | null;
-  };
-};
-
 export type GetInventoryUnitOfMeasureQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetInventoryUnitOfMeasureQuery = {
@@ -22591,6 +22718,40 @@ export type GetWarehouseListQuery = {
             name?: string | null;
             phoneNumber?: string | null;
             address?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSuppliersListQueryVariables = Exact<{
+  filter?: InputMaybe<InvSupplierFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSuppliersListQuery = {
+  inventory: {
+    suppliers?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            name?: string | null;
+            phoneNo?: string | null;
+            email?: string | null;
+            location?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
           } | null;
         } | null> | null;
         pageInfo?: PaginationFragment | null;
@@ -32414,6 +32575,60 @@ export const useSetUnitsMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetUnitsMutation, SetUnitsMutationVariables>(SetUnitsDocument),
     options
   );
+export const SetWareHouseDocument = `
+    mutation setWareHouse($data: AddWarehouseInput) {
+  inventory {
+    warehouse {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetWareHouseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetWareHouseMutation,
+    TError,
+    SetWareHouseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetWareHouseMutation, TError, SetWareHouseMutationVariables, TContext>(
+    ['setWareHouse'],
+    useAxios<SetWareHouseMutation, SetWareHouseMutationVariables>(SetWareHouseDocument),
+    options
+  );
+export const SetSuppliersDocument = `
+    mutation setSuppliers($data: InvSupplierInput) {
+  inventory {
+    suppliers {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSuppliersMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSuppliersMutation,
+    TError,
+    SetSuppliersMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetSuppliersMutation, TError, SetSuppliersMutationVariables, TContext>(
+    ['setSuppliers'],
+    useAxios<SetSuppliersMutation, SetSuppliersMutationVariables>(SetSuppliersDocument),
+    options
+  );
 export const SendLoanApplicationForApprovalDocument = `
     mutation sendLoanApplicationForApproval($id: ID!, $data: LoanAccountInput!) {
   loanAccount {
@@ -39724,64 +39939,6 @@ export const useGetInventoryItemsQuery = <TData = GetInventoryItemsQuery, TError
     ).bind(null, variables),
     options
   );
-export const GetInventoryItemGroupDocument = `
-    query getInventoryItemGroup {
-  inventory {
-    itemsGroup {
-      list {
-        edges {
-          node {
-            name
-            id
-            description
-            parentCategory
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetInventoryItemGroupQuery = <TData = GetInventoryItemGroupQuery, TError = unknown>(
-  variables?: GetInventoryItemGroupQueryVariables,
-  options?: UseQueryOptions<GetInventoryItemGroupQuery, TError, TData>
-) =>
-  useQuery<GetInventoryItemGroupQuery, TError, TData>(
-    variables === undefined ? ['getInventoryItemGroup'] : ['getInventoryItemGroup', variables],
-    useAxios<GetInventoryItemGroupQuery, GetInventoryItemGroupQueryVariables>(
-      GetInventoryItemGroupDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetInventoryVendorDocument = `
-    query getInventoryVendor {
-  inventory {
-    vendors {
-      list {
-        edges {
-          node {
-            name
-            location
-            email
-            phoneNumber
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetInventoryVendorQuery = <TData = GetInventoryVendorQuery, TError = unknown>(
-  variables?: GetInventoryVendorQueryVariables,
-  options?: UseQueryOptions<GetInventoryVendorQuery, TError, TData>
-) =>
-  useQuery<GetInventoryVendorQuery, TError, TData>(
-    variables === undefined ? ['getInventoryVendor'] : ['getInventoryVendor', variables],
-    useAxios<GetInventoryVendorQuery, GetInventoryVendorQueryVariables>(
-      GetInventoryVendorDocument
-    ).bind(null, variables),
-    options
-  );
 export const GetInventoryUnitOfMeasureDocument = `
     query getInventoryUnitOfMeasure {
   inventory {
@@ -39915,6 +40072,53 @@ export const useGetWarehouseListQuery = <TData = GetWarehouseListQuery, TError =
   useQuery<GetWarehouseListQuery, TError, TData>(
     ['getWarehouseList', variables],
     useAxios<GetWarehouseListQuery, GetWarehouseListQueryVariables>(GetWarehouseListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetSuppliersListDocument = `
+    query getSuppliersList($filter: InvSupplierFilter, $pagination: Pagination) {
+  inventory {
+    suppliers {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            location {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            phoneNo
+            email
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSuppliersListQuery = <TData = GetSuppliersListQuery, TError = unknown>(
+  variables?: GetSuppliersListQueryVariables,
+  options?: UseQueryOptions<GetSuppliersListQuery, TError, TData>
+) =>
+  useQuery<GetSuppliersListQuery, TError, TData>(
+    variables === undefined ? ['getSuppliersList'] : ['getSuppliersList', variables],
+    useAxios<GetSuppliersListQuery, GetSuppliersListQueryVariables>(GetSuppliersListDocument).bind(
       null,
       variables
     ),
