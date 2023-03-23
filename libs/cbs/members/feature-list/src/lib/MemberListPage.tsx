@@ -260,7 +260,7 @@ export const MemberListPage = () => {
       />
 
       <Table
-        data={[]}
+        data={rowData}
         columns={columns}
         getRowId={(row) => String(row?.node?.id)}
         rowOnClick={(row) => {
