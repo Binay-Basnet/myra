@@ -9,7 +9,6 @@ import { asyncToast, Button, Column, DetailsCard, Icon, Table } from '@myra-ui';
 
 import {
   InterestRateSetupInput,
-  useAccountDetails,
   useEditAccountInterestMutation,
   useGetAccountInterestRateDetailQuery,
   useGetEndOfDayDateDataQuery,
@@ -25,8 +24,6 @@ import { TabHeader } from './TabHeader';
 export const InterestUpdateTab = () => {
   const router = useRouter();
   const { id } = router.query;
-
-  const { accountDetails } = useAccountDetails();
 
   const [selectedRateId, setSelectedRateId] = useState('');
 
@@ -183,7 +180,7 @@ export const InterestUpdateTab = () => {
         accountId: id as string,
         data: {
           ...values,
-          rate: Number(accountDetails?.interestRate) + Number(values.rate),
+          rate: baseRate + Number(values.rate),
         } as InterestRateSetupInput,
       }),
     });
