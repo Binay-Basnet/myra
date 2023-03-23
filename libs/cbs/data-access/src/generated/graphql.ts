@@ -16915,6 +16915,25 @@ export type SetMakeDormantAccountActiveMutationVariables = Exact<{
 
 export type SetMakeDormantAccountActiveMutation = { account: { makeActive?: string | null } };
 
+export type SetupdateSavingsNomineeAccountMutationVariables = Exact<{
+  NomineeAccountUpdateInput: NomineeAccountUpdateInput;
+}>;
+
+export type SetupdateSavingsNomineeAccountMutation = {
+  account: {
+    updateNomineeAccount?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type UpdateAccountInterestMutationVariables = Exact<{
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
@@ -17681,6 +17700,34 @@ export type LoanAccountGuaranteeActionsMutation = {
           | MutationError_ServerError_Fragment
           | MutationError_ValidationError_Fragment
           | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetLoanCloseMutationVariables = Exact<{
+  data?: InputMaybe<LoanRepaymentInput>;
+}>;
+
+export type SetLoanCloseMutation = {
+  loanAccount: {
+    close?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+      record?: {
+        accountID?: string | null;
+        closedDate?: Record<'local' | 'en' | 'np', string> | null;
+        accountName?: string | null;
+        totalPrincipal?: string | null;
+        totalInterest?: string | null;
+        totalFine?: string | null;
+        paymentMode?: AccountClosePaymentMode | null;
+        totalAmount?: string | null;
       } | null;
     } | null;
   };
@@ -23669,6 +23716,23 @@ export type GetLoanFilterMappingQuery = {
   loanAccount: {
     filterMapping?: {
       productName: Array<{ label?: string | null; value?: unknown | null }>;
+    } | null;
+  };
+};
+
+export type GetLoanCloseDataQueryVariables = Exact<{
+  loanAccountId: Scalars['ID'];
+}>;
+
+export type GetLoanCloseDataQuery = {
+  loanAccount: {
+    remainingPayments?: {
+      data?: {
+        totalInterest?: string | null;
+        totalPayableAmount?: string | null;
+        totalPenalty?: string | null;
+        totalPrincipal?: string | null;
+      } | null;
     } | null;
   };
 };
@@ -30454,6 +30518,36 @@ export type EodHistoryQuery = {
   };
 };
 
+export type EodHistoryDetailsQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter: EodDetailsFilter;
+}>;
+
+export type EodHistoryDetailsQuery = {
+  endOfDay: {
+    details?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          jobType: EodJob;
+          success: boolean;
+          accountNumber: string;
+          narration: string;
+          payload?: Record<string, string> | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type OptionTypeFragment = { label?: string | null; value?: unknown | null };
 
 export type GetDepositFilterMappingQueryVariables = Exact<{ [key: string]: never }>;
@@ -31638,6 +31732,39 @@ export const useSetMakeDormantAccountActiveMutation = <TError = unknown, TContex
     useAxios<SetMakeDormantAccountActiveMutation, SetMakeDormantAccountActiveMutationVariables>(
       SetMakeDormantAccountActiveDocument
     ),
+    options
+  );
+export const SetupdateSavingsNomineeAccountDocument = `
+    mutation setupdateSavingsNomineeAccount($NomineeAccountUpdateInput: NomineeAccountUpdateInput!) {
+  account {
+    updateNomineeAccount(data: $NomineeAccountUpdateInput) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetupdateSavingsNomineeAccountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetupdateSavingsNomineeAccountMutation,
+    TError,
+    SetupdateSavingsNomineeAccountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetupdateSavingsNomineeAccountMutation,
+    TError,
+    SetupdateSavingsNomineeAccountMutationVariables,
+    TContext
+  >(
+    ['setupdateSavingsNomineeAccount'],
+    useAxios<
+      SetupdateSavingsNomineeAccountMutation,
+      SetupdateSavingsNomineeAccountMutationVariables
+    >(SetupdateSavingsNomineeAccountDocument),
     options
   );
 export const UpdateAccountInterestDocument = `
@@ -32888,6 +33015,40 @@ export const useLoanAccountGuaranteeActionsMutation = <TError = unknown, TContex
     useAxios<LoanAccountGuaranteeActionsMutation, LoanAccountGuaranteeActionsMutationVariables>(
       LoanAccountGuaranteeActionsDocument
     ),
+    options
+  );
+export const SetLoanCloseDocument = `
+    mutation setLoanClose($data: LoanRepaymentInput) {
+  loanAccount {
+    close(data: $data) {
+      error {
+        ...MutationError
+      }
+      record {
+        accountID
+        closedDate
+        accountName
+        totalPrincipal
+        totalInterest
+        totalFine
+        paymentMode
+        totalAmount
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetLoanCloseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetLoanCloseMutation,
+    TError,
+    SetLoanCloseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetLoanCloseMutation, TError, SetLoanCloseMutationVariables, TContext>(
+    ['setLoanClose'],
+    useAxios<SetLoanCloseMutation, SetLoanCloseMutationVariables>(SetLoanCloseDocument),
     options
   );
 export const UpdateLoanAccountInterestDocument = `
@@ -41241,6 +41402,32 @@ export const useGetLoanFilterMappingQuery = <TData = GetLoanFilterMappingQuery, 
     useAxios<GetLoanFilterMappingQuery, GetLoanFilterMappingQueryVariables>(
       GetLoanFilterMappingDocument
     ).bind(null, variables),
+    options
+  );
+export const GetLoanCloseDataDocument = `
+    query getLoanCloseData($loanAccountId: ID!) {
+  loanAccount {
+    remainingPayments(loanAccountId: $loanAccountId) {
+      data {
+        totalInterest
+        totalPayableAmount
+        totalPenalty
+        totalPrincipal
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanCloseDataQuery = <TData = GetLoanCloseDataQuery, TError = unknown>(
+  variables: GetLoanCloseDataQueryVariables,
+  options?: UseQueryOptions<GetLoanCloseDataQuery, TError, TData>
+) =>
+  useQuery<GetLoanCloseDataQuery, TError, TData>(
+    ['getLoanCloseData', variables],
+    useAxios<GetLoanCloseDataQuery, GetLoanCloseDataQueryVariables>(GetLoanCloseDataDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const ListLoanAccountInterestRateListDocument = `
@@ -50223,6 +50410,43 @@ export const useEodHistoryQuery = <TData = EodHistoryQuery, TError = unknown>(
   useQuery<EodHistoryQuery, TError, TData>(
     variables === undefined ? ['eodHistory'] : ['eodHistory', variables],
     useAxios<EodHistoryQuery, EodHistoryQueryVariables>(EodHistoryDocument).bind(null, variables),
+    options
+  );
+export const EodHistoryDetailsDocument = `
+    query eodHistoryDetails($pagination: Pagination, $filter: EODDetailsFilter!) {
+  endOfDay {
+    details(pagination: $pagination, filter: $filter) {
+      edges {
+        node {
+          id
+          jobType
+          success
+          accountNumber
+          narration
+          payload
+        }
+        cursor
+      }
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useEodHistoryDetailsQuery = <TData = EodHistoryDetailsQuery, TError = unknown>(
+  variables: EodHistoryDetailsQueryVariables,
+  options?: UseQueryOptions<EodHistoryDetailsQuery, TError, TData>
+) =>
+  useQuery<EodHistoryDetailsQuery, TError, TData>(
+    ['eodHistoryDetails', variables],
+    useAxios<EodHistoryDetailsQuery, EodHistoryDetailsQueryVariables>(
+      EodHistoryDetailsDocument
+    ).bind(null, variables),
     options
   );
 export const GetDepositFilterMappingDocument = `

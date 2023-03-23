@@ -7,6 +7,7 @@ export * from './AssociatedGuaranteeAccounts';
 export * from './AvailableWithdrawSlipList';
 export * from './BalanceChart';
 export * from './Bio';
+export * from './ChangeNomineeModal';
 export * from './Cheque';
 export * from './CreateWithdrawSlipModal';
 export * from './Documents';

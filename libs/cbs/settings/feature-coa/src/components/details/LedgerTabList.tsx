@@ -40,8 +40,12 @@ export const LedgerTabList = () => {
         accessorKey: 'index',
       },
       {
+        id: 'date',
         header: 'Date',
+        accessorFn: (row) => row?.node?.date,
         cell: (props) => localizedDate(props?.row?.original?.node?.date),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Ledger Name',

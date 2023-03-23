@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Spinner } from '@chakra-ui/react';
 import format from 'date-fns/format';
 import NepaliDate from 'nepali-date-converter';
 
-import { Box, Chips, Text } from '@myra-ui';
+import { Box, Button, Chips, Icon, Text } from '@myra-ui';
 
 import {
   DateType,
@@ -13,10 +15,13 @@ import {
   useGetEndOfDayDateDataQuery,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/settings/ui-containers';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormDatePicker } from '@coop/shared/form';
 
 export const EodList = () => {
   const dateType = store.getState().auth?.preference?.date || DateType.Ad;
+
+  const router = useRouter();
 
   const [stopFetch, setStopFetch] = useState(false);
 
@@ -101,12 +106,15 @@ export const EodList = () => {
                   />
                 ) : null}
               </Box>
-              {/* <Button
+              <Button
                 variant="outline"
                 rightIcon={<Icon as={ChevronRightIcon} color="primary.500" />}
+                onClick={() =>
+                  router.push(`${ROUTES.SETTINGS_EOD_HISTORY_DETAILS}?id=${eod?.eodDate}`)
+                }
               >
                 Full Details
-              </Button> */}
+              </Button>
             </Box>
           </Box>
         ))}

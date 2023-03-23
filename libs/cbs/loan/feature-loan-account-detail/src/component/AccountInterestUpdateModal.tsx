@@ -13,8 +13,6 @@ import {
 import { CustomInterestRateSetupInput } from '@coop/cbs/utils';
 import { FormDatePicker, FormFileInput, FormInput, FormTextArea } from '@coop/shared/form';
 
-import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
-
 interface IAccountInterestUpdateModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -22,6 +20,7 @@ interface IAccountInterestUpdateModalProps {
   onEdit?: () => void;
   methods: UseFormReturn<CustomInterestRateSetupInput>;
   rate?: InterestRateSetup | null | undefined;
+  baseRate: number;
 }
 
 export const AccountInterestUpdateModal = ({
@@ -31,9 +30,8 @@ export const AccountInterestUpdateModal = ({
   onEdit,
   methods,
   rate,
+  baseRate,
 }: IAccountInterestUpdateModalProps) => {
-  const { overviewData } = useLoanAccountDetailHooks();
-
   const dateType = store.getState().auth?.preference?.date || DateType.Ad;
 
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
@@ -45,7 +43,7 @@ export const AccountInterestUpdateModal = ({
   useEffect(() => {
     if (rate) {
       methods.reset({
-        rate: Number(rate.rate) - Number(overviewData?.generalInformation?.interestRate),
+        rate: null,
         effectiveDate: rate.effectiveDate,
         fileUploads: rate.fileUploads as unknown as string[],
         note: rate.note,
@@ -101,9 +99,7 @@ export const AccountInterestUpdateModal = ({
             <GridItem colSpan={2}>
               <Alert
                 status="info"
-                title={`New Account Premium is ${
-                  Number(rateDiff) + Number(overviewData?.generalInformation?.interestRate ?? 0)
-                } %`}
+                title={`New Account Premium is ${Number(rateDiff) + baseRate} %`}
                 hideCloseIcon
               />
             </GridItem>

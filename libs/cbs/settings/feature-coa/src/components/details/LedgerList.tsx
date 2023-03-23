@@ -31,9 +31,12 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
   const columns = useMemo<Column<typeof ledgersList[0]>[]>(
     () => [
       {
+        id: 'date',
         header: 'Date',
         accessorKey: 'date',
         cell: (props) => localizedDate(props?.row?.original?.date),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Ledger Name',
@@ -48,6 +51,7 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
         header: 'Service Center',
         accessorKey: 'serviceCenter',
         enableColumnFilter: true,
+        filterFn: 'dateTime',
         meta: {
           filterMaps: {
             list: filterMapping?.members?.filterMapping?.serviceCenter,
