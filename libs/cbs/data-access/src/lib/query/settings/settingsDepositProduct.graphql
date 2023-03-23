@@ -272,6 +272,8 @@ query getSavingsProductDetail($id: ID!) {
               ceoAuthority
               boardAuthority
               additionalRate
+              changeMin
+              changeMax
             }
             ladderRate
             ladderRateData {

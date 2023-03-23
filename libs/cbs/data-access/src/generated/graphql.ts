@@ -3920,6 +3920,8 @@ export type DepositLoanAccountMutation = {
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
   makeActive?: Maybe<Scalars['String']>;
   updateAccountInterest: InterestSetupMutationResult;
+  updateNomineeAccount?: Maybe<NomineeAccountUpdateResult>;
+  updateTenure?: Maybe<SavingsTenureUpdateResult>;
 };
 
 export type DepositLoanAccountMutationAddArgs = {
@@ -3949,6 +3951,14 @@ export type DepositLoanAccountMutationMakeActiveArgs = {
 export type DepositLoanAccountMutationUpdateAccountInterestArgs = {
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
+};
+
+export type DepositLoanAccountMutationUpdateNomineeAccountArgs = {
+  data: NomineeAccountUpdateInput;
+};
+
+export type DepositLoanAccountMutationUpdateTenureArgs = {
+  data: SavingsTenureUpdateInput;
 };
 
 export type DepositLoanAccountQuery = {
@@ -6760,6 +6770,8 @@ export type InterestRateSetupInput = {
 export type InterestRateType = {
   boardAuthority?: Maybe<Scalars['Float']>;
   ceoAuthority?: Maybe<Scalars['Float']>;
+  changeMax?: Maybe<Scalars['Float']>;
+  changeMin?: Maybe<Scalars['Float']>;
   defaultRate: Scalars['Float'];
   maxRate?: Maybe<Scalars['Float']>;
   minRate?: Maybe<Scalars['Float']>;
@@ -12591,6 +12603,16 @@ export type Nominee = {
   title?: Maybe<Scalars['String']>;
 };
 
+export type NomineeAccountUpdateInput = {
+  accountID: Scalars['ID'];
+  updatedAccountID: Scalars['ID'];
+};
+
+export type NomineeAccountUpdateResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type NomineeInNepali = {
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
@@ -14123,6 +14145,16 @@ export type SavingsBalanceReportResult = {
   totalCrBalance?: Maybe<Scalars['String']>;
   totalDrBalance?: Maybe<Scalars['String']>;
   totalInterest?: Maybe<Scalars['String']>;
+};
+
+export type SavingsTenureUpdateInput = {
+  accountId: Scalars['ID'];
+  updatedTenure: Scalars['Int'];
+};
+
+export type SavingsTenureUpdateResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type SearchFilterData = {
@@ -28197,6 +28229,8 @@ export type GetLoanProductDetailQuery = {
               defaultRate: number;
               ceoAuthority?: number | null;
               boardAuthority?: number | null;
+              changeMin?: number | null;
+              changeMax?: number | null;
             } | null;
             loanProcessingCharge?: Array<{
               serviceName?: string | null;
@@ -29035,6 +29069,8 @@ export type GetSavingsProductDetailQuery = {
               ceoAuthority?: number | null;
               boardAuthority?: number | null;
               additionalRate?: number | null;
+              changeMin?: number | null;
+              changeMax?: number | null;
             } | null;
             ladderRateData?: Array<{ type: string; amount: any; rate: number } | null> | null;
             serviceCharge?: Array<{
@@ -47143,6 +47179,8 @@ export const GetLoanProductDetailDocument = `
               defaultRate
               ceoAuthority
               boardAuthority
+              changeMin
+              changeMax
             }
             updateInterest
             waiveInterest
@@ -48287,6 +48325,8 @@ export const GetSavingsProductDetailDocument = `
               ceoAuthority
               boardAuthority
               additionalRate
+              changeMin
+              changeMax
             }
             ladderRate
             ladderRateData {
