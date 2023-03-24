@@ -28,14 +28,14 @@ export const WarehouseListTable = () => {
     () => [
       {
         header: t['warehouseTableName'],
-        accessorKey: 'node.name',
+        accessorFn: (row) => row?.node?.name,
         meta: {
           width: '80%',
         },
       },
       {
         header: t['warehouseTableLocation'],
-        accessorKey: 'node.address',
+        accessorFn: (row) => row?.node?.address,
         meta: {
           width: '40%',
         },
@@ -43,7 +43,7 @@ export const WarehouseListTable = () => {
 
       {
         header: t['warehouseTablePhoneNumber'],
-        accessorKey: 'node.phoneNumber',
+        accessorFn: (row) => row?.node?.phoneNumber,
         meta: {
           width: '40%',
         },

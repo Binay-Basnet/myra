@@ -237,6 +237,8 @@ query getLoanProductDetail($id: ID!) {
               defaultRate
               ceoAuthority
               boardAuthority
+              changeMin
+              changeMax
             }
             updateInterest
             waiveInterest

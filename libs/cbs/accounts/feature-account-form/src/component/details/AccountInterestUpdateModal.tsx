@@ -1,14 +1,17 @@
 import { useEffect, useMemo } from 'react';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
+import { ListItem, UnorderedList } from '@chakra-ui/react';
 import NepaliDate from 'nepali-date-converter';
 
-import { Alert, Grid, GridItem, Modal, Text } from '@myra-ui';
+import { Alert, Box, Grid, GridItem, Modal, Text } from '@myra-ui';
 
 import {
   DateType,
   InterestRateSetup,
   store,
+  useAccountDetails,
   useGetEndOfDayDateDataQuery,
+  useGetSavingsProductDetailQuery,
 } from '@coop/cbs/data-access';
 import { CustomInterestRateSetupInput } from '@coop/cbs/utils';
 import { FormDatePicker, FormFileInput, FormInput, FormTextArea } from '@coop/shared/form';
@@ -40,6 +43,31 @@ export const AccountInterestUpdateModal = ({
 
   const rateDiff = methods.watch('rate');
 
+  const { accountDetails } = useAccountDetails();
+
+  const { data: savingProductDetailData } = useGetSavingsProductDetailQuery(
+    { id: accountDetails?.productId as string },
+    { enabled: !!accountDetails?.productId }
+  );
+
+  const { minRate, maxRate, changeMin, changeMax } = useMemo(
+    () => ({
+      minRate:
+        savingProductDetailData?.settings?.general?.depositProduct?.depositProductDetail?.data
+          ?.interest?.minRate,
+      maxRate:
+        savingProductDetailData?.settings?.general?.depositProduct?.depositProductDetail?.data
+          ?.interest?.maxRate,
+      changeMin:
+        savingProductDetailData?.settings?.general?.depositProduct?.depositProductDetail?.data
+          ?.interest?.changeMin,
+      changeMax:
+        savingProductDetailData?.settings?.general?.depositProduct?.depositProductDetail?.data
+          ?.interest?.changeMax,
+    }),
+    [savingProductDetailData]
+  );
+
   useEffect(() => {
     if (rate) {
       methods.reset({
@@ -66,6 +94,32 @@ export const AccountInterestUpdateModal = ({
     >
       <FormProvider {...methods}>
         <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
+          <GridItem colSpan={2}>
+            <Alert status="info" title="Current Interest Details" hideCloseIcon>
+              <UnorderedList>
+                <ListItem>
+                  <Box display="flex" gap="s4">
+                    <Text fontSize="s3" fontWeight={400} color="gray.700">
+                      Account Premium Rate:
+                    </Text>
+                    <Text fontSize="s3" fontWeight={500} color="gray.700">
+                      {minRate} % - {maxRate} %
+                    </Text>
+                  </Box>
+                </ListItem>
+                <ListItem>
+                  <Box display="flex" gap="s4">
+                    <Text fontSize="s3" fontWeight={400} color="gray.700">
+                      Allowable Update Rate:
+                    </Text>
+                    <Text fontSize="s3" fontWeight={500} color="gray.700">
+                      {changeMin} % - {changeMax} %
+                    </Text>
+                  </Box>
+                </ListItem>
+              </UnorderedList>
+            </Alert>
+          </GridItem>
           <FormInput
             name="rate"
             type="number"

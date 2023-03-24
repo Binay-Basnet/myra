@@ -17,39 +17,39 @@ export const InventoryRegisterTable = () => {
     () => [
       {
         header: t['inRegItemID'],
-        accessorFn: (row) => row?.node.id,
+        accessorFn: (row) => row?.node?.id,
         maxWidth: 4,
       },
       {
         header: t['inRegName'],
-        accessorFn: (row) => row?.node.name,
+        accessorFn: (row) => row?.node?.name,
         width: '80%',
       },
       {
         header: t['inRegType'],
-        accessorFn: (row) => row?.node.type,
+        accessorFn: (row) => row?.node?.type,
         meta: {
           width: '40%',
         },
       },
-      {
-        header: t['inRegUnitPrice'],
-        accessorFn: (row) => row?.node.unitPrice,
-        cell: (props) => <span>{Number(props.getValue()).toFixed(2)}</span>,
-      },
-      {
-        id: 'total-cost',
-        header: t['inRegTotalCost'],
-        accessorFn: (row) => row?.node.unitPrice,
-        cell: ({ row, getValue }) => (
-          <span>
-            {Number((getValue() as number) * (row?.original?.node?.itemQuantity || 0)).toFixed(2)}
-          </span>
-        ),
-      },
+      // {
+      //   header: t['inRegUnitPrice'],
+      //   accessorFn: (row) => row?.node.unitPrice,
+      //   cell: (props) => <span>{Number(props.getValue()).toFixed(2)}</span>,
+      // },
+      // {
+      //   id: 'total-cost',
+      //   header: t['inRegTotalCost'],
+      //   accessorFn: (row) => row?.node.unitPrice,
+      //   cell: ({ row, getValue }) => (
+      //     <span>
+      //       {Number((getValue() as number) * (row?.original?.node?.itemQuantity || 0)).toFixed(2)}
+      //     </span>
+      //   ),
+      // },
       {
         header: t['inRegItemQuantity'],
-        accessorFn: (row) => row?.node.itemQuantity,
+        accessorFn: (row) => row?.node?.itemQuantity,
         cell: (props) => <span>{Number(props.getValue()).toFixed(2)}</span>,
       },
       {
