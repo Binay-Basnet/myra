@@ -8,6 +8,7 @@ import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access
 
 import {
   AddNomineeModal,
+  AddTenureModal,
   InterestUpdateTab,
   LedgerListTab,
   Overview,
@@ -19,12 +20,16 @@ interface IAccountDetailsProps {
   pathbarOptions?: { label: string; handler: () => void }[];
   isNomineeAccountModalOpen?: boolean;
   handleNomineeModalClose?: () => void;
+  isTenureModalOpen?: boolean;
+  handleTenureModalClose?: () => void;
 }
 
 export const AccountDetails = ({
   pathbarOptions,
   handleNomineeModalClose,
   isNomineeAccountModalOpen,
+  handleTenureModalClose,
+  isTenureModalOpen,
 }: IAccountDetailsProps) => {
   const router = useRouter();
 
@@ -102,6 +107,10 @@ export const AccountDetails = ({
       <AddNomineeModal
         isOpen={isNomineeAccountModalOpen as boolean}
         onClose={handleNomineeModalClose as () => void}
+      />
+      <AddTenureModal
+        isOpen={isTenureModalOpen as boolean}
+        onClose={handleTenureModalClose as () => void}
       />
     </>
   );

@@ -38,3 +38,14 @@ mutation setupdateSavingsNomineeAccount($NomineeAccountUpdateInput: NomineeAccou
     }
   }
 }
+
+mutation setupdateSavingTenure($SavingsTenureUpdateInput: SavingsTenureUpdateInput!) {
+  account {
+    updateTenure(data: $SavingsTenureUpdateInput) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

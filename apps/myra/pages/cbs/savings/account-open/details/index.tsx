@@ -7,16 +7,24 @@ import { AccountPagesLayout } from '@coop/myra/components';
 
 const AccountListPage = () => {
   const [isAddNomineeAccountModalOpen, setIsAddNomineeAccountModalOpen] = useState(false);
+  const [isAddTenureModalOpen, setIsAddTenureModalOpen] = useState(false);
+
   const handleNomineeAccountModalClose = () => {
     setIsAddNomineeAccountModalOpen(false);
+  };
+  const handleAddTenureModalClose = () => {
+    setIsAddTenureModalOpen(false);
   };
 
   return (
     <AccountDetails
       isNomineeAccountModalOpen={isAddNomineeAccountModalOpen}
       handleNomineeModalClose={handleNomineeAccountModalClose}
+      handleTenureModalClose={handleAddTenureModalClose}
+      isTenureModalOpen={isAddTenureModalOpen}
       pathbarOptions={[
-        { label: 'Add Nominee', handler: () => setIsAddNomineeAccountModalOpen(true) },
+        { label: 'Update Nominee', handler: () => setIsAddNomineeAccountModalOpen(true) },
+        { label: 'Update Tenure', handler: () => setIsAddTenureModalOpen(true) },
       ]}
     />
   );
