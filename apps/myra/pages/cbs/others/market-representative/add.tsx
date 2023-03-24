@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 
-import { Box, MainLayout, WIPState } from '@myra-ui';
+import { Box, MainLayout, Scrollable, WIPState } from '@myra-ui';
 
 const FundManagementAddPage = () => (
-  <Box display="flex" justifyContent="center" alignItems="center" pt="s60">
+  <Box display="flex" justifyContent="center" alignItems="center" pt="60px">
     <WIPState />
   </Box>
 );
@@ -11,5 +11,9 @@ const FundManagementAddPage = () => (
 export default FundManagementAddPage;
 
 FundManagementAddPage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };

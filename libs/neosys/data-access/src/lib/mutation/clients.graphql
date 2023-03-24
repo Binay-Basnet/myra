@@ -69,3 +69,21 @@ mutation setUpEnvironmentDatabase($environmentId: ID!, $clientId: ID!) {
     }
   }
 }
+
+mutation updateVersion($environmentId: String!, $version: String!) {
+  neosys {
+    client {
+      environment {
+        updateVersion(environmentId: $environmentId, version: $version) {
+          id
+          environmentName
+          environmentSlug
+          otpToken
+          description
+          isForProduction
+          version
+        }
+      }
+    }
+  }
+}

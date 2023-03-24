@@ -131,12 +131,14 @@ export type ClientEnvironment = {
   id: Scalars['ID'];
   isForProduction?: Maybe<Scalars['Boolean']>;
   otpToken?: Maybe<Scalars['String']>;
+  version?: Maybe<Scalars['String']>;
 };
 
 export type ClientEnvironmentMutation = {
   createDB?: Maybe<DbCreateResult>;
   delete: DeleteClientEnvironmentResult;
   new: NewClientEnvironmentResult;
+  updateVersion?: Maybe<ClientEnvironment>;
 };
 
 export type ClientEnvironmentMutationCreateDbArgs = {
@@ -151,6 +153,11 @@ export type ClientEnvironmentMutationDeleteArgs = {
 export type ClientEnvironmentMutationNewArgs = {
   clientId: Scalars['ID'];
   data: NewClientEnvironmentInput;
+};
+
+export type ClientEnvironmentMutationUpdateVersionArgs = {
+  environmentId: Scalars['String'];
+  version: Scalars['String'];
 };
 
 export const ComparatorType = {
@@ -974,6 +981,29 @@ export type SetUpEnvironmentDatabaseMutation = {
   };
 };
 
+export type UpdateVersionMutationVariables = Exact<{
+  environmentId: Scalars['String'];
+  version: Scalars['String'];
+}>;
+
+export type UpdateVersionMutation = {
+  neosys: {
+    client?: {
+      environment?: {
+        updateVersion?: {
+          id: string;
+          environmentName: string;
+          environmentSlug: string;
+          otpToken?: string | null;
+          description?: string | null;
+          isForProduction?: boolean | null;
+          version?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetUserMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data?: InputMaybe<NeosysUserInput>;
@@ -1085,6 +1115,7 @@ export type GetClientDetailsQuery = {
           otpToken?: string | null;
           description?: string | null;
           isForProduction?: boolean | null;
+          version?: string | null;
         } | null> | null;
       } | null;
     } | null;
@@ -1507,6 +1538,38 @@ export const useSetUpEnvironmentDatabaseMutation = <TError = unknown, TContext =
     ),
     options
   );
+export const UpdateVersionDocument = `
+    mutation updateVersion($environmentId: String!, $version: String!) {
+  neosys {
+    client {
+      environment {
+        updateVersion(environmentId: $environmentId, version: $version) {
+          id
+          environmentName
+          environmentSlug
+          otpToken
+          description
+          isForProduction
+          version
+        }
+      }
+    }
+  }
+}
+    `;
+export const useUpdateVersionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateVersionMutation,
+    TError,
+    UpdateVersionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpdateVersionMutation, TError, UpdateVersionMutationVariables, TContext>(
+    ['updateVersion'],
+    useAxios<UpdateVersionMutation, UpdateVersionMutationVariables>(UpdateVersionDocument),
+    options
+  );
 export const SetUserDocument = `
     mutation setUser($id: ID, $data: NeosysUserInput) {
   neosys {
@@ -1697,6 +1760,7 @@ export const GetClientDetailsDocument = `
           otpToken
           description
           isForProduction
+          version
         }
       }
     }

@@ -37,7 +37,7 @@ export const ProductDetailPathBar = ({
   return (
     <Box position="sticky" top="0" zIndex={10}>
       <Box
-        h="50px"
+        h="3.125rem"
         bg="white"
         zIndex="10"
         w="100%"

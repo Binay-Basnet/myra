@@ -79,7 +79,7 @@ export const AccorrdianAddMember = (props: AccordianProps) => {
       <Box
         display="flex"
         justifyContent="space-between"
-        minH="50px"
+        minH="3.125rem"
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenPersonal(!isOpenPersonal)}
@@ -126,7 +126,7 @@ export const AccorrdianAddMember = (props: AccordianProps) => {
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenProfessional(!isOpenProfessional)}
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
           {t['kymAccInd2ProfessionalDetails']}
@@ -161,7 +161,7 @@ export const AccorrdianAddMember = (props: AccordianProps) => {
         alignItems="center"
         onClick={() => setIsOpenCoopMembership(!isOpenCoopMemberShip)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
           {t['kymAccInd3COOPMembership']}
@@ -196,7 +196,7 @@ export const AccorrdianAddMember = (props: AccordianProps) => {
         alignItems="center"
         onClick={() => setIsOpenDeclaration(!isOpenDeclaration)}
         cursor="pointer"
-        minH="50px"
+        minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
           {t['kymAccInd4Declaration']}

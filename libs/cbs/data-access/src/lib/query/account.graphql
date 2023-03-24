@@ -688,10 +688,40 @@ query listAssociatedGuaranteeAccounts($accountId: ID!) {
 query getSavingFilterMapping {
   account {
     filterMapping {
-      
       productID {
         label
         value
+      }
+    }
+  }
+}
+
+query listAccountInterestRateList($accountId: ID!) {
+  account {
+    listAccountInterestRates(accountId: $accountId) {
+      data {
+        id
+        rate
+        createdAt
+        effectiveDate
+      }
+    }
+  }
+}
+
+query getAccountInterestRateDetail($id: ID!, $accountId: String!) {
+  account {
+    getAccountInterestRate(id: $id, accountID: $accountId) {
+      data {
+        id
+        rate
+        createdAt
+        effectiveDate
+        fileUploads {
+          identifier
+          url
+        }
+        note
       }
     }
   }

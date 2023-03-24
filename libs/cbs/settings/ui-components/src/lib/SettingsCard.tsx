@@ -18,7 +18,7 @@ export const SettingsCard = ({ title, subtitle, children }: SettingsCardProps) =
     borderColor="border.layout"
     borderRadius="br2"
   >
-    <Box display="flex" alignItems="center" px="s12" height="s60">
+    <Box display="flex" alignItems="center" px="s12" height="60px">
       <Box display="flex" flexDir="column" gap="s4">
         <Text fontSize="r1" color="gray.800" fontWeight="600" lineHeight="16.25px">
           {title}

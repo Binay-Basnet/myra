@@ -137,6 +137,7 @@ export const DatePicker = ({
                       color="gray.400"
                       onClick={() => {
                         setDateState(null);
+                        onChange?.({ date: undefined, ad: undefined, bs: undefined });
                       }}
                       as={IoIosCloseCircleOutline}
                       w="s20"

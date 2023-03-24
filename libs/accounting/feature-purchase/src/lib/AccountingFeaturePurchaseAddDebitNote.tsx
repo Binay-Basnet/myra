@@ -47,7 +47,7 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
     <>
       <Container minW="container.lg" height="fit-content" pb="60px">
         <Box
-          height="50px"
+          height="3.125rem"
           display="flex"
           justifyContent="space-between"
           alignItems="center"

@@ -134,13 +134,13 @@ interface ITabMenuProps {
 
 export const TabMenu = ({ tabs = cbsTabs, routeIndex = 2, module }: ITabMenuProps) => (
   <Box
-    height="50px"
+    height="3.125rem"
     w="100%"
     zIndex={20}
     px="s16"
     pt="s4"
-    pb="5px"
-    gap="32px"
+    pb="s6"
+    gap="s32"
     background="secondary.700"
     alignItems="center"
     display="flex"

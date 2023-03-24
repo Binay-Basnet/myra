@@ -30,7 +30,7 @@ export const TransactionPageHeader = ({
     alignItems="center"
     px="s16"
     py="s8"
-    height="50px"
+    height="3.125rem"
     gap="s48"
   >
     <Text fontSize="r2" fontWeight="600" color="gray.800">

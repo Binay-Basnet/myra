@@ -4,7 +4,7 @@ import { OthersPageLayout } from '@coop/cbs/others/ui-layouts';
 import { Box, MainLayout, WIPState } from '@myra-ui';
 
 const FundManagementListPage = () => (
-  <Box display="flex" justifyContent="center" alignItems="center" pt="s60">
+  <Box display="flex" justifyContent="center" alignItems="center" pt="60px">
     <WIPState />
   </Box>
 );

@@ -394,7 +394,9 @@ export const LoanRepayment = () => {
                     return {
                       type: 'Loan Repayment',
                       total: amountConverter(result?.totalAmount || 0) as string,
-                      totalWords: amountToWordsConverter(result?.totalAmount || 0),
+                      totalWords: amountToWordsConverter(
+                        result?.totalAmount ? Number(result?.totalAmount) : 0
+                      ),
                       title: 'Loan Repayment Successful',
                       details: {
                         'Loan Repayment Id': (

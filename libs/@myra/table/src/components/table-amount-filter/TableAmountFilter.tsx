@@ -1,5 +1,5 @@
 /* eslint-disable-next-line */
-import { Box, Button, Flex, Icon, Input, Popover, Spacer, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Icon, Input, Popover, Portal, Spacer, Text } from '@chakra-ui/react';
 import { BsFilter } from 'react-icons/bs';
 import React, { ForwardedRef, useState } from 'react';
 import { PopoverContent, PopoverTrigger } from '@myra-ui/components';
@@ -29,7 +29,12 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
   const filterCols = Object.keys(parsedQuery);
 
   return (
-    <Popover isLazy placement="bottom" initialFocusRef={initialFocusRef} colorScheme="primary">
+    <Popover
+      isLazy
+      placement="bottom-start"
+      initialFocusRef={initialFocusRef}
+      colorScheme="primary"
+    >
       {({ onClose, isOpen }) => (
         <>
           <PopoverTrigger>
@@ -46,87 +51,90 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
               />
             </Box>
           </PopoverTrigger>
-          <PopoverContent _focus={{ boxShadow: 'E2' }}>
-            <TableAmountFilterContent
-              value={
-                compare === '< >' && typeof value !== 'string' && 'to' in value
-                  ? {
-                      max: value.to,
-                      min: value.from,
-                      conditon: compare,
-                    }
-                  : compare === '=' && typeof value === 'string'
-                  ? { max: value, min: value, conditon: '=' }
-                  : compare === '<' && typeof value === 'string'
-                  ? { max: undefined, min: value, conditon: '<' }
-                  : compare === '>' && typeof value === 'string'
-                  ? { max: value, min: undefined, conditon: '>' }
-                  : undefined
-              }
-              onClose={onClose}
-              onChange={(newValue) => {
-                let queryString;
-                if (newValue.conditon === '=') {
-                  queryString = qs.stringify(
-                    {
-                      ...parsedQuery,
-                      [column]: {
-                        value: newValue.max,
-                        compare: '=',
-                      },
-                    },
-                    { allowDots: true, arrayFormat: 'brackets', encode: false }
-                  );
-                } else if (newValue.conditon === '<') {
-                  queryString = qs.stringify(
-                    {
-                      ...parsedQuery,
-                      [column]: {
-                        value: newValue.min,
-                        compare: '<',
-                      },
-                    },
-                    { allowDots: true, arrayFormat: 'brackets', encode: false }
-                  );
-                } else if (newValue.conditon === '>') {
-                  queryString = qs.stringify(
-                    {
-                      ...parsedQuery,
-                      [column]: {
-                        value: newValue.max,
-                        compare: '>',
-                      },
-                    },
-                    { allowDots: true, arrayFormat: 'brackets', encode: false }
-                  );
-                } else if (newValue.conditon === '< >') {
-                  queryString = qs.stringify(
-                    {
-                      ...parsedQuery,
-                      [column]: {
-                        value: {
-                          from: newValue.min,
-                          to: newValue.max,
-                        },
-                        compare: '< >',
-                      },
-                    },
-                    { allowDots: true, arrayFormat: 'brackets', encode: false }
-                  );
+          <Portal>
+            <PopoverContent w="100%" boxShadow="E2" border="none" borderRadius="br2">
+              <TableAmountFilterContent
+                value={
+                  compare === '< >' && typeof value !== 'string' && 'to' in value
+                    ? {
+                        max: value.to,
+                        min: value.from,
+                        conditon: compare,
+                      }
+                    : compare === '=' && typeof value === 'string'
+                    ? { max: value, min: value, conditon: '=' }
+                    : compare === '<' && typeof value === 'string'
+                    ? { max: undefined, min: value, conditon: '<' }
+                    : compare === '>' && typeof value === 'string'
+                    ? { max: value, min: undefined, conditon: '>' }
+                    : undefined
                 }
+                onClose={onClose}
+                onChange={(newValue) => {
+                  let queryString;
+                  if (newValue.conditon === '=') {
+                    queryString = qs.stringify(
+                      {
+                        ...parsedQuery,
+                        [column]: {
+                          value: newValue.max,
+                          compare: '=',
+                        },
+                      },
+                      { allowDots: true, arrayFormat: 'brackets', encode: false }
+                    );
+                  } else if (newValue.conditon === '<') {
+                    queryString = qs.stringify(
+                      {
+                        ...parsedQuery,
+                        [column]: {
+                          value: newValue.min,
+                          compare: '<',
+                        },
+                      },
+                      { allowDots: true, arrayFormat: 'brackets', encode: false }
+                    );
+                  } else if (newValue.conditon === '>') {
+                    queryString = qs.stringify(
+                      {
+                        ...parsedQuery,
+                        [column]: {
+                          value: newValue.max,
+                          compare: '>',
+                        },
+                      },
+                      { allowDots: true, arrayFormat: 'brackets', encode: false }
+                    );
+                  } else if (newValue.conditon === '< >') {
+                    queryString = qs.stringify(
+                      {
+                        ...parsedQuery,
+                        [column]: {
+                          value: {
+                            from: newValue.min,
+                            to: newValue.max,
+                          },
+                          compare: '< >',
+                        },
+                      },
+                      { allowDots: true, arrayFormat: 'brackets', encode: false }
+                    );
+                  }
 
-                router.push(
-                  {
-                    query: {
-                      filter: queryString,
+                  router.push(
+                    {
+                      query: {
+                        ...router.query,
+                        filter: queryString,
+                      },
                     },
-                  },
-                  undefined,
-                  { shallow: true }
-                );
-              }}
-            />
-          </PopoverContent>
+                    undefined,
+                    { shallow: true }
+                  );
+                }}
+              />
+            </PopoverContent>
+          </Portal>
         </>
       )}
     </Popover>

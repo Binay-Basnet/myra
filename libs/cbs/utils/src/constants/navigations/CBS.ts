@@ -196,6 +196,12 @@ export const CBS: NavType = {
           aclKey: 'CBS_TRANSACTIONS_LOAN_REPAYMENT',
           route: ROUTES.CBS_LOAN_REPAYMENTS_ADD,
         },
+        {
+          label: 'Close Loan Account',
+          // route: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS,
+          aclKey: 'CBS_LOAN_LOAN_ACCOUNT_CLOSE',
+          route: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS_ADD,
+        },
       ],
       pages: [
         {
@@ -229,6 +235,7 @@ export const CBS: NavType = {
           label: 'Closed Accounts',
           route: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS,
           aclKey: 'CBS_LOAN_LOAN_ACCOUNT_CLOSE',
+          addRoute: ROUTES.CBS_LOAN_CLOSED_ACCOUNTS_ADD,
         },
       ],
       settingPages: [

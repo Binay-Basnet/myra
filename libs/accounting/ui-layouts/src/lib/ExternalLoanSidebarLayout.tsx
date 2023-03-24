@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AppSidebar, MenuContainer, PageContainer, Scrollable } from '@myra-ui';
+import { AppSidebar, MenuContainer, PageContainer } from '@myra-ui';
 
 import { Can } from '@coop/cbs/utils';
 
@@ -12,9 +12,7 @@ export const ExternalLoanSidebarLayout = ({ children }: IExternalLoanSidebarLayo
   <Can I="SHOW_IN_MENU" a="ACCOUNTING_LOAN" showError isErrorCentered>
     <MenuContainer>
       <AppSidebar module="ACCOUNTING" menu="LOAN" />
-      <PageContainer>
-        <Scrollable>{children}</Scrollable>
-      </PageContainer>
+      <PageContainer>{children}</PageContainer>
     </MenuContainer>
   </Can>
 );

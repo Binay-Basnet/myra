@@ -53,7 +53,7 @@ export const DefaultAccountPopover = () => {
               px="s12"
               borderBottomColor="border.layout"
               gap="s4"
-              h="s60"
+              h="60px"
             >
               <Text color="gray.800" fontSize="r1" fontWeight="500">
                 Accounts

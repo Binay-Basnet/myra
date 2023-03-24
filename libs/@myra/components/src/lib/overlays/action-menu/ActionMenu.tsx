@@ -66,7 +66,7 @@ export const ActionMenu = <T extends Record<string, unknown>>({
 }: ActionMenuProps<T>) => (
   <Menu>
     <ActionMenuButton>{menuTrigger}</ActionMenuButton>
-    <ActionMenuList>
+    <ActionMenuList zIndex={20}>
       {options?.map(({ isShown = true, ...option }) =>
         !isShown ? null : (
           <ActionMenuItem

@@ -831,3 +831,46 @@ query getLoanFilterMapping {
     }
   }
 }
+
+query getLoanCloseData($loanAccountId: ID!) {
+  loanAccount {
+    remainingPayments(loanAccountId: $loanAccountId) {
+      data {
+        totalInterest
+        totalPayableAmount
+        totalPenalty
+        totalPrincipal
+      }
+    }
+  }
+}
+query listLoanAccountInterestRateList($accountId: ID!) {
+  loanAccount {
+    listAccountInterestRates(accountId: $accountId) {
+      data {
+        id
+        rate
+        createdAt
+        effectiveDate
+      }
+    }
+  }
+}
+
+query getLoanAccountInterestRateDetail($id: ID!, $accountId: String!) {
+  loanAccount {
+    getAccountInterestRate(id: $id, accountID: $accountId) {
+      data {
+        id
+        rate
+        createdAt
+        effectiveDate
+        fileUploads {
+          identifier
+          url
+        }
+        note
+      }
+    }
+  }
+}

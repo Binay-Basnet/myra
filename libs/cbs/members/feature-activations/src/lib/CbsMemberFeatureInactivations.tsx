@@ -209,7 +209,7 @@ const AccountRow = ({ account, index }: AccountRowProps) => {
   const isAccountClosed = data?.members?.inactivateMember?.accountCloseCheck;
 
   return (
-    <Box minH="s60" w="100%" display="flex">
+    <Box minH="60px" w="100%" display="flex">
       <Box w="6%" h="100%" display="flex" alignItems="center" justifyContent="center">
         {index}
       </Box>

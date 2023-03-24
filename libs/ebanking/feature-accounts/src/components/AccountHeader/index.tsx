@@ -31,7 +31,7 @@ const AccountHeader = ({ setSelectedAccountId, selectedAccountId }: IAccountHead
       justifyContent="space-between"
       px="s16"
       py="s12"
-      minH="50px"
+      minH="3.125rem"
     >
       <Box display="flex" flexDir="column" gap="s4">
         <Text fontSize="r1" color="gray.800" fontWeight="600" lineHeight="125%">

@@ -9,7 +9,7 @@ import {
   FiShoppingCart,
 } from 'react-icons/fi';
 
-import { MainLayoutContainer, Scrollable, TabMenu, TopLevelHeader } from '@myra-ui';
+import { MainLayoutContainer, TabMenu, TopLevelHeader } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
 
@@ -85,7 +85,7 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
         ]}
         routeIndex={2}
       />
-      <Scrollable>{children}</Scrollable>
+      {children}
     </MainLayoutContainer>
   );
 };

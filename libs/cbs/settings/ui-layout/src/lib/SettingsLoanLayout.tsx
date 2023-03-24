@@ -25,6 +25,10 @@ const tabList = [
     title: 'settingsSideBarValuator',
     to: ROUTES.SETTINGS_GENERAL_LOAN_VALUATOR,
   },
+  {
+    title: 'Organization Rate',
+    to: ROUTES.SETTINGS_GENERAL_LOAN_ORGANIZATION_RATE,
+  },
 ];
 
 interface ISettingsLoanLayout {

@@ -4,9 +4,10 @@ import { useAccountDetails } from '@coop/cbs/data-access';
 
 export interface PathBarProps {
   title: string;
+  options?: { label: string; handler: () => void }[];
 }
 
-export const AccountDetailsPathBar = ({ title }: PathBarProps) => {
+export const AccountDetailsPathBar = ({ title, options }: PathBarProps) => {
   const { accountDetails } = useAccountDetails();
 
   return (
@@ -16,6 +17,7 @@ export const AccountDetailsPathBar = ({ title }: PathBarProps) => {
         member={{
           name: accountDetails?.member?.name?.local as string,
         }}
+        options={options}
       />
     </Box>
   );

@@ -1,7 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 
-import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -13,6 +12,8 @@ import {
   Icon,
   Text,
 } from '@myra-ui';
+
+import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { CashTransferTable } from '../components';
@@ -28,7 +29,7 @@ export const AccountingFeatureAddCashTransfer = () => {
 
   return (
     <>
-      <Container minW="container.lg" height="fit-content" pb="60px">
+      <Container minW="container.lg" height="fit-content" pb="s60">
         <FormHeader title={t['accountingCashTransferAddNewCashTransfer']} />
 
         <FormProvider {...methods}>

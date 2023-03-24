@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { chakra, Tab, Tabs } from '@chakra-ui/react';
 
 import { Box, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {
@@ -80,7 +81,7 @@ export const GlobalAppSettingsLayout = (props: GlobalAppSettingsLayoutProps) => 
   return (
     <Box>
       <Box
-        height="50px"
+        height="3.125rem"
         p="s16"
         borderBottom="1px solid"
         borderColor="border.layout"

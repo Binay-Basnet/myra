@@ -1,12 +1,17 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
+
+import { MainLayout, Scrollable } from '@myra-ui';
 
 import { KYMCooperativePage } from '@coop/cbs/kym-form/cooperative';
-import { MainLayout } from '@myra-ui';
 
 const AddMember = () => <KYMCooperativePage />;
 
 AddMember.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <Scrollable>{page}</Scrollable>
+    </MainLayout>
+  );
 };
 
 export default AddMember;

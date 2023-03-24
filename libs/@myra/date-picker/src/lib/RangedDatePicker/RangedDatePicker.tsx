@@ -5,6 +5,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Portal,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -152,58 +153,60 @@ export const RangedDatePicker = ({
         </Text>
       )}
 
-      <Popover placement="bottom-start" isOpen={isOpen} onClose={onClose} onOpen={onToggle}>
+      <Popover isLazy placement="bottom-start" isOpen={isOpen} onClose={onClose} onOpen={onToggle}>
         <PopoverTrigger>
           <Box as="button" type="button" w="100%">
             {trigger ? trigger(isOpen) : <DateInput {...inputProps} />}
           </Box>
         </PopoverTrigger>
+        <Portal>
+          <PopoverContent w="100%" border="none">
+            <Box display="flex" bg="white" borderRadius="br2" boxShadow="E2">
+              <Periods {...periodProps} />
 
-        <PopoverContent w="100%" border="none">
-          <Box display="flex" bg="white" borderRadius="br2" boxShadow="E2">
-            <Periods {...periodProps} />
-
-            {selectedPeriod === 'FISCAL_YEAR' ? (
-              <FiscalPeriod
-                tillDateStart={tillDateStart}
-                calendarType={calendarType}
-                locale={locale}
-                value={value}
-                onChange={onChange}
-                onToggle={onToggle}
-              />
-            ) : selectedPeriod === 'TODAY' ||
-              selectedPeriod === 'YESTERDAY' ||
-              !selectedPeriod ? null : (
-              <Box display="flex" flexDir="column">
-                <HStack
-                  display="flex"
-                  alignItems="stretch"
-                  borderBottom="1px"
-                  borderColor="border.layout"
-                  py="s16"
-                >
-                  <Calendar calendarProps={calendarProps} />
-                  <Calendar calendarProps={calendarProps} nextMonth />
-                </HStack>
-                <DateRangeFooter
+              {selectedPeriod === 'FISCAL_YEAR' ? (
+                <FiscalPeriod
+                  tillDateStart={tillDateStart}
                   calendarType={calendarType}
-                  onChange={onChange}
                   locale={locale}
+                  value={value}
+                  onChange={onChange}
                   onToggle={onToggle}
-                  rangeStartDate={rangeStartDate}
-                  rangeEndDate={rangeEndDate}
-                  onRangeStartDateChange={(newDate) => {
-                    setRangeStartDate(newDate);
-                  }}
-                  onRangeEndDateChange={(newDate) => {
-                    setRangeEndDate(newDate);
-                  }}
                 />
-              </Box>
-            )}
-          </Box>
-        </PopoverContent>
+              ) : selectedPeriod === 'TODAY' ||
+                selectedPeriod === 'YESTERDAY' ||
+                !selectedPeriod ? null : (
+                <Box display="flex" flexDir="column">
+                  <HStack
+                    display="flex"
+                    alignItems="stretch"
+                    borderBottom="1px"
+                    borderColor="border.layout"
+                    py="s16"
+                    w="100%"
+                  >
+                    <Calendar calendarProps={calendarProps} />
+                    <Calendar calendarProps={calendarProps} nextMonth />
+                  </HStack>
+                  <DateRangeFooter
+                    calendarType={calendarType}
+                    onChange={onChange}
+                    locale={locale}
+                    onToggle={onToggle}
+                    rangeStartDate={rangeStartDate}
+                    rangeEndDate={rangeEndDate}
+                    onRangeStartDateChange={(newDate) => {
+                      setRangeStartDate(newDate);
+                    }}
+                    onRangeEndDateChange={(newDate) => {
+                      setRangeEndDate(newDate);
+                    }}
+                  />
+                </Box>
+              )}
+            </Box>
+          </PopoverContent>
+        </Portal>
       </Popover>
     </Box>
   );

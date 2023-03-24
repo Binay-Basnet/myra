@@ -1,6 +1,7 @@
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 
 import { AccordionButton, Box, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 interface KYMSettingsAccordionBtnProps {

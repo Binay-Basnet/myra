@@ -7,14 +7,7 @@ mutation setLoanGeneralSettings(
   settings {
     general {
       loan {
-        general(
-          data: {
-            emi: $emi
-            epi: $epi
-            flat: $flat
-            collateralList: $collateralList
-          }
-        ) {
+        general(data: { emi: $emi, epi: $epi, flat: $flat, collateralList: $collateralList }) {
           recordId
           error {
             ...MutationError
@@ -47,13 +40,38 @@ mutation setProductType(
   settings {
     general {
       loan {
-        productType(
-          data: {
-            productTypes: $productType
-            productSubTypes: $productSubType
-          }
-        ) {
+        productType(data: { productTypes: $productType, productSubTypes: $productSubType }) {
           recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setLoanOrganizationRate($data: InterestRateSetupInput!) {
+  settings {
+    general {
+      loan {
+        setOrganizationRate(data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation editLoanOrganizationRate($id: ID!, $data: InterestRateSetupInput!) {
+  settings {
+    general {
+      loan {
+        editOrganizationRate(id: $id, data: $data) {
+          record
           error {
             ...MutationError
           }

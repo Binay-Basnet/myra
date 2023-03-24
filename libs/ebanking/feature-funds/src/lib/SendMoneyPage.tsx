@@ -44,7 +44,7 @@ export const SendMoneyPage = () => {
 
         {paymentStatus === 'form' ? (
           <Box
-            h="50px"
+            h="3.125rem"
             px="s16"
             display="flex"
             alignItems="center"

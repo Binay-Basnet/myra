@@ -19,23 +19,17 @@ import { TableSize, TableVariant } from '../../types/Table';
 
 export interface TableContainerProps<T> {
   children: React.ReactNode;
-  isLoading?: boolean;
-  data: T[];
   variant: TableVariant;
+  data: T[];
 }
 
-export const TableContainer = <T,>({
-  children,
-  isLoading,
-  data,
-  variant,
-}: TableContainerProps<T>) => (
+export const TableContainer = <T,>({ children, variant, data }: TableContainerProps<T>) => (
   <ChakraTable.TableContainer
-    minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
     sx={
       variant === 'report'
         ? {
             maxH: '420px',
+            h: data && data?.length !== 0 ? 'auto' : '420px',
             overflowY: 'auto',
             border: '1px',
             borderColor: 'border.layout',
@@ -53,7 +47,31 @@ export const TableContainer = <T,>({
               borderRadius: '0',
             },
           }
-        : {}
+        : {
+            position: 'relative',
+            height: '100%',
+            overflowY: 'auto',
+            '&::-webkit-scrollbar': {
+              width: '12px',
+              height: '8px',
+              backgroundColor: 'transparent',
+            },
+            '&:hover::-webkit-scrollbar': {
+              width: '12px',
+              height: '8px',
+              backgroundColor: '#f5f5f5',
+
+              display: 'block',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: 'transparent',
+              borderRadius: '8px',
+            },
+            '&:hover::-webkit-scrollbar-thumb': {
+              backgroundColor: 'gray.300',
+              borderRadius: '8px',
+            },
+          }
     }
   >
     {children}
@@ -140,7 +158,6 @@ export const TableHeadCell = <T,>({
   isDetailPageTable,
   header,
   children,
-  variant,
   ...props
 }: TableHeadCellProps<T>) => (
   <ChakraTable.Th
@@ -155,7 +172,7 @@ export const TableHeadCell = <T,>({
     minW={header.column.columnDef.meta?.width}
     w={header.column.columnDef.meta?.width}
     textAlign={header.column.columns.length !== 0 ? 'center' : 'left'}
-    position={variant === 'report' ? 'sticky' : 'unset'}
+    position="sticky"
     top={(header.depth - 1) * 35}
     zIndex={1}
     {...props}
@@ -251,10 +268,12 @@ export interface TableEmptyStateProps<T> {
   forms?: {
     label: string;
     aclKey: AclKey;
-    route: RouteValue;
+    route?: RouteValue;
     idType?: Id_Type;
+    onClick?: () => void;
   }[];
   noDataTitle?: string;
+  isLoading?: boolean;
 }
 
 export const TableEmptyState = <T,>({
@@ -262,18 +281,23 @@ export const TableEmptyState = <T,>({
   forms,
   data,
   noDataTitle,
+  isLoading,
 }: TableEmptyStateProps<T>) => {
   const emptyStateData = EMPTYSTATE[menu as keyof typeof EMPTYSTATE];
 
   const sidebarForms = forms || EMPTYSTATE[menu as keyof typeof EMPTYSTATE]?.buttonLink;
 
+  if (isLoading) {
+    return null;
+  }
+
   if (!data || data?.length === 0) {
     return (
       <Box
         position="absolute"
-        width="70vw"
+        height="300px"
         as="tr"
-        height="100vh"
+        w={menu ? '80%' : '100%'}
         display="flex"
         justifyContent="center"
       >

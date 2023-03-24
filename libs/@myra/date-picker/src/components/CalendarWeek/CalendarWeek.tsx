@@ -33,8 +33,8 @@ export const CalendarWeek = ({ locale, calendarType }: ICalendarWeekProps) => (
     {getDayNames({ locale, calendarType }).map((day) => (
       <GridItem
         color="#000"
-        w="40px"
-        h="40px"
+        w="s40"
+        h="s40"
         display="flex"
         alignItems="center"
         justifyContent="center"

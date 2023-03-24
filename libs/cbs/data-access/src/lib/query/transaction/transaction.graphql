@@ -559,6 +559,43 @@ query getSTRTransactionDetail($transactionId: ID!) {
   }
 }
 
+query eodHistory($transactionDate: Localized) {
+  endOfDay {
+    history(transactionDate: $transactionDate) {
+      eodDate
+      status
+      completedTime
+      errorCount
+      completedBy
+    }
+  }
+}
+
+query eodHistoryDetails($pagination: Pagination, $filter: EODDetailsFilter!) {
+  endOfDay {
+    details(pagination: $pagination, filter: $filter) {
+      edges {
+        node {
+          id
+          jobType
+          success
+          accountNumber
+          narration
+          payload
+        }
+        cursor
+      }
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+
 fragment OptionType on LabelValueArray {
   label
   value

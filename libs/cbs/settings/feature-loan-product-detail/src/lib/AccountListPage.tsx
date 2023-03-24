@@ -2,18 +2,19 @@ import { useMemo } from 'react';
 import { IoAdd } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Button, Icon, Text } from '@myra-ui';
+import { Box, Button, Icon, Scrollable, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetLoanAccountListQuery } from '@coop/cbs/data-access';
+import { LoanObjState, useGetLoanAccountListQuery } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
 
 export const AccountListPage = () => {
   const router = useRouter();
   const searchTerm = router?.query['search'] as string;
+  const searchText = searchTerm ?? '';
   const id = router?.query['id'] as string;
 
   const { data, isLoading } = useGetLoanAccountListQuery({
@@ -23,7 +24,18 @@ export const AccountListPage = () => {
       order: null,
     },
     filter: {
-      query: `${searchTerm} ${id}`,
+      query: `${searchText} ${id}`,
+      orConditions: [
+        {
+          andConditions: [
+            {
+              column: 'objState',
+              comparator: 'EqualTo',
+              value: LoanObjState?.Disbursed,
+            },
+          ],
+        },
+      ],
     },
   });
   const rowData = useMemo(
@@ -54,7 +66,10 @@ export const AccountListPage = () => {
       },
       {
         header: 'Approved Loan',
-        accessorFn: (row) => row?.node?.appliedLoanAmount,
+        accessorFn: (row) => amountConverter(row?.node?.appliedLoanAmount || '0'),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Open Date',
@@ -67,7 +82,7 @@ export const AccountListPage = () => {
       //       <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
       //     ),
       //     meta: {
-      //       width: '50px',
+      //       width: '3.125rem',
       //     },
       //   },
     ],
@@ -75,7 +90,7 @@ export const AccountListPage = () => {
   );
 
   return (
-    <>
+    <Box display="flex">
       <Box
         bg="gray.0"
         w="320px"
@@ -86,30 +101,33 @@ export const AccountListPage = () => {
       >
         <SideBar />
       </Box>
-      <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
-        <Box display="flex" justifyContent="space-between" w="100%">
-          <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
-            Account List
-          </Text>
-          <Button
-            onClick={() => router.push(ROUTES.CBS_LOAN_APPLICATIONS_ADD)}
-            leftIcon={<Icon as={IoAdd} size="md" />}
-          >
-            Add Account
-          </Button>
+      <Scrollable detailPage>
+        <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+          <Box display="flex" justifyContent="space-between" w="100%">
+            <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
+              Account List
+            </Text>
+            <Button
+              onClick={() => router.push(ROUTES.CBS_LOAN_APPLICATIONS_ADD)}
+              leftIcon={<Icon as={IoAdd} size="md" />}
+            >
+              Add Account
+            </Button>
+          </Box>
         </Box>
-      </Box>
-      <Box bg="background.500" ml="320px" p="s16" minH="100vh">
-        <Table
-          isLoading={isLoading}
-          data={rowData}
-          columns={columns}
-          pagination={{
-            total: data?.settings?.general?.loanProducts?.getLoanAccountlist?.totalCount ?? 'Many',
-            pageInfo: data?.settings?.general?.loanProducts?.getLoanAccountlist?.pageInfo,
-          }}
-        />
-      </Box>
-    </>
+        <Box bg="background.500" ml="320px" p="s16" minH="100vh">
+          <Table
+            isLoading={isLoading}
+            data={rowData}
+            columns={columns}
+            pagination={{
+              total:
+                data?.settings?.general?.loanProducts?.getLoanAccountlist?.totalCount ?? 'Many',
+              pageInfo: data?.settings?.general?.loanProducts?.getLoanAccountlist?.pageInfo,
+            }}
+          />
+        </Box>
+      </Scrollable>
+    </Box>
   );
 };

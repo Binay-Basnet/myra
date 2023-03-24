@@ -332,7 +332,7 @@ export const ReportInputs = <T extends FieldValues | null>({
   );
 };
 
-interface IReportTableProps<T extends Record<string, unknown>> {
+interface IReportTableProps<T> {
   data?: T[] | null;
   columns: Column<T>[];
   hasSNo?: boolean;
@@ -341,9 +341,7 @@ interface IReportTableProps<T extends Record<string, unknown>> {
   getSubRows?: (row: T) => T[];
 }
 
-type Maybe<T> = T | null;
-
-export const ReportTable = <T extends Record<string, unknown>>({
+export const ReportTable = <T,>({
   data: tableData,
   columns,
   hasSNo = true,
@@ -360,17 +358,17 @@ export const ReportTable = <T extends Record<string, unknown>>({
         variant="report"
         size="report"
         isStatic
-        getSubRows={getSubRows || ((row) => row['children'] as T[])}
+        getSubRows={getSubRows || ((row) => (row as { children: T[] })['children'])}
         data={
-          tableData
-            ? ((hasSNo
-                ? tableData?.map((d, index) => ({ ...d, index: index + 1 }))
-                : tableData) as unknown as T[])
-            : ((hasSNo
-                ? data?.map((d, index) => ({ ...d, index: index + 1 }))
-                : data) as unknown as T[])
+          (tableData
+            ? hasSNo
+              ? tableData?.map((d, index) => ({ ...d, index: index + 1 }))
+              : tableData
+            : hasSNo
+            ? data?.map((d, index) => ({ ...d, index: index + 1 }))
+            : data) as unknown as T[]
         }
-        columns={columns as Column<Maybe<T>>[]}
+        columns={columns}
         tableTitle={tableTitle}
       />
     </Box>

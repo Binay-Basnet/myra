@@ -8,6 +8,7 @@ const baseStyle = definePartsStyle({
   table: {
     fontVariantNumeric: 'lining-nums tabular-nums',
     borderCollapse: 'collapse',
+    borderSpacing: 0,
     width: 'full',
     // overflow: 'hidden',
   },
@@ -37,35 +38,88 @@ const variantSimple = definePartsStyle((props) => {
   const { colorScheme: c } = props;
 
   return {
+    table: {
+      borderCollapse: 'separate',
+      borderSpacing: '0',
+      borderRadius: 'br2',
+    },
+    tfoot: {
+      th: {
+        bg: 'white',
+        border: '1px',
+        borderRightWidth: '1px',
+        borderTopWidth: '1px',
+        borderBottomWidth: '0px',
+        borderLeftWidth: '0px',
+        color: mode('gray.800', 'gray.400')(props),
+        borderColor: mode(`border.layout`, `${c}.700`)(props),
+        ...numericStyles,
+      },
+    },
+    thead: {
+      tr: {
+        '&:last-of-type': {
+          th: { borderBottomWidth: '1px' },
+          td: { borderBottomWidth: 0 },
+        },
+      },
+      th: {
+        bg: 'white',
+        border: '1px',
+        borderRightWidth: '0px',
+        borderTopWidth: '0px',
+        borderBottomWidth: '1px',
+        borderLeftWidth: '0px',
+        borderColor: mode(`border.layout`, `${c}.700`)(props),
+        color: mode('gray.800', 'gray.400')(props),
+        '&:last-child': {
+          borderRight: '0',
+        },
+        ...numericStyles,
+      },
+    },
     th: {
-      bg: 'white',
-      color: mode('gray.800', 'gray.400')(props),
-      borderBottom: '1px',
+      bg: 'highlight.500',
+      border: '1px',
+      borderRightWidth: '0px',
+      borderTopWidth: '0px',
+      borderBottomWidth: '1px',
+      borderLeftWidth: '0px',
       borderColor: mode(`border.layout`, `${c}.700`)(props),
-      // maxWidth: '300px',
+      color: mode('gray.800', 'gray.400')(props),
+      '&:last-child': {
+        borderRight: '0',
+      },
       ...numericStyles,
     },
-
+    tbody: {
+      tr: {
+        '&:first-of-type': {
+          td: {
+            borderTopWidth: '0px',
+          },
+        },
+      },
+    },
     td: {
+      // // TODO! Experiment
+      // maxWidth: '250px',
+
+      border: '1px',
+      borderRightWidth: '0px',
+      borderTopWidth: '0px',
+      borderBottomWidth: '1px',
+      borderLeftWidth: '0px',
+      borderBottomColor: mode(`border.layout`, `${c}.700`)(props),
+
+      '&:last-child': {
+        borderRight: '0',
+      },
       color: mode('gray.800', 'gray.400')(props),
-      borderBottom: '1px',
-      borderColor: mode('border.layout', `${c}.700`)(props),
-      // maxWidth: '300px',
       ...numericStyles,
     },
     caption: {
       color: mode('gray.600', 'gray.100')(props),
-    },
-    tfoot: {
-      th: {
-        fontSize: 's3',
-      },
-      tr: {
-        '&:last-of-type': {
-          th: { borderBottomWidth: 0 },
-          td: { borderBottomWidth: 0 },
-        },
-      },
     },
   };
 });
@@ -210,13 +264,13 @@ const sizes = {
       px: 's16',
       lineHeight: '125%',
       fontSize: 's3',
-      height: '50px',
+      height: '3.125rem',
     },
     td: {
       px: 's16',
       lineHeight: '125%',
       fontSize: 's3',
-      height: '50px',
+      height: '3.125rem',
     },
   }),
   default: definePartsStyle({
@@ -224,7 +278,7 @@ const sizes = {
       px: 's16',
       lineHeight: '125%',
       fontSize: 's3',
-      height: '50px',
+      height: '3.125rem',
     },
     td: {
       px: 's16',

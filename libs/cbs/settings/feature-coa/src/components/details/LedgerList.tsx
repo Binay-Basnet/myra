@@ -3,7 +3,11 @@ import { ReactNode, useMemo } from 'react';
 import { DetailsCard, Switch, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { LedgerList, useUpdateLedgerStatusMutation } from '@coop/cbs/data-access';
+import {
+  LedgerList,
+  useGetMemberFilterMappingQuery,
+  useUpdateLedgerStatusMutation,
+} from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { debitCreditConverter } from '@coop/shared/utils';
 
@@ -13,6 +17,7 @@ interface ILedgerListsProps {
 }
 
 export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
+  const { data: filterMapping } = useGetMemberFilterMappingQuery();
   const ledgersList = useMemo(
     () =>
       ledgers?.map((ledger, index) => ({
@@ -26,9 +31,12 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
   const columns = useMemo<Column<typeof ledgersList[0]>[]>(
     () => [
       {
+        id: 'date',
         header: 'Date',
         accessorKey: 'date',
         cell: (props) => localizedDate(props?.row?.original?.date),
+        enableColumnFilter: true,
+        filterFn: 'dateTime',
       },
       {
         header: 'Ledger Name',
@@ -42,11 +50,20 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
       {
         header: 'Service Center',
         accessorKey: 'serviceCenter',
+        enableColumnFilter: true,
+        // filterFn: 'dateTime',
+        meta: {
+          filterMaps: {
+            list: filterMapping?.members?.filterMapping?.serviceCenter,
+          },
+        },
       },
       {
         header: 'Balance',
         accessorFn: (row) =>
           debitCreditConverter(row?.balance as string, row?.balanceType as string),
+        enableColumnFilter: true,
+        filterFn: 'amount',
       },
       {
         header: 'Status',
@@ -64,7 +81,7 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
         ),
       },
     ],
-    []
+    [filterMapping?.members?.filterMapping?.serviceCenter]
   );
 
   return (

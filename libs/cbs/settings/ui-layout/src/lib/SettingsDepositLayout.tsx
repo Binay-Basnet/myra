@@ -14,6 +14,10 @@ const tabList = [
     title: 'settingsDepositTds',
     to: ROUTES.SETTINGS_GENERAL_SAVINGS_TDS,
   },
+  {
+    title: 'Organization Rate',
+    to: ROUTES.SETTINGS_GENERAL_SAVINGS_ORGANIZATION_RATE,
+  },
   // {
   //   // title: 'IRO Setup',
   //   title: 'settingsDepositIROSetup',

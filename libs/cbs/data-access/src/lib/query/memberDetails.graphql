@@ -119,6 +119,9 @@ query getMemberKYMDetailsOverview($id: ID!) {
             totalShareValue
             accountBalance
             loanBalance
+            totalSavingInterestAccured
+            totalSavingInterestPosted
+            totalLoanInterest
           }
           payments {
             date

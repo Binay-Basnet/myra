@@ -17,20 +17,20 @@ export const InventoryAdjustmentsTable = () => {
     () => [
       {
         header: t['itemUnitsDate'],
-        accessorFn: (row) => row?.node.name,
+        accessorFn: (row) => row?.node?.name,
       },
       {
         header: t['itemUnitsEntryNo'],
-        accessorFn: (row) => row?.node.type,
+        accessorFn: (row) => row?.node?.type,
       },
 
-      {
-        header: t['itemUnitsReference'],
-        accessorFn: (row) => row?.node.unitPrice,
-        meta: {
-          width: '50%',
-        },
-      },
+      // {
+      //   header: t['itemUnitsReference'],
+      //   accessorFn: (row) => row?.node?.unitPrice,
+      //   meta: {
+      //     width: '50%',
+      //   },
+      // },
       {
         accessorKey: 'actions',
         cell: () => (

@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import React, { forwardRef, ReactElement } from 'react';
 import { ImClock } from 'react-icons/im';
 import { IoCheckmarkCircleSharp, IoCloseCircleSharp, IoCloseOutline } from 'react-icons/io5';
 import {
@@ -19,12 +19,13 @@ export interface ChipsProps extends ChakraTagProps {
   avatar?: string;
   label: string;
   onClick?: () => void;
+  icon?: ReactElement;
 }
 
 const COLORS = {
   bg: {
     neutral: 'gray.100',
-    success: 'success.200',
+    success: 'success.0',
     info: 'info.100',
     warning: 'warning.0',
     danger: 'danger.0',
@@ -112,7 +113,7 @@ const ICON = {
 };
 
 export const Chips = forwardRef<HTMLButtonElement, ChipsProps>((props, ref) => {
-  const { variant, theme, size, label, type, avatar, ...rest } = props;
+  const { variant, theme, size, label, type, avatar, icon, ...rest } = props;
 
   switch (variant) {
     case 'solid':
@@ -149,12 +150,20 @@ export const Chips = forwardRef<HTMLButtonElement, ChipsProps>((props, ref) => {
 
           {type === 'status' && (
             <>
-              <TagLeftIcon
-                mr="s4"
-                color={COLORS.text[theme]}
-                boxSize={SIZE[size].iconSize}
-                as={ICON[type][theme]}
-              />
+              {icon ? (
+                React.cloneElement(icon, {
+                  mr: 's4',
+                  color: COLORS.text[theme],
+                  boxSize: SIZE[size].iconSize,
+                })
+              ) : (
+                <TagLeftIcon
+                  mr="s4"
+                  color={COLORS.text[theme]}
+                  boxSize={SIZE[size].iconSize}
+                  as={ICON[type][theme]}
+                />
+              )}
               <TagLabel color={COLORS.text[theme]} fontSize={SIZE[size].fontSize}>
                 {label}
               </TagLabel>

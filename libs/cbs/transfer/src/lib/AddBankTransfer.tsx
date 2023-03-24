@@ -89,7 +89,7 @@ export const AddBankTransfer = () => {
         <Box bg="white">
           <FormProvider {...methods}>
             <form>
-              <Box minH="calc(100vh - 170px)" pb="s60" p="s24">
+              <Box minH="calc(100vh - 170px)" pb="60px" p="s24">
                 <Box display="flex" flexDir="column" gap={5}>
                   <Grid templateColumns="repeat(3,1fr)" gap={2}>
                     <GridItem colSpan={2}>

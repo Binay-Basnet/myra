@@ -99,7 +99,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
         position="fixed"
         flexDirection="column"
         justifyContent="flex-start"
-        height="calc(100vh - 60px)"
+        height="calc(100vh - s60)"
         px="s16"
         py="s24"
         gap="s32"
@@ -274,7 +274,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
         flexGrow="1"
         overflowX="hidden"
         position="relative"
-        mt="60px"
+        mt="s60"
       >
         {children}
       </Box>

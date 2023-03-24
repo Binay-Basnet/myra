@@ -7,42 +7,8 @@ query getInventoryItems {
             id
             name
             type
-            unitPrice
+            costPrice
             itemQuantity
-          }
-        }
-      }
-    }
-  }
-}
-
-query getInventoryItemGroup {
-  inventory {
-    itemsGroup {
-      list {
-        edges {
-          node {
-            name
-            id
-            description
-            parentCategory
-          }
-        }
-      }
-    }
-  }
-}
-
-query getInventoryVendor {
-  inventory {
-    vendors {
-      list {
-        edges {
-          node {
-            name
-            location
-            email
-            phoneNumber
           }
         }
       }
@@ -60,6 +26,107 @@ query getInventoryUnitOfMeasure {
             shortName
             acceptFraction
           }
+        }
+      }
+    }
+  }
+}
+
+query getItemCategoryList($filter: InvItemsGroupDataFilter, $pagination: Pagination) {
+  inventory {
+    itemsGroup {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            parentCategory
+            description
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getUnitsList($filter: InvUnitOfMeasureDataFilter, $pagination: Pagination) {
+  inventory {
+    unitOfMeasure {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            shortName
+            description
+            acceptFraction
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getWarehouseList($paginate: Pagination!, $filter: WarehouseFilter) {
+  inventory {
+    warehouse {
+      listWarehouses(paginate: $paginate, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            phoneNumber
+            address
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getSuppliersList($filter: InvSupplierFilter, $pagination: Pagination) {
+  inventory {
+    suppliers {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            location {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            phoneNo
+            email
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
         }
       }
     }

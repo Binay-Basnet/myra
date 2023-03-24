@@ -112,7 +112,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
 
   SETTINGS_GENERAL_AUDIT_LOG: '/settings/monitor/audit-log/list',
-  SETTINGS_EOD_SETUP: '/settings/general/eod',
+  SETTINGS_EOD_SETUP: '/settings/general/eod/setup',
   SETTINGS_GENERAL_BANK: '/settings/general/bank/configure',
 
   SETTINGS_GENERAL_COA: '/settings/general/coa/list',
@@ -203,6 +203,7 @@ export const ROUTES = {
   CBS_WITHDRAW_SLIP_BOOK_PRINT: '/cbs/withdraw/withdraw-slip-book/print',
 
   CBS_LOAN_CLOSED_ACCOUNTS: '/cbs/loan/closed-accounts/list',
+  CBS_LOAN_CLOSED_ACCOUNTS_ADD: '/cbs/loan/closed-accounts/add',
   CBS_LOAN_APPLICATIONS_EDIT: '/cbs/loan/applications/edit',
 
   CBS_REPORTS_MEMBER_CLASSIFICATION: '/reports/cbs/members/classification/new',
@@ -312,6 +313,14 @@ export const ROUTES = {
   CBS_ACCOUNT_CLOSED_DETAILS: '/cbs/savings/account-close/details',
 
   SETTINGS_GENERAL_PRINT_PREFERENCE: '/settings/general/print-preference/withdraw-slip',
+
+  SETTINGS_EOD_HISTORY: '/settings/general/eod/history',
+
+  SETTINGS_GENERAL_SAVINGS_ORGANIZATION_RATE: '/settings/general/savings/organization-rate',
+
+  SETTINGS_GENERAL_LOAN_ORGANIZATION_RATE: '/settings/general/loan/organization-rate',
+
+  SETTINGS_EOD_HISTORY_DETAILS: '/settings/general/eod/history/details',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

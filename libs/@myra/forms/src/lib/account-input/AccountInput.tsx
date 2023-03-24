@@ -19,7 +19,7 @@ export const AccountInput = (props: AccountInputProps) => {
         {' '}
         {label ?? 'Amount'}
       </Text>
-      <InputGroup h="44px">
+      <InputGroup h="s44">
         <Input
           pr="58px"
           variant="outline"

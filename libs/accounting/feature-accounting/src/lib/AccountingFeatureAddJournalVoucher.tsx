@@ -78,7 +78,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
 
   return (
     <>
-      <Container minW="container.lg" height="fit-content" pb="60px">
+      <Container minW="container.lg" height="fit-content" pb="s60">
         <FormHeader
           title={`${t['accountingJournalVoucherAddNewJournalVoucher']} - ${featureCode.newJournalVoucher}`}
         />

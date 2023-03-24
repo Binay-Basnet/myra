@@ -23,7 +23,7 @@ export const NoDataState = ({ title, custom }: NoDataStateProps) => {
       justifyContent="center"
       alignItems="center"
       gap="s16"
-      mt="s60"
+      mt="60px"
     >
       <Image height={100} width={100} src="/clipboard.svg" alt="cetral chakra" />
       {custom?.title ? (

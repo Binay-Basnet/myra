@@ -209,12 +209,7 @@ query getCOALeafNodeDetails($id: ID!, $branch: [String]) {
   }
 }
 
-query getLedgerList(
-  $id: ID!
-  $pagination: Pagination
-  $filter: COALedgerListFilter
-  $branchId: [String!]
-) {
+query getLedgerList($id: ID!, $pagination: Pagination, $filter: Filter, $branchId: [String!]) {
   settings {
     chartsOfAccount {
       coaLedgerList(id: $id, pagination: $pagination, filter: $filter, branchId: $branchId) {
@@ -235,6 +230,35 @@ query getLedgerList(
             balance
             balanceType
             status
+          }
+          cursor
+        }
+      }
+    }
+  }
+}
+
+query getCOAAccountsAllTransactionList($id: ID!, $pagination: Pagination) {
+  settings {
+    chartsOfAccount {
+      ledgerAllTransactionsList(ledgerId: $id, pagination: $pagination) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        edges {
+          node {
+            date
+            txnId
+            txnType
+            particulars
+            debit
+            credit
+            total
+            balanceType
           }
           cursor
         }

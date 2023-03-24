@@ -15,6 +15,7 @@ export interface SuccessCardProps {
   title: string;
   subTitle: string;
   details: Record<string, React.ReactNode>;
+  dublicate?: boolean;
   total?: string;
   totalWords?: string;
   type: string;
@@ -59,6 +60,7 @@ export const SuccessCard = ({
   newOpenHandler,
   closeModal,
   meta,
+  dublicate,
   showSignatures,
   jVPrint,
 }: SuccessCardProps) => {
@@ -169,10 +171,12 @@ export const SuccessCard = ({
           showSignatures={showSignatures}
           total={total as string}
           totalWords={totalWords as string}
+          dublicate={dublicate}
           details={details}
           ref={componentRef}
         />
       )}
+
       {jVPrint && (
         <SuccessPrintJornalVoucher
           showSignatures={showSignatures}
@@ -207,7 +211,9 @@ interface SuccessPrintProps {
   details: Record<string, React.ReactNode>;
   total: string;
   totalWords: string;
+
   showSignatures?: boolean;
+  dublicate?: boolean;
   glTransactions?:
     | ({
         account: string;
@@ -223,7 +229,16 @@ interface SuccessPrintProps {
 
 export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
   (
-    { details, total, meta, showSignatures, glTransactions, glTransactionsTotal, totalWords },
+    {
+      details,
+      total,
+      meta,
+      showSignatures,
+      glTransactions,
+      glTransactionsTotal,
+      totalWords,
+      dublicate,
+    },
     ref
   ) => {
     const user = useAppSelector((state) => state.auth.user);
@@ -429,6 +444,196 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
               <Text fontSize="s2" color="gray.800" fontWeight="500">
                 Approved By
               </Text>
+            </Box>
+          </Box>
+        )}
+
+        {dublicate && (
+          <Box
+            // position="fixed"
+            w="100%"
+            bottom="100px"
+            left={0}
+            bg="white"
+            p="s32"
+            pt="s8"
+            flexDir="column"
+            gap="s8"
+          >
+            <Divider borderTop="1px dotted black" pb="s16" />
+            <Box w="100%">
+              <Box display="flex" flexDir="column" gap="s12">
+                <Box display="flex" alignItems="center" gap="s8">
+                  <Box position="relative">
+                    <Avatar
+                      w="s48"
+                      h="s48"
+                      name={user?.organization?.basicDetails?.name as string}
+                      src={user?.organization?.basicDetails?.logo as string}
+                    />
+                  </Box>
+
+                  <Box display="flex" flexDir="column" gap="s4">
+                    <Text fontSize="r2" fontWeight="500" color="gray.800" lineHeight="0.8">
+                      {user?.organization?.basicDetails?.name}
+                    </Text>
+                    <Text fontSize="s2" fontWeight="400" color="gray.700">
+                      Contact: {user?.organization?.contactDetails?.phoneNumber} | Email:{' '}
+                      {user?.organization?.contactDetails?.email ?? 'N/A'} | Website:{' '}
+                      {user?.organization?.contactDetails?.website ?? 'N/A'}
+                    </Text>
+                  </Box>
+                </Box>
+
+                <Box display="flex" alignItems="start" justifyContent="space-between">
+                  <Box display="flex" flexDir="column">
+                    <Text fontSize="s2" color="gray.700" as="span">
+                      Branch: {user?.currentBranch?.name}
+                    </Text>
+                    <Text fontSize="s2" color="gray.700" as="span">
+                      Printed Date: {dayjs(new Date()).format('YYYY-MM-DD')}
+                    </Text>
+                  </Box>
+
+                  <Box>
+                    <Box display="flex" gap="s4">
+                      <Text fontSize="s2" color="gray.700">
+                        Address:
+                      </Text>
+                      <Text fontSize="s2" color="gray.700" fontWeight="500" whiteSpace="nowrap">
+                        {formatAddress(user?.organization?.address)}
+                      </Text>
+                    </Box>
+
+                    <Box display="flex" gap="s4">
+                      <Text fontSize="s2" color="gray.700">
+                        Regd No:
+                      </Text>
+                      <Text fontSize="s2" color="gray.700" fontWeight="500">
+                        {user?.organization?.registrationDetails?.regdNo ?? 'N/A'}
+                      </Text>
+                    </Box>
+
+                    <Box display="flex" gap="s4">
+                      <Text fontSize="s2" color="gray.700">
+                        Pan:
+                      </Text>
+                      <Text fontSize="s2" color="gray.700" fontWeight="500">
+                        {user?.organization?.registrationDetails?.panOrVat ?? 'N/A'}
+                      </Text>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+            <Divider mb={0} borderTop="1px solid" borderTopColor="background.500" />
+            {meta && Object.keys(meta).length !== 0 && (
+              <Box
+                w="100%"
+                display="grid"
+                gridTemplateColumns="repeat(2, 1fr)"
+                rowGap="s4"
+                columnGap="s8"
+              >
+                {meta?.member && (
+                  <Text fontSize="s2" fontWeight="400" color="gray.700">
+                    Member: {meta?.member}
+                  </Text>
+                )}
+
+                {meta?.memberId && (
+                  <Text fontSize="s2" fontWeight="400" color="gray.700">
+                    Member Code: {meta?.memberId}
+                  </Text>
+                )}
+
+                {meta?.accountName && (
+                  <Text fontSize="s2" fontWeight="400" color="gray.700">
+                    Account Name: {meta?.accountName}
+                  </Text>
+                )}
+
+                {meta?.accountId && (
+                  <Text fontSize="s2" fontWeight="400" color="gray.700">
+                    Account Id: {meta?.accountId}
+                  </Text>
+                )}
+              </Box>
+            )}
+
+            <Box
+              mt="s12"
+              w="100%"
+              bg="highlight.500"
+              display="flex"
+              flexDir="column"
+              py="s8"
+              px="s16"
+            >
+              <Box
+                borderBottom={total ? '1px' : 'none'}
+                borderBottomColor="border.layout"
+                display="flex"
+                flexDir="column"
+                gap="s10"
+                py="s8"
+              >
+                {Object.entries(details).map((detail) => (
+                  <Box display="flex" alignItems="center" justifyContent="space-between">
+                    <Box color="gray.600" fontSize="s2" fontWeight="500">
+                      {detail[0]}
+                    </Box>
+                    {typeof detail[1] === 'string' ? (
+                      <Box
+                        color="gray.700"
+                        fontSize="s3"
+                        fontWeight="600"
+                        textTransform="capitalize"
+                      >
+                        {detail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
+                      </Box>
+                    ) : (
+                      detail[1]
+                    )}
+                  </Box>
+                ))}
+              </Box>
+
+              {glTransactions && (
+                <>
+                  <Text fontSize="s1" fontWeight="600" pt="s10">
+                    GL Transactions
+                  </Text>
+                  <GlTransactionJornalVoucherPrint
+                    data={glTransactions}
+                    total={glTransactionsTotal}
+                  />
+                </>
+              )}
+
+              {total && (
+                <Box display="flex" py="s8" justifyContent="space-between">
+                  <Box />
+
+                  <Box
+                    display="flex"
+                    flexDir="column"
+                    gap="s4"
+                    alignItems="end"
+                    justifyContent="end"
+                  >
+                    <Text fontSize="s3" color="gray.600" fontWeight="500" lineHeight="125%">
+                      Total Amount
+                    </Text>
+                    <Text fontSize="r2" color="primary.500" fontWeight="500" lineHeight="125%">
+                      Rs. {total}
+                    </Text>
+                    <Text fontSize="r2" color="primary.500" fontWeight="500" lineHeight="125%">
+                      {totalWords}
+                    </Text>
+                  </Box>
+                </Box>
+              )}
             </Box>
           </Box>
         )}

@@ -49,7 +49,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
         </Text>
       )}
 
-      <InputGroup borderRadius="br2" height={size === 'default' ? '44px' : '36px'}>
+      <InputGroup borderRadius="br2" height={size === 'default' ? 's44' : '36px'}>
         {leftElement && <InputLeftElement pointerEvents="none" children={leftElement} />}
 
         <ChakraInput

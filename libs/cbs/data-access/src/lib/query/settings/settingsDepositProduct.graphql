@@ -1,426 +1,469 @@
 query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProductSearchFilter) {
- settings {
-   general {
-     depositProduct {
-       list(paginate: $paginate, filter: $filter) {
-         totalCount
-         pageInfo {
-           hasNextPage
-           hasPreviousPage
-           startCursor
-           endCursor
-         }
-         edges {
-           node {
-             id
-             objState
-             productCode
-             productName
-             nature
-             interest
-             interest
-             createdDate
-             typeOfMember
-             createdAt
-             createdBy {
-               id
-               name
-               username
-               userType
-             }
-             modifiedAt
-             modifiedBy {
-               id
-               name
-               username
-               userType
-             }
-           }
-         }
-         totalCount
-       }
-     }
-   }
- }
+  settings {
+    general {
+      depositProduct {
+        list(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              objState
+              productCode
+              productName
+              nature
+              interest
+              interest
+              createdDate
+              typeOfMember
+              createdAt
+              createdBy {
+                id
+                name
+                username
+                userType
+              }
+              modifiedAt
+              modifiedBy {
+                id
+                name
+                username
+                userType
+              }
+            }
+          }
+          totalCount
+        }
+      }
+    }
+  }
 }
 
 query getDepositProductSettingsEditData($id: ID!) {
- settings {
-   general {
-     depositProduct {
-       formState(id: $id) {
-         data {
-           productName
-           nature
-           productCode {
-             prefix
-             initialNo
-             noOfDigits
-           }
-           description
-           typeOfMember
-           criteria
-           minAge
-           maxAge
-           genderId
-           maritalStatusId
-           educationQualification
-           transactionAllowed
-           noOftransactionAllowed
-           ethnicity
-           occupation
-           foreignEmployment
-           natureOfBusinessInstitution
-           natureOFBusinessCoop
-           cooperativeType
-           isForMinors
-           depositAmount {
-             minAmount
-             maxAmount
-           }
-           withdrawAmountLimit {
-             minAmount
-             maxAmount
-           }
-           fixedDepositAmountLimit {
-             minAmount
-             maxAmount
-           }
-           depositFrequency
-           penalty
-           penaltyData {
-             dayAfterInstallmentDate
-             penaltyRate
-             penaltyAmount
-             penaltyLedgerMapping
-           }
-           rebate
-           rebateData {
-             dayBeforeInstallmentDate
-             noOfInstallment
-             rebateAmount
-             rebateRate
-             rebateLedgerMapping
-           }
-           isTenureApplicable
-           tenureUnit
-           minTenureUnitNumber
-           maxTenureUnitNumber
-           balanceLimit {
-             minAmount
-             maxAmount
-           }
-           interest {
-             minRate
-             maxRate
-             defaultRate
-             ceoAuthority
-             boardAuthority
-             additionalRate
-           }
-           ladderRate
-           ladderRateData {
-             type
-             amount
-             rate
-           }
-           postingFrequency
-           maxPostingFreqDifference
-           accountType
-           serviceCharge {
-             serviceName
-             ledgerName
-             amount
-           }
-           accountCloseCharge {
-             serviceName
-             ledgerName
-             amount
-           }
+  settings {
+    general {
+      depositProduct {
+        formState(id: $id) {
+          data {
+            productName
+            nature
+            productCode {
+              prefix
+              initialNo
+              noOfDigits
+            }
+            description
+            typeOfMember
+            criteria
+            minAge
+            maxAge
+            genderId
+            maritalStatusId
+            educationQualification
+            transactionAllowed
+            noOftransactionAllowed
+            ethnicity
+            occupation
+            foreignEmployment
+            natureOfBusinessInstitution
+            natureOFBusinessCoop
+            cooperativeType
+            isForMinors
+            depositAmount {
+              minAmount
+              maxAmount
+            }
+            withdrawAmountLimit {
+              minAmount
+              maxAmount
+            }
+            fixedDepositAmountLimit {
+              minAmount
+              maxAmount
+            }
+            depositFrequency
+            penalty
+            penaltyData {
+              dayAfterInstallmentDate
+              penaltyRate
+              penaltyAmount
+              penaltyLedgerMapping
+            }
+            rebate
+            rebateData {
+              dayBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              rebateRate
+              rebateLedgerMapping
+            }
+            isTenureApplicable
+            tenureUnit
+            minTenureUnitNumber
+            maxTenureUnitNumber
+            balanceLimit {
+              minAmount
+              maxAmount
+            }
+            interest {
+              minRate
+              maxRate
+              defaultRate
+              ceoAuthority
+              boardAuthority
+              additionalRate
+            }
+            ladderRate
+            ladderRateData {
+              type
+              amount
+              rate
+            }
+            postingFrequency
+            maxPostingFreqDifference
+            accountType
+            serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            accountCloseCharge {
+              serviceName
+              ledgerName
+              amount
+            }
 
-           chequeCharge {
-             serviceName
-             ledgerName
-             amount
-           }
-           atmCharge {
-             serviceName
-             ledgerName
-             amount
-           }
-           alternativeChannelCharge {
-             serviceName
-             ledgerName
-             amount
-           }
+            chequeCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            atmCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            alternativeChannelCharge {
+              serviceName
+              ledgerName
+              amount
+            }
 
-           dormantSetup {
-             duration
-             condition
-           }
-           withdrawPenalty {
-             penaltyLedgerMapping
-             penaltyAmount
-             penaltyRate
-           }
-           isMandatorySaving
-           autoOpen
-           allowLoan
-           percentageOfDeposit
-           alternativeChannels
-           atmFacility
-           chequeIssue
-           supportMultiple
-           staffProduct
-           withdrawRestricted
-           specifyWithdrawRestriction
-           wealthBuildingProduct
-           individualDocuments
-           institutionDocuments
-           isPrematurePenaltyApplicable
-           prematurePenalty {
-             penaltyDateType
-             noOfDays
-             penaltyLedgerMapping
-             penaltyAmount
-             penaltyRate
-           }
-         }
-       }
-     }
-   }
- }
+            dormantSetup {
+              duration
+              condition
+            }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+            isMandatorySaving
+            autoOpen
+            allowLoan
+            percentageOfDeposit
+            alternativeChannels
+            atmFacility
+            chequeIssue
+            supportMultiple
+            staffProduct
+            withdrawRestricted
+            specifyWithdrawRestriction
+            wealthBuildingProduct
+            individualDocuments
+            institutionDocuments
+            isPrematurePenaltyApplicable
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 query getSavingsProductDetail($id: ID!) {
- settings {
-   general {
-     depositProduct {
-       depositProductDetail(id: $id) {
-         data {
-           id
-           noOfAccounts
-           noOfMembers
-           objState
-           supportMultiple
-           productName
-           nature
-           productCode {
-             prefix
-             initialNo
-             noOfDigits
-           }
-           description
-           typeOfMember
-           criteria
-           minAge
-           maxAge
-           genderId
-           maritalStatusId
-           educationQualification
-           transactionAllowed
-           noOftransactionAllowed
-           ethnicity
-           occupation
-           foreignEmployment
-           natureOfBusinessInstitution
-           natureOFBusinessCoop
-           cooperativeType
-           isForMinors
-           depositAmount {
-             minAmount
-             maxAmount
-           }
-           withdrawAmountLimit {
-             minAmount
-             maxAmount
-           }
-           fixedDepositAmountLimit {
-             minAmount
-             maxAmount
-           }
-           depositFrequency
-           penalty
-           penaltyData {
-             dayAfterInstallmentDate
-             penaltyRate
-             penaltyAmount
-             penaltyLedgerMapping
-           }
-           rebate
-           rebateData {
-             dayBeforeInstallmentDate
-             noOfInstallment
-             rebateAmount
-             rebateRate
-             rebateLedgerMapping
-           }
-           isTenureApplicable
-           tenureUnit
-           minTenureUnitNumber
-           maxTenureUnitNumber
-           balanceLimit {
-             minAmount
-             maxAmount
-           }
-           interest {
-             minRate
-             maxRate
-             defaultRate
-             ceoAuthority
-             boardAuthority
-             additionalRate
-           }
-           ladderRate
-           ladderRateData {
-             type
-             amount
-             rate
-           }
-           postingFrequency
-           maxPostingFreqDifference
-           accountType
-           serviceCharge {
-             serviceName
-             ledgerName
-             amount
-           }
-           accountCloseCharge {
-             serviceName
-             ledgerName
-             amount
-           }
+  settings {
+    general {
+      depositProduct {
+        depositProductDetail(id: $id) {
+          data {
+            id
+            noOfAccounts
+            noOfDormantAccounts
+            noOfInactiveAccounts
+            noOfMembers
+            objState
+            supportMultiple
+            productName
+            nature
+            productCode {
+              prefix
+              initialNo
+              noOfDigits
+            }
+            description
+            typeOfMember
+            criteria
+            minAge
+            maxAge
+            genderId
+            maritalStatusId
+            educationQualification
+            transactionAllowed
+            noOftransactionAllowed
+            ethnicity
+            occupation
+            foreignEmployment
+            natureOfBusinessInstitution
+            natureOFBusinessCoop
+            cooperativeType
+            isForMinors
+            depositAmount {
+              minAmount
+              maxAmount
+            }
+            withdrawAmountLimit {
+              minAmount
+              maxAmount
+            }
+            fixedDepositAmountLimit {
+              minAmount
+              maxAmount
+            }
+            depositFrequency
+            penalty
+            penaltyData {
+              dayAfterInstallmentDate
+              penaltyRate
+              penaltyAmount
+              penaltyLedgerMapping
+            }
+            rebate
+            rebateData {
+              dayBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              rebateRate
+              rebateLedgerMapping
+            }
+            isTenureApplicable
+            tenureUnit
+            minTenureUnitNumber
+            maxTenureUnitNumber
+            balanceLimit {
+              minAmount
+              maxAmount
+            }
+            interest {
+              minRate
+              maxRate
+              defaultRate
+              ceoAuthority
+              boardAuthority
+              additionalRate
+              changeMin
+              changeMax
+            }
+            ladderRate
+            ladderRateData {
+              type
+              amount
+              rate
+            }
+            postingFrequency
+            maxPostingFreqDifference
+            accountType
+            serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            accountCloseCharge {
+              serviceName
+              ledgerName
+              amount
+            }
 
-           chequeCharge {
-             serviceName
-             ledgerName
-             amount
-           }
-           atmCharge {
-             serviceName
-             ledgerName
-             amount
-           }
-           alternativeChannelCharge {
-             serviceName
-             ledgerName
-             amount
-           }
+            chequeCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            atmCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            alternativeChannelCharge {
+              serviceName
+              ledgerName
+              amount
+            }
 
-           dormantSetup {
-             duration
-             condition
-           }
-           withdrawPenalty {
-             penaltyLedgerMapping
-             penaltyAmount
-             penaltyRate
-           }
-           isMandatorySaving
-           autoOpen
-           allowLoan
-           percentageOfDeposit
-           alternativeChannels
-           atmFacility
-           chequeIssue
-           supportMultiple
-           staffProduct
-           withdrawRestricted
-           specifyWithdrawRestriction
-           wealthBuildingProduct
-           individualDocuments
-           institutionDocuments
-           isPrematurePenaltyApplicable
-           prematurePenalty {
-             penaltyDateType
-             noOfDays
-             penaltyLedgerMapping
-             penaltyAmount
-             penaltyRate
-           }
-           savingCharges {
-             serviceName
-             ledgerName
-             amount
-           }
-         }
-       }
-     }
-   }
- }
+            dormantSetup {
+              duration
+              condition
+            }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+            isMandatorySaving
+            autoOpen
+            allowLoan
+            percentageOfDeposit
+            alternativeChannels
+            atmFacility
+            chequeIssue
+            supportMultiple
+            staffProduct
+            withdrawRestricted
+            specifyWithdrawRestriction
+            wealthBuildingProduct
+            individualDocuments
+            institutionDocuments
+            isPrematurePenaltyApplicable
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+            savingCharges {
+              serviceName
+              ledgerName
+              amount
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 query getSavingsProductCriteria($productId: ID!) {
- settings {
-   general {
-     depositProduct {
-       getProductCriteria(productId: $productId) {
-         data {
-           gender
-           minAge
-           maxAge
-           ethnicity
-           educationQualification
-           maritalStatus
-           foreignEmployment
-           occupation
-           institutionType
-           cooperativeUnion
-           cooperativeType
-         }
-       }
-     }
-   }
- }
+  settings {
+    general {
+      depositProduct {
+        getProductCriteria(productId: $productId) {
+          data {
+            gender
+            minAge
+            maxAge
+            ethnicity
+            educationQualification
+            maritalStatus
+            foreignEmployment
+            occupation
+            institutionType
+            cooperativeUnion
+            cooperativeType
+          }
+        }
+      }
+    }
+  }
 }
 
 query getSavingsAccountList($paginate: Pagination, $filter: Filter) {
- settings {
-   general {
-     depositProduct {
-       getAccountlist(paginate: $paginate, filter: $filter) {
-         totalCount
-         pageInfo {
-           hasNextPage
-           hasPreviousPage
-           startCursor
-           endCursor
-         }
-         edges {
-           node {
-             id
-             objState
-             closedAt
-             accountName
-             member {
-               code
-               type
-               name
-             }
-             balance
-             interestAccured
-             interestTax
-             prematurePenalty
-             lastTransactionDate
-             accountOpenedDate
-             installmentAmount
-             product {
-               productCode
-               productName
-               nature
-             }
-             accountExpiryDate
-             overDrawnBalance
-             guaranteedAmount
-             dues {
-               fine
-               totalDue
-               dueInstallments
-             }
-           }
-         }
-       }
-     }
-   }
- }
+  settings {
+    general {
+      depositProduct {
+        getAccountlist(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              objState
+              closedAt
+              accountName
+              member {
+                code
+                type
+                name
+              }
+              balance
+              interestAccured
+              interestTax
+              prematurePenalty
+              lastTransactionDate
+              accountOpenedDate
+              installmentAmount
+              product {
+                productCode
+                productName
+                nature
+              }
+              accountExpiryDate
+              overDrawnBalance
+              guaranteedAmount
+              dues {
+                fine
+                totalDue
+                dueInstallments
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSavingProductInterestRateList($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        listProductInterestRates(productId: $productId) {
+          data {
+            id
+            rate
+            effectiveDate
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSavingProductInterestRateDetail($id: ID!, $productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getProductInterestRate(id: $id, productId: $productId) {
+          data {
+            id
+            rate
+            effectiveDate
+            fileUploads {
+              identifier
+              url
+            }
+            note
+            createdAt
+          }
+        }
+      }
+    }
+  }
 }

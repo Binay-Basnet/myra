@@ -1,19 +1,14 @@
-import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useEffect, useMemo, useState } from 'react';
+import { Spreadsheet } from 'react-spreadsheet';
 import { useRouter } from 'next/router';
 import { useGetCsvDataQuery, useSetCsvDataMutation } from '@migration/data-access';
-import { differenceWith, isEqual, omit } from 'lodash';
+import { differenceWith, isEmpty, isEqual, omit } from 'lodash';
 
-import { Box, Button, Loader, Text } from '@myra-ui';
-
-import { FormEditableTable } from '@coop/shared/form';
+import { Box, Button, Loader, Text, toast } from '@myra-ui';
 
 export const MigrationFileComponent = () => {
   const router = useRouter();
   const [changedRows, setChangedRows] = useState([]);
-
-  const methods = useForm();
-  const { reset, handleSubmit, getValues, watch } = methods;
 
   const { data, refetch, isLoading } = useGetCsvDataQuery({
     input: {
@@ -22,34 +17,50 @@ export const MigrationFileComponent = () => {
       folderName:
         router?.query['csvType'] !== 'transformedCSV'
           ? ([router?.query['csvType']] as string[])
-          : ([router?.query['csvType'], router?.query['folderName']] as unknown as string[]),
+          : ([
+              router?.query['csvType'],
+              router?.query['folderName'],
+              router?.query['subfolder'],
+            ] as unknown as string[]),
       pageNo: 1 as unknown as string,
       data: null,
     },
   });
 
-  const { mutateAsync } = useSetCsvDataMutation();
+  const tableData = data?.protectedQuery?.getFileData || [];
+  const tableDataArray =
+    tableData && tableData?.reduce((acc, curr) => [...acc, { row: curr?.row, ...curr?.data }], []);
+  const columnLabel = !isEmpty(tableData) && Object?.keys(tableDataArray?.[0]);
 
-  const tableData = data?.protectedQuery?.getFileData;
-  const alteredTableData = tableData?.reduce(
-    (acc, curr) => [...acc, { ...curr?.data, row: curr?.row }],
-    []
+  const csvArray =
+    tableData &&
+    tableDataArray?.map((obj) => Object?.values(obj)?.map((value) => ({ value: String(value) })));
+  const [csvData, setCsvData] = useState([]);
+
+  useEffect(() => {
+    setCsvData(csvArray);
+  }, [JSON.stringify(tableDataArray)]);
+
+  const { mutateAsync } = useSetCsvDataMutation();
+  const dataToBeSent = csvData?.map((innerArr) =>
+    innerArr.reduce((acc, curr, index) => {
+      acc[columnLabel[index]] = curr.value;
+      return acc;
+    }, {})
+  );
+  const finalData = differenceWith(dataToBeSent, tableDataArray, isEqual);
+
+  const rowLabel = useMemo(
+    () => tableDataArray?.map((item) => (changedRows.includes(item?.row) ? 'Edited' : '')),
+    [changedRows]
   );
 
   useEffect(() => {
-    if (alteredTableData) {
-      reset({
-        data: [...alteredTableData],
-      });
-    }
-  }, [tableData]);
-
-  const columns =
-    tableData &&
-    Object?.keys(tableData?.[0]?.data)?.map((item) => ({ accessor: item, header: item }));
+    const changedData = finalData?.map((item) => item?.row);
+    setChangedRows(changedData);
+  }, [JSON.stringify(csvData)]);
 
   const onSubmit = () => {
-    const dataToBeSent = differenceWith(getValues()?.data, alteredTableData, isEqual);
     mutateAsync({
       input: {
         fileName: router?.query['filename'] as string,
@@ -57,15 +68,27 @@ export const MigrationFileComponent = () => {
         folderName:
           router?.query['csvType'] !== 'transformedCSV'
             ? ([router?.query['csvType']] as string[])
-            : ([router?.query['csvType'], router?.query['folderName']] as unknown as string[]),
+            : ([
+                router?.query['csvType'],
+                router?.query['folderName'],
+                router?.query['subfolder'],
+              ] as unknown as string[]),
         pageNo: 1 as unknown as string,
-        data: dataToBeSent?.reduce(
+        data: finalData?.reduce(
           (acc, curr) => [...acc, { row: curr?.row, data: omit({ ...curr }, ['row']) }],
           []
         ),
       },
-    }).then(() => refetch());
+    }).then((res) => {
+      refetch();
+      toast({
+        id: 'csv-file',
+        type: 'success',
+        message: res?.protectedMutation?.sendFileData?.status,
+      });
+    });
   };
+
   if (isLoading) {
     return (
       <Box>
@@ -74,25 +97,12 @@ export const MigrationFileComponent = () => {
     );
   }
 
-  const onChange = () => {
-    const watchedData = watch('data');
-    const dataToBeSent = differenceWith(watchedData, alteredTableData, isEqual);
-    setChangedRows(dataToBeSent);
-  };
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} onChange={onChange}>
-        <Box
-          display="flex"
-          flexDir="column"
-          p={5}
-          gap={5}
-          bg="whiteAlpha.900"
-          borderRadius={6}
-          boxShadow="lg"
-        >
-          <Box display="flex" justifyContent="space-between">
-            <Box display="flex" flexDir="column">
+    <Box p={5}>
+      {tableData && (
+        <Box display="flex" flexDir="column">
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box>
               <Text fontSize="r3" fontWeight="medium">
                 Project: {router?.query['name']}
               </Text>
@@ -102,12 +112,14 @@ export const MigrationFileComponent = () => {
               <Text fontSize="r3" fontWeight="medium">
                 Migration File: {router?.query['filename']}
               </Text>
+              <br />
             </Box>
-            <Button type="submit" w={100}>
+            <Button width="-webkit-fit-content" onClick={onSubmit}>
               Submit
             </Button>
+            <br />
           </Box>
-          <Box
+          {/* <Box
             display="flex"
             p={2}
             bg="gray.500"
@@ -116,21 +128,22 @@ export const MigrationFileComponent = () => {
             position="fixed"
             top={90}
             left={500}
+            zIndex={1}
           >
-            Changed Rows: {changedRows?.map((item) => `${item?.row}, `)}
+            Changed Row: {changedRows?.map((item) => `${item}, `)}
+          </Box> */}
+          <Box width="-webkit-fit-content">
+            <Spreadsheet
+              data={csvData}
+              columnLabels={columnLabel}
+              // hideRowIndicators
+              onChange={setCsvData}
+              rowLabels={rowLabel}
+            />
           </Box>
-          {columns && tableData && (
-            <Box overflowX="scroll">
-              <FormEditableTable
-                name="data"
-                hideSN
-                columns={[{ accessor: 'row', header: 'Row' }].concat(columns)}
-              />
-            </Box>
-          )}
         </Box>
-      </form>
-    </FormProvider>
+      )}
+    </Box>
   );
 };
 

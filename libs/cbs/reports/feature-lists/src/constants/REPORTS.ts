@@ -127,6 +127,7 @@ export enum Report {
   USER_LIST_REPORT = 'User List Report',
   SAVING_BALANCE_REPORT = 'Saving Balance [Individual]',
   COPOMIS_IMPORT_MEMBER_REPORT = 'Copomis Import Member Report',
+  PEARLS_REPORT = 'Pearls Report',
 
   EXCEPTION_SAVING_BALANCE = 'Saving Balance Exception Report',
   EXCEPTION_LOAN_BALANCE = 'Loan Balance Exception Report',
@@ -604,6 +605,11 @@ export const REPORTS = {
       id: '11',
       report: Report.COPOMIS_IMPORT_MEMBER_REPORT,
       link: 'copomis-import-member',
+    },
+    {
+      id: '12',
+      report: Report.PEARLS_REPORT,
+      link: 'pearls-report',
     },
   ],
   [ReportGroup.EXCEPTION]: [

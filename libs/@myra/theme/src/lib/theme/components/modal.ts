@@ -28,7 +28,7 @@ const baseStyleDialog: SystemStyleFunction = (props) => ({
   borderRadius: 'md',
   bg: mode('white', 'gray.700')(props),
   color: 'inherit',
-  my: '3.75rem',
+  my: '60px',
   zIndex: 'modal',
   maxHeight: '80vh',
   height: 'auto',
@@ -41,7 +41,7 @@ const baseStyleHeader: SystemStyleObject = {
   fontSize: 'xl',
   fontWeight: 'semibold',
   flex: 'none',
-  height: '50px',
+  height: '3.125rem',
 
   display: 'flex',
   alignItems: 'center',

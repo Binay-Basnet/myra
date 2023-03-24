@@ -35,6 +35,7 @@ export const KymCoopBasicInfo = (props: IProps) => {
             label={t['kymCoopNameofOrganization']}
           />
           <FormInput type="number" name="regdNumber" label={t['kymCoopRegisrationNo']} />
+          <FormInput name="vatNo" label="VAT/PAN No" />
 
           <FormInput
             isRequired

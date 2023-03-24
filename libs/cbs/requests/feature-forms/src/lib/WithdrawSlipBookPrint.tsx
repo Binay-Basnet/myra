@@ -191,7 +191,7 @@ export const WithdrawSlipBookPrint = () => {
             </Box>
 
             <form>
-              <Box minH="calc(100vh - 170px)" pb="s60">
+              <Box minH="calc(100vh - 170px)" pb="60px">
                 <FormSection templateColumns={2}>
                   <GridItem colSpan={2}>
                     <FormMemberSelect isRequired name="memberId" label="Member" isDisabled />

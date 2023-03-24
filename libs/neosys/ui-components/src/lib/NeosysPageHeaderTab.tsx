@@ -6,7 +6,7 @@ import { en, useTranslation } from '@coop/shared/utils';
 const TabElement = chakra(Tab, {
   baseStyle: {
     color: '#636972',
-    height: '50px',
+    height: '3.125rem',
     fontSize: '14px',
     fontWeight: '600',
     // width: '100px',

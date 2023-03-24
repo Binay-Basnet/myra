@@ -24,7 +24,7 @@ const container = {
   sm: '640px',
   md: '768px',
   lg: '1024px',
-  xl: '1280px',
+  xl: '1180px',
 };
 
 const sizes = {
@@ -39,7 +39,6 @@ const sizes = {
  *
  * type Sizes = DefaultChakraTheme['sizes']
  */
-export type Sizes = typeof spacing &
-  typeof largeSizes & { container: typeof container };
+export type Sizes = typeof spacing & typeof largeSizes & { container: typeof container };
 
 export default sizes;

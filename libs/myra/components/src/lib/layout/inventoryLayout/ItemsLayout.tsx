@@ -8,14 +8,20 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Button, Divider, Icon, Text } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import {
+  useGetItemCategoryListQuery,
+  useSetItemCategoryMutation,
+  useSetUnitsMutation,
+} from '@coop/cbs/data-access';
+import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../../tab/TabforMemberPage';
 
@@ -26,6 +32,36 @@ interface IInventoryPageLayoutProps {
 export const InventoryItemsLayout = ({ children }: IInventoryPageLayoutProps) => {
   const [openModal, setOpenModal] = useState(false);
   const [openModalUnits, setOpenModalUnits] = useState(false);
+  const router = useRouter();
+  const { t } = useTranslation();
+  const queryClient = useQueryClient();
+
+  const itemCategoryMethods = useForm();
+  const unitMethods = useForm();
+
+  const { getValues: itemCategoryValues, handleSubmit: itemCategoryHandleSubmit } =
+    itemCategoryMethods;
+
+  const { getValues: unitsValues, handleSubmit: unitHandleSubmit } = unitMethods;
+
+  const { data } = useGetItemCategoryListQuery({
+    pagination: {
+      ...getPaginationQuery(),
+      first: 20,
+      order: {
+        arrange: 'ASC',
+        column: 'ID',
+      },
+    },
+  });
+
+  const { mutateAsync: itemCategoryMutate } = useSetItemCategoryMutation();
+  const { mutateAsync: unitMutate } = useSetUnitsMutation();
+
+  const underItemGroup = data?.inventory?.itemsGroup?.list?.edges?.map((item) => ({
+    value: item?.node?.id,
+    label: item?.node?.name,
+  })) as { value: string; label: string }[];
 
   const onOpenModal = () => {
     setOpenModal(true);
@@ -56,9 +92,19 @@ export const InventoryItemsLayout = ({ children }: IInventoryPageLayoutProps) =>
     },
   ];
 
-  const router = useRouter();
-  const { t } = useTranslation();
-  const methods = useForm();
+  const onItemCategorySubmit = () => {
+    itemCategoryMutate({ data: { ...itemCategoryValues() } }).then(() => {
+      queryClient.invalidateQueries(['getItemCategoryList']);
+      onCloseModal();
+    });
+  };
+
+  const unitOnSubmit = () => {
+    unitMutate({ data: { ...unitsValues() } }).then(() => {
+      queryClient.invalidateQueries(['getUnitsList']);
+      onCloseModalUnits();
+    });
+  };
 
   return (
     <>
@@ -110,48 +156,24 @@ export const InventoryItemsLayout = ({ children }: IInventoryPageLayoutProps) =>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <FormProvider {...methods}>
-              <form>
+            <FormProvider {...itemCategoryMethods}>
+              <form onSubmit={itemCategoryHandleSubmit(onItemCategorySubmit)}>
                 <Box display="flex" flexDirection="column" gap="s24">
-                  <FormInput
-                    type="text"
-                    name="name"
-                    label={t['catgItemGroupName']}
-                    __placeholder={t['catgItemGroupName']}
-                  />
+                  <FormInput type="text" name="name" label={t['catgItemGroupName']} />
                   <FormSelect
-                    name="group"
+                    name="parentCategory"
                     label={t['catgUnderItemGroup']}
                     __placeholder={t['catgSelectItemGroup']}
-                    options={[
-                      {
-                        label: '1',
-                        value: '1',
-                      },
-                      {
-                        label: '2',
-                        value: '2',
-                      },
-                      {
-                        label: '3',
-                        value: '3',
-                      },
-                    ]}
+                    options={underItemGroup}
                   />
-                  <FormInput
-                    type="text"
-                    name="name"
-                    label={t['catgDescription']}
-                    __placeholder={t['catgDescription']}
-                  />
+                  <FormInput type="text" name="description" label={t['catgDescription']} />
+                  <Button w="-webkit-fit-content" type="submit" alignSelf="flex-end">
+                    {t['catgAddItemGroup']}
+                  </Button>
                 </Box>
               </form>
             </FormProvider>
           </ModalBody>
-
-          <ModalFooter>
-            <Button>{t['catgAddItemGroup']}</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
       <Modal isOpen={openModalUnits} onClose={onCloseModalUnits} isCentered trapFocus={false}>
@@ -164,36 +186,20 @@ export const InventoryItemsLayout = ({ children }: IInventoryPageLayoutProps) =>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <FormProvider {...methods}>
-              <form>
+            <FormProvider {...unitMethods}>
+              <form onSubmit={unitHandleSubmit(unitOnSubmit)}>
                 <Box display="flex" flexDirection="column" gap="s24">
-                  <FormInput
-                    type="text"
-                    name="name"
-                    label={t['itemUnitFormName']}
-                    __placeholder={t['itemUnitFormName']}
-                  />
-                  <FormInput
-                    type="text"
-                    name="shortName"
-                    label={t['itemUnitFormShortName']}
-                    __placeholder={t['itemUnitFormShortName']}
-                  />
-                  <FormInput
-                    type="text"
-                    name="description"
-                    label={t['itemUnitFormDescription']}
-                    __placeholder={t['itemUnitFormDescription']}
-                  />
+                  <FormInput type="text" name="name" label={t['itemUnitFormName']} />
+                  <FormInput type="text" name="shortName" label={t['itemUnitFormShortName']} />
+                  <FormInput type="text" name="description" label={t['itemUnitFormDescription']} />
                   <FormSwitch name="acceptFraction" label={t['itemUnitFormAcceptsFraction']} />
+                  <Button w="-webkit-fit-content" type="submit" alignSelf="flex-end">
+                    Add Unit
+                  </Button>
                 </Box>
               </form>
             </FormProvider>
           </ModalBody>
-
-          <ModalFooter>
-            <Button>{t['itemUnitFormAddUnitofMeasurement']}</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

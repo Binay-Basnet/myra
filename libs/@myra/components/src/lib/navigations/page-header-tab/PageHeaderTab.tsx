@@ -7,8 +7,8 @@ import { en, useTranslation } from '@coop/shared/utils';
 const TabElement = chakra(Tab, {
   baseStyle: {
     color: 'gray.600',
-    height: '50px',
-    fontSize: '14px',
+    height: '3.125rem',
+    fontSize: 'r1',
     fontWeight: '600',
     // width: '100px',
     display: 'flex',
@@ -37,7 +37,9 @@ export const PageHeaderTab = ({ list, showTabsInFilter }: PageHeaderTabProps) =>
 
   const { t } = useTranslation();
 
-  const currentIndex = list.findIndex((value) => router?.query['filter']?.includes(value.key));
+  const currentIndex = showTabsInFilter
+    ? list.findIndex((value) => router?.query['filter']?.includes(value.key))
+    : list.findIndex((value) => router?.query['objState']?.includes(value.key));
 
   return (
     <Tabs variant="unstyled" index={currentIndex === -1 ? 0 : currentIndex}>
@@ -63,6 +65,7 @@ export const PageHeaderTab = ({ list, showTabsInFilter }: PageHeaderTabProps) =>
               } else {
                 router?.push({
                   query: {
+                    ...router.query,
                     objState: item.key,
                   },
                 });

@@ -11,11 +11,20 @@ export const theme = extendTheme({
   styles: {
     global: () => ({
       'html, body': {
-        fontSize: 'md',
+        fontSize: '100%',
         background: 'background.500',
         lineHeight: 'tall',
         scrollBehavior: 'smooth',
         fontFamily: 'Inter',
+      },
+      '@media only screen and (max-width: 1366px)': {
+        'html, body': {
+          fontSize: '81.25%',
+          background: 'background.500',
+          lineHeight: 'tall',
+          scrollBehavior: 'smooth',
+          fontFamily: 'Inter',
+        },
       },
       ':lang(ne)': {
         fontFamily: 'Mukta',

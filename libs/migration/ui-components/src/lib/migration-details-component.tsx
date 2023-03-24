@@ -14,7 +14,7 @@ import {
 
 import { Box, Button, Collapse, Grid, GridItem, Text } from '@myra-ui';
 
-import { FormSelect } from '@coop/shared/form';
+import { FormDatePicker, FormSelect } from '@coop/shared/form';
 
 export const MigrationDetailsComponents = () => {
   const [sourceCollapse, setSourceCollapse] = useState(true);
@@ -59,6 +59,7 @@ export const MigrationDetailsComponents = () => {
         dbName: router?.query?.['name'] as string,
         choices: 'all',
         databaseType: getValues()?.databaseType,
+        reportDate: getValues()?.reportDate?.en,
       },
     }).then(() => directoryRefetch());
   };
@@ -207,6 +208,7 @@ export const MigrationDetailsComponents = () => {
                         { label: 'Cooperative Union', value: 'COOPERATIVE_UNION' },
                       ]}
                     />
+                    <FormDatePicker name="reportDate" label="Report date" />
                     <Button type="submit" w={100}>
                       Submit
                     </Button>
@@ -216,41 +218,41 @@ export const MigrationDetailsComponents = () => {
 
               <Collapse in={transformCollapse}>
                 {transformedCSVDataKeys?.map((item) => {
-                  const tableDataArray = transformedCSVData?.[item] as unknown as string[];
+                  const tableDataArray = Object.keys(
+                    transformedCSVData?.[item]
+                  ) as unknown as string[];
+
                   return (
                     <>
                       <Text fontSize="r2" fontWeight="medium">
                         {item} :
                       </Text>
 
-                      <Box maxH="35vh" overflowY="scroll">
-                        <TableContainer>
-                          <Table size="sm">
-                            <Thead>
-                              <Tr>
-                                <Th>S.N</Th>
-                                <Th>Filename</Th>
+                      <TableContainer border="1px" borderColor="gray.100">
+                        <Table size="sm">
+                          <Thead>
+                            <Tr>
+                              <Th>S.N</Th>
+                              <Th>Foldername</Th>
+                            </Tr>
+                          </Thead>
+                          <Tbody>
+                            {tableDataArray?.map((i, index) => (
+                              <Tr
+                                cursor="pointer"
+                                onClick={() =>
+                                  router.push(
+                                    `/${router?.query['name']}/details?folderName=${item}&&subfolder=${i}&&csvType=transformedCSV`
+                                  )
+                                }
+                              >
+                                <Td>{index + 1}</Td>
+                                <Td>{i}</Td>
                               </Tr>
-                            </Thead>
-                            <Tbody>
-                              {tableDataArray?.map((i, index) => (
-                                <Tr
-                                  cursor="pointer"
-                                  onClick={() =>
-                                    router.push(
-                                      `/${router?.query['name']}/${i}?csvType=transformedCSV&&folderName=${item}`
-                                    )
-                                  }
-                                >
-                                  <Td>{index + 1}</Td>
-                                  <Td>{i}</Td>
-                                </Tr>
-                              ))}
-                            </Tbody>
-                          </Table>
-                        </TableContainer>
-                      </Box>
-
+                            ))}
+                          </Tbody>
+                        </Table>
+                      </TableContainer>
                       <br />
                     </>
                   );

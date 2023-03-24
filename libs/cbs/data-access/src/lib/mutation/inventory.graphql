@@ -1,0 +1,51 @@
+mutation setItemCategory($data: InvItemsGroupInput!) {
+  inventory {
+    itemsGroup {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setUnits($data: InvUnitOfMeasureInput!) {
+  inventory {
+    unitOfMeasure {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setWareHouse($data: AddWarehouseInput) {
+  inventory {
+    warehouse {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setSuppliers($data: InvSupplierInput) {
+  inventory {
+    suppliers {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Alert, asyncToast, Box, Button, Modal, Text } from '@myra-ui';
+import { Alert, asyncToast, Box, Button, Modal, Scrollable, Text } from '@myra-ui';
 
 import {
   TypeOfLoan,
@@ -15,7 +15,13 @@ import { amountConverter } from '@coop/shared/utils';
 
 import { SideBar } from '../component/SideBar';
 import { useLoanAccountDetailHooks } from '../hooks/useLoanAccountDetailHooks';
-import { CollateralPage, DocumentPage, GuaranteePage, LedgerPage } from '../tabs';
+import {
+  CollateralPage,
+  DocumentPage,
+  GuaranteePage,
+  InterestUpdatePage,
+  LedgerPage,
+} from '../tabs';
 import { OverviewPage } from '../tabs/OverviewPage';
 
 /* eslint-disable-next-line */
@@ -85,22 +91,27 @@ export const CbsLoanFeatureLoanAccountDetail = (props: CbsLoanFeatureLoanAccount
 
   return (
     <Box bg="gray.100">
-      <Box
-        bg="gray.0"
-        w="320px"
-        position="fixed"
-        h="calc(100vh - 110px)"
-        borderRight="1px"
-        borderRightColor="border.layout"
-      >
-        <SideBar />
-      </Box>
-      <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
-        {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <OverviewPage />}
-        {tabQuery === 'collateral' && <CollateralPage />}
-        {tabQuery === 'guarantee' && <GuaranteePage />}
-        {tabQuery === 'documents' && <DocumentPage />}
-        {tabQuery === 'ledger' && <LedgerPage />}
+      <Box display="flex">
+        <Box
+          bg="gray.0"
+          w="320px"
+          position="fixed"
+          h="calc(100vh - 110px)"
+          borderRight="1px"
+          borderRightColor="border.layout"
+        >
+          <SideBar />
+        </Box>
+        <Scrollable detailPage>
+          <Box ml="320px" p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
+            {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <OverviewPage />}
+            {tabQuery === 'collateral' && <CollateralPage />}
+            {tabQuery === 'guarantee' && <GuaranteePage />}
+            {tabQuery === 'documents' && <DocumentPage />}
+            {tabQuery === 'ledger' && <LedgerPage />}
+            {tabQuery === 'interest update' && <InterestUpdatePage />}
+          </Box>
+        </Scrollable>
       </Box>
       <FormProvider {...methods}>
         <form>

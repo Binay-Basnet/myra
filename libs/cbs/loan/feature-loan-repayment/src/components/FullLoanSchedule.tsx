@@ -42,7 +42,7 @@ export const FullLoanSchedule = ({
         footer: 'Total',
 
         meta: {
-          width: '50px',
+          width: '3.125rem',
           Footer: {
             colspan: 2,
           },

@@ -64,7 +64,7 @@ export const DashboardTable = () => {
       hasTable
       // leftBtn={<Button variant="ghost">View All Requests</Button>}
     >
-      <Table isStatic showFooter isLoading={false} data={dataList ?? []} columns={columns} />
+      <Table isStatic isLoading={false} data={dataList ?? []} columns={columns} />
     </DetailsCard>
   );
 };

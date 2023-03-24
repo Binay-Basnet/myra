@@ -8,13 +8,15 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { FormInput, FormMap, FormSwitch } from '@coop/shared/form';
-import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@myra-ui';
+import { Box, Button, Divider, Icon, Text } from '@myra-ui';
+
+import { useSetWareHouseMutation } from '@coop/cbs/data-access';
+import { FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../../tab/TabforMemberPage';
@@ -38,7 +40,12 @@ export const WarehouseLayout = ({ children }: IInventoryPageLayoutProps) => {
   const router = useRouter();
   const { t } = useTranslation();
   const methods = useForm({});
+  const queryClient = useQueryClient();
+  const { getValues, handleSubmit } = methods;
+
   const [openModal, setOpenModal] = useState(false);
+
+  const { mutateAsync: warehouseMutateAsync } = useSetWareHouseMutation();
 
   const onOpenModal = () => {
     setOpenModal(true);
@@ -48,61 +55,39 @@ export const WarehouseLayout = ({ children }: IInventoryPageLayoutProps) => {
     setOpenModal(false);
   };
 
+  const onSubmit = () => {
+    warehouseMutateAsync({ data: { ...getValues() } }).then(() => {
+      queryClient.invalidateQueries(['getWarehouseList']);
+      onCloseModal();
+    });
+  };
+
   const AddWarehouseModal = () => (
     <Modal isOpen={openModal} onClose={onCloseModal} isCentered trapFocus={false}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
           <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
-            {t['warehouseFormNewWarehouse']}
+            Add Warehouse
           </Text>
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody p="s16">
           <FormProvider {...methods}>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Box display="flex" flexDirection="column" gap="s24">
-                <Grid templateColumns="repeat(3,1fr)" gap="s20">
-                  <GridItem colSpan={2}>
-                    <FormInput
-                      type="text"
-                      name="name"
-                      label={t['warehouseFormName']}
-                      __placeholder={t['warehouseFormEnterName']}
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormInput
-                      type="text"
-                      name="phoneNumber"
-                      label={t['warehouseFormPhoneNumber']}
-                      __placeholder={t['warehouseFormEnterPhoneNumber']}
-                    />
-                  </GridItem>
-                </Grid>
+                <FormInput type="text" name="name" label={t['warehouseFormName']} />
 
-                <FormSwitch name="defaultWarehouse" label={t['warehouseFormDefaultWarehouse']} />
+                <FormInput type="number" name="phoneNumber" label={t['warehouseFormPhoneNumber']} />
 
-                <Box display="flex" flexDirection="column" gap="s16">
-                  <FormInput
-                    type="text"
-                    name="address"
-                    label={t['warehouseFormAddress']}
-                    __placeholder={t['warehouseFormEnterAddress']}
-                  />
-
-                  <Box>
-                    <FormMap name="addressMap" />
-                  </Box>
-                </Box>
+                <FormInput type="text" name="address" label={t['warehouseFormAddress']} />
+                <Button type="submit" w="-webkit-fit-content" alignSelf="flex-end">
+                  {t['warehouseFormAddWarehouse']}
+                </Button>
               </Box>
             </form>
           </FormProvider>
         </ModalBody>
-
-        <ModalFooter>
-          <Button>{t['warehouseFormAddWarehouse']}</Button>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );

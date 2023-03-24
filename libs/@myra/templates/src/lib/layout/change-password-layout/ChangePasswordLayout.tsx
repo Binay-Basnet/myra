@@ -11,7 +11,7 @@ export const ChangePasswordLayout = (props: ChangePasswordLayoutProps) => {
   const { children } = props;
   return (
     <>
-      <Box h="s60" bg="white" display="flex" alignItems="center" px="s16">
+      <Box h="60px" bg="white" display="flex" alignItems="center" px="s16">
         <Box position="relative" w="80px" h="32px">
           <Image src="/loginLogo.svg" layout="fill" alt="logo" />
         </Box>

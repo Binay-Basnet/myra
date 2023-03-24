@@ -17,7 +17,7 @@ export const LoaderOverlay = () => (
       position="absolute"
       top="50%"
       left="50%"
-      fontSize="50px"
+      fontSize="3.125rem"
       color="white"
       transform="translate(-50%, -50%)"
     >

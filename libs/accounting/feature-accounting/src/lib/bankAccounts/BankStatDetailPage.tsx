@@ -2,10 +2,11 @@ import { useMemo } from 'react';
 import { FiCornerLeftDown } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
-import { PopoverComponent } from '@coop/myra/components';
-import { Column, Table } from '@myra-ui/table';
 import { Box, Button, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import { useGetMemberListQuery } from '@coop/cbs/data-access';
+import { PopoverComponent } from '@coop/myra/components';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const BankStatDetailPage = () => {
@@ -15,7 +16,6 @@ export const BankStatDetailPage = () => {
 
   const { data, isFetching } = useGetMemberListQuery({
     pagination: getPaginationQuery(),
-  
   });
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
@@ -64,7 +64,7 @@ export const BankStatDetailPage = () => {
           <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
         ),
         meta: {
-          width: '60px',
+          width: 's60',
         },
       },
     ],

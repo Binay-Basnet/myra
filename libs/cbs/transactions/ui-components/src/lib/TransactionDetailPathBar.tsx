@@ -54,6 +54,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     accountName,
     total,
     details,
+    dublicate,
     voucherDetails,
     showSignatures,
     jvDetails,
@@ -69,6 +70,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     let tempTotal = '';
 
     let tempShowSignatures = false;
+    let tempDublicate = false;
 
     let tempJVDetails;
 
@@ -91,7 +93,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         'Payment Mode': depositDetailData?.paymentMode,
         'Deposited By': depositDetailData?.depositedBy,
       };
-
+      tempDublicate = true;
       tempTotal = depositDetailData?.totalDepositedAmount as string;
 
       tempGLTransactions = depositDetailData?.glTransaction;
@@ -119,7 +121,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         })`,
         'Withdrawn By': withdrawDetailData?.withdrawnBy,
       };
-
+      tempDublicate = true;
       tempTotal = withdrawDetailData?.totalWithdrawnAmount as string;
 
       tempGLTransactions = withdrawDetailData?.glTransaction;
@@ -186,7 +188,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           : '',
         'Transfer Amount': amountConverter(accountTransferDetailData?.transferAmount || 0),
       };
-
+      tempDublicate = true;
       tempTotal = accountTransferDetailData?.transferAmount as string;
 
       tempGLTransactions = accountTransferDetailData?.glTransaction;
@@ -247,6 +249,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       showSignatures: tempShowSignatures,
       jvDetails: tempJVDetails,
       glTransactions: tempGLTransactions,
+      dublicate: tempDublicate,
     };
   }, [
     depositDetailData,
@@ -287,19 +290,22 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       </Box>
 
       {!router?.asPath?.includes('/journal-vouchers/') ? (
-        <SuccessPrint
-          meta={{
-            memberId: memberDetail?.code,
-            accountId,
-            accountName,
-            member: memberDetail?.name,
-          }}
-          total={amountConverter(total)}
-          totalWords={amountToWordsConverter(total)}
-          details={details}
-          showSignatures={showSignatures}
-          ref={printComponentRef}
-        />
+        <Box>
+          <SuccessPrint
+            meta={{
+              memberId: memberDetail?.code,
+              accountId,
+              accountName,
+              member: memberDetail?.name,
+            }}
+            total={amountConverter(total)}
+            totalWords={amountToWordsConverter(Number(total || '0'))}
+            details={details}
+            dublicate={dublicate}
+            showSignatures={showSignatures}
+            ref={printComponentRef}
+          />
+        </Box>
       ) : (
         <SuccessPrintJornalVoucher
           jVPrint={jvDetails}

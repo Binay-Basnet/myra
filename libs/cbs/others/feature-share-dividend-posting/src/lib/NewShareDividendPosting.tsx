@@ -37,7 +37,7 @@ export const NewShareDividendPosting = () => {
           />
         </Box>
 
-        <Box bg="white" pb="s60">
+        <Box bg="white" pb="60px">
           <FormProvider {...methods}>
             <form>
               <Box minH="calc(100vh - 170px)">

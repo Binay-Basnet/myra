@@ -20,7 +20,7 @@ export const DetailPageContentCard = ({
   <Box display="flex" flexDirection="column" borderRadius="br2" bg="gray.0">
     <Box
       px="s16"
-      height="50px"
+      height="3.125rem"
       display="flex"
       justifyContent="space-between"
       alignItems="center"

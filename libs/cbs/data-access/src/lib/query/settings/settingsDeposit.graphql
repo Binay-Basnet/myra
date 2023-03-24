@@ -40,3 +40,41 @@ query getDepositSettingsTds {
     }
   }
 }
+
+query getSavingsOrganizationRateList {
+  settings {
+    general {
+      deposit {
+        listOrganizationRate {
+          data {
+            id
+            rate
+            effectiveDate
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSavingsOrganizationRateDetail($id: ID!) {
+  settings {
+    general {
+      deposit {
+        getOrganizationRate(id: $id) {
+          data {
+            id
+            rate
+            effectiveDate
+            fileUploads {
+              identifier
+              url
+            }
+            note
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}

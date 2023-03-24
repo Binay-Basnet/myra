@@ -104,7 +104,7 @@ export const AddCashTransfer = () => {
         <Box bg="white">
           <FormProvider {...methods}>
             <form>
-              <Box minH="calc(100vh - 170px)" pb="s60">
+              <Box minH="calc(100vh - 170px)" pb="60px">
                 <LedgerTable />
                 <ServiceCenterTable />
               </Box>

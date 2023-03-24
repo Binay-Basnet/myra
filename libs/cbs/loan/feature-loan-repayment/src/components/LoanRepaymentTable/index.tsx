@@ -40,7 +40,7 @@ export const LoanPaymentScheduleTable = React.forwardRef<
           footer: 'Total Cost of Loan',
           accessorKey: 'installmentNo',
           meta: {
-            width: '50px',
+            width: '3.125rem',
             Footer: {
               colspan: 1,
             },
