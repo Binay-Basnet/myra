@@ -108,12 +108,12 @@ const otherTabList: TabList[] = [
 const accountingTabList: TabList[] = [
   {
     label: 'General',
-    route: '/settings/general/accounting/general',
+    route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_GENERAL,
     aclKey: 'SETTINGS_INDEXING',
   },
   {
     label: 'Credit Terms',
-    route: '/settings/general/accounting/credit-terms',
+    route: ROUTES.SETTINGS_GENERAL_ACCOUNTING_CREDIT_TERMS,
     aclKey: 'SETTINGS_INDEXING',
   },
   {

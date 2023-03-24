@@ -3,6 +3,7 @@ import {
   FiCodesandbox,
   FiDatabase,
   FiFileText,
+  FiPackage,
   FiPieChart,
   FiShoppingBag,
   FiShoppingCart,
@@ -39,6 +40,14 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
             match: ['purchase'],
             aclKey: 'ACCOUNTING_PURCHASE',
             navMenu: 'PURCHASE',
+          },
+          {
+            title: 'inventory',
+            icon: FiPackage,
+            link: '/accounting/inventory/items/list',
+            match: ['inventory'],
+            aclKey: 'ACCOUNTING_ACCOUNTING',
+            navMenu: 'INVENTORY',
           },
           {
             title: 'accounting',
