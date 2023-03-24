@@ -51,7 +51,7 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
         header: 'Service Center',
         accessorKey: 'serviceCenter',
         enableColumnFilter: true,
-        filterFn: 'dateTime',
+        // filterFn: 'dateTime',
         meta: {
           filterMaps: {
             list: filterMapping?.members?.filterMapping?.serviceCenter,
