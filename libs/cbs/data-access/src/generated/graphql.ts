@@ -16946,6 +16946,25 @@ export type SetupdateSavingsNomineeAccountMutation = {
   };
 };
 
+export type SetupdateSavingTenureMutationVariables = Exact<{
+  SavingsTenureUpdateInput: SavingsTenureUpdateInput;
+}>;
+
+export type SetupdateSavingTenureMutation = {
+  account: {
+    updateTenure?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type UpdateAccountInterestMutationVariables = Exact<{
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
@@ -31781,6 +31800,38 @@ export const useSetupdateSavingsNomineeAccountMutation = <TError = unknown, TCon
       SetupdateSavingsNomineeAccountMutation,
       SetupdateSavingsNomineeAccountMutationVariables
     >(SetupdateSavingsNomineeAccountDocument),
+    options
+  );
+export const SetupdateSavingTenureDocument = `
+    mutation setupdateSavingTenure($SavingsTenureUpdateInput: SavingsTenureUpdateInput!) {
+  account {
+    updateTenure(data: $SavingsTenureUpdateInput) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetupdateSavingTenureMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetupdateSavingTenureMutation,
+    TError,
+    SetupdateSavingTenureMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetupdateSavingTenureMutation,
+    TError,
+    SetupdateSavingTenureMutationVariables,
+    TContext
+  >(
+    ['setupdateSavingTenure'],
+    useAxios<SetupdateSavingTenureMutation, SetupdateSavingTenureMutationVariables>(
+      SetupdateSavingTenureDocument
+    ),
     options
   );
 export const UpdateAccountInterestDocument = `

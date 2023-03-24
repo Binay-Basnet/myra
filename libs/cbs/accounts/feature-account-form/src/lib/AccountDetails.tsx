@@ -8,6 +8,7 @@ import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access
 
 import {
   AddNomineeModal,
+  AddTenureModal,
   InterestUpdateTab,
   LedgerListTab,
   Overview,
@@ -107,7 +108,7 @@ export const AccountDetails = ({
         isOpen={isNomineeAccountModalOpen as boolean}
         onClose={handleNomineeModalClose as () => void}
       />
-      <AddNomineeModal
+      <AddTenureModal
         isOpen={isTenureModalOpen as boolean}
         onClose={handleTenureModalClose as () => void}
       />

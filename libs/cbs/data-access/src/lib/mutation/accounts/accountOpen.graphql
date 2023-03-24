@@ -39,7 +39,7 @@ mutation setupdateSavingsNomineeAccount($NomineeAccountUpdateInput: NomineeAccou
   }
 }
 
-mutation setupdateSavingTenure($SavingTenureUpdateInput: SavingsTenureUpdateInput!) {
+mutation setupdateSavingTenure($SavingsTenureUpdateInput: SavingsTenureUpdateInput!) {
   account {
     updateTenure(data: $SavingsTenureUpdateInput) {
       recordId
