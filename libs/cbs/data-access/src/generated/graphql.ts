@@ -617,6 +617,26 @@ export type AccountingSalesSaleEntryQueryResult = {
   error?: Maybe<QueryError>;
 };
 
+export type AccountingSettingsMutation = {
+  newTax?: Maybe<NewTaxResult>;
+};
+
+export type AccountingSettingsMutationNewTaxArgs = {
+  data?: InputMaybe<NewTaxInput>;
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type AccountingSettingsQuery = {
+  taxRates?: Maybe<Array<Maybe<AccountingTaxRate>>>;
+};
+
+export type AccountingTaxRate = {
+  default?: Maybe<Scalars['Boolean']>;
+  id: Scalars['String'];
+  name: Scalars['String'];
+  rate: Scalars['Float'];
+};
+
 export type AccountsTransactionFilter = {
   accountIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   date?: InputMaybe<LocalizedDateFilter>;
@@ -6135,6 +6155,7 @@ export type GeneralMemberResult = {
 
 export type GeneralSettingsMutation = {
   KYM?: Maybe<KymMutation>;
+  accounting?: Maybe<AccountingSettingsMutation>;
   alternativeChannel?: Maybe<AlternativeChannelSettingsMutation>;
   branch?: Maybe<GeneralBranchSettingsMutation>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
@@ -6152,6 +6173,7 @@ export type GeneralSettingsMutation = {
 
 export type GeneralSettingsQuery = {
   KYM?: Maybe<KymQuery>;
+  accounting?: Maybe<AccountingSettingsQuery>;
   alternativeChannel?: Maybe<AlternativeChannelSettingsQuery>;
   branch?: Maybe<GeneralBranchSettingsQuery>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
@@ -11030,6 +11052,7 @@ export type LoanRepaymentRecord = {
   interestAmount?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
+  nextInstallment?: Maybe<LoanInstallment>;
   paymentMethod?: Maybe<LoanRepaymentMethod>;
   penaltyAmount?: Maybe<Scalars['String']>;
   principalAmount?: Maybe<Scalars['String']>;
@@ -12585,6 +12608,19 @@ export type NewCoaGroupResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<ChartsOfAccountSettingsQuery>;
   recordId: Scalars['ID'];
+};
+
+export type NewTaxInput = {
+  default?: InputMaybe<Scalars['Boolean']>;
+  rate?: InputMaybe<Scalars['Float']>;
+  taxName?: InputMaybe<Scalars['String']>;
+};
+
+export type NewTaxResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<AccountingSettingsQuery>;
+  record?: Maybe<AccountingTaxRate>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type Nominee = {
@@ -17620,6 +17656,12 @@ export type SetLoanRepaymentMutation = {
         rebateAmount?: string | null;
         totalAmount?: string | null;
         paymentMethod?: LoanRepaymentMethod | null;
+        nextInstallment?: {
+          installmentNo: number;
+          installmentDate: Record<'local' | 'en' | 'np', string>;
+          currentRemainingPrincipal: string;
+          remainingInterest: string;
+        } | null;
       } | null;
     } | null;
   };
@@ -32879,6 +32921,12 @@ export const SetLoanRepaymentDocument = `
         rebateAmount
         totalAmount
         paymentMethod
+        nextInstallment {
+          installmentNo
+          installmentDate
+          currentRemainingPrincipal
+          remainingInterest
+        }
       }
       recordId
     }

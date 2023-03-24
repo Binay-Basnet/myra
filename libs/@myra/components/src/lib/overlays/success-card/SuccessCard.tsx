@@ -8,6 +8,7 @@ import { Avatar, Box, Button, Divider, Icon, Text } from '@myra-ui/foundations';
 
 import { useAppSelector } from '@coop/cbs/data-access';
 import { formatAddress } from '@coop/cbs/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 import { GlTransactionJornalVoucherPrint } from './GLTransJornalVoucherPrint';
 
@@ -47,6 +48,8 @@ export interface SuccessCardProps {
       | null
       | undefined;
   };
+  nextInstallmentDetails?: Record<string, string> | null;
+  nextInstallmentTotal?: number;
 }
 
 export const SuccessCard = ({
@@ -63,6 +66,8 @@ export const SuccessCard = ({
   dublicate,
   showSignatures,
   jVPrint,
+  nextInstallmentDetails,
+  nextInstallmentTotal,
 }: SuccessCardProps) => {
   const router = useRouter();
   const componentRef = useRef<HTMLInputElement | null>(null);
@@ -131,6 +136,55 @@ export const SuccessCard = ({
           </Box>
         )}
       </Box>
+      {nextInstallmentDetails && (
+        <Box display="flex" flexDirection="column" gap="s8">
+          <Text fontSize="s3" fontWeight={500} color="gray.700">
+            Next Installment Details
+          </Text>
+
+          <Box bg="highlight.500" display="flex" flexDir="column" py="s8" px="s16">
+            <Box
+              borderBottom={total ? '1px' : 'none'}
+              borderBottomColor="border.layout"
+              display="flex"
+              flexDir="column"
+              gap="s10"
+              py="s8"
+            >
+              {Object.entries(nextInstallmentDetails).map((detail) => (
+                <Box display="flex" alignItems="center" justifyContent="space-between">
+                  <Box color="gray.600" fontSize="s3" fontWeight="500">
+                    {detail[0]}
+                  </Box>
+
+                  {typeof detail[1] === 'string' ? (
+                    <Box color="gray.700" fontSize="s3" fontWeight="600" textTransform="capitalize">
+                      {detail[1]?.toString()?.replace(/_/g, ' ')?.toLowerCase()}
+                    </Box>
+                  ) : (
+                    detail[1]
+                  )}
+                </Box>
+              ))}
+            </Box>
+
+            {nextInstallmentTotal ? (
+              <Box display="flex" py="s8" justifyContent="space-between">
+                <Box />
+
+                <Box display="flex" flexDir="column" gap="s4" alignItems="end" justifyContent="end">
+                  <Text fontSize="s3" color="gray.600" fontWeight="500" lineHeight="125%">
+                    Total Amount
+                  </Text>
+                  <Text fontSize="r2" color="primary.500" fontWeight="500" lineHeight="125%">
+                    Rs. {amountConverter(nextInstallmentTotal)}
+                  </Text>
+                </Box>
+              </Box>
+            ) : null}
+          </Box>
+        </Box>
+      )}
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <ReactToPrint
           trigger={() => (
