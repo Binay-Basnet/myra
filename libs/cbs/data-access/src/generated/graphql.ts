@@ -4789,6 +4789,18 @@ export type Dues = {
   totalDue?: Maybe<Scalars['String']>;
 };
 
+export type EodAction = {
+  dormantCheck: Scalars['Boolean'];
+  loanRepayment: Scalars['Boolean'];
+  maturityCheck: Scalars['Boolean'];
+};
+
+export type EodActionInput = {
+  dormantCheck: Scalars['Boolean'];
+  loanRepayment: Scalars['Boolean'];
+  maturityCheck: Scalars['Boolean'];
+};
+
 export type EodDate = {
   hasErrors: Scalars['Boolean'];
   headOfficeReady?: Maybe<Scalars['Boolean']>;
@@ -13336,6 +13348,7 @@ export const Resource = {
   AppInventory: 'APP_INVENTORY',
   AppMemberShare: 'APP_MEMBER_SHARE',
   CbbMembersMemberFee: 'CBB_MEMBERS_MEMBER_FEE',
+  CbsEndOfTheDay: 'CBS_END_OF_THE_DAY',
   CbsLoan: 'CBS_LOAN',
   CbsLoanDeclinedLoan: 'CBS_LOAN_DECLINED_LOAN',
   CbsLoanLoanAccount: 'CBS_LOAN_LOAN_ACCOUNT',
@@ -14423,8 +14436,13 @@ export type SettingsQuery = {
 };
 
 export type SetupMutation = {
+  eodAction?: Maybe<Scalars['Boolean']>;
   eodException?: Maybe<Scalars['Boolean']>;
   eodSeed?: Maybe<Scalars['String']>;
+};
+
+export type SetupMutationEodActionArgs = {
+  value: EodActionInput;
 };
 
 export type SetupMutationEodExceptionArgs = {
@@ -14436,6 +14454,7 @@ export type SetupMutationEodSeedArgs = {
 };
 
 export type SetupQuery = {
+  eodAction?: Maybe<EodAction>;
   eodException?: Maybe<EodException>;
   eodSeed?: Maybe<Scalars['Localized']>;
 };
@@ -18606,6 +18625,14 @@ export type EodExceptionSetupMutationVariables = Exact<{
 
 export type EodExceptionSetupMutation = {
   settings: { general?: { setup: { eodException?: boolean | null } } | null };
+};
+
+export type EodActivitiesSetupMutationVariables = Exact<{
+  value: EodActionInput;
+}>;
+
+export type EodActivitiesSetupMutation = {
+  settings: { general?: { setup: { eodAction?: boolean | null } } | null };
 };
 
 export type SetLoanProductMutationVariables = Exact<{
@@ -28086,6 +28113,11 @@ export type GetEodExceptionsQuery = {
           cashInHand: boolean;
           loanRepayment: boolean;
         } | null;
+        eodAction?: {
+          dormantCheck: boolean;
+          maturityCheck: boolean;
+          loanRepayment: boolean;
+        } | null;
       };
     } | null;
   };
@@ -34614,6 +34646,32 @@ export const useEodExceptionSetupMutation = <TError = unknown, TContext = unknow
     ['eodExceptionSetup'],
     useAxios<EodExceptionSetupMutation, EodExceptionSetupMutationVariables>(
       EodExceptionSetupDocument
+    ),
+    options
+  );
+export const EodActivitiesSetupDocument = `
+    mutation eodActivitiesSetup($value: EODActionInput!) {
+  settings {
+    general {
+      setup {
+        eodAction(value: $value)
+      }
+    }
+  }
+}
+    `;
+export const useEodActivitiesSetupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EodActivitiesSetupMutation,
+    TError,
+    EodActivitiesSetupMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<EodActivitiesSetupMutation, TError, EodActivitiesSetupMutationVariables, TContext>(
+    ['eodActivitiesSetup'],
+    useAxios<EodActivitiesSetupMutation, EodActivitiesSetupMutationVariables>(
+      EodActivitiesSetupDocument
     ),
     options
   );
@@ -47115,6 +47173,11 @@ export const GetEodExceptionsDocument = `
           dormantCheck
           maturityCheck
           cashInHand
+          loanRepayment
+        }
+        eodAction {
+          dormantCheck
+          maturityCheck
           loanRepayment
         }
       }
