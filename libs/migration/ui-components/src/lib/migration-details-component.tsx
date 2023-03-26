@@ -59,7 +59,8 @@ export const MigrationDetailsComponents = () => {
         dbName: router?.query?.['name'] as string,
         choices: 'all',
         databaseType: getValues()?.databaseType,
-        reportDate: getValues()?.reportDate?.en,
+        // reportDate: getValues()?.reportDate?.en,
+        newDB: '',
       },
     }).then(() => directoryRefetch());
   };
