@@ -1,20 +1,38 @@
 import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import {
-  asyncToast,
   Box,
   Button,
   ChangePasswordContainerLayout,
   ChangePasswordLayout,
+  MutationError,
   PasswordInput,
   Text,
+  toast,
 } from '@myra-ui';
 
-import { useSetNewPasswordMutation } from '@coop/cbs/data-access';
+import { axiosAgent } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
+
+type ResetPasswordResponse = {
+  recordId: string;
+  error: MutationError;
+};
+
+type ResetPasswordBody = {
+  token: string;
+  newPassword: string;
+};
+
+const resetPassword = async (body: ResetPasswordBody) => {
+  const response = await axiosAgent.post<ResetPasswordResponse>(`/erp/reset-password`, body);
+
+  return response?.data;
+};
 
 const passwordValidationRegex = {
   required: true,
@@ -50,24 +68,37 @@ const ConfirmPassword = () => {
   const route = useRouter();
   const token = route?.query?.id as string;
   const { t } = useTranslation();
-  const { mutateAsync, isLoading } = useSetNewPasswordMutation();
+  // const { mutateAsync, isLoading } = useSetNewPasswordMutation();
   const { register, handleSubmit, formState } = useForm();
+  const { mutateAsync, isLoading } = useMutation(resetPassword, {
+    onMutate: () => {
+      toast({
+        id: 'new-password',
+        type: 'success',
+        message: 'Password reset successful',
+      });
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast({
+        id: 'email-verification',
+        type: 'error',
+        message: error?.response?.data?.message || 'Server Error',
+      });
+    },
+    onSuccess: () => {
+      setSuccess(true);
+    },
+  });
 
   const onSubmit = async (data) => {
     if (data?.password === data?.cpassword) {
-      await asyncToast({
-        id: 'passworrd-recovery',
-        msgs: {
-          success: 'Password changed in Successfully!!',
-          loading: 'changing password!!',
-        },
-        onSuccess: () => {
-          setSuccess(true);
-        },
-        promise: mutateAsync({ token, newPassword: data?.password }),
-      });
+      mutateAsync({ token, newPassword: data?.password });
     } else {
-      toast('Password did not match');
+      toast({
+        id: 'email-verification',
+        type: 'error',
+        message: 'Password did not match',
+      });
     }
   };
 

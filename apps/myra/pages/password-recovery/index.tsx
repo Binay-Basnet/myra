@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import {
   Box,
@@ -8,10 +10,28 @@ import {
   ChangePasswordLayout,
   findError,
   Input,
+  MutationError,
   Text,
+  toast,
 } from '@myra-ui';
 
-import { useSetRecoveryPasswordMutation } from '@coop/cbs/data-access';
+import { axiosAgent } from '@coop/cbs/data-access';
+
+type EmailVerificationResponse = {
+  recordId: string;
+  error: MutationError;
+};
+
+type EmailVerificationBody = {
+  email: string;
+  url: string;
+};
+
+const emailVerification = async (body: EmailVerificationBody) => {
+  const response = await axiosAgent.post<EmailVerificationResponse>(`/erp/forget-password`, body);
+
+  return response?.data;
+};
 
 const PasswordRecovery = () => {
   const [isEmailVerified, setIsEmailVerified] = React.useState(null);
@@ -21,17 +41,36 @@ const PasswordRecovery = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { mutateAsync, isLoading } = useSetRecoveryPasswordMutation();
-  const onSubmit = (data: { email: string }) => {
-    mutateAsync({ email: data?.email, url: fullPath }).then((res) => {
+
+  const { mutateAsync, isLoading } = useMutation(emailVerification, {
+    onMutate: () => {
+      toast({
+        id: 'email-verification',
+        type: 'success',
+        message: 'Email Verified',
+      });
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast({
+        id: 'email-verification',
+        type: 'error',
+        message: error?.response?.data?.message || 'Server Error',
+      });
+      setIsEmailVerified(false);
+    },
+    onSuccess: (res) => {
       const error = findError(res, 'error');
 
-      if (error[0]) {
+      if (error) {
         setIsEmailVerified(false);
       } else {
         setIsEmailVerified(true);
       }
-    });
+    },
+  });
+  // const { mutateAsync, isLoading } = useSetRecoveryPasswordMutation();
+  const onSubmit = (data: { email: string }) => {
+    mutateAsync({ email: data?.email, url: fullPath });
   };
   if (isEmailVerified === null) {
     return (

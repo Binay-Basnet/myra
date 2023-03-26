@@ -177,7 +177,7 @@ export type Transform = {
   choices: Scalars['String'];
   databaseType: Scalars['String'];
   dbName: Scalars['String'];
-  reportDate?: InputMaybe<Scalars['String']>;
+  newDB: Scalars['String'];
 };
 
 export type SetAuthMutationVariables = Exact<{
