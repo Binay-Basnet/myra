@@ -40,8 +40,12 @@ export const MaturityCheck = () => {
         accessorKey: 'accountNumber',
       },
       {
-        header: 'Interest Amount',
-        accessorFn: (row) => amountConverter(row?.payload?.interest_amount ?? 0),
+        header: 'Account Balance',
+        accessorFn: (row) => amountConverter(row?.payload?.account_balance ?? 0),
+      },
+      {
+        header: 'Transferred Amount',
+        accessorFn: (row) => amountConverter(row?.payload?.transferred_account ?? 0),
       },
       {
         header: 'Narration',

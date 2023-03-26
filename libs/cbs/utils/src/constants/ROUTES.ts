@@ -321,6 +321,10 @@ export const ROUTES = {
   SETTINGS_GENERAL_LOAN_ORGANIZATION_RATE: '/settings/general/loan/organization-rate',
 
   SETTINGS_EOD_HISTORY_DETAILS: '/settings/general/eod/history/details',
+
+  DAY_CLOSE: '/day-close',
+
+  BRANCH_READINESS: '/branch-readiness',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useEodHistoryDetailsQuery } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
-import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 export const DormantCheck = () => {
   const router = useRouter();
@@ -40,8 +40,8 @@ export const DormantCheck = () => {
         accessorKey: 'accountNumber',
       },
       {
-        header: 'Interest Amount',
-        accessorFn: (row) => amountConverter(row?.payload?.interest_amount ?? 0),
+        header: 'Dormancy Reason',
+        accessorFn: (row) => row?.payload?.dormancy_reason,
       },
       {
         header: 'Narration',
