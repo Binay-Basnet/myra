@@ -261,6 +261,8 @@ export const LoanCloseForm = () => {
                   isRequired
                   name="memberId"
                   label="Member"
+                  isCurrentBranchMember
+
                   // isDisabled={!!redirectMemberId}
                 />
                 {memberId && (
