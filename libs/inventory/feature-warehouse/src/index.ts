@@ -1,3 +1,4 @@
+export * from './component/WareHouseAddModal';
 export * from './lib/WarehouseListTable';
 export * from './lib/WarehouseTransfer';
 export * from './lib/WarehouseTransferTable';

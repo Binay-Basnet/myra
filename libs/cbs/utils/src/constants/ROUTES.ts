@@ -284,10 +284,18 @@ export const ROUTES = {
 
   ACCOUNTING_REPORTS: '/accounting/reports/transactions',
 
-  INVENTORY_REGISTER: '/inventory/register',
-  INVENTORY_ITEMS: '/inventory/items',
-  INVENTORY_SUPPLIERS: '/inventory/suppliers',
+  INVENTORY_REGISTER: '/inventory/inventory/register/list',
+  INVENTORY_INVENTORY_ADJUSTMENT: '/inventory/inventory/adjustments/list',
+  INVENTORY_INVENTORY_ADJUSTMENT_ADD: '/inventory/inventory/adjustments/add',
+
+  INVENTORY_ITEMS: '/inventory/items/items/list',
+  INVENTORY_ITEMS_ADD: '/inventory/items/items/add',
+  INVENTORY_SUPPLIERS: '/inventory/suppliers/list',
   INVENTORY_WAREHOUSE: '/inventory/warehouse/list',
+  INVENTORY_WAREHOUSE_TRASFER_LIST: '/inventory/warehouse/transfer/list',
+  INVENTORY_ITEMS_CATEGORY: '/inventory/items/category/list',
+  INVENTORY_ITEMS_UNIT_LIST: '/inventory/items/units/list',
+  INVENTORY_SUPPLIERS_LIST: '/inventory/suppliers/list',
 
   SETTINGS_GENERAL_SAVING_PRODUCTS_DETAILS: '/settings/general/saving-products/details',
   CBS_LOAN_ACCOUNT_CLOSED_DETAILS: '/cbs/loan/closed-accounts/details',

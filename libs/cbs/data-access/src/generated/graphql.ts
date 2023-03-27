@@ -617,6 +617,26 @@ export type AccountingSalesSaleEntryQueryResult = {
   error?: Maybe<QueryError>;
 };
 
+export type AccountingSettingsMutation = {
+  newTax?: Maybe<NewTaxResult>;
+};
+
+export type AccountingSettingsMutationNewTaxArgs = {
+  data?: InputMaybe<NewTaxInput>;
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type AccountingSettingsQuery = {
+  taxRates?: Maybe<Array<Maybe<AccountingTaxRate>>>;
+};
+
+export type AccountingTaxRate = {
+  default?: Maybe<Scalars['Boolean']>;
+  id: Scalars['String'];
+  name: Scalars['String'];
+  rate: Scalars['Float'];
+};
+
 export type AccountsTransactionFilter = {
   accountIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   date?: InputMaybe<LocalizedDateFilter>;
@@ -4769,6 +4789,18 @@ export type Dues = {
   totalDue?: Maybe<Scalars['String']>;
 };
 
+export type EodAction = {
+  dormantCheck: Scalars['Boolean'];
+  loanRepayment: Scalars['Boolean'];
+  maturityCheck: Scalars['Boolean'];
+};
+
+export type EodActionInput = {
+  dormantCheck: Scalars['Boolean'];
+  loanRepayment: Scalars['Boolean'];
+  maturityCheck: Scalars['Boolean'];
+};
+
 export type EodDate = {
   hasErrors: Scalars['Boolean'];
   headOfficeReady?: Maybe<Scalars['Boolean']>;
@@ -6135,6 +6167,7 @@ export type GeneralMemberResult = {
 
 export type GeneralSettingsMutation = {
   KYM?: Maybe<KymMutation>;
+  accounting?: Maybe<AccountingSettingsMutation>;
   alternativeChannel?: Maybe<AlternativeChannelSettingsMutation>;
   branch?: Maybe<GeneralBranchSettingsMutation>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
@@ -6152,6 +6185,7 @@ export type GeneralSettingsMutation = {
 
 export type GeneralSettingsQuery = {
   KYM?: Maybe<KymQuery>;
+  accounting?: Maybe<AccountingSettingsQuery>;
   alternativeChannel?: Maybe<AlternativeChannelSettingsQuery>;
   branch?: Maybe<GeneralBranchSettingsQuery>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
@@ -11030,6 +11064,7 @@ export type LoanRepaymentRecord = {
   interestAmount?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
+  nextInstallment?: Maybe<LoanInstallment>;
   paymentMethod?: Maybe<LoanRepaymentMethod>;
   penaltyAmount?: Maybe<Scalars['String']>;
   principalAmount?: Maybe<Scalars['String']>;
@@ -12587,6 +12622,19 @@ export type NewCoaGroupResult = {
   recordId: Scalars['ID'];
 };
 
+export type NewTaxInput = {
+  default?: InputMaybe<Scalars['Boolean']>;
+  rate?: InputMaybe<Scalars['Float']>;
+  taxName?: InputMaybe<Scalars['String']>;
+};
+
+export type NewTaxResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<AccountingSettingsQuery>;
+  record?: Maybe<AccountingTaxRate>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type Nominee = {
   address?: Maybe<Address>;
   citizenship?: Maybe<Citizenship>;
@@ -13300,6 +13348,7 @@ export const Resource = {
   AppInventory: 'APP_INVENTORY',
   AppMemberShare: 'APP_MEMBER_SHARE',
   CbbMembersMemberFee: 'CBB_MEMBERS_MEMBER_FEE',
+  CbsEndOfTheDay: 'CBS_END_OF_THE_DAY',
   CbsLoan: 'CBS_LOAN',
   CbsLoanDeclinedLoan: 'CBS_LOAN_DECLINED_LOAN',
   CbsLoanLoanAccount: 'CBS_LOAN_LOAN_ACCOUNT',
@@ -14387,8 +14436,13 @@ export type SettingsQuery = {
 };
 
 export type SetupMutation = {
+  eodAction?: Maybe<Scalars['Boolean']>;
   eodException?: Maybe<Scalars['Boolean']>;
   eodSeed?: Maybe<Scalars['String']>;
+};
+
+export type SetupMutationEodActionArgs = {
+  value: EodActionInput;
 };
 
 export type SetupMutationEodExceptionArgs = {
@@ -14400,6 +14454,7 @@ export type SetupMutationEodSeedArgs = {
 };
 
 export type SetupQuery = {
+  eodAction?: Maybe<EodAction>;
   eodException?: Maybe<EodException>;
   eodSeed?: Maybe<Scalars['Localized']>;
 };

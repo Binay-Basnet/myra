@@ -78,7 +78,7 @@ const myraAppn = [
   {
     title: 'inventoryManagement',
     img: '/inventory.svg',
-    link: '/inventory/register',
+    link: '/inventory/inventory/register/list',
   },
 ];
 
