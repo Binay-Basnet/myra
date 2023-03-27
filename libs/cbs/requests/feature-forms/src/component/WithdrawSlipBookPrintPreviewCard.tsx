@@ -48,6 +48,7 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       '@media print': {
         display: 'flex',
         boxShadow: 'none',
+        fontFamily: 'Times New Roman',
       },
       '@page': {
         size: 'A4 landscape',
@@ -55,7 +56,7 @@ export const WithdrawSlipBookPrintPreviewCard = ({
     }}
   >
     <Text
-      fontSize="s1"
+      fontSize="s3"
       fontWeight={500}
       color="black"
       position="absolute"
@@ -72,19 +73,19 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       flexDirection="column"
       gap="s4"
     >
-      <Text fontSize="s1" fontWeight={500} color="black">
+      <Text fontSize="s3" fontWeight={500} color="black">
         {details?.memberName}
       </Text>
-      <Text fontSize="s1" fontWeight={500} color="black">
+      <Text fontSize="s3" fontWeight={500} color="black">
         {details?.accountNumber}
       </Text>
-      <Text fontSize="s1" fontWeight={500} color="black">
+      <Text fontSize="s3" fontWeight={500} color="black">
         {details?.accountName}
       </Text>
     </Box>
 
     <Text
-      fontSize="s1"
+      fontSize="s3"
       fontWeight={500}
       color="black"
       position="absolute"

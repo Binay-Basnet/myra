@@ -24,3 +24,10 @@
 
 }
 
+@font-face {
+  font-family: 'Times New Roman';
+  font-style: normal;
+  font-weight: 400;
+  /* src: local('Times New Roman'), url('https://fonts.cdnfonts.com/s/57197/times.woff') format('woff'); */
+  src: url("/times.ttf");
+}
