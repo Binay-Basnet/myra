@@ -221,7 +221,6 @@ export const MigrationDetailsComponents = () => {
                   const tableDataArray = Object.keys(
                     transformedCSVData?.[item]
                   ) as unknown as string[];
-
                   return (
                     <>
                       <Text fontSize="r2" fontWeight="medium">
@@ -234,22 +233,34 @@ export const MigrationDetailsComponents = () => {
                             <Tr>
                               <Th>S.N</Th>
                               <Th>Foldername</Th>
+                              <Th />
                             </Tr>
                           </Thead>
                           <Tbody>
-                            {tableDataArray?.map((i, index) => (
-                              <Tr
-                                cursor="pointer"
-                                onClick={() =>
-                                  router.push(
-                                    `/${router?.query['name']}/details?folderName=${item}&&subfolder=${i}&&csvType=transformedCSV`
-                                  )
-                                }
-                              >
-                                <Td>{index + 1}</Td>
-                                <Td>{i}</Td>
-                              </Tr>
-                            ))}
+                            {tableDataArray
+                              ?.filter((j) => j !== 'error_records')
+                              ?.map((i, index) => (
+                                <Tr
+                                  cursor="pointer"
+                                  onClick={() =>
+                                    router.push(
+                                      `/${router?.query['name']}/details?folderName=${item}&&subfolder=${i}&&csvType=transformedCSV`
+                                    )
+                                  }
+                                >
+                                  <Td>{index + 1}</Td>
+                                  <Td>{i}</Td>
+                                  <Td>
+                                    {i === 'errors' ? (
+                                      <Text bg="red.800" color="white" w="-webkit-fit-content">
+                                        Errors: {transformedCSVData[item]?.['error_records']}
+                                      </Text>
+                                    ) : (
+                                      ''
+                                    )}
+                                  </Td>
+                                </Tr>
+                              ))}
                           </Tbody>
                         </Table>
                       </TableContainer>
