@@ -23,7 +23,7 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
             {
               title: 'inventory',
               icon: FiPackage,
-              link: '/inventory/register',
+              link: '/inventory/inventory/register/list',
               match: ['register'],
               aclKey: 'CBS_MEMBERS_MEMBER',
               navMenu: 'INVENTORY',
@@ -31,7 +31,7 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
             {
               title: 'items',
               icon: FiList,
-              link: '/inventory/items',
+              link: '/inventory/items/list',
               match: ['items'],
               aclKey: 'CBS_MEMBERS_MEMBER',
               navMenu: 'ITEMS',
@@ -47,7 +47,7 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
             {
               title: 'suppliers',
               icon: FiTruck,
-              link: '/inventory/suppliers',
+              link: '/inventory/suppliers/list',
               match: ['suppliers'],
               aclKey: 'CBS_MEMBERS_MEMBER',
               navMenu: 'SUPPLIERS',

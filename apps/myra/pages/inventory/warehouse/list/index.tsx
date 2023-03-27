@@ -1,15 +1,22 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Box, MainLayoutInventory } from '@myra-ui';
 
-import { WarehouseListTable, WarehouseTreeView } from '@coop/inventory/warehouse';
+import {
+  WarehouseAddModal,
+  WarehouseListTable,
+  WarehouseTreeView,
+} from '@coop/inventory/warehouse';
 import { WarehouseLayout } from '@coop/myra/components';
 import { InventoryWarehouseHeader } from '@coop/myra/inventory/ui-layout';
 
 const InventoryWarehousePage = () => {
   const router = useRouter();
-
+  const [isAddMinorModalOpen, setIsAddMinorAccountModalOpen] = useState(false);
+  const handleMinorAccountClose = () => {
+    setIsAddMinorAccountModalOpen(false);
+  };
   const tabList = [
     {
       title: 'warehouseListView',
@@ -21,15 +28,26 @@ const InventoryWarehousePage = () => {
     },
   ];
   return (
-    <Box>
-      <InventoryWarehouseHeader heading="warehouseLayoutWarehouse" tabItems={tabList} />
-      <Box mt="3.125rem">
-        {(router.query['objState'] === 'listView' || !router.query['objState']) && (
-          <WarehouseListTable />
-        )}
-        {router.query['objState'] === 'treeView' && <WarehouseTreeView />}
+    <>
+      {' '}
+      <Box>
+        <InventoryWarehouseHeader
+          heading="warehouseLayoutWarehouse"
+          tabItems={tabList}
+          onClickHandler={() => setIsAddMinorAccountModalOpen(true)}
+        />
+        <Box mt="3.125rem">
+          {(router.query['objState'] === 'listView' || !router.query['objState']) && (
+            <WarehouseListTable />
+          )}
+          {router.query['objState'] === 'treeView' && <WarehouseTreeView />}
+        </Box>
       </Box>
-    </Box>
+      <WarehouseAddModal
+        isAddWareHouseModalOpen={isAddMinorModalOpen}
+        handleWarehouseClose={handleMinorAccountClose}
+      />
+    </>
   );
 };
 

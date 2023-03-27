@@ -62,3 +62,12 @@ query getTransformedDirStructure($folderPath: [String]!) {
     getTransformedDirStruct(folderPath: $folderPath)
   }
 }
+
+query getErrors($input: [String]!) {
+  protectedQuery {
+    checkErrors(input: $input) {
+      files
+      count
+    }
+  }
+}
