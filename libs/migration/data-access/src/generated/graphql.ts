@@ -19,6 +19,11 @@ export type Scalars = {
   Upload: any;
 };
 
+export type CsvError = {
+  count: Scalars['String'];
+  files: Array<Maybe<Scalars['String']>>;
+};
+
 export type CsvFileDetails = {
   data?: Maybe<Scalars['Map']>;
   row?: Maybe<Scalars['String']>;
@@ -141,12 +146,17 @@ export type ProtectedMutationUploadCsvArgs = {
 };
 
 export type ProtectedQuery = {
+  checkErrors: CsvError;
   getDirectoryStructure?: Maybe<ProjectList>;
   getExtractionData: ExtractionResponse;
   getFileData?: Maybe<Array<Maybe<CsvFileDetails>>>;
   getProjects: Array<Maybe<Scalars['String']>>;
   getTransformationData: ExtractionResponse;
   getTransformedDirStruct?: Maybe<Array<Scalars['String']>>;
+};
+
+export type ProtectedQueryCheckErrorsArgs = {
+  input: Array<InputMaybe<Scalars['String']>>;
 };
 
 export type ProtectedQueryGetDirectoryStructureArgs = {
@@ -277,6 +287,14 @@ export type GetTransformedDirStructureQueryVariables = Exact<{
 
 export type GetTransformedDirStructureQuery = {
   protectedQuery: { getTransformedDirStruct?: Array<string> | null };
+};
+
+export type GetErrorsQueryVariables = Exact<{
+  input: Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>;
+}>;
+
+export type GetErrorsQuery = {
+  protectedQuery: { checkErrors: { files: Array<string | null>; count: string } };
 };
 
 export const SetAuthDocument = `
@@ -503,5 +521,24 @@ export const useGetTransformedDirStructureQuery = <
     useAxios<GetTransformedDirStructureQuery, GetTransformedDirStructureQueryVariables>(
       GetTransformedDirStructureDocument
     ).bind(null, variables),
+    options
+  );
+export const GetErrorsDocument = `
+    query getErrors($input: [String]!) {
+  protectedQuery {
+    checkErrors(input: $input) {
+      files
+      count
+    }
+  }
+}
+    `;
+export const useGetErrorsQuery = <TData = GetErrorsQuery, TError = unknown>(
+  variables: GetErrorsQueryVariables,
+  options?: UseQueryOptions<GetErrorsQuery, TError, TData>
+) =>
+  useQuery<GetErrorsQuery, TError, TData>(
+    ['getErrors', variables],
+    useAxios<GetErrorsQuery, GetErrorsQueryVariables>(GetErrorsDocument).bind(null, variables),
     options
   );

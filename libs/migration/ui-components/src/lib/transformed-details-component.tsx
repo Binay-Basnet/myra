@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { useGetTransformedDirStructureQuery } from '@migration/data-access';
+import { useGetErrorsQuery, useGetTransformedDirStructureQuery } from '@migration/data-access';
 
 import { Box, Text } from '@myra-ui';
 
@@ -16,6 +16,21 @@ export const TransformedDetailsComponents = () => {
     ] as string[],
   });
 
+  const checkErrorData = useGetErrorsQuery(
+    {
+      input: [
+        router?.query?.['name'],
+        router?.query?.['csvType'],
+        router?.query?.['folderName'],
+        router?.query?.['subfolder'],
+      ] as string[],
+    },
+    {
+      enabled: router?.query?.['subfolder'] === 'errors',
+    }
+  );
+  const errorData = checkErrorData?.data?.protectedQuery?.checkErrors;
+
   return (
     <Box display="flex" flexDir="column" gap={5}>
       <Text fontSize="r3" fontWeight="medium">
@@ -24,6 +39,7 @@ export const TransformedDetailsComponents = () => {
       <Text fontSize="r3">Project: {router?.query?.['name']}</Text>
       <Text fontSize="r3">Folder: {router?.query?.['folderName']}</Text>
       <Text fontSize="r3">Sub folder: {router?.query?.['subfolder']}</Text>
+      {errorData && <Text fontSize="r3">Error count: {errorData?.count}</Text>}
       <Text fontSize="r3">CSV:</Text>
       <Box w="-webkit-fit-content" bg="whiteAlpha.900" maxH="35vh" overflowY="scroll">
         <TableContainer border="1px" borderColor="gray.100">
@@ -32,6 +48,7 @@ export const TransformedDetailsComponents = () => {
               <Tr>
                 <Th>S.N</Th>
                 <Th>Filename</Th>
+                {errorData && <Th>Error</Th>}
               </Tr>
             </Thead>
             <Tbody>
@@ -47,6 +64,7 @@ export const TransformedDetailsComponents = () => {
                   >
                     <Td>{index + 1}</Td>
                     <Td>{i}</Td>
+                    {errorData && <Td>{errorData?.files?.includes(i) ? 'true' : 'false'}</Td>}
                   </Tr>
                 )
               )}

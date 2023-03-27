@@ -271,6 +271,7 @@ export const MigrationDetailsComponents = () => {
               bg="whiteAlpha.900"
               borderRadius={6}
               boxShadow="lg"
+              // w="-webkit-fit-content"
             >
               <Box display="flex" justifyContent="space-between">
                 <Text
@@ -284,7 +285,7 @@ export const MigrationDetailsComponents = () => {
                 <Button onClick={() => extractionRefetch()}>Reload</Button>
               </Box>
               <Collapse in={extractionCollapse}>
-                <Box maxH="35vh" overflowY="scroll">
+                <Box maxH="35vh" overflowY="scroll" w="-webkit-fit-content">
                   <TableContainer>
                     <Table size="sm">
                       <Thead>
@@ -314,6 +315,7 @@ export const MigrationDetailsComponents = () => {
               bg="whiteAlpha.900"
               borderRadius={6}
               boxShadow="lg"
+              // w="-webkit-fit-content"
             >
               <Box display="flex" justifyContent="space-between">
                 <Text
@@ -322,30 +324,17 @@ export const MigrationDetailsComponents = () => {
                   cursor="pointer"
                   onClick={() => setTransformationCollapse(!transformationCollapse)}
                 >
-                  Transformation Data:{' '}
+                  Transformation Data status:{' '}
                 </Text>
                 <Button onClick={() => transformationRefetch()}>Reload</Button>
               </Box>
               <Collapse in={transformationCollapse}>
-                <Box maxH="35vh" overflowY="scroll">
-                  <TableContainer>
-                    <Table size="sm">
-                      <Thead>
-                        <Tr>
-                          <Th>S.N</Th>
-                          <Th>Status</Th>
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {transformedData?.map((i, index) => (
-                          <Tr>
-                            <Td>{index + 1}</Td>
-                            <Td>{i}</Td>
-                          </Tr>
-                        ))}
-                      </Tbody>
-                    </Table>
-                  </TableContainer>
+                <Box maxH="35vh" overflowY="scroll" w="-webkit-fit-content">
+                  {transformedData?.map((i) => (
+                    <Text fontSize="r1" lineHeight={10}>
+                      -&nbsp;&nbsp;&nbsp;{i}
+                    </Text>
+                  ))}
                 </Box>
               </Collapse>
             </Box>
