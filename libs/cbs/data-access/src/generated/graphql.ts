@@ -14071,9 +14071,8 @@ export const SavingInvestmentType = {
 
 export type SavingInvestmentType = typeof SavingInvestmentType[keyof typeof SavingInvestmentType];
 export type SavingProductBalanceData = {
-  accountTotal?: Maybe<Scalars['Int']>;
-  balanceTotal?: Maybe<Scalars['String']>;
-  balanceTotalType?: Maybe<BalanceType>;
+  accountTotal?: Maybe<Scalars['Any']>;
+  balanceTotal?: Maybe<Scalars['Any']>;
   entries?: Maybe<Array<Maybe<SavingProductBalanceEntry>>>;
 };
 
@@ -25723,9 +25722,8 @@ export type GetSavingProductBalanceQuery = {
     depositReport: {
       savingProductBalanceReport: {
         data?: {
-          accountTotal?: number | null;
-          balanceTotal?: string | null;
-          balanceTotalType?: BalanceType | null;
+          accountTotal?: unknown | null;
+          balanceTotal?: unknown | null;
           entries?: Array<{
             balanceMap?: unknown | null;
             code?: string | null;
@@ -44053,7 +44051,6 @@ export const GetSavingProductBalanceDocument = `
         data {
           accountTotal
           balanceTotal
-          balanceTotalType
           entries {
             balanceMap
             code

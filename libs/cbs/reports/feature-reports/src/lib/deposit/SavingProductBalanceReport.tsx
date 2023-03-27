@@ -16,7 +16,7 @@ import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
-import { debitCreditConverter } from '@coop/shared/utils';
+import { amountConverter, debitCreditConverter } from '@coop/shared/utils';
 
 type SavingProductBalanceInputs = Omit<SavingProductBalanceFilter, 'branchId'> & {
   branchId: {
@@ -98,88 +98,15 @@ export const SavingProductBalanceReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
-          {/* <Report.Table<SavingProductBalanceEntry & { index: number }>
-            showFooter
-            columns={[
-              {
-                header: 'S.No.',
-                accessorKey: 'index',
-                footer: () => 'Total',
-                meta: {
-                  isNumeric: true,
 
-                  Footer: {
-                    colspan: 4,
-                  },
-                },
-              },
-              {
-                header: 'Product Code',
-                accessorKey: 'code',
-                meta: {
-                  Footer: {
-                    display: 'none',
-                  },
-                },
-              },
-              {
-                header: 'Product Name',
-                accessorKey: 'name',
-                cell: (props) => (
-                  <RouteToDetailsPage
-                    id={props?.row?.original?.id as string}
-                    type="saving-product"
-                    label={props?.row?.original?.name as string}
-                  />
-                ),
-                meta: {
-                  Footer: {
-                    display: 'none',
-                  },
-                },
-              },
-              {
-                header: 'Product Nature',
-                accessorKey: 'nature',
-                cell: (props) => (
-                  <Box textTransform="capitalize">
-                    {props.row.original.nature?.toLowerCase()?.replace(/_/g, ' ')}
-                  </Box>
-                ),
-                meta: {
-                  Footer: {
-                    display: 'none',
-                  },
-                },
-              },
-              {
-                header: 'No. of Accounts',
-                accessorKey: 'noOfAccounts',
-                footer: () => quantityConverter(savingProductBalanceReportData?.accountTotal || 0),
-                meta: {
-                  isNumeric: true,
-                },
-              },
-              {
-                header: 'Total Balance',
-                accessorKey: 'totalBalance',
-                footer: () =>
-                  debitCreditConverter(
-                    savingProductBalanceReportData?.balanceTotal || '0.00',
-                    savingProductBalanceReportData?.balanceTotalType || ''
-                  ),
-                cell: (props) =>
-                  debitCreditConverter(
-                    props.row.original.totalBalance || '0.00',
-                    props.row.original.balanceType || ''
-                  ),
-                meta: {
-                  isNumeric: true,
-                },
-              },
-            ]}
-          /> */}
-          <COATable data={savingProductBalanceReport as TrialSheetReportDataEntry[]} type="test" />
+          <COATable
+            data={savingProductBalanceReport as TrialSheetReportDataEntry[]}
+            accountTotal={
+              savingProductBalanceReportData?.accountTotal as unknown as Record<string, number>
+            }
+            balanceTotal={savingProductBalanceReportData?.balanceTotal as unknown as TrialBalance}
+            type="test"
+          />
         </Report.Content>
         <Report.Filters>
           <Report.Filter title="Product Nature">
@@ -204,10 +131,11 @@ export const SavingProductBalanceReport = () => {
 interface ICOATableProps {
   data: TrialSheetReportDataEntry[];
   type: string;
-  // total?: TrialBalance | null | undefined;
+  accountTotal?: Record<string, number>;
+  balanceTotal?: TrialBalance | null | undefined;
 }
 
-const COATable = ({ data, type }: ICOATableProps) => {
+const COATable = ({ data, type, accountTotal, balanceTotal }: ICOATableProps) => {
   const { getValues } = useFormContext<SavingProductBalanceInputs>();
   const branchIDs = getValues()?.branchId?.map((a) => a.value);
 
@@ -237,23 +165,13 @@ const COATable = ({ data, type }: ICOATableProps) => {
     {
       header: 'S.No.',
       accessorKey: 'index',
-      footer: () => 'Total',
       meta: {
         isNumeric: true,
-
-        Footer: {
-          colspan: 1,
-        },
       },
     },
     {
       header: 'Product Code',
       accessorKey: 'code',
-      meta: {
-        Footer: {
-          display: 'none',
-        },
-      },
     },
     {
       header: 'Product Name',
@@ -265,11 +183,6 @@ const COATable = ({ data, type }: ICOATableProps) => {
           label={props?.row?.original?.name as string}
         />
       ),
-      meta: {
-        Footer: {
-          display: 'none',
-        },
-      },
     },
     {
       header: 'Product Nature',
@@ -279,11 +192,7 @@ const COATable = ({ data, type }: ICOATableProps) => {
           {props.row.original.nature?.toLowerCase()?.replace(/_/g, ' ')}
         </Box>
       ),
-      meta: {
-        Footer: {
-          display: 'none',
-        },
-      },
+      footer: () => 'Total',
     },
   ];
 
@@ -298,8 +207,8 @@ const COATable = ({ data, type }: ICOATableProps) => {
             {
               header: 'No of Accounts',
               accessorFn: (row) => row?.noOfAccountsMap,
-              footer: () => 'sameer noob',
-              cell: (props) => props?.row?.original?.noOfAccountsMap?.[header || ''],
+              footer: () => (header ? amountConverter(accountTotal?.[header] || 0) : ''),
+              cell: (props) => props?.row?.original?.noOfAccountsMap?.[header || ''] || 0,
               meta: {
                 isNumeric: true,
               },
@@ -307,7 +216,14 @@ const COATable = ({ data, type }: ICOATableProps) => {
             {
               header: 'Total Balance',
               accessorFn: (row) => row?.balanceMap,
-              footer: () => 'hello',
+
+              footer: () =>
+                header
+                  ? debitCreditConverter(
+                      balanceTotal?.[header]?.amount || 0,
+                      balanceTotal?.[header]?.amountType || ''
+                    )
+                  : '',
 
               cell: (props) =>
                 debitCreditConverter(

@@ -290,7 +290,6 @@ query getSavingProductBalance($data: SavingProductBalanceFilter!) {
         data {
           accountTotal
           balanceTotal
-          balanceTotalType
           entries {
             balanceMap
             code
