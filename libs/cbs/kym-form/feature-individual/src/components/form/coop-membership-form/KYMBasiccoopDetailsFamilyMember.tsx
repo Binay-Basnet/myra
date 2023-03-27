@@ -13,6 +13,7 @@ import {
   useGetIndividualKymFamilyMembersListQuery,
   useGetNewIdMutation,
   useSetMemberDataMutation,
+  useSetMemberFamilyDetailsMutation,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormMemberSelect, FormSwitchTab } from '@coop/shared/form';
@@ -56,6 +57,8 @@ export const KYMBasiccoopDetailsFamilyMember = ({
     //   isMemberOfAnotherCooperative: false,
     // },
   });
+
+  const [newIdAdded, setNewIdAdded] = useState('');
 
   const { watch: formWatch, setValue: formSetValue } = formMethods;
 
@@ -102,7 +105,11 @@ export const KYMBasiccoopDetailsFamilyMember = ({
 
   const [familyMemberIds, setFamilyMemberIds] = useState<string[]>([]);
 
-  const { data: familyMemberListQueryData, refetch } = useGetIndividualKymFamilyMembersListQuery(
+  const {
+    data: familyMemberListQueryData,
+    refetch,
+    isFetching,
+  } = useGetIndividualKymFamilyMembersListQuery(
     {
       id: String(id),
     },
@@ -140,15 +147,45 @@ export const KYMBasiccoopDetailsFamilyMember = ({
         ) ?? []
       );
     }
-  }, [familyMemberListQueryData]);
+  }, [familyMemberListQueryData, isFetching]);
+
+  const { mutate: setFamilyDetails } = useSetMemberFamilyDetailsMutation({
+    onSuccess: () => refetch(),
+  });
 
   const { mutate: newIDMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
-      setFamilyMemberMutationIds([res.newId, ...familyMemberMutationIds]);
+      // setFamilyMemberMutationIds([res.newId, ...familyMemberMutationIds]);
       //   setFamilyMemberMutationIds([...familyMemberMutationIds, res.newId]);
+
+      setNewIdAdded(res.newId);
+
       formSetValue('memberId', '');
     },
   });
+
+  useEffect(() => {
+    if (newIdAdded) {
+      if (id && familyMemberIds?.length) {
+        setFamilyDetails(
+          {
+            id: id as string,
+            data: {
+              id: newIdAdded,
+              relationshipId: '',
+              familyMemberId: familyMemberIds[0],
+            },
+          },
+          {
+            onSuccess: () => {
+              setFamilyMemberMutationIds([newIdAdded, ...familyMemberMutationIds]);
+              setNewIdAdded('');
+            },
+          }
+        );
+      }
+    }
+  }, [newIdAdded, familyMemberIds, familyMemberMutationIds]);
 
   const { mutate: deleteMutate } = useDeleteMemberFamilyDetailsMutation({
     onSuccess: (res) => {
@@ -195,7 +232,7 @@ export const KYMBasiccoopDetailsFamilyMember = ({
               <form>
                 <InputGroupContainer alignItems="center">
                   <GridItem colSpan={2}>
-                    <FormMemberSelect name="memberId" label="Member Search" />
+                    <FormMemberSelect name="memberId" label="Member Search" forceEnableAll />
                   </GridItem>
                 </InputGroupContainer>
               </form>

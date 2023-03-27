@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Box, Button, MemberCard } from '@myra-ui';
 import debounce from 'lodash/debounce';
+
+import { Box, Button, MemberCard } from '@myra-ui';
 
 import {
   FormFieldSearchTerm,
