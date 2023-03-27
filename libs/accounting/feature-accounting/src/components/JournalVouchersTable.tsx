@@ -69,8 +69,8 @@ export const JournalVouchersTable = () => {
 
   const tableSummaryColumns: TableOverviewColumnType[] = [
     { label: 'Total', width: 'auto', isNumeric: true },
-    { label: String(drTotal), width: 'lg', isNumeric: true },
-    { label: String(crTotal), width: 'lg', isNumeric: true },
+    { label: drTotal?.toFixed(2), width: 'lg', isNumeric: true },
+    { label: crTotal?.toFixed(2), width: 'lg', isNumeric: true },
   ];
 
   useDeepCompareEffect(() => {
@@ -138,7 +138,7 @@ export const JournalVouchersTable = () => {
       <TableOverview columns={tableSummaryColumns} />
 
       <Box w="100%" textAlign="right" fontSize="s3" fontWeight={500} color="gray.700">
-        Difference: NPR {drTotal - crTotal}
+        Difference: NPR {(drTotal - crTotal).toFixed(2)}
       </Box>
     </Box>
   );
