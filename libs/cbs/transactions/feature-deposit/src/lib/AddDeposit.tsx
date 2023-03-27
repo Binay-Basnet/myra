@@ -431,7 +431,7 @@ export const AddDeposit = () => {
                       !selectedAccount?.product?.nature) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
-                          <FormInput isRequired name="voucherId" label="Deposit Slip No" />
+                          <FormInput name="voucherId" label="Deposit Slip No" />
 
                           <FormAmountInput
                             isRequired
