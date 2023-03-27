@@ -11,7 +11,7 @@ export const SupplierTable = () => {
   const { t } = useTranslation();
   const { data, isFetching } = useGetInventoryItemsQuery();
 
-  const rowItems = data?.inventory.items?.list?.edges ?? [];
+  const rowItems = data?.inventory?.items?.list?.edges ?? [];
 
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
