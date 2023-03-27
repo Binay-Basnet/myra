@@ -275,6 +275,7 @@ export type AccountOpeningReport = {
   branchName?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
+  nature?: Maybe<NatureOfDepositProduct>;
   openedBy?: Maybe<Scalars['String']>;
   openingDate?: Maybe<Scalars['Localized']>;
 };
@@ -1269,6 +1270,11 @@ export const BalanceType = {
 } as const;
 
 export type BalanceType = typeof BalanceType[keyof typeof BalanceType];
+export type BalanceValue = {
+  amount?: Maybe<Scalars['String']>;
+  amountType?: Maybe<BalanceType>;
+};
+
 export type Bank = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -14072,13 +14078,12 @@ export type SavingProductBalanceData = {
 };
 
 export type SavingProductBalanceEntry = {
-  balanceType?: Maybe<BalanceType>;
+  balanceMap?: Maybe<Scalars['Any']>;
   code?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   nature?: Maybe<NatureOfDepositProduct>;
-  noOfAccounts?: Maybe<Scalars['Int']>;
-  totalBalance?: Maybe<Scalars['String']>;
+  noOfAccountsMap?: Maybe<Scalars['Any']>;
 };
 
 export type SavingProductBalanceFilter = {
@@ -25722,13 +25727,12 @@ export type GetSavingProductBalanceQuery = {
           balanceTotal?: string | null;
           balanceTotalType?: BalanceType | null;
           entries?: Array<{
-            balanceType?: BalanceType | null;
+            balanceMap?: unknown | null;
             code?: string | null;
             id?: string | null;
             name?: string | null;
             nature?: NatureOfDepositProduct | null;
-            noOfAccounts?: number | null;
-            totalBalance?: string | null;
+            noOfAccountsMap?: unknown | null;
           } | null> | null;
         } | null;
       };
@@ -44051,13 +44055,12 @@ export const GetSavingProductBalanceDocument = `
           balanceTotal
           balanceTotalType
           entries {
-            balanceType
+            balanceMap
             code
             id
             name
             nature
-            noOfAccounts
-            totalBalance
+            noOfAccountsMap
           }
         }
       }

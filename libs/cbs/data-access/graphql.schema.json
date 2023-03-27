@@ -2076,6 +2076,18 @@
             "deprecationReason": null
           },
           {
+            "name": "nature",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "NatureOfDepositProduct",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "openedBy",
             "description": null,
             "args": [],
@@ -9972,6 +9984,41 @@
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "BalanceValue",
+        "description": null,
+        "fields": [
+          {
+            "name": "amount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amountType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "BalanceType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -119190,12 +119237,12 @@
         "description": null,
         "fields": [
           {
-            "name": "balanceType",
+            "name": "balanceMap",
             "description": null,
             "args": [],
             "type": {
-              "kind": "ENUM",
-              "name": "BalanceType",
+              "kind": "SCALAR",
+              "name": "Any",
               "ofType": null
             },
             "isDeprecated": false,
@@ -119250,24 +119297,12 @@
             "deprecationReason": null
           },
           {
-            "name": "noOfAccounts",
+            "name": "noOfAccountsMap",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "totalBalance",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
+              "name": "Any",
               "ofType": null
             },
             "isDeprecated": false,
