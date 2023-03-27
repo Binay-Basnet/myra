@@ -17694,6 +17694,12 @@ export type SetLoanRepaymentMutation = {
         rebateAmount?: string | null;
         totalAmount?: string | null;
         paymentMethod?: LoanRepaymentMethod | null;
+        nextInstallment?: {
+          installmentNo: number;
+          installmentDate: Record<'local' | 'en' | 'np', string>;
+          currentRemainingPrincipal: string;
+          remainingInterest: string;
+        } | null;
       } | null;
     } | null;
   };
@@ -18619,6 +18625,14 @@ export type EodExceptionSetupMutationVariables = Exact<{
 
 export type EodExceptionSetupMutation = {
   settings: { general?: { setup: { eodException?: boolean | null } } | null };
+};
+
+export type EodActivitiesSetupMutationVariables = Exact<{
+  value: EodActionInput;
+}>;
+
+export type EodActivitiesSetupMutation = {
+  settings: { general?: { setup: { eodAction?: boolean | null } } | null };
 };
 
 export type SetLoanProductMutationVariables = Exact<{
@@ -28099,6 +28113,11 @@ export type GetEodExceptionsQuery = {
           cashInHand: boolean;
           loanRepayment: boolean;
         } | null;
+        eodAction?: {
+          dormantCheck: boolean;
+          maturityCheck: boolean;
+          loanRepayment: boolean;
+        } | null;
       };
     } | null;
   };
@@ -32985,6 +33004,12 @@ export const SetLoanRepaymentDocument = `
         rebateAmount
         totalAmount
         paymentMethod
+        nextInstallment {
+          installmentNo
+          installmentDate
+          currentRemainingPrincipal
+          remainingInterest
+        }
       }
       recordId
     }
@@ -34621,6 +34646,32 @@ export const useEodExceptionSetupMutation = <TError = unknown, TContext = unknow
     ['eodExceptionSetup'],
     useAxios<EodExceptionSetupMutation, EodExceptionSetupMutationVariables>(
       EodExceptionSetupDocument
+    ),
+    options
+  );
+export const EodActivitiesSetupDocument = `
+    mutation eodActivitiesSetup($value: EODActionInput!) {
+  settings {
+    general {
+      setup {
+        eodAction(value: $value)
+      }
+    }
+  }
+}
+    `;
+export const useEodActivitiesSetupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EodActivitiesSetupMutation,
+    TError,
+    EodActivitiesSetupMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<EodActivitiesSetupMutation, TError, EodActivitiesSetupMutationVariables, TContext>(
+    ['eodActivitiesSetup'],
+    useAxios<EodActivitiesSetupMutation, EodActivitiesSetupMutationVariables>(
+      EodActivitiesSetupDocument
     ),
     options
   );
@@ -47122,6 +47173,11 @@ export const GetEodExceptionsDocument = `
           dormantCheck
           maturityCheck
           cashInHand
+          loanRepayment
+        }
+        eodAction {
+          dormantCheck
+          maturityCheck
           loanRepayment
         }
       }

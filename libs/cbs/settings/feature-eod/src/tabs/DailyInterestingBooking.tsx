@@ -40,8 +40,12 @@ export const DailyInterestBooking = () => {
         accessorKey: 'accountNumber',
       },
       {
-        header: 'Interest Amount',
+        header: 'Interest Accrued',
         accessorFn: (row) => amountConverter(row?.payload?.interest_accrued ?? 0),
+      },
+      {
+        header: 'Closing Balance',
+        accessorFn: (row) => amountConverter(row?.payload?.closing_balance ?? 0),
       },
       {
         header: 'Narration',

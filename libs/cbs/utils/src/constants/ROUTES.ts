@@ -101,6 +101,14 @@ export const ROUTES = {
 
   /* SETTINGS APP & NOT INDEXED BY GLOBAL SEARCH */
 
+  SETTINGS_GENERAL_ACCOUNTING_GENERAL: '/settings/general/accounting/general',
+  SETTINGS_GENERAL_ACCOUNTING_CREDIT_TERMS: '/settings/general/accounting/credit-terms',
+  SETTINGS_GENERAL_ACCOUTING_CUSTOM_FIELDS: '/settings/general/accounting/custom-fields',
+  SETTINGS_GENERAL_ACCOUNTING_LEDGER_MAPPINGS:
+    '/settings/general/accounting/default-ledger-mapping',
+  SETTINGS_GENERAL_ACCOUNTING_CUSTOM_FIELDS: '/settings/general/accounting/custom-fields',
+  SETTINGS_GENERAL_ACCOUNTING_TAX: '/settings/general/accounting/default-ledger-mapping',
+
   SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
 
   SETTINGS_GENERAL_AUDIT_LOG: '/settings/monitor/audit-log/list',
@@ -243,6 +251,17 @@ export const ROUTES = {
   ACCOUNTING_SALES_CUSTOMER: '/accounting/sales/customer/list',
   ACCOUNTING_SALES_CUSTOMER_ADD: '/accounting/sales/customer/add',
 
+  ACCOUNTING_INVENTORY_ITEMS_LIST: '/accounting/inventory/items/list',
+  ACCOUNTING_INVENTORY_ITEMS_ADD: '/accounting/inventory/items/add',
+  ACCOUNTING_INVENTORY_ITEM_CATEGORY: '/accounting/inventory/item-category/list',
+  ACCOUNTING_INVENTORY_ITEM_CATEGORY_ADD: '/accounting/inventory/item-category/ass',
+
+  ACCOUNTING_INVENTORY_UNITS_LIST: '/accounting/inventory/units/list',
+  ACCOUNTING_INVENTORY_UNITS_LIST_ADD: '/accounting/inventory/units/add',
+
+  ACCOUNTING_INVENTORY_WAREHOUSE_LIST: '/accounting/inventory/warehouse/list',
+  ACCOUNTING_INVENTORY_WAREHOUSE_ADD: '/accounting/inventory/warehouse/add',
+
   ACCOUNTING_PURCHASE_LIST: '/accounting/purchase/list',
   ACCOUNTING_PURCHASE_LIST_ADD: '/accounting/purchase/add',
   ACCOUNTING_PURCHASE_EXPENSE: '/accounting/purchase/expenses/list',
@@ -310,6 +329,10 @@ export const ROUTES = {
   SETTINGS_GENERAL_LOAN_ORGANIZATION_RATE: '/settings/general/loan/organization-rate',
 
   SETTINGS_EOD_HISTORY_DETAILS: '/settings/general/eod/history/details',
+
+  DAY_CLOSE: '/day-close',
+
+  BRANCH_READINESS: '/branch-readiness',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

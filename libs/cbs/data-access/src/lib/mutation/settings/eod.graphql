@@ -17,3 +17,13 @@ mutation eodExceptionSetup($value: EODExceptionInput!) {
     }
   }
 }
+
+mutation eodActivitiesSetup($value: EODActionInput!) {
+  settings {
+    general {
+      setup {
+        eodAction(value: $value)
+      }
+    }
+  }
+}

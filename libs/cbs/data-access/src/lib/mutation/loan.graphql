@@ -52,6 +52,12 @@ mutation setLoanRepayment($data: LoanRepaymentInput) {
         rebateAmount
         totalAmount
         paymentMethod
+        nextInstallment {
+          installmentNo
+          installmentDate
+          currentRemainingPrincipal
+          remainingInterest
+        }
       }
 
       recordId

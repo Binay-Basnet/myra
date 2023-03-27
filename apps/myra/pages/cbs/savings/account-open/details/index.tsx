@@ -23,8 +23,8 @@ const AccountListPage = () => {
       handleTenureModalClose={handleAddTenureModalClose}
       isTenureModalOpen={isAddTenureModalOpen}
       pathbarOptions={[
-        { label: 'Add Nominee', handler: () => setIsAddNomineeAccountModalOpen(true) },
-        { label: 'Add Tenure', handler: () => setIsAddTenureModalOpen(true) },
+        { label: 'Update Nominee', handler: () => setIsAddNomineeAccountModalOpen(true) },
+        { label: 'Update Tenure', handler: () => setIsAddTenureModalOpen(true) },
       ]}
     />
   );

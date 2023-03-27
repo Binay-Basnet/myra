@@ -40,8 +40,12 @@ export const LoanInterestBooking = () => {
         accessorKey: 'accountNumber',
       },
       {
-        header: 'Interest Amount',
-        accessorFn: (row) => amountConverter(row?.payload?.interest_amount ?? 0),
+        header: 'Interest Accrued',
+        accessorFn: (row) => amountConverter(row?.payload?.interest_accrued ?? 0),
+      },
+      {
+        header: 'Principal Amount',
+        accessorFn: (row) => amountConverter(row?.payload?.principal_amount ?? 0),
       },
       {
         header: 'Narration',

@@ -71,11 +71,11 @@ export const HeaderTransactionDate = () => {
 
     refetchEndOfDay();
 
-    router.push('/day-close');
+    router.push(ROUTES.DAY_CLOSE);
   };
 
   const handleBranchReadiness = () => {
-    router.push('/branch-readiness');
+    router.push(ROUTES.BRANCH_READINESS);
     refetchEndOfDay();
   };
 
@@ -84,7 +84,7 @@ export const HeaderTransactionDate = () => {
 
     refetchEndOfDay();
 
-    router.push('/day-close');
+    router.push(ROUTES.DAY_CLOSE);
   };
 
   const ignoreAndCloseDay = () => {
@@ -92,7 +92,7 @@ export const HeaderTransactionDate = () => {
 
     refetchEndOfDay();
 
-    router.push('/day-close');
+    router.push(ROUTES.DAY_CLOSE);
   };
 
   return (
@@ -186,7 +186,7 @@ export const HeaderTransactionDate = () => {
                                 display="flex"
                                 justifyContent="center"
                                 w="100%"
-                                // onClick={() => router.push('/day-close')}
+                                // onClick={() => router.push(ROUTES.DAY_CLOSE)}
                                 onClick={closeDayFxn}
                               >
                                 Close Day
@@ -216,7 +216,19 @@ export const HeaderTransactionDate = () => {
 
                       <Box display="flex" flexDirection="column">
                         {eodHistoryData?.endOfDay?.history?.slice(0, 2)?.map((eod) => (
-                          <Button variant="ghost" shade="neutral">
+                          <Button
+                            variant="ghost"
+                            shade="neutral"
+                            onClick={() => {
+                              if (eod?.status === 'ONGOING') {
+                                return router.push(ROUTES.DAY_CLOSE);
+                              }
+
+                              return router.push(
+                                `${ROUTES.SETTINGS_EOD_HISTORY_DETAILS}?id=${eod?.eodDate}`
+                              );
+                            }}
+                          >
                             <Box display="flex" justifyContent="space-between" width="100%">
                               <Box display="flex" alignItems="center" gap="s10">
                                 {eodStatusIcon(eod?.status, eod?.errorCount)}

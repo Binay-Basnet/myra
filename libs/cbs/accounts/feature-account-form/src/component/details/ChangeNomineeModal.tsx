@@ -90,6 +90,7 @@ export const AddNomineeModal = ({ isOpen, onClose }: IChangeNomineeProps) => {
           />
 
           <FormSelect
+            menuPosition="fixed"
             label="Select New Nominee"
             name="updatedAccountID"
             options={defaultDataOptions}
