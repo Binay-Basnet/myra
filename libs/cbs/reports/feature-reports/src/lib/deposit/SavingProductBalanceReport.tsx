@@ -162,13 +162,13 @@ const COATable = ({ data, type, accountTotal, balanceTotal }: ICOATableProps) =>
         ]?.filter(Boolean);
 
   const baseColumn: Column<TrialSheetReportDataEntry>[] = [
-    {
-      header: 'S.No.',
-      accessorKey: 'index',
-      meta: {
-        isNumeric: true,
-      },
-    },
+    // {
+    //   header: 'S.No.',
+    //   accessorKey: 'index',
+    //   meta: {
+    //     isNumeric: true,
+    //   },
+    // },
     {
       header: 'Product Code',
       accessorKey: 'code',
