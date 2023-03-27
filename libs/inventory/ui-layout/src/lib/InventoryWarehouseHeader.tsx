@@ -21,7 +21,7 @@ export const InventoryWarehouseHeader = ({
     <Box
       bg="white"
       zIndex="10"
-      w="100%"
+      w="calc(100vw - 300px)"
       top="110px"
       position="fixed"
       borderBottom="1px solid"
@@ -40,7 +40,6 @@ export const InventoryWarehouseHeader = ({
       </Box>
 
       <Button onClick={onClickHandler}> New Warehouse </Button>
-      <Box>jj</Box>
     </Box>
   );
 };
