@@ -14,7 +14,7 @@ import {
 
 import { Box, Button, Collapse, Grid, GridItem, Text } from '@myra-ui';
 
-import { FormDatePicker, FormSelect } from '@coop/shared/form';
+import { FormInput, FormSelect } from '@coop/shared/form';
 
 export const MigrationDetailsComponents = () => {
   const [sourceCollapse, setSourceCollapse] = useState(true);
@@ -59,8 +59,7 @@ export const MigrationDetailsComponents = () => {
         dbName: router?.query?.['name'] as string,
         choices: 'all',
         databaseType: getValues()?.databaseType,
-        // reportDate: getValues()?.reportDate?.en,
-        newDB: '',
+        newDB: getValues()?.newDB,
       },
     }).then(() => directoryRefetch());
   };
@@ -191,7 +190,7 @@ export const MigrationDetailsComponents = () => {
                   onClick={() => setTransformCollapse(!transformCollapse)}
                   cursor="pointer"
                 >
-                  Transformed CSV:{' '}
+                  Transform CSV:{' '}
                 </Text>
                 <Button onClick={() => directoryRefetch()}>Reload</Button>
               </Box>
@@ -201,7 +200,7 @@ export const MigrationDetailsComponents = () => {
                     <Text fontWeight="medium">Start Transform</Text>
                     <FormSelect
                       name="databaseType"
-                      label="Database Type"
+                      label="Member Type"
                       options={[
                         { label: 'Cooperative', value: 'COOPERATIVE' },
                         { label: 'Individual', value: 'INDIVIDUAL' },
@@ -209,7 +208,7 @@ export const MigrationDetailsComponents = () => {
                         { label: 'Cooperative Union', value: 'COOPERATIVE_UNION' },
                       ]}
                     />
-                    <FormDatePicker name="reportDate" label="Report date" />
+                    <FormInput name="newDB" label="New Database" />
                     <Button type="submit" w={100}>
                       Submit
                     </Button>
