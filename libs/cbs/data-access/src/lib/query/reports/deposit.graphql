@@ -290,15 +290,13 @@ query getSavingProductBalance($data: SavingProductBalanceFilter!) {
         data {
           accountTotal
           balanceTotal
-          balanceTotalType
           entries {
-            balanceType
+            balanceMap
             code
             id
             name
             nature
-            noOfAccounts
-            totalBalance
+            noOfAccountsMap
           }
         }
       }
