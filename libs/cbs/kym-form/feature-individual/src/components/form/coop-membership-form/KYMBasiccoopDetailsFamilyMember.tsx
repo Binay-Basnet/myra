@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { isEqual } from 'lodash';
 import debounce from 'lodash/debounce';
 
-import { FormSection, GridItem } from '@myra-ui';
+import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import {
   Id_Type,
@@ -221,6 +221,24 @@ export const KYMBasiccoopDetailsFamilyMember = ({
               name="isFamilyAMember"
               id="familyMemberInThisInstitution"
             />
+            {isFamilyAMember && (
+              <Alert status="info" title="Info" hideCloseIcon>
+                <Box display="flex" gap="s4" flexDirection="column">
+                  <ul>
+                    <li>
+                      <Text fontSize="r1" fontWeight="600">
+                        Find Family Members With Name
+                      </Text>
+                    </li>
+                    <li>
+                      <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
+                        Multiple Members Can Be Selected With FInd Member Search{' '}
+                      </Text>
+                    </li>
+                  </ul>
+                </Box>
+              </Alert>
+            )}
           </form>
         </FormProvider>
       </GridItem>
