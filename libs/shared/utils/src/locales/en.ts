@@ -3706,7 +3706,7 @@ const en: Record<string, string> = {
   dayCloseInOrder: 'In order to perform the day end, following steps must be complete',
   dayCloseCloseDay: 'Close Day',
   dayCloseCheck: 'Check',
-  dayCloseDailyInterestBooking: 'Daily Interest Booking',
+  dayCloseDailyInterestBooking: 'Saving Interest Booking',
   dayCloseInterestBooking:
     'Interest booking should be done for all the accounts before closing the day.',
   dayCloseCheckFrequency: 'Check Frequency and Post Interest',

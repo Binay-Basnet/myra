@@ -242,6 +242,7 @@ export const SavingsOrganizationRate = () => {
         isOpen={isDetailModalOpen}
         onClose={onDetailModalClose}
         rate={organizationRateDetailData?.settings?.general?.deposit?.getOrganizationRate?.data}
+        rateLabel="New Organization Rate"
       />
     </>
   );

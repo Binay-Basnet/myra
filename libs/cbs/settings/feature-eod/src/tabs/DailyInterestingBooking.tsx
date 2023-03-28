@@ -56,7 +56,7 @@ export const DailyInterestBooking = () => {
   );
 
   return (
-    <SettingsCard title="Daily Interest Booking">
+    <SettingsCard title="Saving Interest Booking">
       <Box height="30rem">
         <Table
           isLoading={isFetching}
