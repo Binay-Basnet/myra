@@ -226,15 +226,15 @@ interface IKYMBasiccoopDetailsProps {
   setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const KYMBasiccoopDetails = ({ setKymCurrentSection }: IKYMBasiccoopDetailsProps) => {
+export const KYMBasiccoopDetails = ({ setKymCurrentSection }: IKYMBasiccoopDetailsProps) => (
   <Box display="flex" flexDirection="column" id="kymAccIndIncomeSourceDetails">
     <KYMBasiccoopDetailsBasic setKymCurrentSection={setKymCurrentSection} />
 
     <KYMBasiccoopDetailsIntroducer setKymCurrentSection={setKymCurrentSection} />
 
     <KYMBasiccoopDetailsFamilyMember setKymCurrentSection={setKymCurrentSection} />
-  </Box>;
-};
+  </Box>
+);
 
 // export const FamilyMember = ({ control, index }: any) => {
 //   const { t } = useTranslation();
