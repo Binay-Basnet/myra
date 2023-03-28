@@ -6,23 +6,23 @@ import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 import { useSetItemsMutation } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 
-import { InventorySimpleForm } from '../component/form/InventorySimpleForm';
+import { InventoryItemVariantForm } from '../component/form/InventoryItemVariantForm';
 
 /* eslint-disable-next-line */
 
-export const InventoryFeatureItem = () => {
+export const InventoryFeatureItemVariant = () => {
   const router = useRouter();
-  const { mutateAsync: AddItems } = useSetItemsMutation();
+  const methods = useForm({});
+  const { mutateAsync: AddItemsVariant } = useSetItemsMutation();
   const handleSave = () => {
     const values = methods.getValues();
 
     asyncToast({
       id: 'account-open-add-minor',
-      promise: AddItems({
+      promise: AddItemsVariant({
         data: {
           ...values,
-          ledgers: null,
-          isVariantItem: false,
+          isVariantItem: true,
         },
       }),
       msgs: {
@@ -37,24 +37,20 @@ export const InventoryFeatureItem = () => {
   };
 
   // const router = useRouter();
-  const methods = useForm({});
+
   const handleButton = () => {
-    router.push(ROUTES.INVENTORY_ITEMS_VARIANT_ADD);
+    router.push(ROUTES.INVENTORY_ITEMS_ADD);
   };
   return (
     <Container minW="container.lg" height="fit-content" bg="gray.0">
       <Box margin="0px auto" width="100%" zIndex="10">
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title="Add Item"
-            buttonLabel="Add Variant Item"
-            buttonHandler={handleButton}
-          />
+          <FormHeader title="Add Item" buttonLabel="Add Simple Item" buttonHandler={handleButton} />
         </Box>
         <Box minH="calc(100vh - 230px)">
           <FormProvider {...methods}>
             <form>
-              <InventorySimpleForm />
+              <InventoryItemVariantForm />
             </form>
           </FormProvider>
         </Box>

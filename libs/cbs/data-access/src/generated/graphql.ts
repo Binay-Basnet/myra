@@ -17614,6 +17614,27 @@ export type SetSuppliersMutation = {
   };
 };
 
+export type SetItemsMutationVariables = Exact<{
+  data: InvItemsInput;
+}>;
+
+export type SetItemsMutation = {
+  inventory: {
+    items?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SendLoanApplicationForApprovalMutationVariables = Exact<{
   id: Scalars['ID'];
   data: LoanAccountInput;
@@ -32925,6 +32946,28 @@ export const useSetSuppliersMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetSuppliersMutation, TError, SetSuppliersMutationVariables, TContext>(
     ['setSuppliers'],
     useAxios<SetSuppliersMutation, SetSuppliersMutationVariables>(SetSuppliersDocument),
+    options
+  );
+export const SetItemsDocument = `
+    mutation setItems($data: InvItemsInput!) {
+  inventory {
+    items {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetItemsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetItemsMutation, TError, SetItemsMutationVariables, TContext>
+) =>
+  useMutation<SetItemsMutation, TError, SetItemsMutationVariables, TContext>(
+    ['setItems'],
+    useAxios<SetItemsMutation, SetItemsMutationVariables>(SetItemsDocument),
     options
   );
 export const SendLoanApplicationForApprovalDocument = `
