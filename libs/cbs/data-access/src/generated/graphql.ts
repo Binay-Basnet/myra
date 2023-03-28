@@ -24193,6 +24193,27 @@ export type GetIndividualKymFamilyMembersListQuery = {
   };
 };
 
+export type GetIndividualKymFamilyMembersInCoopListQueryVariables = Exact<{
+  id: Scalars['String'];
+  isMember?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type GetIndividualKymFamilyMembersInCoopListQuery = {
+  members: {
+    individual?: {
+      listFamilyMember?: {
+        data?: Array<{
+          id: string;
+          relationshipId?: string | null;
+          fullName?: Record<'local' | 'en' | 'np', string> | null;
+          familyMemberId?: string | null;
+          dateOfBirth?: Record<'local' | 'en' | 'np', string> | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetIndividualKymFamilyOccupationListQueryVariables = Exact<{
   id: Scalars['String'];
   isSpouse: Scalars['Boolean'];
@@ -42060,6 +42081,38 @@ export const useGetIndividualKymFamilyMembersListQuery = <
       GetIndividualKymFamilyMembersListQuery,
       GetIndividualKymFamilyMembersListQueryVariables
     >(GetIndividualKymFamilyMembersListDocument).bind(null, variables),
+    options
+  );
+export const GetIndividualKymFamilyMembersInCoopListDocument = `
+    query getIndividualKymFamilyMembersInCoopList($id: String!, $isMember: Boolean) {
+  members {
+    individual(id: $id) {
+      listFamilyMember(isMember: $isMember) {
+        data {
+          id
+          relationshipId
+          fullName
+          familyMemberId
+          dateOfBirth
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndividualKymFamilyMembersInCoopListQuery = <
+  TData = GetIndividualKymFamilyMembersInCoopListQuery,
+  TError = unknown
+>(
+  variables: GetIndividualKymFamilyMembersInCoopListQueryVariables,
+  options?: UseQueryOptions<GetIndividualKymFamilyMembersInCoopListQuery, TError, TData>
+) =>
+  useQuery<GetIndividualKymFamilyMembersInCoopListQuery, TError, TData>(
+    ['getIndividualKymFamilyMembersInCoopList', variables],
+    useAxios<
+      GetIndividualKymFamilyMembersInCoopListQuery,
+      GetIndividualKymFamilyMembersInCoopListQueryVariables
+    >(GetIndividualKymFamilyMembersInCoopListDocument).bind(null, variables),
     options
   );
 export const GetIndividualKymFamilyOccupationListDocument = `

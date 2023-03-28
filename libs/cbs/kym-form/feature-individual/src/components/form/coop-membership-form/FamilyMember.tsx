@@ -6,7 +6,7 @@ import { Box, Button, MemberCard } from '@myra-ui';
 
 import {
   FormFieldSearchTerm,
-  useGetIndividualKymFamilyMembersListQuery,
+  useGetIndividualKymFamilyMembersInCoopListQuery,
   useGetIndividualKymOptionsQuery,
   useGetIndividualMemberDetails,
   useSetMemberFamilyDetailsMutation,
@@ -46,12 +46,13 @@ export const FamilyMember = ({
       searchTerm: FormFieldSearchTerm.Relationship,
     });
 
-  const { data: familyMemberListQueryData } = useGetIndividualKymFamilyMembersListQuery(
-    {
-      id: String(memberId),
-    },
-    { enabled: !!memberId }
-  );
+  const { data: familyMemberListQueryData, refetch } =
+    useGetIndividualKymFamilyMembersInCoopListQuery(
+      {
+        id: String(memberId),
+      },
+      { enabled: !!memberId }
+    );
 
   useEffect(() => {
     const familyMemberData =
@@ -64,24 +65,31 @@ export const FamilyMember = ({
     }
   }, [familyMemberListQueryData, mutationId]);
 
-  const { mutate } = useSetMemberFamilyDetailsMutation();
+  const { mutate } = useSetMemberFamilyDetailsMutation({ onSuccess: () => refetch() });
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({
-          id: memberId,
-          data: {
-            id: mutationId,
-            relationshipId: data.relationshipId,
-            familyMemberId,
-          },
-        });
+        const familyMemberData =
+          familyMemberListQueryData?.members?.individual?.listFamilyMember?.data?.find(
+            (member) => member?.id === mutationId
+          );
+
+        if (familyMemberData?.relationshipId !== data.relationshipId) {
+          mutate({
+            id: memberId,
+            data: {
+              id: mutationId,
+              relationshipId: data.relationshipId,
+              familyMemberId,
+            },
+          });
+        }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
-  }, [watch]);
+  }, [watch, familyMemberListQueryData]);
 
   return (
     <Box display="flex" flexDirection="column" gap="s4">
