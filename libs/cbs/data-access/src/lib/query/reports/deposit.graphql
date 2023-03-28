@@ -11,6 +11,7 @@ query getAccountOpeningReport($data: AccountOpeningReportInput) {
           openingDate
           branchId
           branchName
+          nature
         }
       }
     }
