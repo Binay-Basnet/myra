@@ -144,7 +144,7 @@ export const FormMemberSelect = ({
       render={({ field: { value, onChange } }) => (
         <MemberSelect
           name={name}
-          value={memberOptions?.find((option) => option.value === value)}
+          value={memberOptions?.find((option) => option.value === value) ?? null}
           label={label}
           isLoading={isFetching}
           isDisabled={isDisabledCheck}

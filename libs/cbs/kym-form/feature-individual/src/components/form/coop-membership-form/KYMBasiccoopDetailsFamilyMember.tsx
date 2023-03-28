@@ -10,7 +10,7 @@ import {
   Id_Type,
   useDeleteMemberFamilyDetailsMutation,
   useGetIndividualKymEditDataQuery,
-  useGetIndividualKymFamilyMembersListQuery,
+  useGetIndividualKymFamilyMembersInCoopListQuery,
   useGetNewIdMutation,
   useSetMemberDataMutation,
   useSetMemberFamilyDetailsMutation,
@@ -109,7 +109,7 @@ export const KYMBasiccoopDetailsFamilyMember = ({
     data: familyMemberListQueryData,
     refetch,
     isFetching,
-  } = useGetIndividualKymFamilyMembersListQuery(
+  } = useGetIndividualKymFamilyMembersInCoopListQuery(
     {
       id: String(id),
     },
@@ -120,7 +120,7 @@ export const KYMBasiccoopDetailsFamilyMember = ({
 
   useEffect(() => {
     if (memberId && !familyMemberIds.includes(memberId)) {
-      setFamilyMemberIds([memberId, ...familyMemberIds]);
+      // setFamilyMemberIds([memberId, ...familyMemberIds]);
       //   setFamilyMemberIds([...familyMemberIds, memberId]);
       newIDMutate({ idType: Id_Type.Kymindividualfamilymembers });
     }
@@ -160,32 +160,32 @@ export const KYMBasiccoopDetailsFamilyMember = ({
 
       setNewIdAdded(res.newId);
 
-      formSetValue('memberId', '');
+      // formSetValue('memberId', '');
     },
   });
 
   useEffect(() => {
-    if (newIdAdded) {
-      if (id && familyMemberIds?.length) {
-        setFamilyDetails(
-          {
-            id: id as string,
-            data: {
-              id: newIdAdded,
-              relationshipId: '',
-              familyMemberId: familyMemberIds[0],
-            },
+    if (newIdAdded && id && memberId) {
+      setFamilyDetails(
+        {
+          id: id as string,
+          data: {
+            id: newIdAdded,
+            familyMemberId: memberId,
           },
-          {
-            onSuccess: () => {
-              setFamilyMemberMutationIds([newIdAdded, ...familyMemberMutationIds]);
-              setNewIdAdded('');
-            },
-          }
-        );
-      }
+        },
+        {
+          onSuccess: () => {
+            setFamilyMemberMutationIds([newIdAdded, ...familyMemberMutationIds]);
+            setFamilyMemberIds([memberId, ...familyMemberIds]);
+
+            setNewIdAdded('');
+            formSetValue('memberId', '');
+          },
+        }
+      );
     }
-  }, [newIdAdded, familyMemberIds, familyMemberMutationIds]);
+  }, [newIdAdded, memberId]);
 
   const { mutate: deleteMutate } = useDeleteMemberFamilyDetailsMutation({
     onSuccess: (res) => {
@@ -215,30 +215,32 @@ export const KYMBasiccoopDetailsFamilyMember = ({
               setKymCurrentSection(kymSection);
             }}
           >
-            <FormSwitchTab
-              label={t['kynIndFamilyMemberinthisinstitution']}
-              options={booleanList}
-              name="isFamilyAMember"
-              id="familyMemberInThisInstitution"
-            />
-            {isFamilyAMember && (
-              <Alert status="info" title="Info" hideCloseIcon>
-                <Box display="flex" gap="s4" flexDirection="column">
-                  <ul>
-                    <li>
-                      <Text fontSize="r1" fontWeight="600">
-                        Find Family Members With Name
-                      </Text>
-                    </li>
-                    <li>
-                      <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-                        Multiple Members Can Be Selected With FInd Member Search{' '}
-                      </Text>
-                    </li>
-                  </ul>
-                </Box>
-              </Alert>
-            )}
+            <Box display="flex" flexDirection="column" gap="s16">
+              <FormSwitchTab
+                label={t['kynIndFamilyMemberinthisinstitution']}
+                options={booleanList}
+                name="isFamilyAMember"
+                id="familyMemberInThisInstitution"
+              />
+              {isFamilyAMember && (
+                <Alert status="info" title="Info" hideCloseIcon>
+                  <Box display="flex" gap="s4" flexDirection="column">
+                    <ul>
+                      <li>
+                        <Text fontSize="r1" fontWeight="600">
+                          Find Family Members With Name
+                        </Text>
+                      </li>
+                      <li>
+                        <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
+                          Multiple Members Can Be Selected With FInd Member Search{' '}
+                        </Text>
+                      </li>
+                    </ul>
+                  </Box>
+                </Alert>
+              )}
+            </Box>
           </form>
         </FormProvider>
       </GridItem>

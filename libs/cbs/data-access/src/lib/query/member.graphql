@@ -298,6 +298,22 @@ query getIndividualKymFamilyMembersList($id: String!, $isMember: Boolean) {
   }
 }
 
+query getIndividualKymFamilyMembersInCoopList($id: String!, $isMember: Boolean) {
+  members {
+    individual(id: $id) {
+      listFamilyMember(isMember: $isMember) {
+        data {
+          id
+          relationshipId
+          fullName
+          familyMemberId
+          dateOfBirth
+        }
+      }
+    }
+  }
+}
+
 query getIndividualKymFamilyOccupationList($id: String!, $isSpouse: Boolean!) {
   members {
     individual(id: $id) {
