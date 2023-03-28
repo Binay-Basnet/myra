@@ -25,7 +25,7 @@ export const MigrationDetailsComponents = () => {
 
   const router = useRouter();
   const methods = useForm();
-  const { getValues, handleSubmit } = methods;
+  const { getValues, handleSubmit, reset } = methods;
   const { data: directoryStructureData, refetch: directoryRefetch } = useGetDirectoryStructureQuery(
     {
       dbName: router?.query?.['name'] as string,
@@ -61,7 +61,10 @@ export const MigrationDetailsComponents = () => {
         databaseType: getValues()?.databaseType,
         newDB: getValues()?.newDB,
       },
-    }).then(() => directoryRefetch());
+    }).then(() => {
+      directoryRefetch();
+      reset({ databaseType: null, newDB: '' });
+    });
   };
 
   return (
