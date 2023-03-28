@@ -1,9 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
-import { IoCloseOutline } from 'react-icons/io5';
-import { useRouter } from 'next/router';
 
-import { Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
+import { Box, Button, Container, FormFooter, FormHeader, Icon, Text } from '@myra-ui';
 
 import { useTranslation } from '@coop/shared/utils';
 
@@ -14,33 +12,14 @@ export interface InventoryFeatureItemProps {}
 
 export const InventoryFeatureItem = () => {
   const { t } = useTranslation();
-  const router = useRouter();
+  // const router = useRouter();
   const methods = useForm({});
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="55px" bg="gray.0">
         <Box margin="0px auto" width="100%" zIndex="10">
-          <Box
-            height="s60"
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            px="s16"
-            py="s20"
-            background="neutralColorLight.Gray-0"
-            borderBottom="1px solid "
-            borderColor="border.layout"
-          >
-            <Text fontSize="r2" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-              {t['invItemAddNewItem']}
-            </Text>
-
-            <IconButton
-              variant="ghost"
-              aria-label="close"
-              icon={<Icon as={IoCloseOutline} size="md" />}
-              onClick={() => router.back()}
-            />
+          <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
+            <FormHeader title="Add Item" />
           </Box>
           <FormProvider {...methods}>
             <form>
