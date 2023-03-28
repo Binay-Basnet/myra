@@ -6772,6 +6772,7 @@ export type InterestPostingReportEntry = {
   days?: Maybe<Scalars['Int']>;
   rate?: Maybe<Scalars['Float']>;
   remarks?: Maybe<Scalars['String']>;
+  tds?: Maybe<Scalars['String']>;
 };
 
 export type InterestPostingReportResult = {
@@ -6851,6 +6852,7 @@ export type InterestTaxFilter = {
 export type InterestTaxReportEntry = {
   accountNo?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
+  branchId?: Maybe<Scalars['String']>;
   closingBalance?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   interest?: Maybe<Scalars['String']>;
@@ -6864,6 +6866,7 @@ export type InterestTaxReportEntry = {
 };
 
 export type InterestTaxReportFilter = {
+  branchId: Array<Scalars['String']>;
   filter?: InputMaybe<InterestTaxFilter>;
   period: LocalizedDateFilter;
 };
@@ -9532,6 +9535,7 @@ export type LoanAccReportDetails = {
   accountNo?: Maybe<Scalars['String']>;
   approvedAmount?: Maybe<Scalars['String']>;
   charge?: Maybe<Scalars['String']>;
+  disbursedAmount?: Maybe<Scalars['String']>;
   installment?: Maybe<Scalars['Int']>;
   interestRate?: Maybe<Scalars['Float']>;
   issuedDate?: Maybe<Scalars['Localized']>;
@@ -10202,6 +10206,7 @@ export type LoanBankDisbursement = {
 };
 
 export type LoanCallReport = {
+  contactNo?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   installmentDate?: Maybe<Scalars['Localized']>;
   installmentDueAmount?: Maybe<Scalars['String']>;
@@ -14440,6 +14445,7 @@ export type SettingsQuery = {
 };
 
 export type SetupMutation = {
+  dumpAccountInterestForMigration?: Maybe<Scalars['String']>;
   eodAction?: Maybe<Scalars['Boolean']>;
   eodException?: Maybe<Scalars['Boolean']>;
   eodSeed?: Maybe<Scalars['String']>;
@@ -14997,6 +15003,7 @@ export type ShareStatement = {
 };
 
 export type ShareStatementReport = {
+  openingBalance?: Maybe<Scalars['Int']>;
   shareStatement?: Maybe<Array<Maybe<ShareStatement>>>;
   totals?: Maybe<TotalReport>;
 };

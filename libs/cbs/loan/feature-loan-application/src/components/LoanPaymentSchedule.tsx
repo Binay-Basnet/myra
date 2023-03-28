@@ -162,7 +162,7 @@ export const LoanPaymentSchedule = () => {
           name="disbursementDate"
           label="Disburse Date"
           minDate={
-            closingDate
+            closingDate?.local
               ? dateType === 'BS'
                 ? new NepaliDate(closingDate?.np).toJsDate()
                 : new Date(closingDate?.en)
@@ -175,7 +175,7 @@ export const LoanPaymentSchedule = () => {
           label="Installment Begin Date"
           // minDate={closingDate ? new Date(localizedDate(closingDate) as string) : new Date()}
           minDate={
-            closingDate
+            closingDate?.local
               ? dateType === 'BS'
                 ? new NepaliDate(closingDate?.np).toJsDate()
                 : new Date(closingDate?.en)

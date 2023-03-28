@@ -142,7 +142,7 @@ export const AccountInterestUpdateModal = ({
             name="effectiveDate"
             label="Effective Date"
             minDate={
-              closingDate
+              closingDate?.local
                 ? dateType === 'BS'
                   ? new NepaliDate(closingDate?.np).toJsDate()
                   : new Date(closingDate?.en)

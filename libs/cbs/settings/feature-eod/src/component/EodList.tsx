@@ -53,7 +53,7 @@ export const EodList = () => {
             name="transactionDate"
             label="Transaction Date"
             maxDate={
-              closingDate
+              closingDate?.local
                 ? dateType === 'BS'
                   ? new NepaliDate(closingDate?.np).toJsDate()
                   : new Date(closingDate?.en)
