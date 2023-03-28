@@ -96,7 +96,7 @@ export const MigrationFileComponent = () => {
       </Box>
     );
   }
-
+  /* eslint-disable no-nested-ternary */
   return (
     <Box p={5}>
       {tableData && (
@@ -114,32 +114,30 @@ export const MigrationFileComponent = () => {
               </Text>
               <br />
             </Box>
+
             <Button width="-webkit-fit-content" onClick={onSubmit}>
               Submit
             </Button>
+
             <br />
           </Box>
-          {/* <Box
-            display="flex"
-            p={2}
-            bg="gray.500"
-            borderRadius={5}
-            w="-webkit-fit-content"
-            position="fixed"
-            top={90}
-            left={500}
-            zIndex={1}
-          >
-            Changed Row: {changedRows?.map((item) => `${item}, `)}
-          </Box> */}
+
           <Box width="-webkit-fit-content">
-            <Spreadsheet
-              data={csvData}
-              columnLabels={columnLabel}
-              // hideRowIndicators
-              onChange={setCsvData}
-              rowLabels={rowLabel}
-            />
+            {!isEmpty(columnLabel) && isEmpty(csvData) ? (
+              <Loader />
+            ) : isEmpty(columnLabel) && isEmpty(csvData) ? (
+              <Text fontSize="r3" fontWeight="medium">
+                No data in csv
+              </Text>
+            ) : (
+              <Spreadsheet
+                data={csvData}
+                columnLabels={columnLabel}
+                // hideRowIndicators
+                onChange={setCsvData}
+                rowLabels={rowLabel}
+              />
+            )}
           </Box>
         </Box>
       )}
