@@ -6772,6 +6772,7 @@ export type InterestPostingReportEntry = {
   days?: Maybe<Scalars['Int']>;
   rate?: Maybe<Scalars['Float']>;
   remarks?: Maybe<Scalars['String']>;
+  tds?: Maybe<Scalars['String']>;
 };
 
 export type InterestPostingReportResult = {
@@ -6851,6 +6852,7 @@ export type InterestTaxFilter = {
 export type InterestTaxReportEntry = {
   accountNo?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
+  branchId?: Maybe<Scalars['String']>;
   closingBalance?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   interest?: Maybe<Scalars['String']>;
@@ -6864,6 +6866,7 @@ export type InterestTaxReportEntry = {
 };
 
 export type InterestTaxReportFilter = {
+  branchId: Array<Scalars['String']>;
   filter?: InputMaybe<InterestTaxFilter>;
   period: LocalizedDateFilter;
 };
@@ -9532,6 +9535,7 @@ export type LoanAccReportDetails = {
   accountNo?: Maybe<Scalars['String']>;
   approvedAmount?: Maybe<Scalars['String']>;
   charge?: Maybe<Scalars['String']>;
+  disbursedAmount?: Maybe<Scalars['String']>;
   installment?: Maybe<Scalars['Int']>;
   interestRate?: Maybe<Scalars['Float']>;
   issuedDate?: Maybe<Scalars['Localized']>;
@@ -10202,6 +10206,7 @@ export type LoanBankDisbursement = {
 };
 
 export type LoanCallReport = {
+  contactNo?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   installmentDate?: Maybe<Scalars['Localized']>;
   installmentDueAmount?: Maybe<Scalars['String']>;
@@ -14440,6 +14445,7 @@ export type SettingsQuery = {
 };
 
 export type SetupMutation = {
+  dumpAccountInterestForMigration?: Maybe<Scalars['String']>;
   eodAction?: Maybe<Scalars['Boolean']>;
   eodException?: Maybe<Scalars['Boolean']>;
   eodSeed?: Maybe<Scalars['String']>;
@@ -14997,6 +15003,7 @@ export type ShareStatement = {
 };
 
 export type ShareStatementReport = {
+  openingBalance?: Maybe<Scalars['Int']>;
   shareStatement?: Maybe<Array<Maybe<ShareStatement>>>;
   totals?: Maybe<TotalReport>;
 };
@@ -17593,6 +17600,27 @@ export type SetSuppliersMutationVariables = Exact<{
 export type SetSuppliersMutation = {
   inventory: {
     suppliers?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetItemsMutationVariables = Exact<{
+  data: InvItemsInput;
+}>;
+
+export type SetItemsMutation = {
+  inventory: {
+    items?: {
       add?: {
         recordId?: string | null;
         error?:
@@ -32918,6 +32946,28 @@ export const useSetSuppliersMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetSuppliersMutation, TError, SetSuppliersMutationVariables, TContext>(
     ['setSuppliers'],
     useAxios<SetSuppliersMutation, SetSuppliersMutationVariables>(SetSuppliersDocument),
+    options
+  );
+export const SetItemsDocument = `
+    mutation setItems($data: InvItemsInput!) {
+  inventory {
+    items {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetItemsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetItemsMutation, TError, SetItemsMutationVariables, TContext>
+) =>
+  useMutation<SetItemsMutation, TError, SetItemsMutationVariables, TContext>(
+    ['setItems'],
+    useAxios<SetItemsMutation, SetItemsMutationVariables>(SetItemsDocument),
     options
   );
 export const SendLoanApplicationForApprovalDocument = `

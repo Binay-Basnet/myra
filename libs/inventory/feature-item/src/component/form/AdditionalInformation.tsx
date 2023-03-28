@@ -3,7 +3,7 @@ import { FormSection } from '@myra-ui';
 import { InvItemsValuationMethod } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 
-export const InventoryItemsLedger = () => {
+export const AdditionalInformationInventoryItems = () => {
   const itemOptions = [
     {
       label: 'First In First Out',

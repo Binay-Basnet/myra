@@ -1,29 +1,24 @@
-import { FormSection } from '@myra-ui';
+import { Box, FormSection, Text } from '@myra-ui';
 
-import { useGetItemCategoryListQuery } from '@coop/cbs/data-access';
-import { FormSelect } from '@coop/shared/form';
+import { FormCOASelectModal } from '@coop/shared/form';
 
-export const InventoryItemsLedger = () => {
-  const { data: itemGropus } = useGetItemCategoryListQuery({
-    pagination: {
-      first: -1,
-    },
-  });
-  const itemOptions = itemGropus?.inventory?.itemsGroup?.list?.edges?.map((data) => ({
-    label: data?.node?.name as string,
-    value: data?.node?.id as string,
-  }));
-
-  return (
-    <FormSection header="Ledger Details">
-      <FormSelect name="ledger.salesLedger" label="Sales Ledger" />
-      <FormSelect
-        name="ledger.salesReturnLedger"
-        options={itemOptions}
-        label="Sales Return Ledger"
-      />
-      <FormSelect name="ledger.purchaseLedger" label="Purchase Ledger" />
-      <FormSelect name="ledger.purchaseReturnLedger" label="Purchase Return Ledger" />
-    </FormSection>
-  );
-};
+export const InventoryItemsLedger = () => (
+  <FormSection header="Ledger Details">
+    <Box display="flex" flexDirection="column" gap="s4">
+      <Text fontSize="s3">Sales Ledger</Text>
+      <FormCOASelectModal name="ledgers.salesLedger" />
+    </Box>
+    <Box display="flex" flexDirection="column" gap="s4">
+      <Text fontSize="s3">Sales Return Ledger</Text>
+      <FormCOASelectModal name="ledgers.salesReturnLedger" />
+    </Box>
+    <Box display="flex" flexDirection="column" gap="s4">
+      <Text fontSize="s3">Purchase Ledger</Text>
+      <FormCOASelectModal name="ledgers.purchaseLedger" />
+    </Box>
+    <Box display="flex" flexDirection="column" gap="s4">
+      <Text fontSize="s3">Purchase Return Ledger</Text>
+      <FormCOASelectModal name="ledgers.purchaseReturnLedger" />
+    </Box>
+  </FormSection>
+);
