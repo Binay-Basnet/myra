@@ -123,10 +123,15 @@ export type Projects = {
 };
 
 export type ProtectedMutation = {
+  generateReport: ExtractionResponse;
   sendFileData: ExtractionResponse;
   startExtraction: ExtractionResponse;
   startTransform: ExtractionResponse;
   uploadCSV: Scalars['Boolean'];
+};
+
+export type ProtectedMutationGenerateReportArgs = {
+  input: ReportInput;
 };
 
 export type ProtectedMutationSendFileDataArgs = {
@@ -181,6 +186,13 @@ export type ProtectedQueryGetTransformedDirStructArgs = {
 
 export type Query = {
   protectedQuery: ProtectedQuery;
+};
+
+export type ReportInput = {
+  date?: InputMaybe<Scalars['String']>;
+  dbName: Scalars['String'];
+  head?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 export type Transform = {

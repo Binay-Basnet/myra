@@ -41,7 +41,7 @@ export const EodHistoryDetail = () => {
         >
           <DetailPageTabs
             tabs={[
-              'Daily Interest Booking',
+              'Saving Interest Booking',
               'Interest Posting',
               'Loan Interest Booking',
               'Maturity Check',
@@ -54,7 +54,7 @@ export const EodHistoryDetail = () => {
 
         <Scrollable detailPage>
           <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
-            {(tabQuery === 'daily interest booking' || tabQuery === 'undefined' || !tabQuery) && (
+            {(tabQuery === 'saving interest booking' || tabQuery === 'undefined' || !tabQuery) && (
               <DailyInterestBooking />
             )}
             {tabQuery === 'interest posting' && <InterestPosting />}

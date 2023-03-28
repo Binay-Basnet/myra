@@ -990,6 +990,39 @@
         "description": null,
         "fields": [
           {
+            "name": "generateReport",
+            "description": null,
+            "args": [
+              {
+                "name": "input",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "ReportInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ExtractionResponse",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "sendFileData",
             "description": null,
             "args": [
@@ -1384,6 +1417,73 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "ReportInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "date",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "dbName",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "head",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "title",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -2395,7 +2495,9 @@
         "name": "auth",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION"
+        ],
         "args": []
       },
       {
@@ -2427,7 +2529,10 @@
         "name": "goField",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "forceResolver",
@@ -2459,7 +2564,11 @@
         "name": "include",
         "description": "The @include directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional inclusion during execution as described by the if argument.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -2483,7 +2592,11 @@
         "name": "skip",
         "description": "The @skip directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional exclusion during execution as described by the if argument.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -2507,7 +2620,9 @@
         "name": "specifiedBy",
         "description": "The @specifiedBy built-in directive is used within the type system definition language to provide a scalar specification URL for specifying the behavior of custom scalar types.",
         "isRepeatable": false,
-        "locations": ["SCALAR"],
+        "locations": [
+          "SCALAR"
+        ],
         "args": [
           {
             "name": "url",

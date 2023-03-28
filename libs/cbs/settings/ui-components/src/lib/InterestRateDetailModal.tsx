@@ -7,12 +7,14 @@ interface IInterestRateDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   rate: InterestRateSetup | null | undefined;
+  rateLabel?: string;
 }
 
 export const InterestRateDetailModal = ({
   isOpen,
   onClose,
   rate,
+  rateLabel,
 }: IInterestRateDetailModalProps) => (
   <Modal title="Interest Update Schedule" open={isOpen} onClose={onClose}>
     <Box display="flex" flexDirection="column" gap="s20">
@@ -35,7 +37,7 @@ export const InterestRateDetailModal = ({
         </Box>
         <Box display="flex" flexDirection="column" gap="s4">
           <Text variant="formLabel" color="gray.700">
-            New Product Premium
+            {rateLabel ?? 'New Product Premium'}
           </Text>
           <Text fontSize="r1" fontWeight={600} color="gray.800">
             {`${rate?.rate} %`}

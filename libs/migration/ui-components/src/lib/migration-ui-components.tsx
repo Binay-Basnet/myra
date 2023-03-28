@@ -13,9 +13,12 @@ export const MigrationUiComponents = () => {
   const { data, refetch } = useGetProjectsQuery();
   const { mutateAsync } = useCreateProjectMutation();
   const methods = useForm();
-  const { handleSubmit, getValues } = methods;
+  const { handleSubmit, getValues, reset } = methods;
   const onSubmit = () => {
-    mutateAsync({ input: { dbName: getValues()?.dbName } }).then(() => refetch());
+    mutateAsync({ input: { dbName: getValues()?.dbName } }).then(() => {
+      refetch();
+      reset({ dbName: '' });
+    });
   };
 
   return (

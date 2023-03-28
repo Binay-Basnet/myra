@@ -239,6 +239,7 @@ export const LoanOrganizationRate = () => {
         isOpen={isDetailModalOpen}
         onClose={onDetailModalClose}
         rate={organizationRateDetailData?.settings?.general?.loan?.getOrganizationRate?.data}
+        rateLabel="New Organization Rate"
       />
     </>
   );
