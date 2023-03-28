@@ -11,6 +11,7 @@ export * from './controllers/FormBranchSelect/FormBranchSelectEbanking';
 export * from './controllers/FormCheckbox/FormCheckbox';
 export * from './controllers/FormCheckboxGroup/FormCheckboxGroup';
 export * from './controllers/FormCOASelect/FormCOASelect';
+export * from './controllers/FormCOASelectModal/FormCOASelectModal';
 export * from './controllers/FormCustomerSelect/FormCustomerSelect';
 export * from './controllers/FormDatePicker/FormDatePicker';
 export * from './controllers/FormDepositWithdrawAccountSelect/FormDepositWithdrawAccountSelect';
