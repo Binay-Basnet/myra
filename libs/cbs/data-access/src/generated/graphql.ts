@@ -25465,6 +25465,7 @@ export type GetAccountOpeningReportQuery = {
           openingDate?: Record<'local' | 'en' | 'np', string> | null;
           branchId?: string | null;
           branchName?: string | null;
+          nature?: NatureOfDepositProduct | null;
         } | null> | null;
       } | null;
     };
@@ -25660,6 +25661,7 @@ export type GetInterestStatementReportQuery = {
             days?: number | null;
             rate?: number | null;
             remarks?: string | null;
+            tds?: string | null;
           } | null> | null;
           address?: {
             wardNo?: string | null;
@@ -26089,6 +26091,7 @@ export type GetLoanStatementReportQuery = {
                 installment?: number | null;
                 charge?: string | null;
                 openingBalance?: string | null;
+                disbursedAmount?: string | null;
               } | null;
               loanStatement?: Array<{
                 date?: Record<'local' | 'en' | 'np', string> | null;
@@ -26850,6 +26853,7 @@ export type GetShareStatementQuery = {
         } | null;
         statement?:
           | {
+              openingBalance?: number | null;
               shareStatement?: Array<{
                 date: Record<'local' | 'en' | 'np', string>;
                 particular: string;
@@ -43734,6 +43738,7 @@ export const GetAccountOpeningReportDocument = `
           openingDate
           branchId
           branchName
+          nature
         }
       }
     }
@@ -43989,6 +43994,7 @@ export const GetInterestStatementReportDocument = `
             days
             rate
             remarks
+            tds
           }
           memberId
           accountNo
@@ -44556,6 +44562,7 @@ export const GetLoanStatementReportDocument = `
               installment
               charge
               openingBalance
+              disbursedAmount
             }
             loanStatement {
               date
@@ -45548,6 +45555,7 @@ export const GetShareStatementDocument = `
         }
         statement {
           ... on ShareStatementReport {
+            openingBalance
             shareStatement {
               date
               particular

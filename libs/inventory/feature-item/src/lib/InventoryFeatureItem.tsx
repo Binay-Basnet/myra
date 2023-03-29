@@ -21,7 +21,7 @@ export const InventoryFeatureItem = () => {
       promise: AddItems({
         data: {
           ...values,
-          ledgers: null,
+
           isVariantItem: false,
         },
       }),
