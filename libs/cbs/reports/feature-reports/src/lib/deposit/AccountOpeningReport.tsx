@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { GridItem } from '@myra-ui';
+import { GridItem, Text } from '@myra-ui';
 
 import {
   AccountOpeningReport,
@@ -110,6 +110,15 @@ export const AccountOpenReport = () => {
                 meta: {
                   width: '70%',
                 },
+              },
+              {
+                header: 'Nature',
+                accessorKey: 'nature',
+                cell: (props) => (
+                  <Text textTransform="capitalize">
+                    {props.row?.original?.nature?.toLowerCase().replace(/_/g, ' ')}
+                  </Text>
+                ),
               },
               {
                 header: 'Account Opening Date',

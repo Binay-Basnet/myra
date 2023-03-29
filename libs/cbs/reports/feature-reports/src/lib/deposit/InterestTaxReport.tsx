@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { GridItem } from '@myra-ui/components';
+
 import {
   InterestTaxReportEntry,
   InterestTaxReportFilter,
@@ -9,7 +11,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
-import { FormAmountFilter } from '@coop/shared/form';
+import { FormAmountFilter, FormBranchSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 export const InterestTaxReport = () => {
@@ -43,7 +45,12 @@ export const InterestTaxReport = () => {
           ]}
         />
         <Report.Inputs>
-          <ReportDateRange label="Tax Deduct Date Period" />
+          <GridItem colSpan={2}>
+            <FormBranchSelect name="branchId" label="Select Branch" />
+          </GridItem>
+          <GridItem colSpan={2}>
+            <ReportDateRange label="Tax Deduct Date Period" />
+          </GridItem>
         </Report.Inputs>
       </Report.Header>
 
@@ -106,7 +113,7 @@ export const InterestTaxReport = () => {
                 accessorKey: 'remarks',
               },
               {
-                header: 'Saving Balance',
+                header: 'Opening Balance',
                 accessorKey: 'savingBalance',
                 cell: (props) => amountConverter(props.getValue() as string),
                 meta: {

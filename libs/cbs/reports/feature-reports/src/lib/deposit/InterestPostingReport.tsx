@@ -23,7 +23,7 @@ export const InterestPostingReport = () => {
   const router = useRouter();
   const accountId = router.query?.['accountId'];
   const memberId = router.query?.['memberId'];
-
+  P;
   const { data, isFetching } = useGetInterestStatementReportQuery(
     {
       data: {
@@ -112,6 +112,14 @@ export const InterestPostingReport = () => {
               {
                 header: 'Interest Amount',
                 accessorKey: 'amount',
+                cell: (props) => amountConverter(props.getValue() as string),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'TDS Amount',
+                accessorKey: 'tds',
                 cell: (props) => amountConverter(props.getValue() as string),
                 meta: {
                   isNumeric: true,
