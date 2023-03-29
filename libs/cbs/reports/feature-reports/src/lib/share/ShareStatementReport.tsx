@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box, GridItem } from '@myra-ui';
+import { Box, GridItem, Text } from '@myra-ui';
 
 import {
   ShareStatement,
@@ -42,6 +42,7 @@ export const ShareStatementReport = () => {
   // };
 
   const shareData = data?.report?.shareReport?.shareStatementReport?.statement;
+  const openingBalance = shareData && 'shareStatement' in shareData ? shareData.openingBalance : [];
   const shareReport = shareData && 'shareStatement' in shareData ? shareData.shareStatement : [];
   const shareReportTotal = shareData && 'shareStatement' in shareData ? shareData.totals : {};
 
@@ -79,6 +80,12 @@ export const ShareStatementReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization />
           <ReportMember member={shareMember} />
+          <Box display="flex" justifyContent="end" px="s16">
+            <Text fontSize="r1" fontWeight="500">
+              Opening Balance: {amountConverter((openingBalance as number) || 0)}
+            </Text>
+          </Box>
+
           <Report.Table<ShareStatement & { index: number }>
             showFooter
             columns={[
@@ -157,6 +164,11 @@ export const ShareStatementReport = () => {
               },
             ]}
           />
+          <Box display="flex" px="s16" justifyContent="end">
+            <Text fontSize="r1" fontWeight="500">
+              Closing Balance: {amountConverter(shareReportTotal?.totalBalanceSheet || 0)}
+            </Text>
+          </Box>
         </Report.Content>
         <Report.Filters>
           <Report.Filter title="Type of Share Transaction">

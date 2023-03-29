@@ -11,6 +11,7 @@ query getAccountOpeningReport($data: AccountOpeningReportInput) {
           openingDate
           branchId
           branchName
+          nature
         }
       }
     }
@@ -182,6 +183,7 @@ query getInterestStatementReport($data: InterestStatementFilter!) {
             days
             rate
             remarks
+            tds
           }
           memberId
           accountNo
