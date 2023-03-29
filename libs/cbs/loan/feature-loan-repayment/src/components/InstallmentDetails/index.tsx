@@ -76,11 +76,11 @@ export const InstallmentData = ({
 
       const penalty = Number(installment?.penalty);
       const principal = installment?.isPartial
-        ? Number(installment?.principal) + Number(installment?.currentRemainingPrincipal)
+        ? Number(installment?.currentRemainingPrincipal)
         : Number(installment?.fullPrincipal);
 
       const interest = installment?.isPartial
-        ? Number(installment?.interest) + Number(installment?.remainingInterest)
+        ? Number(installment?.remainingInterest)
         : Number(installment?.interest);
 
       if (penalty && (loanType !== 'EPI' || (loanType === 'EPI' && installment?.status))) {
