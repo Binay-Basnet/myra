@@ -17931,6 +17931,28 @@ export type EditLoanAccountInterestMutation = {
   };
 };
 
+export type SetLoanCollateralMutationVariables = Exact<{
+  loanAccountID: Scalars['ID'];
+  data?: InputMaybe<LoanAccountCollateralData>;
+}>;
+
+export type SetLoanCollateralMutation = {
+  loanAccount: {
+    loanCollateralActions?: {
+      addCollateral?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
 }>;
@@ -33404,6 +33426,35 @@ export const useEditLoanAccountInterestMutation = <TError = unknown, TContext = 
     ['editLoanAccountInterest'],
     useAxios<EditLoanAccountInterestMutation, EditLoanAccountInterestMutationVariables>(
       EditLoanAccountInterestDocument
+    ),
+    options
+  );
+export const SetLoanCollateralDocument = `
+    mutation setLoanCollateral($loanAccountID: ID!, $data: LoanAccountCollateralData) {
+  loanAccount {
+    loanCollateralActions {
+      addCollateral(loanAccountID: $loanAccountID, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetLoanCollateralMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetLoanCollateralMutation,
+    TError,
+    SetLoanCollateralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetLoanCollateralMutation, TError, SetLoanCollateralMutationVariables, TContext>(
+    ['setLoanCollateral'],
+    useAxios<SetLoanCollateralMutation, SetLoanCollateralMutationVariables>(
+      SetLoanCollateralDocument
     ),
     options
   );

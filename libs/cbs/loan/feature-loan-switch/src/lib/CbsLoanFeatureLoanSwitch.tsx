@@ -3,7 +3,11 @@ import { useRouter } from 'next/router';
 
 import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
-import { useGetLoanAccountDetailsQuery, useSwitchCollateralMutation } from '@coop/cbs/data-access';
+import {
+  useGetLoanAccountDetailsQuery,
+  useSetLoanCollateralMutation,
+  useSwitchCollateralMutation,
+} from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
@@ -41,34 +45,58 @@ export const CbsLoanFeatureLoanSwitch = () => {
   );
 
   const { mutateAsync } = useSwitchCollateralMutation();
+  const { mutateAsync: addCollateralMutate } = useSetLoanCollateralMutation();
 
   const handleSubmit = () => {
     const values = getValues();
 
-    asyncToast({
-      id: 'collat-switch',
-      msgs: {
-        success: 'Collateral switched succesfully',
-        loading: 'Switching Collateral',
-      },
-      onSuccess: () => router.push(`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${id}&tab=collateral`),
-      promise: mutateAsync({
-        data: {
+    if (router?.pathname.includes('collateral/add')) {
+      asyncToast({
+        id: 'collat-switch',
+        msgs: {
+          success: 'Collateral switched succesfully',
+          loading: 'Switching Collateral',
+        },
+        onSuccess: () => router.push(`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${id}&tab=collateral`),
+        promise: addCollateralMutate({
           loanAccountID: id as string,
-          confirmSwitch: true,
-          collateralID: collatId as string,
+          data: {
+            ...values,
+            collateralFiles: values?.collateralFiles?.map(
+              (c) => (c as unknown as { identifier: string }).identifier
+            ),
+            valuationFiles: values?.valuationFiles?.map(
+              (c) => (c as unknown as { identifier: string }).identifier
+            ),
+          },
+        }),
+      });
+    } else {
+      asyncToast({
+        id: 'collat-switch',
+        msgs: {
+          success: 'Collateral switched succesfully',
+          loading: 'Switching Collateral',
         },
-        input: {
-          ...values,
-          collateralFiles: values?.collateralFiles?.map(
-            (c) => (c as unknown as { identifier: string }).identifier
-          ),
-          valuationFiles: values?.valuationFiles?.map(
-            (c) => (c as unknown as { identifier: string }).identifier
-          ),
-        },
-      }),
-    });
+        onSuccess: () => router.push(`${ROUTES.CBS_LOAN_ACCOUNT_DETAILS}?id=${id}&tab=collateral`),
+        promise: mutateAsync({
+          data: {
+            loanAccountID: id as string,
+            confirmSwitch: true,
+            collateralID: collatId as string,
+          },
+          input: {
+            ...values,
+            collateralFiles: values?.collateralFiles?.map(
+              (c) => (c as unknown as { identifier: string }).identifier
+            ),
+            valuationFiles: values?.valuationFiles?.map(
+              (c) => (c as unknown as { identifier: string }).identifier
+            ),
+          },
+        }),
+      });
+    }
   };
 
   return (

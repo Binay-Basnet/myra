@@ -406,7 +406,6 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-
       <Modal
         open={openModal}
         onClose={onCloseReleaseModal}
@@ -424,7 +423,6 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
           </Box>
         </FormProvider>
       </Modal>
-
       <Modal
         open={openReleaseFormModal}
         onClose={onCloseReleaseFormModal}
@@ -441,7 +439,6 @@ export const CollateralList = ({ collatDataList }: CollateralProps) => {
           </Box>
         </FormProvider>
       </Modal>
-
       <Modal
         open={openSwitchModal}
         onClose={onCloseSwitchModal}

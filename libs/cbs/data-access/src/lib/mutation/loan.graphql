@@ -164,3 +164,16 @@ mutation editLoanAccountInterest($id: ID!, $accountId: ID!, $data: InterestRateS
     }
   }
 }
+
+mutation setLoanCollateral($loanAccountID: ID!, $data: LoanAccountCollateralData) {
+  loanAccount {
+    loanCollateralActions {
+      addCollateral(loanAccountID: $loanAccountID, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
