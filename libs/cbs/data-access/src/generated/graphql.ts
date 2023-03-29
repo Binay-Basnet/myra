@@ -19565,7 +19565,7 @@ export type GetShareStatementQueryVariables = Exact<{
 }>;
 
 
-export type GetShareStatementQuery = { report: { shareReport: { shareStatementReport?: { member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, activeDate?: Record<"local"|"en"|"np",string> | null, dateJoined?: Record<"local"|"en"|"np",string> | null, branch?: string | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { shareStatement?: Array<{ date: Record<"local"|"en"|"np",string>, particular: string, noOfShares: number, returnAmountDr: number, purchaseAmountCr: number, balanceSheet: number } | null> | null, totals?: { totalShares?: number | null, totalDr?: number | null, totalCr?: number | null, totalBalanceSheet?: number | null } | null } | {} | null } | null } } };
+export type GetShareStatementQuery = { report: { shareReport: { shareStatementReport?: { member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, activeDate?: Record<"local"|"en"|"np",string> | null, dateJoined?: Record<"local"|"en"|"np",string> | null, branch?: string | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { openingBalance?: number | null, shareStatement?: Array<{ date: Record<"local"|"en"|"np",string>, particular: string, noOfShares: number, returnAmountDr: number, purchaseAmountCr: number, balanceSheet: number } | null> | null, totals?: { totalShares?: number | null, totalDr?: number | null, totalCr?: number | null, totalBalanceSheet?: number | null } | null } | {} | null } | null } } };
 
 export type GetShareRegisterReportQueryVariables = Exact<{
   data: SharePurchaseRegisterReportFilter;
@@ -33432,6 +33432,7 @@ export const GetShareStatementDocument = `
         }
         statement {
           ... on ShareStatementReport {
+            openingBalance
             shareStatement {
               date
               particular

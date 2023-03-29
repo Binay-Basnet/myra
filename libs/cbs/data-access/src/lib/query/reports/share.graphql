@@ -19,6 +19,7 @@ query getShareStatement($data: ShareStatementReportSettings!) {
         }
         statement {
           ... on ShareStatementReport {
+            openingBalance
             shareStatement {
               date
               particular
