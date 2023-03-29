@@ -48,7 +48,7 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       '@media print': {
         display: 'flex',
         boxShadow: 'none',
-        fontFamily: 'Times New Roman',
+        // fontFamily: 'Times New Roman',
       },
       '@page': {
         size: 'A4 landscape',
@@ -62,6 +62,7 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       position="absolute"
       top={`${branchPosition?.top || 0}mm`}
       left={`${branchPosition?.left || 0}mm`}
+      fontFamily="Times New Roman"
     >
       {details?.branch}
     </Text>
@@ -73,13 +74,13 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       flexDirection="column"
       gap="s4"
     >
-      <Text fontSize="s3" fontWeight={500} color="black">
+      <Text fontSize="s3" fontWeight={500} color="black" fontFamily="Times New Roman">
         {details?.memberName}
       </Text>
-      <Text fontSize="s3" fontWeight={500} color="black">
+      <Text fontSize="s3" fontWeight={500} color="black" fontFamily="Times New Roman">
         {details?.accountNumber}
       </Text>
-      <Text fontSize="s3" fontWeight={500} color="black">
+      <Text fontSize="s3" fontWeight={500} color="black" fontFamily="Times New Roman">
         {details?.accountName}
       </Text>
     </Box>
@@ -91,6 +92,7 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       position="absolute"
       bottom={`${slipNumberPosition?.top || 0}mm`}
       left={`${slipNumberPosition?.left || 0}mm`}
+      fontFamily="Times New Roman"
     >
       {details?.slipNumber}
     </Text>

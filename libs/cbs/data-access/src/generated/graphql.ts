@@ -10251,8 +10251,14 @@ export type LoanCloseResult = {
 };
 
 export type LoanCollateralActionsMutation = {
+  addCollateral?: Maybe<LoanCollateralActionsResult>;
   releaseCollateral?: Maybe<LoanCollateralActionsResult>;
   switchCollateral?: Maybe<LoanCollateralActionsResult>;
+};
+
+export type LoanCollateralActionsMutationAddCollateralArgs = {
+  data?: InputMaybe<LoanAccountCollateralData>;
+  loanAccountID: Scalars['ID'];
 };
 
 export type LoanCollateralActionsMutationReleaseCollateralArgs = {
@@ -10398,7 +10404,13 @@ export type LoanGuaranteeActionsInput = {
 };
 
 export type LoanGuaranteeActionsMutation = {
+  addGuarantee?: Maybe<LoanGuaranteeActionsResult>;
   guaranteeActions?: Maybe<LoanGuaranteeActionsResult>;
+};
+
+export type LoanGuaranteeActionsMutationAddGuaranteeArgs = {
+  data: LoanAccountGuranteeInput;
+  loanAccountID: Scalars['ID'];
 };
 
 export type LoanGuaranteeActionsMutationGuaranteeActionsArgs = {
