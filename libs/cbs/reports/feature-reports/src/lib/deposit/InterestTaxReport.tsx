@@ -113,7 +113,7 @@ export const InterestTaxReport = () => {
                 accessorKey: 'remarks',
               },
               {
-                header: 'Saving Balance',
+                header: 'Opening Balance',
                 accessorKey: 'savingBalance',
                 cell: (props) => amountConverter(props.getValue() as string),
                 meta: {
