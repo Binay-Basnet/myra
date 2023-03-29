@@ -226,6 +226,7 @@ export const ROUTES = {
   CBS_REPORTS_TRANS_BANK_GL_STATEMENT: '/reports/cbs/transactions/bank-gl-statement/new',
   CBS_REPORTS_VAULT_BALANCE: '/reports/cbs/transactions/vault-balance/new',
   CBS_REPORTS_TELLER_REPORT: '/reports/cbs/transactions/teller/new',
+  CBS_REPORTS_DAY_BOOK_REPORT: '/reports/cbs/transactions/day-book/new',
 
   ALTERNATIVE_CHANNELS_MBANKING_USERS: '/alternative-channels/users/mBanking',
   ALTERNATIVE_CHANNELS_MBANKING_DOWNLOADS: '/alternative-channels/downloads/form',
