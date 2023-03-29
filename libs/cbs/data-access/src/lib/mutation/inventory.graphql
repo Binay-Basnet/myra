@@ -62,3 +62,16 @@ mutation setItems($data: InvItemsInput!) {
     }
   }
 }
+
+mutation setSuppliersAdd($data: InvSupplierInput) {
+  inventory {
+    suppliers {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

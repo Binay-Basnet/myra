@@ -1,57 +1,52 @@
 import { useMemo } from 'react';
-import { BsThreeDots } from 'react-icons/bs';
-import { IconButton } from '@chakra-ui/react';
 
 import { Column, Table } from '@myra-ui';
 
-import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
-import { useTranslation } from '@coop/shared/utils';
+import { useGetInventoryItemsListQuery } from '@coop/cbs/data-access';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 
 export const InventoryItemTable = () => {
   const { t } = useTranslation();
-  const { data, isFetching } = useGetInventoryItemsQuery();
+  const { data, isFetching } = useGetInventoryItemsListQuery({
+    pagination: getPaginationQuery(),
+  });
 
   const rowItems = data?.inventory?.items?.list?.edges ?? [];
 
-  const columns = useMemo<Column<typeof rowItems[0] | any>[]>(
+  const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
         header: t['itemListID'],
-        accessorFn: ({ row }) => row?.node.id,
+        accessorFn: (row) => row?.node?.id,
       },
 
       {
         header: t['itemListName'],
-        accessorFn: ({ row }) => row?.node.name,
+        accessorFn: (row) => row?.node?.name,
       },
       {
         header: t['itemListType'],
-        accessorFn: ({ row }) => row?.node.type,
-      },
-
-      {
-        header: t['itemListUnitPrice'],
-        accessorFn: ({ row }) => row?.node.unitPrice,
+        accessorFn: (row) => row?.node?.type,
       },
 
       {
         id: 'total-cost',
         header: t['itemListTotalCost'],
-        accessorFn: ({ row }) => row?.node.unitPrice,
+        accessorFn: (row) => row?.node?.costPrice,
       },
 
       {
         header: t['itemListItemQuantity'],
-        accessorFn: ({ row }) => row?.node.itemQuantity,
+        accessorFn: (row) => row?.node?.itemQuantity,
       },
-      {
-        accessorKey: 'actions',
-        cell: () => (
-          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
-        ),
-      },
+      // {
+      //   accessorKey: 'actions',
+      //   cell: () => (
+      //     <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
+      //   ),
+      // },
     ],
     [t]
   );
@@ -60,7 +55,15 @@ export const InventoryItemTable = () => {
     <>
       <TableListPageHeader heading="items" />
 
-      <Table isLoading={isFetching} data={rowItems} columns={columns} />
+      <Table
+        isLoading={isFetching}
+        data={rowItems}
+        columns={columns}
+        pagination={{
+          total: data?.inventory?.items?.list?.totalCount ?? 'Many',
+          pageInfo: data?.inventory?.items?.list?.pageInfo,
+        }}
+      />
     </>
   );
 };
