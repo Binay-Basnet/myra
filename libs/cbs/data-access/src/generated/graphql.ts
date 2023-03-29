@@ -19341,7 +19341,7 @@ export type GetInterestStatementReportQueryVariables = Exact<{
 }>;
 
 
-export type GetInterestStatementReportQuery = { report: { depositReport: { interestStatementReport: { data?: { memberId?: string | null, accountNo?: string | null, accountType?: NatureOfDepositProduct | null, currentInterestRate?: number | null, memberName?: Record<"local"|"en"|"np",string> | null, entries?: Array<{ date?: Record<"local"|"en"|"np",string> | null, amount?: string | null, balance?: string | null, days?: number | null, rate?: number | null, remarks?: string | null } | null> | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } } } };
+export type GetInterestStatementReportQuery = { report: { depositReport: { interestStatementReport: { data?: { memberId?: string | null, accountNo?: string | null, accountType?: NatureOfDepositProduct | null, currentInterestRate?: number | null, memberName?: Record<"local"|"en"|"np",string> | null, entries?: Array<{ date?: Record<"local"|"en"|"np",string> | null, amount?: string | null, balance?: string | null, days?: number | null, rate?: number | null, remarks?: string | null, tds?: string | null } | null> | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } } } };
 
 export type GetSuspiciousTransactionReportQueryVariables = Exact<{
   data: SuspiciousTransactionReportInput;
@@ -31930,6 +31930,7 @@ export const GetInterestStatementReportDocument = `
             days
             rate
             remarks
+            tds
           }
           memberId
           accountNo

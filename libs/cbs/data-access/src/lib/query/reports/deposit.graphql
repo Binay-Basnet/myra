@@ -183,6 +183,7 @@ query getInterestStatementReport($data: InterestStatementFilter!) {
             days
             rate
             remarks
+            tds
           }
           memberId
           accountNo
