@@ -17647,6 +17647,27 @@ export type SetItemsMutation = {
   };
 };
 
+export type SetSuppliersAddMutationVariables = Exact<{
+  data?: InputMaybe<InvSupplierInput>;
+}>;
+
+export type SetSuppliersAddMutation = {
+  inventory: {
+    suppliers?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SendLoanApplicationForApprovalMutationVariables = Exact<{
   id: Scalars['ID'];
   data: LoanAccountInput;
@@ -22812,21 +22833,29 @@ export type GetInsAccountOperatorEditListQuery = {
   };
 };
 
-export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never }>;
+export type GetInventoryItemsListQueryVariables = Exact<{
+  filter?: InputMaybe<InvItemsDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
 
-export type GetInventoryItemsQuery = {
+export type GetInventoryItemsListQuery = {
   inventory: {
     items?: {
       list?: {
+        totalCount: number;
         edges?: Array<{
+          cursor?: string | null;
           node?: {
             id: string;
+            itemCode: string;
             name: string;
             type: string;
             costPrice: string;
+            sellingPrice: string;
             itemQuantity: string;
           } | null;
         } | null> | null;
+        pageInfo?: PaginationFragment | null;
       } | null;
     } | null;
   };
@@ -32986,6 +33015,33 @@ export const useSetItemsMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetItemsMutation, SetItemsMutationVariables>(SetItemsDocument),
     options
   );
+export const SetSuppliersAddDocument = `
+    mutation setSuppliersAdd($data: InvSupplierInput) {
+  inventory {
+    suppliers {
+      add(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSuppliersAddMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSuppliersAddMutation,
+    TError,
+    SetSuppliersAddMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetSuppliersAddMutation, TError, SetSuppliersAddMutationVariables, TContext>(
+    ['setSuppliersAdd'],
+    useAxios<SetSuppliersAddMutation, SetSuppliersAddMutationVariables>(SetSuppliersAddDocument),
+    options
+  );
 export const SendLoanApplicationForApprovalDocument = `
     mutation sendLoanApplicationForApproval($id: ID!, $data: LoanAccountInput!) {
   loanAccount {
@@ -40332,33 +40388,40 @@ export const useGetInsAccountOperatorEditListQuery = <
     ).bind(null, variables),
     options
   );
-export const GetInventoryItemsDocument = `
-    query getInventoryItems {
+export const GetInventoryItemsListDocument = `
+    query getInventoryItemsList($filter: InvItemsDataFilter, $pagination: Pagination) {
   inventory {
     items {
-      list {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
         edges {
           node {
             id
+            itemCode
             name
             type
             costPrice
+            sellingPrice
             itemQuantity
           }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
         }
       }
     }
   }
 }
-    `;
-export const useGetInventoryItemsQuery = <TData = GetInventoryItemsQuery, TError = unknown>(
-  variables?: GetInventoryItemsQueryVariables,
-  options?: UseQueryOptions<GetInventoryItemsQuery, TError, TData>
+    ${PaginationFragmentDoc}`;
+export const useGetInventoryItemsListQuery = <TData = GetInventoryItemsListQuery, TError = unknown>(
+  variables?: GetInventoryItemsListQueryVariables,
+  options?: UseQueryOptions<GetInventoryItemsListQuery, TError, TData>
 ) =>
-  useQuery<GetInventoryItemsQuery, TError, TData>(
-    variables === undefined ? ['getInventoryItems'] : ['getInventoryItems', variables],
-    useAxios<GetInventoryItemsQuery, GetInventoryItemsQueryVariables>(
-      GetInventoryItemsDocument
+  useQuery<GetInventoryItemsListQuery, TError, TData>(
+    variables === undefined ? ['getInventoryItemsList'] : ['getInventoryItemsList', variables],
+    useAxios<GetInventoryItemsListQuery, GetInventoryItemsListQueryVariables>(
+      GetInventoryItemsListDocument
     ).bind(null, variables),
     options
   );

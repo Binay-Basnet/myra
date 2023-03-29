@@ -83,6 +83,14 @@ export const INVENTORY: NavType = {
           label: 'Supplier List',
           aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.INVENTORY_SUPPLIERS,
+          addRoute: ROUTES.INVENTORY_SUPPLIERS_ADD,
+        },
+      ],
+      forms: [
+        {
+          label: 'Add New Suppliers',
+          aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.INVENTORY_SUPPLIERS_ADD,
         },
       ],
     },

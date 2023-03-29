@@ -4,14 +4,17 @@ import { IconButton } from '@chakra-ui/react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
-import { useTranslation } from '@coop/shared/utils';
+import { useGetSuppliersListQuery } from '@coop/cbs/data-access';
+import { formatAddress } from '@coop/cbs/utils';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const SupplierTable = () => {
   const { t } = useTranslation();
-  const { data, isFetching } = useGetInventoryItemsQuery();
+  const { data, isFetching } = useGetSuppliersListQuery({
+    pagination: getPaginationQuery(),
+  });
 
-  const rowItems = data?.inventory?.items?.list?.edges ?? [];
+  const rowItems = data?.inventory?.suppliers?.list?.edges ?? [];
 
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
@@ -21,13 +24,17 @@ export const SupplierTable = () => {
       },
       {
         header: t['supplierLocation'],
-        accessorFn: (row) => row?.node?.type,
+        accessorFn: (row) => formatAddress(row?.node?.location),
       },
 
-      // {
-      //   header: t['supplierPhoneNumber'],
-      //   accessorFn: (row) => row?.node.unitPrice,
-      // },
+      {
+        header: t['supplierPhoneNumber'],
+        accessorFn: (row) => row?.node?.phoneNo,
+      },
+      {
+        header: 'Email',
+        accessorFn: (row) => row?.node?.email,
+      },
 
       {
         accessorKey: 'actions',
@@ -43,7 +50,15 @@ export const SupplierTable = () => {
     <>
       <PageHeader heading="supplier" />
 
-      <Table data={rowItems} isLoading={isFetching} columns={columns} />
+      <Table
+        data={rowItems}
+        isLoading={isFetching}
+        columns={columns}
+        pagination={{
+          total: data?.inventory?.suppliers?.list?.totalCount ?? 'Many',
+          pageInfo: data?.inventory?.suppliers?.list?.pageInfo,
+        }}
+      />
     </>
   );
 };

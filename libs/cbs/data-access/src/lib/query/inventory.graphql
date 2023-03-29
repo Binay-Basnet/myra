@@ -1,15 +1,22 @@
-query getInventoryItems {
+query getInventoryItemsList($filter: InvItemsDataFilter, $pagination: Pagination) {
   inventory {
     items {
-      list {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
         edges {
           node {
             id
+            itemCode
             name
             type
             costPrice
+            sellingPrice
             itemQuantity
           }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
         }
       }
     }

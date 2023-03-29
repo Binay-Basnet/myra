@@ -4,12 +4,14 @@ import { IconButton } from '@chakra-ui/react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
-import { useTranslation } from '@coop/shared/utils';
+import { useGetInventoryItemsListQuery } from '@coop/cbs/data-access';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const InventoryRegisterTable = () => {
   const { t } = useTranslation();
-  const { data, isFetching } = useGetInventoryItemsQuery();
+  const { data, isFetching } = useGetInventoryItemsListQuery({
+    pagination: getPaginationQuery(),
+  });
 
   const rowItems = data?.inventory?.items?.list?.edges ?? [];
 
