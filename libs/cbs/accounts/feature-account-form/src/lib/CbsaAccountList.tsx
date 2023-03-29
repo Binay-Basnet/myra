@@ -108,7 +108,7 @@ export const CBSAccountList = () => {
               name={props.row?.original?.node?.member?.name?.local}
               size="sm"
             />
-            <Text fontWeight="400" fontSize="r1">
+            <Text fontWeight="400" fontSize="s3">
               {props.row?.original?.node?.member?.name?.local}
             </Text>
           </Box>

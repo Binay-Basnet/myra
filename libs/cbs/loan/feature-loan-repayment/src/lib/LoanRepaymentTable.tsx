@@ -80,7 +80,7 @@ export const CBSLoanRepaymentList = () => {
               size="sm"
               src={props.row?.original?.node?.memberProfilePicUrl ?? undefined}
             />
-            <Text fontWeight="400" fontSize="r1">
+            <Text fontWeight="400" fontSize="s3">
               {props.row?.original?.node?.memberName?.local}
             </Text>
           </Box>
