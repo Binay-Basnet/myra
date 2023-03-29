@@ -118,6 +118,14 @@ export const InterestPostingReport = () => {
                 },
               },
               {
+                header: 'TDS Amount',
+                accessorKey: 'tds',
+                cell: (props) => amountConverter(props.getValue() as string),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
                 header: 'Remarks',
                 accessorKey: 'remarks',
 
