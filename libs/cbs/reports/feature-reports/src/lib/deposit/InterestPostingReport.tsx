@@ -23,7 +23,7 @@ export const InterestPostingReport = () => {
   const router = useRouter();
   const accountId = router.query?.['accountId'];
   const memberId = router.query?.['memberId'];
-
+  P;
   const { data, isFetching } = useGetInterestStatementReportQuery(
     {
       data: {
