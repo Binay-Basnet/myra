@@ -14720,6 +14720,7 @@ export type SettingsQuery = {
 };
 
 export type SetupMutation = {
+  dumpAccountInterestForMigration?: Maybe<Scalars['String']>;
   eodAction?: Maybe<Scalars['Boolean']>;
   eodException?: Maybe<Scalars['Boolean']>;
   eodSeed?: Maybe<Scalars['String']>;
@@ -19424,7 +19425,7 @@ export type GetLoanStatementReportQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanStatementReportQuery = { report: { loanReport: { loanStatementReport?: { memberId?: string | null, member?: { name?: Record<"local"|"en"|"np",string> | null, code: string, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, statement?: { meta?: { accountNo?: string | null, approvedAmount?: string | null, interestRate?: number | null, loanType?: string | null, loanSubtype?: string | null, issuedDate?: Record<"local"|"en"|"np",string> | null, installment?: number | null, charge?: string | null, openingBalance?: string | null } | null, loanStatement?: Array<{ date?: Record<"local"|"en"|"np",string> | null, particular?: string | null, txnId?: string | null, disbursePrinciple?: string | null, paidPrinciple?: string | null, interestPaid?: string | null, finePaid?: string | null, discount?: string | null, remainingPrinciple?: string | null } | null> | null } | {} | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } } };
+export type GetLoanStatementReportQuery = { report: { loanReport: { loanStatementReport?: { memberId?: string | null, member?: { name?: Record<"local"|"en"|"np",string> | null, code: string, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, statement?: { meta?: { accountNo?: string | null, approvedAmount?: string | null, interestRate?: number | null, loanType?: string | null, loanSubtype?: string | null, issuedDate?: Record<"local"|"en"|"np",string> | null, installment?: number | null, charge?: string | null, openingBalance?: string | null, disbursedAmount?: string | null } | null, loanStatement?: Array<{ date?: Record<"local"|"en"|"np",string> | null, particular?: string | null, txnId?: string | null, disbursePrinciple?: string | null, paidPrinciple?: string | null, interestPaid?: string | null, finePaid?: string | null, discount?: string | null, remainingPrinciple?: string | null } | null> | null } | {} | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } } };
 
 export type GetClosedLoanAccountReportQueryVariables = Exact<{
   data?: InputMaybe<ClosedLoanAccountFilter>;
@@ -32480,6 +32481,7 @@ export const GetLoanStatementReportDocument = `
               installment
               charge
               openingBalance
+              disbursedAmount
             }
             loanStatement {
               date
