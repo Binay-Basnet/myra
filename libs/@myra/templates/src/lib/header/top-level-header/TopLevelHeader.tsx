@@ -405,7 +405,7 @@ export const TopLevelHeader = () => {
                             <AppSwitcherText>{t['corebankingSystems']}</AppSwitcherText>
                           </AppSwitcherIconWrapper>
                           <AppSwitcherIconWrapper
-                            onClick={() => router.push('/inventory/register')}
+                            onClick={() => router.push(ROUTES.INVENTORY_REGISTER)}
                           >
                             <Image
                               width={32}
