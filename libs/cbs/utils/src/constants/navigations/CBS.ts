@@ -451,6 +451,16 @@ export const CBS: NavType = {
           route: ROUTES.CBS_REPORTS_TELLER_REPORT,
           aclKey: 'CBS_REPORTS',
         },
+        {
+          label: 'Cash Ledger Report',
+          route: ROUTES.CBS_REPORTS_TRANS_CASH_LEDGER,
+          aclKey: 'CBS_REPORTS',
+        },
+        {
+          label: 'Day Book Report',
+          route: ROUTES.CBS_REPORTS_DAY_BOOK_REPORT,
+          aclKey: 'CBS_REPORTS',
+        },
       ],
     },
 

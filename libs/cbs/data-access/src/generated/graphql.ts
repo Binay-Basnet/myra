@@ -18357,6 +18357,30 @@ export type ApproveOrDeclineMemberRequestMutation = {
   };
 };
 
+export type SetAccountingNewTaxMutationVariables = Exact<{
+  data?: InputMaybe<NewTaxInput>;
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+export type SetAccountingNewTaxMutation = {
+  settings: {
+    general?: {
+      accounting?: {
+        newTax?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SaveAlternativeChargesMutationVariables = Exact<{
   data?: InputMaybe<
     Array<InputMaybe<AlternativeChannelChargesInput>> | InputMaybe<AlternativeChannelChargesInput>
@@ -27619,6 +27643,23 @@ export type GetGlobalSearchQuery = {
   };
 };
 
+export type GetAllAccountingTaxesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllAccountingTaxesQuery = {
+  settings: {
+    general?: {
+      accounting?: {
+        taxRates?: Array<{
+          default?: boolean | null;
+          id: string;
+          name: string;
+          rate: number;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetAlternativeFeeAndChargesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAlternativeFeeAndChargesQuery = {
@@ -34314,6 +34355,37 @@ export const useApproveOrDeclineMemberRequestMutation = <TError = unknown, TCont
     ['approveOrDeclineMemberRequest'],
     useAxios<ApproveOrDeclineMemberRequestMutation, ApproveOrDeclineMemberRequestMutationVariables>(
       ApproveOrDeclineMemberRequestDocument
+    ),
+    options
+  );
+export const SetAccountingNewTaxDocument = `
+    mutation setAccountingNewTax($data: NewTaxInput, $id: String) {
+  settings {
+    general {
+      accounting {
+        newTax(id: $id, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAccountingNewTaxMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAccountingNewTaxMutation,
+    TError,
+    SetAccountingNewTaxMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetAccountingNewTaxMutation, TError, SetAccountingNewTaxMutationVariables, TContext>(
+    ['setAccountingNewTax'],
+    useAxios<SetAccountingNewTaxMutation, SetAccountingNewTaxMutationVariables>(
+      SetAccountingNewTaxDocument
     ),
     options
   );
@@ -46584,6 +46656,33 @@ export const useGetGlobalSearchQuery = <TData = GetGlobalSearchQuery, TError = u
       null,
       variables
     ),
+    options
+  );
+export const GetAllAccountingTaxesDocument = `
+    query getAllAccountingTaxes {
+  settings {
+    general {
+      accounting {
+        taxRates {
+          default
+          id
+          name
+          rate
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllAccountingTaxesQuery = <TData = GetAllAccountingTaxesQuery, TError = unknown>(
+  variables?: GetAllAccountingTaxesQueryVariables,
+  options?: UseQueryOptions<GetAllAccountingTaxesQuery, TError, TData>
+) =>
+  useQuery<GetAllAccountingTaxesQuery, TError, TData>(
+    variables === undefined ? ['getAllAccountingTaxes'] : ['getAllAccountingTaxes', variables],
+    useAxios<GetAllAccountingTaxesQuery, GetAllAccountingTaxesQueryVariables>(
+      GetAllAccountingTaxesDocument
+    ).bind(null, variables),
     options
   );
 export const GetAlternativeFeeAndChargesDocument = `

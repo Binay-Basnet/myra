@@ -1,7 +1,7 @@
 import { FormSection, GridItem } from '@myra-ui';
 
 import {
-  InvItemsValuationMethod,
+  useGetAllAccountingTaxesQuery,
   useGetItemCategoryListQuery,
   useGetUnitsListQuery,
 } from '@coop/cbs/data-access';
@@ -18,12 +18,13 @@ export const BasicDetailsInventory = () => {
     label: data?.node?.name as string,
     value: data?.node?.id as string,
   }));
-  const itemHappy = [
-    {
-      label: 'First In First Out',
-      value: InvItemsValuationMethod?.Fifo,
-    },
-  ];
+  const { data: taxData } = useGetAllAccountingTaxesQuery();
+
+  const taxDataOptions = taxData?.settings?.general?.accounting?.taxRates?.map((data) => ({
+    label: `${data?.name} - ${data?.rate}`,
+    value: data?.id as string,
+  }));
+
   const { data: unitTable } = useGetUnitsListQuery({
     pagination: {
       after: '',
@@ -43,7 +44,7 @@ export const BasicDetailsInventory = () => {
       <FormInput name="itemCode" label="Item Code" />
       <FormSelect name="itemGroup" options={itemOptions} label="Item Groups" />
       <FormSelect name="primaryUnit" label="Primary Unit" options={itemUnits} />
-      <FormSelect name="tax" label="Tax" options={itemHappy} />
+      <FormSelect name="tax" label="Tax" options={taxDataOptions} />
       <FormInput name="sellingPrice" label="Selling Price" />
       <FormInput name="costPrice" label="Cost Price" />
     </FormSection>

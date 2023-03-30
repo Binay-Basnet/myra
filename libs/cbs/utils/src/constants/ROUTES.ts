@@ -108,7 +108,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_ACCOUNTING_LEDGER_MAPPINGS:
     '/settings/general/accounting/default-ledger-mapping',
   SETTINGS_GENERAL_ACCOUNTING_CUSTOM_FIELDS: '/settings/general/accounting/custom-fields',
-  SETTINGS_GENERAL_ACCOUNTING_TAX: '/settings/general/accounting/default-ledger-mapping',
+  SETTINGS_GENERAL_ACCOUNTING_TAX: '/settings/general/accounting/tax',
 
   SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
 
@@ -227,6 +227,7 @@ export const ROUTES = {
   CBS_REPORTS_TRANS_BANK_GL_STATEMENT: '/reports/cbs/transactions/bank-gl-statement/new',
   CBS_REPORTS_VAULT_BALANCE: '/reports/cbs/transactions/vault-balance/new',
   CBS_REPORTS_TELLER_REPORT: '/reports/cbs/transactions/teller/new',
+  CBS_REPORTS_DAY_BOOK_REPORT: '/reports/cbs/transactions/day-book/new',
 
   ALTERNATIVE_CHANNELS_MBANKING_USERS: '/alternative-channels/users/mBanking',
   ALTERNATIVE_CHANNELS_MBANKING_DOWNLOADS: '/alternative-channels/downloads/form',
