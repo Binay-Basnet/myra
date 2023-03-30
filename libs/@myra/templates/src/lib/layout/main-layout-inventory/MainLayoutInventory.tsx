@@ -24,7 +24,7 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
               title: 'inventory',
               icon: FiPackage,
               link: '/inventory/inventory/register/list',
-              match: ['register'],
+              match: ['inventory'],
               aclKey: 'CBS_MEMBERS_MEMBER',
               navMenu: 'INVENTORY',
             },

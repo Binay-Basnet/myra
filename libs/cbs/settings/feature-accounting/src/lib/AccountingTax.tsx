@@ -34,6 +34,14 @@ export const AccountingTaxSettings = () => {
 
   const rowData = taxData?.settings?.general?.accounting?.taxRates ?? [];
 
+  const handleUpdateModalClose = () => {
+    methods.reset({
+      taxName: null,
+      rate: null,
+      default: null,
+    });
+  };
+
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -102,6 +110,7 @@ export const AccountingTaxSettings = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries(['getAllAccountingTaxes']);
+        handleUpdateModalClose();
         onClose();
         // router.push('/accounting/investment/investment-transaction/list');
       },
@@ -152,6 +161,7 @@ export const AccountingTaxSettings = () => {
         onClose={onClose}
         primaryButtonLabel="Save"
         primaryButtonHandler={handleSave}
+        onCloseComplete={handleUpdateModalClose}
       >
         <FormProvider {...methods}>
           <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
