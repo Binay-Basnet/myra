@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useEodHistoryDetailsQuery } from '@coop/cbs/data-access';
@@ -53,18 +52,16 @@ export const InterestPosting = () => {
 
   return (
     <SettingsCard title="Interest Posting">
-      <Box height="30rem">
-        <Table
-          isLoading={isFetching}
-          isStatic
-          data={detailList}
-          columns={columns}
-          pagination={{
-            total: eodDetailsData?.endOfDay?.details?.totalCount ?? 'Many',
-            pageInfo: eodDetailsData?.endOfDay?.details?.pageInfo,
-          }}
-        />
-      </Box>
+      <Table
+        isLoading={isFetching}
+        isStatic
+        data={detailList}
+        columns={columns}
+        pagination={{
+          total: eodDetailsData?.endOfDay?.details?.totalCount ?? 'Many',
+          pageInfo: eodDetailsData?.endOfDay?.details?.pageInfo,
+        }}
+      />
     </SettingsCard>
   );
 };

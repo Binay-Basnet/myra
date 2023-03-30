@@ -1,14 +1,15 @@
 /* eslint-disable-next-line */
 import { VStack, Divider, Box, Text } from '@myra-ui';
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 export interface SettingsCardProps {
   title: string;
   subtitle?: string;
   children?: React.ReactNode;
+  headerButton?: ReactElement;
 }
 
-export const SettingsCard = ({ title, subtitle, children }: SettingsCardProps) => (
+export const SettingsCard = ({ title, subtitle, children, headerButton }: SettingsCardProps) => (
   <VStack
     width="100%"
     border="1px"
@@ -18,7 +19,14 @@ export const SettingsCard = ({ title, subtitle, children }: SettingsCardProps) =
     borderColor="border.layout"
     borderRadius="br2"
   >
-    <Box display="flex" alignItems="center" px="s12" height="60px">
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      px="s12"
+      height="60px"
+      width="100%"
+    >
       <Box display="flex" flexDir="column" gap="s4">
         <Text fontSize="r1" color="gray.800" fontWeight="600" lineHeight="16.25px">
           {title}
@@ -29,6 +37,8 @@ export const SettingsCard = ({ title, subtitle, children }: SettingsCardProps) =
           </Text>
         )}
       </Box>
+
+      {headerButton}
     </Box>
     <Box p="s16" width="100%">
       {children}
