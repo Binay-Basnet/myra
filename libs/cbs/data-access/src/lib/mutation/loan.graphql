@@ -177,3 +177,16 @@ mutation setLoanCollateral($loanAccountID: ID!, $data: LoanAccountCollateralData
     }
   }
 }
+
+mutation setLoanGuarantee($loanAccountID: ID!, $data: LoanAccountGuranteeInput!) {
+  loanAccount {
+    loanGuaranteeActions {
+      addGuarantee(loanAccountID: $loanAccountID, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

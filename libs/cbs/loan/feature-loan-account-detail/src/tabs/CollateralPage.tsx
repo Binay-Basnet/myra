@@ -17,7 +17,7 @@ export const CollateralPage = () => {
     <>
       <TabHeader heading="Collateral" />
       <Statistics statsData={collateralSummary} />
-      <DetailsCard title={`Collateral List (${collatListInfo?.length})`} hasTable>
+      <DetailsCard title={`Collateral List (${collatListInfo?.length || 0})`} hasTable>
         <Box
           display="flex"
           gap="s4"

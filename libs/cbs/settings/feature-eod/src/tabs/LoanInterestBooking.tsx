@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box } from '@myra-ui';
+import { Button } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useEodHistoryDetailsQuery } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
+import { exportVisibleTableToExcel } from '@coop/cbs/utils';
 import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 export const LoanInterestBooking = () => {
@@ -56,19 +57,31 @@ export const LoanInterestBooking = () => {
   );
 
   return (
-    <SettingsCard title="Loan Interest Booking">
-      <Box height="30rem">
-        <Table
-          isLoading={isFetching}
-          isStatic
-          data={detailList}
-          columns={columns}
-          pagination={{
-            total: eodDetailsData?.endOfDay?.details?.totalCount ?? 'Many',
-            pageInfo: eodDetailsData?.endOfDay?.details?.pageInfo,
-          }}
-        />
-      </Box>
+    <SettingsCard
+      title="Loan Interest Booking"
+      headerButton={
+        <Button
+          variant="ghost"
+          onClick={() =>
+            exportVisibleTableToExcel(
+              `Loan Interest Booking - ${objState === 'success' ? 'Success' : 'Errors'}`
+            )
+          }
+        >
+          Export
+        </Button>
+      }
+    >
+      <Table
+        isLoading={isFetching}
+        isStatic
+        data={detailList}
+        columns={columns}
+        pagination={{
+          total: eodDetailsData?.endOfDay?.details?.totalCount ?? 'Many',
+          pageInfo: eodDetailsData?.endOfDay?.details?.pageInfo,
+        }}
+      />
     </SettingsCard>
   );
 };
