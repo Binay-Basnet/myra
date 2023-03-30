@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
-import { useSetItemsMutation } from '@coop/cbs/data-access';
+import { InvItemsInput, useSetItemsMutation } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 
 import { InventoryItemVariantForm } from '../component/form/InventoryItemVariantForm';
@@ -14,8 +14,11 @@ export const InventoryFeatureItemVariant = () => {
   const router = useRouter();
   const methods = useForm({});
   const { mutateAsync: AddItemsVariant } = useSetItemsMutation();
+  // const valuesTest = methods.getValues();
+
+  // console.log({ valuesTest });
   const handleSave = () => {
-    const values = methods.getValues();
+    const values = methods.getValues() as InvItemsInput;
 
     asyncToast({
       id: 'account-open-add-minor',

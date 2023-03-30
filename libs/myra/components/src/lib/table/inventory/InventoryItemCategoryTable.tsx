@@ -1,18 +1,10 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BsThreeDots } from 'react-icons/bs';
-import {
-  IconButton,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react';
+import { IconButton } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Box, Button, Column, PageHeader, Table, Text } from '@myra-ui';
+import { asyncToast, Box, Column, Modal, PageHeader, Table } from '@myra-ui';
 
 import { useGetItemCategoryListQuery, useSetItemCategoryMutation } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
@@ -23,10 +15,14 @@ export const InventoryItemCategoryTable = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
-  const itemCategoryMethods = useForm();
-
-  const { getValues: itemCategoryValues, handleSubmit: itemCategoryHandleSubmit } =
-    itemCategoryMethods;
+  const methods = useForm();
+  const handleUpdateModalClose = () => {
+    methods.reset({
+      name: null,
+      parentCategory: null,
+      description: null,
+    });
+  };
 
   const { data } = useGetItemCategoryListQuery({
     pagination: {
@@ -53,28 +49,27 @@ export const InventoryItemCategoryTable = () => {
   const onCloseModal = () => {
     setOpenModal(false);
   };
+  const handleSubmit = () => {
+    const values = methods.getValues();
 
-  // const inventoryColumns = [
-  //   {
-  //     title: 'itemsList',
-  //     link: '/inventory/items/list',
-  //   },
-  //   {
-  //     title: 'itemsCategory',
-  //     link: '/inventory/items/category/list',
-  //     modalOpen: onOpenModal,
-  //   },
-  //   {
-  //     title: 'itemUnits',
-  //     link: '/inventory/items/units/list',
-  //     modalOpen: onOpenModalUnits,
-  //   },
-  // ];
+    asyncToast({
+      id: 'inventory-add-category',
+      promise: itemCategoryMutate({
+        data: {
+          ...values,
+        },
+      }),
+      msgs: {
+        loading: 'Adding Item Category',
+        success: 'Item Category Added Successfully',
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getItemCategoryList']);
+        handleUpdateModalClose();
+        onCloseModal();
 
-  const onItemCategorySubmit = () => {
-    itemCategoryMutate({ data: { ...itemCategoryValues() } }).then(() => {
-      queryClient.invalidateQueries(['getItemCategoryList']);
-      onCloseModal();
+        // router.push('/accounting/investment/investment-transaction/list');
+      },
     });
   };
 
@@ -115,35 +110,27 @@ export const InventoryItemCategoryTable = () => {
       />
 
       <Table isLoading={isFetching} data={rowItems} columns={columns} />
-      <Modal isOpen={openModal} onClose={onCloseModal} isCentered trapFocus={false}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
-              {t['catgAddNewCatgModal']}
-            </Text>
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <FormProvider {...itemCategoryMethods}>
-              <form onSubmit={itemCategoryHandleSubmit(onItemCategorySubmit)}>
-                <Box display="flex" flexDirection="column" gap="s24">
-                  <FormInput type="text" name="name" label={t['catgItemGroupName']} />
-                  <FormSelect
-                    name="parentCategory"
-                    label={t['catgUnderItemGroup']}
-                    __placeholder={t['catgSelectItemGroup']}
-                    options={underItemGroup}
-                  />
-                  <FormInput type="text" name="description" label={t['catgDescription']} />
-                  <Button w="-webkit-fit-content" type="submit" alignSelf="flex-end">
-                    {t['catgAddItemGroup']}
-                  </Button>
-                </Box>
-              </form>
-            </FormProvider>
-          </ModalBody>
-        </ModalContent>
+      <Modal
+        open={openModal}
+        onClose={onCloseModal}
+        title="Add Item Category"
+        primaryButtonLabel="Add"
+        primaryButtonHandler={handleSubmit}
+        onCloseComplete={handleUpdateModalClose}
+      >
+        <FormProvider {...methods}>
+          <Box display="flex" flexDirection="column" gap="s24">
+            <FormInput type="text" name="name" label={t['catgItemGroupName']} />
+            <FormSelect
+              name="parentCategory"
+              menuPosition="fixed"
+              label={t['catgUnderItemGroup']}
+              __placeholder={t['catgSelectItemGroup']}
+              options={underItemGroup}
+            />
+            <FormInput type="text" name="description" label={t['catgDescription']} />
+          </Box>
+        </FormProvider>
       </Modal>
     </>
   );
