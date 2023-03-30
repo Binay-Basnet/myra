@@ -1,22 +1,15 @@
-import { Box } from '@myra-ui';
-
+import { AccountingTaxSettings } from '@coop/cbs/settings/accounting';
 import {
   SettingsAccountingLayout,
   SettingsGeneralLayout,
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
-import { Can } from '@coop/cbs/utils';
 
-const AccountingTax = () => (
-  <Can I="SHOW_IN_MENU" a="SETTINGS_SHARE" showError isErrorCentered>
-    {/* <ShareSettingsGeneralPage /> */}
-    <Box>Accounting Tax</Box>
-  </Can>
-);
+const AccountingTaxPage = () => <AccountingTaxSettings />;
 
-export default AccountingTax;
+export default AccountingTaxPage;
 
-AccountingTax.getLayout = function getLayout(page) {
+AccountingTaxPage.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
       <SettingsGeneralLayout>

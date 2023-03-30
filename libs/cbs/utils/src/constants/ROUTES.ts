@@ -107,7 +107,7 @@ export const ROUTES = {
   SETTINGS_GENERAL_ACCOUNTING_LEDGER_MAPPINGS:
     '/settings/general/accounting/default-ledger-mapping',
   SETTINGS_GENERAL_ACCOUNTING_CUSTOM_FIELDS: '/settings/general/accounting/custom-fields',
-  SETTINGS_GENERAL_ACCOUNTING_TAX: '/settings/general/accounting/default-ledger-mapping',
+  SETTINGS_GENERAL_ACCOUNTING_TAX: '/settings/general/accounting/tax',
 
   SETTINGS_GENERAL_ALTERNATIVE_CHANNELS: '/settings/general/alternative-channels/charges/configure',
 

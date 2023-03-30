@@ -1,0 +1,14 @@
+mutation setAccountingNewTax($data: NewTaxInput, $id: String) {
+  settings {
+    general {
+      accounting {
+        newTax(id: $id, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
