@@ -1,6 +1,4 @@
 import { useMemo } from 'react';
-import { BsThreeDots } from 'react-icons/bs';
-import { IconButton } from '@chakra-ui/react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
@@ -36,12 +34,12 @@ export const SupplierTable = () => {
         accessorFn: (row) => row?.node?.email,
       },
 
-      {
-        accessorKey: 'actions',
-        cell: () => (
-          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
-        ),
-      },
+      // {
+      //   accessorKey: 'actions',
+      //   cell: () => (
+      //     <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
+      //   ),
+      // },
     ],
     [t]
   );

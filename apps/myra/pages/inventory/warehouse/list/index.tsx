@@ -22,10 +22,10 @@ const InventoryWarehousePage = () => {
       title: 'warehouseListView',
       key: 'listView',
     },
-    {
-      title: 'warehouseTreeView',
-      key: 'treeView',
-    },
+    // {
+    //   title: 'warehouseTreeView',
+    //   key: 'treeView',
+    // },
   ];
   return (
     <>

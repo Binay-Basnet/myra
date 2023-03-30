@@ -1,0 +1,14 @@
+query getAllAccountingTaxes {
+  settings {
+    general {
+      accounting {
+        taxRates {
+          default
+          id
+          name
+          rate
+        }
+      }
+    }
+  }
+}
