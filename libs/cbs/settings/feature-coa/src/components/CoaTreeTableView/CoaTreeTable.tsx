@@ -4,6 +4,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IoAdd } from 'react-icons/io5';
 import Link from 'next/link';
 import { useDisclosure } from '@chakra-ui/react';
+import isBoolean from 'lodash/isBoolean';
 
 import { ActionMenu } from '@myra-ui/components';
 import { Box } from '@myra-ui/foundations';
@@ -88,7 +89,7 @@ export const CoaTreeTable = ({ data, type }: ICoaTreeTableProps) => {
         </Box>
       ),
       accessorKey: 'allowMultipleLedger',
-      cell: (props) => (props.getValue() ? 'Yes' : 'No'),
+      cell: (props) => (isBoolean(props.getValue()) ? (props.getValue() ? 'Yes' : 'No') : ''),
       meta: {
         width: '200px',
       },
@@ -100,7 +101,7 @@ export const CoaTreeTable = ({ data, type }: ICoaTreeTableProps) => {
         </Box>
       ),
       accessorKey: 'allowDirectPostingFromJV',
-      cell: (props) => (props.getValue() ? 'Yes' : 'No'),
+      cell: (props) => (isBoolean(props.getValue()) ? (props.getValue() ? 'Yes' : 'No') : ''),
 
       meta: {
         width: '200px',
