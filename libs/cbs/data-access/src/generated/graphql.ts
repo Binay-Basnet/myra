@@ -6986,6 +6986,7 @@ export type InvItemsInput = {
   sellingPrice?: InputMaybe<Scalars['String']>;
   tax?: InputMaybe<Scalars['String']>;
   valuationMethod?: InputMaybe<InvItemsValuationMethod>;
+  variantList?: InputMaybe<Array<InputMaybe<ItemVariantDetail>>>;
   variants?: InputMaybe<Array<InputMaybe<InvItemsVariant>>>;
 };
 
@@ -7031,7 +7032,6 @@ export type InvItemsValuationMethod =
   typeof InvItemsValuationMethod[keyof typeof InvItemsValuationMethod];
 export type InvItemsVariant = {
   options?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  variantList?: InputMaybe<Array<InputMaybe<ItemVariantDetail>>>;
   variantName?: InputMaybe<Scalars['String']>;
 };
 
