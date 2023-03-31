@@ -74,7 +74,7 @@ export const TransformedDetailsComponents = () => {
   };
 
   return (
-    <Box display="flex" justifyContent="space-between" gap={5}>
+    <Box display="flex" gap={5}>
       <Box
         p={5}
         display="flex"
