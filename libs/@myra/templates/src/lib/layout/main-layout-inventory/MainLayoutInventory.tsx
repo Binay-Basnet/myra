@@ -1,9 +1,9 @@
 import React from 'react';
 import { FiList, FiMap, FiPackage, FiTruck } from 'react-icons/fi';
-import { Box } from '@chakra-ui/react';
 
 import { TabMenu } from '@myra-ui/components';
 
+import { MainLayoutContainer } from '../containers/Container';
 import { TopLevelHeader } from '../../header';
 
 export interface MainLayoutInventoryProps {
@@ -14,7 +14,7 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
   const { children } = props;
   return (
     <div>
-      <Box position="fixed" top={0} width="100%" zIndex={11}>
+      <MainLayoutContainer>
         <TopLevelHeader />
         <TabMenu
           module="INVENTORY"
@@ -54,8 +54,8 @@ export const MainLayoutInventory = (props: MainLayoutInventoryProps) => {
             },
           ]}
         />
-      </Box>
-      <Box mt="110px">{children}</Box>
+        {children}
+      </MainLayoutContainer>
     </div>
   );
 };
