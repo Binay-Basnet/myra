@@ -4,13 +4,14 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { IoAddOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
 
+import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@myra-ui';
+
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
   GroupContainer,
 } from '@coop/neosys-admin/layout';
 import { FormEditableTable, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type VarinatProductTable = {
@@ -87,13 +88,13 @@ export const InventoryItemForm = () => {
     const tableData = variantProduct.reduce(
       (accumulator, currentVal) =>
         accumulator.concat(
-          currentVal.options
-            .split(',')
-            .map((option: string) => ({ sku: itemCode, itemName: `${itemName}-${option}` }))
+          currentVal.options.split(',').map((option: string, index: number) => ({
+            sku: `${itemCode}-${index + 1}`,
+            itemName: `${itemName}-${option}`,
+          }))
         ),
       [{}]
     );
-
     reset({
       ...getValues(),
       data: tableData.slice(1),

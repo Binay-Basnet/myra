@@ -1,18 +1,10 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BsThreeDots } from 'react-icons/bs';
-import {
-  IconButton,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react';
+import { IconButton } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Box, Button, Column, PageHeader, Table, Text } from '@myra-ui';
+import { asyncToast, Box, Column, Modal, PageHeader, Table } from '@myra-ui';
 
 import { useGetUnitsListQuery, useSetUnitsMutation } from '@coop/cbs/data-access';
 import { FormInput, FormSwitch } from '@coop/shared/form';
@@ -23,9 +15,7 @@ export const InventoryItemUnitsTable = () => {
 
   const queryClient = useQueryClient();
 
-  const unitMethods = useForm();
-
-  const { getValues: unitsValues, handleSubmit: unitHandleSubmit } = unitMethods;
+  const methods = useForm();
 
   const { mutateAsync: unitMutate } = useSetUnitsMutation();
 
@@ -36,11 +26,35 @@ export const InventoryItemUnitsTable = () => {
   const onCloseModalUnits = () => {
     setOpenModalUnits(false);
   };
+  const handleUpdateModalClose = () => {
+    methods.reset({
+      name: null,
+      shortName: null,
+      description: null,
+      acceptFraction: null,
+    });
+  };
 
-  const unitOnSubmit = () => {
-    unitMutate({ data: { ...unitsValues() } }).then(() => {
-      queryClient.invalidateQueries(['getUnitsList']);
-      onCloseModalUnits();
+  const handleSave = () => {
+    const values = methods.getValues();
+
+    asyncToast({
+      id: 'add-modal-units',
+      promise: unitMutate({
+        data: {
+          ...values,
+        },
+      }),
+      msgs: {
+        loading: 'Adding Unit',
+        success: 'New Unit Added',
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getUnitsList']);
+        handleUpdateModalClose();
+        onCloseModalUnits();
+        // router.push('/accounting/investment/investment-transaction/list');
+      },
     });
   };
 
@@ -77,31 +91,22 @@ export const InventoryItemUnitsTable = () => {
       <PageHeader heading="Units" buttonTitle="New Unit Add" onClick={onOpenModalUnits} button />
 
       <Table isLoading={isFetching} data={rowItems} columns={columns} />
-      <Modal isOpen={openModalUnits} onClose={onCloseModalUnits} isCentered trapFocus={false}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
-              {t['itemUnitAddNewUnit']}
-            </Text>
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <FormProvider {...unitMethods}>
-              <form onSubmit={unitHandleSubmit(unitOnSubmit)}>
-                <Box display="flex" flexDirection="column" gap="s24">
-                  <FormInput type="text" name="name" label={t['itemUnitFormName']} />
-                  <FormInput type="text" name="shortName" label={t['itemUnitFormShortName']} />
-                  <FormInput type="text" name="description" label={t['itemUnitFormDescription']} />
-                  <FormSwitch name="acceptFraction" label={t['itemUnitFormAcceptsFraction']} />
-                  <Button w="-webkit-fit-content" type="submit" alignSelf="flex-end">
-                    Add Unit
-                  </Button>
-                </Box>
-              </form>
-            </FormProvider>
-          </ModalBody>
-        </ModalContent>
+      <Modal
+        open={openModalUnits}
+        onClose={onCloseModalUnits}
+        title="Add Unit"
+        primaryButtonLabel="Add"
+        primaryButtonHandler={handleSave}
+        onCloseComplete={handleUpdateModalClose}
+      >
+        <FormProvider {...methods}>
+          <Box display="flex" flexDirection="column" gap="s24">
+            <FormInput type="text" name="name" label={t['itemUnitFormName']} />
+            <FormInput type="text" name="shortName" label={t['itemUnitFormShortName']} />
+            <FormInput type="text" name="description" label={t['itemUnitFormDescription']} />
+            <FormSwitch name="acceptFraction" label={t['itemUnitFormAcceptsFraction']} />
+          </Box>
+        </FormProvider>
       </Modal>
     </>
   );

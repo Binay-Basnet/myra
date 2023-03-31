@@ -37,10 +37,18 @@ export const WarehouseAddModal = ({
       },
       onSuccess: () => {
         queryClient.invalidateQueries(['getWarehouseList']);
+        handleUpdateModalClose();
         handleWarehouseClose();
 
         // router.push('/accounting/investment/investment-transaction/list');
       },
+    });
+  };
+  const handleUpdateModalClose = () => {
+    methods.reset({
+      name: null,
+      phoneNumber: null,
+      address: null,
     });
   };
   return isAddWareHouseModalOpen ? (
@@ -50,6 +58,7 @@ export const WarehouseAddModal = ({
       title="Add Warehouse"
       primaryButtonLabel="Add"
       primaryButtonHandler={onSubmit}
+      onCloseComplete={handleUpdateModalClose}
     >
       <FormProvider {...methods}>
         <Box display="flex" flexDirection="column" gap="s24">

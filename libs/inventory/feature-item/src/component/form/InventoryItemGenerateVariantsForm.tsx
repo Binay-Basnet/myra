@@ -78,14 +78,15 @@ export const InventoryItemGenerateVariantsForm = () => {
     const tableData = variantProduct.reduce(
       (accumulator, currentVal) =>
         accumulator.concat(
-          currentVal.options
-            ?.split(',')
-            ?.map((option: string) => ({ sku: itemCode, itemName: `${itemName}-${option}` }))
+          currentVal.options?.split(',')?.map((option: string, index: number) => ({
+            sku: `${itemCode}-${index + 1}`,
+            itemName: `${itemName}-${option}`,
+          }))
         ),
       [{}]
     );
 
-    methods.setValue('variants.variantList', tableData.slice(1));
+    methods.setValue('variantList', tableData.slice(1));
     // reset({
     //   ...data,
     //   variants: {
@@ -139,7 +140,7 @@ export const InventoryItemGenerateVariantsForm = () => {
       </GroupContainer>
 
       <FormEditableTable<VarinatProductTable>
-        name="variants.variantList"
+        name="variantList"
         canAddRow={false}
         columns={[
           {
