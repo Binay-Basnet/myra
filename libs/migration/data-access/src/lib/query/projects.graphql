@@ -71,3 +71,18 @@ query getErrors($input: [String]!) {
     }
   }
 }
+
+query getReportTypes {
+  protectedQuery {
+    getReportType
+  }
+}
+
+query getReportStatus($dbName: String) {
+  protectedQuery {
+    getreportStatus(dbName: $dbName) {
+      status
+      data
+    }
+  }
+}

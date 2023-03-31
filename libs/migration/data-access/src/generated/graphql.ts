@@ -156,8 +156,10 @@ export type ProtectedQuery = {
   getExtractionData: ExtractionResponse;
   getFileData?: Maybe<Array<Maybe<CsvFileDetails>>>;
   getProjects: Array<Maybe<Scalars['String']>>;
+  getReportType: Array<Scalars['String']>;
   getTransformationData: ExtractionResponse;
   getTransformedDirStruct?: Maybe<Array<Scalars['String']>>;
+  getreportStatus: ExtractionResponse;
 };
 
 export type ProtectedQueryCheckErrorsArgs = {
@@ -184,6 +186,10 @@ export type ProtectedQueryGetTransformedDirStructArgs = {
   folderPath: Array<InputMaybe<Scalars['String']>>;
 };
 
+export type ProtectedQueryGetreportStatusArgs = {
+  dbName?: InputMaybe<Scalars['String']>;
+};
+
 export type Query = {
   protectedQuery: ProtectedQuery;
 };
@@ -192,7 +198,7 @@ export type ReportInput = {
   date?: InputMaybe<Scalars['String']>;
   dbName: Scalars['String'];
   head?: InputMaybe<Scalars['String']>;
-  title: Scalars['String'];
+  title: Array<InputMaybe<Scalars['String']>>;
 };
 
 export type Transform = {
@@ -241,6 +247,14 @@ export type SetCsvDataMutationVariables = Exact<{
 
 export type SetCsvDataMutation = {
   protectedMutation: { sendFileData: { status: string; data?: Array<string | null> | null } };
+};
+
+export type GenerateReportMutationVariables = Exact<{
+  input: ReportInput;
+}>;
+
+export type GenerateReportMutation = {
+  protectedMutation: { generateReport: { status: string; data?: Array<string | null> | null } };
 };
 
 export type GetProjectsQueryVariables = Exact<{ [key: string]: never }>;
@@ -307,6 +321,18 @@ export type GetErrorsQueryVariables = Exact<{
 
 export type GetErrorsQuery = {
   protectedQuery: { checkErrors: { files: Array<string | null>; count: string } };
+};
+
+export type GetReportTypesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetReportTypesQuery = { protectedQuery: { getReportType: Array<string> } };
+
+export type GetReportStatusQueryVariables = Exact<{
+  dbName?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetReportStatusQuery = {
+  protectedQuery: { getreportStatus: { status: string; data?: Array<string | null> | null } };
 };
 
 export const SetAuthDocument = `
@@ -407,6 +433,29 @@ export const useSetCsvDataMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetCsvDataMutation, TError, SetCsvDataMutationVariables, TContext>(
     ['setCSVData'],
     useAxios<SetCsvDataMutation, SetCsvDataMutationVariables>(SetCsvDataDocument),
+    options
+  );
+export const GenerateReportDocument = `
+    mutation generateReport($input: ReportInput!) {
+  protectedMutation {
+    generateReport(input: $input) {
+      status
+      data
+    }
+  }
+}
+    `;
+export const useGenerateReportMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    GenerateReportMutation,
+    TError,
+    GenerateReportMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<GenerateReportMutation, TError, GenerateReportMutationVariables, TContext>(
+    ['generateReport'],
+    useAxios<GenerateReportMutation, GenerateReportMutationVariables>(GenerateReportDocument),
     options
   );
 export const GetProjectsDocument = `
@@ -552,5 +601,46 @@ export const useGetErrorsQuery = <TData = GetErrorsQuery, TError = unknown>(
   useQuery<GetErrorsQuery, TError, TData>(
     ['getErrors', variables],
     useAxios<GetErrorsQuery, GetErrorsQueryVariables>(GetErrorsDocument).bind(null, variables),
+    options
+  );
+export const GetReportTypesDocument = `
+    query getReportTypes {
+  protectedQuery {
+    getReportType
+  }
+}
+    `;
+export const useGetReportTypesQuery = <TData = GetReportTypesQuery, TError = unknown>(
+  variables?: GetReportTypesQueryVariables,
+  options?: UseQueryOptions<GetReportTypesQuery, TError, TData>
+) =>
+  useQuery<GetReportTypesQuery, TError, TData>(
+    variables === undefined ? ['getReportTypes'] : ['getReportTypes', variables],
+    useAxios<GetReportTypesQuery, GetReportTypesQueryVariables>(GetReportTypesDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetReportStatusDocument = `
+    query getReportStatus($dbName: String) {
+  protectedQuery {
+    getreportStatus(dbName: $dbName) {
+      status
+      data
+    }
+  }
+}
+    `;
+export const useGetReportStatusQuery = <TData = GetReportStatusQuery, TError = unknown>(
+  variables?: GetReportStatusQueryVariables,
+  options?: UseQueryOptions<GetReportStatusQuery, TError, TData>
+) =>
+  useQuery<GetReportStatusQuery, TError, TData>(
+    variables === undefined ? ['getReportStatus'] : ['getReportStatus', variables],
+    useAxios<GetReportStatusQuery, GetReportStatusQueryVariables>(GetReportStatusDocument).bind(
+      null,
+      variables
+    ),
     options
   );
