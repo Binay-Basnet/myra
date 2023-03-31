@@ -1,5 +1,7 @@
 import { ReactElement } from 'react';
 
+import { Scrollable } from '@myra-ui';
+
 import { AccountingFeaturePurchaseAddExpenses } from '@coop/accounting/purchase';
 import { AccountingLayout } from '@coop/accounting/ui-layouts';
 
@@ -7,6 +9,10 @@ import { AccountingLayout } from '@coop/accounting/ui-layouts';
 const AccountingExpensesAdd = () => <AccountingFeaturePurchaseAddExpenses />;
 
 AccountingExpensesAdd.getLayout = function getLayout(page: ReactElement) {
-  return <AccountingLayout>{page}</AccountingLayout>;
+  return (
+    <AccountingLayout>
+      <Scrollable>{page}</Scrollable>
+    </AccountingLayout>
+  );
 };
 export default AccountingExpensesAdd;

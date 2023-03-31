@@ -61,7 +61,10 @@ export const InventoryFeatureItem = () => {
       </Box>
 
       <Box position="sticky" bottom={0}>
-        <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSave} />
+        <Box>
+          {' '}
+          <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSave} />{' '}
+        </Box>
       </Box>
     </Container>
   );

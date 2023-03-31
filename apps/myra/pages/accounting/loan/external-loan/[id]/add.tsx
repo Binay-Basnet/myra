@@ -1,5 +1,7 @@
 import { ReactElement } from 'react';
 
+import { Scrollable } from '@myra-ui';
+
 import { AccountingLayout } from '@coop/accounting/ui-layouts';
 import { ExternalLoanAdd } from '@coop/accouting/loan';
 
@@ -7,6 +9,11 @@ import { ExternalLoanAdd } from '@coop/accouting/loan';
 const AddExternalLoan = () => <ExternalLoanAdd />;
 
 AddExternalLoan.getLayout = function getLayout(page: ReactElement) {
-  return <AccountingLayout>{page}</AccountingLayout>;
+  return (
+    <AccountingLayout>
+      {' '}
+      <Scrollable>{page}</Scrollable>
+    </AccountingLayout>
+  );
 };
 export default AddExternalLoan;
