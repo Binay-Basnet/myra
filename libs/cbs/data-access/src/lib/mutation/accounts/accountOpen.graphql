@@ -49,3 +49,14 @@ mutation setupdateSavingTenure($SavingsTenureUpdateInput: SavingsTenureUpdateInp
     }
   }
 }
+
+mutation setupdateSignature($accountID: ID!, $data: [String!]!) {
+  account {
+    updateSignature(accountID: $accountID, data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

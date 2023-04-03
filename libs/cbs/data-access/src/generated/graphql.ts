@@ -17126,6 +17126,26 @@ export type SetupdateSavingTenureMutation = {
   };
 };
 
+export type SetupdateSignatureMutationVariables = Exact<{
+  accountID: Scalars['ID'];
+  data: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+export type SetupdateSignatureMutation = {
+  account: {
+    updateSignature?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type UpdateAccountInterestMutationVariables = Exact<{
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
@@ -32170,6 +32190,33 @@ export const useSetupdateSavingTenureMutation = <TError = unknown, TContext = un
     ['setupdateSavingTenure'],
     useAxios<SetupdateSavingTenureMutation, SetupdateSavingTenureMutationVariables>(
       SetupdateSavingTenureDocument
+    ),
+    options
+  );
+export const SetupdateSignatureDocument = `
+    mutation setupdateSignature($accountID: ID!, $data: [String!]!) {
+  account {
+    updateSignature(accountID: $accountID, data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetupdateSignatureMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetupdateSignatureMutation,
+    TError,
+    SetupdateSignatureMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetupdateSignatureMutation, TError, SetupdateSignatureMutationVariables, TContext>(
+    ['setupdateSignature'],
+    useAxios<SetupdateSignatureMutation, SetupdateSignatureMutationVariables>(
+      SetupdateSignatureDocument
     ),
     options
   );

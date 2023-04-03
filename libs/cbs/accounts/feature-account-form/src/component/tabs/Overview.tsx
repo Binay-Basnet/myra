@@ -101,7 +101,9 @@ export const Overview = () => {
     nomineeAccountName: accountDetails?.nomineeAccountName,
     productMinimumBalance: accountDetails?.product?.minimumBalance,
     accountExpiryDate: accountDetails?.accountExpiryDate,
+    signaturePicUrl: accountDetails?.member?.signaturePicUrl,
   };
+
   return (
     <>
       <TabHeader heading="Overview" />
@@ -231,7 +233,7 @@ export const Overview = () => {
         </Box>
       </Grid> */}
 
-      {/* {memberShareDetails && <MemberStatistics />}
+      {/* {memberShareDetails && <MemberStatistics />}IChangeNomineeProps
       {memberPaymentUp && (
         <Box bg="white" display="flex" flexDirection="column" gap="s8" pb="s16" borderRadius="br2">
           <Box display="flex" justifyContent="space-between" p="s16">
