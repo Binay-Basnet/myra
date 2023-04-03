@@ -9,6 +9,7 @@ const AccountListPage = () => {
   const [isAddNomineeAccountModalOpen, setIsAddNomineeAccountModalOpen] = useState(false);
   const [isAddTenureModalOpen, setIsAddTenureModalOpen] = useState(false);
   const [isUpdateSinatureModalOpen, setUpdateSinatureModalOpen] = useState(false);
+  const [isUpdateInstallmentAmountModalOpen, setUpdateInstallmentAmountModalOpen] = useState(false);
 
   const handleNomineeAccountModalClose = () => {
     setIsAddNomineeAccountModalOpen(false);
@@ -19,6 +20,9 @@ const AccountListPage = () => {
   const handleUpdateSignatureModalClose = () => {
     setUpdateSinatureModalOpen(false);
   };
+  const handleUpdateInstallmentAmountModalClose = () => {
+    setUpdateInstallmentAmountModalOpen(false);
+  };
 
   return (
     <AccountDetails
@@ -28,10 +32,16 @@ const AccountListPage = () => {
       handleUpdateSignatureModalClose={handleUpdateSignatureModalClose}
       isTenureModalOpen={isAddTenureModalOpen}
       isUpdateSignatureModalOpen={isUpdateSinatureModalOpen}
+      isUpdateInstallmentAmountModalOpen={isUpdateInstallmentAmountModalOpen}
+      handleUpdateInstallmentAmountModalClose={handleUpdateInstallmentAmountModalClose}
       pathbarOptions={[
         { label: 'Update Nominee', handler: () => setIsAddNomineeAccountModalOpen(true) },
         { label: 'Update Tenure', handler: () => setIsAddTenureModalOpen(true) },
         { label: 'Update Signature', handler: () => setUpdateSinatureModalOpen(true) },
+        {
+          label: 'Update Installment Amount',
+          handler: () => setUpdateInstallmentAmountModalOpen(true),
+        },
       ]}
     />
   );

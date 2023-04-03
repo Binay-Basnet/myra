@@ -26,7 +26,8 @@ interface IGeneralInfoCardProps {
     nomineeAccountName: string | null | undefined;
     productMinimumBalance: string | null | undefined;
     accountExpiryDate: Record<'local' | 'en' | 'np', string> | null | undefined;
-    signaturePicUrl?: string;
+    installmentAmount?: string | null;
+    signaturePicUrl?: string | null;
   };
   // accountTypes?: {
   //   SAVING: string;
@@ -103,6 +104,10 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => {
         <DetailCardContent
           title="Minimum Balance"
           subtitle={amountConverter(data?.productMinimumBalance || 0)}
+        />
+        <DetailCardContent
+          title="Installment Amount"
+          subtitle={amountConverter(data?.installmentAmount || 0)}
         />
         <Text
           fontWeight="500"

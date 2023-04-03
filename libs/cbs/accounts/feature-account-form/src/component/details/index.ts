@@ -24,4 +24,5 @@ export * from './TabHeader';
 export * from './Tasks';
 export * from './TransactionCard';
 export * from './UpcomingInstallments';
+export * from './UpdateInstallmentAmountModal';
 export * from './UpdateSignatureModal';

@@ -102,6 +102,7 @@ export const Overview = () => {
     productMinimumBalance: accountDetails?.product?.minimumBalance,
     accountExpiryDate: accountDetails?.accountExpiryDate,
     signaturePicUrl: accountDetails?.member?.signaturePicUrl,
+    installmentAmount: accountDetails?.installmentAmount,
   };
 
   return (

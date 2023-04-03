@@ -601,7 +601,7 @@ export type AccountingSalesMutationUpsertCustomerPaymentArgs = {
 
 export type AccountingSalesMutationUpsertSaleEntryArgs = {
   data: SalesSaleEntryInput;
-  id?: InputMaybe<Scalars['ID']>;
+  id: Scalars['ID'];
 };
 
 export type AccountingSalesMutationResult = {
@@ -14077,12 +14077,10 @@ export type SalesSaleEntry = {
 };
 
 export type SalesSaleEntryEntry = {
-  customerId: Scalars['String'];
-  customerName: Scalars['String'];
-  date: Scalars['Localized'];
+  date?: Maybe<Scalars['Localized']>;
   id: Scalars['ID'];
-  invoiceNo: Scalars['String'];
-  totalAmount: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
 };
 
 export type SalesSaleEntryFilter = {
@@ -14091,13 +14089,16 @@ export type SalesSaleEntryFilter = {
 };
 
 export type SalesSaleEntryInput = {
-  customerID?: InputMaybe<Scalars['ID']>;
+  customerID: Scalars['ID'];
   discount?: InputMaybe<Scalars['String']>;
-  dueDate?: InputMaybe<Scalars['Localized']>;
-  invoiceDate?: InputMaybe<Scalars['Localized']>;
-  invoiceNumber?: InputMaybe<Scalars['String']>;
+  dueDate: Scalars['Localized'];
+  invoiceDate: Scalars['Localized'];
   notes?: InputMaybe<Scalars['String']>;
-  products?: InputMaybe<Array<InputMaybe<PurchaseItemDetails>>>;
+  products: Array<SaleProductInput>;
+  reference: Scalars['String'];
+  subTotal?: InputMaybe<Scalars['String']>;
+  taxableTotal?: InputMaybe<Scalars['String']>;
+  vat?: InputMaybe<Scalars['String']>;
 };
 
 export type SalesSaleEntryListConnection = {
@@ -17134,6 +17135,26 @@ export type SetupdateSignatureMutationVariables = Exact<{
 export type SetupdateSignatureMutation = {
   account: {
     updateSignature?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type SetupdateInstallmentAmountMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+  newInstallmentAmount: Scalars['String'];
+}>;
+
+export type SetupdateInstallmentAmountMutation = {
+  account: {
+    updateInstallmentAmount?: {
       recordId?: string | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -21441,9 +21462,8 @@ export type GetSalesSaleEntryListDataQuery = {
           cursor: string;
           node?: {
             id: string;
-            customerName: string;
-            totalAmount: string;
-            date: Record<'local' | 'en' | 'np', string>;
+            totalAmount?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
           } | null;
         } | null> | null;
         pageInfo?: {
@@ -32220,6 +32240,41 @@ export const useSetupdateSignatureMutation = <TError = unknown, TContext = unkno
     ),
     options
   );
+export const SetupdateInstallmentAmountDocument = `
+    mutation setupdateInstallmentAmount($accountId: ID!, $newInstallmentAmount: String!) {
+  account {
+    updateInstallmentAmount(
+      accountId: $accountId
+      newInstallmentAmount: $newInstallmentAmount
+    ) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetupdateInstallmentAmountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetupdateInstallmentAmountMutation,
+    TError,
+    SetupdateInstallmentAmountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetupdateInstallmentAmountMutation,
+    TError,
+    SetupdateInstallmentAmountMutationVariables,
+    TContext
+  >(
+    ['setupdateInstallmentAmount'],
+    useAxios<SetupdateInstallmentAmountMutation, SetupdateInstallmentAmountMutationVariables>(
+      SetupdateInstallmentAmountDocument
+    ),
+    options
+  );
 export const UpdateAccountInterestDocument = `
     mutation updateAccountInterest($accountId: ID!, $data: InterestRateSetupInput!) {
   account {
@@ -38703,7 +38758,6 @@ export const GetSalesSaleEntryListDataDocument = `
         edges {
           node {
             id
-            customerName
             totalAmount
             date
           }

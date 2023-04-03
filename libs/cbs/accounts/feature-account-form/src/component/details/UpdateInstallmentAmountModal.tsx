@@ -1,27 +1,22 @@
-import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { Alert, asyncToast, Box, Button, Modal, Text } from '@myra-ui';
 
-import { useSetupdateSignatureMutation } from '@coop/cbs/data-access';
-import { FormFileInput } from '@coop/shared/form';
+import { useSetupdateInstallmentAmountMutation } from '@coop/cbs/data-access';
+import { FormInput } from '@coop/shared/form';
 
 import { useAccountDetails } from '../../hooks/useAccountDetails';
 
-interface IUpdateSignatureProps {
+interface IUpdateInstallmentProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const UpdateSignatureModal = ({ isOpen, onClose }: IUpdateSignatureProps) => {
+export const UpdateInstallmentAmountModal = ({ isOpen, onClose }: IUpdateInstallmentProps) => {
   const { accountDetails } = useAccountDetails();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
+
   const queryClient = useQueryClient();
 
   const router = useRouter();
@@ -30,16 +25,16 @@ export const UpdateSignatureModal = ({ isOpen, onClose }: IUpdateSignatureProps)
     mode: 'onChange',
   });
 
-  const { mutateAsync } = useSetupdateSignatureMutation();
+  const { mutateAsync } = useSetupdateInstallmentAmountMutation();
 
   const handleSave = () => {
     const values = methods.getValues();
 
     asyncToast({
-      id: 'update-signature',
+      id: 'update-installment',
       msgs: {
-        success: 'Signature updated successfully',
-        loading: 'Updating Signature',
+        success: 'Installment updated successfully',
+        loading: 'Updating Installment',
       },
       onSuccess: () => {
         queryClient.invalidateQueries(['getAccountDetailsData']);
@@ -47,8 +42,8 @@ export const UpdateSignatureModal = ({ isOpen, onClose }: IUpdateSignatureProps)
         onClose();
       },
       promise: mutateAsync({
-        accountID: router?.query?.['id'] as string,
-        data: values?.['fileUploads'],
+        accountId: router?.query?.['id'] as string,
+        newInstallmentAmount: values?.['newInstallmentAmount'],
       }),
     });
   };
@@ -74,28 +69,12 @@ export const UpdateSignatureModal = ({ isOpen, onClose }: IUpdateSignatureProps)
         <Box display="flex" flexDir="column" gap={5}>
           <Alert status="info" hideCloseIcon>
             <Box display="flex" justifyContent="space-between">
-              <Text>Existing Signature for this account can be viewed here.</Text>
-              <Text
-                color="blue.500"
-                fontWeight="medium"
-                cursor="pointer"
-                onClick={() => setIsModalOpen(true)}
-              >
-                View
-              </Text>
+              <Text>Existing installment no: {accountDetails?.installmentAmount}</Text>
             </Box>
           </Alert>
-          <FormFileInput name="fileUploads" label="File Upload" size="md" />
+          <FormInput label="New Installment Amount" name="newInstallmentAmount" w={300} />
         </Box>
       </FormProvider>
-      <Modal open={isModalOpen} onClose={handleModalClose} isCentered title="Signature" width="xs">
-        <Image
-          src={accountDetails?.member?.signaturePicUrl as string}
-          alt="Signature"
-          width={400}
-          height={400}
-        />
-      </Modal>
     </Modal>
   ) : null;
 };
