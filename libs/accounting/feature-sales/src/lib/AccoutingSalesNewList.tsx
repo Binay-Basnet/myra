@@ -36,7 +36,7 @@ export const AccountingSalesList = () => {
         accessorFn: (row) => row?.node?.id,
       },
       {
-        accessorFn: (row) => row?.node?.name,
+        accessorFn: (row) => row?.node?.customerName,
         header: t['accountingSalesListCustomer'],
         meta: {
           width: '60%',
