@@ -30,18 +30,16 @@ const InventoryWarehousePage = () => {
   return (
     <>
       {' '}
-      <Box>
-        <InventoryWarehouseHeader
-          heading="warehouseLayoutWarehouse"
-          tabItems={tabList}
-          onClickHandler={() => setIsAddMinorAccountModalOpen(true)}
-        />
-        <Box mt="3.125rem">
-          {(router.query['objState'] === 'listView' || !router.query['objState']) && (
-            <WarehouseListTable />
-          )}
-          {router.query['objState'] === 'treeView' && <WarehouseTreeView />}
-        </Box>
+      <InventoryWarehouseHeader
+        heading="warehouseLayoutWarehouse"
+        tabItems={tabList}
+        onClickHandler={() => setIsAddMinorAccountModalOpen(true)}
+      />
+      <Box mt="3.125rem">
+        {(router.query['objState'] === 'listView' || !router.query['objState']) && (
+          <WarehouseListTable />
+        )}
+        {router.query['objState'] === 'treeView' && <WarehouseTreeView />}
       </Box>
       <WarehouseAddModal
         isAddWareHouseModalOpen={isAddMinorModalOpen}
