@@ -126,6 +126,7 @@ export enum Report {
 
   USER_LIST_REPORT = 'User List Report',
   SAVING_BALANCE_REPORT = 'Saving Balance [Individual]',
+  SAVING_BALANCE_MINOR_REPORT = 'Minor Saving Balance Report',
   COPOMIS_IMPORT_MEMBER_REPORT = 'Copomis Import Member Report',
   PEARLS_REPORT = 'Pearls Report',
 
@@ -319,6 +320,11 @@ export const REPORTS = {
       id: '5.17',
       report: Report.SAVING_PRODUCT_BALANCE_REPORT,
       link: 'saving-product-balance',
+    },
+    {
+      id: '5.18',
+      report: Report.SAVING_BALANCE_MINOR_REPORT,
+      link: 'saving-balance-minor',
     },
   ],
 
