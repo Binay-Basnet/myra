@@ -1,0 +1,12 @@
+mutation setPurchaseEntry($data: PurchaseEntryInput!) {
+  accounting {
+    purchase {
+      purchaseEntry(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

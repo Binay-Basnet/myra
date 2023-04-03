@@ -1,18 +1,22 @@
+import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 
+import { Text } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
+
+import { useGetInventoryItemsListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 type PurchaseTableType = {
-  product_id: string;
-  quantity: number;
-  rate: number;
-  tax: number;
-  amount: number;
-  product_description?: string;
-  warehouse_partition?: number;
-  purchase_ledger?: string;
+  itemId?: string;
+  quantity?: string;
+  rate?: string;
+  tax?: string;
+  amount?: string;
+  description?: string;
+  warehouse?: string;
 };
 
 const search_options = [
@@ -31,17 +35,48 @@ const search_options = [
 export const PurchaseTable = () => {
   const { t } = useTranslation();
 
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
-  const addToInventory = watch('addToInventory');
+  const itemDetails = watch('itemDetails') as PurchaseTableType[];
+  const { data: inventoryItems } = useGetInventoryItemsListQuery({
+    pagination: {
+      after: '',
+      first: -1,
+    },
+  });
+  const inventoryItemsData = inventoryItems?.inventory?.items?.list?.edges;
+  const accountSearchOptions = useMemo(
+    () =>
+      inventoryItemsData?.map((account) => ({
+        label: account?.node?.name as string,
+        value: account?.node?.id as string,
+      })),
+    [inventoryItemsData]
+  );
 
+  useDeepCompareEffect(() => {
+    const hello = 'Hello';
+    console.log({ hello });
+    if (itemDetails) {
+      setValue(
+        'itemDetails',
+        itemDetails?.map((entry) => ({
+          itemId: entry?.itemId,
+          quantity: entry?.quantity,
+          rate: inventoryItemsData?.find((t) => entry?.itemId === t?.node?.id)?.node?.name,
+          tax: entry?.tax,
+        }))
+      );
+    }
+  }, [itemDetails]);
+  console.log({ itemDetails });
   const tableColumns: Column<PurchaseTableType>[] = [
     {
-      accessor: 'product_id',
+      accessor: 'itemId',
       header: t['accountingPurchaseTableProduct'],
       cellWidth: 'auto',
       fieldType: 'search',
-      searchOptions: search_options,
+      searchOptions: accountSearchOptions,
     },
     {
       accessor: 'quantity',
@@ -57,6 +92,12 @@ export const PurchaseTable = () => {
       accessor: 'tax',
       header: t['accountingPurchaseTableTax'],
       isNumeric: true,
+      cell: (row) => {
+        const account = inventoryItemsData?.find((member) => member?.node?.id === row?.itemId);
+
+        return <Text textAlign="right">{account?.node?.name}</Text>;
+      },
+
       fieldType: 'percentage',
     },
     {
@@ -65,18 +106,19 @@ export const PurchaseTable = () => {
       isNumeric: true,
 
       accessorFn: (row: PurchaseTableType) =>
-        row.quantity * row.rate + (row.quantity * row.rate * row.tax) / 100,
+        Number(row.quantity || 0) * Number(row.rate || 0) +
+        (Number(row.quantity || 0) * Number(row.rate || 0) * Number(row.tax || 0)) / 100,
     },
     {
-      accessor: 'product_description',
+      accessor: 'description',
       header: t['accountingPurchaseTableProductDescription'],
       hidden: true,
 
       fieldType: 'textarea',
     },
     {
-      accessor: 'purchase_ledger',
-      header: t['accountingPurchaseTablePurchaseLedger'],
+      accessor: 'warehouse',
+      header: 'Warehouse',
       hidden: true,
       fieldType: 'select',
     },
@@ -84,19 +126,19 @@ export const PurchaseTable = () => {
 
   return (
     <FormEditableTable<PurchaseTableType>
-      name="data"
+      name="itemDetails"
       columns={
-        !addToInventory || addToInventory === 'No'
-          ? tableColumns
-          : [
-              ...tableColumns,
-              {
-                accessor: 'warehouse_partition',
-                header: t['accountingPurchaseTableWarehousePartition'],
-                hidden: true,
-                fieldType: 'select',
-              },
-            ]
+        // !addToInventory || addToInventory === 'No'
+        tableColumns
+        // : [
+        //     ...tableColumns,
+        //     {
+        //       accessor: 'warehouse_partition',
+        //       header: t['accountingPurchaseTableWarehousePartition'],
+        //       hidden: true,
+        //       fieldType: 'select',
+        //     },
+        //   ]
       }
     />
   );

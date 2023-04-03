@@ -1,33 +1,25 @@
-import { BoxContainer, InputGroupContainer } from '@coop/accounting/ui-components';
-import { FormInput } from '@coop/shared/form';
-import { GridItem } from '@myra-ui';
+import { FormSection, GridItem } from '@myra-ui';
+
+import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const PurchaseDetails = () => {
   const { t } = useTranslation();
   return (
-    <BoxContainer>
-      <InputGroupContainer>
-        <GridItem colSpan={2}>
-          <FormInput
-            name="supplierName"
-            type="text"
-            label={t['accountingPurchaseAddSupplierName']}
-            __placeholder={t['accountingPurchaseAddSupplierName']}
-          />
-        </GridItem>
+    <FormSection>
+      <GridItem colSpan={2}>
+        <FormInput name="supplier" type="text" label={t['accountingPurchaseAddSupplierName']} />
+      </GridItem>
 
-        <FormInput
-          name="supplierInvoiceReference"
-          type="text"
-          label={t['accountingPurchaseAddSupplierInvoiceReference']}
-          __placeholder={t['accountingPurchaseAddSupplierInvoiceReference']}
-        />
+      <FormDatePicker name="invoiceDate" label={t['accountingPurchaseAddInvoiceDate']} />
 
-        <FormInput name="invoiceDate" type="date" label={t['accountingPurchaseAddInvoiceDate']} />
+      <FormDatePicker name="dueDate" label={t['accountingPurchaseAddDueDate']} />
 
-        <FormInput name="dueDate" type="date" label={t['accountingPurchaseAddDueDate']} />
-      </InputGroupContainer>
-    </BoxContainer>
+      <FormInput
+        name="invoiceReference"
+        type="text"
+        label={t['accountingPurchaseAddSupplierInvoiceReference']}
+      />
+    </FormSection>
   );
 };
