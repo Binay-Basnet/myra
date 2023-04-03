@@ -13,6 +13,7 @@ import {
   LedgerListTab,
   Overview,
   Transactions,
+  UpdateSignatureModal,
   WithdrawSlip,
 } from '../component';
 
@@ -22,6 +23,8 @@ interface IAccountDetailsProps {
   handleNomineeModalClose?: () => void;
   isTenureModalOpen?: boolean;
   handleTenureModalClose?: () => void;
+  handleUpdateSignatureModalClose?: () => void;
+  isUpdateSignatureModalOpen?: boolean;
 }
 
 export const AccountDetails = ({
@@ -30,6 +33,8 @@ export const AccountDetails = ({
   isNomineeAccountModalOpen,
   handleTenureModalClose,
   isTenureModalOpen,
+  handleUpdateSignatureModalClose,
+  isUpdateSignatureModalOpen,
 }: IAccountDetailsProps) => {
   const router = useRouter();
 
@@ -111,6 +116,10 @@ export const AccountDetails = ({
       <AddTenureModal
         isOpen={isTenureModalOpen as boolean}
         onClose={handleTenureModalClose as () => void}
+      />
+      <UpdateSignatureModal
+        isOpen={isUpdateSignatureModalOpen as boolean}
+        onClose={handleUpdateSignatureModalClose as () => void}
       />
     </>
   );

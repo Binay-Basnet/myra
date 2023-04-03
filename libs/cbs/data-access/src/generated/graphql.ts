@@ -507,7 +507,50 @@ export type AccountingMutation = {
   externalLoan: ExternalLoanMutation;
   investment: AccountingInvestmentMutation;
   journalVoucher: JournalVoucherMutation;
+  purchase: AccountingPurchaseMutation;
   sales: AccountingSalesMutation;
+};
+
+export type AccountingPurchase = {
+  date: Scalars['Localized'];
+  entryNo: Scalars['String'];
+  id: Scalars['String'];
+  supplierId: Scalars['String'];
+  supplierName: Scalars['String'];
+  totalAmount: Scalars['String'];
+};
+
+export type AccountingPurchaseConnection = {
+  edges?: Maybe<Array<Maybe<AccountingPurchaseEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AccountingPurchaseEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<AccountingPurchase>;
+};
+
+export type AccountingPurchaseFilter = {
+  id?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type AccountingPurchaseMutation = {
+  purchaseEntry?: Maybe<PurchaseEntryResult>;
+};
+
+export type AccountingPurchaseMutationPurchaseEntryArgs = {
+  data: PurchaseEntryInput;
+};
+
+export type AccountingPurchaseQuery = {
+  list?: Maybe<AccountingPurchaseConnection>;
+};
+
+export type AccountingPurchaseQueryListArgs = {
+  filter?: InputMaybe<AccountingPurchaseFilter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type AccountingQuery = {
@@ -515,6 +558,7 @@ export type AccountingQuery = {
   externalLoan: ExternalLoanQuery;
   investment: AccountingInvestmentQuery;
   journalVoucher: JournalVoucherQuery;
+  purchase: AccountingPurchaseQuery;
   sales: AccountingSalesQuery;
 };
 
@@ -3946,7 +3990,9 @@ export type DepositLoanAccountMutation = {
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
   makeActive?: Maybe<Scalars['String']>;
   updateAccountInterest: InterestSetupMutationResult;
+  updateInstallmentAmount?: Maybe<SavingsTenureUpdateResult>;
   updateNomineeAccount?: Maybe<NomineeAccountUpdateResult>;
+  updateSignature?: Maybe<SavingsTenureUpdateResult>;
   updateTenure?: Maybe<SavingsTenureUpdateResult>;
 };
 
@@ -3979,8 +4025,18 @@ export type DepositLoanAccountMutationUpdateAccountInterestArgs = {
   data: InterestRateSetupInput;
 };
 
+export type DepositLoanAccountMutationUpdateInstallmentAmountArgs = {
+  accountId: Scalars['ID'];
+  newInstallmentAmount: Scalars['String'];
+};
+
 export type DepositLoanAccountMutationUpdateNomineeAccountArgs = {
   data: NomineeAccountUpdateInput;
+};
+
+export type DepositLoanAccountMutationUpdateSignatureArgs = {
+  accountID: Scalars['ID'];
+  data: Array<Scalars['String']>;
 };
 
 export type DepositLoanAccountMutationUpdateTenureArgs = {
@@ -6890,6 +6946,8 @@ export type InvItems = {
   itemQuantity: Scalars['String'];
   name: Scalars['String'];
   sellingPrice: Scalars['String'];
+  taxId?: Maybe<Scalars['String']>;
+  taxValue?: Maybe<Scalars['Float']>;
   type: Scalars['String'];
 };
 
@@ -13283,6 +13341,32 @@ export type Province = {
   nameNp: Scalars['String'];
 };
 
+export type PurchaseEntryInput = {
+  discount?: InputMaybe<Scalars['String']>;
+  dueDate?: InputMaybe<Scalars['Localized']>;
+  invoiceDate?: InputMaybe<Scalars['Localized']>;
+  invoiceReference?: InputMaybe<Scalars['String']>;
+  itemDetails?: InputMaybe<Array<InputMaybe<PurchaseItemDetails>>>;
+  notes?: InputMaybe<Scalars['String']>;
+  supplier?: InputMaybe<Scalars['String']>;
+};
+
+export type PurchaseEntryResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<AccountingPurchaseQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type PurchaseItemDetails = {
+  amount?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  itemId?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['String']>;
+  rate?: InputMaybe<Scalars['String']>;
+  tax?: InputMaybe<Scalars['String']>;
+  warehouse?: InputMaybe<Scalars['String']>;
+};
+
 export type QuarterlyDividendRate = {
   firstQuarter?: Maybe<Scalars['Float']>;
   fourthQuarter?: Maybe<Scalars['Float']>;
@@ -17031,6 +17115,26 @@ export type SetupdateSavingTenureMutationVariables = Exact<{
 export type SetupdateSavingTenureMutation = {
   account: {
     updateTenure?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type SetupdateSignatureMutationVariables = Exact<{
+  accountID: Scalars['ID'];
+  data: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+export type SetupdateSignatureMutation = {
+  account: {
+    updateSignature?: {
       recordId?: string | null;
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -32086,6 +32190,33 @@ export const useSetupdateSavingTenureMutation = <TError = unknown, TContext = un
     ['setupdateSavingTenure'],
     useAxios<SetupdateSavingTenureMutation, SetupdateSavingTenureMutationVariables>(
       SetupdateSavingTenureDocument
+    ),
+    options
+  );
+export const SetupdateSignatureDocument = `
+    mutation setupdateSignature($accountID: ID!, $data: [String!]!) {
+  account {
+    updateSignature(accountID: $accountID, data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetupdateSignatureMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetupdateSignatureMutation,
+    TError,
+    SetupdateSignatureMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetupdateSignatureMutation, TError, SetupdateSignatureMutationVariables, TContext>(
+    ['setupdateSignature'],
+    useAxios<SetupdateSignatureMutation, SetupdateSignatureMutationVariables>(
+      SetupdateSignatureDocument
     ),
     options
   );
