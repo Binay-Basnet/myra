@@ -95,12 +95,14 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
         member {
           name
           code
+          branch
           address {
             state
             district
             localGovernment
             wardNo
             locality
+
             houseNo
             coordinates {
               longitude
