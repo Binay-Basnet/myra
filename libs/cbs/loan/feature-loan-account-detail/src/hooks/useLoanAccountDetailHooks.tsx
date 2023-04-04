@@ -77,7 +77,7 @@ export const useLoanAccountDetailHooks = () => {
     { label: 'Installment Frequency', value: generalInfo?.installmentFrequency ?? 'N/A' },
     {
       label: 'Disbursed Amount',
-      value: amountConverter(generalInfo?.disbursedAmount as string) ?? 'N/A',
+      value: amountConverter(generalInfo?.sanctionedAmount as string) ?? 'N/A',
     },
   ];
   const productId = generalInfo?.productId;
