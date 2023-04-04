@@ -35,13 +35,13 @@ export const AccountingSalesList = () => {
         header: 'Order No',
         accessorFn: (row) => row?.node?.id,
       },
-      // {
-      //   accessorFn: (row) => row?.node?.customerName,
-      //   header: t['accountingSalesListCustomer'],
-      //   meta: {
-      //     width: '60%',
-      //   },
-      // },
+      {
+        accessorFn: (row) => row?.node?.customerName,
+        header: t['accountingSalesListCustomer'],
+        meta: {
+          width: '60%',
+        },
+      },
       {
         header: t['accountingSalesListTotalAmount'],
         accessorFn: (row) => row?.node?.totalAmount,

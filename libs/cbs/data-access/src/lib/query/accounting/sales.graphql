@@ -69,7 +69,7 @@ query getSalesSaleEntryListData($pagination: Pagination, $filter: SalesSaleEntry
         edges {
           node {
             id
-            #customerName
+            customerName
             totalAmount
             date
           }

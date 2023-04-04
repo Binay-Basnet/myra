@@ -485,6 +485,7 @@ export type AccountingMutation = {
   investment: AccountingInvestmentMutation;
   journalVoucher: JournalVoucherMutation;
   organization: AccountingOrganizationMutation;
+  purchase: AccountingPurchaseMutation;
   sales: AccountingSalesMutation;
 };
 
@@ -516,12 +517,55 @@ export type AccountingOrganizationQueryResult = {
   error?: Maybe<QueryError>;
 };
 
+export type AccountingPurchase = {
+  date: Scalars['Localized'];
+  entryNo: Scalars['String'];
+  id: Scalars['String'];
+  supplierId: Scalars['String'];
+  supplierName: Scalars['String'];
+  totalAmount: Scalars['String'];
+};
+
+export type AccountingPurchaseConnection = {
+  edges?: Maybe<Array<Maybe<AccountingPurchaseEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AccountingPurchaseEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<AccountingPurchase>;
+};
+
+export type AccountingPurchaseFilter = {
+  id?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type AccountingPurchaseMutation = {
+  purchaseEntry?: Maybe<PurchaseEntryResult>;
+};
+
+export type AccountingPurchaseMutationPurchaseEntryArgs = {
+  data: PurchaseEntryInput;
+};
+
+export type AccountingPurchaseQuery = {
+  list?: Maybe<AccountingPurchaseConnection>;
+};
+
+export type AccountingPurchaseQueryListArgs = {
+  filter?: InputMaybe<AccountingPurchaseFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type AccountingQuery = {
   bankAccounts: BankAccountQuery;
   externalLoan: ExternalLoanQuery;
   investment: AccountingInvestmentQuery;
   journalVoucher: JournalVoucherQuery;
   organization: AccountingOrganizationQuery;
+  purchase: AccountingPurchaseQuery;
   sales: AccountingSalesQuery;
 };
 
@@ -564,7 +608,7 @@ export type AccountingSalesMutationUpsertCustomerPaymentArgs = {
 
 export type AccountingSalesMutationUpsertSaleEntryArgs = {
   data: SalesSaleEntryInput;
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type AccountingSalesMutationResult = {
@@ -6870,6 +6914,8 @@ export type InvItems = {
   itemQuantity: Scalars['String'];
   name: Scalars['String'];
   sellingPrice: Scalars['String'];
+  taxId?: Maybe<Scalars['String']>;
+  taxValue?: Maybe<Scalars['Float']>;
   type: Scalars['String'];
 };
 
@@ -13267,6 +13313,32 @@ export type Province = {
   nameNp: Scalars['String'];
 };
 
+export type PurchaseEntryInput = {
+  discount?: InputMaybe<Scalars['String']>;
+  dueDate?: InputMaybe<Scalars['Localized']>;
+  invoiceDate?: InputMaybe<Scalars['Localized']>;
+  invoiceReference?: InputMaybe<Scalars['String']>;
+  itemDetails?: InputMaybe<Array<InputMaybe<PurchaseItemDetails>>>;
+  notes?: InputMaybe<Scalars['String']>;
+  supplier?: InputMaybe<Scalars['String']>;
+};
+
+export type PurchaseEntryResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<AccountingPurchaseQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type PurchaseItemDetails = {
+  amount?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  itemId?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['String']>;
+  rate?: InputMaybe<Scalars['String']>;
+  tax?: InputMaybe<Scalars['String']>;
+  warehouse?: InputMaybe<Scalars['String']>;
+};
+
 export type QuarterlyDividendRate = {
   firstQuarter?: Maybe<Scalars['Float']>;
   fourthQuarter?: Maybe<Scalars['Float']>;
@@ -13977,10 +14049,12 @@ export type SalesSaleEntry = {
 };
 
 export type SalesSaleEntryEntry = {
-  date?: Maybe<Scalars['Localized']>;
+  customerId: Scalars['String'];
+  customerName: Scalars['String'];
+  date: Scalars['Localized'];
   id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  totalAmount?: Maybe<Scalars['String']>;
+  invoiceNo: Scalars['String'];
+  totalAmount: Scalars['String'];
 };
 
 export type SalesSaleEntryFilter = {
@@ -13989,16 +14063,13 @@ export type SalesSaleEntryFilter = {
 };
 
 export type SalesSaleEntryInput = {
-  customerID: Scalars['ID'];
+  customerID?: InputMaybe<Scalars['ID']>;
   discount?: InputMaybe<Scalars['String']>;
-  dueDate: Scalars['Localized'];
-  invoiceDate: Scalars['Localized'];
+  dueDate?: InputMaybe<Scalars['Localized']>;
+  invoiceDate?: InputMaybe<Scalars['Localized']>;
+  invoiceNumber?: InputMaybe<Scalars['String']>;
   notes?: InputMaybe<Scalars['String']>;
-  products: Array<SaleProductInput>;
-  reference: Scalars['String'];
-  subTotal?: InputMaybe<Scalars['String']>;
-  taxableTotal?: InputMaybe<Scalars['String']>;
-  vat?: InputMaybe<Scalars['String']>;
+  products?: InputMaybe<Array<InputMaybe<PurchaseItemDetails>>>;
 };
 
 export type SalesSaleEntryListConnection = {
@@ -21341,8 +21412,9 @@ export type GetSalesSaleEntryListDataQuery = {
           cursor: string;
           node?: {
             id: string;
-            totalAmount?: string | null;
-            date?: Record<'local' | 'en' | 'np', string> | null;
+            customerName: string;
+            totalAmount: string;
+            date: Record<'local' | 'en' | 'np', string>;
           } | null;
         } | null> | null;
         pageInfo?: {
@@ -38625,6 +38697,7 @@ export const GetSalesSaleEntryListDataDocument = `
         edges {
           node {
             id
+            customerName
             totalAmount
             date
           }
