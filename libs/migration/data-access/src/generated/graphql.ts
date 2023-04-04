@@ -19,6 +19,11 @@ export type Scalars = {
   Upload: any;
 };
 
+export type CsvDataResponse = {
+  data?: Maybe<Array<Maybe<CsvFileDetails>>>;
+  totalPages: Scalars['String'];
+};
+
 export type CsvError = {
   count: Scalars['String'];
   files: Array<Maybe<Scalars['String']>>;
@@ -154,7 +159,7 @@ export type ProtectedQuery = {
   checkErrors: CsvError;
   getDirectoryStructure?: Maybe<ProjectList>;
   getExtractionData: ExtractionResponse;
-  getFileData?: Maybe<Array<Maybe<CsvFileDetails>>>;
+  getFileData: CsvDataResponse;
   getProjects: Array<Maybe<Scalars['String']>>;
   getReportType: Array<Scalars['String']>;
   getTransformationData: ExtractionResponse;
@@ -300,10 +305,9 @@ export type GetCsvDataQueryVariables = Exact<{
 
 export type GetCsvDataQuery = {
   protectedQuery: {
-    getFileData?: Array<{
-      row?: string | null;
-      data?: Record<string, string> | null;
-    } | null> | null;
+    getFileData: {
+      data?: Array<{ row?: string | null; data?: Record<string, string> | null } | null> | null;
+    };
   };
 };
 
@@ -548,8 +552,10 @@ export const GetCsvDataDocument = `
     query getCSVData($input: FileDetails!) {
   protectedQuery {
     getFileData(input: $input) {
-      row
-      data
+      data {
+        row
+        data
+      }
     }
   }
 }

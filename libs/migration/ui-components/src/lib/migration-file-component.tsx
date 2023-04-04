@@ -27,7 +27,7 @@ export const MigrationFileComponent = () => {
     },
   });
 
-  const tableData = data?.protectedQuery?.getFileData || [];
+  const tableData = data?.protectedQuery?.getFileData?.data || [];
   const tableDataArray =
     tableData && tableData?.reduce((acc, curr) => [...acc, { row: curr?.row, ...curr?.data }], []);
   const columnLabel = !isEmpty(tableData) && Object?.keys(tableDataArray?.[0]);
