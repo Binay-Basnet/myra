@@ -8,7 +8,7 @@ export const SalesDetails = () => (
       <FormCustomerSelect name="customerID" label="Customer Name" />
     </GridItem>
 
-    <FormInput name="reference" type="number" label="Reference" />
+    <FormInput name="invoiceNumber" label="Invoice Number" />
 
     <FormDatePicker name="invoiceDate" label="Invoice Date" />
 
