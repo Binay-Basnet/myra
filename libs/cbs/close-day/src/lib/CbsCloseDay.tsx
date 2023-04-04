@@ -319,7 +319,7 @@ export const CbsCloseDay = () => {
       handleCompleteWithError('PRE');
       return setIsPreStageIgnoreInitiated(true);
     }
-    5;
+
     if (eodStatus?.stage === 'MAIN' && eodStatus?.overAllStatus === 'COMPLETED_WITH_ERRORS') {
       return handleCompleteWithError('MAIN');
     }

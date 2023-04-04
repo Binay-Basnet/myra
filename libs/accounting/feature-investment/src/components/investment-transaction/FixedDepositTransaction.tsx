@@ -1,58 +1,31 @@
-import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
+import { FormSection, GridItem } from '@myra-ui';
 
-import { FdInvestmentType } from '@coop/cbs/data-access';
-import { FormAmountInput, FormSelect } from '@coop/shared/form';
+import { InvestmentTransactionType } from '@coop/cbs/data-access';
+import {
+  FormAmountInput,
+  FormBankSelect,
+  FormDatePicker,
+  FormSelect,
+  FormTextArea,
+} from '@coop/shared/form';
 
 const fdTypeOptions = [
-  { label: 'Type 1', value: FdInvestmentType.Type_1 },
-  { label: 'Type 2', value: FdInvestmentType.Type_2 },
-  { label: 'Type 3', value: FdInvestmentType.Type_3 },
+  { label: 'Deposit', value: InvestmentTransactionType.Deposit },
+  { label: 'Withdraw', value: InvestmentTransactionType.Withdraw },
 ];
 
 export const FixedDepositTransaction = () => (
-  // const { data: bank } = useGetCoaBankListQuery({
-  //   accountCode: featureCode.accountCode as string[],
-  // });
-
-  // const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
-
-  // const bankList = bankListArr?.map((item) => ({
-  //   label: item?.name?.local as string,
-  //   value: item?.id as string,
-  // }));
-
   <FormSection header="Fixed Deposit">
-    <FormSelect name="fd.type" label="Type" options={fdTypeOptions} />
+    <FormSelect name="fd.type" label="Transaction Type" options={fdTypeOptions} />
+
+    <FormDatePicker name="fd.date" label="Transaction Date" />
+
     <FormAmountInput name="fd.amount" label="FD Amount" />
-    <GridItem colSpan={3} display="none">
-      <Alert status="info" title="Bank Details" hideCloseIcon>
-        {/* <Box display="flex" flexDirection="column"> */}
-        <Box display="flex" gap="s4">
-          <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-80">
-            Bank Name:
-          </Text>
-          <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-80">
-            Standard Chartered Bank Nepal
-          </Text>
-        </Box>
-        <Box display="flex" gap="s4">
-          <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-80">
-            Account Name:
-          </Text>
-          <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-80">
-            SC Saving Account
-          </Text>
-        </Box>
-        <Box display="flex" gap="s4">
-          <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-80">
-            Account Number:
-          </Text>
-          <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-80">
-            09100003422490
-          </Text>
-        </Box>
-        {/* </Box> */}
-      </Alert>
+
+    <FormBankSelect name="bankId" label="Bank" />
+
+    <GridItem colSpan={3}>
+      <FormTextArea name="notes" label="Notes" rows={3} />
     </GridItem>
   </FormSection>
 );

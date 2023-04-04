@@ -1,17 +1,4 @@
-mutation setInvestmentAccountData($id: ID!, $data: InvestmentAccountInput!) {
-  accounting {
-    investment {
-      upsertAccount(id: $id, data: $data) {
-        recordId
-        error {
-          ...MutationError
-        }
-      }
-    }
-  }
-}
-
-mutation setInvestmentEntryData($id: ID!, $data: InvestmentEntryInput!) {
+mutation setInvestmentEntryData($id: ID, $data: InvestmentEntryInput!) {
   accounting {
     investment {
       upsertEntry(id: $id, data: $data) {

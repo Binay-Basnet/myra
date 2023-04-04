@@ -1,94 +1,49 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import { TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { ExternalLoanPaymentMethod } from '@coop/cbs/data-access';
-import { useTranslation } from '@coop/shared/utils';
-
-import { useExternalLoan } from '../hooks/useExternalLoan';
+import { useExternalLoanPaymentListQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface ExternalLoanPaymentListProps {}
 
-interface IPaymentModeProps {
-  paymentMode: string;
-  t: Record<string, string>;
-}
-
-const paymentModeSwitch = ({ paymentMode, t }: IPaymentModeProps) => {
-  if (paymentMode === ExternalLoanPaymentMethod.Cash) {
-    return <Text>{t['cash']}</Text>;
-  }
-  if (paymentMode === ExternalLoanPaymentMethod.Bank) {
-    return <Text>{t['bank']}</Text>;
-  }
-  if (paymentMode === ExternalLoanPaymentMethod.Other) {
-    return <Text>{t['other']}</Text>;
-  }
-
-  return '-';
-};
-
 export const ExternalLoanPaymentList = () => {
-  const { t } = useTranslation();
+  const { data: loanPaymentData, isLoading: isLoanPaymentLoading } =
+    useExternalLoanPaymentListQuery({
+      pagination: getPaginationQuery(),
+    });
 
-  const { loanPaymentList, isLoanPaymentLoading, refetchLoanPayment } = useExternalLoan();
-  const rowData = useMemo(() => loanPaymentList ?? [], [loanPaymentList]);
+  const rowData = useMemo(
+    () => loanPaymentData?.accounting?.externalLoan?.payment?.list?.edges ?? [],
+    [loanPaymentData]
+  );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         header: 'Loan',
-        accessorFn: (row) => row?.loanName,
+        accessorFn: (row) => row?.node?.loanName,
       },
       {
-        accessorFn: (row) => row?.paymentMode,
-        header: 'Payment Mode',
-        cell: (props) =>
-          props?.row?.original &&
-          paymentModeSwitch({ paymentMode: props?.row?.original?.paymentMode ?? ' ', t }),
-        meta: {
-          width: '60%',
-        },
-      },
-      {
-        accessorFn: (row) => row?.amount,
+        accessorFn: (row) => amountConverter(row?.node?.amount ?? 0),
         header: 'Amount',
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Date',
-        accessorFn: (row) => row?.date,
-        meta: {
-          width: '30%',
-        },
-      },
-      {
-        id: '_actions',
-        header: '',
-        cell: (props) =>
-          props?.row?.original && (
-            <TablePopover
-              node={props?.row?.original}
-              items={[
-                {
-                  title: t['transDetailViewDetail'],
-                },
-              ]}
-            />
-          ),
-        meta: {
-          width: '3.125rem',
-        },
+        accessorFn: (row) => localizedDate(row?.node?.createdDate),
+        // meta: {
+        //   width: '30%',
+        // },
       },
     ],
-    [t]
+    []
   );
-
-  useEffect(() => {
-    refetchLoanPayment();
-  }, [refetchLoanPayment]);
 
   return (
     <>

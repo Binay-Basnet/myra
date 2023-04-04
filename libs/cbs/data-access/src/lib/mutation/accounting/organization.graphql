@@ -1,0 +1,12 @@
+mutation setAccountingOrganizationData($id: ID!, $data: InvestmentAccountInput!) {
+  accounting {
+    organization {
+      upsert(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

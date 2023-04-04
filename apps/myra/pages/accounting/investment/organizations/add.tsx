@@ -2,10 +2,10 @@ import { ReactElement } from 'react';
 
 import { Scrollable } from '@myra-ui';
 
-import { AddInvestmentAccount } from '@coop/accounting/investment';
+import { AddAccountingOrganization } from '@coop/accounting/ui-components';
 import { AccountingLayout } from '@coop/accounting/ui-layouts';
 
-const AddInvestmentAccountPage = () => <AddInvestmentAccount />;
+const AddInvestmentAccountPage = () => <AddAccountingOrganization />;
 
 AddInvestmentAccountPage.getLayout = function getLayout(page: ReactElement) {
   return (

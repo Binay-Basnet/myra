@@ -1,4 +1,4 @@
-query externalLoanList($filter: ExternalLoanApplicationFilter, $pagination: Pagination) {
+query externalLoanList($filter: Filter, $pagination: Pagination) {
   accounting {
     externalLoan {
       loan {
@@ -29,46 +29,7 @@ query externalLoanList($filter: ExternalLoanApplicationFilter, $pagination: Pagi
   }
 }
 
-query externalLoanAccountList($filter: ExternalLoanAccountFilter, $pagination: Pagination) {
-  accounting {
-    externalLoan {
-      account {
-        list(filter: $filter, pagination: $pagination) {
-          totalCount
-          edges {
-            node {
-              id
-              name
-              createdBy
-              createdDate
-              address {
-                state
-                district
-                localGovernment
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
-                }
-              }
-            }
-            cursor
-          }
-          pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
-          }
-        }
-      }
-    }
-  }
-}
-
-query externalLoanPaymentList($filter: ExternalLoanPaymentFilter, $pagination: Pagination) {
+query externalLoanPaymentList($filter: Filter, $pagination: Pagination) {
   accounting {
     externalLoan {
       payment {
@@ -83,7 +44,63 @@ query externalLoanPaymentList($filter: ExternalLoanPaymentFilter, $pagination: P
               createdBy
               createdDate
               amount
-              paymentMode
+              #paymentMode
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getExternalLoanFormState($id: ID!) {
+  accounting {
+    externalLoan {
+      loan {
+        formState(id: $id) {
+          data {
+            loanName
+            organizationId
+            loanType
+            mortageType
+            loanAppliedDate
+            loanApprovedDate
+            appliedAmount
+            sanctionedAmount
+            disbursedAmount
+            loanAccountNumber
+            tenure
+            tenureUnit
+            repaymentStartDate
+            maturityDate
+            interestRate
+            installmentType
+            installmentFrequency
+            collateral {
+              typeOfCollateral
+              valuationAmount
+              details
+            }
+            fixDeposit
+            nameOfRepresentative
+            position
+            loanCharges {
+              serviceName
+              serviceId
+              serviceCharge
+            }
+            insurance
+            insuranceCompany
+            insurancePremiumAmount
+            insuranceStartDate
+            insuranceValidUpto
+            bankId
+            documents {
+              fieldId
+              docData {
+                identifier
+                url
+              }
             }
           }
         }

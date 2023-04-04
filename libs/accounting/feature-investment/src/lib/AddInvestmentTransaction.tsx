@@ -1,8 +1,18 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
+
+import {
+  asyncToast,
+  Box,
+  Container,
+  FormFooter,
+  FormHeader,
+  FormSection,
+  GridItem,
+} from '@myra-ui';
 
 import {
   DateType,
@@ -13,15 +23,6 @@ import {
   useSetInvestmentTransactionDataMutation,
 } from '@coop/cbs/data-access';
 import { FormInvestmentEntrySelect, FormSelect } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
 
 import {
   FixedDepositTransaction,
@@ -44,7 +45,7 @@ export const AddInvestmentTransaction = () => {
 
   const methods = useForm<InvestmentTransactionInput>();
 
-  const { watch, reset, getValues, resetField } = methods;
+  const { watch, reset, getValues } = methods;
 
   const investmentType = watch('investmentType');
 
@@ -53,13 +54,6 @@ export const AddInvestmentTransaction = () => {
   useEffect(() => {
     reset({ investmentType, entryID: '' });
   }, [investmentType]);
-
-  useEffect(() => {
-    if (preferenceDate) {
-      resetField('share.date');
-      resetField('saving.amount');
-    }
-  }, [preferenceDate]);
 
   const { mutateAsync: setInvestmentTransaction } = useSetInvestmentTransactionDataMutation();
 
@@ -73,10 +67,6 @@ export const AddInvestmentTransaction = () => {
         ...omit({ ...values }, ['share', 'fd']),
         saving: {
           ...values.saving,
-          date:
-            preferenceDate === DateType.Bs
-              ? { np: values.saving?.date }
-              : { en: values.saving?.date },
         },
       };
     }
@@ -91,10 +81,6 @@ export const AddInvestmentTransaction = () => {
               'sharePerKitta',
               'totalShareReturnAmount',
             ]),
-            date:
-              preferenceDate === DateType.Bs
-                ? { np: values.share?.date }
-                : { en: values.share?.date },
           },
         };
       }

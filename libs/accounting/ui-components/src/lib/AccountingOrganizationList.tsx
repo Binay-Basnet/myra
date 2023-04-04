@@ -5,26 +5,20 @@ import { TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { InvestmentType, useGetInvestmentAccountsListDataQuery } from '@coop/cbs/data-access';
-import { formatTableAddress } from '@coop/cbs/utils';
+import { useGetAccountingOrganiztionListQuery } from '@coop/cbs/data-access';
+import { formatTableAddress, ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
-const investmentAccountType = {
-  [InvestmentType.Share]: 'Share',
-  [InvestmentType.Saving]: 'Savings & Deposit',
-  [InvestmentType.FixedDeposit]: 'Fixed Deposit',
-};
-
-export const InvestmentAccountsList = () => {
+export const AccountingOrganizationList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
 
-  const { data, isFetching } = useGetInvestmentAccountsListDataQuery({
+  const { data, isFetching } = useGetAccountingOrganiztionListQuery({
     pagination: getPaginationQuery(),
   });
 
-  const rowData = useMemo(() => data?.accounting?.investment?.listAccount?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.accounting?.organization?.list?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -50,10 +44,10 @@ export const InvestmentAccountsList = () => {
           width: '400px',
         },
       },
-      {
-        header: 'Type',
-        accessorFn: (row) => (row?.node?.type ? investmentAccountType[row?.node?.type] : ''),
-      },
+      // {
+      //   header: 'Type',
+      //   accessorFn: (row) => (row?.node?.type ? investmentAccountType[row?.node?.type] : ''),
+      // },
       {
         header: 'Address',
         accessorFn: (row) => formatTableAddress(row?.node?.address),
@@ -71,9 +65,11 @@ export const InvestmentAccountsList = () => {
               node={props?.row?.original?.node}
               items={[
                 {
-                  title: 'Edit Account',
+                  title: 'Edit Organization',
                   onClick: (row) => {
-                    router.push(`/accounting/investment/investment-account/edit/${row['id']}`);
+                    router.push(
+                      `${ROUTES.ACCOUNTING_INVESTMENT_ORGANIZATION_EDIT}?id=${row['id']}`
+                    );
                   },
                 },
               ]}
@@ -89,7 +85,7 @@ export const InvestmentAccountsList = () => {
 
   return (
     <>
-      <AccountingPageHeader heading="Investment Accounts" />
+      <AccountingPageHeader heading="Organizations" />
 
       <Table
         data={rowData}
@@ -101,12 +97,12 @@ export const InvestmentAccountsList = () => {
         columns={columns}
         noDataTitle="account list"
         pagination={{
-          total: data?.accounting?.investment?.listAccount?.totalCount ?? 'Many',
-          pageInfo: data?.accounting?.investment?.listAccount?.pageInfo,
+          total: data?.accounting?.organization?.list?.totalCount ?? 'Many',
+          pageInfo: data?.accounting?.organization?.list?.pageInfo,
         }}
       />
     </>
   );
 };
 
-export default InvestmentAccountsList;
+export default AccountingOrganizationList;

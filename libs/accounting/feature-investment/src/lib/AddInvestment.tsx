@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
+import { pickBy } from 'lodash';
 import omit from 'lodash/omit';
-import pickBy from 'lodash/pickBy';
 
 import {
   asyncToast,
@@ -16,15 +16,12 @@ import {
 } from '@myra-ui';
 
 import {
-  InstallmentFrequency,
   InvestmentEntryInput,
   InvestmentType,
-  useAppSelector,
-  useGetInvestmentAccountFormStateDataQuery,
   useGetInvestmentEntryFormStateDataQuery,
   useSetInvestmentEntryDataMutation,
 } from '@coop/cbs/data-access';
-import { FormInvestmentAccountSelect, FormSelect } from '@coop/shared/form';
+import { FormInput, FormOrganizationSelect, FormSelect } from '@coop/shared/form';
 
 import { FixedDepositInvestment, SavingsDepositsInvestment, ShareInvestment } from '../components';
 
@@ -52,34 +49,15 @@ const investmentTypeOptions = [
 // };
 
 export const AddInvestment = () => {
-  const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
-
   const router = useRouter();
 
   const id = router?.query?.['id'];
 
   const queryClient = useQueryClient();
 
-  const methods = useForm<InvestmentEntryInput>({
-    defaultValues: { saving: { frequency: InstallmentFrequency.Daily } },
-  });
+  const methods = useForm<InvestmentEntryInput>();
 
-  const { watch, setValue, getValues, reset } = methods;
-
-  const accountID = watch('accountID');
-
-  const { data: accountFormStateQueryData } = useGetInvestmentAccountFormStateDataQuery(
-    { id: accountID },
-    { enabled: !!accountID }
-  );
-
-  const accountEditData = accountFormStateQueryData?.accounting?.investment?.accountFormState?.data;
-
-  useEffect(() => {
-    if (accountEditData) {
-      setValue('investmentType', accountEditData?.type);
-    }
-  }, [accountEditData]);
+  const { watch, getValues, reset } = methods;
 
   const investmentType = watch('investmentType');
 
@@ -97,7 +75,8 @@ export const AddInvestment = () => {
 
         if (formState.investmentType === InvestmentType.Saving) {
           filteredFormState = {
-            accountID: formState.accountID,
+            organizationID: formState?.organizationID,
+            investmentName: formState?.investmentName,
             investmentType: formState.investmentType,
             saving: formState.saving,
           };
@@ -105,7 +84,8 @@ export const AddInvestment = () => {
 
         if (formState.investmentType === InvestmentType.Share) {
           filteredFormState = {
-            accountID: formState.accountID,
+            organizationID: formState?.organizationID,
+            investmentName: formState?.investmentName,
             investmentType: formState.investmentType,
             share: formState.share,
           };
@@ -113,7 +93,8 @@ export const AddInvestment = () => {
 
         if (formState.investmentType === InvestmentType.FixedDeposit) {
           filteredFormState = {
-            accountID: formState.accountID,
+            organizationID: formState?.organizationID,
+            investmentName: formState?.investmentName,
             investmentType: formState.investmentType,
             fd: formState.fd,
           };
@@ -136,7 +117,7 @@ export const AddInvestment = () => {
     //   setValue('fd.startDate', '');
     //   setValue('fd.maturityDate', '');
     // }
-  }, [formState, preferenceDate]);
+  }, [formState]);
 
   const { mutateAsync: setInvestmentEntry } = useSetInvestmentEntryDataMutation();
 
@@ -168,7 +149,9 @@ export const AddInvestment = () => {
 
     asyncToast({
       id: 'save-accounting-investment-entry',
-      promise: setInvestmentEntry({ id: String(id), data: filteredValues as InvestmentEntryInput }),
+      promise: id
+        ? setInvestmentEntry({ id: String(id), data: filteredValues as InvestmentEntryInput })
+        : setInvestmentEntry({ data: filteredValues as InvestmentEntryInput }),
       msgs: {
         loading: 'Saving investment entry',
         success: 'Investment entry saved',
@@ -193,17 +176,18 @@ export const AddInvestment = () => {
               <Box minH="calc(100vh - 170px)">
                 <FormSection>
                   <GridItem colSpan={2}>
-                    <FormInvestmentAccountSelect
-                      name="accountID"
-                      label="Select Investment Account"
-                    />
+                    <FormInput name="investmentName" label="Investment Account Name" />
+                  </GridItem>
+
+                  <GridItem colSpan={2}>
+                    <FormOrganizationSelect name="organizationID" label="Name of Organization" />
                   </GridItem>
 
                   <FormSelect
                     name="investmentType"
                     label="Investment Type"
                     options={investmentTypeOptions}
-                    isDisabled
+                    // isDisabled
                   />
                 </FormSection>
 

@@ -1,30 +1,26 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
 import {
   asyncToast,
   Box,
-  Button,
   Container,
   FormFooter,
   FormHeader,
   FormSection,
   GridItem,
-  Icon,
-  Text,
 } from '@myra-ui';
 
 import {
   ExternalLoanApplicationInput,
-  ExternalLoanPaymentMethod,
-  ExternalLoanType,
   FrequencyTenure,
-  InstallmentFrequency,
-  LoanRepaymentScheme,
+  MortageType,
+  useGetExternalLoanFormStateQuery,
   useSetExternalLoanMutation,
 } from '@coop/cbs/data-access';
-import { FormSwitchTab } from '@coop/shared/form';
+import { ROUTES } from '@coop/cbs/utils';
+import { FormBankSelect, FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -41,31 +37,57 @@ import {
 /* eslint-disable-next-line */
 export interface ExternalLoanAddProps {}
 
+type DocumentType = Record<string, ({ identifier: string; url: string } | null)[]>;
+
+type CustomExternalLoanApplicationInput = Omit<ExternalLoanApplicationInput, 'documents'> & {
+  documents: DocumentType;
+};
+
 export const ExternalLoanAdd = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const methods = useForm<ExternalLoanApplicationInput>({
+  const methods = useForm<CustomExternalLoanApplicationInput>({
     mode: 'onChange',
     defaultValues: {
       tenureUnit: FrequencyTenure.Day,
       insurance: false,
-      installmentType: LoanRepaymentScheme.Emi,
-      installmentFrequency: InstallmentFrequency.Daily,
-      paymentMethod: ExternalLoanPaymentMethod.Cash,
+
+      // installmentType: LoanRepaymentScheme.Emi,
+      // installmentFrequency: InstallmentFrequency.Daily,
+      // paymentMethod: ExternalLoanPaymentMethod.Cash,
     },
   });
-  // const id = String(router?.query?.['id']);
-  const { getValues, watch } = methods;
+
+  const { getValues, watch, reset } = methods;
+
+  const id = router?.query?.['id'];
+
+  const { data: loanFormStateData } = useGetExternalLoanFormStateQuery(
+    { id: id as string },
+    {
+      enabled: !!id,
+    }
+  );
+
+  useEffect(() => {
+    if (loanFormStateData) {
+      const queryValues = loanFormStateData?.accounting?.externalLoan?.loan?.formState?.data;
+
+      reset({
+        ...queryValues,
+        documents: queryValues?.documents?.reduce(
+          (docArr, doc) => ({ ...docArr, [doc?.fieldId as string]: doc?.docData ?? [] }),
+          {} as DocumentType
+        ),
+      });
+    }
+  }, [loanFormStateData]);
 
   const insurance = watch('insurance');
-  const typeOfLoan = watch('typeOfLoan');
+
+  const mortageType = watch('mortageType');
 
   const { mutateAsync } = useSetExternalLoanMutation();
-
-  const paymentModeList = [
-    { label: t['cash'], value: ExternalLoanPaymentMethod.Cash },
-    { label: t['bank'], value: ExternalLoanPaymentMethod.Bank },
-  ];
 
   const submitForm = () => {
     const values = getValues();
@@ -76,16 +98,22 @@ export const ExternalLoanAdd = () => {
       insurancePremiumAmount: insurance ? values?.insurancePremiumAmount : null,
       insuranceStartDate: insurance ? values?.insuranceStartDate : null,
       insuranceValidUpto: insurance ? values?.insuranceValidUpto : null,
+      documents: Object.keys(values?.documents ?? {}).map((fieldName) => ({
+        fieldId: fieldName,
+        identifiers: values?.documents?.[fieldName]?.map((doc) => doc?.identifier) ?? [],
+      })),
     };
 
     asyncToast({
       id: 'external-loan-id',
       msgs: {
-        success: 'New External Loan Added',
-        loading: 'Adding External Loan',
+        success: 'Saving External Loan',
+        loading: 'External Loan Saved',
       },
-      onSuccess: () => router.push('/accounting/loan/external-loan/list'),
-      promise: mutateAsync({ data: updatedData }),
+      onSuccess: () => router.push(ROUTES.ACCOUNTING_EXTERNAL_LOAN_LIST),
+      promise: id
+        ? mutateAsync({ id: id as string, data: updatedData as ExternalLoanApplicationInput })
+        : mutateAsync({ data: updatedData as ExternalLoanApplicationInput }),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
           Object.keys(error.validationErrorMsg).map((key) =>
@@ -112,25 +140,30 @@ export const ExternalLoanAdd = () => {
 
               <Installment />
 
-              {typeOfLoan === ExternalLoanType.Collateral && <Collateral />}
-              {typeOfLoan === ExternalLoanType.LoanAgainstFd && <FixDeposit />}
+              {mortageType === MortageType.Collateral && <Collateral />}
+              {mortageType === MortageType.LoanAgainstFd && <FixDeposit />}
 
-              <FormSection>
-                <GridItem colSpan={3}>
-                  <LoanProcessTable />
-                </GridItem>
+              <FormSection templateColumns={1}>
+                <LoanProcessTable />
               </FormSection>
 
               <Insurance />
 
-              <FormSection>
-                <FormSwitchTab
-                  name="paymentMethod"
-                  label="Payment Method"
-                  defaultValue="cash"
-                  options={paymentModeList}
-                />
+              <FormSection header="Transaction Method">
+                <FormBankSelect name="bankId" label="Bank" />
               </FormSection>
+
+              <FormSection header="Representative Information">
+                <GridItem colSpan={2}>
+                  <FormInput
+                    name="nameOfRepresentative"
+                    type="text"
+                    label="Name of Representative"
+                  />
+                </GridItem>
+                <FormInput name="position" type="text" label="Position" />
+              </FormSection>
+
               <Documents />
             </Box>
           </form>
@@ -138,25 +171,7 @@ export const ExternalLoanAdd = () => {
       </Container>
       <Box bottom="0" position="fixed" width="100%" bg="gray.100">
         <Container minW="container.lg" height="fit-content">
-          <FormFooter
-            status={
-              <Box display="flex" gap="s8">
-                <Text as="i" fontSize="r1">
-                  {t['formDetails']}
-                </Text>
-              </Box>
-            }
-            draftButton={
-              <Button type="submit" variant="ghost" shade="neutral">
-                <Icon as={BiSave} />
-                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
-                  {t['saveDraft']}
-                </Text>
-              </Button>
-            }
-            mainButtonLabel={t['save']}
-            mainButtonHandler={submitForm}
-          />
+          <FormFooter mainButtonLabel={t['save']} mainButtonHandler={submitForm} />
         </Container>
       </Box>
     </>

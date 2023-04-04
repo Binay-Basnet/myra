@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { FormSection, GridItem } from '@myra-ui';
 
 import { FrequencyTenure } from '@coop/cbs/data-access';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { FormDatePicker, FormNumberInput, FormSwitchTab } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IRightElementProps {
@@ -33,7 +33,7 @@ const inputRightElementText = (props: IRightElementProps) => {
 export const LoanTenure = () => {
   const { t } = useTranslation();
   const methods = useFormContext();
-  const { watch } = methods;
+  const { watch, resetField } = methods;
   const tenureUnit = watch('tenureUnit');
 
   const [rightElement, setRightElement] = useState('days');
@@ -46,23 +46,31 @@ export const LoanTenure = () => {
   ];
 
   useEffect(() => {
+    resetField('tenure');
     setRightElement(tenureUnit);
   }, [tenureUnit]);
 
   return (
-    <FormSection header="Loan Tenure">
-      <GridItem colSpan={2}>
+    <FormSection>
+      <GridItem colSpan={3}>
         <FormSwitchTab name="tenureUnit" label="Unit" options={tenureList} />
       </GridItem>
-      <FormInput
+
+      <FormNumberInput
+        isRequired
         name="tenure"
-        type="text"
+        textAlign="right"
         label="Tenure"
         rightAddonText={inputRightElementText({
           rightElement: rightElement as FrequencyTenure,
           t,
         })}
+        // isDisabled={router?.asPath?.includes('/edit')}
       />
+
+      <FormDatePicker name="repaymentStartDate" label="Repayment Start Date" />
+
+      <FormDatePicker name="maturityDate" label="Maturity Date" />
     </FormSection>
   );
 };
