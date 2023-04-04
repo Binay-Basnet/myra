@@ -35,7 +35,7 @@ export const AccountingFeaturePurchaseAdd = () => {
         success: 'New Purchase Added',
       },
       onSuccess: () => {
-        router.push(ROUTES.INVENTORY_ITEMS);
+        router.push(ROUTES.ACCOUNTING_PURCHASE_LIST);
         // router.push('/accounting/investment/investment-transaction/list');
       },
     });
