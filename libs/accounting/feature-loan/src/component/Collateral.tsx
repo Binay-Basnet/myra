@@ -1,6 +1,7 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseButton } from '@chakra-ui/react';
+
 import { Box, Button, FormSection, GridItem, Icon, IconButton } from '@myra-ui';
 
 import { FormInput } from '@coop/shared/form';
@@ -81,7 +82,7 @@ export const Collateral = () => {
           variant="outline"
           onClick={addCollateral}
         >
-          Add New
+          New
         </Button>
       </GridItem>
     </FormSection>

@@ -1,19 +1,23 @@
+import { useFormContext } from 'react-hook-form';
+
 import { FormSection, GridItem, Text } from '@myra-ui';
 
-import { InstallmentFrequency, SavingInvestmentType } from '@coop/cbs/data-access';
+import {
+  InstallmentFrequency,
+  InvestmentEntryInput,
+  SavingInvestmentType,
+} from '@coop/cbs/data-access';
 import {
   FormAmountInput,
   FormDatePicker,
   FormNumberInput,
   FormSelect,
-  FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
 
 const savingInvestmentTypeOptions = [
-  { label: 'Type 1', value: SavingInvestmentType.Type_1 },
-  { label: 'Type 2', value: SavingInvestmentType.Type_2 },
-  { label: 'Type 3', value: SavingInvestmentType.Type_3 },
+  { label: 'Voluntary Saving', value: SavingInvestmentType.VolunntarySaving },
+  { label: 'Recurring Saving', value: SavingInvestmentType.RecurringSaving },
 ];
 
 const installmentFrequencyOptions = [
@@ -43,36 +47,40 @@ const installmentFrequencyOptions = [
   },
 ];
 
-export const SavingsDepositsInvestment = () => (
-  <FormSection header="Savings / Deposits">
-    <FormSelect name="saving.type" label="Saving Type" options={savingInvestmentTypeOptions} />
+export const SavingsDepositsInvestment = () => {
+  const { watch } = useFormContext<InvestmentEntryInput>();
 
-    <FormAmountInput name="saving.installmentAmount" label="Installment Amount" />
+  const savingType = watch('saving.type');
 
-    <GridItem colSpan={3}>
-      <FormSwitchTab
-        name="saving.frequency"
-        label="Installment Frequency"
-        options={installmentFrequencyOptions}
+  return (
+    <FormSection header="Savings / Deposits">
+      <FormSelect name="saving.type" label="Saving Type" options={savingInvestmentTypeOptions} />
+
+      <FormAmountInput name="saving.installmentAmount" label="Installment Amount" />
+
+      <FormNumberInput
+        name="saving.rate"
+        label="Interest Rate"
+        rightElement={
+          <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+            %
+          </Text>
+        }
       />
-    </GridItem>
 
-    <FormNumberInput
-      name="saving.rate"
-      label="Interest Rate"
-      rightElement={
-        <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-          %
-        </Text>
-      }
-    />
+      {savingType === 'RECURRING_SAVING' && (
+        <FormSelect
+          name="saving.frequency"
+          label="Installment Frequency"
+          options={installmentFrequencyOptions}
+        />
+      )}
 
-    <FormDatePicker name="saving.openDate" label="Account Open Date" />
+      <FormDatePicker name="saving.openDate" label="Account Open Date" />
 
-    <FormAmountInput name="saving.initialDepositAmount" label="Initial Deposit Amount" />
-
-    <GridItem colSpan={3}>
-      <FormTextArea name="saving.notes" label="Notes" rows={3} />
-    </GridItem>
-  </FormSection>
-);
+      <GridItem colSpan={3}>
+        <FormTextArea name="saving.notes" label="Notes" rows={3} />
+      </GridItem>
+    </FormSection>
+  );
+};

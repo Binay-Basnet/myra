@@ -13,26 +13,11 @@ mutation setExternalLoan($id: String, $data: ExternalLoanApplicationInput) {
   }
 }
 
-mutation setExternalAccount($id: String, $data: ExternalLoanAccountInput) {
-  accounting {
-    externalLoan {
-      account {
-        new(id: $id, data: $data) {
-          recordId
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-
-mutation setExternalPayment($id: String, $data: ExternalLoanPaymentInput) {
+mutation setExternalPayment($data: ExternalLoanPaymentInput) {
   accounting {
     externalLoan {
       payment {
-        new(id: $id, data: $data) {
+        new(data: $data) {
           recordId
           error {
             ...MutationError

@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 
-import { InvestmentAccountsList } from '@coop/accounting/investment';
+import { AccountingOrganizationList } from '@coop/accounting/ui-components';
 import { AccountingLayout, InvestmentSidebarLayout } from '@coop/accounting/ui-layouts';
 
-const InvestmentAccountListPage = () => <InvestmentAccountsList />;
+const InvestmentAccountListPage = () => <AccountingOrganizationList />;
 
 InvestmentAccountListPage.getLayout = function getLayout(page: ReactElement) {
   return (

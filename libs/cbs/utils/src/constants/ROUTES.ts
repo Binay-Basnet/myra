@@ -289,19 +289,15 @@ export const ROUTES = {
   ACCOUNTING_TRAIL_BALANCE_REPORT: '/accounting/reports/transactions/trial-sheet/new',
 
   ACCOUNTING_EXTERNAL_LOAN_LIST: '/accounting/loan/external-loan/list',
-  ACCOUNTING_EXTERNAL_LOAN_ADD: '/accounting/loan/external-loan/new/add',
-  ACCOUNTING_EXTERNAL_LOAN_ACCOUNTS_LIST: '/accounting/loan/external-loan-accounts/list',
-  ACCOUNTING_EXTERNAL_LOAN_ACCOUNTS_ADD: '/accounting/loan/external-loan-accounts/new/add',
+  ACCOUNTING_EXTERNAL_LOAN_ADD: '/accounting/loan/external-loan/add',
   ACCOUNTING_EXTERNAL_LOAN_PAYMENT_LIST: '/accounting/loan/external-loan-payment/list',
   ACCOUNTING_EXTERNAL_LOAN_PAYMENT_ADD: '/accounting/loan/external-loan-payment/new/add',
 
   ACCOUNTING_INVESTMENT_LIST: '/accounting/investment/list',
-  ACCOUNTING_INVESTMENT_LIST_ADD: '/accounting/investment/add/1',
-  ACCOUNTING_INVESTMENT_ACCOUNTS: '/accounting/investment/investment-account/list',
-  ACCOUNTING_INVESTMENT_ACCOUNTS_ADD: '/accounting/investment/investment-account/add/1',
+  ACCOUNTING_INVESTMENT_LIST_ADD: '/accounting/investment/add',
   ACCOUNTING_INVESTMENT_ACCOUNT_TRANSACTIONS: '/accounting/investment/investment-transaction/list',
   ACCOUNTING_INVESTMENT_ACCOUNT_TRANSACTIONS_ADD:
-    '/accounting/investment/investment-transaction/add/1',
+    '/accounting/investment/investment-transaction/add',
 
   ACCOUNTING_REPORTS: '/accounting/reports/transactions',
 
@@ -337,6 +333,18 @@ export const ROUTES = {
   DAY_CLOSE: '/day-close',
 
   BRANCH_READINESS: '/branch-readiness',
+
+  ACCOUNTING_INVESTMENT_ORGANIZTION_LIST: '/accounting/investment/organizations/list',
+  ACCOUNTING_INVESTMENT_ORGANIZATION_ADD: '/accounting/investment/organizations/add',
+  ACCOUNTING_INVESTMENT_ORGANIZATION_EDIT: '/accounting/investment/organizations/edit',
+
+  ACCOUNTING_INVESTMENT_EDIT: '/accounting/investment/edit',
+
+  ACCOUNTING_EXTERNAL_LOAN_ORGANIZTION_LIST: '/accounting/loan/organizations/list',
+  ACCOUNTING_EXTERNAL_LOAN_ORGANIZATION_ADD: '/accounting/loan/organizations/add',
+  ACCOUNTING_EXTERNAL_LOAN_ORGANIZATION_EDIT: '/accounting/loan/organizations/edit',
+
+  ACCOUNTING_EXTERNAL_LOAN_EDIT: '/accounting/loan/external-loan/edit',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

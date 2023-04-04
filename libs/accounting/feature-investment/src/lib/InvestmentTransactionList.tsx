@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 
-import { TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
@@ -82,18 +81,18 @@ export const InvestmentTransactionList = () => {
           width: '100px',
         },
       },
-      {
-        id: '_actions',
-        header: '',
-        accessorKey: 'actions',
-        cell: (props) =>
-          props?.row?.original?.node && (
-            <TablePopover node={props?.row?.original?.node} items={[]} />
-          ),
-        meta: {
-          width: 's60',
-        },
-      },
+      // {
+      //   id: '_actions',
+      //   header: '',
+      //   accessorKey: 'actions',
+      //   cell: (props) =>
+      //     props?.row?.original?.node && (
+      //       <TablePopover node={props?.row?.original?.node} items={[]} />
+      //     ),
+      //   meta: {
+      //     width: 's60',
+      //   },
+      // },
     ],
     [preferenceDate]
   );

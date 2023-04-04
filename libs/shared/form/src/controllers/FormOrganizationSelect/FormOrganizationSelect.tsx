@@ -2,28 +2,23 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import debounce from 'lodash/debounce';
 
-import { InvestmentType, useGetInvestmentAccountsListDataQuery } from '@coop/cbs/data-access';
+import { useGetAccountingOrganiztionListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-interface IFormInvestmentAccountSelectProps {
+interface IFormOrganizationSelectProps {
   name: string;
   label: string;
-  type?: InvestmentType;
 }
 
 type OptionType = { label: string; value: string };
 
-export const FormInvestmentAccountSelect = ({
-  name,
-  label,
-  type,
-}: IFormInvestmentAccountSelectProps) => {
+export const FormOrganizationSelect = ({ name, label }: IFormOrganizationSelectProps) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const { watch } = useFormContext();
 
-  const { data: accountListQueryData, isFetching } = useGetInvestmentAccountsListDataQuery(
+  const { data: accountListQueryData, isFetching } = useGetAccountingOrganiztionListQuery(
     {
       pagination: {
         ...getPaginationQuery(),
@@ -31,13 +26,13 @@ export const FormInvestmentAccountSelect = ({
       },
       filter: {
         name: searchTerm,
-        type,
+        id: searchTerm,
       },
     },
     { staleTime: 0 }
   );
 
-  const accountList = accountListQueryData?.accounting?.investment?.listAccount?.edges;
+  const accountList = accountListQueryData?.accounting?.organization?.list?.edges ?? [];
 
   const accountOptions = accountList?.reduce(
     (prevVal, curVal) => [
@@ -70,4 +65,4 @@ export const FormInvestmentAccountSelect = ({
   );
 };
 
-export default FormInvestmentAccountSelect;
+export default FormOrganizationSelect;

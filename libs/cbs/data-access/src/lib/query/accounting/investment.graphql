@@ -1,60 +1,4 @@
-query getInvestmentAccountsListData($pagination: Pagination, $filter: InvestmentAccountFilter) {
-  accounting {
-    investment {
-      listAccount(pagination: $pagination, filter: $filter) {
-        totalCount
-        edges {
-          node {
-            id
-            name
-            type
-            address {
-              state
-              district
-              localGovernment
-              wardNo
-              locality
-            }
-          }
-          cursor
-        }
-        pageInfo {
-          startCursor
-          endCursor
-          hasNextPage
-          hasPreviousPage
-        }
-      }
-    }
-  }
-}
-
-query getInvestmentAccountFormStateData($id: ID!) {
-  accounting {
-    investment {
-      accountFormState(id: $id) {
-        data {
-          name
-          type
-          address {
-            provinceId
-            districtId
-            localGovernmentId
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-query getInvestmentEntriesListData($pagination: Pagination, $filter: InvestmentEntryFilter) {
+query getInvestmentEntriesListData($pagination: Pagination, $filter: Filter) {
   accounting {
     investment {
       listEntry(pagination: $pagination, filter: $filter) {
@@ -85,8 +29,9 @@ query getInvestmentEntryFormStateData($id: ID!) {
     investment {
       entryFormState(id: $id) {
         data {
-          accountID
+          organizationID
           investmentType
+          investmentName
           share {
             count
             rate
@@ -101,7 +46,6 @@ query getInvestmentEntryFormStateData($id: ID!) {
             frequency
             rate
             openDate
-            initialDepositAmount
             notes
           }
           fd {
@@ -111,9 +55,7 @@ query getInvestmentEntryFormStateData($id: ID!) {
             certificateNo
             startDate
             maturityDate
-            interestNomineeBank
-            bankACNo
-            interestLedgerMapping
+            nomineeBankACNo
             notes
           }
         }
@@ -122,10 +64,7 @@ query getInvestmentEntryFormStateData($id: ID!) {
   }
 }
 
-query getInvestmentTransactionsListData(
-  $pagination: Pagination
-  $filter: InvestmentTransactionFilter
-) {
+query getInvestmentTransactionsListData($pagination: Pagination, $filter: Filter) {
   accounting {
     investment {
       listTransaction(pagination: $pagination, filter: $filter) {

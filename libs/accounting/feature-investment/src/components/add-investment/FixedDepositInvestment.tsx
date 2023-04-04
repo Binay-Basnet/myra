@@ -1,6 +1,5 @@
-import { Box, FormSection, GridItem, Text } from '@myra-ui';
+import { FormSection, GridItem, Text } from '@myra-ui';
 
-import { InputGroupContainer } from '@coop/accounting/ui-components';
 import { FdInvestmentType } from '@coop/cbs/data-access';
 import {
   FormAmountInput,
@@ -13,9 +12,8 @@ import {
 } from '@coop/shared/form';
 
 const fdInvestmentTypeOptions = [
-  { label: 'Type 1', value: FdInvestmentType.Type_1 },
-  { label: 'Type 2', value: FdInvestmentType.Type_2 },
-  { label: 'Type 3', value: FdInvestmentType.Type_3 },
+  { label: 'Standard FD', value: FdInvestmentType.StandardFd },
+  { label: 'Recurring FD', value: FdInvestmentType.RecurringFd },
 ];
 
 export const FixedDepositInvestment = () => (
@@ -40,23 +38,7 @@ export const FixedDepositInvestment = () => (
 
     <FormDatePicker name="fd.maturityDate" label="Maturity Date" />
 
-    <GridItem colSpan={3}>
-      <Box display="flex" flexDirection="column" gap="s12">
-        <Text fontSize="s2" fontWeight="500" lineHeight="1.5">
-          Nominee Details
-        </Text>
-
-        <InputGroupContainer>
-          <GridItem colSpan={2}>
-            <FormBankSelect name="fd.interestNomineeBank" label="Interest Nominee Bank" />
-          </GridItem>
-
-          <FormInput name="fd.bankACNo" label="Bank Account Number" />
-        </InputGroupContainer>
-      </Box>
-    </GridItem>
-
-    <FormBankSelect name="fd.interestLedgerMapping" label="Interest Received Ledger Mapping" />
+    <FormBankSelect name="fd.nomineeBankACNo" label="Interest Nominee Bank" />
 
     <GridItem colSpan={3}>
       <FormTextArea name="fd.notes" label="Notes" rows={3} />

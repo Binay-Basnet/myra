@@ -1,89 +1,80 @@
 import { useFormContext } from 'react-hook-form';
 
-import { FormSection, GridItem, Text } from '@myra-ui';
+import { FormSection, GridItem } from '@myra-ui';
 
-import { ExternalLoanType, useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
-import { FormAmountInput, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { ExternalLoanType, MortageType } from '@coop/cbs/data-access';
+// import { ExternalLoanType, useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
+import {
+  FormAmountInput,
+  FormDatePicker,
+  FormInput,
+  FormOrganizationSelect,
+  FormSelect,
+} from '@coop/shared/form';
+
+const loanTypeList = [
+  { label: 'Co-operative Sector', value: ExternalLoanType.CooperativeSector },
+  { label: 'Other Sector', value: ExternalLoanType.OtherSector },
+];
+
+const mortageTypeOptions = [
+  { label: 'Collateral', value: MortageType.Collateral },
+  { label: 'Loan Against Fd', value: MortageType.LoanAgainstFd },
+];
 
 export const ExternalLoanInfo = () => {
   const { watch } = useFormContext();
   const appliedAmount = watch('appliedAmount');
+  const sanctionedAmount = watch('sanctionedAmount');
   const loanAppliedDate = watch('loanAppliedDate');
 
-  const { data } = useExternalLoanAccountListQuery({
-    pagination: getPaginationQuery(),
-  });
-
-  const accountList = data?.accounting?.externalLoan?.account?.list?.edges;
-
-  const orgList =
-    accountList &&
-    accountList?.map((item) => ({
-      label: item?.node?.name as string,
-      value: item?.node?.id as string,
-    }));
-
-  const loanTypeList = [
-    { label: 'Collateral', value: ExternalLoanType.Collateral },
-    { label: 'Loan Against Fd', value: ExternalLoanType.LoanAgainstFd },
-  ];
-
   return (
-    <>
-      <FormSection divider={false}>
-        <GridItem colSpan={2}>
-          <FormInput name="loanName" type="text" label="External Loan" />
-        </GridItem>
-        <GridItem colSpan={1}>
-          <FormSelect
-            name="nameOfOrganization"
-            label="Name of Organization"
-            options={orgList ?? []}
-          />
-        </GridItem>
-        <FormSelect name="typeOfLoan" label="Type of Loan" options={loanTypeList} />
+    <FormSection>
+      <GridItem colSpan={2}>
+        <FormInput name="loanName" type="text" label="External Loan Name" />
+      </GridItem>
 
-        <FormDatePicker name="loanAppliedDate" label="Loan Applied Date" />
-        <FormDatePicker
-          maxDate={loanAppliedDate}
-          name="loanApprovedDate"
-          label="Loan Approved Date"
-        />
-      </FormSection>
+      <FormOrganizationSelect name="organizationId" label="Name of Organization" />
 
-      <FormSection divider={false}>
-        <FormAmountInput name="appliedAmount" type="number" label="Applied Amount" />
-        <FormAmountInput
-          rules={{
-            max: {
-              value: appliedAmount,
-              message: 'Approved amount should not exceed Applied amount ',
-            },
-          }}
-          name="approvedAmount"
-          type="number"
-          label="Approved Amount"
-        />
+      <FormSelect name="loanType" label="Loan Type" options={loanTypeList} />
 
-        <FormInput name="loanNumber" type="text" label="Loan Number" />
-      </FormSection>
+      <FormSelect name="mortageType" label="Mortage Type" options={mortageTypeOptions} />
 
-      <FormSection>
-        <FormDatePicker name="effectiveStartDate" label="Effective Start Date" />
-        <FormDatePicker name="maturityDate" label="Maturity Date" />
-        <FormInput
-          name="interestRate"
-          type="number"
-          textAlign="right"
-          rightElement={
-            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-              %
-            </Text>
-          }
-          label="Interest Rate"
-        />
-      </FormSection>
-    </>
+      <FormDatePicker name="loanAppliedDate" label="Loan Applied Date" />
+
+      <FormDatePicker
+        maxDate={loanAppliedDate}
+        name="loanApprovedDate"
+        label="Loan Approved Date"
+      />
+
+      <FormAmountInput name="appliedAmount" type="number" label="Applied Amount" />
+
+      <FormAmountInput
+        rules={{
+          max: {
+            value: appliedAmount,
+            message: 'Sanctioned amount should not exceed Applied amount ',
+          },
+        }}
+        name="sanctionedAmount"
+        type="number"
+        label="Sanctioned Amount"
+      />
+
+      <FormAmountInput
+        rules={{
+          max: {
+            value: sanctionedAmount,
+            message: 'Disbursed amount should not exceed Sanctioned amount ',
+          },
+        }}
+        name="disbursedAmount"
+        type="number"
+        label="Disbursed Amount"
+      />
+
+      <FormInput name="loanAccountNumber" type="text" label="Loan Account Number" />
+    </FormSection>
   );
 };

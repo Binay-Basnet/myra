@@ -1,0 +1,60 @@
+query getAccountingOrganiztionList($pagination: Pagination, $filter: OrganizationEntryFilter) {
+  accounting {
+    organization {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            note
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+
+query getAccountingOrganizationFormStateData($id: ID!) {
+  accounting {
+    organization {
+      formState(id: $id) {
+        data {
+          name
+          address {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          note
+        }
+      }
+    }
+  }
+}

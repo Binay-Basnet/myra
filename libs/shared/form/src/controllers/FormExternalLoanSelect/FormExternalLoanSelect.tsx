@@ -1,26 +1,21 @@
 import { useState } from 'react';
 import debounce from 'lodash/debounce';
 
-import { InvestmentType, useGetInvestmentEntriesListDataQuery } from '@coop/cbs/data-access';
+import { useExternalLoanListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-interface IFormInvestmentEntrySelectProps {
+interface IFormExternalLoanSelectProps {
   name: string;
   label: string;
-  type?: InvestmentType | null | undefined;
 }
 
 type OptionType = { label: string; value: string };
 
-export const FormInvestmentEntrySelect = ({
-  name,
-  label,
-  type,
-}: IFormInvestmentEntrySelectProps) => {
+export const FormExternalLoanSelect = ({ name, label }: IFormExternalLoanSelectProps) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { data: entryListQueryData, isFetching } = useGetInvestmentEntriesListDataQuery(
+  const { data: entryListQueryData, isFetching } = useExternalLoanListQuery(
     {
       pagination: {
         ...getPaginationQuery(),
@@ -28,29 +23,18 @@ export const FormInvestmentEntrySelect = ({
       },
       filter: {
         query: searchTerm,
-        orConditions: [
-          {
-            andConditions: [
-              {
-                column: 'type',
-                comparator: 'EqualTo',
-                value: type,
-              },
-            ],
-          },
-        ],
       },
     },
     { staleTime: 0 }
   );
 
-  const accountList = entryListQueryData?.accounting?.investment?.listEntry?.edges;
+  const accountList = entryListQueryData?.accounting?.externalLoan?.loan?.list?.edges ?? [];
 
   const accountOptions = accountList?.reduce(
     (prevVal, curVal) => [
       ...prevVal,
       {
-        label: `${curVal?.node?.name} [ID:${curVal?.node?.id}]`,
+        label: `${curVal?.node?.loanName} [ID:${curVal?.node?.id}]`,
         value: curVal?.node?.id as string,
       },
     ],
@@ -72,4 +56,4 @@ export const FormInvestmentEntrySelect = ({
   );
 };
 
-export default FormInvestmentEntrySelect;
+export default FormExternalLoanSelect;

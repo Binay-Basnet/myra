@@ -229,10 +229,10 @@ export const ACCOUNTING: NavType = {
           addRoute: ROUTES.ACCOUNTING_EXTERNAL_LOAN_ADD,
         },
         {
-          label: 'External Loan Accounts',
-          route: ROUTES.ACCOUNTING_EXTERNAL_LOAN_ACCOUNTS_LIST,
+          label: 'Organizations',
+          route: ROUTES.ACCOUNTING_EXTERNAL_LOAN_ORGANIZTION_LIST,
           aclKey: 'ACCOUNTING_SYSTEM_EXTERNAL_LOAN_ACCOUNTS',
-          addRoute: ROUTES.ACCOUNTING_EXTERNAL_LOAN_ACCOUNTS_ADD,
+          addRoute: ROUTES.ACCOUNTING_EXTERNAL_LOAN_ORGANIZATION_ADD,
         },
         {
           label: 'External Loan Payment',
@@ -248,9 +248,9 @@ export const ACCOUNTING: NavType = {
           route: ROUTES.ACCOUNTING_EXTERNAL_LOAN_ADD,
         },
         {
-          label: 'External Loan Accounts',
+          label: 'Organizations',
           aclKey: 'ACCOUNTING_SYSTEM_EXTERNAL_LOAN_ACCOUNTS',
-          route: ROUTES.ACCOUNTING_EXTERNAL_LOAN_ACCOUNTS_ADD,
+          route: ROUTES.ACCOUNTING_EXTERNAL_LOAN_ORGANIZATION_ADD,
         },
         {
           label: 'External Loan Payment',
@@ -270,8 +270,8 @@ export const ACCOUNTING: NavType = {
           aclKey: 'ACCOUNTING_SYSTEM_INVESTMENTS',
         },
         {
-          label: 'Investment Accounts',
-          route: ROUTES.ACCOUNTING_INVESTMENT_ACCOUNTS_ADD,
+          label: 'Organizations',
+          route: ROUTES.ACCOUNTING_INVESTMENT_ORGANIZATION_ADD,
           aclKey: 'ACCOUNTING_SYSTEM_INVESTMENTS_ACCOUNTS',
         },
         {
@@ -288,14 +288,14 @@ export const ACCOUNTING: NavType = {
           aclKey: 'ACCOUNTING_SYSTEM_INVESTMENTS',
         },
         {
-          label: 'Investment Accounts',
-          route: ROUTES.ACCOUNTING_INVESTMENT_ACCOUNTS,
-          addRoute: ROUTES.ACCOUNTING_INVESTMENT_ACCOUNTS_ADD,
+          label: 'Organizations',
+          route: ROUTES.ACCOUNTING_INVESTMENT_ORGANIZTION_LIST,
+          addRoute: ROUTES.ACCOUNTING_INVESTMENT_ORGANIZATION_ADD,
           aclKey: 'ACCOUNTING_SYSTEM_INVESTMENTS_ACCOUNTS',
         },
         {
           label: 'Investment Transaction',
-          route: ROUTES.ACCOUNTING_INVESTMENT_ACCOUNT_TRANSACTIONS_ADD,
+          route: ROUTES.ACCOUNTING_INVESTMENT_ACCOUNT_TRANSACTIONS,
           addRoute: ROUTES.ACCOUNTING_INVESTMENT_ACCOUNT_TRANSACTIONS_ADD,
           aclKey: 'ACCOUNTING_SYSTEM_INVESTMENT_TRANSACTIONS',
         },

@@ -1,7 +1,7 @@
 import {
   DateType,
   useAppSelector,
-  useExternalLoanAccountListQuery,
+  // useExternalLoanAccountListQuery,
   useExternalLoanListQuery,
   useExternalLoanPaymentListQuery,
 } from '@coop/cbs/data-access';
@@ -26,13 +26,13 @@ export const useExternalLoan = () => {
     pagination: getPaginationQuery(),
   });
 
-  const {
-    data: loanAccountData,
-    isLoading: isLoanAccountLoading,
-    refetch: refetchLoanAccount,
-  } = useExternalLoanAccountListQuery({
-    pagination: getPaginationQuery(),
-  });
+  // const {
+  //   data: loanAccountData,
+  //   isLoading: isLoanAccountLoading,
+  //   refetch: refetchLoanAccount,
+  // } = useExternalLoanAccountListQuery({
+  //   pagination: getPaginationQuery(),
+  // });
 
   const externalLoanList = externalLoanData?.accounting?.externalLoan?.loan?.list?.edges?.map(
     (externalLoan) => ({
@@ -54,15 +54,15 @@ export const useExternalLoan = () => {
     })
   );
 
-  const loanAccountList = loanAccountData?.accounting?.externalLoan?.account?.list?.edges?.map(
-    (loanAccount) => ({
-      ...loanAccount?.node,
-      date:
-        preferenceDate === DateType.Bs
-          ? loanAccount?.node?.createdDate?.np
-          : loanAccount?.node?.createdDate?.en,
-    })
-  );
+  // const loanAccountList = loanAccountData?.accounting?.externalLoan?.account?.list?.edges?.map(
+  //   (loanAccount) => ({
+  //     ...loanAccount?.node,
+  //     date:
+  //       preferenceDate === DateType.Bs
+  //         ? loanAccount?.node?.createdDate?.np
+  //         : loanAccount?.node?.createdDate?.en,
+  //   })
+  // );
 
   return {
     externalLoanList,
@@ -71,8 +71,8 @@ export const useExternalLoan = () => {
     loanPaymentList,
     isLoanPaymentLoading,
     refetchLoanPayment,
-    loanAccountList,
-    isLoanAccountLoading,
-    refetchLoanAccount,
+    // loanAccountList,
+    // isLoanAccountLoading,
+    // refetchLoanAccount,
   };
 };

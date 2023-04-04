@@ -1,39 +1,60 @@
+import { FormSection, Text } from '@myra-ui';
+
 import { InstallmentFrequency, LoanRepaymentScheme } from '@coop/cbs/data-access';
-import { FormSwitchTab } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+import { FormNumberInput, FormSelect } from '@coop/shared/form';
 
-export const Installment = () => {
-  const { t } = useTranslation();
+const installmentTypeOptions = [
+  { label: 'EPI', value: LoanRepaymentScheme.Epi },
+  { label: 'EMI', value: LoanRepaymentScheme.Emi },
+  { label: 'Flat', value: LoanRepaymentScheme.Flat },
+  { label: 'Loc', value: LoanRepaymentScheme.Loc },
+];
 
-  const installmentList = [
-    { label: 'EMI', value: LoanRepaymentScheme.Emi },
-    { label: 'EPI', value: LoanRepaymentScheme.Epi },
-    { label: 'Flat', value: LoanRepaymentScheme.Flat },
-  ];
+const installmentFrequencyOptions = [
+  {
+    label: 'Daily',
+    value: InstallmentFrequency.Daily,
+  },
+  {
+    label: 'Weekly',
+    value: InstallmentFrequency.Weekly,
+  },
+  {
+    label: 'Monthly',
+    value: InstallmentFrequency.Monthly,
+  },
+  {
+    label: 'Quaterly',
+    value: InstallmentFrequency.Quarterly,
+  },
+  {
+    label: 'Half Yearly',
+    value: InstallmentFrequency.HalfYearly,
+  },
+  {
+    label: 'Yearly',
+    value: InstallmentFrequency.Yearly,
+  },
+];
 
-  const installmentFreqList = [
-    { label: t['daily'], value: InstallmentFrequency.Daily },
-    { label: t['weekly'], value: InstallmentFrequency.Weekly },
-    { label: t['monthly'], value: InstallmentFrequency.Monthly },
-    { label: t['quaterly'], value: InstallmentFrequency.Quarterly },
-    { label: t['halfYearly'], value: InstallmentFrequency.HalfYearly },
-    { label: t['yearly'], value: InstallmentFrequency.Yearly },
-  ];
+export const Installment = () => (
+  <FormSection>
+    <FormNumberInput
+      name="interestRate"
+      label="Interest Rate"
+      rightElement={
+        <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+          %
+        </Text>
+      }
+    />
 
-  return (
-    <FormSection>
-      <GridItem colSpan={2}>
-        <FormSwitchTab name="installmentType" label="Installment Type" options={installmentList} />
-      </GridItem>
+    <FormSelect name="installmentType" label="Installment Type" options={installmentTypeOptions} />
 
-      <GridItem>
-        <FormSwitchTab
-          name="installmentFrequency"
-          label="Installment Frequency"
-          options={installmentFreqList}
-        />
-      </GridItem>
-    </FormSection>
-  );
-};
+    <FormSelect
+      name="installmentFrequency"
+      label="Installment Frequency"
+      options={installmentFrequencyOptions}
+    />
+  </FormSection>
+);

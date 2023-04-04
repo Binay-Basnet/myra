@@ -12,7 +12,8 @@ import {
   useAppSelector,
   useGetInvestmentEntriesListDataQuery,
 } from '@coop/cbs/data-access';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { ROUTES } from '@coop/cbs/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 const investmentAccountType = {
   [InvestmentType.Share]: 'Share',
@@ -70,7 +71,7 @@ export const InvestmentList = () => {
       },
       {
         header: 'Amount',
-        accessorFn: (row) => row?.node?.amount,
+        accessorFn: (row) => amountConverter(row?.node?.amount ?? 0),
         meta: {
           width: '120px',
         },
@@ -97,7 +98,7 @@ export const InvestmentList = () => {
                 {
                   title: 'Edit',
                   onClick: (row) => {
-                    router.push(`/accounting/investment/edit/${row['id']}`);
+                    router.push(`${ROUTES.ACCOUNTING_INVESTMENT_EDIT}/?id=${row['id']}`);
                   },
                 },
               ]}

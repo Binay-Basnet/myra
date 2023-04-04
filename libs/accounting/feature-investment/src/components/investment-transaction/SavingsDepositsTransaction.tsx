@@ -1,35 +1,31 @@
 import { FormSection, GridItem } from '@myra-ui';
 
-import { InvestmentTransactionMethod, SavingInvestmentType } from '@coop/cbs/data-access';
-import { FormAmountInput, FormDatePicker, FormSelect, FormTextArea } from '@coop/shared/form';
+import { InvestmentTransactionType } from '@coop/cbs/data-access';
+import {
+  FormAmountInput,
+  FormBankSelect,
+  FormDatePicker,
+  FormSelect,
+  FormTextArea,
+} from '@coop/shared/form';
 
 const savingInvestmentTypeOptions = [
-  { label: 'Type 1', value: SavingInvestmentType.Type_1 },
-  { label: 'Type 2', value: SavingInvestmentType.Type_2 },
-  { label: 'Type 3', value: SavingInvestmentType.Type_3 },
-];
-
-const paymentMethodOptions = [
-  { label: 'Cash', value: InvestmentTransactionMethod.Cash },
-  { label: 'Cheque', value: InvestmentTransactionMethod.Cheque },
+  { label: 'Deposit', value: InvestmentTransactionType.Deposit },
+  { label: 'Withdraw', value: InvestmentTransactionType.Withdraw },
 ];
 
 export const SavingsDepositsTransaction = () => (
   <FormSection header="Savings / Deposits">
-    <FormSelect name="saving.type" label="Saving Type" options={savingInvestmentTypeOptions} />
+    <FormSelect name="saving.type" label="Transaction Type" options={savingInvestmentTypeOptions} />
 
     <FormDatePicker name="saving.date" label="Transaction Date" />
 
     <FormAmountInput name="saving.amount" label="Transaction Amount" />
 
-    <FormSelect
-      name="saving.paymentMethod"
-      label="Payment Through"
-      options={paymentMethodOptions}
-    />
+    <FormBankSelect name="bankId" label="Bank" />
 
     <GridItem colSpan={3}>
-      <FormTextArea name="saving.notes" label="Notes" rows={3} />
+      <FormTextArea name="notes" label="Notes" rows={3} />
     </GridItem>
   </FormSection>
 );

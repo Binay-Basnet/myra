@@ -1,35 +1,28 @@
 import { useEffect, useMemo } from 'react';
+import { useRouter } from 'next/router';
 
-import { TablePopover, Text } from '@myra-ui';
+import { TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ExternalLoanType } from '@coop/cbs/data-access';
-import { useTranslation } from '@coop/shared/utils';
+import { ROUTES } from '@coop/cbs/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { useExternalLoan } from '../hooks/useExternalLoan';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureLoanProps {}
 
-interface ILoanTypeProps {
-  loanType: string;
-  t: Record<string, string>;
-}
-
-const loanTypeSwitch = ({ loanType, t }: ILoanTypeProps) => {
-  if (loanType === ExternalLoanType.Collateral) {
-    return <Text>{t['collateral']} </Text>;
-  }
-  if (loanType === ExternalLoanType.LoanAgainstFd) {
-    return <Text>{t['loanAgainstFd']}</Text>;
-  }
-
-  return '-';
+const loanType: Record<ExternalLoanType, string> = {
+  [ExternalLoanType.CooperativeSector]: 'Co-operative Sector',
+  [ExternalLoanType.OtherSector]: 'Other Sector',
 };
 
 export const ExternalLoansList = () => {
   const { t } = useTranslation();
+
+  const router = useRouter();
 
   const { externalLoanList, isExternalLoanLoading, refetchExternalLoan } = useExternalLoan();
 
@@ -56,12 +49,11 @@ export const ExternalLoansList = () => {
           width: '30%',
         },
         cell: (props) =>
-          props?.row?.original &&
-          loanTypeSwitch({ loanType: props?.row?.original?.loanType ?? '', t }),
+          props?.row?.original && loanType[props?.row?.original?.loanType as ExternalLoanType],
       },
       {
         header: 'Amount',
-        accessorFn: (row) => row?.amount,
+        accessorFn: (row) => amountConverter(row?.amount ?? 0),
         meta: {
           width: '30%',
         },
@@ -81,6 +73,11 @@ export const ExternalLoansList = () => {
             <TablePopover
               node={props?.row?.original}
               items={[
+                {
+                  title: 'Edit',
+                  onClick: (node) =>
+                    router.push(`${ROUTES.ACCOUNTING_EXTERNAL_LOAN_EDIT}?id=${node?.id}`),
+                },
                 {
                   title: t['transDetailViewDetail'],
                 },
