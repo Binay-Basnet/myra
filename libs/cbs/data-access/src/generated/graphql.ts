@@ -21350,6 +21350,33 @@ export type GetAccountingOrganizationFormStateDataQuery = {
   };
 };
 
+export type GetAccountingPurchaseEntryListQueryVariables = Exact<{
+  filter?: InputMaybe<AccountingPurchaseFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetAccountingPurchaseEntryListQuery = {
+  accounting: {
+    purchase: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id: string;
+            date: Record<'local' | 'en' | 'np', string>;
+            entryNo: string;
+            supplierId: string;
+            supplierName: string;
+            totalAmount: string;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    };
+  };
+};
+
 export type GetSalesCustomerListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<SalesCustomerFilter>;
@@ -38641,6 +38668,47 @@ export const useGetAccountingOrganizationFormStateDataQuery = <
       GetAccountingOrganizationFormStateDataQuery,
       GetAccountingOrganizationFormStateDataQueryVariables
     >(GetAccountingOrganizationFormStateDataDocument).bind(null, variables),
+    options
+  );
+export const GetAccountingPurchaseEntryListDocument = `
+    query getAccountingPurchaseEntryList($filter: AccountingPurchaseFilter, $pagination: Pagination) {
+  accounting {
+    purchase {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            supplierId
+            supplierName
+            totalAmount
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetAccountingPurchaseEntryListQuery = <
+  TData = GetAccountingPurchaseEntryListQuery,
+  TError = unknown
+>(
+  variables?: GetAccountingPurchaseEntryListQueryVariables,
+  options?: UseQueryOptions<GetAccountingPurchaseEntryListQuery, TError, TData>
+) =>
+  useQuery<GetAccountingPurchaseEntryListQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountingPurchaseEntryList']
+      : ['getAccountingPurchaseEntryList', variables],
+    useAxios<GetAccountingPurchaseEntryListQuery, GetAccountingPurchaseEntryListQueryVariables>(
+      GetAccountingPurchaseEntryListDocument
+    ).bind(null, variables),
     options
   );
 export const GetSalesCustomerListDataDocument = `

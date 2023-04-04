@@ -3,20 +3,7 @@ import { useMemo } from 'react';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetWarehouseListQuery } from '@coop/cbs/data-access';
-import { PopoverComponent } from '@coop/myra/components';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
-
-const popoverTitle = [
-  {
-    title: 'warehouseTableReceived',
-  },
-  {
-    title: 'warehouseTableEditMember',
-  },
-  {
-    title: 'warehouseTableMakeInactive',
-  },
-];
 
 export const WarehouseListTable = () => {
   const { t } = useTranslation();
@@ -46,16 +33,6 @@ export const WarehouseListTable = () => {
         accessorFn: (row) => row?.node?.phoneNumber,
         meta: {
           width: '40%',
-        },
-      },
-
-      {
-        id: '_actions',
-        header: '',
-        accessorKey: 'actions',
-        cell: () => <PopoverComponent items={popoverTitle} />,
-        meta: {
-          width: 's60',
         },
       },
     ],

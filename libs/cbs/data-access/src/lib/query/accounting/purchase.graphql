@@ -1,0 +1,23 @@
+query getAccountingPurchaseEntryList($filter: AccountingPurchaseFilter, $pagination: Pagination) {
+  accounting {
+    purchase {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            supplierId
+            supplierName
+            totalAmount
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
