@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetAccountingPurchaseEntryListQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseListProps {}
@@ -42,7 +42,7 @@ export const AccountingFeaturePurchaseList = () => {
       },
       {
         header: t['accountingPurchaseListTotalAmount'],
-        accessorFn: (row) => row?.node?.totalAmount,
+        accessorFn: (row) => amountConverter(row?.node?.totalAmount || 0),
         meta: {
           width: '30%',
         },
