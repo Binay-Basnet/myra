@@ -1,13 +1,12 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { useGetMemberListQuery } from '@coop/cbs/data-access';
-import { PopoverComponent } from '@coop/myra/components';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { useGetAccountingPurchaseEntryListQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
+import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseListProps {}
@@ -17,71 +16,35 @@ export const AccountingFeaturePurchaseList = () => {
 
   const router = useRouter();
 
-  const { data, isFetching } = useGetMemberListQuery({
+  const { data, isFetching } = useGetAccountingPurchaseEntryListQuery({
     pagination: getPaginationQuery(),
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
-
-  const popoverTitle = [
-    {
-      title: 'memberListTableViewMemberProfile',
-    },
-    {
-      title: 'memberListTableEditMember',
-    },
-    {
-      title: 'memberListTableMakeInactive',
-    },
-  ];
+  const rowData = useMemo(() => data?.accounting?.purchase?.list?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['accountingPurchaseListBillNo'],
-        accessorFn: (row) => row?.node?.id,
+        header: 'Date',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
-        accessorFn: (row) => row?.node?.name?.local,
-        header: t['accountingPurchaseListSupplierName'],
-        cell: (props) => (
-          <Box display="flex" alignItems="center" gap="s12">
-            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
-            <Text
-              fontSize="s3"
-              textTransform="capitalize"
-              textOverflow="ellipsis"
-              overflow="hidden"
-            >
-              {props.getValue() as string}
-            </Text>
-          </Box>
-        ),
+        header: 'Entry No',
+        accessorFn: (row) => row?.node?.entryNo,
+      },
 
-        meta: {
-          width: '60%',
-        },
-      },
       {
-        header: t['accountingPurchaseListTotalAmount'],
-        accessorFn: (row) => row?.node?.contact,
+        header: 'Supplier Name',
+        accessorFn: (row) => row?.node?.supplierName,
         meta: {
           width: '30%',
         },
       },
       {
-        header: t['accountingPurchaseListInvoiceDate'],
-        accessorFn: (row) => row?.node?.dateJoined?.en,
-      },
-      {
-        id: '_actions',
-        header: '',
-        accessorKey: 'actions',
-        cell: (cell) => (
-          <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
-        ),
+        header: t['accountingPurchaseListTotalAmount'],
+        accessorFn: (row) => amountConverter(row?.node?.totalAmount || 0),
         meta: {
-          width: '60px',
+          width: '30%',
         },
       },
     ],
@@ -102,8 +65,8 @@ export const AccountingFeaturePurchaseList = () => {
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          total: data?.accounting?.purchase?.list?.totalCount ?? 'Many',
+          pageInfo: data?.accounting?.purchase?.list?.pageInfo,
         }}
       />
     </>
