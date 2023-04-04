@@ -36,7 +36,7 @@ export const DepositDetailPage = () => {
           bg="gray.0"
           w="320px"
           position="fixed"
-          h="calc(100vh - 110px)"
+          h="calc(100vh - 170px)"
           borderRight="1px"
           borderRightColor="border.layout"
         >

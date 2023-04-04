@@ -133,10 +133,8 @@ export const WithdrawSlipBookList = () => {
   )?.node;
 
   return (
-    <Box display="flex" flexDir="column">
-      <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader heading={`Withdraw Slip Book - ${featureCode.withdrawSlipBookList}`} />
-      </Box>
+    <>
+      <PageHeader heading={`Withdraw Slip Book - ${featureCode.withdrawSlipBookList}`} />
 
       <Table
         isLoading={isFetching}
@@ -211,6 +209,6 @@ export const WithdrawSlipBookList = () => {
           <DetailCardContent title="Remarks" subtitle={selectedRequest?.remarks} />
         </Box>
       </ApproveDeclineModal>
-    </Box>
+    </>
   );
 };

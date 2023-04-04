@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { Box, Text } from '@myra-ui';
+import { Box, Scrollable, Text } from '@myra-ui';
 
 import { useGetJournalVoucherDetailQuery } from '@coop/cbs/data-access';
 
@@ -42,29 +42,33 @@ export const JournalVoucerDetailPage = () => {
 
   return (
     <Box bg="gray.100">
-      <Box
-        bg="gray.0"
-        w="320px"
-        position="fixed"
-        h="calc(100vh - 110px)"
-        borderRight="1px"
-        borderRightColor="border.layout"
-      >
-        <SideBar sidebarData={sidebarDetailData} />
-      </Box>
+      <Box display="flex">
+        <Box
+          bg="gray.0"
+          w="320px"
+          position="fixed"
+          h="calc(100vh - 170px)"
+          borderRight="1px"
+          borderRightColor="border.layout"
+        >
+          <SideBar sidebarData={sidebarDetailData} />
+        </Box>
 
-      <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16" minH="100vh">
-        <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
-          Overview
-        </Text>
-        <TransactionDetails detailData={detailData} />
-        {voucherData?.note && <Note note={voucherData?.note} />}
-        <OtherDetails otherData={otherData} />
-        <GlTransaction
-          data={voucherData?.glTransaction}
-          totalDebit={voucherData?.totalDebit ?? '-'}
-          totalCredit={voucherData?.totalCredit ?? '-'}
-        />
+        <Scrollable detailPage>
+          <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16" minH="100vh">
+            <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
+              Overview
+            </Text>
+            <TransactionDetails detailData={detailData} />
+            {voucherData?.note && <Note note={voucherData?.note} />}
+            <OtherDetails otherData={otherData} />
+            <GlTransaction
+              data={voucherData?.glTransaction}
+              totalDebit={voucherData?.totalDebit ?? '-'}
+              totalCredit={voucherData?.totalCredit ?? '-'}
+            />
+          </Box>
+        </Scrollable>
       </Box>
     </Box>
   );

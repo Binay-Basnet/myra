@@ -140,10 +140,8 @@ export const ChequeBookRequestList = () => {
   )?.node;
 
   return (
-    <Box display="flex" flexDir="column">
-      <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader heading={`Withdraw Slip Requests - ${featureCode?.withdrawSlipRequestList}`} />
-      </Box>
+    <>
+      <PageHeader heading={`Withdraw Slip Requests - ${featureCode?.withdrawSlipRequestList}`} />
 
       <Table
         isLoading={isFetching}
@@ -218,6 +216,6 @@ export const ChequeBookRequestList = () => {
           <DetailCardContent title="Remarks" subtitle={selectedRequest?.remarks} />
         </Box>
       </ApproveDeclineModal>
-    </Box>
+    </>
   );
 };

@@ -121,12 +121,10 @@ export const BlockWithdrawSlipRequestsList = () => {
   )?.node;
 
   return (
-    <Box display="flex" flexDir="column">
-      <Box position="sticky" top="0" zIndex={3}>
-        <PageHeader
-          heading={`Block Withdraw Slip Request - ${featureCode.blockWithdrawSlipRequestList}`}
-        />
-      </Box>
+    <>
+      <PageHeader
+        heading={`Block Withdraw Slip Request - ${featureCode.blockWithdrawSlipRequestList}`}
+      />
 
       <Table
         data={blockChequeRequests}
@@ -183,6 +181,6 @@ export const BlockWithdrawSlipRequestsList = () => {
           <DetailCardContent title="Reason" subtitle={selectedRequest?.reason} />
         </Box>
       </ApproveDeclineModal>
-    </Box>
+    </>
   );
 };
