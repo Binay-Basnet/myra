@@ -16880,6 +16880,27 @@ export type SetAccountingOrganizationDataMutation = {
   };
 };
 
+export type SetPurchaseEntryMutationVariables = Exact<{
+  data: PurchaseEntryInput;
+}>;
+
+export type SetPurchaseEntryMutation = {
+  accounting: {
+    purchase: {
+      purchaseEntry?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
 export type SetSalesCustomerDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: SalesCustomerInput;
@@ -22995,6 +23016,8 @@ export type GetInventoryItemsListQuery = {
             costPrice: string;
             sellingPrice: string;
             itemQuantity: string;
+            taxId?: string | null;
+            taxValue?: number | null;
           } | null;
         } | null> | null;
         pageInfo?: PaginationFragment | null;
@@ -31817,6 +31840,33 @@ export const useSetAccountingOrganizationDataMutation = <TError = unknown, TCont
     useAxios<SetAccountingOrganizationDataMutation, SetAccountingOrganizationDataMutationVariables>(
       SetAccountingOrganizationDataDocument
     ),
+    options
+  );
+export const SetPurchaseEntryDocument = `
+    mutation setPurchaseEntry($data: PurchaseEntryInput!) {
+  accounting {
+    purchase {
+      purchaseEntry(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetPurchaseEntryMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetPurchaseEntryMutation,
+    TError,
+    SetPurchaseEntryMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetPurchaseEntryMutation, TError, SetPurchaseEntryMutationVariables, TContext>(
+    ['setPurchaseEntry'],
+    useAxios<SetPurchaseEntryMutation, SetPurchaseEntryMutationVariables>(SetPurchaseEntryDocument),
     options
   );
 export const SetSalesCustomerDataDocument = `
@@ -40700,6 +40750,8 @@ export const GetInventoryItemsListDocument = `
             costPrice
             sellingPrice
             itemQuantity
+            taxId
+            taxValue
           }
           cursor
         }

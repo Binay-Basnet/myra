@@ -12,6 +12,8 @@ query getInventoryItemsList($filter: InvItemsDataFilter, $pagination: Pagination
             costPrice
             sellingPrice
             itemQuantity
+            taxId
+            taxValue
           }
           cursor
         }

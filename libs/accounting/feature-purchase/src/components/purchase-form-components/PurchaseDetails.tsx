@@ -1,33 +1,44 @@
-import { BoxContainer, InputGroupContainer } from '@coop/accounting/ui-components';
-import { FormInput } from '@coop/shared/form';
-import { GridItem } from '@myra-ui';
+import { useMemo } from 'react';
+
+import { FormSection, GridItem } from '@myra-ui';
+
+import { useGetSuppliersListQuery } from '@coop/cbs/data-access';
+import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const PurchaseDetails = () => {
   const { t } = useTranslation();
+  const { data: suppliersDetails } = useGetSuppliersListQuery({
+    pagination: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  const inventoryItemsData = suppliersDetails?.inventory?.suppliers?.list?.edges;
+  const supplierSearchOptions = useMemo(
+    () =>
+      inventoryItemsData?.map((account) => ({
+        label: account?.node?.name as string,
+        value: account?.node?.id as string,
+      })),
+    [inventoryItemsData]
+  );
   return (
-    <BoxContainer>
-      <InputGroupContainer>
-        <GridItem colSpan={2}>
-          <FormInput
-            name="supplierName"
-            type="text"
-            label={t['accountingPurchaseAddSupplierName']}
-            __placeholder={t['accountingPurchaseAddSupplierName']}
-          />
-        </GridItem>
+    <FormSection>
+      <GridItem colSpan={2}>
+        <FormSelect name="supplier" label="Select Supplier Name" options={supplierSearchOptions} />
+      </GridItem>
 
-        <FormInput
-          name="supplierInvoiceReference"
-          type="text"
-          label={t['accountingPurchaseAddSupplierInvoiceReference']}
-          __placeholder={t['accountingPurchaseAddSupplierInvoiceReference']}
-        />
+      <FormDatePicker name="invoiceDate" label={t['accountingPurchaseAddInvoiceDate']} />
 
-        <FormInput name="invoiceDate" type="date" label={t['accountingPurchaseAddInvoiceDate']} />
+      <FormDatePicker name="dueDate" label={t['accountingPurchaseAddDueDate']} />
 
-        <FormInput name="dueDate" type="date" label={t['accountingPurchaseAddDueDate']} />
-      </InputGroupContainer>
-    </BoxContainer>
+      <FormInput
+        name="invoiceReference"
+        type="text"
+        label={t['accountingPurchaseAddSupplierInvoiceReference']}
+      />
+    </FormSection>
   );
 };
