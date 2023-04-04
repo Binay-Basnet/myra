@@ -20,6 +20,8 @@ import {
 
 interface IAccountDetailsProps {
   pathbarOptions?: { label: string; handler: () => void }[];
+  pathbarCommonOptions?: { label: string; handler: () => void }[];
+  pathbarMandatorySavingOptions?: { label: string; handler: () => void }[];
   isNomineeAccountModalOpen?: boolean;
   handleNomineeModalClose?: () => void;
   isTenureModalOpen?: boolean;
@@ -32,6 +34,7 @@ interface IAccountDetailsProps {
 
 export const AccountDetails = ({
   pathbarOptions,
+  pathbarCommonOptions,
   handleNomineeModalClose,
   isNomineeAccountModalOpen,
   handleTenureModalClose,
@@ -40,6 +43,7 @@ export const AccountDetails = ({
   isUpdateSignatureModalOpen,
   isUpdateInstallmentAmountModalOpen,
   handleUpdateInstallmentAmountModalClose,
+  pathbarMandatorySavingOptions,
 }: IAccountDetailsProps) => {
   const router = useRouter();
 
@@ -51,10 +55,14 @@ export const AccountDetails = ({
       <AccountDetailsPathBar
         title="Savings Account List"
         options={
+          // eslint-disable-next-line no-nested-ternary
           accountDetails?.accountType === NatureOfDepositProduct?.TermSavingOrFd ||
           accountDetails?.accountType === NatureOfDepositProduct?.RecurringSaving
             ? pathbarOptions
-            : undefined
+            : accountDetails?.accountType === NatureOfDepositProduct?.Saving &&
+              accountDetails?.product?.isMandatorySaving
+            ? pathbarMandatorySavingOptions
+            : pathbarCommonOptions
         }
       />
       <Box display="flex">

@@ -43,6 +43,16 @@ const AccountListPage = () => {
           handler: () => setUpdateInstallmentAmountModalOpen(true),
         },
       ]}
+      pathbarCommonOptions={[
+        { label: 'Update Signature', handler: () => setUpdateSinatureModalOpen(true) },
+      ]}
+      pathbarMandatorySavingOptions={[
+        { label: 'Update Signature', handler: () => setUpdateSinatureModalOpen(true) },
+        {
+          label: 'Update Installment Amount',
+          handler: () => setUpdateInstallmentAmountModalOpen(true),
+        },
+      ]}
     />
   );
 };
