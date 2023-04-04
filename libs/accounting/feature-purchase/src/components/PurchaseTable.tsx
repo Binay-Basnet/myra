@@ -105,10 +105,7 @@ export const PurchaseTable = () => {
       header: t['accountingPurchaseTableAmount'],
 
       accessorFn: (row: PurchaseTableType) =>
-        String(
-          Number(row.quantity || 0) * Number(row.rate || 0) +
-            (Number(row.quantity || 0) * Number(row.rate || 0) * Number(row.tax || 0)) / 100
-        ),
+        String(Number(row.quantity || 0) * Number(row.rate || 0)),
     },
     {
       accessor: 'description',

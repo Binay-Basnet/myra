@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { asyncToast, Box, Container, FormFooter, FormHeader, GridItem, Text } from '@myra-ui';
 
-import { useSetPurchaseEntryMutation } from '@coop/cbs/data-access';
+import { PurchaseItemDetails, useSetPurchaseEntryMutation } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormNumberInput, FormTextArea } from '@coop/shared/form';
@@ -15,6 +16,7 @@ import { PurchaseDetails, PurchaseTable } from '../components';
 export interface AccountingFeaturePurchaseAddProps {}
 
 export const AccountingFeaturePurchaseAdd = () => {
+  const [grandTotal, setGrandTotal] = useState(0);
   const { t } = useTranslation();
   const router = useRouter();
   const { mutateAsync: AddItems } = useSetPurchaseEntryMutation();
@@ -40,6 +42,18 @@ export const AccountingFeaturePurchaseAdd = () => {
   };
 
   const methods = useForm();
+  const { watch } = methods;
+  const itemDetails = watch('itemDetails') as PurchaseItemDetails[];
+
+  const totalAmount = itemDetails?.reduce((a, b) => a + Number(b?.amount), 0);
+  const discount = watch('discount');
+  const taxableTotal = Number(totalAmount || '0') - Number(discount || '0');
+  const totalVat = itemDetails?.reduce((a, b) => a + (Number(b?.amount) * Number(b?.tax)) / 100, 0);
+
+  useEffect(() => {
+    const grandTot = Number(taxableTotal) + Number(totalVat);
+    setGrandTotal(grandTot);
+  }, [itemDetails, discount]);
 
   return (
     <>
@@ -64,23 +78,12 @@ export const AccountingFeaturePurchaseAdd = () => {
                       __placeholder={t['accountingPurchaseAddNote']}
                       rows={5}
                     />
-                    <FieldCardComponents rows="repeat(5,1fr)">
-                      <GridItem display="flex" justifyContent="space-between">
-                        <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
-                          {t['accountingPurchaseAddSubTotal']}
+                    <Box display="flex" flexDirection="column" gap="s24">
+                      <Box display="flex" justifyContent="space-between">
+                        <Text fontWeight="500" fontSize="r1" display="flex" alignItems="center">
+                          Discount{' '}
                         </Text>
-
-                        <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
-                          2,000.00
-                        </Text>
-                      </GridItem>
-
-                      <GridItem display="flex" justifyContent="space-between">
-                        <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
-                          {t['accountingPurchaseAddDiscount']}
-                        </Text>
-
-                        <Box width="200px">
+                        <Box w="200px">
                           <FormNumberInput
                             width="100%"
                             name="discount"
@@ -89,37 +92,57 @@ export const AccountingFeaturePurchaseAdd = () => {
                             bg="gray.0"
                           />
                         </Box>
-                      </GridItem>
+                      </Box>
+                      <FieldCardComponents rows="repeat(5,1fr)">
+                        <GridItem display="flex" justifyContent="space-between">
+                          <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
+                            {t['accountingPurchaseAddSubTotal']}
+                          </Text>
 
-                      <GridItem display="flex" justifyContent="space-between">
-                        <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
-                          {t['accountingPurchaseAddTaxableTotal']}
-                        </Text>
-                        <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
-                          5,000.00
-                        </Text>
-                      </GridItem>
+                          <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
+                            {totalAmount}
+                          </Text>
+                        </GridItem>
 
-                      <GridItem display="flex" justifyContent="space-between">
-                        <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
-                          {t['accountingPurchaseAddVAT']}
-                        </Text>
+                        <GridItem display="flex" justifyContent="space-between">
+                          <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
+                            {t['accountingPurchaseAddDiscount']}
+                          </Text>
+                          <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
+                            {discount ?? '0'}
+                          </Text>
+                        </GridItem>
 
-                        <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
-                          2000
-                        </Text>
-                      </GridItem>
+                        <GridItem display="flex" justifyContent="space-between">
+                          <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
+                            {t['accountingPurchaseAddTaxableTotal']}
+                          </Text>
+                          <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
+                            {taxableTotal}
+                          </Text>
+                        </GridItem>
 
-                      <GridItem display="flex" justifyContent="space-between">
-                        <Text color="neutralColorLight.Gray-80" fontWeight="500" fontSize="s3">
-                          {t['accountingPurchaseAddGrandTotal']}
-                        </Text>
+                        <GridItem display="flex" justifyContent="space-between">
+                          <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
+                            {t['accountingPurchaseAddVAT']}
+                          </Text>
 
-                        <Text color="neutralColorLight.Gray-70" fontWeight="Medium" fontSize="r1">
-                          12,000
-                        </Text>
-                      </GridItem>
-                    </FieldCardComponents>
+                          <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
+                            {totalVat}
+                          </Text>
+                        </GridItem>
+
+                        <GridItem display="flex" justifyContent="space-between">
+                          <Text color="neutralColorLight.Gray-80" fontWeight="500" fontSize="s3">
+                            {t['accountingPurchaseAddGrandTotal']}
+                          </Text>
+
+                          <Text color="neutralColorLight.Gray-70" fontWeight="Medium" fontSize="r1">
+                            {grandTotal}
+                          </Text>
+                        </GridItem>
+                      </FieldCardComponents>
+                    </Box>
                   </Box>
                 </Box>
                 {/* <TDS /> */}
