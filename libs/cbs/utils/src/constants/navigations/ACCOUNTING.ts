@@ -26,7 +26,7 @@ export const ACCOUNTING: NavType = {
         {
           label: 'accountingSalesCustomers',
           aclKey: 'ACCOUNTING_SYSTEM_SALES_CUSTOMER_PAYMENT',
-          route: ROUTES.ACCOUNTING_SALES_CUSTOMER_PAYMENT_ADD,
+          route: ROUTES.ACCOUNTING_SALES_CUSTOMER_ADD,
         },
       ],
       pages: [
@@ -52,7 +52,7 @@ export const ACCOUNTING: NavType = {
           label: 'accountingSalesCustomers',
           route: ROUTES.ACCOUNTING_SALES_CUSTOMER_PAYMENT,
           aclKey: 'ACCOUNTING_SYSTEM_SALES_CUSTOMER_PAYMENT',
-          addRoute: ROUTES.ACCOUNTING_SALES_CUSTOMER_PAYMENT_ADD,
+          addRoute: ROUTES.ACCOUNTING_SALES_CUSTOMER_ADD,
         },
       ],
     },

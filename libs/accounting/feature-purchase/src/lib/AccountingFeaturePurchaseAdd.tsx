@@ -1,41 +1,45 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
-import { Box, Container, FormFooter, FormHeader, GridItem, Text } from '@myra-ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader, GridItem, Text } from '@myra-ui';
 
-import { DividerContainer } from '@coop/accounting/ui-components';
+import { useSetPurchaseEntryMutation } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormNumberInput, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
-import { PurchaseDetails, PurchaseTable, TDS } from '../components';
+import { PurchaseDetails, PurchaseTable } from '../components';
 
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseAddProps {}
 
 export const AccountingFeaturePurchaseAdd = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+  const { mutateAsync: AddItems } = useSetPurchaseEntryMutation();
+  const handleSave = () => {
+    const values = methods.getValues();
 
-  const methods = useForm({
-    defaultValues: {
-      data: [
-        {
-          product_id: 'm003',
-          quantity: 45,
-          rate: 45,
-          tax: 45,
-          amount: 23,
+    asyncToast({
+      id: 'account-open-add-minor',
+      promise: AddItems({
+        data: {
+          ...values,
         },
-        {
-          product_id: 'm004',
-          quantity: 2,
-          rate: 4,
-          tax: 4,
-          amount: 34212,
-        },
-      ],
-      addToInventory: '',
-    },
-  });
+      }),
+      msgs: {
+        loading: 'Adding New Purchase',
+        success: 'New Purchase Added',
+      },
+      onSuccess: () => {
+        router.push(ROUTES.INVENTORY_ITEMS);
+        // router.push('/accounting/investment/investment-transaction/list');
+      },
+    });
+  };
+
+  const methods = useForm();
 
   return (
     <>
@@ -45,18 +49,17 @@ export const AccountingFeaturePurchaseAdd = () => {
           <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
             <FormHeader title="New Purchase Entry" />
           </Box>
-          <Box minH="calc(100vh - 230px)" bg="white" p="s20">
+          <Box minH="calc(100vh - 230px)">
             <FormProvider {...methods}>
               <form>
-                <DividerContainer>
-                  <PurchaseDetails />
-                  {/* <AddToInventory /> */}
+                <PurchaseDetails />
+                {/* <AddToInventory /> */}
 
-                  <PurchaseTable />
-
+                <PurchaseTable />
+                <Box pt="s16" px="s16">
                   <Box display="grid" gap="s32" gridTemplateColumns="repeat(2,1fr)">
                     <FormTextArea
-                      name="note"
+                      name="notes"
                       label={t['accountingPurchaseAddNotes']}
                       __placeholder={t['accountingPurchaseAddNote']}
                       rows={5}
@@ -80,7 +83,7 @@ export const AccountingFeaturePurchaseAdd = () => {
                         <Box width="200px">
                           <FormNumberInput
                             width="100%"
-                            name="adminFee"
+                            name="discount"
                             label=""
                             textAlign="right"
                             bg="gray.0"
@@ -118,8 +121,8 @@ export const AccountingFeaturePurchaseAdd = () => {
                       </GridItem>
                     </FieldCardComponents>
                   </Box>
-                  <TDS />
-                </DividerContainer>
+                </Box>
+                {/* <TDS /> */}
               </form>
             </FormProvider>
           </Box>
@@ -128,7 +131,7 @@ export const AccountingFeaturePurchaseAdd = () => {
         <Box position="sticky" bottom={0}>
           <Box>
             {' '}
-            <FormFooter mainButtonLabel={t['submit']} />{' '}
+            <FormFooter mainButtonLabel={t['submit']} mainButtonHandler={handleSave} />{' '}
           </Box>
         </Box>
       </Container>
