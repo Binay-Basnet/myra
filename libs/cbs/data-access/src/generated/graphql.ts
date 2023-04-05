@@ -16035,6 +16035,12 @@ export type TransferInput = {
   withdrawWith?: InputMaybe<WithdrawWith>;
 };
 
+export type TransferItemDetails = {
+  description?: InputMaybe<Scalars['String']>;
+  itemId?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['String']>;
+};
+
 export const TransferRequestAction = {
   Approve: 'APPROVE',
   Decline: 'DECLINE',
@@ -16479,14 +16485,25 @@ export type WarehouseInfo = {
 
 export type WarehouseMutation = {
   add?: Maybe<AddWarehouseResult>;
+  transfer?: Maybe<WarehouseTransferResult>;
 };
 
 export type WarehouseMutationAddArgs = {
   data?: InputMaybe<AddWarehouseInput>;
 };
 
+export type WarehouseMutationTransferArgs = {
+  data?: InputMaybe<WarehouseTransferInput>;
+};
+
 export type WarehouseQuery = {
+  listTransfers?: Maybe<WarehouseTransferConnection>;
   listWarehouses?: Maybe<WarehouseConnection>;
+};
+
+export type WarehouseQueryListTransfersArgs = {
+  filter?: InputMaybe<WarehouseTransferFilter>;
+  paginate: Pagination;
 };
 
 export type WarehouseQueryListWarehousesArgs = {
@@ -16494,6 +16511,58 @@ export type WarehouseQueryListWarehousesArgs = {
   paginate: Pagination;
 };
 
+export type WarehouseTransfer = {
+  date: Scalars['Localized'];
+  destinationWarehouseId: Scalars['String'];
+  destinationWarehouseName: Scalars['String'];
+  entryNo: Scalars['String'];
+  id: Scalars['String'];
+  reference: Scalars['String'];
+  sourceWarehouseId: Scalars['String'];
+  sourceWarehouseName: Scalars['String'];
+  status: WarehouseTransferStatus;
+};
+
+export type WarehouseTransferConnection = {
+  edges?: Maybe<Array<Maybe<WarehouseTransferEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type WarehouseTransferEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<WarehouseTransfer>;
+};
+
+export type WarehouseTransferFilter = {
+  id?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type WarehouseTransferInput = {
+  authorizedReceiver?: InputMaybe<Scalars['String']>;
+  authorizedSender?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
+  destinationWarehouse?: InputMaybe<Scalars['String']>;
+  itemDetails?: InputMaybe<Array<InputMaybe<TransferItemDetails>>>;
+  note?: InputMaybe<Scalars['String']>;
+  referenceNumber?: InputMaybe<Scalars['String']>;
+  sourceWarehouse?: InputMaybe<Scalars['String']>;
+};
+
+export type WarehouseTransferResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<WarehouseQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export const WarehouseTransferStatus = {
+  Completed: 'COMPLETED',
+  OnTransit: 'ON_TRANSIT',
+} as const;
+
+export type WarehouseTransferStatus =
+  typeof WarehouseTransferStatus[keyof typeof WarehouseTransferStatus];
 export const Week = {
   Friday: 'FRIDAY',
   Monday: 'MONDAY',
@@ -17787,6 +17856,27 @@ export type SetSuppliersAddMutation = {
   inventory: {
     suppliers?: {
       add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetWareHouseTransferMutationVariables = Exact<{
+  data?: InputMaybe<WarehouseTransferInput>;
+}>;
+
+export type SetWareHouseTransferMutation = {
+  inventory: {
+    warehouse?: {
+      transfer?: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -23247,6 +23337,36 @@ export type GetInventoryRegisterListQuery = {
         } | null;
       } | null> | null;
       pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
+export type GetInventoryWarehouseTransferQueryVariables = Exact<{
+  filter?: InputMaybe<WarehouseTransferFilter>;
+  pagination: Pagination;
+}>;
+
+export type GetInventoryWarehouseTransferQuery = {
+  inventory: {
+    warehouse?: {
+      listTransfers?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id: string;
+            date: Record<'local' | 'en' | 'np', string>;
+            entryNo: string;
+            reference: string;
+            sourceWarehouseId: string;
+            sourceWarehouseName: string;
+            destinationWarehouseId: string;
+            destinationWarehouseName: string;
+            status: WarehouseTransferStatus;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
     } | null;
   };
 };
@@ -33389,6 +33509,40 @@ export const useSetSuppliersAddMutation = <TError = unknown, TContext = unknown>
     useAxios<SetSuppliersAddMutation, SetSuppliersAddMutationVariables>(SetSuppliersAddDocument),
     options
   );
+export const SetWareHouseTransferDocument = `
+    mutation setWareHouseTransfer($data: WarehouseTransferInput) {
+  inventory {
+    warehouse {
+      transfer(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetWareHouseTransferMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetWareHouseTransferMutation,
+    TError,
+    SetWareHouseTransferMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetWareHouseTransferMutation,
+    TError,
+    SetWareHouseTransferMutationVariables,
+    TContext
+  >(
+    ['setWareHouseTransfer'],
+    useAxios<SetWareHouseTransferMutation, SetWareHouseTransferMutationVariables>(
+      SetWareHouseTransferDocument
+    ),
+    options
+  );
 export const SendLoanApplicationForApprovalDocument = `
     mutation sendLoanApplicationForApproval($id: ID!, $data: LoanAccountInput!) {
   loanAccount {
@@ -41144,6 +41298,48 @@ export const useGetInventoryRegisterListQuery = <
       : ['getInventoryRegisterList', variables],
     useAxios<GetInventoryRegisterListQuery, GetInventoryRegisterListQueryVariables>(
       GetInventoryRegisterListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryWarehouseTransferDocument = `
+    query getInventoryWarehouseTransfer($filter: WarehouseTransferFilter, $pagination: Pagination!) {
+  inventory {
+    warehouse {
+      listTransfers(filter: $filter, paginate: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+            sourceWarehouseId
+            sourceWarehouseName
+            destinationWarehouseId
+            destinationWarehouseName
+            status
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetInventoryWarehouseTransferQuery = <
+  TData = GetInventoryWarehouseTransferQuery,
+  TError = unknown
+>(
+  variables: GetInventoryWarehouseTransferQueryVariables,
+  options?: UseQueryOptions<GetInventoryWarehouseTransferQuery, TError, TData>
+) =>
+  useQuery<GetInventoryWarehouseTransferQuery, TError, TData>(
+    ['getInventoryWarehouseTransfer', variables],
+    useAxios<GetInventoryWarehouseTransferQuery, GetInventoryWarehouseTransferQueryVariables>(
+      GetInventoryWarehouseTransferDocument
     ).bind(null, variables),
     options
   );

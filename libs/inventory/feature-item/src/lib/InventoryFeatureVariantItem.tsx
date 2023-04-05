@@ -13,6 +13,8 @@ import { InventoryItemVariantForm } from '../component/form/InventoryItemVariant
 export const InventoryFeatureItemVariant = () => {
   const router = useRouter();
   const methods = useForm({});
+  const isAccounting = router?.pathname?.includes('accounting');
+
   const { mutateAsync: AddItemsVariant } = useSetItemsMutation();
   // const valuesTest = methods.getValues();
 
@@ -33,7 +35,7 @@ export const InventoryFeatureItemVariant = () => {
         success: 'Item Added',
       },
       onSuccess: () => {
-        router.push(ROUTES.INVENTORY_ITEMS);
+        router.push(isAccounting ? ROUTES.ACCOUNTING_INVENTORY_ITEMS_LIST : ROUTES.INVENTORY_ITEMS);
         // router.push('/accounting/investment/investment-transaction/list');
       },
     });
@@ -42,7 +44,7 @@ export const InventoryFeatureItemVariant = () => {
   // const router = useRouter();
 
   const handleButton = () => {
-    router.push(ROUTES.INVENTORY_ITEMS_ADD);
+    router.push(isAccounting ? ROUTES.ACCOUNTING_INVENTORY_ITEMS_ADD : ROUTES.INVENTORY_ITEMS_ADD);
   };
   return (
     <Container minW="container.lg" height="fit-content" bg="gray.0">

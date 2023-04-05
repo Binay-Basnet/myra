@@ -165,3 +165,30 @@ query getInventoryRegisterList($filter: InventoryRegisterFilter, $pagination: Pa
     }
   }
 }
+query getInventoryWarehouseTransfer($filter: WarehouseTransferFilter, $pagination: Pagination!) {
+  inventory {
+    warehouse {
+      listTransfers(filter: $filter, paginate: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+            sourceWarehouseId
+            sourceWarehouseName
+            destinationWarehouseId
+            destinationWarehouseName
+            status
+          }
+          cursor
+        }
+
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
