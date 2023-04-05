@@ -306,6 +306,7 @@ export type GetCsvDataQueryVariables = Exact<{
 export type GetCsvDataQuery = {
   protectedQuery: {
     getFileData: {
+      totalPages: string;
       data?: Array<{ row?: string | null; data?: Record<string, string> | null } | null> | null;
     };
   };
@@ -556,6 +557,7 @@ export const GetCsvDataDocument = `
         row
         data
       }
+      totalPages
     }
   }
 }

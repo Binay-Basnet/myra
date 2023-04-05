@@ -7269,12 +7269,52 @@ export type InventoryMutation = {
 export type InventoryQuery = {
   items?: Maybe<InvItemsQuery>;
   itemsGroup?: Maybe<InvItemsGroupQuery>;
+  register?: Maybe<InventoryRegisterConnection>;
   suppliers?: Maybe<InvSuppliersQuery>;
   unitOfMeasure?: Maybe<InvUnitOfMeasureQuery>;
   vendors?: Maybe<InvVendorsQuery>;
   warehouse?: Maybe<WarehouseQuery>;
 };
 
+export type InventoryQueryRegisterArgs = {
+  filter?: InputMaybe<InventoryRegisterFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type InventoryRegister = {
+  id: Scalars['String'];
+  itemCode: Scalars['String'];
+  itemId: Scalars['String'];
+  itemName: Scalars['String'];
+  quantity: Scalars['String'];
+  totalCost: Scalars['String'];
+  transaction_type: InventoryTransactionType;
+  unitPrice: Scalars['String'];
+};
+
+export type InventoryRegisterConnection = {
+  edges?: Maybe<Array<Maybe<InventoryRegisterEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type InventoryRegisterEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<InventoryRegister>;
+};
+
+export type InventoryRegisterFilter = {
+  id?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export const InventoryTransactionType = {
+  Purchase: 'PURCHASE',
+  Sales: 'SALES',
+} as const;
+
+export type InventoryTransactionType =
+  typeof InventoryTransactionType[keyof typeof InventoryTransactionType];
 export type InvestmentAccountInput = {
   address: KymAddressInput;
   name: Scalars['String'];
@@ -13283,6 +13323,12 @@ export type PrintPreferenceResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export const PrintType = {
+  CustomerCopy: 'CUSTOMER_COPY',
+  OfficeVoucher: 'OFFICE_VOUCHER',
+} as const;
+
+export type PrintType = typeof PrintType[keyof typeof PrintType];
 export type ProductActivateResult = {
   error?: Maybe<MutationError>;
   recordId: Scalars['ID'];
@@ -14499,7 +14545,13 @@ export type SettingsQuery = {
   declaration: DeclarationQuery;
   form?: Maybe<FormSettingQuery>;
   general?: Maybe<GeneralSettingsQuery>;
+  getPrintCount: Scalars['Int'];
   myraUser?: Maybe<MyraUserQuery>;
+};
+
+export type SettingsQueryGetPrintCountArgs = {
+  objectId: Scalars['ID'];
+  type: PrintType;
 };
 
 export type SetupMutation = {

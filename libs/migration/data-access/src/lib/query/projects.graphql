@@ -55,6 +55,7 @@ query getCSVData($input: FileDetails!) {
         row
         data
       }
+      totalPages
     }
   }
 }

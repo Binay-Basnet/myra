@@ -6,26 +6,33 @@ import { differenceWith, isEmpty, isEqual, omit } from 'lodash';
 
 import { Box, Button, Loader, Text, toast } from '@myra-ui';
 
+import MigrationPaginationComponent from './migration-pagination-component';
+
 export const MigrationFileComponent = () => {
   const router = useRouter();
   const [changedRows, setChangedRows] = useState([]);
 
-  const { data, refetch, isLoading } = useGetCsvDataQuery({
-    input: {
-      fileName: router?.query['filename'] as string,
-      dbName: router?.query['name'] as string,
-      folderName:
-        router?.query['csvType'] !== 'transformedCSV'
-          ? ([router?.query['csvType']] as string[])
-          : ([
-              router?.query['csvType'],
-              router?.query['folderName'],
-              router?.query['subfolder'],
-            ] as unknown as string[]),
-      pageNo: 1 as unknown as string,
-      data: null,
+  const { data, refetch, isLoading } = useGetCsvDataQuery(
+    {
+      input: {
+        fileName: router?.query['filename'] as string,
+        dbName: router?.query['name'] as string,
+        folderName:
+          router?.query['csvType'] !== 'transformedCSV'
+            ? ([router?.query['csvType']] as string[])
+            : ([
+                router?.query['csvType'],
+                router?.query['folderName'],
+                router?.query['subfolder'],
+              ] as unknown as string[]),
+        pageNo: (router?.query['pageNo'] as unknown as string) || (1 as unknown as string),
+        data: null,
+      },
     },
-  });
+    {
+      enabled: router?.query?.['pageNo'] !== 'undefined',
+    }
+  );
 
   const tableData = data?.protectedQuery?.getFileData?.data || [];
   const tableDataArray =
@@ -130,13 +137,18 @@ export const MigrationFileComponent = () => {
                 No data in csv
               </Text>
             ) : (
-              <Spreadsheet
-                data={csvData}
-                columnLabels={columnLabel}
-                // hideRowIndicators
-                onChange={setCsvData}
-                rowLabels={rowLabel}
-              />
+              <>
+                <MigrationPaginationComponent
+                  totalPages={data?.protectedQuery?.getFileData?.totalPages}
+                />
+                <Spreadsheet
+                  data={csvData}
+                  columnLabels={columnLabel}
+                  // hideRowIndicators
+                  onChange={setCsvData}
+                  rowLabels={rowLabel}
+                />
+              </>
             )}
           </Box>
         </Box>
