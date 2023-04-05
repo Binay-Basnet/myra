@@ -1,14 +1,16 @@
 import { ReactElement } from 'react';
 
+import { Scrollable } from '@myra-ui';
+
 import { AddAccountingOrganization } from '@coop/accounting/ui-components';
-import { AccountingLayout, ExternalLoanSidebarLayout } from '@coop/accounting/ui-layouts';
+import { AccountingLayout } from '@coop/accounting/ui-layouts';
 
 const AddInvestmentAccountPage = () => <AddAccountingOrganization />;
 
 AddInvestmentAccountPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <AccountingLayout>
-      <ExternalLoanSidebarLayout>{page}</ExternalLoanSidebarLayout>
+      <Scrollable>{page}</Scrollable>
     </AccountingLayout>
   );
 };
