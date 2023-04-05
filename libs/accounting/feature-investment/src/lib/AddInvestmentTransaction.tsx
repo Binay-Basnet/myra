@@ -15,11 +15,8 @@ import {
 } from '@myra-ui';
 
 import {
-  DateType,
   InvestmentTransactionInput,
   InvestmentType,
-  ShareInvestmentType,
-  useAppSelector,
   useSetInvestmentTransactionDataMutation,
 } from '@coop/cbs/data-access';
 import { FormInvestmentEntrySelect, FormSelect } from '@coop/shared/form';
@@ -37,8 +34,6 @@ const investmentTypeOptions = [
 ];
 
 export const AddInvestmentTransaction = () => {
-  const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
-
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -65,43 +60,13 @@ export const AddInvestmentTransaction = () => {
     if (values.investmentType === InvestmentType.Saving) {
       filteredValues = {
         ...omit({ ...values }, ['share', 'fd']),
-        saving: {
-          ...values.saving,
-        },
       };
     }
 
     if (values.investmentType === InvestmentType.Share) {
-      if (values.share?.type === ShareInvestmentType.ShareBonusDividend) {
-        filteredValues = {
-          ...omit({ ...values }, ['saving', 'fd']),
-          share: {
-            ...omit({ ...values.share }, [
-              'shareReturnKitta',
-              'sharePerKitta',
-              'totalShareReturnAmount',
-            ]),
-          },
-        };
-      }
-
-      if (values.share?.type === ShareInvestmentType.ShareReturn) {
-        filteredValues = {
-          ...omit({ ...values }, ['saving', 'fd']),
-          share: {
-            ...omit({ ...values.share }, [
-              'bonusAmount',
-              'dividendAmount',
-              'shareQuantity',
-              'totalAmount',
-            ]),
-            date:
-              preferenceDate === DateType.Bs
-                ? { np: values.share?.date }
-                : { en: values.share?.date },
-          },
-        };
-      }
+      filteredValues = {
+        ...omit({ ...values }, ['saving', 'fd']),
+      };
     }
 
     if (values.investmentType === InvestmentType.FixedDeposit) {
