@@ -1,64 +1,48 @@
 import { useMemo } from 'react';
-import { BsThreeDots } from 'react-icons/bs';
-import { IconButton } from '@chakra-ui/react';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
-import { useGetInventoryItemsListQuery } from '@coop/cbs/data-access';
+import { useGetInventoryRegisterListQuery } from '@coop/cbs/data-access';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const InventoryRegisterTable = () => {
   const { t } = useTranslation();
-  const { data, isFetching } = useGetInventoryItemsListQuery({
+  const { data, isFetching } = useGetInventoryRegisterListQuery({
     pagination: getPaginationQuery(),
   });
 
-  const rowItems = data?.inventory?.items?.list?.edges ?? [];
+  const rowItems = data?.inventory?.register?.edges ?? [];
 
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
-        header: t['inRegItemID'],
+        header: 'Item Id',
         accessorFn: (row) => row?.node?.id,
         maxWidth: 4,
       },
       {
-        header: t['inRegName'],
-        accessorFn: (row) => row?.node?.name,
-        width: '80%',
+        header: 'Type',
+        accessorFn: (row) => row?.node?.transaction_type,
       },
       {
-        header: t['inRegType'],
-        accessorFn: (row) => row?.node?.type,
+        header: 'Name',
+        accessorFn: (row) => row?.node?.itemName,
         meta: {
           width: '40%',
         },
       },
-      // {
-      //   header: t['inRegUnitPrice'],
-      //   accessorFn: (row) => row?.node.unitPrice,
-      //   cell: (props) => <span>{Number(props.getValue()).toFixed(2)}</span>,
-      // },
-      // {
-      //   id: 'total-cost',
-      //   header: t['inRegTotalCost'],
-      //   accessorFn: (row) => row?.node.unitPrice,
-      //   cell: ({ row, getValue }) => (
-      //     <span>
-      //       {Number((getValue() as number) * (row?.original?.node?.itemQuantity || 0)).toFixed(2)}
-      //     </span>
-      //   ),
-      // },
+
       {
-        header: t['inRegItemQuantity'],
-        accessorFn: (row) => row?.node?.itemQuantity,
-        cell: (props) => <span>{Number(props.getValue()).toFixed(2)}</span>,
+        header: 'Unit Price',
+        accessorFn: (row) => row?.node?.unitPrice,
       },
       {
-        accessorKey: 'actions',
-        cell: () => (
-          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
-        ),
+        header: 'Total Cost',
+        accessorFn: (row) => row?.node?.totalCost,
+      },
+      {
+        header: 'Item Quantity',
+        accessorFn: (row) => row?.node?.quantity,
       },
     ],
     [t]
