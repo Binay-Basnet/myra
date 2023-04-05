@@ -1,0 +1,5 @@
+query getPrintCount($type: PrintType!, $objectId: ID!) {
+  settings {
+    getPrintCount(type: $type, objectId: $objectId)
+  }
+}

@@ -11,6 +11,7 @@ import { formatAddress } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 import { GlTransactionJornalVoucherPrint } from './GLTransJornalVoucherPrint';
+import { Chips } from '../../data-display';
 
 export interface SuccessCardProps {
   title: string;
@@ -279,6 +280,7 @@ interface SuccessPrintProps {
     | null
     | undefined;
   glTransactionsTotal?: string;
+  count?: number;
 }
 
 export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps>(
@@ -292,6 +294,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
       glTransactionsTotal,
       totalWords,
       dublicate,
+      count,
     },
     ref
   ) => {
@@ -318,26 +321,38 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
       >
         <Box w="100%" mb="s12">
           <Box display="flex" flexDir="column" gap="s12">
-            <Box display="flex" alignItems="center" gap="s8">
-              <Box position="relative">
-                <Avatar
-                  w="s48"
-                  h="s48"
-                  name={user?.organization?.basicDetails?.name as string}
-                  src={user?.organization?.basicDetails?.logo as string}
-                />
+            <Box display="flex" alignItems="flex-start" justifyContent="space-between" gap="s8">
+              <Box display="flex" alignItems="center" gap="s8">
+                <Box position="relative">
+                  <Avatar
+                    w="s48"
+                    h="s48"
+                    name={user?.organization?.basicDetails?.name as string}
+                    src={user?.organization?.basicDetails?.logo as string}
+                  />
+                </Box>
+
+                <Box display="flex" flexDir="column" gap="s4">
+                  <Text fontSize="r2" fontWeight="500" color="gray.800" lineHeight="0.8">
+                    {user?.organization?.basicDetails?.name}
+                  </Text>
+                  <Text fontSize="s2" fontWeight="400" color="gray.700">
+                    Contact: {user?.organization?.contactDetails?.phoneNumber} | Email:{' '}
+                    {user?.organization?.contactDetails?.email ?? 'N/A'} | Website:{' '}
+                    {user?.organization?.contactDetails?.website ?? 'N/A'}
+                  </Text>
+                </Box>
               </Box>
 
-              <Box display="flex" flexDir="column" gap="s4">
-                <Text fontSize="r2" fontWeight="500" color="gray.800" lineHeight="0.8">
-                  {user?.organization?.basicDetails?.name}
-                </Text>
-                <Text fontSize="s2" fontWeight="400" color="gray.700">
-                  Contact: {user?.organization?.contactDetails?.phoneNumber} | Email:{' '}
-                  {user?.organization?.contactDetails?.email ?? 'N/A'} | Website:{' '}
-                  {user?.organization?.contactDetails?.website ?? 'N/A'}
-                </Text>
-              </Box>
+              {count && (
+                <Chips
+                  variant="solid"
+                  theme="success"
+                  size="md"
+                  type="label"
+                  label={`Count - ${count}`}
+                />
+              )}
             </Box>
 
             <Box display="flex" alignItems="start" justifyContent="space-between">
@@ -716,10 +731,11 @@ interface SuccessPrintJVProps {
       | undefined;
   };
   showSignatures?: boolean;
+  count?: number;
 }
 
 export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, SuccessPrintJVProps>(
-  ({ jVPrint, showSignatures }, ref) => {
+  ({ jVPrint, showSignatures, count }, ref) => {
     const user = useAppSelector((state) => state.auth.user);
 
     return (
@@ -743,26 +759,38 @@ export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, Succ
       >
         <Box w="100%" mb="s12">
           <Box display="flex" flexDir="column" gap="s12">
-            <Box display="flex" alignItems="center" gap="s8">
-              <Box position="relative">
-                <Avatar
-                  w="s48"
-                  h="s48"
-                  name={user?.organization?.basicDetails?.name as string}
-                  src={user?.organization?.basicDetails?.logo as string}
-                />
+            <Box display="flex" justifyContent="space-between" alignItems="flex-start" gap="s8">
+              <Box display="flex" alignItems="center" gap="s8">
+                <Box position="relative">
+                  <Avatar
+                    w="s48"
+                    h="s48"
+                    name={user?.organization?.basicDetails?.name as string}
+                    src={user?.organization?.basicDetails?.logo as string}
+                  />
+                </Box>
+
+                <Box display="flex" flexDir="column" gap="s4">
+                  <Text fontSize="r2" fontWeight="500" color="gray.800" lineHeight="0.8">
+                    {user?.organization?.basicDetails?.name}
+                  </Text>
+                  <Text fontSize="s2" fontWeight="400" color="gray.700">
+                    Contact: {user?.organization?.contactDetails?.phoneNumber} | Email:{' '}
+                    {user?.organization?.contactDetails?.email ?? 'N/A'} | Website:{' '}
+                    {user?.organization?.contactDetails?.website ?? 'N/A'}
+                  </Text>
+                </Box>
               </Box>
 
-              <Box display="flex" flexDir="column" gap="s4">
-                <Text fontSize="r2" fontWeight="500" color="gray.800" lineHeight="0.8">
-                  {user?.organization?.basicDetails?.name}
-                </Text>
-                <Text fontSize="s2" fontWeight="400" color="gray.700">
-                  Contact: {user?.organization?.contactDetails?.phoneNumber} | Email:{' '}
-                  {user?.organization?.contactDetails?.email ?? 'N/A'} | Website:{' '}
-                  {user?.organization?.contactDetails?.website ?? 'N/A'}
-                </Text>
-              </Box>
+              {count && (
+                <Chips
+                  variant="solid"
+                  theme="success"
+                  size="md"
+                  type="label"
+                  label={`Count - ${count}`}
+                />
+              )}
             </Box>
 
             <Box display="flex" alignItems="start" justifyContent="space-between">

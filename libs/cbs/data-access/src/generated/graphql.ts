@@ -28484,6 +28484,13 @@ export type ListCbsWithdrawSlipCodesQuery = {
   };
 };
 
+export type GetPrintCountQueryVariables = Exact<{
+  type: PrintType;
+  objectId: Scalars['ID'];
+}>;
+
+export type GetPrintCountQuery = { settings: { getPrintCount: number } };
+
 export type GetEodExceptionsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetEodExceptionsQuery = {
@@ -47911,6 +47918,25 @@ export const useListCbsWithdrawSlipCodesQuery = <
     useAxios<ListCbsWithdrawSlipCodesQuery, ListCbsWithdrawSlipCodesQueryVariables>(
       ListCbsWithdrawSlipCodesDocument
     ).bind(null, variables),
+    options
+  );
+export const GetPrintCountDocument = `
+    query getPrintCount($type: PrintType!, $objectId: ID!) {
+  settings {
+    getPrintCount(type: $type, objectId: $objectId)
+  }
+}
+    `;
+export const useGetPrintCountQuery = <TData = GetPrintCountQuery, TError = unknown>(
+  variables: GetPrintCountQueryVariables,
+  options?: UseQueryOptions<GetPrintCountQuery, TError, TData>
+) =>
+  useQuery<GetPrintCountQuery, TError, TData>(
+    ['getPrintCount', variables],
+    useAxios<GetPrintCountQuery, GetPrintCountQueryVariables>(GetPrintCountDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetEodExceptionsDocument = `

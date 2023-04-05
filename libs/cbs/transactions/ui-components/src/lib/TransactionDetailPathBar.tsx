@@ -1,11 +1,17 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
 import { useTransactionDetailHooks } from 'libs/cbs/transactions/feature-detail-page/src/hooks/useTransactionDetailHooks';
 
 import { Box, DetailPageHeader, SuccessPrint, SuccessPrintJornalVoucher, Text } from '@myra-ui';
 
-import { TransferType, useGetJournalVoucherDetailQuery, WithdrawWith } from '@coop/cbs/data-access';
+import {
+  PrintType,
+  TransferType,
+  useGetJournalVoucherDetailQuery,
+  useGetPrintCountQuery,
+  WithdrawWith,
+} from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
 
@@ -41,13 +47,54 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
 
   const voucherPrintRef = useRef<HTMLInputElement | null>(null);
 
+  const [printType, setPrintType] = useState<PrintType | null>();
+
+  const [printCount, setPrintCount] = useState<number>();
+
+  const { data: printCountData } = useGetPrintCountQuery(
+    {
+      objectId: id as string,
+      type: printType as PrintType,
+    },
+    {
+      enabled: !!printType,
+    }
+  );
+
   const handlePrint = useReactToPrint({
     content: () => printComponentRef.current,
+    onAfterPrint: () => setPrintType(null),
   });
+
+  const handleCustomerPrint = () => {
+    setPrintType('CUSTOMER_COPY');
+  };
 
   const handlePrintVoucher = useReactToPrint({
     content: () => voucherPrintRef.current,
+    onAfterPrint: () => setPrintType(null),
   });
+
+  const handleOfficeVoucherPrint = () => {
+    setPrintType('OFFICE_VOUCHER');
+  };
+
+  useEffect(() => {
+    if (printCountData) {
+      setPrintCount(printCountData?.settings?.getPrintCount);
+    }
+  }, [printCountData]);
+
+  useEffect(() => {
+    if (printCount) {
+      if (printType === 'CUSTOMER_COPY') {
+        handlePrint();
+      }
+      if (printType === 'OFFICE_VOUCHER') {
+        handlePrintVoucher();
+      }
+    }
+  }, [printCount, printType]);
 
   const {
     accountId,
@@ -268,10 +315,10 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
     router?.asPath?.includes('/loan-payment/') ||
     router?.asPath?.includes('/journal-vouchers/')
       ? [
-          { label: 'Print', handler: handlePrint },
+          { label: 'Print', handler: handleCustomerPrint },
           {
             label: 'Print Voucher',
-            handler: handlePrintVoucher,
+            handler: handleOfficeVoucherPrint,
           },
         ]
       : [];
@@ -303,6 +350,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
             details={details}
             dublicate={dublicate}
             showSignatures={showSignatures}
+            count={printCount}
             ref={printComponentRef}
           />
         </Box>
@@ -310,6 +358,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         <SuccessPrintJornalVoucher
           jVPrint={jvDetails}
           showSignatures={showSignatures}
+          count={printCount}
           ref={printComponentRef}
         />
       )}
@@ -328,12 +377,14 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           showSignatures={showSignatures}
           glTransactions={glTransactions}
           glTransactionsTotal={total}
+          count={printCount}
           ref={voucherPrintRef}
         />
       ) : (
         <SuccessPrintJornalVoucher
           jVPrint={jvDetails}
           showSignatures={showSignatures}
+          count={printCount}
           ref={voucherPrintRef}
         />
       )}
