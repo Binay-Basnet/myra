@@ -3,9 +3,9 @@ import { ReactElement } from 'react';
 import { Scrollable } from '@myra-ui';
 
 import { AccountingLayout } from '@coop/accounting/ui-layouts';
-import { InventoryFeatureItem } from '@coop/myra/inventory/item';
+import { InventoryFeatureItemVariant } from '@coop/myra/inventory/item';
 
-const AddNewItemPage = () => <InventoryFeatureItem />;
+const AddNewItemPage = () => <InventoryFeatureItemVariant />;
 
 export default AddNewItemPage;
 

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Column, Table } from '@myra-ui';
+import { Box, Column, Table } from '@myra-ui';
 
 import { useGetInventoryItemsListQuery } from '@coop/cbs/data-access';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
@@ -53,8 +53,9 @@ export const InventoryItemTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading="items" />
-
+      <Box position="sticky" top="0px">
+        <TableListPageHeader heading="Items" />
+      </Box>
       <Table
         isLoading={isFetching}
         data={rowItems}

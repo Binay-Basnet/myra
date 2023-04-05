@@ -75,3 +75,16 @@ mutation setSuppliersAdd($data: InvSupplierInput) {
     }
   }
 }
+
+mutation setWareHouseTransfer($data: WarehouseTransferInput) {
+  inventory {
+    warehouse {
+      transfer(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
