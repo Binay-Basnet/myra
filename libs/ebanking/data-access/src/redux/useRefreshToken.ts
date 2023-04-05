@@ -4,6 +4,7 @@ import { NextRouter, useRouter } from 'next/router';
 import axios from 'axios';
 
 import { EBankingTokenType, saveCoopToken, store } from '@coop/ebanking/data-access';
+import { getAPIUrl } from '@coop/shared/utils';
 
 import { saveToken } from './slices/auth-slice';
 
@@ -82,7 +83,7 @@ export const useRefreshToken = (url: string, type: EBankingTokenType = EBankingT
 
     if (type === EBankingTokenType.Myra) {
       return axiosAgent
-        .post<RefreshTokenREST>(`${process.env['NX_SCHEMA_PATH']}/ebanking/reset-token`, {
+        .post<RefreshTokenREST>(`${getAPIUrl()}/ebanking/reset-token`, {
           refreshToken,
         })
         .then((res) => {

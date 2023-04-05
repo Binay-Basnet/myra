@@ -141,3 +141,27 @@ query getSuppliersList($filter: InvSupplierFilter, $pagination: Pagination) {
     }
   }
 }
+query getInventoryRegisterList($filter: InventoryRegisterFilter, $pagination: Pagination) {
+  inventory {
+    register(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          itemId
+          itemCode
+          itemName
+          transaction_type
+          unitPrice
+          totalCost
+          quantity
+        }
+        cursor
+      }
+
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}

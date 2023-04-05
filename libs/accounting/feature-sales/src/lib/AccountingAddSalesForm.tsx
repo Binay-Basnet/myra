@@ -12,6 +12,7 @@ import {
   useGetSalesSaleEntryFormStateDataQuery,
   useSetSalesSaleEntryDataMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 import { EntryTable, SalesBox, SalesDetails } from '../components/form-components/salesEntry';
@@ -64,11 +65,6 @@ export const NewSalesForm = () => {
 
     const filteredValues = {
       ...values,
-      products: values.products.map((product) => ({
-        ...product,
-        quantity: String(product.quantity),
-        rate: String(product.rate),
-      })),
     };
 
     asyncToast({
@@ -80,7 +76,7 @@ export const NewSalesForm = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries(['getSalesSaleEntryListData']);
-        router.push('/accounting/sales/list');
+        router.push(ROUTES.ACCOUNTING_SALES_ENTRY);
       },
     });
   };

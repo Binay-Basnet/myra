@@ -17,6 +17,7 @@ import {
 } from '@myra-ui';
 
 import { axiosAgent, login, useAppDispatch } from '@coop/ebanking/data-access';
+import { getAPIUrl } from '@coop/shared/utils';
 
 import { AuthContainer } from '../components/AuthContainer';
 
@@ -47,10 +48,7 @@ type LoginBody = {
 };
 
 const loginUser = async (body: LoginBody) => {
-  const response = await axiosAgent.post<LoginResponse>(
-    `${process.env['NX_SCHEMA_PATH']}/ebanking/login`,
-    body
-  );
+  const response = await axiosAgent.post<LoginResponse>(`${getAPIUrl()}/ebanking/login`, body);
 
   return response?.data;
 };

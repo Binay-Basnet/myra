@@ -23224,6 +23224,33 @@ export type GetSuppliersListQuery = {
   };
 };
 
+export type GetInventoryRegisterListQueryVariables = Exact<{
+  filter?: InputMaybe<InventoryRegisterFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetInventoryRegisterListQuery = {
+  inventory: {
+    register?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: {
+          id: string;
+          itemId: string;
+          itemCode: string;
+          itemName: string;
+          transaction_type: InventoryTransactionType;
+          unitPrice: string;
+          totalCost: string;
+          quantity: string;
+        } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
 export type GetIndividualKymOptionsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
 }>;
@@ -41077,6 +41104,47 @@ export const useGetSuppliersListQuery = <TData = GetSuppliersListQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetInventoryRegisterListDocument = `
+    query getInventoryRegisterList($filter: InventoryRegisterFilter, $pagination: Pagination) {
+  inventory {
+    register(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          itemId
+          itemCode
+          itemName
+          transaction_type
+          unitPrice
+          totalCost
+          quantity
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetInventoryRegisterListQuery = <
+  TData = GetInventoryRegisterListQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryRegisterListQueryVariables,
+  options?: UseQueryOptions<GetInventoryRegisterListQuery, TError, TData>
+) =>
+  useQuery<GetInventoryRegisterListQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryRegisterList']
+      : ['getInventoryRegisterList', variables],
+    useAxios<GetInventoryRegisterListQuery, GetInventoryRegisterListQueryVariables>(
+      GetInventoryRegisterListDocument
+    ).bind(null, variables),
     options
   );
 export const GetIndividualKymOptionsDocument = `
