@@ -13,7 +13,7 @@ export const OtherDetails = ({ branch, teller }: OtherDetailProps) => {
   return (
     <DetailsCard title={t['transDetailOtherDetails']} hasThreeRows>
       <DetailCardContent title={t['transDetailTransactionBranch']} subtitle={branch} />
-      <DetailCardContent title={t['transDetailTeller']} subtitle={teller} />
+      <DetailCardContent title="User" subtitle={teller} />
     </DetailsCard>
   );
 };

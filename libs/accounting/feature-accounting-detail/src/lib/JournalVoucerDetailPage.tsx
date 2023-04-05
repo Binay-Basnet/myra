@@ -36,7 +36,7 @@ export const JournalVoucerDetailPage = () => {
   };
 
   const otherData = {
-    tellerName: voucherData?.note,
+    tellerName: voucherData?.creatorName,
     serviceCenter: voucherData?.reference,
   };
 

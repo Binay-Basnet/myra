@@ -49,6 +49,7 @@ query getJournalVoucherDetail($entryId: ID!) {
           }
           totalDebit
           totalCredit
+          creatorName
         }
       }
     }

@@ -7438,6 +7438,7 @@ export type JournalVoucherConnection = {
 
 export type JournalVoucherDetail = {
   amount?: Maybe<Scalars['String']>;
+  creatorName?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id?: Maybe<Scalars['ID']>;
@@ -16035,6 +16036,12 @@ export type TransferInput = {
   withdrawWith?: InputMaybe<WithdrawWith>;
 };
 
+export type TransferItemDetails = {
+  description?: InputMaybe<Scalars['String']>;
+  itemId?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['String']>;
+};
+
 export const TransferRequestAction = {
   Approve: 'APPROVE',
   Decline: 'DECLINE',
@@ -16479,14 +16486,25 @@ export type WarehouseInfo = {
 
 export type WarehouseMutation = {
   add?: Maybe<AddWarehouseResult>;
+  transfer?: Maybe<WarehouseTransferResult>;
 };
 
 export type WarehouseMutationAddArgs = {
   data?: InputMaybe<AddWarehouseInput>;
 };
 
+export type WarehouseMutationTransferArgs = {
+  data?: InputMaybe<WarehouseTransferInput>;
+};
+
 export type WarehouseQuery = {
+  listTransfers?: Maybe<WarehouseTransferConnection>;
   listWarehouses?: Maybe<WarehouseConnection>;
+};
+
+export type WarehouseQueryListTransfersArgs = {
+  filter?: InputMaybe<WarehouseTransferFilter>;
+  paginate: Pagination;
 };
 
 export type WarehouseQueryListWarehousesArgs = {
@@ -16494,6 +16512,58 @@ export type WarehouseQueryListWarehousesArgs = {
   paginate: Pagination;
 };
 
+export type WarehouseTransfer = {
+  date: Scalars['Localized'];
+  destinationWarehouseId: Scalars['String'];
+  destinationWarehouseName: Scalars['String'];
+  entryNo: Scalars['String'];
+  id: Scalars['String'];
+  reference: Scalars['String'];
+  sourceWarehouseId: Scalars['String'];
+  sourceWarehouseName: Scalars['String'];
+  status: WarehouseTransferStatus;
+};
+
+export type WarehouseTransferConnection = {
+  edges?: Maybe<Array<Maybe<WarehouseTransferEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type WarehouseTransferEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<WarehouseTransfer>;
+};
+
+export type WarehouseTransferFilter = {
+  id?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type WarehouseTransferInput = {
+  authorizedReceiver?: InputMaybe<Scalars['String']>;
+  authorizedSender?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
+  destinationWarehouse?: InputMaybe<Scalars['String']>;
+  itemDetails?: InputMaybe<Array<InputMaybe<TransferItemDetails>>>;
+  note?: InputMaybe<Scalars['String']>;
+  referenceNumber?: InputMaybe<Scalars['String']>;
+  sourceWarehouse?: InputMaybe<Scalars['String']>;
+};
+
+export type WarehouseTransferResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<WarehouseQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export const WarehouseTransferStatus = {
+  Completed: 'COMPLETED',
+  OnTransit: 'ON_TRANSIT',
+} as const;
+
+export type WarehouseTransferStatus =
+  typeof WarehouseTransferStatus[keyof typeof WarehouseTransferStatus];
 export const Week = {
   Friday: 'FRIDAY',
   Monday: 'MONDAY',
@@ -21322,6 +21392,7 @@ export type GetJournalVoucherDetailQuery = {
           transactionCode?: string | null;
           totalDebit?: string | null;
           totalCredit?: string | null;
+          creatorName?: string | null;
           glTransaction?: Array<{
             ledgerId?: string | null;
             account: string;
@@ -38642,6 +38713,7 @@ export const GetJournalVoucherDetailDocument = `
           }
           totalDebit
           totalCredit
+          creatorName
         }
       }
     }
