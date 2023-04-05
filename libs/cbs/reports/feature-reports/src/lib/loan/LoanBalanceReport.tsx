@@ -4,9 +4,11 @@ import { useFormContext } from 'react-hook-form';
 import { Box, GridItem } from '@myra-ui';
 
 import {
+  FormFieldSearchTerm,
   LoanBalanceFilterData,
   LoanBalanceReport as LoanBalanceReportType,
   LocalizedDateFilter,
+  useGetIndividualKymOptionsQuery,
   useGetLoanBalanceReportQuery,
   useGetLoanProductsFromSubTypeQuery,
   useGetLoanProductTypeQuery,
@@ -20,6 +22,7 @@ import {
   FormBranchSelect,
   FormCheckboxGroup,
   FormDatePicker,
+  FormInput,
 } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -37,11 +40,15 @@ export const LoanBalanceReport = () => {
     filters?.branchId && filters?.branchId.length !== 0
       ? filters?.branchId?.map((t) => t.value)
       : null;
+  const genderIds = filters?.filter?.gender ?? null;
 
   const { data, isFetching } = useGetLoanBalanceReportQuery(
     {
       data: {
-        ...filters,
+        filter: {
+          ...filters?.filter,
+          gender: genderIds,
+        },
         branchId: branchIds,
         period: {
           from: filters?.period?.from,
@@ -300,6 +307,14 @@ const ReportFilter = () => {
   const { data: loanProductData } = useGetLoanProductsFromSubTypeQuery({
     subTypeIds: productSubTypeIds || [],
   });
+  const { data: genderFields } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.Gender,
+  });
+
+  const genderOptions = genderFields?.form?.options?.predefined?.data?.map((g) => ({
+    label: String(g?.name?.local),
+    value: g?.id as string,
+  }));
 
   const loanProductType = loanProductTypeData?.settings?.general?.loan?.productType?.productTypes;
   const loanSubProductType =
@@ -344,7 +359,12 @@ const ReportFilter = () => {
           />
         </Report.Filter>
       )}
-
+      <Report.Filter title="Gender">
+        <FormCheckboxGroup name="filter.gender" list={genderOptions} orientation="column" />
+      </Report.Filter>
+      <Report.Filter title="Age">
+        <FormInput name="filter.age" textAlign="right" color="gray.700" type="number" />
+      </Report.Filter>
       <Report.Filter title="Outstanding Balance">
         <FormAmountFilter name="filter.outstandingBalance" />
       </Report.Filter>

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Box, GridItem } from '@myra-ui';
 
 import {
+  FormFieldSearchTerm,
   KymMemberTypesEnum,
   LocalizedDateFilter,
   MinMaxFilter,
@@ -11,6 +12,7 @@ import {
   SavingsBalanceFilterData,
   SavingsBalanceReport,
   SavingsBalanceReportResult,
+  useGetIndividualKymOptionsQuery,
   useGetSavingsBalanceReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -21,6 +23,7 @@ import {
   FormBranchSelect,
   FormCheckboxGroup,
   FormDatePicker,
+  FormInput,
   FormMemberSelect,
   FormRadioGroup,
 } from '@coop/shared/form';
@@ -50,6 +53,8 @@ type Filter = {
     productTypes?: NatureOfDepositProduct[];
     memberType?: KymMemberTypesEnum[];
     amount?: MinMaxFilter;
+    age?: number;
+    gender?: string[];
   };
 };
 export const SavingBalanceReport = () => {
@@ -59,11 +64,23 @@ export const SavingBalanceReport = () => {
     filters?.branchId && filters?.branchId.length !== 0
       ? filters?.branchId?.map((t) => t.value)
       : null;
+  const genderIds = filters?.filter?.gender ?? null;
 
+  const { data: genderFields } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.Gender,
+  });
+
+  const genderOptions = genderFields?.form?.options?.predefined?.data?.map((g) => ({
+    label: String(g?.name?.local),
+    value: g?.id as string,
+  }));
   const { data, isFetching } = useGetSavingsBalanceReportQuery(
     {
       data: {
-        ...filters,
+        filter: {
+          ...filters?.filter,
+          gender: genderIds,
+        },
         branchId: branchIds,
         period: {
           from: filters?.period?.from,
@@ -355,6 +372,12 @@ export const SavingBalanceReport = () => {
               ]}
               orientation="column"
             />
+          </Report.Filter>
+          <Report.Filter title="Gender">
+            <FormCheckboxGroup name="filter.gender" list={genderOptions} orientation="column" />
+          </Report.Filter>
+          <Report.Filter title="Age">
+            <FormInput name="filter.age" textAlign="right" color="gray.700" type="number" />
           </Report.Filter>
           <Report.Filter title="MemberType">
             <FormCheckboxGroup
