@@ -1,14 +1,9 @@
 import { ReactElement } from 'react';
 
 import { AccountingInventoryLayout, AccountingLayout } from '@coop/accounting/ui-layouts';
-import { InventoryItemTable } from '@coop/myra/components';
+import { InventoryItemUnitsTable } from '@coop/myra/components';
 
-const InventoryProduct = () => (
-  <>
-    Units
-    <InventoryItemTable />
-  </>
-);
+const InventoryProduct = () => <InventoryItemUnitsTable />;
 
 InventoryProduct.getLayout = function getLayout(page: ReactElement) {
   return (

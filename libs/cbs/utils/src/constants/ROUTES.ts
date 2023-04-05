@@ -255,6 +255,7 @@ export const ROUTES = {
 
   ACCOUNTING_INVENTORY_ITEMS_LIST: '/accounting/inventory/items/list',
   ACCOUNTING_INVENTORY_ITEMS_ADD: '/accounting/inventory/items/add',
+  ACCOUTING_INVENTORY_VARIANT_ITEMS_ADD: '/accounting/inventory/variant-items/add',
   ACCOUNTING_INVENTORY_ITEM_CATEGORY: '/accounting/inventory/item-category/list',
   ACCOUNTING_INVENTORY_ITEM_CATEGORY_ADD: '/accounting/inventory/item-category/ass',
 
@@ -312,6 +313,7 @@ export const ROUTES = {
   INVENTORY_SUPPLIERS_ADD: '/inventory/suppliers/add',
   INVENTORY_WAREHOUSE: '/inventory/warehouse/list',
   INVENTORY_WAREHOUSE_TRASFER_LIST: '/inventory/warehouse/transfer/list',
+  INVENTORY_WAREHOUSE_TRANSFER_ADD: '/inventory/warehouse/transfer/add',
   INVENTORY_ITEMS_CATEGORY: '/inventory/items/category/list',
   INVENTORY_ITEMS_UNIT_LIST: '/inventory/items/units/list',
   INVENTORY_SUPPLIERS_LIST: '/inventory/suppliers/list',

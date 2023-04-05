@@ -1,14 +1,11 @@
 import { ReactElement } from 'react';
 
-import { Box, MainLayoutInventory, WIPState } from '@myra-ui';
+import { MainLayoutInventory } from '@myra-ui';
 
+import { WarehouseTransferTable } from '@coop/inventory/warehouse';
 import { WarehouseLayout } from '@coop/myra/components';
 
-const InventoryWarehousePage = () => (
-  <Box display="flex" justifyContent="center" alignItems="center">
-    <WIPState />
-  </Box>
-);
+const InventoryWarehousePage = () => <WarehouseTransferTable />;
 
 InventoryWarehousePage.getLayout = function getLayout(page: ReactElement) {
   return (

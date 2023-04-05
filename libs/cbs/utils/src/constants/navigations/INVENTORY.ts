@@ -13,21 +13,21 @@ export const INVENTORY: NavType = {
           aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.INVENTORY_REGISTER,
         },
-        {
-          label: 'Inventory Adjustments',
-          aclKey: 'CBS_MEMBERS_MEMBER',
-          route: ROUTES.INVENTORY_INVENTORY_ADJUSTMENT,
-          addRoute: ROUTES.INVENTORY_INVENTORY_ADJUSTMENT_ADD,
-        },
+        // {
+        //   label: 'Inventory Adjustments',
+        //   aclKey: 'CBS_MEMBERS_MEMBER',
+        //   route: ROUTES.INVENTORY_INVENTORY_ADJUSTMENT,
+        //   addRoute: ROUTES.INVENTORY_INVENTORY_ADJUSTMENT_ADD,
+        // },
       ],
 
-      forms: [
-        {
-          label: 'New Inventory Adjustment',
-          aclKey: 'CBS_MEMBERS_MEMBER',
-          route: ROUTES.INVENTORY_INVENTORY_ADJUSTMENT_ADD,
-        },
-      ],
+      // forms: [
+      //   {
+      //     label: 'New Inventory Adjustment',
+      //     aclKey: 'CBS_MEMBERS_MEMBER',
+      //     route: ROUTES.INVENTORY_INVENTORY_ADJUSTMENT_ADD,
+      //   },
+      // ],
     },
 
     ITEMS: {
@@ -72,6 +72,14 @@ export const INVENTORY: NavType = {
           label: 'Warehouse Transfer',
           aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.INVENTORY_WAREHOUSE_TRASFER_LIST,
+          addRoute: ROUTES.INVENTORY_WAREHOUSE_TRANSFER_ADD,
+        },
+      ],
+      forms: [
+        {
+          label: 'New Warehouse Transfer',
+          aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.INVENTORY_WAREHOUSE_TRANSFER_ADD,
         },
       ],
     },

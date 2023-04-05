@@ -1,77 +1,67 @@
-import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 
-import { InventoryPageHeader } from '@coop/myra/inventory/ui-layout';
+import { Column, Table } from '@myra-ui';
+
+import { useGetInventoryWarehouseTransferQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
+import { TableListPageHeader } from '@coop/myra/components';
+import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const WarehouseTransferTable = () => {
-  // const { t } = useTranslation();
-  const router = useRouter();
-  // const { data } = useGetShareRegisterListQuery();
+  const { t } = useTranslation();
+  const { data, isFetching } = useGetInventoryWarehouseTransferQuery({
+    pagination: getPaginationQuery(),
+  });
 
-  // const rowItems = useMemo(() => data?.share?.register?.edges ?? [], [data]);
+  const rowItems = data?.inventory?.warehouse?.listTransfers?.edges ?? [];
 
-  // const columns = useMemo<Column<typeof rowItems[0]>[]>(
-  //   () => [
-  //     {
-  //       Header: t['warehouseTranserDate'],
-  //       accessor: 'node.member.name.local',
-  //       width: '80%',
-  //     },
-  //     {
-  //       Header: t['warehouseTranserEntryNo'],
-  //       accessor: 'node.member.name.local',
-  //       width: '40%',
-  //     },
+  const columns = useMemo<Column<typeof rowItems[0]>[]>(
+    () => [
+      {
+        header: 'Date',
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+      {
+        header: 'Entry No',
+        accessorFn: (row) => row?.node?.entryNo,
+      },
 
-  //     {
-  //       Header: t['warehouseTranserReference'],
-  //       accessor: 'node.transactionDate',
-  //       width: '40%',
-  //     },
-  //     {
-  //       Header: t['warehouseTranserSourceWarehouse'],
-  //       accessor: 'node.balance',
-  //       width: '40%',
-  //     },
+      {
+        id: 'total-cost',
 
-  //     {
-  //       Header: t['warehouseTranserDestinationWarehouse'],
-  //       accessor: 'node.transactionDirection',
-  //       width: '40%',
-  //     },
-  //     {
-  //       Header: t['warehouseTranserStatus'],
-  //       accessor: 'node.startNumber',
-  //       width: '40%',
-  //     },
+        header: 'Reference',
+        accessorFn: (row) => row?.node?.reference,
+      },
 
-  //     {
-  //       accessor: 'actions',
-  //       Cell: () => (
-  //         <IconButton
-  //           variant="ghost"
-  //           aria-label="Search database"
-  //           icon={<BsThreeDots />}
-  //         />
-  //       ),
-  //     },
-  //   ],
-  //   [t]
-  // );
+      {
+        header: 'Source Warehouse',
+        accessorFn: (row) => row?.node?.sourceWarehouseName,
+      },
+      {
+        header: 'Destination Warehouse',
+        accessorFn: (row) => row?.node?.destinationWarehouseName,
+      },
+      {
+        header: 'Status',
+        accessorFn: (row) => row?.node?.status,
+      },
+    ],
+    [t]
+  );
 
   return (
     <>
-      <InventoryPageHeader
-        heading="warehouseTransferWarehouseTransfer"
-        buttonLabel="warehouseTransferNewWarehouseTransfer"
-        buttonHandler={() => router.push('/inventory/warehouse/transfer/add')}
-      />
+      <TableListPageHeader heading="Warehouse Transfer" />
 
-      {/* <Table */}
-      {/*  data={rowItems} */}
-      {/*  isLoading={isFetching} */}
-      {/*  columns={columns} */}
-      {/*  sort={true} */}
-      {/* /> */}
+      <Table
+        isLoading={isFetching}
+        data={rowItems}
+        columns={columns}
+        pagination={{
+          total: data?.inventory?.warehouse?.listTransfers?.totalCount ?? 'Many',
+          pageInfo: data?.inventory?.warehouse?.listTransfers?.pageInfo,
+        }}
+      />
     </>
   );
 };

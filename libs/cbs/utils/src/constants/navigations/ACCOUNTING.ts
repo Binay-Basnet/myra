@@ -122,26 +122,23 @@ export const ACCOUNTING: NavType = {
           label: 'Item Category',
           route: ROUTES.ACCOUNTING_INVENTORY_ITEM_CATEGORY,
           aclKey: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
-          addRoute: ROUTES.ACCOUNTING_INVENTORY_ITEM_CATEGORY_ADD,
         },
         {
           label: 'Units',
           route: ROUTES.ACCOUNTING_INVENTORY_UNITS_LIST,
           aclKey: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
-          addRoute: ROUTES.ACCOUNTING_INVENTORY_UNITS_LIST_ADD,
         },
 
         {
           label: 'Warehouse',
           route: ROUTES.ACCOUNTING_INVENTORY_WAREHOUSE_LIST,
           aclKey: 'ACCOUNTING_SYSTEM_ACCOUNTING_BANK_ACCOUNTS',
-          addRoute: ROUTES.ACCOUNTING_INVENTORY_WAREHOUSE_ADD,
         },
       ],
       forms: [
         {
           label: 'New Item',
-          route: ROUTES.ACCOUNTING_PURCHASE_LIST,
+          route: ROUTES.ACCOUNTING_INVENTORY_ITEMS_ADD,
           aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_PURCHASE_ENTRY',
         },
       ],
