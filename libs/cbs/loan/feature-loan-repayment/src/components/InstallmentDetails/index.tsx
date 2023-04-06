@@ -46,7 +46,7 @@ export const InstallmentData = ({
     )?.installmentNo;
 
     return lastUnpaidInstallment
-      ? loanInstallments?.slice(lastUnpaidInstallment - 1, -1)
+      ? loanInstallments?.slice(lastUnpaidInstallment - 1, Number(loanInstallments?.length))
       : loanInstallments;
   }, [loanInstallments]);
 

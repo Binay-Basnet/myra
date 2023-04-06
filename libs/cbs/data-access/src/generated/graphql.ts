@@ -1273,9 +1273,15 @@ export type AuditTransactionReport = {
 };
 
 export type AuthMutation = {
+  changeState?: Maybe<Scalars['String']>;
   login?: Maybe<LoginResult>;
   switchRole?: Maybe<SwitchRoleResult>;
   token?: Maybe<AuthTokenResult>;
+};
+
+export type AuthMutationChangeStateArgs = {
+  state: ObjState;
+  userID: Scalars['ID'];
 };
 
 export type AuthMutationLoginArgs = {
