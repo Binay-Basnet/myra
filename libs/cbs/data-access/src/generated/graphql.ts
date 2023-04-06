@@ -18876,6 +18876,31 @@ export type EditSavingProductInterestRateMutation = {
   };
 };
 
+export type EditSavingProductBalanceLimitMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  productType: AccountTypeFilter;
+  data: AmountLimit;
+}>;
+
+export type EditSavingProductBalanceLimitMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        editBalanceLimit?: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetDepositIroMutationVariables = Exact<{
   data?: InputMaybe<DepositIroInput>;
 }>;
@@ -35206,6 +35231,42 @@ export const useEditSavingProductInterestRateMutation = <TError = unknown, TCont
     ['editSavingProductInterestRate'],
     useAxios<EditSavingProductInterestRateMutation, EditSavingProductInterestRateMutationVariables>(
       EditSavingProductInterestRateDocument
+    ),
+    options
+  );
+export const EditSavingProductBalanceLimitDocument = `
+    mutation editSavingProductBalanceLimit($productId: ID!, $productType: AccountTypeFilter!, $data: AmountLimit!) {
+  settings {
+    general {
+      depositProduct {
+        editBalanceLimit(productId: $productId, productType: $productType, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useEditSavingProductBalanceLimitMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EditSavingProductBalanceLimitMutation,
+    TError,
+    EditSavingProductBalanceLimitMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    EditSavingProductBalanceLimitMutation,
+    TError,
+    EditSavingProductBalanceLimitMutationVariables,
+    TContext
+  >(
+    ['editSavingProductBalanceLimit'],
+    useAxios<EditSavingProductBalanceLimitMutation, EditSavingProductBalanceLimitMutationVariables>(
+      EditSavingProductBalanceLimitDocument
     ),
     options
   );
