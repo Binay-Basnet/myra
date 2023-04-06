@@ -6773,6 +6773,8 @@ export type IntRange = {
 export const InterestAuthority = {
   Board: 'BOARD',
   Ceo: 'CEO',
+  Default: 'DEFAULT',
+  UpdateInterest: 'UPDATE_INTEREST',
 } as const;
 
 export type InterestAuthority = typeof InterestAuthority[keyof typeof InterestAuthority];
