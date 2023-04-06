@@ -19,8 +19,12 @@ const radioGroupdata = [
     value: InterestAuthority?.Board,
   },
   {
-    label: 'Not Applicable',
-    value: 'Not Applicable',
+    label: 'Default',
+    value: InterestAuthority?.Default,
+  },
+  {
+    label: 'Update Interest',
+    value: InterestAuthority?.UpdateInterest,
   },
 ];
 export const Interest = () => {
@@ -49,6 +53,8 @@ export const Interest = () => {
   const interestAuth = watch('interestAuthority');
 
   const defaultRate = Number(ProductData?.interest?.defaultRate);
+
+  const maxRate = Number(ProductData?.interest?.maxRate);
   // useEffect(() => {
   //   setValue('interestRate', valueInput);
   // }, [valueInput, setValue]);
@@ -90,7 +96,7 @@ export const Interest = () => {
                   message: 'Interest Rate is invalid',
                 },
                 min: {
-                  value: defaultRate,
+                  value: interestAuth === InterestAuthority?.UpdateInterest ? maxRate : defaultRate,
                   message: 'Interest Rate is invalid',
                 },
               }}
@@ -106,19 +112,20 @@ export const Interest = () => {
             <FormRadioGroup name="interestAuthority" options={radioGroupdata} direction="row" />
           </Box>
 
-          {interestAuth !== 'Not Applicable' && (
-            <Box display="flex" flexDirection="column" gap="s8">
-              <Text fontWeight="500" fontSize="s3">
-                {' '}
-                Authority Document
-              </Text>
+          {interestAuth !== InterestAuthority?.UpdateInterest &&
+            interestAuth !== InterestAuthority?.Default && (
+              <Box display="flex" flexDirection="column" gap="s8">
+                <Text fontWeight="500" fontSize="s3">
+                  {' '}
+                  Authority Document
+                </Text>
 
-              <Box w="125px">
-                {' '}
-                <FormFileInput name="interestDoc" size="md" />{' '}
+                <Box w="125px">
+                  {' '}
+                  <FormFileInput name="interestDoc" size="md" />{' '}
+                </Box>
               </Box>
-            </Box>
-          )}
+            )}
           <Alert status="info" title="Rates">
             <Box display="flex" flexDirection="column" gap="s4">
               <Text fontWeight="400" fontSize="r1">

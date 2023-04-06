@@ -104,7 +104,7 @@ type CustomDepositLoanAccountInput = Omit<
 > & {
   // tenure?: FrequencyTenure | null | undefined;
   openingPayment: CustomDepositInput;
-  interestAuthority?: InterestAuthority | 'Not Applicable';
+  interestAuthority?: InterestAuthority;
 };
 
 const accountTypes = {
@@ -159,7 +159,7 @@ export const AccountOpenNew = () => {
     mode: 'onChange',
 
     defaultValues: {
-      interestAuthority: 'Not Applicable',
+      interestAuthority: InterestAuthority?.Default,
       openingPayment: {
         payment_type: DepositPaymentType.Cash,
         cash: { disableDenomination: true },
@@ -422,8 +422,6 @@ export const AccountOpenNew = () => {
       depositFrequencyWeekly: values?.depositFrequencyWeekly
         ? values?.depositFrequencyWeekly
         : null,
-      interestAuthority:
-        values?.interestAuthority === 'Not Applicable' ? null : values?.interestAuthority,
       accountDocuments: tempDocuments,
     };
 

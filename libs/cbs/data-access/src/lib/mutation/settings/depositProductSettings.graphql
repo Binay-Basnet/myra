@@ -80,3 +80,22 @@ mutation editSavingProductInterestRate($id: ID!, $productId: ID!, $data: Interes
     }
   }
 }
+
+mutation editSavingProductBalanceLimit(
+  $productId: ID!
+  $productType: AccountTypeFilter!
+  $data: AmountLimit!
+) {
+  settings {
+    general {
+      depositProduct {
+        editBalanceLimit(productId: $productId, productType: $productType, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
