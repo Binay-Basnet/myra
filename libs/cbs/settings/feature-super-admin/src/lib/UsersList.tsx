@@ -1,10 +1,15 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { Avatar, Box, Text } from '@myra-ui';
+import { asyncToast, Avatar, Box, Text } from '@myra-ui';
 import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import { useAppSelector, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
+import {
+  useAppSelector,
+  useChangeUserStateMutation,
+  useGetSettingsUserListDataQuery,
+} from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
@@ -27,6 +32,8 @@ import { NewUserModal } from '../components';
 // };
 
 export const UsersList = () => {
+  const queryClient = useQueryClient();
+
   const datePreference = useAppSelector((state) => state?.auth?.preference?.date);
 
   const { t } = useTranslation();
@@ -35,6 +42,8 @@ export const UsersList = () => {
 
   const router = useRouter();
   const searchTerm = router?.query['search'] as string;
+
+  const { mutateAsync: changeUserState } = useChangeUserStateMutation();
 
   const {
     data: userListQueryData,
@@ -114,6 +123,29 @@ export const UsersList = () => {
                 title: 'Edit',
                 onClick: () => {
                   router.push(`${ROUTES.SETTINGS_USERS_EDIT}?id=${props?.row?.original?.node?.id}`);
+                },
+              },
+              {
+                title:
+                  props?.row?.original?.node?.objState === 'APPROVED'
+                    ? 'Make Inactive'
+                    : 'Make Active',
+                onClick: () => {
+                  asyncToast({
+                    id: 'user-change-state',
+                    msgs: {
+                      loading: 'Updating user state',
+                      success: 'User state updated',
+                    },
+                    promise: changeUserState({
+                      userID: props?.row?.original?.node?.id as string,
+                      state:
+                        props?.row?.original?.node?.objState === 'APPROVED'
+                          ? 'INACTIVE'
+                          : 'APPROVED',
+                    }),
+                    onSuccess: () => queryClient.invalidateQueries(['getSettingsUserListData']),
+                  });
                 },
               },
               {

@@ -17497,6 +17497,13 @@ export type SwitchRoleMutation = {
   };
 };
 
+export type ChangeUserStateMutationVariables = Exact<{
+  userID: Scalars['ID'];
+  state: ObjState;
+}>;
+
+export type ChangeUserStateMutation = { auth: { changeState?: string | null } };
+
 export type AddNewAccountInCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
@@ -32852,6 +32859,26 @@ export const useSwitchRoleMutation = <TError = unknown, TContext = unknown>(
   useMutation<SwitchRoleMutation, TError, SwitchRoleMutationVariables, TContext>(
     ['switchRole'],
     useAxios<SwitchRoleMutation, SwitchRoleMutationVariables>(SwitchRoleDocument),
+    options
+  );
+export const ChangeUserStateDocument = `
+    mutation changeUserState($userID: ID!, $state: ObjState!) {
+  auth {
+    changeState(userID: $userID, state: $state)
+  }
+}
+    `;
+export const useChangeUserStateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ChangeUserStateMutation,
+    TError,
+    ChangeUserStateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ChangeUserStateMutation, TError, ChangeUserStateMutationVariables, TContext>(
+    ['changeUserState'],
+    useAxios<ChangeUserStateMutation, ChangeUserStateMutationVariables>(ChangeUserStateDocument),
     options
   );
 export const AddNewAccountInCoaDocument = `
