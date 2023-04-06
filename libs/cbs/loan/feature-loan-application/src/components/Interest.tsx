@@ -20,8 +20,12 @@ const radioGroupdata = [
     value: InterestAuthority?.Board,
   },
   {
-    label: 'Not Applicable',
-    value: 'Not Applicable',
+    label: 'Default',
+    value: InterestAuthority?.Default,
+  },
+  {
+    label: 'Update Interest',
+    value: InterestAuthority?.UpdateInterest,
   },
 ];
 
@@ -61,7 +65,12 @@ export const Interest = () => {
     if (interestAuth === InterestAuthority?.Ceo) {
       setMinValue(Number(product?.interest?.defaultRate) - Number(product?.interest?.ceoAuthority));
     }
+    if (interestAuth === InterestAuthority?.UpdateInterest) {
+      setMinValue(Number(product?.interest?.minRate));
+    }
   }, [defaultInput, interestAuth, product]);
+
+  const maxValue = Number(product?.interest?.maxRate);
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -79,7 +88,8 @@ export const Interest = () => {
               isDisabled={!interestAuth || interestAuth === 'Not Applicable'}
               rules={{
                 max: {
-                  value: defaultInput,
+                  value:
+                    interestAuth === InterestAuthority?.UpdateInterest ? maxValue : defaultInput,
                   message: 'Interest Rate is invalid',
                 },
                 min: {
@@ -97,18 +107,19 @@ export const Interest = () => {
           <Box display="flex" flexDirection="row" justifyContent="space-between">
             <FormRadioGroup name="interestAuthority" options={radioGroupdata} direction="row" />
           </Box>
-          {interestAuth !== 'Not Applicable' && (
-            <Box display="flex" flexDirection="column" gap="s8">
-              <Text fontWeight="500" fontSize="s3">
-                {' '}
-                Authority Document
-              </Text>
-              <Box w="125px">
-                {' '}
-                <FormFileInput name="interestDoc" size="md" />{' '}
+          {interestAuth !== InterestAuthority?.Default &&
+            interestAuth !== InterestAuthority?.UpdateInterest && (
+              <Box display="flex" flexDirection="column" gap="s8">
+                <Text fontWeight="500" fontSize="s3">
+                  {' '}
+                  Authority Document
+                </Text>
+                <Box w="125px">
+                  {' '}
+                  <FormFileInput name="interestDoc" size="md" />{' '}
+                </Box>
               </Box>
-            </Box>
-          )}
+            )}
 
           <Alert status="info" title="Rates" hideCloseIcon>
             <Box display="flex" flexDirection="column" gap="s4">

@@ -59,7 +59,7 @@ import { useLoanProductErrors } from '../hooks/useLoanProductListErrors';
 type CustomLoanAccountInput = Omit<LoanAccountInput, 'interestAuthority'> & {
   // tenure?: FrequencyTenure | null | undefined;
 
-  interestAuthority?: InterestAuthority | 'Not Applicable';
+  interestAuthority?: InterestAuthority;
 };
 
 export const NewLoanApplication = () => {
@@ -74,7 +74,7 @@ export const NewLoanApplication = () => {
   const methods = useForm<CustomLoanAccountInput>({
     mode: 'onChange',
     defaultValues: {
-      interestAuthority: 'Not Applicable',
+      interestAuthority: InterestAuthority?.Default,
     },
   });
   const { watch, resetField, setValue } = methods;
@@ -116,10 +116,7 @@ export const NewLoanApplication = () => {
             id: responseId.newId,
             data: {
               ...methods.getValues(),
-              interestAuthority:
-                methods?.getValues()?.interestAuthority === 'Not Applicable'
-                  ? null
-                  : (methods.getValues()?.interestAuthority as InterestAuthority),
+
               gurantee_details: methods
                 .getValues()
                 ?.gurantee_details?.map((col) => omit(col, 'index')),
@@ -146,10 +143,6 @@ export const NewLoanApplication = () => {
           id: id as string,
           data: {
             ...methods.getValues(),
-            interestAuthority:
-              methods?.getValues()?.interestAuthority === 'Not Applicable'
-                ? null
-                : (methods.getValues()?.interestAuthority as InterestAuthority),
 
             gurantee_details: methods
               .getValues()
@@ -235,7 +228,7 @@ export const NewLoanApplication = () => {
         collateralData: loanApplication.collateralData ?? [],
         gurantee_details: loanApplication.gurantee_details ?? [],
         interestAuthority: !loanApplication?.interestAuthority
-          ? 'Not Applicable'
+          ? InterestAuthority?.Default
           : loanApplication?.interestAuthority,
       });
     }
