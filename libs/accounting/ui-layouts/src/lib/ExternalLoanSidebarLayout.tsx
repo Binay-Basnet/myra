@@ -11,7 +11,7 @@ interface IExternalLoanSidebarLayoutProps {
 export const ExternalLoanSidebarLayout = ({ children }: IExternalLoanSidebarLayoutProps) => (
   <Can I="SHOW_IN_MENU" a="ACCOUNTING_LOAN" showError isErrorCentered>
     <MenuContainer>
-      <AppSidebar module="ACCOUNTING" menu="LOAN" />
+      <AppSidebar module="ACCOUNTING" menu="EXTERNAL_LOAN" />
       <PageContainer>{children}</PageContainer>
     </MenuContainer>
   </Can>

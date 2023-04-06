@@ -215,7 +215,7 @@ export const ACCOUNTING: NavType = {
         },
       ],
     },
-    LOAN: {
+    EXTERNAL_LOAN: {
       label: 'External Loan',
       aclKey: 'ACCOUNTING_SYSTEM_EXTERNAL_LOAN',
       pages: [
