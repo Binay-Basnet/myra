@@ -58,7 +58,7 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
             navMenu: 'ACCOUNTING',
           },
           {
-            title: 'loan',
+            title: 'External Loan',
             icon: FiCodesandbox,
             link: '/accounting/loan/external-loan/list',
             match: ['loan'],

@@ -31,6 +31,7 @@ export type MenuType =
   | 'WAREHOUSE'
   | 'SUPPLIERS'
   | 'MONITOR'
+  | 'EXTERNAL_LOAN'
   | 'SETTINGS_SAVINGS_ORGANIZATION_RATE';
 
 export type Page = {
