@@ -83,7 +83,11 @@ export const InstallmentData = ({
         ? Number(installment?.remainingInterest)
         : Number(installment?.interest);
 
-      if (penalty && (loanType !== 'EPI' || (loanType === 'EPI' && installment?.status))) {
+      if (
+        penalty &&
+        (loanType !== 'EPI' ||
+          (loanType === 'EPI' && installment?.status && installment.status !== 'CURRENT'))
+      ) {
         if (tempAmount > penalty) {
           tempInst.fine = penalty;
           tempInst.isFinePartial = false;
@@ -97,7 +101,11 @@ export const InstallmentData = ({
         }
       }
 
-      if (interest && (loanType !== 'EPI' || (loanType === 'EPI' && installment?.status))) {
+      if (
+        interest &&
+        (loanType !== 'EPI' ||
+          (loanType === 'EPI' && installment?.status && installment.status !== 'CURRENT'))
+      ) {
         if (tempAmount > interest) {
           tempInst.interest = interest;
           tempInst.isInterestPartial = false;

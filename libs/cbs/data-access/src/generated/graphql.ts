@@ -4384,6 +4384,9 @@ export type DepositProductSearchFilter = {
 export type DepositProductSettingsMutation = {
   activateProduct?: Maybe<ProductActivateResult>;
   add?: Maybe<DepositProductResult>;
+  /** For Deposit Product and Loan Product, send account type respectively and use this common mutation to edit balance limit */
+  editBalanceLimit?: Maybe<ProductActivateResult>;
+  editChequeSettings?: Maybe<ProductActivateResult>;
   editProductInterest: InterestSetupMutationResult;
   makeInactive?: Maybe<DepositProductInactiveResult>;
   updateProductInterest: InterestSetupMutationResult;
@@ -4399,6 +4402,18 @@ export type DepositProductSettingsMutationAddArgs = {
   data?: InputMaybe<DepositProductInput>;
   edit?: InputMaybe<Scalars['Boolean']>;
   id: Scalars['ID'];
+};
+
+export type DepositProductSettingsMutationEditBalanceLimitArgs = {
+  data: AmountLimit;
+  productId: Scalars['ID'];
+  productType: AccountTypeFilter;
+};
+
+export type DepositProductSettingsMutationEditChequeSettingsArgs = {
+  chequeCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
+  ischequeIssueAllowed: Scalars['Boolean'];
+  productId: Scalars['ID'];
 };
 
 export type DepositProductSettingsMutationEditProductInterestArgs = {
