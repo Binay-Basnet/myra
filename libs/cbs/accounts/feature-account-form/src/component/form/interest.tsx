@@ -89,7 +89,7 @@ export const Interest = () => {
               type="number"
               label={t['accountOpenInterestRate']}
               textAlign="right"
-              isDisabled={!interestAuth || interestAuth === 'Not Applicable'}
+              isDisabled={!interestAuth || interestAuth === InterestAuthority?.Default}
               rules={{
                 max: {
                   value: maxValue,
