@@ -54,7 +54,7 @@ export const Interest = () => {
 
   const defaultRate = Number(ProductData?.interest?.defaultRate);
 
-  const maxRate = Number(ProductData?.interest?.maxRate);
+  const minRate = Number(ProductData?.interest?.minRate);
   // useEffect(() => {
   //   setValue('interestRate', valueInput);
   // }, [valueInput, setValue]);
@@ -69,6 +69,10 @@ export const Interest = () => {
         Number(ProductData?.interest?.boardAuthority) + Number(ProductData?.interest?.defaultRate)
       );
     }
+    if (interestAuth === InterestAuthority.Default) {
+      setMaxValue(Number(ProductData?.interest?.maxRate));
+    }
+
     if (interestAuth === InterestAuthority?.Ceo) {
       setMaxValue(
         Number(ProductData?.interest?.ceoAuthority) + Number(ProductData?.interest?.defaultRate)
@@ -96,7 +100,7 @@ export const Interest = () => {
                   message: 'Interest Rate is invalid',
                 },
                 min: {
-                  value: interestAuth === InterestAuthority?.UpdateInterest ? maxRate : defaultRate,
+                  value: interestAuth === InterestAuthority?.UpdateInterest ? minRate : defaultRate,
                   message: 'Interest Rate is invalid',
                 },
               }}
