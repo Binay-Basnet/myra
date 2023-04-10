@@ -43,10 +43,24 @@ export const DailyInterestBooking = () => {
       {
         header: 'Interest Accrued',
         accessorFn: (row) => amountConverter(row?.payload?.interest_accrued ?? 0),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Interest Rate',
+        accessorFn: (row) =>
+          row?.payload?.interest_rate ? `${row?.payload?.interest_rate} %` : '-',
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Closing Balance',
         accessorFn: (row) => amountConverter(row?.payload?.closing_balance ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Narration',

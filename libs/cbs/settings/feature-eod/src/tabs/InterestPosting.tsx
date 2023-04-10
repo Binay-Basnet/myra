@@ -41,6 +41,9 @@ export const InterestPosting = () => {
       {
         header: 'Interest Amount',
         accessorFn: (row) => amountConverter(row?.payload?.interest_amount ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Narration',

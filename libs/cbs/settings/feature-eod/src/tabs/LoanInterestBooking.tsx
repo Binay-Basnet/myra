@@ -43,10 +43,24 @@ export const LoanInterestBooking = () => {
       {
         header: 'Interest Accrued',
         accessorFn: (row) => amountConverter(row?.payload?.interest_accrued ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Principal Amount',
         accessorFn: (row) => amountConverter(row?.payload?.principal_amount ?? 0),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Interest Rate',
+        accessorFn: (row) =>
+          row?.payload?.interest_rate ? `${row?.payload?.interest_rate} %` : '-',
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Narration',
