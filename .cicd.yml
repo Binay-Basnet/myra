@@ -64,48 +64,48 @@ trigger:
 
 ---
 
-kind: pipeline
-name: Build storybook
-type: docker
-
-platform:
-  arch: amd64
-  os: linux
-
-steps:
-- name: build storybook
-  image: node:16
-  volumes:
-  - name: node_modules
-    path: /drone/src/node_modules
-  - name: commit-sha
-    path: /drone/previous-success-build-commit-sha
-  - name: storybook-build
-    path: /drone/src/dist
-  commands:
-  - yarn
-  - npx nx affected --target=build-storybook --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
-
-volumes:
-- name: node_modules
-  host:
-    path: /build-cache/myra-ui-${DRONE_BRANCH}/node_modules
-- name: commit-sha
-  host:
-    path: /build-cache/myra-ui-${DRONE_BRANCH}/previous-success-build-commit-sha
-- name: storybook-build
-  host:
-    path: /build-cache/myra-ui-${DRONE_BRANCH}/storybook
-depends_on:
-- Build all the apps
-
-trigger:
-  branch:
-  - dev
-  event:
-  - push
-
----
+#kind: pipeline
+#name: Build storybook
+#type: docker
+#
+#platform:
+#  arch: amd64
+#  os: linux
+#
+#steps:
+#- name: build storybook
+#  image: node:16
+#  volumes:
+#  - name: node_modules
+#    path: /drone/src/node_modules
+#  - name: commit-sha
+#    path: /drone/previous-success-build-commit-sha
+#  - name: storybook-build
+#    path: /drone/src/dist
+#  commands:
+#  - yarn
+#  - npx nx affected --target=build-storybook --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
+#
+#volumes:
+#- name: node_modules
+#  host:
+#    path: /build-cache/myra-ui-${DRONE_BRANCH}/node_modules
+#- name: commit-sha
+#  host:
+#    path: /build-cache/myra-ui-${DRONE_BRANCH}/previous-success-build-commit-sha
+#- name: storybook-build
+#  host:
+#    path: /build-cache/myra-ui-${DRONE_BRANCH}/storybook
+#depends_on:
+#- Build all the apps
+#
+#trigger:
+#  branch:
+#  - dev
+#  event:
+#  - push
+#
+#---
 
 kind: pipeline
 name: Publish myra-app
@@ -248,53 +248,53 @@ trigger:
 
 ---
 
-kind: pipeline
-name: Publish storybook
-type: docker
-
-platform:
-  arch: amd64
-  os: linux
-
-steps:
-- name: publishing storybook
-  image: plugins/ecr
-  settings:
-    cache_from:
-    - 110278083494.dkr.ecr.ap-south-1.amazonaws.com/storybook:${DRONE_BRANCH}
-    access_key:
-      from_secret: aws_access_key
-    secret_key:
-      from_secret: aws_secret_key
-    repo: storybook
-    registry: 110278083494.dkr.ecr.ap-south-1.amazonaws.com
-    region: ap-south-1
-    tags: dev
-    dockerfile: /drone/src/Dockerfile.storybook
-  volumes:
-  - name: storybook
-    path: /drone/src/dist
-  - name: docker-sock
-    path: /var/run/docker.sock
-
-volumes:
-- name: storybook
-  host:
-    path: /build-cache/myra-ui-${DRONE_BRANCH}/storybook
-- name: docker-sock
-  host:
-    path: /var/run/docker.sock
-
-depends_on:
-- Build storybook
-
-trigger:
-  branch:
-  - dev
-  event:
-  - push
-
----
+#kind: pipeline
+#name: Publish storybook
+#type: docker
+#
+#platform:
+#  arch: amd64
+#  os: linux
+#
+#steps:
+#- name: publishing storybook
+#  image: plugins/ecr
+#  settings:
+#    cache_from:
+#    - 110278083494.dkr.ecr.ap-south-1.amazonaws.com/storybook:${DRONE_BRANCH}
+#    access_key:
+#      from_secret: aws_access_key
+#    secret_key:
+#      from_secret: aws_secret_key
+#    repo: storybook
+#    registry: 110278083494.dkr.ecr.ap-south-1.amazonaws.com
+#    region: ap-south-1
+#    tags: dev
+#    dockerfile: /drone/src/Dockerfile.storybook
+#  volumes:
+#  - name: storybook
+#    path: /drone/src/dist
+#  - name: docker-sock
+#    path: /var/run/docker.sock
+#
+#volumes:
+#- name: storybook
+#  host:
+#    path: /build-cache/myra-ui-${DRONE_BRANCH}/storybook
+#- name: docker-sock
+#  host:
+#    path: /var/run/docker.sock
+#
+#depends_on:
+#- Build storybook
+#
+#trigger:
+#  branch:
+#  - dev
+#  event:
+#  - push
+#
+#---
 
 kind: pipeline
 type: exec
@@ -319,7 +319,7 @@ depends_on:
 - Publish myra-app
 - Publish neosys-admin-app
 - Publish ebanking-app
-- Publish storybook
+#- Publish storybook
 
 trigger:
   branch:

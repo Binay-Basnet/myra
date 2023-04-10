@@ -41,22 +41,37 @@ export const LoanRepayment = () => {
       {
         header: 'Principal Due',
         accessorFn: (row) => amountConverter(row?.payload?.principal_due ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Interest Due',
         accessorFn: (row) => amountConverter(row?.payload?.interest_due ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Penalty Due',
         accessorFn: (row) => amountConverter(row?.payload?.penalty_due ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Total Payable Amount',
         accessorFn: (row) => amountConverter(row?.payload?.total_payable_amount ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Available Balance',
         accessorFn: (row) => amountConverter(row?.payload?.available_balance ?? 0),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Narration',
