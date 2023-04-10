@@ -52,6 +52,8 @@ export const Interest = () => {
   //     ? Number(product?.interest?.defaultRate) - Number(product?.interest?.boardAuthority)
   //     : Number(product?.interest?.defaultRate) - Number(product?.interest?.ceoAuthority);
 
+  // this comment is for  cherrypicking
+
   useEffect(() => {
     clearErrors();
     if (router.pathname.includes('add')) {
