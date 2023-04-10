@@ -107,6 +107,7 @@
     "cbs-transfer-feature-detail-page": "libs/cbs/transfer/feature-detail-page",
     "cbs-ui-components": "libs/cbs/ui-components",
     "cbs-utils": "libs/cbs/utils",
+    "csv-viewer": "apps/csv-viewer",
     "ebanking": "apps/ebanking",
     "ebanking-data-access": "libs/ebanking/data-access",
     "ebanking-e2e": "apps/ebanking-e2e",
