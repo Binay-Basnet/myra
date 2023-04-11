@@ -34,7 +34,13 @@ import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { FormAmountInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { amountConverter, amountToWordsConverter, featureCode } from '@coop/shared/utils';
 
-import { InstallmentData, LoanPaymentSchedule, LoanProductCard, Payment } from '../components';
+import {
+  Discount,
+  InstallmentData,
+  LoanPaymentSchedule,
+  LoanProductCard,
+  Payment,
+} from '../components';
 
 export type LoanRepaymentInputType = Omit<LoanRepaymentInput, 'cash'> & {
   cash?:
@@ -72,6 +78,7 @@ export const LoanRepayment = () => {
   const { mutateAsync } = useSetLoanRepaymentMutation();
 
   const [totalPayableAmount, setTotalPayableAmount] = useState<number>(0);
+  const [totalFine, setTotalFine] = useState<number>(0);
 
   // const tableRef = useRef<HTMLTableElement>(null);
 
@@ -142,9 +149,8 @@ export const LoanRepayment = () => {
   };
   const handleSubmit = () => {
     const values = getValues();
-    let filteredValues = {
-      ...values,
-    };
+    let filteredValues = omit(values, ['isDiscountApplied']);
+
     if (values.paymentMethod === LoanRepaymentMethod.LocSaving) {
       filteredValues = omit({ ...filteredValues }, ['account', 'bankVoucher', 'cash']);
     }
@@ -296,9 +302,17 @@ export const LoanRepayment = () => {
                 )}
                 {memberId && loanAccountId && loanPaymentScheduleSplice && loanPaymentSchedule && (
                   <Box display="flex" flexDirection="column" gap="s16" w="100%">
-                    <LoanPaymentSchedule />
+                    <LoanPaymentSchedule totalFine={totalFine} setTotalFine={setTotalFine} />
 
                     <Divider />
+
+                    {totalFine ? (
+                      <>
+                        <Discount totalFine={totalFine} />
+
+                        <Divider />
+                      </>
+                    ) : null}
 
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
                       <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
