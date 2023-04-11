@@ -17656,6 +17656,7 @@ export type AddAccountInCoaMutationVariables = Exact<{
   accountSetup: CoaAccountSetup;
   parentAccountCode: Scalars['String'];
   openForBranches?: InputMaybe<Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>>;
+  ledgerName?: InputMaybe<Scalars['String']>;
 }>;
 
 export type AddAccountInCoaMutation = {
@@ -33040,7 +33041,7 @@ export const useAddGroupMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const AddAccountInCoaDocument = `
-    mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!, $openForBranches: [ID]) {
+    mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!, $openForBranches: [ID], $ledgerName: String) {
   settings {
     chartsOfAccount {
       account {
@@ -33048,6 +33049,7 @@ export const AddAccountInCoaDocument = `
           accountSetup: $accountSetup
           parentAccountCode: $parentAccountCode
           openForBranches: $openForBranches
+          ledgerName: $ledgerName
         ) {
           success
           error {
