@@ -134,7 +134,7 @@
     "@webpro/nx-tsc": "^0.0.1",
     "babel-jest": "28.1.1",
     "babel-loader": "8.1.0",
-    "cypress": "^11.0.0",
+    "cypress": "12.9.0",
     "eslint": "8.15.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",

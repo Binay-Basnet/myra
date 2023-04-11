@@ -31,6 +31,7 @@ export const NeosysFeatureClientView = () => {
   const router = useRouter();
   const clientId = router?.query['id'] as string;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentId, setCurrentId] = useState('');
   const [isUpdateEnvironmentOpen, setIsUpdateEnvironmentOpen] = useState(false);
   const { data, isLoading, refetch } = useGetClientDetailsQuery({ clientId });
@@ -90,14 +91,16 @@ export const NeosysFeatureClientView = () => {
                 {
                   title: 'Delete Environment',
                   onClick: async (node) => {
-                    deleteEnvironmentMutation({ environmentId: node?.id }).then(() => {
-                      refetch();
-                      toast({
-                        id: 'delete-environement',
-                        type: 'success',
-                        message: 'Environement deleted successfully',
-                      });
-                    });
+                    setCurrentId(node?.id);
+                    setIsDeleteModalOpen(true);
+                    // deleteEnvironmentMutation({ environmentId: node?.id }).then(() => {
+                    //   refetch();
+                    //   toast({
+                    //     id: 'delete-environement',
+                    //     type: 'success',
+                    //     message: 'Environement deleted successfully',
+                    //   });
+                    // });
                   },
                 },
                 {
@@ -137,6 +140,9 @@ export const NeosysFeatureClientView = () => {
   };
   const handleModalClose = () => {
     setIsModalOpen(false);
+  };
+  const handleDeleteModalClose = () => {
+    setIsDeleteModalOpen(false);
   };
 
   const handleUpgradeEnvironmentClose = () => {
@@ -200,24 +206,22 @@ export const NeosysFeatureClientView = () => {
   };
 
   return (
-    <Box p="s8" display="flex" flexDirection="column" gap={2}>
-      <Box display="flex" justifyContent="space-between">
+    <>
+      <Box display="flex" justifyContent="space-between" p={2}>
         <Text fontSize="r2">{data?.neosys?.client?.details?.organizationName}</Text>
         <Button onClick={handleModalOpen}>Create Environment</Button>
       </Box>
-      <Box borderTop="1px" borderColor="gray.200">
-        <Table
-          data={rowData}
-          columns={columns}
-          getRowId={(row) => row?.id as string}
-          isLoading={isLoading}
-          // noDataTitle={t['member']}
-          // pagination={{
-          //   total: data?.members?.list?.totalCount ?? 'Many',
-          //   pageInfo: data?.members?.list?.pageInfo,
-          // }}
-        />
-      </Box>
+      <Table
+        data={rowData}
+        columns={columns}
+        getRowId={(row) => row?.id as string}
+        isLoading={isLoading}
+        // noDataTitle={t['member']}
+        // pagination={{
+        //   total: data?.members?.list?.totalCount ?? 'Many',
+        //   pageInfo: data?.members?.list?.pageInfo,
+        // }}
+      />
       <Modal
         open={isUpdateEnvironmentOpen}
         onClose={handleUpgradeEnvironmentClose}
@@ -236,6 +240,39 @@ export const NeosysFeatureClientView = () => {
             </Box>
           </form>
         </FormProvider>
+      </Modal>
+      <Modal
+        open={isDeleteModalOpen}
+        onClose={handleDeleteModalClose}
+        isCentered
+        title="Delete Environment"
+        width="3xl"
+      >
+        <Box display="flex" flexDir="column" gap={5}>
+          <Text>Are you sure you want to delete this environment?</Text>
+          <Box display="flex" gap={2} justifyContent="flex-end">
+            <Button
+              w="-webkit-fit-content"
+              onClick={() => {
+                deleteEnvironmentMutation({ environmentId: currentId }).then(() => {
+                  refetch();
+                  toast({
+                    id: 'delete-environement',
+                    type: 'success',
+                    message: 'Environement deleted successfully',
+                  });
+                  handleDeleteModalClose();
+                  setCurrentId('');
+                });
+              }}
+            >
+              Yes
+            </Button>
+            <Button w="-webkit-fit-content" onClick={() => handleDeleteModalClose()}>
+              Cancel
+            </Button>
+          </Box>
+        </Box>
       </Modal>
 
       <Modal
@@ -270,7 +307,7 @@ export const NeosysFeatureClientView = () => {
           </Box>
         </FormProvider>
       </Modal>
-    </Box>
+    </>
   );
 };
 

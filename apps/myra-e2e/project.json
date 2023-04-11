@@ -13,7 +13,7 @@
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/myra-e2e/cypress.json",
+        "cypressConfig": "apps/myra-e2e/cypress.config.js",
         "devServerTarget": "myra:serve"
       },
       "configurations": {
