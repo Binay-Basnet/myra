@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDisclosure } from '@chakra-ui/react';
 
@@ -12,7 +12,12 @@ import { AllPaymentsModal } from './AllPaymentsModal';
 import { FullLoanSchedule } from './FullLoanSchedule';
 import { PartialLoanPaymentSchedule } from './PartialLoanPaymentSchedule';
 
-export const LoanPaymentSchedule = () => {
+interface ILoanPaymentScheduleProps {
+  setTotalFine: Dispatch<SetStateAction<number>>;
+  totalFine: number;
+}
+
+export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentScheduleProps) => {
   const {
     isOpen: isRecentPaymentOpen,
     onClose: onRecentPaymentClose,
@@ -53,8 +58,20 @@ export const LoanPaymentSchedule = () => {
     (installment) => installment?.status === 'PAID'
   );
 
-  const overDueInstallments =
-    paymentSchedule?.installments?.filter((installment) => installment?.status === 'OVERDUE') ?? [];
+  const overDueInstallments = useMemo(
+    () =>
+      paymentSchedule?.installments?.filter((installment) => installment?.status === 'OVERDUE') ??
+      [],
+    [paymentSchedule]
+  );
+
+  useEffect(() => {
+    if (!overDueInstallments?.length) return setTotalFine(0);
+
+    return setTotalFine(
+      overDueInstallments.reduce((sum, installment) => sum + Number(installment?.penalty ?? 0), 0)
+    );
+  }, [overDueInstallments]);
 
   const currentInstallment = paymentSchedule?.installments?.find(
     (installment) => installment?.status === 'CURRENT'
@@ -231,14 +248,7 @@ export const LoanPaymentSchedule = () => {
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Total Fine:</Text>
-                <Text fontWeight={500}>
-                  {amountConverter(
-                    overDueInstallments.reduce(
-                      (sum, installment) => sum + Number(installment?.penalty ?? 0),
-                      0
-                    )
-                  )}
-                </Text>
+                <Text fontWeight={500}>{amountConverter(totalFine)}</Text>
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Total Overdue Amount:</Text>
