@@ -200,24 +200,22 @@ export const NeosysFeatureClientView = () => {
   };
 
   return (
-    <Box p="s8" display="flex" flexDirection="column" gap={2}>
-      <Box display="flex" justifyContent="space-between">
+    <>
+      <Box display="flex" justifyContent="space-between" p={2}>
         <Text fontSize="r2">{data?.neosys?.client?.details?.organizationName}</Text>
         <Button onClick={handleModalOpen}>Create Environment</Button>
       </Box>
-      <Box borderTop="1px" borderColor="gray.200">
-        <Table
-          data={rowData}
-          columns={columns}
-          getRowId={(row) => row?.id as string}
-          isLoading={isLoading}
-          // noDataTitle={t['member']}
-          // pagination={{
-          //   total: data?.members?.list?.totalCount ?? 'Many',
-          //   pageInfo: data?.members?.list?.pageInfo,
-          // }}
-        />
-      </Box>
+      <Table
+        data={rowData}
+        columns={columns}
+        getRowId={(row) => row?.id as string}
+        isLoading={isLoading}
+        // noDataTitle={t['member']}
+        // pagination={{
+        //   total: data?.members?.list?.totalCount ?? 'Many',
+        //   pageInfo: data?.members?.list?.pageInfo,
+        // }}
+      />
       <Modal
         open={isUpdateEnvironmentOpen}
         onClose={handleUpgradeEnvironmentClose}
@@ -270,7 +268,7 @@ export const NeosysFeatureClientView = () => {
           </Box>
         </FormProvider>
       </Modal>
-    </Box>
+    </>
   );
 };
 
