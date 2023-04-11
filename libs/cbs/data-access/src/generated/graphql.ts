@@ -2441,6 +2441,7 @@ export type ChartsOfAccountMutationAddArgs = {
 
 export type ChartsOfAccountMutationAddAccountArgs = {
   accountSetup: CoaAccountSetup;
+  ledgerName?: InputMaybe<Scalars['String']>;
   openForBranches?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   parentAccountCode: Scalars['String'];
 };
@@ -2742,6 +2743,56 @@ export type CombinedAccountDetail = {
   natureOfOwnership?: Maybe<Scalars['String']>;
 };
 
+export type Committee = {
+  code?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  file?: Maybe<UploadedDocumentData>;
+  id?: Maybe<Scalars['ID']>;
+  member?: Maybe<Array<Maybe<CommitteeMember>>>;
+  memberCount?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  tenure?: Maybe<Scalars['Int']>;
+};
+
+export type CommitteeAddResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Committee>;
+  recordId: Scalars['ID'];
+};
+
+export type CommitteeInput = {
+  code?: InputMaybe<Scalars['String']>;
+  description: Scalars['String'];
+  file?: InputMaybe<Scalars['String']>;
+  memberIds?: InputMaybe<Array<InputMaybe<CommitteeMemberInput>>>;
+  name: Scalars['String'];
+  tenure: Scalars['Int'];
+};
+
+export type CommitteeMember = {
+  id?: Maybe<Scalars['ID']>;
+  member: Member;
+  position: CommitteePosition;
+};
+
+export type CommitteeMemberAddResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<CommitteeMember>;
+  recordId: Scalars['ID'];
+};
+
+export type CommitteeMemberInput = {
+  committeeId: Scalars['ID'];
+  memberId: Scalars['ID'];
+  position: CommitteePosition;
+};
+
+export const CommitteePosition = {
+  ChairPerson: 'CHAIR_PERSON',
+  Member: 'MEMBER',
+} as const;
+
+export type CommitteePosition = typeof CommitteePosition[keyof typeof CommitteePosition];
 export const ComparatorType = {
   Between: 'BETWEEN',
   Contains: 'CONTAINS',
@@ -6058,7 +6109,6 @@ export type FormSettingQuery = {
 export const Frequency = {
   Daily: 'DAILY',
   Monthly: 'MONTHLY',
-  Nature: 'Nature',
   Weekly: 'WEEKLY',
   Yearly: 'YEARLY',
 } as const;
@@ -12699,6 +12749,7 @@ export type NewCoaGroupInput = {
   allowedBalance?: InputMaybe<CoaTypeOfTransaction>;
   category?: InputMaybe<CoaCategory>;
   groupName?: InputMaybe<Scalars['String']>;
+  ledgerName?: InputMaybe<Scalars['String']>;
   openForBranches?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   typeOfTransaction?: InputMaybe<CoaTypeOfTransaction>;
   underAccountCode?: InputMaybe<Scalars['String']>;
@@ -12967,16 +13018,39 @@ export type OrganizationRegistrationDetails = {
 
 export type OrganizationSettingsMutation = {
   initialSetup?: Maybe<OrganizationAddResult>;
+  removeCommitteeMember?: Maybe<Scalars['String']>;
+  upsertCommittee?: Maybe<CommitteeAddResult>;
+  upsertCommitteeMember?: Maybe<CommitteeMemberAddResult>;
 };
 
 export type OrganizationSettingsMutationInitialSetupArgs = {
   data: OrganizationInput;
 };
 
+export type OrganizationSettingsMutationRemoveCommitteeMemberArgs = {
+  ids: Array<Scalars['ID']>;
+};
+
+export type OrganizationSettingsMutationUpsertCommitteeArgs = {
+  data: CommitteeInput;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type OrganizationSettingsMutationUpsertCommitteeMemberArgs = {
+  data: CommitteeMemberInput;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type OrganizationSettingsQuery = {
+  committee?: Maybe<Array<Maybe<Committee>>>;
+  committeeMembers?: Maybe<Array<Maybe<CommitteeMember>>>;
   formState?: Maybe<OrganizationFormStateResult>;
   /** This is to get organization details of a logged in employee. id of that email will be extracted from the employee who sends the request */
   mine?: Maybe<OrganizationGetResult>;
+};
+
+export type OrganizationSettingsQueryCommitteeMembersArgs = {
+  committeeId?: InputMaybe<Scalars['ID']>;
 };
 
 export type OrganizationStatistics = {

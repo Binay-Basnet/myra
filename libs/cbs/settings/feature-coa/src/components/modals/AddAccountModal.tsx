@@ -7,7 +7,7 @@ import { asyncToast, Modal } from '@myra-ui/components';
 import { Box } from '@myra-ui/foundations';
 
 import { CoaAccountSetup, useAddAccountInCoaMutation } from '@coop/cbs/data-access';
-import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
+import { FormBranchSelect, FormInput, FormRadioGroup } from '@coop/shared/form';
 
 import { CoaTree } from '../../types';
 
@@ -75,6 +75,9 @@ export const AddAccountModal = ({ clickedAccount, modalProps }: IAddAccountProps
             },
           ]}
         />
+        <Box mt="s32" width={280}>
+          <FormInput name="ledgerName" label="Ledger Name" />
+        </Box>
         {isAccountOpenForSelectedBranch && (
           <Box mt="s32" width={280}>
             <FormBranchSelect name="openForBranches" label="Select Service Center" isMulti />

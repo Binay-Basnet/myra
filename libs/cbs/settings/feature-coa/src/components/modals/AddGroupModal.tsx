@@ -57,6 +57,7 @@ export const AddGroupModal = ({ clickedAccount, modalProps }: IAddGroupModalProp
   );
 
   const isAccountOpenForSelectedBranch = watch('accountSetup') === CoaAccountSetup.SelectedBranch;
+  const isAccountSetup = watch('accountSetup');
 
   useEffect(() => {
     methods.reset({
@@ -204,6 +205,11 @@ export const AddGroupModal = ({ clickedAccount, modalProps }: IAddGroupModalProp
                     },
                   ]}
                 />
+                {isAccountSetup && (
+                  <Box mt="s32" width={280}>
+                    <FormInput name="ledgerName" label="Ledger Name" />
+                  </Box>
+                )}
                 {isAccountOpenForSelectedBranch && (
                   <Box mt="s32" width={280}>
                     <FormBranchSelect
