@@ -2772,7 +2772,7 @@ export type CommitteeInput = {
 export type CommitteeMember = {
   id?: Maybe<Scalars['ID']>;
   member: Member;
-  position: CommitteePosition;
+  position: Scalars['String'];
 };
 
 export type CommitteeMemberAddResult = {
@@ -2784,15 +2784,9 @@ export type CommitteeMemberAddResult = {
 export type CommitteeMemberInput = {
   committeeId: Scalars['ID'];
   memberId: Scalars['ID'];
-  position: CommitteePosition;
+  position: Scalars['String'];
 };
 
-export const CommitteePosition = {
-  ChairPerson: 'CHAIR_PERSON',
-  Member: 'MEMBER',
-} as const;
-
-export type CommitteePosition = typeof CommitteePosition[keyof typeof CommitteePosition];
 export const ComparatorType = {
   Between: 'BETWEEN',
   Contains: 'CONTAINS',
@@ -13642,6 +13636,7 @@ export const Resource = {
   CbsTransactionLimitLoanDisburse: 'CBS_TRANSACTION_LIMIT_LOAN_DISBURSE',
   CbsTransactionLimitShare: 'CBS_TRANSACTION_LIMIT_SHARE',
   CbsTransactionLimitWithdrawLimit: 'CBS_TRANSACTION_LIMIT_WITHDRAW_LIMIT',
+  CbsTransactionRevert: 'CBS_TRANSACTION_REVERT',
   CbsTransfers: 'CBS_TRANSFERS',
   CbsTransfersCashInTransitTransfer: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
   CbsTransfersServiceCenterCashTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
@@ -13917,6 +13912,11 @@ export type Result = {
   id: Scalars['Int'];
   name: Scalars['String'];
   nameNp: Scalars['String'];
+};
+
+export type RevertTransactionResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export const RiskCategoryFilter = {
@@ -15861,6 +15861,7 @@ export type TransactionMutation = {
   deposit: DepositResult;
   endOfDay?: Maybe<EodResult>;
   readyBranchEOD?: Maybe<Array<Maybe<Scalars['String']>>>;
+  revertTransaction: RevertTransactionResult;
   serviceCentreCashTransfer: ServiceCentreCashTransferResult;
   strTransactionAction?: Maybe<StrTransactionActionResult>;
   tellerBankTransfer?: Maybe<TellerBankTransferMutation>;
@@ -15901,6 +15902,10 @@ export type TransactionMutationDepositArgs = {
 
 export type TransactionMutationEndOfDayArgs = {
   option?: InputMaybe<EodOption>;
+};
+
+export type TransactionMutationRevertTransactionArgs = {
+  journalId: Scalars['ID'];
 };
 
 export type TransactionMutationServiceCentreCashTransferArgs = {
@@ -17651,6 +17656,7 @@ export type AddAccountInCoaMutationVariables = Exact<{
   accountSetup: CoaAccountSetup;
   parentAccountCode: Scalars['String'];
   openForBranches?: InputMaybe<Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>>;
+  ledgerName?: InputMaybe<Scalars['String']>;
 }>;
 
 export type AddAccountInCoaMutation = {
@@ -33035,7 +33041,7 @@ export const useAddGroupMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const AddAccountInCoaDocument = `
-    mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!, $openForBranches: [ID]) {
+    mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!, $openForBranches: [ID], $ledgerName: String) {
   settings {
     chartsOfAccount {
       account {
@@ -33043,6 +33049,7 @@ export const AddAccountInCoaDocument = `
           accountSetup: $accountSetup
           parentAccountCode: $parentAccountCode
           openForBranches: $openForBranches
+          ledgerName: $ledgerName
         ) {
           success
           error {
