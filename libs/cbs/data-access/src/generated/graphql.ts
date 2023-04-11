@@ -20443,6 +20443,25 @@ export type ApproveIbtMutation = {
   };
 };
 
+export type RevertTransactionMutationVariables = Exact<{
+  journalId: Scalars['ID'];
+}>;
+
+export type RevertTransactionMutation = {
+  transaction: {
+    revertTransaction: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
 export type GetAccountMemberListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -37534,6 +37553,33 @@ export const useApproveIbtMutation = <TError = unknown, TContext = unknown>(
   useMutation<ApproveIbtMutation, TError, ApproveIbtMutationVariables, TContext>(
     ['approveIBT'],
     useAxios<ApproveIbtMutation, ApproveIbtMutationVariables>(ApproveIbtDocument),
+    options
+  );
+export const RevertTransactionDocument = `
+    mutation revertTransaction($journalId: ID!) {
+  transaction {
+    revertTransaction(journalId: $journalId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useRevertTransactionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RevertTransactionMutation,
+    TError,
+    RevertTransactionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<RevertTransactionMutation, TError, RevertTransactionMutationVariables, TContext>(
+    ['revertTransaction'],
+    useAxios<RevertTransactionMutation, RevertTransactionMutationVariables>(
+      RevertTransactionDocument
+    ),
     options
   );
 export const GetAccountMemberListDocument = `

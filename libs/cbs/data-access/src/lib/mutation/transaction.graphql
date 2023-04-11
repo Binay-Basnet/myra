@@ -193,3 +193,14 @@ mutation approveIBT($requestId: ID!, $data: JournalVoucherInput!) {
     }
   }
 }
+
+mutation revertTransaction($journalId: ID!) {
+  transaction {
+    revertTransaction(journalId: $journalId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
