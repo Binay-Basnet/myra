@@ -112,6 +112,10 @@ export const UsersList = () => {
         cell: (props) => localizedDate(props?.row?.original?.node?.createdAt),
       },
       {
+        header: 'Status',
+        cell: (props) => props?.row?.original?.node?.objState,
+      },
+      {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
