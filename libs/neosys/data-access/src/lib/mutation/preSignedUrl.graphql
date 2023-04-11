@@ -1,0 +1,9 @@
+mutation getPreSignedUrl($contentType: String) {
+  presignedUrl {
+    upload(contentType: $contentType) {
+      filename
+      getUrl
+      putUrl
+    }
+  }
+}

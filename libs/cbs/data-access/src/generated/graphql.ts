@@ -11165,6 +11165,7 @@ export type LoanRepaymentInput = {
   bankVoucher?: InputMaybe<LoanRepaymentBankVoucher>;
   cash?: InputMaybe<DepositCash>;
   closeNotes?: InputMaybe<Scalars['String']>;
+  discount?: InputMaybe<RepaymentDiscount>;
   isSuspicious?: InputMaybe<Scalars['Boolean']>;
   loanAccountId: Scalars['ID'];
   memberId: Scalars['ID'];
@@ -13718,6 +13719,11 @@ export type RebateTypeInput = {
 export type ReleaseGuaranteeInput = {
   files?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   note: Scalars['String'];
+};
+
+export type RepaymentDiscount = {
+  amount: Scalars['String'];
+  doc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type ReportDetail = {
@@ -20440,6 +20446,25 @@ export type ApproveIbtMutation = {
         | MutationError_ValidationError_Fragment
         | null;
     } | null;
+  };
+};
+
+export type RevertTransactionMutationVariables = Exact<{
+  journalId: Scalars['ID'];
+}>;
+
+export type RevertTransactionMutation = {
+  transaction: {
+    revertTransaction: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
   };
 };
 
@@ -37534,6 +37559,33 @@ export const useApproveIbtMutation = <TError = unknown, TContext = unknown>(
   useMutation<ApproveIbtMutation, TError, ApproveIbtMutationVariables, TContext>(
     ['approveIBT'],
     useAxios<ApproveIbtMutation, ApproveIbtMutationVariables>(ApproveIbtDocument),
+    options
+  );
+export const RevertTransactionDocument = `
+    mutation revertTransaction($journalId: ID!) {
+  transaction {
+    revertTransaction(journalId: $journalId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useRevertTransactionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RevertTransactionMutation,
+    TError,
+    RevertTransactionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<RevertTransactionMutation, TError, RevertTransactionMutationVariables, TContext>(
+    ['revertTransaction'],
+    useAxios<RevertTransactionMutation, RevertTransactionMutationVariables>(
+      RevertTransactionDocument
+    ),
     options
   );
 export const GetAccountMemberListDocument = `
