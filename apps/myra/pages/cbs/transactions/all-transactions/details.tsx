@@ -1,11 +1,12 @@
 import { ReactElement, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box, Button, DetailPageHeader, MainLayout, Modal, Text } from '@myra-ui';
+import { Box, Button, DetailPageHeader, MainLayout, Modal, Text, toast } from '@myra-ui';
 
 import { useRevertTransactionMutation } from '@coop/cbs/data-access';
 import { AllTransactionDetailPage } from '@coop/cbs/transactions/feature-detail-page';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
+import { ROUTES } from '@coop/cbs/utils';
 
 const DepositDetailsPage = () => {
   const router = useRouter();
@@ -37,9 +38,23 @@ const DepositDetailsPage = () => {
             <Button onClick={() => handleRevertTransactionModalClose()}>Cancel</Button>
             <Button
               onClick={() =>
-                mutateAsync({ journalId: router?.query?.['id'] as string }).then(() =>
-                  handleRevertTransactionModalClose()
-                )
+                mutateAsync({ journalId: router?.query?.['id'] as string })
+                  .then(() => {
+                    router.push(ROUTES?.CBS_TRANS_ALL_TRANSACTION_LIST);
+                    handleRevertTransactionModalClose();
+                    toast({
+                      id: 'revert-transaction',
+                      type: 'success',
+                      message: 'Transaction reverted successfully!!!',
+                    });
+                  })
+                  .catch(() =>
+                    toast({
+                      id: 'revert-transaction',
+                      type: 'error',
+                      message: 'Something went wrong!!!',
+                    })
+                  )
               }
             >
               Ok

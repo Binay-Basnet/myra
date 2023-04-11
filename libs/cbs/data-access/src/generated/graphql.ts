@@ -11165,6 +11165,7 @@ export type LoanRepaymentInput = {
   bankVoucher?: InputMaybe<LoanRepaymentBankVoucher>;
   cash?: InputMaybe<DepositCash>;
   closeNotes?: InputMaybe<Scalars['String']>;
+  discount?: InputMaybe<RepaymentDiscount>;
   isSuspicious?: InputMaybe<Scalars['Boolean']>;
   loanAccountId: Scalars['ID'];
   memberId: Scalars['ID'];
@@ -13718,6 +13719,11 @@ export type RebateTypeInput = {
 export type ReleaseGuaranteeInput = {
   files?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   note: Scalars['String'];
+};
+
+export type RepaymentDiscount = {
+  amount: Scalars['String'];
+  doc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type ReportDetail = {
