@@ -2772,7 +2772,7 @@ export type CommitteeInput = {
 export type CommitteeMember = {
   id?: Maybe<Scalars['ID']>;
   member: Member;
-  position: CommitteePosition;
+  position: Scalars['String'];
 };
 
 export type CommitteeMemberAddResult = {
@@ -2784,15 +2784,9 @@ export type CommitteeMemberAddResult = {
 export type CommitteeMemberInput = {
   committeeId: Scalars['ID'];
   memberId: Scalars['ID'];
-  position: CommitteePosition;
+  position: Scalars['String'];
 };
 
-export const CommitteePosition = {
-  ChairPerson: 'CHAIR_PERSON',
-  Member: 'MEMBER',
-} as const;
-
-export type CommitteePosition = typeof CommitteePosition[keyof typeof CommitteePosition];
 export const ComparatorType = {
   Between: 'BETWEEN',
   Contains: 'CONTAINS',
@@ -13642,6 +13636,7 @@ export const Resource = {
   CbsTransactionLimitLoanDisburse: 'CBS_TRANSACTION_LIMIT_LOAN_DISBURSE',
   CbsTransactionLimitShare: 'CBS_TRANSACTION_LIMIT_SHARE',
   CbsTransactionLimitWithdrawLimit: 'CBS_TRANSACTION_LIMIT_WITHDRAW_LIMIT',
+  CbsTransactionRevert: 'CBS_TRANSACTION_REVERT',
   CbsTransfers: 'CBS_TRANSFERS',
   CbsTransfersCashInTransitTransfer: 'CBS_TRANSFERS_CASH_IN_TRANSIT_TRANSFER',
   CbsTransfersServiceCenterCashTransfer: 'CBS_TRANSFERS_SERVICE_CENTER_CASH_TRANSFER',
@@ -13917,6 +13912,11 @@ export type Result = {
   id: Scalars['Int'];
   name: Scalars['String'];
   nameNp: Scalars['String'];
+};
+
+export type RevertTransactionResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export const RiskCategoryFilter = {
@@ -15861,6 +15861,7 @@ export type TransactionMutation = {
   deposit: DepositResult;
   endOfDay?: Maybe<EodResult>;
   readyBranchEOD?: Maybe<Array<Maybe<Scalars['String']>>>;
+  revertTransaction: RevertTransactionResult;
   serviceCentreCashTransfer: ServiceCentreCashTransferResult;
   strTransactionAction?: Maybe<StrTransactionActionResult>;
   tellerBankTransfer?: Maybe<TellerBankTransferMutation>;
@@ -15901,6 +15902,10 @@ export type TransactionMutationDepositArgs = {
 
 export type TransactionMutationEndOfDayArgs = {
   option?: InputMaybe<EodOption>;
+};
+
+export type TransactionMutationRevertTransactionArgs = {
+  journalId: Scalars['ID'];
 };
 
 export type TransactionMutationServiceCentreCashTransferArgs = {
@@ -28730,6 +28735,62 @@ export type ListCbsWithdrawSlipCodesQuery = {
             } | null;
           } | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetCommitteeListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCommitteeListQuery = {
+  settings: {
+    general?: {
+      organization?: {
+        committee?: Array<{
+          code?: string | null;
+          description?: string | null;
+          id?: string | null;
+          memberCount?: number | null;
+          name?: string | null;
+          tenure?: number | null;
+          file?: { identifier: string; url: string } | null;
+          member?: Array<{
+            id?: string | null;
+            position: string;
+            member: {
+              activeDate?: Record<'local' | 'en' | 'np', string> | null;
+              modifiedAt: string;
+              name?: Record<'local' | 'en' | 'np', string> | null;
+              objState: ObjState;
+              profilePic?: string | null;
+              profilePicUrl?: string | null;
+              signaturePicUrl?: string | null;
+              signaturepic?: string | null;
+              modifiedBy: { id: string; name: string; userType: UserType; username: string };
+              profile?:
+                | { __typename: 'CooperativeUnionMember' }
+                | { __typename: 'KymCooperativeFormStateQuery' }
+                | { __typename: 'KymIndFormStateQuery' }
+                | { __typename: 'KymInsFormStateQuery' }
+                | null;
+              share?: {
+                history?: Array<{
+                  accountId?: string | null;
+                  memberId?: string | null;
+                } | null> | null;
+                summary?: { amount: number; count: number; id?: string | null } | null;
+              } | null;
+              address?: {
+                houseNo?: string | null;
+                localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                state?: Record<'local' | 'en' | 'np', string> | null;
+                wardNo?: string | null;
+                coordinates?: { latitude?: number | null; longitude?: number | null } | null;
+              } | null;
+            };
+          } | null> | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -48302,6 +48363,85 @@ export const useListCbsWithdrawSlipCodesQuery = <
     useAxios<ListCbsWithdrawSlipCodesQuery, ListCbsWithdrawSlipCodesQueryVariables>(
       ListCbsWithdrawSlipCodesDocument
     ).bind(null, variables),
+    options
+  );
+export const GetCommitteeListDocument = `
+    query getCommitteeList {
+  settings {
+    general {
+      organization {
+        committee {
+          code
+          description
+          file {
+            identifier
+            url
+          }
+          id
+          member {
+            id
+            member {
+              activeDate
+              modifiedAt
+              modifiedBy {
+                id
+                name
+                userType
+                username
+              }
+              name
+              objState
+              profile {
+                __typename
+              }
+              profilePic
+              profilePicUrl
+              share {
+                history {
+                  accountId
+                  memberId
+                }
+                summary {
+                  amount
+                  count
+                  id
+                }
+              }
+              signaturePicUrl
+              signaturepic
+              address {
+                coordinates {
+                  latitude
+                  longitude
+                }
+                houseNo
+                localGovernment
+                locality
+                state
+                wardNo
+              }
+            }
+            position
+          }
+          memberCount
+          name
+          tenure
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCommitteeListQuery = <TData = GetCommitteeListQuery, TError = unknown>(
+  variables?: GetCommitteeListQueryVariables,
+  options?: UseQueryOptions<GetCommitteeListQuery, TError, TData>
+) =>
+  useQuery<GetCommitteeListQuery, TError, TData>(
+    variables === undefined ? ['getCommitteeList'] : ['getCommitteeList', variables],
+    useAxios<GetCommitteeListQuery, GetCommitteeListQueryVariables>(GetCommitteeListDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetPrintCountDocument = `

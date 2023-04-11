@@ -73,6 +73,7 @@
     "cbs-settings-feature-branches": "libs/cbs/settings/feature-branches",
     "cbs-settings-feature-coa": "libs/cbs/settings/feature-coa",
     "cbs-settings-feature-code-management": "libs/cbs/settings/feature-code-management",
+    "cbs-settings-feature-committee": "libs/cbs/settings/feature-committee",
     "cbs-settings-feature-deposit": "libs/cbs/settings/feature-deposit",
     "cbs-settings-feature-deposit-products": "libs/cbs/settings/feature-deposit-products",
     "cbs-settings-feature-documents": "libs/cbs/settings/feature-documents",

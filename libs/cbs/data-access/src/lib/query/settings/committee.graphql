@@ -1,0 +1,65 @@
+query getCommitteeList {
+  settings {
+    general {
+      organization {
+        committee {
+          code
+          description
+          file {
+            identifier
+            url
+          }
+          id
+          member {
+            id
+            member {
+              activeDate
+              modifiedAt
+              modifiedBy {
+                id
+                name
+                userType
+                username
+              }
+              name
+              objState
+              profile {
+                __typename
+              }
+              profilePic
+              profilePicUrl
+              share {
+                history {
+                  accountId
+                  memberId
+                }
+                summary {
+                  amount
+                  count
+                  id
+                }
+              }
+              signaturePicUrl
+              signaturepic
+              address {
+                coordinates {
+                  latitude
+                  longitude
+                }
+                houseNo
+                localGovernment
+                locality
+                state
+                wardNo
+              }
+            }
+            position
+          }
+          memberCount
+          name
+          tenure
+        }
+      }
+    }
+  }
+}
