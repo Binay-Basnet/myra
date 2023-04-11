@@ -63,7 +63,7 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
             link: '/accounting/loan/external-loan/list',
             match: ['loan'],
             aclKey: 'ACCOUNTING_LOAN',
-            navMenu: 'LOAN',
+            navMenu: 'EXTERNAL_LOAN',
           },
 
           {
