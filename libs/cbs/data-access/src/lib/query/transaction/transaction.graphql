@@ -358,6 +358,11 @@ query loanRepaymentDetail($paymentId: ID!) {
         totalDebit
         totalCredit
         note
+        discount
+        discountDocs {
+          id
+          url
+        }
       }
     }
   }

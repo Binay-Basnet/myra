@@ -17,6 +17,7 @@ import {
   FormDatePicker,
   FormFileInput,
   FormInput,
+  FormNeosysFileInput,
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
@@ -80,7 +81,7 @@ export const NeosysClientForm = () => {
 
       <FormSection flexLayout>
         <Box w="110px">
-          <FormFileInput
+          <FormNeosysFileInput
             maxFiles="one"
             size="md"
             label={t['neoClientOrganizationLogo']}

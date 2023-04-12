@@ -17757,6 +17757,7 @@ export type AddAccountInCoaMutationVariables = Exact<{
   accountSetup: CoaAccountSetup;
   parentAccountCode: Scalars['String'];
   openForBranches?: InputMaybe<Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>>;
+  ledgerName?: InputMaybe<Scalars['String']>;
 }>;
 
 export type AddAccountInCoaMutation = {
@@ -18189,6 +18190,7 @@ export type SetLoanRepaymentMutation = {
         principalAmount?: string | null;
         interestAmount?: string | null;
         penaltyAmount?: string | null;
+        discountAmount?: string | null;
         rebateAmount?: string | null;
         totalAmount?: string | null;
         paymentMethod?: LoanRepaymentMethod | null;
@@ -20587,6 +20589,25 @@ export type ApproveIbtMutation = {
         | MutationError_ValidationError_Fragment
         | null;
     } | null;
+  };
+};
+
+export type RevertTransactionMutationVariables = Exact<{
+  journalId: Scalars['ID'];
+}>;
+
+export type RevertTransactionMutation = {
+  transaction: {
+    revertTransaction: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
   };
 };
 
@@ -31216,6 +31237,7 @@ export type LoanRepaymentDetailQuery = {
         totalDebit?: string | null;
         totalCredit?: string | null;
         note?: string | null;
+        discount?: string | null;
         member?: {
           id: string;
           code: string;
@@ -31237,6 +31259,7 @@ export type LoanRepaymentDetailQuery = {
           balance?: string | null;
           balanceType?: BalanceType | null;
         } | null> | null;
+        discountDocs?: Array<{ id: string; url: string } | null> | null;
       } | null;
     } | null;
   };
@@ -33230,7 +33253,7 @@ export const useAddGroupMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const AddAccountInCoaDocument = `
-    mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!, $openForBranches: [ID]) {
+    mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!, $openForBranches: [ID], $ledgerName: String) {
   settings {
     chartsOfAccount {
       account {
@@ -33238,6 +33261,7 @@ export const AddAccountInCoaDocument = `
           accountSetup: $accountSetup
           parentAccountCode: $parentAccountCode
           openForBranches: $openForBranches
+          ledgerName: $ledgerName
         ) {
           success
           error {
@@ -34000,6 +34024,7 @@ export const SetLoanRepaymentDocument = `
         principalAmount
         interestAmount
         penaltyAmount
+        discountAmount
         rebateAmount
         totalAmount
         paymentMethod
@@ -37787,6 +37812,33 @@ export const useApproveIbtMutation = <TError = unknown, TContext = unknown>(
   useMutation<ApproveIbtMutation, TError, ApproveIbtMutationVariables, TContext>(
     ['approveIBT'],
     useAxios<ApproveIbtMutation, ApproveIbtMutationVariables>(ApproveIbtDocument),
+    options
+  );
+export const RevertTransactionDocument = `
+    mutation revertTransaction($journalId: ID!) {
+  transaction {
+    revertTransaction(journalId: $journalId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useRevertTransactionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RevertTransactionMutation,
+    TError,
+    RevertTransactionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<RevertTransactionMutation, TError, RevertTransactionMutationVariables, TContext>(
+    ['revertTransaction'],
+    useAxios<RevertTransactionMutation, RevertTransactionMutationVariables>(
+      RevertTransactionDocument
+    ),
     options
   );
 export const GetAccountMemberListDocument = `
@@ -51790,6 +51842,11 @@ export const LoanRepaymentDetailDocument = `
         totalDebit
         totalCredit
         note
+        discount
+        discountDocs {
+          id
+          url
+        }
       }
     }
   }

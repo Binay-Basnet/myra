@@ -19,6 +19,7 @@ export * from './controllers/FormEditableTable/FormEditableTable';
 export * from './controllers/FormEmailInput/FormEmailInput';
 export * from './controllers/FormExternalLoanSelect/FormExternalLoanSelect';
 export * from './controllers/FormFileInput/FormFileInput';
+export * from './controllers/FormFileInput/FormNeosysFileInput';
 export * from './controllers/FormInput/FormInput';
 export * from './controllers/FormInvestmentEntrySelect/FormInvestmentEntrySelect';
 export * from './controllers/FormMap/FormMap';

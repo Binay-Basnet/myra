@@ -21,6 +21,7 @@ export const AddAccountModal = ({ clickedAccount, modalProps }: IAddAccountProps
     accountSetup: CoaAccountSetup;
     parentAccountCode: string;
     openForBranches: { label: string; value: string }[];
+    ledgerName: string;
   }>();
   const { watch, reset } = methods;
   const isAccountOpenForSelectedBranch = watch('accountSetup') === CoaAccountSetup.SelectedBranch;
@@ -58,6 +59,7 @@ export const AddAccountModal = ({ clickedAccount, modalProps }: IAddAccountProps
             accountSetup: methods.getValues().accountSetup,
             parentAccountCode: clickedAccount?.id as string,
             openForBranches: methods?.getValues()?.openForBranches?.map((item) => item?.value),
+            ledgerName: methods?.getValues()?.ledgerName as string,
           }),
         });
       }}

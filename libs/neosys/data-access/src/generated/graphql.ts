@@ -1004,6 +1004,16 @@ export type UpdateVersionMutation = {
   };
 };
 
+export type GetPreSignedUrlMutationVariables = Exact<{
+  contentType?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetPreSignedUrlMutation = {
+  presignedUrl: {
+    upload?: { filename?: string | null; getUrl?: string | null; putUrl?: string | null } | null;
+  };
+};
+
 export type SetUserMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   data?: InputMaybe<NeosysUserInput>;
@@ -1568,6 +1578,30 @@ export const useUpdateVersionMutation = <TError = unknown, TContext = unknown>(
   useMutation<UpdateVersionMutation, TError, UpdateVersionMutationVariables, TContext>(
     ['updateVersion'],
     useAxios<UpdateVersionMutation, UpdateVersionMutationVariables>(UpdateVersionDocument),
+    options
+  );
+export const GetPreSignedUrlDocument = `
+    mutation getPreSignedUrl($contentType: String) {
+  presignedUrl {
+    upload(contentType: $contentType) {
+      filename
+      getUrl
+      putUrl
+    }
+  }
+}
+    `;
+export const useGetPreSignedUrlMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    GetPreSignedUrlMutation,
+    TError,
+    GetPreSignedUrlMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>(
+    ['getPreSignedUrl'],
+    useAxios<GetPreSignedUrlMutation, GetPreSignedUrlMutationVariables>(GetPreSignedUrlDocument),
     options
   );
 export const SetUserDocument = `

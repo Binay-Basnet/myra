@@ -1,4 +1,5 @@
 export * from './AllPaymentsModal';
+export * from './Discount';
 export * from './FullLoanSchedule';
 export * from './InstallmentDetails';
 export * from './LoanPaymentSchedule';
