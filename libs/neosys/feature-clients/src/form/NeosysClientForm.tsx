@@ -15,7 +15,6 @@ import {
   FormAddress,
   FormCheckboxGroup,
   FormDatePicker,
-  FormFileInput,
   FormInput,
   FormNeosysFileInput,
   FormSelect,
@@ -254,26 +253,34 @@ export const NeosysClientForm = () => {
       </FormSection>
 
       <FormSection templateColumns={2} header="neoClientDocumentDeclaration">
-        <FormFileInput name="documents.agmOrBodDocument" size="lg" label={t['neoClientAGMBOD']} />
-        <FormFileInput
+        <FormNeosysFileInput
+          name="documents.agmOrBodDocument"
+          size="lg"
+          label={t['neoClientAGMBOD']}
+        />
+        <FormNeosysFileInput
           name="documents.registeredCertificate"
           size="lg"
           label={t['neoClientRegisteredCertificate']}
         />
-        <FormFileInput name="documents.moaOrAoa" size="lg" label={t['neoClientMOA']} />
-        <FormFileInput
+        <FormNeosysFileInput name="documents.moaOrAoa" size="lg" label={t['neoClientMOA']} />
+        <FormNeosysFileInput
           name="documents.panCertificate"
           size="lg"
           label={t['neoClientPANCertificate']}
         />
-        <FormFileInput name="documents.taxClearance" size="lg" label={t['neoClientTaxClearance']} />
-        <FormFileInput
+        <FormNeosysFileInput
+          name="documents.taxClearance"
+          size="lg"
+          label={t['neoClientTaxClearance']}
+        />
+        <FormNeosysFileInput
           name="documents.latestAuditReport"
           size="lg"
           label={t['neoClientLatestAuditReport']}
         />
-        <FormFileInput name="documents.logo" size="lg" label={t['neoClientLogo']} />
-        <FormFileInput
+        <FormNeosysFileInput name="documents.logo" size="lg" label={t['neoClientLogo']} />
+        <FormNeosysFileInput
           name="documents.minuteOfCentralRep"
           size="lg"
           label={t['neoClientMinuteOfCentralRep']}
