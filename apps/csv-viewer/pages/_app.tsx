@@ -4,8 +4,6 @@ import { ChakraProvider } from '@chakra-ui/react';
 
 import { theme } from '@myra-ui/theme';
 
-import './styles.css';
-
 const CustomApp = ({ Component, pageProps }: AppProps) => (
   <>
     <Head>

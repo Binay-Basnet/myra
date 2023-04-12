@@ -12,9 +12,6 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
-  compiler: {
-    styledComponents: true,
-  },
 };
 
 module.exports = withNx(nextConfig);
