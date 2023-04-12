@@ -37,6 +37,11 @@ const orgTabList: TabList[] = [
     route: ROUTES.SETTINGS_EOD_HISTORY,
   },
   {
+    label: 'Committee',
+    aclKey: 'SETTINGS_SERVICE_CENTER',
+    route: ROUTES.SETTINGS_GENERAL_COMMITTEE,
+  },
+  {
     label: 'bank',
     aclKey: 'SETTINGS_BANK',
     route: ROUTES.SETTINGS_GENERAL_BANK,

@@ -1,0 +1,29 @@
+mutation setCommitteeAdd($data: CommitteeInput!, $id: ID) {
+  settings {
+    general {
+      organization {
+        upsertCommittee(data: $data, id: $id) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setCommitteeMemberAdd($data: [CommitteeMemberInput!]!) {
+  settings {
+    general {
+      organization {
+        upsertCommitteeMember(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

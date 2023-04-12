@@ -1,0 +1,39 @@
+query getCommitteeList {
+  settings {
+    general {
+      organization {
+        committee {
+          code
+          description
+          file {
+            identifier
+            url
+          }
+          id
+
+          memberCount
+          name
+          tenure
+        }
+      }
+    }
+  }
+}
+
+query getCommitteeMemberList($committeeID: ID) {
+  settings {
+    general {
+      organization {
+        committeeMembers(committeeId: $committeeID) {
+          id
+          position
+          member {
+            name
+            contact
+            dateJoined
+          }
+        }
+      }
+    }
+  }
+}

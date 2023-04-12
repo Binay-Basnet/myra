@@ -18957,6 +18957,53 @@ export type SetCbsCodeMutation = {
   };
 };
 
+export type SetCommitteeAddMutationVariables = Exact<{
+  data: CommitteeInput;
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type SetCommitteeAddMutation = {
+  settings: {
+    general?: {
+      organization?: {
+        upsertCommittee?: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetCommitteeMemberAddMutationVariables = Exact<{
+  data: Array<CommitteeMemberInput> | CommitteeMemberInput;
+}>;
+
+export type SetCommitteeMemberAddMutation = {
+  settings: {
+    general?: {
+      organization?: {
+        upsertCommitteeMember?: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetDepositProductMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<DepositProductInput>;
@@ -28862,6 +28909,48 @@ export type ListCbsWithdrawSlipCodesQuery = {
   };
 };
 
+export type GetCommitteeListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCommitteeListQuery = {
+  settings: {
+    general?: {
+      organization?: {
+        committee?: Array<{
+          code?: string | null;
+          description?: string | null;
+          id?: string | null;
+          memberCount?: number | null;
+          name?: string | null;
+          tenure?: number | null;
+          file?: { identifier: string; url: string } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetCommitteeMemberListQueryVariables = Exact<{
+  committeeID?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type GetCommitteeMemberListQuery = {
+  settings: {
+    general?: {
+      organization?: {
+        committeeMembers?: Array<{
+          id?: string | null;
+          position: string;
+          member: {
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            contact?: string | null;
+            dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+          };
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetPrintCountQueryVariables = Exact<{
   type: PrintType;
   objectId: Scalars['ID'];
@@ -35288,6 +35377,71 @@ export const useSetCbsCodeMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetCbsCodeMutation, TError, SetCbsCodeMutationVariables, TContext>(
     ['setCBSCode'],
     useAxios<SetCbsCodeMutation, SetCbsCodeMutationVariables>(SetCbsCodeDocument),
+    options
+  );
+export const SetCommitteeAddDocument = `
+    mutation setCommitteeAdd($data: CommitteeInput!, $id: ID) {
+  settings {
+    general {
+      organization {
+        upsertCommittee(data: $data, id: $id) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetCommitteeAddMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetCommitteeAddMutation,
+    TError,
+    SetCommitteeAddMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetCommitteeAddMutation, TError, SetCommitteeAddMutationVariables, TContext>(
+    ['setCommitteeAdd'],
+    useAxios<SetCommitteeAddMutation, SetCommitteeAddMutationVariables>(SetCommitteeAddDocument),
+    options
+  );
+export const SetCommitteeMemberAddDocument = `
+    mutation setCommitteeMemberAdd($data: [CommitteeMemberInput!]!) {
+  settings {
+    general {
+      organization {
+        upsertCommitteeMember(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetCommitteeMemberAddMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetCommitteeMemberAddMutation,
+    TError,
+    SetCommitteeMemberAddMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetCommitteeMemberAddMutation,
+    TError,
+    SetCommitteeMemberAddMutationVariables,
+    TContext
+  >(
+    ['setCommitteeMemberAdd'],
+    useAxios<SetCommitteeMemberAddMutation, SetCommitteeMemberAddMutationVariables>(
+      SetCommitteeMemberAddDocument
+    ),
     options
   );
 export const SetDepositProductDocument = `
@@ -48459,6 +48613,73 @@ export const useListCbsWithdrawSlipCodesQuery = <
       : ['listCBSWithdrawSlipCodes', variables],
     useAxios<ListCbsWithdrawSlipCodesQuery, ListCbsWithdrawSlipCodesQueryVariables>(
       ListCbsWithdrawSlipCodesDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCommitteeListDocument = `
+    query getCommitteeList {
+  settings {
+    general {
+      organization {
+        committee {
+          code
+          description
+          file {
+            identifier
+            url
+          }
+          id
+          memberCount
+          name
+          tenure
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCommitteeListQuery = <TData = GetCommitteeListQuery, TError = unknown>(
+  variables?: GetCommitteeListQueryVariables,
+  options?: UseQueryOptions<GetCommitteeListQuery, TError, TData>
+) =>
+  useQuery<GetCommitteeListQuery, TError, TData>(
+    variables === undefined ? ['getCommitteeList'] : ['getCommitteeList', variables],
+    useAxios<GetCommitteeListQuery, GetCommitteeListQueryVariables>(GetCommitteeListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetCommitteeMemberListDocument = `
+    query getCommitteeMemberList($committeeID: ID) {
+  settings {
+    general {
+      organization {
+        committeeMembers(committeeId: $committeeID) {
+          id
+          position
+          member {
+            name
+            contact
+            dateJoined
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCommitteeMemberListQuery = <
+  TData = GetCommitteeMemberListQuery,
+  TError = unknown
+>(
+  variables?: GetCommitteeMemberListQueryVariables,
+  options?: UseQueryOptions<GetCommitteeMemberListQuery, TError, TData>
+) =>
+  useQuery<GetCommitteeMemberListQuery, TError, TData>(
+    variables === undefined ? ['getCommitteeMemberList'] : ['getCommitteeMemberList', variables],
+    useAxios<GetCommitteeMemberListQuery, GetCommitteeMemberListQueryVariables>(
+      GetCommitteeMemberListDocument
     ).bind(null, variables),
     options
   );
