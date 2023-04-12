@@ -8,6 +8,7 @@ import { featureCode } from '@coop/shared/utils';
 import { AccountListPage } from './AccountListPage';
 import { InactiveLoanAccountListPage } from './InactiveAccountsList';
 import { InterestUpdatePage } from './InteretUpdatePage';
+import { LoanPenaltyUpdatePage } from './LoanPenaltyUpdatePage';
 import { OverviewPage } from './OverviewPage';
 import UpdateBalanceLimitModal from '../components/LoanDetailsUpdateBalanceLimitModal';
 import { useLoanProductDepositHook } from '../hooks/useLoanProductDepositHook';
@@ -38,6 +39,7 @@ export const LoanProductDetail = () => {
       {tabQuery === 'interest update' && <InterestUpdatePage />}
       {tabQuery === 'active accounts' && <AccountListPage />}
       {tabQuery === 'inactive accounts' && <InactiveLoanAccountListPage />}
+      {tabQuery === 'penalty update' && <LoanPenaltyUpdatePage />}
       <UpdateBalanceLimitModal
         isOpen={isUpdateBalanceLimitOpen as boolean}
         onClose={handleUpdateBalanceLimitModalClose as () => void}

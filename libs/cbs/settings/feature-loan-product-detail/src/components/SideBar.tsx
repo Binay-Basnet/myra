@@ -12,6 +12,7 @@ export const SideBar = () => (
         'Active Accounts',
         'Inactive Accounts',
         'Interest Update',
+        'Penalty Update',
         // 'ACTIVITY', 'DOCUMENTS', 'TASKS'
       ]}
     />
