@@ -1,1 +1,2 @@
-export * from './lib/cbs-settings-feature-committee';
+export * from './lib/ComitteeListTable';
+export * from './lib/CommitteeDetails';

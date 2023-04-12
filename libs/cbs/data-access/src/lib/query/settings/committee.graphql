@@ -10,54 +10,28 @@ query getCommitteeList {
             url
           }
           id
-          member {
-            id
-            member {
-              activeDate
-              modifiedAt
-              modifiedBy {
-                id
-                name
-                userType
-                username
-              }
-              name
-              objState
-              profile {
-                __typename
-              }
-              profilePic
-              profilePicUrl
-              share {
-                history {
-                  accountId
-                  memberId
-                }
-                summary {
-                  amount
-                  count
-                  id
-                }
-              }
-              signaturePicUrl
-              signaturepic
-              address {
-                coordinates {
-                  latitude
-                  longitude
-                }
-                houseNo
-                localGovernment
-                locality
-                state
-                wardNo
-              }
-            }
-            position
-          }
+
           memberCount
           name
           tenure
+        }
+      }
+    }
+  }
+}
+
+query getCommitteeMemberList($committeeID: ID) {
+  settings {
+    general {
+      organization {
+        committeeMembers(committeeId: $committeeID) {
+          id
+          position
+          member {
+            name
+            contact
+            dateJoined
+          }
         }
       }
     }

@@ -1,7 +1,7 @@
 import { SettingsGeneralLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
-import { CommitteListTable } from '@coop/settings/committee';
+import { CommitteeDetails } from '@coop/settings/committee';
 
-const Page = () => <CommitteListTable />;
+const Page = () => <CommitteeDetails />;
 
 export default Page;
 

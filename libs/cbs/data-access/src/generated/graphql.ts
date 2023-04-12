@@ -809,6 +809,12 @@ export type AddressType = {
   temporary?: Maybe<Address>;
 };
 
+export const AdjustmentUnit = {
+  Minus: 'MINUS',
+  Plus: 'PLUS',
+} as const;
+
+export type AdjustmentUnit = typeof AdjustmentUnit[keyof typeof AdjustmentUnit];
 export type AdministrationQuery = {
   all: Array<Province>;
   districts: Array<Result>;
@@ -6974,11 +6980,17 @@ export type InvAddSupplierResult = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export type InvAdjustmentEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<InventoryAdjustment>;
+};
+
 export type InvItems = {
   costPrice: Scalars['String'];
   id: Scalars['ID'];
   itemCode: Scalars['String'];
   itemQuantity: Scalars['String'];
+  itemsInWarehouses?: Maybe<Scalars['Map']>;
   name: Scalars['String'];
   sellingPrice: Scalars['String'];
   taxId?: Maybe<Scalars['String']>;
@@ -7324,7 +7336,75 @@ export type InvalidDataError = {
   error?: Maybe<Scalars['InvalidData']>;
 };
 
+export type InventoryAdjustment = {
+  date?: Maybe<Scalars['Localized']>;
+  entryNo?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  reference?: Maybe<Scalars['String']>;
+};
+
+export type InventoryAdjustmentConnection = {
+  edges?: Maybe<Array<Maybe<InvAdjustmentEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type InventoryAdjustmentFilter = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type InventoryAdjustmentInput = {
+  code?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
+  description?: InputMaybe<Scalars['String']>;
+  itemDetails?: InputMaybe<Array<InputMaybe<InventoryAdjustmentItemDetails>>>;
+  modeOfAdjustment?: InputMaybe<InventoryAdjustmentMode>;
+  referenceNumber?: InputMaybe<Scalars['String']>;
+};
+
+export type InventoryAdjustmentItemDetails = {
+  itemId?: InputMaybe<Scalars['String']>;
+  newQuantity?: InputMaybe<Scalars['String']>;
+  /** For value adjustment */
+  newValue?: InputMaybe<Scalars['String']>;
+  quantityAdjusted?: InputMaybe<Scalars['String']>;
+  quantityAdjustedUnit?: InputMaybe<AdjustmentUnit>;
+  /** For quantity adjustment */
+  warehouseId?: InputMaybe<Scalars['String']>;
+};
+
+export const InventoryAdjustmentMode = {
+  Quantity: 'QUANTITY',
+  Value: 'VALUE',
+} as const;
+
+export type InventoryAdjustmentMode =
+  typeof InventoryAdjustmentMode[keyof typeof InventoryAdjustmentMode];
+export type InventoryAdjustmentMutation = {
+  new?: Maybe<InventoryAdjustmentResult>;
+};
+
+export type InventoryAdjustmentMutationNewArgs = {
+  data?: InputMaybe<InventoryAdjustmentInput>;
+};
+
+export type InventoryAdjustmentQuery = {
+  list?: Maybe<InventoryAdjustmentConnection>;
+};
+
+export type InventoryAdjustmentQueryListArgs = {
+  filter?: InputMaybe<InventoryAdjustmentFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type InventoryAdjustmentResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<InventoryAdjustmentQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type InventoryMutation = {
+  adjustment?: Maybe<InventoryAdjustmentMutation>;
   items?: Maybe<InvItemsMutation>;
   itemsGroup?: Maybe<InvItemsGroupMutation>;
   suppliers?: Maybe<InvSupplierMutation>;
@@ -7334,6 +7414,7 @@ export type InventoryMutation = {
 };
 
 export type InventoryQuery = {
+  adjustment?: Maybe<InventoryAdjustmentQuery>;
   items?: Maybe<InvItemsQuery>;
   itemsGroup?: Maybe<InvItemsGroupQuery>;
   register?: Maybe<InventoryRegisterConnection>;
@@ -7985,6 +8066,11 @@ export type KymMutation = {
 
 export type KymQuery = {
   general?: Maybe<KymGeneralSettingsQuery>;
+};
+
+export type KymUpdateResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['String']>;
 };
 
 export type KymAdditionalFields = {
@@ -11165,6 +11251,7 @@ export type LoanRepaymentInput = {
   bankVoucher?: InputMaybe<LoanRepaymentBankVoucher>;
   cash?: InputMaybe<DepositCash>;
   closeNotes?: InputMaybe<Scalars['String']>;
+  discount?: InputMaybe<RepaymentDiscount>;
   isSuspicious?: InputMaybe<Scalars['Boolean']>;
   loanAccountId: Scalars['ID'];
   memberId: Scalars['ID'];
@@ -11186,6 +11273,7 @@ export type LoanRepaymentRecord = {
   accountName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
+  discountAmount?: Maybe<Scalars['String']>;
   installmentNo?: Maybe<Scalars['String']>;
   interestAmount?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -11217,6 +11305,9 @@ export type LoanRepaymentScheme = typeof LoanRepaymentScheme[keyof typeof LoanRe
 export type LoanRepaymentView = {
   depositedBy?: Maybe<Scalars['String']>;
   depositedDate?: Maybe<Scalars['Localized']>;
+  discount?: Maybe<Scalars['String']>;
+  discountDocIdentifiers?: Maybe<Array<Maybe<Scalars['String']>>>;
+  discountDocs?: Maybe<Array<Maybe<DocumentInfo>>>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   installmentAmount?: Maybe<Scalars['String']>;
@@ -11898,6 +11989,7 @@ export type MemberMutation = {
   officialUse?: Maybe<OfficialUseResult>;
   /**  id is the ID of member  */
   translate?: Maybe<TranslateData>;
+  updateKym: KymUpdateResult;
 };
 
 export type MemberMutationCooperativeArgs = {
@@ -11936,6 +12028,11 @@ export type MemberMutationOfficialUseArgs = {
 export type MemberMutationTranslateArgs = {
   data: TranslateInput;
   memberId: Scalars['ID'];
+};
+
+export type MemberMutationUpdateKymArgs = {
+  date: Scalars['Localized'];
+  id: Scalars['ID'];
 };
 
 export type MemberOtherData = {
@@ -13031,8 +13128,7 @@ export type OrganizationSettingsMutationUpsertCommitteeArgs = {
 };
 
 export type OrganizationSettingsMutationUpsertCommitteeMemberArgs = {
-  data: CommitteeMemberInput;
-  id?: InputMaybe<Scalars['ID']>;
+  data: Array<CommitteeMemberInput>;
 };
 
 export type OrganizationSettingsQuery = {
@@ -13718,6 +13814,11 @@ export type RebateTypeInput = {
 export type ReleaseGuaranteeInput = {
   files?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   note: Scalars['String'];
+};
+
+export type RepaymentDiscount = {
+  amount: Scalars['String'];
+  doc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type ReportDetail = {
@@ -18848,6 +18949,53 @@ export type SetCbsCodeMutation = {
               | MutationError_ValidationError_Fragment
               | null;
           } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetCommitteeAddMutationVariables = Exact<{
+  data: CommitteeInput;
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type SetCommitteeAddMutation = {
+  settings: {
+    general?: {
+      organization?: {
+        upsertCommittee?: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetCommitteeMemberAddMutationVariables = Exact<{
+  data: Array<CommitteeMemberInput> | CommitteeMemberInput;
+}>;
+
+export type SetCommitteeMemberAddMutation = {
+  settings: {
+    general?: {
+      organization?: {
+        upsertCommitteeMember?: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
         } | null;
       } | null;
     } | null;
@@ -28754,42 +28902,28 @@ export type GetCommitteeListQuery = {
           name?: string | null;
           tenure?: number | null;
           file?: { identifier: string; url: string } | null;
-          member?: Array<{
-            id?: string | null;
-            position: string;
-            member: {
-              activeDate?: Record<'local' | 'en' | 'np', string> | null;
-              modifiedAt: string;
-              name?: Record<'local' | 'en' | 'np', string> | null;
-              objState: ObjState;
-              profilePic?: string | null;
-              profilePicUrl?: string | null;
-              signaturePicUrl?: string | null;
-              signaturepic?: string | null;
-              modifiedBy: { id: string; name: string; userType: UserType; username: string };
-              profile?:
-                | { __typename: 'CooperativeUnionMember' }
-                | { __typename: 'KymCooperativeFormStateQuery' }
-                | { __typename: 'KymIndFormStateQuery' }
-                | { __typename: 'KymInsFormStateQuery' }
-                | null;
-              share?: {
-                history?: Array<{
-                  accountId?: string | null;
-                  memberId?: string | null;
-                } | null> | null;
-                summary?: { amount: number; count: number; id?: string | null } | null;
-              } | null;
-              address?: {
-                houseNo?: string | null;
-                localGovernment?: Record<'local' | 'en' | 'np', string> | null;
-                locality?: Record<'local' | 'en' | 'np', string> | null;
-                state?: Record<'local' | 'en' | 'np', string> | null;
-                wardNo?: string | null;
-                coordinates?: { latitude?: number | null; longitude?: number | null } | null;
-              } | null;
-            };
-          } | null> | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetCommitteeMemberListQueryVariables = Exact<{
+  committeeID?: InputMaybe<Scalars['ID']>;
+}>;
+
+export type GetCommitteeMemberListQuery = {
+  settings: {
+    general?: {
+      organization?: {
+        committeeMembers?: Array<{
+          id?: string | null;
+          position: string;
+          member: {
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            contact?: string | null;
+            dateJoined?: Record<'local' | 'en' | 'np', string> | null;
+          };
         } | null> | null;
       } | null;
     } | null;
@@ -35218,6 +35352,71 @@ export const useSetCbsCodeMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetCbsCodeMutation, TError, SetCbsCodeMutationVariables, TContext>(
     ['setCBSCode'],
     useAxios<SetCbsCodeMutation, SetCbsCodeMutationVariables>(SetCbsCodeDocument),
+    options
+  );
+export const SetCommitteeAddDocument = `
+    mutation setCommitteeAdd($data: CommitteeInput!, $id: ID) {
+  settings {
+    general {
+      organization {
+        upsertCommittee(data: $data, id: $id) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetCommitteeAddMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetCommitteeAddMutation,
+    TError,
+    SetCommitteeAddMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetCommitteeAddMutation, TError, SetCommitteeAddMutationVariables, TContext>(
+    ['setCommitteeAdd'],
+    useAxios<SetCommitteeAddMutation, SetCommitteeAddMutationVariables>(SetCommitteeAddDocument),
+    options
+  );
+export const SetCommitteeMemberAddDocument = `
+    mutation setCommitteeMemberAdd($data: [CommitteeMemberInput!]!) {
+  settings {
+    general {
+      organization {
+        upsertCommitteeMember(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetCommitteeMemberAddMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetCommitteeMemberAddMutation,
+    TError,
+    SetCommitteeMemberAddMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetCommitteeMemberAddMutation,
+    TError,
+    SetCommitteeMemberAddMutationVariables,
+    TContext
+  >(
+    ['setCommitteeMemberAdd'],
+    useAxios<SetCommitteeMemberAddMutation, SetCommitteeMemberAddMutationVariables>(
+      SetCommitteeMemberAddDocument
+    ),
     options
   );
 export const SetDepositProductDocument = `
@@ -48378,51 +48577,6 @@ export const GetCommitteeListDocument = `
             url
           }
           id
-          member {
-            id
-            member {
-              activeDate
-              modifiedAt
-              modifiedBy {
-                id
-                name
-                userType
-                username
-              }
-              name
-              objState
-              profile {
-                __typename
-              }
-              profilePic
-              profilePicUrl
-              share {
-                history {
-                  accountId
-                  memberId
-                }
-                summary {
-                  amount
-                  count
-                  id
-                }
-              }
-              signaturePicUrl
-              signaturepic
-              address {
-                coordinates {
-                  latitude
-                  longitude
-                }
-                houseNo
-                localGovernment
-                locality
-                state
-                wardNo
-              }
-            }
-            position
-          }
           memberCount
           name
           tenure
@@ -48442,6 +48596,39 @@ export const useGetCommitteeListQuery = <TData = GetCommitteeListQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetCommitteeMemberListDocument = `
+    query getCommitteeMemberList($committeeID: ID) {
+  settings {
+    general {
+      organization {
+        committeeMembers(committeeId: $committeeID) {
+          id
+          position
+          member {
+            name
+            contact
+            dateJoined
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCommitteeMemberListQuery = <
+  TData = GetCommitteeMemberListQuery,
+  TError = unknown
+>(
+  variables?: GetCommitteeMemberListQueryVariables,
+  options?: UseQueryOptions<GetCommitteeMemberListQuery, TError, TData>
+) =>
+  useQuery<GetCommitteeMemberListQuery, TError, TData>(
+    variables === undefined ? ['getCommitteeMemberList'] : ['getCommitteeMemberList', variables],
+    useAxios<GetCommitteeMemberListQuery, GetCommitteeMemberListQueryVariables>(
+      GetCommitteeMemberListDocument
+    ).bind(null, variables),
     options
   );
 export const GetPrintCountDocument = `

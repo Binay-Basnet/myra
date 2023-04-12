@@ -1,13 +1,19 @@
+import { useMemo } from 'react';
 import { IoCopyOutline } from 'react-icons/io5';
-import { useCOALeafNodeDetails } from 'libs/cbs/settings/feature-coa/src/hooks';
+import { useRouter } from 'next/router';
 
 import { Box, DetailPageTabs, Icon, Text } from '@myra-ui';
 
-import { localizedDate, localizedText } from '@coop/cbs/utils';
+import { useGetCommitteeListQuery } from '@coop/cbs/data-access';
 import { copyToClipboard } from '@coop/shared/utils';
 
-export const COALeafDetailSidebar = () => {
-  const { leafNodeData } = useCOALeafNodeDetails();
+export const CommitteeDetailSidebar = () => {
+  const router = useRouter();
+  const id = router?.query?.['id'];
+  const { data } = useGetCommitteeListQuery();
+  const rowData = useMemo(() => data?.settings?.general?.organization?.committee ?? [], [data]);
+
+  const detailData = rowData?.find((d) => d?.id === id);
 
   return (
     <>
@@ -22,7 +28,7 @@ export const COALeafDetailSidebar = () => {
           <Box display="flex" flexDirection="column">
             <Box display="flex" justifyContent="space-between">
               <Text fontSize="r1" fontWeight={600} color="primary.500">
-                {localizedText(leafNodeData?.accountName)}
+                {detailData?.name}
               </Text>
             </Box>
             <Box display="flex" alignItems="center" gap="s4">
@@ -32,7 +38,7 @@ export const COALeafDetailSidebar = () => {
                 color="neutralColorLight.Gray-50"
                 wordBreak="break-all"
               >
-                #{leafNodeData?.id}
+                {detailData?.code}
               </Text>
               <Icon
                 _hover={{ cursor: 'pointer' }}
@@ -42,19 +48,7 @@ export const COALeafDetailSidebar = () => {
               />
             </Box>
           </Box>
-          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-            {leafNodeData?.accountType}
-          </Text>
         </Box>
-      </Box>
-
-      <Box borderBottom="1px" borderBottomColor="border.layout" p="s16" display="flex" gap="s4">
-        <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-          Created Date:
-        </Text>
-        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
-          {localizedDate(leafNodeData?.date)}
-        </Text>
       </Box>
 
       {/* <Box
@@ -72,7 +66,7 @@ export const COALeafDetailSidebar = () => {
       <DetailPageTabs
         tabs={[
           'Overview',
-          'Ledger',
+          'Members',
           // 'ATM',
           // 'Activity',
           // 'Documents',
