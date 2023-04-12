@@ -192,3 +192,25 @@ query getInventoryWarehouseTransfer($filter: WarehouseTransferFilter, $paginatio
     }
   }
 }
+
+query getInventoryAdjustmentList($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
+  inventory {
+    adjustment {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
