@@ -809,6 +809,12 @@ export type AddressType = {
   temporary?: Maybe<Address>;
 };
 
+export const AdjustmentUnit = {
+  Minus: 'MINUS',
+  Plus: 'PLUS',
+} as const;
+
+export type AdjustmentUnit = typeof AdjustmentUnit[keyof typeof AdjustmentUnit];
 export type AdministrationQuery = {
   all: Array<Province>;
   districts: Array<Result>;
@@ -6974,11 +6980,17 @@ export type InvAddSupplierResult = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export type InvAdjustmentEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<InventoryAdjustment>;
+};
+
 export type InvItems = {
   costPrice: Scalars['String'];
   id: Scalars['ID'];
   itemCode: Scalars['String'];
   itemQuantity: Scalars['String'];
+  itemsInWarehouses?: Maybe<Scalars['Map']>;
   name: Scalars['String'];
   sellingPrice: Scalars['String'];
   taxId?: Maybe<Scalars['String']>;
@@ -7324,7 +7336,75 @@ export type InvalidDataError = {
   error?: Maybe<Scalars['InvalidData']>;
 };
 
+export type InventoryAdjustment = {
+  date?: Maybe<Scalars['Localized']>;
+  entryNo?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  reference?: Maybe<Scalars['String']>;
+};
+
+export type InventoryAdjustmentConnection = {
+  edges?: Maybe<Array<Maybe<InvAdjustmentEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type InventoryAdjustmentFilter = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type InventoryAdjustmentInput = {
+  code?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
+  description?: InputMaybe<Scalars['String']>;
+  itemDetails?: InputMaybe<Array<InputMaybe<InventoryAdjustmentItemDetails>>>;
+  modeOfAdjustment?: InputMaybe<InventoryAdjustmentMode>;
+  referenceNumber?: InputMaybe<Scalars['String']>;
+};
+
+export type InventoryAdjustmentItemDetails = {
+  itemId?: InputMaybe<Scalars['String']>;
+  newQuantity?: InputMaybe<Scalars['String']>;
+  /** For value adjustment */
+  newValue?: InputMaybe<Scalars['String']>;
+  quantityAdjusted?: InputMaybe<Scalars['String']>;
+  quantityAdjustedUnit?: InputMaybe<AdjustmentUnit>;
+  /** For quantity adjustment */
+  warehouseId?: InputMaybe<Scalars['String']>;
+};
+
+export const InventoryAdjustmentMode = {
+  Quantity: 'QUANTITY',
+  Value: 'VALUE',
+} as const;
+
+export type InventoryAdjustmentMode =
+  typeof InventoryAdjustmentMode[keyof typeof InventoryAdjustmentMode];
+export type InventoryAdjustmentMutation = {
+  new?: Maybe<InventoryAdjustmentResult>;
+};
+
+export type InventoryAdjustmentMutationNewArgs = {
+  data?: InputMaybe<InventoryAdjustmentInput>;
+};
+
+export type InventoryAdjustmentQuery = {
+  list?: Maybe<InventoryAdjustmentConnection>;
+};
+
+export type InventoryAdjustmentQueryListArgs = {
+  filter?: InputMaybe<InventoryAdjustmentFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type InventoryAdjustmentResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<InventoryAdjustmentQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type InventoryMutation = {
+  adjustment?: Maybe<InventoryAdjustmentMutation>;
   items?: Maybe<InvItemsMutation>;
   itemsGroup?: Maybe<InvItemsGroupMutation>;
   suppliers?: Maybe<InvSupplierMutation>;
@@ -7334,6 +7414,7 @@ export type InventoryMutation = {
 };
 
 export type InventoryQuery = {
+  adjustment?: Maybe<InventoryAdjustmentQuery>;
   items?: Maybe<InvItemsQuery>;
   itemsGroup?: Maybe<InvItemsGroupQuery>;
   register?: Maybe<InventoryRegisterConnection>;
@@ -7985,6 +8066,11 @@ export type KymMutation = {
 
 export type KymQuery = {
   general?: Maybe<KymGeneralSettingsQuery>;
+};
+
+export type KymUpdateResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['String']>;
 };
 
 export type KymAdditionalFields = {
@@ -11187,6 +11273,7 @@ export type LoanRepaymentRecord = {
   accountName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Localized']>;
   date?: Maybe<Scalars['Localized']>;
+  discountAmount?: Maybe<Scalars['String']>;
   installmentNo?: Maybe<Scalars['String']>;
   interestAmount?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
@@ -11218,6 +11305,9 @@ export type LoanRepaymentScheme = typeof LoanRepaymentScheme[keyof typeof LoanRe
 export type LoanRepaymentView = {
   depositedBy?: Maybe<Scalars['String']>;
   depositedDate?: Maybe<Scalars['Localized']>;
+  discount?: Maybe<Scalars['String']>;
+  discountDocIdentifiers?: Maybe<Array<Maybe<Scalars['String']>>>;
+  discountDocs?: Maybe<Array<Maybe<DocumentInfo>>>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   installmentAmount?: Maybe<Scalars['String']>;
@@ -11899,6 +11989,7 @@ export type MemberMutation = {
   officialUse?: Maybe<OfficialUseResult>;
   /**  id is the ID of member  */
   translate?: Maybe<TranslateData>;
+  updateKym: KymUpdateResult;
 };
 
 export type MemberMutationCooperativeArgs = {
@@ -11937,6 +12028,11 @@ export type MemberMutationOfficialUseArgs = {
 export type MemberMutationTranslateArgs = {
   data: TranslateInput;
   memberId: Scalars['ID'];
+};
+
+export type MemberMutationUpdateKymArgs = {
+  date: Scalars['Localized'];
+  id: Scalars['ID'];
 };
 
 export type MemberOtherData = {
@@ -13032,8 +13128,7 @@ export type OrganizationSettingsMutationUpsertCommitteeArgs = {
 };
 
 export type OrganizationSettingsMutationUpsertCommitteeMemberArgs = {
-  data: CommitteeMemberInput;
-  id?: InputMaybe<Scalars['ID']>;
+  data: Array<CommitteeMemberInput>;
 };
 
 export type OrganizationSettingsQuery = {
@@ -18095,6 +18190,7 @@ export type SetLoanRepaymentMutation = {
         principalAmount?: string | null;
         interestAmount?: string | null;
         penaltyAmount?: string | null;
+        discountAmount?: string | null;
         rebateAmount?: string | null;
         totalAmount?: string | null;
         paymentMethod?: LoanRepaymentMethod | null;
@@ -31052,6 +31148,7 @@ export type LoanRepaymentDetailQuery = {
         totalDebit?: string | null;
         totalCredit?: string | null;
         note?: string | null;
+        discount?: string | null;
         member?: {
           id: string;
           code: string;
@@ -31073,6 +31170,7 @@ export type LoanRepaymentDetailQuery = {
           balance?: string | null;
           balanceType?: BalanceType | null;
         } | null> | null;
+        discountDocs?: Array<{ id: string; url: string } | null> | null;
       } | null;
     } | null;
   };
@@ -33837,6 +33935,7 @@ export const SetLoanRepaymentDocument = `
         principalAmount
         interestAmount
         penaltyAmount
+        discountAmount
         rebateAmount
         totalAmount
         paymentMethod
@@ -51522,6 +51621,11 @@ export const LoanRepaymentDetailDocument = `
         totalDebit
         totalCredit
         note
+        discount
+        discountDocs {
+          id
+          url
+        }
       }
     }
   }

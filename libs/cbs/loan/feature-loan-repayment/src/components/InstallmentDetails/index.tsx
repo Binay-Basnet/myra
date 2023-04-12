@@ -50,15 +50,33 @@ export const InstallmentData = ({
       : loanInstallments;
   }, [loanInstallments]);
 
+  const overDueInstallments = useMemo(
+    () => loanInstallments?.filter((installment) => installment?.status === 'OVERDUE') ?? [],
+    [loanInstallments]
+  );
+
+  const totalFine = useMemo(
+    () =>
+      overDueInstallments?.reduce(
+        (sum, installment) => sum + Number(installment?.penalty ?? 0),
+        0
+      ) ?? 0,
+    [overDueInstallments]
+  );
+
+  const discountAmount = watch('discount.amount');
+
+  const discountedFine = totalFine - Number(discountAmount ?? 0);
+
   const coveredInstallments: CoveredInstallment[] = useMemo(() => {
-    let tempAmount = Number(amountPaid);
+    let tempAmount = Number(amountPaid) - discountedFine;
 
-    if (!tempAmount || !remainingInstallments?.length) return [];
+    if (tempAmount < 0 || !remainingInstallments?.length) return [];
 
-    const temp: CoveredInstallment[] = [];
+    const tempCoveredInstallments: CoveredInstallment[] = [];
 
     for (let index = 0; index < remainingInstallments.length; index += 1) {
-      if (!tempAmount) break;
+      if (tempAmount < 0) break;
 
       const installment = remainingInstallments[index];
 
@@ -74,7 +92,6 @@ export const InstallmentData = ({
         installmentNo: installment.installmentNo,
       };
 
-      const penalty = Number(installment?.penalty);
       const principal = installment?.isPartial
         ? Number(installment?.currentRemainingPrincipal)
         : Number(installment?.fullPrincipal);
@@ -83,23 +100,9 @@ export const InstallmentData = ({
         ? Number(installment?.remainingInterest)
         : Number(installment?.interest);
 
-      if (
-        penalty &&
-        (loanType !== 'EPI' ||
-          (loanType === 'EPI' && installment?.status && installment.status !== 'CURRENT'))
-      ) {
-        if (tempAmount > penalty) {
-          tempInst.fine = penalty;
-          tempInst.isFinePartial = false;
-          tempAmount -= penalty;
-        } else {
-          tempInst.fine = tempAmount;
-          tempInst.isFinePartial = true;
-
-          temp.push(tempInst);
-          break;
-        }
-      }
+      const existingIndex = tempCoveredInstallments?.findIndex(
+        (inst) => inst?.installmentNo === installment?.installmentNo
+      );
 
       if (
         interest &&
@@ -107,64 +110,76 @@ export const InstallmentData = ({
           (loanType === 'EPI' && installment?.status && installment.status !== 'CURRENT'))
       ) {
         if (tempAmount > interest) {
-          tempInst.interest = interest;
-          tempInst.isInterestPartial = false;
+          if (existingIndex !== -1) {
+            tempCoveredInstallments[existingIndex].interest = interest;
+            tempCoveredInstallments[existingIndex].isInterestPartial = false;
+          } else {
+            tempInst.interest = interest;
+            tempInst.isInterestPartial = false;
+          }
           tempAmount -= interest;
         } else {
-          tempInst.interest = tempAmount;
-          tempInst.isInterestPartial = true;
-
-          temp.push(tempInst);
+          if (existingIndex !== -1) {
+            tempCoveredInstallments[existingIndex].interest = tempAmount;
+            tempCoveredInstallments[existingIndex].isInterestPartial = true;
+          } else {
+            tempInst.interest = tempAmount;
+            tempInst.isInterestPartial = true;
+            tempCoveredInstallments.push(tempInst);
+          }
           break;
         }
       }
 
       if (principal) {
         if (tempAmount > principal) {
-          tempInst.principal = principal;
-          tempInst.isPrincipalPartial = false;
+          if (existingIndex !== -1) {
+            tempCoveredInstallments[existingIndex].principal = principal;
+            tempCoveredInstallments[existingIndex].isPrincipalPartial = false;
+          } else {
+            tempInst.principal = principal;
+            tempInst.isPrincipalPartial = false;
+          }
           tempAmount -= principal;
         } else {
-          tempInst.principal = tempAmount;
-          tempInst.isPrincipalPartial = true;
+          if (existingIndex !== -1) {
+            tempCoveredInstallments[existingIndex].principal = tempAmount;
+            tempCoveredInstallments[existingIndex].isPrincipalPartial = true;
+          } else {
+            tempInst.principal = tempAmount;
+            tempInst.isPrincipalPartial = true;
 
-          temp.push(tempInst);
+            tempCoveredInstallments.push(tempInst);
+          }
           break;
         }
       }
 
-      temp.push(tempInst);
+      tempCoveredInstallments.push(tempInst);
     }
 
-    return temp;
-  }, [amountPaid, remainingInstallments, loanType]);
+    return tempCoveredInstallments;
+  }, [amountPaid, remainingInstallments, loanType, discountedFine]);
 
-  const { totalCoveredPrincipal, totalCoveredInterest, totalCoveredFine, returnAmount } =
-    useMemo(() => {
-      const tempPrincipal = coveredInstallments?.reduce(
-        (sum, installment) => sum + Number(installment.principal),
-        0
-      );
+  const { totalCoveredPrincipal, totalCoveredInterest, returnAmount } = useMemo(() => {
+    const tempPrincipal = coveredInstallments?.reduce(
+      (sum, installment) => sum + Number(installment.principal),
+      0
+    );
 
-      const tempInterest = coveredInstallments?.reduce(
-        (sum, installment) => sum + Number(installment.interest),
-        0
-      );
+    const tempInterest = coveredInstallments?.reduce(
+      (sum, installment) => sum + Number(installment.interest),
+      0
+    );
 
-      const tempFine = coveredInstallments?.reduce(
-        (sum, installment) => sum + Number(installment.fine),
-        0
-      );
+    setTotalPayableAmount(tempPrincipal + tempInterest + discountedFine);
 
-      setTotalPayableAmount(tempPrincipal + tempInterest + tempFine);
-
-      return {
-        totalCoveredPrincipal: tempPrincipal,
-        totalCoveredInterest: tempInterest,
-        totalCoveredFine: tempFine,
-        returnAmount: amountPaid - tempPrincipal - tempInterest - tempFine,
-      };
-    }, [coveredInstallments, amountPaid]);
+    return {
+      totalCoveredPrincipal: tempPrincipal,
+      totalCoveredInterest: tempInterest,
+      returnAmount: amountPaid - tempPrincipal - tempInterest - discountedFine,
+    };
+  }, [coveredInstallments, amountPaid, discountedFine]);
 
   return amountPaid ? (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -311,14 +326,14 @@ export const InstallmentData = ({
             </Text>
           </Box>
         ) : null}
-        {totalCoveredFine ? (
+        {discountedFine ? (
           <Box display="flex" justifyContent="space-between">
             <Text fontSize="s3" fontWeight={500} color="gray.700">
               Total Fine
             </Text>
 
             <Text fontSize="s3" fontWeight={500} color="gray.700">
-              {amountConverter(totalCoveredFine)}
+              {amountConverter(discountedFine)}
             </Text>
           </Box>
         ) : null}

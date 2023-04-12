@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { Box, Button, Text } from '@myra-ui';
@@ -65,11 +66,9 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     [paymentSchedule]
   );
 
-  useEffect(() => {
-    if (!overDueInstallments?.length) return setTotalFine(0);
-
-    return setTotalFine(
-      overDueInstallments.reduce((sum, installment) => sum + Number(installment?.penalty ?? 0), 0)
+  useDeepCompareEffect(() => {
+    setTotalFine(
+      overDueInstallments?.reduce((sum, installment) => sum + Number(installment?.penalty ?? 0), 0)
     );
   }, [overDueInstallments]);
 
