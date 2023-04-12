@@ -7,6 +7,7 @@ export * from './lib/checkbox/indeterminate-checkbox/IndeterminateCheckbox';
 export * from './lib/checkbox-group/CheckboxGroup';
 export * from './lib/email-input/EmailInput';
 export * from './lib/file-input/FileInput';
+export * from './lib/file-input/NeosysFileInput';
 export * from './lib/input/Input';
 export * from './lib/member-select/MemberSelect';
 export * from './lib/number-input/NumberInput';

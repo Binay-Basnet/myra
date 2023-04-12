@@ -16,7 +16,13 @@ const nextConfig = {
     svgr: false,
   },
   images: {
-    domains: ['images.unsplash.com', 'cdn.raralabs.live'],
+    domains: [
+      'images.unsplash.com',
+      'cdn.raralabs.live',
+      'minio.migration.myraerp.com',
+      'minio.myraerp.com',
+      'minio.dev.myraerp.com',
+    ],
   },
   i18n: {
     locales: ['en', 'ne'],
