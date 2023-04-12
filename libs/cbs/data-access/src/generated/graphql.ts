@@ -710,6 +710,20 @@ export type AccountwiseTransactionDetail = {
   year?: Maybe<Scalars['String']>;
 };
 
+export type AccrueInterestInfo = {
+  balance: Scalars['String'];
+  date: Scalars['Localized'];
+  interestAccrued: Scalars['String'];
+  interestRate?: Maybe<Scalars['Float']>;
+  transactionId?: Maybe<Scalars['String']>;
+};
+
+export type AccruedInterestFilter = {
+  accountId: Scalars['String'];
+  memberId: Scalars['String'];
+  period: LocalizedDateFilter;
+};
+
 export type ActiveInactiveMemberReport = {
   branchDetails?: Maybe<Branch>;
   branchID: Scalars['ID'];
@@ -4446,6 +4460,9 @@ export type DepositProductSettingsMutation = {
   editChequeSettings?: Maybe<ProductActivateResult>;
   editProductInterest: InterestSetupMutationResult;
   makeInactive?: Maybe<DepositProductInactiveResult>;
+  updateCloseCharge: ProductChargeMutationResult;
+  updateOpenCharge: ProductChargeMutationResult;
+  updatePenaltyCharge: ProductChargeMutationResult;
   updateProductInterest: InterestSetupMutationResult;
 };
 
@@ -4483,6 +4500,27 @@ export type DepositProductSettingsMutationMakeInactiveArgs = {
   data?: InputMaybe<DepositProductInactiveData>;
 };
 
+export type DepositProductSettingsMutationUpdateCloseChargeArgs = {
+  additionalData: ProductChargeAdditionalDataInput;
+  id?: InputMaybe<Scalars['ID']>;
+  payload: Array<ServiceType>;
+  productId: Scalars['ID'];
+};
+
+export type DepositProductSettingsMutationUpdateOpenChargeArgs = {
+  additionalData: ProductChargeAdditionalDataInput;
+  id?: InputMaybe<Scalars['ID']>;
+  payload: Array<ServiceType>;
+  productId: Scalars['ID'];
+};
+
+export type DepositProductSettingsMutationUpdatePenaltyChargeArgs = {
+  additionalData: ProductChargeAdditionalDataInput;
+  id?: InputMaybe<Scalars['ID']>;
+  payload: PenaltyTypeInput;
+  productId: Scalars['ID'];
+};
+
 export type DepositProductSettingsMutationUpdateProductInterestArgs = {
   data: InterestRateSetupInput;
   productId: Scalars['ID'];
@@ -4493,11 +4531,17 @@ export type DepositProductSettingsQuery = {
   formState?: Maybe<DepositProductFormStateResult>;
   get?: Maybe<DepositProduct>;
   getAccountlist?: Maybe<DepositLoanAccountConnection>;
+  getCloseCharge: ProductAccountOpenCloseQueryResult;
+  getOpenCharge: ProductAccountOpenCloseQueryResult;
+  getPenaltyCharge: ProductPenaltyQueryResult;
   getPenaltyRebateInfo?: Maybe<PenaltyRebateResult>;
   getProductCriteria?: Maybe<DepositProductCriteriaResult>;
   getProductInterestRate: InterestSetupQueryResult;
   getProductList?: Maybe<DepositProductList>;
   list?: Maybe<DepositProductConnection>;
+  listCloseCharge: ProductAccountOpenCloseListQueryResult;
+  listOpenCharge: ProductAccountOpenCloseListQueryResult;
+  listPenaltyCharge: ProductPenaltyListQueryResult;
   listProductInterestRates: InterestSetupListResult;
 };
 
@@ -4516,6 +4560,18 @@ export type DepositProductSettingsQueryGetArgs = {
 export type DepositProductSettingsQueryGetAccountlistArgs = {
   filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type DepositProductSettingsQueryGetCloseChargeArgs = {
+  id: Scalars['ID'];
+};
+
+export type DepositProductSettingsQueryGetOpenChargeArgs = {
+  id: Scalars['ID'];
+};
+
+export type DepositProductSettingsQueryGetPenaltyChargeArgs = {
+  id: Scalars['ID'];
 };
 
 export type DepositProductSettingsQueryGetPenaltyRebateInfoArgs = {
@@ -4538,6 +4594,18 @@ export type DepositProductSettingsQueryGetProductListArgs = {
 export type DepositProductSettingsQueryListArgs = {
   filter?: InputMaybe<DepositProductSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type DepositProductSettingsQueryListCloseChargeArgs = {
+  productId: Scalars['ID'];
+};
+
+export type DepositProductSettingsQueryListOpenChargeArgs = {
+  productId: Scalars['ID'];
+};
+
+export type DepositProductSettingsQueryListPenaltyChargeArgs = {
+  productId: Scalars['ID'];
 };
 
 export type DepositProductSettingsQueryListProductInterestRatesArgs = {
@@ -4568,6 +4636,7 @@ export type DepositRecord = {
 };
 
 export type DepositReport = {
+  ETDSReport: EtdsReportResult;
   accountClosingReport?: Maybe<AccountClosingReportResult>;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
   closedSavingAccountReport?: Maybe<ClosedSavingAccountResult>;
@@ -4575,10 +4644,15 @@ export type DepositReport = {
   fixedDepositReport?: Maybe<FixedDepositReportResult>;
   interestStatementReport: InterestPostingReportResult;
   interestTaxReport: InterestTaxReportResult;
+  savingAccruedInterestReport: SavingAccruedInterestResult;
   savingProductBalanceReport: SavingProductBalanceResult;
   savingStatementReport?: Maybe<ReportResult>;
   suspiciousTransctionReport?: Maybe<SuspiciousTransactionReportResult>;
   thresholdTransactionReport: TtrReportResult;
+};
+
+export type DepositReportEtdsReportArgs = {
+  data: EtdsReportFilter;
 };
 
 export type DepositReportAccountClosingReportArgs = {
@@ -4607,6 +4681,10 @@ export type DepositReportInterestStatementReportArgs = {
 
 export type DepositReportInterestTaxReportArgs = {
   data: InterestTaxReportFilter;
+};
+
+export type DepositReportSavingAccruedInterestReportArgs = {
+  data: AccruedInterestFilter;
 };
 
 export type DepositReportSavingProductBalanceReportArgs = {
@@ -5065,6 +5143,26 @@ export type EodStates = {
   loanRepayment?: Maybe<EodState>;
   maturity?: Maybe<EodState>;
   transactionDate?: Maybe<EodState>;
+};
+
+export type EtdsReportEntry = {
+  branchId?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  interest?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  panNo?: Maybe<Scalars['String']>;
+  tax?: Maybe<Scalars['String']>;
+  tdsType?: Maybe<Scalars['String']>;
+};
+
+export type EtdsReportFilter = {
+  branchId: Array<Scalars['String']>;
+  period: LocalizedDateFilter;
+};
+
+export type EtdsReportResult = {
+  data?: Maybe<Array<Maybe<EtdsReportEntry>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type EbankingRegistrationReportResult = {
@@ -6960,6 +7058,7 @@ export type InterestTaxReportEntry = {
   remarks?: Maybe<Scalars['String']>;
   savingBalance?: Maybe<Scalars['String']>;
   tax?: Maybe<Scalars['String']>;
+  tdsType?: Maybe<Scalars['String']>;
 };
 
 export type InterestTaxReportFilter = {
@@ -7806,6 +7905,7 @@ export type KymIndBasicInformation = {
   lastName?: Maybe<Scalars['Localized']>;
   middleName?: Maybe<Scalars['Localized']>;
   nationalityId?: Maybe<Scalars['String']>;
+  panNo?: Maybe<Scalars['String']>;
   religionId?: Maybe<Scalars['String']>;
 };
 
@@ -9061,6 +9161,7 @@ export type KymIndMemberInput = {
   otherCoopName?: InputMaybe<Scalars['String']>;
   otherFinancialAmount?: InputMaybe<Scalars['String']>;
   otherProfession?: InputMaybe<Scalars['String']>;
+  panNo?: InputMaybe<Scalars['String']>;
   permanentAddress?: InputMaybe<KymAddressInput>;
   phoneNumber?: InputMaybe<Scalars['String']>;
   politicallyExposedDetails?: InputMaybe<Scalars['String']>;
@@ -10243,6 +10344,30 @@ export type LoanAccountResult = {
   recordId: Scalars['ID'];
 };
 
+export type LoanAccrueBasicInfo = {
+  accountId: Scalars['String'];
+  accountName: Scalars['String'];
+  accountSubType: Scalars['String'];
+  accountType: Scalars['String'];
+  address?: Maybe<Address>;
+  approvedAmount: Scalars['String'];
+  currentInterestRate: Scalars['Float'];
+  disbursedAmount: Scalars['String'];
+  loanIssueDate: Scalars['Localized'];
+  memberCode: Scalars['String'];
+  memberId: Scalars['String'];
+  membershipDate: Scalars['Localized'];
+  noOfInstallment: Scalars['Int'];
+  serviceCentreId: Scalars['String'];
+  serviceCentreName: Scalars['String'];
+};
+
+export type LoanAccruedInterestResult = {
+  basicInfo?: Maybe<LoanAccrueBasicInfo>;
+  data?: Maybe<Array<Maybe<AccrueInterestInfo>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanAgingFilters = {
   disbursePrincipal?: InputMaybe<MinMaxFilter>;
   loanSubType?: InputMaybe<Scalars['String']>;
@@ -11122,6 +11247,8 @@ export type LoanProductTypeInput = {
 export type LoanProductsMutation = {
   editProductInterest: InterestSetupMutationResult;
   makeInactive?: Maybe<LoanProductInactiveResult>;
+  updatePenaltyCharge: ProductChargeMutationResult;
+  updateProcessingCharge: ProductChargeMutationResult;
   updateProductInterest: InterestSetupMutationResult;
   upsert?: Maybe<LoanProductsResult>;
 };
@@ -11134,6 +11261,20 @@ export type LoanProductsMutationEditProductInterestArgs = {
 
 export type LoanProductsMutationMakeInactiveArgs = {
   data?: InputMaybe<LoanProductInactiveData>;
+};
+
+export type LoanProductsMutationUpdatePenaltyChargeArgs = {
+  additionalData: ProductChargeAdditionalDataInput;
+  id?: InputMaybe<Scalars['ID']>;
+  payload: PenaltyTypeInput;
+  productId: Scalars['ID'];
+};
+
+export type LoanProductsMutationUpdateProcessingChargeArgs = {
+  additionalData: ProductChargeAdditionalDataInput;
+  id?: InputMaybe<Scalars['ID']>;
+  payload: Array<ServiceType>;
+  productId: Scalars['ID'];
 };
 
 export type LoanProductsMutationUpdateProductInterestArgs = {
@@ -11150,10 +11291,14 @@ export type LoanProductsMutationUpsertArgs = {
 export type LoanProductsQuery = {
   formState?: Maybe<LoanProductData>;
   getLoanAccountlist?: Maybe<LoanAccountConnection>;
+  getPenaltyCharge: ProductPenaltyQueryResult;
+  getProcessingCharge: ProductAccountOpenCloseQueryResult;
   getProductCriteria?: Maybe<LoanProductCriteriaResult>;
   getProductDetail?: Maybe<LoanProductData>;
   getProductInterestRate: InterestSetupQueryResult;
   list?: Maybe<LoanProductConnection>;
+  listPenaltyCharge: ProductPenaltyListQueryResult;
+  listProcessingCharge: ProductAccountOpenCloseListQueryResult;
   listProductInterestRates: InterestSetupListResult;
 };
 
@@ -11164,6 +11309,14 @@ export type LoanProductsQueryFormStateArgs = {
 export type LoanProductsQueryGetLoanAccountlistArgs = {
   filter?: InputMaybe<Filter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type LoanProductsQueryGetPenaltyChargeArgs = {
+  id: Scalars['ID'];
+};
+
+export type LoanProductsQueryGetProcessingChargeArgs = {
+  id: Scalars['ID'];
 };
 
 export type LoanProductsQueryGetProductCriteriaArgs = {
@@ -11182,6 +11335,14 @@ export type LoanProductsQueryGetProductInterestRateArgs = {
 export type LoanProductsQueryListArgs = {
   filter?: InputMaybe<LoanProductSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type LoanProductsQueryListPenaltyChargeArgs = {
+  productId: Scalars['ID'];
+};
+
+export type LoanProductsQueryListProcessingChargeArgs = {
+  productId: Scalars['ID'];
 };
 
 export type LoanProductsQueryListProductInterestRatesArgs = {
@@ -11338,6 +11499,7 @@ export type LoanRepaymentViewResult = {
 
 export type LoanReport = {
   closedLoanAccountStatementReport?: Maybe<ClosedLoanAccountReportResult>;
+  loanAccruedInterestReport?: Maybe<LoanAccruedInterestResult>;
   loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
   loanBalanceReport: LoanBalanceReportResult;
   loanCallReport?: Maybe<LoanCallReportResult>;
@@ -11349,6 +11511,10 @@ export type LoanReport = {
 
 export type LoanReportClosedLoanAccountStatementReportArgs = {
   data?: InputMaybe<ClosedLoanAccountFilter>;
+};
+
+export type LoanReportLoanAccruedInterestReportArgs = {
+  data: AccruedInterestFilter;
 };
 
 export type LoanReportLoanAgingStatementReportArgs = {
@@ -11624,6 +11790,7 @@ export type Member = Base & {
   modifiedBy: Identity;
   name?: Maybe<Scalars['Localized']>;
   objState: ObjState;
+  panVatNo?: Maybe<Scalars['String']>;
   profile?: Maybe<MemberProfile>;
   profilePic?: Maybe<Scalars['String']>;
   profilePicUrl?: Maybe<Scalars['String']>;
@@ -12204,6 +12371,7 @@ export type MemberQuery = {
   inactivateMember?: Maybe<MemberInactivateQuery>;
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
+  issueCertificate: Scalars['String'];
   list: KymMemberListConnection;
   memberOverview?: Maybe<MemberOverviewResult>;
   memberOverviewV2?: Maybe<MemberOverviewV2Result>;
@@ -12236,6 +12404,10 @@ export type MemberQueryIndividualArgs = {
 
 export type MemberQueryInstitutionArgs = {
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type MemberQueryIssueCertificateArgs = {
+  id: Scalars['ID'];
 };
 
 export type MemberQueryListArgs = {
@@ -13279,6 +13451,7 @@ export type Penalty = {
   penaltyAmount?: Maybe<Scalars['Amount']>;
   penaltyLedgerMapping?: Maybe<Scalars['String']>;
   penaltyRate?: Maybe<Scalars['Float']>;
+  penaltyType?: Maybe<PenaltyType>;
 };
 
 export type PenaltyFormState = {
@@ -13326,6 +13499,7 @@ export type PenaltyTypeInput = {
   penaltyAmount?: InputMaybe<Scalars['Amount']>;
   penaltyLedgerMapping?: InputMaybe<Scalars['String']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
+  penaltyType?: InputMaybe<PenaltyType>;
 };
 
 export type PendingOverview = {
@@ -13517,9 +13691,43 @@ export const PrintType = {
 } as const;
 
 export type PrintType = typeof PrintType[keyof typeof PrintType];
+export type ProductAccountOpenCloseData = {
+  additionalData?: Maybe<ProductChargeAdditionalData>;
+  payload?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
+};
+
+export type ProductAccountOpenCloseListQueryResult = {
+  data?: Maybe<Array<Maybe<ProductAccountOpenCloseData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type ProductAccountOpenCloseQueryResult = {
+  data?: Maybe<ProductAccountOpenCloseData>;
+  error?: Maybe<QueryError>;
+};
+
 export type ProductActivateResult = {
   error?: Maybe<MutationError>;
   recordId: Scalars['ID'];
+};
+
+export type ProductChargeAdditionalData = {
+  createdAt?: Maybe<Scalars['Localized']>;
+  effectiveDate: Scalars['Localized'];
+  fileUploads?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  id?: Maybe<Scalars['String']>;
+  notes?: Maybe<Scalars['String']>;
+};
+
+export type ProductChargeAdditionalDataInput = {
+  effectiveDate: Scalars['Localized'];
+  fileUploads?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  notes?: InputMaybe<Scalars['String']>;
+};
+
+export type ProductChargeMutationResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['ID']>;
 };
 
 export type ProductCode = {
@@ -13538,6 +13746,21 @@ export type ProductCodeType = {
   initialNo: Scalars['String'];
   noOfDigits?: Maybe<Scalars['Int']>;
   prefix: Scalars['String'];
+};
+
+export type ProductPenaltyData = {
+  additionalData?: Maybe<ProductChargeAdditionalData>;
+  payload?: Maybe<Penalty>;
+};
+
+export type ProductPenaltyListQueryResult = {
+  data?: Maybe<Array<Maybe<ProductPenaltyData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type ProductPenaltyQueryResult = {
+  data?: Maybe<ProductPenaltyData>;
+  error?: Maybe<QueryError>;
 };
 
 export type Province = {
@@ -14334,6 +14557,25 @@ export type SavedReportResponse = {
 };
 
 export type SavedReportSettings = ShareStatementReportSettingsType;
+
+export type SavingAccrueBasicInfo = {
+  accountId: Scalars['String'];
+  accountName: Scalars['String'];
+  accountType: NatureOfDepositProduct;
+  address?: Maybe<Address>;
+  currentInterestRate: Scalars['Float'];
+  memberCode: Scalars['String'];
+  memberId: Scalars['String'];
+  membershipDate: Scalars['Localized'];
+  serviceCentreId: Scalars['String'];
+  serviceCentreName: Scalars['String'];
+};
+
+export type SavingAccruedInterestResult = {
+  basicInfo?: Maybe<SavingAccrueBasicInfo>;
+  data?: Maybe<Array<Maybe<AccrueInterestInfo>>>;
+  error?: Maybe<QueryError>;
+};
 
 export type SavingAmountRange = {
   max?: InputMaybe<Scalars['Int']>;
@@ -19145,6 +19387,32 @@ export type EditSavingProductBalanceLimitMutation = {
   };
 };
 
+export type UpdateSavingProductPenaltyMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  productId: Scalars['ID'];
+  payload: PenaltyTypeInput;
+  additionalData: ProductChargeAdditionalDataInput;
+}>;
+
+export type UpdateSavingProductPenaltyMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        updatePenaltyCharge: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type SetDepositIroMutationVariables = Exact<{
   data?: InputMaybe<DepositIroInput>;
 }>;
@@ -19376,6 +19644,32 @@ export type EditLoanProductInterestRateMutation = {
     general?: {
       loanProducts?: {
         editProductInterest: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdateLoanProductPenaltyMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  productId: Scalars['ID'];
+  payload: PenaltyTypeInput;
+  additionalData: ProductChargeAdditionalDataInput;
+}>;
+
+export type UpdateLoanProductPenaltyMutation = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        updatePenaltyCharge: {
           record?: string | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -29375,6 +29669,58 @@ export type GetLoanProductInterestRateDetailQuery = {
   };
 };
 
+export type GetLoanProductPenaltyUpdateListQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetLoanProductPenaltyUpdateListQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        listPenaltyCharge: {
+          data?: Array<{
+            payload?: { penaltyRate?: number | null; penaltyAmount?: any | null } | null;
+            additionalData?: {
+              id?: string | null;
+              createdAt?: Record<'local' | 'en' | 'np', string> | null;
+              effectiveDate: Record<'local' | 'en' | 'np', string>;
+            } | null;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanProductPenaltyChargeDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetLoanProductPenaltyChargeDetailQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        getPenaltyCharge: {
+          data?: {
+            payload?: {
+              penaltyRate?: number | null;
+              penaltyAmount?: any | null;
+              dayAfterInstallmentDate?: number | null;
+            } | null;
+            additionalData?: {
+              id?: string | null;
+              createdAt?: Record<'local' | 'en' | 'np', string> | null;
+              effectiveDate: Record<'local' | 'en' | 'np', string>;
+              notes?: string | null;
+              fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+            } | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetLoanGeneralSettingsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetLoanGeneralSettingsQuery = {
@@ -30237,6 +30583,58 @@ export type GetSavingProductInterestRateDetailQuery = {
             note?: string | null;
             createdAt: Record<'local' | 'en' | 'np', string>;
             fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSavingProductPenaltyUpdateListQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetSavingProductPenaltyUpdateListQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        listPenaltyCharge: {
+          data?: Array<{
+            payload?: { penaltyRate?: number | null; penaltyAmount?: any | null } | null;
+            additionalData?: {
+              id?: string | null;
+              createdAt?: Record<'local' | 'en' | 'np', string> | null;
+              effectiveDate: Record<'local' | 'en' | 'np', string>;
+            } | null;
+          } | null> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSavingProductPenaltyChargeDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSavingProductPenaltyChargeDetailQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        getPenaltyCharge: {
+          data?: {
+            payload?: {
+              penaltyRate?: number | null;
+              penaltyAmount?: any | null;
+              dayAfterInstallmentDate?: number | null;
+            } | null;
+            additionalData?: {
+              id?: string | null;
+              createdAt?: Record<'local' | 'en' | 'np', string> | null;
+              effectiveDate: Record<'local' | 'en' | 'np', string>;
+              notes?: string | null;
+              fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+            } | null;
           } | null;
         };
       } | null;
@@ -35664,6 +36062,47 @@ export const useEditSavingProductBalanceLimitMutation = <TError = unknown, TCont
     ),
     options
   );
+export const UpdateSavingProductPenaltyDocument = `
+    mutation updateSavingProductPenalty($id: ID, $productId: ID!, $payload: PenaltyTypeInput!, $additionalData: ProductChargeAdditionalDataInput!) {
+  settings {
+    general {
+      depositProduct {
+        updatePenaltyCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateSavingProductPenaltyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateSavingProductPenaltyMutation,
+    TError,
+    UpdateSavingProductPenaltyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateSavingProductPenaltyMutation,
+    TError,
+    UpdateSavingProductPenaltyMutationVariables,
+    TContext
+  >(
+    ['updateSavingProductPenalty'],
+    useAxios<UpdateSavingProductPenaltyMutation, UpdateSavingProductPenaltyMutationVariables>(
+      UpdateSavingProductPenaltyDocument
+    ),
+    options
+  );
 export const SetDepositIroDocument = `
     mutation setDepositIro($data: DepositIroInput) {
   settings {
@@ -36057,6 +36496,47 @@ export const useEditLoanProductInterestRateMutation = <TError = unknown, TContex
     ['editLoanProductInterestRate'],
     useAxios<EditLoanProductInterestRateMutation, EditLoanProductInterestRateMutationVariables>(
       EditLoanProductInterestRateDocument
+    ),
+    options
+  );
+export const UpdateLoanProductPenaltyDocument = `
+    mutation updateLoanProductPenalty($id: ID, $productId: ID!, $payload: PenaltyTypeInput!, $additionalData: ProductChargeAdditionalDataInput!) {
+  settings {
+    general {
+      loanProducts {
+        updatePenaltyCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLoanProductPenaltyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLoanProductPenaltyMutation,
+    TError,
+    UpdateLoanProductPenaltyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateLoanProductPenaltyMutation,
+    TError,
+    UpdateLoanProductPenaltyMutationVariables,
+    TContext
+  >(
+    ['updateLoanProductPenalty'],
+    useAxios<UpdateLoanProductPenaltyMutation, UpdateLoanProductPenaltyMutationVariables>(
+      UpdateLoanProductPenaltyDocument
     ),
     options
   );
@@ -49224,6 +49704,87 @@ export const useGetLoanProductInterestRateDetailQuery = <
     ).bind(null, variables),
     options
   );
+export const GetLoanProductPenaltyUpdateListDocument = `
+    query getLoanProductPenaltyUpdateList($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        listPenaltyCharge(productId: $productId) {
+          data {
+            payload {
+              penaltyRate
+              penaltyAmount
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductPenaltyUpdateListQuery = <
+  TData = GetLoanProductPenaltyUpdateListQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductPenaltyUpdateListQueryVariables,
+  options?: UseQueryOptions<GetLoanProductPenaltyUpdateListQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductPenaltyUpdateListQuery, TError, TData>(
+    ['getLoanProductPenaltyUpdateList', variables],
+    useAxios<GetLoanProductPenaltyUpdateListQuery, GetLoanProductPenaltyUpdateListQueryVariables>(
+      GetLoanProductPenaltyUpdateListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanProductPenaltyChargeDetailDocument = `
+    query getLoanProductPenaltyChargeDetail($id: ID!) {
+  settings {
+    general {
+      loanProducts {
+        getPenaltyCharge(id: $id) {
+          data {
+            payload {
+              penaltyRate
+              penaltyAmount
+              dayAfterInstallmentDate
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductPenaltyChargeDetailQuery = <
+  TData = GetLoanProductPenaltyChargeDetailQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductPenaltyChargeDetailQueryVariables,
+  options?: UseQueryOptions<GetLoanProductPenaltyChargeDetailQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductPenaltyChargeDetailQuery, TError, TData>(
+    ['getLoanProductPenaltyChargeDetail', variables],
+    useAxios<
+      GetLoanProductPenaltyChargeDetailQuery,
+      GetLoanProductPenaltyChargeDetailQueryVariables
+    >(GetLoanProductPenaltyChargeDetailDocument).bind(null, variables),
+    options
+  );
 export const GetLoanGeneralSettingsDocument = `
     query getLoanGeneralSettings {
   settings {
@@ -50411,6 +50972,88 @@ export const useGetSavingProductInterestRateDetailQuery = <
       GetSavingProductInterestRateDetailQuery,
       GetSavingProductInterestRateDetailQueryVariables
     >(GetSavingProductInterestRateDetailDocument).bind(null, variables),
+    options
+  );
+export const GetSavingProductPenaltyUpdateListDocument = `
+    query getSavingProductPenaltyUpdateList($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        listPenaltyCharge(productId: $productId) {
+          data {
+            payload {
+              penaltyRate
+              penaltyAmount
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingProductPenaltyUpdateListQuery = <
+  TData = GetSavingProductPenaltyUpdateListQuery,
+  TError = unknown
+>(
+  variables: GetSavingProductPenaltyUpdateListQueryVariables,
+  options?: UseQueryOptions<GetSavingProductPenaltyUpdateListQuery, TError, TData>
+) =>
+  useQuery<GetSavingProductPenaltyUpdateListQuery, TError, TData>(
+    ['getSavingProductPenaltyUpdateList', variables],
+    useAxios<
+      GetSavingProductPenaltyUpdateListQuery,
+      GetSavingProductPenaltyUpdateListQueryVariables
+    >(GetSavingProductPenaltyUpdateListDocument).bind(null, variables),
+    options
+  );
+export const GetSavingProductPenaltyChargeDetailDocument = `
+    query getSavingProductPenaltyChargeDetail($id: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getPenaltyCharge(id: $id) {
+          data {
+            payload {
+              penaltyRate
+              penaltyAmount
+              dayAfterInstallmentDate
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingProductPenaltyChargeDetailQuery = <
+  TData = GetSavingProductPenaltyChargeDetailQuery,
+  TError = unknown
+>(
+  variables: GetSavingProductPenaltyChargeDetailQueryVariables,
+  options?: UseQueryOptions<GetSavingProductPenaltyChargeDetailQuery, TError, TData>
+) =>
+  useQuery<GetSavingProductPenaltyChargeDetailQuery, TError, TData>(
+    ['getSavingProductPenaltyChargeDetail', variables],
+    useAxios<
+      GetSavingProductPenaltyChargeDetailQuery,
+      GetSavingProductPenaltyChargeDetailQueryVariables
+    >(GetSavingProductPenaltyChargeDetailDocument).bind(null, variables),
     options
   );
 export const GetSettingsOptionsFieldsDocument = `

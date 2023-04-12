@@ -75,3 +75,28 @@ mutation editLoanProductInterestRate($id: ID!, $productId: ID!, $data: InterestR
     }
   }
 }
+
+mutation updateLoanProductPenalty(
+  $id: ID
+  $productId: ID!
+  $payload: PenaltyTypeInput!
+  $additionalData: ProductChargeAdditionalDataInput!
+) {
+  settings {
+    general {
+      loanProducts {
+        updatePenaltyCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

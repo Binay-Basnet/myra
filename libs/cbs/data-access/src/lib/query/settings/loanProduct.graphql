@@ -391,3 +391,53 @@ query getLoanProductInterestRateDetail($id: ID!, $productId: ID!) {
     }
   }
 }
+
+query getLoanProductPenaltyUpdateList($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        listPenaltyCharge(productId: $productId) {
+          data {
+            payload {
+              penaltyRate
+              penaltyAmount
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLoanProductPenaltyChargeDetail($id: ID!) {
+  settings {
+    general {
+      loanProducts {
+        getPenaltyCharge(id: $id) {
+          data {
+            payload {
+              penaltyRate
+              penaltyAmount
+              dayAfterInstallmentDate
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+        }
+      }
+    }
+  }
+}

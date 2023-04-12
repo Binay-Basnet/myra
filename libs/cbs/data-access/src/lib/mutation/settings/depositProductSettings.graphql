@@ -99,3 +99,28 @@ mutation editSavingProductBalanceLimit(
     }
   }
 }
+
+mutation updateSavingProductPenalty(
+  $id: ID
+  $productId: ID!
+  $payload: PenaltyTypeInput!
+  $additionalData: ProductChargeAdditionalDataInput!
+) {
+  settings {
+    general {
+      depositProduct {
+        updatePenaltyCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

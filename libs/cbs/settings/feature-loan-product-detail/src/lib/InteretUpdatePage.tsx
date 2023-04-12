@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Button, Column, Icon, Table, Text } from '@myra-ui';
+import { asyncToast, Box, Button, Column, Icon, Scrollable, Table, Text } from '@myra-ui';
 
 import {
   InterestRateSetupInput,
@@ -171,7 +171,7 @@ export const InterestUpdatePage = () => {
   };
 
   return (
-    <>
+    <Box display="flex">
       <Box
         bg="gray.0"
         w="320px"
@@ -182,28 +182,34 @@ export const InterestUpdatePage = () => {
       >
         <SideBar />
       </Box>
-      <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
-        <Box display="flex" justifyContent="space-between" alignItems="center" w="100%">
-          <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
-            Interest Update
-          </Text>
-          <Button leftIcon={<Icon as={HiOutlineRefresh} size="md" />} onClick={onUpdateModalToggle}>
-            Update Interest
-          </Button>
+
+      <Scrollable detailPage>
+        <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
+          <Box display="flex" justifyContent="space-between" alignItems="center" w="100%">
+            <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
+              Interest Update
+            </Text>
+            <Button
+              leftIcon={<Icon as={HiOutlineRefresh} size="md" />}
+              onClick={onUpdateModalToggle}
+            >
+              Update Interest
+            </Button>
+          </Box>
         </Box>
-      </Box>
-      <Box bg="background.500" ml="320px" p="s16" minH="100vh">
-        <Table
-          isStatic
-          isLoading={isFetching}
-          data={rowData}
-          columns={columns}
-          rowOnClick={(row) => {
-            setSelectedRateId(row?.id as string);
-            onDetailModalToggle();
-          }}
-        />
-      </Box>
+        <Box bg="background.500" ml="320px" p="s16" minH="100vh">
+          <Table
+            isStatic
+            isLoading={isFetching}
+            data={rowData}
+            columns={columns}
+            rowOnClick={(row) => {
+              setSelectedRateId(row?.id as string);
+              onDetailModalToggle();
+            }}
+          />
+        </Box>
+      </Scrollable>
 
       {!isRateDetailFetching && (
         <AccountInterestUpdateModal
@@ -226,6 +232,6 @@ export const InterestUpdatePage = () => {
         onClose={onDetailModalClose}
         rate={interestRateDetailData?.settings?.general?.loanProducts?.getProductInterestRate?.data}
       />
-    </>
+    </Box>
   );
 };

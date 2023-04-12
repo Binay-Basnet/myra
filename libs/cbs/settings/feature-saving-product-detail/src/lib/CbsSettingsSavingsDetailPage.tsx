@@ -10,6 +10,7 @@ import { DormantAccountListPage } from './DormantAccountPage';
 import { InactiveAccountListPage } from './InactiveAccountPage';
 import { InterestUpdatePage } from './InterestUpdatePage';
 import { OverviewPage } from './OverviewPage';
+import { PenaltyUpdatePage } from './PenaltyUpdatePage';
 import UpdateBalanceLimitModal from './UpdateBalanceLimitModal';
 import { useSavingDepositHook } from '../hooks/useSavingDepositHook';
 
@@ -44,6 +45,9 @@ export const CbsSettingsSavingsDetailPage = () => {
       {tabQuery === 'inactive accounts' && <InactiveAccountListPage />}
 
       {tabQuery === 'active accounts' && <AccountListPage />}
+
+      {tabQuery === 'penalty update' && <PenaltyUpdatePage />}
+
       <UpdateBalanceLimitModal
         isOpen={isUpdateBalanceLimitOpen as boolean}
         onClose={handleUpdateBalanceLimitModalClose as () => void}

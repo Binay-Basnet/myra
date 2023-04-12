@@ -8,23 +8,22 @@ import { useQueryClient } from '@tanstack/react-query';
 import { asyncToast, Box, Button, Column, Icon, Scrollable, Table, Text } from '@myra-ui';
 
 import {
-  InterestRateSetupInput,
-  useEditSavingProductInterestRateMutation,
   useGetEndOfDayDateDataQuery,
-  useGetSavingProductInterestRateDetailQuery,
-  useGetSavingProductInterestRateListQuery,
-  useUpdateSavingProductInterestRateMutation,
+  useGetSavingProductPenaltyChargeDetailQuery,
+  useGetSavingProductPenaltyUpdateListQuery,
+  useUpdateSavingProductPenaltyMutation,
 } from '@coop/cbs/data-access';
-import { InterestRateDetailModal, UpdateRateModal } from '@coop/cbs/settings/ui-components';
-import { CustomInterestRateSetupInput, localizedDate } from '@coop/cbs/utils';
+import { PenaltyDetailModal, UpdatePenaltyModal } from '@coop/cbs/settings/ui-components';
+import { localizedDate } from '@coop/cbs/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 import { SideBar } from '../components';
 
-export const InterestUpdatePage = () => {
+export const PenaltyUpdatePage = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const [selectedRateId, setSelectedRateId] = useState('');
+  const [selectedPenaltyId, setSelectedPenaltyId] = useState('');
 
   const queryClient = useQueryClient();
 
@@ -40,22 +39,21 @@ export const InterestUpdatePage = () => {
     onToggle: onDetailModalToggle,
   } = useDisclosure();
 
-  const methods = useForm<CustomInterestRateSetupInput>();
+  const methods = useForm();
 
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
 
   const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
 
-  const { data: interestRateDetailData, isFetching: isRateDetailFetching } =
-    useGetSavingProductInterestRateDetailQuery(
+  const { data: penaltyChargeDetailData, isFetching: isPenaltyChargeFetching } =
+    useGetSavingProductPenaltyChargeDetailQuery(
       {
-        id: selectedRateId,
-        productId: id as string,
+        id: selectedPenaltyId,
       },
-      { enabled: Boolean(id && selectedRateId) }
+      { enabled: !!selectedPenaltyId }
     );
 
-  const { data: interestRateListData, isFetching } = useGetSavingProductInterestRateListQuery(
+  const { data: penaltyUpdateListData, isFetching } = useGetSavingProductPenaltyUpdateListQuery(
     {
       productId: id as string,
     },
@@ -63,40 +61,46 @@ export const InterestUpdatePage = () => {
   );
 
   const rowData = useMemo(
-    () =>
-      interestRateListData?.settings?.general?.depositProduct?.listProductInterestRates?.data ?? [],
-    [interestRateListData]
+    () => penaltyUpdateListData?.settings?.general?.depositProduct?.listPenaltyCharge?.data ?? [],
+    [penaltyUpdateListData]
   );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         header: 'Created Date',
-        accessorKey: 'createdAt',
-        cell: (props) => localizedDate(props?.row?.original?.createdAt),
+        accessorFn: (row) => localizedDate(row?.additionalData?.createdAt),
       },
       {
         header: 'Effective Date',
-        accessorKey: 'effectiveDate',
-        cell: (props) => localizedDate(props?.row?.original?.effectiveDate),
+        accessorFn: (row) => localizedDate(row?.additionalData?.effectiveDate),
       },
       {
-        header: 'Interest Rate',
-        accessorKey: 'rate',
-        cell: (props) => `${props?.row?.original?.rate} %`,
+        header: 'Penalty Rate',
+        accessorFn: (row) => `${row?.payload?.penaltyRate} %`,
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Penalty Amount',
+        accessorFn: (row) => amountConverter(row?.payload?.penaltyAmount),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         id: '_actions',
         header: '',
         cell: (props) =>
           closingDate &&
-          props?.row?.original?.effectiveDate &&
+          props?.row?.original?.additionalData?.effectiveDate &&
           (localizedDate(closingDate) as string) <
-            (localizedDate(props?.row?.original?.effectiveDate) as string) ? (
+            (localizedDate(props?.row?.original?.additionalData?.effectiveDate) as string) ? (
             <Button
               variant="ghost"
               onClick={(e) => {
-                setSelectedRateId(props?.row?.original?.id as string);
+                setSelectedPenaltyId(props?.row?.original?.additionalData?.id as string);
                 onUpdateModalToggle();
                 e.stopPropagation();
               }}
@@ -107,7 +111,7 @@ export const InterestUpdatePage = () => {
             <Button
               variant="ghost"
               onClick={() => {
-                setSelectedRateId(props?.row?.original?.id as string);
+                setSelectedPenaltyId(props?.row?.original?.additionalData?.id as string);
                 onDetailModalToggle();
               }}
             >
@@ -122,51 +126,57 @@ export const InterestUpdatePage = () => {
     [closingDate]
   );
 
-  const { mutateAsync: updateSavingInterestRate } = useUpdateSavingProductInterestRateMutation();
+  const { mutateAsync: updatePenalty } = useUpdateSavingProductPenaltyMutation();
 
-  const handleSaveInterestRate = () => {
+  const handleSavePenaltyCharge = () => {
+    const values = methods.getValues();
     asyncToast({
-      id: 'settings-saving-product-interest-rate-update',
+      id: 'settings-saving-product-penalty-charge-update',
       msgs: {
-        loading: 'Updating Interest Rate',
-        success: 'Interest Rate Updated',
+        loading: 'Updating Penalty Charge',
+        success: 'Penalty Charge Updated',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(['getSavingProductInterestRateList']);
+        queryClient.invalidateQueries(['getSavingProductPenaltyUpdateList']);
         handleUpdateModalClose();
       },
-      promise: updateSavingInterestRate({
+      promise: updatePenalty({
         productId: id as string,
-        data: { ...methods.getValues() } as InterestRateSetupInput,
+        payload: values['payload'],
+        additionalData: values['additionalData'],
       }),
     });
   };
 
-  const { mutateAsync: editInterestRate } = useEditSavingProductInterestRateMutation();
-
   const handleEditInterestRate = () => {
+    const values = methods.getValues();
+
     asyncToast({
-      id: 'settings-saving-product-interest-rate-edit',
+      id: 'settings-saving-product-penalty-charge-edit',
       msgs: {
-        loading: 'Updating Interest Rate',
-        success: 'Interest Rate Updated',
+        loading: 'Updating Penalty Charge',
+        success: 'Penalty Charge Updated',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(['getSavingProductInterestRateList']);
+        queryClient.invalidateQueries(['getSavingProductPenaltyUpdateList']);
         handleUpdateModalClose();
       },
-      promise: editInterestRate({
-        id: selectedRateId,
+      promise: updatePenalty({
+        id: selectedPenaltyId,
         productId: id as string,
-        data: { ...methods.getValues() } as InterestRateSetupInput,
+        payload: values['payload'],
+        additionalData: values['additionalData'],
       }),
     });
   };
 
   const handleUpdateModalClose = () => {
-    methods.reset({ rate: null, effectiveDate: null, fileUploads: [], note: '' });
+    methods.reset({
+      payload: { dayAfterInstallmentDate: null, penaltyRate: null, penaltyAmount: null },
+      additionalData: { effectiveDate: null, fileUploads: [], notes: '' },
+    });
 
-    setSelectedRateId('');
+    setSelectedPenaltyId('');
     onUpdateModalClose();
   };
 
@@ -187,13 +197,13 @@ export const InterestUpdatePage = () => {
         <Box bg="background.500" ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
           <Box display="flex" justifyContent="space-between" alignItems="center" w="100%">
             <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
-              Interest Update
+              Penalty Update
             </Text>
             <Button
               leftIcon={<Icon as={HiOutlineRefresh} size="md" />}
               onClick={onUpdateModalToggle}
             >
-              Update Interest
+              Update Penalty
             </Button>
           </Box>
         </Box>
@@ -204,34 +214,32 @@ export const InterestUpdatePage = () => {
             data={rowData}
             columns={columns}
             rowOnClick={(row) => {
-              setSelectedRateId(row?.id as string);
+              setSelectedPenaltyId(row?.additionalData?.id as string);
               onDetailModalToggle();
             }}
           />
         </Box>
       </Scrollable>
 
-      {!isRateDetailFetching && (
-        <UpdateRateModal
+      {!isPenaltyChargeFetching && (
+        <UpdatePenaltyModal
           isOpen={isUpdateModalOpen}
           onClose={handleUpdateModalClose}
-          onSave={handleSaveInterestRate}
+          onSave={handleSavePenaltyCharge}
           onEdit={handleEditInterestRate}
           methods={methods}
-          rate={
-            selectedRateId
-              ? interestRateDetailData?.settings?.general?.depositProduct?.getProductInterestRate
-                  ?.data
+          penalty={
+            selectedPenaltyId
+              ? penaltyChargeDetailData?.settings?.general?.depositProduct?.getPenaltyCharge?.data
               : null
           }
         />
       )}
-      <InterestRateDetailModal
+
+      <PenaltyDetailModal
         isOpen={isDetailModalOpen}
         onClose={onDetailModalClose}
-        rate={
-          interestRateDetailData?.settings?.general?.depositProduct?.getProductInterestRate?.data
-        }
+        penalty={penaltyChargeDetailData?.settings?.general?.depositProduct?.getPenaltyCharge?.data}
       />
     </Box>
   );

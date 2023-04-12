@@ -467,3 +467,53 @@ query getSavingProductInterestRateDetail($id: ID!, $productId: ID!) {
     }
   }
 }
+
+query getSavingProductPenaltyUpdateList($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        listPenaltyCharge(productId: $productId) {
+          data {
+            payload {
+              penaltyRate
+              penaltyAmount
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSavingProductPenaltyChargeDetail($id: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getPenaltyCharge(id: $id) {
+          data {
+            payload {
+              penaltyRate
+              penaltyAmount
+              dayAfterInstallmentDate
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+        }
+      }
+    }
+  }
+}
