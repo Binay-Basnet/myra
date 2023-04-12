@@ -49,6 +49,7 @@ mutation setLoanRepayment($data: LoanRepaymentInput) {
         principalAmount
         interestAmount
         penaltyAmount
+        discountAmount
         rebateAmount
         totalAmount
         paymentMethod

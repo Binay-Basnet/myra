@@ -8260,6 +8260,11 @@ export type KymQuery = {
   general?: Maybe<KymGeneralSettingsQuery>;
 };
 
+export type KymUpdateResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['String']>;
+};
+
 export type KymAdditionalFields = {
   fieldId?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
@@ -12226,6 +12231,7 @@ export type MemberMutation = {
   officialUse?: Maybe<OfficialUseResult>;
   /**  id is the ID of member  */
   translate?: Maybe<TranslateData>;
+  updateKym: KymUpdateResult;
 };
 
 
@@ -12273,6 +12279,12 @@ export type MemberMutationOfficialUseArgs = {
 export type MemberMutationTranslateArgs = {
   data: TranslateInput;
   memberId: Scalars['ID'];
+};
+
+
+export type MemberMutationUpdateKymArgs = {
+  date: Scalars['Localized'];
+  id: Scalars['ID'];
 };
 
 export type MemberOtherData = {
@@ -17841,7 +17853,7 @@ export type SetLoanRepaymentMutationVariables = Exact<{
 }>;
 
 
-export type SetLoanRepaymentMutation = { loanAccount: { repayment?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null, record?: { transactionId?: string | null, accountId?: string | null, accountName?: string | null, memberId?: string | null, memberName?: Record<"local"|"en"|"np",string> | null, date?: Record<"local"|"en"|"np",string> | null, createdAt?: Record<"local"|"en"|"np",string> | null, installmentNo?: string | null, principalAmount?: string | null, interestAmount?: string | null, penaltyAmount?: string | null, rebateAmount?: string | null, totalAmount?: string | null, paymentMethod?: LoanRepaymentMethod | null, nextInstallment?: { installmentNo: number, installmentDate: Record<"local"|"en"|"np",string>, currentRemainingPrincipal: string, remainingInterest: string } | null } | null } | null } };
+export type SetLoanRepaymentMutation = { loanAccount: { repayment?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null, record?: { transactionId?: string | null, accountId?: string | null, accountName?: string | null, memberId?: string | null, memberName?: Record<"local"|"en"|"np",string> | null, date?: Record<"local"|"en"|"np",string> | null, createdAt?: Record<"local"|"en"|"np",string> | null, installmentNo?: string | null, principalAmount?: string | null, interestAmount?: string | null, penaltyAmount?: string | null, discountAmount?: string | null, rebateAmount?: string | null, totalAmount?: string | null, paymentMethod?: LoanRepaymentMethod | null, nextInstallment?: { installmentNo: number, installmentDate: Record<"local"|"en"|"np",string>, currentRemainingPrincipal: string, remainingInterest: string } | null } | null } | null } };
 
 export type ChangeLocMutationVariables = Exact<{
   accountId: Scalars['ID'];
@@ -20805,7 +20817,7 @@ export type LoanRepaymentDetailQueryVariables = Exact<{
 }>;
 
 
-export type LoanRepaymentDetailQuery = { transaction: { viewLoanRepayment?: { data?: { repaymentId: string, transactionCode?: string | null, loanSubType?: string | null, loanAccountId?: string | null, loanAccountName?: string | null, repaymentDate?: Record<"local"|"en"|"np",string> | null, installmentNo?: string | null, installmentAmount?: string | null, fine?: string | null, rebate?: string | null, totalRepaymentAmount?: string | null, objState: string, paymentMode?: string | null, depositedBy?: string | null, depositedDate?: Record<"local"|"en"|"np",string> | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, note?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, installmentDetails?: Array<{ installmentNo?: number | null, payment?: string | null, principalAmount?: string | null, interestAmount?: string | null } | null> | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null, ledgerId?: string | null, balance?: string | null, balanceType?: BalanceType | null } | null> | null } | null } | null } };
+export type LoanRepaymentDetailQuery = { transaction: { viewLoanRepayment?: { data?: { repaymentId: string, transactionCode?: string | null, loanSubType?: string | null, loanAccountId?: string | null, loanAccountName?: string | null, repaymentDate?: Record<"local"|"en"|"np",string> | null, installmentNo?: string | null, installmentAmount?: string | null, fine?: string | null, rebate?: string | null, totalRepaymentAmount?: string | null, objState: string, paymentMode?: string | null, depositedBy?: string | null, depositedDate?: Record<"local"|"en"|"np",string> | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, note?: string | null, discount?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, installmentDetails?: Array<{ installmentNo?: number | null, payment?: string | null, principalAmount?: string | null, interestAmount?: string | null } | null> | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null, serviceCenter?: string | null, ledgerId?: string | null, balance?: string | null, balanceType?: BalanceType | null } | null> | null, discountDocs?: Array<{ id: string, url: string } | null> | null } | null } | null } };
 
 export type GetEodStatusQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -22658,6 +22670,7 @@ export const SetLoanRepaymentDocument = `
         principalAmount
         interestAmount
         penaltyAmount
+        discountAmount
         rebateAmount
         totalAmount
         paymentMethod
@@ -39220,6 +39233,11 @@ export const LoanRepaymentDetailDocument = `
         totalDebit
         totalCredit
         note
+        discount
+        discountDocs {
+          id
+          url
+        }
       }
     }
   }

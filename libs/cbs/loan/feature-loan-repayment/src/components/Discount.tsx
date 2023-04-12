@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Box, Divider, Grid, Text } from '@myra-ui';
@@ -7,13 +7,20 @@ import { FormAmountInput, FormCheckbox, FormFileInput } from '@coop/shared/form'
 import { amountConverter } from '@coop/shared/utils';
 
 export const Discount = ({ totalFine }: { totalFine: number }) => {
-  const { watch } = useFormContext();
+  const { watch, resetField } = useFormContext();
 
   const isDiscountApplied = watch('isDiscountApplied');
 
   const discountAmount = watch('discount.amount');
 
   const newFine = useMemo(() => totalFine - Number(discountAmount), [totalFine, discountAmount]);
+
+  useEffect(() => {
+    if (!isDiscountApplied) {
+      resetField('discount.amount');
+      resetField('discount.doc');
+    }
+  }, [isDiscountApplied]);
 
   return (
     <>

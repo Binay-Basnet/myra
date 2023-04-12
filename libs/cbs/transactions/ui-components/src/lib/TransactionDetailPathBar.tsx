@@ -262,6 +262,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         'Principal Amount': amountConverter(loanRepaymentDetailData?.totalRepaymentAmount || 0),
         'Interest Amount': amountConverter(totalInterestAmount || 0),
         'Penalty Amount': amountConverter(loanRepaymentDetailData?.fine || 0),
+        'Discount Amount': amountConverter(loanRepaymentDetailData?.discount || 0),
         'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
 
         'Payment Mode': loanRepaymentDetailData?.paymentMode,

@@ -27,7 +27,14 @@ export const LoanRepaymentDetails = () => {
         title={t['transDetailInstallmentAmount']}
         subtitle={amountConverter(loanRepaymentDetailData?.installmentAmount ?? 0)}
       />
-      <DetailCardContent title={t['transDetailFine']} subtitle={loanRepaymentDetailData?.fine} />
+      <DetailCardContent
+        title={t['transDetailFine']}
+        subtitle={amountConverter(loanRepaymentDetailData?.fine ?? 0)}
+      />
+      <DetailCardContent
+        title="Discount Amount"
+        subtitle={amountConverter(loanRepaymentDetailData?.discount ?? 0)}
+      />
       <DetailCardContent
         title={t['transDetailTotalRepaymentAmount']}
         subtitle={amountConverter(loanRepaymentDetailData?.totalRepaymentAmount ?? 0)}

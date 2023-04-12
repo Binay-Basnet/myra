@@ -424,6 +424,7 @@ export const LoanRepayment = () => {
                         'Principal Amount': amountConverter(result?.principalAmount ?? '0'),
                         'Interest Amount': amountConverter(result?.interestAmount ?? '0'),
                         'Penalty Amount': amountConverter(result?.penaltyAmount ?? '0'),
+                        'Discount Amount': amountConverter(result?.discountAmount ?? '0'),
                         'Rebate Amount': amountConverter(result?.rebateAmount ?? '0'),
 
                         'Payment Mode': result?.paymentMethod,
