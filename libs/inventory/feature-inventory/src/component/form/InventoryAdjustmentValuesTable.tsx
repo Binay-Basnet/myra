@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { FormSection } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
 
-import { useGetInventoryItemsListQuery, useGetWarehouseListQuery } from '@coop/cbs/data-access';
+import { useGetInventoryItemsListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 
 export type PurchaseAdjustmentTableType = {
@@ -17,7 +17,7 @@ export type PurchaseAdjustmentTableType = {
   newValue: string;
 };
 
-export const InventoryAdjustmentTable = () => {
+export const InventoryAdjustmentValueTable = () => {
   const { data: inventoryItems } = useGetInventoryItemsListQuery({
     pagination: {
       after: '',
@@ -34,21 +34,6 @@ export const InventoryAdjustmentTable = () => {
       })),
     [inventoryItemsData]
   );
-  const { data: wareHouse } = useGetWarehouseListQuery({
-    paginate: {
-      after: '',
-      first: -1,
-    },
-  });
-  const warehouseData = wareHouse?.inventory?.warehouse?.listWarehouses?.edges;
-  const wareHouseSearchOptions = useMemo(
-    () =>
-      warehouseData?.map((account) => ({
-        label: account?.node?.name as string,
-        value: account?.node?.id as string,
-      })),
-    [warehouseData]
-  );
 
   const tableColumns: Column<PurchaseAdjustmentTableType>[] = [
     {
@@ -58,38 +43,32 @@ export const InventoryAdjustmentTable = () => {
       fieldType: 'search',
       searchOptions: accountSearchOptions,
     },
+
     {
-      accessor: 'warehouseId',
-      header: 'Warehouse',
-      // hidden: true,
-      fieldType: 'select',
-      selectOptions: wareHouseSearchOptions,
-    },
-    {
-      accessor: 'quantity',
-      header: 'Quantity Available',
+      accessor: 'value',
+      header: 'Current Value',
 
       accessorFn: (row: any) =>
         inventoryItemsData?.find((item) => row?.itemId?.value === item?.node?.id)
           ? (inventoryItemsData?.find((item) => row?.itemId?.value === item?.node?.id)?.node
-              ?.itemsInWarehouses?.[row?.warehouseId] as string)
+              ?.sellingPrice as string)
           : '',
     },
     {
-      accessor: 'newQuantity',
-      header: 'New Quantity',
-      accessorFn: (row) => Number(row?.quantity) + Number(row?.quantityAdjusted),
+      accessor: 'newValue',
+      header: 'New Value',
+      accessorFn: (row) => Number(row?.value) + Number(row?.quantityAdjusted),
     },
     {
       accessor: 'quantityAdjusted',
-      header: 'Quantity Adjusted',
+      header: 'Value Adjusted',
       isNumeric: true,
     },
   ];
 
   return (
     <FormSection flexLayout>
-      <FormEditableTable<PurchaseAdjustmentTableType> name="itemDetails" columns={tableColumns} />
+      <FormEditableTable<PurchaseAdjustmentTableType> name="valueItems" columns={tableColumns} />
     </FormSection>
   );
 };

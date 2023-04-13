@@ -13,6 +13,7 @@ query getInventoryItemsList($filter: InvItemsDataFilter, $pagination: Pagination
             sellingPrice
             itemQuantity
             taxId
+            itemsInWarehouses
             taxValue
           }
           cursor
@@ -194,6 +195,28 @@ query getInventoryWarehouseTransfer($filter: WarehouseTransferFilter, $paginatio
 }
 
 query getInventoryAdjustmentList($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
+  inventory {
+    adjustment {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getInventoryAdjustmentTable($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
   inventory {
     adjustment {
       list(filter: $filter, pagination: $pagination) {

@@ -1,64 +1,37 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
-import { Box, Divider, Text } from '@myra-ui';
+import { Box, FormSection } from '@myra-ui';
 
 import { InventoryAdjustmentMode } from '@coop/cbs/data-access';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormDatePicker, FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
 
 import { InventoryAdjustmentTable } from './InventoryAdjustmentTable';
-
-type InventoryAdjustmentTable = {
-  product_id: string;
-  quantity: number;
-  rate: number;
-  totalAmount: number;
-  product_description: string;
-};
-
-const searchOptions = [
-  { label: 'MI 001 - Lenovo Laptop', value: 'mi001' },
-  { label: 'MI 002 - Lenovo Laptop', value: 'mi002' },
-  { label: 'MI 003 - Lenovo Laptop', value: 'mi003' },
-  { label: 'MI 004 - Lenovo Laptop', value: 'mi004' },
-  { label: 'MI 005 - Lenovo Laptop', value: 'mi005' },
-  { label: 'MI 006 - Lenovo Laptop', value: 'mi006' },
-  { label: 'MI 007 - Lenovo Laptop', value: 'mi007' },
-  { label: 'MI 008 - Lenovo Laptop', value: 'mi008' },
-  { label: 'MI 009 - Lenovo Laptop', value: 'mi009' },
-  { label: 'MI 0010 - Lenovo Laptop', value: 'mi0010' },
-];
+import { InventoryAdjustmentValueTable } from './InventoryAdjustmentValuesTable';
 
 const InventoryAdjustmentForm = () => {
-  const { t } = useTranslation();
-  const methods = useForm({});
+  const methods = useFormContext();
   const modeOfAdjustment = methods?.watch('modeOfAdjustment');
   return (
-    <FormProvider {...methods}>
-      <form>
-        <Box p="s20" display="flex" flexDirection="column" gap="s32" bg="neutralColorLight.Gray-0">
-          <InputGroupContainer>
-            <FormRadioGroup
-              label="Mode of Adjustment"
-              name="modeOfAdjustment"
-              options={[
-                { label: 'Quantity Adjustment', value: InventoryAdjustmentMode?.Quantity },
-                { label: 'Value Adjustment', value: InventoryAdjustmentMode?.Value },
-              ]}
-            />
-          </InputGroupContainer>
+    <Box display="flex" flexDirection="column">
+      <FormSection>
+        <FormRadioGroup
+          label="Mode of Adjustment"
+          name="modeOfAdjustment"
+          options={[
+            { label: 'Quantity Adjustment', value: InventoryAdjustmentMode?.Quantity },
+            { label: 'Value Adjustment', value: InventoryAdjustmentMode?.Value },
+          ]}
+        />
+      </FormSection>
+      <FormSection header="Adjustment Details">
+        <FormInput label="Reference Number" name="referenceNumber" />
+        <FormInput label="Code" name="code" />
+        <FormDatePicker label="Date" name="date" />
+      </FormSection>
+      {modeOfAdjustment === InventoryAdjustmentMode?.Quantity && <InventoryAdjustmentTable />}
+      {modeOfAdjustment === InventoryAdjustmentMode?.Value && <InventoryAdjustmentValueTable />}
 
-          <Divider />
-          <Text>Adjustment Details</Text>
-          <InputGroupContainer>
-            <FormInput label="Reference Number" name="referenceNumber" />
-            <FormInput label="Code" name="code" />
-            <FormDatePicker label="Date" name="date" />
-          </InputGroupContainer>
-          <InventoryAdjustmentTable modeOfAdjustment={modeOfAdjustment} />
-
-          {/* <Box>
+      {/* <Box>
             <FormEditableTable<InventoryAdjustmentTable>
               name="data"
               debug={false}
@@ -98,12 +71,10 @@ const InventoryAdjustmentForm = () => {
             />
           </Box> */}
 
-          <Box>
-            <FormTextArea name="note" label=" " __placeholder={t['invFormNote']} />
-          </Box>
-        </Box>
-      </form>
-    </FormProvider>
+      <Box p="s20">
+        <FormTextArea name="description" label="Description" />
+      </Box>
+    </Box>
   );
 };
 

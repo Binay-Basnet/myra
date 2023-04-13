@@ -87,23 +87,23 @@ export const ACCOUNTING: NavType = {
       ],
       forms: [
         {
-          label: 'accountingPurchaseSidebarPurchaseList',
-          route: ROUTES.ACCOUNTING_PURCHASE_LIST,
+          label: 'New Purchase Entry',
+          route: ROUTES.ACCOUNTING_PURCHASE_LIST_ADD,
           aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_PURCHASE_ENTRY',
         },
         {
-          label: 'accountingPurchaseSidebarExpenses',
-          route: ROUTES.ACCOUNTING_PURCHASE_EXPENSE,
+          label: 'New Expense',
+          route: ROUTES.ACCOUNTING_PURCHASE_EXPENSE_ADD,
           aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_EXPENSES',
         },
         {
-          label: 'accountingPurchaseSidebarDebitNote',
-          route: ROUTES.ACCOUNTING_PURCHASE_DEBIT_NOTE,
+          label: 'New Debit Note',
+          route: ROUTES.ACCOUNTING_PURCHASE_DEBIT_NOTE_ADD,
           aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_DEBIT_NOTE',
         },
         {
-          label: 'accountingPurchaseSidebarSupplierPayment',
-          route: ROUTES.ACCOUNTING_PURCHASE_SUPPLIER_PAYMENT,
+          label: 'New Supplier Payment',
+          route: ROUTES.ACCOUNTING_PURCHASE_SUPPLIER_PAYMENT_ADD,
           aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_SUPPLIER_PAYMENT',
         },
       ],

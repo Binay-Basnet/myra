@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -15,8 +14,6 @@ export interface AccountingFeaturePurchaseExpensesProps {}
 
 export const AccountingFeaturePurchaseExpenses = () => {
   const { t } = useTranslation();
-
-  const router = useRouter();
 
   const { data, isFetching } = useGetMemberListQuery({
     pagination: getPaginationQuery(),
@@ -91,11 +88,7 @@ export const AccountingFeaturePurchaseExpenses = () => {
 
   return (
     <>
-      <AccountingPageHeader
-        heading={t['accountingExpensesListExpenses']}
-        buttonLabel={t['accountingExpensesListExpensesNew']}
-        buttonHandler={() => router.push('/accounting/purchase/expenses/add')}
-      />
+      <AccountingPageHeader heading={t['accountingExpensesListExpenses']} />
 
       <Table
         data={rowData}
