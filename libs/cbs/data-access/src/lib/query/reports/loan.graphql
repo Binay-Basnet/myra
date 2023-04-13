@@ -296,7 +296,7 @@ query getLoanCallSheetReport($data: LoanCallReportFilter) {
 query getLoanAccruedInterestReport($data: AccruedInterestFilter!) {
   report {
     loanReport {
-      loanAccruedInterestReport(data: $data){
+      loanAccruedInterestReport(data: $data) {
         data {
           transactionId
           interestRate
