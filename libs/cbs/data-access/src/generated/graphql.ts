@@ -26990,6 +26990,28 @@ export type GetSavingAccountAccruedInterestReportQuery = {
   };
 };
 
+export type GetEtdsStatementQueryVariables = Exact<{
+  data: EtdsReportFilter;
+}>;
+
+export type GetEtdsStatementQuery = {
+  report: {
+    depositReport: {
+      ETDSReport: {
+        data?: Array<{
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          branchId?: string | null;
+          interest?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          panNo?: string | null;
+          tax?: string | null;
+          tdsType?: string | null;
+        } | null> | null;
+      };
+    };
+  };
+};
+
 export type GetUserReportQueryVariables = Exact<{
   data?: InputMaybe<UserReportFilter>;
 }>;
@@ -46368,6 +46390,37 @@ export const useGetSavingAccountAccruedInterestReportQuery = <
       GetSavingAccountAccruedInterestReportQuery,
       GetSavingAccountAccruedInterestReportQueryVariables
     >(GetSavingAccountAccruedInterestReportDocument).bind(null, variables),
+    options
+  );
+export const GetEtdsStatementDocument = `
+    query getETDSStatement($data: ETDSReportFilter!) {
+  report {
+    depositReport {
+      ETDSReport(data: $data) {
+        data {
+          date
+          branchId
+          interest
+          memberName
+          panNo
+          tax
+          tdsType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetEtdsStatementQuery = <TData = GetEtdsStatementQuery, TError = unknown>(
+  variables: GetEtdsStatementQueryVariables,
+  options?: UseQueryOptions<GetEtdsStatementQuery, TError, TData>
+) =>
+  useQuery<GetEtdsStatementQuery, TError, TData>(
+    ['getETDSStatement', variables],
+    useAxios<GetEtdsStatementQuery, GetEtdsStatementQueryVariables>(GetEtdsStatementDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetUserReportDocument = `

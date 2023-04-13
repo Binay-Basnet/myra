@@ -362,3 +362,22 @@ query getSavingAccountAccruedInterestReport($data: AccruedInterestFilter!) {
     }
   }
 }
+
+query getETDSStatement($data: ETDSReportFilter!){
+  report {
+    depositReport {
+      ETDSReport(data: $data){
+        data {
+          date
+          branchId
+          interest
+          memberName
+          panNo
+          tax
+          tdsType
+          
+        }
+      }
+    }
+  }
+}
