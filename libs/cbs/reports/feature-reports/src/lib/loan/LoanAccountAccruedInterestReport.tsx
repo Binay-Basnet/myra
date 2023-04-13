@@ -1,55 +1,53 @@
-/* eslint-disable-next-line */
-import { Report } from '../../components/Report/useReport';
+import { useState } from 'react';
+
+import { GridItem } from '@myra-ui/components';
+import { Box, Grid, Text } from '@myra-ui/foundations';
+
 import {
   AccruedInterestFilter,
   AccrueInterestInfo,
-  useGetSavingAccountAccruedInterestReportQuery,
+  useGetLoanAccruedInterestReportQuery,
 } from '@coop/cbs/data-access';
+import { Report } from '@coop/cbs/reports';
+import { LoanReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { InterestStatementInputs } from '@coop/cbs/reports/components';
-import { useState } from 'react';
 import { formatAddress, localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
-import { Box, Grid, Text } from '@myra-ui/foundations';
-import { GridItem } from '@myra-ui/components';
 
-export const SavingAccountAccruedInterestReport = () => {
+export const LoanAccountAccruedInterestReport = () => {
   const [filters, setFilters] = useState<AccruedInterestFilter | null>(null);
 
-  const { data, isFetching } = useGetSavingAccountAccruedInterestReportQuery(
+  const { data, isFetching } = useGetLoanAccruedInterestReportQuery(
     {
       data: filters as AccruedInterestFilter,
     },
-    {
-      enabled: !!filters,
-    }
+    { enabled: !!filters }
   );
 
-  const savingAccountAccruedInterestReport =
-    data?.report?.depositReport?.savingAccruedInterestReport;
-  const meta = savingAccountAccruedInterestReport?.basicInfo;
+  const loanAccountAccruedInterestReport = data?.report?.loanReport?.loanAccruedInterestReport;
+  const basicInfo = loanAccountAccruedInterestReport?.basicInfo;
 
   return (
     <Report
       defaultFilters={null}
-      data={savingAccountAccruedInterestReport?.data as AccrueInterestInfo[]}
+      data={loanAccountAccruedInterestReport?.data as AccrueInterestInfo[]}
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
-      report={ReportEnum.SAVING_ACCOUNT_ACCRUED_INTEREST_REPORT}
+      report={ReportEnum.LOAN_ACCOUNT_ACCRUED_INTEREST_REPORT}
     >
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Saving Reports', link: '/reports/cbs/savings' },
+            { label: 'Loan Reports', link: '/reports/cbs/loan' },
             {
-              label: 'Saving Account Accrued Interest Report',
-              link: '/reports/cbs/savings/saving-account-accrued-interest/new',
+              label: 'Loan Account Accrued Interest Report',
+              link: '/reports/cbs/loan/loan-account-accrued-interest/new',
             },
           ]}
         />
         <Report.Inputs>
-          <InterestStatementInputs />
+          <LoanReportInputs accountName="accountId" />
         </Report.Inputs>
       </Report.Header>
 
@@ -64,9 +62,11 @@ export const SavingAccountAccruedInterestReport = () => {
                   <GridItem>
                     <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
                       <Text>Name of member:</Text>
-                      {meta?.address && <Text>Address:</Text>}
-                      {meta?.serviceCentreName && <Text>Service Center Name:</Text>}
-                      {meta?.currentInterestRate && <Text>Current Interest Rate:</Text>}
+                      {basicInfo?.address && <Text>Address:</Text>}
+                      {basicInfo?.serviceCentreName && <Text>Service Center Name:</Text>}
+                      {basicInfo?.approvedAmount && <Text>Approved Amount:</Text>}
+                      {basicInfo?.loanIssueDate && <Text>Loan Issued Date:</Text>}
+                      {basicInfo?.currentInterestRate && <Text>Current Interest Rate:</Text>}
                     </Box>
                   </GridItem>
 
@@ -79,14 +79,20 @@ export const SavingAccountAccruedInterestReport = () => {
                       color="gray.700"
                     >
                       <Text noOfLines={1} textTransform="capitalize">
-                        {meta?.memberId}
+                        {basicInfo?.memberCode}
                       </Text>
-                      {meta?.address && <Text noOfLines={1}>{formatAddress(meta?.address)}</Text>}
-                      {meta?.serviceCentreName && (
-                        <Text noOfLines={1}>{meta?.serviceCentreName}</Text>
+                      {basicInfo?.address && (
+                        <Text noOfLines={1}>{formatAddress(basicInfo?.address)}</Text>
                       )}
-                      {meta?.currentInterestRate && (
-                        <Text noOfLines={1}>{meta?.currentInterestRate}</Text>
+                      {basicInfo?.serviceCentreName && (
+                        <Text noOfLines={1}>{basicInfo?.serviceCentreName}</Text>
+                      )}
+                      <Text noOfLines={1}>{amountConverter(basicInfo?.approvedAmount ?? 0)}</Text>
+                      {basicInfo?.loanIssueDate && (
+                        <Text noOfLines={1}> {localizedDate(basicInfo?.loanIssueDate)}</Text>
+                      )}
+                      {basicInfo?.currentInterestRate && (
+                        <Text noOfLines={1}>{basicInfo?.currentInterestRate ?? 0}%</Text>
                       )}
                     </Box>
                   </GridItem>
@@ -99,10 +105,12 @@ export const SavingAccountAccruedInterestReport = () => {
                 <Grid templateColumns="repeat(2, 1fr)">
                   <GridItem>
                     <Box display="flex" flexDir="column" fontSize="r1" color="gray.700">
-                      {meta?.accountId && <Text>Account No.</Text>}
-                      {meta?.accountType && <Text>Account Type:</Text>}
-                      {meta?.memberCode && <Text>Membership No:</Text>}
-                      {meta?.membershipDate && <Text>Membership Date:</Text>}
+                      {basicInfo?.accountId && <Text>Account No:</Text>}
+                      {basicInfo?.accountType && <Text>Account Type:</Text>}
+                      {basicInfo?.accountSubType && <Text>Account Sub Type:</Text>}
+                      {basicInfo?.memberCode && <Text>Membership No:</Text>}
+                      {basicInfo?.noOfInstallment && <Text>Installment:</Text>}
+                      {basicInfo?.disbursedAmount && <Text>Disbursed Amount:</Text>}
                     </Box>
                   </GridItem>
 
@@ -114,11 +122,23 @@ export const SavingAccountAccruedInterestReport = () => {
                       color="gray.700"
                       fontWeight="500"
                     >
-                      {meta?.accountId && <Text noOfLines={1}>{meta?.accountId ?? 0}</Text>}
-                      {meta?.accountType && <Text noOfLines={1}>{meta?.accountType}</Text>}
-                      {meta?.memberId && <Text noOfLines={1}>{meta?.memberCode}</Text>}
-                      {meta?.membershipDate && (
-                        <Text noOfLines={1}>{localizedDate(meta?.membershipDate)}</Text>
+                      {basicInfo?.accountId && (
+                        <Text noOfLines={1}>{basicInfo?.accountId ?? 0}%</Text>
+                      )}
+                      {basicInfo?.accountType && (
+                        <Text noOfLines={1}>{basicInfo?.accountType}</Text>
+                      )}
+                      {basicInfo?.accountSubType && (
+                        <Text noOfLines={1}>{basicInfo?.accountSubType}</Text>
+                      )}
+                      {basicInfo?.memberCode && <Text noOfLines={1}>{basicInfo?.memberCode}</Text>}
+                      {basicInfo?.noOfInstallment && (
+                        <Text noOfLines={1}>{basicInfo?.noOfInstallment}</Text>
+                      )}
+                      {basicInfo?.disbursedAmount && (
+                        <Text noOfLines={1}>
+                          {amountConverter(basicInfo?.disbursedAmount || 0)}
+                        </Text>
                       )}
                     </Box>
                   </GridItem>
@@ -175,5 +195,3 @@ export const SavingAccountAccruedInterestReport = () => {
     </Report>
   );
 };
-
-export default SavingAccountAccruedInterestReport;
