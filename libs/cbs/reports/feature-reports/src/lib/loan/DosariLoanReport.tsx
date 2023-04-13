@@ -29,10 +29,9 @@ type DosariLoanReportFilters = Omit<DosariReportInput, 'committeeId'> & {
   }[];
 };
 
-export type ReportData = {
+export type ReportData = LoanAgingStatementReport & {
   designation?: string;
   fullName?: string;
-  agingData?: LoanAgingStatementReport;
   phoneNumber?: string;
   type?: string;
 };
@@ -65,7 +64,7 @@ export const DosariLoanReport = () => {
   const reportData = loanReport?.reduce((loan, curr) => {
     loan.push(
       ...(curr?.loanAgingStatementData?.report?.map((report, index) => ({
-        agingData: report,
+        ...report,
         ...(index === 0 ? omit(curr, 'loanAgingStatementData') : {}),
       })) as ReportData[])
     );
@@ -151,7 +150,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Member Name',
-                accessorKey: 'agingData.name',
+                accessorKey: 'name',
                 meta: {
                   Footer: {
                     display: 'none',
@@ -160,12 +159,12 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Loan No',
-                accessorKey: 'agingData.loanNo',
+                accessorKey: 'loanNo',
                 cell: (props) => (
                   <RouteToDetailsPage
-                    id={props?.row?.original?.agingData?.loanNo as string}
+                    id={props?.row?.original?.loanNo as string}
                     type="loan"
-                    label={props?.row?.original?.agingData?.loanNo as string}
+                    label={props?.row?.original?.loanNo as string}
                   />
                 ),
                 meta: {
@@ -176,7 +175,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Service Center',
-                accessorKey: 'agingData.branchName',
+                accessorKey: 'branchName',
                 meta: {
                   Footer: {
                     display: 'none',
@@ -186,7 +185,7 @@ export const DosariLoanReport = () => {
 
               {
                 header: 'Address',
-                accessorKey: 'agingData.address',
+                accessorKey: 'address',
                 meta: {
                   Footer: {
                     display: 'none',
@@ -195,7 +194,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Phone No.',
-                accessorKey: 'agingData.phoneNo',
+                accessorKey: 'phoneNo',
                 meta: {
                   Footer: {
                     display: 'none',
@@ -204,7 +203,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Loan Type',
-                accessorKey: 'agingData.loanType',
+                accessorKey: 'loanType',
                 meta: {
                   Footer: {
                     display: 'none',
@@ -213,7 +212,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Payment Mode',
-                accessorKey: 'agingData.paymentMode',
+                accessorKey: 'paymentMode',
                 meta: {
                   Footer: {
                     display: 'none',
@@ -222,7 +221,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Tenure',
-                accessorKey: 'agingData.tenure',
+                accessorKey: 'tenure',
                 meta: {
                   Footer: {
                     display: 'none',
@@ -231,7 +230,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Issue Date',
-                accessorFn: (row) => localizedDate(row?.agingData?.issueDate),
+                accessorFn: (row) => localizedDate(row?.issueDate),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -240,7 +239,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Loan Maturity Date',
-                accessorFn: (row) => localizedDate(row?.agingData?.loanMaturityDate),
+                accessorFn: (row) => localizedDate(row?.loanMaturityDate),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -249,7 +248,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Disburse Principal',
-                accessorKey: 'agingData.disbursePrincipal',
+                accessorKey: 'disbursePrincipal',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.disbursePrincipalTotal || 0),
 
@@ -259,7 +258,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Outstanding Balance',
-                accessorKey: 'agingData.remainingPrincipal',
+                accessorKey: 'remainingPrincipal',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.remainingPrincipalTotal || 0),
                 meta: {
@@ -269,7 +268,7 @@ export const DosariLoanReport = () => {
 
               {
                 header: 'Installment Amount',
-                accessorKey: 'agingData.installmentAmount',
+                accessorKey: 'installmentAmount',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.installmentAmountTotal || 0),
 
@@ -279,7 +278,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Remaining (Due) Installment Amount',
-                accessorKey: 'agingData.remainingInstallmentAmount',
+                accessorKey: 'remainingInstallmentAmount',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.remainingInstallmentAmountTotal || 0),
 
@@ -289,7 +288,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Remaining Interest',
-                accessorKey: 'agingData.remainingInterest',
+                accessorKey: 'remainingInterest',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.remainingInterestTotal || 0),
 
@@ -299,7 +298,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Remaining Fine/Penalty',
-                accessorKey: 'agingData.remainingPenalty',
+                accessorKey: 'remainingPenalty',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.remainingPenaltyTotal || 0),
 
@@ -309,7 +308,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Total Due Amount',
-                accessorKey: 'agingData.totalDueAmount',
+                accessorKey: 'totalDueAmount',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.dueAmountTotal || 0),
 
@@ -319,7 +318,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Good Amount',
-                accessorKey: 'agingData.goodAmount',
+                accessorKey: 'goodAmount',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.goodAmountTotal || 0),
 
@@ -329,7 +328,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Matured (Due)-1 to 30 Days',
-                accessorKey: 'agingData.matured1To30Days',
+                accessorKey: 'matured1To30Days',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.matured1To30DaysTotal || 0),
 
@@ -339,7 +338,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Matured (Due)-1 to 12 Month',
-                accessorKey: 'agingData.matured1To12Months',
+                accessorKey: 'matured1To12Months',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.matured1To12MonthsTotal || 0),
 
@@ -349,7 +348,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Matured (Due)- Above 12 Month',
-                accessorKey: 'agingData.maturedAbove12Months',
+                accessorKey: 'maturedAbove12Months',
                 cell: (props) => amountConverter(props.getValue() as string),
                 footer: () => amountConverter(summary?.maturedAbove12MonthsTotal || 0),
 
@@ -359,15 +358,15 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Last Principal Paid Date',
-                accessorFn: (row) => localizedDate(row?.agingData?.lastPrincipalPaidDate),
+                accessorFn: (row) => localizedDate(row?.lastPrincipalPaidDate),
               },
               {
                 header: 'Last Interest Paid Date',
-                accessorFn: (row) => localizedDate(row?.agingData?.lastInterestPaidDate),
+                accessorFn: (row) => localizedDate(row?.lastInterestPaidDate),
               },
               {
                 header: 'Next Installment Date',
-                accessorFn: (row) => localizedDate(row?.agingData?.nextPaymentDate),
+                accessorFn: (row) => localizedDate(row?.nextPaymentDate),
               },
               {
                 header: 'Installment Late Days',
