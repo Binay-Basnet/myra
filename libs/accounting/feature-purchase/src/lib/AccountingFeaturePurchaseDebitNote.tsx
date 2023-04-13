@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -15,8 +14,6 @@ export interface AccountingFeaturePurchaseDebitNoteProps {}
 
 export const AccountingFeaturePurchaseDebitNote = () => {
   const { t } = useTranslation();
-
-  const router = useRouter();
 
   const { data, isFetching } = useGetMemberListQuery({
     pagination: getPaginationQuery(),
@@ -91,11 +88,7 @@ export const AccountingFeaturePurchaseDebitNote = () => {
 
   return (
     <>
-      <AccountingPageHeader
-        heading={t['accountingDebitNoteListDebitNote']}
-        buttonLabel={t['accountingDebitNoteListDebitNoteNew']}
-        buttonHandler={() => router.push('/accounting/purchase/debit-note/add')}
-      />
+      <AccountingPageHeader heading={t['accountingDebitNoteListDebitNote']} />
 
       <Table
         data={rowData}

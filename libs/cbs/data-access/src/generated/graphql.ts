@@ -5002,6 +5002,31 @@ export type DormantSetupFormState = {
   duration?: Maybe<DormantDuration>;
 };
 
+export type DosariReportData = {
+  designation?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  loanAgingStatementData?: Maybe<LoanAgingStatementData>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+};
+
+export type DosariReportFilter = {
+  installmentDate?: InputMaybe<Scalars['Localized']>;
+  product?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  type?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type DosariReportInput = {
+  committeeId?: InputMaybe<Array<Scalars['String']>>;
+  filter?: InputMaybe<DosariReportFilter>;
+  period: LocalizedDateFilter;
+};
+
+export type DosariReportResult = {
+  data?: Maybe<Array<Maybe<DosariReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type Dues = {
   dueInstallments?: Maybe<Scalars['Int']>;
   fine?: Maybe<Scalars['String']>;
@@ -10356,6 +10381,7 @@ export type LoanAccrueBasicInfo = {
   loanIssueDate: Scalars['Localized'];
   memberCode: Scalars['String'];
   memberId: Scalars['String'];
+  memberName: Scalars['String'];
   membershipDate: Scalars['Localized'];
   noOfInstallment: Scalars['Int'];
   serviceCentreId: Scalars['String'];
@@ -11499,6 +11525,7 @@ export type LoanRepaymentViewResult = {
 
 export type LoanReport = {
   closedLoanAccountStatementReport?: Maybe<ClosedLoanAccountReportResult>;
+  dosariLoanReport?: Maybe<DosariReportResult>;
   loanAccruedInterestReport?: Maybe<LoanAccruedInterestResult>;
   loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
   loanBalanceReport: LoanBalanceReportResult;
@@ -11511,6 +11538,10 @@ export type LoanReport = {
 
 export type LoanReportClosedLoanAccountStatementReportArgs = {
   data?: InputMaybe<ClosedLoanAccountFilter>;
+};
+
+export type LoanReportDosariLoanReportArgs = {
+  data: DosariReportInput;
 };
 
 export type LoanReportLoanAccruedInterestReportArgs = {
@@ -14566,6 +14597,7 @@ export type SavingAccrueBasicInfo = {
   currentInterestRate: Scalars['Float'];
   memberCode: Scalars['String'];
   memberId: Scalars['String'];
+  memberName: Scalars['String'];
   membershipDate: Scalars['Localized'];
   serviceCentreId: Scalars['String'];
   serviceCentreName: Scalars['String'];
@@ -18331,6 +18363,27 @@ export type SetWareHouseTransferMutation = {
   inventory: {
     warehouse?: {
       transfer?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetInventoryAdjustmentMutationVariables = Exact<{
+  data?: InputMaybe<InventoryAdjustmentInput>;
+}>;
+
+export type SetInventoryAdjustmentMutation = {
+  inventory: {
+    adjustment?: {
+      new?: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -23785,6 +23838,7 @@ export type GetInventoryItemsListQuery = {
             sellingPrice: string;
             itemQuantity: string;
             taxId?: string | null;
+            itemsInWarehouses?: Record<string, string> | null;
             taxValue?: number | null;
           } | null;
         } | null> | null;
@@ -23962,6 +24016,56 @@ export type GetInventoryWarehouseTransferQuery = {
             destinationWarehouseId: string;
             destinationWarehouseName: string;
             status: WarehouseTransferStatus;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventoryAdjustmentListQueryVariables = Exact<{
+  filter?: InputMaybe<InventoryAdjustmentFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetInventoryAdjustmentListQuery = {
+  inventory: {
+    adjustment?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            entryNo?: string | null;
+            reference?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventoryAdjustmentTableQueryVariables = Exact<{
+  filter?: InputMaybe<InventoryAdjustmentFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetInventoryAdjustmentTableQuery = {
+  inventory: {
+    adjustment?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            entryNo?: string | null;
+            reference?: string | null;
           } | null;
         } | null> | null;
         pageInfo?: PaginationFragment | null;
@@ -34318,6 +34422,40 @@ export const useSetWareHouseTransferMutation = <TError = unknown, TContext = unk
     ),
     options
   );
+export const SetInventoryAdjustmentDocument = `
+    mutation setInventoryAdjustment($data: InventoryAdjustmentInput) {
+  inventory {
+    adjustment {
+      new(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetInventoryAdjustmentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetInventoryAdjustmentMutation,
+    TError,
+    SetInventoryAdjustmentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetInventoryAdjustmentMutation,
+    TError,
+    SetInventoryAdjustmentMutationVariables,
+    TContext
+  >(
+    ['setInventoryAdjustment'],
+    useAxios<SetInventoryAdjustmentMutation, SetInventoryAdjustmentMutationVariables>(
+      SetInventoryAdjustmentDocument
+    ),
+    options
+  );
 export const SendLoanApplicationForApprovalDocument = `
     mutation sendLoanApplicationForApproval($id: ID!, $data: LoanAccountInput!) {
   loanAccount {
@@ -42039,6 +42177,7 @@ export const GetInventoryItemsListDocument = `
             sellingPrice
             itemQuantity
             taxId
+            itemsInWarehouses
             taxValue
           }
           cursor
@@ -42327,6 +42466,84 @@ export const useGetInventoryWarehouseTransferQuery = <
     ['getInventoryWarehouseTransfer', variables],
     useAxios<GetInventoryWarehouseTransferQuery, GetInventoryWarehouseTransferQueryVariables>(
       GetInventoryWarehouseTransferDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryAdjustmentListDocument = `
+    query getInventoryAdjustmentList($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
+  inventory {
+    adjustment {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetInventoryAdjustmentListQuery = <
+  TData = GetInventoryAdjustmentListQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryAdjustmentListQueryVariables,
+  options?: UseQueryOptions<GetInventoryAdjustmentListQuery, TError, TData>
+) =>
+  useQuery<GetInventoryAdjustmentListQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryAdjustmentList']
+      : ['getInventoryAdjustmentList', variables],
+    useAxios<GetInventoryAdjustmentListQuery, GetInventoryAdjustmentListQueryVariables>(
+      GetInventoryAdjustmentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryAdjustmentTableDocument = `
+    query getInventoryAdjustmentTable($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
+  inventory {
+    adjustment {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetInventoryAdjustmentTableQuery = <
+  TData = GetInventoryAdjustmentTableQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryAdjustmentTableQueryVariables,
+  options?: UseQueryOptions<GetInventoryAdjustmentTableQuery, TError, TData>
+) =>
+  useQuery<GetInventoryAdjustmentTableQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryAdjustmentTable']
+      : ['getInventoryAdjustmentTable', variables],
+    useAxios<GetInventoryAdjustmentTableQuery, GetInventoryAdjustmentTableQueryVariables>(
+      GetInventoryAdjustmentTableDocument
     ).bind(null, variables),
     options
   );

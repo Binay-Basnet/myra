@@ -1,53 +1,61 @@
 import { useMemo } from 'react';
-import { BsThreeDots } from 'react-icons/bs';
-import { IconButton } from '@chakra-ui/react';
 
-import { Column, PageHeader, Table } from '@myra-ui';
+import { Box, Column, Table } from '@myra-ui';
 
-import { useGetInventoryItemsListQuery } from '@coop/cbs/data-access';
+import { useGetInventoryAdjustmentListQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
-export const InventoryAdjustmentsTable = () => {
+import { TableListPageHeader } from '../../TableListPageHeader';
+
+export const InventoryAdjustmentsTableList = () => {
   const { t } = useTranslation();
-  const { data, isFetching } = useGetInventoryItemsListQuery({
+  const { data, isFetching } = useGetInventoryAdjustmentListQuery({
     pagination: getPaginationQuery(),
   });
 
-  const rowItems = data?.inventory.items?.list?.edges ?? [];
+  const rowItems = data?.inventory?.adjustment?.list?.edges ?? [];
 
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
-        header: t['itemUnitsDate'],
-        accessorFn: (row) => row?.node?.name,
+        header: 'Date',
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+
+      {
+        header: 'Entry No',
+        accessorFn: (row) => row?.node?.entryNo,
       },
       {
-        header: t['itemUnitsEntryNo'],
-        accessorFn: (row) => row?.node?.type,
+        header: 'Reference',
+        accessorFn: (row) => row?.node?.reference,
       },
 
       // {
-      //   header: t['itemUnitsReference'],
-      //   accessorFn: (row) => row?.node?.unitPrice,
-      //   meta: {
-      //     width: '50%',
-      //   },
+      //   accessorKey: 'actions',
+      //   cell: () => (
+      //     <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
+      //   ),
       // },
-      {
-        accessorKey: 'actions',
-        cell: () => (
-          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
-        ),
-      },
     ],
     [t]
   );
 
   return (
     <>
-      <PageHeader heading="itemUnitInventoryAdjustment" />
-
-      <Table isLoading={isFetching} data={rowItems} columns={columns} />
+      <Box position="sticky" top="0px">
+        <TableListPageHeader heading="Items" />
+      </Box>
+      <Table
+        isLoading={isFetching}
+        data={rowItems}
+        columns={columns}
+        pagination={{
+          total: data?.inventory?.adjustment?.list?.totalCount ?? 'Many',
+          pageInfo: data?.inventory?.adjustment?.list?.pageInfo,
+        }}
+      />
     </>
   );
 };

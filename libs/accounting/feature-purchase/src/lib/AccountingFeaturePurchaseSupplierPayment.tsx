@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -14,8 +13,6 @@ export interface AccountingFeaturePurchaseSupplierPaymentProps {}
 
 export const AccountingFeaturePurchaseSupplierPayment = () => {
   const { t } = useTranslation();
-
-  const router = useRouter();
 
   const { data, isFetching } = useGetMemberListQuery({
     pagination: getPaginationQuery(),
@@ -90,11 +87,7 @@ export const AccountingFeaturePurchaseSupplierPayment = () => {
 
   return (
     <>
-      <AccountingPageHeader
-        heading={t['accountingSupplierPaymentListSupplierPayment']}
-        buttonLabel={t['accountingSupplierPaymentListSupplierPaymentNew']}
-        buttonHandler={() => router.push('/accounting/purchase/supplier-payment/add')}
-      />
+      <AccountingPageHeader heading={t['accountingSupplierPaymentListSupplierPayment']} />
 
       <Table
         data={rowData}

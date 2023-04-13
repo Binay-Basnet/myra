@@ -13,6 +13,12 @@ export const INVENTORY: NavType = {
           aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.INVENTORY_REGISTER,
         },
+        {
+          label: 'Inventory Adjustment',
+          aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.INVENTORY_INVENTORY_ADJUSTMENT,
+          addRoute: ROUTES.INVENTORY_INVENTORY_ADJUSTMENT_ADD,
+        },
         // {
         //   label: 'Inventory Adjustments',
         //   aclKey: 'CBS_MEMBERS_MEMBER',
