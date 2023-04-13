@@ -17,6 +17,7 @@ export * from './lib/deposit/TTRReport';
 export * from './lib/exceptions';
 export * from './lib/LedgerReport';
 export * from './lib/loan/ClosedLoanAccountReport';
+export * from './lib/loan/DosariLoanReport';
 export * from './lib/loan/LoanAccountAccruedInterestReport';
 export * from './lib/loan/LoanAgeingStatementReport';
 export * from './lib/loan/LoanBalanceReport';

@@ -331,10 +331,26 @@ query getLoanAccruedInterestReport($data: AccruedInterestFilter!) {
   }
 }
 
-query getDosariReport {
+query getDosariReport($data: DosariReportInput!) {
   report {
     loanReport {
-      dosariLoanReport {
+      dosariLoanReport(data: $data) {
+        error {
+          ...QueryError
+        }
+        summary {
+          disbursePrincipalTotal
+          remainingPrincipalTotal
+          installmentAmountTotal
+          remainingInstallmentAmountTotal
+          remainingInterestTotal
+          remainingPenaltyTotal
+          dueAmountTotal
+          goodAmountTotal
+          matured1To30DaysTotal
+          matured1To12MonthsTotal
+          maturedAbove12MonthsTotal
+        }
         data {
           designation
           fullName
@@ -367,22 +383,8 @@ query getDosariReport {
               installmentLateDays
               nextPaymentDate
               tenure
-
               branchId
               branchName
-            }
-            summary {
-              disbursePrincipalTotal
-              remainingPrincipalTotal
-              installmentAmountTotal
-              remainingInstallmentAmountTotal
-              remainingInterestTotal
-              remainingPenaltyTotal
-              dueAmountTotal
-              goodAmountTotal
-              matured1To30DaysTotal
-              matured1To12MonthsTotal
-              maturedAbove12MonthsTotal
             }
           }
         }
