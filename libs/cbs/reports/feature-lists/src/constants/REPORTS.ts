@@ -81,6 +81,7 @@ export enum Report {
   LOAN_UTILIZATION_INSPECTION = 'Loan utilization inspection(eg. above 5 Lakh)',
   LOAN_BALANCE_REPORT = 'Loan Balance Report',
   CLOSED_LOAN_ACCOUNT_STATEMENT = 'Closed Loan Account Statement',
+  DOSARI_LOAN_REPORT = 'Dosari Loan Report',
 
   THRESHOLD_TRANSACTION_REPORT = 'Threshold Transaction ',
   TRANSACTION_TRIAL_SHEET = 'Trial Balance',
@@ -435,6 +436,10 @@ export const REPORTS = {
     {
       report: Report.LOAN_ACCOUNT_ACCRUED_INTEREST_REPORT,
       link: 'loan-account-accrued-interest',
+    },
+    {
+      report: Report.DOSARI_LOAN_REPORT,
+      link: 'dosari-loan',
     },
   ],
 

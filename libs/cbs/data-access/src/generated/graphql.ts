@@ -5025,6 +5025,7 @@ export type DosariReportInput = {
 export type DosariReportResult = {
   data?: Maybe<Array<Maybe<DosariReportData>>>;
   error?: Maybe<QueryError>;
+  summary?: Maybe<LoanAgingStatementSummary>;
 };
 
 export type Dues = {
@@ -27523,6 +27524,75 @@ export type GetLoanAccruedInterestReportQuery = {
   };
 };
 
+export type GetDosariReportQueryVariables = Exact<{
+  data: DosariReportInput;
+}>;
+
+export type GetDosariReportQuery = {
+  report: {
+    loanReport: {
+      dosariLoanReport?: {
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+        summary?: {
+          disbursePrincipalTotal?: string | null;
+          remainingPrincipalTotal?: string | null;
+          installmentAmountTotal?: string | null;
+          remainingInstallmentAmountTotal?: string | null;
+          remainingInterestTotal?: string | null;
+          remainingPenaltyTotal?: string | null;
+          dueAmountTotal?: string | null;
+          goodAmountTotal?: string | null;
+          matured1To30DaysTotal?: string | null;
+          matured1To12MonthsTotal?: string | null;
+          maturedAbove12MonthsTotal?: string | null;
+        } | null;
+        data?: Array<{
+          designation?: string | null;
+          fullName?: string | null;
+          phoneNumber?: string | null;
+          type?: string | null;
+          loanAgingStatementData?: {
+            report?: Array<{
+              memberNo?: string | null;
+              loanNo?: string | null;
+              name?: string | null;
+              address?: string | null;
+              phoneNo?: string | null;
+              loanType?: string | null;
+              paymentMode?: string | null;
+              issueDate?: Record<'local' | 'en' | 'np', string> | null;
+              loanMaturityDate?: Record<'local' | 'en' | 'np', string> | null;
+              disbursePrincipal?: string | null;
+              remainingPrincipal?: string | null;
+              installmentAmount?: string | null;
+              remainingInstallmentAmount?: string | null;
+              remainingInterest?: string | null;
+              remainingPenalty?: string | null;
+              totalDueAmount?: string | null;
+              goodAmount?: string | null;
+              matured1To30Days?: string | null;
+              matured1To12Months?: string | null;
+              maturedAbove12Months?: string | null;
+              lastPrincipalPaidDate?: Record<'local' | 'en' | 'np', string> | null;
+              lastInterestPaidDate?: Record<'local' | 'en' | 'np', string> | null;
+              installmentLateDays?: number | null;
+              nextPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
+              tenure?: string | null;
+              branchId?: string | null;
+              branchName?: string | null;
+            } | null> | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
 export type GetMemberClassificationReportQueryVariables = Exact<{
   data: MemberClassificationFilter;
 }>;
@@ -47076,6 +47146,81 @@ export const useGetLoanAccruedInterestReportQuery = <
     useAxios<GetLoanAccruedInterestReportQuery, GetLoanAccruedInterestReportQueryVariables>(
       GetLoanAccruedInterestReportDocument
     ).bind(null, variables),
+    options
+  );
+export const GetDosariReportDocument = `
+    query getDosariReport($data: DosariReportInput!) {
+  report {
+    loanReport {
+      dosariLoanReport(data: $data) {
+        error {
+          ...QueryError
+        }
+        summary {
+          disbursePrincipalTotal
+          remainingPrincipalTotal
+          installmentAmountTotal
+          remainingInstallmentAmountTotal
+          remainingInterestTotal
+          remainingPenaltyTotal
+          dueAmountTotal
+          goodAmountTotal
+          matured1To30DaysTotal
+          matured1To12MonthsTotal
+          maturedAbove12MonthsTotal
+        }
+        data {
+          designation
+          fullName
+          phoneNumber
+          type
+          loanAgingStatementData {
+            report {
+              memberNo
+              loanNo
+              name
+              address
+              phoneNo
+              loanType
+              paymentMode
+              issueDate
+              loanMaturityDate
+              disbursePrincipal
+              remainingPrincipal
+              installmentAmount
+              remainingInstallmentAmount
+              remainingInterest
+              remainingPenalty
+              totalDueAmount
+              goodAmount
+              matured1To30Days
+              matured1To12Months
+              maturedAbove12Months
+              lastPrincipalPaidDate
+              lastInterestPaidDate
+              installmentLateDays
+              nextPaymentDate
+              tenure
+              branchId
+              branchName
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetDosariReportQuery = <TData = GetDosariReportQuery, TError = unknown>(
+  variables: GetDosariReportQueryVariables,
+  options?: UseQueryOptions<GetDosariReportQuery, TError, TData>
+) =>
+  useQuery<GetDosariReportQuery, TError, TData>(
+    ['getDosariReport', variables],
+    useAxios<GetDosariReportQuery, GetDosariReportQueryVariables>(GetDosariReportDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetMemberClassificationReportDocument = `
