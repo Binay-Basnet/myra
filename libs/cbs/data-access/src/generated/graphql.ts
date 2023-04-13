@@ -26952,6 +26952,44 @@ export type GetDormantAccountReportQuery = {
   };
 };
 
+export type GetSavingAccountAccruedInterestReportQueryVariables = Exact<{
+  data: AccruedInterestFilter;
+}>;
+
+export type GetSavingAccountAccruedInterestReportQuery = {
+  report: {
+    depositReport: {
+      savingAccruedInterestReport: {
+        data?: Array<{
+          balance: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          interestAccrued: string;
+          interestRate?: number | null;
+          transactionId?: string | null;
+        } | null> | null;
+        basicInfo?: {
+          accountId: string;
+          accountName: string;
+          accountType: NatureOfDepositProduct;
+          currentInterestRate: number;
+          memberCode: string;
+          memberId: string;
+          membershipDate: Record<'local' | 'en' | 'np', string>;
+          serviceCentreId: string;
+          serviceCentreName: string;
+          address?: AddressFragment | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type GetUserReportQueryVariables = Exact<{
   data?: InputMaybe<UserReportFilter>;
 }>;
@@ -27415,6 +27453,49 @@ export type GetLoanCallSheetReportQuery = {
           installmentDueDays?: number | null;
           totalInstallment?: string | null;
         } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetLoanAccruedInterestReportQueryVariables = Exact<{
+  data: AccruedInterestFilter;
+}>;
+
+export type GetLoanAccruedInterestReportQuery = {
+  report: {
+    loanReport: {
+      loanAccruedInterestReport?: {
+        data?: Array<{
+          transactionId?: string | null;
+          interestRate?: number | null;
+          interestAccrued: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          balance: string;
+        } | null> | null;
+        basicInfo?: {
+          serviceCentreName: string;
+          serviceCentreId: string;
+          membershipDate: Record<'local' | 'en' | 'np', string>;
+          memberId: string;
+          memberCode: string;
+          currentInterestRate: number;
+          accountType: string;
+          accountName: string;
+          accountId: string;
+          accountSubType: string;
+          approvedAmount: string;
+          disbursedAmount: string;
+          loanIssueDate: Record<'local' | 'en' | 'np', string>;
+          noOfInstallment: number;
+          address?: AddressFragment | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
       } | null;
     };
   };
@@ -46239,6 +46320,56 @@ export const useGetDormantAccountReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetSavingAccountAccruedInterestReportDocument = `
+    query getSavingAccountAccruedInterestReport($data: AccruedInterestFilter!) {
+  report {
+    depositReport {
+      savingAccruedInterestReport(data: $data) {
+        data {
+          balance
+          date
+          interestAccrued
+          interestRate
+          transactionId
+        }
+        basicInfo {
+          accountId
+          accountName
+          accountType
+          address {
+            ...Address
+          }
+          currentInterestRate
+          memberCode
+          memberId
+          membershipDate
+          serviceCentreId
+          serviceCentreName
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${QueryErrorFragmentDoc}`;
+export const useGetSavingAccountAccruedInterestReportQuery = <
+  TData = GetSavingAccountAccruedInterestReportQuery,
+  TError = unknown
+>(
+  variables: GetSavingAccountAccruedInterestReportQueryVariables,
+  options?: UseQueryOptions<GetSavingAccountAccruedInterestReportQuery, TError, TData>
+) =>
+  useQuery<GetSavingAccountAccruedInterestReportQuery, TError, TData>(
+    ['getSavingAccountAccruedInterestReport', variables],
+    useAxios<
+      GetSavingAccountAccruedInterestReportQuery,
+      GetSavingAccountAccruedInterestReportQueryVariables
+    >(GetSavingAccountAccruedInterestReportDocument).bind(null, variables),
+    options
+  );
 export const GetUserReportDocument = `
     query getUserReport($data: UserReportFilter) {
   report {
@@ -46837,6 +46968,60 @@ export const useGetLoanCallSheetReportQuery = <
     variables === undefined ? ['getLoanCallSheetReport'] : ['getLoanCallSheetReport', variables],
     useAxios<GetLoanCallSheetReportQuery, GetLoanCallSheetReportQueryVariables>(
       GetLoanCallSheetReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanAccruedInterestReportDocument = `
+    query getLoanAccruedInterestReport($data: AccruedInterestFilter!) {
+  report {
+    loanReport {
+      loanAccruedInterestReport(data: $data) {
+        data {
+          transactionId
+          interestRate
+          interestAccrued
+          date
+          balance
+        }
+        basicInfo {
+          serviceCentreName
+          serviceCentreId
+          membershipDate
+          memberId
+          memberCode
+          currentInterestRate
+          accountType
+          accountName
+          accountId
+          accountSubType
+          address {
+            ...Address
+          }
+          approvedAmount
+          disbursedAmount
+          loanIssueDate
+          noOfInstallment
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${QueryErrorFragmentDoc}`;
+export const useGetLoanAccruedInterestReportQuery = <
+  TData = GetLoanAccruedInterestReportQuery,
+  TError = unknown
+>(
+  variables: GetLoanAccruedInterestReportQueryVariables,
+  options?: UseQueryOptions<GetLoanAccruedInterestReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanAccruedInterestReportQuery, TError, TData>(
+    ['getLoanAccruedInterestReport', variables],
+    useAxios<GetLoanAccruedInterestReportQuery, GetLoanAccruedInterestReportQueryVariables>(
+      GetLoanAccruedInterestReportDocument
     ).bind(null, variables),
     options
   );
