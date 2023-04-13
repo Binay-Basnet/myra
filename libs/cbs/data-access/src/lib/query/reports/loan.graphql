@@ -292,3 +292,103 @@ query getLoanCallSheetReport($data: LoanCallReportFilter) {
     }
   }
 }
+
+query getLoanAccruedInterestReport($data: AccruedInterestFilter!) {
+  report {
+    loanReport {
+      loanAccruedInterestReport(data: $data) {
+        data {
+          transactionId
+          interestRate
+          interestAccrued
+          date
+          balance
+        }
+        basicInfo {
+          serviceCentreName
+          serviceCentreId
+          membershipDate
+          memberId
+          memberCode
+          currentInterestRate
+          accountType
+          accountName
+          accountId
+          accountSubType
+          address {
+            ...Address
+          }
+          approvedAmount
+          disbursedAmount
+          loanIssueDate
+          noOfInstallment
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+
+query getDosariReport($data: DosariReportInput!) {
+  report {
+    loanReport {
+      dosariLoanReport(data: $data) {
+        error {
+          ...QueryError
+        }
+        summary {
+          disbursePrincipalTotal
+          remainingPrincipalTotal
+          installmentAmountTotal
+          remainingInstallmentAmountTotal
+          remainingInterestTotal
+          remainingPenaltyTotal
+          dueAmountTotal
+          goodAmountTotal
+          matured1To30DaysTotal
+          matured1To12MonthsTotal
+          maturedAbove12MonthsTotal
+        }
+        data {
+          designation
+          fullName
+          phoneNumber
+          type
+          loanAgingStatementData {
+            report {
+              memberNo
+              loanNo
+              name
+              address
+              phoneNo
+              loanType
+              paymentMode
+              issueDate
+              loanMaturityDate
+              disbursePrincipal
+              remainingPrincipal
+              installmentAmount
+              remainingInstallmentAmount
+              remainingInterest
+              remainingPenalty
+              totalDueAmount
+              goodAmount
+              matured1To30Days
+              matured1To12Months
+              maturedAbove12Months
+              lastPrincipalPaidDate
+              lastInterestPaidDate
+              installmentLateDays
+              nextPaymentDate
+              tenure
+              branchId
+              branchName
+            }
+          }
+        }
+      }
+    }
+  }
+}

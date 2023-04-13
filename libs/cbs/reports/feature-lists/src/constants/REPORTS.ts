@@ -55,6 +55,8 @@ export enum Report {
   SAVINGS_FD_MATURE_REPORT = 'Fixed Deposit Maturity Report',
   SAVING_PRODUCT_BALANCE_REPORT = 'Saving Product Wise Balance Report',
   CLOSED_SAVING_ACCOUNT_STATEMENT = 'Closed Saving Account Statement',
+  SAVING_ACCOUNT_ACCRUED_INTEREST_REPORT = 'Saving Account Accrued Interest Report',
+  E_TDS_REPORT = 'e-TDS Report',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
@@ -66,6 +68,7 @@ export enum Report {
   LOAN_COLLATERAL_REPORT = 'Loan Collateral Report',
   LOAN_PRODUCT_WISE_BALANCE_REPORT = 'Loan Product Wise Balance Report',
   LOAN_CALL_REPORT = 'Loan Call Sheet Report',
+  LOAN_ACCOUNT_ACCRUED_INTEREST_REPORT = 'Loan Account Accrued Interest Report',
 
   LOAN_PERSONAL_GURANTEE_REPORT = 'Personal Guarantee Report',
   LOAN_WRITE_OFF_REPORT = 'Loan write off report',
@@ -78,6 +81,7 @@ export enum Report {
   LOAN_UTILIZATION_INSPECTION = 'Loan utilization inspection(eg. above 5 Lakh)',
   LOAN_BALANCE_REPORT = 'Loan Balance Report',
   CLOSED_LOAN_ACCOUNT_STATEMENT = 'Closed Loan Account Statement',
+  DOSARI_LOAN_REPORT = 'Dosari Loan Report',
 
   THRESHOLD_TRANSACTION_REPORT = 'Threshold Transaction ',
   TRANSACTION_TRIAL_SHEET = 'Trial Balance',
@@ -326,6 +330,14 @@ export const REPORTS = {
       report: Report.SAVING_BALANCE_MINOR_REPORT,
       link: 'saving-balance-minor',
     },
+    {
+      report: Report.SAVING_ACCOUNT_ACCRUED_INTEREST_REPORT,
+      link: 'saving-account-accrued-interest',
+    },
+    {
+      report: Report.E_TDS_REPORT,
+      link: 'e-tds',
+    },
   ],
 
   [ReportGroup.LOAN]: [
@@ -420,6 +432,14 @@ export const REPORTS = {
       id: '14.2.9',
       report: Report.LOAN_CALL_REPORT,
       link: 'call-sheet',
+    },
+    {
+      report: Report.LOAN_ACCOUNT_ACCRUED_INTEREST_REPORT,
+      link: 'loan-account-accrued-interest',
+    },
+    {
+      report: Report.DOSARI_LOAN_REPORT,
+      link: 'dosari-loan',
     },
   ],
 

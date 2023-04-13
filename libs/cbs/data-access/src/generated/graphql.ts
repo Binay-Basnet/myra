@@ -5025,6 +5025,7 @@ export type DosariReportInput = {
 export type DosariReportResult = {
   data?: Maybe<Array<Maybe<DosariReportData>>>;
   error?: Maybe<QueryError>;
+  summary?: Maybe<LoanAgingStatementSummary>;
 };
 
 export type Dues = {
@@ -26952,6 +26953,66 @@ export type GetDormantAccountReportQuery = {
   };
 };
 
+export type GetSavingAccountAccruedInterestReportQueryVariables = Exact<{
+  data: AccruedInterestFilter;
+}>;
+
+export type GetSavingAccountAccruedInterestReportQuery = {
+  report: {
+    depositReport: {
+      savingAccruedInterestReport: {
+        data?: Array<{
+          balance: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          interestAccrued: string;
+          interestRate?: number | null;
+          transactionId?: string | null;
+        } | null> | null;
+        basicInfo?: {
+          accountId: string;
+          accountName: string;
+          accountType: NatureOfDepositProduct;
+          currentInterestRate: number;
+          memberCode: string;
+          memberId: string;
+          membershipDate: Record<'local' | 'en' | 'np', string>;
+          serviceCentreId: string;
+          serviceCentreName: string;
+          address?: AddressFragment | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type GetEtdsStatementQueryVariables = Exact<{
+  data: EtdsReportFilter;
+}>;
+
+export type GetEtdsStatementQuery = {
+  report: {
+    depositReport: {
+      ETDSReport: {
+        data?: Array<{
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          branchId?: string | null;
+          interest?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          panNo?: string | null;
+          tax?: string | null;
+          tdsType?: string | null;
+        } | null> | null;
+      };
+    };
+  };
+};
+
 export type GetUserReportQueryVariables = Exact<{
   data?: InputMaybe<UserReportFilter>;
 }>;
@@ -27414,6 +27475,118 @@ export type GetLoanCallSheetReportQuery = {
           installmentDueAmount?: string | null;
           installmentDueDays?: number | null;
           totalInstallment?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetLoanAccruedInterestReportQueryVariables = Exact<{
+  data: AccruedInterestFilter;
+}>;
+
+export type GetLoanAccruedInterestReportQuery = {
+  report: {
+    loanReport: {
+      loanAccruedInterestReport?: {
+        data?: Array<{
+          transactionId?: string | null;
+          interestRate?: number | null;
+          interestAccrued: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          balance: string;
+        } | null> | null;
+        basicInfo?: {
+          serviceCentreName: string;
+          serviceCentreId: string;
+          membershipDate: Record<'local' | 'en' | 'np', string>;
+          memberId: string;
+          memberCode: string;
+          currentInterestRate: number;
+          accountType: string;
+          accountName: string;
+          accountId: string;
+          accountSubType: string;
+          approvedAmount: string;
+          disbursedAmount: string;
+          loanIssueDate: Record<'local' | 'en' | 'np', string>;
+          noOfInstallment: number;
+          address?: AddressFragment | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type GetDosariReportQueryVariables = Exact<{
+  data: DosariReportInput;
+}>;
+
+export type GetDosariReportQuery = {
+  report: {
+    loanReport: {
+      dosariLoanReport?: {
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+        summary?: {
+          disbursePrincipalTotal?: string | null;
+          remainingPrincipalTotal?: string | null;
+          installmentAmountTotal?: string | null;
+          remainingInstallmentAmountTotal?: string | null;
+          remainingInterestTotal?: string | null;
+          remainingPenaltyTotal?: string | null;
+          dueAmountTotal?: string | null;
+          goodAmountTotal?: string | null;
+          matured1To30DaysTotal?: string | null;
+          matured1To12MonthsTotal?: string | null;
+          maturedAbove12MonthsTotal?: string | null;
+        } | null;
+        data?: Array<{
+          designation?: string | null;
+          fullName?: string | null;
+          phoneNumber?: string | null;
+          type?: string | null;
+          loanAgingStatementData?: {
+            report?: Array<{
+              memberNo?: string | null;
+              loanNo?: string | null;
+              name?: string | null;
+              address?: string | null;
+              phoneNo?: string | null;
+              loanType?: string | null;
+              paymentMode?: string | null;
+              issueDate?: Record<'local' | 'en' | 'np', string> | null;
+              loanMaturityDate?: Record<'local' | 'en' | 'np', string> | null;
+              disbursePrincipal?: string | null;
+              remainingPrincipal?: string | null;
+              installmentAmount?: string | null;
+              remainingInstallmentAmount?: string | null;
+              remainingInterest?: string | null;
+              remainingPenalty?: string | null;
+              totalDueAmount?: string | null;
+              goodAmount?: string | null;
+              matured1To30Days?: string | null;
+              matured1To12Months?: string | null;
+              maturedAbove12Months?: string | null;
+              lastPrincipalPaidDate?: Record<'local' | 'en' | 'np', string> | null;
+              lastInterestPaidDate?: Record<'local' | 'en' | 'np', string> | null;
+              installmentLateDays?: number | null;
+              nextPaymentDate?: Record<'local' | 'en' | 'np', string> | null;
+              tenure?: string | null;
+              branchId?: string | null;
+              branchName?: string | null;
+            } | null> | null;
+          } | null;
         } | null> | null;
       } | null;
     };
@@ -46239,6 +46412,87 @@ export const useGetDormantAccountReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetSavingAccountAccruedInterestReportDocument = `
+    query getSavingAccountAccruedInterestReport($data: AccruedInterestFilter!) {
+  report {
+    depositReport {
+      savingAccruedInterestReport(data: $data) {
+        data {
+          balance
+          date
+          interestAccrued
+          interestRate
+          transactionId
+        }
+        basicInfo {
+          accountId
+          accountName
+          accountType
+          address {
+            ...Address
+          }
+          currentInterestRate
+          memberCode
+          memberId
+          membershipDate
+          serviceCentreId
+          serviceCentreName
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${QueryErrorFragmentDoc}`;
+export const useGetSavingAccountAccruedInterestReportQuery = <
+  TData = GetSavingAccountAccruedInterestReportQuery,
+  TError = unknown
+>(
+  variables: GetSavingAccountAccruedInterestReportQueryVariables,
+  options?: UseQueryOptions<GetSavingAccountAccruedInterestReportQuery, TError, TData>
+) =>
+  useQuery<GetSavingAccountAccruedInterestReportQuery, TError, TData>(
+    ['getSavingAccountAccruedInterestReport', variables],
+    useAxios<
+      GetSavingAccountAccruedInterestReportQuery,
+      GetSavingAccountAccruedInterestReportQueryVariables
+    >(GetSavingAccountAccruedInterestReportDocument).bind(null, variables),
+    options
+  );
+export const GetEtdsStatementDocument = `
+    query getETDSStatement($data: ETDSReportFilter!) {
+  report {
+    depositReport {
+      ETDSReport(data: $data) {
+        data {
+          date
+          branchId
+          interest
+          memberName
+          panNo
+          tax
+          tdsType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetEtdsStatementQuery = <TData = GetEtdsStatementQuery, TError = unknown>(
+  variables: GetEtdsStatementQueryVariables,
+  options?: UseQueryOptions<GetEtdsStatementQuery, TError, TData>
+) =>
+  useQuery<GetEtdsStatementQuery, TError, TData>(
+    ['getETDSStatement', variables],
+    useAxios<GetEtdsStatementQuery, GetEtdsStatementQueryVariables>(GetEtdsStatementDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetUserReportDocument = `
     query getUserReport($data: UserReportFilter) {
   report {
@@ -46838,6 +47092,135 @@ export const useGetLoanCallSheetReportQuery = <
     useAxios<GetLoanCallSheetReportQuery, GetLoanCallSheetReportQueryVariables>(
       GetLoanCallSheetReportDocument
     ).bind(null, variables),
+    options
+  );
+export const GetLoanAccruedInterestReportDocument = `
+    query getLoanAccruedInterestReport($data: AccruedInterestFilter!) {
+  report {
+    loanReport {
+      loanAccruedInterestReport(data: $data) {
+        data {
+          transactionId
+          interestRate
+          interestAccrued
+          date
+          balance
+        }
+        basicInfo {
+          serviceCentreName
+          serviceCentreId
+          membershipDate
+          memberId
+          memberCode
+          currentInterestRate
+          accountType
+          accountName
+          accountId
+          accountSubType
+          address {
+            ...Address
+          }
+          approvedAmount
+          disbursedAmount
+          loanIssueDate
+          noOfInstallment
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${QueryErrorFragmentDoc}`;
+export const useGetLoanAccruedInterestReportQuery = <
+  TData = GetLoanAccruedInterestReportQuery,
+  TError = unknown
+>(
+  variables: GetLoanAccruedInterestReportQueryVariables,
+  options?: UseQueryOptions<GetLoanAccruedInterestReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanAccruedInterestReportQuery, TError, TData>(
+    ['getLoanAccruedInterestReport', variables],
+    useAxios<GetLoanAccruedInterestReportQuery, GetLoanAccruedInterestReportQueryVariables>(
+      GetLoanAccruedInterestReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDosariReportDocument = `
+    query getDosariReport($data: DosariReportInput!) {
+  report {
+    loanReport {
+      dosariLoanReport(data: $data) {
+        error {
+          ...QueryError
+        }
+        summary {
+          disbursePrincipalTotal
+          remainingPrincipalTotal
+          installmentAmountTotal
+          remainingInstallmentAmountTotal
+          remainingInterestTotal
+          remainingPenaltyTotal
+          dueAmountTotal
+          goodAmountTotal
+          matured1To30DaysTotal
+          matured1To12MonthsTotal
+          maturedAbove12MonthsTotal
+        }
+        data {
+          designation
+          fullName
+          phoneNumber
+          type
+          loanAgingStatementData {
+            report {
+              memberNo
+              loanNo
+              name
+              address
+              phoneNo
+              loanType
+              paymentMode
+              issueDate
+              loanMaturityDate
+              disbursePrincipal
+              remainingPrincipal
+              installmentAmount
+              remainingInstallmentAmount
+              remainingInterest
+              remainingPenalty
+              totalDueAmount
+              goodAmount
+              matured1To30Days
+              matured1To12Months
+              maturedAbove12Months
+              lastPrincipalPaidDate
+              lastInterestPaidDate
+              installmentLateDays
+              nextPaymentDate
+              tenure
+              branchId
+              branchName
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetDosariReportQuery = <TData = GetDosariReportQuery, TError = unknown>(
+  variables: GetDosariReportQueryVariables,
+  options?: UseQueryOptions<GetDosariReportQuery, TError, TData>
+) =>
+  useQuery<GetDosariReportQuery, TError, TData>(
+    ['getDosariReport', variables],
+    useAxios<GetDosariReportQuery, GetDosariReportQueryVariables>(GetDosariReportDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetMemberClassificationReportDocument = `
