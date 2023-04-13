@@ -53,6 +53,11 @@ export const AddMembersModal = ({ isOpen, onClose }: IUpdateBalanceProps) => {
           {
             andConditions: [
               {
+                column: 'type',
+                comparator: 'EqualTo',
+                value: 'INDIVIDUAL',
+              },
+              {
                 column: 'objState',
                 comparator: 'EqualTo',
                 value: 'APPROVED',
@@ -88,9 +93,9 @@ export const AddMembersModal = ({ isOpen, onClose }: IUpdateBalanceProps) => {
     const chairman = values?.chairman;
     const chairmanObj = [
       {
-        committeeId: chairman ? id : null,
-        memberId: chairman ?? null,
-        position: chairman ? 'Chairman' : null,
+        committeeId: id,
+        memberId: chairman,
+        position: 'Chairman',
       },
     ];
 
@@ -101,7 +106,7 @@ export const AddMembersModal = ({ isOpen, onClose }: IUpdateBalanceProps) => {
         position: data?.position,
       })) || [];
 
-    const combinedArray = [...chairmanObj, ...otherMembersData];
+    const combinedArray = chairman ? [...chairmanObj, ...otherMembersData] : otherMembersData;
     asyncToast({
       id: 'add-committee',
 
