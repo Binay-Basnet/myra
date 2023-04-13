@@ -56,6 +56,7 @@ export enum Report {
   SAVING_PRODUCT_BALANCE_REPORT = 'Saving Product Wise Balance Report',
   CLOSED_SAVING_ACCOUNT_STATEMENT = 'Closed Saving Account Statement',
   SAVING_ACCOUNT_ACCRUED_INTEREST_REPORT = 'Saving Account Accrued Interest Report',
+  E_TDS_REPORT = 'e-TDS Report',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
@@ -331,6 +332,10 @@ export const REPORTS = {
     {
       report: Report.SAVING_ACCOUNT_ACCRUED_INTEREST_REPORT,
       link: 'saving-account-accrued-interest',
+    },
+    {
+      report: Report.E_TDS_REPORT,
+      link: 'e-tds',
     },
   ],
 

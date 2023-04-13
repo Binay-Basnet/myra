@@ -330,3 +330,63 @@ query getLoanAccruedInterestReport($data: AccruedInterestFilter!) {
     }
   }
 }
+
+query getDosariReport {
+  report {
+    loanReport {
+      dosariLoanReport {
+        data {
+          designation
+          fullName
+          phoneNumber
+          type
+          loanAgingStatementData {
+            report {
+              memberNo
+              loanNo
+              name
+              address
+              phoneNo
+              loanType
+              paymentMode
+              issueDate
+              loanMaturityDate
+              disbursePrincipal
+              remainingPrincipal
+              installmentAmount
+              remainingInstallmentAmount
+              remainingInterest
+              remainingPenalty
+              totalDueAmount
+              goodAmount
+              matured1To30Days
+              matured1To12Months
+              maturedAbove12Months
+              lastPrincipalPaidDate
+              lastInterestPaidDate
+              installmentLateDays
+              nextPaymentDate
+              tenure
+
+              branchId
+              branchName
+            }
+            summary {
+              disbursePrincipalTotal
+              remainingPrincipalTotal
+              installmentAmountTotal
+              remainingInstallmentAmountTotal
+              remainingInterestTotal
+              remainingPenaltyTotal
+              dueAmountTotal
+              goodAmountTotal
+              matured1To30DaysTotal
+              matured1To12MonthsTotal
+              maturedAbove12MonthsTotal
+            }
+          }
+        }
+      }
+    }
+  }
+}

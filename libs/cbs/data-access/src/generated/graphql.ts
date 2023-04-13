@@ -5002,6 +5002,31 @@ export type DormantSetupFormState = {
   duration?: Maybe<DormantDuration>;
 };
 
+export type DosariReportData = {
+  designation?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  loanAgingStatementData?: Maybe<LoanAgingStatementData>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+};
+
+export type DosariReportFilter = {
+  installmentDate?: InputMaybe<Scalars['Localized']>;
+  product?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  type?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type DosariReportInput = {
+  committeeId?: InputMaybe<Array<Scalars['String']>>;
+  filter?: InputMaybe<DosariReportFilter>;
+  period: LocalizedDateFilter;
+};
+
+export type DosariReportResult = {
+  data?: Maybe<Array<Maybe<DosariReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type Dues = {
   dueInstallments?: Maybe<Scalars['Int']>;
   fine?: Maybe<Scalars['String']>;
@@ -11499,6 +11524,7 @@ export type LoanRepaymentViewResult = {
 
 export type LoanReport = {
   closedLoanAccountStatementReport?: Maybe<ClosedLoanAccountReportResult>;
+  dosariLoanReport?: Maybe<DosariReportResult>;
   loanAccruedInterestReport?: Maybe<LoanAccruedInterestResult>;
   loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
   loanBalanceReport: LoanBalanceReportResult;
@@ -11511,6 +11537,10 @@ export type LoanReport = {
 
 export type LoanReportClosedLoanAccountStatementReportArgs = {
   data?: InputMaybe<ClosedLoanAccountFilter>;
+};
+
+export type LoanReportDosariLoanReportArgs = {
+  data: DosariReportInput;
 };
 
 export type LoanReportLoanAccruedInterestReportArgs = {
@@ -26881,6 +26911,28 @@ export type GetSavingAccountAccruedInterestReportQuery = {
           | QueryError_NotFoundError_Fragment
           | QueryError_ServerError_Fragment
           | null;
+      };
+    };
+  };
+};
+
+export type GetEtdsStatementQueryVariables = Exact<{
+  data: EtdsReportFilter;
+}>;
+
+export type GetEtdsStatementQuery = {
+  report: {
+    depositReport: {
+      ETDSReport: {
+        data?: Array<{
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          branchId?: string | null;
+          interest?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          panNo?: string | null;
+          tax?: string | null;
+          tdsType?: string | null;
+        } | null> | null;
       };
     };
   };
@@ -46151,6 +46203,37 @@ export const useGetSavingAccountAccruedInterestReportQuery = <
       GetSavingAccountAccruedInterestReportQuery,
       GetSavingAccountAccruedInterestReportQueryVariables
     >(GetSavingAccountAccruedInterestReportDocument).bind(null, variables),
+    options
+  );
+export const GetEtdsStatementDocument = `
+    query getETDSStatement($data: ETDSReportFilter!) {
+  report {
+    depositReport {
+      ETDSReport(data: $data) {
+        data {
+          date
+          branchId
+          interest
+          memberName
+          panNo
+          tax
+          tdsType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetEtdsStatementQuery = <TData = GetEtdsStatementQuery, TError = unknown>(
+  variables: GetEtdsStatementQueryVariables,
+  options?: UseQueryOptions<GetEtdsStatementQuery, TError, TData>
+) =>
+  useQuery<GetEtdsStatementQuery, TError, TData>(
+    ['getETDSStatement', variables],
+    useAxios<GetEtdsStatementQuery, GetEtdsStatementQueryVariables>(GetEtdsStatementDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetUserReportDocument = `

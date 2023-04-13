@@ -3,6 +3,7 @@ export * from './lib/deposit/AccountClosingReport';
 export * from './lib/deposit/AccountOpeningReport';
 export * from './lib/deposit/ClosedSavingAccountStatement';
 export * from './lib/deposit/DormantAccountReport';
+export * from './lib/deposit/ETDSReport';
 export * from './lib/deposit/FixedDepositReport';
 export * from './lib/deposit/InterestPostingReport';
 export * from './lib/deposit/InterestTaxReport';
