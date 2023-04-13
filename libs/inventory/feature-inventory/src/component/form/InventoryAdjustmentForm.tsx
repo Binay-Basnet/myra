@@ -1,9 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { Box, Divider, Text } from '@myra-ui';
+
+import { InventoryAdjustmentMode } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormEditableTable, FormInput, FormTextArea } from '@coop/shared/form';
-import { Box, Divider } from '@myra-ui';
+import { FormDatePicker, FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
+
+import { InventoryAdjustmentTable } from './InventoryAdjustmentTable';
 
 type InventoryAdjustmentTable = {
   product_id: string;
@@ -29,29 +33,32 @@ const searchOptions = [
 const InventoryAdjustmentForm = () => {
   const { t } = useTranslation();
   const methods = useForm({});
+  const modeOfAdjustment = methods?.watch('modeOfAdjustment');
   return (
     <FormProvider {...methods}>
       <form>
         <Box p="s20" display="flex" flexDirection="column" gap="s32" bg="neutralColorLight.Gray-0">
           <InputGroupContainer>
-            <FormInput
-              type="text"
-              name="code"
-              label={t['itemUnitCode']}
-              __placeholder={t['itemUnitCode']}
-            />
-            <FormInput type="date" name="date" label={t['itemUnitDate']} />
-            <FormInput
-              type="text"
-              name="referenceNumber"
-              label={t['itemUnitReferenceNumber']}
-              __placeholder={t['itemUnitReferenceNumber']}
+            <FormRadioGroup
+              label="Mode of Adjustment"
+              name="modeOfAdjustment"
+              options={[
+                { label: 'Quantity Adjustment', value: InventoryAdjustmentMode?.Quantity },
+                { label: 'Value Adjustment', value: InventoryAdjustmentMode?.Value },
+              ]}
             />
           </InputGroupContainer>
 
           <Divider />
+          <Text>Adjustment Details</Text>
+          <InputGroupContainer>
+            <FormInput label="Reference Number" name="referenceNumber" />
+            <FormInput label="Code" name="code" />
+            <FormDatePicker label="Date" name="date" />
+          </InputGroupContainer>
+          <InventoryAdjustmentTable modeOfAdjustment={modeOfAdjustment} />
 
-          <Box>
+          {/* <Box>
             <FormEditableTable<InventoryAdjustmentTable>
               name="data"
               debug={false}
@@ -89,9 +96,7 @@ const InventoryAdjustmentForm = () => {
                 },
               ]}
             />
-          </Box>
-
-          <Divider />
+          </Box> */}
 
           <Box>
             <FormTextArea name="note" label=" " __placeholder={t['invFormNote']} />

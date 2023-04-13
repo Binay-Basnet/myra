@@ -88,3 +88,16 @@ mutation setWareHouseTransfer($data: WarehouseTransferInput) {
     }
   }
 }
+
+mutation setInventoryAdjustment($data: InventoryAdjustmentInput) {
+  inventory {
+    adjustment {
+      new(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

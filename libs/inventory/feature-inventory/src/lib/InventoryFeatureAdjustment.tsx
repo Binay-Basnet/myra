@@ -36,7 +36,7 @@ export const InventoryFeatureAdjustment = () => {
             borderColor="border.layout"
           >
             <Text fontSize="r2" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-              {t['itemUnitAddNewInventoryAdjustment']}
+              Inventory Adjustment
             </Text>
 
             <IconButton
