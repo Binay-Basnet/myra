@@ -55,6 +55,7 @@ export enum Report {
   SAVINGS_FD_MATURE_REPORT = 'Fixed Deposit Maturity Report',
   SAVING_PRODUCT_BALANCE_REPORT = 'Saving Product Wise Balance Report',
   CLOSED_SAVING_ACCOUNT_STATEMENT = 'Closed Saving Account Statement',
+  SAVING_ACCOUNT_ACCURED_INTEREST_REPORT = 'Saving Account Accured Interest Report',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
@@ -325,6 +326,10 @@ export const REPORTS = {
       id: '5.18',
       report: Report.SAVING_BALANCE_MINOR_REPORT,
       link: 'saving-balance-minor',
+    },
+    {
+      report: Report.SAVING_ACCOUNT_ACCURED_INTEREST_REPORT,
+      link: 'saving-account-accrued-interest',
     },
   ],
 

@@ -329,3 +329,38 @@ query getDormantAccountReport($data: DormantAccountReportInput) {
     }
   }
 }
+
+query getSavingAccountAccruedInterestReport($data: AccruedInterestFilter!) {
+  report {
+    depositReport {
+      savingAccruedInterestReport(data: $data) {
+        data {
+          balance
+          date
+          interestAccrued
+          interestRate
+          transactionId
+        }
+        basicInfo {
+          accountId
+          accountName
+          accountType
+          address {
+            ...Address
+          }
+          currentInterestRate
+          memberCode
+          memberId
+          membershipDate
+          serviceCentreId
+          serviceCentreName
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+
+

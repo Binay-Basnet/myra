@@ -292,3 +292,41 @@ query getLoanCallSheetReport($data: LoanCallReportFilter) {
     }
   }
 }
+
+query getLoanAccruedInterestReport($data: AccruedInterestFilter!) {
+  report {
+    loanReport {
+      loanAccruedInterestReport(data: $data){
+        data {
+          transactionId
+          interestRate
+          interestAccrued
+          date
+          balance
+        }
+        basicInfo {
+          serviceCentreName
+          serviceCentreId
+          membershipDate
+          memberId
+          memberCode
+          currentInterestRate
+          accountType
+          accountName
+          accountId
+          accountSubType
+          address {
+            ...Address
+          }
+          approvedAmount
+          disbursedAmount
+          loanIssueDate
+          noOfInstallment
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
