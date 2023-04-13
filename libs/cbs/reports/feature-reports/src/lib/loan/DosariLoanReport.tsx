@@ -140,7 +140,7 @@ export const DosariLoanReport = () => {
 
               {
                 header: 'Member Id',
-                accessorKey: 'agingData.memberNo',
+                accessorKey: 'memberNo',
 
                 meta: {
                   Footer: {
@@ -370,7 +370,7 @@ export const DosariLoanReport = () => {
               },
               {
                 header: 'Installment Late Days',
-                accessorKey: 'agingData.installmentLateDays',
+                accessorKey: 'installmentLateDays',
               },
             ]}
           />
