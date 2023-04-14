@@ -1,5 +1,6 @@
-import { FormEditableTable } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@myra-ui';
+
+import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 type CashTransferTableType = {

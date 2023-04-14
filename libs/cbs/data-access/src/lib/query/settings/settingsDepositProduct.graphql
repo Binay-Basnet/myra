@@ -517,3 +517,131 @@ query getSavingProductPenaltyChargeDetail($id: ID!) {
     }
   }
 }
+
+query getOpenChargeList($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        listOpenCharge(productId: $productId) {
+          data {
+            payload {
+              serviceName
+              ledgerName
+              amount
+              percentage
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getCloseChargeList($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        listCloseCharge(productId: $productId) {
+          data {
+            payload {
+              serviceName
+              ledgerName
+              amount
+              percentage
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getOpenCharge($id: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getOpenCharge(id: $id) {
+          data {
+            payload {
+              serviceName
+              ledgerName
+              amount
+              percentage
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getCloseCharge($id: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getCloseCharge(id: $id) {
+          data {
+            payload {
+              serviceName
+              ledgerName
+              amount
+              percentage
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

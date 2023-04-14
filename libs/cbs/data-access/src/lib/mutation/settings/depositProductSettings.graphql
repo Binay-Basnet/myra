@@ -124,3 +124,53 @@ mutation updateSavingProductPenalty(
     }
   }
 }
+
+mutation updateOpenCharge(
+  $id: ID
+  $productId: ID!
+  $payload: [ServiceType!]!
+  $additionalData: ProductChargeAdditionalDataInput!
+) {
+  settings {
+    general {
+      depositProduct {
+        updateOpenCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updateCloseCharge(
+  $id: ID
+  $productId: ID!
+  $payload: [ServiceType!]!
+  $additionalData: ProductChargeAdditionalDataInput!
+) {
+  settings {
+    general {
+      depositProduct {
+        updateCloseCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

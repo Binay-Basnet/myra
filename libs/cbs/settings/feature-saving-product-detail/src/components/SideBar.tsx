@@ -14,6 +14,7 @@ export const SideBar = () => (
         'Dormant Accounts',
         'Interest Update',
         'Penalty Update',
+        'Fee and Charges Update',
         // 'ACTIVITY', 'DOCUMENTS', 'TASKS'
       ]}
     />

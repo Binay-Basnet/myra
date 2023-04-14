@@ -7,6 +7,7 @@ import { featureCode } from '@coop/shared/utils';
 
 import { AccountListPage } from './AccountListPage';
 import { DormantAccountListPage } from './DormantAccountPage';
+import FeesAndChargesUpdatePage from './FeesAndChargesUpdatePage';
 import { InactiveAccountListPage } from './InactiveAccountPage';
 import { InterestUpdatePage } from './InterestUpdatePage';
 import { OverviewPage } from './OverviewPage';
@@ -47,6 +48,7 @@ export const CbsSettingsSavingsDetailPage = () => {
       {tabQuery === 'active accounts' && <AccountListPage />}
 
       {tabQuery === 'penalty update' && <PenaltyUpdatePage />}
+      {tabQuery === 'fee and charges update' && <FeesAndChargesUpdatePage />}
 
       <UpdateBalanceLimitModal
         isOpen={isUpdateBalanceLimitOpen as boolean}
