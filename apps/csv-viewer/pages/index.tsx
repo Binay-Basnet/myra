@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { motion } from 'framer-motion';
 
-import { Box, Icon, Input, Text } from '@myra-ui';
+import { Box, Column, Icon, Input, Table, Text } from '@myra-ui';
+
+import { data } from '../constants/data';
 
 type Tab = {
   label: string;
@@ -124,7 +126,7 @@ export const Index = () => {
   }, [selectedTab.value]);
 
   return (
-    <Box h="100vh" w="100vw" display="flex" flexDir="column" bg="background.500" overflow="hidden">
+    <Box h="100vh" w="100vw" display="flex" flexDir="column" bg="background.500" overflowX="auto">
       <Box
         h="3rem"
         w="100%"
@@ -135,6 +137,7 @@ export const Index = () => {
         fontSize="r1"
         fontWeight={500}
         px="s16"
+        flexShrink={0}
       >
         CSV-VIEWER
       </Box>
@@ -146,10 +149,11 @@ export const Index = () => {
         borderBottomColor="border.layout"
         display="flex"
         alignItems="center"
+        flexShrink={0}
       >
         Myra Prod
       </Box>
-      <Box bg="#f8f8f8" height="100%" display="flex" flexDir="row">
+      <Box bg="#f8f8f8" height="calc(100% - 5.75rem)" display="flex" flexDir="row">
         <Resizer width="12rem" constraints={['12rem', '50rem']}>
           <Box w="100%" display="flex" flexDir="column" gap="s16" p="s8">
             <Input placeholder="Search Table" size="sm" />
@@ -207,7 +211,6 @@ export const Index = () => {
           </Box>
         </Resizer>
         <Box
-          flex={1}
           sx={{
             scrollbarWidth: 'none',
             '&::-webkit-scrollbar': {
@@ -215,90 +218,118 @@ export const Index = () => {
             },
           }}
           overflowX="auto"
+          flex={1}
+          w="100%"
+          bg="white"
           display="flex"
-          h="40px"
-          ref={tabRef}
+          flexDir="column"
         >
-          {currentTabs?.map((tab) => (
-            <Box
-              h="100%"
-              px="s16"
-              cursor="pointer"
-              ref={selectedTab.value === tab.value ? tabRef : null}
-              onClick={() => setSelectedTab(tab)}
-              borderRight="1px"
-              borderRightColor="border.layout"
-              fontSize="s3"
-              bg={tab.value === selectedTab.value ? 'white' : 'transparent'}
-              display="flex"
-              alignItems="center"
-              position="relative"
-              justifyContent="center"
-              key={tab.value}
-              gap="s8"
-            >
-              <Text>{tab.label}</Text>
-              {currentTabs.length > 1 && (
-                <Icon
-                  as={IoMdClose}
-                  size="sm"
-                  cursor="pointer"
-                  color="gray.700"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentTabs((prev) => {
-                      const index = prev.findIndex((v) => v.value === tab.value);
+          <Box
+            sx={{
+              scrollbarWidth: 'none',
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+            }}
+            overflowX="auto"
+            display="flex"
+            h="40px"
+            flexShrink={0}
+            ref={tabRef}
+          >
+            {currentTabs?.map((tab) => (
+              <Box
+                h="100%"
+                px="s16"
+                cursor="pointer"
+                ref={selectedTab.value === tab.value ? tabRef : null}
+                onClick={() => setSelectedTab(tab)}
+                borderRight="1px"
+                borderRightColor="border.layout"
+                fontSize="s3"
+                bg={tab.value === selectedTab.value ? 'white' : 'transparent'}
+                display="flex"
+                alignItems="center"
+                position="relative"
+                justifyContent="center"
+                key={tab.value}
+                gap="s8"
+              >
+                <Text>{tab.label}</Text>
+                {currentTabs.length > 1 && (
+                  <Icon
+                    as={IoMdClose}
+                    size="sm"
+                    cursor="pointer"
+                    color="gray.700"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentTabs((prev) => {
+                        const index = prev.findIndex((v) => v.value === tab.value);
 
-                      if (selectedTab.value === tab.value) {
-                        if (index === 0) {
-                          setSelectedTab(currentTabs[1]);
-                        } else {
-                          setSelectedTab(currentTabs[index - 1]);
+                        if (selectedTab.value === tab.value) {
+                          if (index === 0) {
+                            setSelectedTab(currentTabs[1]);
+                          } else {
+                            setSelectedTab(currentTabs[index - 1]);
+                          }
                         }
-                      }
 
-                      return prev.filter((p) => p.value !== tab.value);
-                    });
-                  }}
-                  _hover={{ color: 'gray.800' }}
-                />
-              )}
-              {selectedTab.value === tab.value ? (
-                <motion.div
-                  layoutId="underline"
-                  transition={{
-                    duration: 0.1,
-                  }}
-                  style={{
-                    position: 'absolute',
-                    bottom: '0px',
-                    left: 0,
-                    right: 0,
-                    height: '2px',
-                    background: 'green',
-                    zIndex: '2',
-                  }}
-                />
-              ) : (
-                <div
-                  style={{
-                    position: 'absolute',
-                    bottom: '0px',
-                    left: 0,
-                    right: 0,
-                    height: '1px',
-                    background: '#E0E5EB',
-                  }}
-                />
-              )}
-            </Box>
-          ))}
-          <Box flex={1} h="40px" borderBottom="1px" borderBottomColor="border.layout" />
+                        return prev.filter((p) => p.value !== tab.value);
+                      });
+                    }}
+                    _hover={{ color: 'gray.800' }}
+                  />
+                )}
+                {selectedTab.value === tab.value ? (
+                  <motion.div
+                    layoutId="underline"
+                    transition={{
+                      duration: 0.1,
+                    }}
+                    style={{
+                      position: 'absolute',
+                      bottom: '0px',
+                      left: 0,
+                      right: 0,
+                      height: '2px',
+                      background: 'green',
+                      zIndex: '2',
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '0px',
+                      left: 0,
+                      right: 0,
+                      height: '1px',
+                      background: '#E0E5EB',
+                    }}
+                  />
+                )}
+              </Box>
+            ))}
+            <Box flex={1} h="40px" borderBottom="1px" borderBottomColor="border.layout" />
+          </Box>
+          <Box p="s12" h="calc(100% - 40px)">
+            <DataGridTable />
+          </Box>
         </Box>
       </Box>
     </Box>
   );
 };
+
+const DataGridTable = React.memo(() => {
+  const columns: Column<typeof data[0]>[] = Object.keys(data[0])?.map((column) => ({
+    header: column,
+    accessorKey: column as keyof typeof data[0],
+  }));
+
+  return <Table data={data} isStatic variant="dataGrid" size="dataGrid" columns={columns} />;
+});
 
 interface ResizerProps {
   children: React.ReactNode;

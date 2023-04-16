@@ -124,6 +124,97 @@ const variantSimple = definePartsStyle((props) => {
   };
 });
 
+const variantDataGrid = definePartsStyle((props) => {
+  const { colorScheme: c } = props;
+
+  return {
+    table: {
+      borderCollapse: 'separate',
+      borderSpacing: '0',
+      borderRadius: 'br2',
+    },
+    tfoot: {
+      th: {
+        bg: 'white',
+        border: '1px',
+        borderRightWidth: '1px',
+        borderTopWidth: '1px',
+        borderBottomWidth: '0px',
+        borderLeftWidth: '0px',
+        color: mode('gray.800', 'gray.400')(props),
+        borderColor: mode(`border.layout`, `${c}.700`)(props),
+        ...numericStyles,
+      },
+    },
+    thead: {
+      tr: {
+        '&:last-of-type': {
+          th: { borderBottomWidth: '1px' },
+          td: { borderBottomWidth: 0 },
+        },
+      },
+      th: {
+        bg: 'white',
+        textTransform: 'unset',
+        border: '1px',
+        borderRightWidth: '1px',
+        borderTopWidth: '0px',
+        borderBottomWidth: '1px',
+        borderLeftWidth: '0px',
+        borderColor: mode(`border.layout`, `${c}.700`)(props),
+        color: mode('gray.800', 'gray.400')(props),
+        '&:last-child': {
+          borderRight: '0',
+        },
+        ...numericStyles,
+      },
+    },
+    th: {
+      bg: 'transparent',
+      border: '1px',
+      borderRightWidth: '1px',
+      borderTopWidth: '0px',
+      borderBottomWidth: '0px',
+      borderLeftWidth: '0px',
+      borderColor: mode(`border.layout`, `${c}.700`)(props),
+      color: mode('gray.800', 'gray.400')(props),
+      '&:last-child': {
+        borderRight: '0',
+      },
+      ...numericStyles,
+    },
+    tbody: {
+      tr: {
+        '&:first-of-type': {
+          td: {
+            borderTopWidth: '0px',
+          },
+        },
+      },
+    },
+    td: {
+      // // TODO! Experiment
+      // maxWidth: '250px',
+
+      border: '1px',
+      borderColor: mode(`border.layout`, `${c}.700`)(props),
+      borderRightWidth: '1px',
+      borderTopWidth: '1px',
+      borderBottomWidth: '0px',
+      borderLeftWidth: '0px',
+
+      '&:last-child': {
+        borderRight: '0',
+      },
+      color: mode('gray.800', 'gray.400')(props),
+      ...numericStyles,
+    },
+    caption: {
+      color: mode('gray.600', 'gray.100')(props),
+    },
+  };
+});
+
 const variantReport = definePartsStyle((props) => {
   const { colorScheme: c } = props;
 
@@ -217,6 +308,7 @@ const variantReport = definePartsStyle((props) => {
 const variants = {
   simple: variantSimple,
   report: variantReport,
+  dataGrid: variantDataGrid,
   unstyled: defineStyle({}),
 };
 
@@ -254,6 +346,26 @@ const sizes = {
     tfoot: {
       th: {
         minH: '35px',
+      },
+    },
+  }),
+  dataGrid: definePartsStyle({
+    th: {
+      px: 's16',
+      lineHeight: '125%',
+      fontSize: 's2',
+      height: '27px',
+    },
+    td: {
+      px: 's16',
+      lineHeight: '125%',
+      fontSize: 's2',
+      height: '26px',
+      minH: '26px',
+    },
+    tfoot: {
+      th: {
+        minH: '26px',
       },
     },
   }),

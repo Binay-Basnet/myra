@@ -47,6 +47,27 @@ export const TableContainer = <T,>({ children, variant, data }: TableContainerPr
               borderRadius: '0',
             },
           }
+        : variant === 'dataGrid'
+        ? {
+            position: 'relative',
+            height: '100%',
+            overflowY: 'auto',
+            border: '1px',
+            borderColor: 'border.layout',
+            borderRadius: 'br2',
+            scrollbarWidth: 'none',
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+            '@media print': {
+              w: '100%',
+              h: '100%',
+              display: 'block',
+              maxH: 'none',
+              overflow: 'visible',
+              borderRadius: '0',
+            },
+          }
         : {
             position: 'relative',
             height: '100%',
