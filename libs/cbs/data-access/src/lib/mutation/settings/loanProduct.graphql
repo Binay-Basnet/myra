@@ -100,3 +100,28 @@ mutation updateLoanProductPenalty(
     }
   }
 }
+
+mutation updateLoanProductProcessingCharge(
+  $id: ID
+  $productId: ID!
+  $payload: [ServiceType!]!
+  $additionalData: ProductChargeAdditionalDataInput!
+) {
+  settings {
+    general {
+      loanProducts {
+        updateProcessingCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

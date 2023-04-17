@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
-import flatten from 'lodash/flatten';
+import omit from 'lodash/omit';
 
 import { Alert, asyncToast, Box, Modal } from '@myra-ui';
 
@@ -26,25 +26,40 @@ export const UpdateCloseChargesModal = ({ isOpen, onClose, methods }: IUpdatePen
   const { mutateAsync } = useUpdateCloseChargeMutation();
   const queryClient = useQueryClient();
 
-  const handleClose = () => {
-    onClose();
-  };
+  const { data: closeServiceChargeData } = useGetCloseChargeListQuery({
+    productId: router?.query?.['id'] as string,
+  });
 
-  const { data: closeServiceChargeData, isFetching: closeServiceChargeFetching } =
-    useGetCloseChargeListQuery({
-      productId: router?.query?.['id'] as string,
-    });
+  const chargesEditData = useMemo(() => {
+    const chargesList =
+      closeServiceChargeData?.settings?.general?.depositProduct?.listCloseCharge?.data;
 
-  const serviceNameList =
-    closeServiceChargeData?.settings?.general?.depositProduct?.listCloseCharge?.data?.map((item) =>
-      item?.payload?.map((data) => ({ serviceName: data?.serviceName, amount: data?.amount }))
-    );
+    return chargesList?.[0];
+  }, [closeServiceChargeData]);
 
   useEffect(() => {
-    methods.reset({
-      payload: flatten(serviceNameList),
-    });
-  }, [closeServiceChargeFetching]);
+    if (chargesEditData) {
+      methods.reset({
+        payload: chargesEditData?.payload?.map((charge) => omit(charge, ['percentage'])),
+        additionalData: omit(chargesEditData?.additionalData, ['id', 'createdAt']),
+      });
+    }
+  }, [chargesEditData]);
+
+  const handleClose = () => {
+    if (chargesEditData) {
+      methods.reset({
+        payload: chargesEditData?.payload?.map((charge) => omit(charge, ['percentage'])),
+        additionalData: omit(chargesEditData?.additionalData, ['id', 'createdAt']),
+      });
+    } else {
+      methods.reset({
+        payload: [],
+        additionalData: { effectiveDate: null, fileUploads: [], notes: '' },
+      });
+    }
+    onClose();
+  };
 
   const handleSave = () => {
     const values = methods?.getValues();
@@ -78,15 +93,17 @@ export const UpdateCloseChargesModal = ({ isOpen, onClose, methods }: IUpdatePen
       <FormProvider {...methods}>
         <form>
           <Box display="flex" flexDir="column" gap={5}>
-            <Alert title="Immediate Previous Details" status="info">
-              {flatten(serviceNameList)?.map((item) => (
-                <ul>
-                  <li>
-                    {item?.serviceName}: {item?.amount}
-                  </li>
-                </ul>
-              ))}
-            </Alert>
+            {chargesEditData && (
+              <Alert title="Immediate Previous Details" status="info">
+                {chargesEditData?.payload?.map((item) => (
+                  <ul>
+                    <li>
+                      {item?.serviceName}: {item?.amount}
+                    </li>
+                  </ul>
+                ))}
+              </Alert>
+            )}
             <FormEditableTable<ServiceType>
               name="payload"
               columns={[
@@ -110,7 +127,11 @@ export const UpdateCloseChargesModal = ({ isOpen, onClose, methods }: IUpdatePen
               ]}
             />
             <Box w="-webkit-fit-content">
-              <FormDatePicker name="additionalData.effectiveDate" label="Effective From" />
+              <FormDatePicker
+                name="additionalData.effectiveDate"
+                label="Effective From"
+                minTransactionDate
+              />
             </Box>
             <FormFileInput name="additionalData.fileUploads" label="File Upload" />
             <FormTextArea name="additionalData.notes" label="Note" />

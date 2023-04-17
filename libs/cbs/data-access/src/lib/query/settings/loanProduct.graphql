@@ -441,3 +441,61 @@ query getLoanProductPenaltyChargeDetail($id: ID!) {
     }
   }
 }
+
+query getLoanProductProcessingChargesList($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        listProcessingCharge(productId: $productId) {
+          data {
+            payload {
+              serviceName
+              ledgerName
+              amount
+              percentage
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLoanProductProcessingChargeDetail($chargeId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        getProcessingCharge(id: $chargeId) {
+          data {
+            payload {
+              serviceName
+              ledgerName
+              amount
+              percentage
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+        }
+      }
+    }
+  }
+}

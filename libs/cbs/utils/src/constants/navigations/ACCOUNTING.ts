@@ -37,12 +37,6 @@ export const ACCOUNTING: NavType = {
           addRoute: ROUTES.ACCOUNTING_SALES_ENTRY_ADD,
         },
         {
-          label: 'creditNote',
-          route: ROUTES.ACCOUNTING_SALES_CREDIT_NOTE,
-          aclKey: 'ACCOUNTING_SYSTEM_SALES_CREDIT_NOTE',
-          addRoute: ROUTES.ACCOUNTING_SALES_CREDIT_NOTE_ADD,
-        },
-        {
           label: 'customerPayment',
           route: ROUTES.ACCOUNTING_SALES_CUSTOMER_PAYMENT,
           aclKey: 'ACCOUNTING_SYSTEM_SALES_CUSTOMER_PAYMENT',
@@ -50,7 +44,7 @@ export const ACCOUNTING: NavType = {
         },
         {
           label: 'accountingSalesCustomers',
-          route: ROUTES.ACCOUNTING_SALES_CUSTOMER_PAYMENT,
+          route: ROUTES.ACCOUNTING_SALES_CUSTOMER,
           aclKey: 'ACCOUNTING_SYSTEM_SALES_CUSTOMER_PAYMENT',
           addRoute: ROUTES.ACCOUNTING_SALES_CUSTOMER_ADD,
         },
@@ -66,18 +60,7 @@ export const ACCOUNTING: NavType = {
           addRoute: ROUTES.ACCOUNTING_PURCHASE_LIST_ADD,
           aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_PURCHASE_ENTRY',
         },
-        {
-          label: 'accountingPurchaseSidebarExpenses',
-          route: ROUTES.ACCOUNTING_PURCHASE_EXPENSE,
-          addRoute: ROUTES.ACCOUNTING_PURCHASE_EXPENSE_ADD,
-          aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_EXPENSES',
-        },
-        {
-          label: 'accountingPurchaseSidebarDebitNote',
-          route: ROUTES.ACCOUNTING_PURCHASE_DEBIT_NOTE,
-          addRoute: ROUTES.ACCOUNTING_PURCHASE_DEBIT_NOTE_ADD,
-          aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_DEBIT_NOTE',
-        },
+
         {
           label: 'accountingPurchaseSidebarSupplierPayment',
           route: ROUTES.ACCOUNTING_PURCHASE_SUPPLIER_PAYMENT,

@@ -167,3 +167,13 @@ mutation issueCertificate($id: ID!) {
     issueCertificate(id: $id)
   }
 }
+
+mutation updateKym($date: Localized!, $id: ID!) {
+  members {
+    updateKym(date: $date, id: $id) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

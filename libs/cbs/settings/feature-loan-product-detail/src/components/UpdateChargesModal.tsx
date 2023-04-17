@@ -6,11 +6,14 @@ import omit from 'lodash/omit';
 
 import { Alert, asyncToast, Box, Modal } from '@myra-ui';
 
-import { useGetOpenChargeListQuery, useUpdateOpenChargeMutation } from '@coop/cbs/data-access';
+import {
+  useGetLoanProductProcessingChargesListQuery,
+  useUpdateLoanProductProcessingChargeMutation,
+} from '@coop/cbs/data-access';
 import { COASelectModal } from '@coop/shared/components';
 import { FormDatePicker, FormEditableTable, FormFileInput, FormTextArea } from '@coop/shared/form';
 
-interface IUpdatePenaltyModalProps {
+interface IUpdateChargesModalProps {
   isOpen: boolean;
   onClose: () => void;
   methods: UseFormReturn;
@@ -21,21 +24,22 @@ type ServiceType = {
   ledgerName: string;
 };
 
-export const UpdateOpenChargesModal = ({ isOpen, onClose, methods }: IUpdatePenaltyModalProps) => {
+export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesModalProps) => {
   const router = useRouter();
-  const { mutateAsync } = useUpdateOpenChargeMutation();
+  const { mutateAsync: updateLoanProcessingCharges } =
+    useUpdateLoanProductProcessingChargeMutation();
   const queryClient = useQueryClient();
 
-  const { data: openServiceChargeData } = useGetOpenChargeListQuery({
+  const { data: loanProcessingChargesListData } = useGetLoanProductProcessingChargesListQuery({
     productId: router?.query?.['id'] as string,
   });
 
   const chargesEditData = useMemo(() => {
     const chargesList =
-      openServiceChargeData?.settings?.general?.depositProduct?.listOpenCharge?.data;
+      loanProcessingChargesListData?.settings?.general?.loanProducts?.listProcessingCharge?.data;
 
     return chargesList?.[0];
-  }, [openServiceChargeData]);
+  }, [loanProcessingChargesListData]);
 
   useEffect(() => {
     if (chargesEditData) {
@@ -64,26 +68,26 @@ export const UpdateOpenChargesModal = ({ isOpen, onClose, methods }: IUpdatePena
   const handleSave = () => {
     const values = methods?.getValues();
     asyncToast({
-      id: 'settings-saving-product-open-charge-update',
+      id: 'settings-loan-product-processing-charge-update',
       msgs: {
-        loading: 'Updating Open Charge',
-        success: 'Open Charge Updated',
+        loading: 'Updating Processing Charge',
+        success: 'Processing Charge Updated',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(['getOpenChargeList']);
+        queryClient.invalidateQueries(['getLoanProductProcessingChargesList']);
         onClose();
       },
-      promise: mutateAsync({
+      promise: updateLoanProcessingCharges({
         productId: router?.query?.['id'] as string,
         payload: values['payload'],
-        additionalData: values?.additionalData,
+        additionalData: values?.['additionalData'],
       }),
     });
   };
 
   return (
     <Modal
-      title="Update Account Open Charges"
+      title="Update Loan Processing Charges"
       open={isOpen}
       onClose={handleClose}
       primaryButtonLabel="Save Changes"
