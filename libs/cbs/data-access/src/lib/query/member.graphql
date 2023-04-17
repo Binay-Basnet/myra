@@ -458,3 +458,9 @@ query getMemberFilterMapping {
     }
   }
 }
+
+query getCertificate($id: ID!) {
+  members {
+    issueCertificate(id: $id)
+  }
+}
