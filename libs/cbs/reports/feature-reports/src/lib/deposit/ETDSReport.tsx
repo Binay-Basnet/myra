@@ -82,11 +82,17 @@ export const ETDSReport = () => {
                 header: 'Payment Amount',
                 accessorFn: (row) => row.interest,
                 cell: (props) => amountConverter(props.row.original.interest || '0.00'),
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'TDS Amount',
                 accessorFn: (row) => row.tax,
                 cell: (props) => amountConverter(props.row.original.tax || '0.00'),
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'TDS Type',
