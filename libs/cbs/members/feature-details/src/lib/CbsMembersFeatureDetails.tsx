@@ -30,6 +30,7 @@ export interface CbsMemberDetailsProps {
   handleMinorAccountClose: () => void;
   options?: { label: string; handler: () => void }[];
 }
+
 export const MemberDetails = ({
   isAddMinorModalOpen,
   handleMinorAccountClose,
@@ -87,7 +88,22 @@ export const MemberDetails = ({
     <>
       <MemberDetailsPathBar
         title="Member List"
-        options={memberType === 'individual' ? options : undefined}
+        options={
+          memberType === 'individual'
+            ? [
+                ...(options || []),
+                {
+                  label: 'Update Kym',
+                  handler: () => router.push(`/cbs/members/individual/update/${memberId}`),
+                },
+              ]
+            : [
+                {
+                  label: 'Update Kym',
+                  handler: () => router.push(`/cbs/members/${memberType}/update/${memberId}`),
+                },
+              ]
+        }
       />
       <Box display="flex">
         <Box

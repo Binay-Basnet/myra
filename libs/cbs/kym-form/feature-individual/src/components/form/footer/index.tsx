@@ -1,5 +1,6 @@
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
 import { Box, Button, FormFooter, Icon, Text, toast } from '@myra-ui';
 
@@ -10,13 +11,18 @@ import {
   useAppSelector,
   useGetKymFormStatusQuery,
 } from '@coop/cbs/data-access';
+import { KYMUpdateModal } from '@coop/cbs/kym-form/formElements';
 import { ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KymIndividualFooter = () => {
   const { t } = useTranslation();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
+
   const id = String(router?.query?.['id']);
+  const action = String(router.query['action']);
+
   const isFormDirty = useAppSelector((state) => state.individual.isFormDirty);
 
   const dispatch = useAppDispatch();
@@ -28,49 +34,59 @@ export const KymIndividualFooter = () => {
   );
 
   return (
-    <FormFooter
-      status={
-        <Box display="flex" gap="s8">
-          <Text as="i" fontSize="r1">
-            {t['formDetails']}
-          </Text>
-        </Box>
-      }
-      draftButton={
-        <Button type="submit" variant="ghost" onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}>
-          <Icon as={BiSave} color="primary.500" />
-          <Text alignSelf="center" color="primary.500" fontWeight="Medium" fontSize="s2" ml="5px">
-            {t['saveDraft']}
-          </Text>
-        </Button>
-      }
-      isMainButtonDisabled={!isFormDirty}
-      mainButtonLabel={t['next']}
-      mainButtonHandler={async () => {
-        const response = await refetch();
-        const sectionStatus = response?.data?.members?.individual?.formState?.sectionStatus?.errors;
-        const basicAllErrors =
-          response?.data?.members?.individual?.formState?.sectionStatus?.errors;
-
-        if (basicAllErrors) {
-          dispatch(addIndividualError(basicAllErrors));
-        } else {
-          dispatch(addIndividualError({}));
+    <>
+      <KYMUpdateModal isOpen={isOpen} onClose={onClose} />
+      <FormFooter
+        status={
+          <Box display="flex" gap="s8">
+            <Text as="i" fontSize="r1">
+              {t['formDetails']}
+            </Text>
+          </Box>
         }
-        if (response) {
-          dispatch(setIndividualHasPressedNext(true));
-          if (!sectionStatus) {
-            router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}?type=individual`);
+        draftButton={
+          <Button type="submit" variant="ghost" onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}>
+            <Icon as={BiSave} color="primary.500" />
+            <Text alignSelf="center" color="primary.500" fontWeight="Medium" fontSize="s2" ml="5px">
+              {t['saveDraft']}
+            </Text>
+          </Button>
+        }
+        isMainButtonDisabled={!isFormDirty}
+        mainButtonLabel={action === 'update' ? 'Update' : t['next']}
+        mainButtonHandler={async () => {
+          if (action === 'update') {
+            onOpen();
           } else {
-            toast({
-              id: 'validation-error',
-              message: 'Some fields are empty or have error',
-              type: 'error',
-            });
+            const response = await refetch();
+            const sectionStatus =
+              response?.data?.members?.individual?.formState?.sectionStatus?.errors;
+            const basicAllErrors =
+              response?.data?.members?.individual?.formState?.sectionStatus?.errors;
+
+            if (basicAllErrors) {
+              dispatch(addIndividualError(basicAllErrors));
+            } else {
+              dispatch(addIndividualError({}));
+            }
+            if (response) {
+              dispatch(setIndividualHasPressedNext(true));
+              if (!sectionStatus) {
+                router.push(
+                  `${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}?type=individual`
+                );
+              } else {
+                toast({
+                  id: 'validation-error',
+                  message: 'Some fields are empty or have error',
+                  type: 'error',
+                });
+              }
+            }
           }
-        }
-      }}
-    />
+        }}
+      />
+    </>
   );
 };
 

@@ -18859,6 +18859,25 @@ export type DeleteDraftMutation = {
   };
 };
 
+export type UpdateKymMutationVariables = Exact<{
+  date: Scalars['Localized'];
+  id: Scalars['ID'];
+}>;
+
+export type UpdateKymMutation = {
+  members: {
+    updateKym: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
 export type PayMembershipMutationVariables = Exact<{
   data?: InputMaybe<MembershipPaymentInput>;
   memberId: Scalars['ID'];
@@ -35724,6 +35743,25 @@ export const useDeleteDraftMutation = <TError = unknown, TContext = unknown>(
   useMutation<DeleteDraftMutation, TError, DeleteDraftMutationVariables, TContext>(
     ['deleteDraft'],
     useAxios<DeleteDraftMutation, DeleteDraftMutationVariables>(DeleteDraftDocument),
+    options
+  );
+export const UpdateKymDocument = `
+    mutation updateKym($date: Localized!, $id: ID!) {
+  members {
+    updateKym(date: $date, id: $id) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateKymMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<UpdateKymMutation, TError, UpdateKymMutationVariables, TContext>
+) =>
+  useMutation<UpdateKymMutation, TError, UpdateKymMutationVariables, TContext>(
+    ['updateKym'],
+    useAxios<UpdateKymMutation, UpdateKymMutationVariables>(UpdateKymDocument),
     options
   );
 export const PayMembershipDocument = `

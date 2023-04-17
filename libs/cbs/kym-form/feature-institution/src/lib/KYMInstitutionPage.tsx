@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { BiSave } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
 import { Box, Button, Container, FormFooter, FormHeader, Icon, Text, toast } from '@myra-ui';
 
@@ -14,7 +15,7 @@ import {
   useAppSelector,
   useGetKymOverallFormStatusQuery,
 } from '@coop/cbs/data-access';
-import { AccorrdianAddInstitution } from '@coop/cbs/kym-form/formElements';
+import { AccorrdianAddInstitution, KYMUpdateModal } from '@coop/cbs/kym-form/formElements';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, useTranslation } from '@coop/shared/utils';
@@ -37,6 +38,8 @@ import {
 
 export const KYMInstitutionPage = () => {
   const { t } = useTranslation();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
     subSection: string;
@@ -44,6 +47,7 @@ export const KYMInstitutionPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const id = String(router?.query?.['id']);
+  const action = String(router.query['action']);
 
   const setSection = useCallback(
     (section?: { section: string; subSection: string }) => setKymCurrentSection(section),
@@ -138,6 +142,8 @@ export const KYMInstitutionPage = () => {
 
       <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
+          <KYMUpdateModal isOpen={isOpen} onClose={onClose} />
+
           <FormFooter
             status={
               <Box display="flex" gap="s8">
@@ -165,55 +171,61 @@ export const KYMInstitutionPage = () => {
               </Button>
             }
             isMainButtonDisabled={!isFormDirty}
-            mainButtonLabel={t['next']}
+            mainButtonLabel={action === 'update' ? 'Update' : t['next']}
             mainButtonHandler={async () => {
-              const response = await refetch();
+              if (action === 'update') {
+                onOpen();
+              } else {
+                const response = await refetch();
 
-              const sectionStatus = response?.data?.members?.institution?.overallFormStatus;
+                const sectionStatus = response?.data?.members?.institution?.overallFormStatus;
 
-              const basicErrors = sectionStatus?.institutionDetails?.errors;
-              const accountDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
-                (accountOperator, index) => ({
-                  operatorId: String(index),
-                  errors: accountOperator?.errors ?? {},
-                })
-              );
+                const basicErrors = sectionStatus?.institutionDetails?.errors;
+                const accountDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
+                  (accountOperator, index) => ({
+                    operatorId: String(index),
+                    errors: accountOperator?.errors ?? {},
+                  })
+                );
 
-              const directorDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
-                (director, index) => ({
-                  directorId: String(index),
-                  errors: director?.errors ?? {},
-                })
-              );
-              const sisterErrors = sectionStatus?.accountOperatorDetails?.map((sister, index) => ({
-                sisterId: String(index),
-                errors: sister?.errors ?? {},
-              }));
+                const directorDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
+                  (director, index) => ({
+                    directorId: String(index),
+                    errors: director?.errors ?? {},
+                  })
+                );
+                const sisterErrors = sectionStatus?.accountOperatorDetails?.map(
+                  (sister, index) => ({
+                    sisterId: String(index),
+                    errors: sister?.errors ?? {},
+                  })
+                );
 
-              if (basicErrors) {
-                dispatch(addInstitutionError(basicErrors));
-              }
-              if (accountDetailsErrors) {
-                dispatch(addAccountError(accountDetailsErrors));
-              }
+                if (basicErrors) {
+                  dispatch(addInstitutionError(basicErrors));
+                }
+                if (accountDetailsErrors) {
+                  dispatch(addAccountError(accountDetailsErrors));
+                }
 
-              if (sisterErrors) {
-                dispatch(addSisterError(sisterErrors));
-              }
-              if (directorDetailsErrors) {
-                dispatch(addInstitutionDirectorError(directorDetailsErrors));
-              }
+                if (sisterErrors) {
+                  dispatch(addSisterError(sisterErrors));
+                }
+                if (directorDetailsErrors) {
+                  dispatch(addInstitutionDirectorError(directorDetailsErrors));
+                }
 
-              if (response) {
-                dispatch(setInstitutionHasPressedNext(true));
-                if (!basicErrors) {
-                  router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}`);
-                } else {
-                  toast({
-                    id: 'validation-error',
-                    message: 'Some fields are empty or have error',
-                    type: 'error',
-                  });
+                if (response) {
+                  dispatch(setInstitutionHasPressedNext(true));
+                  if (!basicErrors) {
+                    router.push(`${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}`);
+                  } else {
+                    toast({
+                      id: 'validation-error',
+                      message: 'Some fields are empty or have error',
+                      type: 'error',
+                    });
+                  }
                 }
               }
             }}

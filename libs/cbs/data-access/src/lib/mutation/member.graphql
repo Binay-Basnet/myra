@@ -161,3 +161,13 @@ mutation deleteDraft($memberId: ID!) {
     }
   }
 }
+
+mutation updateKym($date: Localized!, $id: ID!){
+  members {
+    updateKym(date: $date, id: $id){
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
