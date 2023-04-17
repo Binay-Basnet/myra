@@ -3,14 +3,14 @@ import { useRouter } from 'next/router';
 
 import { MainLayout } from '@myra-ui';
 
-import { useGetCertificateQuery } from '@coop/cbs/data-access';
+import { useIssueCertificateMutation } from '@coop/cbs/data-access';
 import { MemberDetails } from '@coop/cbs/members/details';
 import { MemberPagesLayout } from '@coop/cbs/members/list';
 
 const MemberDEtailsPage = () => {
   const router = useRouter();
 
-  const { data } = useGetCertificateQuery({ id: router?.query?.['id'] as string });
+  const { mutateAsync } = useIssueCertificateMutation();
 
   const [isAddMinorModalOpen, setIsAddMinorAccountModalOpen] = useState(false);
   const handleMinorAccountClose = () => {
@@ -18,7 +18,9 @@ const MemberDEtailsPage = () => {
   };
 
   const getCertificate = () => {
-    window.open(data?.members?.issueCertificate, '_blank');
+    mutateAsync({ id: router?.query?.['id'] as string }).then((res) =>
+      window.open(res?.members?.issueCertificate, '_blank')
+    );
   };
 
   return (

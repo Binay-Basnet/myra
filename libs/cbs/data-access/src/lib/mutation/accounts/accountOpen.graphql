@@ -71,3 +71,9 @@ mutation setupdateInstallmentAmount($accountId: ID!, $newInstallmentAmount: Stri
     }
   }
 }
+
+mutation issueFDCertificate($accountId: ID!) {
+  account {
+    issueFDCertificate(accountId: $accountId)
+  }
+}

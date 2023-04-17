@@ -4066,6 +4066,7 @@ export type DepositLoanAccountMutation = {
   close?: Maybe<DepositAccountCloseResult>;
   editAccountInterest: InterestSetupMutationResult;
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
+  issueFDCertificate: Scalars['String'];
   makeActive?: Maybe<Scalars['String']>;
   updateAccountInterest: InterestSetupMutationResult;
   updateInstallmentAmount?: Maybe<SavingsTenureUpdateResult>;
@@ -4092,6 +4093,10 @@ export type DepositLoanAccountMutationEditAccountInterestArgs = {
 export type DepositLoanAccountMutationForgiveInstallmentArgs = {
   id: Scalars['ID'];
   installmentDate: Array<Scalars['String']>;
+};
+
+export type DepositLoanAccountMutationIssueFdCertificateArgs = {
+  accountId: Scalars['ID'];
 };
 
 export type DepositLoanAccountMutationMakeActiveArgs = {
@@ -12185,6 +12190,7 @@ export type MemberMutation = {
   generateExcel: Scalars['String'];
   individual?: Maybe<KymIndMutation>;
   institution?: Maybe<KymInsMutation>;
+  issueCertificate: Scalars['String'];
   makeInactive?: Maybe<MemberInactiveResult>;
   officialUse?: Maybe<OfficialUseResult>;
   /**  id is the ID of member  */
@@ -12214,6 +12220,10 @@ export type MemberMutationIndividualArgs = {
 };
 
 export type MemberMutationInstitutionArgs = {
+  id: Scalars['ID'];
+};
+
+export type MemberMutationIssueCertificateArgs = {
   id: Scalars['ID'];
 };
 
@@ -12404,7 +12414,6 @@ export type MemberQuery = {
   inactivateMember?: Maybe<MemberInactivateQuery>;
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
-  issueCertificate: Scalars['String'];
   list: KymMemberListConnection;
   memberOverview?: Maybe<MemberOverviewResult>;
   memberOverviewV2?: Maybe<MemberOverviewV2Result>;
@@ -12437,10 +12446,6 @@ export type MemberQueryIndividualArgs = {
 
 export type MemberQueryInstitutionArgs = {
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type MemberQueryIssueCertificateArgs = {
-  id: Scalars['ID'];
 };
 
 export type MemberQueryListArgs = {
@@ -17724,6 +17729,12 @@ export type SetupdateInstallmentAmountMutation = {
   };
 };
 
+export type IssueFdCertificateMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+}>;
+
+export type IssueFdCertificateMutation = { account: { issueFDCertificate: string } };
+
 export type UpdateAccountInterestMutationVariables = Exact<{
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
@@ -18858,6 +18869,12 @@ export type DeleteDraftMutation = {
     } | null;
   };
 };
+
+export type IssueCertificateMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type IssueCertificateMutation = { members: { issueCertificate: string } };
 
 export type PayMembershipMutationVariables = Exact<{
   data?: InputMaybe<MembershipPaymentInput>;
@@ -25601,12 +25618,6 @@ export type GetMemberFilterMappingQuery = {
     } | null;
   };
 };
-
-export type GetCertificateQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetCertificateQuery = { members: { issueCertificate: string } };
 
 export type GetMembershipFeeQueryVariables = Exact<{
   memberID: Scalars['ID'];
@@ -33705,6 +33716,28 @@ export const useSetupdateInstallmentAmountMutation = <TError = unknown, TContext
     ),
     options
   );
+export const IssueFdCertificateDocument = `
+    mutation issueFDCertificate($accountId: ID!) {
+  account {
+    issueFDCertificate(accountId: $accountId)
+  }
+}
+    `;
+export const useIssueFdCertificateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    IssueFdCertificateMutation,
+    TError,
+    IssueFdCertificateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<IssueFdCertificateMutation, TError, IssueFdCertificateMutationVariables, TContext>(
+    ['issueFDCertificate'],
+    useAxios<IssueFdCertificateMutation, IssueFdCertificateMutationVariables>(
+      IssueFdCertificateDocument
+    ),
+    options
+  );
 export const UpdateAccountInterestDocument = `
     mutation updateAccountInterest($accountId: ID!, $data: InterestRateSetupInput!) {
   account {
@@ -35626,6 +35659,26 @@ export const useDeleteDraftMutation = <TError = unknown, TContext = unknown>(
   useMutation<DeleteDraftMutation, TError, DeleteDraftMutationVariables, TContext>(
     ['deleteDraft'],
     useAxios<DeleteDraftMutation, DeleteDraftMutationVariables>(DeleteDraftDocument),
+    options
+  );
+export const IssueCertificateDocument = `
+    mutation issueCertificate($id: ID!) {
+  members {
+    issueCertificate(id: $id)
+  }
+}
+    `;
+export const useIssueCertificateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    IssueCertificateMutation,
+    TError,
+    IssueCertificateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<IssueCertificateMutation, TError, IssueCertificateMutationVariables, TContext>(
+    ['issueCertificate'],
+    useAxios<IssueCertificateMutation, IssueCertificateMutationVariables>(IssueCertificateDocument),
     options
   );
 export const PayMembershipDocument = `
@@ -44870,25 +44923,6 @@ export const useGetMemberFilterMappingQuery = <
     useAxios<GetMemberFilterMappingQuery, GetMemberFilterMappingQueryVariables>(
       GetMemberFilterMappingDocument
     ).bind(null, variables),
-    options
-  );
-export const GetCertificateDocument = `
-    query getCertificate($id: ID!) {
-  members {
-    issueCertificate(id: $id)
-  }
-}
-    `;
-export const useGetCertificateQuery = <TData = GetCertificateQuery, TError = unknown>(
-  variables: GetCertificateQueryVariables,
-  options?: UseQueryOptions<GetCertificateQuery, TError, TData>
-) =>
-  useQuery<GetCertificateQuery, TError, TData>(
-    ['getCertificate', variables],
-    useAxios<GetCertificateQuery, GetCertificateQueryVariables>(GetCertificateDocument).bind(
-      null,
-      variables
-    ),
     options
   );
 export const GetMembershipFeeDocument = `

@@ -161,3 +161,9 @@ mutation deleteDraft($memberId: ID!) {
     }
   }
 }
+
+mutation issueCertificate($id: ID!) {
+  members {
+    issueCertificate(id: $id)
+  }
+}
