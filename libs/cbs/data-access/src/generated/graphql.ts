@@ -25602,6 +25602,12 @@ export type GetMemberFilterMappingQuery = {
   };
 };
 
+export type GetCertificateQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetCertificateQuery = { members: { issueCertificate: string } };
+
 export type GetMembershipFeeQueryVariables = Exact<{
   memberID: Scalars['ID'];
 }>;
@@ -44864,6 +44870,25 @@ export const useGetMemberFilterMappingQuery = <
     useAxios<GetMemberFilterMappingQuery, GetMemberFilterMappingQueryVariables>(
       GetMemberFilterMappingDocument
     ).bind(null, variables),
+    options
+  );
+export const GetCertificateDocument = `
+    query getCertificate($id: ID!) {
+  members {
+    issueCertificate(id: $id)
+  }
+}
+    `;
+export const useGetCertificateQuery = <TData = GetCertificateQuery, TError = unknown>(
+  variables: GetCertificateQueryVariables,
+  options?: UseQueryOptions<GetCertificateQuery, TError, TData>
+) =>
+  useQuery<GetCertificateQuery, TError, TData>(
+    ['getCertificate', variables],
+    useAxios<GetCertificateQuery, GetCertificateQueryVariables>(GetCertificateDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetMembershipFeeDocument = `
