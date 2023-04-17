@@ -30107,12 +30107,6 @@ export type GetLoanProductProcessingChargesListQuery = {
               fileUploads?: Array<{ identifier: string; url: string } | null> | null;
             } | null;
           } | null> | null;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | null;
         };
       } | null;
     } | null;
@@ -30120,15 +30114,15 @@ export type GetLoanProductProcessingChargesListQuery = {
 };
 
 export type GetLoanProductProcessingChargeDetailQueryVariables = Exact<{
-  productId: Scalars['ID'];
+  chargeId: Scalars['ID'];
 }>;
 
 export type GetLoanProductProcessingChargeDetailQuery = {
   settings: {
     general?: {
       loanProducts?: {
-        listProcessingCharge: {
-          data?: Array<{
+        getProcessingCharge: {
+          data?: {
             payload?: Array<{
               serviceName?: string | null;
               ledgerName?: string | null;
@@ -30142,13 +30136,7 @@ export type GetLoanProductProcessingChargeDetailQuery = {
               notes?: string | null;
               fileUploads?: Array<{ identifier: string; url: string } | null> | null;
             } | null;
-          } | null> | null;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | null;
+          } | null;
         };
       } | null;
     } | null;
@@ -50841,15 +50829,12 @@ export const GetLoanProductProcessingChargesListDocument = `
               notes
             }
           }
-          error {
-            ...MutationError
-          }
         }
       }
     }
   }
 }
-    ${MutationErrorFragmentDoc}`;
+    `;
 export const useGetLoanProductProcessingChargesListQuery = <
   TData = GetLoanProductProcessingChargesListQuery,
   TError = unknown
@@ -50866,11 +50851,11 @@ export const useGetLoanProductProcessingChargesListQuery = <
     options
   );
 export const GetLoanProductProcessingChargeDetailDocument = `
-    query getLoanProductProcessingChargeDetail($productId: ID!) {
+    query getLoanProductProcessingChargeDetail($chargeId: ID!) {
   settings {
     general {
       loanProducts {
-        listProcessingCharge(productId: $productId) {
+        getProcessingCharge(id: $chargeId) {
           data {
             payload {
               serviceName
@@ -50889,15 +50874,12 @@ export const GetLoanProductProcessingChargeDetailDocument = `
               notes
             }
           }
-          error {
-            ...MutationError
-          }
         }
       }
     }
   }
 }
-    ${MutationErrorFragmentDoc}`;
+    `;
 export const useGetLoanProductProcessingChargeDetailQuery = <
   TData = GetLoanProductProcessingChargeDetailQuery,
   TError = unknown
