@@ -1,11 +1,18 @@
+import { useMemo } from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 import { useRouter } from 'next/router';
+import NepaliDate from 'nepali-date-converter';
 
 import { Box, InputProps, Text } from '@myra-ui';
 import { DatePicker } from '@myra-ui/date-picker';
 
-import { useAppSelector } from '@coop/cbs/data-access';
+import {
+  DateType,
+  store,
+  useAppSelector,
+  useGetEndOfDayDateDataQuery,
+} from '@coop/cbs/data-access';
 
 interface IFormDatePickerProps<T> extends InputProps {
   name: Path<T> | string;
@@ -15,6 +22,7 @@ interface IFormDatePickerProps<T> extends InputProps {
   minDate?: Date;
   maxToday?: boolean;
   isRequired?: boolean;
+  minTransactionDate?: boolean;
 }
 
 export const FormDatePicker = <T,>({
@@ -24,10 +32,17 @@ export const FormDatePicker = <T,>({
   minDate,
   maxToday,
   isRequired,
+  minTransactionDate,
   ...rest
 }: IFormDatePickerProps<T>) => {
   const router = useRouter();
   const preference = useAppSelector((state) => state?.auth?.preference);
+
+  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
+
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+
+  const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
 
   const methods = useFormContext();
 
@@ -63,7 +78,15 @@ export const FormDatePicker = <T,>({
             calendarType={preference?.date || 'AD'}
             // value={value ? (preference?.date === 'AD' ? { ad: value } : { bs: value }) : undefined}
             maxDate={maxToday ? new Date() : maxDate}
-            minDate={minDate}
+            minDate={
+              minTransactionDate
+                ? closingDate?.local
+                  ? dateType === 'BS'
+                    ? new NepaliDate(closingDate?.np ?? '').toJsDate()
+                    : new Date(closingDate?.en ?? '')
+                  : new Date()
+                : minDate
+            }
           />
 
           {errors[name] ? (

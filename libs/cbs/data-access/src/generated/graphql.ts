@@ -19791,6 +19791,32 @@ export type UpdateLoanProductPenaltyMutation = {
   };
 };
 
+export type UpdateLoanProductProcessingChargeMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  productId: Scalars['ID'];
+  payload: Array<ServiceType> | ServiceType;
+  additionalData: ProductChargeAdditionalDataInput;
+}>;
+
+export type UpdateLoanProductProcessingChargeMutation = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        updateProcessingCharge: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type SetLoanGeneralSettingsMutationVariables = Exact<{
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
@@ -30051,6 +30077,78 @@ export type GetLoanProductPenaltyChargeDetailQuery = {
   };
 };
 
+export type GetLoanProductProcessingChargesListQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetLoanProductProcessingChargesListQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        listProcessingCharge: {
+          data?: Array<{
+            payload?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+              percentage?: number | null;
+            } | null> | null;
+            additionalData?: {
+              id?: string | null;
+              createdAt?: Record<'local' | 'en' | 'np', string> | null;
+              effectiveDate: Record<'local' | 'en' | 'np', string>;
+              notes?: string | null;
+              fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+            } | null;
+          } | null> | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanProductProcessingChargeDetailQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetLoanProductProcessingChargeDetailQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        listProcessingCharge: {
+          data?: Array<{
+            payload?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+              percentage?: number | null;
+            } | null> | null;
+            additionalData?: {
+              id?: string | null;
+              createdAt?: Record<'local' | 'en' | 'np', string> | null;
+              effectiveDate: Record<'local' | 'en' | 'np', string>;
+              notes?: string | null;
+              fileUploads?: Array<{ identifier: string; url: string } | null> | null;
+            } | null;
+          } | null> | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetLoanGeneralSettingsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetLoanGeneralSettingsQuery = {
@@ -37116,6 +37214,48 @@ export const useUpdateLoanProductPenaltyMutation = <TError = unknown, TContext =
     useAxios<UpdateLoanProductPenaltyMutation, UpdateLoanProductPenaltyMutationVariables>(
       UpdateLoanProductPenaltyDocument
     ),
+    options
+  );
+export const UpdateLoanProductProcessingChargeDocument = `
+    mutation updateLoanProductProcessingCharge($id: ID, $productId: ID!, $payload: [ServiceType!]!, $additionalData: ProductChargeAdditionalDataInput!) {
+  settings {
+    general {
+      loanProducts {
+        updateProcessingCharge(
+          id: $id
+          productId: $productId
+          payload: $payload
+          additionalData: $additionalData
+        ) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLoanProductProcessingChargeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLoanProductProcessingChargeMutation,
+    TError,
+    UpdateLoanProductProcessingChargeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateLoanProductProcessingChargeMutation,
+    TError,
+    UpdateLoanProductProcessingChargeMutationVariables,
+    TContext
+  >(
+    ['updateLoanProductProcessingCharge'],
+    useAxios<
+      UpdateLoanProductProcessingChargeMutation,
+      UpdateLoanProductProcessingChargeMutationVariables
+    >(UpdateLoanProductProcessingChargeDocument),
     options
   );
 export const SetLoanGeneralSettingsDocument = `
@@ -50650,6 +50790,102 @@ export const useGetLoanProductPenaltyChargeDetailQuery = <
       GetLoanProductPenaltyChargeDetailQuery,
       GetLoanProductPenaltyChargeDetailQueryVariables
     >(GetLoanProductPenaltyChargeDetailDocument).bind(null, variables),
+    options
+  );
+export const GetLoanProductProcessingChargesListDocument = `
+    query getLoanProductProcessingChargesList($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        listProcessingCharge(productId: $productId) {
+          data {
+            payload {
+              serviceName
+              ledgerName
+              amount
+              percentage
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetLoanProductProcessingChargesListQuery = <
+  TData = GetLoanProductProcessingChargesListQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductProcessingChargesListQueryVariables,
+  options?: UseQueryOptions<GetLoanProductProcessingChargesListQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductProcessingChargesListQuery, TError, TData>(
+    ['getLoanProductProcessingChargesList', variables],
+    useAxios<
+      GetLoanProductProcessingChargesListQuery,
+      GetLoanProductProcessingChargesListQueryVariables
+    >(GetLoanProductProcessingChargesListDocument).bind(null, variables),
+    options
+  );
+export const GetLoanProductProcessingChargeDetailDocument = `
+    query getLoanProductProcessingChargeDetail($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        listProcessingCharge(productId: $productId) {
+          data {
+            payload {
+              serviceName
+              ledgerName
+              amount
+              percentage
+            }
+            additionalData {
+              id
+              createdAt
+              effectiveDate
+              fileUploads {
+                identifier
+                url
+              }
+              notes
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetLoanProductProcessingChargeDetailQuery = <
+  TData = GetLoanProductProcessingChargeDetailQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductProcessingChargeDetailQueryVariables,
+  options?: UseQueryOptions<GetLoanProductProcessingChargeDetailQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductProcessingChargeDetailQuery, TError, TData>(
+    ['getLoanProductProcessingChargeDetail', variables],
+    useAxios<
+      GetLoanProductProcessingChargeDetailQuery,
+      GetLoanProductProcessingChargeDetailQueryVariables
+    >(GetLoanProductProcessingChargeDetailDocument).bind(null, variables),
     options
   );
 export const GetLoanGeneralSettingsDocument = `
