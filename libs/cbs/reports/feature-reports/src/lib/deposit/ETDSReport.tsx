@@ -40,8 +40,8 @@ export const ETDSReport = () => {
           paths={[
             { label: 'Saving Reports', link: '/reports/cbs/savings' },
             {
-              label: 'Interest Tax Report',
-              link: '/reports/cbs/savings/interest-tax/new',
+              label: 'e-TDS Report',
+              link: '/reports/cbs/savings/e-tds/new',
             },
           ]}
         />
@@ -67,11 +67,11 @@ export const ETDSReport = () => {
               },
               {
                 header: 'Name',
-                accessorFn: (row) => row?.memberName,
+                accessorFn: (row) => row?.memberName?.local,
               },
               {
                 header: 'T Date',
-                accessorFn: (row) => row?.date,
+                accessorFn: (row) => row?.date?.local,
               },
               {
                 header: 'Date Type',
