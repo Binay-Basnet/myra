@@ -342,6 +342,7 @@ query getSavingAccountAccruedInterestReport($data: AccruedInterestFilter!) {
           transactionId
         }
         basicInfo {
+          memberName
           accountId
           accountName
           accountType

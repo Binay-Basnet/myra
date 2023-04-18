@@ -82,6 +82,7 @@ export enum Report {
   LOAN_BALANCE_REPORT = 'Loan Balance Report',
   CLOSED_LOAN_ACCOUNT_STATEMENT = 'Closed Loan Account Statement',
   DOSARI_LOAN_REPORT = 'Dosari Loan Report',
+  DOSARI_MEMBER_REPORT = 'Dosari Member Report',
 
   THRESHOLD_TRANSACTION_REPORT = 'Threshold Transaction ',
   TRANSACTION_TRIAL_SHEET = 'Trial Balance',
@@ -185,6 +186,10 @@ export const REPORTS = {
       id: '2.7',
       report: Report.MEMBER_WISE_BALANCE_REPORT,
       link: 'balance',
+    },
+    {
+      report: Report.DOSARI_MEMBER_REPORT,
+      link: 'dosari-member',
     },
   ],
 

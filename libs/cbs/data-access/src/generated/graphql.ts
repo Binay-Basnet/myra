@@ -15039,6 +15039,7 @@ export type SetupMutation = {
   eodAction?: Maybe<Scalars['Boolean']>;
   eodException?: Maybe<Scalars['Boolean']>;
   eodSeed?: Maybe<Scalars['String']>;
+  updateSavingEndDate?: Maybe<Scalars['String']>;
 };
 
 export type SetupMutationEodActionArgs = {
@@ -27084,6 +27085,7 @@ export type GetSavingAccountAccruedInterestReportQuery = {
           transactionId?: string | null;
         } | null> | null;
         basicInfo?: {
+          memberName: string;
           accountId: string;
           accountName: string;
           accountType: NatureOfDepositProduct;
@@ -27615,6 +27617,7 @@ export type GetLoanAccruedInterestReportQuery = {
           serviceCentreName: string;
           serviceCentreId: string;
           membershipDate: Record<'local' | 'en' | 'np', string>;
+          memberName: string;
           memberId: string;
           memberCode: string;
           currentInterestRate: number;
@@ -46917,6 +46920,7 @@ export const GetSavingAccountAccruedInterestReportDocument = `
           transactionId
         }
         basicInfo {
+          memberName
           accountId
           accountName
           accountType
@@ -47602,6 +47606,7 @@ export const GetLoanAccruedInterestReportDocument = `
           serviceCentreName
           serviceCentreId
           membershipDate
+          memberName
           memberId
           memberCode
           currentInterestRate

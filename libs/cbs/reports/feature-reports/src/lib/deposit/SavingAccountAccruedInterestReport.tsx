@@ -79,7 +79,7 @@ export const SavingAccountAccruedInterestReport = () => {
                       color="gray.700"
                     >
                       <Text noOfLines={1} textTransform="capitalize">
-                        {meta?.memberId}
+                        {meta?.memberName}
                       </Text>
                       {meta?.address && <Text noOfLines={1}>{formatAddress(meta?.address)}</Text>}
                       {meta?.serviceCentreName && (

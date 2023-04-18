@@ -308,6 +308,7 @@ query getLoanAccruedInterestReport($data: AccruedInterestFilter!) {
           serviceCentreName
           serviceCentreId
           membershipDate
+          memberName
           memberId
           memberCode
           currentInterestRate

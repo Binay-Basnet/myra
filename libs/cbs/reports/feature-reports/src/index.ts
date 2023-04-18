@@ -26,6 +26,7 @@ export * from './lib/loan/LoanCollateralReport';
 export * from './lib/loan/LoanProductWiseBalanceReport';
 export * from './lib/loan/LoanStatementReport';
 export * from './lib/loan/PersonalGuranteeReport';
+export * from './lib/members/DosariMemberReport';
 export * from './lib/members/IndividualMemberReport';
 export * from './lib/members/KYMStatusReport';
 export * from './lib/members/MemberActiveInactiveReport';

@@ -79,7 +79,7 @@ export const LoanAccountAccruedInterestReport = () => {
                       color="gray.700"
                     >
                       <Text noOfLines={1} textTransform="capitalize">
-                        {basicInfo?.memberCode}
+                        {basicInfo?.memberName}
                       </Text>
                       {basicInfo?.address && (
                         <Text noOfLines={1}>{formatAddress(basicInfo?.address)}</Text>
