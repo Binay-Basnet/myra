@@ -3,7 +3,7 @@ import { IoCopyOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { Box, Text } from '@chakra-ui/react';
 
-import { Avatar, DetailPageTabs, Divider, Icon, toast } from '@myra-ui';
+import { Avatar, DetailPageTabs, Divider, Icon, Scrollable, toast } from '@myra-ui';
 
 import { useGetAgentDetailDataQuery } from '@coop/cbs/data-access';
 import { TransactionDetailPathBar } from '@coop/cbs/transactions/ui-components';
@@ -37,7 +37,7 @@ export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) 
     { enabled: !!id }
   );
   return (
-    <>
+    <Scrollable detailPage>
       <TransactionDetailPathBar title="Market Representative List" />
       <Box
         w="250px"
@@ -88,6 +88,6 @@ export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) 
       <Box bg="background.500" ml="250px" minHeight="calc(100vh - 160px)" p="s16">
         {children}
       </Box>
-    </>
+    </Scrollable>
   );
 };
