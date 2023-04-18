@@ -25369,6 +25369,7 @@ export type GetIndividualKymEditDataQuery = {
               nationalityId?: string | null;
               educationQualificationId?: string | null;
               religionId?: string | null;
+              panNo?: string | null;
             } | null;
             contactDetails?: {
               mobileNumber?: string | null;
@@ -44678,6 +44679,7 @@ export const GetIndividualKymEditDataDocument = `
               religionId
               educationQualificationId
               religionId
+              panNo
             }
             contactDetails {
               mobileNumber
