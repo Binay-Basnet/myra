@@ -9,6 +9,8 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
+import { asyncToast, Box, Button, Divider, Text } from '@myra-ui';
+
 import {
   DateType,
   DepositAccount,
@@ -18,7 +20,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetAccountForgiveInstallmentDataMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Button, Divider, Text } from '@myra-ui';
+import { localizedDate } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IInstallmentModelProps {
@@ -57,7 +59,7 @@ export const InstallmentModel = ({
   const installmentList = installmentsListQueryData?.account?.getInstallments?.data?.map(
     (installment) => ({
       ...installment,
-      dueDate: preferenceDate === DateType.Bs ? installment?.dueDate?.np : installment?.dueDate?.en,
+      // dueDate: preferenceDate === DateType.Bs ? installment?.dueDate?.np : installment?.dueDate?.en,
       monthName:
         preferenceDate === DateType.Bs ? installment?.monthName?.np : installment?.monthName?.en,
     })
@@ -145,7 +147,7 @@ export const InstallmentModel = ({
                       h="s16"
                     /> */}
                     <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-60">
-                      {installment?.dueDate}
+                      {localizedDate(installment?.dueDate)}
                     </Text>
                   </Box>
                 </Box>
@@ -156,17 +158,17 @@ export const InstallmentModel = ({
                     <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-60">
                       {t['installmentModalDone']}
                     </Text>
-                  ) : forgivenList.includes(installment?.dueDate as string) ? (
+                  ) : forgivenList.includes(installment?.dueDate?.en as string) ? (
                     <Button
                       variant="ghost"
-                      onClick={() => handleUnforgiveInstallment(installment?.dueDate as string)}
+                      onClick={() => handleUnforgiveInstallment(installment?.dueDate?.en as string)}
                     >
                       Unforgive
                     </Button>
                   ) : (
                     <Button
                       variant="ghost"
-                      onClick={() => handleForgiveInstallment(installment?.dueDate as string)}
+                      onClick={() => handleForgiveInstallment(installment?.dueDate?.en as string)}
                     >
                       {t['installmentModalForgive']}
                     </Button>
