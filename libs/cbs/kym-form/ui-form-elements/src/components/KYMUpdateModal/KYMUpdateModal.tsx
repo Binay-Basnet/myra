@@ -41,7 +41,7 @@ export const KYMUpdateModal = ({ isOpen, onClose }: IKymUpdateModalProps) => {
       <Box display="flex" flexDir="column" gap="s32">
         <Alert
           status="info"
-          title="All the updates dont to the member will be visible only after the effective date "
+          title="All the updates done to the member will be visible only after the effective date "
         />
         <FormProvider {...methods}>
           <Box w="50%">

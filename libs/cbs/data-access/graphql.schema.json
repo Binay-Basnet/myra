@@ -138376,7 +138376,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "AssignedMemberListFiler",
+                  "name": "Filter",
                   "ofType": null
                 },
                 "defaultValue": null,

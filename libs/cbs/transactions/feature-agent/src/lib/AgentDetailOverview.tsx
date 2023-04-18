@@ -51,7 +51,17 @@ export const AgentDetailOverview = () => {
         after: '',
       },
       filter: {
-        agentId: id as string,
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'agentId',
+                comparator: 'EqualTo',
+                value: id,
+              },
+            ],
+          },
+        ],
       },
     },
     { enabled: !!id, staleTime: 0 }

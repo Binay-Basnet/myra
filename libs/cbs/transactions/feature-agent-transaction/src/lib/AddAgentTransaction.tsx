@@ -40,7 +40,17 @@ export const AddAgentTransaction = () => {
         after: '',
       },
       filter: {
-        agentId: agentId as string,
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'agentId',
+                comparator: 'EqualTo',
+                value: agentId,
+              },
+            ],
+          },
+        ],
       },
     },
     { enabled: !!agentId, staleTime: 0 }

@@ -16361,7 +16361,7 @@ export type TransactionQueryAgentDetailArgs = {
 };
 
 export type TransactionQueryAssignedMemberListArgs = {
-  filter?: InputMaybe<AssignedMemberListFiler>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -22631,7 +22631,7 @@ export type GetAgentDetailDataQuery = {
 };
 
 export type GetAgentAssignedMemberListDataQueryVariables = Exact<{
-  filter?: InputMaybe<AssignedMemberListFiler>;
+  filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -41256,7 +41256,7 @@ export const useGetAgentDetailDataQuery = <TData = GetAgentDetailDataQuery, TErr
     options
   );
 export const GetAgentAssignedMemberListDataDocument = `
-    query getAgentAssignedMemberListData($filter: AssignedMemberListFiler, $pagination: Pagination) {
+    query getAgentAssignedMemberListData($filter: Filter, $pagination: Pagination) {
   transaction {
     assignedMemberList(filter: $filter, pagination: $pagination) {
       totalCount

@@ -1,8 +1,4 @@
-query getAgentListData(
-  $filter: Filter
-  $currentBranchOnly: Boolean
-  $pagination: Pagination
-) {
+query getAgentListData($filter: Filter, $currentBranchOnly: Boolean, $pagination: Pagination) {
   transaction {
     listAgent(filter: $filter, currentBranchOnly: $currentBranchOnly, pagination: $pagination) {
       totalCount
@@ -40,7 +36,7 @@ query getAgentDetailData($id: ID!) {
   }
 }
 
-query getAgentAssignedMemberListData($filter: AssignedMemberListFiler, $pagination: Pagination) {
+query getAgentAssignedMemberListData($filter: Filter, $pagination: Pagination) {
   transaction {
     assignedMemberList(filter: $filter, pagination: $pagination) {
       totalCount

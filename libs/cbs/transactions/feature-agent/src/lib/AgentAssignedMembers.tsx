@@ -31,7 +31,17 @@ export const AgentAssignedMembers = () => {
     {
       pagination: getPaginationQuery(),
       filter: {
-        agentId: id as string,
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'agentId',
+                comparator: 'EqualTo',
+                value: id,
+              },
+            ],
+          },
+        ],
       },
       // filter: {
       //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
