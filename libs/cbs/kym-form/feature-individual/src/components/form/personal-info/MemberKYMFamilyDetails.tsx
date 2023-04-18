@@ -19,6 +19,7 @@ import {
   useGetNewIdMutation,
   useSetMemberFamilyDetailsMutation,
 } from '@coop/cbs/data-access';
+import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { DynamicBoxContainer, DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
@@ -158,6 +159,15 @@ const AddFamilyMember = ({
               id="familyDetailsDateOfBirth"
               label={t['kymIndDateofBirthBS']}
               maxToday
+            />
+
+            <KYMDocumentField
+              mutationId={id}
+              label="Photo"
+              name={familyMemberId}
+              setKymCurrentSection={setKymCurrentSection}
+              getKymSection={getKymSection}
+              size="sm"
             />
           </InputGroupContainer>
         </form>

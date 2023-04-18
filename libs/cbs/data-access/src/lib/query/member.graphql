@@ -189,6 +189,7 @@ query getIndividualKymEditData($id: String!, $hasPressedNext: Boolean) {
               religionId
               educationQualificationId
               religionId
+              panNo
             }
             contactDetails {
               mobileNumber

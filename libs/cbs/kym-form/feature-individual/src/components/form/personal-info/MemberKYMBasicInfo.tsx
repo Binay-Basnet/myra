@@ -99,6 +99,8 @@ export const MemberKYMBasicInfo = ({ setKymCurrentSection }: IMemberKYMBasicInfo
             isLoading={religionLoading}
             options={getFieldOption(religionFields)}
           />
+
+          <FormInput name="panNo" label="Pan No" />
         </FormSection>
       </form>
     </FormProvider>
