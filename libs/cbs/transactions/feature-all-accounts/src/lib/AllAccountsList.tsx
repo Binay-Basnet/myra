@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetAllAccountsQuery } from '@coop/cbs/data-access';
+import { useGetAllAccountsFilterMappingQuery, useGetAllAccountsQuery } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
@@ -18,6 +18,8 @@ export const AllAccountsList = () => {
     paginate: getPaginationQuery(),
     filter: getFilterQuery(),
   });
+
+  const { data: accountsFilterMapping, isLoading } = useGetAllAccountsFilterMappingQuery();
 
   const rowData = useMemo(() => data?.allAccounts?.list?.edges ?? [], [data]);
 
@@ -48,15 +50,25 @@ export const AllAccountsList = () => {
         header: 'Product',
         accessorFn: (row) => row?.node?.productName,
         enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: accountsFilterMapping?.allAccounts?.filterMapping?.productName,
+          },
+        },
       },
       {
         id: 'accountType',
         header: 'Account Type',
         accessorFn: (row) => row?.node?.accountType,
         enableColumnFilter: true,
+        meta: {
+          filterMaps: {
+            list: accountsFilterMapping?.allAccounts?.filterMapping?.accountType,
+          },
+        },
       },
     ],
-    []
+    [isLoading]
   );
 
   return (

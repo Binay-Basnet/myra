@@ -726,3 +726,16 @@ query getAccountInterestRateDetail($id: ID!, $accountId: String!) {
     }
   }
 }
+
+query getAllAccountsFilterMapping {
+  allAccounts {
+    filterMapping {
+      accountType {
+        ...OptionType
+      }
+      productName {
+        ...OptionType
+      }
+    }
+  }
+}
