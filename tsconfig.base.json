@@ -128,6 +128,7 @@
       "@coop/cbs/transfer": ["libs/cbs/transfer/src/index.ts"],
       "@coop/cbs/transfer/detail": ["libs/cbs/transfer/feature-detail-page/src/index.ts"],
       "@coop/cbs/utils": ["libs/cbs/utils/src/index.ts"],
+      "@coop/csv-viewer/data-access": ["libs/csv-viewer/data-access/src/index.ts"],
       "@coop/ebanking/accounts": ["libs/ebanking/feature-accounts/src/index.ts"],
       "@coop/ebanking/auth": ["libs/ebanking/feature-auth/src/index.ts"],
       "@coop/ebanking/cards": ["libs/ebanking/ui-cards/src/index.ts"],

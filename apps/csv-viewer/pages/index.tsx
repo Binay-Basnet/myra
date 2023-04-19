@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 
 import { Box, Column, Icon, Input, Table, Text } from '@myra-ui';
 
+import { Header } from '../components/Header';
 import { data } from '../constants/data';
 
 type Tab = {
@@ -127,20 +128,7 @@ export const Index = () => {
 
   return (
     <Box h="100vh" w="100vw" display="flex" flexDir="column" bg="background.500" overflowX="auto">
-      <Box
-        h="3rem"
-        w="100%"
-        bg="primary.500"
-        display="flex"
-        alignItems="center"
-        color="white"
-        fontSize="r1"
-        fontWeight={500}
-        px="s16"
-        flexShrink={0}
-      >
-        CSV-VIEWER
-      </Box>
+      <Header />
       <Box
         h="2.75rem"
         px="s16"
