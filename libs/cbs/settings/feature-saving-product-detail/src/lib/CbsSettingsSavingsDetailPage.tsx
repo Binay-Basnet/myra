@@ -5,6 +5,7 @@ import { Box, DetailPageHeader } from '@myra-ui';
 import { featureCode } from '@coop/shared/utils';
 
 import { AccountListPage } from './AccountListPage';
+import { ChequeSettingsUpdatePage } from './ChequeSettingsUpdatePage';
 import { DormantAccountListPage } from './DormantAccountPage';
 import FeesAndChargesUpdatePage from './FeesAndChargesUpdatePage';
 import GeneralUpdatesPage from './GeneralUpdatesPage';
@@ -41,6 +42,7 @@ export const CbsSettingsSavingsDetailPage = () => {
       {tabQuery === 'penalty update' && <PenaltyUpdatePage />}
       {tabQuery === 'fee and charges update' && <FeesAndChargesUpdatePage />}
       {tabQuery === 'general updates' && <GeneralUpdatesPage />}
+      {tabQuery === 'cheque settings update' && <ChequeSettingsUpdatePage />}
     </>
   );
 };

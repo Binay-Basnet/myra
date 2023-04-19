@@ -174,3 +174,26 @@ mutation updateCloseCharge(
     }
   }
 }
+
+mutation editChequeSettings(
+  $productId: ID!
+  $isChequeIssueAllowed: Boolean!
+  $chequeCharge: [ServiceType]
+) {
+  settings {
+    general {
+      depositProduct {
+        editChequeSettings(
+          productId: $productId
+          ischequeIssueAllowed: $isChequeIssueAllowed
+          chequeCharge: $chequeCharge
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

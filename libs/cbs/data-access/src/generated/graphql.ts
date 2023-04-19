@@ -4134,7 +4134,6 @@ export type DepositLoanAccountQuery = {
   getAccountInterestRate: InterestSetupQueryResult;
   getBulkInstallments?: Maybe<Array<Maybe<BulkInstallmentResult>>>;
   getInstallments?: Maybe<InstallmentResult>;
-  getMRMemberInstallments: MRmemberInstallmentResult;
   list?: Maybe<DepositLoanAccountConnection>;
   listAccountInterestRates: InterestSetupListResult;
   listAccountLedgers?: Maybe<AccountLedgerListResult>;
@@ -4171,10 +4170,6 @@ export type DepositLoanAccountQueryGetInstallmentsArgs = {
   id: Scalars['ID'];
   to?: InputMaybe<Scalars['String']>;
   toN?: InputMaybe<Scalars['Int']>;
-};
-
-export type DepositLoanAccountQueryGetMrMemberInstallmentsArgs = {
-  agentId: Scalars['ID'];
 };
 
 export type DepositLoanAccountQueryListArgs = {
@@ -11810,20 +11805,6 @@ export type MBankingTransactionFilterData = {
 
 export type MBankingTransactionResult = {
   data?: Maybe<Array<Maybe<MBankingTransactionData>>>;
-  error?: Maybe<QueryError>;
-};
-
-export type MRmemberInstallmentData = {
-  installments?: Maybe<Scalars['Int']>;
-  memberCode: Scalars['String'];
-  memberId: Scalars['String'];
-  nearestRemainingDays?: Maybe<Scalars['Int']>;
-  profilePic?: Maybe<Scalars['String']>;
-  profilePicUrl?: Maybe<Scalars['String']>;
-};
-
-export type MRmemberInstallmentResult = {
-  data?: Maybe<Array<Maybe<MRmemberInstallmentData>>>;
   error?: Maybe<QueryError>;
 };
 
@@ -19571,6 +19552,31 @@ export type UpdateCloseChargeMutation = {
             | MutationError_ValidationError_Fragment
             | null;
         };
+      } | null;
+    } | null;
+  };
+};
+
+export type EditChequeSettingsMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  isChequeIssueAllowed: Scalars['Boolean'];
+  chequeCharge?: InputMaybe<Array<InputMaybe<ServiceType>> | InputMaybe<ServiceType>>;
+}>;
+
+export type EditChequeSettingsMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        editChequeSettings?: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -36884,6 +36890,41 @@ export const useUpdateCloseChargeMutation = <TError = unknown, TContext = unknow
     ['updateCloseCharge'],
     useAxios<UpdateCloseChargeMutation, UpdateCloseChargeMutationVariables>(
       UpdateCloseChargeDocument
+    ),
+    options
+  );
+export const EditChequeSettingsDocument = `
+    mutation editChequeSettings($productId: ID!, $isChequeIssueAllowed: Boolean!, $chequeCharge: [ServiceType]) {
+  settings {
+    general {
+      depositProduct {
+        editChequeSettings(
+          productId: $productId
+          ischequeIssueAllowed: $isChequeIssueAllowed
+          chequeCharge: $chequeCharge
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useEditChequeSettingsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EditChequeSettingsMutation,
+    TError,
+    EditChequeSettingsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<EditChequeSettingsMutation, TError, EditChequeSettingsMutationVariables, TContext>(
+    ['editChequeSettings'],
+    useAxios<EditChequeSettingsMutation, EditChequeSettingsMutationVariables>(
+      EditChequeSettingsDocument
     ),
     options
   );
