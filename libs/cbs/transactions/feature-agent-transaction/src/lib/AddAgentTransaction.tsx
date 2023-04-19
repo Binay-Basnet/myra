@@ -94,7 +94,17 @@ export const AddAgentTransaction = () => {
     {
       pagination: getPaginationQuery(),
       filter: {
-        agentId,
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'agentId',
+                comparator: 'EqualTo',
+                value: agentId,
+              },
+            ],
+          },
+        ],
       },
     },
     { enabled: !!agentId }
