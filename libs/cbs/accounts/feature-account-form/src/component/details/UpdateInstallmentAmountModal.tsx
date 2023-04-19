@@ -55,7 +55,7 @@ export const UpdateInstallmentAmountModal = ({ isOpen, onClose }: IUpdateInstall
       isCentered
       title={
         <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
-          Update Installment Signature
+          Update Installment Amount
         </Text>
       }
       footer={

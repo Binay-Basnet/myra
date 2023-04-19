@@ -13,6 +13,7 @@ export * from './Cheque';
 export * from './CreateWithdrawSlipModal';
 export * from './Documents';
 export * from './GeneralInfoCard';
+export * from './GeneralUpdates';
 export * from './InterestUpdateTab';
 export * from './LedgerListTab';
 export * from './PastWithdrawSlipList';

@@ -98,6 +98,7 @@ export const AccountDetailsSidebar = () => {
           'Withdraw Slip',
           'Ledger',
           'Interest Update',
+          'General Updates',
           // 'ATM',
           // 'Activity',
           // 'Documents',

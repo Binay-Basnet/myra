@@ -6,7 +6,7 @@ import { Box, Grid, Icon, Text } from '@myra-ui/foundations';
 
 /* eslint-disable-next-line */
 export interface DetailPageQuickLinksProps {
-  links: { title: string; link: string; icon?: IconType; onClick?: () => void }[];
+  links: { title: string; link?: string; icon?: IconType; onClick?: () => void }[];
 }
 
 export const DetailPageQuickLinks = ({ links }: DetailPageQuickLinksProps) => {

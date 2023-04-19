@@ -4,65 +4,42 @@ import { Box, Scrollable, WIPState } from '@myra-ui';
 
 import { AccountDetailsPathBar } from '@coop/cbs/accounts/ui-components';
 import { AccountDetailsSidebar } from '@coop/cbs/accounts/ui-layouts';
-import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
+import { useAccountDetails, useIssueFdCertificateMutation } from '@coop/cbs/data-access';
 
 import {
-  AddNomineeModal,
-  AddTenureModal,
+  GeneralUpdates,
   InterestUpdateTab,
   LedgerListTab,
   Overview,
   Transactions,
-  UpdateInstallmentAmountModal,
-  UpdateSignatureModal,
   WithdrawSlip,
 } from '../component';
 
-interface IAccountDetailsProps {
-  pathbarOptions?: { label: string; handler: () => void }[];
-  pathbarCommonOptions?: { label: string; handler: () => void }[];
-  pathbarMandatorySavingOptions?: { label: string; handler: () => void }[];
-  isNomineeAccountModalOpen?: boolean;
-  handleNomineeModalClose?: () => void;
-  isTenureModalOpen?: boolean;
-  handleTenureModalClose?: () => void;
-  handleUpdateSignatureModalClose?: () => void;
-  isUpdateSignatureModalOpen?: boolean;
-  isUpdateInstallmentAmountModalOpen?: boolean;
-  handleUpdateInstallmentAmountModalClose?: () => void;
-}
-
-export const AccountDetails = ({
-  pathbarOptions,
-  pathbarCommonOptions,
-  handleNomineeModalClose,
-  isNomineeAccountModalOpen,
-  handleTenureModalClose,
-  isTenureModalOpen,
-  handleUpdateSignatureModalClose,
-  isUpdateSignatureModalOpen,
-  isUpdateInstallmentAmountModalOpen,
-  handleUpdateInstallmentAmountModalClose,
-  pathbarMandatorySavingOptions,
-}: IAccountDetailsProps) => {
+export const AccountDetails = () => {
   const router = useRouter();
 
   const tabQuery = router.query['tab'] as string;
+
   const { accountDetails } = useAccountDetails();
+
+  const { mutateAsync } = useIssueFdCertificateMutation();
 
   return (
     <>
       <AccountDetailsPathBar
         title="Savings Account List"
         options={
-          // eslint-disable-next-line no-nested-ternary
-          accountDetails?.accountType === NatureOfDepositProduct?.TermSavingOrFd ||
-          accountDetails?.accountType === NatureOfDepositProduct?.RecurringSaving
-            ? pathbarOptions
-            : accountDetails?.accountType === NatureOfDepositProduct?.Saving &&
-              accountDetails?.product?.isMandatorySaving
-            ? pathbarMandatorySavingOptions
-            : pathbarCommonOptions
+          accountDetails?.accountType === 'TERM_SAVING_OR_FD'
+            ? [
+                {
+                  label: 'Issue FD Certificate',
+                  handler: () =>
+                    mutateAsync({ accountId: router?.query?.['id'] as string }).then((res) =>
+                      window.open(res?.account?.issueFDCertificate, '_blank')
+                    ),
+                },
+              ]
+            : []
         }
       />
       <Box display="flex">
@@ -96,6 +73,8 @@ export const AccountDetails = ({
 
             {tabQuery === 'interest update' && <InterestUpdateTab />}
 
+            {tabQuery === 'general updates' && <GeneralUpdates />}
+
             {tabQuery &&
               ![
                 'undefined',
@@ -104,6 +83,7 @@ export const AccountDetails = ({
                 'withdraw slip',
                 'ledger',
                 'interest update',
+                'general updates',
               ].includes(tabQuery) && (
                 <Box h="calc(100vh - 110px)">
                   <WIPState />
@@ -122,26 +102,6 @@ export const AccountDetails = ({
           </Box>
         </Scrollable>
       </Box>
-      <AddNomineeModal
-        isOpen={isNomineeAccountModalOpen as boolean}
-        onClose={handleNomineeModalClose as () => void}
-      />
-      <AddTenureModal
-        isOpen={isTenureModalOpen as boolean}
-        onClose={handleTenureModalClose as () => void}
-      />
-      <UpdateSignatureModal
-        isOpen={isUpdateSignatureModalOpen as boolean}
-        onClose={handleUpdateSignatureModalClose as () => void}
-      />
-      <UpdateSignatureModal
-        isOpen={isUpdateSignatureModalOpen as boolean}
-        onClose={handleUpdateSignatureModalClose as () => void}
-      />
-      <UpdateInstallmentAmountModal
-        isOpen={isUpdateInstallmentAmountModalOpen as boolean}
-        onClose={handleUpdateInstallmentAmountModalClose as () => void}
-      />
     </>
   );
 };

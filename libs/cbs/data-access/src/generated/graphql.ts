@@ -4134,6 +4134,7 @@ export type DepositLoanAccountQuery = {
   getAccountInterestRate: InterestSetupQueryResult;
   getBulkInstallments?: Maybe<Array<Maybe<BulkInstallmentResult>>>;
   getInstallments?: Maybe<InstallmentResult>;
+  getMRMemberInstallments: MRmemberInstallmentResult;
   list?: Maybe<DepositLoanAccountConnection>;
   listAccountInterestRates: InterestSetupListResult;
   listAccountLedgers?: Maybe<AccountLedgerListResult>;
@@ -4170,6 +4171,10 @@ export type DepositLoanAccountQueryGetInstallmentsArgs = {
   id: Scalars['ID'];
   to?: InputMaybe<Scalars['String']>;
   toN?: InputMaybe<Scalars['Int']>;
+};
+
+export type DepositLoanAccountQueryGetMrMemberInstallmentsArgs = {
+  agentId: Scalars['ID'];
 };
 
 export type DepositLoanAccountQueryListArgs = {
@@ -11805,6 +11810,20 @@ export type MBankingTransactionFilterData = {
 
 export type MBankingTransactionResult = {
   data?: Maybe<Array<Maybe<MBankingTransactionData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type MRmemberInstallmentData = {
+  installments?: Maybe<Scalars['Int']>;
+  memberCode: Scalars['String'];
+  memberId: Scalars['String'];
+  nearestRemainingDays?: Maybe<Scalars['Int']>;
+  profilePic?: Maybe<Scalars['String']>;
+  profilePicUrl?: Maybe<Scalars['String']>;
+};
+
+export type MRmemberInstallmentResult = {
+  data?: Maybe<Array<Maybe<MRmemberInstallmentData>>>;
   error?: Maybe<QueryError>;
 };
 
