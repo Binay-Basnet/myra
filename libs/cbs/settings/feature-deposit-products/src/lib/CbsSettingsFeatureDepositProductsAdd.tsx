@@ -288,11 +288,11 @@ export const SettingsDepositProductsAdd = () => {
         maxAmount: values?.balanceLimit?.maxAmount ?? null,
         minAmount: values?.balanceLimit?.minAmount ?? null,
       },
-      isPrematurePenaltyApplicable:
-        depositNature === NatureOfDepositProduct.RecurringSaving ||
-        depositNature === NatureOfDepositProduct.TermSavingOrFd
-          ? true
-          : values?.isPrematurePenaltyApplicable,
+      // isPrematurePenaltyApplicable:
+      //   depositNature === NatureOfDepositProduct.RecurringSaving ||
+      //   depositNature === NatureOfDepositProduct.TermSavingOrFd
+      //     ? true
+      //     : values?.isPrematurePenaltyApplicable,
       prematurePenalty:
         depositNature === NatureOfDepositProduct.RecurringSaving ||
         depositNature === NatureOfDepositProduct.TermSavingOrFd
