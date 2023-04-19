@@ -15,6 +15,7 @@ export const SideBar = () => (
         'Interest Update',
         'Penalty Update',
         'Fee and Charges Update',
+        'General Updates',
         // 'ACTIVITY', 'DOCUMENTS', 'TASKS'
       ]}
     />
