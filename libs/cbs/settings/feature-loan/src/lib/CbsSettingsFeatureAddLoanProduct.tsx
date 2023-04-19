@@ -334,7 +334,7 @@ export const SettingsLoanProductForm = () => {
       prematurePenaltySetup: {
         noOfDays: values?.prematurePenaltySetup?.noOfDays ?? null,
         penaltyAmount: values?.prematurePenaltySetup?.penaltyAmount ?? null,
-        penaltyDateType: values?.prematurePenaltySetup?.penaltyDateType ?? null,
+        penaltyDateType: values?.prematurePenaltySetup?.penaltyDateType || null,
         penaltyRate: values?.prematurePenaltySetup?.penaltyRate ?? null,
         // penaltyLedgerMapping: values?.prematurePenaltySetup?.penaltyLedgerMapping ?? null,
       },
