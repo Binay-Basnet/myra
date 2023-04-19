@@ -5,6 +5,8 @@ import { LoanInfo } from './LoanInfo';
 export const SideBar = () => (
   <>
     <LoanInfo />
-    <DetailPageTabs tabs={['Overview', 'Collateral', 'Guarantee', 'Ledger', 'Interest Update']} />
+    <DetailPageTabs
+      tabs={['Overview', 'Collateral', 'Guarantee', 'Ledger', 'Interest Update', 'General Updates']}
+    />
   </>
 );
