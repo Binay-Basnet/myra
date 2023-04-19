@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { DetailPageHeader } from '@myra-ui';
@@ -6,34 +5,28 @@ import { DetailPageHeader } from '@myra-ui';
 import { featureCode } from '@coop/shared/utils';
 
 import { AccountListPage } from './AccountListPage';
+import GeneralUpdatesPage from './GeneralUpdatesPage';
 import { InactiveLoanAccountListPage } from './InactiveAccountsList';
 import { InterestUpdatePage } from './InteretUpdatePage';
 import LoanFeesAndChargesUpdatePage from './LoanFeesAndChargesUpdatePage';
 import { LoanPenaltyUpdatePage } from './LoanPenaltyUpdatePage';
 import { OverviewPage } from './OverviewPage';
-import UpdateBalanceLimitModal from '../components/LoanDetailsUpdateBalanceLimitModal';
 import { useLoanProductDepositHook } from '../hooks/useLoanProductDepositHook';
 
 /* eslint-disable-next-line */
 export interface LoanProductDetailProps {}
 
 export const LoanProductDetail = () => {
-  const [isUpdateBalanceLimitOpen, setIsUpdateBalanceLimitOpen] = useState(false);
   const router = useRouter();
   const { sidebarData } = useLoanProductDepositHook();
 
   const tabQuery = router.query['tab'] as string;
-
-  const handleUpdateBalanceLimitModalClose = () => {
-    setIsUpdateBalanceLimitOpen(false);
-  };
 
   return (
     <>
       <DetailPageHeader
         name={sidebarData?.productName ?? ''}
         title={`Loan Product - ${featureCode.loanProductDetail}`}
-        options={[{ label: 'Update Loan Limit', handler: () => setIsUpdateBalanceLimitOpen(true) }]}
       />
       {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <OverviewPage />}
       {tabQuery === 'account list' && <AccountListPage />}
@@ -42,11 +35,7 @@ export const LoanProductDetail = () => {
       {tabQuery === 'inactive accounts' && <InactiveLoanAccountListPage />}
       {tabQuery === 'penalty update' && <LoanPenaltyUpdatePage />}
       {tabQuery === 'fee and charges update' && <LoanFeesAndChargesUpdatePage />}
-
-      <UpdateBalanceLimitModal
-        isOpen={isUpdateBalanceLimitOpen as boolean}
-        onClose={handleUpdateBalanceLimitModalClose as () => void}
-      />
+      {tabQuery === 'general updates' && <GeneralUpdatesPage />}
     </>
   );
 };
