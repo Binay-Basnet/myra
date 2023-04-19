@@ -951,7 +951,13 @@ export type AllAccountEdge = {
   node?: Maybe<AllAccount>;
 };
 
+export type AllAccountsFilterMapping = {
+  accountType: Array<LabelValueArray>;
+  productName: Array<LabelValueArray>;
+};
+
 export type AllAccountsQuery = {
+  filterMapping?: Maybe<AllAccountsFilterMapping>;
   list?: Maybe<AllAccountConnection>;
 };
 
@@ -21865,6 +21871,17 @@ export type GetAccountInterestRateDetailQuery = {
   };
 };
 
+export type GetAllAccountsFilterMappingQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllAccountsFilterMappingQuery = {
+  allAccounts: {
+    filterMapping?: {
+      accountType: Array<OptionTypeFragment>;
+      productName: Array<OptionTypeFragment>;
+    } | null;
+  };
+};
+
 export type GetBankAccountListQueryVariables = Exact<{
   filter?: InputMaybe<BankAccountFilter>;
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
@@ -40164,6 +40181,36 @@ export const useGetAccountInterestRateDetailQuery = <
     ['getAccountInterestRateDetail', variables],
     useAxios<GetAccountInterestRateDetailQuery, GetAccountInterestRateDetailQueryVariables>(
       GetAccountInterestRateDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAllAccountsFilterMappingDocument = `
+    query getAllAccountsFilterMapping {
+  allAccounts {
+    filterMapping {
+      accountType {
+        ...OptionType
+      }
+      productName {
+        ...OptionType
+      }
+    }
+  }
+}
+    ${OptionTypeFragmentDoc}`;
+export const useGetAllAccountsFilterMappingQuery = <
+  TData = GetAllAccountsFilterMappingQuery,
+  TError = unknown
+>(
+  variables?: GetAllAccountsFilterMappingQueryVariables,
+  options?: UseQueryOptions<GetAllAccountsFilterMappingQuery, TError, TData>
+) =>
+  useQuery<GetAllAccountsFilterMappingQuery, TError, TData>(
+    variables === undefined
+      ? ['getAllAccountsFilterMapping']
+      : ['getAllAccountsFilterMapping', variables],
+    useAxios<GetAllAccountsFilterMappingQuery, GetAllAccountsFilterMappingQueryVariables>(
+      GetAllAccountsFilterMappingDocument
     ).bind(null, variables),
     options
   );
