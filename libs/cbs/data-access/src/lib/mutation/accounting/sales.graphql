@@ -24,10 +24,10 @@ mutation setSalesSaleEntryData($id: ID!, $data: SalesSaleEntryInput!) {
   }
 }
 
-mutation setSalesCreditNoteData($id: ID!, $data: SalesCreditNoteInput!) {
+mutation setSalesCreditNoteData($data: SalesCreditNoteInput!) {
   accounting {
     sales {
-      upsertCreditNote(id: $id, data: $data) {
+      creditNote(data: $data) {
         recordId
         error {
           ...MutationError
