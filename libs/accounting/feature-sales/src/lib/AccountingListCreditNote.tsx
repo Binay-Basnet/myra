@@ -31,7 +31,7 @@ export const AccountingListCreditNote = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        accessorFn: (row) => row?.node?.name,
+        accessorFn: (row) => row?.node?.customerName,
         header: t['accountingCreditNoteListCustomer'],
 
         meta: {
@@ -40,7 +40,7 @@ export const AccountingListCreditNote = () => {
       },
       {
         header: t['accountingCreditNoteListTotalAmount'],
-        accessorFn: (row) => row?.node?.totalAmount,
+        accessorFn: (row) => row?.node?.amount,
         meta: {
           width: '30%',
         },

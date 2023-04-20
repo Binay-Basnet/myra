@@ -77,7 +77,7 @@ export const CreditNoteForm = () => {
 
     asyncToast({
       id: 'save-sales-credit-note',
-      promise: setCreditNoteData({ id: String(id), data: filteredValues }),
+      promise: setCreditNoteData({ data: filteredValues }),
       msgs: {
         loading: 'Saving credit note',
         success: 'Credit note saved',
