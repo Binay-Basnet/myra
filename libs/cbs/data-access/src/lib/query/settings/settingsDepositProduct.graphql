@@ -347,6 +347,7 @@ query getSavingsProductDetail($id: ID!) {
               ledgerName
               amount
             }
+            productPremiumInterest
           }
         }
       }

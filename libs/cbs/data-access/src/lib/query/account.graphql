@@ -183,6 +183,7 @@ query getAccountOpenProductDetails($id: ID!) {
               penaltyAmount
               penaltyRate
             }
+            productPremiumInterest
           }
         }
       }

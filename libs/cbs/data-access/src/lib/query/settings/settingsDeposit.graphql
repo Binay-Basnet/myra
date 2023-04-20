@@ -78,3 +78,13 @@ query getSavingsOrganizationRateDetail($id: ID!) {
     }
   }
 }
+
+query getCurrentOrganizationRate {
+  settings {
+    general {
+      deposit {
+        getCurrentOrganizationRate
+      }
+    }
+  }
+}

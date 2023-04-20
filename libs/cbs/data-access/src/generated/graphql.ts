@@ -435,6 +435,27 @@ export const AccountingBankAccountType = {
 
 export type AccountingBankAccountType =
   typeof AccountingBankAccountType[keyof typeof AccountingBankAccountType];
+export type AccountingDebitNote = {
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  noteNo: Scalars['String'];
+  referenceNo: Scalars['String'];
+  supplierId: Scalars['String'];
+  supplierName: Scalars['String'];
+  totalAmount: Scalars['String'];
+};
+
+export type AccountingDebitNoteConnection = {
+  edges?: Maybe<Array<Maybe<AccountingDebitNoteEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AccountingDebitNoteEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AccountingDebitNote>;
+};
+
 export type AccountingInvestmentEntryQueryResult = {
   data?: Maybe<InvestmentEntry>;
   error?: Maybe<QueryError>;
@@ -543,7 +564,12 @@ export type AccountingPurchaseFilter = {
 };
 
 export type AccountingPurchaseMutation = {
+  debitNote?: Maybe<PurchaseEntryResult>;
   purchaseEntry?: Maybe<PurchaseEntryResult>;
+};
+
+export type AccountingPurchaseMutationDebitNoteArgs = {
+  data: PurchaseDebitNoteInput;
 };
 
 export type AccountingPurchaseMutationPurchaseEntryArgs = {
@@ -552,9 +578,15 @@ export type AccountingPurchaseMutationPurchaseEntryArgs = {
 
 export type AccountingPurchaseQuery = {
   list?: Maybe<AccountingPurchaseConnection>;
+  listDebitNote?: Maybe<AccountingDebitNoteConnection>;
 };
 
 export type AccountingPurchaseQueryListArgs = {
+  filter?: InputMaybe<AccountingPurchaseFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AccountingPurchaseQueryListDebitNoteArgs = {
   filter?: InputMaybe<AccountingPurchaseFilter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -585,15 +617,14 @@ export type AccountingSalesCustomerQueryResult = {
 };
 
 export type AccountingSalesMutation = {
-  upsertCreditNote: AccountingSalesMutationResult;
+  creditNote: AccountingSalesMutationResult;
   upsertCustomer: AccountingSalesMutationResult;
   upsertCustomerPayment: AccountingSalesMutationResult;
   upsertSaleEntry: AccountingSalesMutationResult;
 };
 
-export type AccountingSalesMutationUpsertCreditNoteArgs = {
+export type AccountingSalesMutationCreditNoteArgs = {
   data: SalesCreditNoteInput;
-  id: Scalars['ID'];
 };
 
 export type AccountingSalesMutationUpsertCustomerArgs = {
@@ -4140,6 +4171,7 @@ export type DepositLoanAccountQuery = {
   getAccountInterestRate: InterestSetupQueryResult;
   getBulkInstallments?: Maybe<Array<Maybe<BulkInstallmentResult>>>;
   getInstallments?: Maybe<InstallmentResult>;
+  getMRMemberInstallments: MRmemberInstallmentResult;
   list?: Maybe<DepositLoanAccountConnection>;
   listAccountInterestRates: InterestSetupListResult;
   listAccountLedgers?: Maybe<AccountLedgerListResult>;
@@ -4176,6 +4208,10 @@ export type DepositLoanAccountQueryGetInstallmentsArgs = {
   id: Scalars['ID'];
   to?: InputMaybe<Scalars['String']>;
   toN?: InputMaybe<Scalars['Int']>;
+};
+
+export type DepositLoanAccountQueryGetMrMemberInstallmentsArgs = {
+  agentId: Scalars['ID'];
 };
 
 export type DepositLoanAccountQueryListArgs = {
@@ -4331,6 +4367,7 @@ export type DepositProductFormStateData = {
   prematurePenalty?: Maybe<PrematurePenaltyFormState>;
   productCode: ProductCodeFormState;
   productName?: Maybe<Scalars['String']>;
+  productPremiumInterest?: Maybe<Scalars['Float']>;
   rebate?: Maybe<Scalars['Boolean']>;
   rebateData?: Maybe<Rebate>;
   savingCharges?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
@@ -4746,6 +4783,7 @@ export type DepositSettingsMutationTdsSetupArgs = {
 };
 
 export type DepositSettingsQuery = {
+  getCurrentOrganizationRate?: Maybe<Scalars['Float']>;
   getOrganizationRate: InterestSetupQueryResult;
   iroFormState?: Maybe<DepositIroFormStateResult>;
   listOrganizationRate: InterestSetupListResult;
@@ -11700,6 +11738,7 @@ export type LoanSettingsProductTypeInput = {
 
 export type LoanSettingsQuery = {
   general?: Maybe<LoanGeneralSettings>;
+  getCurrentOrganizationRate?: Maybe<Scalars['Float']>;
   getOrganizationRate: InterestSetupQueryResult;
   insuranceSchemes?: Maybe<Array<Maybe<LoanInsuranceScheme>>>;
   listOrganizationRate: InterestSetupListResult;
@@ -11811,6 +11850,21 @@ export type MBankingTransactionFilterData = {
 
 export type MBankingTransactionResult = {
   data?: Maybe<Array<Maybe<MBankingTransactionData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type MRmemberInstallmentData = {
+  installments?: Maybe<Scalars['Int']>;
+  memberCode: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  nearestRemainingDays?: Maybe<Scalars['Int']>;
+  profilePic?: Maybe<Scalars['String']>;
+  profilePicUrl?: Maybe<Scalars['String']>;
+};
+
+export type MRmemberInstallmentResult = {
+  data?: Maybe<Array<Maybe<MRmemberInstallmentData>>>;
   error?: Maybe<QueryError>;
 };
 
@@ -13814,6 +13868,15 @@ export type Province = {
   nameNp: Scalars['String'];
 };
 
+export type PurchaseDebitNoteInput = {
+  discount?: InputMaybe<Scalars['String']>;
+  invoiceDate?: InputMaybe<Scalars['Localized']>;
+  itemDetails?: InputMaybe<Array<InputMaybe<PurchaseItemDetails>>>;
+  notes?: InputMaybe<Scalars['String']>;
+  purchaseReference?: InputMaybe<Scalars['String']>;
+  supplier?: InputMaybe<Scalars['String']>;
+};
+
 export type PurchaseEntryInput = {
   discount?: InputMaybe<Scalars['String']>;
   dueDate?: InputMaybe<Scalars['Localized']>;
@@ -14411,10 +14474,13 @@ export type SalesCreditNote = {
 };
 
 export type SalesCreditNoteEntry = {
-  date?: Maybe<Scalars['Localized']>;
+  amount: Scalars['String'];
+  customerId: Scalars['String'];
+  customerName: Scalars['String'];
+  date: Scalars['Localized'];
   id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  totalAmount?: Maybe<Scalars['String']>;
+  invoiceReferenceNo?: Maybe<Scalars['String']>;
+  noteNo: Scalars['String'];
 };
 
 export type SalesCreditNoteFilter = {
@@ -14423,15 +14489,12 @@ export type SalesCreditNoteFilter = {
 };
 
 export type SalesCreditNoteInput = {
-  customerID: Scalars['ID'];
-  date: Scalars['Localized'];
-  invoiceReference: Scalars['String'];
-  nonTaxableTotal?: InputMaybe<Scalars['String']>;
+  customerID?: InputMaybe<Scalars['ID']>;
+  discount?: InputMaybe<Scalars['String']>;
+  invoiceDate?: InputMaybe<Scalars['Localized']>;
+  invoiceReference?: InputMaybe<Scalars['String']>;
   notes?: InputMaybe<Scalars['String']>;
-  products: Array<SaleProductInput>;
-  subTotal?: InputMaybe<Scalars['String']>;
-  taxableTotal?: InputMaybe<Scalars['String']>;
-  vat?: InputMaybe<Scalars['String']>;
+  products?: InputMaybe<Array<InputMaybe<PurchaseItemDetails>>>;
 };
 
 export type SalesCreditNoteListConnection = {
@@ -17559,14 +17622,13 @@ export type SetSalesSaleEntryDataMutation = {
 };
 
 export type SetSalesCreditNoteDataMutationVariables = Exact<{
-  id: Scalars['ID'];
   data: SalesCreditNoteInput;
 }>;
 
 export type SetSalesCreditNoteDataMutation = {
   accounting: {
     sales: {
-      upsertCreditNote: {
+      creditNote: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -21215,6 +21277,7 @@ export type GetAccountOpenProductDetailsQuery = {
             wealthBuildingProduct?: boolean | null;
             individualDocuments?: Array<IndividualRequiredDocument | null> | null;
             institutionDocuments?: Array<InstitutionRequiredDocument | null> | null;
+            productPremiumInterest?: number | null;
             productCode: { prefix: string; initialNo: string };
             depositAmount?: { minAmount?: any | null; maxAmount?: any | null } | null;
             penaltyData?: {
@@ -22477,9 +22540,9 @@ export type GetSalesCreditNoteListDataQuery = {
           cursor: string;
           node?: {
             id: string;
-            name?: string | null;
-            totalAmount?: string | null;
-            date?: Record<'local' | 'en' | 'np', string> | null;
+            customerName: string;
+            amount: string;
+            date: Record<'local' | 'en' | 'np', string>;
           } | null;
         } | null> | null;
         pageInfo?: {
@@ -30651,6 +30714,14 @@ export type GetSavingsOrganizationRateDetailQuery = {
   };
 };
 
+export type GetCurrentOrganizationRateQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCurrentOrganizationRateQuery = {
+  settings: {
+    general?: { deposit?: { getCurrentOrganizationRate?: number | null } | null } | null;
+  };
+};
+
 export type GetDepositProductSettingsListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<DepositProductSearchFilter>;
@@ -30881,6 +30952,7 @@ export type GetSavingsProductDetailQuery = {
             individualDocuments?: Array<IndividualRequiredDocument | null> | null;
             institutionDocuments?: Array<InstitutionRequiredDocument | null> | null;
             isPrematurePenaltyApplicable?: boolean | null;
+            productPremiumInterest?: number | null;
             productCode: { prefix: string; initialNo: string; noOfDigits?: number | null };
             depositAmount?: { minAmount?: any | null; maxAmount?: any | null } | null;
             withdrawAmountLimit?: { minAmount?: any | null; maxAmount?: any | null } | null;
@@ -33560,10 +33632,10 @@ export const useSetSalesSaleEntryDataMutation = <TError = unknown, TContext = un
     options
   );
 export const SetSalesCreditNoteDataDocument = `
-    mutation setSalesCreditNoteData($id: ID!, $data: SalesCreditNoteInput!) {
+    mutation setSalesCreditNoteData($data: SalesCreditNoteInput!) {
   accounting {
     sales {
-      upsertCreditNote(id: $id, data: $data) {
+      creditNote(data: $data) {
         recordId
         error {
           ...MutationError
@@ -39414,6 +39486,7 @@ export const GetAccountOpenProductDetailsDocument = `
               penaltyAmount
               penaltyRate
             }
+            productPremiumInterest
           }
         }
       }
@@ -41036,8 +41109,8 @@ export const GetSalesCreditNoteListDataDocument = `
         edges {
           node {
             id
-            name
-            totalAmount
+            customerName
+            amount
             date
           }
           cursor
@@ -51698,6 +51771,33 @@ export const useGetSavingsOrganizationRateDetailQuery = <
     ).bind(null, variables),
     options
   );
+export const GetCurrentOrganizationRateDocument = `
+    query getCurrentOrganizationRate {
+  settings {
+    general {
+      deposit {
+        getCurrentOrganizationRate
+      }
+    }
+  }
+}
+    `;
+export const useGetCurrentOrganizationRateQuery = <
+  TData = GetCurrentOrganizationRateQuery,
+  TError = unknown
+>(
+  variables?: GetCurrentOrganizationRateQueryVariables,
+  options?: UseQueryOptions<GetCurrentOrganizationRateQuery, TError, TData>
+) =>
+  useQuery<GetCurrentOrganizationRateQuery, TError, TData>(
+    variables === undefined
+      ? ['getCurrentOrganizationRate']
+      : ['getCurrentOrganizationRate', variables],
+    useAxios<GetCurrentOrganizationRateQuery, GetCurrentOrganizationRateQueryVariables>(
+      GetCurrentOrganizationRateDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetDepositProductSettingsListDocument = `
     query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProductSearchFilter) {
   settings {
@@ -52077,6 +52177,7 @@ export const GetSavingsProductDetailDocument = `
               ledgerName
               amount
             }
+            productPremiumInterest
           }
         }
       }

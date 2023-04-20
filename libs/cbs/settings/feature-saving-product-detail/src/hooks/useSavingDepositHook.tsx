@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import {
+  useGetCurrentOrganizationRateQuery,
   useGetSavingsProductCriteriaQuery,
   useGetSavingsProductDetailQuery,
 } from '@coop/cbs/data-access';
@@ -13,6 +14,8 @@ export const useSavingDepositHook = () => {
   const { data: criteriaList } = useGetSavingsProductCriteriaQuery({
     productId: id as string,
   });
+
+  const { data: orgRateData } = useGetCurrentOrganizationRateQuery();
 
   const detailData = data?.settings?.general?.depositProduct?.depositProductDetail?.data;
   const criteriaData = criteriaList?.settings?.general?.depositProduct?.getProductCriteria?.data;
@@ -86,5 +89,6 @@ export const useSavingDepositHook = () => {
     currentTermSavingFeatureTable,
     savingRecurringFeatureTable,
     productLimits,
+    currentOrgRate: orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate,
   };
 };

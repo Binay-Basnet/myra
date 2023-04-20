@@ -37,6 +37,7 @@ export const OverviewPage = () => {
     currentTermSavingFeatureTable,
     savingRecurringFeatureTable,
     productLimits,
+    currentOrgRate,
   } = useSavingDepositHook();
 
   return (
@@ -84,7 +85,11 @@ export const OverviewPage = () => {
             <ProductLimits limits={productLimits} />
 
             {detailData?.nature !== NatureOfDepositProduct.Current && (
-              <ProductInterestRate interestRate={detailData?.interest} />
+              <ProductInterestRate
+                interestRate={detailData?.interest}
+                productPremium={detailData?.productPremiumInterest}
+                currentOrgRate={currentOrgRate}
+              />
             )}
 
             {(detailData?.nature === NatureOfDepositProduct.RecurringSaving ||

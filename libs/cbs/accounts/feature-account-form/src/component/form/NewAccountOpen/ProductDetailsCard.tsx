@@ -5,6 +5,7 @@ import { Box, Text } from '@myra-ui';
 import {
   NatureOfDepositProduct,
   useGetAccountOpenProductDetailsQuery,
+  useGetCurrentOrganizationRateQuery,
 } from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 
@@ -20,6 +21,9 @@ export const ProductCard = ({ productId }: ProductProps) => {
       enabled: triggerQuery,
     }
   );
+
+  const { data: orgRateData } = useGetCurrentOrganizationRateQuery();
+
   const productData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
   useEffect(() => {
     if (productId) {
@@ -57,6 +61,22 @@ export const ProductCard = ({ productId }: ProductProps) => {
           <b>
             {' '}
             {productData?.interest?.minRate} % -{productData?.interest?.maxRate}%{' '}
+          </b>
+        </Text>
+        <Text fontWeight="Medium" fontSize="s3">
+          Product Premium :
+          <b>
+            {productData?.productPremiumInterest !== null
+              ? `${productData?.productPremiumInterest} %`
+              : 'N/A'}
+          </b>
+        </Text>
+        <Text fontWeight="Medium" fontSize="s3">
+          Organization Rate :
+          <b>
+            {orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate !== null
+              ? `${orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate} %`
+              : 'N/A'}
           </b>
         </Text>
       </Box>
