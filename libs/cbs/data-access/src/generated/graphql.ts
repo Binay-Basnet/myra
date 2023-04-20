@@ -11063,6 +11063,7 @@ export type LoanProduct = Base & {
   productCodeString?: Maybe<Scalars['String']>;
   productName: Scalars['String'];
   productNature: NatureOfLoanProduct;
+  productPremiumInterest?: Maybe<Scalars['Float']>;
   productSubType: Scalars['String'];
   productType: Scalars['ID'];
   rebate?: Maybe<Rebate>;
