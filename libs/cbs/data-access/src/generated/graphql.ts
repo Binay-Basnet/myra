@@ -456,6 +456,46 @@ export type AccountingDebitNoteEdges = {
   node?: Maybe<AccountingDebitNote>;
 };
 
+export type AccountingExpense = {
+  date: Scalars['Localized'];
+  entryNo: Scalars['String'];
+  id: Scalars['String'];
+  reference: Scalars['String'];
+  supplierId: Scalars['String'];
+  supplierName: Scalars['String'];
+  totalAmount: Scalars['String'];
+};
+
+export type AccountingExpenseConnection = {
+  edges?: Maybe<Array<Maybe<AccountingExpenseEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AccountingExpenseEdge = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<AccountingExpense>;
+};
+
+export type AccountingExpenseInput = {
+  date?: InputMaybe<Scalars['Localized']>;
+  discount?: InputMaybe<Scalars['String']>;
+  dueDate?: InputMaybe<Scalars['Localized']>;
+  note?: InputMaybe<Scalars['String']>;
+  reference?: InputMaybe<Scalars['String']>;
+  supplierId?: InputMaybe<Scalars['String']>;
+  tdsAccount?: InputMaybe<Scalars['String']>;
+  tdsAmount?: InputMaybe<Scalars['String']>;
+  tdsStatus?: InputMaybe<TdsStatus>;
+  transferredLedgers?: InputMaybe<Array<InputMaybe<ExpenseLedgerTransfer>>>;
+};
+
+export type AccountingExpenseResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<AccountingPurchaseQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type AccountingInvestmentEntryQueryResult = {
   data?: Maybe<InvestmentEntry>;
   error?: Maybe<QueryError>;
@@ -565,11 +605,16 @@ export type AccountingPurchaseFilter = {
 
 export type AccountingPurchaseMutation = {
   debitNote?: Maybe<PurchaseEntryResult>;
+  expense?: Maybe<AccountingExpenseResult>;
   purchaseEntry?: Maybe<PurchaseEntryResult>;
 };
 
 export type AccountingPurchaseMutationDebitNoteArgs = {
   data: PurchaseDebitNoteInput;
+};
+
+export type AccountingPurchaseMutationExpenseArgs = {
+  data?: InputMaybe<AccountingExpenseInput>;
 };
 
 export type AccountingPurchaseMutationPurchaseEntryArgs = {
@@ -579,6 +624,7 @@ export type AccountingPurchaseMutationPurchaseEntryArgs = {
 export type AccountingPurchaseQuery = {
   list?: Maybe<AccountingPurchaseConnection>;
   listDebitNote?: Maybe<AccountingDebitNoteConnection>;
+  listExpense?: Maybe<AccountingExpenseConnection>;
 };
 
 export type AccountingPurchaseQueryListArgs = {
@@ -587,6 +633,11 @@ export type AccountingPurchaseQueryListArgs = {
 };
 
 export type AccountingPurchaseQueryListDebitNoteArgs = {
+  filter?: InputMaybe<AccountingPurchaseFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AccountingPurchaseQueryListExpenseArgs = {
   filter?: InputMaybe<AccountingPurchaseFilter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -994,6 +1045,7 @@ export type AllAccountsQuery = {
 
 export type AllAccountsQueryListArgs = {
   filter?: InputMaybe<Filter>;
+  isHoldings?: InputMaybe<Scalars['Boolean']>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -5377,6 +5429,12 @@ export type ExceptionReportSavingsBalanceReportArgs = {
 
 export type ExceptionReportShareBalanceReportArgs = {
   data?: InputMaybe<ShareBalanceReportFilter>;
+};
+
+export type ExpenseLedgerTransfer = {
+  accountId?: InputMaybe<Scalars['String']>;
+  amount?: InputMaybe<Scalars['String']>;
+  tax?: InputMaybe<Scalars['String']>;
 };
 
 export const ExpiryStatusFilter = {
@@ -15949,6 +16007,12 @@ export type SwitchRoleResult = {
   error?: Maybe<MutationError>;
 };
 
+export const TdsStatus = {
+  NoTds: 'NO_TDS',
+  Tds: 'TDS',
+} as const;
+
+export type TdsStatus = typeof TdsStatus[keyof typeof TdsStatus];
 export const Transaction_Direction = {
   Purchased: 'PURCHASED',
   Sold: 'SOLD',
@@ -21847,6 +21911,7 @@ export type GetAccountLedgersListQuery = {
 export type GetAllAccountsQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
+  isHoldings?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetAllAccountsQuery = {
@@ -40143,9 +40208,9 @@ export const useGetAccountLedgersListQuery = <TData = GetAccountLedgersListQuery
     options
   );
 export const GetAllAccountsDocument = `
-    query getAllAccounts($paginate: Pagination, $filter: Filter) {
+    query getAllAccounts($paginate: Pagination, $filter: Filter, $isHoldings: Boolean) {
   allAccounts {
-    list(paginate: $paginate, filter: $filter) {
+    list(paginate: $paginate, filter: $filter, isHoldings: $isHoldings) {
       totalCount
       edges {
         node {
