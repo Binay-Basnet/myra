@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Box, DetailPageTabs, Scrollable } from '@myra-ui';
 
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
+import { ROUTES } from '@coop/cbs/utils';
 
 import {
   DailyInterestBooking,
@@ -24,11 +25,19 @@ const tabItems = [
 export const EodHistoryDetail = () => {
   const router = useRouter();
 
+  const eodDate = router?.query?.['id'];
+
   const tabQuery = router.query['tab'] as string;
 
   return (
     <>
-      <SettingsPageHeader heading="Day End" tabItems={tabItems} />
+      <SettingsPageHeader
+        breadcrumbs={[
+          { label: 'Day End', link: ROUTES.SETTINGS_EOD_HISTORY },
+          { label: eodDate as string },
+        ]}
+        tabItems={tabItems}
+      />
 
       <Box display="flex">
         <Box
