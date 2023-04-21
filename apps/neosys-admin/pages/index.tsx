@@ -1,10 +1,18 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 import { Box, Scrollable } from '@myra-ui';
 
 import { MainLayout } from '@coop/neosys-admin/layout';
 
-const Index = () => <Box>Dashboard</Box>;
+const Index = () => {
+  const router = useRouter();
+  useEffect(() => {
+    router.push('/clients');
+  }, []);
+
+  return <Box>Dashboard</Box>;
+};
 
 Index.getLayout = function getLayout(page: ReactElement) {
   return (

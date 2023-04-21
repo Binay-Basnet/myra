@@ -3,10 +3,14 @@ import { FormProvider, UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
+import NepaliDate from 'nepali-date-converter';
 
 import { Alert, asyncToast, Box, Modal } from '@myra-ui';
 
 import {
+  DateType,
+  store,
+  useGetEndOfDayDateDataQuery,
   useGetLoanProductProcessingChargesListQuery,
   useUpdateLoanProductProcessingChargeMutation,
 } from '@coop/cbs/data-access';
@@ -26,6 +30,7 @@ type ServiceType = {
 
 export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesModalProps) => {
   const router = useRouter();
+  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
   const { mutateAsync: updateLoanProcessingCharges } =
     useUpdateLoanProductProcessingChargeMutation();
   const queryClient = useQueryClient();
@@ -33,6 +38,9 @@ export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesM
   const { data: loanProcessingChargesListData } = useGetLoanProductProcessingChargesListQuery({
     productId: router?.query?.['id'] as string,
   });
+
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+  const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
 
   const chargesEditData = useMemo(() => {
     const chargesList =
@@ -134,7 +142,13 @@ export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesM
               <FormDatePicker
                 name="additionalData.effectiveDate"
                 label="Effective From"
-                minTransactionDate
+                minDate={
+                  closingDate?.local
+                    ? dateType === 'BS'
+                      ? new NepaliDate(closingDate?.np ?? '').toJsDate()
+                      : new Date(closingDate?.en ?? '')
+                    : new Date()
+                }
               />
             </Box>
             <FormFileInput name="additionalData.fileUploads" label="File Upload" />

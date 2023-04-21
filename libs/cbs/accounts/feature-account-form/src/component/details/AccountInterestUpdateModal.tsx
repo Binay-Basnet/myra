@@ -1,12 +1,16 @@
 import { useEffect, useMemo } from 'react';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
 import { ListItem, UnorderedList } from '@chakra-ui/react';
+import NepaliDate from 'nepali-date-converter';
 
 import { Alert, Box, Grid, GridItem, Modal, Text } from '@myra-ui';
 
 import {
+  DateType,
   InterestRateSetup,
+  store,
   useAccountDetails,
+  useGetEndOfDayDateDataQuery,
   useGetSavingsProductDetailQuery,
 } from '@coop/cbs/data-access';
 import { CustomInterestRateSetupInput } from '@coop/cbs/utils';
@@ -33,12 +37,16 @@ export const AccountInterestUpdateModal = ({
 }: IAccountInterestUpdateModalProps) => {
   const rateDiff = methods.watch('rate');
 
+  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
+
   const { accountDetails } = useAccountDetails();
 
   const { data: savingProductDetailData } = useGetSavingsProductDetailQuery(
     { id: accountDetails?.productId as string },
     { enabled: !!accountDetails?.productId }
   );
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+  const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
 
   const { minRate, maxRate, changeMin, changeMax } = useMemo(
     () => ({
@@ -122,7 +130,17 @@ export const AccountInterestUpdateModal = ({
             }
           />
 
-          <FormDatePicker name="effectiveDate" label="Effective Date" minTransactionDate />
+          <FormDatePicker
+            name="effectiveDate"
+            label="Effective Date"
+            minDate={
+              closingDate?.local
+                ? dateType === 'BS'
+                  ? new NepaliDate(closingDate?.np ?? '').toJsDate()
+                  : new Date(closingDate?.en ?? '')
+                : new Date()
+            }
+          />
 
           {rateDiff && (
             <GridItem colSpan={2}>

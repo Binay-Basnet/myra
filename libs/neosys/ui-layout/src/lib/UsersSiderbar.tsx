@@ -107,7 +107,7 @@ export const UsersSiderbar = ({ children }: IUsersSidebarProps) => {
 
         <Divider my="s16" />
 
-        <Button
+        {/* <Button
           width="full"
           size="lg"
           justifyContent="start"
@@ -117,7 +117,7 @@ export const UsersSiderbar = ({ children }: IUsersSidebarProps) => {
           // onClick={() => router.push('/users/[action]')}
         >
           {t['neoClientUserSiderbarNewUserRole']}
-        </Button>
+        </Button> */}
       </Box>
       <Box
         width="calc(100% - 275px)"

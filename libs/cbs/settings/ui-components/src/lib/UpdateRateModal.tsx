@@ -1,9 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
+import NepaliDate from 'nepali-date-converter';
 
 import { Grid, GridItem, Modal, Text } from '@myra-ui';
 
-import { InterestRateSetup } from '@coop/cbs/data-access';
+import {
+  DateType,
+  InterestRateSetup,
+  store,
+  useGetEndOfDayDateDataQuery,
+} from '@coop/cbs/data-access';
 import { CustomInterestRateSetupInput } from '@coop/cbs/utils';
 import { FormDatePicker, FormFileInput, FormInput, FormTextArea } from '@coop/shared/form';
 
@@ -26,6 +32,10 @@ export const UpdateRateModal = ({
   rate,
   rateLabel,
 }: IUpdateRateModalProps) => {
+  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+  const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
+
   useEffect(() => {
     if (rate) {
       methods.reset({
@@ -64,7 +74,17 @@ export const UpdateRateModal = ({
             }
           />
 
-          <FormDatePicker name="effectiveDate" label="Effective Date" minTransactionDate />
+          <FormDatePicker
+            name="effectiveDate"
+            label="Effective Date"
+            minDate={
+              closingDate?.local
+                ? dateType === 'BS'
+                  ? new NepaliDate(closingDate?.np ?? '').toJsDate()
+                  : new Date(closingDate?.en ?? '')
+                : new Date()
+            }
+          />
 
           <GridItem colSpan={2}>
             <FormFileInput name="fileUploads" label="File Upload" size="md" />

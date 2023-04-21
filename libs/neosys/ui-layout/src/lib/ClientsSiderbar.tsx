@@ -1,9 +1,9 @@
 import React from 'react';
-import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
 import { Box, Button, Divider, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 interface IClientsSidebarProps {
@@ -50,7 +50,7 @@ export const ClientsSiderbarLayout = ({ children }: IClientsSidebarProps) => {
 
         <Divider my="s16" />
 
-        <Button
+        {/* <Button
           width="full"
           size="lg"
           justifyContent="start"
@@ -59,7 +59,7 @@ export const ClientsSiderbarLayout = ({ children }: IClientsSidebarProps) => {
           leftIcon={<AiOutlineSetting height="11px" />}
         >
           {t['neoClientSiderbarSettings']}
-        </Button>
+        </Button> */}
       </Box>
       <Box
         width="calc(100% - 275px)"

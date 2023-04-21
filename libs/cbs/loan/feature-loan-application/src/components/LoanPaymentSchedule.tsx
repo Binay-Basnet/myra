@@ -2,14 +2,18 @@ import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoClose } from 'react-icons/io5';
+import NepaliDate from 'nepali-date-converter';
 
 import { Alert, Box, Button, Grid, Icon, IconButton, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
+  DateType,
   LoanAccountInput,
   LoanInstallment,
   LoanRepaymentScheme,
+  store,
+  useGetEndOfDayDateDataQuery,
   useGetLoanInstallmentsQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
@@ -35,6 +39,7 @@ export const LoanPaymentSchedule = () => {
 
   const disburseDate = watch('disbursementDate');
   const installmentBeginDate = watch('installmentBeginDate');
+  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -60,6 +65,9 @@ export const LoanPaymentSchedule = () => {
       onSuccess: () => setTrigger(false),
     }
   );
+
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+  const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
 
   useEffect(() => {
     if (
@@ -151,14 +159,26 @@ export const LoanPaymentSchedule = () => {
         <FormDatePicker
           name="disbursementDate"
           label="Disburse Date"
-          minTransactionDate
+          minDate={
+            closingDate?.local
+              ? dateType === 'BS'
+                ? new NepaliDate(closingDate?.np ?? '').toJsDate()
+                : new Date(closingDate?.en ?? '')
+              : new Date()
+          }
           isRequired
         />
         <FormDatePicker
           name="installmentBeginDate"
           label="Installment Begin Date"
           // minDate={closingDate ? new Date(localizedDate(closingDate) as string) : new Date()}
-          minTransactionDate
+          minDate={
+            closingDate?.local
+              ? dateType === 'BS'
+                ? new NepaliDate(closingDate?.np ?? '').toJsDate()
+                : new Date(closingDate?.en ?? '')
+              : new Date()
+          }
           isRequired
         />
       </Grid>

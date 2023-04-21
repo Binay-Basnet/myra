@@ -12,12 +12,7 @@ export const NeosysUsersForm = () => {
         <Box display="flex" flexDirection="column" gap="s32">
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
             <GridItem colSpan={2}>
-              <FormInput
-                type="text"
-                name="name"
-                label={t['neoUsersName']}
-                __placeholder={t['neoUsersName']}
-              />
+              <FormInput type="text" name="name" label={t['neoUsersName']} />
             </GridItem>
             <GridItem>
               <FormSelect
@@ -35,19 +30,13 @@ export const NeosysUsersForm = () => {
               <FormDatePicker isRequired name="dob" label="Date of birth" maxDate={new Date()} />
             </GridItem>
             <GridItem>
-              <FormInput
-                type="text"
-                name="contactNo"
-                label="Contact No"
-                __placeholder={t['neoUsersName']}
-              />
+              <FormInput type="text" name="contactNo" label="Contact No" />
             </GridItem>
             <GridItem>
               <FormEmailInput
                 // type="text"
                 name="email"
                 label={t['neoUsersEmailAddress']}
-                __placeholder={t['neoUsersEmailAddress']}
               />
             </GridItem>
           </Grid>

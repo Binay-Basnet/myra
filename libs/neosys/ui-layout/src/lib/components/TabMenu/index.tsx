@@ -1,6 +1,4 @@
 import { IconType } from 'react-icons';
-import { AiOutlineAppstore } from 'react-icons/ai';
-import { ImStack } from 'react-icons/im';
 import { IoCubeOutline, IoRoseOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -14,10 +12,10 @@ import { useTranslation } from '@coop/shared/utils';
 export interface TabMenuProps {}
 
 const NAVBAR_TAB_OBJECT: Record<string, number> = {
-  '/': 0,
-  '/clients': 1,
-  '/users': 2,
-  '/settings': 3,
+  // '/': 0,
+  '/clients': 0,
+  '/users': 1,
+  '/settings': 2,
 };
 
 export const TabMenu = () => {
@@ -26,11 +24,11 @@ export const TabMenu = () => {
   const { t } = useTranslation();
 
   const demotabs: { title: string; icon: IconType; link: string }[] = [
-    {
-      title: t['neoClientDashboard'],
-      icon: AiOutlineAppstore,
-      link: '/',
-    },
+    // {
+    //   title: t['neoClientDashboard'],
+    //   icon: AiOutlineAppstore,
+    //   link: '/',
+    // },
     {
       title: t['neoClientClients'],
       icon: IoRoseOutline,
@@ -41,11 +39,11 @@ export const TabMenu = () => {
       icon: IoCubeOutline,
       link: '/users',
     },
-    {
-      title: t['neoClientSettings'],
-      icon: ImStack,
-      link: '/settings',
-    },
+    // {
+    //   title: t['neoClientSettings'],
+    //   icon: ImStack,
+    //   link: '/settings',
+    // },
   ];
 
   const currentIndex =

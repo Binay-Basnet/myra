@@ -3,10 +3,17 @@ import { FormProvider, UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
+import NepaliDate from 'nepali-date-converter';
 
 import { Alert, asyncToast, Box, Modal } from '@myra-ui';
 
-import { useGetOpenChargeListQuery, useUpdateOpenChargeMutation } from '@coop/cbs/data-access';
+import {
+  DateType,
+  store,
+  useGetEndOfDayDateDataQuery,
+  useGetOpenChargeListQuery,
+  useUpdateOpenChargeMutation,
+} from '@coop/cbs/data-access';
 import { COASelectModal } from '@coop/shared/components';
 import { FormDatePicker, FormEditableTable, FormFileInput, FormTextArea } from '@coop/shared/form';
 
@@ -25,10 +32,14 @@ export const UpdateOpenChargesModal = ({ isOpen, onClose, methods }: IUpdatePena
   const router = useRouter();
   const { mutateAsync } = useUpdateOpenChargeMutation();
   const queryClient = useQueryClient();
+  const dateType = store.getState().auth?.preference?.date || DateType.Ad;
 
   const { data: openServiceChargeData } = useGetOpenChargeListQuery({
     productId: router?.query?.['id'] as string,
   });
+
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+  const closingDate = useMemo(() => endOfDayData?.transaction?.endOfDayDate?.value, [endOfDayData]);
 
   const chargesEditData = useMemo(() => {
     const chargesList =
@@ -130,7 +141,13 @@ export const UpdateOpenChargesModal = ({ isOpen, onClose, methods }: IUpdatePena
               <FormDatePicker
                 name="additionalData.effectiveDate"
                 label="Effective From"
-                minTransactionDate
+                minDate={
+                  closingDate?.local
+                    ? dateType === 'BS'
+                      ? new NepaliDate(closingDate?.np ?? '').toJsDate()
+                      : new Date(closingDate?.en ?? '')
+                    : new Date()
+                }
               />
             </Box>
             <FormFileInput name="additionalData.fileUploads" label="File Upload" />
