@@ -1,16 +1,14 @@
 import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Spinner } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { Toaster } from '@myra-ui';
+import { Box, Toaster } from '@myra-ui';
 import { theme } from '@myra-ui/theme';
 
-import { store } from '@coop/csv-viewer/data-access';
-
-const fiveMinutesInMs = 5 * 60 * 1000;
+import { store, useInit } from '@coop/csv-viewer/data-access';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,12 +18,26 @@ const queryClient = new QueryClient({
       refetchOnReconnect: false,
       retry: false,
       keepPreviousData: true,
-      cacheTime: fiveMinutesInMs,
-      staleTime: fiveMinutesInMs,
+      cacheTime: Infinity,
+      staleTime: Infinity,
     },
   },
 });
-const CustomApp = ({ Component, pageProps }: AppProps) => (
+
+const App = ({ Component, pageProps }: AppProps) => {
+  const { isLoading } = useInit();
+
+  if (isLoading) {
+    return (
+      <Box w="100vw" h="100vh" display="flex" alignItems="center" justifyContent="center" gap="s16">
+        <Spinner />
+      </Box>
+    );
+  }
+  return <Component {...pageProps} />;
+};
+
+const CustomApp = (props: AppProps) => (
   <>
     <Head>
       <title>CSV Viewer | Product of Myra </title>
@@ -34,7 +46,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
           <Toaster />
-          <Component {...pageProps} />
+          <App {...props} />
         </ChakraProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>

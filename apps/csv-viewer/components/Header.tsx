@@ -1,36 +1,111 @@
-import { Avatar, Box, Text } from '@myra-ui/foundations';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
-export const Header = () => (
-  <Box
-    h="3rem"
-    w="100%"
-    bg="primary.500"
-    display="flex"
-    alignItems="center"
-    color="white"
-    fontSize="r1"
-    fontWeight={500}
-    px="s16"
-    flexShrink={0}
-    justifyContent="space-between"
-  >
-    <Box display="flex" alignItems="center" gap="s32">
-      <Text fontSize="r2" color="#fff" fontWeight={600}>
-        CSV Viewer
-      </Text>
-      <Box display="flex" alignItems="center" gap="s8">
-        <Text fontSize="s2" color="#fff" fontWeight={500}>
-          Product of
+import { Popover, PopoverBody, PopoverContent, PopoverTrigger } from '@myra-ui';
+import { Avatar, Box, Button, Text } from '@myra-ui/foundations';
+
+import { logout } from '@coop/csv-viewer/data-access';
+
+export const Header = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+  return (
+    <Box
+      h="3rem"
+      w="100%"
+      bg="primary.500"
+      display="flex"
+      alignItems="center"
+      color="white"
+      fontSize="r1"
+      fontWeight={500}
+      px="s16"
+      flexShrink={0}
+      justifyContent="space-between"
+    >
+      <Box display="flex" alignItems="center" gap="s32">
+        <Text fontSize="r2" color="#fff" fontWeight={600}>
+          CSV Viewer
         </Text>
-        <LightLogo />
-        <Text fontSize="r2" color="#fff" fontWeight={700}>
-          Myra
-        </Text>
+        <Box display="flex" alignItems="center" gap="s8">
+          <Text fontSize="s2" color="#fff" fontWeight={500}>
+            Product of
+          </Text>
+          <LightLogo />
+          <Text fontSize="r2" color="#fff" fontWeight={700}>
+            Myra
+          </Text>
+        </Box>
       </Box>
+
+      <Popover placement="bottom-end" gutter={3}>
+        {() => (
+          <>
+            <PopoverTrigger>
+              <Button
+                w="40px"
+                h="40px"
+                variant="ghost"
+                _hover={{ backgroundColor: 'secondary.900' }}
+              >
+                <Avatar icon={<AvatarIcon />} />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent
+              bg="gray.0"
+              w="200px"
+              border="none"
+              boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
+              outline="none"
+              _focus={{
+                boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
+              }}
+              color="white"
+              zIndex="2000"
+            >
+              <PopoverBody p="0">
+                <Box display="flex" flexDirection="column">
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="space-between"
+                    py="s8"
+                    px="s8"
+                  >
+                    <Box
+                      _hover={{
+                        bg: 'background.500',
+                        borderRadius: 'br2',
+                      }}
+                      h="40px"
+                      px="s8"
+                      display="flex"
+                      alignItems="center"
+                      cursor="pointer"
+                      onClick={() => {
+                        router.replace('/login').then(() => {
+                          dispatch(logout());
+                          queryClient.resetQueries();
+                        });
+                      }}
+                    >
+                      <Text fontWeight="Regular" fontSize="r1" color="neutralColorLight.Gray-80">
+                        Logout
+                      </Text>
+                    </Box>
+                  </Box>
+                </Box>
+              </PopoverBody>
+            </PopoverContent>
+          </>
+        )}
+      </Popover>
     </Box>
-    <Avatar icon={<AvatarIcon />} />
-  </Box>
-);
+  );
+};
 
 const AvatarIcon = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -156,6 +231,64 @@ export const DarkLogo = () => (
     <path
       d="M33.0165 19.5V5.78189H35.4102L40.5476 12.7606H39.406L44.4329 5.78189H46.8266V19.5H44.304V8.636L45.2799 8.87537L40.0688 15.8173H39.7742L34.6921 8.87537L35.5207 8.636V19.5H33.0165ZM50.4647 23.5694C50.1947 23.5694 49.9307 23.5448 49.673 23.4957C49.4152 23.4589 49.1819 23.3914 48.9732 23.2932V21.2677C49.1328 21.3045 49.3231 21.3414 49.5441 21.3782C49.7773 21.415 49.9921 21.4334 50.1885 21.4334C50.7409 21.4334 51.1399 21.3045 51.3854 21.0467C51.6432 20.7889 51.8703 20.4514 52.0667 20.034L52.7296 18.4873L52.6928 20.5127L48.3288 9.48302H50.9251L53.9817 17.6218H53.0611L56.0993 9.48302H58.714L54.35 20.5127C54.0922 21.1634 53.7792 21.7158 53.4109 22.17C53.0426 22.6242 52.613 22.9679 52.122 23.2011C51.6432 23.4466 51.0908 23.5694 50.4647 23.5694ZM60.0386 19.5V9.48302H62.3035V11.7111L62.1194 11.3796C62.3526 10.6308 62.7147 10.1091 63.2058 9.81447C63.7091 9.51985 64.3106 9.37254 65.0103 9.37254H65.5995V11.5085H64.7341C64.0467 11.5085 63.4943 11.7233 63.0769 12.153C62.6595 12.5704 62.4508 13.1596 62.4508 13.9207V19.5H60.0386ZM69.964 19.721C69.2643 19.721 68.6566 19.6043 68.141 19.3711C67.6255 19.1379 67.2265 18.8064 66.9442 18.3768C66.6618 17.9348 66.5206 17.4254 66.5206 16.8484C66.5206 16.296 66.6434 15.805 66.8889 15.3754C67.1344 14.9334 67.515 14.5652 68.0306 14.2705C68.5461 13.9759 69.1968 13.7672 69.9824 13.6445L73.26 13.1105V14.9518L70.4427 15.4306C69.964 15.5165 69.608 15.67 69.3747 15.8909C69.1415 16.1119 69.0249 16.4004 69.0249 16.7564C69.0249 17.1001 69.1538 17.3763 69.4116 17.585C69.6816 17.7814 70.0131 17.8796 70.4059 17.8796C70.9092 17.8796 71.3511 17.7753 71.7317 17.5666C72.1245 17.3456 72.4253 17.0449 72.6339 16.6643C72.8549 16.2838 72.9654 15.8664 72.9654 15.4122V12.8343C72.9654 12.4046 72.7935 12.0486 72.4498 11.7663C72.1184 11.4717 71.6764 11.3244 71.124 11.3244C70.6085 11.3244 70.1481 11.4655 69.743 11.7479C69.3502 12.018 69.0617 12.3801 68.8776 12.8343L66.9073 11.8768C67.1037 11.3489 67.4106 10.8947 67.828 10.5142C68.2577 10.1214 68.761 9.81447 69.3379 9.5935C69.9149 9.37254 70.5409 9.26206 71.2161 9.26206C72.0386 9.26206 72.7628 9.4155 73.3889 9.7224C74.015 10.017 74.4999 10.4344 74.8436 10.9745C75.1996 11.5024 75.3776 12.1223 75.3776 12.8343V19.5H73.0943V17.7875L73.6099 17.7507C73.3521 18.1804 73.0452 18.5425 72.6892 18.8371C72.3332 19.1195 71.9281 19.3404 71.4739 19.5C71.0197 19.6473 70.5164 19.721 69.964 19.721Z"
       fill="#006636"
+    />
+  </svg>
+);
+
+export const LogoSecondary = () => (
+  <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect y="0.601562" width="21.7969" height="21.7969" rx="3.26953" fill="#025250" />
+    <path
+      d="M12.2157 7.90263C12.4716 7.14624 12.4819 6.32904 12.2452 5.5665C12.0377 4.89804 11.6496 4.30121 11.1257 3.83974C10.9944 3.72407 10.7989 3.72421 10.6678 3.84005C10.3012 4.16386 9.99981 4.55527 9.78092 4.99355C9.51802 5.51994 9.38123 6.09965 9.38123 6.68735C9.38123 7.27505 9.51802 7.85477 9.78092 8.38116C9.99985 8.81953 10.3013 9.21101 10.668 9.53485C10.799 9.65059 10.9943 9.65082 11.1257 9.53536C11.625 9.0963 12.0015 8.53381 12.2157 7.90263Z"
+      fill="#88BD40"
+    />
+    <rect
+      x="5.89893"
+      y="7.45242"
+      width="6.42805"
+      height="2.2448"
+      rx="1.1224"
+      transform="rotate(40 5.89893 7.45242)"
+      fill="white"
+    />
+    <rect
+      x="5.01318"
+      y="15.8514"
+      width="1.30781"
+      height="1.30781"
+      rx="0.653906"
+      transform="rotate(-45 5.01318 15.8514)"
+      fill="#88BD40"
+    />
+    <rect
+      x="5.73438"
+      y="11.4799"
+      width="3.83372"
+      height="1.56931"
+      rx="0.784656"
+      transform="rotate(40 5.73438 11.4799)"
+      fill="#88BD40"
+    />
+    <rect
+      width="6.42928"
+      height="2.24541"
+      rx="1.12271"
+      transform="matrix(-0.765895 0.642966 0.642609 0.766194 15.8978 7.45041)"
+      fill="white"
+    />
+    <rect
+      width="1.30812"
+      height="1.30812"
+      rx="0.654058"
+      transform="matrix(-0.70694 -0.707274 -0.70694 0.707274 16.7836 15.8533)"
+      fill="#88BD40"
+    />
+    <rect
+      width="3.83445"
+      height="1.56974"
+      rx="0.78487"
+      transform="matrix(-0.765895 0.642966 0.642609 0.766194 16.0624 11.4798)"
+      fill="#88BD40"
     />
   </svg>
 );

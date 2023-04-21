@@ -1,88 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
+import DataGrid, { DataGridHandle } from 'react-data-grid';
+import { BsChevronRight } from 'react-icons/bs';
+import { FiDatabase } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
+import { Spinner } from '@chakra-ui/react';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
+import { startCase } from 'lodash';
 
-import { Box, Column, Icon, Input, Table, Text } from '@myra-ui';
+import { Box, Icon, Input, Text } from '@myra-ui';
 
-import { Header } from '../components/Header';
-import { data } from '../constants/data';
+import { privateAgent } from '@coop/csv-viewer/data-access';
+import { getAPIUrl, getDatabaseSlug } from '@coop/shared/utils';
+
+import { Header, LogoSecondary } from '../components/Header';
+
+import 'react-data-grid/lib/styles.css';
 
 type Tab = {
   label: string;
   value: string;
 };
-
-const tabs: Tab[] = [
-  {
-    label: 'ACTransfer',
-    value: 'acTransfer',
-  },
-  {
-    label: 'AccessLog',
-    value: 'accesslog',
-  },
-  {
-    label: 'AccountCloseDetails',
-    value: 'accountCloseDetails',
-  },
-  {
-    label: 'AccountingOrganization',
-    value: 'accountingOrganization',
-  },
-  {
-    label: 'Address',
-    value: 'address',
-  },
-  {
-    label: 'Agents',
-    value: 'agents',
-  },
-  {
-    label: 'AllAccount',
-    value: 'allAccount',
-  },
-  {
-    label: 'AlternativeChannelCharges',
-    value: 'alternativeChannelCharges',
-  },
-  {
-    label: 'AuditLog',
-    value: 'auditlog',
-  },
-  {
-    label: 'Bank',
-    value: 'bank',
-  },
-  {
-    label: 'Branch',
-    value: 'branch',
-  },
-  {
-    label: 'Member',
-    value: 'member',
-  },
-  { label: 'MembershipFeePayment', value: 'membershipFeePayment' },
-  {
-    label: 'Membership ',
-    value: 'membershipRequest',
-  },
-  {
-    label: 'MoneyJournal',
-    value: 'moneyJournal',
-  },
-  {
-    label: 'CashInTransit',
-    value: 'cashInTransit',
-  },
-  {
-    label: 'CbsCodeManagement',
-    value: 'cbsCodeManagement',
-  },
-  {
-    label: 'ChartsOfAccounts',
-    value: 'chartsofAccounts',
-  },
-];
 
 const TableSvg = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -110,11 +48,38 @@ const TableSvg = () => (
   </svg>
 );
 
+const getCSVs = async () => {
+  const response = await privateAgent.get<{ data: string[] }>(`${getAPIUrl()}/home`);
+
+  return response?.data;
+};
+
+const getCSV = async (csv: string, page: number) => {
+  const response = await privateAgent.get<{
+    data: {
+      data: Record<string, string>;
+    }[];
+    total_pages: number;
+  }>(`${getAPIUrl()}/file`, {
+    params: {
+      file_name: csv,
+      page,
+    },
+  });
+
+  return response?.data;
+};
+
 export const Index = () => {
   const tabRef = useRef<HTMLInputElement | null>(null);
 
-  const [currentTabs, setCurrentTabs] = useState<Tab[]>([tabs[0]]);
-  const [selectedTab, setSelectedTab] = useState(tabs[0]);
+  const { data: tabList } = useQuery({
+    queryKey: ['home'],
+    queryFn: getCSVs,
+  });
+
+  const [currentTabs, setCurrentTabs] = useState<Tab[]>([]);
+  const [selectedTab, setSelectedTab] = useState<Tab | null>(null);
 
   useEffect(() => {
     if (tabRef.current) {
@@ -124,10 +89,26 @@ export const Index = () => {
         inline: 'end',
       });
     }
-  }, [selectedTab.value]);
+  }, [selectedTab?.value]);
+
+  const tabs = React.useMemo(
+    () =>
+      tabList?.data?.map((tab) => ({
+        label: tab.split('.')[0],
+        value: tab,
+      })),
+    [tabList]
+  );
+
+  useEffect(() => {
+    if (tabs) {
+      setSelectedTab(tabs[0]);
+      setCurrentTabs([tabs[0]]);
+    }
+  }, [tabs]);
 
   return (
-    <Box h="100vh" w="100vw" display="flex" flexDir="column" bg="background.500" overflowX="auto">
+    <Box h="100vh" w="100vw" display="flex" flexDir="column" bg="background.500" overflow="auto">
       <Header />
       <Box
         h="2.75rem"
@@ -139,14 +120,40 @@ export const Index = () => {
         alignItems="center"
         flexShrink={0}
       >
-        Myra Prod
+        <Box display="flex" alignItems="center" gap="s16">
+          <Box display="flex" alignItems="center" gap="s8">
+            <LogoSecondary />
+            <Text fontSize="s3" fontWeight={500} color="gray.800" textTransform="capitalize">
+              {startCase(getDatabaseSlug())}
+            </Text>
+          </Box>
+
+          <Icon size="lg" as={BsChevronRight} color="gray.600" />
+
+          <Box
+            h="35px"
+            display="flex"
+            alignItems="center"
+            gap="s8"
+            bg="white"
+            cursor="pointer"
+            px="s16"
+            boxShadow="E1"
+            borderRadius="br1"
+          >
+            <Icon size="sm" as={FiDatabase} color="gray.600" />
+            <Text fontSize="s3" fontWeight={500} color="gray.800" textTransform="capitalize">
+              Table
+            </Text>
+          </Box>
+        </Box>
       </Box>
       <Box bg="#f8f8f8" height="calc(100% - 5.75rem)" display="flex" flexDir="row">
         <Resizer width="12rem" constraints={['12rem', '50rem']}>
           <Box w="100%" display="flex" flexDir="column" gap="s16" p="s8">
             <Input placeholder="Search Table" size="sm" />
             <Box>
-              {tabs.map((tab) => (
+              {tabs?.map((tab) => (
                 <Box
                   h="28px"
                   px="s8"
@@ -155,7 +162,7 @@ export const Index = () => {
                   cursor="pointer"
                   onClick={() => {
                     setCurrentTabs((prev) =>
-                      prev.some((p) => p.value === tab.value) ? prev : [...prev, tab]
+                      prev?.some((p) => p.value === tab.value) ? prev : [...prev, tab]
                     );
 
                     setSelectedTab(tab);
@@ -165,7 +172,7 @@ export const Index = () => {
                   gap="s8"
                   position="relative"
                   // bg={selectedTab.value === tab.value ? '#e6e6e6' : 'transparent'}
-                  color={selectedTab.value === tab.value ? 'gray.900' : 'gray.600'}
+                  color={selectedTab?.value === tab.value ? 'gray.900' : 'gray.600'}
                   key={tab.value}
                 >
                   <Box flexShrink={0}>
@@ -175,7 +182,7 @@ export const Index = () => {
                   <Text wordBreak="break-all" noOfLines={1}>
                     {tab.label}
                   </Text>
-                  {selectedTab.value === tab.value ? (
+                  {selectedTab?.value === tab.value ? (
                     <motion.div
                       layoutId="background"
                       transition={{
@@ -230,12 +237,12 @@ export const Index = () => {
                 h="100%"
                 px="s16"
                 cursor="pointer"
-                ref={selectedTab.value === tab.value ? tabRef : null}
+                ref={selectedTab?.value === tab.value ? tabRef : null}
                 onClick={() => setSelectedTab(tab)}
                 borderRight="1px"
                 borderRightColor="border.layout"
                 fontSize="s3"
-                bg={tab.value === selectedTab.value ? 'white' : 'transparent'}
+                bg={tab.value === selectedTab?.value ? 'white' : 'transparent'}
                 display="flex"
                 alignItems="center"
                 position="relative"
@@ -253,23 +260,23 @@ export const Index = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                       setCurrentTabs((prev) => {
-                        const index = prev.findIndex((v) => v.value === tab.value);
+                        const index = prev?.findIndex((v) => v.value === tab.value);
 
-                        if (selectedTab.value === tab.value) {
+                        if (selectedTab?.value === tab.value) {
                           if (index === 0) {
                             setSelectedTab(currentTabs[1]);
-                          } else {
+                          } else if (index) {
                             setSelectedTab(currentTabs[index - 1]);
                           }
                         }
 
-                        return prev.filter((p) => p.value !== tab.value);
+                        return prev?.filter((p) => p.value !== tab.value) || [];
                       });
                     }}
                     _hover={{ color: 'gray.800' }}
                   />
                 )}
-                {selectedTab.value === tab.value ? (
+                {selectedTab?.value === tab.value ? (
                   <motion.div
                     layoutId="underline"
                     transition={{
@@ -301,23 +308,109 @@ export const Index = () => {
             ))}
             <Box flex={1} h="40px" borderBottom="1px" borderBottomColor="border.layout" />
           </Box>
-          <Box p="s12" h="calc(100% - 40px)">
-            <DataGridTable />
-          </Box>
+          {selectedTab?.value && (
+            <Box
+              p="s12"
+              h="calc(100vh - 40px)"
+              display="flex"
+              alignItems="center"
+              w="100%"
+              justifyContent="center"
+              overflowY="auto"
+            >
+              <DataGridTable tab={selectedTab?.value} />{' '}
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>
   );
 };
 
-const DataGridTable = React.memo(() => {
-  const columns: Column<typeof data[0]>[] = Object.keys(data[0])?.map((column) => ({
-    header: column,
-    accessorKey: column as keyof typeof data[0],
-  }));
+interface DataGridTableProps {
+  tab: string;
+}
 
-  return <Table data={data} isStatic variant="dataGrid" size="dataGrid" columns={columns} />;
-});
+const DataGridTable = React.memo(
+  ({ tab }: DataGridTableProps) => {
+    const tableContainerRef = React.useRef<DataGridHandle>(null);
+
+    const {
+      data: csvData,
+      isFetching,
+      fetchNextPage,
+      isFetchingNextPage,
+    } = useInfiniteQuery(['csv', tab], async ({ pageParam = 1 }) => getCSV(tab, pageParam), {
+      getNextPageParam: (_lastGroup, groups) => groups.length,
+      keepPreviousData: true,
+      refetchOnWindowFocus: false,
+    });
+
+    const flatData = React.useMemo(
+      () => csvData?.pages?.flatMap((page) => page.data) ?? [],
+      [csvData]
+    );
+
+    const totalDBRowCount =
+      flatData.length < 1000 ? flatData.length : (csvData?.pages[0].total_pages || 0) * 1000;
+    const totalFetched = flatData.length;
+
+    // called on scroll and possibly on mount to fetch more data as the user scrolls and reaches bottom of table
+    const fetchMoreOnBottomReached = React.useCallback(
+      (containerRefElement?: HTMLDivElement | null) => {
+        if (containerRefElement) {
+          const { scrollHeight, scrollTop, clientHeight } = containerRefElement || {};
+          // once the user has scrolled within 300px of the bottom of the table, fetch more data if there is any
+
+          if (
+            scrollHeight - scrollTop - clientHeight < 300 &&
+            !isFetching &&
+            totalFetched < totalDBRowCount
+          ) {
+            fetchNextPage();
+          }
+        }
+      },
+      [fetchNextPage, isFetching, totalFetched, totalDBRowCount]
+    );
+
+    // a check on mount and after a fetch to see if the table is already scrolled to the bottom and immediately needs to fetch more data
+    React.useEffect(() => {
+      fetchMoreOnBottomReached(tableContainerRef.current?.element);
+    }, [fetchMoreOnBottomReached]);
+
+    const finalData = flatData?.map((d) => d.data) || [];
+
+    const columns =
+      finalData.length !== 0
+        ? Object.keys(finalData[0])?.map((column) => ({
+            name: column,
+            key: column,
+          }))
+        : [];
+
+    if (isFetching && !isFetchingNextPage) {
+      return <Spinner />;
+    }
+    return (
+      <DataGrid
+        onScroll={(e) => fetchMoreOnBottomReached(e.target as HTMLDivElement)}
+        ref={tableContainerRef}
+        className="rdg-light"
+        style={{
+          height: '100%',
+          width: '100%',
+          background: '#fff',
+          color: 'gray',
+          fontSize: '13px',
+        }}
+        columns={columns}
+        rows={finalData}
+      />
+    );
+  },
+  (prevProps, nextProps) => prevProps.tab === nextProps.tab
+);
 
 interface ResizerProps {
   children: React.ReactNode;
