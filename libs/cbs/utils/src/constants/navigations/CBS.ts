@@ -358,6 +358,11 @@ export const CBS: NavType = {
           route: ROUTES.CBS_TRANS_ALL_ACCOUNTS_LIST,
           aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
         },
+        {
+          label: 'All Holding Accounts',
+          route: ROUTES.CBS_TRANS_ALL_HOLDING_ACCOUNTS_LIST,
+          aclKey: 'CBS_TRANSACTIONS_DEPOSIT',
+        },
       ],
       reportPages: [
         {

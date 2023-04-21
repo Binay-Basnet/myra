@@ -21911,6 +21911,7 @@ export type GetAccountLedgersListQuery = {
 export type GetAllAccountsQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<Filter>;
+  isHoldings?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetAllAccountsQuery = {
@@ -40207,9 +40208,9 @@ export const useGetAccountLedgersListQuery = <TData = GetAccountLedgersListQuery
     options
   );
 export const GetAllAccountsDocument = `
-    query getAllAccounts($paginate: Pagination, $filter: Filter) {
+    query getAllAccounts($paginate: Pagination, $filter: Filter, $isHoldings: Boolean) {
   allAccounts {
-    list(paginate: $paginate, filter: $filter) {
+    list(paginate: $paginate, filter: $filter, isHoldings: $isHoldings) {
       totalCount
       edges {
         node {
