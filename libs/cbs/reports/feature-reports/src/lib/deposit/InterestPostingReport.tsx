@@ -9,7 +9,7 @@ import {
   useGetInterestStatementReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { InterestStatementInputs } from '@coop/cbs/reports/components';
+import { InterestStatementInputs, ReportMember } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate } from '@coop/cbs/utils';
 import { FormAmountFilter } from '@coop/shared/form';
@@ -36,6 +36,7 @@ export const InterestPostingReport = () => {
   );
   const interestStatementReport =
     data?.report?.depositReport?.interestStatementReport?.data?.entries ?? [];
+  const metaData = data?.report?.depositReport?.interestStatementReport?.data;
 
   return (
     <Report
@@ -72,6 +73,23 @@ export const InterestPostingReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
+          <ReportMember
+            member={{
+              name: metaData?.memberName,
+              address: metaData?.address,
+              branch: undefined,
+              code: metaData?.memberId || undefined,
+              activeDate: undefined,
+            }}
+            savingData={{
+              meta: {
+                accountNo: metaData?.accountNo,
+                currentInterestRate: metaData?.currentInterestRate,
+                savingType: metaData?.accountType,
+              },
+            }}
+          />
+
           <Report.Table<InterestPostingReportEntry & { index: number }>
             columns={[
               {

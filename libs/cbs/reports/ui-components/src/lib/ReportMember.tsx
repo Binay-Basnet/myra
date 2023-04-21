@@ -101,7 +101,7 @@ export const ReportMember = ({ member, accountCloseDate, savingData }: ReportMem
                   fontWeight="500"
                   textTransform="capitalize"
                 >
-                  {savingData?.meta?.savingType}
+                  {savingData?.meta?.savingType?.replace(/_/g, ' ').toLowerCase()}
                 </Text>
               )}
             </Box>

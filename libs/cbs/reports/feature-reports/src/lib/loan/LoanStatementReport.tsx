@@ -64,7 +64,6 @@ export const LoanStatementReport = () => {
           <Report.Organization />
           <LoanReportMember member={loanMember} account={loanAccountMeta as LoanAccReportDetails} />
           <Report.Table<LoanStatement & { index: number }>
-            showFooter
             columns={[
               {
                 header: 'S.No.',
