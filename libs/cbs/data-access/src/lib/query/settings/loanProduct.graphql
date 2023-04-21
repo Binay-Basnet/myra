@@ -284,6 +284,7 @@ query getLoanProductDetail($id: ID!) {
               penaltyRate
             }
             loanType
+            productPremiumInterest
           }
         }
       }

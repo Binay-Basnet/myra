@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import {
+  useGetLoanCurrentOrganizationRateQuery,
   useGetLoanProductCriteriaQuery,
   useGetLoanProductDetailQuery,
 } from '@coop/cbs/data-access';
@@ -12,6 +13,8 @@ export const useLoanProductDepositHook = () => {
   const { data: criteriaList } = useGetLoanProductCriteriaQuery({
     productId: id as string,
   });
+
+  const { data: loanCurrentOrgRateData } = useGetLoanCurrentOrganizationRateQuery();
 
   const detailData = data?.settings?.general?.loanProducts?.getProductDetail?.data;
   const criteriaData = criteriaList?.settings?.general?.loanProducts?.getProductCriteria?.data;
@@ -63,5 +66,6 @@ export const useLoanProductDepositHook = () => {
     sidebarData,
     featureTable,
     productLimits,
+    currentOrgRate: loanCurrentOrgRateData?.settings?.general?.loan?.getCurrentOrganizationRate,
   };
 };

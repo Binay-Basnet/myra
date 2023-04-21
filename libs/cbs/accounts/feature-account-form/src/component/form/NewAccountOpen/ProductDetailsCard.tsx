@@ -66,7 +66,7 @@ export const ProductCard = ({ productId }: ProductProps) => {
         <Text fontWeight="Medium" fontSize="s3">
           Product Premium :
           <b>
-            {productData?.productPremiumInterest !== null
+            {typeof productData?.productPremiumInterest === 'number'
               ? `${productData?.productPremiumInterest} %`
               : 'N/A'}
           </b>
@@ -74,7 +74,7 @@ export const ProductCard = ({ productId }: ProductProps) => {
         <Text fontWeight="Medium" fontSize="s3">
           Organization Rate :
           <b>
-            {orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate !== null
+            {typeof orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate === 'number'
               ? `${orgRateData?.settings?.general?.deposit?.getCurrentOrganizationRate} %`
               : 'N/A'}
           </b>

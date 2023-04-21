@@ -128,3 +128,13 @@ query getLoanOrganizationRateDetail($id: ID!) {
     }
   }
 }
+
+query getLoanCurrentOrganizationRate {
+  settings {
+    general {
+      loan {
+        getCurrentOrganizationRate
+      }
+    }
+  }
+}

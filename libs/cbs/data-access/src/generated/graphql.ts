@@ -24473,6 +24473,7 @@ export type LoanProductFragment = {
   isCollateralRequired?: boolean | null;
   collateralTypes?: Array<string | null> | null;
   requiredDocuments?: Array<LoanRequiredDocuments | null> | null;
+  productPremiumInterest?: number | null;
   productCode?: { prefix: string; initialNo: string } | null;
   rebate?: {
     dayBeforeInstallmentDate?: number | null;
@@ -30063,6 +30064,7 @@ export type GetLoanProductDetailQuery = {
             collateralTypes?: Array<string | null> | null;
             isPrematurePenaltyApplicable?: boolean | null;
             loanType: TypeOfLoan;
+            productPremiumInterest?: number | null;
             productCode?: { prefix: string; initialNo: string; noOfDigits?: number | null } | null;
             penalty?: {
               penaltyType?: PenaltyType | null;
@@ -30492,6 +30494,12 @@ export type GetLoanOrganizationRateDetailQuery = {
       } | null;
     } | null;
   };
+};
+
+export type GetLoanCurrentOrganizationRateQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetLoanCurrentOrganizationRateQuery = {
+  settings: { general?: { loan?: { getCurrentOrganizationRate?: number | null } | null } | null };
 };
 
 export type GetGeneralMemberSettingsDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -33319,6 +33327,7 @@ export const LoanProductFragmentDoc = `
     penaltyRate
   }
   requiredDocuments
+  productPremiumInterest
 }
     `;
 export const OptionTypeFragmentDoc = `
@@ -50873,6 +50882,7 @@ export const GetLoanProductDetailDocument = `
               penaltyRate
             }
             loanType
+            productPremiumInterest
           }
         }
       }
@@ -51449,6 +51459,33 @@ export const useGetLoanOrganizationRateDetailQuery = <
     ['getLoanOrganizationRateDetail', variables],
     useAxios<GetLoanOrganizationRateDetailQuery, GetLoanOrganizationRateDetailQueryVariables>(
       GetLoanOrganizationRateDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanCurrentOrganizationRateDocument = `
+    query getLoanCurrentOrganizationRate {
+  settings {
+    general {
+      loan {
+        getCurrentOrganizationRate
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanCurrentOrganizationRateQuery = <
+  TData = GetLoanCurrentOrganizationRateQuery,
+  TError = unknown
+>(
+  variables?: GetLoanCurrentOrganizationRateQueryVariables,
+  options?: UseQueryOptions<GetLoanCurrentOrganizationRateQuery, TError, TData>
+) =>
+  useQuery<GetLoanCurrentOrganizationRateQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanCurrentOrganizationRate']
+      : ['getLoanCurrentOrganizationRate', variables],
+    useAxios<GetLoanCurrentOrganizationRateQuery, GetLoanCurrentOrganizationRateQueryVariables>(
+      GetLoanCurrentOrganizationRateDocument
     ).bind(null, variables),
     options
   );

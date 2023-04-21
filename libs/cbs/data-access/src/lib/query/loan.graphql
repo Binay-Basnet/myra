@@ -104,6 +104,7 @@ fragment LoanProduct on LoanProduct {
     penaltyRate
   }
   requiredDocuments
+  productPremiumInterest
 }
 
 query getLoanProductDetailsData($id: ID!) {

@@ -27,7 +27,8 @@ import { useLoanProductDepositHook } from '../hooks/useLoanProductDepositHook';
 export const OverviewPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { detailData, criteriaData, featureTable, productLimits } = useLoanProductDepositHook();
+  const { detailData, criteriaData, featureTable, productLimits, currentOrgRate } =
+    useLoanProductDepositHook();
 
   return (
     <Box display="flex">
@@ -69,7 +70,11 @@ export const OverviewPage = () => {
             <ProductLimits limits={productLimits} />
 
             <ProductRebate rebateData={detailData?.rebate} />
-            <ProductInterestRate interestRate={detailData?.interest} />
+            <ProductInterestRate
+              interestRate={detailData?.interest}
+              productPremium={detailData?.productPremiumInterest}
+              currentOrgRate={currentOrgRate}
+            />
             {detailData?.loanType === TypeOfLoan?.Normal && (
               <>
                 <ProductPenalty penaltyData={detailData?.penalty} />

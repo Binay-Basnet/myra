@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 
 import { Box, Text } from '@myra-ui';
 
-import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
+import {
+  useGetLoanCurrentOrganizationRateQuery,
+  useGetLoanProductDetailsDataQuery,
+} from '@coop/cbs/data-access';
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -19,6 +22,8 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
     }
   );
   const productData = productDetails?.data?.settings?.general?.loanProducts?.formState?.data;
+
+  const { data: loanCurrentOrgRateData } = useGetLoanCurrentOrganizationRateQuery();
 
   useEffect(() => {
     if (productId) {
@@ -43,6 +48,23 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
         </Text>
         <Text fontWeight="Medium" fontSize="s3">
           Interest Rate : {productData?.interest?.minRate} -{productData?.interest?.maxRate}
+        </Text>
+        <Text fontWeight="Medium" fontSize="s3">
+          Product Premium :
+          <b>
+            {typeof productData?.productPremiumInterest === 'number'
+              ? `${productData?.productPremiumInterest} %`
+              : 'N/A'}
+          </b>
+        </Text>
+        <Text fontWeight="Medium" fontSize="s3">
+          Organization Rate :
+          <b>
+            {typeof loanCurrentOrgRateData?.settings?.general?.loan?.getCurrentOrganizationRate ===
+            'number'
+              ? `${loanCurrentOrgRateData?.settings?.general?.loan?.getCurrentOrganizationRate} %`
+              : 'N/A'}
+          </b>
         </Text>
       </Box>
       <Box

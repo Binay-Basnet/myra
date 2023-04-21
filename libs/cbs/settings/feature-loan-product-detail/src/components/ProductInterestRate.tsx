@@ -1,13 +1,19 @@
-import { Box, DetailsCard } from '@myra-ui';
+import { Box, DetailsCard, Text } from '@myra-ui';
 
 import { InterestFormState } from '@coop/cbs/data-access';
 
+interface IProductInterestRateProps {
+  interestRate: InterestFormState | undefined | null;
+  productPremium: number | null | undefined;
+  currentOrgRate: number | null | undefined;
+}
+
 export const ProductInterestRate = ({
   interestRate,
-}: {
-  interestRate: InterestFormState | undefined | null;
-}) => (
-  <DetailsCard title="Interest Rate">
+  productPremium,
+  currentOrgRate,
+}: IProductInterestRateProps) => (
+  <DetailsCard title="Interest Rate" hasThreeRows>
     <Box px="s16" fontSize="r1">
       <ul>
         <li>
@@ -35,6 +41,37 @@ export const ProductInterestRate = ({
           Board Authentication:&nbsp;
           <b>
             {interestRate?.boardAuthority !== null ? `${interestRate?.boardAuthority} %` : 'N/A'}
+          </b>
+        </li>
+      </ul>
+    </Box>
+    <Box px="s16" fontSize="r1" textTransform="capitalize">
+      <ul>
+        <li>
+          Organization Rate: &nbsp;
+          <b>{typeof currentOrgRate === 'number' ? `${currentOrgRate} %` : 'N/A'}</b>
+        </li>
+        <li>
+          Product Premium: &nbsp;
+          <b>{typeof productPremium === 'number' ? `${productPremium} %` : 'N/A'}</b>
+        </li>
+      </ul>
+    </Box>
+    <Box px="s16" fontSize="r1" textTransform="capitalize">
+      <Text fontSize="r1" fontWeight={500}>
+        Allowable Change in Interest Rate
+      </Text>
+      <ul>
+        <li>
+          Minimum Rate: &nbsp;
+          <b>
+            {typeof interestRate?.changeMin === 'number' ? `${interestRate?.changeMin} %` : 'N/A'}
+          </b>
+        </li>
+        <li>
+          Maximum Rate: &nbsp;
+          <b>
+            {typeof interestRate?.changeMax === 'number' ? `${interestRate?.changeMax} %` : 'N/A'}
           </b>
         </li>
       </ul>

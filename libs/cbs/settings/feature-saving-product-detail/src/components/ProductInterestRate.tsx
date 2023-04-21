@@ -49,11 +49,11 @@ export const ProductInterestRate = ({
       <ul>
         <li>
           Organization Rate: &nbsp;
-          <b>{currentOrgRate !== null ? `${currentOrgRate} %` : 'N/A'}</b>
+          <b>{typeof currentOrgRate === 'number' ? `${currentOrgRate} %` : 'N/A'}</b>
         </li>
         <li>
           Product Premium: &nbsp;
-          <b>{productPremium !== null ? `${productPremium} %` : 'N/A'}</b>
+          <b>{typeof productPremium === 'number' ? `${productPremium} %` : 'N/A'}</b>
         </li>
       </ul>
     </Box>
@@ -64,11 +64,15 @@ export const ProductInterestRate = ({
       <ul>
         <li>
           Minimum Rate: &nbsp;
-          <b>{interestRate?.changeMin !== null ? `${interestRate?.changeMin} %` : 'N/A'}</b>
+          <b>
+            {typeof interestRate?.changeMin === 'number' ? `${interestRate?.changeMin} %` : 'N/A'}
+          </b>
         </li>
         <li>
           Maximum Rate: &nbsp;
-          <b>{interestRate?.changeMax !== null ? `${interestRate?.changeMax} %` : 'N/A'}</b>
+          <b>
+            {typeof interestRate?.changeMax === 'number' ? `${interestRate?.changeMax} %` : 'N/A'}
+          </b>
         </li>
       </ul>
     </Box>
