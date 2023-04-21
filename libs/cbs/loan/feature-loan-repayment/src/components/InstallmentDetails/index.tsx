@@ -172,7 +172,7 @@ export const InstallmentData = ({
       0
     );
 
-    setTotalPayableAmount(tempPrincipal + tempInterest + discountedFine);
+    setTotalPayableAmount(Number((tempPrincipal + tempInterest + discountedFine).toFixed(2)));
 
     return {
       totalCoveredPrincipal: tempPrincipal,
