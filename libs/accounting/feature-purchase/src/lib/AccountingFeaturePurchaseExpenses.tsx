@@ -1,25 +1,21 @@
 import { useMemo } from 'react';
 
-import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { useGetMemberListQuery } from '@coop/cbs/data-access';
+import { useGetAccountingPurchaseSalesListQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
-
-/* eslint-disable-next-line */
-export interface AccountingFeaturePurchaseExpensesProps {}
+import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const AccountingFeaturePurchaseExpenses = () => {
   const { t } = useTranslation();
 
-  const { data, isFetching } = useGetMemberListQuery({
+  const { data, isFetching } = useGetAccountingPurchaseSalesListQuery({
     pagination: getPaginationQuery(),
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.accounting?.purchase?.listExpense?.edges ?? [], [data]);
 
   const popoverTitle = [
     {
@@ -36,40 +32,32 @@ export const AccountingFeaturePurchaseExpenses = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['accountingExpensesListBillNo'],
-        accessorFn: (row) => row?.node?.id,
+        header: 'Date',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
-        accessorFn: (row) => row?.node?.name?.local,
-        header: t['accountingExpensesListSupplierName'],
-        cell: (props) => (
-          <Box display="flex" alignItems="center" gap="s12">
-            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
-            <Text
-              fontSize="s3"
-              textTransform="capitalize"
-              textOverflow="ellipsis"
-              overflow="hidden"
-            >
-              {props.getValue() as string}
-            </Text>
-          </Box>
-        ),
+        accessorFn: (row) => row?.node?.entryNo,
+        header: 'Entry No',
 
         meta: {
           width: '60%',
         },
       },
       {
-        header: t['accountingExpensesListTotalAmount'],
-        accessorFn: (row) => row?.node?.contact,
+        header: 'Supplier Name',
+        accessorFn: (row) => row?.node?.supplierName,
         meta: {
           width: '30%',
         },
       },
       {
-        header: t['accountingExpensesListInvoiceDate'],
-        accessorFn: (row) => localizedDate(row?.node?.dateJoined),
+        header: 'Reference',
+        accessorFn: (row) => row?.node?.reference,
+      },
+      {
+        header: 'Amount',
+        accessorFn: (row) => row?.node?.totalAmount,
+        cell: (props) => amountConverter(props.getValue() as string),
       },
       {
         id: '_actions',
@@ -96,8 +84,8 @@ export const AccountingFeaturePurchaseExpenses = () => {
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          total: data?.accounting?.purchase?.listExpense?.totalCount ?? 'Many',
+          pageInfo: data?.accounting?.purchase?.listExpense?.pageInfo,
         }}
       />
     </>

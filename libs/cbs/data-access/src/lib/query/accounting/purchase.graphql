@@ -21,3 +21,28 @@ query getAccountingPurchaseEntryList($filter: AccountingPurchaseFilter, $paginat
     }
   }
 }
+
+query getAccountingPurchaseSalesList($filter: AccountingPurchaseFilter, $pagination: Pagination){
+  accounting {
+    purchase {
+      listExpense(filter: $filter, pagination: $pagination){
+        totalCount
+        edges {
+          cursor
+          node {
+            id
+            date
+            entryNo
+            reference
+            supplierId
+            supplierName
+            totalAmount
+          }
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}

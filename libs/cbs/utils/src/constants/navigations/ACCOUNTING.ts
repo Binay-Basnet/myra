@@ -62,6 +62,13 @@ export const ACCOUNTING: NavType = {
         },
 
         {
+          label: 'accountingPurchaseSidebarExpenses',
+          route: ROUTES.ACCOUNTING_PURCHASE_EXPENSE,
+          addRoute: ROUTES.ACCOUNTING_PURCHASE_EXPENSE_ADD,
+          aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_EXPENSES',
+        },
+
+        {
           label: 'accountingPurchaseSidebarSupplierPayment',
           route: ROUTES.ACCOUNTING_PURCHASE_SUPPLIER_PAYMENT,
           addRoute: ROUTES.ACCOUNTING_PURCHASE_SUPPLIER_PAYMENT_ADD,

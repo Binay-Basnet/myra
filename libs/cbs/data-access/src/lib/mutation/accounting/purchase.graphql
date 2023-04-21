@@ -10,3 +10,16 @@ mutation setPurchaseEntry($data: PurchaseEntryInput!) {
     }
   }
 }
+
+mutation addNewExpense($data: AccountingExpenseInput){
+  accounting {
+    purchase {
+      expense(data: $data){
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

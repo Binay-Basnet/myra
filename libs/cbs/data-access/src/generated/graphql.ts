@@ -582,6 +582,8 @@ export type AccountingPurchase = {
   date: Scalars['Localized'];
   entryNo: Scalars['String'];
   id: Scalars['String'];
+  itemDetails?: Maybe<Array<Maybe<PurchaseItemDetailsType>>>;
+  referenceId: Scalars['String'];
   supplierId: Scalars['String'];
   supplierName: Scalars['String'];
   totalAmount: Scalars['String'];
@@ -2854,6 +2856,7 @@ export type CombinedAccountDetail = {
 
 export type Committee = {
   code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Time']>;
   description?: Maybe<Scalars['String']>;
   file?: Maybe<UploadedDocumentData>;
   id?: Maybe<Scalars['ID']>;
@@ -2880,6 +2883,7 @@ export type CommitteeInput = {
 
 export type CommitteeMember = {
   id?: Maybe<Scalars['ID']>;
+  joinedAt: Scalars['Time'];
   member: Member;
   position: Scalars['String'];
 };
@@ -7089,6 +7093,7 @@ export type InterestPostingReportData = {
   address?: Maybe<Address>;
   currentInterestRate?: Maybe<Scalars['Float']>;
   entries?: Maybe<Array<Maybe<InterestPostingReportEntry>>>;
+  member?: Maybe<Member>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
 };
@@ -13962,6 +13967,16 @@ export type PurchaseItemDetails = {
   warehouse?: InputMaybe<Scalars['String']>;
 };
 
+export type PurchaseItemDetailsType = {
+  amount?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  itemId?: Maybe<Scalars['String']>;
+  quantity?: Maybe<Scalars['String']>;
+  rate?: Maybe<Scalars['String']>;
+  tax?: Maybe<Scalars['String']>;
+  warehouse?: Maybe<Scalars['String']>;
+};
+
 export type QuarterlyDividendRate = {
   firstQuarter?: Maybe<Scalars['Float']>;
   fourthQuarter?: Maybe<Scalars['Float']>;
@@ -14688,6 +14703,8 @@ export type SalesSaleEntryEntry = {
   date: Scalars['Localized'];
   id: Scalars['ID'];
   invoiceNo: Scalars['String'];
+  itemDetails?: Maybe<Array<Maybe<PurchaseItemDetailsType>>>;
+  referenceId: Scalars['String'];
   totalAmount: Scalars['String'];
 };
 
@@ -17629,6 +17646,27 @@ export type SetPurchaseEntryMutation = {
   accounting: {
     purchase: {
       purchaseEntry?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type AddNewExpenseMutationVariables = Exact<{
+  data?: InputMaybe<AccountingExpenseInput>;
+}>;
+
+export type AddNewExpenseMutation = {
+  accounting: {
+    purchase: {
+      expense?: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -22448,6 +22486,34 @@ export type GetAccountingPurchaseEntryListQuery = {
             id: string;
             date: Record<'local' | 'en' | 'np', string>;
             entryNo: string;
+            supplierId: string;
+            supplierName: string;
+            totalAmount: string;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    };
+  };
+};
+
+export type GetAccountingPurchaseSalesListQueryVariables = Exact<{
+  filter?: InputMaybe<AccountingPurchaseFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetAccountingPurchaseSalesListQuery = {
+  accounting: {
+    purchase: {
+      listExpense?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id: string;
+            date: Record<'local' | 'en' | 'np', string>;
+            entryNo: string;
+            reference: string;
             supplierId: string;
             supplierName: string;
             totalAmount: string;
@@ -33638,6 +33704,33 @@ export const useSetPurchaseEntryMutation = <TError = unknown, TContext = unknown
     useAxios<SetPurchaseEntryMutation, SetPurchaseEntryMutationVariables>(SetPurchaseEntryDocument),
     options
   );
+export const AddNewExpenseDocument = `
+    mutation addNewExpense($data: AccountingExpenseInput) {
+  accounting {
+    purchase {
+      expense(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddNewExpenseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddNewExpenseMutation,
+    TError,
+    AddNewExpenseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddNewExpenseMutation, TError, AddNewExpenseMutationVariables, TContext>(
+    ['addNewExpense'],
+    useAxios<AddNewExpenseMutation, AddNewExpenseMutationVariables>(AddNewExpenseDocument),
+    options
+  );
 export const SetSalesCustomerDataDocument = `
     mutation setSalesCustomerData($id: ID!, $data: SalesCustomerInput!) {
   accounting {
@@ -40990,6 +41083,48 @@ export const useGetAccountingPurchaseEntryListQuery = <
       : ['getAccountingPurchaseEntryList', variables],
     useAxios<GetAccountingPurchaseEntryListQuery, GetAccountingPurchaseEntryListQueryVariables>(
       GetAccountingPurchaseEntryListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountingPurchaseSalesListDocument = `
+    query getAccountingPurchaseSalesList($filter: AccountingPurchaseFilter, $pagination: Pagination) {
+  accounting {
+    purchase {
+      listExpense(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          cursor
+          node {
+            id
+            date
+            entryNo
+            reference
+            supplierId
+            supplierName
+            totalAmount
+          }
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetAccountingPurchaseSalesListQuery = <
+  TData = GetAccountingPurchaseSalesListQuery,
+  TError = unknown
+>(
+  variables?: GetAccountingPurchaseSalesListQueryVariables,
+  options?: UseQueryOptions<GetAccountingPurchaseSalesListQuery, TError, TData>
+) =>
+  useQuery<GetAccountingPurchaseSalesListQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountingPurchaseSalesList']
+      : ['getAccountingPurchaseSalesList', variables],
+    useAxios<GetAccountingPurchaseSalesListQuery, GetAccountingPurchaseSalesListQueryVariables>(
+      GetAccountingPurchaseSalesListDocument
     ).bind(null, variables),
     options
   );

@@ -1,44 +1,53 @@
+import { FormSection } from '@myra-ui/templates';
+
+import { useGetAllAccountingTaxesQuery } from '@coop/cbs/data-access';
+import { COASelectModal } from '@coop/shared/components';
 import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 type ExpensesTableType = {
-  product_id: string;
-  transferred_to: string;
-  rate: number;
-  tax: number;
-  amount: number;
-  product_description?: string;
-  warehouse_partition?: number;
-  purchase_ledger?: string;
+  accountId?: string;
+  tax: string;
+  amount: string;
 };
 
 export const ExpensesTable = () => {
   const { t } = useTranslation();
 
+  const { data: taxData } = useGetAllAccountingTaxesQuery();
+
+  const taxDataOptions = taxData?.settings?.general?.accounting?.taxRates?.map((data) => ({
+    label: `${data?.name} - ${data?.rate}`,
+    value: data?.id as string,
+  }));
+
   return (
-    <FormEditableTable<ExpensesTableType>
-      name="data"
-      columns={[
-        {
-          accessor: 'transferred_to',
-          header: t['accountingExpensesFormTableTransferredTo'],
-          fieldType: 'select',
-          cellWidth: 'auto',
-        },
-        {
-          accessor: 'tax',
-          header: t['accountingExpensesFormTableTax'],
-          isNumeric: true,
-          cellWidth: 'auto',
-          fieldType: 'percentage',
-        },
-        {
-          accessor: 'amount',
-          header: t['accountingExpensesFormTableAmount'],
-          isNumeric: true,
-          cellWidth: 'auto',
-        },
-      ]}
-    />
+    <FormSection flexLayout>
+      <FormEditableTable<ExpensesTableType>
+        name="transferredLedgers"
+        columns={[
+          {
+            accessor: 'accountId',
+            header: t['accountingExpensesFormTableTransferredTo'],
+            cellWidth: 'auto',
+            fieldType: 'modal',
+            modal: COASelectModal,
+          },
+          {
+            accessor: 'tax',
+            header: t['accountingExpensesFormTableTax'],
+            cellWidth: 'auto',
+            fieldType: 'select',
+            selectOptions: taxDataOptions,
+          },
+          {
+            accessor: 'amount',
+            header: t['accountingExpensesFormTableAmount'],
+            isNumeric: true,
+            cellWidth: 'auto',
+          },
+        ]}
+      />
+    </FormSection>
   );
 };
