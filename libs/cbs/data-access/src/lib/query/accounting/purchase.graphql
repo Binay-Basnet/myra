@@ -11,6 +11,7 @@ query getAccountingPurchaseEntryList($filter: AccountingPurchaseFilter, $paginat
             supplierId
             supplierName
             totalAmount
+            referenceId
           }
           cursor
         }
@@ -31,6 +32,7 @@ query getAccountingPurchaseSalesList($filter: AccountingPurchaseFilter, $paginat
           cursor
           node {
             id
+            reference
             date
             entryNo
             reference
@@ -41,6 +43,34 @@ query getAccountingPurchaseSalesList($filter: AccountingPurchaseFilter, $paginat
         }
         pageInfo {
           ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getAccountingDebitNoteList($filter: AccountingPurchaseFilter, $pagination: Pagination){
+  accounting {
+    purchase {
+      listDebitNote(filter: $filter, pagination: $pagination ){
+        totalCount
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
+          hasPreviousPage
+        }
+        edges {
+          node {
+            totalAmount
+            supplierName
+            supplierId
+            date
+            noteNo
+            referenceNo
+          }
+          cursor
+
         }
       }
     }

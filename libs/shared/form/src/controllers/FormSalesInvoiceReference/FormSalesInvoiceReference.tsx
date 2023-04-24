@@ -1,4 +1,8 @@
-import { SalesSaleEntryEntry, useGetSalesSaleEntryListDataQuery } from '@coop/cbs/data-access';
+import {
+  SalesSaleEntryEntry,
+  useGetAccountingPurchaseEntryListQuery,
+  useGetSalesSaleEntryListDataQuery,
+} from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
@@ -6,6 +10,8 @@ interface IFormSalesInvoiceReferenceProps {
   name: string;
   label: string;
   getSelectedValue: (sales: Partial<SalesSaleEntryEntry> | null | undefined) => void;
+
+  type?: 'sales' | 'purchase';
 }
 
 type OptionType = {
@@ -18,20 +24,28 @@ export const FormSalesInvoiceReference = ({
   name,
   label,
   getSelectedValue,
+  type = 'sales',
 }: IFormSalesInvoiceReferenceProps) => {
-  // const [searchTerm, setSearchTerm] = useState('');
-
-  // const { watch } = useFormContext();
-
-  const { data: salesListQueryData, isFetching } = useGetSalesSaleEntryListDataQuery({
-    pagination: {
-      ...getPaginationQuery(),
-      first: -1,
+  const { data: salesListQueryData, isFetching: salesFetching } = useGetSalesSaleEntryListDataQuery(
+    {
+      pagination: {
+        ...getPaginationQuery(),
+        first: -1,
+      },
     },
-    // filter: {
-    //   name: searchTerm,
-    // },
-  });
+    { enabled: type === 'sales' }
+  );
+
+  const { data: purchaseListQueryData, isFetching: purchaseFetching } =
+    useGetAccountingPurchaseEntryListQuery(
+      {
+        pagination: {
+          ...getPaginationQuery(),
+          first: -1,
+        },
+      },
+      { enabled: type === 'purchase' }
+    );
 
   const salesList = salesListQueryData?.accounting?.sales?.listSaleEntry?.edges;
 
@@ -39,7 +53,6 @@ export const FormSalesInvoiceReference = ({
     (prevVal, curVal) => [
       ...prevVal,
       {
-        // label: `${curVal?.node?.customerName} [ID:${curVal?.node?.invoiceNo}]`,
         label: curVal?.node?.invoiceNo as string,
         value: curVal?.node?.invoiceNo as string,
       },
@@ -47,29 +60,45 @@ export const FormSalesInvoiceReference = ({
     [] as OptionType[]
   );
 
-  // useEffect(() => {
-  //   const term = watch(name);
-  //   setSearchTerm(term);
-  // }, []);
+  const purchaseList = purchaseListQueryData?.accounting?.purchase?.list?.edges;
+
+  const purchaseOptions = purchaseList?.reduce(
+    (prevVal, curVal) => [
+      ...prevVal,
+      {
+        label: curVal?.node?.referenceId as string,
+        value: curVal?.node?.referenceId as string,
+      },
+    ],
+    [] as OptionType[]
+  );
 
   return (
     <FormSelect
       name={name}
       label={label}
-      isLoading={isFetching}
+      isLoading={type === 'sales' ? salesFetching : purchaseFetching}
       //   onInputChange={debounce((id) => {
       //     if (id) {
       //       setSearchTerm(id);
       //     }
       //   }, 800)}
       onChangeAction={(val: any) => {
-        const selectedValue = salesList?.find(
-          (sales) => sales?.node?.invoiceNo === val?.value
-        )?.node;
+        if (type === 'purchase') {
+          const selectedValue = purchaseList?.find(
+            (sales) => sales?.node?.referenceId === val?.value
+          )?.node;
 
-        getSelectedValue(selectedValue);
+          getSelectedValue(selectedValue);
+        } else {
+          const selectedValue = salesList?.find(
+            (sales) => sales?.node?.invoiceNo === val?.value
+          )?.node;
+
+          getSelectedValue(selectedValue);
+        }
       }}
-      options={salesOptions}
+      options={type === 'purchase' ? purchaseOptions : salesOptions}
     />
   );
 };

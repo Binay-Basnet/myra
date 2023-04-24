@@ -23,3 +23,16 @@ mutation addNewExpense($data: AccountingExpenseInput){
     }
   }
 }
+
+mutation addNewDebitNote($data: PurchaseDebitNoteInput!){
+  accounting {
+    purchase {
+      debitNote(data: $data){
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
