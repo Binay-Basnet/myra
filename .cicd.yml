@@ -27,7 +27,7 @@ steps:
   - name: neosys-admin-app
     path: /drone/src/apps/neosys-admin/dist
   commands:
-  - yarn
+  - yarn --pure-lockfile
   - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
 
 volumes:
@@ -430,7 +430,7 @@ steps:
       - name: myra-app
         path: /drone/src/apps/myra/dist
     commands:
-      - yarn
+      - yarn --pure-lockfile
       - npx nx run myra:build:production
 
   - name: Publish myra-ui
@@ -652,5 +652,72 @@ volumes:
 trigger:
   branch:
     - migration
+  event:
+    - push
+
+#########################################################################################################
+#########################################################################################################
+###############                           B O X   M I G R A T I O N                           ###########
+#########################################################################################################
+#########################################################################################################
+
+---
+
+kind: pipeline
+name: Build and Push box migration
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+  - name: build from box migration
+    image: node:16-alpine
+    volumes:
+      - name: env file
+        path: /drone/src/apps/box-migration/.env
+      - name: env file
+        path: /drone/src/apps/.env
+      - name: migration-app
+        path: /drone/src/apps/box-migration/dist
+    commands:
+      - yarn
+      - npx nx run csv-viewer:build:production
+
+
+  - name: Publish box-migration-ui to ECR
+    image: bentolor/docker-dind-awscli:dind
+    environment:
+      aws_access_key:
+        from_secret: aws_access_key
+      aws_secret_key:
+        from_secret: aws_secret_key
+    volumes:
+      - name: docker-sock
+        path: /var/run/docker.sock
+      - name: box-migration-app
+        path: /drone/src/apps/box-migration/dist
+
+    commands:
+      - aws configure set aws_access_key_id $aws_access_key
+      - aws configure set aws_secret_access_key $aws_secret_key
+      - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
+      - docker compose -f docker-compose.csv-viewer.yaml build
+      - docker compose -f docker-compose.csv-viewer.yaml push
+
+volumes:
+  - name: env file
+    host:
+      path: /build-cache/box-migration/fe/.env
+  - name: docker-sock
+    host:
+      path: /var/run/docker.sock
+  - name: migration-app
+    temp: {}
+
+trigger:
+  branch:
+    - box-migration
   event:
     - push
