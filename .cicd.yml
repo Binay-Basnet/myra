@@ -679,7 +679,7 @@ steps:
         path: /drone/src/apps/csv-viewer/.env
       - name: env file
         path: /drone/src/apps/.env
-      - name: migration-app
+      - name: box-migration-app
         path: /drone/src/apps/csv-viewer/dist
     commands:
       - yarn
@@ -713,7 +713,7 @@ volumes:
   - name: docker-sock
     host:
       path: /var/run/docker.sock
-  - name: migration-app
+  - name: box-migration-app
     temp: {}
 
 trigger:
