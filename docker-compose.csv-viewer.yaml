@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  csv-viewer:
+    build:
+      context: apps/csv-viewer
+      dockerfile: Dockerfile
+    image: 110278083494.dkr.ecr.ap-south-1.amazonaws.com/dev-box-migration:dev
+    container_name: box-migration
+    ports:
+      - 9900:3000
+    restart: unless-stopped
