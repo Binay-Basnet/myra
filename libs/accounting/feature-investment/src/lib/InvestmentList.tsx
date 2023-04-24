@@ -73,6 +73,7 @@ export const InvestmentList = () => {
         header: 'Amount',
         accessorFn: (row) => amountConverter(row?.node?.amount ?? 0),
         meta: {
+          isNumeric: true,
           width: '120px',
         },
       },
