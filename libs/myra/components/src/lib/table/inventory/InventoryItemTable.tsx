@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { Box, Column, Table } from '@myra-ui';
 
 import { useGetInventoryItemsListQuery } from '@coop/cbs/data-access';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 
@@ -25,6 +25,9 @@ export const InventoryItemTable = () => {
       {
         header: t['itemListName'],
         accessorFn: (row) => row?.node?.name,
+        meta: {
+          width: '70%',
+        },
       },
       {
         header: t['itemListType'],
@@ -35,11 +38,20 @@ export const InventoryItemTable = () => {
         id: 'total-cost',
         header: t['itemListTotalCost'],
         accessorFn: (row) => row?.node?.costPrice,
+        cell: (props) => amountConverter(props.getValue() as string),
+
+        meta: {
+          isNumeric: true,
+        },
       },
 
       {
         header: t['itemListItemQuantity'],
         accessorFn: (row) => row?.node?.itemQuantity,
+        cell: (props) => amountConverter(props.getValue() as string),
+        meta: {
+          isNumeric: true,
+        },
       },
       // {
       //   accessorKey: 'actions',
