@@ -8,7 +8,7 @@ export const BasicDetailsSuppliers = () => (
       <FormInput name="name" label="Name" />
     </GridItem>
     <FormInput name="supplierCode" label="Supplier Code" />
-    <FormInput name="panNo" label="PANorVATno" />
+    <FormInput name="panNo" label="PAN / VAT" />
     <FormInput name="contactNo" label="Contact No" />
     <FormInput name="email" label="Email" />
   </FormSection>
