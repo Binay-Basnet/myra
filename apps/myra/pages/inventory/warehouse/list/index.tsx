@@ -17,16 +17,16 @@ const InventoryWarehousePage = () => {
   const handleMinorAccountClose = () => {
     setIsAddMinorAccountModalOpen(false);
   };
-  const tabList = [
-    {
-      title: 'warehouseListView',
-      key: 'listView',
-    },
-    // {
-    //   title: 'warehouseTreeView',
-    //   key: 'treeView',
-    // },
-  ];
+  // const tabList = [
+  //   {
+  //     title: 'warehouseListView',
+  //     key: 'listView',
+  //   },
+  //   // {
+  //   //   title: 'warehouseTreeView',
+  //   //   key: 'treeView',
+  //   // },
+  // ];
   return (
     <>
       {' '}

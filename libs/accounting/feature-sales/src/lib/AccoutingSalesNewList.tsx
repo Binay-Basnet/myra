@@ -1,11 +1,15 @@
-import {useMemo} from 'react';
-import {useRouter} from 'next/router';
+import { useMemo } from 'react';
 
-import {Column, Table} from '@myra-ui/table';
+import { Column, Table } from '@myra-ui/table';
 
-import {AccountingPageHeader} from '@coop/accounting/ui-components';
-import {DateType, RootState, useAppSelector, useGetSalesSaleEntryListDataQuery,} from '@coop/cbs/data-access';
-import {amountConverter, getPaginationQuery, useTranslation} from '@coop/shared/utils';
+import { AccountingPageHeader } from '@coop/accounting/ui-components';
+import {
+  DateType,
+  RootState,
+  useAppSelector,
+  useGetSalesSaleEntryListDataQuery,
+} from '@coop/cbs/data-access';
+import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingSalesListProps {}
@@ -13,7 +17,7 @@ export interface AccountingSalesListProps {}
 export const AccountingSalesList = () => {
   const { t } = useTranslation();
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const preferenceDate = useAppSelector((state: RootState) => state?.auth?.preference?.date);
 

@@ -37,6 +37,12 @@ export const ACCOUNTING: NavType = {
           addRoute: ROUTES.ACCOUNTING_SALES_ENTRY_ADD,
         },
         {
+          label: 'creditNote',
+          route: ROUTES.ACCOUNTING_SALES_CREDIT_NOTE,
+          aclKey: 'ACCOUNTING_SYSTEM_SALES_CREDIT_NOTE',
+          addRoute: ROUTES.ACCOUNTING_SALES_CREDIT_NOTE_ADD,
+        },
+        {
           label: 'customerPayment',
           route: ROUTES.ACCOUNTING_SALES_CUSTOMER_PAYMENT,
           aclKey: 'ACCOUNTING_SYSTEM_SALES_CUSTOMER_PAYMENT',

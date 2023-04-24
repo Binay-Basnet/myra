@@ -8,6 +8,7 @@ import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import {
   SalesCreditNoteInput,
+  SalesSaleEntryEntry,
   useGetNewIdMutation,
   useGetSalesCreditNoteFormStateDataQuery,
   useSetSalesCreditNoteDataMutation,
@@ -24,9 +25,14 @@ export const CreditNoteForm = () => {
   const { t } = useTranslation();
   const [newId, setNewId] = useState('');
 
+  const [selectedSales, setSelectedSales] = useState<
+    Partial<SalesSaleEntryEntry> | null | undefined
+  >();
+
   const router = useRouter();
 
   const getNewId = useGetNewIdMutation({});
+
   useEffect(() => {
     getNewId?.mutateAsync({}).then((res) => setNewId(res?.newId));
   }, []);
@@ -37,7 +43,7 @@ export const CreditNoteForm = () => {
 
   const methods = useForm<SalesCreditNoteInput>();
 
-  const { getValues, reset } = methods;
+  const { getValues, reset, setValue } = methods;
 
   const { data: formStateQueryData } = useGetSalesCreditNoteFormStateDataQuery(
     { id: String(id) },
@@ -68,10 +74,10 @@ export const CreditNoteForm = () => {
 
     const filteredValues = {
       ...values,
-      products: values.products.map((product) => ({
+      products: values?.products?.map((product) => ({
         ...product,
-        quantity: String(product.quantity),
-        rate: String(product.rate),
+        quantity: String(product?.quantity),
+        rate: String(product?.rate),
       })),
     };
 
@@ -89,6 +95,14 @@ export const CreditNoteForm = () => {
     });
   };
 
+  const getSelectedValue = (val: Partial<SalesSaleEntryEntry> | null | undefined) => {
+    setSelectedSales(val);
+  };
+
+  useEffect(() => {
+    setValue('products', selectedSales?.itemDetails ?? []);
+  }, [selectedSales]);
+
   return (
     <>
       <Container minW="container.xl" height="fit-content" pb="60px">
@@ -103,7 +117,7 @@ export const CreditNoteForm = () => {
           <FormProvider {...methods}>
             <form>
               <Box minH="calc(100vh - 170px)">
-                <CreditNoteDetails />
+                <CreditNoteDetails getSelectedValue={getSelectedValue} />
 
                 <ProductTable />
 

@@ -1,91 +1,122 @@
-import { FormEditableTable } from '@coop/shared/form';
+import { useMemo } from 'react';
+
 import { FormSection, GridItem } from '@myra-ui';
+import { Column } from '@myra-ui/editable-table';
+
+import { useGetInventoryItemsListQuery, useGetWarehouseListQuery } from '@coop/cbs/data-access';
+import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 type SalesTable = {
-  name: string;
+  itemId: string;
   quantity: number;
   rate: number;
   tax: number;
   amount: number;
-  productDescription?: string;
-  warehousePartition?: number;
+  description?: string;
+  warehouse?: number;
   salesLedger?: string;
 };
-
-// const SearchOptions = [
-//   { label: 'MI 001 - Lenovo Laptop', value: 'mi001' },
-//   { label: 'MI 002 - Lenovo Laptop', value: 'mi002' },
-//   { label: 'MI 003 - Lenovo Laptop', value: 'mi003' },
-//   { label: 'MI 004 - Lenovo Laptop', value: 'mi004' },
-//   { label: 'MI 005 - Lenovo Laptop', value: 'mi005' },
-//   { label: 'MI 006 - Lenovo Laptop', value: 'mi006' },
-//   { label: 'MI 007 - Lenovo Laptop', value: 'mi007' },
-//   { label: 'MI 008 - Lenovo Laptop', value: 'mi008' },
-//   { label: 'MI 009 - Lenovo Laptop', value: 'mi009' },
-//   { label: 'MI 0010 - Lenovo Laptop', value: 'mi0010' },
-// ];
 
 export const ProductTable = () => {
   const { t } = useTranslation();
 
+  const { data: inventoryItems } = useGetInventoryItemsListQuery({
+    pagination: {
+      after: '',
+      first: -1,
+    },
+  });
+  const inventoryItemsData = inventoryItems?.inventory?.items?.list?.edges;
+
+  const accountSearchOptions = useMemo(
+    () =>
+      inventoryItemsData?.map((account) => ({
+        label: account?.node?.name as string,
+        value: account?.node?.id as string,
+      })),
+    [inventoryItemsData]
+  );
+
+  const { data: wareHouse } = useGetWarehouseListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+  const warehouseData = wareHouse?.inventory?.warehouse?.listWarehouses?.edges;
+  const wareHouseSearchOptions = useMemo(
+    () =>
+      warehouseData?.map((account) => ({
+        label: account?.node?.name as string,
+        value: account?.node?.id as string,
+      })),
+    [warehouseData]
+  );
+
+  const tableColumns: Column<SalesTable>[] = [
+    {
+      accessor: 'itemId',
+      header: t['accountingPurchaseTableProduct'],
+      cellWidth: 'auto',
+      fieldType: 'select',
+      selectOptions: accountSearchOptions,
+    },
+    {
+      accessor: 'quantity',
+      header: t['accountingPurchaseTableQuantity'],
+      // isNumeric: true,
+    },
+    {
+      accessor: 'rate',
+      header: t['accountingPurchaseTableRate'],
+      accessorFn: (row: any) =>
+        inventoryItemsData?.find((item) => row?.itemId?.value ?? row?.itemId === item?.node?.id)
+          ? (inventoryItemsData?.find(
+              (item) => row?.itemId?.value ?? row?.itemId === item?.node?.id
+            )?.node?.sellingPrice as string)
+          : '',
+    },
+    {
+      accessor: 'tax',
+      header: 'Tax(%)',
+
+      accessorFn: (row: any) =>
+        inventoryItemsData?.find((item) => row?.itemId?.value ?? row?.itemId === item?.node?.id)
+          ? String(
+              inventoryItemsData?.find(
+                (item) => row?.itemId?.value ?? row?.itemId === item?.node?.id
+              )?.node?.taxValue as number
+            )
+          : '',
+    },
+    {
+      accessor: 'amount',
+      header: t['accountingPurchaseTableAmount'],
+
+      accessorFn: (row: SalesTable) =>
+        row?.amount ?? String(Number(row.quantity || 0) * Number(row.rate || 0)),
+    },
+    {
+      accessor: 'description',
+      header: t['accountingPurchaseTableProductDescription'],
+      hidden: true,
+
+      fieldType: 'textarea',
+    },
+    {
+      accessor: 'warehouse',
+      header: 'Warehouse',
+      // hidden: true,
+      fieldType: 'select',
+      selectOptions: wareHouseSearchOptions,
+    },
+  ];
+
   return (
     <FormSection>
       <GridItem colSpan={3}>
-        <FormEditableTable<SalesTable>
-          name="products"
-          columns={[
-            {
-              accessor: 'name',
-              header: t['CreditNoteProduct'],
-              // cellWidth: 'auto',
-              // fieldType: 'search',
-              // searchOptions: SearchOptions,
-            },
-
-            {
-              accessor: 'quantity',
-              header: t['CreditNoteQuantity'],
-              isNumeric: true,
-            },
-            {
-              accessor: 'rate',
-              header: t['CreditNoteRate'],
-              isNumeric: true,
-            },
-            {
-              accessor: 'tax',
-              header: t['CreditNoteTax'],
-              isNumeric: true,
-              fieldType: 'percentage',
-            },
-            {
-              accessor: 'amount',
-              header: t['CreditNoteTotalAmount'],
-              isNumeric: true,
-
-              accessorFn: (row) => String(row.quantity * row.rate),
-            },
-            {
-              accessor: 'productDescription',
-              header: t['CreditNoteProductDes'],
-              hidden: true,
-
-              fieldType: 'textarea',
-            },
-
-            {
-              accessor: 'warehousePartition',
-              hidden: true,
-              header: t['CreditNoteWareHouse'],
-            },
-            {
-              accessor: 'salesLedger',
-              hidden: true,
-              header: t['CreditNoteSalesReturn'],
-            },
-          ]}
-        />
+        <FormEditableTable<SalesTable> name="products" columns={tableColumns} />
       </GridItem>
     </FormSection>
   );

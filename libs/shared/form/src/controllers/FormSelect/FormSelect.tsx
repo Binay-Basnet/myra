@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Control, Controller, FieldValues, useFormContext } from 'react-hook-form';
 import { ControllerRenderProps, UseControllerProps } from 'react-hook-form/dist/types/controller';
+import { MultiValue, SingleValue } from 'chakra-react-select';
 import { get } from 'lodash';
 
 import { Select, SelectProps } from '@myra-ui';
@@ -10,12 +11,13 @@ interface IFormSelectProps<T extends Record<string, unknown>> extends SelectProp
   name?: string;
   showAll?: boolean;
   rules?: UseControllerProps['rules'];
-  onChangeAction?: () => void;
+  onChangeAction?: (newValue: MultiValue<SelectOption> | SingleValue<SelectOption>) => void;
 }
 
-interface Option {
-  label: string;
-  value: string;
+interface SelectOption {
+  label: string | number;
+  value: string | number;
+  disabled?: boolean;
 }
 
 export const FormSelect = <T extends Record<string, unknown>>(props: IFormSelectProps<T>) => {
@@ -40,7 +42,7 @@ export const FormSelect = <T extends Record<string, unknown>>(props: IFormSelect
 interface FormControlProps<T extends Record<string, unknown>> extends IFormSelectProps<T> {
   errors: any;
   field: ControllerRenderProps<FieldValues, string>;
-  onChangeAction?: () => void;
+  onChangeAction?: (newValue: MultiValue<SelectOption> | SingleValue<SelectOption>) => void;
 }
 
 const FormControl = <T extends Record<string, unknown>>({
@@ -64,7 +66,8 @@ const FormControl = <T extends Record<string, unknown>>({
   const filteredValue = rest.isMulti
     ? options?.filter(
         (option) =>
-          value?.some((v: Option) => v?.value === option.value) || value?.includes(option?.value)
+          value?.some((v: SelectOption) => v?.value === option.value) ||
+          value?.includes(option?.value)
       )
     : [];
 
@@ -88,14 +91,14 @@ const FormControl = <T extends Record<string, unknown>>({
         }
         if (Array.isArray(newValue)) {
           onChange(newValue);
-          onChangeAction && onChangeAction();
+          onChangeAction && onChangeAction(newValue);
         } else {
           // const { value: newVal } = newValue as Option;
 
-          const newVal = (newValue as Option)?.value;
+          const newVal = (newValue as SelectOption)?.value;
 
           onChange(newVal);
-          onChangeAction && onChangeAction();
+          onChangeAction && onChangeAction(newValue);
         }
       }}
     />

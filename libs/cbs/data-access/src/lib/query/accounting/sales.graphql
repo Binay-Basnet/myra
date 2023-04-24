@@ -72,6 +72,16 @@ query getSalesSaleEntryListData($pagination: Pagination, $filter: SalesSaleEntry
             customerName
             totalAmount
             date
+            invoiceNo
+            itemDetails {
+              itemId
+              quantity
+              rate
+              tax
+              amount
+              description
+              warehouse
+            }
           }
           cursor
         }

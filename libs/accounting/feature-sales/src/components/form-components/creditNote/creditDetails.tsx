@@ -1,9 +1,14 @@
 import { FormSection, GridItem } from '@myra-ui';
 
-import { FormCustomerSelect, FormDatePicker, FormInput } from '@coop/shared/form';
+import { SalesSaleEntryEntry } from '@coop/cbs/data-access';
+import { FormCustomerSelect, FormDatePicker, FormSalesInvoiceReference } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
-export const CreditNoteDetails = () => {
+export const CreditNoteDetails = ({
+  getSelectedValue,
+}: {
+  getSelectedValue: (sales: Partial<SalesSaleEntryEntry> | null | undefined) => void;
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -12,9 +17,13 @@ export const CreditNoteDetails = () => {
         <FormCustomerSelect name="customerID" label={t['accountingCreditNoteAddCustomerName']} />
       </GridItem>
 
-      <FormDatePicker name="date" label={t['accountingCreditNoteAddDate']} />
+      <FormDatePicker name="invoiceDate" label={t['accountingCreditNoteAddDate']} />
 
-      <FormInput name="invoiceReference" label={t['accountingCreditNoteAddInvoiceReference']} />
+      <FormSalesInvoiceReference
+        name="invoiceReference"
+        label={t['accountingCreditNoteAddInvoiceReference']}
+        getSelectedValue={getSelectedValue}
+      />
     </FormSection>
   );
 };

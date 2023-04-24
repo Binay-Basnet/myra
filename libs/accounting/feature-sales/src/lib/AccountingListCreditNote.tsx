@@ -5,19 +5,14 @@ import { TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import {
-  DateType,
-  useAppSelector,
-  useGetSalesCreditNoteListDataQuery,
-} from '@coop/cbs/data-access';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { useGetSalesCreditNoteListDataQuery } from '@coop/cbs/data-access';
+import { localizedDate } from '@coop/cbs/utils';
+import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingListCreditNoteProps {}
 
 export const AccountingListCreditNote = () => {
-  const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
-
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -40,15 +35,14 @@ export const AccountingListCreditNote = () => {
       },
       {
         header: t['accountingCreditNoteListTotalAmount'],
-        accessorFn: (row) => row?.node?.amount,
+        accessorFn: (row) => amountConverter(row?.node?.amount ?? 0),
         meta: {
           width: '30%',
         },
       },
       {
         header: 'Date',
-        accessorFn: (row) =>
-          preferenceDate === DateType.Bs ? row?.node?.date?.np : row?.node?.date?.en ?? 'N/A',
+        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
         id: '_actions',
