@@ -16,7 +16,9 @@
         "development": {
           "outputPath": "apps/csv-viewer"
         },
-        "production": {}
+        "production": {
+          "outputPath": "apps/csv-viewer/dist"
+        }
       }
     },
     "serve": {
