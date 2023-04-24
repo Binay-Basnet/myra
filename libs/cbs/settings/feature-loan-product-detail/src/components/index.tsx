@@ -1,6 +1,7 @@
 export * from './AccountInterestDetailModal';
 export * from './AccountInterestUpdateModal';
 export * from './AlertEnable';
+export * from './LoanPenaltyUpdateModal';
 export * from './Overview';
 export * from './ProductCriteria';
 export * from './ProductDescription';

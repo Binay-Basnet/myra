@@ -402,6 +402,7 @@ query getLoanProductPenaltyUpdateList($productId: ID!) {
             payload {
               penaltyRate
               penaltyAmount
+              dayAfterInstallmentDate
             }
             additionalData {
               id
@@ -422,6 +423,7 @@ query getLoanProductPenaltyChargeDetail($id: ID!) {
         getPenaltyCharge(id: $id) {
           data {
             payload {
+              penaltyType
               penaltyRate
               penaltyAmount
               dayAfterInstallmentDate
