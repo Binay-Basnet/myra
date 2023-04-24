@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useGetAllAccountsQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
+import { amountConverter, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AllHoldingAccountsListProps {}
@@ -39,6 +39,7 @@ export const AllHoldingAccountsList = () => {
       {
         header: 'Ledger Balance',
         accessorFn: (row) => row?.node?.ledgerBalance,
+        cell: (props) => amountConverter(props?.row?.original?.node?.ledgerBalance as string),
       },
     ],
     [isFetching]
