@@ -11,7 +11,7 @@ import {
   useAppSelector,
   useGetSalesCustomerPaymentListDataQuery,
 } from '@coop/cbs/data-access';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 const PayementMode = {
   [CustomerPayment.BankTransfer]: 'Bank Transfer',
@@ -48,6 +48,10 @@ export const AccountingCustomerPayment = () => {
       {
         header: t['accountingCustomerPaymentListTotalAmount'],
         accessorFn: (row) => row?.node?.totalAmount,
+        cell: (props) => amountConverter(props.getValue() as string),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: t['accountingCustomerPaymentListDate'],

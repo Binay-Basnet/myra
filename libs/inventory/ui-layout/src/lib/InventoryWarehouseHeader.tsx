@@ -21,7 +21,8 @@ export const InventoryWarehouseHeader = ({
     <Box
       bg="white"
       zIndex="10"
-      w="calc(100vw - 300px)"
+      w="calc(100vw - 260px)"
+      py="s4"
       top="110px"
       position="fixed"
       borderBottom="1px solid"

@@ -32,7 +32,6 @@ const InventoryWarehousePage = () => {
       {' '}
       <InventoryWarehouseHeader
         heading="warehouseLayoutWarehouse"
-        tabItems={tabList}
         onClickHandler={() => setIsAddMinorAccountModalOpen(true)}
       />
       <Box mt="3.125rem">

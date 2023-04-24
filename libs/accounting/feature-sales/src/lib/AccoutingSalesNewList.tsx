@@ -1,17 +1,11 @@
-import { useMemo } from 'react';
-import { useRouter } from 'next/router';
+import {useMemo} from 'react';
+import {useRouter} from 'next/router';
 
-import { TablePopover } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import {Column, Table} from '@myra-ui/table';
 
-import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import {
-  DateType,
-  RootState,
-  useAppSelector,
-  useGetSalesSaleEntryListDataQuery,
-} from '@coop/cbs/data-access';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import {AccountingPageHeader} from '@coop/accounting/ui-components';
+import {DateType, RootState, useAppSelector, useGetSalesSaleEntryListDataQuery,} from '@coop/cbs/data-access';
+import {amountConverter, getPaginationQuery, useTranslation} from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingSalesListProps {}
@@ -45,7 +39,10 @@ export const AccountingSalesList = () => {
       {
         header: t['accountingSalesListTotalAmount'],
         accessorFn: (row) => row?.node?.totalAmount,
+        cell: (props) => amountConverter(props.getValue() as string),
+
         meta: {
+          isNumeric: true,
           width: '30%',
         },
       },
@@ -54,28 +51,28 @@ export const AccountingSalesList = () => {
         accessorFn: (row) =>
           preferenceDate === DateType.Bs ? row?.node?.date?.np : row?.node?.date?.en ?? 'N/A',
       },
-      {
-        id: '_actions',
-        header: '',
-        accessorKey: 'actions',
-        cell: (props) =>
-          props?.row?.original?.node && (
-            <TablePopover
-              node={props?.row?.original?.node}
-              items={[
-                {
-                  title: 'Edit',
-                  onClick: (row) => {
-                    router.push(`/accounting/sales/edit/${row['id']}`);
-                  },
-                },
-              ]}
-            />
-          ),
-        meta: {
-          width: '60px',
-        },
-      },
+      // {
+      //   id: '_actions',
+      //   header: '',
+      //   accessorKey: 'actions',
+      //   cell: (props) =>
+      //     props?.row?.original?.node && (
+      //       <TablePopover
+      //         node={props?.row?.original?.node}
+      //         items={[
+      //           {
+      //             title: 'Edit',
+      //             onClick: (row) => {
+      //               router.push(`/accounting/sales/sales-entry/edit?id=${row['id']}`);
+      //             },
+      //           },
+      //         ]}
+      //       />
+      //     ),
+      //   meta: {
+      //     width: '60px',
+      //   },
+      // },
     ],
     [t]
   );

@@ -17,23 +17,12 @@ const InventoryProduct = () => {
   const handleMinorAccountClose = () => {
     setIsAddMinorAccountModalOpen(false);
   };
-  const tabList = [
-    {
-      title: 'warehouseListView',
-      key: 'listView',
-    },
-    // {
-    //   title: 'warehouseTreeView',
-    //   key: 'treeView',
-    // },
-  ];
 
   return (
     <>
       {' '}
       <InventoryWarehouseHeader
         heading="warehouseLayoutWarehouse"
-        tabItems={tabList}
         onClickHandler={() => setIsAddMinorAccountModalOpen(true)}
       />
       <Box mt="3.125rem">

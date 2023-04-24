@@ -343,6 +343,7 @@ query getAccountTableListMinimal($paginate: Pagination, $filter: Filter) {
           createdAt
           accountName
           balance
+
           accountOpenedDate
           accountExpiryDate
           closedAt

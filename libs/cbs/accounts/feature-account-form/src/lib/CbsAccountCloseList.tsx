@@ -49,6 +49,10 @@ export const CBSAccountCloseList = () => {
         meta: { width: '50%' },
       },
       {
+        header: 'Account Id',
+        accessorFn: (row) => row?.node?.id,
+      },
+      {
         id: 'productName',
         header: 'Product Name',
         accessorFn: (row) => row?.node?.product?.productName,

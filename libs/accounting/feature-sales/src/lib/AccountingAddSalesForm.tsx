@@ -87,7 +87,7 @@ export const NewSalesForm = () => {
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={t['accountingSalesFormNewSalesEntry']}
-            closeLink="/accounting/sales/list"
+            closeLink="/accounting/sales/sales-entry/list"
           />
         </Box>
 
