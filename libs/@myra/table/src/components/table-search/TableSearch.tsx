@@ -72,7 +72,7 @@ export type TableSearchProps = {
     } | null;
     total: number | string;
   };
-  size: 'default' | 'compact' | 'report' | 'small';
+  size: 'default' | 'compact' | 'report' | 'small' | 'dataGrid';
   setSize: (size: 'default' | 'compact') => void;
 };
 

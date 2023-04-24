@@ -48,8 +48,8 @@ export type Pagination = {
 };
 
 export type Maybe<T> = T | null;
-export type TableSize = 'default' | 'compact' | 'small' | 'report';
-export type TableVariant = 'simple' | 'report';
+export type TableSize = 'default' | 'compact' | 'small' | 'report' | 'dataGrid';
+export type TableVariant = 'simple' | 'report' | 'dataGrid';
 
 export interface TableProps<TData> {
   data: TData[];

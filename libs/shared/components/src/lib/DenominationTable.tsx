@@ -24,17 +24,17 @@ const denominationsOptions = [
 ];
 
 export const CashOptions: Record<string, string> = {
-  '1000': CashValue.Cash_1000,
-  '500': CashValue.Cash_500,
-  '100': CashValue.Cash_100,
-  '50': CashValue.Cash_50,
-  '25': CashValue.Cash_25,
-  '20': CashValue.Cash_20,
-  '10': CashValue.Cash_10,
-  '5': CashValue.Cash_5,
-  '2': CashValue.Cash_2,
-  '1': CashValue.Cash_1,
-  PAISA: CashValue.Paisa,
+  '1000': CashValue?.Cash_1000,
+  '500': CashValue?.Cash_500,
+  '100': CashValue?.Cash_100,
+  '50': CashValue?.Cash_50,
+  '25': CashValue?.Cash_25,
+  '20': CashValue?.Cash_20,
+  '10': CashValue?.Cash_10,
+  '5': CashValue?.Cash_5,
+  '2': CashValue?.Cash_2,
+  '1': CashValue?.Cash_1,
+  PAISA: CashValue?.Paisa,
 };
 
 type PurchaseProps = {
