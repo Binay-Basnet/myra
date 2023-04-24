@@ -21969,6 +21969,9 @@ export type GetAllAccountsQuery = {
           productName?: string | null;
           accountType?: AccountTypes | null;
           accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
+          ledgerId?: string | null;
+          serviceCenter?: string | null;
+          ledgerBalance?: string | null;
           member?: { name?: Record<'local' | 'en' | 'np', string> | null } | null;
         } | null;
       }> | null;
@@ -40339,6 +40342,9 @@ export const GetAllAccountsDocument = `
           productName
           accountType
           accountOpenDate
+          ledgerId
+          serviceCenter
+          ledgerBalance
         }
         cursor
       }
