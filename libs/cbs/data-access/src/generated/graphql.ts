@@ -10363,6 +10363,7 @@ export type LoanAccountPreview = {
   collateralAndGuarantees?: Maybe<Array<Maybe<LoanCollateralAndGuarantees>>>;
   criteria?: Maybe<LoanProductCriteria>;
   generalInformation?: Maybe<LoanPreviewGeneralInformation>;
+  idealSchedule?: Maybe<LoanInstallments>;
   loanDetails?: Maybe<LoanPreviewLoanDetails>;
   member?: Maybe<Member>;
   memberId?: Maybe<Scalars['String']>;

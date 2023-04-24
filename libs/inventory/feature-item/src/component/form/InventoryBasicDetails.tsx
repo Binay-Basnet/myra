@@ -21,7 +21,7 @@ export const BasicDetailsInventory = () => {
   const { data: taxData } = useGetAllAccountingTaxesQuery();
 
   const taxDataOptions = taxData?.settings?.general?.accounting?.taxRates?.map((data) => ({
-    label: `${data?.name} - ${data?.rate}`,
+    label: `${data?.name} - ${data?.rate} %`,
     value: data?.id as string,
   }));
 

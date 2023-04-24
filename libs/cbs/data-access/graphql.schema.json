@@ -87965,6 +87965,18 @@
             "deprecationReason": null
           },
           {
+            "name": "idealSchedule",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "LoanInstallments",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "loanDetails",
             "description": null,
             "args": [],
