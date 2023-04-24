@@ -13,11 +13,11 @@ import {
   useGetLoanProductPenaltyUpdateListQuery,
   useUpdateLoanProductPenaltyMutation,
 } from '@coop/cbs/data-access';
-import { PenaltyDetailModal, UpdatePenaltyModal } from '@coop/cbs/settings/ui-components';
+import { PenaltyDetailModal } from '@coop/cbs/settings/ui-components';
 import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
-import { SideBar } from '../components';
+import { LoanPenaltyUpdateModal, SideBar } from '../components';
 
 export const LoanPenaltyUpdatePage = () => {
   const router = useRouter();
@@ -85,6 +85,13 @@ export const LoanPenaltyUpdatePage = () => {
       {
         header: 'Penalty Amount',
         accessorFn: (row) => amountConverter(row?.payload?.penaltyAmount),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Days after installment date',
+        accessorFn: (row) => row?.payload?.dayAfterInstallmentDate,
         meta: {
           isNumeric: true,
         },
@@ -221,7 +228,7 @@ export const LoanPenaltyUpdatePage = () => {
       </Scrollable>
 
       {!isPenaltyChargeFetching && (
-        <UpdatePenaltyModal
+        <LoanPenaltyUpdateModal
           isOpen={isUpdateModalOpen}
           onClose={handleUpdateModalClose}
           onSave={handleSavePenaltyCharge}

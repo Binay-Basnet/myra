@@ -30332,7 +30332,11 @@ export type GetLoanProductPenaltyUpdateListQuery = {
       loanProducts?: {
         listPenaltyCharge: {
           data?: Array<{
-            payload?: { penaltyRate?: number | null; penaltyAmount?: any | null } | null;
+            payload?: {
+              penaltyRate?: number | null;
+              penaltyAmount?: any | null;
+              dayAfterInstallmentDate?: number | null;
+            } | null;
             additionalData?: {
               id?: string | null;
               createdAt?: Record<'local' | 'en' | 'np', string> | null;
@@ -30356,6 +30360,7 @@ export type GetLoanProductPenaltyChargeDetailQuery = {
         getPenaltyCharge: {
           data?: {
             payload?: {
+              penaltyType?: PenaltyType | null;
               penaltyRate?: number | null;
               penaltyAmount?: any | null;
               dayAfterInstallmentDate?: number | null;
@@ -51235,6 +51240,7 @@ export const GetLoanProductPenaltyUpdateListDocument = `
             payload {
               penaltyRate
               penaltyAmount
+              dayAfterInstallmentDate
             }
             additionalData {
               id
@@ -51270,6 +51276,7 @@ export const GetLoanProductPenaltyChargeDetailDocument = `
         getPenaltyCharge(id: $id) {
           data {
             payload {
+              penaltyType
               penaltyRate
               penaltyAmount
               dayAfterInstallmentDate
