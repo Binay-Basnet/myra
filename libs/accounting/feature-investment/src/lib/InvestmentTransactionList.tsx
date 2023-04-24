@@ -10,7 +10,7 @@ import {
   useAppSelector,
   useGetInvestmentTransactionsListDataQuery,
 } from '@coop/cbs/data-access';
-import { getPaginationQuery } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 const investmentAccountType = {
   [InvestmentType.Share]: 'Share',
@@ -67,7 +67,9 @@ export const InvestmentTransactionList = () => {
       {
         header: 'Transaction Amount',
         accessorFn: (row) => row?.node?.amount,
+        cell: (props) => amountConverter(props.getValue() as string),
         meta: {
+          isNumeric: true,
           width: '120px',
         },
       },
