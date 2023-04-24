@@ -346,7 +346,7 @@ export const LoanRepayment = () => {
           </FormProvider>
         </Box>
         {memberId && (
-          <Box position="sticky" top="170px" right="0" w="320px">
+          <Box position="sticky" zIndex={10} top="170px" right="0" w="320px">
             <Box display="flex" flexDirection="column" gap="s16">
               <MemberCard
                 memberDetails={{

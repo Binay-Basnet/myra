@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Portal } from '@chakra-ui/react';
 
 import { Popover, PopoverBody, PopoverContent, PopoverTrigger } from '@myra-ui/components';
 import { Box } from '@myra-ui/foundations';
@@ -29,9 +30,11 @@ interface IHoverCardContentProps {
 }
 
 const HoverCardContent = ({ children }: IHoverCardContentProps) => (
-  <PopoverContent bg="white" boxShadow="E2" borderRadius="br2" w="350px">
-    <PopoverBody p={0}>{children}</PopoverBody>
-  </PopoverContent>
+  <Portal>
+    <PopoverContent bg="white" boxShadow="E2" borderRadius="br2" w="350px">
+      <PopoverBody p={0}>{children}</PopoverBody>
+    </PopoverContent>
+  </Portal>
 );
 
 interface IHoverCardHeaderProps {

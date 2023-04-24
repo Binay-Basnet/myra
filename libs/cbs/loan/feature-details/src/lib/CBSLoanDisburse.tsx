@@ -76,7 +76,7 @@ export const CBSLoanDisburse = () => {
       <LoanListLayout>
         <LoanDetailsHeader title="Loan Application List" />
         <CBSLoanDetails />
-        <Box position="fixed" bottom="0" w="calc(100% - 260px)">
+        <Box position="fixed" bottom="0" zIndex={10} w="calc(100% - 260px)">
           <FormFooter
             mainButtonLabel="Disburse Loan"
             mainButtonHandler={continueToPayment}
@@ -115,7 +115,7 @@ export const CBSLoanDisburseSuccess = () => {
         <LoanDetails />
         <LoanPaymentSchedule />
       </Box>
-      <Box position="sticky" bottom="0">
+      <Box position="sticky" bottom="0" zIndex={10}>
         <FormFooter
           mainButtonLabel="Done"
           mainButtonHandler={() => router.push(ROUTES.CBS_LOAN_ACCOUNTS_LIST)}
