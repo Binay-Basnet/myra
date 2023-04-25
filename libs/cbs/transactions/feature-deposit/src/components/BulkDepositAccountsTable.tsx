@@ -303,8 +303,8 @@ export const BulkDepositAccountsTable = ({
           accessor: 'accountId',
           header: 'Accounts',
           cellWidth: 'auto',
-          fieldType: 'search',
-          searchOptions: accountListSearchOptions,
+          fieldType: 'select',
+          selectOptions: accountListSearchOptions,
           cell: (row) => {
             const accountInfo = accountListData?.account?.list?.edges?.find(
               (account) => account?.node?.id === row.accountId
