@@ -11,6 +11,7 @@ import {
   useSetAgentTodayListDataMutation,
 } from '@coop/cbs/data-access';
 import { AssignedMembersCard } from '@coop/cbs/transactions/ui-components';
+import { localizedText } from '@coop/cbs/utils';
 import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -218,27 +219,30 @@ export const AgentDetailOverview = () => {
                     accessor: 'member',
                     header: t['agentOverviewMember'],
                     cellWidth: 'auto',
-                    fieldType: 'search',
-                    searchOptions: memberListSearchOptions,
-                    cell: (row) => (
-                      <Box display="flex" flexDirection="column" py="s4">
-                        <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
-                          {(row?.member as unknown as { label: string; value: string })?.label}
-                        </Text>
-                        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
-                          {(row?.member as unknown as { label: string; value: string })?.value}
-                        </Text>
-                      </Box>
-                    ),
+                    fieldType: 'select',
+                    selectOptions: memberListSearchOptions,
+                    cell: (row) => {
+                      const memberName =
+                        assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
+                          (member) => member?.node?.member?.id === row?.member
+                        )?.node?.member?.name;
+
+                      return (
+                        <Box display="flex" flexDirection="column" py="s4">
+                          <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
+                            {localizedText(memberName)}
+                          </Text>
+                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
+                            {row?.member}
+                          </Text>
+                        </Box>
+                      );
+                    },
                   },
                   {
                     accessor: 'account',
                     header: t['agentOverviewAccount'],
-                    // isNumeric: true,
-                    loadOptions: (row) =>
-                      getMemberAccounts(
-                        (row?.member as unknown as { label: string; value: string })?.value
-                      ),
+                    loadOptions: (row) => getMemberAccounts(row?.member),
                     fieldType: 'select',
                     cellWidth: 'auto',
                   },
@@ -246,27 +250,9 @@ export const AgentDetailOverview = () => {
                     accessor: 'amount',
                     header: t['agentOverviewAmount'],
                     isNumeric: true,
-                    // cell: (row) => {
-                    //   const account =
-                    //     assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
-                    //       (member) => member?.node?.account?.id === row?.account
-                    //     );
-
-                    //   return (
-                    //     <Text textAlign="right">{account?.node?.account?.dues?.totalDue}</Text>
-                    //   );
-                    // },
-
-                    // accessorFn: (row) =>
-                    //   row.quantity
-                    //     ? Number(row.value) * Number(row.quantity)
-                    //     : '0',
                   },
                 ]}
-                // defaultData={accountListDefaultData}
-                searchPlaceholder={t['agentOverviewSearchPlaceholder']}
                 canDeleteRow
-                // canAddRow={false}
               />
             </FormProvider>
           </Box>

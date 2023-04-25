@@ -288,15 +288,19 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
           const newObject = keys.reduce((acc, key) => {
             const value = rest[key];
 
+            // acc = {
+            //   ...acc,
+            //   [key]:
+            //     value &&
+            //     (typeof value === 'number' || typeof value === 'string'
+            //       ? value
+            //       : 'value' in value
+            //       ? value.value
+            //       : value),
+            // };
             acc = {
               ...acc,
-              [key]:
-                value &&
-                (typeof value === 'number' || typeof value === 'string'
-                  ? value
-                  : 'value' in value
-                  ? value.value
-                  : value),
+              [key]: value && typeof value === 'object' && 'value' in value ? value.value : value,
             };
 
             return acc;
@@ -715,7 +719,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
     if (column?.loadOptions) {
       getAsyncOptions();
     }
-  }, []);
+  }, [column?.loadOptions]);
 
   const dataValue = data[column.accessor];
 

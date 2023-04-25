@@ -10,8 +10,9 @@ import {
   useSetAgentTodayDepositDataMutation,
 } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/cbs/transactions/ui-containers';
+import { localizedText } from '@coop/cbs/utils';
 import { FormAgentSelect, FormEditableTable } from '@coop/shared/form';
-import { featureCode, getPaginationQuery } from '@coop/shared/utils';
+import { featureCode } from '@coop/shared/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface AddAgentTransactionProps {}
@@ -90,34 +91,42 @@ export const AddAgentTransaction = () => {
     [agentTodayListQueryData]
   );
 
-  const { data: memberListQueryData } = useGetAgentAssignedMemberListDataQuery(
-    {
-      pagination: getPaginationQuery(),
-      filter: {
-        orConditions: [
-          {
-            andConditions: [
-              {
-                column: 'agentId',
-                comparator: 'EqualTo',
-                value: agentId,
-              },
-            ],
-          },
-        ],
-      },
-    },
-    { enabled: !!agentId }
-  );
+  // const { data: memberListQueryData } = useGetAgentAssignedMemberListDataQuery(
+  //   {
+  //     pagination: getPaginationQuery(),
+  //     filter: {
+  //       orConditions: [
+  //         {
+  //           andConditions: [
+  //             {
+  //               column: 'agentId',
+  //               comparator: 'EqualTo',
+  //               value: agentId,
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //     },
+  //   },
+  //   { enabled: !!agentId }
+  // );
 
-  const memberListSearchOptions = useMemo(
-    () =>
-      memberListQueryData?.transaction?.assignedMemberList?.edges?.map((member) => ({
-        label: member?.node?.member?.name?.local as string,
-        value: member?.node?.member?.id as string,
-      })) ?? [],
-    [memberListQueryData]
-  );
+  const memberListSearchOptions = useMemo(() => {
+    const tempMembers: { label: string; value: string }[] = [];
+    const tempIds: string[] = [];
+
+    assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.forEach((member) => {
+      if (!tempIds.includes(member?.node?.member?.id as string)) {
+        tempIds.push(member?.node?.member?.id as string);
+        tempMembers.push({
+          label: member?.node?.member?.name?.local as string,
+          value: member?.node?.member?.id as string,
+        });
+      }
+    });
+
+    return tempMembers;
+  }, [assignedMemberListQueryData]);
 
   const { mutateAsync: setAgentTodayList } = useSetAgentTodayDepositDataMutation();
 
@@ -169,7 +178,12 @@ export const AddAgentTransaction = () => {
                   <Box display="flex" flexDirection="column" gap="s16">
                     <Text>Market Representative Transaction</Text>
 
-                    <FormAgentSelect isRequired name="agentId" label="Market Representative" />
+                    <FormAgentSelect
+                      isRequired
+                      name="agentId"
+                      label="Market Representative"
+                      currentBranchOnly
+                    />
                   </Box>
 
                   {agentId && (
@@ -185,40 +199,38 @@ export const AddAgentTransaction = () => {
                             accessor: 'member',
                             header: 'Member',
                             cellWidth: 'auto',
-                            fieldType: 'search',
-                            searchOptions: memberListSearchOptions,
-                            cell: (row) => (
-                              <Box display="flex" flexDirection="column" py="s4">
-                                <Text
-                                  fontSize="r1"
-                                  fontWeight={500}
-                                  color="neutralColorLight.Gray-80"
-                                >
-                                  {
-                                    (row?.member as unknown as { label: string; value: string })
-                                      ?.label
-                                  }
-                                </Text>
-                                <Text
-                                  fontSize="s3"
-                                  fontWeight={500}
-                                  color="neutralColorLight.Gray-60"
-                                >
-                                  {
-                                    (row?.member as unknown as { label: string; value: string })
-                                      ?.value
-                                  }
-                                </Text>
-                              </Box>
-                            ),
+                            fieldType: 'select',
+                            selectOptions: memberListSearchOptions,
+                            cell: (row) => {
+                              const memberName =
+                                assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
+                                  (member) => member?.node?.member?.id === row?.member
+                                )?.node?.member?.name;
+
+                              return (
+                                <Box display="flex" flexDirection="column" py="s4">
+                                  <Text
+                                    fontSize="r1"
+                                    fontWeight={500}
+                                    color="neutralColorLight.Gray-80"
+                                  >
+                                    {localizedText(memberName)}
+                                  </Text>
+                                  <Text
+                                    fontSize="s3"
+                                    fontWeight={500}
+                                    color="neutralColorLight.Gray-60"
+                                  >
+                                    {row?.member}
+                                  </Text>
+                                </Box>
+                              );
+                            },
                           },
                           {
                             accessor: 'account',
                             header: 'Account',
-                            loadOptions: (row) =>
-                              getMemberAccounts(
-                                (row?.member as unknown as { label: string; value: string })?.value
-                              ),
+                            loadOptions: (row) => getMemberAccounts(row?.member),
                             fieldType: 'select',
                             cellWidth: 'lg',
                           },
