@@ -659,6 +659,9 @@ query getAllAccounts($paginate: Pagination, $filter: Filter, $isHoldings: Boolea
           productName
           accountType
           accountOpenDate
+          ledgerId
+          serviceCenter
+          ledgerBalance
         }
         cursor
       }

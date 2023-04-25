@@ -17685,6 +17685,27 @@ export type AddNewExpenseMutation = {
   };
 };
 
+export type AddNewDebitNoteMutationVariables = Exact<{
+  data: PurchaseDebitNoteInput;
+}>;
+
+export type AddNewDebitNoteMutation = {
+  accounting: {
+    purchase: {
+      debitNote?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
 export type SetSalesCustomerDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: SalesCustomerInput;
@@ -21969,6 +21990,9 @@ export type GetAllAccountsQuery = {
           productName?: string | null;
           accountType?: AccountTypes | null;
           accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
+          ledgerId?: string | null;
+          serviceCenter?: string | null;
+          ledgerBalance?: string | null;
           member?: { name?: Record<'local' | 'en' | 'np', string> | null } | null;
         } | null;
       }> | null;
@@ -22494,6 +22518,7 @@ export type GetAccountingPurchaseEntryListQuery = {
             supplierId: string;
             supplierName: string;
             totalAmount: string;
+            referenceId: string;
           } | null;
         } | null> | null;
         pageInfo?: PaginationFragment | null;
@@ -22516,15 +22541,47 @@ export type GetAccountingPurchaseSalesListQuery = {
           cursor?: string | null;
           node?: {
             id: string;
+            reference: string;
             date: Record<'local' | 'en' | 'np', string>;
             entryNo: string;
-            reference: string;
             supplierId: string;
             supplierName: string;
             totalAmount: string;
           } | null;
         } | null> | null;
         pageInfo?: PaginationFragment | null;
+      } | null;
+    };
+  };
+};
+
+export type GetAccountingDebitNoteListQueryVariables = Exact<{
+  filter?: InputMaybe<AccountingPurchaseFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetAccountingDebitNoteListQuery = {
+  accounting: {
+    purchase: {
+      listDebitNote?: {
+        totalCount: number;
+        pageInfo?: {
+          endCursor?: string | null;
+          startCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            totalAmount: string;
+            supplierName: string;
+            supplierId: string;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            noteNo: string;
+            referenceNo: string;
+          } | null;
+        } | null> | null;
       } | null;
     };
   };
@@ -33751,6 +33808,33 @@ export const useAddNewExpenseMutation = <TError = unknown, TContext = unknown>(
     useAxios<AddNewExpenseMutation, AddNewExpenseMutationVariables>(AddNewExpenseDocument),
     options
   );
+export const AddNewDebitNoteDocument = `
+    mutation addNewDebitNote($data: PurchaseDebitNoteInput!) {
+  accounting {
+    purchase {
+      debitNote(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddNewDebitNoteMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddNewDebitNoteMutation,
+    TError,
+    AddNewDebitNoteMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddNewDebitNoteMutation, TError, AddNewDebitNoteMutationVariables, TContext>(
+    ['addNewDebitNote'],
+    useAxios<AddNewDebitNoteMutation, AddNewDebitNoteMutationVariables>(AddNewDebitNoteDocument),
+    options
+  );
 export const SetSalesCustomerDataDocument = `
     mutation setSalesCustomerData($id: ID!, $data: SalesCustomerInput!) {
   accounting {
@@ -40344,6 +40428,9 @@ export const GetAllAccountsDocument = `
           productName
           accountType
           accountOpenDate
+          ledgerId
+          serviceCenter
+          ledgerBalance
         }
         cursor
       }
@@ -41079,6 +41166,7 @@ export const GetAccountingPurchaseEntryListDocument = `
             supplierId
             supplierName
             totalAmount
+            referenceId
           }
           cursor
         }
@@ -41116,6 +41204,7 @@ export const GetAccountingPurchaseSalesListDocument = `
           cursor
           node {
             id
+            reference
             date
             entryNo
             reference
@@ -41145,6 +41234,50 @@ export const useGetAccountingPurchaseSalesListQuery = <
       : ['getAccountingPurchaseSalesList', variables],
     useAxios<GetAccountingPurchaseSalesListQuery, GetAccountingPurchaseSalesListQueryVariables>(
       GetAccountingPurchaseSalesListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountingDebitNoteListDocument = `
+    query getAccountingDebitNoteList($filter: AccountingPurchaseFilter, $pagination: Pagination) {
+  accounting {
+    purchase {
+      listDebitNote(filter: $filter, pagination: $pagination) {
+        totalCount
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
+          hasPreviousPage
+        }
+        edges {
+          node {
+            totalAmount
+            supplierName
+            supplierId
+            date
+            noteNo
+            referenceNo
+          }
+          cursor
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountingDebitNoteListQuery = <
+  TData = GetAccountingDebitNoteListQuery,
+  TError = unknown
+>(
+  variables?: GetAccountingDebitNoteListQueryVariables,
+  options?: UseQueryOptions<GetAccountingDebitNoteListQuery, TError, TData>
+) =>
+  useQuery<GetAccountingDebitNoteListQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountingDebitNoteList']
+      : ['getAccountingDebitNoteList', variables],
+    useAxios<GetAccountingDebitNoteListQuery, GetAccountingDebitNoteListQueryVariables>(
+      GetAccountingDebitNoteListDocument
     ).bind(null, variables),
     options
   );

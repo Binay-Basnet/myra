@@ -80,6 +80,12 @@ export const ACCOUNTING: NavType = {
           addRoute: ROUTES.ACCOUNTING_PURCHASE_SUPPLIER_PAYMENT_ADD,
           aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_SUPPLIER_PAYMENT',
         },
+        {
+          label: 'accountingPurchaseSidebarDebitNote',
+          route: ROUTES.ACCOUNTING_PURCHASE_DEBIT_NOTE,
+          addRoute: ROUTES.ACCOUNTING_PURCHASE_DEBIT_NOTE_ADD,
+          aclKey: 'ACCOUNTING_SYSTEM_PURCHASE_DEBIT_NOTE',
+        },
       ],
       forms: [
         {

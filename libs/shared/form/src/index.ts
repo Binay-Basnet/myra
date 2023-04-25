@@ -31,6 +31,7 @@ export * from './controllers/FormPhoneNumber/FormPhoneNumber';
 export * from './controllers/FormSalesInvoiceReference/FormSalesInvoiceReference';
 export * from './controllers/FormSelect/FormSelect';
 export * from './controllers/FormSelectPopout/FormSelectPopout';
+export * from './controllers/FormSupplierSelect/FormSupplierSelect';
 export * from './controllers/FormSwitchTab/FormSwitchTab';
 export * from './controllers/FormTellerSelect/FormTellerSelect';
 export * from './lib/controllers-temp';

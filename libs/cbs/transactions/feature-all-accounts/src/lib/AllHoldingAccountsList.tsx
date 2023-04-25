@@ -1,22 +1,23 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetAllAccountsFilterMappingQuery, useGetAllAccountsQuery } from '@coop/cbs/data-access';
-import { getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
+import { useGetAllAccountsQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
+import { amountConverter, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AllHoldingAccountsListProps {}
 
 export const AllHoldingAccountsList = () => {
+  const router = useRouter();
   const { data, isFetching } = useGetAllAccountsQuery({
     paginate: getPaginationQuery(),
     filter: getFilterQuery(),
     isHoldings: true,
   });
-
-  const { data: accountsFilterMapping, isLoading } = useGetAllAccountsFilterMappingQuery();
 
   const rowData = useMemo(() => data?.allAccounts?.list?.edges ?? [], [data]);
 
@@ -32,18 +33,16 @@ export const AllHoldingAccountsList = () => {
         cell: (props) => <Tooltip title={props?.row?.original?.node?.accountName as string} />,
       },
       {
-        id: 'accountType',
-        header: 'Account Type',
-        accessorFn: (row) => row?.node?.accountType,
-        enableColumnFilter: true,
-        meta: {
-          filterMaps: {
-            list: accountsFilterMapping?.allAccounts?.filterMapping?.accountType,
-          },
-        },
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.serviceCenter,
+      },
+      {
+        header: 'Ledger Balance',
+        accessorFn: (row) => row?.node?.ledgerBalance,
+        cell: (props) => amountConverter(props?.row?.original?.node?.ledgerBalance as string),
       },
     ],
-    [isLoading]
+    [isFetching]
   );
 
   return (
@@ -57,6 +56,9 @@ export const AllHoldingAccountsList = () => {
         pageInfo: data?.allAccounts?.list?.pageInfo,
       }}
       searchPlaceholder="Search all accounts"
+      rowOnClick={(row) =>
+        router.push(`${ROUTES?.CBS_TRANS_ALL_HOLDING_ACCOUNTS_DETAILS}?id=${row?.node?.ledgerId}`)
+      }
     />
   );
 };

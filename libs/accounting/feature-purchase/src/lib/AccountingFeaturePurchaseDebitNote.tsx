@@ -1,13 +1,11 @@
 import { useMemo } from 'react';
 
-import { Avatar, Box, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { useGetMemberListQuery } from '@coop/cbs/data-access';
+import { useGetAccountingDebitNoteListQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
-import { PopoverComponent } from '@coop/myra/components';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseDebitNoteProps {}
@@ -15,72 +13,38 @@ export interface AccountingFeaturePurchaseDebitNoteProps {}
 export const AccountingFeaturePurchaseDebitNote = () => {
   const { t } = useTranslation();
 
-  const { data, isFetching } = useGetMemberListQuery({
+  const { data, isFetching } = useGetAccountingDebitNoteListQuery({
     pagination: getPaginationQuery(),
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
-
-  const popoverTitle = [
-    {
-      title: 'memberListTableViewMemberProfile',
-    },
-    {
-      title: 'memberListTableEditMember',
-    },
-    {
-      title: 'memberListTableMakeInactive',
-    },
-  ];
+  const rowData = useMemo(() => data?.accounting?.purchase?.listDebitNote?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['accountingDebitNoteListBillNo'],
-        accessorFn: (row) => row?.node?.id,
+        header: 'Date',
+        accessorFn: (row) => row?.node?.date,
+        cell: (props) => localizedDate(props.cell?.row?.original?.node?.date),
       },
       {
-        accessorFn: (row) => row?.node?.name?.local,
-        header: t['accountingDebitNoteListSupplierName'],
-        cell: (props) => (
-          <Box display="flex" alignItems="center" gap="s12">
-            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
-            <Text
-              fontSize="s3"
-              textTransform="capitalize"
-              textOverflow="ellipsis"
-              overflow="hidden"
-            >
-              {props.getValue() as string}
-            </Text>
-          </Box>
-        ),
-
+        header: 'Note No',
+        accessorFn: (row) => row?.node?.noteNo,
+      },
+      {
+        header: 'Supplier',
+        accessorFn: (row) => row?.node?.supplierName,
+      },
+      {
+        header: 'Amount',
+        accessorFn: (row) => row?.node?.totalAmount,
+        cell: (props) => amountConverter(props.getValue() as string),
         meta: {
-          width: '60%',
+          isNumeric: true,
         },
       },
       {
-        header: t['accountingDebitNoteListAmount'],
-        accessorFn: (row) => row?.node?.contact,
-        meta: {
-          width: '30%',
-        },
-      },
-      {
-        header: t['accountingDebitNoteListDate'],
-        accessorFn: (row) => localizedDate(row?.node?.dateJoined),
-      },
-      {
-        id: '_actions',
-        header: '',
-        accessorKey: 'actions',
-        cell: (cell) => (
-          <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
-        ),
-        meta: {
-          width: '60px',
-        },
+        header: 'Reference',
+        accessorFn: (row) => row?.node?.referenceNo,
       },
     ],
     [t]
@@ -92,12 +56,11 @@ export const AccountingFeaturePurchaseDebitNote = () => {
 
       <Table
         data={rowData}
-        getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          total: data?.accounting?.purchase.listDebitNote?.totalCount ?? 'Many',
+          pageInfo: data?.accounting?.purchase?.listDebitNote?.pageInfo,
         }}
       />
     </>

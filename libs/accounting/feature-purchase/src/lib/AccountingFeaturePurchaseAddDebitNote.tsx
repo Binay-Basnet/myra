@@ -1,171 +1,132 @@
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
-import router from 'next/router';
+import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
+import pickBy from 'lodash/pickBy';
 
-import { Box, Button, Container, FormFooter, GridItem, Icon, IconButton, Text } from '@myra-ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import {
-  BoxContainer,
-  DividerContainer,
-  InputGroupContainer,
-} from '@coop/accounting/ui-components';
-import { FieldCardComponents } from '@coop/shared/components';
-import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
+  PurchaseDebitNoteInput,
+  SalesSaleEntryEntry,
+  useAddNewDebitNoteMutation,
+  useGetNewIdMutation,
+  useGetSalesCreditNoteFormStateDataQuery,
+} from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
-import { DebitNoteTable } from '../components';
-
-/* eslint-disable-next-line */
-export interface AccountingFeaturePurchaseAddDebitNoteProps {}
+import { DebitBox } from '../components/debit-note/DebitBox';
+import { DebitNoteDetails } from '../components/debit-note/DebitNoteDetails';
+import { DebitProductTable } from '../components/debit-note/DebitProductTable';
 
 export const AccountingFeaturePurchaseAddDebitNote = () => {
   const { t } = useTranslation();
+  const [newId, setNewId] = useState('');
 
-  const methods = useForm({
-    defaultValues: {
-      data: [
-        {
-          product_id: 'm003',
-          quantity: 45,
-          rate: 45,
-          tax: 45,
-          amount: 23,
-        },
-        {
-          product_id: 'm004',
-          quantity: 2,
-          rate: 4,
-          tax: 4,
-          amount: 34212,
-        },
-      ],
-    },
-  });
+  const [selectedSales, setSelectedSales] = useState<
+    Partial<SalesSaleEntryEntry> | null | undefined
+  >();
+
+  const router = useRouter();
+
+  const getNewId = useGetNewIdMutation({});
+
+  useEffect(() => {
+    getNewId?.mutateAsync({}).then((res) => setNewId(res?.newId));
+  }, []);
+
+  const id = router?.query?.['id'] || newId;
+
+  const queryClient = useQueryClient();
+
+  const methods = useForm<PurchaseDebitNoteInput>();
+
+  const { getValues, reset, setValue } = methods;
+
+  const { data: formStateQueryData } = useGetSalesCreditNoteFormStateDataQuery(
+    { id: String(id) },
+    { enabled: Boolean(id && router?.asPath?.includes('edit')), staleTime: 0 }
+  );
+
+  const formState = formStateQueryData?.accounting?.sales?.creditNoteFormState?.data;
+
+  useEffect(() => {
+    if (router?.asPath?.includes('edit')) {
+      if (formState) {
+        reset({
+          ...pickBy(
+            {
+              ...formState,
+            } ?? {},
+            (v) => v !== null
+          ),
+        });
+      }
+    }
+  }, [formState]);
+
+  const { mutateAsync: setCreditNoteData } = useAddNewDebitNoteMutation();
+
+  const handleSubmit = () => {
+    const values = getValues();
+
+    const filteredValues = {
+      ...values,
+      itemDetails: values?.itemDetails?.map((product) => ({
+        ...product,
+        quantity: String(product?.quantity),
+        rate: String(product?.rate),
+      })),
+    };
+
+    asyncToast({
+      id: 'save-sales-credit-note',
+      promise: setCreditNoteData({ data: filteredValues }),
+      msgs: {
+        loading: 'Saving credit note',
+        success: 'Credit note saved',
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getSalesCreditNoteListData']);
+        router.push('/accounting/sales/credit-note/list');
+      },
+    });
+  };
+
+  const getSelectedValue = (val: Partial<SalesSaleEntryEntry> | null | undefined) => {
+    setSelectedSales(val);
+  };
+
+  useEffect(() => {
+    setValue('itemDetails', selectedSales?.itemDetails ?? []);
+  }, [selectedSales]);
 
   return (
-    <>
-      <Container minW="container.lg" height="fit-content" pb="60px">
-        <Box
-          height="3.125rem"
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          px="5"
-          background="neutralColorLight.Gray-0"
-          borderBottom="1px solid"
-          borderColor="border.layout"
-          borderTopRadius={5}
-          position="sticky"
-          top="0"
-          zIndex={8}
-        >
-          <Text fontSize="r2" fontWeight="600" color="neutralColorLight.Gray-80">
-            {t['accountingDebitNoteAddNewDebitNote']}
-          </Text>
-          <IconButton
-            variant="ghost"
-            aria-label="close"
-            icon={<GrClose />}
-            onClick={() => router.back()}
-          />
-        </Box>
+    <Container minW="container.xl" height="fit-content">
+      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
+        <FormHeader
+          title={t['accountingCreditNoteAddNewCreditNote']}
+          closeLink="/accounting/sales/debit-note/list"
+        />
+      </Box>
 
+      <Box bg="white">
         <FormProvider {...methods}>
           <form>
-            <Box bg="white" p="s20" minH="calc(100vh - 220px)">
-              <DividerContainer>
-                <BoxContainer>
-                  <InputGroupContainer>
-                    <FormSelect
-                      name="supplierName"
-                      label={t['accountingDebitNoteAddSupplierName']}
-                      __placeholder={t['accountingDebitNoteAddSupplierName']}
-                      options={[]}
-                    />
+            <Box minH="calc(100vh - 170px)">
+              <DebitNoteDetails getSelectedValue={getSelectedValue} />
 
-                    <FormInput
-                      name="billReference"
-                      type="text"
-                      label={t['accountingDebitNoteAddBillReference']}
-                      __placeholder={t['accountingDebitNoteAddBillReferenceEnter']}
-                    />
+              <DebitProductTable />
 
-                    <FormInput name="date" type="date" label={t['accountingDebitNoteAddDate']} />
-                  </InputGroupContainer>
-                </BoxContainer>
-
-                <DebitNoteTable />
-
-                <Box display="grid" gap="s32" gridTemplateColumns="repeat(2,1fr)">
-                  <FormTextArea
-                    name="note"
-                    label={t['accountingDebitNoteAddNotes']}
-                    __placeholder={t['accountingDebitNoteAddNote']}
-                    rows={5}
-                  />
-                  <FieldCardComponents rows="repeat(5,1fr)">
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
-                        {t['accountingDebitNoteAddSubTotal']}
-                      </Text>
-
-                      <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
-                        2,000.00
-                      </Text>
-                    </GridItem>
-
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
-                        {t['accountingDebitNoteAddTaxableTotal']}
-                      </Text>
-                      <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
-                        5,000.00
-                      </Text>
-                    </GridItem>
-
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
-                        {t['accountingDebitNoteAddVAT']}
-                      </Text>
-
-                      <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
-                        2000
-                      </Text>
-                    </GridItem>
-
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text color="neutralColorLight.Gray-80" fontWeight="500" fontSize="s3">
-                        {t['accountingDebitNoteAddGrandTotal']}
-                      </Text>
-
-                      <Text color="neutralColorLight.Gray-70" fontWeight="Medium" fontSize="r1">
-                        12,000
-                      </Text>
-                    </GridItem>
-                  </FieldCardComponents>
-                </Box>
-              </DividerContainer>
+              <DebitBox />
             </Box>
           </form>
         </FormProvider>
-      </Container>
-      <Box bottom="0" position="fixed" width="100%" bg="gray.100">
-        <Container minW="container.lg" height="fit-content">
-          <FormFooter
-            draftButton={
-              <Button type="submit" variant="ghost">
-                <Icon as={BiSave} />
-                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
-                  {t['saveDraft']}
-                </Text>
-              </Button>
-            }
-            mainButtonLabel={t['submit']}
-            mainButtonHandler={() => alert('Submitted')}
-          />
-        </Container>
       </Box>
-    </>
+
+      <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">
+        <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
+      </Box>
+    </Container>
   );
 };
