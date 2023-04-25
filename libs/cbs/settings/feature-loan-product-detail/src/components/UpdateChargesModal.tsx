@@ -26,6 +26,7 @@ type ServiceType = {
   serviceName: string;
   amount: string;
   ledgerName: string;
+  percentage: number;
 };
 
 export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesModalProps) => {
@@ -130,6 +131,12 @@ export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesM
                   cellWidth: 'auto',
                   fieldType: 'modal',
                   modal: COASelectModal,
+                },
+                {
+                  accessor: 'percentage',
+                  header: 'Rate (%)',
+                  isNumeric: true,
+                  cellWidth: 'auto',
                 },
                 {
                   accessor: 'amount',

@@ -61,6 +61,14 @@ export const UpdateChargesDetailModal = ({
               </Box>
               <Box display="flex" flexDirection="column" gap="s4">
                 <Text variant="formLabel" color="gray.700">
+                  Rate
+                </Text>
+                <Text fontSize="r1" fontWeight={600} color="gray.800">
+                  {item?.percentage ? `${item?.percentage} %` : 'N/A'}
+                </Text>
+              </Box>
+              <Box display="flex" flexDirection="column" gap="s4">
+                <Text variant="formLabel" color="gray.700">
                   Amount
                 </Text>
                 <Text fontSize="r1" fontWeight={600} color="gray.800">
