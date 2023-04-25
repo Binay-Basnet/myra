@@ -25,6 +25,7 @@ export enum Report {
   MEMBER_ACTIVATIONS = 'Active/Inactive Member',
   MEMBER_CLASSIFICATION_REPORT = 'Member Classification Reports',
   KYM_STATUS_REPORT = 'Kym Status Report',
+  MINOR_LIST_REPORT = 'Minor List Report',
   MEMBER_WISE_BALANCE_REPORT = 'Member Wise Balance Report',
 
   SHARE_REGISTER = 'Share Register',
@@ -190,6 +191,10 @@ export const REPORTS = {
     {
       report: Report.DOSARI_MEMBER_REPORT,
       link: 'dosari-member',
+    },
+    {
+      report: Report.MINOR_LIST_REPORT,
+      link: 'minor-list',
     },
   ],
 

@@ -3789,6 +3789,12 @@ export type DashboardQuery = {
   myDayInfo?: Maybe<TransactionMyDayData>;
 };
 
+export type DataMigration = {
+  dumpAccountInterest?: Maybe<Scalars['String']>;
+  dumpProductCharges?: Maybe<Scalars['String']>;
+  updateSavingEndDate?: Maybe<Scalars['String']>;
+};
+
 export type DateFilter = {
   from?: InputMaybe<Scalars['String']>;
   to?: InputMaybe<Scalars['String']>;
@@ -12544,6 +12550,7 @@ export type MemberQuery = {
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
+  listMinor?: Maybe<MinorListConnection>;
   memberOverview?: Maybe<MemberOverviewResult>;
   memberOverviewV2?: Maybe<MemberOverviewV2Result>;
   memberPDF: Scalars['String'];
@@ -12579,6 +12586,11 @@ export type MemberQueryInstitutionArgs = {
 
 export type MemberQueryListArgs = {
   filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type MemberQueryListMinorArgs = {
+  filter?: InputMaybe<MinorFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -12654,6 +12666,7 @@ export type MemberReport = {
   memberBalanceReport?: Maybe<MemberBalanceReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   memberRegistrationReport?: Maybe<MemberRegistrationReportResult>;
+  minorReport?: Maybe<MinorReportResult>;
 };
 
 export type MemberReportActiveInactiveMemberReportArgs = {
@@ -12686,6 +12699,10 @@ export type MemberReportMemberClassificationReportArgs = {
 
 export type MemberReportMemberRegistrationReportArgs = {
   data?: InputMaybe<MemberRegistrationReportData>;
+};
+
+export type MemberReportMinorReportArgs = {
+  data?: InputMaybe<MinorFilter>;
 };
 
 export type MemberReportFilters = {
@@ -12827,6 +12844,45 @@ export type MinMaxFilter = {
   min?: InputMaybe<Scalars['String']>;
 };
 
+export type MinorFilter = {
+  branchId?: InputMaybe<Array<Scalars['String']>>;
+  id?: InputMaybe<Scalars['String']>;
+  minorType?: InputMaybe<MinorTypeFilter>;
+};
+
+export type MinorInformation = {
+  dateOfBirth?: Maybe<Scalars['Localized']>;
+  id: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  minorName: Scalars['String'];
+  relationshipId?: Maybe<Scalars['String']>;
+  relationshipName?: Maybe<Scalars['String']>;
+  serviceCentreId: Scalars['String'];
+  serviceCentreName: Scalars['String'];
+};
+
+export type MinorListConnection = {
+  edges?: Maybe<Array<Maybe<MinorListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type MinorListEdges = {
+  cursor: Scalars['Cursor'];
+  node: MinorInformation;
+};
+
+export type MinorReportResult = {
+  data?: Maybe<Array<Maybe<MinorInformation>>>;
+};
+
+export const MinorTypeFilter = {
+  AllMinors: 'ALL_MINORS',
+  WithSavingAccount: 'WITH_SAVING_ACCOUNT',
+} as const;
+
+export type MinorTypeFilter = typeof MinorTypeFilter[keyof typeof MinorTypeFilter];
 export const MinorWiseFilter = {
   All: 'ALL',
   MinorProduct: 'MINOR_PRODUCT',
@@ -14166,6 +14222,7 @@ export const Resource = {
   SettingsLoanParameters: 'SETTINGS_LOAN_PARAMETERS',
   SettingsLoanProducts: 'SETTINGS_LOAN_PRODUCTS',
   SettingsMember: 'SETTINGS_MEMBER',
+  SettingsMigration: 'SETTINGS_MIGRATION',
   SettingsOrganizationProfile: 'SETTINGS_ORGANIZATION_PROFILE',
   SettingsPrintPreference: 'SETTINGS_PRINT_PREFERENCE',
   SettingsReportSetting: 'SETTINGS_REPORT_SETTING',
@@ -15185,11 +15242,10 @@ export type SettingsQueryGetPrintCountArgs = {
 };
 
 export type SetupMutation = {
-  dumpAccountInterestForMigration?: Maybe<Scalars['String']>;
   eodAction?: Maybe<Scalars['Boolean']>;
   eodException?: Maybe<Scalars['Boolean']>;
   eodSeed?: Maybe<Scalars['String']>;
-  updateSavingEndDate?: Maybe<Scalars['String']>;
+  migration?: Maybe<DataMigration>;
 };
 
 export type SetupMutationEodActionArgs = {
@@ -28318,6 +28374,30 @@ export type GetIndividualMemberReportQuery = {
             } | null> | null;
           } | null> | null;
         } | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMinorListReportQueryVariables = Exact<{
+  data?: InputMaybe<MinorFilter>;
+}>;
+
+export type GetMinorListReportQuery = {
+  report: {
+    memberReport: {
+      minorReport?: {
+        data?: Array<{
+          id: string;
+          memberName: Record<'local' | 'en' | 'np', string>;
+          dateOfBirth?: Record<'local' | 'en' | 'np', string> | null;
+          memberId: string;
+          relationshipName?: string | null;
+          serviceCentreId: string;
+          serviceCentreName: string;
+          minorName: string;
+          relationshipId?: string | null;
+        } | null> | null;
       } | null;
     };
   };
@@ -48647,6 +48727,38 @@ export const useGetIndividualMemberReportQuery = <
     ['getIndividualMemberReport', variables],
     useAxios<GetIndividualMemberReportQuery, GetIndividualMemberReportQueryVariables>(
       GetIndividualMemberReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMinorListReportDocument = `
+    query getMinorListReport($data: MinorFilter) {
+  report {
+    memberReport {
+      minorReport(data: $data) {
+        data {
+          id
+          memberName
+          dateOfBirth
+          memberId
+          relationshipName
+          serviceCentreId
+          serviceCentreName
+          minorName
+          relationshipId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMinorListReportQuery = <TData = GetMinorListReportQuery, TError = unknown>(
+  variables?: GetMinorListReportQueryVariables,
+  options?: UseQueryOptions<GetMinorListReportQuery, TError, TData>
+) =>
+  useQuery<GetMinorListReportQuery, TError, TData>(
+    variables === undefined ? ['getMinorListReport'] : ['getMinorListReport', variables],
+    useAxios<GetMinorListReportQuery, GetMinorListReportQueryVariables>(
+      GetMinorListReportDocument
     ).bind(null, variables),
     options
   );

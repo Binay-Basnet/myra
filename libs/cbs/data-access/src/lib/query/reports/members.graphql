@@ -288,4 +288,22 @@ query getIndividualMemberReport($memberId: ID!) {
 }
 
 
-
+query getMinorListReport($data: MinorFilter) {
+  report {
+    memberReport {
+      minorReport(data: $data ) {
+        data {
+          id
+          memberName
+          dateOfBirth
+          memberId
+          relationshipName
+          serviceCentreId
+          serviceCentreName
+          minorName
+          relationshipId
+        }
+      }
+    }
+  }
+}
