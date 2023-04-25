@@ -33,24 +33,6 @@ const paymentModes = [
     value: LoanRepaymentMethod.BankVoucher,
   },
 ];
-const paymentModesWithLoc = [
-  {
-    label: 'Cash',
-    value: LoanRepaymentMethod.Cash,
-  },
-  {
-    label: 'Account',
-    value: LoanRepaymentMethod.Account,
-  },
-  {
-    label: 'Bank Cheque',
-    value: LoanRepaymentMethod.BankVoucher,
-  },
-  {
-    label: 'LOC Saving',
-    value: LoanRepaymentMethod.LocSaving,
-  },
-];
 
 const denominationsOptions = [
   { label: '1000x', value: '1000' },
@@ -70,7 +52,6 @@ const denominationsOptions = [
 export interface PaymentProps {
   amountPaid: string;
   loanTotal: string | undefined;
-  hasLoc?: boolean;
   loanAccountId: string;
   totalPayableAmount: number;
   setTotalPayableAmount: Dispatch<SetStateAction<number>>;
@@ -85,7 +66,6 @@ type PaymentTableType = {
 export const Payment = ({
   amountPaid,
   loanTotal,
-  hasLoc,
   loanAccountId,
   totalPayableAmount,
   setTotalPayableAmount,
@@ -125,8 +105,9 @@ export const Payment = ({
       <BoxContainer>
         <FormSwitchTab
           label="Payment Mode"
-          options={!hasLoc ? paymentModes : paymentModesWithLoc}
+          options={paymentModes}
           name="paymentMethod"
+          id="payment-mode"
         />
 
         {selectedPaymentMode === LoanRepaymentMethod?.Account && (
@@ -138,6 +119,7 @@ export const Payment = ({
                 label="Destination Account"
                 memberId={memberId}
                 filterBy={ObjState.Active}
+                includeLoc
               />
             </GridItem>
             <FormInput name="account.amount" value={loanTotal} isDisabled label="Amount" />

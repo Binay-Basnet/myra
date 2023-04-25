@@ -1,20 +1,16 @@
 import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { useQueryClient } from '@tanstack/react-query';
 
 import { Box, PageHeader } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetGeneralMemberSettingsDataQuery, useGetMinorListQuery } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { forms, Page } from './MemberLayout';
 
 export const MemberMinorListPage = () => {
   const { t } = useTranslation();
-
-  const queryClient = useQueryClient();
 
   const router = useRouter();
   const searchTerm = router?.query['search'] as string;
@@ -92,10 +88,6 @@ export const MemberMinorListPage = () => {
         data={rowData}
         columns={columns}
         getRowId={(row) => String(row?.node?.id)}
-        rowOnClick={(row) => {
-          queryClient.invalidateQueries(['getMemberDetailsOverview']);
-          router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${row?.node?.id}`);
-        }}
         isLoading={isFetching}
         noDataTitle={t['member']}
         pagination={{

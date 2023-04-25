@@ -28407,6 +28407,30 @@ export type GetIndividualMemberReportQuery = {
   };
 };
 
+export type GetMinorListReportQueryVariables = Exact<{
+  data?: InputMaybe<MinorFilter>;
+}>;
+
+export type GetMinorListReportQuery = {
+  report: {
+    memberReport: {
+      minorReport?: {
+        data?: Array<{
+          id: string;
+          memberName: Record<'local' | 'en' | 'np', string>;
+          dateOfBirth?: Record<'local' | 'en' | 'np', string> | null;
+          memberId: string;
+          relationshipName?: string | null;
+          serviceCentreId: string;
+          serviceCentreName: string;
+          minorName: string;
+          relationshipId?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
 export type GetMBankingRegistrationReportQueryVariables = Exact<{
   data?: InputMaybe<EbankingReportFilter>;
 }>;
@@ -48769,6 +48793,38 @@ export const useGetIndividualMemberReportQuery = <
     ['getIndividualMemberReport', variables],
     useAxios<GetIndividualMemberReportQuery, GetIndividualMemberReportQueryVariables>(
       GetIndividualMemberReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMinorListReportDocument = `
+    query getMinorListReport($data: MinorFilter) {
+  report {
+    memberReport {
+      minorReport(data: $data) {
+        data {
+          id
+          memberName
+          dateOfBirth
+          memberId
+          relationshipName
+          serviceCentreId
+          serviceCentreName
+          minorName
+          relationshipId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMinorListReportQuery = <TData = GetMinorListReportQuery, TError = unknown>(
+  variables?: GetMinorListReportQueryVariables,
+  options?: UseQueryOptions<GetMinorListReportQuery, TError, TData>
+) =>
+  useQuery<GetMinorListReportQuery, TError, TData>(
+    variables === undefined ? ['getMinorListReport'] : ['getMinorListReport', variables],
+    useAxios<GetMinorListReportQuery, GetMinorListReportQueryVariables>(
+      GetMinorListReportDocument
     ).bind(null, variables),
     options
   );

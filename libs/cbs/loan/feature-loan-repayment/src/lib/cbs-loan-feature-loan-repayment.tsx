@@ -213,8 +213,6 @@ export const LoanRepayment = () => {
   );
 
   const loanData = loanPreview?.data?.loanAccount?.loanPreview?.data;
-  const hasLoC =
-    loanPreview?.data?.loanAccount?.loanPreview?.data?.loanDetails?.loanRepaymentScheme === 'LOC';
   const loanTry = loanData?.paymentSchedule?.installments;
   const nextInstallmentNumber = loanData?.repaymentDetails?.nextInstallmentNo as number;
   const loanPaymentSchedule =
@@ -262,6 +260,14 @@ export const LoanRepayment = () => {
   const isSuspicious = watch('isSuspicious');
 
   const suspicionRemarks = watch('suspicionRemarks');
+
+  useEffect(() => {
+    if (mode === '1') {
+      document
+        .getElementById('payment-mode')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    }
+  }, [mode]);
 
   return (
     <Container minW="container.xl" p="0" bg="white">
@@ -336,7 +342,6 @@ export const LoanRepayment = () => {
                 <Payment
                   amountPaid={String(amountPaid)}
                   loanTotal={String(totalPayableAmount)}
-                  hasLoc={hasLoC}
                   loanAccountId={loanAccountId}
                   totalPayableAmount={totalPayableAmount}
                   setTotalPayableAmount={setTotalPayableAmount}

@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 import NepaliDate from 'nepali-date-converter';
 
-import { Alert, asyncToast, Box, Modal } from '@myra-ui';
+import { asyncToast, Box, Modal } from '@myra-ui';
 
 import {
   DateType,
@@ -106,17 +106,6 @@ export const UpdateChargesModal = ({ isOpen, onClose, methods }: IUpdateChargesM
       <FormProvider {...methods}>
         <form>
           <Box display="flex" flexDir="column" gap={5}>
-            {chargesEditData && (
-              <Alert title="Immediate Previous Details" status="info">
-                {chargesEditData?.payload?.map((item) => (
-                  <ul>
-                    <li>
-                      {item?.serviceName}: {item?.amount}
-                    </li>
-                  </ul>
-                ))}
-              </Alert>
-            )}
             <FormEditableTable<ServiceType>
               name="payload"
               columns={[
