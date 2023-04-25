@@ -14,6 +14,7 @@ export const ROUTES = {
   CBS_MEMBER_ACTIVATION: '/cbs/members/activation',
   CBS_MEMBER_INACTIVATION: '/cbs/members/inactivation',
   CBS_MEMBER_TRANSLATION: '/cbs/members/translation',
+  CBS_MEMBER_MINOR_LIST: '/cbs/members/minor/list',
 
   CBS_SHARE_ISSUE_ADD: '/cbs/share/issue/add',
   CBS_SHARE_RETURN_ADD: '/cbs/share/return/add',
