@@ -3,13 +3,14 @@ import React, { useMemo } from 'react';
 import { Box, Chips } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { LoanInstallment } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
+import { IdealLoanInstallment } from '../types';
+
 interface IPartialLoanPaymentScheduleProps {
-  data: LoanInstallment[];
-  nextInstallmentNumber?: number | null;
+  data: IdealLoanInstallment[];
+  // nextInstallmentNumber?: number | null;
   total: string;
   totalInterest: string | number;
   totalPrincipal: string | number;
@@ -30,12 +31,12 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
       totalPrincipal,
       // remainingInterest,
       // currentRemainingPrincipal,
-      nextInstallmentNumber,
+      // nextInstallmentNumber,
       isLoading,
     },
     ref
   ) => {
-    const columns = useMemo<Column<LoanInstallment>[]>(
+    const columns = useMemo<Column<IdealLoanInstallment>[]>(
       () => [
         {
           header: 'Ins. No.',
@@ -62,12 +63,7 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
         {
           header: 'Principal',
           accessorKey: 'principal',
-          cell: (props) =>
-            amountConverter(
-              props?.row?.original?.isPartial
-                ? props?.row?.original?.fullPrincipal ?? 0
-                : props?.row?.original?.principal ?? 0
-            ),
+          cell: (props) => amountConverter(props?.row?.original?.idealPrincipal),
           footer: () => amountConverter(totalPrincipal),
           meta: {
             isNumeric: true,
@@ -76,13 +72,7 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
         {
           header: 'Interest',
           accessorKey: 'interest',
-          cell: (props) =>
-            amountConverter(
-              props?.row?.original?.isPartial
-                ? Number(props?.row?.original?.interest ?? 0) +
-                    Number(props?.row?.original?.remainingInterest ?? 0)
-                : props?.row?.original?.interest ?? 0
-            ),
+          cell: (props) => amountConverter(props?.row?.original?.idealInterest),
           footer: () => amountConverter(totalInterest),
           meta: {
             isNumeric: true,
@@ -92,7 +82,7 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
         {
           header: 'Total',
           accessorKey: 'payment',
-          cell: (props) => amountConverter((props?.row?.original?.payment as string) ?? 0),
+          cell: (props) => amountConverter(props?.row?.original?.idealPayment ?? 0),
           footer: () => amountConverter(total) || '-',
           meta: {
             isNumeric: true,
@@ -131,7 +121,7 @@ export const PartialLoanPaymentSchedule = React.forwardRef<
           },
         },
       ],
-      [nextInstallmentNumber, total]
+      [total, totalInterest, totalPrincipal]
     );
     return (
       <Box maxW="920" overflowY="auto">

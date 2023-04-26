@@ -32,7 +32,10 @@ export const InstallmentData = ({
 
   const amountPaid = Number(watch('amountPaid')) ?? 0;
 
-  const { data: loanPreviewData } = useGetLoanPreviewQuery({ id: loanAccountId });
+  const { data: loanPreviewData } = useGetLoanPreviewQuery(
+    { id: loanAccountId },
+    { enabled: !!loanAccountId }
+  );
 
   const loanInstallments =
     loanPreviewData?.loanAccount?.loanPreview?.data?.paymentSchedule?.installments;

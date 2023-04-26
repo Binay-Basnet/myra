@@ -5,13 +5,14 @@ import { useDisclosure } from '@chakra-ui/react';
 
 import { Box, Button, Text } from '@myra-ui';
 
-import { LoanInstallment, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
+import { useGetLoanPreviewQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter, quantityConverter } from '@coop/shared/utils';
 
 import { AllPaymentsModal } from './AllPaymentsModal';
 import { FullLoanSchedule } from './FullLoanSchedule';
 import { PartialLoanPaymentSchedule } from './PartialLoanPaymentSchedule';
+import { IdealLoanInstallment } from '../types';
 
 interface ILoanPaymentScheduleProps {
   setTotalFine: Dispatch<SetStateAction<number>>;
@@ -44,25 +45,38 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     }
   );
 
-  const { paymentSchedule, generalInformation, repaymentDetails } = useMemo(
+  const { paymentSchedule, generalInformation, idealSchedule } = useMemo(
     () => ({ ...loanPreviewData?.loanAccount?.loanPreview?.data }),
     [loanPreviewData]
   );
 
-  const nextInstallmentNo = repaymentDetails?.nextInstallmentNo ?? (1 as number);
+  // const nextInstallmentNo = repaymentDetails?.nextInstallmentNo ?? (1 as number);
 
-  const partialPaidInstallment = paymentSchedule?.installments?.find(
+  const loanInstallments: IdealLoanInstallment[] = useMemo(
+    () =>
+      paymentSchedule?.installments?.map((installment, index) => {
+        const idealInstallment = idealSchedule?.installments?.[index];
+
+        return {
+          ...installment,
+          idealPrincipal: idealInstallment?.principal,
+          idealInterest: idealInstallment?.interest,
+          idealPayment: idealInstallment?.payment,
+          idealRemainingPrincipal: idealInstallment?.remainingPrincipal,
+        } as IdealLoanInstallment;
+      }) ?? [],
+    [paymentSchedule, idealSchedule]
+  );
+
+  const partialPaidInstallment = loanInstallments?.find(
     (installment) => installment?.status === 'PARTIAL' || installment?.isPartial
   );
 
-  const paidInstallments = paymentSchedule?.installments?.filter(
-    (installment) => installment?.status === 'PAID'
-  );
+  const paidInstallments =
+    loanInstallments?.filter((installment) => installment?.status === 'PAID') ?? [];
 
   const overDueInstallments = useMemo(
-    () =>
-      paymentSchedule?.installments?.filter((installment) => installment?.status === 'OVERDUE') ??
-      [],
+    () => loanInstallments?.filter((installment) => installment?.status === 'OVERDUE') ?? [],
     [paymentSchedule]
   );
 
@@ -72,7 +86,7 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     );
   }, [overDueInstallments]);
 
-  const currentInstallment = paymentSchedule?.installments?.find(
+  const currentInstallment = loanInstallments?.find(
     (installment) => installment?.status === 'CURRENT'
   );
 
@@ -90,20 +104,20 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     if (tempInstallments?.length) {
       tempInstallments = [
         ...tempInstallments,
-        ...paymentSchedule.installments.slice(
+        ...loanInstallments.slice(
           tempInstallments[tempInstallments.length - 1].installmentNo,
           tempInstallments[tempInstallments.length - 1].installmentNo + 2
         ),
       ];
     }
 
-    if (!tempInstallments?.length && paymentSchedule?.installments?.length) {
-      const lastUnpaidInstallment = paymentSchedule?.installments?.find(
+    if (!tempInstallments?.length && loanInstallments?.length) {
+      const lastUnpaidInstallment = loanInstallments?.find(
         (installment) => !installment?.status
       )?.installmentNo;
 
       if (lastUnpaidInstallment) {
-        tempInstallments = paymentSchedule?.installments?.slice(
+        tempInstallments = loanInstallments?.slice(
           lastUnpaidInstallment - 1,
           lastUnpaidInstallment + 1
         );
@@ -141,9 +155,9 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
       </Box>
 
       <PartialLoanPaymentSchedule
-        data={(partialLoanPaymentSchedule ?? []) as LoanInstallment[]}
+        data={partialLoanPaymentSchedule}
         total={paymentSchedule?.total as string}
-        nextInstallmentNumber={nextInstallmentNo}
+        // nextInstallmentNumber={nextInstallmentNo}
         totalInterest={paymentSchedule?.totalInterest ?? 0}
         totalPrincipal={paymentSchedule?.totalPrincipal ?? 0}
         isLoading={isLoanPreviewFetching}
@@ -171,11 +185,15 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Principal Paid:</Text>
-                <Text fontWeight={500}>{amountConverter(partialPaidInstallment?.principal)}</Text>
+                <Text fontWeight={500}>
+                  {amountConverter(partialPaidInstallment?.principal ?? 0)}
+                </Text>
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Interest Paid:</Text>
-                <Text fontWeight={500}>{amountConverter(partialPaidInstallment?.interest)}</Text>
+                <Text fontWeight={500}>
+                  {amountConverter(partialPaidInstallment?.interest ?? 0)}
+                </Text>
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Last Paid Date:</Text>
@@ -190,13 +208,13 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
               <Box display="flex" gap="s4">
                 <Text>Remaining Principal:</Text>
                 <Text fontWeight={500} color="danger.500">
-                  {amountConverter(partialPaidInstallment?.currentRemainingPrincipal)}
+                  {amountConverter(partialPaidInstallment?.currentRemainingPrincipal ?? 0)}
                 </Text>
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Remaining Interest:</Text>
                 <Text fontWeight={500} color="danger.500">
-                  {amountConverter(partialPaidInstallment?.remainingInterest)}
+                  {amountConverter(partialPaidInstallment?.remainingInterest ?? 0)}
                 </Text>
               </Box>
               <Box display="flex" gap="s4">
@@ -286,11 +304,11 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Interest Till Date:</Text>
-                <Text fontWeight={500}>{amountConverter(currentInstallment?.interest)}</Text>
+                <Text fontWeight={500}>{amountConverter(currentInstallment?.interest ?? 0)}</Text>
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Total Payable Amount:</Text>
-                <Text fontWeight={500}>{amountConverter(currentInstallment?.payment)}</Text>
+                <Text fontWeight={500}>{amountConverter(currentInstallment?.payment ?? 0)}</Text>
               </Box>
             </Box>
           </>
@@ -300,18 +318,12 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
       <AllPaymentsModal
         isOpen={isRecentPaymentOpen}
         onClose={onRecentPaymentClose}
-        data={paidInstallments as LoanInstallment[]}
-        total={paymentSchedule?.total as string}
-        totalInterest={paymentSchedule?.totalInterest ?? 0}
-        totalPrincipal={paymentSchedule?.totalPrincipal ?? 0}
+        data={paidInstallments as IdealLoanInstallment[]}
       />
       <FullLoanSchedule
         isOpen={isFullScheduleOpen}
         onClose={onFullScheduleClose}
-        data={
-          (paymentSchedule?.installments?.filter((installment) => installment?.status !== 'PAID') ??
-            []) as LoanInstallment[]
-        }
+        data={loanInstallments?.filter((installment) => installment?.status !== 'PAID') ?? []}
         total={paymentSchedule?.total as string}
         totalInterest={paymentSchedule?.totalInterest ?? 0}
         totalPrincipal={paymentSchedule?.totalPrincipal ?? 0}

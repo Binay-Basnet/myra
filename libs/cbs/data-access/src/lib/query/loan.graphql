@@ -519,6 +519,29 @@ query getLoanPreview($id: String!) {
           totalPaidAmount
           totalPayableAmount
         }
+        idealSchedule {
+          total
+          totalInterest
+          totalPrincipal
+          installments {
+            installmentDate
+            installmentNo
+            interest
+            payment
+            principal
+            remainingPrincipal
+            currentRemainingPrincipal
+            paidDate
+            remainingInterest
+            status
+            overDueDays
+            penalty
+            isPartial
+            overdueAmount
+            fullPrincipal
+          }
+          totalRemainingPayable
+        }
       }
     }
   }
