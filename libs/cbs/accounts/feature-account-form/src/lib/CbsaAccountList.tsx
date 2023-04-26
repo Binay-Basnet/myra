@@ -118,7 +118,7 @@ export const CBSAccountList = () => {
         id: '_actions',
         header: '',
         cell: (props) =>
-          props?.row?.original?.node && objState !== 'DORMANT' && objState !== 'SUBMITTED' ? (
+          props?.row?.original?.node && objState !== 'DORMANT' && objState !== 'ACTIVE' ? (
             <TablePopover
               items={[
                 {
