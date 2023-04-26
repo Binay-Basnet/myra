@@ -7735,6 +7735,7 @@ export type InvestmentEntryEntry = {
 };
 
 export type InvestmentEntryInput = {
+  bankId?: InputMaybe<Scalars['String']>;
   fd?: InputMaybe<FdInvestmentInput>;
   investmentName: Scalars['String'];
   investmentType: InvestmentType;
