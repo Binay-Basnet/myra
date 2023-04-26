@@ -7,10 +7,17 @@ export interface FormHeaderProps {
   title: string;
   closeLink?: string;
   buttonLabel?: string;
+  handleAlertDialouge?: () => void;
   buttonHandler?: () => void;
 }
 
-export const FormHeader = ({ title, closeLink, buttonLabel, buttonHandler }: FormHeaderProps) => {
+export const FormHeader = ({
+  title,
+  closeLink,
+  buttonLabel,
+  buttonHandler,
+  handleAlertDialouge,
+}: FormHeaderProps) => {
   const router = useRouter();
 
   return (
@@ -35,20 +42,33 @@ export const FormHeader = ({ title, closeLink, buttonLabel, buttonHandler }: For
             {buttonLabel}
           </Button>
         )}
-        <IconButton
-          variant="ghost"
-          aria-label="close"
-          color="gray.500"
-          height="40px"
-          icon={<Icon as={IoClose} size="lg" />}
-          onClick={() => {
-            if (closeLink) {
-              router.push(closeLink);
-            } else {
-              router.back();
-            }
-          }}
-        />
+        {!handleAlertDialouge && (
+          <IconButton
+            variant="ghost"
+            aria-label="close"
+            color="gray.500"
+            height="40px"
+            icon={<Icon as={IoClose} size="lg" />}
+            onClick={() => {
+              if (closeLink) {
+                router.push(closeLink);
+              } else {
+                router.back();
+              }
+            }}
+          />
+        )}
+
+        {handleAlertDialouge && (
+          <IconButton
+            variant="ghost"
+            aria-label="close"
+            color="gray.500"
+            height="40px"
+            icon={<Icon as={IoClose} size="lg" />}
+            onClick={handleAlertDialouge}
+          />
+        )}
       </Box>
     </Box>
   );
