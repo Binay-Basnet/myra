@@ -3936,12 +3936,10 @@ export type DepositAccount = Base & {
   id: Scalars['ID'];
   installmentAmount?: Maybe<Scalars['String']>;
   interestAccured?: Maybe<Scalars['String']>;
-  interestRate?: Maybe<Scalars['Float']>;
   interestTax?: Maybe<Scalars['String']>;
   lastTransactionDate?: Maybe<Scalars['Localized']>;
   ledgerId?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
-  minor?: Maybe<Scalars['String']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
@@ -12557,7 +12555,6 @@ export type MemberQuery = {
   memberOverviewV2?: Maybe<MemberOverviewV2Result>;
   memberPDF: Scalars['String'];
   memberTypes: MemberTypeResult;
-  minorProfile?: Maybe<MinorProfile>;
   officialUse?: Maybe<OfficialUseResult>;
   translate: TranslateQueryResult;
 };
@@ -12603,10 +12600,6 @@ export type MemberQueryMemberOverviewArgs = {
 
 export type MemberQueryMemberPdfArgs = {
   id: Scalars['ID'];
-};
-
-export type MemberQueryMinorProfileArgs = {
-  minorId: Scalars['String'];
 };
 
 export type MemberQueryOfficialUseArgs = {
@@ -12860,7 +12853,6 @@ export type MinorFilter = {
 export type MinorInformation = {
   dateOfBirth?: Maybe<Scalars['Localized']>;
   id: Scalars['String'];
-  memberCode: Scalars['String'];
   memberId: Scalars['String'];
   memberName: Scalars['Localized'];
   minorName: Scalars['String'];
@@ -12879,20 +12871,6 @@ export type MinorListConnection = {
 export type MinorListEdges = {
   cursor: Scalars['Cursor'];
   node: MinorInformation;
-};
-
-export type MinorProfile = {
-  address?: Maybe<Address>;
-  dateOfBirth: Scalars['Localized'];
-  fullName: Scalars['String'];
-  gender: Scalars['String'];
-  memberCode: Scalars['String'];
-  memberId: Scalars['String'];
-  minorId: Scalars['String'];
-  parentName: Scalars['String'];
-  savingAccounts?: Maybe<Array<Maybe<DepositAccount>>>;
-  serviceCentreId: Scalars['String'];
-  serviceCentreName: Scalars['String'];
 };
 
 export type MinorReportResult = {
