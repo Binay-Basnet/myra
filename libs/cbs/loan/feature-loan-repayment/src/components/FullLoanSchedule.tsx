@@ -3,12 +3,13 @@ import { useMemo, useRef } from 'react';
 import { Box, Button, Chips, Modal, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { LoanInstallment } from '@coop/cbs/data-access';
 import { exportVisibleTableToExcel, localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
+import { IdealLoanInstallment } from '../types';
+
 interface IFullLoanScheduleProps {
-  data: LoanInstallment[];
+  data: IdealLoanInstallment[];
   total: string;
   totalInterest: string | number;
   totalPrincipal: string | number;
@@ -34,7 +35,7 @@ export const FullLoanSchedule = ({
 }: IFullLoanScheduleProps) => {
   const tableRef = useRef<HTMLTableElement>(null);
 
-  const columns = useMemo<Column<LoanInstallment>[]>(
+  const columns = useMemo<Column<IdealLoanInstallment>[]>(
     () => [
       {
         header: 'Ins. No.',
@@ -61,12 +62,7 @@ export const FullLoanSchedule = ({
       {
         header: 'Principal',
         accessorKey: 'principal',
-        cell: (props) =>
-          amountConverter(
-            props?.row?.original?.isPartial
-              ? Number(props?.row?.original?.fullPrincipal ?? 0)
-              : props?.row?.original?.principal ?? 0
-          ),
+        cell: (props) => amountConverter(props?.row?.original?.idealPrincipal),
         footer: () => amountConverter(totalPrincipal),
         meta: {
           isNumeric: true,
@@ -75,13 +71,7 @@ export const FullLoanSchedule = ({
       {
         header: 'Interest',
         accessorKey: 'interest',
-        cell: (props) =>
-          amountConverter(
-            props?.row?.original?.isPartial
-              ? Number(props?.row?.original?.interest ?? 0) +
-                  Number(props?.row?.original?.remainingInterest ?? 0)
-              : props?.row?.original?.interest ?? 0
-          ),
+        cell: (props) => amountConverter(props?.row?.original?.idealInterest),
         footer: () => amountConverter(totalInterest),
         meta: {
           isNumeric: true,
@@ -90,7 +80,7 @@ export const FullLoanSchedule = ({
       {
         header: 'Total',
         accessorKey: 'payment',
-        cell: (props) => amountConverter(props.getValue() as string),
+        cell: (props) => amountConverter(props?.row?.original?.idealPayment),
         footer: () => amountConverter(total) || '-',
         meta: {
           isNumeric: true,
@@ -99,7 +89,7 @@ export const FullLoanSchedule = ({
       {
         header: 'Rem. Principal',
         accessorKey: 'remainingPrincipal',
-        cell: (props) => amountConverter(props.getValue() as string),
+        cell: (props) => amountConverter(props?.row?.original?.idealRemainingPrincipal),
         meta: {
           isNumeric: true,
         },

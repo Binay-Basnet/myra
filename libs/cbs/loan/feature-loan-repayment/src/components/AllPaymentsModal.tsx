@@ -3,46 +3,36 @@ import { useMemo, useRef } from 'react';
 import { Modal } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { LoanInstallment } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
+import { IdealLoanInstallment } from '../types';
+
 interface IAllPaymentsModalProps {
-  data: LoanInstallment[];
-  total: string;
-  totalInterest: string | number;
-  totalPrincipal: string | number;
+  data: IdealLoanInstallment[];
   isOpen: boolean;
   onClose: () => void;
-  // remainingInterest?: string | number;
-  // currentRemainingPrincipal?: string | number;
 }
 
-export const AllPaymentsModal = ({
-  data,
-  total,
-  totalInterest,
-  totalPrincipal,
-  // remainingInterest,
-  // currentRemainingPrincipal,
-  isOpen,
-  onClose,
-}: IAllPaymentsModalProps) => {
+export const AllPaymentsModal = ({ data, isOpen, onClose }: IAllPaymentsModalProps) => {
   const tableRef = useRef<HTMLTableElement>(null);
 
-  const totalFine = useMemo(
-    () =>
-      data?.reduce(
-        (sum, installment) =>
-          sum +
-          Number(installment?.currentRemainingPrincipal ?? 0) +
-          Number(installment?.remainingInterest ?? 0),
+  const { totalPrincipalPaid, totalInterestPaid, totalFinePaid } = useMemo(
+    () => ({
+      totalPrincipalPaid: data?.reduce(
+        (sum, installment) => sum + Number(installment?.principal) ?? 0,
         0
       ),
+      totalInterestPaid: data?.reduce(
+        (sum, installment) => sum + Number(installment?.interest) ?? 0,
+        0
+      ),
+      totalFinePaid: data?.reduce((sum, installment) => sum + Number(installment?.penalty), 0),
+    }),
     [data]
   );
 
-  const columns = useMemo<Column<LoanInstallment>[]>(
+  const columns = useMemo<Column<IdealLoanInstallment>[]>(
     () => [
       {
         header: 'Ins. No.',
@@ -81,14 +71,8 @@ export const AllPaymentsModal = ({
       {
         header: 'Principal',
         accessorKey: 'principal',
-        cell: (props) =>
-          amountConverter(
-            props?.row?.original?.currentRemainingPrincipal !== '0'
-              ? Number(props?.row?.original?.principal ?? 0) +
-                  Number(props?.row?.original?.currentRemainingPrincipal ?? 0)
-              : props?.row?.original?.principal ?? 0
-          ),
-        footer: () => amountConverter(totalPrincipal),
+        cell: (props) => amountConverter(props?.row?.original?.principal),
+        footer: () => amountConverter(totalPrincipalPaid),
         meta: {
           isNumeric: true,
         },
@@ -97,7 +81,7 @@ export const AllPaymentsModal = ({
         header: 'Interest',
         accessorKey: 'interest',
         cell: (props) => amountConverter(props.getValue() as string),
-        footer: () => amountConverter(totalInterest),
+        footer: () => amountConverter(totalInterestPaid),
         meta: {
           isNumeric: true,
         },
@@ -106,7 +90,7 @@ export const AllPaymentsModal = ({
         header: 'Fine',
         accessorKey: 'penalty',
         cell: (props) => amountConverter(props.getValue() as string),
-        footer: () => amountConverter(totalFine),
+        footer: () => amountConverter(totalFinePaid),
         meta: {
           isNumeric: true,
         },
@@ -116,13 +100,13 @@ export const AllPaymentsModal = ({
         header: 'Total',
         accessorKey: 'payment',
         cell: (props) => amountConverter(props.getValue() as string),
-        footer: () => amountConverter(total) || '-',
+        footer: () => amountConverter(totalPrincipalPaid + totalInterestPaid + totalFinePaid),
         meta: {
           isNumeric: true,
         },
       },
     ],
-    [total, totalFine]
+    [totalPrincipalPaid, totalInterestPaid, totalFinePaid]
   );
   return (
     <Modal
@@ -132,14 +116,6 @@ export const AllPaymentsModal = ({
       scrollBehavior="inside"
       blockScrollOnMount
       width="4xl"
-      // headerButton={
-      //   <Button
-      //     variant="ghost"
-      //     onClick={() => exportVisibleTableToExcel(`${loanName} - Recent Payments`, tableRef)}
-      //   >
-      //     Export
-      //   </Button>
-      // }
     >
       <Table
         size="report"
