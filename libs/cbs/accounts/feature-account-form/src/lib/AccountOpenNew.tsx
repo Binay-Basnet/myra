@@ -118,6 +118,7 @@ export const AccountOpenNew = () => {
   const queryClient = useQueryClient();
 
   const [mode, setMode] = useState('0');
+  const [showAccountName, setShowAccountName] = useState(true);
 
   const {
     isOpen: isMinorModalOpen,
@@ -272,6 +273,7 @@ export const AccountOpenNew = () => {
     label: item?.fullName?.local as string,
     value: item?.id as string,
   }));
+  const minorselectedValue = watch('minor');
 
   const proceedToPaymentHandler = () => {
     setMode('1');
@@ -303,7 +305,6 @@ export const AccountOpenNew = () => {
   const withdrawSlipAmount = watch('openingPayment.withdrawSlip.amount');
 
   const bankVoucherAmount = watch('openingPayment.bankVoucher.amount');
-  const minorselectedValue = watch('minor');
   const isForMinors = ProductData?.isForMinors as boolean;
 
   const selectedPaymentMode = watch('openingPayment.payment_type');
@@ -376,6 +377,7 @@ export const AccountOpenNew = () => {
           },
         };
       }
+      `${memberDetailData?.name} - ${defaultAccount?.label}`;
 
       if (values.openingPayment?.payment_type === DepositPaymentType.WithdrawSlip) {
         updatedData = {
@@ -494,11 +496,19 @@ export const AccountOpenNew = () => {
   }, [refetch]);
 
   useEffect(() => {
-    if (router.pathname.includes('add')) {
+    const minorName = minorOptions?.find((r) => r?.value === minorselectedValue)?.label;
+
+    const defaultMinorAccountName = `${minorName} - ${defaultAccount?.label}`;
+
+    if (router?.pathname?.includes('add')) {
       // if (routerAction === 'add' || routerAction === 'edit') {
       setValue('accountName', defaultAccountName);
     }
-  }, [defaultAccountName]);
+    if (router?.pathname?.includes('add') && ProductData?.isForMinors) {
+      // if (routerAction === 'add' || routerAction === 'edit') {
+      setValue('accountName', defaultMinorAccountName);
+    }
+  }, [defaultAccountName, ProductData, minorselectedValue]);
   // get redirect id from url
   const redirectMemberId = router.query['memberId'];
   // redirect from member details
@@ -507,6 +517,17 @@ export const AccountOpenNew = () => {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
+  // show account name only after a minor account is selected in case of minor account
+
+  useEffect(() => {
+    if (ProductData?.isForMinors && !minorselectedValue) {
+      setShowAccountName(false);
+    }
+    if (ProductData?.isForMinors && minorselectedValue) {
+      setShowAccountName(true);
+    }
+  }, [ProductData, minorselectedValue]);
 
   return (
     <>
@@ -586,19 +607,24 @@ export const AccountOpenNew = () => {
                         <CriteriaCard productId={productID} />
                       </Box>
                     )}
+                    {memberId && productID && !errors && ProductData?.isForMinors && (
+                      <FormSelect
+                        name="minor"
+                        label="Minor"
+                        options={minorOptions}
+                        addItemLabel="Add Minor"
+                        addItemHandler={onToggleMinorModal}
+                        isRequired
+                      />
+                    )}
+                    {memberId && productID && !errors && showAccountName && (
+                      <FormInput name="accountName" label="Account Name" />
+                    )}
+
                     {memberId && productID && !errors && (
                       <Box display="flex" flexDirection="column" gap="s32" w="100%">
-                        <FormInput name="accountName" label="Account Name" />
-                        {ProductData?.isForMinors && (
-                          <FormSelect
-                            name="minor"
-                            label="Minor"
-                            options={minorOptions}
-                            addItemLabel="Add Minor"
-                            addItemHandler={onToggleMinorModal}
-                            isRequired
-                          />
-                        )}
+                        {/* {showAccountName && <FormInput name="accountName" label="Account Name" />} */}
+
                         {productType !== NatureOfDepositProduct?.Current &&
                           productType !== NatureOfDepositProduct?.Saving && <Tenure />}
                         <Divider />
