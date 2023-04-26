@@ -210,15 +210,15 @@ export const CBS: NavType = {
       ],
       pages: [
         {
+          label: 'Loan Accounts',
+          aclKey: 'CBS_LOAN_LOAN_ACCOUNT',
+          route: ROUTES.CBS_LOAN_ACCOUNTS_LIST,
+        },
+        {
           label: 'Loan Applications',
           route: ROUTES.CBS_LOAN_APPLICATIONS_LIST,
           aclKey: 'CBS_LOAN_LOAN_APPLICATION',
           addRoute: ROUTES.CBS_LOAN_APPLICATIONS_ADD,
-        },
-        {
-          label: 'Loan Accounts',
-          aclKey: 'CBS_LOAN_LOAN_ACCOUNT',
-          route: ROUTES.CBS_LOAN_ACCOUNTS_LIST,
         },
         {
           label: 'Loan Repayment',
