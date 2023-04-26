@@ -1,14 +1,16 @@
+import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
+import { AlertDialog } from '@myra-ui';
 import { Box, Button, Icon, IconButton, Text } from '@myra-ui/foundations';
 
 export interface FormHeaderProps {
   title: string;
   closeLink?: string;
   buttonLabel?: string;
-  handleAlertDialouge?: () => void;
   buttonHandler?: () => void;
+  isFormDirty?: boolean;
 }
 
 export const FormHeader = ({
@@ -16,9 +18,22 @@ export const FormHeader = ({
   closeLink,
   buttonLabel,
   buttonHandler,
-  handleAlertDialouge,
+  isFormDirty,
 }: FormHeaderProps) => {
   const router = useRouter();
+  const [showAlertDialog, setShowAlertDialog] = useState(false);
+
+  const handleLeavePageButton = () => {
+    if (isFormDirty) {
+      setShowAlertDialog(true);
+    } else {
+      router?.back();
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowAlertDialog(false);
+  };
 
   return (
     <Box
@@ -42,7 +57,7 @@ export const FormHeader = ({
             {buttonLabel}
           </Button>
         )}
-        {!handleAlertDialouge && (
+        {!isFormDirty && (
           <IconButton
             variant="ghost"
             aria-label="close"
@@ -59,16 +74,18 @@ export const FormHeader = ({
           />
         )}
 
-        {handleAlertDialouge && (
+        {isFormDirty && (
           <IconButton
             variant="ghost"
             aria-label="close"
             color="gray.500"
             height="40px"
             icon={<Icon as={IoClose} size="lg" />}
-            onClick={handleAlertDialouge}
+            onClick={handleLeavePageButton}
           />
         )}
+
+        <AlertDialog onClose={handleCloseModal} show={showAlertDialog} />
       </Box>
     </Box>
   );

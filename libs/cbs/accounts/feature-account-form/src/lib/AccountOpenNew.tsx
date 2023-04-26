@@ -7,7 +7,6 @@ import omit from 'lodash/omit';
 
 import {
   Alert,
-  AlertDialog,
   asyncToast,
   Box,
   Button,
@@ -120,19 +119,6 @@ export const AccountOpenNew = () => {
 
   const [mode, setMode] = useState('0');
   const [showAccountName, setShowAccountName] = useState(true);
-  const [showAlertDialog, setShowAlertDialog] = useState(false);
-
-  const handleLeavePageButton = () => {
-    if (isDirty) {
-      setShowAlertDialog(true);
-    } else {
-      router?.back();
-    }
-  };
-
-  const handleCloseModal = () => {
-    setShowAlertDialog(false);
-  };
 
   const {
     isOpen: isMinorModalOpen,
@@ -555,7 +541,7 @@ export const AccountOpenNew = () => {
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={`${t['newAccountOpen']} - ${featureCode?.newSavingAccountOpen}`}
-            handleAlertDialouge={handleLeavePageButton}
+            isFormDirty={isDirty}
           />
         </Box>
         <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
@@ -722,8 +708,6 @@ export const AccountOpenNew = () => {
                   >
                     <Payment mode={Number(mode)} totalAmount={totalDeposit} />
                   </Box>
-
-                  <AlertDialog onClose={handleCloseModal} show={showAlertDialog} />
                 </form>
               </FormProvider>
             )}
