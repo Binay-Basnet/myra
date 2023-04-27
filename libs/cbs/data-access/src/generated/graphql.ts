@@ -26091,6 +26091,7 @@ export type GetMinorListQuery = {
         node: {
           id: string;
           memberId: string;
+          memberCode: string;
           memberName: Record<'local' | 'en' | 'np', string>;
           serviceCentreId: string;
           serviceCentreName: string;
@@ -26101,6 +26102,40 @@ export type GetMinorListQuery = {
         };
       } | null> | null;
       pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
+export type GetMinorProfileQueryVariables = Exact<{
+  minorId: Scalars['String'];
+}>;
+
+export type GetMinorProfileQuery = {
+  members: {
+    minorProfile?: {
+      minorId: string;
+      fullName: string;
+      dateOfBirth: Record<'local' | 'en' | 'np', string>;
+      gender: string;
+      parentName: string;
+      memberId: string;
+      memberCode: string;
+      serviceCentreId: string;
+      serviceCentreName: string;
+      address?: {
+        state?: Record<'local' | 'en' | 'np', string> | null;
+        district?: Record<'local' | 'en' | 'np', string> | null;
+        localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+        wardNo?: string | null;
+        locality?: Record<'local' | 'en' | 'np', string> | null;
+        houseNo?: string | null;
+        coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+      } | null;
+      savingAccounts?: Array<{
+        accountName?: string | null;
+        interestRate?: number | null;
+        balance?: string | null;
+      } | null> | null;
     } | null;
   };
 };
@@ -45835,6 +45870,7 @@ export const GetMinorListDocument = `
         node {
           id
           memberId
+          memberCode
           memberName
           serviceCentreId
           serviceCentreName
@@ -45859,6 +45895,52 @@ export const useGetMinorListQuery = <TData = GetMinorListQuery, TError = unknown
   useQuery<GetMinorListQuery, TError, TData>(
     variables === undefined ? ['getMinorList'] : ['getMinorList', variables],
     useAxios<GetMinorListQuery, GetMinorListQueryVariables>(GetMinorListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetMinorProfileDocument = `
+    query getMinorProfile($minorId: String!) {
+  members {
+    minorProfile(minorId: $minorId) {
+      minorId
+      fullName
+      dateOfBirth
+      gender
+      parentName
+      address {
+        state
+        district
+        localGovernment
+        wardNo
+        locality
+        houseNo
+        coordinates {
+          longitude
+          latitude
+        }
+      }
+      memberId
+      memberCode
+      serviceCentreId
+      serviceCentreName
+      savingAccounts {
+        accountName
+        interestRate
+        balance
+      }
+    }
+  }
+}
+    `;
+export const useGetMinorProfileQuery = <TData = GetMinorProfileQuery, TError = unknown>(
+  variables: GetMinorProfileQueryVariables,
+  options?: UseQueryOptions<GetMinorProfileQuery, TError, TData>
+) =>
+  useQuery<GetMinorProfileQuery, TError, TData>(
+    ['getMinorProfile', variables],
+    useAxios<GetMinorProfileQuery, GetMinorProfileQueryVariables>(GetMinorProfileDocument).bind(
       null,
       variables
     ),

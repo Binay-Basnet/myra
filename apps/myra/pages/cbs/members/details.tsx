@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { MainLayout } from '@myra-ui';
 
 import { useIssueCertificateMutation } from '@coop/cbs/data-access';
-import { MemberDetails } from '@coop/cbs/members/details';
+import { CbsMinorMembersFeatureDetails, MemberDetails } from '@coop/cbs/members/details';
 import { MemberPagesLayout } from '@coop/cbs/members/list';
 
 const MemberDEtailsPage = () => {
@@ -22,6 +22,10 @@ const MemberDEtailsPage = () => {
       window.open(res?.members?.issueCertificate, '_blank')
     );
   };
+
+  if (router?.query?.['type'] === 'minor') {
+    return <CbsMinorMembersFeatureDetails />;
+  }
 
   return (
     <MemberDetails
