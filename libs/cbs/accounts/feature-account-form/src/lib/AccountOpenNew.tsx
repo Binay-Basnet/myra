@@ -231,7 +231,11 @@ export const AccountOpenNew = () => {
 
   const productID = watch('productId');
   const defaultAccount = productOptions.find((d) => d?.value === productID);
-  const defaultAccountName = `${memberDetailData?.name} - ${defaultAccount?.label}`;
+  const defaultAccountLabel =
+    data?.settings?.general?.depositProduct?.getProductList?.allowed?.find(
+      (d) => d?.id === productID
+    )?.productName;
+  const defaultAccountName = `${memberDetailData?.name} - ${defaultAccountLabel}`;
 
   const errors = newLog?.find((d) => d?.data?.id === productID);
 
@@ -504,7 +508,7 @@ export const AccountOpenNew = () => {
   useEffect(() => {
     const minorName = minorOptions?.find((r) => r?.value === minorselectedValue)?.label;
 
-    const defaultMinorAccountName = `${minorName} - ${defaultAccount?.label}`;
+    const defaultMinorAccountName = `${minorName} - ${defaultAccountLabel}`;
 
     if (router?.pathname?.includes('add')) {
       // if (routerAction === 'add' || routerAction === 'edit') {
