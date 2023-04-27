@@ -496,6 +496,8 @@ query getDefaultAccountList($productId: ID!, $memberId: ID!) {
       data {
         id
         accountName
+
+        productId
       }
     }
   }

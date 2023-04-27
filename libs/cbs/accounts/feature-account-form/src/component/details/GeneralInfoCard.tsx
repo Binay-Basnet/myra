@@ -96,7 +96,7 @@ export const GeneralInfoCard = ({ title, data }: IGeneralInfoCardProps) => {
         {data?.nomineeAccountName && data?.nomineeAccountNumber ? (
           <DetailCardContent title="Nominee Account">
             <RedirectButton
-              label={data?.nomineeAccountName}
+              label={data?.nomineeAccountNumber}
               link={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}/?id=${data?.nomineeAccountNumber}`}
             />
           </DetailCardContent>
