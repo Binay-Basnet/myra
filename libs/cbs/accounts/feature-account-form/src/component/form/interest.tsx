@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { Alert, Box, Text } from '@myra-ui';
+import { Box, Callout, Text } from '@myra-ui';
 
 import { InterestAuthority, useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
@@ -130,7 +130,7 @@ export const Interest = () => {
                 </Box>
               </Box>
             )}
-          <Alert status="info" title="Rates">
+          <Callout status="info" title="Rates">
             <Box display="flex" flexDirection="column" gap="s4">
               <Text fontWeight="400" fontSize="r1">
                 Interest Rate:{' '}
@@ -161,7 +161,7 @@ export const Interest = () => {
                 </Box>
               )}
             </Box>{' '}
-          </Alert>
+          </Callout>
         </Box>
       </Box>
     </Box>

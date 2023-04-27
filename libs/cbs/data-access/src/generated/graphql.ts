@@ -902,6 +902,15 @@ export type Address = {
   wardNo?: Maybe<Scalars['String']>;
 };
 
+export type AddressInput = {
+  districtId?: InputMaybe<Scalars['Int']>;
+  localGovernmentId?: InputMaybe<Scalars['Int']>;
+  locality?: InputMaybe<Scalars['String']>;
+  location?: InputMaybe<LocationCoordinateInput>;
+  provinceId?: InputMaybe<Scalars['Int']>;
+  wardNo?: InputMaybe<Scalars['Int']>;
+};
+
 export type AddressType = {
   permanent?: Maybe<Address>;
   temporary?: Maybe<Address>;
@@ -2902,6 +2911,41 @@ export type CommitteeMemberInput = {
   committeeId: Scalars['ID'];
   memberId: Scalars['ID'];
   position: Scalars['String'];
+};
+
+export type CommitteeMemberReport = {
+  familyMember: FamilyDetails;
+  id?: Maybe<Scalars['ID']>;
+  joinedAt: Scalars['Time'];
+  member: Member;
+  occupation?: Maybe<KymIndOccupation>;
+  position: Scalars['String'];
+};
+
+export type CommitteeRegisterReport = {
+  code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Time']>;
+  description?: Maybe<Scalars['String']>;
+  file?: Maybe<UploadedDocumentData>;
+  id?: Maybe<Scalars['ID']>;
+  member?: Maybe<Array<Maybe<CommitteeMemberReport>>>;
+  memberCount?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  tenure?: Maybe<Scalars['Int']>;
+};
+
+export type CommitteeRegisterReportFilterData = {
+  committeeId: Scalars['ID'];
+  period?: InputMaybe<LocalizedDateFilter>;
+};
+
+export type CommitteeReport = {
+  committeeRegisterReport?: Maybe<CommitteeRegisterReport>;
+  organizationProfileReport?: Maybe<OrganizationProfileReport>;
+};
+
+export type CommitteeReportCommitteeRegisterReportArgs = {
+  data?: InputMaybe<CommitteeRegisterReportFilterData>;
 };
 
 export const ComparatorType = {
@@ -7737,6 +7781,7 @@ export type InvestmentEntryEntry = {
 };
 
 export type InvestmentEntryInput = {
+  bankId?: InputMaybe<Scalars['String']>;
   fd?: InputMaybe<FdInvestmentInput>;
   investmentName: Scalars['String'];
   investmentType: InvestmentType;
@@ -13377,7 +13422,6 @@ export type Organization = {
   contactDetails?: Maybe<OrganizationContactDetails>;
   documents?: Maybe<Array<Maybe<Scalars['String']>>>;
   id: Scalars['ID'];
-  location?: Maybe<LocationCoordinate>;
   mainContactPerson?: Maybe<OrganizationMainContactPerson>;
   registrationDetails?: Maybe<OrganizationRegistrationDetails>;
   statistics?: Maybe<OrganizationStatistics>;
@@ -13396,10 +13440,22 @@ export type OrganizationBasicDetails = {
   typeOfOrganization?: Maybe<TypeOfOrganization>;
 };
 
+export type OrganizationBasicDetailsInput = {
+  logo?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  typeOfOrganization?: InputMaybe<TypeOfOrganization>;
+};
+
 export type OrganizationContactDetails = {
   email?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
+};
+
+export type OrganizationContactDetailsInput = {
+  email?: InputMaybe<Scalars['String']>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  website?: InputMaybe<Scalars['String']>;
 };
 
 export type OrganizationDeleteResult = {
@@ -13410,6 +13466,10 @@ export type OrganizationDeleteResult = {
 
 export type OrganizationDocument = {
   documents?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type OrganizationDocumentInput = {
+  documents?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type OrganizationEntry = {
@@ -13482,28 +13542,13 @@ export type OrganizationGetResult = {
 };
 
 export type OrganizationInput = {
-  contactPersonContactNumber?: InputMaybe<Scalars['String']>;
-  contactPersonName?: InputMaybe<Scalars['String']>;
-  districtId?: InputMaybe<Scalars['Int']>;
+  address?: InputMaybe<AddressInput>;
+  basicDetails?: InputMaybe<OrganizationBasicDetailsInput>;
+  contactDetails?: InputMaybe<OrganizationContactDetailsInput>;
   documents?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  email?: InputMaybe<Scalars['String']>;
-  localGovernmentId?: InputMaybe<Scalars['Int']>;
-  locality?: InputMaybe<Scalars['String']>;
-  location?: InputMaybe<LocationCoordinateInput>;
-  logo?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  panOrVat?: InputMaybe<Scalars['String']>;
-  phoneNumber?: InputMaybe<Scalars['String']>;
-  provinceId?: InputMaybe<Scalars['Int']>;
-  regdAddress?: InputMaybe<Scalars['String']>;
-  regdNo?: InputMaybe<Scalars['String']>;
-  regdOffice?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
-  totalCapital?: InputMaybe<Scalars['Float']>;
-  totalMembers?: InputMaybe<Scalars['Int']>;
-  typeOfOrganization?: InputMaybe<TypeOfOrganization>;
-  wardNo?: InputMaybe<Scalars['Int']>;
-  website?: InputMaybe<Scalars['String']>;
+  mainContactPerson?: InputMaybe<OrganizationMainContactPersonInput>;
+  registrationDetails?: InputMaybe<OrganizationRegistrationDetailsInput>;
+  statistics?: InputMaybe<OrganizationStatisticsInput>;
 };
 
 export type OrganizationListResult = {
@@ -13517,11 +13562,29 @@ export type OrganizationMainContactPerson = {
   title?: Maybe<Scalars['String']>;
 };
 
+export type OrganizationMainContactPersonInput = {
+  contactPersonContactNumber?: InputMaybe<Scalars['String']>;
+  contactPersonName?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+export type OrganizationProfileReport = {
+  committee: Array<Committee>;
+  organization: Organization;
+};
+
 export type OrganizationRegistrationDetails = {
   panOrVat?: Maybe<Scalars['String']>;
   regdAddress?: Maybe<Scalars['String']>;
   regdNo?: Maybe<Scalars['String']>;
   regdOffice?: Maybe<Scalars['String']>;
+};
+
+export type OrganizationRegistrationDetailsInput = {
+  panOrVat?: InputMaybe<Scalars['String']>;
+  regdAddress?: InputMaybe<Scalars['String']>;
+  regdNo?: InputMaybe<Scalars['String']>;
+  regdOffice?: InputMaybe<Scalars['String']>;
 };
 
 export type OrganizationSettingsMutation = {
@@ -13561,6 +13624,11 @@ export type OrganizationSettingsQueryCommitteeMembersArgs = {
 };
 
 export type OrganizationStatistics = {
+  totalCapital: Scalars['Float'];
+  totalMembers: Scalars['Int'];
+};
+
+export type OrganizationStatisticsInput = {
   totalCapital: Scalars['Float'];
   totalMembers: Scalars['Int'];
 };
@@ -14365,6 +14433,7 @@ export type ReportPeriodType = typeof ReportPeriodType[keyof typeof ReportPeriod
 export type ReportQuery = {
   branchReport: BranchReport;
   cashReport: CashReport;
+  committeeQuery: CommitteeReport;
   depositReport: DepositReport;
   employeeReport: EmployeeReport;
   exceptionReport: ExceptionReport;
