@@ -19,6 +19,7 @@ import {
 
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
+  AccountObjState,
   DepositAccount,
   DepositedBy,
   DepositInput,
@@ -377,6 +378,7 @@ export const AddDeposit = () => {
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
                       includeLoc
+                      filterBy={AccountObjState?.Active}
                       isDisabled={!!redirectAccountId}
                     />
                   )}
