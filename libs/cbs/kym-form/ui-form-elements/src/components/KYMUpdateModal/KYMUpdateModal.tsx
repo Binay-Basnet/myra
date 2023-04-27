@@ -30,7 +30,7 @@ export const KYMUpdateModal = ({ isOpen, onClose }: IKymUpdateModalProps) => {
             success: 'Kym Update Successfull',
             loading: 'Update KYM',
           },
-          onSuccess: () => router.push(`/cbs/member/details?id=${router.query['id']}`),
+          onSuccess: () => router.push(`/cbs/members/details?id=${router.query['id']}`),
           promise: mutateAsync({
             id: router.query['id'] as string,
             date: methods.getValues().date,
