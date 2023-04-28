@@ -38,6 +38,7 @@ export * from './lib/members/UsersReport';
 export * from './lib/mobile-banking/MBExpiryReport';
 export * from './lib/mobile-banking/MBRegistrationReport';
 export * from './lib/mobile-banking/MBTransactionReport';
+export * from './lib/others/BODDetailsRegisterReport';
 export * from './lib/others/CopomisImportMemberReport';
 export * from './lib/others/PearlsReport';
 export * from './lib/others/SavingsBalanceReport';
