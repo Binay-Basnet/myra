@@ -58,7 +58,7 @@ export const BODDetailsRegisterReport = () => {
           paths={[
             { label: 'Other Report', link: '/reports/cbs/others' },
             {
-              label: 'BOD Detail Register Report',
+              label: 'Committee Registered Details Report',
               link: '/reports/cbs/others/committee-register/new',
             },
           ]}

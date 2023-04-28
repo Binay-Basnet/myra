@@ -141,7 +141,7 @@ export enum Report {
   EXCEPTION_MEMBER_WISE_BALANCE = 'Member Wise Balance Execption Report',
   EXCEPTION_SHARE_BALANCE = 'Share Balance Exception Report',
 
-  OTHERS_COMMITTEE_REGISTER = 'BOD Detail Register Report',
+  OTHERS_COMMITTEE_REGISTER = 'Committee Registered Details Report',
 }
 
 export const REPORTS = {
