@@ -39,10 +39,10 @@ export const UsersSiderbar = ({ children }: IUsersSidebarProps) => {
 
   const tabLinks = [
     { title: t['neoClientUserSiderbarUsersList'], to: `/users` },
-    {
-      title: t['neoClientUserSiderbarUsersRole'],
-      to: `/users/role`,
-    },
+    // {
+    //   title: t['neoClientUserSiderbarUsersRole'],
+    //   to: `/users/role`,
+    // },
   ];
 
   const currentIndex = useMemo(
