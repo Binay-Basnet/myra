@@ -21,7 +21,7 @@ import {
   useGetInvestmentEntryFormStateDataQuery,
   useSetInvestmentEntryDataMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormOrganizationSelect, FormSelect } from '@coop/shared/form';
+import { FormBankSelect, FormInput, FormOrganizationSelect, FormSelect } from '@coop/shared/form';
 
 import { FixedDepositInvestment, SavingsDepositsInvestment, ShareInvestment } from '../components';
 
@@ -194,6 +194,10 @@ export const AddInvestment = () => {
                 {investmentType === InvestmentType.Share && <ShareInvestment />}
                 {investmentType === InvestmentType.Saving && <SavingsDepositsInvestment />}
                 {investmentType === InvestmentType.FixedDeposit && <FixedDepositInvestment />}
+
+                <FormSection header="Transaction Method">
+                  <FormBankSelect name="bankId" label="Bank" />
+                </FormSection>
               </Box>
             </form>
           </FormProvider>

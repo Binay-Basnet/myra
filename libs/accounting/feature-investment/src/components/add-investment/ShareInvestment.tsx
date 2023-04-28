@@ -5,7 +5,6 @@ import { FormSection, GridItem } from '@myra-ui';
 
 import {
   FormAmountInput,
-  FormBankSelect,
   FormDatePicker,
   FormInput,
   FormNumberInput,
@@ -40,8 +39,6 @@ export const ShareInvestment = () => {
       <FormInput name="share.certificateNo" label="Share Certificate Number" />
 
       <FormDatePicker name="share.date" label="Purchase Date" />
-
-      <FormBankSelect name="bankId" label="Bank" />
 
       <GridItem colSpan={3}>
         <FormTextArea name="share.notes" label="Notes" rows={3} />

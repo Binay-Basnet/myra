@@ -40,8 +40,6 @@ export const FixedDepositInvestment = () => (
 
     <FormBankSelect name="fd.nomineeBankACNo" label="Interest Nominee Bank" />
 
-    <FormBankSelect name="bankId" label="Bank" />
-
     <GridItem colSpan={3}>
       <FormTextArea name="fd.notes" label="Notes" rows={3} />
     </GridItem>

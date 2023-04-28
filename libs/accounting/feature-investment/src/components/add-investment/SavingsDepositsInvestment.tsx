@@ -9,7 +9,6 @@ import {
 } from '@coop/cbs/data-access';
 import {
   FormAmountInput,
-  FormBankSelect,
   FormDatePicker,
   FormNumberInput,
   FormSelect,
@@ -78,8 +77,6 @@ export const SavingsDepositsInvestment = () => {
       )}
 
       <FormDatePicker name="saving.openDate" label="Account Open Date" />
-
-      <FormBankSelect name="bankId" label="Bank" />
 
       <GridItem colSpan={3}>
         <FormTextArea name="saving.notes" label="Notes" rows={3} />
