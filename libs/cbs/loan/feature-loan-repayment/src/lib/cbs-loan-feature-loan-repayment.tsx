@@ -392,7 +392,7 @@ export const LoanRepayment = () => {
                     Total Payable Amount
                   </Text>
                   <Text fontSize="r1" fontWeight={600} color="gray.700">
-                    {amountConverter(totalPayableAmount)}
+                    {amountConverter(totalPayableAmount || 0)}
                   </Text>
                 </Box>
               }
