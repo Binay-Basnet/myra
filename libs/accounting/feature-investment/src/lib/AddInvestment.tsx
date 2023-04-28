@@ -165,7 +165,7 @@ export const AddInvestment = () => {
 
   return (
     <>
-      <Container minW="container.xl" height="fit-content">
+      <Container minW="container.xl" height="fit-content" pb="s60">
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader title="New Investment Entry" closeLink="/accounting/investment/list" />
         </Box>
@@ -195,9 +195,11 @@ export const AddInvestment = () => {
                 {investmentType === InvestmentType.Saving && <SavingsDepositsInvestment />}
                 {investmentType === InvestmentType.FixedDeposit && <FixedDepositInvestment />}
 
-                <FormSection header="Transaction Method">
-                  <FormBankSelect name="bankId" label="Bank" />
-                </FormSection>
+                {investmentType && (
+                  <FormSection header="Transaction Method">
+                    <FormBankSelect name="bankId" label="Bank" />
+                  </FormSection>
+                )}
               </Box>
             </form>
           </FormProvider>
