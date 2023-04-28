@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
-import { TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
@@ -12,7 +10,6 @@ import {
   useAppSelector,
   useGetInvestmentEntriesListDataQuery,
 } from '@coop/cbs/data-access';
-import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 const investmentAccountType = {
@@ -24,7 +21,7 @@ const investmentAccountType = {
 export const InvestmentList = () => {
   const preferenceDate = useAppSelector((state: RootState) => state?.auth?.preference?.date);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const { data, isFetching } = useGetInvestmentEntriesListDataQuery({
     pagination: getPaginationQuery(),
@@ -87,28 +84,28 @@ export const InvestmentList = () => {
           width: '100px',
         },
       },
-      {
-        id: '_actions',
-        header: '',
-        accessorKey: 'actions',
-        cell: (props) =>
-          props?.row?.original?.node && (
-            <TablePopover
-              node={props?.row?.original?.node}
-              items={[
-                {
-                  title: 'Edit',
-                  onClick: (row) => {
-                    router.push(`${ROUTES.ACCOUNTING_INVESTMENT_EDIT}/?id=${row['id']}`);
-                  },
-                },
-              ]}
-            />
-          ),
-        meta: {
-          width: 's60',
-        },
-      },
+      // {
+      //   id: '_actions',
+      //   header: '',
+      //   accessorKey: 'actions',
+      //   cell: (props) =>
+      //     props?.row?.original?.node && (
+      //       <TablePopover
+      //         node={props?.row?.original?.node}
+      //         items={[
+      //           {
+      //             title: 'Edit',
+      //             onClick: (row) => {
+      //               router.push(`${ROUTES.ACCOUNTING_INVESTMENT_EDIT}/?id=${row['id']}`);
+      //             },
+      //           },
+      //         ]}
+      //       />
+      //     ),
+      //   meta: {
+      //     width: 's60',
+      //   },
+      // },
     ],
     [preferenceDate]
   );
