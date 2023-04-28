@@ -13507,28 +13507,14 @@ export type OrganizationFilter = {
 };
 
 export type OrganizationFormData = {
-  contactPersonContactNumber?: Maybe<Scalars['String']>;
-  contactPersonName?: Maybe<Scalars['String']>;
-  districtId?: Maybe<Scalars['Int']>;
+  address?: Maybe<KymAddress>;
+  basicDetails?: Maybe<OrganizationBasicDetails>;
+  contactDetails?: Maybe<OrganizationContactDetails>;
   documents?: Maybe<Array<Maybe<Scalars['String']>>>;
-  email?: Maybe<Scalars['String']>;
-  localGovernmentId?: Maybe<Scalars['Int']>;
-  locality?: Maybe<Scalars['String']>;
-  location?: Maybe<LocationCoordinate>;
-  logo?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  panOrVat?: Maybe<Scalars['String']>;
-  phoneNumber?: Maybe<Scalars['String']>;
-  provinceId?: Maybe<Scalars['Int']>;
-  regdAddress?: Maybe<Scalars['String']>;
-  regdNo?: Maybe<Scalars['String']>;
-  regdOffice?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  totalCapital?: Maybe<Scalars['Float']>;
-  totalMembers?: Maybe<Scalars['Int']>;
-  typeOfOrganization?: Maybe<TypeOfOrganization>;
-  wardNo?: Maybe<Scalars['Int']>;
-  website?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  mainContactPerson?: Maybe<OrganizationMainContactPerson>;
+  registrationDetails?: Maybe<OrganizationRegistrationDetails>;
+  statistics?: Maybe<OrganizationStatistics>;
 };
 
 export type OrganizationFormStateResult = {
@@ -14941,8 +14927,8 @@ export type SavingInvestment = {
 };
 
 export type SavingInvestmentInput = {
-  frequency: InstallmentFrequency;
-  installmentAmount: Scalars['String'];
+  frequency?: InputMaybe<InstallmentFrequency>;
+  installmentAmount?: InputMaybe<Scalars['String']>;
   notes?: InputMaybe<Scalars['String']>;
   openDate: Scalars['Localized'];
   rate: Scalars['Float'];
@@ -20729,6 +20715,29 @@ export type UpdateDeclarationMutationVariables = Exact<{
 export type UpdateDeclarationMutation = {
   settings: {
     declaration: { update: { record?: { content: Record<'local' | 'en' | 'np', string> } | null } };
+  };
+};
+
+export type SetOrganizationInitialSetupMutationVariables = Exact<{
+  data: OrganizationInput;
+}>;
+
+export type SetOrganizationInitialSetupMutation = {
+  settings: {
+    general?: {
+      organization?: {
+        initialSetup?: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
   };
 };
 
@@ -31098,6 +31107,106 @@ export type GetAccessLogListQuery = {
   };
 };
 
+export type GetOrganizationDataQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetOrganizationDataQuery = {
+  settings: {
+    general?: {
+      organization?: {
+        mine?: {
+          data?: {
+            id: string;
+            documents?: Array<string | null> | null;
+            basicDetails?: {
+              name?: string | null;
+              logo?: string | null;
+              typeOfOrganization?: TypeOfOrganization | null;
+            } | null;
+            contactDetails?: {
+              phoneNumber?: string | null;
+              email?: string | null;
+              website?: string | null;
+            } | null;
+            mainContactPerson?: {
+              contactPersonName?: string | null;
+              contactPersonContactNumber?: string | null;
+              title?: string | null;
+            } | null;
+            address?: AddressFragment | null;
+            registrationDetails?: {
+              regdNo?: string | null;
+              regdOffice?: string | null;
+              regdAddress?: string | null;
+              panOrVat?: string | null;
+            } | null;
+            statistics?: { totalMembers: number; totalCapital: number } | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetOrganizationEditDataQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetOrganizationEditDataQuery = {
+  settings: {
+    general?: {
+      organization?: {
+        formState?: {
+          data?: {
+            id?: string | null;
+            documents?: Array<string | null> | null;
+            basicDetails?: {
+              name?: string | null;
+              logo?: string | null;
+              typeOfOrganization?: TypeOfOrganization | null;
+            } | null;
+            contactDetails?: {
+              phoneNumber?: string | null;
+              email?: string | null;
+              website?: string | null;
+            } | null;
+            mainContactPerson?: {
+              contactPersonName?: string | null;
+              contactPersonContactNumber?: string | null;
+              title?: string | null;
+            } | null;
+            address?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            registrationDetails?: {
+              regdNo?: string | null;
+              regdOffice?: string | null;
+              regdAddress?: string | null;
+              panOrVat?: string | null;
+            } | null;
+            statistics?: { totalMembers: number; totalCapital: number } | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetDepositSettingsIroQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetDepositSettingsIroQuery = {
@@ -38748,6 +38857,42 @@ export const useUpdateDeclarationMutation = <TError = unknown, TContext = unknow
     ['updateDeclaration'],
     useAxios<UpdateDeclarationMutation, UpdateDeclarationMutationVariables>(
       UpdateDeclarationDocument
+    ),
+    options
+  );
+export const SetOrganizationInitialSetupDocument = `
+    mutation setOrganizationInitialSetup($data: OrganizationInput!) {
+  settings {
+    general {
+      organization {
+        initialSetup(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetOrganizationInitialSetupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetOrganizationInitialSetupMutation,
+    TError,
+    SetOrganizationInitialSetupMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetOrganizationInitialSetupMutation,
+    TError,
+    SetOrganizationInitialSetupMutationVariables,
+    TContext
+  >(
+    ['setOrganizationInitialSetup'],
+    useAxios<SetOrganizationInitialSetupMutation, SetOrganizationInitialSetupMutationVariables>(
+      SetOrganizationInitialSetupDocument
     ),
     options
   );
@@ -52433,6 +52578,135 @@ export const useGetAccessLogListQuery = <TData = GetAccessLogListQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetOrganizationDataDocument = `
+    query getOrganizationData {
+  settings {
+    general {
+      organization {
+        mine {
+          data {
+            id
+            basicDetails {
+              name
+              logo
+              typeOfOrganization
+            }
+            contactDetails {
+              phoneNumber
+              email
+              website
+            }
+            mainContactPerson {
+              contactPersonName
+              contactPersonContactNumber
+              title
+            }
+            address {
+              ...Address
+            }
+            registrationDetails {
+              regdNo
+              regdOffice
+              regdAddress
+              panOrVat
+            }
+            documents
+            statistics {
+              totalMembers
+              totalCapital
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${MutationErrorFragmentDoc}`;
+export const useGetOrganizationDataQuery = <TData = GetOrganizationDataQuery, TError = unknown>(
+  variables?: GetOrganizationDataQueryVariables,
+  options?: UseQueryOptions<GetOrganizationDataQuery, TError, TData>
+) =>
+  useQuery<GetOrganizationDataQuery, TError, TData>(
+    variables === undefined ? ['getOrganizationData'] : ['getOrganizationData', variables],
+    useAxios<GetOrganizationDataQuery, GetOrganizationDataQueryVariables>(
+      GetOrganizationDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetOrganizationEditDataDocument = `
+    query getOrganizationEditData {
+  settings {
+    general {
+      organization {
+        formState {
+          data {
+            id
+            basicDetails {
+              name
+              logo
+              typeOfOrganization
+            }
+            contactDetails {
+              phoneNumber
+              email
+              website
+            }
+            mainContactPerson {
+              contactPersonName
+              contactPersonContactNumber
+              title
+            }
+            address {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            registrationDetails {
+              regdNo
+              regdOffice
+              regdAddress
+              panOrVat
+            }
+            documents
+            statistics {
+              totalMembers
+              totalCapital
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetOrganizationEditDataQuery = <
+  TData = GetOrganizationEditDataQuery,
+  TError = unknown
+>(
+  variables?: GetOrganizationEditDataQueryVariables,
+  options?: UseQueryOptions<GetOrganizationEditDataQuery, TError, TData>
+) =>
+  useQuery<GetOrganizationEditDataQuery, TError, TData>(
+    variables === undefined ? ['getOrganizationEditData'] : ['getOrganizationEditData', variables],
+    useAxios<GetOrganizationEditDataQuery, GetOrganizationEditDataQueryVariables>(
+      GetOrganizationEditDataDocument
+    ).bind(null, variables),
     options
   );
 export const GetDepositSettingsIroDocument = `

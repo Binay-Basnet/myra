@@ -333,6 +333,9 @@ export const ROUTES = {
 
   SETTINGS_GENERAL_LOAN_ORGANIZATION_RATE: '/settings/general/loan/organization-rate',
 
+  SETTINGS_GENERAL_ORGANIZATION_DETAILS: '/settings/general/organization',
+  SETTINGS_GENERAL_ORGANIZATION_EDIT: '/settings/general/organization/edit',
+
   SETTINGS_EOD_HISTORY_DETAILS: '/settings/general/eod/history/details',
   SETTINGS_GENERAL_COMMITTEE: '/settings/general/committee/list',
   SETTINGS_GENERAL_COMMITTEE_DETAILS: '/settings/general/committee/details',

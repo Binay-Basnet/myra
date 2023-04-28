@@ -1,0 +1,100 @@
+query getOrganizationData {
+  settings {
+    general {
+      organization {
+        mine {
+          data {
+            id
+            basicDetails {
+              name
+              logo
+              typeOfOrganization
+            }
+            contactDetails {
+              phoneNumber
+              email
+              website
+            }
+            mainContactPerson {
+              contactPersonName
+              contactPersonContactNumber
+              title
+            }
+            address {
+              ...Address
+            }
+            registrationDetails {
+              regdNo
+              regdOffice
+              regdAddress
+              panOrVat
+            }
+            documents
+            statistics {
+              totalMembers
+              totalCapital
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getOrganizationEditData {
+  settings {
+    general {
+      organization {
+        formState {
+          data {
+            id
+            basicDetails {
+              name
+              logo
+              typeOfOrganization
+            }
+            contactDetails {
+              phoneNumber
+              email
+              website
+            }
+            mainContactPerson {
+              contactPersonName
+              contactPersonContactNumber
+              title
+            }
+            address {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            registrationDetails {
+              regdNo
+              regdOffice
+              regdAddress
+              panOrVat
+            }
+            documents
+            statistics {
+              totalMembers
+              totalCapital
+            }
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
