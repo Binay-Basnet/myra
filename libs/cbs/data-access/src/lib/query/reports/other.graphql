@@ -119,3 +119,66 @@ query getPearlsReport($data: PearlsReportInput!) {
     }
   }
 }
+
+query getBODRegisterReport($data: CommitteeRegisterReportFilterData!) {
+  report {
+    committeeQuery {
+      committeeRegisterReport(data: $data) {
+        committee {
+          code
+          memberCount
+          name
+          tenure
+          createdAt
+          description
+          file {
+            identifier
+            url
+          }
+          member {
+            familyMember {
+              fatherName
+              grandFatherName
+              grandMotherName
+              inNepali {
+                fatherName
+                grandFatherName
+                grandMotherName
+                motherName
+                spouseName
+              }
+              motherName
+              spouseName
+            }
+            id
+            member {
+              id
+
+              code
+              name
+              address {
+                ...Address
+              }
+              contact
+            }
+            joinedAt
+            occupation {
+              id
+              occupationId
+              orgName
+              panVatNo
+              address
+              estimatedAnnualIncome
+              establishedDate
+              registrationNo
+              contact
+              isOwner
+            }
+            position
+          }
+          id
+        }
+      }
+    }
+  }
+}

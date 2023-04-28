@@ -2895,9 +2895,11 @@ export type CommitteeInput = {
 };
 
 export type CommitteeMember = {
+  familyMember: FamilyDetails;
   id?: Maybe<Scalars['ID']>;
   joinedAt: Scalars['Time'];
   member: Member;
+  occupation?: Maybe<KymIndOccupation>;
   position: Scalars['String'];
 };
 
@@ -2913,29 +2915,13 @@ export type CommitteeMemberInput = {
   position: Scalars['String'];
 };
 
-export type CommitteeMemberReport = {
-  familyMember: FamilyDetails;
-  id?: Maybe<Scalars['ID']>;
-  joinedAt: Scalars['Time'];
-  member: Member;
-  occupation?: Maybe<KymIndOccupation>;
-  position: Scalars['String'];
-};
-
 export type CommitteeRegisterReport = {
-  code?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Time']>;
-  description?: Maybe<Scalars['String']>;
-  file?: Maybe<UploadedDocumentData>;
-  id?: Maybe<Scalars['ID']>;
-  member?: Maybe<Array<Maybe<CommitteeMemberReport>>>;
-  memberCount?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  tenure?: Maybe<Scalars['Int']>;
+  committee?: Maybe<Array<Maybe<Committee>>>;
+  organization?: Maybe<Organization>;
 };
 
 export type CommitteeRegisterReportFilterData = {
-  committeeId: Scalars['ID'];
+  committeeId: Array<Scalars['ID']>;
   period?: InputMaybe<LocalizedDateFilter>;
 };
 
@@ -2945,7 +2931,7 @@ export type CommitteeReport = {
 };
 
 export type CommitteeReportCommitteeRegisterReportArgs = {
-  data?: InputMaybe<CommitteeRegisterReportFilterData>;
+  data: CommitteeRegisterReportFilterData;
 };
 
 export const ComparatorType = {
@@ -28796,6 +28782,67 @@ export type GetPearlsReportQuery = {
   };
 };
 
+export type GetBodRegisterReportQueryVariables = Exact<{
+  data: CommitteeRegisterReportFilterData;
+}>;
+
+export type GetBodRegisterReportQuery = {
+  report: {
+    committeeQuery: {
+      committeeRegisterReport?: {
+        committee?: Array<{
+          code?: string | null;
+          memberCount?: number | null;
+          name?: string | null;
+          tenure?: number | null;
+          createdAt?: string | null;
+          description?: string | null;
+          id?: string | null;
+          file?: { identifier: string; url: string } | null;
+          member?: Array<{
+            id?: string | null;
+            joinedAt: string;
+            position: string;
+            familyMember: {
+              fatherName?: string | null;
+              grandFatherName?: string | null;
+              grandMotherName?: string | null;
+              motherName?: string | null;
+              spouseName?: string | null;
+              inNepali?: {
+                fatherName?: string | null;
+                grandFatherName?: string | null;
+                grandMotherName?: string | null;
+                motherName?: string | null;
+                spouseName?: string | null;
+              } | null;
+            };
+            member: {
+              id: string;
+              code: string;
+              name?: Record<'local' | 'en' | 'np', string> | null;
+              contact?: string | null;
+              address?: AddressFragment | null;
+            };
+            occupation?: {
+              id: string;
+              occupationId?: string | null;
+              orgName?: Record<'local' | 'en' | 'np', string> | null;
+              panVatNo?: string | null;
+              address?: Record<'local' | 'en' | 'np', string> | null;
+              estimatedAnnualIncome?: string | null;
+              establishedDate?: Record<'local' | 'en' | 'np', string> | null;
+              registrationNo?: string | null;
+              contact?: string | null;
+              isOwner?: boolean | null;
+            } | null;
+          } | null> | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
 export type GetAllSavedReportsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -49462,6 +49509,80 @@ export const useGetPearlsReportQuery = <TData = GetPearlsReportQuery, TError = u
       null,
       variables
     ),
+    options
+  );
+export const GetBodRegisterReportDocument = `
+    query getBODRegisterReport($data: CommitteeRegisterReportFilterData!) {
+  report {
+    committeeQuery {
+      committeeRegisterReport(data: $data) {
+        committee {
+          code
+          memberCount
+          name
+          tenure
+          createdAt
+          description
+          file {
+            identifier
+            url
+          }
+          member {
+            familyMember {
+              fatherName
+              grandFatherName
+              grandMotherName
+              inNepali {
+                fatherName
+                grandFatherName
+                grandMotherName
+                motherName
+                spouseName
+              }
+              motherName
+              spouseName
+            }
+            id
+            member {
+              id
+              code
+              name
+              address {
+                ...Address
+              }
+              contact
+            }
+            joinedAt
+            occupation {
+              id
+              occupationId
+              orgName
+              panVatNo
+              address
+              estimatedAnnualIncome
+              establishedDate
+              registrationNo
+              contact
+              isOwner
+            }
+            position
+          }
+          id
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetBodRegisterReportQuery = <TData = GetBodRegisterReportQuery, TError = unknown>(
+  variables: GetBodRegisterReportQueryVariables,
+  options?: UseQueryOptions<GetBodRegisterReportQuery, TError, TData>
+) =>
+  useQuery<GetBodRegisterReportQuery, TError, TData>(
+    ['getBODRegisterReport', variables],
+    useAxios<GetBodRegisterReportQuery, GetBodRegisterReportQueryVariables>(
+      GetBodRegisterReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetAllSavedReportsDocument = `
