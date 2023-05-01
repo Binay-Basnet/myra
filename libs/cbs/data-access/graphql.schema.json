@@ -20546,7 +20546,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Time",
+              "name": "Localized",
               "ofType": null
             },
             "isDeprecated": false,

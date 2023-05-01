@@ -259,3 +259,45 @@ query getOrganizationalProfileReport {
     }
   }
 }
+
+query getShaareCertificatePrintReport($data: CertificatePrintFilter!) {
+  report {
+    printReport {
+      issueCertificateReport(data: $data) {
+        data {
+          Id
+          memberId
+          accountNumber
+          printedDate
+          printCount
+          issueServiceCenter
+          printedServiceCenter
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+
+query getFDCertificatePrintReport($data: CertificatePrintFilter!) {
+  report {
+    printReport {
+      fbCertificateReport(data: $data) {
+        data {
+          Id
+          memberId
+          accountNumber
+          printedDate
+          printCount
+          issueServiceCenter
+          printedServiceCenter
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}

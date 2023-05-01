@@ -143,6 +143,8 @@ export enum Report {
 
   OTHERS_COMMITTEE_REGISTER = 'Committee Registered Details Report',
   OTHERS_ORGANIZATIONAL_PROFILE = 'Organizational Profile Report',
+  OTHERS_SHARE_CERTIFICATE_PRINT_REPORT = 'Share Certificate Report',
+  OTHERS_FD_CERTIFICATE_PRINT_REPORT = 'FD-Certificate Report',
 }
 
 export const REPORTS = {
@@ -656,6 +658,8 @@ export const REPORTS = {
       link: 'committee-register',
     },
     { id: '14', report: Report.OTHERS_ORGANIZATIONAL_PROFILE, link: 'organizational-profile' },
+    { id: '15', report: Report.OTHERS_SHARE_CERTIFICATE_PRINT_REPORT, link: 'share-issue-print' },
+    { id: '15', report: Report.OTHERS_FD_CERTIFICATE_PRINT_REPORT, link: 'fd-print' },
   ],
   [ReportGroup.EXCEPTION]: [
     {
