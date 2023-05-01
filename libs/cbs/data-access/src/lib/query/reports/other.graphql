@@ -182,3 +182,78 @@ query getBODRegisterReport($data: CommitteeRegisterReportFilterData!) {
     }
   }
 }
+
+query getOrganizationalProfileReport {
+  report {
+    committeeQuery {
+      organizationProfileReport {
+        organization {
+          id
+          basicDetails {
+            logo
+            name
+            typeOfOrganization
+          }
+          contactDetails {
+            email
+            phoneNumber
+            website
+          }
+          mainContactPerson {
+            contactPersonContactNumber
+            contactPersonName
+            title
+          }
+          address {
+            ...Address
+          }
+          registrationDetails {
+            regdNo
+            regdOffice
+            regdAddress
+            panOrVat
+          }
+        }
+        committee {
+          code
+          memberCount
+          name
+          tenure
+          createdAt
+          description
+          file {
+            identifier
+            url
+          }
+          member {
+            id
+            member {
+              id
+
+              code
+              name
+              address {
+                ...Address
+              }
+              contact
+            }
+            occupation {
+              id
+              occupationId
+              orgName
+              panVatNo
+              address
+              estimatedAnnualIncome
+              establishedDate
+              registrationNo
+              contact
+              isOwner
+            }
+            position
+          }
+          id
+        }
+      }
+    }
+  }
+}

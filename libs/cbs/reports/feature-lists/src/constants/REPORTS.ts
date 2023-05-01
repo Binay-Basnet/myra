@@ -142,6 +142,7 @@ export enum Report {
   EXCEPTION_SHARE_BALANCE = 'Share Balance Exception Report',
 
   OTHERS_COMMITTEE_REGISTER = 'Committee Registered Details Report',
+  OTHERS_ORGANIZATIONAL_PROFILE = 'Organizational Profile Report',
 }
 
 export const REPORTS = {
@@ -654,6 +655,7 @@ export const REPORTS = {
       report: Report.OTHERS_COMMITTEE_REGISTER,
       link: 'committee-register',
     },
+    { id: '14', report: Report.OTHERS_ORGANIZATIONAL_PROFILE, link: 'organizational-profile' },
   ],
   [ReportGroup.EXCEPTION]: [
     {
