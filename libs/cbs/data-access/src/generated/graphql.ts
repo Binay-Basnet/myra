@@ -2521,7 +2521,7 @@ export type CertificatePrintReport = {
   issueServiceCenter?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   printCount?: Maybe<Scalars['Int']>;
-  printedDate?: Maybe<Scalars['Time']>;
+  printedDate?: Maybe<Scalars['Localized']>;
   printedServiceCenter?: Maybe<Scalars['String']>;
 };
 
@@ -28956,6 +28956,62 @@ export type GetOrganizationalProfileReportQuery = {
   };
 };
 
+export type GetShaareCertificatePrintReportQueryVariables = Exact<{
+  data: CertificatePrintFilter;
+}>;
+
+export type GetShaareCertificatePrintReportQuery = {
+  report: {
+    printReport: {
+      issueCertificateReport?: {
+        data?: Array<{
+          Id?: string | null;
+          memberId?: string | null;
+          accountNumber?: string | null;
+          printedDate?: Record<'local' | 'en' | 'np', string> | null;
+          printCount?: number | null;
+          issueServiceCenter?: string | null;
+          printedServiceCenter?: string | null;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type GetFdCertificatePrintReportQueryVariables = Exact<{
+  data: CertificatePrintFilter;
+}>;
+
+export type GetFdCertificatePrintReportQuery = {
+  report: {
+    printReport: {
+      fbCertificateReport?: {
+        data?: Array<{
+          Id?: string | null;
+          memberId?: string | null;
+          accountNumber?: string | null;
+          printedDate?: Record<'local' | 'en' | 'np', string> | null;
+          printCount?: number | null;
+          issueServiceCenter?: string | null;
+          printedServiceCenter?: string | null;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
 export type GetAllSavedReportsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -49788,6 +49844,78 @@ export const useGetOrganizationalProfileReportQuery = <
       : ['getOrganizationalProfileReport', variables],
     useAxios<GetOrganizationalProfileReportQuery, GetOrganizationalProfileReportQueryVariables>(
       GetOrganizationalProfileReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetShaareCertificatePrintReportDocument = `
+    query getShaareCertificatePrintReport($data: CertificatePrintFilter!) {
+  report {
+    printReport {
+      issueCertificateReport(data: $data) {
+        data {
+          Id
+          memberId
+          accountNumber
+          printedDate
+          printCount
+          issueServiceCenter
+          printedServiceCenter
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetShaareCertificatePrintReportQuery = <
+  TData = GetShaareCertificatePrintReportQuery,
+  TError = unknown
+>(
+  variables: GetShaareCertificatePrintReportQueryVariables,
+  options?: UseQueryOptions<GetShaareCertificatePrintReportQuery, TError, TData>
+) =>
+  useQuery<GetShaareCertificatePrintReportQuery, TError, TData>(
+    ['getShaareCertificatePrintReport', variables],
+    useAxios<GetShaareCertificatePrintReportQuery, GetShaareCertificatePrintReportQueryVariables>(
+      GetShaareCertificatePrintReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetFdCertificatePrintReportDocument = `
+    query getFDCertificatePrintReport($data: CertificatePrintFilter!) {
+  report {
+    printReport {
+      fbCertificateReport(data: $data) {
+        data {
+          Id
+          memberId
+          accountNumber
+          printedDate
+          printCount
+          issueServiceCenter
+          printedServiceCenter
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetFdCertificatePrintReportQuery = <
+  TData = GetFdCertificatePrintReportQuery,
+  TError = unknown
+>(
+  variables: GetFdCertificatePrintReportQueryVariables,
+  options?: UseQueryOptions<GetFdCertificatePrintReportQuery, TError, TData>
+) =>
+  useQuery<GetFdCertificatePrintReportQuery, TError, TData>(
+    ['getFDCertificatePrintReport', variables],
+    useAxios<GetFdCertificatePrintReportQuery, GetFdCertificatePrintReportQueryVariables>(
+      GetFdCertificatePrintReportDocument
     ).bind(null, variables),
     options
   );
