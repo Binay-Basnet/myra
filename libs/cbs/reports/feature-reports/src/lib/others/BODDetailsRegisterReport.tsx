@@ -12,7 +12,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { formatAddress, localizedText, RouteToDetailsPage } from '@coop/cbs/utils';
+import { formatAddress, localizedDate, localizedText, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormSelect } from '@coop/shared/form';
 
 type CommitteeFilters = Omit<CommitteeRegisterReportFilterData, 'committeeId'> & {
@@ -165,10 +165,12 @@ const CommitteeTable = ({ data, header }: IMemberTableProps) => {
         {
           header: 'Elected Date.',
           accessorKey: 'joinedAt',
+          accessorFn: (row) => localizedDate(row?.joinedAt),
         },
         {
           header: 'Valid Upto',
-          accessorKey: 'joinedAt',
+          accessorKey: 'validUpto',
+          accessorFn: (row) => localizedDate(row?.validUpto),
         },
         {
           header: 'Contact Number',

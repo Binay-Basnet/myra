@@ -151,6 +151,8 @@ query getBODRegisterReport($data: CommitteeRegisterReportFilterData!) {
               spouseName
             }
             id
+            joinedAt
+            validUpto
             member {
               id
 

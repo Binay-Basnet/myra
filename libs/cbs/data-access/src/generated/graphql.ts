@@ -2498,6 +2498,38 @@ export const CashValue = {
 } as const;
 
 export type CashValue = typeof CashValue[keyof typeof CashValue];
+export type CertificatePrint = {
+  fbCertificateReport?: Maybe<CertificatePrintReportResult>;
+  issueCertificateReport?: Maybe<CertificatePrintReportResult>;
+};
+
+export type CertificatePrintFbCertificateReportArgs = {
+  data: CertificatePrintFilter;
+};
+
+export type CertificatePrintIssueCertificateReportArgs = {
+  data: CertificatePrintFilter;
+};
+
+export type CertificatePrintFilter = {
+  list?: InputMaybe<ListType>;
+};
+
+export type CertificatePrintReport = {
+  Id?: Maybe<Scalars['ID']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  issueServiceCenter?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  printCount?: Maybe<Scalars['Int']>;
+  printedDate?: Maybe<Scalars['Time']>;
+  printedServiceCenter?: Maybe<Scalars['String']>;
+};
+
+export type CertificatePrintReportResult = {
+  data?: Maybe<Array<Maybe<CertificatePrintReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type CharKhataReportFilter = {
   branchId: Array<InputMaybe<Scalars['String']>>;
   coaHead: Array<Scalars['String']>;
@@ -2869,7 +2901,7 @@ export type CombinedAccountDetail = {
 
 export type Committee = {
   code?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Time']>;
+  createdAt?: Maybe<Scalars['Localized']>;
   description?: Maybe<Scalars['String']>;
   file?: Maybe<UploadedDocumentData>;
   id?: Maybe<Scalars['ID']>;
@@ -2897,10 +2929,11 @@ export type CommitteeInput = {
 export type CommitteeMember = {
   familyMember: FamilyDetails;
   id?: Maybe<Scalars['ID']>;
-  joinedAt: Scalars['Time'];
+  joinedAt: Scalars['Localized'];
   member: Member;
   occupation?: Maybe<KymIndOccupation>;
   position: Scalars['String'];
+  validUpto: Scalars['Localized'];
 };
 
 export type CommitteeMemberAddResult = {
@@ -10001,6 +10034,13 @@ export type Level2HelloArgs = {
   data: ExampleInput;
 };
 
+export const ListType = {
+  All: 'ALL',
+  NotPrinted: 'NOT_PRINTED',
+  Printed: 'PRINTED',
+} as const;
+
+export type ListType = typeof ListType[keyof typeof ListType];
 export type LoanAccReportDetails = {
   accountNo?: Maybe<Scalars['String']>;
   approvedAmount?: Maybe<Scalars['String']>;
@@ -13972,6 +14012,8 @@ export type PrintPreferenceResult = {
 
 export const PrintType = {
   CustomerCopy: 'CUSTOMER_COPY',
+  FdCertificate: 'FD_CERTIFICATE',
+  IssueCertificate: 'ISSUE_CERTIFICATE',
   OfficeVoucher: 'OFFICE_VOUCHER',
 } as const;
 
@@ -14416,6 +14458,7 @@ export type ReportQuery = {
   mobileBankingReport: MobileBankingReport;
   otherReport: OtherReport;
   pearlsReport?: Maybe<PearlsReportResult>;
+  printReport: CertificatePrint;
   shareReport: ShareReport;
   transactionReport: TransactionReport;
 };
@@ -28795,13 +28838,14 @@ export type GetBodRegisterReportQuery = {
           memberCount?: number | null;
           name?: string | null;
           tenure?: number | null;
-          createdAt?: string | null;
+          createdAt?: Record<'local' | 'en' | 'np', string> | null;
           description?: string | null;
           id?: string | null;
           file?: { identifier: string; url: string } | null;
           member?: Array<{
             id?: string | null;
-            joinedAt: string;
+            joinedAt: Record<'local' | 'en' | 'np', string>;
+            validUpto: Record<'local' | 'en' | 'np', string>;
             position: string;
             familyMember: {
               fatherName?: string | null;
@@ -28879,7 +28923,7 @@ export type GetOrganizationalProfileReportQuery = {
           memberCount?: number | null;
           name?: string | null;
           tenure?: number | null;
-          createdAt?: string | null;
+          createdAt?: Record<'local' | 'en' | 'np', string> | null;
           description?: string | null;
           id?: string | null;
           file?: { identifier: string; url: string } | null;
@@ -49612,6 +49656,8 @@ export const GetBodRegisterReportDocument = `
               spouseName
             }
             id
+            joinedAt
+            validUpto
             member {
               id
               code
