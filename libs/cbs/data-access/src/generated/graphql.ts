@@ -28843,6 +28843,75 @@ export type GetBodRegisterReportQuery = {
   };
 };
 
+export type GetOrganizationalProfileReportQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetOrganizationalProfileReportQuery = {
+  report: {
+    committeeQuery: {
+      organizationProfileReport?: {
+        organization: {
+          id: string;
+          basicDetails?: {
+            logo?: string | null;
+            name?: string | null;
+            typeOfOrganization?: TypeOfOrganization | null;
+          } | null;
+          contactDetails?: {
+            email?: string | null;
+            phoneNumber?: string | null;
+            website?: string | null;
+          } | null;
+          mainContactPerson?: {
+            contactPersonContactNumber?: string | null;
+            contactPersonName?: string | null;
+            title?: string | null;
+          } | null;
+          address?: AddressFragment | null;
+          registrationDetails?: {
+            regdNo?: string | null;
+            regdOffice?: string | null;
+            regdAddress?: string | null;
+            panOrVat?: string | null;
+          } | null;
+        };
+        committee: Array<{
+          code?: string | null;
+          memberCount?: number | null;
+          name?: string | null;
+          tenure?: number | null;
+          createdAt?: string | null;
+          description?: string | null;
+          id?: string | null;
+          file?: { identifier: string; url: string } | null;
+          member?: Array<{
+            id?: string | null;
+            position: string;
+            member: {
+              id: string;
+              code: string;
+              name?: Record<'local' | 'en' | 'np', string> | null;
+              contact?: string | null;
+              address?: AddressFragment | null;
+            };
+            occupation?: {
+              id: string;
+              occupationId?: string | null;
+              orgName?: Record<'local' | 'en' | 'np', string> | null;
+              panVatNo?: string | null;
+              address?: Record<'local' | 'en' | 'np', string> | null;
+              estimatedAnnualIncome?: string | null;
+              establishedDate?: Record<'local' | 'en' | 'np', string> | null;
+              registrationNo?: string | null;
+              contact?: string | null;
+              isOwner?: boolean | null;
+            } | null;
+          } | null> | null;
+        }>;
+      } | null;
+    };
+  };
+};
+
 export type GetAllSavedReportsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -49582,6 +49651,97 @@ export const useGetBodRegisterReportQuery = <TData = GetBodRegisterReportQuery, 
     ['getBODRegisterReport', variables],
     useAxios<GetBodRegisterReportQuery, GetBodRegisterReportQueryVariables>(
       GetBodRegisterReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetOrganizationalProfileReportDocument = `
+    query getOrganizationalProfileReport {
+  report {
+    committeeQuery {
+      organizationProfileReport {
+        organization {
+          id
+          basicDetails {
+            logo
+            name
+            typeOfOrganization
+          }
+          contactDetails {
+            email
+            phoneNumber
+            website
+          }
+          mainContactPerson {
+            contactPersonContactNumber
+            contactPersonName
+            title
+          }
+          address {
+            ...Address
+          }
+          registrationDetails {
+            regdNo
+            regdOffice
+            regdAddress
+            panOrVat
+          }
+        }
+        committee {
+          code
+          memberCount
+          name
+          tenure
+          createdAt
+          description
+          file {
+            identifier
+            url
+          }
+          member {
+            id
+            member {
+              id
+              code
+              name
+              address {
+                ...Address
+              }
+              contact
+            }
+            occupation {
+              id
+              occupationId
+              orgName
+              panVatNo
+              address
+              estimatedAnnualIncome
+              establishedDate
+              registrationNo
+              contact
+              isOwner
+            }
+            position
+          }
+          id
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetOrganizationalProfileReportQuery = <
+  TData = GetOrganizationalProfileReportQuery,
+  TError = unknown
+>(
+  variables?: GetOrganizationalProfileReportQueryVariables,
+  options?: UseQueryOptions<GetOrganizationalProfileReportQuery, TError, TData>
+) =>
+  useQuery<GetOrganizationalProfileReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getOrganizationalProfileReport']
+      : ['getOrganizationalProfileReport', variables],
+    useAxios<GetOrganizationalProfileReportQuery, GetOrganizationalProfileReportQueryVariables>(
+      GetOrganizationalProfileReportDocument
     ).bind(null, variables),
     options
   );

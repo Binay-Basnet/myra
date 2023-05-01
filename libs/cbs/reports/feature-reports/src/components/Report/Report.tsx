@@ -279,7 +279,7 @@ export const ReportInputs = <T extends FieldValues | null>({
   children,
   hideDate,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   hideDate?: boolean;
 }) => {
   const { getValues, watch } = useFormContext<NonNullable<T>>();
