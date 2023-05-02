@@ -75,6 +75,7 @@ query getAgentTodayListData($id: ID!) {
   transaction {
     listAgentTask(id: $id) {
       record {
+        id
         member {
           id
         }

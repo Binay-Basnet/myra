@@ -989,6 +989,7 @@ export type AgentRecord = {
 export type AgentTodayList = {
   account?: Maybe<DepositLoanAccount>;
   amount?: Maybe<Scalars['Amount']>;
+  id?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   paid?: Maybe<Scalars['Boolean']>;
 };
@@ -1001,6 +1002,7 @@ export type AgentTodayListData = {
 export type AgentTodayListInput = {
   account?: InputMaybe<Scalars['String']>;
   amount?: InputMaybe<Scalars['Amount']>;
+  id?: InputMaybe<Scalars['String']>;
   member?: InputMaybe<Scalars['String']>;
   paid?: InputMaybe<Scalars['Boolean']>;
 };
@@ -2521,7 +2523,7 @@ export type CertificatePrintReport = {
   issueServiceCenter?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   printCount?: Maybe<Scalars['Int']>;
-  printedDate?: Maybe<Scalars['Localized']>;
+  printedDate?: Maybe<Scalars['Time']>;
   printedServiceCenter?: Maybe<Scalars['String']>;
 };
 
@@ -23165,6 +23167,7 @@ export type GetAgentTodayListDataQuery = {
   transaction: {
     listAgentTask?: {
       record?: Array<{
+        id?: string | null;
         amount?: any | null;
         paid?: boolean | null;
         member?: { id: string } | null;
@@ -28968,7 +28971,7 @@ export type GetShaareCertificatePrintReportQuery = {
           Id?: string | null;
           memberId?: string | null;
           accountNumber?: string | null;
-          printedDate?: Record<'local' | 'en' | 'np', string> | null;
+          printedDate?: string | null;
           printCount?: number | null;
           issueServiceCenter?: string | null;
           printedServiceCenter?: string | null;
@@ -28996,7 +28999,7 @@ export type GetFdCertificatePrintReportQuery = {
           Id?: string | null;
           memberId?: string | null;
           accountNumber?: string | null;
-          printedDate?: Record<'local' | 'en' | 'np', string> | null;
+          printedDate?: string | null;
           printCount?: number | null;
           issueServiceCenter?: string | null;
           printedServiceCenter?: string | null;
@@ -42485,6 +42488,7 @@ export const GetAgentTodayListDataDocument = `
   transaction {
     listAgentTask(id: $id) {
       record {
+        id
         member {
           id
         }
