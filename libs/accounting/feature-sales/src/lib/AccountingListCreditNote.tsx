@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { Column, Table } from '@myra-ui/table';
 
@@ -14,8 +13,6 @@ export interface AccountingListCreditNoteProps {}
 export const AccountingListCreditNote = () => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-
   const { data, isFetching } = useGetSalesCreditNoteListDataQuery({
     pagination: getPaginationQuery(),
   });
@@ -25,18 +22,20 @@ export const AccountingListCreditNote = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: 'Date',
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+      {
         accessorFn: (row) => row?.node?.customerName,
         header: t['accountingCreditNoteListCustomer'],
-
-        meta: {
-          width: '60%',
-        },
       },
+
       {
         header: t['accountingCreditNoteListTotalAmount'],
         accessorFn: (row) => amountConverter(row?.node?.amount ?? 0),
         meta: {
-          width: '30%',
+          width: '10%',
+          isNumeric: true,
         },
       },
       {

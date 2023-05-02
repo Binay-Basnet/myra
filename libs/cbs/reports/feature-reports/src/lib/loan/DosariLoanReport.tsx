@@ -111,7 +111,7 @@ export const DosariLoanReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization />
           <Report.Table<ReportData>
-            showFooter
+            // showFooter
             columns={[
               {
                 header: 'Type',

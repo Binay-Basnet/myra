@@ -52,7 +52,7 @@ export const MemberMinorListPage = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Member ID',
+        header: 'Member Code',
         accessorFn: (row) => row?.node?.memberCode,
       },
       {
