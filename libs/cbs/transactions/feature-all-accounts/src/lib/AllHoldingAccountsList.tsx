@@ -40,6 +40,10 @@ export const AllHoldingAccountsList = () => {
         header: 'Ledger Balance',
         accessorFn: (row) => row?.node?.ledgerBalance,
         cell: (props) => amountConverter(props?.row?.original?.node?.ledgerBalance as string),
+        meta: {
+          isNumeric: true,
+          width: '5%',
+        },
       },
     ],
     [isFetching]
