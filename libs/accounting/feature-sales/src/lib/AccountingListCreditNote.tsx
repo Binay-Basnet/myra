@@ -26,23 +26,21 @@ export const AccountingListCreditNote = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        header: 'Date',
+        accessorFn: (row) => localizedDate(row?.node?.date),
+      },
+      {
         accessorFn: (row) => row?.node?.customerName,
         header: t['accountingCreditNoteListCustomer'],
-
-        meta: {
-          width: '60%',
-        },
       },
+
       {
         header: t['accountingCreditNoteListTotalAmount'],
         accessorFn: (row) => amountConverter(row?.node?.amount ?? 0),
         meta: {
-          width: '30%',
+          width: '10%',
+          isNumeric: true,
         },
-      },
-      {
-        header: 'Date',
-        accessorFn: (row) => localizedDate(row?.node?.date),
       },
       {
         id: '_actions',
