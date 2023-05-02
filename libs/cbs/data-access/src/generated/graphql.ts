@@ -705,6 +705,9 @@ export type AccountingSalesQuery = {
   creditNoteFormState: AccountingSalesCreditNoteQueryResult;
   customerFormState: AccountingSalesCustomerQueryResult;
   customerPaymentFormState: AccountingSalesCustomerPaymentQueryResult;
+  detailCreditNote: SalesSaleCreditNote;
+  detailCustomer: SalesCustomerDetail;
+  detailSaleEntry: SalesSaleDetailEntry;
   listCreditNote: SalesCreditNoteListConnection;
   listCustomer: SalesCustomerListConnection;
   listCustomerPayment: SalesCustomerPaymentListConnection;
@@ -721,6 +724,18 @@ export type AccountingSalesQueryCustomerFormStateArgs = {
 };
 
 export type AccountingSalesQueryCustomerPaymentFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+export type AccountingSalesQueryDetailCreditNoteArgs = {
+  id: Scalars['ID'];
+};
+
+export type AccountingSalesQueryDetailCustomerArgs = {
+  id: Scalars['ID'];
+};
+
+export type AccountingSalesQueryDetailSaleEntryArgs = {
   id: Scalars['ID'];
 };
 
@@ -989,6 +1004,7 @@ export type AgentRecord = {
 export type AgentTodayList = {
   account?: Maybe<DepositLoanAccount>;
   amount?: Maybe<Scalars['Amount']>;
+  id?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   paid?: Maybe<Scalars['Boolean']>;
 };
@@ -1001,6 +1017,7 @@ export type AgentTodayListData = {
 export type AgentTodayListInput = {
   account?: InputMaybe<Scalars['String']>;
   amount?: InputMaybe<Scalars['Amount']>;
+  id?: InputMaybe<Scalars['String']>;
   member?: InputMaybe<Scalars['String']>;
   paid?: InputMaybe<Scalars['Boolean']>;
 };
@@ -13748,6 +13765,15 @@ export const PaymentDepositedBy = {
 } as const;
 
 export type PaymentDepositedBy = typeof PaymentDepositedBy[keyof typeof PaymentDepositedBy];
+export type PaymentDetail = {
+  discount?: Maybe<Scalars['String']>;
+  grandTotal?: Maybe<Scalars['String']>;
+  nonTaxableTotal?: Maybe<Scalars['String']>;
+  subTotal?: Maybe<Scalars['String']>;
+  taxableTotal?: Maybe<Scalars['String']>;
+  vat?: Maybe<Scalars['String']>;
+};
+
 export type PearlsRecord = {
   denominator: Scalars['String'];
   description: Scalars['String'];
@@ -14682,14 +14708,16 @@ export type StrTransactionDetailQuery = {
 };
 
 export type SaleProduct = {
-  amount: Scalars['String'];
-  name: Scalars['String'];
-  productDescription?: Maybe<Scalars['String']>;
-  quantity: Scalars['String'];
-  rate: Scalars['String'];
-  salesLedger?: Maybe<Scalars['String']>;
-  tax: Scalars['Float'];
-  warehousePartition?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  itemId?: Maybe<Scalars['String']>;
+  itemName?: Maybe<Scalars['String']>;
+  quantity?: Maybe<Scalars['String']>;
+  rate?: Maybe<Scalars['String']>;
+  tax?: Maybe<Scalars['String']>;
+  taxValue?: Maybe<Scalars['String']>;
+  warehouse?: Maybe<Scalars['String']>;
+  warehouseName?: Maybe<Scalars['String']>;
 };
 
 export type SaleProductInput = {
@@ -14705,14 +14733,12 @@ export type SaleProductInput = {
 
 export type SalesCreditNote = {
   customerID: Scalars['ID'];
+  customerName?: Maybe<Scalars['String']>;
   date: Scalars['Localized'];
   invoiceReference: Scalars['String'];
-  nonTaxableTotal?: Maybe<Scalars['String']>;
   notes?: Maybe<Scalars['String']>;
+  paymentDetail?: Maybe<PaymentDetail>;
   products: Array<SaleProduct>;
-  subTotal?: Maybe<Scalars['String']>;
-  taxableTotal?: Maybe<Scalars['String']>;
-  vat?: Maybe<Scalars['String']>;
 };
 
 export type SalesCreditNoteEntry = {
@@ -14762,11 +14788,21 @@ export type SalesCustomer = {
   phoneNumber: Scalars['String'];
 };
 
+export type SalesCustomerDetail = {
+  data?: Maybe<SalesCustomerEntry>;
+  error?: Maybe<QueryError>;
+};
+
 export type SalesCustomerEntry = {
   address?: Maybe<Address>;
+  code?: Maybe<Scalars['String']>;
+  creditLimit?: Maybe<Scalars['String']>;
+  creditTerms?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
+  openingBalance?: Maybe<Scalars['String']>;
+  panNo?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
 };
 
@@ -14852,17 +14888,29 @@ export type SalesCustomerPaymentListEdges = {
   node?: Maybe<SalesCustomerPaymentEntry>;
 };
 
+export type SalesSaleCreditNote = {
+  data?: Maybe<SalesCreditNote>;
+  error?: Maybe<QueryError>;
+};
+
+export type SalesSaleDetailEntry = {
+  data?: Maybe<SalesSaleEntry>;
+  error?: Maybe<QueryError>;
+};
+
 export type SalesSaleEntry = {
   customerID: Scalars['ID'];
-  discount?: Maybe<Scalars['String']>;
+  customerName?: Maybe<Scalars['String']>;
   dueDate: Scalars['Localized'];
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   invoiceDate: Scalars['Localized'];
+  invoiceNo?: Maybe<Scalars['String']>;
   notes?: Maybe<Scalars['String']>;
+  paymentDetail?: Maybe<PaymentDetail>;
   products: Array<SaleProduct>;
   reference: Scalars['String'];
-  subTotal?: Maybe<Scalars['String']>;
-  taxableTotal?: Maybe<Scalars['String']>;
-  vat?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
 };
 
 export type SalesSaleEntryEntry = {
@@ -15379,6 +15427,8 @@ export type ShareBalance = {
   member: Member;
   memberId?: Maybe<Scalars['ID']>;
   shareCertificateNo?: Maybe<Scalars['String']>;
+  totalIssued?: Maybe<Scalars['Int']>;
+  totalReturned?: Maybe<Scalars['Int']>;
 };
 
 export type ShareBalanceConnection = {
@@ -22881,40 +22931,6 @@ export type GetSalesSaleEntryListDataQuery = {
   };
 };
 
-export type GetSalesSaleEntryFormStateDataQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetSalesSaleEntryFormStateDataQuery = {
-  accounting: {
-    sales: {
-      saleEntryFormState: {
-        data?: {
-          customerID: string;
-          reference: string;
-          invoiceDate: Record<'local' | 'en' | 'np', string>;
-          dueDate: Record<'local' | 'en' | 'np', string>;
-          notes?: string | null;
-          subTotal?: string | null;
-          discount?: string | null;
-          taxableTotal?: string | null;
-          vat?: string | null;
-          products: Array<{
-            name: string;
-            quantity: string;
-            rate: string;
-            tax: number;
-            amount: string;
-            productDescription?: string | null;
-            warehousePartition?: string | null;
-            salesLedger?: string | null;
-          }>;
-        } | null;
-      };
-    };
-  };
-};
-
 export type GetSalesCreditNoteListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<SalesCreditNoteFilter>;
@@ -22939,39 +22955,6 @@ export type GetSalesCreditNoteListDataQuery = {
           endCursor?: string | null;
           hasNextPage: boolean;
           hasPreviousPage: boolean;
-        } | null;
-      };
-    };
-  };
-};
-
-export type GetSalesCreditNoteFormStateDataQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetSalesCreditNoteFormStateDataQuery = {
-  accounting: {
-    sales: {
-      creditNoteFormState: {
-        data?: {
-          customerID: string;
-          invoiceReference: string;
-          date: Record<'local' | 'en' | 'np', string>;
-          notes?: string | null;
-          subTotal?: string | null;
-          nonTaxableTotal?: string | null;
-          taxableTotal?: string | null;
-          vat?: string | null;
-          products: Array<{
-            name: string;
-            quantity: string;
-            rate: string;
-            tax: number;
-            amount: string;
-            productDescription?: string | null;
-            warehousePartition?: string | null;
-            salesLedger?: string | null;
-          }>;
         } | null;
       };
     };
@@ -23037,6 +23020,66 @@ export type GetSalesCustomerPaymentFormStateDataQuery = {
             thisAllocation: string;
           }>;
         } | null;
+      };
+    };
+  };
+};
+
+export type GetSalesEntryDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSalesEntryDetailsQuery = {
+  accounting: {
+    sales: {
+      detailSaleEntry: {
+        data?: {
+          customerID: string;
+          reference: string;
+          invoiceNo?: string | null;
+          customerName?: string | null;
+          invoiceDate: Record<'local' | 'en' | 'np', string>;
+          dueDate: Record<'local' | 'en' | 'np', string>;
+          totalDebit?: string | null;
+          totalCredit?: string | null;
+          notes?: string | null;
+          products: Array<{
+            itemId?: string | null;
+            itemName?: string | null;
+            quantity?: string | null;
+            rate?: string | null;
+            tax?: string | null;
+            taxValue?: string | null;
+            amount?: string | null;
+            description?: string | null;
+            warehouse?: string | null;
+            warehouseName?: string | null;
+          }>;
+          paymentDetail?: {
+            subTotal?: string | null;
+            nonTaxableTotal?: string | null;
+            taxableTotal?: string | null;
+            vat?: string | null;
+            grandTotal?: string | null;
+            discount?: string | null;
+          } | null;
+          glTransaction?: Array<{
+            ledgerId?: string | null;
+            account: string;
+            serviceCentreId?: string | null;
+            serviceCenter?: string | null;
+            debit?: string | null;
+            credit?: string | null;
+            balance?: string | null;
+            balanceType?: BalanceType | null;
+          } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
       };
     };
   };
@@ -23165,6 +23208,7 @@ export type GetAgentTodayListDataQuery = {
   transaction: {
     listAgentTask?: {
       record?: Array<{
+        id?: string | null;
         amount?: any | null;
         paid?: boolean | null;
         member?: { id: string } | null;
@@ -42047,51 +42091,6 @@ export const useGetSalesSaleEntryListDataQuery = <
     ).bind(null, variables),
     options
   );
-export const GetSalesSaleEntryFormStateDataDocument = `
-    query getSalesSaleEntryFormStateData($id: ID!) {
-  accounting {
-    sales {
-      saleEntryFormState(id: $id) {
-        data {
-          customerID
-          reference
-          invoiceDate
-          dueDate
-          products {
-            name
-            quantity
-            rate
-            tax
-            amount
-            productDescription
-            warehousePartition
-            salesLedger
-          }
-          notes
-          subTotal
-          discount
-          taxableTotal
-          vat
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetSalesSaleEntryFormStateDataQuery = <
-  TData = GetSalesSaleEntryFormStateDataQuery,
-  TError = unknown
->(
-  variables: GetSalesSaleEntryFormStateDataQueryVariables,
-  options?: UseQueryOptions<GetSalesSaleEntryFormStateDataQuery, TError, TData>
-) =>
-  useQuery<GetSalesSaleEntryFormStateDataQuery, TError, TData>(
-    ['getSalesSaleEntryFormStateData', variables],
-    useAxios<GetSalesSaleEntryFormStateDataQuery, GetSalesSaleEntryFormStateDataQueryVariables>(
-      GetSalesSaleEntryFormStateDataDocument
-    ).bind(null, variables),
-    options
-  );
 export const GetSalesCreditNoteListDataDocument = `
     query getSalesCreditNoteListData($pagination: Pagination, $filter: SalesCreditNoteFilter) {
   accounting {
@@ -42131,50 +42130,6 @@ export const useGetSalesCreditNoteListDataQuery = <
       : ['getSalesCreditNoteListData', variables],
     useAxios<GetSalesCreditNoteListDataQuery, GetSalesCreditNoteListDataQueryVariables>(
       GetSalesCreditNoteListDataDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetSalesCreditNoteFormStateDataDocument = `
-    query getSalesCreditNoteFormStateData($id: ID!) {
-  accounting {
-    sales {
-      creditNoteFormState(id: $id) {
-        data {
-          customerID
-          invoiceReference
-          date
-          products {
-            name
-            quantity
-            rate
-            tax
-            amount
-            productDescription
-            warehousePartition
-            salesLedger
-          }
-          notes
-          subTotal
-          nonTaxableTotal
-          taxableTotal
-          vat
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetSalesCreditNoteFormStateDataQuery = <
-  TData = GetSalesCreditNoteFormStateDataQuery,
-  TError = unknown
->(
-  variables: GetSalesCreditNoteFormStateDataQueryVariables,
-  options?: UseQueryOptions<GetSalesCreditNoteFormStateDataQuery, TError, TData>
-) =>
-  useQuery<GetSalesCreditNoteFormStateDataQuery, TError, TData>(
-    ['getSalesCreditNoteFormStateData', variables],
-    useAxios<GetSalesCreditNoteFormStateDataQuery, GetSalesCreditNoteFormStateDataQueryVariables>(
-      GetSalesCreditNoteFormStateDataDocument
     ).bind(null, variables),
     options
   );
@@ -42264,6 +42219,71 @@ export const useGetSalesCustomerPaymentFormStateDataQuery = <
       GetSalesCustomerPaymentFormStateDataQuery,
       GetSalesCustomerPaymentFormStateDataQueryVariables
     >(GetSalesCustomerPaymentFormStateDataDocument).bind(null, variables),
+    options
+  );
+export const GetSalesEntryDetailsDocument = `
+    query getSalesEntryDetails($id: ID!) {
+  accounting {
+    sales {
+      detailSaleEntry(id: $id) {
+        data {
+          customerID
+          reference
+          invoiceNo
+          customerName
+          invoiceDate
+          dueDate
+          products {
+            itemId
+            itemName
+            quantity
+            rate
+            tax
+            taxValue
+            amount
+            description
+            warehouse
+            warehouseName
+          }
+          paymentDetail {
+            subTotal
+            nonTaxableTotal
+            taxableTotal
+            vat
+            grandTotal
+            discount
+          }
+          glTransaction {
+            ledgerId
+            account
+            serviceCentreId
+            serviceCenter
+            debit
+            credit
+            balance
+            balanceType
+          }
+          totalDebit
+          totalCredit
+          notes
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetSalesEntryDetailsQuery = <TData = GetSalesEntryDetailsQuery, TError = unknown>(
+  variables: GetSalesEntryDetailsQueryVariables,
+  options?: UseQueryOptions<GetSalesEntryDetailsQuery, TError, TData>
+) =>
+  useQuery<GetSalesEntryDetailsQuery, TError, TData>(
+    ['getSalesEntryDetails', variables],
+    useAxios<GetSalesEntryDetailsQuery, GetSalesEntryDetailsQueryVariables>(
+      GetSalesEntryDetailsDocument
+    ).bind(null, variables),
     options
   );
 export const AllAdministrationDocument = `
@@ -42485,6 +42505,7 @@ export const GetAgentTodayListDataDocument = `
   transaction {
     listAgentTask(id: $id) {
       record {
+        id
         member {
           id
         }

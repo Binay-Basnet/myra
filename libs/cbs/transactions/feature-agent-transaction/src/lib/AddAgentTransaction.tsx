@@ -83,6 +83,7 @@ export const AddAgentTransaction = () => {
   const todaysList = useMemo(
     () =>
       agentTodayListQueryData?.transaction?.listAgentTask?.record?.map((record) => ({
+        id: record?.id,
         member: record?.member?.id as string,
         account: record?.account?.id as string,
         amount: record?.amount,
@@ -136,12 +137,27 @@ export const AddAgentTransaction = () => {
       promise: setAgentTodayList({
         id: agentId,
         data: getValues()['accounts'].map(
-          (account: { member: string; account: string; amount: string; paid: boolean }) => ({
-            member: account.member,
-            account: account.account,
-            amount: String(account.amount),
-            paid: account.paid,
-          })
+          (account: {
+            id: string;
+            member: string;
+            account: string;
+            amount: string;
+            paid: boolean;
+          }) =>
+            account.id
+              ? {
+                  id: account.id,
+                  member: account.member,
+                  account: account.account,
+                  amount: String(account.amount),
+                  paid: account.paid,
+                }
+              : {
+                  member: account.member,
+                  account: account.account,
+                  amount: String(account.amount),
+                  paid: account.paid,
+                }
         ),
       }),
       msgs: {

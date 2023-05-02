@@ -96,35 +96,35 @@ query getSalesSaleEntryListData($pagination: Pagination, $filter: SalesSaleEntry
   }
 }
 
-query getSalesSaleEntryFormStateData($id: ID!) {
-  accounting {
-    sales {
-      saleEntryFormState(id: $id) {
-        data {
-          customerID
-          reference
-          invoiceDate
-          dueDate
-          products {
-            name
-            quantity
-            rate
-            tax
-            amount
-            productDescription
-            warehousePartition
-            salesLedger
-          }
-          notes
-          subTotal
-          discount
-          taxableTotal
-          vat
-        }
-      }
-    }
-  }
-}
+# query getSalesSaleEntryFormStateData($id: ID!) {
+#   accounting {
+#     sales {
+#       saleEntryFormState(id: $id) {
+#         data {
+#           customerID
+#           reference
+#           invoiceDate
+#           dueDate
+#           products {
+#             name
+#             quantity
+#             rate
+#             tax
+#             amount
+#             productDescription
+#             warehousePartition
+#             salesLedger
+#           }
+#           notes
+#           subTotal
+#           discount
+#           taxableTotal
+#           vat
+#         }
+#       }
+#     }
+#   }
+# }
 
 query getSalesCreditNoteListData($pagination: Pagination, $filter: SalesCreditNoteFilter) {
   accounting {
@@ -151,34 +151,34 @@ query getSalesCreditNoteListData($pagination: Pagination, $filter: SalesCreditNo
   }
 }
 
-query getSalesCreditNoteFormStateData($id: ID!) {
-  accounting {
-    sales {
-      creditNoteFormState(id: $id) {
-        data {
-          customerID
-          invoiceReference
-          date
-          products {
-            name
-            quantity
-            rate
-            tax
-            amount
-            productDescription
-            warehousePartition
-            salesLedger
-          }
-          notes
-          subTotal
-          nonTaxableTotal
-          taxableTotal
-          vat
-        }
-      }
-    }
-  }
-}
+# query getSalesCreditNoteFormStateData($id: ID!) {
+#   accounting {
+#     sales {
+#       creditNoteFormState(id: $id) {
+#         data {
+#           customerID
+#           invoiceReference
+#           date
+#           products {
+#             name
+#             quantity
+#             rate
+#             tax
+#             amount
+#             productDescription
+#             warehousePartition
+#             salesLedger
+#           }
+#           notes
+#           subTotal
+#           nonTaxableTotal
+#           taxableTotal
+#           vat
+#         }
+#       }
+#     }
+#   }
+# }
 
 query getSalesCustomerPaymentListData(
   $pagination: Pagination
@@ -232,6 +232,59 @@ query getSalesCustomerPaymentFormStateData($id: ID!) {
             thisAllocation
           }
           notes
+        }
+      }
+    }
+  }
+}
+
+query getSalesEntryDetails($id: ID!) {
+  accounting {
+    sales {
+      detailSaleEntry(id: $id) {
+        data {
+          customerID
+          reference
+          invoiceNo
+          customerName
+          invoiceDate
+          dueDate
+          products {
+            itemId
+            itemName
+            quantity
+            rate
+            tax
+            taxValue
+            amount
+            description
+            warehouse
+            warehouseName
+          }
+          paymentDetail {
+            subTotal
+            nonTaxableTotal
+            taxableTotal
+            vat
+            grandTotal
+            discount
+          }
+          glTransaction {
+            ledgerId
+            account
+            serviceCentreId
+            serviceCenter
+            debit
+            credit
+            balance
+            balanceType
+          }
+          totalDebit
+          totalCredit
+          notes
+        }
+        error {
+          ...QueryError
         }
       }
     }

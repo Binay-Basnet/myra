@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
-import pickBy from 'lodash/pickBy';
 
 import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
@@ -11,7 +10,6 @@ import {
   SalesSaleEntryEntry,
   useAddNewDebitNoteMutation,
   useGetNewIdMutation,
-  useGetSalesCreditNoteFormStateDataQuery,
 } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -41,29 +39,29 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
 
   const methods = useForm<PurchaseDebitNoteInput>();
 
-  const { getValues, reset, setValue } = methods;
+  const { getValues, setValue } = methods;
 
-  const { data: formStateQueryData } = useGetSalesCreditNoteFormStateDataQuery(
-    { id: String(id) },
-    { enabled: Boolean(id && router?.asPath?.includes('edit')), staleTime: 0 }
-  );
+  // const { data: formStateQueryData } = useGetSalesCreditNoteFormStateDataQuery(
+  //   { id: String(id) },
+  //   { enabled: Boolean(id && router?.asPath?.includes('edit')), staleTime: 0 }
+  // );
 
-  const formState = formStateQueryData?.accounting?.sales?.creditNoteFormState?.data;
+  // const formState = formStateQueryData?.accounting?.sales?.creditNoteFormState?.data;
 
-  useEffect(() => {
-    if (router?.asPath?.includes('edit')) {
-      if (formState) {
-        reset({
-          ...pickBy(
-            {
-              ...formState,
-            } ?? {},
-            (v) => v !== null
-          ),
-        });
-      }
-    }
-  }, [formState]);
+  // useEffect(() => {
+  //   if (router?.asPath?.includes('edit')) {
+  //     if (formState) {
+  //       reset({
+  //         ...pickBy(
+  //           {
+  //             ...formState,
+  //           } ?? {},
+  //           (v) => v !== null
+  //         ),
+  //       });
+  //     }
+  //   }
+  // }, [formState]);
 
   const { mutateAsync: setCreditNoteData } = useAddNewDebitNoteMutation();
 

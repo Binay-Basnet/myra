@@ -2,14 +2,12 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
-import pickBy from 'lodash/pickBy';
 
 import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import {
   SalesSaleEntryInput,
   useGetNewIdMutation,
-  useGetSalesSaleEntryFormStateDataQuery,
   useSetSalesSaleEntryDataMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -34,29 +32,29 @@ export const NewSalesForm = () => {
 
   const methods = useForm<SalesSaleEntryInput>();
 
-  const { getValues, reset } = methods;
+  const { getValues } = methods;
 
-  const { data: formStateQueryData } = useGetSalesSaleEntryFormStateDataQuery(
-    { id: String(id) },
-    { enabled: Boolean(id && router?.asPath?.includes('edit')), staleTime: 0 }
-  );
+  // const { data: formStateQueryData } = useGetSalesSaleEntryFormStateDataQuery(
+  //   { id: String(id) },
+  //   { enabled: Boolean(id && router?.asPath?.includes('edit')), staleTime: 0 }
+  // );
 
-  const formState = formStateQueryData?.accounting?.sales?.saleEntryFormState?.data;
+  // const formState = formStateQueryData?.accounting?.sales?.saleEntryFormState?.data;
 
-  useEffect(() => {
-    if (router?.asPath?.includes('edit')) {
-      if (formState) {
-        reset({
-          ...pickBy(
-            {
-              ...formState,
-            } ?? {},
-            (v) => v !== null
-          ),
-        });
-      }
-    }
-  }, [formState]);
+  // useEffect(() => {
+  //   if (router?.asPath?.includes('edit')) {
+  //     if (formState) {
+  //       reset({
+  //         ...pickBy(
+  //           {
+  //             ...formState,
+  //           } ?? {},
+  //           (v) => v !== null
+  //         ),
+  //       });
+  //     }
+  //   }
+  // }, [formState]);
 
   const { mutateAsync: setSalesEntryData } = useSetSalesSaleEntryDataMutation();
 
