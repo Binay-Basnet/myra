@@ -52,7 +52,7 @@ export const AddCashTransfer = () => {
       tempDR += Number(entry?.dr ?? 0);
     });
 
-    return { crSelfTotal: tempCR, drSelfTotal: tempDR };
+    return { crSelfTotal: Number(tempCR.toFixed(2)), drSelfTotal: Number(tempDR.toFixed(2)) };
   }, [values]);
 
   const disableButton = () => {
