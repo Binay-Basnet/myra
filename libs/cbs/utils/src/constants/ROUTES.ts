@@ -249,6 +249,7 @@ export const ROUTES = {
 
   ACCOUNTING_SALES_ENTRY: '/accounting/sales/sales-entry/list',
   ACCOUNTING_SALES_ENTRY_ADD: '/accounting/sales/sales-entry/add',
+  ACCOUNTING_SALES_ENTRY_DETAILS: '/accounting/sales/sales-entry/details',
   ACCOUNTING_SALES_CREDIT_NOTE: '/accounting/sales/credit-note/list',
   ACCOUNTING_SALES_CREDIT_NOTE_ADD: '/accounting/sales/credit-note/add',
   ACCOUNTING_SALES_CUSTOMER_PAYMENT: '/accounting/sales/customer-payment/list',

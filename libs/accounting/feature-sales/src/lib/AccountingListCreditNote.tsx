@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { TablePopover } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
@@ -44,28 +43,28 @@ export const AccountingListCreditNote = () => {
         header: 'Date',
         accessorFn: (row) => localizedDate(row?.node?.date),
       },
-      {
-        id: '_actions',
-        header: '',
-        accessorKey: 'actions',
-        cell: (props) =>
-          props?.row?.original?.node && (
-            <TablePopover
-              items={[
-                {
-                  title: 'Edit',
-                  onClick: (row) => {
-                    router.push(`/accounting/sales/credit-note/edit/${row['id']}`);
-                  },
-                },
-              ]}
-              node={props?.row?.original?.node}
-            />
-          ),
-        meta: {
-          width: '60px',
-        },
-      },
+      // {
+      //   id: '_actions',
+      //   header: '',
+      //   accessorKey: 'actions',
+      //   cell: (props) =>
+      //     props?.row?.original?.node && (
+      //       <TablePopover
+      //         items={[
+      //           {
+      //             title: 'Edit',
+      //             onClick: (row) => {
+      //               router.push(`/accounting/sales/credit-note/edit/${row['id']}`);
+      //             },
+      //           },
+      //         ]}
+      //         node={props?.row?.original?.node}
+      //       />
+      //     ),
+      //   meta: {
+      //     width: '60px',
+      //   },
+      // },
     ],
     [t]
   );

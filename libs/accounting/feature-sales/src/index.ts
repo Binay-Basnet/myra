@@ -1,3 +1,4 @@
+export * from './detail-pages';
 export * from './lib/AccountingAddSalesForm';
 export * from './lib/AccountingCustomerDetails';
 export * from './lib/AccountingCustomerPayment';
