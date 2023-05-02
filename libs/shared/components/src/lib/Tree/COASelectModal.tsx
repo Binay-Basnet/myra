@@ -16,6 +16,7 @@ import {
 import { GetCoaFullViewQuery, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
 
 import { BaseType, MultiTree } from './Tree';
+import { MultiTreeV1 } from './Tree-v1';
 
 interface ICOASelectModalProps {
   trigger: (props: { id: string; name: string; under: string } | null) => React.ReactNode;
@@ -26,8 +27,46 @@ interface ICOASelectModalProps {
 export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectModalProps) => {
   const { isOpen, onClose, onToggle } = useDisclosure();
 
-  const [accordionIndices, setAccordionIndices] = useState<number[]>([]);
   const [value, setValue] = useState<BaseType | null>(null);
+
+  return (
+    <>
+      <Box key={JSON.stringify(value)} w="100%" h="100%" onClick={onToggle}>
+        {trigger(value)}
+      </Box>
+
+      <Modal
+        width="4xl"
+        scrollBehavior="inside"
+        open={isOpen}
+        onClose={onClose}
+        title="Ledger Mapping"
+      >
+        <COATree
+          setValue={setValue}
+          value={value}
+          defaultValue={defaultValue}
+          onChange={onChange}
+          onClose={onClose}
+        />
+      </Modal>
+    </>
+  );
+};
+
+interface COATreeProps {
+  defaultValue: string | undefined | null;
+  onChange: (newValue: string) => void;
+  onClose: () => void;
+
+  type: 'single' | 'multi';
+
+  value: BaseType | null;
+  setValue: React.Dispatch<React.SetStateAction<BaseType | null>>;
+}
+
+export const COATree = ({ defaultValue, onChange, onClose, value, setValue }: COATreeProps) => {
+  const [accordionIndices, setAccordionIndices] = useState<number[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   const { data: fullView, isFetching } = useGetCoaFullViewQuery();
@@ -96,226 +135,221 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
 
   return (
     <>
-      <Box key={JSON.stringify(value)} w="100%" h="100%" onClick={onToggle}>
-        {trigger(value)}
+      <Input
+        value={searchTerm}
+        type="search"
+        placeholder="Search for ledger"
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <Box minH="50vh" display="flex" flexDir="column" py="s16" gap="s16" bg="white">
+        <Accordion index={accordionIndices} allowMultiple allowToggle mb="0" border="none">
+          <AccordionItem mt="s8">
+            {({ isExpanded }) => (
+              <>
+                <AccordionButton
+                  onClick={() => {
+                    setAccordionIndices((prev) =>
+                      prev?.includes(0) ? prev?.filter((p) => p !== 0) : [...prev, 0]
+                    );
+                  }}
+                  p="s12"
+                  bg={isExpanded ? '#E0E5EB' : ''}
+                  h="60px"
+                >
+                  <Box flex="1" textAlign="left">
+                    <Text fontSize="r1" fontWeight="SemiBold">
+                      Equity and Liabilities
+                    </Text>
+                  </Box>
+                  {isExpanded ? (
+                    <IoChevronUpOutline fontSize="18px" />
+                  ) : (
+                    <IoChevronDownOutline fontSize="18px" />
+                  )}
+                </AccordionButton>
+
+                <AccordionPanel display="flex" flexDir="column" gap="s16">
+                  <MultiTreeV1
+                    isMulti
+                    value={value}
+                    onValueChange={(newValue) => setValue(newValue)}
+                    data={coaLiabilitiesFullView || []}
+                    searchTerm={searchTerm}
+                  />
+
+                  {/* <MultiTree */}
+                  {/*  index={0} */}
+                  {/*  value={value} */}
+                  {/*  setValue={(newValue) => setValue(newValue)} */}
+                  {/*  data={coaLiabilitiesFullView ?? []} */}
+                  {/*  searchTerm={searchTerm} */}
+                  {/*  setAccordianIndices={setAccordionIndices} */}
+                  {/*  accordionIndices={accordionIndices} */}
+                  {/* /> */}
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+
+          <AccordionItem mt="s8">
+            {({ isExpanded }) => (
+              <>
+                <AccordionButton
+                  onClick={() => {
+                    setAccordionIndices((prev) =>
+                      prev?.includes(1) ? prev?.filter((p) => p !== 1) : [...prev, 1]
+                    );
+                  }}
+                  p="s12"
+                  bg={isExpanded ? '#E0E5EB' : ''}
+                  h="60px"
+                >
+                  <Box flex="1" textAlign="left">
+                    <Text fontSize="r1" fontWeight="SemiBold">
+                      Assets
+                    </Text>
+                  </Box>
+                  {isExpanded ? (
+                    <IoChevronUpOutline fontSize="18px" />
+                  ) : (
+                    <IoChevronDownOutline fontSize="18px" />
+                  )}
+                </AccordionButton>
+
+                <AccordionPanel display="flex" flexDir="column" gap="s16">
+                  <MultiTree
+                    index={1}
+                    value={value}
+                    setValue={(newValue) => setValue(newValue)}
+                    data={coaAssetsFullView ?? []}
+                    searchTerm={searchTerm}
+                    setAccordianIndices={setAccordionIndices}
+                    accordionIndices={accordionIndices}
+                  />
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+
+          <AccordionItem mt="s8">
+            {({ isExpanded }) => (
+              <>
+                <AccordionButton
+                  onClick={() => {
+                    setAccordionIndices((prev) =>
+                      prev?.includes(2) ? prev?.filter((p) => p !== 2) : [...prev, 2]
+                    );
+                  }}
+                  p="s12"
+                  bg={isExpanded ? '#E0E5EB' : ''}
+                  h="60px"
+                >
+                  <Box flex="1" textAlign="left">
+                    <Text fontSize="r1" fontWeight="SemiBold">
+                      Expenditure
+                    </Text>
+                  </Box>
+                  {isExpanded ? (
+                    <IoChevronUpOutline fontSize="18px" />
+                  ) : (
+                    <IoChevronDownOutline fontSize="18px" />
+                  )}
+                </AccordionButton>
+
+                <AccordionPanel display="flex" flexDir="column" gap="s16">
+                  <MultiTree
+                    index={2}
+                    value={value}
+                    setValue={(newValue) => setValue(newValue)}
+                    data={coaExpenditureFullView ?? []}
+                    searchTerm={searchTerm}
+                    setAccordianIndices={setAccordionIndices}
+                    accordionIndices={accordionIndices}
+                  />
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+          <AccordionItem mt="s8">
+            {({ isExpanded }) => (
+              <>
+                <AccordionButton
+                  onClick={() => {
+                    setAccordionIndices((prev) =>
+                      prev?.includes(3) ? prev?.filter((p) => p !== 3) : [...prev, 3]
+                    );
+                  }}
+                  p="s12"
+                  bg={isExpanded ? '#E0E5EB' : ''}
+                  h="60px"
+                >
+                  <Box flex="1" textAlign="left">
+                    <Text fontSize="r1" fontWeight="SemiBold">
+                      Income
+                    </Text>
+                  </Box>
+                  {isExpanded ? (
+                    <IoChevronUpOutline fontSize="18px" />
+                  ) : (
+                    <IoChevronDownOutline fontSize="18px" />
+                  )}
+                </AccordionButton>
+
+                <AccordionPanel display="flex" flexDir="column" gap="s16">
+                  <MultiTree
+                    index={3}
+                    value={value}
+                    setValue={(newValue) => setValue(newValue)}
+                    data={coaIncomeFullView ?? []}
+                    searchTerm={searchTerm}
+                    setAccordianIndices={setAccordionIndices}
+                    accordionIndices={accordionIndices}
+                  />
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+          <AccordionItem mt="s8">
+            {({ isExpanded }) => (
+              <>
+                <AccordionButton
+                  onClick={() => {
+                    setAccordionIndices((prev) =>
+                      prev?.includes(4) ? prev?.filter((p) => p !== 4) : [...prev, 4]
+                    );
+                  }}
+                  p="s12"
+                  bg={isExpanded ? '#E0E5EB' : ''}
+                  h="60px"
+                >
+                  <Box flex="1" textAlign="left">
+                    <Text fontSize="r1" fontWeight="SemiBold">
+                      Off Balance Sheet
+                    </Text>
+                  </Box>
+                  {isExpanded ? (
+                    <IoChevronUpOutline fontSize="18px" />
+                  ) : (
+                    <IoChevronDownOutline fontSize="18px" />
+                  )}
+                </AccordionButton>
+
+                <AccordionPanel display="flex" flexDir="column" gap="s16">
+                  <MultiTree
+                    index={4}
+                    value={value}
+                    setValue={(newValue) => setValue(newValue)}
+                    data={coaOffSheetBalanceFullView ?? []}
+                    searchTerm={searchTerm}
+                    setAccordianIndices={setAccordionIndices}
+                    accordionIndices={accordionIndices}
+                  />
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+        </Accordion>
       </Box>
-
-      <Modal
-        width="4xl"
-        scrollBehavior="inside"
-        open={isOpen}
-        onClose={onClose}
-        title="Ledger Mapping"
-      >
-        <Input
-          value={searchTerm}
-          type="search"
-          placeholder="Search for ledger"
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-
-        <Box minH="50vh" display="flex" flexDir="column" py="s16" gap="s16" bg="white">
-          <Accordion index={accordionIndices} allowMultiple allowToggle mb="0" border="none">
-            <AccordionItem mt="s8">
-              {({ isExpanded }) => (
-                <>
-                  <AccordionButton
-                    onClick={() => {
-                      setAccordionIndices((prev) =>
-                        prev?.includes(0) ? prev?.filter((p) => p !== 0) : [...prev, 0]
-                      );
-                    }}
-                    p="s12"
-                    bg={isExpanded ? '#E0E5EB' : ''}
-                    h="60px"
-                  >
-                    <Box flex="1" textAlign="left">
-                      <Text fontSize="r1" fontWeight="SemiBold">
-                        Equity and Liabilities
-                      </Text>
-                    </Box>
-                    {isExpanded ? (
-                      <IoChevronUpOutline fontSize="18px" />
-                    ) : (
-                      <IoChevronDownOutline fontSize="18px" />
-                    )}
-                  </AccordionButton>
-
-                  <AccordionPanel display="flex" flexDir="column" gap="s16">
-                    <MultiTree
-                      index={0}
-                      value={value}
-                      setValue={(newValue) => setValue(newValue)}
-                      data={coaLiabilitiesFullView ?? []}
-                      searchTerm={searchTerm}
-                      setAccordianIndices={setAccordionIndices}
-                      accordionIndices={accordionIndices}
-                    />
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-
-            <AccordionItem mt="s8">
-              {({ isExpanded }) => (
-                <>
-                  <AccordionButton
-                    onClick={() => {
-                      setAccordionIndices((prev) =>
-                        prev?.includes(1) ? prev?.filter((p) => p !== 1) : [...prev, 1]
-                      );
-                    }}
-                    p="s12"
-                    bg={isExpanded ? '#E0E5EB' : ''}
-                    h="60px"
-                  >
-                    <Box flex="1" textAlign="left">
-                      <Text fontSize="r1" fontWeight="SemiBold">
-                        Assets
-                      </Text>
-                    </Box>
-                    {isExpanded ? (
-                      <IoChevronUpOutline fontSize="18px" />
-                    ) : (
-                      <IoChevronDownOutline fontSize="18px" />
-                    )}
-                  </AccordionButton>
-
-                  <AccordionPanel display="flex" flexDir="column" gap="s16">
-                    <MultiTree
-                      index={1}
-                      value={value}
-                      setValue={(newValue) => setValue(newValue)}
-                      data={coaAssetsFullView ?? []}
-                      searchTerm={searchTerm}
-                      setAccordianIndices={setAccordionIndices}
-                      accordionIndices={accordionIndices}
-                    />
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-
-            <AccordionItem mt="s8">
-              {({ isExpanded }) => (
-                <>
-                  <AccordionButton
-                    onClick={() => {
-                      setAccordionIndices((prev) =>
-                        prev?.includes(2) ? prev?.filter((p) => p !== 2) : [...prev, 2]
-                      );
-                    }}
-                    p="s12"
-                    bg={isExpanded ? '#E0E5EB' : ''}
-                    h="60px"
-                  >
-                    <Box flex="1" textAlign="left">
-                      <Text fontSize="r1" fontWeight="SemiBold">
-                        Expenditure
-                      </Text>
-                    </Box>
-                    {isExpanded ? (
-                      <IoChevronUpOutline fontSize="18px" />
-                    ) : (
-                      <IoChevronDownOutline fontSize="18px" />
-                    )}
-                  </AccordionButton>
-
-                  <AccordionPanel display="flex" flexDir="column" gap="s16">
-                    <MultiTree
-                      index={2}
-                      value={value}
-                      setValue={(newValue) => setValue(newValue)}
-                      data={coaExpenditureFullView ?? []}
-                      searchTerm={searchTerm}
-                      setAccordianIndices={setAccordionIndices}
-                      accordionIndices={accordionIndices}
-                    />
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-            <AccordionItem mt="s8">
-              {({ isExpanded }) => (
-                <>
-                  <AccordionButton
-                    onClick={() => {
-                      setAccordionIndices((prev) =>
-                        prev?.includes(3) ? prev?.filter((p) => p !== 3) : [...prev, 3]
-                      );
-                    }}
-                    p="s12"
-                    bg={isExpanded ? '#E0E5EB' : ''}
-                    h="60px"
-                  >
-                    <Box flex="1" textAlign="left">
-                      <Text fontSize="r1" fontWeight="SemiBold">
-                        Income
-                      </Text>
-                    </Box>
-                    {isExpanded ? (
-                      <IoChevronUpOutline fontSize="18px" />
-                    ) : (
-                      <IoChevronDownOutline fontSize="18px" />
-                    )}
-                  </AccordionButton>
-
-                  <AccordionPanel display="flex" flexDir="column" gap="s16">
-                    <MultiTree
-                      index={3}
-                      value={value}
-                      setValue={(newValue) => setValue(newValue)}
-                      data={coaIncomeFullView ?? []}
-                      searchTerm={searchTerm}
-                      setAccordianIndices={setAccordionIndices}
-                      accordionIndices={accordionIndices}
-                    />
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-            <AccordionItem mt="s8">
-              {({ isExpanded }) => (
-                <>
-                  <AccordionButton
-                    onClick={() => {
-                      setAccordionIndices((prev) =>
-                        prev?.includes(4) ? prev?.filter((p) => p !== 4) : [...prev, 4]
-                      );
-                    }}
-                    p="s12"
-                    bg={isExpanded ? '#E0E5EB' : ''}
-                    h="60px"
-                  >
-                    <Box flex="1" textAlign="left">
-                      <Text fontSize="r1" fontWeight="SemiBold">
-                        Off Balance Sheet
-                      </Text>
-                    </Box>
-                    {isExpanded ? (
-                      <IoChevronUpOutline fontSize="18px" />
-                    ) : (
-                      <IoChevronDownOutline fontSize="18px" />
-                    )}
-                  </AccordionButton>
-
-                  <AccordionPanel display="flex" flexDir="column" gap="s16">
-                    <MultiTree
-                      index={4}
-                      value={value}
-                      setValue={(newValue) => setValue(newValue)}
-                      data={coaOffSheetBalanceFullView ?? []}
-                      searchTerm={searchTerm}
-                      setAccordianIndices={setAccordionIndices}
-                      accordionIndices={accordionIndices}
-                    />
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-          </Accordion>
-        </Box>
-      </Modal>
     </>
   );
 };
