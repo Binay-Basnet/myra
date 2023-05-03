@@ -1,17 +1,13 @@
 import React from 'react';
 
-import { MainLayout, Scrollable } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
 import { CbsShareFeaturesSharePurchase } from '@coop/cbs/share';
 
 const SharePurchase = () => <CbsShareFeaturesSharePurchase />;
 
 SharePurchase.getLayout = function getLayout(page: React.ReactElement) {
-  return (
-    <MainLayout>
-      <Scrollable>{page}</Scrollable>
-    </MainLayout>
-  );
+  return <MainLayout>{page}</MainLayout>;
 };
 
 export default SharePurchase;
