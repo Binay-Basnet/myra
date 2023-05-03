@@ -35,7 +35,7 @@ export const FormFooter = ({
       background="white"
       px="s20"
       py="s20"
-      h="60px"
+      h="3.75rem"
       borderTop="1px solid"
       borderColor="border.layout"
     >

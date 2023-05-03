@@ -33,7 +33,7 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
     getNewId?.mutateAsync({}).then((res) => setNewId(res?.newId));
   }, []);
 
-  const id = router?.query?.['id'] || newId;
+  // const id = router?.query?.['id'] || newId;
 
   const queryClient = useQueryClient();
 

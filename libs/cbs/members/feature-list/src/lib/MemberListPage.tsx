@@ -3,13 +3,14 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { PageHeader, TablePopover } from '@myra-ui';
+import { asyncToast, PageHeader, TablePopover } from '@myra-ui';
 import { AvatarCell, Column, Table } from '@myra-ui/table';
 
 import {
   useGetGeneralMemberSettingsDataQuery,
   useGetMemberFilterMappingQuery,
   useGetMemberListQuery,
+  useSwitchDormancyMutation,
 } from '@coop/cbs/data-access';
 import { formatTableAddress, localizedDate, ROUTES } from '@coop/cbs/utils';
 import {
@@ -39,6 +40,8 @@ export const MemberListPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const objState = getFilter('objState') || 'APPROVED';
+
+  const { mutateAsync: switchDormancy } = useSwitchDormancyMutation();
 
   const { data, isFetching } = useGetMemberListQuery({
     pagination: getPaginationQuery(),
@@ -156,7 +159,26 @@ export const MemberListPage = () => {
               node={cell.row.original?.node}
               items={
                 /* eslint-disable no-nested-ternary */
-                objState === 'DRAFT'
+                objState === 'DORMANT'
+                  ? [
+                      {
+                        title: 'Make Active',
+                        onClick: (node) => {
+                          asyncToast({
+                            id: 'member-make-dormant-active',
+                            msgs: {
+                              loading: 'Updating user dormancy',
+                              success: 'User dormancy updated',
+                            },
+                            promise: switchDormancy({
+                              id: node?.id,
+                            }),
+                            onSuccess: () => queryClient.invalidateQueries(['getMemberList']),
+                          });
+                        },
+                      },
+                    ]
+                  : objState === 'DRAFT'
                   ? [
                       {
                         title: t['memberListTableEditMember'],
@@ -237,6 +259,22 @@ export const MemberListPage = () => {
                           objState === 'VALIDATED'
                             ? router.push(`${ROUTES.CBS_MEMBER_ACTIVATION}/${node?.id}`)
                             : router.push(`${ROUTES.CBS_MEMBER_INACTIVATION}/${node?.id}`);
+                        },
+                      },
+                      {
+                        title: 'Make Dormant',
+                        onClick: (node) => {
+                          asyncToast({
+                            id: 'member-make-dormant',
+                            msgs: {
+                              loading: 'Updating user dormancy',
+                              success: 'User dormancy updated',
+                            },
+                            promise: switchDormancy({
+                              id: node?.id,
+                            }),
+                            onSuccess: () => queryClient.invalidateQueries(['getMemberList']),
+                          });
                         },
                       },
                     ]
