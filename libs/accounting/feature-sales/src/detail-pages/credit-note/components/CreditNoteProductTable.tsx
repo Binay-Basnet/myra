@@ -12,13 +12,15 @@ interface ILoanPaymentScheduleTableProps {
 
         quantity: string | null | undefined;
         rate: string | null | undefined;
+        tax: string | null | undefined;
+
         amount: string | null | undefined;
       }[];
 
   //   data: MemberPaymentView[] | null | undefined;
 }
 
-export const SalesEntryTable = ({ data }: ILoanPaymentScheduleTableProps) => {
+export const CreditNoteProductDetailsTable = ({ data }: ILoanPaymentScheduleTableProps) => {
   const columns = React.useMemo<Column<typeof data[0]>[]>(
     () => [
       {
@@ -39,6 +41,10 @@ export const SalesEntryTable = ({ data }: ILoanPaymentScheduleTableProps) => {
       {
         header: 'Rate',
         accessorKey: 'rate',
+      },
+      {
+        header: 'Tax(%)',
+        accessorKey: 'tax',
       },
       {
         header: 'Total Amount',

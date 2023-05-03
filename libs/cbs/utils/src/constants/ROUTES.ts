@@ -252,10 +252,13 @@ export const ROUTES = {
   ACCOUNTING_SALES_ENTRY_DETAILS: '/accounting/sales/sales-entry/details',
   ACCOUNTING_SALES_CREDIT_NOTE: '/accounting/sales/credit-note/list',
   ACCOUNTING_SALES_CREDIT_NOTE_ADD: '/accounting/sales/credit-note/add',
+  ACCOUNTING_SALES_CREDIT_NOTE_DETAILS: '/accounting/sales/credit-note/details',
+
   ACCOUNTING_SALES_CUSTOMER_PAYMENT: '/accounting/sales/customer-payment/list',
   ACCOUNTING_SALES_CUSTOMER_PAYMENT_ADD: '/accounting/sales/customer-payment/add',
   ACCOUNTING_SALES_CUSTOMER: '/accounting/sales/customer/list',
   ACCOUNTING_SALES_CUSTOMER_ADD: '/accounting/sales/customer/add',
+  ACCOUNTING_SALES_CUSTOMER_DETAILS: '/accounting/sales/customer/details',
 
   ACCOUNTING_INVENTORY_ITEMS_LIST: '/accounting/inventory/items/list',
   ACCOUNTING_INVENTORY_ITEMS_ADD: '/accounting/inventory/items/add',
