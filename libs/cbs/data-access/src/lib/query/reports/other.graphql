@@ -267,6 +267,8 @@ query getShaareCertificatePrintReport($data: CertificatePrintFilter!) {
         data {
           Id
           memberId
+          memberCode
+          accountName
           accountNumber
           printedDate
           printCount
@@ -289,6 +291,8 @@ query getFDCertificatePrintReport($data: CertificatePrintFilter!) {
           Id
           memberId
           accountNumber
+          memberCode
+          accountName
           printedDate
           printCount
           issueServiceCenter

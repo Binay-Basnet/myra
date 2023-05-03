@@ -2534,8 +2534,10 @@ export type CertificatePrintFilter = {
 
 export type CertificatePrintReport = {
   Id?: Maybe<Scalars['ID']>;
+  accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
   issueServiceCenter?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   printCount?: Maybe<Scalars['Int']>;
   printedDate?: Maybe<Scalars['Localized']>;
@@ -29117,6 +29119,8 @@ export type GetShaareCertificatePrintReportQuery = {
         data?: Array<{
           Id?: string | null;
           memberId?: string | null;
+          memberCode?: string | null;
+          accountName?: string | null;
           accountNumber?: string | null;
           printedDate?: Record<'local' | 'en' | 'np', string> | null;
           printCount?: number | null;
@@ -29146,6 +29150,8 @@ export type GetFdCertificatePrintReportQuery = {
           Id?: string | null;
           memberId?: string | null;
           accountNumber?: string | null;
+          memberCode?: string | null;
+          accountName?: string | null;
           printedDate?: Record<'local' | 'en' | 'np', string> | null;
           printCount?: number | null;
           issueServiceCenter?: string | null;
@@ -50099,6 +50105,8 @@ export const GetShaareCertificatePrintReportDocument = `
         data {
           Id
           memberId
+          memberCode
+          accountName
           accountNumber
           printedDate
           printCount
@@ -50136,6 +50144,8 @@ export const GetFdCertificatePrintReportDocument = `
           Id
           memberId
           accountNumber
+          memberCode
+          accountName
           printedDate
           printCount
           issueServiceCenter
