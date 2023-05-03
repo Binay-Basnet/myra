@@ -12325,6 +12325,11 @@ export type MemberDocumentDetails = {
   value?: Maybe<Scalars['String']>;
 };
 
+export type MemberDormancyResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Member>;
+};
+
 export type MemberFilterMapping = {
   activeDate?: Maybe<DateFilterOutput>;
   createdAtDate?: Maybe<DateFilterOutput>;
@@ -12418,6 +12423,7 @@ export type MemberMutation = {
   issueCertificate: Scalars['String'];
   makeInactive?: Maybe<MemberInactiveResult>;
   officialUse?: Maybe<OfficialUseResult>;
+  switchDormancy: MemberDormancyResult;
   /**  id is the ID of member  */
   translate?: Maybe<TranslateData>;
   updateKym: KymUpdateResult;
@@ -12458,6 +12464,10 @@ export type MemberMutationMakeInactiveArgs = {
 
 export type MemberMutationOfficialUseArgs = {
   data: OfficialUseInputData;
+};
+
+export type MemberMutationSwitchDormancyArgs = {
+  id: Scalars['ID'];
 };
 
 export type MemberMutationTranslateArgs = {
@@ -23073,6 +23083,83 @@ export type GetSalesEntryDetailsQuery = {
             balance?: string | null;
             balanceType?: BalanceType | null;
           } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type GetCreditNoteDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetCreditNoteDetailsQuery = {
+  accounting: {
+    sales: {
+      detailCreditNote: {
+        data?: {
+          customerID: string;
+          customerName?: string | null;
+          invoiceReference: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          notes?: string | null;
+          products: Array<{
+            itemId?: string | null;
+            itemName?: string | null;
+            quantity?: string | null;
+            rate?: string | null;
+            tax?: string | null;
+            taxValue?: string | null;
+            amount?: string | null;
+            description?: string | null;
+            warehouse?: string | null;
+            warehouseName?: string | null;
+          }>;
+          paymentDetail?: {
+            subTotal?: string | null;
+            nonTaxableTotal?: string | null;
+            taxableTotal?: string | null;
+            vat?: string | null;
+            grandTotal?: string | null;
+            discount?: string | null;
+          } | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type GetCustomerDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetCustomerDetailsQuery = {
+  accounting: {
+    sales: {
+      detailCustomer: {
+        data?: {
+          id: string;
+          name?: string | null;
+          code?: string | null;
+          phoneNumber?: string | null;
+          panNo?: string | null;
+          email?: string | null;
+          creditTerms?: string | null;
+          creditLimit?: string | null;
+          openingBalance?: string | null;
+          address?: AddressFragment | null;
         } | null;
         error?:
           | QueryError_AuthorizationError_Fragment
@@ -42283,6 +42370,96 @@ export const useGetSalesEntryDetailsQuery = <TData = GetSalesEntryDetailsQuery, 
     ['getSalesEntryDetails', variables],
     useAxios<GetSalesEntryDetailsQuery, GetSalesEntryDetailsQueryVariables>(
       GetSalesEntryDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCreditNoteDetailsDocument = `
+    query getCreditNoteDetails($id: ID!) {
+  accounting {
+    sales {
+      detailCreditNote(id: $id) {
+        data {
+          customerID
+          customerName
+          invoiceReference
+          date
+          products {
+            itemId
+            itemName
+            quantity
+            rate
+            tax
+            taxValue
+            amount
+            description
+            warehouse
+            warehouseName
+          }
+          notes
+          paymentDetail {
+            subTotal
+            nonTaxableTotal
+            taxableTotal
+            vat
+            grandTotal
+            discount
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetCreditNoteDetailsQuery = <TData = GetCreditNoteDetailsQuery, TError = unknown>(
+  variables: GetCreditNoteDetailsQueryVariables,
+  options?: UseQueryOptions<GetCreditNoteDetailsQuery, TError, TData>
+) =>
+  useQuery<GetCreditNoteDetailsQuery, TError, TData>(
+    ['getCreditNoteDetails', variables],
+    useAxios<GetCreditNoteDetailsQuery, GetCreditNoteDetailsQueryVariables>(
+      GetCreditNoteDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCustomerDetailsDocument = `
+    query getCustomerDetails($id: ID!) {
+  accounting {
+    sales {
+      detailCustomer(id: $id) {
+        data {
+          id
+          name
+          code
+          phoneNumber
+          panNo
+          address {
+            ...Address
+          }
+          email
+          creditTerms
+          creditLimit
+          openingBalance
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${QueryErrorFragmentDoc}`;
+export const useGetCustomerDetailsQuery = <TData = GetCustomerDetailsQuery, TError = unknown>(
+  variables: GetCustomerDetailsQueryVariables,
+  options?: UseQueryOptions<GetCustomerDetailsQuery, TError, TData>
+) =>
+  useQuery<GetCustomerDetailsQuery, TError, TData>(
+    ['getCustomerDetails', variables],
+    useAxios<GetCustomerDetailsQuery, GetCustomerDetailsQueryVariables>(
+      GetCustomerDetailsDocument
     ).bind(null, variables),
     options
   );

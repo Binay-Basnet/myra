@@ -290,3 +290,68 @@ query getSalesEntryDetails($id: ID!) {
     }
   }
 }
+
+query getCreditNoteDetails($id: ID!) {
+  accounting {
+    sales {
+      detailCreditNote(id: $id) {
+        data {
+          customerID
+          customerName
+          invoiceReference
+          date
+          products {
+            itemId
+            itemName
+            quantity
+            rate
+            tax
+            taxValue
+            amount
+            description
+            warehouse
+            warehouseName
+          }
+          notes
+          paymentDetail {
+            subTotal
+            nonTaxableTotal
+            taxableTotal
+            vat
+            grandTotal
+            discount
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+
+query getCustomerDetails($id: ID!) {
+  accounting {
+    sales {
+      detailCustomer(id: $id) {
+        data {
+          id
+          name
+          code
+          phoneNumber
+          panNo
+          address {
+            ...Address
+          }
+          email
+          creditTerms
+          creditLimit
+          openingBalance
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
