@@ -6,6 +6,7 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
+    "start:dhadda-migration": "concurrently \"nx serve dhadda-migration\"",
     "start:myra": "concurrently \"nx serve myra\" \"yarn graphql-cbs:codegen\"",
     "start:migration": "concurrently \"nx serve migration\" \"yarn graphql-migration:codegen\"",
     "start:neosys-admin": "concurrently \"nx serve neosys-admin\" \"yarn graphql-neosys:codegen\"",

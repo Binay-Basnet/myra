@@ -169,7 +169,7 @@ export const FileInput = ({
             size={size}
             remove={() => {
               setAlreadyAddedFiles((prev) =>
-                prev ? prev.filter((f) => f.identifier !== fileUrl.identifier) : null
+                prev ? prev.filter((f) => f?.identifier !== fileUrl?.identifier) : null
               );
             }}
           />

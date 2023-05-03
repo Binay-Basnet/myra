@@ -5,6 +5,7 @@ import { Box, PageHeader } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetGeneralMemberSettingsDataQuery, useGetMinorListQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { forms, Page } from './MemberLayout';
@@ -51,8 +52,8 @@ export const MemberMinorListPage = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Member ID',
-        accessorFn: (row) => row?.node?.memberId,
+        header: 'Member Code',
+        accessorFn: (row) => row?.node?.memberCode,
       },
       {
         header: 'Minor Name',
@@ -94,6 +95,9 @@ export const MemberMinorListPage = () => {
           total: data?.members?.listMinor?.totalCount ?? 'Many',
           pageInfo: data?.members?.listMinor?.pageInfo,
         }}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.CBS_MEMBER_DETAILS}?id=${row?.['node']?.id}&&type=minor`);
+        }}
         menu="MEMBERS"
         forms={memberForms}
       />
@@ -102,3 +106,4 @@ export const MemberMinorListPage = () => {
 };
 
 export default MemberMinorListPage;
+11;

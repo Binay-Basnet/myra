@@ -119,3 +119,185 @@ query getPearlsReport($data: PearlsReportInput!) {
     }
   }
 }
+
+query getBODRegisterReport($data: CommitteeRegisterReportFilterData!) {
+  report {
+    committeeQuery {
+      committeeRegisterReport(data: $data) {
+        committee {
+          code
+          memberCount
+          name
+          tenure
+          createdAt
+          description
+          file {
+            identifier
+            url
+          }
+          member {
+            familyMember {
+              fatherName
+              grandFatherName
+              grandMotherName
+              inNepali {
+                fatherName
+                grandFatherName
+                grandMotherName
+                motherName
+                spouseName
+              }
+              motherName
+              spouseName
+            }
+            id
+            joinedAt
+            validUpto
+            member {
+              id
+
+              code
+              name
+              address {
+                ...Address
+              }
+              contact
+            }
+            joinedAt
+            occupation {
+              id
+              occupationId
+              orgName
+              panVatNo
+              address
+              estimatedAnnualIncome
+              establishedDate
+              registrationNo
+              contact
+              isOwner
+            }
+            position
+          }
+          id
+        }
+      }
+    }
+  }
+}
+
+query getOrganizationalProfileReport {
+  report {
+    committeeQuery {
+      organizationProfileReport {
+        organization {
+          id
+          basicDetails {
+            logo
+            name
+            typeOfOrganization
+          }
+          contactDetails {
+            email
+            phoneNumber
+            website
+          }
+          mainContactPerson {
+            contactPersonContactNumber
+            contactPersonName
+            title
+          }
+          address {
+            ...Address
+          }
+          registrationDetails {
+            regdNo
+            regdOffice
+            regdAddress
+            panOrVat
+          }
+        }
+        committee {
+          code
+          memberCount
+          name
+          tenure
+          createdAt
+          description
+          file {
+            identifier
+            url
+          }
+          member {
+            id
+            member {
+              id
+
+              code
+              name
+              address {
+                ...Address
+              }
+              contact
+            }
+            occupation {
+              id
+              occupationId
+              orgName
+              panVatNo
+              address
+              estimatedAnnualIncome
+              establishedDate
+              registrationNo
+              contact
+              isOwner
+            }
+            position
+          }
+          id
+        }
+      }
+    }
+  }
+}
+
+query getShaareCertificatePrintReport($data: CertificatePrintFilter!) {
+  report {
+    printReport {
+      issueCertificateReport(data: $data) {
+        data {
+          Id
+          memberId
+          accountNumber
+          printedDate
+          printCount
+          issueServiceCenter
+          printedServiceCenter
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+
+query getFDCertificatePrintReport($data: CertificatePrintFilter!) {
+  report {
+    printReport {
+      fbCertificateReport(data: $data) {
+        data {
+          Id
+          memberId
+          accountNumber
+          printedDate
+          printCount
+          issueServiceCenter
+          printedServiceCenter
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}

@@ -164,6 +164,7 @@
       ],
       "@coop/settings/bank": ["libs/cbs/settings/feature-bank/src/index.ts"],
       "@coop/settings/committee": ["libs/cbs/settings/feature-committee/src/index.ts"],
+      "@coop/settings/org": ["libs/cbs/settings/feature-org/src/index.ts"],
       "@coop/settings/saving-product": [
         "libs/cbs/settings/feature-saving-product-detail/src/index.ts"
       ],
@@ -172,6 +173,7 @@
       "@coop/shared/components": ["libs/shared/components/src/index.ts"],
       "@coop/shared/form": ["libs/shared/form/src/index.ts"],
       "@coop/shared/utils": ["libs/shared/utils/src/index.ts"],
+      "@dhadda-migration/ui-layout": ["libs/dhadda-migration/ui-layout/src/index.ts"],
       "@migration/data-access": ["libs/migration/data-access/src/index.ts"],
       "@migration/ui-components": ["libs/migration/ui-components/src/index.ts"],
       "@migration/ui-layout": ["libs/migration/ui-layout/src/index.ts"],

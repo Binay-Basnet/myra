@@ -468,6 +468,7 @@ query getMinorList($filter: MinorFilter, $pagination: Pagination) {
         node {
           id
           memberId
+          memberCode
           memberName
           serviceCentreId
           serviceCentreName
@@ -480,6 +481,39 @@ query getMinorList($filter: MinorFilter, $pagination: Pagination) {
       }
       pageInfo {
         ...Pagination
+      }
+    }
+  }
+}
+
+query getMinorProfile($minorId: String!) {
+  members {
+    minorProfile(minorId: $minorId) {
+      minorId
+      fullName
+      dateOfBirth
+      gender
+      parentName
+      address {
+        state
+        district
+        localGovernment
+        wardNo
+        locality
+        houseNo
+        coordinates {
+          longitude
+          latitude
+        }
+      }
+      memberId
+      memberCode
+      serviceCentreId
+      serviceCentreName
+      savingAccounts {
+        accountName
+        interestRate
+        balance
       }
     }
   }

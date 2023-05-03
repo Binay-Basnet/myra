@@ -1,3 +1,4 @@
+export * from './components';
 export * from './controllers/FormAccountInput/FormAccountInput';
 export * from './controllers/FormAccountSelect/FormAccountSelect';
 export * from './controllers/FormAddress/FormAddress';

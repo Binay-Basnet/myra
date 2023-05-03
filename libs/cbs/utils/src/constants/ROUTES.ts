@@ -249,12 +249,16 @@ export const ROUTES = {
 
   ACCOUNTING_SALES_ENTRY: '/accounting/sales/sales-entry/list',
   ACCOUNTING_SALES_ENTRY_ADD: '/accounting/sales/sales-entry/add',
+  ACCOUNTING_SALES_ENTRY_DETAILS: '/accounting/sales/sales-entry/details',
   ACCOUNTING_SALES_CREDIT_NOTE: '/accounting/sales/credit-note/list',
   ACCOUNTING_SALES_CREDIT_NOTE_ADD: '/accounting/sales/credit-note/add',
+  ACCOUNTING_SALES_CREDIT_NOTE_DETAILS: '/accounting/sales/credit-note/details',
+
   ACCOUNTING_SALES_CUSTOMER_PAYMENT: '/accounting/sales/customer-payment/list',
   ACCOUNTING_SALES_CUSTOMER_PAYMENT_ADD: '/accounting/sales/customer-payment/add',
   ACCOUNTING_SALES_CUSTOMER: '/accounting/sales/customer/list',
   ACCOUNTING_SALES_CUSTOMER_ADD: '/accounting/sales/customer/add',
+  ACCOUNTING_SALES_CUSTOMER_DETAILS: '/accounting/sales/customer/details',
 
   ACCOUNTING_INVENTORY_ITEMS_LIST: '/accounting/inventory/items/list',
   ACCOUNTING_INVENTORY_ITEMS_ADD: '/accounting/inventory/items/add',
@@ -332,6 +336,9 @@ export const ROUTES = {
   SETTINGS_GENERAL_SAVINGS_ORGANIZATION_RATE: '/settings/general/savings/organization-rate',
 
   SETTINGS_GENERAL_LOAN_ORGANIZATION_RATE: '/settings/general/loan/organization-rate',
+
+  SETTINGS_GENERAL_ORGANIZATION_DETAILS: '/settings/general/organization',
+  SETTINGS_GENERAL_ORGANIZATION_EDIT: '/settings/general/organization/edit',
 
   SETTINGS_EOD_HISTORY_DETAILS: '/settings/general/eod/history/details',
   SETTINGS_GENERAL_COMMITTEE: '/settings/general/committee/list',

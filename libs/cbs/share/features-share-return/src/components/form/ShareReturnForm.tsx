@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
@@ -8,11 +8,7 @@ import { omit } from 'lodash';
 import {
   Box,
   Button,
-  Container,
-  FormFooter,
-  FormHeader,
   FormSection,
-  Grid,
   GridItem,
   ResponseDialog,
   ShareMemberCard,
@@ -31,7 +27,7 @@ import {
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
 import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
-import { FormMemberSelect } from '@coop/shared/form';
+import { FormLayout, FormMemberSelect } from '@coop/shared/form';
 import {
   amountConverter,
   featureCode,
@@ -39,7 +35,6 @@ import {
   useTranslation,
 } from '@coop/shared/utils';
 
-import { ShareInfoFooter } from './ShareInfoFooter';
 import { ShareReturnInfo } from './ShareReturnInfo';
 import { ShareReturnPayment } from './ShareReturnPayment';
 
@@ -259,162 +254,327 @@ export const ShareReturnForm = () => {
     }
   }, [redirectMemberId]);
 
+  // return (
+  //   <>
+  //     <FormProvider {...methods}>
+  //       <form>
+  //         <Container minW="container.xl" p="0" mb="60px">
+  //           <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
+  //             <FormHeader
+  //               title={`${t['shareLayoutShareReturnAdd']} - ${featureCode?.newShareReturn}`}
+  //             />
+  //           </Box>
+
+  //           <Grid templateColumns="repeat(6,1fr)">
+  //             {mode === 'shareInfo' && (
+  //               <GridItem colSpan={memberDetailData ? 4 : 6}>
+  //                 <Box
+  //                   mb="3.125rem"
+  //                   width="100%"
+  //                   h="100%"
+  //                   background="gray.0"
+  //                   minH="calc(100vh - 170px)"
+  //                   borderRight="1px solid"
+  //                   borderColor="border.layout"
+  //                 >
+  //                   <Box w="100%">
+  //                     <FormSection>
+  //                       <GridItem colSpan={3}>
+  //                         <FormMemberSelect
+  //                           allMembers={false}
+  //                           name="memberId"
+  //                           label={t['sharePurchaseSelectMember']}
+  //                           isDisabled={!!redirectMemberId}
+  //                         />
+  //                       </GridItem>
+  //                     </FormSection>
+
+  //                     {memberDetailData && <ShareReturnInfo totalAmount={totalAmount} />}
+  //                   </Box>
+  //                 </Box>
+  //               </GridItem>
+  //             )}
+
+  //             {mode === 'sharePayment' && (
+  //               <GridItem colSpan={memberDetailData ? 4 : 6}>
+  //                 <ShareReturnPayment
+  //                   totalAmount={totalAmount}
+  //                   denominationTotal={denominationTotal}
+  //                   totalCashPaid={totalCashPaid}
+  //                   returnAmount={returnAmount}
+  //                 />
+  //               </GridItem>
+  //             )}
+
+  //             <GridItem colSpan={memberDetailData ? 2 : 0}>
+  //               {memberDetailData && (
+  //                 <ShareMemberCard
+  //                   mode={mode}
+  //                   memberId={memberId}
+  //                   totalAmount={totalAmount}
+  //                   memberDetailData={memberDetailData}
+  //                 />
+  //               )}
+  //             </GridItem>
+  //           </Grid>
+  //         </Container>
+  //       </form>
+  //     </FormProvider>
+  //     <Box position="relative" margin="0px auto">
+  //       <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+  //         <Container minW="container.xl" height="fit-content" p="0">
+  //           {mode === 'shareInfo' && (
+  //             <ShareInfoFooter
+  //               disableButton={noOfShares && isMultiple}
+  //               totalAmount={totalAmount}
+  //               paymentButtonHandler={paymentButtonHandler}
+  //             />
+  //           )}
+  //           {mode === 'sharePayment' && (
+  //             <FormFooter
+  //               mainButton={
+  //                 <ResponseDialog
+  //                   onSuccess={() => {
+  //                     if (redirectPath) {
+  //                       queryClient.invalidateQueries(['getMemberInactiveCheck']);
+  //                       router.push(String(redirectPath));
+  //                     } else {
+  //                       router.push(ROUTES.CBS_SHARE_REGISTER);
+  //                     }
+  //                   }}
+  //                   promise={() => mutateAsync({ data: handleSubmit() })}
+  //                   successCardProps={(response) => {
+  //                     const result = response?.share?.return?.record;
+
+  //                     const sum = result?.extraFee?.reduce((a, b) => a + Number(b?.value ?? 0), 0);
+  //                     const totalAmountCard = Number(sum ?? 0) + Number(result?.shareAmount ?? 0);
+
+  //                     const temp: Record<string, string> = {};
+
+  //                     result?.extraFee?.forEach((fee) => {
+  //                       if (fee?.name && fee?.value) {
+  //                         temp[String(fee.name)] = String(fee.value);
+  //                       }
+  //                     });
+
+  //                     return {
+  //                       type: 'Share-Return',
+  //                       total: String(amountConverter(totalAmountCard ?? '0')),
+  //                       title: 'Share Return Successful',
+  //                       details: {
+  //                         'Transaction Id': (
+  //                           <Text fontSize="s3" color="primary.500" fontWeight="600">
+  //                             {result?.transactionId}
+  //                           </Text>
+  //                         ),
+
+  //                         Date: localizedDate(result?.transactionDate),
+  //                         'Transaction Time': localizedTime(result?.createdAt),
+  //                         'No of Shares Returned': quantityConverter(result?.noOfShare || 0),
+  //                         'Withdraw Amount': quantityConverter(result?.shareAmount || 0),
+  //                         'Payment Mode': result?.paymentMode,
+  //                         // ...result?.extraFee?.map((fee) => ({
+  //                         //   [String(fee?.name)]: fee?.value,
+  //                         // })),
+
+  //                         ...temp,
+  //                       },
+  //                       meta: {
+  //                         memberId: result?.member?.code,
+  //                         member: result?.member?.name?.local,
+  //                       },
+  //                       subTitle:
+  //                         'Share returned successfully. Details of the transaction is listed below.',
+  //                     };
+  //                   }}
+  //                   errorCardProps={{
+  //                     title: 'Share Return Failed',
+  //                   }}
+  //                 >
+  //                   <Button width="160px">{t['shareConfirmPayment']}</Button>
+  //                 </ResponseDialog>
+  //               }
+  //               status={
+  //                 <Button
+  //                   variant="outline"
+  //                   leftIcon={<IoChevronBackOutline />}
+  //                   onClick={previousButtonHandler}
+  //                 >
+  //                   {t['previous']}
+  //                 </Button>
+  //               }
+  //               mainButtonHandler={handleSubmit}
+  //               isMainButtonDisabled={disableSubmitButtonFxn(paymentModes)}
+  //             />
+  //           )}
+  //         </Container>
+  //       </Box>
+  //     </Box>
+  //   </>
+  // );
+
   return (
-    <>
-      <FormProvider {...methods}>
-        <form>
-          <Container minW="container.xl" p="0" mb="60px">
-            <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-              <FormHeader
-                title={`${t['shareLayoutShareReturnAdd']} - ${featureCode?.newShareReturn}`}
-              />
+    <FormLayout methods={methods} hasSidebar={memberDetailData && mode === 'shareInfo'}>
+      <FormLayout.Header
+        title={`${t['shareLayoutShareReturnAdd']} - ${featureCode?.newShareReturn}`}
+      />
+
+      <FormLayout.Content>
+        <FormLayout.Form>
+          {mode === 'shareInfo' && (
+            <Box
+              // mb="3.125rem"
+              width="100%"
+              h="100%"
+              background="gray.0"
+              borderRight="1px solid"
+              borderColor="border.layout"
+            >
+              <Box w="100%">
+                <FormSection>
+                  <GridItem colSpan={3}>
+                    <FormMemberSelect
+                      allMembers={false}
+                      name="memberId"
+                      label={t['sharePurchaseSelectMember']}
+                      isDisabled={!!redirectMemberId}
+                    />
+                  </GridItem>
+                </FormSection>
+
+                {memberDetailData && <ShareReturnInfo totalAmount={totalAmount} />}
+              </Box>
             </Box>
+          )}
 
-            <Grid templateColumns="repeat(6,1fr)">
-              {mode === 'shareInfo' && (
-                <GridItem colSpan={memberDetailData ? 4 : 6}>
-                  <Box
-                    mb="3.125rem"
-                    width="100%"
-                    h="100%"
-                    background="gray.0"
-                    minH="calc(100vh - 170px)"
-                    borderRight="1px solid"
-                    borderColor="border.layout"
-                  >
-                    <Box w="100%">
-                      <FormSection>
-                        <GridItem colSpan={3}>
-                          <FormMemberSelect
-                            allMembers={false}
-                            name="memberId"
-                            label={t['sharePurchaseSelectMember']}
-                            isDisabled={!!redirectMemberId}
-                          />
-                        </GridItem>
-                      </FormSection>
+          {mode === 'sharePayment' && (
+            <ShareReturnPayment
+              totalAmount={totalAmount}
+              denominationTotal={denominationTotal}
+              totalCashPaid={totalCashPaid}
+              returnAmount={returnAmount}
+            />
+          )}
+        </FormLayout.Form>
 
-                      {memberDetailData && <ShareReturnInfo totalAmount={totalAmount} />}
-                    </Box>
-                  </Box>
-                </GridItem>
-              )}
+        {memberDetailData && mode === 'shareInfo' && (
+          <FormLayout.Sidebar>
+            <ShareMemberCard
+              mode={mode}
+              memberId={memberId}
+              totalAmount={totalAmount}
+              memberDetailData={memberDetailData}
+            />
+          </FormLayout.Sidebar>
+        )}
+      </FormLayout.Content>
 
-              {mode === 'sharePayment' && (
-                <GridItem colSpan={memberDetailData ? 4 : 6}>
-                  <ShareReturnPayment
-                    totalAmount={totalAmount}
-                    denominationTotal={denominationTotal}
-                    totalCashPaid={totalCashPaid}
-                    returnAmount={returnAmount}
-                  />
-                </GridItem>
-              )}
-
-              <GridItem colSpan={memberDetailData ? 2 : 0}>
-                {memberDetailData && (
-                  <ShareMemberCard
-                    mode={mode}
-                    memberId={memberId}
-                    totalAmount={totalAmount}
-                    memberDetailData={memberDetailData}
-                  />
+      {mode === 'shareInfo' && (
+        <FormLayout.Footer
+          status={
+            <Box display="flex" gap="s8">
+              <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
+                {totalAmount ? (
+                  <Text>
+                    {t['sharePurchaseTotalAmount']}
+                    <Text
+                      ml="s32"
+                      color="neutralColorLight.Gray-70"
+                      fontWeight="SemiBold"
+                      as="span"
+                    >
+                      {amountConverter(totalAmount)}
+                    </Text>
+                  </Text>
+                ) : (
+                  ''
                 )}
-              </GridItem>
-            </Grid>
-          </Container>
-        </form>
-      </FormProvider>
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content" p="0">
-            {mode === 'shareInfo' && (
-              <ShareInfoFooter
-                disableButton={noOfShares && isMultiple}
-                totalAmount={totalAmount}
-                paymentButtonHandler={paymentButtonHandler}
-              />
-            )}
-            {mode === 'sharePayment' && (
-              <FormFooter
-                mainButton={
-                  <ResponseDialog
-                    onSuccess={() => {
-                      if (redirectPath) {
-                        queryClient.invalidateQueries(['getMemberInactiveCheck']);
-                        router.push(String(redirectPath));
-                      } else {
-                        router.push(ROUTES.CBS_SHARE_REGISTER);
-                      }
-                    }}
-                    promise={() => mutateAsync({ data: handleSubmit() })}
-                    successCardProps={(response) => {
-                      const result = response?.share?.return?.record;
+              </Text>
+            </Box>
+          }
+          mainButtonLabel={t['proceedToPayment']}
+          mainButtonHandler={paymentButtonHandler}
+          isMainButtonDisabled={!(noOfShares && isMultiple)}
+        />
+      )}
 
-                      const sum = result?.extraFee?.reduce((a, b) => a + Number(b?.value ?? 0), 0);
-                      const totalAmountCard = Number(sum ?? 0) + Number(result?.shareAmount ?? 0);
-
-                      const temp: Record<string, string> = {};
-
-                      result?.extraFee?.forEach((fee) => {
-                        if (fee?.name && fee?.value) {
-                          temp[String(fee.name)] = String(fee.value);
-                        }
-                      });
-
-                      return {
-                        type: 'Share-Return',
-                        total: String(amountConverter(totalAmountCard ?? '0')),
-                        title: 'Share Return Successful',
-                        details: {
-                          'Transaction Id': (
-                            <Text fontSize="s3" color="primary.500" fontWeight="600">
-                              {result?.transactionId}
-                            </Text>
-                          ),
-
-                          Date: localizedDate(result?.transactionDate),
-                          'Transaction Time': localizedTime(result?.createdAt),
-                          'No of Shares Returned': quantityConverter(result?.noOfShare || 0),
-                          'Withdraw Amount': quantityConverter(result?.shareAmount || 0),
-                          'Payment Mode': result?.paymentMode,
-                          // ...result?.extraFee?.map((fee) => ({
-                          //   [String(fee?.name)]: fee?.value,
-                          // })),
-
-                          ...temp,
-                        },
-                        meta: {
-                          memberId: result?.member?.code,
-                          member: result?.member?.name?.local,
-                        },
-                        subTitle:
-                          'Share returned successfully. Details of the transaction is listed below.',
-                      };
-                    }}
-                    errorCardProps={{
-                      title: 'Share Return Failed',
-                    }}
-                  >
-                    <Button width="160px">{t['shareConfirmPayment']}</Button>
-                  </ResponseDialog>
+      {mode === 'sharePayment' && (
+        <FormLayout.Footer
+          mainButton={
+            <ResponseDialog
+              onSuccess={() => {
+                if (redirectPath) {
+                  queryClient.invalidateQueries(['getMemberInactiveCheck']);
+                  router.push(String(redirectPath));
+                } else {
+                  router.push(ROUTES.CBS_SHARE_REGISTER);
                 }
-                status={
-                  <Button
-                    variant="outline"
-                    leftIcon={<IoChevronBackOutline />}
-                    onClick={previousButtonHandler}
-                  >
-                    {t['previous']}
-                  </Button>
-                }
-                mainButtonHandler={handleSubmit}
-                isMainButtonDisabled={disableSubmitButtonFxn(paymentModes)}
-              />
-            )}
-          </Container>
-        </Box>
-      </Box>
-    </>
+              }}
+              promise={() => mutateAsync({ data: handleSubmit() })}
+              successCardProps={(response) => {
+                const result = response?.share?.return?.record;
+
+                const sum = result?.extraFee?.reduce((a, b) => a + Number(b?.value ?? 0), 0);
+                const totalAmountCard = Number(sum ?? 0) + Number(result?.shareAmount ?? 0);
+
+                const temp: Record<string, string> = {};
+
+                result?.extraFee?.forEach((fee) => {
+                  if (fee?.name && fee?.value) {
+                    temp[String(fee.name)] = String(fee.value);
+                  }
+                });
+
+                return {
+                  type: 'Share-Return',
+                  total: String(amountConverter(totalAmountCard ?? '0')),
+                  title: 'Share Return Successful',
+                  details: {
+                    'Transaction Id': (
+                      <Text fontSize="s3" color="primary.500" fontWeight="600">
+                        {result?.transactionId}
+                      </Text>
+                    ),
+
+                    Date: localizedDate(result?.transactionDate),
+                    'Transaction Time': localizedTime(result?.createdAt),
+                    'No of Shares Returned': quantityConverter(result?.noOfShare || 0),
+                    'Withdraw Amount': quantityConverter(result?.shareAmount || 0),
+                    'Payment Mode': result?.paymentMode,
+                    // ...result?.extraFee?.map((fee) => ({
+                    //   [String(fee?.name)]: fee?.value,
+                    // })),
+
+                    ...temp,
+                  },
+                  meta: {
+                    memberId: result?.member?.code,
+                    member: result?.member?.name?.local,
+                  },
+                  subTitle:
+                    'Share returned successfully. Details of the transaction is listed below.',
+                };
+              }}
+              errorCardProps={{
+                title: 'Share Return Failed',
+              }}
+            >
+              <Button width="160px">{t['shareConfirmPayment']}</Button>
+            </ResponseDialog>
+          }
+          status={
+            <Button
+              variant="outline"
+              leftIcon={<IoChevronBackOutline />}
+              onClick={previousButtonHandler}
+            >
+              {t['previous']}
+            </Button>
+          }
+          mainButtonHandler={handleSubmit}
+          isMainButtonDisabled={disableSubmitButtonFxn(paymentModes)}
+        />
+      )}
+    </FormLayout>
   );
 };

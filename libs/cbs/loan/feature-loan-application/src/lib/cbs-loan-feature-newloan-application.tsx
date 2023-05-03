@@ -410,7 +410,7 @@ export const NewLoanApplication = () => {
         </Box>
 
         {memberId && (
-          <Box position="sticky" zIndex={10} top="170px" right="0" w="320px">
+          <Box position="sticky" zIndex={9} top="170px" right="0" w="320px">
             <Box display="flex" flexDirection="column" gap="s16">
               <MemberCard
                 memberDetails={{
@@ -440,7 +440,7 @@ export const NewLoanApplication = () => {
           </Box>
         )}
       </Box>
-      <Box position="sticky" bottom={0} zIndex="3">
+      <Box position="sticky" bottom={0} zIndex="10">
         <FormFooter
           status={
             <>

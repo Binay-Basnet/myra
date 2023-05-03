@@ -4,7 +4,7 @@ import { Avatar, Box, Button, Text } from '@myra-ui/foundations';
 
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { Share_Transaction_Direction, useGetShareHistoryQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type MemberType = {
@@ -143,7 +143,7 @@ export const ShareMemberCard = ({
 
           <Box px="s12" py="s8" display="flex" justifyContent="space-between">
             <Button
-              onClick={() => router.push(`/members/details?id=${memberId}&tab=share`)}
+              onClick={() => router.push(`${ROUTES?.CBS_MEMBER_DETAILS}?id=${memberId}&tab=share`)}
               variant="ghost"
             >
               {t['viewAll']}

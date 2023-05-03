@@ -21,7 +21,7 @@ import {
   useGetInvestmentEntryFormStateDataQuery,
   useSetInvestmentEntryDataMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormOrganizationSelect, FormSelect } from '@coop/shared/form';
+import { FormBankSelect, FormInput, FormOrganizationSelect, FormSelect } from '@coop/shared/form';
 
 import { FixedDepositInvestment, SavingsDepositsInvestment, ShareInvestment } from '../components';
 
@@ -165,7 +165,7 @@ export const AddInvestment = () => {
 
   return (
     <>
-      <Container minW="container.xl" height="fit-content">
+      <Container minW="container.xl" height="fit-content" pb="s60">
         <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
           <FormHeader title="New Investment Entry" closeLink="/accounting/investment/list" />
         </Box>
@@ -194,6 +194,12 @@ export const AddInvestment = () => {
                 {investmentType === InvestmentType.Share && <ShareInvestment />}
                 {investmentType === InvestmentType.Saving && <SavingsDepositsInvestment />}
                 {investmentType === InvestmentType.FixedDeposit && <FixedDepositInvestment />}
+
+                {investmentType && (
+                  <FormSection header="Transaction Method">
+                    <FormBankSelect name="bankId" label="Bank" />
+                  </FormSection>
+                )}
               </Box>
             </form>
           </FormProvider>

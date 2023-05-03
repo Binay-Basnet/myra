@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, Table } from '@myra-ui/table';
 
@@ -9,6 +10,7 @@ import {
   useAppSelector,
   useGetSalesSaleEntryListDataQuery,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -16,7 +18,7 @@ export interface AccountingSalesListProps {}
 
 export const AccountingSalesList = () => {
   const { t } = useTranslation();
-
+  const router = useRouter();
   // const router = useRouter();
 
   const preferenceDate = useAppSelector((state: RootState) => state?.auth?.preference?.date);
@@ -88,6 +90,9 @@ export const AccountingSalesList = () => {
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.ACCOUNTING_SALES_ENTRY_DETAILS}?id=${row?.node?.id}`);
+        }}
         isLoading={isFetching}
         columns={columns}
         pagination={{

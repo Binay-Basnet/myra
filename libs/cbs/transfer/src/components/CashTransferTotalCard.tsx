@@ -32,12 +32,12 @@ export const CashTransferTotalCard = () => {
       tempDR += Number(entry?.dr ?? 0);
     });
 
-    return { crSelfTotal: tempCR, drSelfTotal: tempDR };
+    return { crSelfTotal: Number(tempCR?.toFixed(2)), drSelfTotal: Number(tempDR.toFixed(2)) };
   }, [selfEntries]);
 
-  const totalDr = drSelfTotal + drBranchTotal;
-  const totalCr = crSelfTotal + crBranchTotal;
-  const diff = totalDr - totalCr;
+  const totalDr = Number((drSelfTotal + drBranchTotal).toFixed(2));
+  const totalCr = Number((crSelfTotal + crBranchTotal).toFixed(2));
+  const diff = Number((totalDr - totalCr).toFixed(2));
 
   return (
     <GridItem colSpan={3}>

@@ -76,6 +76,7 @@ export const AgentDetailOverview = () => {
 
       reset({
         accounts: agentTodayListQueryData?.transaction?.listAgentTask?.record?.map((record) => ({
+          id: record?.id,
           member: record?.member?.id,
           account: record?.account?.id,
           amount: record?.amount,
@@ -88,13 +89,14 @@ export const AgentDetailOverview = () => {
     if (accounts?.length) {
       reset({
         accounts: accounts?.map(
-          (record: { account: string | undefined; member: any; amount: any }) => {
+          (record: { id: string; account: string | undefined; member: any; amount: any }) => {
             const account =
               assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
                 (member) => member?.node?.account?.id === record?.account
               );
 
             return {
+              id: record?.id,
               member: record?.member,
               account: record?.account,
               amount: record?.amount || account?.node?.account?.dues?.totalDue,
@@ -153,11 +155,19 @@ export const AgentDetailOverview = () => {
       promise: setAgentTodayList({
         id: id as string,
         data: getValues()['accounts'].map(
-          (account: { member: string; account: string; amount: string }) => ({
-            member: account.member,
-            account: account.account,
-            amount: String(account.amount),
-          })
+          (account: { id: string; member: string; account: string; amount: string }) =>
+            account.id
+              ? {
+                  id: account.id,
+                  member: account.member,
+                  account: account.account,
+                  amount: String(account.amount),
+                }
+              : {
+                  member: account.member,
+                  account: account.account,
+                  amount: String(account.amount),
+                }
         ),
       }),
       msgs: {

@@ -32,7 +32,13 @@ export const InstallmentData = ({
 
   const amountPaid = Number(watch('amountPaid')) ?? 0;
 
-  const { data: loanPreviewData } = useGetLoanPreviewQuery({ id: loanAccountId });
+  const { data: loanPreviewData } = useGetLoanPreviewQuery(
+    { id: loanAccountId },
+    { enabled: !!loanAccountId }
+  );
+
+  const isLOC =
+    loanPreviewData?.loanAccount?.loanPreview?.data?.loanDetails?.loanRepaymentScheme === 'LOC';
 
   const loanInstallments =
     loanPreviewData?.loanAccount?.loanPreview?.data?.paymentSchedule?.installments;
@@ -183,116 +189,120 @@ export const InstallmentData = ({
 
   return amountPaid ? (
     <Box display="flex" flexDirection="column" gap="s16">
-      <Box display="flex" flexDirection="column" gap="s8">
-        <Text fontSize="s3" fontWeight={500} color="gray.700">
-          Payment Details
-        </Text>
-        {coveredInstallments?.map(
-          (installment) =>
-            installment && (
-              <Box
-                display="flex"
-                flexDirection="column"
-                gap="s16"
-                p="s16"
-                bg="highlight.500"
-                borderRadius="br3"
-                key={installment.installmentNo}
-              >
-                <Box display="flex" flexDirection="column" gap="s4">
-                  <Box display="flex" justifyContent="space-between">
-                    <Text fontWeight="400" fontSize="s3" color="gray.600">
-                      Installment No
-                    </Text>
-                    <Text fontWeight="500" fontSize="s3" color="gray.700">
-                      {installment.installmentNo}
-                    </Text>
+      {!isLOC && (
+        <>
+          <Box display="flex" flexDirection="column" gap="s8">
+            <Text fontSize="s3" fontWeight={500} color="gray.700">
+              Payment Details
+            </Text>
+            {coveredInstallments?.map(
+              (installment) =>
+                installment && (
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    gap="s16"
+                    p="s16"
+                    bg="highlight.500"
+                    borderRadius="br3"
+                    key={installment.installmentNo}
+                  >
+                    <Box display="flex" flexDirection="column" gap="s4">
+                      <Box display="flex" justifyContent="space-between">
+                        <Text fontWeight="400" fontSize="s3" color="gray.600">
+                          Installment No
+                        </Text>
+                        <Text fontWeight="500" fontSize="s3" color="gray.700">
+                          {installment.installmentNo}
+                        </Text>
+                      </Box>
+                      {installment.principal ? (
+                        <Box display="flex" justifyContent="space-between">
+                          <Box display="flex" alignItems="center" gap="s4">
+                            <Text fontWeight="400" fontSize="s3" color="gray.600">
+                              Principal
+                            </Text>
+
+                            {installment.isPrincipalPartial && (
+                              <Chips
+                                variant="solid"
+                                theme="warning"
+                                size="md"
+                                type="label"
+                                label="Partial"
+                              />
+                            )}
+                          </Box>
+
+                          <Text fontWeight="500" fontSize="s3" color="gray.700">
+                            {amountConverter(installment.principal)}
+                          </Text>
+                        </Box>
+                      ) : null}
+                      {installment.interest ? (
+                        <Box display="flex" justifyContent="space-between">
+                          <Box display="flex" alignItems="center" gap="s4">
+                            <Text fontWeight="400" fontSize="s3" color="gray.600">
+                              Interest
+                            </Text>
+
+                            {installment.isInterestPartial && (
+                              <Chips
+                                variant="solid"
+                                theme="warning"
+                                size="md"
+                                type="label"
+                                label="Partial"
+                              />
+                            )}
+                          </Box>
+                          <Text fontWeight="500" fontSize="s3" color="gray.700">
+                            {amountConverter(installment.interest)}
+                          </Text>
+                        </Box>
+                      ) : null}
+                      {installment.fine ? (
+                        <Box display="flex" justifyContent="space-between">
+                          <Box display="flex" alignItems="center" gap="s4">
+                            <Text fontWeight="400" fontSize="s3" color="gray.600">
+                              Fine
+                            </Text>
+
+                            {installment.isFinePartial && (
+                              <Chips
+                                variant="solid"
+                                theme="warning"
+                                size="md"
+                                type="label"
+                                label="Partial"
+                              />
+                            )}
+                          </Box>
+                          <Text fontWeight="500" fontSize="s3" color="gray.700">
+                            {amountConverter(installment.fine)}
+                          </Text>
+                        </Box>
+                      ) : null}
+                    </Box>
+
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontWeight="500" fontSize="r1" color="gray.800">
+                        Total
+                      </Text>
+                      <Text fontWeight="500" fontSize="r1" color="gray.800">
+                        {amountConverter(
+                          installment.principal + installment.interest + installment.fine
+                        )}
+                      </Text>
+                    </Box>
                   </Box>
-                  {installment.principal ? (
-                    <Box display="flex" justifyContent="space-between">
-                      <Box display="flex" alignItems="center" gap="s4">
-                        <Text fontWeight="400" fontSize="s3" color="gray.600">
-                          Principal
-                        </Text>
+                )
+            )}
+          </Box>
 
-                        {installment.isPrincipalPartial && (
-                          <Chips
-                            variant="solid"
-                            theme="warning"
-                            size="md"
-                            type="label"
-                            label="Partial"
-                          />
-                        )}
-                      </Box>
-
-                      <Text fontWeight="500" fontSize="s3" color="gray.700">
-                        {amountConverter(installment.principal)}
-                      </Text>
-                    </Box>
-                  ) : null}
-                  {installment.interest ? (
-                    <Box display="flex" justifyContent="space-between">
-                      <Box display="flex" alignItems="center" gap="s4">
-                        <Text fontWeight="400" fontSize="s3" color="gray.600">
-                          Interest
-                        </Text>
-
-                        {installment.isInterestPartial && (
-                          <Chips
-                            variant="solid"
-                            theme="warning"
-                            size="md"
-                            type="label"
-                            label="Partial"
-                          />
-                        )}
-                      </Box>
-                      <Text fontWeight="500" fontSize="s3" color="gray.700">
-                        {amountConverter(installment.interest)}
-                      </Text>
-                    </Box>
-                  ) : null}
-                  {installment.fine ? (
-                    <Box display="flex" justifyContent="space-between">
-                      <Box display="flex" alignItems="center" gap="s4">
-                        <Text fontWeight="400" fontSize="s3" color="gray.600">
-                          Fine
-                        </Text>
-
-                        {installment.isFinePartial && (
-                          <Chips
-                            variant="solid"
-                            theme="warning"
-                            size="md"
-                            type="label"
-                            label="Partial"
-                          />
-                        )}
-                      </Box>
-                      <Text fontWeight="500" fontSize="s3" color="gray.700">
-                        {amountConverter(installment.fine)}
-                      </Text>
-                    </Box>
-                  ) : null}
-                </Box>
-
-                <Box display="flex" justifyContent="space-between">
-                  <Text fontWeight="500" fontSize="r1" color="gray.800">
-                    Total
-                  </Text>
-                  <Text fontWeight="500" fontSize="r1" color="gray.800">
-                    {amountConverter(
-                      installment.principal + installment.interest + installment.fine
-                    )}
-                  </Text>
-                </Box>
-              </Box>
-            )
-        )}
-      </Box>
-
-      <Divider />
+          <Divider />
+        </>
+      )}
 
       <Box
         display="flex"

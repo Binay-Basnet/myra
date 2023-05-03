@@ -177,3 +177,16 @@ mutation updateKym($date: Localized!, $id: ID!) {
     }
   }
 }
+
+mutation switchDormancy($id: ID!) {
+  members {
+    switchDormancy(id: $id) {
+      record {
+        id
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
