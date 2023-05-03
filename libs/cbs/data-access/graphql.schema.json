@@ -20616,6 +20616,18 @@
             "deprecationReason": null
           },
           {
+            "name": "accountName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "accountNumber",
             "description": null,
             "args": [],
@@ -20629,6 +20641,18 @@
           },
           {
             "name": "issueServiceCenter",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "memberCode",
             "description": null,
             "args": [],
             "type": {
