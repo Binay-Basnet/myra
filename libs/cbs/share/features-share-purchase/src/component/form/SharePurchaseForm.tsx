@@ -281,7 +281,7 @@ export const SharePurchaseForm = () => {
           )}
         </FormLayout.Form>
 
-        {memberDetailData && mode === 'shareInfo' && (
+        {memberDetailData && (
           <FormLayout.Sidebar borderPosition="left">
             <ShareMemberCard
               mode={mode}
