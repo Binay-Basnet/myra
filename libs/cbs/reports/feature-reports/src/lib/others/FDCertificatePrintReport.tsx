@@ -84,7 +84,7 @@ export const FDCertificatePrintReport = () => {
                   <RouteToDetailsPage
                     id={props?.row?.original?.memberId as string}
                     type="member"
-                    label={props?.row?.original?.memberId as string}
+                    label={props?.row?.original?.memberCode as string}
                   />
                 ),
               },
@@ -98,6 +98,10 @@ export const FDCertificatePrintReport = () => {
                     label={props?.row?.original?.accountNumber as string}
                   />
                 ),
+              },
+              {
+                header: 'Account Name',
+                accessorKey: 'accountName',
               },
               {
                 header: 'Date',

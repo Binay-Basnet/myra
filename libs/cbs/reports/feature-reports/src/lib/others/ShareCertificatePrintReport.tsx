@@ -84,7 +84,7 @@ export const ShareCertificatePrintReport = () => {
                   <RouteToDetailsPage
                     id={props?.row?.original?.memberId as string}
                     type="member"
-                    label={props?.row?.original?.memberId as string}
+                    label={props?.row?.original?.memberCode as string}
                   />
                 ),
               },
