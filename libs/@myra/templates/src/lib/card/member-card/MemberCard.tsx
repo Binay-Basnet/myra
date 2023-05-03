@@ -120,7 +120,7 @@ export const MemberCard = ({
 
   return (
     <>
-      <Box bg={cardBg} w={isInline ? '100%' : '320px'}>
+      <Box bg={cardBg} w={isInline ? '100%' : '20rem'}>
         {!isInline && (
           <Box px="s16" py="s8">
             <Text fontSize="s3" fontWeight="500" color="neutralColorLight.Gray-60">

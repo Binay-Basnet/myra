@@ -723,7 +723,11 @@ export const AccountOpenNew = () => {
                   citizenshipPath={memberCitizenshipUrl}
                 />
               </Box>
-              <Box p="s16">{productID && <ProductCard productId={productID} />}</Box>
+              {productID && (
+                <Box p="s16">
+                  <ProductCard productId={productID} />
+                </Box>
+              )}
               {productID && (
                 <Box p="s16">
                   <AccordianComponent productId={productID} />

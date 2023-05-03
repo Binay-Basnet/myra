@@ -54,18 +54,66 @@ const Sidebar = ({
   borderPosition?: 'left' | 'right';
 }) => (
   <Box
-    w="320px"
+    w="20rem"
     borderLeft={borderPosition === 'left' ? '1px' : '0'}
     borderRight={borderPosition === 'right' ? '1px' : '0'}
     borderColor="border.layout"
     overflowY="auto"
+    overflowX="hidden"
+    sx={{
+      '&::-webkit-scrollbar': {
+        width: '12px',
+        height: '8px',
+        backgroundColor: 'transparent',
+      },
+      '&:hover::-webkit-scrollbar': {
+        width: '12px',
+        height: '8px',
+        backgroundColor: '#f5f5f5',
+
+        display: 'block',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'transparent',
+        borderRadius: '8px',
+      },
+      '&:hover::-webkit-scrollbar-thumb': {
+        backgroundColor: 'gray.300',
+        borderRadius: '8px',
+      },
+    }}
   >
     {children}
   </Box>
 );
 
 const Form = ({ children }: { children: ReactNode }) => (
-  <Box flex={1} overflowY="auto">
+  <Box
+    flex={1}
+    overflowY="auto"
+    sx={{
+      '&::-webkit-scrollbar': {
+        width: '12px',
+        height: '8px',
+        backgroundColor: 'transparent',
+      },
+      '&:hover::-webkit-scrollbar': {
+        width: '12px',
+        height: '8px',
+        backgroundColor: '#f5f5f5',
+
+        display: 'block',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'transparent',
+        borderRadius: '8px',
+      },
+      '&:hover::-webkit-scrollbar-thumb': {
+        backgroundColor: 'gray.300',
+        borderRadius: '8px',
+      },
+    }}
+  >
     {children}
   </Box>
 );
