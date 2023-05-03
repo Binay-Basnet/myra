@@ -6,6 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetSalesCustomerListDataQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const CustomerList = () => {
@@ -69,6 +70,9 @@ export const CustomerList = () => {
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.ACCOUNTING_SALES_CUSTOMER_DETAILS}?id=${row?.node?.id}`);
+        }}
         isLoading={isFetching}
         columns={columns}
         pagination={{

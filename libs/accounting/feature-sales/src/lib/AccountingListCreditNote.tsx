@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetSalesCreditNoteListDataQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -12,6 +13,7 @@ export interface AccountingListCreditNoteProps {}
 
 export const AccountingListCreditNote = () => {
   const { t } = useTranslation();
+  const router = useRouter();
 
   const { data, isFetching } = useGetSalesCreditNoteListDataQuery({
     pagination: getPaginationQuery(),
@@ -75,6 +77,9 @@ export const AccountingListCreditNote = () => {
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.ACCOUNTING_SALES_CREDIT_NOTE_DETAILS}?id=${row?.node?.id}`);
+        }}
         isLoading={isFetching}
         columns={columns}
         pagination={{
