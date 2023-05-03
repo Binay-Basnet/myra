@@ -346,7 +346,7 @@ export const AddDeposit = () => {
         <FormLayout.Content>
           <FormLayout.Form>
             <Box display={mode === 0 ? 'flex' : 'none'}>
-              <Box p="s16" pb="100px" width="100%" display="flex" flexDirection="column" gap="s24">
+              <Box p="s16" width="100%" display="flex" flexDirection="column" gap="s24">
                 <FormMemberSelect
                   isRequired
                   name="memberId"

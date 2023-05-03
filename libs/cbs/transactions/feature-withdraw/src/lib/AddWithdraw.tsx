@@ -1,19 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
-import {
-  Alert,
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  MemberCard,
-  ResponseDialog,
-  Text,
-} from '@myra-ui';
+import { Alert, Box, Button, MemberCard, ResponseDialog, Text } from '@myra-ui';
 
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
@@ -35,6 +25,7 @@ import {
   FormAccountSelect,
   FormAmountInput,
   FormInput,
+  FormLayout,
   FormMemberSelect,
   FormSelect,
   FormSwitchTab,
@@ -304,282 +295,257 @@ export const AddWithdraw = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title={`${t['addWithdrawNewWithdraw']} - ${featureCode?.newWithdraw}`} />
-        </Box>
+    <FormLayout methods={methods} hasSidebar={Boolean(memberId && mode === 0)}>
+      <FormLayout.Header title={`${t['addWithdrawNewWithdraw']} - ${featureCode?.newWithdraw}`} />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)" display={mode === 0 ? 'flex' : 'none'}>
-                <Box
-                  p="s16"
-                  pb="100px"
-                  width="100%"
-                  display="flex"
-                  flexDirection="column"
-                  gap="s24"
-                  borderRight="1px"
-                  borderColor="border.layout"
-                >
-                  <FormMemberSelect
-                    isRequired
-                    name="memberId"
-                    label={t['addWithdrawMember']}
-                    isDisabled={!!redirectMemberId}
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <Box display={mode === 0 ? 'flex' : 'none'}>
+            <Box p="s16" width="100%" display="flex" flexDirection="column" gap="s24">
+              <FormMemberSelect
+                isRequired
+                name="memberId"
+                label={t['addWithdrawMember']}
+                isDisabled={!!redirectMemberId}
+              />
+              {memberId && (
+                <FormAccountSelect
+                  isRequired
+                  name="accountId"
+                  label={t['addDepositSelectDepositAccount']}
+                  memberId={memberId}
+                  includeLoc
+                  isDisabled={!!redirectAccountId}
+                />
+              )}
+              {selectedAccount?.product?.withdrawRestricted && (
+                <Alert
+                  status="info"
+                  hideCloseIcon
+                  title="Withdraw Restricted"
+                  subtitle="Withdraw is restricted for this account."
+                />
+              )}
+              {memberId && accountId && (
+                <>
+                  <FormSwitchTab
+                    name="withdrawWith"
+                    label={t['addWithdrawWithdrawBy']}
+                    options={withdrawTypes}
                   />
-                  {memberId && (
-                    <FormAccountSelect
-                      isRequired
-                      name="accountId"
-                      label={t['addDepositSelectDepositAccount']}
-                      memberId={memberId}
-                      includeLoc
-                      isDisabled={!!redirectAccountId}
-                    />
-                  )}
-                  {selectedAccount?.product?.withdrawRestricted && (
-                    <Alert
-                      status="info"
-                      hideCloseIcon
-                      title="Withdraw Restricted"
-                      subtitle="Withdraw is restricted for this account."
-                    />
-                  )}
-                  {memberId && accountId && (
-                    <>
-                      <FormSwitchTab
-                        name="withdrawWith"
-                        label={t['addWithdrawWithdrawBy']}
-                        options={withdrawTypes}
-                      />
 
-                      {withdrawn === WithdrawWith.WithdrawSlip && (
-                        <InputGroupContainer>
-                          <FormSelect
-                            isRequired
-                            name="withdrawSlipNo"
-                            label="Withdraw Slip No"
-                            options={availableSlipListOptions}
-                          />
-                        </InputGroupContainer>
-                      )}
-
-                      {withdrawn === WithdrawWith.CounterSlip && (
-                        <InputGroupContainer>
-                          <FormInput isRequired name="counterSlipNo" label="Counter Slip No" />
-                        </InputGroupContainer>
-                      )}
-
-                      <FormAmountInput
+                  {withdrawn === WithdrawWith.WithdrawSlip && (
+                    <InputGroupContainer>
+                      <FormSelect
                         isRequired
-                        type="number"
-                        min={0}
-                        name="amount"
-                        label={t['addWithdrawWithdrawAmount']}
+                        name="withdrawSlipNo"
+                        label="Withdraw Slip No"
+                        options={availableSlipListOptions}
                       />
-
-                      {memberDetailData?.type === KymMemberTypesEnum.Individual && (
-                        <SuspiciousTransaction />
-                      )}
-
-                      <Box
-                        bg="background.500"
-                        borderRadius="br2"
-                        px="s16"
-                        py="s18"
-                        display="flex"
-                        flexDirection="column"
-                        gap="s14"
-                      >
-                        <Box display="flex" justifyContent="space-between">
-                          <Text fontSize="s3" fontWeight={500} color="gray.600">
-                            {t['addWithdrawWithdrawAmount']}
-                          </Text>
-
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-                            {amountConverter(amountToBeWithdrawn)}
-                          </Text>
-                        </Box>
-
-                        <Box display="flex" justifyContent="space-between">
-                          <Text fontSize="s3" fontWeight={500} color="gray.600">
-                            {t['addWithdrawFine']}
-                          </Text>
-
-                          <Text fontSize="s3" fontWeight={500} color="danger.500">
-                            {`- ${amountConverter(fine)}`}
-                          </Text>
-                        </Box>
-
-                        <Box display="flex" justifyContent="space-between">
-                          <Text fontSize="s3" fontWeight={500} color="gray.600">
-                            {t['addWithdrawTotalWithdraw']}
-                          </Text>
-
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-                            {amountConverter(totalWithdraw)}
-                          </Text>
-                        </Box>
-                      </Box>
-                    </>
+                    </InputGroupContainer>
                   )}
-                </Box>
 
-                {memberId && (
-                  <Box>
-                    <MemberCard
-                      memberDetails={{
-                        name: memberDetailData?.name,
-                        code: memberDetailData?.code,
-                        avatar: memberDetailData?.profilePicUrl ?? '',
-                        memberID: memberDetailData?.id,
-                        gender: memberDetailData?.gender,
-                        age: memberDetailData?.age,
-                        maritalStatus: memberDetailData?.maritalStatus,
-                        dateJoined: memberDetailData?.dateJoined,
-                        // branch: 'Basantapur',
-                        phoneNo: memberDetailData?.contact,
-                        email: memberDetailData?.email,
-                        address: memberDetailData?.address,
-                      }}
-                      // notice="KYM needs to be updated"
-                      signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
-                      showSignaturePreview
-                      citizenshipPath={memberCitizenshipUrl}
-                      accountInfo={
-                        selectedAccount
-                          ? {
-                              name: selectedAccount?.accountName as string,
-                              type: selectedAccount?.product?.nature
-                                ? accountTypes[selectedAccount?.product?.nature]
-                                : '',
-                              ID: selectedAccount?.accountId,
-                              currentBalance: selectedAccount?.availableBalance ?? '0',
-                              actualBalance: selectedAccount?.accountBalance ?? '0',
-                              minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
-                              interestAccured: selectedAccount?.interestAccrued ?? '0',
-                              guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
-                              overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
-                              fine: selectedAccount?.dues?.fine ?? '0',
-                              // branch: 'Kumaripati',
-                              openDate: localizedDate(selectedAccount?.accountOpenDate) ?? 'N/A',
-                              expiryDate:
-                                localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
-                              lastTransactionDate:
-                                localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
-                              productName: selectedAccount?.product?.productName,
-                              installmentAmount:
-                                selectedAccount?.product?.nature ===
-                                  NatureOfDepositProduct.RecurringSaving ||
-                                (selectedAccount?.product?.nature ===
-                                  NatureOfDepositProduct.Saving &&
-                                  selectedAccount?.product?.isMandatorySaving)
-                                  ? selectedAccount?.installmentAmount
-                                  : null,
-                            }
-                          : null
-                      }
-                      redirectUrl={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedAccount?.accountId}`}
-                    />
-                  </Box>
-                )}
-              </Box>
+                  {withdrawn === WithdrawWith.CounterSlip && (
+                    <InputGroupContainer>
+                      <FormInput isRequired name="counterSlipNo" label="Counter Slip No" />
+                    </InputGroupContainer>
+                  )}
 
-              <Payment mode={mode} totalWithdraw={totalWithdraw} />
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
+                  <FormAmountInput
+                    isRequired
+                    type="number"
+                    min={0}
+                    name="amount"
+                    label={t['addWithdrawWithdrawAmount']}
+                  />
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter
-              mainButton={
-                mode === 1 ? (
-                  <ResponseDialog
-                    onSuccess={() => {
-                      router.push(ROUTES.CBS_TRANS_WITHDRAW_LIST);
-                    }}
-                    promise={() => mutateAsync({ data: handleSubmit() })}
-                    successCardProps={(response) => {
-                      const result = response?.transaction?.withdraw?.record;
-                      const isWithdrawOther = result?.withdrawnBy === 'OTHER';
+                  {memberDetailData?.type === KymMemberTypesEnum.Individual && (
+                    <SuspiciousTransaction />
+                  )}
 
-                      return {
-                        type: 'Withdraw',
-                        total: amountConverter(result?.amount || 0) as string,
-                        totalWords: amountToWordsConverter(result?.amount || 0),
-                        title: 'Withdraw Successful',
-                        details: {
-                          'Transaction Id': (
-                            <Text fontSize="s3" color="primary.500" fontWeight="600">
-                              {result?.transactionID}
-                            </Text>
-                          ),
-                          Date: localizedDate(result?.date),
-                          'Transaction Time': localizedTime(result?.createdAt),
-                          'Withdraw Amount': amountConverter(result?.amount || 0),
-                          Fine: amountConverter(result?.fine || '0'),
-                          'Payment Mode': result?.paymentMode,
-                          'Withdraw By': `${result?.withdrawWith} (${
-                            result?.withdrawWith === WithdrawWith.WithdrawSlip
-                              ? result?.slipNo?.padStart(10, '0') ?? 'N/A'
-                              : result?.slipNo ?? 'N/A'
-                          })`,
-                          'Withdrawn By': !isWithdrawOther
-                            ? result?.withdrawnBy
-                            : `${result?.withdrawnBy}-(${result?.withdrawOther})`,
-
-                          // ...(isWithdrawOther && { 'Withdrawer Name': result?.withdrawOther }),
-                        },
-                        subTitle:
-                          'Amount withdrawn successfully. Details of the transaction is listed below.',
-                        meta: {
-                          memberId: result?.memberId,
-                          accountId: result?.accountId,
-                          accountName: result?.accountName,
-                          member: result?.memberName?.local,
-                        },
-                      };
-                    }}
-                    errorCardProps={{
-                      title: 'New Withdraw Failed',
-                    }}
+                  <Box
+                    bg="background.500"
+                    borderRadius="br2"
+                    px="s16"
+                    py="s18"
+                    display="flex"
+                    flexDirection="column"
+                    gap="s14"
                   >
-                    <Button width="160px">{t['addWithdrawSubmit']}</Button>
-                  </ResponseDialog>
-                ) : undefined
-              }
-              status={
-                mode === 0 ? (
-                  <Box display="flex" gap="s32">
-                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
-                      {t['addWithdrawTotalWithdrawAmount']}
-                    </Text>
-                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                      {amountConverter(totalWithdraw) ?? '---'}
-                    </Text>
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="s3" fontWeight={500} color="gray.600">
+                        {t['addWithdrawWithdrawAmount']}
+                      </Text>
+
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
+                        {amountConverter(amountToBeWithdrawn)}
+                      </Text>
+                    </Box>
+
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="s3" fontWeight={500} color="gray.600">
+                        {t['addWithdrawFine']}
+                      </Text>
+
+                      <Text fontSize="s3" fontWeight={500} color="danger.500">
+                        {`- ${amountConverter(fine)}`}
+                      </Text>
+                    </Box>
+
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="s3" fontWeight={500} color="gray.600">
+                        {t['addWithdrawTotalWithdraw']}
+                      </Text>
+
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
+                        {amountConverter(totalWithdraw)}
+                      </Text>
+                    </Box>
                   </Box>
-                ) : (
-                  <Button variant="solid" onClick={() => setMode(0)}>
-                    {t['addWithdrawPrevious']}
-                  </Button>
-                )
+                </>
+              )}
+            </Box>
+          </Box>
+
+          <Payment mode={mode} totalWithdraw={totalWithdraw} />
+        </FormLayout.Form>
+
+        {memberId && mode === 0 && (
+          <FormLayout.Sidebar borderPosition="left">
+            <MemberCard
+              memberDetails={{
+                name: memberDetailData?.name,
+                code: memberDetailData?.code,
+                avatar: memberDetailData?.profilePicUrl ?? '',
+                memberID: memberDetailData?.id,
+                gender: memberDetailData?.gender,
+                age: memberDetailData?.age,
+                maritalStatus: memberDetailData?.maritalStatus,
+                dateJoined: memberDetailData?.dateJoined,
+                // branch: 'Basantapur',
+                phoneNo: memberDetailData?.contact,
+                email: memberDetailData?.email,
+                address: memberDetailData?.address,
+              }}
+              // notice="KYM needs to be updated"
+              signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
+              showSignaturePreview
+              citizenshipPath={memberCitizenshipUrl}
+              accountInfo={
+                selectedAccount
+                  ? {
+                      name: selectedAccount?.accountName as string,
+                      type: selectedAccount?.product?.nature
+                        ? accountTypes[selectedAccount?.product?.nature]
+                        : '',
+                      ID: selectedAccount?.accountId,
+                      currentBalance: selectedAccount?.availableBalance ?? '0',
+                      actualBalance: selectedAccount?.accountBalance ?? '0',
+                      minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
+                      interestAccured: selectedAccount?.interestAccrued ?? '0',
+                      guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
+                      overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
+                      fine: selectedAccount?.dues?.fine ?? '0',
+                      // branch: 'Kumaripati',
+                      openDate: localizedDate(selectedAccount?.accountOpenDate) ?? 'N/A',
+                      expiryDate: localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
+                      lastTransactionDate:
+                        localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
+                      productName: selectedAccount?.product?.productName,
+                      installmentAmount:
+                        selectedAccount?.product?.nature ===
+                          NatureOfDepositProduct.RecurringSaving ||
+                        (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                          selectedAccount?.product?.isMandatorySaving)
+                          ? selectedAccount?.installmentAmount
+                          : null,
+                    }
+                  : null
               }
-              mainButtonLabel={
-                mode === 0 ? t['addWithdrawProceedToPayment'] : t['addWithdrawSubmit']
-              }
-              mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
-              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
+              redirectUrl={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedAccount?.accountId}`}
             />
-          </Container>
-        </Box>
-      </Box>
-    </>
+          </FormLayout.Sidebar>
+        )}
+      </FormLayout.Content>
+
+      <FormLayout.Footer
+        mainButton={
+          mode === 1 ? (
+            <ResponseDialog
+              onSuccess={() => {
+                router.push(ROUTES.CBS_TRANS_WITHDRAW_LIST);
+              }}
+              promise={() => mutateAsync({ data: handleSubmit() })}
+              successCardProps={(response) => {
+                const result = response?.transaction?.withdraw?.record;
+                const isWithdrawOther = result?.withdrawnBy === 'OTHER';
+
+                return {
+                  type: 'Withdraw',
+                  total: amountConverter(result?.amount || 0) as string,
+                  totalWords: amountToWordsConverter(result?.amount || 0),
+                  title: 'Withdraw Successful',
+                  details: {
+                    'Transaction Id': (
+                      <Text fontSize="s3" color="primary.500" fontWeight="600">
+                        {result?.transactionID}
+                      </Text>
+                    ),
+                    Date: localizedDate(result?.date),
+                    'Transaction Time': localizedTime(result?.createdAt),
+                    'Withdraw Amount': amountConverter(result?.amount || 0),
+                    Fine: amountConverter(result?.fine || '0'),
+                    'Payment Mode': result?.paymentMode,
+                    'Withdraw By': `${result?.withdrawWith} (${
+                      result?.withdrawWith === WithdrawWith.WithdrawSlip
+                        ? result?.slipNo?.padStart(10, '0') ?? 'N/A'
+                        : result?.slipNo ?? 'N/A'
+                    })`,
+                    'Withdrawn By': !isWithdrawOther
+                      ? result?.withdrawnBy
+                      : `${result?.withdrawnBy}-(${result?.withdrawOther})`,
+
+                    // ...(isWithdrawOther && { 'Withdrawer Name': result?.withdrawOther }),
+                  },
+                  subTitle:
+                    'Amount withdrawn successfully. Details of the transaction is listed below.',
+                  meta: {
+                    memberId: result?.memberId,
+                    accountId: result?.accountId,
+                    accountName: result?.accountName,
+                    member: result?.memberName?.local,
+                  },
+                };
+              }}
+              errorCardProps={{
+                title: 'New Withdraw Failed',
+              }}
+            >
+              <Button width="160px">{t['addWithdrawSubmit']}</Button>
+            </ResponseDialog>
+          ) : undefined
+        }
+        status={
+          mode === 0 ? (
+            <Box display="flex" gap="s32">
+              <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
+                {t['addWithdrawTotalWithdrawAmount']}
+              </Text>
+              <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
+                {amountConverter(totalWithdraw) ?? '---'}
+              </Text>
+            </Box>
+          ) : (
+            <Button variant="solid" onClick={() => setMode(0)}>
+              {t['addWithdrawPrevious']}
+            </Button>
+          )
+        }
+        mainButtonLabel={mode === 0 ? t['addWithdrawProceedToPayment'] : t['addWithdrawSubmit']}
+        mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
+        isMainButtonDisabled={checkIsSubmitButtonDisabled()}
+      />
+    </FormLayout>
   );
 };
 
