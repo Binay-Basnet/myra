@@ -48,7 +48,7 @@ const Content = ({ children }: { children: ReactNode }) => (
 
 const Sidebar = ({
   children,
-  borderPosition,
+  borderPosition = 'left',
 }: {
   children: ReactNode;
   borderPosition?: 'left' | 'right';

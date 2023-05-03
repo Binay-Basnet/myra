@@ -101,7 +101,7 @@ export const Payment = ({
   }, [cashPaid]);
 
   return (
-    <ContainerWithDivider borderRight="1px" borderColor="border.layout" p="s16" pb="100px">
+    <ContainerWithDivider p="s16">
       <BoxContainer>
         <FormSwitchTab
           label="Payment Mode"
