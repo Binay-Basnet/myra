@@ -11,4 +11,8 @@ export const MEMBER_TAB_ITEMS = [
     title: 'memberNavDraft',
     key: 'DRAFT',
   },
+  {
+    title: 'Dormant',
+    key: 'DORMANT',
+  },
 ];

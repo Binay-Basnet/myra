@@ -12325,6 +12325,11 @@ export type MemberDocumentDetails = {
   value?: Maybe<Scalars['String']>;
 };
 
+export type MemberDormancyResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Member>;
+};
+
 export type MemberFilterMapping = {
   activeDate?: Maybe<DateFilterOutput>;
   createdAtDate?: Maybe<DateFilterOutput>;
@@ -12418,6 +12423,7 @@ export type MemberMutation = {
   issueCertificate: Scalars['String'];
   makeInactive?: Maybe<MemberInactiveResult>;
   officialUse?: Maybe<OfficialUseResult>;
+  switchDormancy: MemberDormancyResult;
   /**  id is the ID of member  */
   translate?: Maybe<TranslateData>;
   updateKym: KymUpdateResult;
@@ -12458,6 +12464,10 @@ export type MemberMutationMakeInactiveArgs = {
 
 export type MemberMutationOfficialUseArgs = {
   data: OfficialUseInputData;
+};
+
+export type MemberMutationSwitchDormancyArgs = {
+  id: Scalars['ID'];
 };
 
 export type MemberMutationTranslateArgs = {
@@ -19294,6 +19304,25 @@ export type UpdateKymMutationVariables = Exact<{
 export type UpdateKymMutation = {
   members: {
     updateKym: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type SwitchDormancyMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type SwitchDormancyMutation = {
+  members: {
+    switchDormancy: {
+      record?: { id: string } | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -36819,6 +36848,33 @@ export const useUpdateKymMutation = <TError = unknown, TContext = unknown>(
   useMutation<UpdateKymMutation, TError, UpdateKymMutationVariables, TContext>(
     ['updateKym'],
     useAxios<UpdateKymMutation, UpdateKymMutationVariables>(UpdateKymDocument),
+    options
+  );
+export const SwitchDormancyDocument = `
+    mutation switchDormancy($id: ID!) {
+  members {
+    switchDormancy(id: $id) {
+      record {
+        id
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSwitchDormancyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SwitchDormancyMutation,
+    TError,
+    SwitchDormancyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SwitchDormancyMutation, TError, SwitchDormancyMutationVariables, TContext>(
+    ['switchDormancy'],
+    useAxios<SwitchDormancyMutation, SwitchDormancyMutationVariables>(SwitchDormancyDocument),
     options
   );
 export const PayMembershipDocument = `
