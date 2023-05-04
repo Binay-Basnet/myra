@@ -86,7 +86,7 @@ export const SavingAccountAccruedInterestReport = () => {
                         <Text noOfLines={1}>{meta?.serviceCentreName}</Text>
                       )}
                       {meta?.currentInterestRate && (
-                        <Text noOfLines={1}>{meta?.currentInterestRate}</Text>
+                        <Text noOfLines={1}>{meta?.currentInterestRate} %</Text>
                       )}
                     </Box>
                   </GridItem>
@@ -155,6 +155,7 @@ export const SavingAccountAccruedInterestReport = () => {
               {
                 header: 'Interest Rate',
                 accessorKey: 'interestRate',
+                cell: (props) => `${props.getValue()} %`,
                 meta: {
                   isNumeric: true,
                 },
