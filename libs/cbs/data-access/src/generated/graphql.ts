@@ -5148,6 +5148,17 @@ export type DocumentResult = {
   error?: Maybe<QueryError>;
 };
 
+export type DormancyData = {
+  blockLoanTransaction?: Maybe<Scalars['Boolean']>;
+  blockSavingTransaction?: Maybe<Scalars['Boolean']>;
+  blockShareTransaction?: Maybe<Scalars['Boolean']>;
+};
+
+export type DormancyResult = {
+  data?: Maybe<DormancyData>;
+  error?: Maybe<QueryError>;
+};
+
 export type DormantAccountReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNo?: Maybe<Scalars['String']>;
@@ -12327,6 +12338,17 @@ export type MemberDocumentDetails = {
   value?: Maybe<Scalars['String']>;
 };
 
+export type MemberDormancyInput = {
+  blockLoanTransaction: Scalars['Boolean'];
+  blockSavingTransaction: Scalars['Boolean'];
+  blockShareTransaction: Scalars['Boolean'];
+  documents?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  loanAccountId?: InputMaybe<Scalars['String']>;
+  notes?: InputMaybe<Scalars['String']>;
+  reason: Scalars['String'];
+  savingAccountId?: InputMaybe<Scalars['String']>;
+};
+
 export type MemberDormancyResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<Member>;
@@ -12423,11 +12445,12 @@ export type MemberMutation = {
   individual?: Maybe<KymIndMutation>;
   institution?: Maybe<KymInsMutation>;
   issueCertificate: Scalars['String'];
+  makeDormant?: Maybe<MemberDormancyResult>;
   makeInactive?: Maybe<MemberInactiveResult>;
   officialUse?: Maybe<OfficialUseResult>;
-  switchDormancy: MemberDormancyResult;
-  /**  id is the ID of member  */
+  revokeDormancy: MemberDormancyResult;
   translate?: Maybe<TranslateData>;
+  updateDormancy: MemberDormancyResult;
   updateKym: KymUpdateResult;
 };
 
@@ -12460,6 +12483,11 @@ export type MemberMutationIssueCertificateArgs = {
   id: Scalars['ID'];
 };
 
+export type MemberMutationMakeDormantArgs = {
+  data: MemberDormancyInput;
+  memberId: Scalars['ID'];
+};
+
 export type MemberMutationMakeInactiveArgs = {
   memberId: Scalars['ID'];
 };
@@ -12468,12 +12496,18 @@ export type MemberMutationOfficialUseArgs = {
   data: OfficialUseInputData;
 };
 
-export type MemberMutationSwitchDormancyArgs = {
-  id: Scalars['ID'];
+export type MemberMutationRevokeDormancyArgs = {
+  data: RevokeDormancyInput;
+  memberId: Scalars['ID'];
 };
 
 export type MemberMutationTranslateArgs = {
   data: TranslateInput;
+  memberId: Scalars['ID'];
+};
+
+export type MemberMutationUpdateDormancyArgs = {
+  data: UpdateDormancyInput;
   memberId: Scalars['ID'];
 };
 
@@ -12645,6 +12679,7 @@ export type MemberQuery = {
   cooperative?: Maybe<KymCooperativeQuery>;
   cooperativeUnion?: Maybe<KymCoopUnionQuery>;
   details: MemberDetailsResult;
+  dormancyDetails?: Maybe<DormancyResult>;
   entry?: Maybe<KymEntryQuery>;
   filterMapping?: Maybe<MemberFilterMapping>;
   getAllAccounts?: Maybe<MemberAccountResult>;
@@ -12668,6 +12703,10 @@ export type MemberQueryCooperativeArgs = {
 
 export type MemberQueryDetailsArgs = {
   id: Scalars['ID'];
+};
+
+export type MemberQueryDormancyDetailsArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberQueryEntryArgs = {
@@ -14628,6 +14667,14 @@ export type Result = {
 export type RevertTransactionResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type RevokeDormancyInput = {
+  activateLoanTransaction: Scalars['Boolean'];
+  activateSavingTransaction: Scalars['Boolean'];
+  activateShareTransaction: Scalars['Boolean'];
+  documents?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  notes?: InputMaybe<Scalars['String']>;
 };
 
 export const RiskCategoryFilter = {
@@ -17013,6 +17060,12 @@ export type UpdateBankAccountInput = {
   openingBalance?: InputMaybe<Scalars['String']>;
 };
 
+export type UpdateDormancyInput = {
+  blockLoanTransaction: Scalars['Boolean'];
+  blockSavingTransaction: Scalars['Boolean'];
+  blockShareTransaction: Scalars['Boolean'];
+};
+
 export type UploadedDocument = {
   docData: Array<Maybe<UploadedDocumentData>>;
   fieldId?: Maybe<Scalars['String']>;
@@ -19317,14 +19370,52 @@ export type UpdateKymMutation = {
   };
 };
 
-export type SwitchDormancyMutationVariables = Exact<{
-  id: Scalars['ID'];
+export type MakeMemberDormantMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+  data: MemberDormancyInput;
 }>;
 
-export type SwitchDormancyMutation = {
+export type MakeMemberDormantMutation = {
   members: {
-    switchDormancy: {
-      record?: { id: string } | null;
+    makeDormant?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type RevokeMemberDormancyMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+  data: RevokeDormancyInput;
+}>;
+
+export type RevokeMemberDormancyMutation = {
+  members: {
+    revokeDormancy: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
+
+export type UpdateMemberDormancyMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+  data: UpdateDormancyInput;
+}>;
+
+export type UpdateMemberDormancyMutation = {
+  members: {
+    updateDormancy: {
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -26395,6 +26486,22 @@ export type GetMinorProfileQuery = {
         interestRate?: number | null;
         balance?: string | null;
       } | null> | null;
+    } | null;
+  };
+};
+
+export type MemberDormancyDetailsQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
+
+export type MemberDormancyDetailsQuery = {
+  members: {
+    dormancyDetails?: {
+      data?: {
+        blockSavingTransaction?: boolean | null;
+        blockLoanTransaction?: boolean | null;
+        blockShareTransaction?: boolean | null;
+      } | null;
     } | null;
   };
 };
@@ -36933,13 +37040,10 @@ export const useUpdateKymMutation = <TError = unknown, TContext = unknown>(
     useAxios<UpdateKymMutation, UpdateKymMutationVariables>(UpdateKymDocument),
     options
   );
-export const SwitchDormancyDocument = `
-    mutation switchDormancy($id: ID!) {
+export const MakeMemberDormantDocument = `
+    mutation makeMemberDormant($memberId: ID!, $data: MemberDormancyInput!) {
   members {
-    switchDormancy(id: $id) {
-      record {
-        id
-      }
+    makeDormant(memberId: $memberId, data: $data) {
       error {
         ...MutationError
       }
@@ -36947,17 +37051,81 @@ export const SwitchDormancyDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSwitchDormancyMutation = <TError = unknown, TContext = unknown>(
+export const useMakeMemberDormantMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
-    SwitchDormancyMutation,
+    MakeMemberDormantMutation,
     TError,
-    SwitchDormancyMutationVariables,
+    MakeMemberDormantMutationVariables,
     TContext
   >
 ) =>
-  useMutation<SwitchDormancyMutation, TError, SwitchDormancyMutationVariables, TContext>(
-    ['switchDormancy'],
-    useAxios<SwitchDormancyMutation, SwitchDormancyMutationVariables>(SwitchDormancyDocument),
+  useMutation<MakeMemberDormantMutation, TError, MakeMemberDormantMutationVariables, TContext>(
+    ['makeMemberDormant'],
+    useAxios<MakeMemberDormantMutation, MakeMemberDormantMutationVariables>(
+      MakeMemberDormantDocument
+    ),
+    options
+  );
+export const RevokeMemberDormancyDocument = `
+    mutation revokeMemberDormancy($memberId: ID!, $data: RevokeDormancyInput!) {
+  members {
+    revokeDormancy(memberId: $memberId, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useRevokeMemberDormancyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RevokeMemberDormancyMutation,
+    TError,
+    RevokeMemberDormancyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    RevokeMemberDormancyMutation,
+    TError,
+    RevokeMemberDormancyMutationVariables,
+    TContext
+  >(
+    ['revokeMemberDormancy'],
+    useAxios<RevokeMemberDormancyMutation, RevokeMemberDormancyMutationVariables>(
+      RevokeMemberDormancyDocument
+    ),
+    options
+  );
+export const UpdateMemberDormancyDocument = `
+    mutation updateMemberDormancy($memberId: ID!, $data: UpdateDormancyInput!) {
+  members {
+    updateDormancy(memberId: $memberId, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateMemberDormancyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateMemberDormancyMutation,
+    TError,
+    UpdateMemberDormancyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateMemberDormancyMutation,
+    TError,
+    UpdateMemberDormancyMutationVariables,
+    TContext
+  >(
+    ['updateMemberDormancy'],
+    useAxios<UpdateMemberDormancyMutation, UpdateMemberDormancyMutationVariables>(
+      UpdateMemberDormancyDocument
+    ),
     options
   );
 export const PayMembershipDocument = `
@@ -46624,6 +46792,30 @@ export const useGetMinorProfileQuery = <TData = GetMinorProfileQuery, TError = u
       null,
       variables
     ),
+    options
+  );
+export const MemberDormancyDetailsDocument = `
+    query memberDormancyDetails($memberId: ID!) {
+  members {
+    dormancyDetails(memberId: $memberId) {
+      data {
+        blockSavingTransaction
+        blockLoanTransaction
+        blockShareTransaction
+      }
+    }
+  }
+}
+    `;
+export const useMemberDormancyDetailsQuery = <TData = MemberDormancyDetailsQuery, TError = unknown>(
+  variables: MemberDormancyDetailsQueryVariables,
+  options?: UseQueryOptions<MemberDormancyDetailsQuery, TError, TData>
+) =>
+  useQuery<MemberDormancyDetailsQuery, TError, TData>(
+    ['memberDormancyDetails', variables],
+    useAxios<MemberDormancyDetailsQuery, MemberDormancyDetailsQueryVariables>(
+      MemberDormancyDetailsDocument
+    ).bind(null, variables),
     options
   );
 export const GetMembershipFeeDocument = `

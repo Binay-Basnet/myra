@@ -32,7 +32,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
   return (
     <ChakraRadioGroup value={value}>
       <Box display="flex" flexDir="column" gap="s16">
-        <Stack spacing={spacing} direction={direction} gap="s8">
+        <Stack spacing={spacing} direction={direction} gap="s8" flexWrap="wrap">
           {radioList
             ? radioList?.map((item, index) => (
                 // TODO string index
