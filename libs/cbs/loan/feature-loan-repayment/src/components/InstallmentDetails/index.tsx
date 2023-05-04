@@ -110,11 +110,7 @@ export const InstallmentData = ({
         (inst) => inst?.installmentNo === installment?.installmentNo
       );
 
-      if (
-        interest &&
-        (loanType !== 'EPI' ||
-          (loanType === 'EPI' && installment?.status && installment.status !== 'CURRENT'))
-      ) {
+      if (interest && (loanType !== 'EPI' || (loanType === 'EPI' && index === 0))) {
         if (tempAmount > interest) {
           if (existingIndex !== -1) {
             tempCoveredInstallments[existingIndex].interest = interest;
