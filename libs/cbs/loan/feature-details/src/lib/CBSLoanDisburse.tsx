@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
@@ -13,7 +13,6 @@ import {
   Container,
   Divider,
   FormFooter,
-  FormHeader,
   Grid,
   GridItem,
   Icon,
@@ -32,11 +31,14 @@ import { LoanListLayout } from '@coop/cbs/loan/layouts';
 import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
+  FormAmountInput,
   FormBankSelect,
   FormInput,
+  FormLayout,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 import CBSLoanDetails from './CbsLoanFeatureDetails';
 import {
@@ -205,157 +207,137 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
   }, [linkedAccountId]);
 
   return (
-    <Container minW="container.xl" p="0" bg="white">
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title="Loan Application" />
-      </Box>
-      <Box display="flex" flexDirection="row" minH="calc(100vh - 220px)">
-        <Box
-          display="flex"
-          flexDirection="column"
-          w="100%"
-          borderRight="1px solid"
-          borderColor="border.layout"
-          p="s16"
-        >
-          <FormProvider {...methods}>
-            <form>
-              <FormSwitchTab label="Disbursement Method" options={paymentModes} name="method" />
+    <FormLayout methods={methods}>
+      <FormLayout.Header title="Loan Application" />
 
-              {selectedPaymentMode === LoanDisbursementMethod?.Account && (
-                <Grid templateColumns="repeat(2,1fr)" gap="s20" pt="s16">
-                  <GridItem colSpan={2}>
-                    <FormAccountSelect
-                      name="accountPayment.destinationAccount"
-                      label="Destination Account"
-                      memberId={memberId}
-                      isDisabled
-                      isLinkedAccounts
-                    />
-                  </GridItem>
-                  <FormInput
-                    name="amount"
-                    label="Amount"
-                    textAlign="right"
-                    placeholder="0.00"
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <Box p="s16">
+            <FormSwitchTab label="Disbursement Method" options={paymentModes} name="method" />
+
+            {selectedPaymentMode === LoanDisbursementMethod?.Account && (
+              <Grid templateColumns="repeat(2,1fr)" gap="s20" pt="s16">
+                <GridItem colSpan={2}>
+                  <FormAccountSelect
+                    name="accountPayment.destinationAccount"
+                    label="Destination Account"
+                    memberId={memberId}
                     isDisabled
+                    isLinkedAccounts
                   />
+                </GridItem>
+                <FormAmountInput name="amount" label="Amount" isDisabled />
+                <GridItem colSpan={2}>
                   <Divider />
-                  <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
-                    {' '}
-                    <FormTextArea name="accountPayment.note" label="Note" />
-                  </GridItem>
-                </Grid>
-              )}
+                </GridItem>
+                <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
+                  <FormTextArea name="accountPayment.note" label="Note" />
+                </GridItem>
+              </Grid>
+            )}
 
-              {selectedPaymentMode === LoanDisbursementMethod?.BankCheque && (
-                <Grid templateColumns="repeat(2,1fr)" gap="s20" pt="s16">
-                  {' '}
-                  <GridItem colSpan={2}>
-                    <FormBankSelect
-                      name="bankChequePayment.bankAccountId"
-                      label="Bank Name"
-                      currentBranchOnly
-                    />
-                  </GridItem>
-                  <FormInput
-                    name="bankChequePayment.chequeNo"
-                    label="Cheque No"
-                    placeholder="Cheque No"
+            {selectedPaymentMode === LoanDisbursementMethod?.BankCheque && (
+              <Grid templateColumns="repeat(2,1fr)" gap="s20" pt="s16">
+                <GridItem colSpan={2}>
+                  <FormBankSelect
+                    name="bankChequePayment.bankAccountId"
+                    label="Bank Name"
+                    currentBranchOnly
                   />
-                  <FormInput
-                    name="amount"
-                    label="Amount"
-                    isDisabled
-                    textAlign="right"
-                    placeholder="0.00"
-                  />
-                  <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
-                    <FormTextArea name="bankChequePayment.note" label="Note" />
-                  </GridItem>
-                </Grid>
-              )}
-            </form>
-          </FormProvider>
-        </Box>
+                </GridItem>
+                <FormInput
+                  name="bankChequePayment.chequeNo"
+                  label="Cheque No"
+                  placeholder="Cheque No"
+                />
+                <FormAmountInput name="amount" label="Amount" isDisabled />
+                <GridItem colSpan={2}>
+                  <Divider />
+                </GridItem>
+                <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
+                  <FormTextArea name="bankChequePayment.note" label="Note" />
+                </GridItem>
+              </Grid>
+            )}
+          </Box>
+        </FormLayout.Form>
 
-        <Box>
-          <Box position="sticky" top="0" right="0" w="320px">
-            <Box display="flex" flexDirection="column" gap="s16">
-              <MemberCard
-                memberDetails={{
-                  name: memberDetailData?.name,
-                  avatar: memberDetailData?.profilePicUrl ?? '',
-                  memberID: memberDetailData?.id,
-                  gender: memberDetailData?.gender,
-                  age: memberDetailData?.age,
-                  maritalStatus: memberDetailData?.maritalStatus,
-                  dateJoined: memberDetailData?.dateJoined,
-                  phoneNo: memberDetailData?.contact,
-                  email: memberDetailData?.email,
-                  address: memberDetailData?.address,
-                }}
-                signaturePath={memberSignatureUrl}
-                citizenshipPath={memberCitizenshipUrl}
-              />
-              <Box p="s16" display="flex" flexDirection="column" gap="s16">
-                <LoanProductCard productId={productId} />
-                <Box border="1px solid" borderColor="border.layout" borderRadius="br2">
-                  <Box p="s8" display="flex" flexDirection="column" gap="s8">
-                    <Box display="flex" flexDirection="row" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight="400">
-                        Applied Loan Amount
-                      </Text>
-                      <Text fontSize="s2" fontWeight="600">
-                        {loanPreview?.loanDetails?.totalSanctionedAmount}{' '}
-                      </Text>
-                    </Box>
-                    {loanPreview?.loanDetails?.processingCharges?.map((charge) => (
-                      <Box
-                        display="flex"
-                        flexDirection="row"
-                        justifyContent="space-between"
-                        key={charge?.name}
-                      >
-                        <Text fontSize="s3" fontWeight="400">
-                          {charge?.name}
-                        </Text>
-                        <Text fontSize="s2" fontWeight="600" color="danger.500">
-                          {charge?.amount}{' '}
-                        </Text>
-                      </Box>
-                    ))}
-                  </Box>
-                  <Box display="flex" justifyContent="space-between" p="s8" bg="border.layout">
+        <FormLayout.Sidebar>
+          <Box display="flex" flexDirection="column" gap="s16">
+            <MemberCard
+              memberDetails={{
+                name: memberDetailData?.name,
+                avatar: memberDetailData?.profilePicUrl ?? '',
+                memberID: memberDetailData?.id,
+                gender: memberDetailData?.gender,
+                age: memberDetailData?.age,
+                maritalStatus: memberDetailData?.maritalStatus,
+                dateJoined: memberDetailData?.dateJoined,
+                phoneNo: memberDetailData?.contact,
+                email: memberDetailData?.email,
+                address: memberDetailData?.address,
+              }}
+              signaturePath={memberSignatureUrl}
+              citizenshipPath={memberCitizenshipUrl}
+            />
+            <Box p="s16" display="flex" flexDirection="column" gap="s16">
+              <LoanProductCard productId={productId} />
+              <Box border="1px solid" borderColor="border.layout" borderRadius="br2">
+                <Box p="s8" display="flex" flexDirection="column" gap="s8">
+                  <Box display="flex" flexDirection="row" justifyContent="space-between">
                     <Text fontSize="s3" fontWeight="400">
-                      Total Disbursed Amount{' '}
+                      Applied Loan Amount
                     </Text>
                     <Text fontSize="s2" fontWeight="600">
-                      {Number(loanPreview?.loanDetails?.totalSanctionedAmount) -
-                        Number(loanPreview?.loanDetails?.totalProcessingChargesValuation)}
+                      {amountConverter(loanPreview?.loanDetails?.totalSanctionedAmount || 0)}
                     </Text>
                   </Box>
+                  {loanPreview?.loanDetails?.processingCharges?.map((charge) => (
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      justifyContent="space-between"
+                      key={charge?.name}
+                    >
+                      <Text fontSize="s3" fontWeight="400">
+                        {charge?.name}
+                      </Text>
+                      <Text fontSize="s2" fontWeight="600" color="danger.500">
+                        {amountConverter(charge?.amount)}
+                      </Text>
+                    </Box>
+                  ))}
+                </Box>
+                <Box display="flex" justifyContent="space-between" p="s8" bg="border.layout">
+                  <Text fontSize="s3" fontWeight="400">
+                    Total Disbursed Amount
+                  </Text>
+                  <Text fontSize="s2" fontWeight="600">
+                    {amountConverter(
+                      Number(loanPreview?.loanDetails?.totalSanctionedAmount) -
+                        Number(loanPreview?.loanDetails?.totalProcessingChargesValuation)
+                    )}
+                  </Text>
                 </Box>
               </Box>
             </Box>
           </Box>
-        </Box>
-      </Box>
-      <Box position="sticky" bottom="0">
-        <FormFooter
-          mainButtonLabel="Disburse Loan"
-          mainButtonHandler={disburseLoan}
-          status={
-            <Button
-              onClick={previousButtonHandler}
-              variant="outline"
-              leftIcon={<IoChevronBackOutline />}
-            >
-              Previous
-            </Button>
-          }
-        />
-      </Box>
-    </Container>
+        </FormLayout.Sidebar>
+      </FormLayout.Content>
+
+      <FormLayout.Footer
+        mainButtonLabel="Disburse Loan"
+        mainButtonHandler={disburseLoan}
+        status={
+          <Button
+            onClick={previousButtonHandler}
+            variant="outline"
+            leftIcon={<IoChevronBackOutline />}
+          >
+            Previous
+          </Button>
+        }
+      />
+    </FormLayout>
   );
 };

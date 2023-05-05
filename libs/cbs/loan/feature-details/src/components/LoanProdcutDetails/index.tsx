@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
 import { Box, Text } from '@myra-ui';
+
+import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
+import { amountConverter } from '@coop/shared/utils';
 
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 
@@ -74,7 +76,8 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
             Loan Amount Limit
           </Text>
           <Text fontSize="s3" fontWeight="600">
-            {productData?.minimumLoanAmount}- {productData?.maxLoanAmount}
+            {amountConverter(productData?.minimumLoanAmount)}-{' '}
+            {amountConverter(productData?.maxLoanAmount)}
           </Text>
         </Box>
       </Box>
