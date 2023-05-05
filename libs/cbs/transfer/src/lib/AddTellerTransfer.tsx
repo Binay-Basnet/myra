@@ -1,18 +1,10 @@
 import { useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
+import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
   TellerTransferInput,
@@ -23,7 +15,13 @@ import {
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { CashOptions, DenominationTable } from '@coop/shared/components';
-import { FormAmountInput, FormInput, FormTellerSelect, FormTextArea } from '@coop/shared/form';
+import {
+  FormAmountInput,
+  FormInput,
+  FormLayout,
+  FormTellerSelect,
+  FormTextArea,
+} from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import { BalanceCard } from '../components';
@@ -96,67 +94,46 @@ export const AddTellerTransfer = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title={`New Teller Transfer - ${featureCode.newTellerTransfer}`}
-            // buttonLabel={t['addDepositAddBulkDeposit']}
-            // buttonHandler={() => router.push('/transactions/deposit/add-bulk-deposit')}
-          />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title={`New Teller Transfer - ${featureCode.newTellerTransfer}`} />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)" pb="60px">
-                <FormSection templateColumns={2}>
-                  <FormInput name="srcTellerID" label="Sender" isDisabled />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <FormSection templateColumns={2}>
+            <FormInput name="srcTellerID" label="Sender" isDisabled />
 
-                  <FormTellerSelect
-                    isRequired
-                    name="destTellerID"
-                    label="Receiver"
-                    excludeIds={[user?.id as string]}
-                  />
-                </FormSection>
-
-                <FormSection templateColumns={3} divider={false}>
-                  <GridItem colSpan={3}>
-                    <BalanceCard
-                      label="Sender Teller Available Cash"
-                      balance={userBalance ?? '0'}
-                    />
-                  </GridItem>
-
-                  <FormAmountInput isRequired name="amount" label="Cash Amount" />
-                  <GridItem colSpan={3} display="flex" flexDirection="column" gap="s4">
-                    <DenominationTable
-                      fieldName="denominations"
-                      denominationTotal={denominationTotal}
-                      denominationTotalOnly
-                    />
-                  </GridItem>
-                  <FormTextArea isRequired name="note" label="Note" />
-                </FormSection>
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
-
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter
-              mainButtonLabel="Done"
-              mainButtonHandler={handleSubmit}
-              isMainButtonDisabled={Number(denominationTotal) !== Number(amount)}
+            <FormTellerSelect
+              isRequired
+              name="destTellerID"
+              label="Receiver"
+              excludeIds={[user?.id as string]}
             />
-          </Container>
-        </Box>
-      </Box>
-    </>
+          </FormSection>
+
+          <FormSection templateColumns={3} divider={false}>
+            <GridItem colSpan={3}>
+              <BalanceCard label="Sender Teller Available Cash" balance={userBalance ?? '0'} />
+            </GridItem>
+
+            <FormAmountInput isRequired name="amount" label="Cash Amount" />
+            <GridItem colSpan={3} display="flex" flexDirection="column" gap="s4">
+              <DenominationTable
+                fieldName="denominations"
+                denominationTotal={denominationTotal}
+                denominationTotalOnly
+              />
+            </GridItem>
+            <FormTextArea isRequired name="note" label="Note" />
+          </FormSection>
+        </FormLayout.Form>
+      </FormLayout.Content>
+
+      <FormLayout.Footer
+        mainButtonLabel="Done"
+        mainButtonHandler={handleSubmit}
+        isMainButtonDisabled={Number(denominationTotal) !== Number(amount)}
+      />
+    </FormLayout>
   );
 };
 

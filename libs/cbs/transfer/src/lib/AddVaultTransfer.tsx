@@ -1,18 +1,10 @@
 import { useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
+import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
   TellerTransferInput,
@@ -23,7 +15,13 @@ import {
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { CashOptions, DenominationTable } from '@coop/shared/components';
-import { FormAmountInput, FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import {
+  FormAmountInput,
+  FormInput,
+  FormLayout,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import { BalanceCard } from '../components';
@@ -116,75 +114,62 @@ export const AddVaultTransfer = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title={`New Vault Transfer - ${featureCode.newVaultTransfer}`} />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title={`New Vault Transfer - ${featureCode.newVaultTransfer}`} />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)" pb="60px">
-                <FormSection templateColumns={1}>
-                  <FormInput isRequired name="teller" label="Teller Name" isDisabled />
-                </FormSection>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <FormSection templateColumns={1}>
+            <FormInput isRequired name="teller" label="Teller Name" isDisabled />
+          </FormSection>
 
-                <FormSection header="Transfer Cash Details" templateColumns={3}>
-                  <GridItem colSpan={3}>
-                    <FormSwitchTab
-                      name="transferType"
-                      label="Transfer Type"
-                      options={transferTypeOptions}
-                    />
-                  </GridItem>
+          <FormSection header="Transfer Cash Details" templateColumns={3} divider={false}>
+            <GridItem colSpan={3}>
+              <FormSwitchTab
+                name="transferType"
+                label="Transfer Type"
+                options={transferTypeOptions}
+              />
+            </GridItem>
 
-                  {transferType && (
-                    <GridItem colSpan={3}>
-                      <BalanceCard
-                        label={
-                          transferType === TellerTransferType.VaultToCash
-                            ? 'Available Cash in Vault'
-                            : 'Available Cash with Teller'
-                        }
-                        balance={
-                          (transferType === TellerTransferType.VaultToCash
-                            ? branchBalance
-                            : userBalance) ?? '0'
-                        }
-                      />
-                    </GridItem>
-                  )}
+            {transferType && (
+              <GridItem colSpan={3}>
+                <BalanceCard
+                  label={
+                    transferType === TellerTransferType.VaultToCash
+                      ? 'Available Cash in Vault'
+                      : 'Available Cash with Teller'
+                  }
+                  balance={
+                    (transferType === TellerTransferType.VaultToCash
+                      ? branchBalance
+                      : userBalance) ?? '0'
+                  }
+                />
+              </GridItem>
+            )}
 
-                  <FormAmountInput isRequired name="amount" label="Cash Amount" />
-                  <GridItem colSpan={3} display="flex" flexDirection="column">
-                    <DenominationTable
-                      fieldName="denominations"
-                      denominationTotal={denominationTotal}
-                      denominationTotalOnly
-                    />
-                  </GridItem>
+            <FormAmountInput isRequired name="amount" label="Cash Amount" />
 
-                  <FormTextArea isRequired name="note" label="Note" />
-                </FormSection>
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
+            <GridItem colSpan={3} display="flex" flexDirection="column">
+              <DenominationTable
+                fieldName="denominations"
+                denominationTotal={denominationTotal}
+                denominationTotalOnly
+              />
+            </GridItem>
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter
-              mainButtonLabel="Done"
-              mainButtonHandler={handleSubmit}
-              isMainButtonDisabled={Number(denominationTotal) !== Number(amount)}
-            />
-          </Container>
-        </Box>
-      </Box>
-    </>
+            <FormTextArea isRequired name="note" label="Note" />
+          </FormSection>
+        </FormLayout.Form>
+      </FormLayout.Content>
+
+      <FormLayout.Footer
+        mainButtonLabel="Done"
+        mainButtonHandler={handleSubmit}
+        isMainButtonDisabled={Number(denominationTotal) !== Number(amount)}
+      />
+    </FormLayout>
   );
 };
 

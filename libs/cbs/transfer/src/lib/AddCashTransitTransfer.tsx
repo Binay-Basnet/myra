@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast } from '@myra-ui';
 
 import {
   CashInTransitInput,
@@ -14,6 +14,7 @@ import {
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { CashOptions } from '@coop/shared/components';
+import { FormLayout } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import { CashTransitInfo, Denomination, TransferMode } from '../components';
@@ -92,40 +93,26 @@ export const AddCashTransitTransfer = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title={`New Cash in Transit - ${featureCode.newVaultTransfer}`}
-            closeLink={ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST}
-          />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header
+        title={`New Cash in Transit - ${featureCode.newVaultTransfer}`}
+        closeLink={ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST}
+      />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)" pb="60px">
-                <CashTransitInfo />
-                <TransferMode />
-                <Denomination availableCash={userBalance} />
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <CashTransitInfo />
+          <TransferMode />
+          <Denomination availableCash={userBalance} />
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter
-              mainButtonLabel="Done"
-              mainButtonHandler={handleSubmit}
-              isMainButtonDisabled={Number(denominationTotal) !== Number(amount)}
-            />
-          </Container>
-        </Box>
-      </Box>
-    </>
+      <FormLayout.Footer
+        mainButtonLabel="Done"
+        mainButtonHandler={handleSubmit}
+        isMainButtonDisabled={Number(denominationTotal) !== Number(amount)}
+      />
+    </FormLayout>
   );
 };
 

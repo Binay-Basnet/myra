@@ -255,7 +255,7 @@ export const ShareReturnForm = () => {
   }, [redirectMemberId]);
 
   return (
-    <FormLayout methods={methods} hasSidebar={memberDetailData && mode === 'shareInfo'}>
+    <FormLayout methods={methods} hasSidebar={!!memberDetailData}>
       <FormLayout.Header
         title={`${t['shareLayoutShareReturnAdd']} - ${featureCode?.newShareReturn}`}
       />

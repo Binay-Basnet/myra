@@ -1,18 +1,8 @@
 import { useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import {
-  asyncToast,
-  Box,
-  Container,
-  Divider,
-  FormFooter,
-  FormHeader,
-  Grid,
-  GridItem,
-  Text,
-} from '@myra-ui';
+import { asyncToast, Box, FormSection, GridItem } from '@myra-ui';
 
 import {
   TellerBankTransferInput,
@@ -22,7 +12,13 @@ import {
   useSetBankTransferMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormBankSelect, FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import {
+  FormBankSelect,
+  FormInput,
+  FormLayout,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 
 import { BalanceCard } from '../components';
 
@@ -80,74 +76,49 @@ export const AddBankTransfer = () => {
   const isDeposit = watch('transferType') === TellerBankTransferType?.Deposit;
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title="Add Bank Transfer" closeLink={ROUTES.CBS_TRANSFER_BANK_LIST} />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title="Add Bank Transfer" closeLink={ROUTES.CBS_TRANSFER_BANK_LIST} />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)" pb="60px" p="s24">
-                <Box display="flex" flexDir="column" gap={5}>
-                  <Grid templateColumns="repeat(3,1fr)" gap={2}>
-                    <GridItem colSpan={2}>
-                      <FormInput
-                        name="tellerId"
-                        label="Teller Name"
-                        value={[user?.firstName?.local, user?.lastName?.local].join(' ')}
-                        isDisabled
-                      />
-                    </GridItem>
-                  </Grid>
-                  <Divider />
-                  {isDeposit && (
-                    <>
-                      {' '}
-                      <GridItem colSpan={3}>
-                        <BalanceCard
-                          label="Teller Bank Available Cash"
-                          balance={userBalance ?? '0'}
-                        />
-                      </GridItem>
-                      <Divider />
-                    </>
-                  )}
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <Box display="flex" flexDir="column" gap={5}>
+            <FormSection>
+              <GridItem colSpan={2}>
+                <FormInput
+                  name="tellerId"
+                  label="Teller Name"
+                  value={[user?.firstName?.local, user?.lastName?.local].join(' ')}
+                  isDisabled
+                />
+              </GridItem>
+            </FormSection>
 
-                  <Text>Transfer Details</Text>
-                  <FormSwitchTab label="Transfer Type" options={booleanList} name="transferType" />
-                  <Grid templateColumns="repeat(3,1fr)" gap={2}>
-                    <GridItem colSpan={2}>
-                      <FormBankSelect
-                        isRequired
-                        name="bankId"
-                        label="Select Bank"
-                        currentBranchOnly
-                      />
-                    </GridItem>
-                    <GridItem colSpan={1}>
-                      <FormInput name="amount" label="Amount" />
-                    </GridItem>
-                  </Grid>
-                  <GridItem colSpan={2}>
-                    <FormTextArea name="note" label="Note" />
-                  </GridItem>
-                </Box>
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
+            {isDeposit && (
+              <FormSection>
+                <BalanceCard label="Teller Bank Available Cash" balance={userBalance ?? '0'} />
+              </FormSection>
+            )}
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter mainButtonLabel="Done" mainButtonHandler={handleSubmit} />
-          </Container>
-        </Box>
-      </Box>
-    </>
+            <FormSection header="Transfer Details" divider={false}>
+              <GridItem colSpan={3}>
+                <FormSwitchTab label="Transfer Type" options={booleanList} name="transferType" />
+              </GridItem>
+              <GridItem colSpan={2}>
+                <FormBankSelect isRequired name="bankId" label="Select Bank" currentBranchOnly />
+              </GridItem>
+              <GridItem colSpan={1}>
+                <FormInput name="amount" label="Amount" />
+              </GridItem>
+              <GridItem colSpan={2}>
+                <FormTextArea name="note" label="Note" />
+              </GridItem>
+            </FormSection>
+          </Box>
+        </FormLayout.Form>
+      </FormLayout.Content>
+
+      <FormLayout.Footer mainButtonLabel="Done" mainButtonHandler={handleSubmit} />
+    </FormLayout>
   );
 };
 
