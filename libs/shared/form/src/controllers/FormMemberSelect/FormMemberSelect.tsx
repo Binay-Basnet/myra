@@ -88,6 +88,15 @@ export const FormMemberSelect = ({
                   },
                 ],
               },
+              {
+                andConditions: [
+                  {
+                    column: 'objState',
+                    comparator: 'EqualTo',
+                    value: 'DORMANT',
+                  },
+                ],
+              },
             ],
       },
     },
