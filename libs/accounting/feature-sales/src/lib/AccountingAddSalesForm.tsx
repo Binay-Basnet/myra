@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast } from '@myra-ui';
 
 import {
   SalesSaleEntryInput,
@@ -11,6 +11,7 @@ import {
   useSetSalesSaleEntryDataMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormLayout } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { EntryTable, SalesBox, SalesDetails } from '../components/form-components/salesEntry';
@@ -80,37 +81,23 @@ export const NewSalesForm = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content" pb="60px">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title={t['accountingSalesFormNewSalesEntry']}
-            closeLink="/accounting/sales/sales-entry/list"
-          />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header
+        title={t['accountingSalesFormNewSalesEntry']}
+        closeLink="/accounting/sales/sales-entry/list"
+      />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)">
-                <SalesDetails />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <SalesDetails />
 
-                <EntryTable />
+          <EntryTable />
 
-                <SalesBox />
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
+          <SalesBox />
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
-          </Container>
-        </Box>
-      </Box>
-    </>
+      <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
+    </FormLayout>
   );
 };

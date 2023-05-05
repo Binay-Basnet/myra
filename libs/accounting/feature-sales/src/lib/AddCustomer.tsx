@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import pickBy from 'lodash/pickBy';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast } from '@myra-ui';
 
 import {
   SalesCustomerInput,
@@ -12,6 +12,7 @@ import {
   useGetSalesCustomerFormStateDataQuery,
   useSetSalesCustomerDataMutation,
 } from '@coop/cbs/data-access';
+import { FormLayout } from '@coop/shared/form';
 
 import { AdditionalDetail, CustomerDetail } from '../components/form-components/customer';
 
@@ -85,32 +86,18 @@ export const AddCustomer = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content" pb="60px">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title="New Customer" closeLink="/accounting/sales/customer/list" />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title="New Customer" closeLink="/accounting/sales/customer/list" />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)">
-                <CustomerDetail setShowAdditionalDetails={setShowAdditionalDetails} />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <CustomerDetail setShowAdditionalDetails={setShowAdditionalDetails} />
 
-                {showAdditionalDetails && <AdditionalDetail />}
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
+          {showAdditionalDetails && <AdditionalDetail />}
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
-          </Container>
-        </Box>
-      </Box>
-    </>
+      <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
+    </FormLayout>
   );
 };

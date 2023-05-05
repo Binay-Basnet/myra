@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast } from '@myra-ui';
 
 import {
   SalesCreditNoteInput,
   SalesSaleEntryEntry,
-  useGetNewIdMutation,
   useSetSalesCreditNoteDataMutation,
 } from '@coop/cbs/data-access';
+import { FormLayout } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -21,7 +21,7 @@ import {
 
 export const CreditNoteForm = () => {
   const { t } = useTranslation();
-  const [newId, setNewId] = useState('');
+  // const [newId, setNewId] = useState('');
 
   const [selectedSales, setSelectedSales] = useState<
     Partial<SalesSaleEntryEntry> | null | undefined
@@ -29,19 +29,19 @@ export const CreditNoteForm = () => {
 
   const router = useRouter();
 
-  const getNewId = useGetNewIdMutation({});
+  // const getNewId = useGetNewIdMutation({});
 
-  useEffect(() => {
-    getNewId?.mutateAsync({}).then((res) => setNewId(res?.newId));
-  }, []);
+  // useEffect(() => {
+  //   getNewId?.mutateAsync({}).then((res) => setNewId(res?.newId));
+  // }, []);
 
-  const id = router?.query?.['id'] || newId;
+  // const id = router?.query?.['id'] || newId;
 
   const queryClient = useQueryClient();
 
   const methods = useForm<SalesCreditNoteInput>();
 
-  const { getValues, reset, setValue } = methods;
+  const { getValues, setValue } = methods;
 
   // const { data: formStateQueryData } = useGetSalesCreditNoteFormStateDataQuery(
   //   { id: String(id) },
@@ -101,38 +101,59 @@ export const CreditNoteForm = () => {
     setValue('products', selectedSales?.itemDetails ?? []);
   }, [selectedSales]);
 
+  // return (
+  //   <>
+  //     <Container minW="container.xl" height="fit-content" pb="60px">
+  //       <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
+  //         <FormHeader
+  //           title={t['accountingCreditNoteAddNewCreditNote']}
+  //           closeLink="/accounting/sales/credit-note/list"
+  //         />
+  //       </Box>
+
+  //       <Box bg="white">
+  //         <FormProvider {...methods}>
+  //           <form>
+  //             <Box minH="calc(100vh - 170px)">
+  //               <CreditNoteDetails getSelectedValue={getSelectedValue} />
+
+  //               <ProductTable />
+
+  //               <CreditBox />
+  //             </Box>
+  //           </form>
+  //         </FormProvider>
+  //       </Box>
+  //     </Container>
+
+  //     <Box position="relative" margin="0px auto">
+  //       <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+  //         <Container minW="container.xl" height="fit-content">
+  //           <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
+  //         </Container>
+  //       </Box>
+  //     </Box>
+  //   </>
+  // );
+
   return (
-    <>
-      <Container minW="container.xl" height="fit-content" pb="60px">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title={t['accountingCreditNoteAddNewCreditNote']}
-            closeLink="/accounting/sales/credit-note/list"
-          />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header
+        title={t['accountingCreditNoteAddNewCreditNote']}
+        closeLink="/accounting/sales/credit-note/list"
+      />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)">
-                <CreditNoteDetails getSelectedValue={getSelectedValue} />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <CreditNoteDetails getSelectedValue={getSelectedValue} />
 
-                <ProductTable />
+          <ProductTable />
 
-                <CreditBox />
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
+          <CreditBox />
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
-          </Container>
-        </Box>
-      </Box>
-    </>
+      <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
+    </FormLayout>
   );
 };

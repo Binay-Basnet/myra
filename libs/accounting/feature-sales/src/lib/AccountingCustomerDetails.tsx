@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import pickBy from 'lodash/pickBy';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast } from '@myra-ui';
 
 import {
   CustomerPayment,
@@ -13,6 +13,7 @@ import {
   useGetSalesCustomerPaymentFormStateDataQuery,
   useSetSalesCustomerPaymentDataMutation,
 } from '@coop/cbs/data-access';
+import { FormLayout } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -101,41 +102,27 @@ export const CustomerPaymentForm = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content" pb="60px">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title={t['accountingCustomerPaymentAddNewCustomerPayment']}
-            closeLink="/accounting/sales/customer-payment/list"
-          />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header
+        title={t['accountingCustomerPaymentAddNewCustomerPayment']}
+        closeLink="/accounting/sales/customer-payment/list"
+      />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)">
-                <CustomerDetails />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <CustomerDetails />
 
-                <PaymentMode />
+          <PaymentMode />
 
-                <TDS />
+          <TDS />
 
-                <PaymentTable />
+          <PaymentTable />
 
-                <CustomerPaymentBox />
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
+          <CustomerPaymentBox />
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
-          </Container>
-        </Box>
-      </Box>
-    </>
+      <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
+    </FormLayout>
   );
 };
