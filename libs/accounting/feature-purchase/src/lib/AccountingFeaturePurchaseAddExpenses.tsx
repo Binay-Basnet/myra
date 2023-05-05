@@ -1,16 +1,8 @@
 import { useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
+import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
   AccountingExpenseInput,
@@ -18,7 +10,7 @@ import {
   useGetSuppliersListQuery,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormLayout, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { ExpensesTable } from '../components';
@@ -49,68 +41,60 @@ export const AccountingFeaturePurchaseAddExpenses = () => {
   );
 
   return (
-    <Container minW="container.xl" height="fit-content">
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title={t['accountingExpensesAddNewExpense']} />
-      </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title={t['accountingExpensesAddNewExpense']} />
 
-      <Box bg="white">
-        <FormProvider {...methods}>
-          <form>
-            <Box minH="calc(100vh - 220px)">
-              <FormSection>
-                <GridItem colSpan={2}>
-                  <FormSelect
-                    name="supplierId"
-                    label="Select Supplier Name"
-                    options={supplierSearchOptions}
-                  />
-                </GridItem>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <FormSection>
+            <GridItem colSpan={2}>
+              <FormSelect
+                name="supplierId"
+                label="Select Supplier Name"
+                options={supplierSearchOptions}
+              />
+            </GridItem>
 
-                <FormDatePicker name="date" label={t['accountingExpensesAddDate']} />
+            <FormDatePicker name="date" label={t['accountingExpensesAddDate']} />
 
-                <FormDatePicker name="dueDate" label={t['accountingExpensesAddDueDate']} />
+            <FormDatePicker name="dueDate" label={t['accountingExpensesAddDueDate']} />
 
-                <FormInput
-                  name="reference"
-                  type="text"
-                  label={t['accountingExpensesAddReference']}
-                  placeholder={t['accountingExpensesAddReference']}
-                />
-              </FormSection>
-              <ExpensesTable />
-              <ExpensesTotal />
-            </Box>
-          </form>
-        </FormProvider>
-      </Box>
+            <FormInput
+              name="reference"
+              type="text"
+              label={t['accountingExpensesAddReference']}
+              placeholder={t['accountingExpensesAddReference']}
+            />
+          </FormSection>
+          <ExpensesTable />
+          <ExpensesTotal />
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">
-        <FormFooter
-          mainButtonLabel="Save"
-          mainButtonHandler={async () => {
-            await asyncToast({
-              id: 'expense-add',
-              promise: mutateAsync({
-                data: {
-                  ...methods.getValues(),
-                  transferredLedgers: methods.getValues().transferredLedgers?.map((ledger) => ({
-                    ...ledger,
-                    amount: String(ledger?.amount),
-                  })),
-                },
-              }),
-              onSuccess: () => {
-                router.push(ROUTES.ACCOUNTING_PURCHASE_EXPENSE);
+      <FormLayout.Footer
+        mainButtonLabel="Save"
+        mainButtonHandler={async () => {
+          await asyncToast({
+            id: 'expense-add',
+            promise: mutateAsync({
+              data: {
+                ...methods.getValues(),
+                transferredLedgers: methods.getValues().transferredLedgers?.map((ledger) => ({
+                  ...ledger,
+                  amount: String(ledger?.amount),
+                })),
               },
-              msgs: {
-                success: 'New Expense Added',
-                loading: 'Adding new expense',
-              },
-            });
-          }}
-        />
-      </Box>
-    </Container>
+            }),
+            onSuccess: () => {
+              router.push(ROUTES.ACCOUNTING_PURCHASE_EXPENSE);
+            },
+            msgs: {
+              success: 'New Expense Added',
+              loading: 'Adding new expense',
+            },
+          });
+        }}
+      />
+    </FormLayout>
   );
 };

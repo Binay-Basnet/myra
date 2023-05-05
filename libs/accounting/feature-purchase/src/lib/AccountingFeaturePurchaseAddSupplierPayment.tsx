@@ -1,16 +1,14 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
-import router from 'next/router';
 
-import { Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
+import { Box, Button, Icon, Text } from '@myra-ui';
 
 import {
   BoxContainer,
   DividerContainer,
   InputGroupContainer,
 } from '@coop/accounting/ui-components';
-import { FormInput, FormSelect, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import { FormInput, FormLayout, FormSelect, FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { SupplierPaymentTable } from '../components';
@@ -63,159 +61,131 @@ export const AccountingFeaturePurchaseAddSupplierPayment = () => {
   ];
 
   return (
-    <>
-      <Container minW="container.lg" height="fit-content" pb="60px">
-        <Box
-          height="3.125rem"
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          px="5"
-          background="neutralColorLight.Gray-0"
-          borderBottom="1px solid "
-          borderColor="border.layout"
-          borderTopRadius={5}
-          position="sticky"
-          top="0"
-          zIndex={8}
-        >
-          <Text fontSize="r2" fontWeight="600" color="neutralColorLight.Gray-80">
-            {t['accountingSupplierPaymentAddNewSupplierPayment']}
-          </Text>
-          <IconButton
-            variant="ghost"
-            aria-label="close"
-            icon={<GrClose />}
-            onClick={() => router.back()}
-          />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title={t['accountingSupplierPaymentAddNewSupplierPayment']} />
 
-        <FormProvider {...methods}>
-          <form>
-            <Box bg="white" p="s20">
-              <DividerContainer>
-                <BoxContainer>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <Box bg="white" p="s20">
+            <DividerContainer>
+              <BoxContainer>
+                <InputGroupContainer>
+                  <FormSelect
+                    name="paidTo"
+                    label={t['accountingSupplierPaymentAddPaidTo']}
+                    __placeholder={t['accountingSupplierPaymentAddPaidTo']}
+                    options={[]}
+                  />
+
+                  <FormSelect
+                    name="paidFrom"
+                    label={t['accountingSupplierPaymentAddPaidFrom']}
+                    __placeholder={t['accountingSupplierPaymentAddPaidFrom']}
+                    options={[]}
+                  />
+
+                  <FormInput
+                    name="date"
+                    type="date"
+                    label={t['accountingSupplierPaymentAddDate']}
+                  />
+
+                  <FormInput
+                    name="amount"
+                    type="number"
+                    label={t['accountingSupplierPaymentAddAmount']}
+                    textAlign="right"
+                    __placeholder="0.00"
+                  />
+
+                  <FormInput
+                    name="dueDate"
+                    type="date"
+                    label={t['accountingSupplierPaymentAddDueDate']}
+                  />
+                </InputGroupContainer>
+              </BoxContainer>
+
+              <BoxContainer>
+                <Text fontSize="s3" fontWeight="500" color="neutralColorLight.Gray-80">
+                  {t['accountingSupplierPaymentAddPaymentMode']}
+                </Text>
+
+                <FormSwitchTab name="paymentMode" options={PaymentModes} />
+
+                <InputGroupContainer>
+                  <FormInput
+                    name="paymentReferenceNo"
+                    type="text"
+                    label={t['accountingSupplierPaymentAddPaymentReferenceNo']}
+                    __placeholder={t['accountingSupplierPaymentAddPaymentReferenceNo']}
+                  />
+                </InputGroupContainer>
+              </BoxContainer>
+
+              <BoxContainer>
+                <Box display="flex" justifyContent="space-between">
+                  <Text fontSize="s3" fontWeight="500" color="gray.700">
+                    {t['accountingSupplierPaymentAddTDS']}
+                  </Text>
+
+                  <FormSwitchTab options={booleanList} name="tds" />
+                </Box>
+
+                {tds === 'Yes' && (
                   <InputGroupContainer>
                     <FormSelect
-                      name="paidTo"
-                      label={t['accountingSupplierPaymentAddPaidTo']}
-                      __placeholder={t['accountingSupplierPaymentAddPaidTo']}
+                      name="tdsAccount"
+                      label={t['accountingSupplierPaymentAddTDSAccount']}
+                      __placeholder={t['accountingSupplierPaymentAddTDSAccount']}
                       options={[]}
                     />
 
                     <FormSelect
-                      name="paidFrom"
-                      label={t['accountingSupplierPaymentAddPaidFrom']}
-                      __placeholder={t['accountingSupplierPaymentAddPaidFrom']}
+                      name="tdsType"
+                      label={t['accountingSupplierPaymentAddTDSType']}
+                      __placeholder={t['accountingSupplierPaymentAddTDSType']}
                       options={[]}
                     />
 
                     <FormInput
-                      name="date"
-                      type="date"
-                      label={t['accountingSupplierPaymentAddDate']}
-                    />
-
-                    <FormInput
-                      name="amount"
+                      name="tdsAmount"
                       type="number"
-                      label={t['accountingSupplierPaymentAddAmount']}
+                      label={t['accountingSupplierPaymentAddTDSAmount']}
                       textAlign="right"
                       __placeholder="0.00"
                     />
-
-                    <FormInput
-                      name="dueDate"
-                      type="date"
-                      label={t['accountingSupplierPaymentAddDueDate']}
-                    />
                   </InputGroupContainer>
-                </BoxContainer>
+                )}
+              </BoxContainer>
 
-                <BoxContainer>
-                  <Text fontSize="s3" fontWeight="500" color="neutralColorLight.Gray-80">
-                    {t['accountingSupplierPaymentAddPaymentMode']}
-                  </Text>
+              <SupplierPaymentTable />
 
-                  <FormSwitchTab name="paymentMode" options={PaymentModes} />
+              <BoxContainer>
+                <FormTextArea
+                  name="note"
+                  label={t['invFormNotes']}
+                  __placeholder={t['invFormNote']}
+                  rows={5}
+                />
+              </BoxContainer>
+            </DividerContainer>
+          </Box>
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-                  <InputGroupContainer>
-                    <FormInput
-                      name="paymentReferenceNo"
-                      type="text"
-                      label={t['accountingSupplierPaymentAddPaymentReferenceNo']}
-                      __placeholder={t['accountingSupplierPaymentAddPaymentReferenceNo']}
-                    />
-                  </InputGroupContainer>
-                </BoxContainer>
-
-                <BoxContainer>
-                  <Box display="flex" justifyContent="space-between">
-                    <Text fontSize="s3" fontWeight="500" color="gray.700">
-                      {t['accountingSupplierPaymentAddTDS']}
-                    </Text>
-
-                    <FormSwitchTab options={booleanList} name="tds" />
-                  </Box>
-
-                  {tds === 'Yes' && (
-                    <InputGroupContainer>
-                      <FormSelect
-                        name="tdsAccount"
-                        label={t['accountingSupplierPaymentAddTDSAccount']}
-                        __placeholder={t['accountingSupplierPaymentAddTDSAccount']}
-                        options={[]}
-                      />
-
-                      <FormSelect
-                        name="tdsType"
-                        label={t['accountingSupplierPaymentAddTDSType']}
-                        __placeholder={t['accountingSupplierPaymentAddTDSType']}
-                        options={[]}
-                      />
-
-                      <FormInput
-                        name="tdsAmount"
-                        type="number"
-                        label={t['accountingSupplierPaymentAddTDSAmount']}
-                        textAlign="right"
-                        __placeholder="0.00"
-                      />
-                    </InputGroupContainer>
-                  )}
-                </BoxContainer>
-
-                <SupplierPaymentTable />
-
-                <BoxContainer>
-                  <FormTextArea
-                    name="note"
-                    label={t['invFormNotes']}
-                    __placeholder={t['invFormNote']}
-                    rows={5}
-                  />
-                </BoxContainer>
-              </DividerContainer>
-            </Box>
-          </form>
-        </FormProvider>
-      </Container>
-      <Box bottom="0" position="fixed" width="100%" bg="gray.100">
-        <Container minW="container.lg" height="fit-content">
-          <FormFooter
-            draftButton={
-              <Button type="submit" variant="ghost" shade="neutral">
-                <Icon as={BiSave} />
-                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
-                  {t['saveDraft']}
-                </Text>
-              </Button>
-            }
-            mainButtonLabel={t['submit']}
-            mainButtonHandler={() => alert('Submitted')}
-          />
-        </Container>
-      </Box>
-    </>
+      <FormLayout.Footer
+        draftButton={
+          <Button type="submit" variant="ghost" shade="neutral">
+            <Icon as={BiSave} />
+            <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
+              {t['saveDraft']}
+            </Text>
+          </Button>
+        }
+        mainButtonLabel={t['submit']}
+        mainButtonHandler={() => alert('Submitted')}
+      />
+    </FormLayout>
   );
 };
