@@ -1,20 +1,10 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import {
-  Alert,
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
+import { Alert, asyncToast, Button, FormSection, GridItem } from '@myra-ui';
 
 import {
   SlipSizeStandard,
@@ -25,9 +15,9 @@ import {
   WithdrawSlipIssueInput,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormAccountSelect, FormMemberSelect, FormSelect } from '@coop/shared/form';
+import { FormAccountSelect, FormLayout, FormMemberSelect, FormSelect } from '@coop/shared/form';
 
-import { WithdrawPrintCard, WithdrawSlipBookPrintPreviewCard } from '../component';
+import { WithdrawSlipBookPrintPreviewCard } from '../component';
 
 interface CustomWithdrawSlipIssueInput extends WithdrawSlipIssueInput {
   memberId: string;
@@ -168,114 +158,80 @@ export const WithdrawSlipBookPrint = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title="Withdraw Slip Print" />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title="Withdraw Slip Print" />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <FormSection templateColumns={2}>
+            <GridItem colSpan={2}>
+              <FormMemberSelect isRequired name="memberId" label="Member" isDisabled />
+            </GridItem>
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <Box
-              display="none"
-              sx={{
-                '@media print': {
-                  display: 'flex',
-                },
-                '@page': {
-                  size: 'A4 landscape',
-                },
-              }}
-            >
-              <WithdrawPrintCard ref={componentRef} {...printProps} />
-            </Box>
-
-            <form>
-              <Box minH="calc(100vh - 170px)" pb="60px">
-                <FormSection templateColumns={2}>
-                  <GridItem colSpan={2}>
-                    <FormMemberSelect isRequired name="memberId" label="Member" isDisabled />
-                  </GridItem>
-
-                  <FormAccountSelect
-                    isRequired
-                    name="accountId"
-                    label="Account"
-                    memberId={memberId}
-                    isDisabled
-                  />
-
-                  <FormSelect
-                    isRequired
-                    name="count"
-                    label="Total no of withdraw slip"
-                    options={totalNumberOptions}
-                    isDisabled
-                  />
-
-                  {to && from && (
-                    <GridItem colSpan={2}>
-                      <Alert
-                        status="info"
-                        title={`Withdraw Slip from ${from} to ${to} will be printed.`}
-                        hideCloseIcon
-                      />
-                    </GridItem>
-                  )}
-
-                  {count && !(from && to) && (
-                    <GridItem colSpan={2}>
-                      <Alert
-                        status="error"
-                        title="All Withdraw Slips have been printed."
-                        hideCloseIcon
-                      />
-                    </GridItem>
-                  )}
-
-                  {count && from && to && (
-                    <GridItem colSpan={2}>
-                      <Alert
-                        status="warning"
-                        title="Withdraw Slip Print Preference"
-                        subtitle={`Withdraw Slip of Width ${slipWidth} inch and height ${slipHeight} inch will be printed`}
-                        bottomButtonlabel="Configure"
-                        bottomButtonHandler={() => {
-                          router.push(ROUTES.SETTINGS_GENERAL_PRINT_PREFERENCE);
-                        }}
-                        hideCloseIcon
-                      />
-                    </GridItem>
-                  )}
-                </FormSection>
-
-                {count && from && to && (
-                  <FormSection header="Print Preview" templateColumns={1} divider={false}>
-                    <WithdrawSlipBookPrintPreviewCard {...printProps} />
-                  </FormSection>
-                )}
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
-
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter
-              mainButtonLabel="Print"
-              mainButtonHandler={handleSave}
-              isMainButtonDisabled={!(from && to)}
-              draftButton={
-                <Button variant="ghost" shade="danger" onClick={() => router.back()}>
-                  Cancel
-                </Button>
-              }
+            <FormAccountSelect
+              isRequired
+              name="accountId"
+              label="Account"
+              memberId={memberId}
+              isDisabled
             />
-          </Container>
-        </Box>
-      </Box>
-    </>
+
+            <FormSelect
+              isRequired
+              name="count"
+              label="Total no of withdraw slip"
+              options={totalNumberOptions}
+              isDisabled
+            />
+
+            {to && from && (
+              <GridItem colSpan={2}>
+                <Alert
+                  status="info"
+                  title={`Withdraw Slip from ${from} to ${to} will be printed.`}
+                  hideCloseIcon
+                />
+              </GridItem>
+            )}
+
+            {count && !(from && to) && (
+              <GridItem colSpan={2}>
+                <Alert status="error" title="All Withdraw Slips have been printed." hideCloseIcon />
+              </GridItem>
+            )}
+
+            {count && from && to && (
+              <GridItem colSpan={2}>
+                <Alert
+                  status="warning"
+                  title="Withdraw Slip Print Preference"
+                  subtitle={`Withdraw Slip of Width ${slipWidth} inch and height ${slipHeight} inch will be printed`}
+                  bottomButtonlabel="Configure"
+                  bottomButtonHandler={() => {
+                    router.push(ROUTES.SETTINGS_GENERAL_PRINT_PREFERENCE);
+                  }}
+                  hideCloseIcon
+                />
+              </GridItem>
+            )}
+          </FormSection>
+
+          {count && from && to && (
+            <FormSection header="Print Preview" templateColumns={1} divider={false}>
+              <WithdrawSlipBookPrintPreviewCard {...printProps} />
+            </FormSection>
+          )}
+        </FormLayout.Form>
+      </FormLayout.Content>
+      <FormLayout.Footer
+        mainButtonLabel="Print"
+        mainButtonHandler={handleSave}
+        isMainButtonDisabled={!(from && to)}
+        draftButton={
+          <Button variant="ghost" shade="danger" onClick={() => router.back()}>
+            Cancel
+          </Button>
+        }
+      />
+    </FormLayout>
   );
 };

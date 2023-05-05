@@ -1,20 +1,10 @@
 import { useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import {
-  Alert,
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
+import { Alert, asyncToast, Button, FormSection, GridItem } from '@myra-ui';
 
 import {
   PickupMethod,
@@ -27,6 +17,7 @@ import {
   FormAccountSelect,
   FormAgentSelect,
   FormBranchSelect,
+  FormLayout,
   FormMemberSelect,
   FormSelect,
   FormSwitchTab,
@@ -115,88 +106,74 @@ export const AddWithdrawSlipBook = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title={`Create Withdraw Slip Book - ${featureCode.newWithdrawSlipBook}`} />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title={`Create Withdraw Slip Book - ${featureCode.newWithdrawSlipBook}`} />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)">
-                <FormSection templateColumns={2}>
-                  <GridItem colSpan={2}>
-                    <FormMemberSelect isRequired name="memberId" label="Member" />
-                  </GridItem>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <FormSection templateColumns={2}>
+            <GridItem colSpan={2}>
+              <FormMemberSelect isRequired name="memberId" label="Member" />
+            </GridItem>
 
-                  <FormAccountSelect
-                    isRequired
-                    name="accountId"
-                    label="Account"
-                    memberId={memberId}
-                    filterBy="ACTIVE"
-                  />
-
-                  <FormSelect
-                    isRequired
-                    name="count"
-                    label="Total no of withdraw slip"
-                    options={WITHDRAW_SLIP_COUNT_OPTIONS}
-                  />
-
-                  {count && to && from && (
-                    <GridItem colSpan={2}>
-                      <Alert
-                        status="info"
-                        title={`Withdraw Slip Start Number ${from} and Withdraw Slip End Number ${to}`}
-                        hideCloseIcon
-                      />
-                    </GridItem>
-                  )}
-                </FormSection>
-
-                <FormSection templateColumns={2} divider={false}>
-                  <GridItem colSpan={2}>
-                    <FormSwitchTab
-                      name="pickupMethod"
-                      label="Pickup Method"
-                      options={pickupMethodOptions}
-                    />
-                  </GridItem>
-
-                  {pickupMethod === PickupMethod.MarketRepresentative && (
-                    <>
-                      <FormBranchSelect name="branchId" label="Service Center" />
-                      <FormAgentSelect name="marketRepresentative" label="Market Representative" />
-                    </>
-                  )}
-                </FormSection>
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
-
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter
-              mainButtonLabel="Save"
-              mainButtonHandler={handleSave}
-              draftButton={
-                <Button
-                  // width="160px"
-                  variant="outline"
-                  onClick={handelSaveAndPrint}
-                >
-                  Save & Print
-                </Button>
-              }
+            <FormAccountSelect
+              isRequired
+              name="accountId"
+              label="Account"
+              memberId={memberId}
+              filterBy="ACTIVE"
             />
-          </Container>
-        </Box>
-      </Box>
-    </>
+
+            <FormSelect
+              isRequired
+              name="count"
+              label="Total no of withdraw slip"
+              options={WITHDRAW_SLIP_COUNT_OPTIONS}
+            />
+
+            {count && to && from && (
+              <GridItem colSpan={2}>
+                <Alert
+                  status="info"
+                  title={`Withdraw Slip Start Number ${from} and Withdraw Slip End Number ${to}`}
+                  hideCloseIcon
+                />
+              </GridItem>
+            )}
+          </FormSection>
+
+          <FormSection templateColumns={2} divider={false}>
+            <GridItem colSpan={2}>
+              <FormSwitchTab
+                name="pickupMethod"
+                label="Pickup Method"
+                options={pickupMethodOptions}
+              />
+            </GridItem>
+
+            {pickupMethod === PickupMethod.MarketRepresentative && (
+              <>
+                <FormBranchSelect name="branchId" label="Service Center" />
+                <FormAgentSelect name="marketRepresentative" label="Market Representative" />
+              </>
+            )}
+          </FormSection>
+        </FormLayout.Form>
+      </FormLayout.Content>
+
+      <FormLayout.Footer
+        mainButtonLabel="Save"
+        mainButtonHandler={handleSave}
+        draftButton={
+          <Button
+            // width="160px"
+            variant="outline"
+            onClick={handelSaveAndPrint}
+          >
+            Save & Print
+          </Button>
+        }
+      />
+    </FormLayout>
   );
 };
