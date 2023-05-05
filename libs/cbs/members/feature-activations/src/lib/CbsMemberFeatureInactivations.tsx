@@ -3,18 +3,7 @@ import { IoCheckmarkDone } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import {
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  Divider,
-  FormFooter,
-  FormHeader,
-  Icon,
-  Text,
-  VStack,
-} from '@myra-ui';
+import { asyncToast, Box, Button, Divider, Icon, Text, VStack } from '@myra-ui';
 
 import {
   AccountTypeFilter,
@@ -22,10 +11,10 @@ import {
   useGetAccountInactiveCheckQuery,
   useGetMemberAccountsQuery,
   useGetMemberInactiveCheckQuery,
-  useGetNewIdMutation,
   useInactivateMemberMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormLayout } from '@coop/shared/form';
 
 import { NumberStatus } from './CbsMembersFeatureActivations';
 
@@ -53,46 +42,76 @@ export const CbsMemberFeatureInactivations = () => {
   const isShareReturned = data?.members?.inactivateMember?.inactivateCheck?.isShareReturned;
 
   return (
-    <Container p={0} minWidth="container.lg" bg="white" minH="calc(100vh - 110px)">
-      <Box position="sticky" top="0">
-        <FormHeader title="Member Inactive" />
-      </Box>
-      <Box minH="calc(100vh - 220px)" p="s16" display="flex" flexDir="column" gap="s16">
-        <Box py="s16">
-          <Text fontSize="r2" fontWeight="600" color="gray.800">
-            In order to make the member inactive, following steps must be completed:
-          </Text>
-        </Box>
-        <Box display="flex" gap="s16">
-          <NumberStatus active={!isAllAccountsClosed} number={1} />
-          <Box w="100%" display="flex" flexDir="column" gap="s16">
-            <Box display="flex" flexDir="column" gap="s4">
-              <Text fontSize="r1" fontWeight="600" color="gray.800">
-                Update Account Details
-              </Text>
-              <Text fontSize="r1" color="gray.800">
-                Some of the accounts are mandatory for all the users. Update account details below
-                to activate your membership{' '}
+    <FormLayout>
+      <FormLayout.Header title="Member Inactive" />
+
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <Box p="s16" display="flex" flexDir="column" gap="s16">
+            <Box py="s16">
+              <Text fontSize="r2" fontWeight="600" color="gray.800">
+                In order to make the member inactive, following steps must be completed:
               </Text>
             </Box>
+            <Box display="flex" gap="s16">
+              <NumberStatus active={!isAllAccountsClosed} number={1} />
+              <Box w="100%" display="flex" flexDir="column" gap="s16">
+                <Box display="flex" flexDir="column" gap="s4">
+                  <Text fontSize="r1" fontWeight="600" color="gray.800">
+                    Update Account Details
+                  </Text>
+                  <Text fontSize="r1" color="gray.800">
+                    Some of the accounts are mandatory for all the users. Update account details
+                    below to activate your membership{' '}
+                  </Text>
+                </Box>
 
-            {accounts && accounts?.length !== 0 ? (
-              <Box w="100%" display="flex" flexDir="column" gap="s8">
-                <VStack
-                  divider={<Divider />}
-                  spacing={0}
-                  alignItems="normal"
-                  border="1px"
-                  borderColor="border.layout"
-                  borderRadius="br2"
-                >
-                  {accounts?.map((account, index) => (
-                    <AccountRow index={index + 1} account={account} />
-                  ))}
-                </VStack>
+                {accounts && accounts?.length !== 0 ? (
+                  <Box w="100%" display="flex" flexDir="column" gap="s8">
+                    <VStack
+                      divider={<Divider />}
+                      spacing={0}
+                      alignItems="normal"
+                      border="1px"
+                      borderColor="border.layout"
+                      borderRadius="br2"
+                    >
+                      {accounts?.map((account, index) => (
+                        <AccountRow index={index + 1} account={account} />
+                      ))}
+                    </VStack>
 
-                {isAllAccountsClosed ? (
-                  <Box display="flex" gap="s4" py="s16">
+                    {isAllAccountsClosed ? (
+                      <Box display="flex" gap="s4" py="s16">
+                        <Icon color="primary.500" as={IoCheckmarkDone} />
+                        <Text
+                          fontSize="s3"
+                          fontWeight="SemiBold"
+                          color="neutralColorLight.Gray-70"
+                          lineHeight="150%"
+                        >
+                          Completed
+                        </Text>
+                      </Box>
+                    ) : null}
+                  </Box>
+                ) : null}
+              </Box>
+            </Box>
+            <Divider />
+            <Box display="flex" gap="s16">
+              <NumberStatus active={!isShareReturned && !!isAllAccountsClosed} number={2} />
+              <Box display="flex" flexDir="column" gap="s16">
+                <Box display="flex" flexDir="column" gap="s4">
+                  <Text fontSize="r1" fontWeight="600" color="gray.800">
+                    Return all Shares
+                  </Text>
+                  <Text fontSize="r1" color="gray.800">
+                    Share must be issued for a member to be active.
+                  </Text>
+                </Box>
+                {isShareReturned ? (
+                  <Box display="flex" gap="s4">
                     <Icon color="primary.500" as={IoCheckmarkDone} />
                     <Text
                       fontSize="s3"
@@ -100,78 +119,50 @@ export const CbsMemberFeatureInactivations = () => {
                       color="neutralColorLight.Gray-70"
                       lineHeight="150%"
                     >
-                      Completed
+                      Share Return
                     </Text>
                   </Box>
-                ) : null}
+                ) : (
+                  <Box>
+                    <Button
+                      {...(!isAllAccountsClosed ? { shade: 'neutral', disabled: true } : {})}
+                      leftIcon={<Icon as={AiOutlinePlus} />}
+                      onClick={() =>
+                        router.push(
+                          `${ROUTES.CBS_SHARE_RETURN_ADD}?redirect=${router.asPath}&memberId=${id}`
+                        )
+                      }
+                    >
+                      Share Return
+                    </Button>
+                  </Box>
+                )}
               </Box>
-            ) : null}
-          </Box>
-        </Box>
-        <Divider />
-        <Box display="flex" gap="s16">
-          <NumberStatus active={!isShareReturned && !!isAllAccountsClosed} number={2} />
-          <Box display="flex" flexDir="column" gap="s16">
-            <Box display="flex" flexDir="column" gap="s4">
-              <Text fontSize="r1" fontWeight="600" color="gray.800">
-                Return all Shares
-              </Text>
-              <Text fontSize="r1" color="gray.800">
-                Share must be issued for a member to be active.
-              </Text>
             </Box>
-            {isShareReturned ? (
-              <Box display="flex" gap="s4">
-                <Icon color="primary.500" as={IoCheckmarkDone} />
-                <Text
-                  fontSize="s3"
-                  fontWeight="SemiBold"
-                  color="neutralColorLight.Gray-70"
-                  lineHeight="150%"
-                >
-                  Share Return
-                </Text>
-              </Box>
-            ) : (
-              <Box>
-                <Button
-                  {...(!isAllAccountsClosed ? { shade: 'neutral', disabled: true } : {})}
-                  leftIcon={<Icon as={AiOutlinePlus} />}
-                  onClick={() =>
-                    router.push(
-                      `${ROUTES.CBS_SHARE_RETURN_ADD}?redirect=${router.asPath}&memberId=${id}`
-                    )
-                  }
-                >
-                  Share Return
-                </Button>
-              </Box>
-            )}
           </Box>
-        </Box>
-      </Box>
-      <Box position="sticky" bottom={0} zIndex="11">
-        <FormFooter
-          mainButtonLabel="Inactivate Member"
-          mainButtonHandler={async () => {
-            await asyncToast({
-              id: 'member-inactivate',
-              promise: inactivateMember({ memberId: id }),
-              msgs: {
-                loading: 'Making Member Inactive',
-                success: 'Member Inactivated',
-              },
-              onSuccess: () => {
-                router.push(ROUTES.CBS_MEMBER_LIST);
-                queryClient.invalidateQueries(['getMemberList']);
-              },
-            });
-          }}
-          dangerButton
-          isMainButtonDisabled={!isAllAccountsClosed || !isShareReturned}
-        />
-      </Box>
-    </Container>
+        </FormLayout.Form>
+      </FormLayout.Content>
+
+      <FormLayout.Footer
+        mainButtonLabel="Inactivate Member"
+        mainButtonHandler={async () => {
+          await asyncToast({
+            id: 'member-inactivate',
+            promise: inactivateMember({ memberId: id }),
+            msgs: {
+              loading: 'Making Member Inactive',
+              success: 'Member Inactivated',
+            },
+            onSuccess: () => {
+              router.push(ROUTES.CBS_MEMBER_LIST);
+              queryClient.invalidateQueries(['getMemberList']);
+            },
+          });
+        }}
+        dangerButton
+        isMainButtonDisabled={!isAllAccountsClosed || !isShareReturned}
+      />
+    </FormLayout>
   );
 };
 
@@ -192,7 +183,7 @@ interface AccountRowProps {
 const AccountRow = ({ account, index }: AccountRowProps) => {
   const router = useRouter();
   const memberId = router.query['id'] as string;
-  const { mutateAsync } = useGetNewIdMutation();
+  // const { mutateAsync } = useGetNewIdMutation();
 
   const { data } = useGetAccountInactiveCheckQuery(
     {

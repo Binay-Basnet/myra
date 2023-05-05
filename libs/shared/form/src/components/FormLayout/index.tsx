@@ -6,15 +6,28 @@ import { Box, FormFooter, FormFooterProps, FormHeader, FormHeaderProps } from '@
 interface IFormLayoutProps<T extends FieldValues> {
   children: ReactNode;
   hasSidebar?: boolean;
-  methods: UseFormReturn<T>;
+  methods?: UseFormReturn<T>;
 }
 
 const FormLayout = <T extends FieldValues>({
   children,
   hasSidebar,
   methods,
-}: IFormLayoutProps<T>) => (
-  <FormProvider {...methods}>
+}: IFormLayoutProps<T>) =>
+  methods ? (
+    <FormProvider {...methods}>
+      <Box height="100%" maxH="calc(100vh - 6.875rem)" display="flex" justifyContent="center">
+        <Box
+          width={hasSidebar ? '6xl' : '4xl'}
+          display="flex"
+          flexDirection="column"
+          bgColor="gray.0"
+        >
+          {children}
+        </Box>
+      </Box>
+    </FormProvider>
+  ) : (
     <Box height="100%" maxH="calc(100vh - 6.875rem)" display="flex" justifyContent="center">
       <Box
         width={hasSidebar ? '6xl' : '4xl'}
@@ -25,8 +38,7 @@ const FormLayout = <T extends FieldValues>({
         {children}
       </Box>
     </Box>
-  </FormProvider>
-);
+  );
 
 const Header = (props: FormHeaderProps) => (
   <Box bg="gray.100" width="100%" maxH="3.125rem">
