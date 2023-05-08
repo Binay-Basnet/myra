@@ -23,10 +23,10 @@ query getAccountingPurchaseEntryList($filter: AccountingPurchaseFilter, $paginat
   }
 }
 
-query getAccountingPurchaseSalesList($filter: AccountingPurchaseFilter, $pagination: Pagination){
+query getAccountingPurchaseSalesList($filter: AccountingPurchaseFilter, $pagination: Pagination) {
   accounting {
     purchase {
-      listExpense(filter: $filter, pagination: $pagination){
+      listExpense(filter: $filter, pagination: $pagination) {
         totalCount
         edges {
           cursor
@@ -49,10 +49,10 @@ query getAccountingPurchaseSalesList($filter: AccountingPurchaseFilter, $paginat
   }
 }
 
-query getAccountingDebitNoteList($filter: AccountingPurchaseFilter, $pagination: Pagination){
+query getAccountingDebitNoteList($filter: AccountingPurchaseFilter, $pagination: Pagination) {
   accounting {
     purchase {
-      listDebitNote(filter: $filter, pagination: $pagination ){
+      listDebitNote(filter: $filter, pagination: $pagination) {
         totalCount
         pageInfo {
           endCursor
@@ -62,6 +62,7 @@ query getAccountingDebitNoteList($filter: AccountingPurchaseFilter, $pagination:
         }
         edges {
           node {
+            id
             totalAmount
             supplierName
             supplierId
@@ -70,7 +71,143 @@ query getAccountingDebitNoteList($filter: AccountingPurchaseFilter, $pagination:
             referenceNo
           }
           cursor
+        }
+      }
+    }
+  }
+}
 
+query getPurchaseEntryDetails($id: ID!) {
+  accounting {
+    purchase {
+      detailPurchaseEntry(id: $id) {
+        data {
+          billNo
+          supplierName
+          invoiceReference
+          invoiceDate
+          dueDate
+          productDetails {
+            itemId
+            itemName
+            quantity
+            rate
+            tax
+            taxValue
+            amount
+            description
+            warehouse
+            warehouseName
+          }
+          paymentDetail {
+            subTotal
+            nonTaxableTotal
+            taxableTotal
+            vat
+            grandTotal
+            discount
+          }
+          glTransaction {
+            ledgerId
+            account
+            serviceCentreId
+            serviceCenter
+            debit
+            credit
+            balance
+            balanceType
+          }
+          totalDebit
+          totalCredit
+          notes
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+
+query getPurchaseDebitNoteDetails($id: ID!) {
+  accounting {
+    purchase {
+      detailDebitNote(id: $id) {
+        data {
+          supplierName
+          supplierId
+          invoiceReference
+          date
+          products {
+            itemId
+            itemName
+            quantity
+            rate
+            tax
+            taxValue
+            amount
+            description
+            warehouse
+            warehouseName
+          }
+          notes
+          paymentDetail {
+            subTotal
+            nonTaxableTotal
+            taxableTotal
+            vat
+            grandTotal
+            discount
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+
+query getPurchaseExpenseDetails($id: ID!) {
+  accounting {
+    purchase {
+      detailExpenses(id: $id) {
+        data {
+          billNo
+          supplierName
+          invoiceReference
+          invoiceDate
+          dueDate
+          ledgerDetails {
+            accountId
+            amount
+            tax
+            taxAmount
+          }
+          paymentDetail {
+            subTotal
+            nonTaxableTotal
+            taxableTotal
+            vat
+            grandTotal
+            discount
+          }
+          glTransaction {
+            ledgerId
+            account
+            serviceCentreId
+            serviceCenter
+            debit
+            credit
+            balance
+            balanceType
+          }
+          totalDebit
+          totalCredit
+          notes
+        }
+        error {
+          ...QueryError
         }
       }
     }

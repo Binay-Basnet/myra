@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetAccountingPurchaseEntryListQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -12,6 +13,7 @@ export interface AccountingFeaturePurchaseListProps {}
 
 export const AccountingFeaturePurchaseList = () => {
   const { t } = useTranslation();
+  const router = useRouter();
 
   const { data, isFetching } = useGetAccountingPurchaseEntryListQuery({
     pagination: getPaginationQuery(),
@@ -55,6 +57,9 @@ export const AccountingFeaturePurchaseList = () => {
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.ACCOUNTING_PURCHASE_LIST_DETAILS}?id=${row?.node?.id}`);
+        }}
         isLoading={isFetching}
         columns={columns}
         pagination={{

@@ -600,6 +600,34 @@ export type AccountingPurchaseEdge = {
   node?: Maybe<AccountingPurchase>;
 };
 
+export type AccountingPurchaseEntryDetail = {
+  billNo: Scalars['String'];
+  dueDate: Scalars['Localized'];
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  invoiceDate: Scalars['Localized'];
+  invoiceReference: Scalars['String'];
+  notes?: Maybe<Scalars['String']>;
+  paymentDetail?: Maybe<PaymentDetail>;
+  productDetails?: Maybe<Array<Maybe<SaleProduct>>>;
+  supplierName: Scalars['String'];
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+};
+
+export type AccountingPurchaseExpenseDetail = {
+  billNo: Scalars['String'];
+  dueDate: Scalars['Localized'];
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  invoiceDate: Scalars['Localized'];
+  invoiceReference: Scalars['String'];
+  ledgerDetails?: Maybe<Array<Maybe<LedgerDetails>>>;
+  notes?: Maybe<Scalars['String']>;
+  paymentDetail?: Maybe<PaymentDetail>;
+  supplierName: Scalars['String'];
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+};
+
 export type AccountingPurchaseFilter = {
   id?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
@@ -624,9 +652,24 @@ export type AccountingPurchaseMutationPurchaseEntryArgs = {
 };
 
 export type AccountingPurchaseQuery = {
+  detailDebitNote: PurchaseDebitNoteDetails;
+  detailExpenses: PurchaseExpenseDetails;
+  detailPurchaseEntry: PurchaseDetailEntry;
   list?: Maybe<AccountingPurchaseConnection>;
   listDebitNote?: Maybe<AccountingDebitNoteConnection>;
   listExpense?: Maybe<AccountingExpenseConnection>;
+};
+
+export type AccountingPurchaseQueryDetailDebitNoteArgs = {
+  id: Scalars['ID'];
+};
+
+export type AccountingPurchaseQueryDetailExpensesArgs = {
+  id: Scalars['ID'];
+};
+
+export type AccountingPurchaseQueryDetailPurchaseEntryArgs = {
+  id: Scalars['ID'];
 };
 
 export type AccountingPurchaseQueryListArgs = {
@@ -2030,6 +2073,26 @@ export type BulkInstallmentResult = {
   value?: Maybe<InstallmentResult>;
 };
 
+export type BulkTransferInput = {
+  accounts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  amount?: InputMaybe<Scalars['String']>;
+  bulkTransferType?: InputMaybe<BulkTransferType>;
+  ledger?: InputMaybe<Scalars['String']>;
+  savingProduct?: InputMaybe<Scalars['String']>;
+};
+
+export type BulkTransferResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export const BulkTransferType = {
+  ManyToOne: 'MANY_TO_ONE',
+  OneToMany: 'ONE_TO_MANY',
+} as const;
+
+export type BulkTransferType = typeof BulkTransferType[keyof typeof BulkTransferType];
 export type CbsCodeManagement = {
   codeType?: Maybe<CbsCodeType>;
   id?: Maybe<Scalars['ID']>;
@@ -4010,6 +4073,7 @@ export type DepositAccount = Base & {
   accountOpenedDate?: Maybe<Scalars['Localized']>;
   availableBalance?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
   closedAt?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -5544,6 +5608,7 @@ export type ExpenseLedgerTransfer = {
   accountId?: InputMaybe<Scalars['String']>;
   amount?: InputMaybe<Scalars['String']>;
   tax?: InputMaybe<Scalars['String']>;
+  taxAmount?: InputMaybe<Scalars['String']>;
 };
 
 export const ExpiryStatusFilter = {
@@ -7692,6 +7757,19 @@ export type InventoryAdjustmentConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type InventoryAdjustmentDetail = {
+  code: Scalars['String'];
+  date: Scalars['Localized'];
+  itemDetails?: Maybe<Array<Maybe<InventoryAdjustmentItemDetailsType>>>;
+  modeOfAdjustment: Scalars['String'];
+  referenceNo: Scalars['String'];
+};
+
+export type InventoryAdjustmentDetailResult = {
+  data?: Maybe<InventoryAdjustmentDetail>;
+  error?: Maybe<QueryError>;
+};
+
 export type InventoryAdjustmentFilter = {
   id?: InputMaybe<Scalars['String']>;
 };
@@ -7712,8 +7790,23 @@ export type InventoryAdjustmentItemDetails = {
   newValue?: InputMaybe<Scalars['String']>;
   quantityAdjusted?: InputMaybe<Scalars['String']>;
   quantityAdjustedUnit?: InputMaybe<AdjustmentUnit>;
+  valueAdjusted?: InputMaybe<Scalars['String']>;
   /** For quantity adjustment */
   warehouseId?: InputMaybe<Scalars['String']>;
+  warehouseName?: InputMaybe<Scalars['String']>;
+};
+
+export type InventoryAdjustmentItemDetailsType = {
+  itemId?: Maybe<Scalars['String']>;
+  newQuantity?: Maybe<Scalars['String']>;
+  /** For value adjustment */
+  newValue?: Maybe<Scalars['String']>;
+  quantityAdjusted?: Maybe<Scalars['String']>;
+  quantityAdjustedUnit?: Maybe<AdjustmentUnit>;
+  valueAdjusted?: Maybe<Scalars['String']>;
+  /** For quantity adjustment */
+  warehouseId?: Maybe<Scalars['String']>;
+  warehouseName?: Maybe<Scalars['String']>;
 };
 
 export const InventoryAdjustmentMode = {
@@ -7732,7 +7825,12 @@ export type InventoryAdjustmentMutationNewArgs = {
 };
 
 export type InventoryAdjustmentQuery = {
+  detailAdjustment: InventoryAdjustmentDetailResult;
   list?: Maybe<InventoryAdjustmentConnection>;
+};
+
+export type InventoryAdjustmentQueryDetailAdjustmentArgs = {
+  id: Scalars['ID'];
 };
 
 export type InventoryAdjustmentQueryListArgs = {
@@ -14174,6 +14272,21 @@ export type Province = {
   nameNp: Scalars['String'];
 };
 
+export type PurchaseDebitNote = {
+  date?: Maybe<Scalars['Localized']>;
+  invoiceReference: Scalars['String'];
+  notes?: Maybe<Scalars['String']>;
+  paymentDetail?: Maybe<PaymentDetail>;
+  products: Array<SaleProduct>;
+  supplierId: Scalars['String'];
+  supplierName: Scalars['String'];
+};
+
+export type PurchaseDebitNoteDetails = {
+  data?: Maybe<PurchaseDebitNote>;
+  error?: Maybe<QueryError>;
+};
+
 export type PurchaseDebitNoteInput = {
   discount?: InputMaybe<Scalars['String']>;
   invoiceDate?: InputMaybe<Scalars['Localized']>;
@@ -14181,6 +14294,11 @@ export type PurchaseDebitNoteInput = {
   notes?: InputMaybe<Scalars['String']>;
   purchaseReference?: InputMaybe<Scalars['String']>;
   supplier?: InputMaybe<Scalars['String']>;
+};
+
+export type PurchaseDetailEntry = {
+  data?: Maybe<AccountingPurchaseEntryDetail>;
+  error?: Maybe<QueryError>;
 };
 
 export type PurchaseEntryInput = {
@@ -14197,6 +14315,11 @@ export type PurchaseEntryResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<AccountingPurchaseQuery>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type PurchaseExpenseDetails = {
+  data?: Maybe<AccountingPurchaseExpenseDetail>;
+  error?: Maybe<QueryError>;
 };
 
 export type PurchaseItemDetails = {
@@ -16667,6 +16790,7 @@ export type TransactionMutation = {
   agentTodayList?: Maybe<AgentTodayListResult>;
   approveIBT?: Maybe<ApproveIbtResult>;
   bulkDeposit: BulkDepositResult;
+  bulkTransfer?: Maybe<BulkTransferResult>;
   cashInTransit?: Maybe<CashInTransitMutation>;
   deposit: DepositResult;
   endOfDay?: Maybe<EodResult>;
@@ -16704,6 +16828,10 @@ export type TransactionMutationApproveIbtArgs = {
 
 export type TransactionMutationBulkDepositArgs = {
   data?: InputMaybe<BulkDepositInput>;
+};
+
+export type TransactionMutationBulkTransferArgs = {
+  data: BulkTransferInput;
 };
 
 export type TransactionMutationDepositArgs = {
@@ -17725,6 +17853,13 @@ export const WithdrawWith = {
 } as const;
 
 export type WithdrawWith = typeof WithdrawWith[keyof typeof WithdrawWith];
+export type LedgerDetails = {
+  accountId: Scalars['String'];
+  amount?: Maybe<Scalars['String']>;
+  tax?: Maybe<Scalars['String']>;
+  taxAmount: Scalars['String'];
+};
+
 export type SetBankAccountsMutationVariables = Exact<{
   data?: InputMaybe<NewBankAccountInput>;
 }>;
@@ -22931,6 +23066,7 @@ export type GetAccountingDebitNoteListQuery = {
         edges?: Array<{
           cursor: string;
           node?: {
+            id: string;
             totalAmount: string;
             supplierName: string;
             supplierId: string;
@@ -22940,6 +23076,164 @@ export type GetAccountingDebitNoteListQuery = {
           } | null;
         } | null> | null;
       } | null;
+    };
+  };
+};
+
+export type GetPurchaseEntryDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetPurchaseEntryDetailsQuery = {
+  accounting: {
+    purchase: {
+      detailPurchaseEntry: {
+        data?: {
+          billNo: string;
+          supplierName: string;
+          invoiceReference: string;
+          invoiceDate: Record<'local' | 'en' | 'np', string>;
+          dueDate: Record<'local' | 'en' | 'np', string>;
+          totalDebit?: string | null;
+          totalCredit?: string | null;
+          notes?: string | null;
+          productDetails?: Array<{
+            itemId?: string | null;
+            itemName?: string | null;
+            quantity?: string | null;
+            rate?: string | null;
+            tax?: string | null;
+            taxValue?: string | null;
+            amount?: string | null;
+            description?: string | null;
+            warehouse?: string | null;
+            warehouseName?: string | null;
+          } | null> | null;
+          paymentDetail?: {
+            subTotal?: string | null;
+            nonTaxableTotal?: string | null;
+            taxableTotal?: string | null;
+            vat?: string | null;
+            grandTotal?: string | null;
+            discount?: string | null;
+          } | null;
+          glTransaction?: Array<{
+            ledgerId?: string | null;
+            account: string;
+            serviceCentreId?: string | null;
+            serviceCenter?: string | null;
+            debit?: string | null;
+            credit?: string | null;
+            balance?: string | null;
+            balanceType?: BalanceType | null;
+          } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type GetPurchaseDebitNoteDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetPurchaseDebitNoteDetailsQuery = {
+  accounting: {
+    purchase: {
+      detailDebitNote: {
+        data?: {
+          supplierName: string;
+          supplierId: string;
+          invoiceReference: string;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          notes?: string | null;
+          products: Array<{
+            itemId?: string | null;
+            itemName?: string | null;
+            quantity?: string | null;
+            rate?: string | null;
+            tax?: string | null;
+            taxValue?: string | null;
+            amount?: string | null;
+            description?: string | null;
+            warehouse?: string | null;
+            warehouseName?: string | null;
+          }>;
+          paymentDetail?: {
+            subTotal?: string | null;
+            nonTaxableTotal?: string | null;
+            taxableTotal?: string | null;
+            vat?: string | null;
+            grandTotal?: string | null;
+            discount?: string | null;
+          } | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type GetPurchaseExpenseDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetPurchaseExpenseDetailsQuery = {
+  accounting: {
+    purchase: {
+      detailExpenses: {
+        data?: {
+          billNo: string;
+          supplierName: string;
+          invoiceReference: string;
+          invoiceDate: Record<'local' | 'en' | 'np', string>;
+          dueDate: Record<'local' | 'en' | 'np', string>;
+          totalDebit?: string | null;
+          totalCredit?: string | null;
+          notes?: string | null;
+          ledgerDetails?: Array<{
+            accountId: string;
+            amount?: string | null;
+            tax?: string | null;
+            taxAmount: string;
+          } | null> | null;
+          paymentDetail?: {
+            subTotal?: string | null;
+            nonTaxableTotal?: string | null;
+            taxableTotal?: string | null;
+            vat?: string | null;
+            grandTotal?: string | null;
+            discount?: string | null;
+          } | null;
+          glTransaction?: Array<{
+            ledgerId?: string | null;
+            account: string;
+            serviceCentreId?: string | null;
+            serviceCenter?: string | null;
+            debit?: string | null;
+            credit?: string | null;
+            balance?: string | null;
+            balanceType?: BalanceType | null;
+          } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
     };
   };
 };
@@ -42221,6 +42515,7 @@ export const GetAccountingDebitNoteListDocument = `
         }
         edges {
           node {
+            id
             totalAmount
             supplierName
             supplierId
@@ -42248,6 +42543,188 @@ export const useGetAccountingDebitNoteListQuery = <
       : ['getAccountingDebitNoteList', variables],
     useAxios<GetAccountingDebitNoteListQuery, GetAccountingDebitNoteListQueryVariables>(
       GetAccountingDebitNoteListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetPurchaseEntryDetailsDocument = `
+    query getPurchaseEntryDetails($id: ID!) {
+  accounting {
+    purchase {
+      detailPurchaseEntry(id: $id) {
+        data {
+          billNo
+          supplierName
+          invoiceReference
+          invoiceDate
+          dueDate
+          productDetails {
+            itemId
+            itemName
+            quantity
+            rate
+            tax
+            taxValue
+            amount
+            description
+            warehouse
+            warehouseName
+          }
+          paymentDetail {
+            subTotal
+            nonTaxableTotal
+            taxableTotal
+            vat
+            grandTotal
+            discount
+          }
+          glTransaction {
+            ledgerId
+            account
+            serviceCentreId
+            serviceCenter
+            debit
+            credit
+            balance
+            balanceType
+          }
+          totalDebit
+          totalCredit
+          notes
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetPurchaseEntryDetailsQuery = <
+  TData = GetPurchaseEntryDetailsQuery,
+  TError = unknown
+>(
+  variables: GetPurchaseEntryDetailsQueryVariables,
+  options?: UseQueryOptions<GetPurchaseEntryDetailsQuery, TError, TData>
+) =>
+  useQuery<GetPurchaseEntryDetailsQuery, TError, TData>(
+    ['getPurchaseEntryDetails', variables],
+    useAxios<GetPurchaseEntryDetailsQuery, GetPurchaseEntryDetailsQueryVariables>(
+      GetPurchaseEntryDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetPurchaseDebitNoteDetailsDocument = `
+    query getPurchaseDebitNoteDetails($id: ID!) {
+  accounting {
+    purchase {
+      detailDebitNote(id: $id) {
+        data {
+          supplierName
+          supplierId
+          invoiceReference
+          date
+          products {
+            itemId
+            itemName
+            quantity
+            rate
+            tax
+            taxValue
+            amount
+            description
+            warehouse
+            warehouseName
+          }
+          notes
+          paymentDetail {
+            subTotal
+            nonTaxableTotal
+            taxableTotal
+            vat
+            grandTotal
+            discount
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetPurchaseDebitNoteDetailsQuery = <
+  TData = GetPurchaseDebitNoteDetailsQuery,
+  TError = unknown
+>(
+  variables: GetPurchaseDebitNoteDetailsQueryVariables,
+  options?: UseQueryOptions<GetPurchaseDebitNoteDetailsQuery, TError, TData>
+) =>
+  useQuery<GetPurchaseDebitNoteDetailsQuery, TError, TData>(
+    ['getPurchaseDebitNoteDetails', variables],
+    useAxios<GetPurchaseDebitNoteDetailsQuery, GetPurchaseDebitNoteDetailsQueryVariables>(
+      GetPurchaseDebitNoteDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetPurchaseExpenseDetailsDocument = `
+    query getPurchaseExpenseDetails($id: ID!) {
+  accounting {
+    purchase {
+      detailExpenses(id: $id) {
+        data {
+          billNo
+          supplierName
+          invoiceReference
+          invoiceDate
+          dueDate
+          ledgerDetails {
+            accountId
+            amount
+            tax
+            taxAmount
+          }
+          paymentDetail {
+            subTotal
+            nonTaxableTotal
+            taxableTotal
+            vat
+            grandTotal
+            discount
+          }
+          glTransaction {
+            ledgerId
+            account
+            serviceCentreId
+            serviceCenter
+            debit
+            credit
+            balance
+            balanceType
+          }
+          totalDebit
+          totalCredit
+          notes
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetPurchaseExpenseDetailsQuery = <
+  TData = GetPurchaseExpenseDetailsQuery,
+  TError = unknown
+>(
+  variables: GetPurchaseExpenseDetailsQueryVariables,
+  options?: UseQueryOptions<GetPurchaseExpenseDetailsQuery, TError, TData>
+) =>
+  useQuery<GetPurchaseExpenseDetailsQuery, TError, TData>(
+    ['getPurchaseExpenseDetails', variables],
+    useAxios<GetPurchaseExpenseDetailsQuery, GetPurchaseExpenseDetailsQueryVariables>(
+      GetPurchaseExpenseDetailsDocument
     ).bind(null, variables),
     options
   );

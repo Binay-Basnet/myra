@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetAccountingDebitNoteListQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -12,7 +13,7 @@ export interface AccountingFeaturePurchaseDebitNoteProps {}
 
 export const AccountingFeaturePurchaseDebitNote = () => {
   const { t } = useTranslation();
-
+  const router = useRouter();
   const { data, isFetching } = useGetAccountingDebitNoteListQuery({
     pagination: getPaginationQuery(),
   });
@@ -58,6 +59,9 @@ export const AccountingFeaturePurchaseDebitNote = () => {
         data={rowData}
         isLoading={isFetching}
         columns={columns}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.ACCOUNTING_PURCHASE_DEBIT_NOTE_DETAILS}?id=${row?.node?.id}`);
+        }}
         pagination={{
           total: data?.accounting?.purchase.listDebitNote?.totalCount ?? 'Many',
           pageInfo: data?.accounting?.purchase?.listDebitNote?.pageInfo,
