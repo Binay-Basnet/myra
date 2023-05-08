@@ -90,7 +90,7 @@ export const ShareCertificatePrintReport = () => {
               },
               {
                 header: 'Member Name',
-                accessorKey: 'accountNumber',
+                accessorKey: 'accountName',
               },
               {
                 header: 'Date',

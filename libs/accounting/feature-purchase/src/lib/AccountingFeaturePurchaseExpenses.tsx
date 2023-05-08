@@ -1,15 +1,17 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, Table } from '@myra-ui/table';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetAccountingPurchaseSalesListQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
 import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const AccountingFeaturePurchaseExpenses = () => {
   const { t } = useTranslation();
+  const router = useRouter();
 
   const { data, isFetching } = useGetAccountingPurchaseSalesListQuery({
     pagination: getPaginationQuery(),
@@ -82,6 +84,9 @@ export const AccountingFeaturePurchaseExpenses = () => {
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.ACCOUNTING_PURCHASE_EXPENSE_DETAILS}?id=${row?.node?.id}`);
+        }}
         columns={columns}
         pagination={{
           total: data?.accounting?.purchase?.listExpense?.totalCount ?? 'Many',
