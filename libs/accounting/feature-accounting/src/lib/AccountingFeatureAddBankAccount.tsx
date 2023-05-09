@@ -1,16 +1,8 @@
 import { useEffect, useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
+import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
   AccountingBankAccountType,
@@ -20,7 +12,7 @@ import {
   useSetBankAccountsMutation,
   useUpdateBankAccountsMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
+import { FormInput, FormLayout, FormSelect, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -128,73 +120,66 @@ export const AccountingFeatureAddBankAccount = () => {
   }, [id, bankAccountDetail]);
 
   return (
-    <>
-      <Container minW="container.lg" height="fit-content" pb="s60">
-        <FormHeader title={t['accountingBankAccountAddNewBankAccount']} />
+    <FormLayout methods={methods}>
+      <FormLayout.Header title={t['accountingBankAccountAddNewBankAccount']} />
 
-        <FormProvider {...methods}>
-          <form>
-            <Box bg="white" minH="calc(100vh - 220px)">
-              <FormSection templateColumns={4}>
-                <GridItem colSpan={2}>
-                  <FormSelect
-                    name="bankId"
-                    label={t['accountingBankAccountAddSelectBank']}
-                    options={bankList}
-                  />
-                </GridItem>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <FormSection templateColumns={4}>
+            <GridItem colSpan={2}>
+              <FormSelect
+                name="bankId"
+                label={t['accountingBankAccountAddSelectBank']}
+                options={bankList}
+              />
+            </GridItem>
 
-                <GridItem colSpan={2}>
-                  <FormInput
-                    name="displayName"
-                    type="text"
-                    label={t['accountingBankAccountAddDisplayName']}
-                  />
-                </GridItem>
-              </FormSection>
+            <GridItem colSpan={2}>
+              <FormInput
+                name="displayName"
+                type="text"
+                label={t['accountingBankAccountAddDisplayName']}
+              />
+            </GridItem>
+          </FormSection>
 
-              <FormSection divider={false} header="bankAccountBankInformation">
-                <GridItem colSpan={2}>
-                  <FormInput
-                    name="accountName"
-                    type="text"
-                    label={t['accountingBankAccountAddAccountName']}
-                  />
-                </GridItem>
-                <FormInput
-                  name="accountNumber"
-                  type="text"
-                  label={t['accountingBankAccountAddAccountNumber']}
-                />
-                <FormSelect
-                  name="accountType"
-                  label={t['accountingBankAccountAddAccountType']}
-                  options={accountTypeList}
-                />
-                {/* <FormAmountInput
+          <FormSection divider={false} header="bankAccountBankInformation">
+            <GridItem colSpan={2}>
+              <FormInput
+                name="accountName"
+                type="text"
+                label={t['accountingBankAccountAddAccountName']}
+              />
+            </GridItem>
+            <FormInput
+              name="accountNumber"
+              type="text"
+              label={t['accountingBankAccountAddAccountNumber']}
+            />
+            <FormSelect
+              name="accountType"
+              label={t['accountingBankAccountAddAccountType']}
+              options={accountTypeList}
+            />
+            {/* <FormAmountInput
                   name="openingBalance"
                   textAlign="right"
                   label={t['accountingBankAccountAddOpeningBalance']}
                 /> */}
 
-                <GridItem colSpan={3}>
-                  <FormTextArea
-                    name="description"
-                    label={t['accountingBankAccountAddDesciption']}
-                    rows={5}
-                  />
-                </GridItem>
-              </FormSection>
-            </Box>
-          </form>
-        </FormProvider>
-      </Container>
-      <Box bottom="0" position="fixed" width="100%" bg="gray.100">
-        <Container minW="container.lg" height="fit-content">
-          <FormFooter mainButtonLabel={t['save']} mainButtonHandler={submitForm} />
-        </Container>
-      </Box>
-    </>
+            <GridItem colSpan={3}>
+              <FormTextArea
+                name="description"
+                label={t['accountingBankAccountAddDesciption']}
+                rows={5}
+              />
+            </GridItem>
+          </FormSection>
+        </FormLayout.Form>
+      </FormLayout.Content>
+
+      <FormLayout.Footer mainButtonLabel={t['save']} mainButtonHandler={submitForm} />
+    </FormLayout>
   );
 };
 

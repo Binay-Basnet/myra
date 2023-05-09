@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast, FormFooter, FormHeader } from '@myra-ui';
 
 import {
   CashTransferSelfEntry,
@@ -11,6 +11,7 @@ import {
   useSetServiceCenterCashTransferMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormLayout } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import { LedgerTable, ServiceCenterTable } from '../components';
@@ -92,39 +93,25 @@ export const AddCashTransfer = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title={`Inter Service Center Transaction - ${featureCode.newVaultTransfer}`}
-            closeLink={ROUTES.CBS_TRANSFER_INTER_SERVICE_TRANS_LIST}
-          />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormHeader
+        title={`Inter Service Center Transaction - ${featureCode.newVaultTransfer}`}
+        closeLink={ROUTES.CBS_TRANSFER_INTER_SERVICE_TRANS_LIST}
+      />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)" pb="60px">
-                <LedgerTable />
-                <ServiceCenterTable />
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <LedgerTable />
+          <ServiceCenterTable />
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter
-              mainButtonLabel="Done"
-              mainButtonHandler={handleSubmit}
-              isMainButtonDisabled={disableButton()}
-            />
-          </Container>
-        </Box>
-      </Box>
-    </>
+      <FormFooter
+        mainButtonLabel="Done"
+        mainButtonHandler={handleSubmit}
+        isMainButtonDisabled={disableButton()}
+      />
+    </FormLayout>
   );
 };
 
