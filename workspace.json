@@ -112,6 +112,8 @@
     "csv-viewer": "apps/csv-viewer",
     "csv-viewer-data-access": "libs/csv-viewer/data-access",
     "dhadda-migration": "apps/dhadda-migration",
+    "dhadda-migration-data-access": "libs/dhadda-migration/data-access",
+    "dhadda-migration-ui-components": "libs/dhadda-migration/ui-components",
     "dhadda-migration-ui-layout": "libs/dhadda-migration/ui-layout",
     "ebanking": "apps/ebanking",
     "ebanking-data-access": "libs/ebanking/data-access",

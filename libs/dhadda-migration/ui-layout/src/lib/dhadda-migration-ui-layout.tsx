@@ -1,10 +1,17 @@
-/* eslint-disable-next-line */
-export interface DhaddaMigrationUiLayoutProps {}
+import { Container } from '@myra-ui';
 
-export const DhaddaMigrationUiLayout = () => (
-  <div>
-    <h1>Welcome to DhaddaMigrationUiLayout!</h1>
-  </div>
-);
+/* eslint-disable-next-line */
+export interface DhaddaMigrationUiLayoutProps {
+  children: React.ReactNode;
+}
+
+export const DhaddaMigrationUiLayout = (props: DhaddaMigrationUiLayoutProps) => {
+  const { children } = props;
+  return (
+    <Container minW="container.lg" height="fit-content" p="s60">
+      {children}
+    </Container>
+  );
+};
 
 export default DhaddaMigrationUiLayout;
