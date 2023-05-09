@@ -98,72 +98,74 @@ export const InventoryItemGenerateVariantsForm = () => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" gap="s32" pt="s24">
-      <Text fontSize="r1"> Generate Variant</Text>
-      <GroupContainer scrollMarginTop="200px">
-        <Box>
-          <DynamicBoxGroupContainer>
-            {variantProducts.map((item, index) => (
-              <Box key={item.id}>
-                <VariantProduct
-                  index={index}
-                  removeVariantProduct={() => variantProductRemove(index)}
-                />
-              </Box>
-            ))}
-            <Box display="flex" justifyContent="space-between">
-              <Button
-                id="newDetailButton"
-                alignSelf="start"
-                leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-                variant="outline"
-                onClick={() => {
-                  variantProductAppend({});
-                }}
-              >
-                {t['invItemAddNewVariant']}
-              </Button>
-              {variantProducts.length > 0 && (
+    <>
+      <Box display="flex" flexDirection="column" gap="s32" p="s20">
+        <Text fontSize="r1"> Generate Variant</Text>
+        <GroupContainer scrollMarginTop="200px">
+          <Box>
+            <DynamicBoxGroupContainer>
+              {variantProducts.map((item, index) => (
+                <Box key={item.id}>
+                  <VariantProduct
+                    index={index}
+                    removeVariantProduct={() => variantProductRemove(index)}
+                  />
+                </Box>
+              ))}
+              <Box display="flex" justifyContent="space-between">
                 <Button
                   id="newDetailButton"
                   alignSelf="start"
+                  leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+                  variant="outline"
                   onClick={() => {
-                    generate();
+                    variantProductAppend({});
                   }}
                 >
-                  {t['generate']}
+                  {t['invItemAddNewVariant']}
                 </Button>
-              )}
-            </Box>
-          </DynamicBoxGroupContainer>
-        </Box>
-      </GroupContainer>
+                {variantProducts.length > 0 && (
+                  <Button
+                    id="newDetailButton"
+                    alignSelf="start"
+                    onClick={() => {
+                      generate();
+                    }}
+                  >
+                    {t['generate']}
+                  </Button>
+                )}
+              </Box>
+            </DynamicBoxGroupContainer>
+          </Box>
+        </GroupContainer>
 
-      <FormEditableTable<VarinatProductTable>
-        name="variantList"
-        canAddRow={false}
-        columns={[
-          {
-            accessor: 'sku',
-            header: t['inventoryItemTableSKU'],
-          },
-          {
-            accessor: 'itemName',
-            header: t['inventoryItemTableItemName'],
-          },
-          {
-            accessor: 'sellingPrice',
-            header: t['inventoryItemTableSellingPrice'],
-            isNumeric: true,
-          },
-          {
-            accessor: 'costPrice',
-            header: t['inventoryItemTablePurchasePrice'],
-            isNumeric: true,
-          },
-        ]}
-      />
+        <FormEditableTable<VarinatProductTable>
+          name="variantList"
+          canAddRow={false}
+          columns={[
+            {
+              accessor: 'sku',
+              header: t['inventoryItemTableSKU'],
+            },
+            {
+              accessor: 'itemName',
+              header: t['inventoryItemTableItemName'],
+            },
+            {
+              accessor: 'sellingPrice',
+              header: t['inventoryItemTableSellingPrice'],
+              isNumeric: true,
+            },
+            {
+              accessor: 'costPrice',
+              header: t['inventoryItemTablePurchasePrice'],
+              isNumeric: true,
+            },
+          ]}
+        />
+      </Box>
       <Divider />
-    </Box>
+    </>
   );
 };
