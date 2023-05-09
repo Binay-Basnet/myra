@@ -7844,6 +7844,15 @@ export type InventoryAdjustmentResult = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export type InventoryItemSummationData = {
+  totalQuantityInStock?: Maybe<Scalars['String']>;
+  totalQuantityPurchased: Scalars['String'];
+  totalQuantitySoled?: Maybe<Scalars['String']>;
+  totalStockValue?: Maybe<Scalars['String']>;
+  totalStockValueVat?: Maybe<Scalars['String']>;
+  totalVatAmount?: Maybe<Scalars['String']>;
+};
+
 export type InventoryMutation = {
   adjustment?: Maybe<InventoryAdjustmentMutation>;
   items?: Maybe<InvItemsMutation>;
@@ -7895,6 +7904,39 @@ export type InventoryRegisterEdge = {
 export type InventoryRegisterFilter = {
   id?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
+};
+
+export type InventoryRegistrationData = {
+  itemId: Scalars['String'];
+  itemName: Scalars['String'];
+  pricePerUnit: Scalars['String'];
+  quantityInStock?: Maybe<Scalars['String']>;
+  quantityPurchased: Scalars['String'];
+  quantitySoled?: Maybe<Scalars['String']>;
+  reorderQuantityLevel?: Maybe<Scalars['String']>;
+  stockValue?: Maybe<Scalars['String']>;
+  stockValueVat?: Maybe<Scalars['String']>;
+  vatAmount?: Maybe<Scalars['String']>;
+  vatPercent: Scalars['String'];
+};
+
+export type InventoryRegistrationFilter = {
+  period: Scalars['Localized'];
+  warehouseId?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type InventoryRegistrationReportResult = {
+  data?: Maybe<Array<Maybe<InventoryRegistrationData>>>;
+  error?: Maybe<QueryError>;
+  total?: Maybe<InventoryItemSummationData>;
+};
+
+export type InventoryReport = {
+  inventoryRegistrationReport?: Maybe<InventoryRegistrationReportResult>;
+};
+
+export type InventoryReportInventoryRegistrationReportArgs = {
+  data?: InputMaybe<InventoryRegistrationFilter>;
 };
 
 export const InventoryTransactionType = {
@@ -14652,6 +14694,7 @@ export type ReportQuery = {
   employeeReport: EmployeeReport;
   exceptionReport: ExceptionReport;
   getReport?: Maybe<SavedReportResponse>;
+  inventoryReport: InventoryReport;
   listReports: ReportListConnection;
   loanReport: LoanReport;
   memberReport: MemberReport;
@@ -25222,6 +25265,41 @@ export type GetInventoryAdjustmentTableQuery = {
   };
 };
 
+export type GetInventoryAdjustmentDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryAdjustmentDetailsQuery = {
+  inventory: {
+    adjustment?: {
+      detailAdjustment: {
+        data?: {
+          referenceNo: string;
+          code: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          modeOfAdjustment: string;
+          itemDetails?: Array<{
+            itemId?: string | null;
+            warehouseId?: string | null;
+            warehouseName?: string | null;
+            newQuantity?: string | null;
+            quantityAdjusted?: string | null;
+            quantityAdjustedUnit?: AdjustmentUnit | null;
+            newValue?: string | null;
+            valueAdjusted?: string | null;
+          } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
 export type GetIndividualKymOptionsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
 }>;
@@ -28406,6 +28484,46 @@ export type GetExceptionShareBalanceReportQuery = {
           | QueryError_ServerError_Fragment
           | null;
       };
+    };
+  };
+};
+
+export type GetInventoryRegisterReportQueryVariables = Exact<{
+  data?: InputMaybe<InventoryRegistrationFilter>;
+}>;
+
+export type GetInventoryRegisterReportQuery = {
+  report: {
+    inventoryReport: {
+      inventoryRegistrationReport?: {
+        data?: Array<{
+          itemId: string;
+          itemName: string;
+          quantityPurchased: string;
+          quantitySoled?: string | null;
+          quantityInStock?: string | null;
+          pricePerUnit: string;
+          stockValue?: string | null;
+          vatPercent: string;
+          vatAmount?: string | null;
+          stockValueVat?: string | null;
+          reorderQuantityLevel?: string | null;
+        } | null> | null;
+        total?: {
+          totalQuantityPurchased: string;
+          totalQuantitySoled?: string | null;
+          totalQuantityInStock?: string | null;
+          totalStockValue?: string | null;
+          totalVatAmount?: string | null;
+          totalStockValueVat?: string | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
     };
   };
 };
@@ -45283,6 +45401,49 @@ export const useGetInventoryAdjustmentTableQuery = <
     ).bind(null, variables),
     options
   );
+export const GetInventoryAdjustmentDetailsDocument = `
+    query getInventoryAdjustmentDetails($id: ID!) {
+  inventory {
+    adjustment {
+      detailAdjustment(id: $id) {
+        data {
+          referenceNo
+          code
+          date
+          modeOfAdjustment
+          itemDetails {
+            itemId
+            warehouseId
+            warehouseName
+            newQuantity
+            quantityAdjusted
+            quantityAdjustedUnit
+            newValue
+            valueAdjusted
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryAdjustmentDetailsQuery = <
+  TData = GetInventoryAdjustmentDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryAdjustmentDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryAdjustmentDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryAdjustmentDetailsQuery, TError, TData>(
+    ['getInventoryAdjustmentDetails', variables],
+    useAxios<GetInventoryAdjustmentDetailsQuery, GetInventoryAdjustmentDetailsQueryVariables>(
+      GetInventoryAdjustmentDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetIndividualKymOptionsDocument = `
     query getIndividualKYMOptions($searchTerm: FormFieldSearchTerm!) {
   form {
@@ -49374,6 +49535,56 @@ export const useGetExceptionShareBalanceReportQuery = <
     ['getExceptionShareBalanceReport', variables],
     useAxios<GetExceptionShareBalanceReportQuery, GetExceptionShareBalanceReportQueryVariables>(
       GetExceptionShareBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryRegisterReportDocument = `
+    query getInventoryRegisterReport($data: InventoryRegistrationFilter) {
+  report {
+    inventoryReport {
+      inventoryRegistrationReport(data: $data) {
+        data {
+          itemId
+          itemName
+          quantityPurchased
+          quantitySoled
+          quantityInStock
+          pricePerUnit
+          stockValue
+          vatPercent
+          vatAmount
+          stockValueVat
+          reorderQuantityLevel
+        }
+        total {
+          totalQuantityPurchased
+          totalQuantitySoled
+          totalQuantityInStock
+          totalStockValue
+          totalVatAmount
+          totalStockValueVat
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryRegisterReportQuery = <
+  TData = GetInventoryRegisterReportQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryRegisterReportQueryVariables,
+  options?: UseQueryOptions<GetInventoryRegisterReportQuery, TError, TData>
+) =>
+  useQuery<GetInventoryRegisterReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryRegisterReport']
+      : ['getInventoryRegisterReport', variables],
+    useAxios<GetInventoryRegisterReportQuery, GetInventoryRegisterReportQueryVariables>(
+      GetInventoryRegisterReportDocument
     ).bind(null, variables),
     options
   );

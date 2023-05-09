@@ -1,0 +1,32 @@
+query getInventoryRegisterReport($data: InventoryRegistrationFilter) {
+  report {
+    inventoryReport {
+      inventoryRegistrationReport(data: $data) {
+        data {
+          itemId
+          itemName
+          quantityPurchased
+          quantitySoled
+          quantityInStock
+          pricePerUnit
+          stockValue
+          vatPercent
+          vatAmount
+          stockValueVat
+          reorderQuantityLevel
+        }
+        total {
+          totalQuantityPurchased
+          totalQuantitySoled
+          totalQuantityInStock
+          totalStockValue
+          totalVatAmount
+          totalStockValueVat
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ export const AccountingPurchaseExpensesDetails = () => {
 
   return (
     <>
-      <ProductDetailPathBar name="Purchase Entry" title={`Purchase `} />
+      <ProductDetailPathBar name="Expenses" title={`Purchase `} />
       <Box display="flex">
         <Box
           w="320px"

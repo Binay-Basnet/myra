@@ -3,6 +3,7 @@ export * from './lib/ATMReport';
 export * from './lib/BranchLessBankingReport';
 export * from './lib/BranchReport';
 export * from './lib/ExceptionReportList';
+export * from './lib/InventoryReportList';
 export * from './lib/LoanReportList';
 export * from './lib/MemberReportList';
 export * from './lib/MobileBankingReport';
