@@ -8,6 +8,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { asyncToast, Box, Button, Column, Icon, Scrollable, Table, Text } from '@myra-ui';
 
 import {
+  PenaltyType,
+  PenaltyTypeInput,
+  ProductChargeAdditionalDataInput,
+  Scalars,
   useGetEndOfDayDateDataQuery,
   useGetLoanProductPenaltyChargeDetailQuery,
   useGetLoanProductPenaltyUpdateListQuery,
@@ -18,6 +22,13 @@ import { localizedDate } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 import { LoanPenaltyUpdateModal, SideBar } from '../components';
+
+type LoanProductPenaltyUpdateInput = {
+  payload: PenaltyTypeInput;
+  additionalData: Omit<ProductChargeAdditionalDataInput, 'effectiveDate'> & {
+    effectiveDate: Scalars['Localized'] | null;
+  };
+};
 
 export const LoanPenaltyUpdatePage = () => {
   const router = useRouter();
@@ -39,7 +50,9 @@ export const LoanPenaltyUpdatePage = () => {
     onToggle: onDetailModalToggle,
   } = useDisclosure();
 
-  const methods = useForm();
+  const methods = useForm<LoanProductPenaltyUpdateInput>({
+    defaultValues: { payload: { penaltyType: PenaltyType.RemainingPrincipal } },
+  });
 
   const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
 
@@ -150,7 +163,7 @@ export const LoanPenaltyUpdatePage = () => {
       promise: updatePenalty({
         productId: id as string,
         payload: values['payload'],
-        additionalData: values['additionalData'],
+        additionalData: values['additionalData'] as ProductChargeAdditionalDataInput,
       }),
     });
   };
@@ -172,7 +185,7 @@ export const LoanPenaltyUpdatePage = () => {
         id: selectedPenaltyId,
         productId: id as string,
         payload: values['payload'],
-        additionalData: values['additionalData'],
+        additionalData: values['additionalData'] as ProductChargeAdditionalDataInput,
       }),
     });
   };
