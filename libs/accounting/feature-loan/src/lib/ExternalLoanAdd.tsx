@@ -1,16 +1,8 @@
 import { useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
+import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
   ExternalLoanApplicationInput,
@@ -20,7 +12,7 @@ import {
   useSetExternalLoanMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormBankSelect, FormInput } from '@coop/shared/form';
+import { FormBankSelect, FormInput, FormLayout } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -127,54 +119,43 @@ export const ExternalLoanAdd = () => {
   };
 
   return (
-    <>
-      <Container minW="container.lg" height="fit-content" pb="s60">
-        <FormHeader title="New External Loan" />
+    <FormLayout methods={methods}>
+      <FormLayout.Header title="New External Loan" />
 
-        <FormProvider {...methods}>
-          <form>
-            <Box bg="white" minH="calc(100vh - 220px)">
-              <ExternalLoanInfo />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <ExternalLoanInfo />
 
-              <LoanTenure />
+          <LoanTenure />
 
-              <Installment />
+          <Installment />
 
-              {mortageType === MortageType.Collateral && <Collateral />}
-              {mortageType === MortageType.LoanAgainstFd && <FixDeposit />}
+          {mortageType === MortageType.Collateral && <Collateral />}
+          {mortageType === MortageType.LoanAgainstFd && <FixDeposit />}
 
-              <FormSection templateColumns={1}>
-                <LoanProcessTable />
-              </FormSection>
+          <FormSection templateColumns={1}>
+            <LoanProcessTable />
+          </FormSection>
 
-              <Insurance />
+          <Insurance />
 
-              <FormSection header="Transaction Method">
-                <FormBankSelect name="bankId" label="Bank" />
-              </FormSection>
+          <FormSection header="Transaction Method">
+            <FormBankSelect name="bankId" label="Bank" />
+          </FormSection>
 
-              <FormSection header="Representative Information">
-                <GridItem colSpan={2}>
-                  <FormInput
-                    name="nameOfRepresentative"
-                    type="text"
-                    label="Name of Representative"
-                  />
-                </GridItem>
-                <FormInput name="position" type="text" label="Position" />
-              </FormSection>
+          <FormSection header="Representative Information">
+            <GridItem colSpan={2}>
+              <FormInput name="nameOfRepresentative" type="text" label="Name of Representative" />
+            </GridItem>
+            <FormInput name="position" type="text" label="Position" />
+          </FormSection>
 
-              <Documents />
-            </Box>
-          </form>
-        </FormProvider>
-      </Container>
-      <Box bottom="0" position="fixed" width="100%" bg="gray.100">
-        <Container minW="container.lg" height="fit-content">
-          <FormFooter mainButtonLabel={t['save']} mainButtonHandler={submitForm} />
-        </Container>
-      </Box>
-    </>
+          <Documents />
+        </FormLayout.Form>
+      </FormLayout.Content>
+
+      <FormLayout.Footer mainButtonLabel={t['save']} mainButtonHandler={submitForm} />
+    </FormLayout>
   );
 };
 

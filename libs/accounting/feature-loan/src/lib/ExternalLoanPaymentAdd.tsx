@@ -1,16 +1,8 @@
 import { useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
+import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import { ExternalLoanPaymentInput, useSetExternalPaymentMutation } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -19,6 +11,7 @@ import {
   FormBankSelect,
   FormDatePicker,
   FormExternalLoanSelect,
+  FormLayout,
 } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -74,59 +67,47 @@ export const ExternalLoanPaymentAdd = () => {
   };
 
   return (
-    <>
-      <Container minW="container.lg" height="fit-content" pb="s60">
-        <FormHeader title="New External Loan Payment" />
+    <FormLayout methods={methods}>
+      <FormLayout.Header title="New External Loan Payment" />
 
-        <FormProvider {...methods}>
-          <form>
-            <Box bg="white" minH="calc(100vh - 170px)">
-              <FormSection>
-                <GridItem colSpan={2}>
-                  <FormExternalLoanSelect name="loanId" label="Select Loan" />
-                </GridItem>
-                <GridItem colSpan={1}>
-                  <FormDatePicker name="date" label="Date" />
-                </GridItem>
-              </FormSection>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <FormSection>
+            <GridItem colSpan={2}>
+              <FormExternalLoanSelect name="loanId" label="Select Loan" />
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormDatePicker name="date" label="Date" />
+            </GridItem>
+          </FormSection>
 
-              <FormSection header="Installment Details">
-                <FormAmountInput
-                  name="principle"
-                  label="Principal"
-                  type="number"
-                  textAlign="right"
-                />
-                <FormAmountInput name="interest" label="Interest" type="number" textAlign="right" />
-                <FormAmountInput name="rebate" label="Rebate" type="number" textAlign="right" />
-                <FormAmountInput name="fine" label="Fine" type="number" textAlign="right" />
-                <FormAmountInput
-                  name="otherCharge"
-                  label="Other Charges"
-                  type="number"
-                  textAlign="right"
-                />
-                <FormAmountInput
-                  name="amountPaid"
-                  label="Amount Paid"
-                  type="number"
-                  textAlign="right"
-                  isDisabled
-                />
+          <FormSection header="Installment Details">
+            <FormAmountInput name="principle" label="Principal" type="number" textAlign="right" />
+            <FormAmountInput name="interest" label="Interest" type="number" textAlign="right" />
+            <FormAmountInput name="rebate" label="Rebate" type="number" textAlign="right" />
+            <FormAmountInput name="fine" label="Fine" type="number" textAlign="right" />
+            <FormAmountInput
+              name="otherCharge"
+              label="Other Charges"
+              type="number"
+              textAlign="right"
+            />
+            <FormAmountInput
+              name="amountPaid"
+              label="Amount Paid"
+              type="number"
+              textAlign="right"
+              isDisabled
+            />
 
-                <GridItem colSpan={2}>
-                  <FormBankSelect label="Payment Through (Select Bank)" name="bankId" />
-                </GridItem>
-              </FormSection>
-            </Box>
-          </form>
-        </FormProvider>
-      </Container>
-      <Box bottom="0" position="fixed" width="100%" bg="gray.100">
-        <Container minW="container.lg" height="fit-content">
-          <FormFooter mainButtonLabel={t['save']} mainButtonHandler={submitForm} />
-        </Container>
-      </Box>
-    </>
+            <GridItem colSpan={2}>
+              <FormBankSelect label="Payment Through (Select Bank)" name="bankId" />
+            </GridItem>
+          </FormSection>
+        </FormLayout.Form>
+      </FormLayout.Content>
+
+      <FormLayout.Footer mainButtonLabel={t['save']} mainButtonHandler={submitForm} />
+    </FormLayout>
   );
 };
