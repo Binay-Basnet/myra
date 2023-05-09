@@ -237,3 +237,33 @@ query getInventoryAdjustmentTable($filter: InventoryAdjustmentFilter, $paginatio
     }
   }
 }
+
+query getInventoryAdjustmentDetails($id: ID!) {
+  inventory {
+    adjustment {
+      detailAdjustment(id: $id) {
+        data {
+          referenceNo
+          code
+          date
+          modeOfAdjustment
+          itemDetails {
+            itemId
+            warehouseId
+
+            warehouseName
+            newQuantity
+            quantityAdjusted
+            quantityAdjustedUnit
+            newValue
+
+            valueAdjusted
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
