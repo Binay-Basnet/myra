@@ -57,7 +57,10 @@ export const AddCashTransfer = () => {
   }, [values]);
 
   const disableButton = () => {
-    if (selectedBranch && crBranchTotal + crSelfTotal === drSelfTotal + drBranchTotal) {
+    if (
+      selectedBranch &&
+      (crBranchTotal + crSelfTotal).toFixed(2) === (drSelfTotal + drBranchTotal).toFixed(2)
+    ) {
       return false;
     }
     return true;
