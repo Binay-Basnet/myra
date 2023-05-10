@@ -24,7 +24,7 @@ export const Discount = () => {
 
   return (
     <>
-      <FormCheckbox name="isDiscountApplied" label="Change Fine" />
+      <FormCheckbox name="isDiscountApplied" label="Fine to be paid" />
 
       {isDiscountApplied && (
         <Box
