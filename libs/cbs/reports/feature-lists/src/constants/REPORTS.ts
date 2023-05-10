@@ -11,6 +11,7 @@ export enum ReportGroup {
   ATM = 'ATM',
   BRANCH = 'Branch',
   EXCEPTION = 'Exception',
+  INVENTORY = 'Inventory',
 }
 
 export enum Report {
@@ -145,6 +146,8 @@ export enum Report {
   OTHERS_ORGANIZATIONAL_PROFILE = 'Organizational Profile Report',
   OTHERS_SHARE_CERTIFICATE_PRINT_REPORT = 'Share Certificate Report',
   OTHERS_FD_CERTIFICATE_PRINT_REPORT = 'FD-Certificate Report',
+
+  INVENTORY_REGISTER_REPORT = 'Inventory Register Report',
 }
 
 export const REPORTS = {
@@ -682,6 +685,14 @@ export const REPORTS = {
       id: '',
       report: Report.EXCEPTION_SHARE_BALANCE,
       link: 'share-balance',
+    },
+  ],
+
+  [ReportGroup.INVENTORY]: [
+    {
+      id: '',
+      report: Report.INVENTORY_REGISTER_REPORT,
+      link: 'register',
     },
   ],
 };

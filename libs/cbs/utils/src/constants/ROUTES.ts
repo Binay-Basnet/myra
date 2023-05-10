@@ -15,6 +15,7 @@ export const ROUTES = {
   CBS_MEMBER_INACTIVATION: '/cbs/members/inactivation',
   CBS_MEMBER_TRANSLATION: '/cbs/members/translation',
   CBS_MEMBER_MINOR_LIST: '/cbs/members/minor/list',
+  CBS_MEMBER_DORMANCY: '/cbs/members/dormancy',
 
   CBS_SHARE_ISSUE_ADD: '/cbs/share/issue/add',
   CBS_SHARE_RETURN_ADD: '/cbs/share/return/add',
@@ -274,10 +275,15 @@ export const ROUTES = {
 
   ACCOUNTING_PURCHASE_LIST: '/accounting/purchase/list',
   ACCOUNTING_PURCHASE_LIST_ADD: '/accounting/purchase/add',
+  ACCOUNTING_PURCHASE_LIST_DETAILS: '/accounting/purchase/details',
   ACCOUNTING_PURCHASE_EXPENSE: '/accounting/purchase/expenses/list',
   ACCOUNTING_PURCHASE_EXPENSE_ADD: '/accounting/purchase/expenses/add',
+  ACCOUNTING_PURCHASE_EXPENSE_DETAILS: '/accounting/purchase/expenses/details',
+
   ACCOUNTING_PURCHASE_DEBIT_NOTE: '/accounting/purchase/debit-note/list',
   ACCOUNTING_PURCHASE_DEBIT_NOTE_ADD: '/accounting/purchase/debit-note/add',
+  ACCOUNTING_PURCHASE_DEBIT_NOTE_DETAILS: '/accounting/purchase/debit-note/details',
+
   ACCOUNTING_PURCHASE_SUPPLIER_PAYMENT: '/accounting/purchase/supplier-payment/list',
   ACCOUNTING_PURCHASE_SUPPLIER_PAYMENT_ADD: '/accounting/purchase/supplier-payment/add',
 

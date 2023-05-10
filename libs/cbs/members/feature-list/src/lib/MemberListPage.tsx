@@ -3,16 +3,16 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, PageHeader, TablePopover } from '@myra-ui';
+import { PageHeader, TablePopover } from '@myra-ui';
 import { AvatarCell, Column, Table } from '@myra-ui/table';
 
 import {
   useGetGeneralMemberSettingsDataQuery,
   useGetMemberFilterMappingQuery,
   useGetMemberListQuery,
-  useSwitchDormancyMutation,
 } from '@coop/cbs/data-access';
 import { formatTableAddress, localizedDate, ROUTES } from '@coop/cbs/utils';
+import { MemberActivationModal, MemberDormancyEditModal } from '@coop/members/dormancy';
 import {
   featureCode,
   getFilter,
@@ -36,12 +36,20 @@ export const MemberListPage = () => {
   const { t } = useTranslation();
   const [memberId, setMemberId] = useState<string | null>(null);
   const { isOpen, onClose, onToggle } = useDisclosure();
+  const {
+    isOpen: isActivationModalOpen,
+    onClose: onActivationModalClose,
+    onToggle: onActivationModalToggle,
+  } = useDisclosure();
+  const {
+    isOpen: isDormancyEditModalOpen,
+    onClose: onDormancyEditModalClose,
+    onToggle: onDormancyEditModalToggle,
+  } = useDisclosure();
 
   const router = useRouter();
   const queryClient = useQueryClient();
   const objState = getFilter('objState') || 'APPROVED';
-
-  const { mutateAsync: switchDormancy } = useSwitchDormancyMutation();
 
   const { data, isFetching } = useGetMemberListQuery({
     pagination: getPaginationQuery(),
@@ -162,19 +170,17 @@ export const MemberListPage = () => {
                 objState === 'DORMANT'
                   ? [
                       {
+                        title: 'Edit Dormancy',
+                        onClick: (node) => {
+                          setMemberId(node?.id);
+                          onDormancyEditModalToggle();
+                        },
+                      },
+                      {
                         title: 'Make Active',
                         onClick: (node) => {
-                          asyncToast({
-                            id: 'member-make-dormant-active',
-                            msgs: {
-                              loading: 'Updating user dormancy',
-                              success: 'User dormancy updated',
-                            },
-                            promise: switchDormancy({
-                              id: node?.id,
-                            }),
-                            onSuccess: () => queryClient.invalidateQueries(['getMemberList']),
-                          });
+                          setMemberId(node?.id);
+                          onActivationModalToggle();
                         },
                       },
                     ]
@@ -263,19 +269,7 @@ export const MemberListPage = () => {
                       },
                       {
                         title: 'Make Dormant',
-                        onClick: (node) => {
-                          asyncToast({
-                            id: 'member-make-dormant',
-                            msgs: {
-                              loading: 'Updating user dormancy',
-                              success: 'User dormancy updated',
-                            },
-                            promise: switchDormancy({
-                              id: node?.id,
-                            }),
-                            onSuccess: () => queryClient.invalidateQueries(['getMemberList']),
-                          });
-                        },
+                        onClick: (node) => router.push(`${ROUTES.CBS_MEMBER_DORMANCY}/${node?.id}`),
                       },
                     ]
               }
@@ -317,6 +311,18 @@ export const MemberListPage = () => {
         forms={alteredMemberForms}
       />
       <MemberDeleteModal isOpen={isOpen} onClose={onClose} memberId={memberId} />
+
+      <MemberActivationModal
+        open={isActivationModalOpen}
+        onClose={onActivationModalClose}
+        memberId={memberId as string}
+      />
+
+      <MemberDormancyEditModal
+        open={isDormancyEditModalOpen}
+        onClose={onDormancyEditModalClose}
+        memberId={memberId as string}
+      />
     </>
   );
 };

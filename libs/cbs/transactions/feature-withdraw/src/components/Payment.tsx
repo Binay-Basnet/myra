@@ -100,13 +100,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
   const returnAmount = Number(totalCashPaid) - Number(totalWithdraw);
 
   return (
-    <ContainerWithDivider
-      borderRight="1px"
-      borderColor="border.layout"
-      p="s16"
-      pb="100px"
-      display={mode === 1 ? 'flex' : 'none'}
-    >
+    <ContainerWithDivider p="s16" display={mode === 1 ? 'flex' : 'none'}>
       <BoxContainer>
         <FormSwitchTab
           label={t['withdrawPaymentPaymentMode']}

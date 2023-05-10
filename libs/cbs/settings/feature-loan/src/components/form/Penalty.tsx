@@ -43,6 +43,11 @@ export const Penalty = () => {
       value: PenaltyType.PenalInterest,
       isDisabled: router?.asPath?.includes('/edit'),
     },
+    {
+      label: 'Loan Installment Amount',
+      value: PenaltyType.LoanInstallmentAmount,
+      isDisabled: router?.asPath?.includes('/edit'),
+    },
   ];
 
   return (

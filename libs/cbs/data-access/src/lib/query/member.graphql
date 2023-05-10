@@ -518,3 +518,15 @@ query getMinorProfile($minorId: String!) {
     }
   }
 }
+
+query memberDormancyDetails($memberId: ID!) {
+  members {
+    dormancyDetails(memberId: $memberId) {
+      data {
+        blockSavingTransaction
+        blockLoanTransaction
+        blockShareTransaction
+      }
+    }
+  }
+}

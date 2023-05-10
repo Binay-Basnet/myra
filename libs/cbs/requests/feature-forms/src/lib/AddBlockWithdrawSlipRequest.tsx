@@ -1,17 +1,9 @@
 import { useEffect, useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
+import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
   SlipRangeInput,
@@ -21,6 +13,7 @@ import {
 import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAccountSelect,
+  FormLayout,
   FormMemberSelect,
   FormSelect,
   FormSwitchTab,
@@ -113,58 +106,39 @@ export const AddBlockWithdrawSlipRequest = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title={`Block Withdraw Slip Book - ${featureCode.newBlockWithdrawSlipBook}`}
-          />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header
+        title={`Block Withdraw Slip Book - ${featureCode.newBlockWithdrawSlipBook}`}
+      />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)">
-                <FormSection>
-                  <GridItem colSpan={2}>
-                    <FormMemberSelect isRequired name="memberId" label="Member" />
-                  </GridItem>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <FormSection>
+            <GridItem colSpan={2}>
+              <FormMemberSelect isRequired name="memberId" label="Member" />
+            </GridItem>
 
-                  <FormAccountSelect
-                    isRequired
-                    name="accountId"
-                    label="Account"
-                    memberId={memberId}
-                  />
-                  <GridItem colSpan={3}>
-                    <FormSwitchTab label="Withdraw Slip" options={blockModes} name="blockMode" />
-                  </GridItem>
-                  {blockMode === 'Number' && (
-                    <FormSelect
-                      isRequired
-                      name="slipNumber"
-                      label="Withdraw Slip No"
-                      options={availableSlipListOptions}
-                    />
-                  )}
-                </FormSection>
+            <FormAccountSelect isRequired name="accountId" label="Account" memberId={memberId} />
+            <GridItem colSpan={3}>
+              <FormSwitchTab label="Withdraw Slip" options={blockModes} name="blockMode" />
+            </GridItem>
+            {blockMode === 'Number' && (
+              <FormSelect
+                isRequired
+                name="slipNumber"
+                label="Withdraw Slip No"
+                options={availableSlipListOptions}
+              />
+            )}
+          </FormSection>
 
-                <FormSection templateColumns={1}>
-                  <FormTextArea name="reason" label="Reason" rows={5} />
-                </FormSection>
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
+          <FormSection templateColumns={1} divider={false}>
+            <FormTextArea name="reason" label="Reason" rows={5} />
+          </FormSection>
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSave} />
-          </Container>
-        </Box>
-      </Box>
-    </>
+      <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={handleSave} />
+    </FormLayout>
   );
 };

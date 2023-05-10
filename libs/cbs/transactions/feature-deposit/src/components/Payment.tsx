@@ -141,13 +141,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
   });
 
   return (
-    <ContainerWithDivider
-      borderRight="1px"
-      borderColor="border.layout"
-      p="s16"
-      display={mode === 1 ? 'flex' : 'none'}
-      pb="100px"
-    >
+    <ContainerWithDivider p="s16" display={mode === 1 ? 'flex' : 'none'}>
       <BoxContainer>
         <FormSwitchTab
           label={t['depositPaymentPaymentMode']}

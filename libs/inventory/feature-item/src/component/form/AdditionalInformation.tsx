@@ -12,7 +12,7 @@ export const AdditionalInformationInventoryItems = () => {
   ];
 
   return (
-    <FormSection header="Additional Information">
+    <FormSection header="Additional Information" divider={false}>
       <FormInput name="reorderLevel" label="Reorder Level" />
       <FormSelect name="valuationMethod" label="Valuation Method" options={itemOptions} />
     </FormSection>

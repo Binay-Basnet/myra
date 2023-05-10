@@ -1,12 +1,11 @@
+import { CreateProject, ProjectList } from '@dhadda-migration/ui-components';
 import { DhaddaMigrationUiLayout } from '@dhadda-migration/ui-layout';
 
 export const Index = () => (
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.css file.
-   */
-  <DhaddaMigrationUiLayout />
+  <DhaddaMigrationUiLayout>
+    <CreateProject />
+    <ProjectList />
+  </DhaddaMigrationUiLayout>
 );
 
 export default Index;

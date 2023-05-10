@@ -248,7 +248,7 @@ export const SharePurchaseForm = () => {
   }, [redirectMemberId]);
 
   return (
-    <FormLayout hasSidebar={Boolean(mode === 'shareInfo' && memberDetailData)} methods={methods}>
+    <FormLayout hasSidebar={!!memberDetailData} methods={methods}>
       <FormLayout.Header
         title={`${t['sharePurchaseNewShareIssue']} - ${featureCode?.newShareIssue}`}
       />
@@ -281,7 +281,7 @@ export const SharePurchaseForm = () => {
           )}
         </FormLayout.Form>
 
-        {memberDetailData && mode === 'shareInfo' && (
+        {memberDetailData && (
           <FormLayout.Sidebar borderPosition="left">
             <ShareMemberCard
               mode={mode}

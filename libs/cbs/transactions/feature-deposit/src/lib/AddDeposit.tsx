@@ -1,21 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  FormFooter,
-  FormHeader,
-  Grid,
-  MemberCard,
-  ResponseDialog,
-  Text,
-} from '@myra-ui';
+import { Box, Button, Divider, Grid, MemberCard, ResponseDialog, Text } from '@myra-ui';
 
 import { SuspiciousTransaction } from '@coop/cbs/components';
 import {
@@ -35,7 +24,13 @@ import {
 } from '@coop/cbs/data-access';
 import { localizedDate, localizedTime, ROUTES } from '@coop/cbs/utils';
 import { CashOptions } from '@coop/shared/components';
-import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
+import {
+  FormAccountSelect,
+  FormAmountInput,
+  FormInput,
+  FormLayout,
+  FormMemberSelect,
+} from '@coop/shared/form';
 import {
   amountConverter,
   amountToWordsConverter,
@@ -341,338 +336,313 @@ export const AddDeposit = () => {
 
   return (
     <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title={`${t['addDepositNewDeposit']} - ${featureCode?.newDeposit}`}
-            buttonLabel={t['addDepositAddBulkDeposit']}
-            buttonHandler={() => router.push(ROUTES.CBS_TRANS_BULK_DEPOSIT_ADD)}
-          />
-        </Box>
+      <FormLayout methods={methods} hasSidebar={Boolean(memberDetailData && mode === 0)}>
+        <FormLayout.Header
+          title={`${t['addDepositNewDeposit']} - ${featureCode?.newDeposit}`}
+          buttonLabel={t['addDepositAddBulkDeposit']}
+          buttonHandler={() => router.push(ROUTES.CBS_TRANS_BULK_DEPOSIT_ADD)}
+        />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box display={mode === 0 ? 'flex' : 'none'} minH="calc(100vh - 170px)">
-                <Box
-                  p="s16"
-                  pb="100px"
-                  width="100%"
-                  display="flex"
-                  flexDirection="column"
-                  gap="s24"
-                  borderRight="1px"
-                  borderColor="border.layout"
-                >
-                  <FormMemberSelect
+        <FormLayout.Content>
+          <FormLayout.Form>
+            <Box display={mode === 0 ? 'flex' : 'none'}>
+              <Box p="s16" width="100%" display="flex" flexDirection="column" gap="s24">
+                <FormMemberSelect
+                  isRequired
+                  name="memberId"
+                  label="Member"
+                  isDisabled={!!redirectMemberId}
+                />
+
+                {memberId && (
+                  <FormAccountSelect
                     isRequired
-                    name="memberId"
-                    label="Member"
-                    isDisabled={!!redirectMemberId}
+                    name="accountId"
+                    label={t['addDepositSelectDepositAccount']}
+                    memberId={memberId}
+                    includeLoc
+                    filterBy={AccountObjState?.Active}
+                    isDisabled={!!redirectAccountId}
                   />
+                )}
 
-                  {memberId && (
-                    <FormAccountSelect
-                      isRequired
-                      name="accountId"
-                      label={t['addDepositSelectDepositAccount']}
-                      memberId={memberId}
-                      includeLoc
-                      filterBy={AccountObjState?.Active}
-                      isDisabled={!!redirectAccountId}
-                    />
-                  )}
-
-                  {accountId &&
-                    (selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
-                      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-                        selectedAccount?.product?.isMandatorySaving)) && (
-                      <>
-                        <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
-                          <FormInput isRequired name="voucherId" label="Deposit Slip No" />
-
-                          <Box />
-
-                          <FormInput
-                            isRequired
-                            name="noOfInstallments"
-                            label={t['addDepositNoOfInstallments']}
-                          />
-
-                          <Box>
-                            <Button variant="outline" onClick={handleModalOpen}>
-                              {t['addDepositViewAllInstallments']}
-                            </Button>
-                          </Box>
-                        </Grid>
-
-                        {memberDetailData?.type === KymMemberTypesEnum.Individual && (
-                          <SuspiciousTransaction />
-                        )}
-
-                        <Box display="flex" flexDirection="column" gap="s4">
-                          <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70">
-                            {t['addDepositPaymentRange']}
-                          </Text>
-                          <Text
-                            fontSize="s3"
-                            fontWeight="Regular"
-                            color="neutralColorLight.Gray-70"
-                          >
-                            {`Payment made from ${firstMonth} to ${lastMonth}`}
-                          </Text>
-                        </Box>
-                      </>
-                    )}
-
-                  {accountId &&
-                    (selectedAccount?.product?.nature === NatureOfDepositProduct.Current ||
-                      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-                        !selectedAccount?.product?.isMandatorySaving) ||
-                      selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd ||
-                      !selectedAccount?.product?.nature) && (
-                      <>
-                        <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
-                          <FormInput name="voucherId" label="Deposit Slip No" />
-
-                          <FormAmountInput
-                            isRequired
-                            type="number"
-                            name="amount"
-                            label={t['addDepositAmountToBeDeposited']}
-                          />
-                        </Grid>
-
-                        {memberDetailData?.type === KymMemberTypesEnum.Individual && (
-                          <SuspiciousTransaction />
-                        )}
-
-                        <Box display="flex" flexDirection="column" gap="s4">
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
-                            {t['addDepositTotalAmountAfterDeposit']}
-                          </Text>
-                          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-                            {`${t['rs']} ${amountConverter(
-                              Number(selectedAccount?.accountBalance ?? 0) + Number(totalDeposit)
-                            )}`}
-                          </Text>
-                        </Box>
-                      </>
-                    )}
-
-                  {memberId && accountId && (
+                {accountId &&
+                  (selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
+                    (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                      selectedAccount?.product?.isMandatorySaving)) && (
                     <>
-                      <Divider my="s8" border="1px solid" borderColor="background.500" />
+                      <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
+                        <FormInput isRequired name="voucherId" label="Deposit Slip No" />
 
-                      <Box
-                        bg="background.500"
-                        borderRadius="br2"
-                        px="s16"
-                        py="s18"
-                        display="flex"
-                        flexDirection="column"
-                        gap="s14"
-                      >
-                        <Box display="flex" justifyContent="space-between">
-                          <Text fontSize="s3" fontWeight={500} color="gray.600">
-                            {t['addDepositDepositAmount']}
-                          </Text>
+                        <Box />
 
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-                            {amountConverter(amountToBeDeposited)}
-                          </Text>
+                        <FormInput
+                          isRequired
+                          name="noOfInstallments"
+                          label={t['addDepositNoOfInstallments']}
+                        />
+
+                        <Box>
+                          <Button variant="outline" onClick={handleModalOpen}>
+                            {t['addDepositViewAllInstallments']}
+                          </Button>
                         </Box>
+                      </Grid>
 
-                        {(selectedAccount?.product?.nature ===
-                          NatureOfDepositProduct.RecurringSaving ||
-                          (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-                            selectedAccount?.product?.isMandatorySaving === true)) && (
-                          <Box display="flex" justifyContent="space-between">
-                            <Text fontSize="s3" fontWeight={500} color="gray.600">
-                              {t['addDepositFine']}
-                            </Text>
+                      {memberDetailData?.type === KymMemberTypesEnum.Individual && (
+                        <SuspiciousTransaction />
+                      )}
 
-                            <Text fontSize="s3" fontWeight={500} color="danger.500">
-                              {`+ ${amountConverter(fine ?? FINE)}`}
-                            </Text>
-                          </Box>
-                        )}
-
-                        <Box display="flex" justifyContent="space-between">
-                          <Text fontSize="s3" fontWeight={500} color="gray.600">
-                            {t['addDepositRebate']}
-                          </Text>
-
-                          <Text fontSize="s3" fontWeight={500} color="success.500">
-                            {`+ ${amountConverter(rebate ?? REBATE)}`}
-                          </Text>
-                        </Box>
-
-                        <Box display="flex" justifyContent="space-between">
-                          <Text fontSize="s3" fontWeight={500} color="gray.600">
-                            {t['addDepositTotalDeposit']}
-                          </Text>
-
-                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-                            {amountConverter(totalDeposit)}
-                          </Text>
-                        </Box>
+                      <Box display="flex" flexDirection="column" gap="s4">
+                        <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70">
+                          {t['addDepositPaymentRange']}
+                        </Text>
+                        <Text fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-70">
+                          {`Payment made from ${firstMonth} to ${lastMonth}`}
+                        </Text>
                       </Box>
                     </>
                   )}
-                </Box>
 
-                {memberDetailData && (
-                  <Box>
-                    <MemberCard
-                      memberDetails={{
-                        name: memberDetailData?.name,
-                        avatar: memberDetailData?.profilePicUrl ?? '',
-                        code: memberDetailData?.code,
-                        memberID: memberDetailData?.id,
-                        gender: memberDetailData?.gender,
-                        age: memberDetailData?.age,
-                        maritalStatus: memberDetailData?.maritalStatus,
-                        dateJoined: memberDetailData?.dateJoined,
-                        // branch: 'Basantapur',
-                        phoneNo: memberDetailData?.contact,
-                        email: memberDetailData?.email,
-                        address: memberDetailData?.address,
-                      }}
-                      // notice="KYM needs to be updated"
-                      signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
-                      citizenshipPath={memberCitizenshipUrl}
-                      accountInfo={
-                        selectedAccount
-                          ? {
-                              name: selectedAccount?.accountName as string,
-                              type: selectedAccount?.product?.nature
-                                ? accountTypes[selectedAccount?.product?.nature]
-                                : '',
-                              ID: selectedAccount?.accountId,
-                              currentBalance: selectedAccount?.availableBalance ?? '0',
-                              actualBalance: selectedAccount?.accountBalance ?? '0',
-                              minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
-                              interestAccured: selectedAccount?.interestAccrued ?? '0',
-                              guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
-                              overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
-                              fine: fine ?? FINE,
-                              // branch: 'Kumaripati',
-                              openDate: localizedDate(selectedAccount?.accountOpenDate) ?? 'N/A',
-                              expiryDate:
-                                localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
-                              lastTransactionDate:
-                                localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
-                              productName: selectedAccount?.product?.productName,
-                              installmentAmount:
-                                selectedAccount?.product?.nature ===
-                                  NatureOfDepositProduct.RecurringSaving ||
-                                (selectedAccount?.product?.nature ===
-                                  NatureOfDepositProduct.Saving &&
-                                  selectedAccount?.product?.isMandatorySaving)
-                                  ? selectedAccount?.installmentAmount
-                                  : null,
-                            }
-                          : null
-                      }
-                      redirectUrl={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedAccount?.accountId}`}
-                    />
-                  </Box>
+                {accountId &&
+                  (selectedAccount?.product?.nature === NatureOfDepositProduct.Current ||
+                    (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                      !selectedAccount?.product?.isMandatorySaving) ||
+                    selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd ||
+                    !selectedAccount?.product?.nature) && (
+                    <>
+                      <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
+                        <FormInput name="voucherId" label="Deposit Slip No" />
+
+                        <FormAmountInput
+                          isRequired
+                          type="number"
+                          name="amount"
+                          label={t['addDepositAmountToBeDeposited']}
+                        />
+                      </Grid>
+
+                      {memberDetailData?.type === KymMemberTypesEnum.Individual && (
+                        <SuspiciousTransaction />
+                      )}
+
+                      <Box display="flex" flexDirection="column" gap="s4">
+                        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
+                          {t['addDepositTotalAmountAfterDeposit']}
+                        </Text>
+                        <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
+                          {`${t['rs']} ${amountConverter(
+                            Number(selectedAccount?.accountBalance ?? 0) + Number(totalDeposit)
+                          )}`}
+                        </Text>
+                      </Box>
+                    </>
+                  )}
+
+                {memberId && accountId && (
+                  <>
+                    <Divider my="s8" border="1px solid" borderColor="background.500" />
+
+                    <Box
+                      bg="background.500"
+                      borderRadius="br2"
+                      px="s16"
+                      py="s18"
+                      display="flex"
+                      flexDirection="column"
+                      gap="s14"
+                    >
+                      <Box display="flex" justifyContent="space-between">
+                        <Text fontSize="s3" fontWeight={500} color="gray.600">
+                          {t['addDepositDepositAmount']}
+                        </Text>
+
+                        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
+                          {amountConverter(amountToBeDeposited)}
+                        </Text>
+                      </Box>
+
+                      {(selectedAccount?.product?.nature ===
+                        NatureOfDepositProduct.RecurringSaving ||
+                        (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                          selectedAccount?.product?.isMandatorySaving === true)) && (
+                        <Box display="flex" justifyContent="space-between">
+                          <Text fontSize="s3" fontWeight={500} color="gray.600">
+                            {t['addDepositFine']}
+                          </Text>
+
+                          <Text fontSize="s3" fontWeight={500} color="danger.500">
+                            {`+ ${amountConverter(fine ?? FINE)}`}
+                          </Text>
+                        </Box>
+                      )}
+
+                      <Box display="flex" justifyContent="space-between">
+                        <Text fontSize="s3" fontWeight={500} color="gray.600">
+                          {t['addDepositRebate']}
+                        </Text>
+
+                        <Text fontSize="s3" fontWeight={500} color="success.500">
+                          {`+ ${amountConverter(rebate ?? REBATE)}`}
+                        </Text>
+                      </Box>
+
+                      <Box display="flex" justifyContent="space-between">
+                        <Text fontSize="s3" fontWeight={500} color="gray.600">
+                          {t['addDepositTotalDeposit']}
+                        </Text>
+
+                        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
+                          {amountConverter(totalDeposit)}
+                        </Text>
+                      </Box>
+                    </Box>
+                  </>
                 )}
               </Box>
+            </Box>
 
-              <Payment
-                mode={mode}
-                totalDeposit={rebate ? Number(totalDeposit) - Number(rebate) : Number(totalDeposit)}
-                // rebate={Number(rebate ?? 0)}
-                // selectedAccount={selectedAccount as DepositAccount}
-              />
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
-
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter
-              mainButton={
-                mode === 1 ? (
-                  <ResponseDialog
-                    onSuccess={() => {
-                      if (methods.getValues().payment_type === DepositPaymentType.WithdrawSlip) {
-                        queryClient.invalidateQueries(['getAvailableSlipsList']);
-                        queryClient.invalidateQueries(['getPastSlipsList']);
-                      }
-                      queryClient.invalidateQueries(['getDepositListData']);
-                      router.push(ROUTES.CBS_TRANS_DEPOSIT_LIST);
-                    }}
-                    promise={() => mutateAsync({ data: handleSubmit() })}
-                    successCardProps={(response) => {
-                      const result = response?.transaction?.deposit?.record;
-                      const isDepositedByOther = result?.depositedBy === 'OTHER';
-
-                      return {
-                        type: 'Deposit',
-                        total: amountConverter(result?.amount || 0) as string,
-                        totalWords: amountToWordsConverter(result?.amount || 0),
-                        title: 'Deposit Successful',
-                        details: {
-                          'Transaction Id': (
-                            <Text fontSize="s3" color="primary.500" fontWeight="600">
-                              {result?.transactionID}
-                            </Text>
-                          ),
-                          Date: localizedDate(result?.date),
-                          'Transaction Time': localizedTime(result?.createdAt),
-                          'Deposit Amount': amountConverter(result?.amount || 0),
-                          Rebate: amountConverter(result?.rebate || 0),
-                          'Payment Mode': result?.paymentMode,
-                          'Deposited By': !isDepositedByOther
-                            ? result?.depositedBy
-                            : `${result?.depositedBy}-(${result?.depositedOther})`,
-                        },
-                        subTitle:
-                          'Amount deposited successfully. Details of the transaction is listed below.',
-                        meta: {
-                          memberId: result?.memberId,
-                          accountId: result?.accountId,
-                          accountName: result?.accountName,
-                          member: result?.memberName?.local,
-                        },
-                      };
-                    }}
-                    errorCardProps={{
-                      title: 'New Deposit Failed',
-                    }}
-                  >
-                    <Button width="160px">Add New Deposit</Button>
-                  </ResponseDialog>
-                ) : undefined
-              }
-              status={
-                mode === 0 ? (
-                  <Box display="flex" gap="s32">
-                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
-                      {t['addDepositTotalDepositAmount']}
-                    </Text>
-                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                      {amountConverter(totalDeposit) ?? '---'}
-                    </Text>
-                  </Box>
-                ) : (
-                  <Button variant="solid" onClick={() => setMode(0)}>
-                    {t['addDepositPrevious']}
-                  </Button>
-                )
-              }
-              mainButtonLabel={mode === 0 ? t['addDepositProceedPayment'] : t['addDepositSubmit']}
-              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
-              mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
+            <Payment
+              mode={mode}
+              totalDeposit={rebate ? Number(totalDeposit) - Number(rebate) : Number(totalDeposit)}
+              // rebate={Number(rebate ?? 0)}
+              // selectedAccount={selectedAccount as DepositAccount}
             />
-          </Container>
-        </Box>
-      </Box>
+          </FormLayout.Form>
+
+          {memberDetailData && mode === 0 && (
+            <FormLayout.Sidebar borderPosition="left">
+              <MemberCard
+                memberDetails={{
+                  name: memberDetailData?.name,
+                  avatar: memberDetailData?.profilePicUrl ?? '',
+                  code: memberDetailData?.code,
+                  memberID: memberDetailData?.id,
+                  gender: memberDetailData?.gender,
+                  age: memberDetailData?.age,
+                  maritalStatus: memberDetailData?.maritalStatus,
+                  dateJoined: memberDetailData?.dateJoined,
+                  // branch: 'Basantapur',
+                  phoneNo: memberDetailData?.contact,
+                  email: memberDetailData?.email,
+                  address: memberDetailData?.address,
+                }}
+                // notice="KYM needs to be updated"
+                signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
+                citizenshipPath={memberCitizenshipUrl}
+                accountInfo={
+                  selectedAccount
+                    ? {
+                        name: selectedAccount?.accountName as string,
+                        type: selectedAccount?.product?.nature
+                          ? accountTypes[selectedAccount?.product?.nature]
+                          : '',
+                        ID: selectedAccount?.accountId,
+                        currentBalance: selectedAccount?.availableBalance ?? '0',
+                        actualBalance: selectedAccount?.accountBalance ?? '0',
+                        minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
+                        interestAccured: selectedAccount?.interestAccrued ?? '0',
+                        guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
+                        overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
+                        fine: fine ?? FINE,
+                        // branch: 'Kumaripati',
+                        openDate: localizedDate(selectedAccount?.accountOpenDate) ?? 'N/A',
+                        expiryDate: localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
+                        lastTransactionDate:
+                          localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
+                        productName: selectedAccount?.product?.productName,
+                        installmentAmount:
+                          selectedAccount?.product?.nature ===
+                            NatureOfDepositProduct.RecurringSaving ||
+                          (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                            selectedAccount?.product?.isMandatorySaving)
+                            ? selectedAccount?.installmentAmount
+                            : null,
+                      }
+                    : null
+                }
+                redirectUrl={`${ROUTES.CBS_ACCOUNT_SAVING_DETAILS}?id=${selectedAccount?.accountId}`}
+              />
+            </FormLayout.Sidebar>
+          )}
+        </FormLayout.Content>
+
+        <FormLayout.Footer
+          mainButton={
+            mode === 1 ? (
+              <ResponseDialog
+                onSuccess={() => {
+                  if (methods.getValues().payment_type === DepositPaymentType.WithdrawSlip) {
+                    queryClient.invalidateQueries(['getAvailableSlipsList']);
+                    queryClient.invalidateQueries(['getPastSlipsList']);
+                  }
+                  queryClient.invalidateQueries(['getDepositListData']);
+                  router.push(ROUTES.CBS_TRANS_DEPOSIT_LIST);
+                }}
+                promise={() => mutateAsync({ data: handleSubmit() })}
+                successCardProps={(response) => {
+                  const result = response?.transaction?.deposit?.record;
+                  const isDepositedByOther = result?.depositedBy === 'OTHER';
+
+                  return {
+                    type: 'Deposit',
+                    total: amountConverter(result?.amount || 0) as string,
+                    totalWords: amountToWordsConverter(result?.amount || 0),
+                    title: 'Deposit Successful',
+                    details: {
+                      'Transaction Id': (
+                        <Text fontSize="s3" color="primary.500" fontWeight="600">
+                          {result?.transactionID}
+                        </Text>
+                      ),
+                      Date: localizedDate(result?.date),
+                      'Transaction Time': localizedTime(result?.createdAt),
+                      'Deposit Amount': amountConverter(result?.amount || 0),
+                      Rebate: amountConverter(result?.rebate || 0),
+                      'Payment Mode': result?.paymentMode,
+                      'Deposited By': !isDepositedByOther
+                        ? result?.depositedBy
+                        : `${result?.depositedBy}-(${result?.depositedOther})`,
+                    },
+                    subTitle:
+                      'Amount deposited successfully. Details of the transaction is listed below.',
+                    meta: {
+                      memberId: result?.memberId,
+                      accountId: result?.accountId,
+                      accountName: result?.accountName,
+                      member: result?.memberName?.local,
+                    },
+                  };
+                }}
+                errorCardProps={{
+                  title: 'New Deposit Failed',
+                }}
+              >
+                <Button width="160px">Add New Deposit</Button>
+              </ResponseDialog>
+            ) : undefined
+          }
+          status={
+            mode === 0 ? (
+              <Box display="flex" gap="s32">
+                <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
+                  {t['addDepositTotalDepositAmount']}
+                </Text>
+                <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
+                  {amountConverter(totalDeposit) ?? '---'}
+                </Text>
+              </Box>
+            ) : (
+              <Button variant="solid" onClick={() => setMode(0)}>
+                {t['addDepositPrevious']}
+              </Button>
+            )
+          }
+          mainButtonLabel={mode === 0 ? t['addDepositProceedPayment'] : t['addDepositSubmit']}
+          isMainButtonDisabled={checkIsSubmitButtonDisabled()}
+          mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
+        />
+      </FormLayout>
 
       <InstallmentModel
         isOpen={isModalOpen}

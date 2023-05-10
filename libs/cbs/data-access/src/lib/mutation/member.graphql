@@ -178,12 +178,29 @@ mutation updateKym($date: Localized!, $id: ID!) {
   }
 }
 
-mutation switchDormancy($id: ID!) {
+mutation makeMemberDormant($memberId: ID!, $data: MemberDormancyInput!) {
   members {
-    switchDormancy(id: $id) {
-      record {
-        id
+    makeDormant(memberId: $memberId, data: $data) {
+      error {
+        ...MutationError
       }
+    }
+  }
+}
+
+mutation revokeMemberDormancy($memberId: ID!, $data: RevokeDormancyInput!) {
+  members {
+    revokeDormancy(memberId: $memberId, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation updateMemberDormancy($memberId: ID!, $data: UpdateDormancyInput!) {
+  members {
+    updateDormancy(memberId: $memberId, data: $data) {
       error {
         ...MutationError
       }

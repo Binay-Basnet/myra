@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import rhtoast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
@@ -9,11 +9,8 @@ import {
   asyncToast,
   Box,
   Button,
-  Container,
   Divider,
   findError,
-  FormFooter,
-  FormHeader,
   getError,
   Grid,
   MemberCard,
@@ -37,6 +34,7 @@ import {
   FormAccountSelect,
   FormAmountInput,
   FormInput,
+  FormLayout,
   FormMemberSelect,
   FormRadioGroup,
   FormTextArea,
@@ -390,326 +388,312 @@ export const CbsAccountClose = () => {
   }, [redirectMemberId]);
 
   return (
-    <Container minW="container.xl" p="0" bg="white">
-      <FormProvider {...methods}>
-        <form>
-          {' '}
-          <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-            <FormHeader title={`${t['accountClose']} - ${featureCode?.newAccountClose}`} />
-          </Box>
-          <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
-            <Box display="flex" flexDirection="column" w="100%">
-              <Box
-                display={mode === '0' ? 'flex' : 'none'}
-                flexDirection="column"
-                gap="s16"
-                p="s20"
-                w="100%"
-                minH="100%"
-                borderRight="1px solid"
-                borderColor="border.layout"
-              >
-                <FormMemberSelect isRequired name="memberID" label="Member" />
+    <FormLayout methods={methods} hasSidebar={Boolean(memberId && memberId !== 'undefined')}>
+      <FormLayout.Header title={`${t['accountClose']} - ${featureCode?.newAccountClose}`} />
 
-                {memberId && memberId !== 'undefined' && (
-                  <FormAccountSelect
-                    name="accountID"
-                    memberId={memberId}
-                    label="Select Deposit Account"
-                    filterBy={ObjState.Active}
-                  />
-                )}
-                {memberId && memberId !== 'undefined' && accountId && accountId !== 'undefined' && (
-                  <Box>
-                    <Divider />
-                    <Box display="flex" flexDirection="column" gap="s4" pt="s16">
-                      <Text fontSize="s3" fontWeight="600">
-                        Reason for closing *
-                      </Text>
-                      <Box display="flex" flexDirection="column" gap="s16">
-                        <FormRadioGroup
-                          name="reason"
-                          options={radioList}
-                          direction="row"
-                          pb="s16"
-                        />
-                        {radioOther === AccountCloseReason?.Other && (
-                          <Grid templateColumns="repeat(3,1fr)">
-                            <FormInput name="otherReason" label="Specify Reason" />
-                          </Grid>
-                        )}
-                      </Box>
-                    </Box>
-                    <Divider />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <Box display="flex" flexDirection="column" w="100%">
+            <Box
+              display={mode === '0' ? 'flex' : 'none'}
+              flexDirection="column"
+              gap="s16"
+              p="s20"
+              w="100%"
+              minH="100%"
+              borderRight="1px solid"
+              borderColor="border.layout"
+            >
+              <FormMemberSelect isRequired name="memberID" label="Member" />
+
+              {memberId && memberId !== 'undefined' && (
+                <FormAccountSelect
+                  name="accountID"
+                  memberId={memberId}
+                  label="Select Deposit Account"
+                  filterBy={ObjState.Active}
+                />
+              )}
+              {memberId && memberId !== 'undefined' && accountId && accountId !== 'undefined' && (
+                <Box>
+                  <Divider />
+                  <Box display="flex" flexDirection="column" gap="s4" pt="s16">
+                    <Text fontSize="s3" fontWeight="600">
+                      Reason for closing *
+                    </Text>
                     <Box display="flex" flexDirection="column" gap="s16">
-                      <Box display="flex" flexDirection="column" gap="s4" pt="s16">
-                        <Text fontSize="r1" fontWeight="600">
-                          Fees & Charges Summary
-                        </Text>
-                        <Text fontSize="s2" fontWeight="400">
-                          All charges and fees must be paid to get approved.
-                        </Text>
-                      </Box>
+                      <FormRadioGroup name="reason" options={radioList} direction="row" pb="s16" />
+                      {radioOther === AccountCloseReason?.Other && (
+                        <Grid templateColumns="repeat(3,1fr)">
+                          <FormInput name="otherReason" label="Specify Reason" />
+                        </Grid>
+                      )}
                     </Box>
-                    <Box bg="background.500" borderRadius="br2" mt="s16">
-                      <Box display="flex" flexDirection="column" gap="s16" p="s16">
-                        {selectedAccount?.guaranteedAmount &&
-                          selectedAccount?.guaranteedAmount !== '0' && (
-                            <Box display="flex" flexDirection="column" gap="s8">
-                              <Text fontWeight="600" fontSize="s3">
-                                Guarantee
-                              </Text>
-                              <Box
-                                h="36px"
-                                display="flex"
-                                justifyContent="space-between"
-                                alignItems="center"
-                              >
-                                <Text color="gray.600" fontWeight="500" fontSize="s3">
-                                  Guarantee Amount
-                                </Text>
-                                <Text color="gray.600" fontWeight="600" fontSize="r1">
-                                  {amountConverter(selectedAccount?.guaranteedAmount ?? 0)}
-                                </Text>
-                              </Box>
-                            </Box>
-                          )}
-                        <Box display="flex" flexDirection="column" gap="s8">
-                          <Text fontWeight="600" fontSize="s3">
-                            Interest
-                          </Text>
-
-                          <Box
-                            h="36px"
-                            display="flex"
-                            justifyContent="space-between"
-                            alignItems="center"
-                          >
-                            <Text color="gray.600" fontWeight="500" fontSize="s3">
-                              Interest Payable
-                            </Text>
-                            <Text color="gray.600" fontWeight="600" fontSize="r1">
-                              {amountConverter(selectedAccount?.interestAccrued ?? 0)}
-                            </Text>
-                          </Box>
-
-                          <Box
-                            h="36px"
-                            display="flex"
-                            justifyContent="space-between"
-                            alignItems="center"
-                          >
-                            <Text color="gray.600" fontWeight="500" fontSize="s3">
-                              Total Interest Tax
-                            </Text>
-                            <Text color="gray.600" fontWeight="600" fontSize="r1">
-                              {amountConverter(selectedAccount?.interestTax ?? 0)}
-                            </Text>
-                          </Box>
-
-                          <Box
-                            h="36px"
-                            display="flex"
-                            justifyContent="space-between"
-                            alignItems="center"
-                          >
-                            <Text color="gray.600" fontWeight="500" fontSize="s3">
-                              Adjusted Interest
-                            </Text>
-                            <Box>
-                              <FormAmountInput
-                                type="number"
-                                size="sm"
-                                name="adjustedInterest"
-                                isDisabled
-                              />
-                            </Box>
-                          </Box>
-
-                          <Box
-                            h="36px"
-                            display="flex"
-                            justifyContent="space-between"
-                            alignItems="center"
-                          >
-                            <Text color="gray.600" fontWeight="500" fontSize="s3">
-                              Net Interest Payable
-                            </Text>
-                            <Text fontWeight="600" fontSize="r1">
-                              {amountConverter(netInterestPayable ?? 0)}
-                            </Text>
-                          </Box>
-                        </Box>
-                        {selectedAccount?.product?.accountClosingCharge?.length ? (
+                  </Box>
+                  <Divider />
+                  <Box display="flex" flexDirection="column" gap="s16">
+                    <Box display="flex" flexDirection="column" gap="s4" pt="s16">
+                      <Text fontSize="r1" fontWeight="600">
+                        Fees & Charges Summary
+                      </Text>
+                      <Text fontSize="s2" fontWeight="400">
+                        All charges and fees must be paid to get approved.
+                      </Text>
+                    </Box>
+                  </Box>
+                  <Box bg="background.500" borderRadius="br2" mt="s16">
+                    <Box display="flex" flexDirection="column" gap="s16" p="s16">
+                      {selectedAccount?.guaranteedAmount &&
+                        selectedAccount?.guaranteedAmount !== '0' && (
                           <Box display="flex" flexDirection="column" gap="s8">
                             <Text fontWeight="600" fontSize="s3">
-                              Other Charges
+                              Guarantee
                             </Text>
-                            {selectedAccount.product?.accountClosingCharge?.map(
-                              ({ serviceName }: any) => (
-                                <Box
-                                  // h="36px"
-                                  display="flex"
-                                  justifyContent="space-between"
-                                  alignItems="center"
-                                  key={`${serviceName}`}
-                                >
-                                  <Text color="gray.600" fontWeight="500" fontSize="s3">
-                                    {serviceName}
-                                  </Text>
-                                  <FormAmountInput
-                                    type="number"
-                                    size="sm"
-                                    name={`serviceCharge.${serviceName}`}
-                                  />
-                                </Box>
-                              )
-                            )}
-
-                            {(selectedAccount?.product?.nature ===
-                              NatureOfDepositProduct.RecurringSaving ||
-                              selectedAccount?.product?.nature ===
-                                NatureOfDepositProduct.TermSavingOrFd) && (
-                              <Box
-                                h="36px"
-                                display="flex"
-                                justifyContent="space-between"
-                                alignItems="center"
-                              >
-                                <Text color="gray.600" fontWeight="500" fontSize="s3">
-                                  Premature Penalty
-                                </Text>
-                                <Text fontWeight="600" fontSize="r1">
-                                  {amountConverter(selectedAccount?.prematurePenalty ?? 0)}
-                                </Text>
-                              </Box>
-                            )}
+                            <Box
+                              h="36px"
+                              display="flex"
+                              justifyContent="space-between"
+                              alignItems="center"
+                            >
+                              <Text color="gray.600" fontWeight="500" fontSize="s3">
+                                Guarantee Amount
+                              </Text>
+                              <Text color="gray.600" fontWeight="600" fontSize="r1">
+                                {amountConverter(selectedAccount?.guaranteedAmount ?? 0)}
+                              </Text>
+                            </Box>
                           </Box>
-                        ) : null}
-                        <Divider />
+                        )}
+                      <Box display="flex" flexDirection="column" gap="s8">
+                        <Text fontWeight="600" fontSize="s3">
+                          Interest
+                        </Text>
+
                         <Box
                           h="36px"
                           display="flex"
                           justifyContent="space-between"
                           alignItems="center"
                         >
-                          <Text fontWeight="600" fontSize="s3">
-                            Total Charges
+                          <Text color="gray.600" fontWeight="500" fontSize="s3">
+                            Interest Payable
+                          </Text>
+                          <Text color="gray.600" fontWeight="600" fontSize="r1">
+                            {amountConverter(selectedAccount?.interestAccrued ?? 0)}
+                          </Text>
+                        </Box>
+
+                        <Box
+                          h="36px"
+                          display="flex"
+                          justifyContent="space-between"
+                          alignItems="center"
+                        >
+                          <Text color="gray.600" fontWeight="500" fontSize="s3">
+                            Total Interest Tax
+                          </Text>
+                          <Text color="gray.600" fontWeight="600" fontSize="r1">
+                            {amountConverter(selectedAccount?.interestTax ?? 0)}
+                          </Text>
+                        </Box>
+
+                        <Box
+                          h="36px"
+                          display="flex"
+                          justifyContent="space-between"
+                          alignItems="center"
+                        >
+                          <Text color="gray.600" fontWeight="500" fontSize="s3">
+                            Adjusted Interest
+                          </Text>
+                          <Box>
+                            <FormAmountInput
+                              type="number"
+                              size="sm"
+                              name="adjustedInterest"
+                              isDisabled
+                            />
+                          </Box>
+                        </Box>
+
+                        <Box
+                          h="36px"
+                          display="flex"
+                          justifyContent="space-between"
+                          alignItems="center"
+                        >
+                          <Text color="gray.600" fontWeight="500" fontSize="s3">
+                            Net Interest Payable
                           </Text>
                           <Text fontWeight="600" fontSize="r1">
-                            {amountConverter(totalCharge)}
+                            {amountConverter(netInterestPayable ?? 0)}
                           </Text>
                         </Box>
                       </Box>
-                    </Box>
-                    <Divider />
-                    <Box display="flex" flexDirection="column" gap="s4" pt="s16">
-                      <FormTextArea name="notes" label="Notes" rows={5} />
+                      {selectedAccount?.product?.accountClosingCharge?.length ? (
+                        <Box display="flex" flexDirection="column" gap="s8">
+                          <Text fontWeight="600" fontSize="s3">
+                            Other Charges
+                          </Text>
+                          {selectedAccount.product?.accountClosingCharge?.map(
+                            ({ serviceName }: any) => (
+                              <Box
+                                // h="36px"
+                                display="flex"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                key={`${serviceName}`}
+                              >
+                                <Text color="gray.600" fontWeight="500" fontSize="s3">
+                                  {serviceName}
+                                </Text>
+                                <FormAmountInput
+                                  type="number"
+                                  size="sm"
+                                  name={`serviceCharge.${serviceName}`}
+                                />
+                              </Box>
+                            )
+                          )}
+
+                          {(selectedAccount?.product?.nature ===
+                            NatureOfDepositProduct.RecurringSaving ||
+                            selectedAccount?.product?.nature ===
+                              NatureOfDepositProduct.TermSavingOrFd) && (
+                            <Box
+                              h="36px"
+                              display="flex"
+                              justifyContent="space-between"
+                              alignItems="center"
+                            >
+                              <Text color="gray.600" fontWeight="500" fontSize="s3">
+                                Premature Penalty
+                              </Text>
+                              <Text fontWeight="600" fontSize="r1">
+                                {amountConverter(selectedAccount?.prematurePenalty ?? 0)}
+                              </Text>
+                            </Box>
+                          )}
+                        </Box>
+                      ) : null}
+                      <Divider />
+                      <Box
+                        h="36px"
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Text fontWeight="600" fontSize="s3">
+                          Total Charges
+                        </Text>
+                        <Text fontWeight="600" fontSize="r1">
+                          {amountConverter(totalCharge)}
+                        </Text>
+                      </Box>
                     </Box>
                   </Box>
-                )}
-              </Box>
-              <Box
-                display={mode === '1' ? 'flex' : 'none'}
-                flexDirection="column"
-                minH="100%"
-                gap="s16"
-                w="100%"
-                borderRight="1px solid"
-                borderColor="border.layout"
-              >
-                <Payment totalDeposit={totalDeposit} />
-              </Box>
+                  <Divider />
+                  <Box display="flex" flexDirection="column" gap="s4" pt="s16">
+                    <FormTextArea name="notes" label="Notes" rows={5} />
+                  </Box>
+                </Box>
+              )}
             </Box>
-            {memberId && memberId !== 'undefined' && (
-              <Box position="sticky" top="0" right="0" maxH="500px">
-                <MemberCard
-                  memberDetails={{
-                    name: memberDetailData?.name,
-                    code: memberDetailData?.code,
-                    avatar: memberDetailData?.profilePicUrl ?? '',
-                    memberID: memberDetailData?.id,
-                    gender: memberDetailData?.gender,
-                    age: memberDetailData?.age,
-                    maritalStatus: memberDetailData?.maritalStatus,
-                    dateJoined: memberDetailData?.dateJoined?.en,
-                    // branch: 'Basantapur',
-                    phoneNo: memberDetailData?.contact,
-                    email: memberDetailData?.email,
-                    address: memberDetailData?.address,
-                  }}
-                  // notice="KYM needs to be updated"
-                  signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
-                  citizenshipPath={memberCitizenshipUrl}
-                  accountInfo={
-                    selectedAccount
-                      ? {
-                          name: selectedAccount?.accountName as string,
-                          type: selectedAccount?.product?.nature
-                            ? accountTypes[selectedAccount?.product?.nature]
-                            : '',
-                          ID: selectedAccount?.accountId,
-                          currentBalance: selectedAccount?.availableBalance ?? '0',
-                          actualBalance: selectedAccount?.accountBalance ?? '0',
-                          minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
-                          interestAccured: selectedAccount?.interestAccrued ?? '0',
-                          guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
-                          overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
-                          fine: selectedAccount?.dues?.fine ?? 0,
-                          // branch: 'Kumaripati',
-                          openDate: localizedDate(selectedAccount?.accountOpenDate) ?? 'N/A',
-                          expiryDate: localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
-                          lastTransactionDate:
-                            localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
-                          productName: selectedAccount?.product?.productName,
-                          installmentAmount:
-                            selectedAccount?.product?.nature ===
-                              NatureOfDepositProduct.RecurringSaving ||
-                            (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-                              selectedAccount?.product?.isMandatorySaving)
-                              ? selectedAccount?.installmentAmount
-                              : null,
-                        }
-                      : null
-                  }
-                />
-              </Box>
-            )}
+            <Box
+              display={mode === '1' ? 'flex' : 'none'}
+              flexDirection="column"
+              minH="100%"
+              gap="s16"
+              w="100%"
+              borderRight="1px solid"
+              borderColor="border.layout"
+            >
+              <Payment totalDeposit={totalDeposit} />
+            </Box>
           </Box>
-          <Box position="sticky" bottom={0}>
-            {mode === '0' && (
-              <FormFooter
-                mainButtonLabel={
-                  Number(selectedAccount?.accountBalance ?? 0) -
-                    netInterestPayable -
-                    totalCharge ===
-                  0
-                    ? 'Close Account'
-                    : 'Proceed Transaction'
-                }
-                isMainButtonDisabled={!radioOther}
-                dangerButton={
-                  !!(
-                    Number(selectedAccount?.accountBalance ?? 0) -
-                      netInterestPayable -
-                      totalCharge ===
-                    0
-                  )
-                }
-                mainButtonHandler={mainButtonHandlermode0}
-              />
-            )}
-            {mode === '1' && (
-              <FormFooter
-                status={<Button onClick={previousButtonHandler}>Previous</Button>}
-                mainButtonLabel="Confirm Payment"
-                mainButtonHandler={handleSubmit}
-                isMainButtonDisabled={disableSubmitButtonFxn(selectedPaymentMode)}
-              />
-            )}
-          </Box>
-        </form>
-      </FormProvider>
-    </Container>
+        </FormLayout.Form>
+
+        {memberId && memberId !== 'undefined' && (
+          <FormLayout.Sidebar borderPosition="left">
+            <MemberCard
+              memberDetails={{
+                name: memberDetailData?.name,
+                code: memberDetailData?.code,
+                avatar: memberDetailData?.profilePicUrl ?? '',
+                memberID: memberDetailData?.id,
+                gender: memberDetailData?.gender,
+                age: memberDetailData?.age,
+                maritalStatus: memberDetailData?.maritalStatus,
+                dateJoined: memberDetailData?.dateJoined?.en,
+                // branch: 'Basantapur',
+                phoneNo: memberDetailData?.contact,
+                email: memberDetailData?.email,
+                address: memberDetailData?.address,
+              }}
+              // notice="KYM needs to be updated"
+              signaturePath={selectedAccount?.member?.signaturePicUrl ?? ''}
+              citizenshipPath={memberCitizenshipUrl}
+              accountInfo={
+                selectedAccount
+                  ? {
+                      name: selectedAccount?.accountName as string,
+                      type: selectedAccount?.product?.nature
+                        ? accountTypes[selectedAccount?.product?.nature]
+                        : '',
+                      ID: selectedAccount?.accountId,
+                      currentBalance: selectedAccount?.availableBalance ?? '0',
+                      actualBalance: selectedAccount?.accountBalance ?? '0',
+                      minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
+                      interestAccured: selectedAccount?.interestAccrued ?? '0',
+                      guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
+                      overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
+                      fine: selectedAccount?.dues?.fine ?? 0,
+                      // branch: 'Kumaripati',
+                      openDate: localizedDate(selectedAccount?.accountOpenDate) ?? 'N/A',
+                      expiryDate: localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
+                      lastTransactionDate:
+                        localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
+                      productName: selectedAccount?.product?.productName,
+                      installmentAmount:
+                        selectedAccount?.product?.nature ===
+                          NatureOfDepositProduct.RecurringSaving ||
+                        (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                          selectedAccount?.product?.isMandatorySaving)
+                          ? selectedAccount?.installmentAmount
+                          : null,
+                    }
+                  : null
+              }
+            />
+          </FormLayout.Sidebar>
+        )}
+      </FormLayout.Content>
+
+      {mode === '0' && (
+        <FormLayout.Footer
+          mainButtonLabel={
+            Number(selectedAccount?.accountBalance ?? 0) - netInterestPayable - totalCharge === 0
+              ? 'Close Account'
+              : 'Proceed Transaction'
+          }
+          isMainButtonDisabled={!radioOther}
+          dangerButton={
+            !!(
+              Number(selectedAccount?.accountBalance ?? 0) - netInterestPayable - totalCharge ===
+              0
+            )
+          }
+          mainButtonHandler={mainButtonHandlermode0}
+        />
+      )}
+      {mode === '1' && (
+        <FormLayout.Footer
+          status={<Button onClick={previousButtonHandler}>Previous</Button>}
+          mainButtonLabel="Confirm Payment"
+          mainButtonHandler={handleSubmit}
+          isMainButtonDisabled={disableSubmitButtonFxn(selectedPaymentMode)}
+        />
+      )}
+    </FormLayout>
   );
 };

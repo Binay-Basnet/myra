@@ -7,7 +7,10 @@ import { Grid, GridItem, Modal, Text } from '@myra-ui';
 import {
   DateType,
   PenaltyType,
+  PenaltyTypeInput,
+  ProductChargeAdditionalDataInput,
   ProductPenaltyData,
+  Scalars,
   store,
   useGetEndOfDayDateDataQuery,
 } from '@coop/cbs/data-access';
@@ -21,12 +24,19 @@ import {
 } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
+type LoanProductPenaltyUpdateInput = {
+  payload: PenaltyTypeInput;
+  additionalData: Omit<ProductChargeAdditionalDataInput, 'effectiveDate'> & {
+    effectiveDate: Scalars['Localized'] | null;
+  };
+};
+
 interface ILoanPenaltyUpdateModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: () => void;
   onEdit?: () => void;
-  methods: UseFormReturn;
+  methods: UseFormReturn<LoanProductPenaltyUpdateInput, any>;
   penalty?: ProductPenaltyData | null;
   rateLabel?: string;
 }
@@ -56,7 +66,7 @@ export const LoanPenaltyUpdateModal = ({
         },
         additionalData: {
           effectiveDate: penalty?.additionalData?.effectiveDate,
-          fileUploads: penalty?.additionalData?.fileUploads,
+          fileUploads: penalty?.additionalData?.fileUploads as unknown as string[],
           notes: penalty?.additionalData?.notes,
         },
       });
@@ -84,6 +94,10 @@ export const LoanPenaltyUpdateModal = ({
     {
       label: t['loanProductPenalInterest'],
       value: PenaltyType.PenalInterest,
+    },
+    {
+      label: 'Loan Installment Amount',
+      value: PenaltyType.LoanInstallmentAmount,
     },
   ];
 

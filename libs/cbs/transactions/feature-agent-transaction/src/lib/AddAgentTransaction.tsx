@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
+import { asyncToast, Box, Text } from '@myra-ui';
 
 import {
   useGetAgentAssignedMemberListDataQuery,
@@ -11,7 +11,7 @@ import {
 } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/cbs/transactions/ui-containers';
 import { localizedText } from '@coop/cbs/utils';
-import { FormAgentSelect, FormEditableTable } from '@coop/shared/form';
+import { FormAgentSelect, FormEditableTable, FormLayout } from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -169,122 +169,92 @@ export const AddAgentTransaction = () => {
   };
 
   return (
-    <>
-      <Container minW="container.xl" height="fit-content">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader
-            title={`New Market Representative Transaction - ${featureCode?.newMarketRepresentativeTransaction}`}
-            // closeLink="/transactions/market-representative-transaction/list"
-            buttonHandler={() => router.back()}
-          />
-        </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header
+        title={`New Market Representative Transaction - ${featureCode?.newMarketRepresentativeTransaction}`}
+        buttonHandler={() => router.back()}
+      />
 
-        <Box bg="white">
-          <FormProvider {...methods}>
-            <form>
-              <Box minH="calc(100vh - 170px)">
-                <Box
-                  p="s16"
-                  pb="100px"
-                  width="100%"
-                  display="flex"
-                  flexDirection="column"
-                  gap="s32"
-                >
-                  <Box display="flex" flexDirection="column" gap="s16">
-                    <Text>Market Representative Transaction</Text>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <Box p="s16" pb="100px" width="100%" display="flex" flexDirection="column" gap="s32">
+            <Box display="flex" flexDirection="column" gap="s16">
+              <Text>Market Representative Transaction</Text>
 
-                    <FormAgentSelect
-                      isRequired
-                      name="agentId"
-                      label="Market Representative"
-                      currentBranchOnly
-                    />
-                  </Box>
+              <FormAgentSelect
+                isRequired
+                name="agentId"
+                label="Market Representative"
+                currentBranchOnly
+              />
+            </Box>
 
-                  {agentId && (
-                    <BoxContainer>
-                      <Text fontSize="r1" fontWeight={600} color="gray.800">
-                        Assigned Member List
-                      </Text>
+            {agentId && (
+              <BoxContainer>
+                <Text fontSize="r1" fontWeight={600} color="gray.800">
+                  Assigned Member List
+                </Text>
 
-                      <FormEditableTable<DepositAccountTable>
-                        name="accounts"
-                        columns={[
-                          {
-                            accessor: 'member',
-                            header: 'Member',
-                            cellWidth: 'auto',
-                            fieldType: 'select',
-                            selectOptions: memberListSearchOptions,
-                            cell: (row) => {
-                              const memberName =
-                                assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
-                                  (member) => member?.node?.member?.id === row?.member
-                                )?.node?.member?.name;
+                <FormEditableTable<DepositAccountTable>
+                  name="accounts"
+                  columns={[
+                    {
+                      accessor: 'member',
+                      header: 'Member',
+                      cellWidth: 'auto',
+                      fieldType: 'select',
+                      selectOptions: memberListSearchOptions,
+                      cell: (row) => {
+                        const memberName =
+                          assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
+                            (member) => member?.node?.member?.id === row?.member
+                          )?.node?.member?.name;
 
-                              return (
-                                <Box display="flex" flexDirection="column" py="s4">
-                                  <Text
-                                    fontSize="r1"
-                                    fontWeight={500}
-                                    color="neutralColorLight.Gray-80"
-                                  >
-                                    {localizedText(memberName)}
-                                  </Text>
-                                  <Text
-                                    fontSize="s3"
-                                    fontWeight={500}
-                                    color="neutralColorLight.Gray-60"
-                                  >
-                                    {row?.member}
-                                  </Text>
-                                </Box>
-                              );
-                            },
-                          },
-                          {
-                            accessor: 'account',
-                            header: 'Account',
-                            loadOptions: (row) => getMemberAccounts(row?.member),
-                            fieldType: 'select',
-                            cellWidth: 'lg',
-                          },
-                          {
-                            accessor: 'amount',
-                            header: 'Amount',
-                            isNumeric: true,
-                          },
-                          {
-                            accessor: 'paid',
-                            header: 'Payment Confirm',
-                            fieldType: 'checkbox',
-                          },
-                        ]}
-                        defaultData={todaysList}
-                        searchPlaceholder="Search or add member"
-                        canDeleteRow
-                      />
-                    </BoxContainer>
-                  )}
-                </Box>
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </Container>
+                        return (
+                          <Box display="flex" flexDirection="column" py="s4">
+                            <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
+                              {localizedText(memberName)}
+                            </Text>
+                            <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
+                              {row?.member}
+                            </Text>
+                          </Box>
+                        );
+                      },
+                    },
+                    {
+                      accessor: 'account',
+                      header: 'Account',
+                      loadOptions: (row) => getMemberAccounts(row?.member),
+                      fieldType: 'select',
+                      cellWidth: 'lg',
+                    },
+                    {
+                      accessor: 'amount',
+                      header: 'Amount',
+                      isNumeric: true,
+                    },
+                    {
+                      accessor: 'paid',
+                      header: 'Payment Confirm',
+                      fieldType: 'checkbox',
+                    },
+                  ]}
+                  defaultData={todaysList}
+                  searchPlaceholder="Search or add member"
+                  canDeleteRow
+                />
+              </BoxContainer>
+            )}
+          </Box>
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter
-              mainButtonLabel="Save Transaction"
-              mainButtonHandler={handleSaveTodayList}
-            />
-          </Container>
-        </Box>
-      </Box>
-    </>
+      <FormLayout.Footer
+        mainButtonLabel="Save Transaction"
+        mainButtonHandler={handleSaveTodayList}
+      />
+    </FormLayout>
   );
 };
 

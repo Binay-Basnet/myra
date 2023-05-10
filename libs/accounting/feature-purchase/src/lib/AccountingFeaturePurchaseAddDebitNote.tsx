@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast } from '@myra-ui';
 
 import {
   PurchaseDebitNoteInput,
   SalesSaleEntryEntry,
   useAddNewDebitNoteMutation,
-  useGetNewIdMutation,
 } from '@coop/cbs/data-access';
+import { FormLayout } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { DebitBox } from '../components/debit-note/DebitBox';
@@ -19,7 +19,7 @@ import { DebitProductTable } from '../components/debit-note/DebitProductTable';
 
 export const AccountingFeaturePurchaseAddDebitNote = () => {
   const { t } = useTranslation();
-  const [newId, setNewId] = useState('');
+  // const [newId, setNewId] = useState('');
 
   const [selectedSales, setSelectedSales] = useState<
     Partial<SalesSaleEntryEntry> | null | undefined
@@ -27,11 +27,11 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
 
   const router = useRouter();
 
-  const getNewId = useGetNewIdMutation({});
+  // const getNewId = useGetNewIdMutation({});
 
-  useEffect(() => {
-    getNewId?.mutateAsync({}).then((res) => setNewId(res?.newId));
-  }, []);
+  // useEffect(() => {
+  //   getNewId?.mutateAsync({}).then((res) => setNewId(res?.newId));
+  // }, []);
 
   // const id = router?.query?.['id'] || newId;
 
@@ -100,31 +100,23 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
   }, [selectedSales]);
 
   return (
-    <Container minW="container.xl" height="fit-content">
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader
-          title={t['accountingCreditNoteAddNewCreditNote']}
-          closeLink="/accounting/sales/debit-note/list"
-        />
-      </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header
+        title={t['accountingCreditNoteAddNewCreditNote']}
+        closeLink="/accounting/sales/debit-note/list"
+      />
 
-      <Box bg="white">
-        <FormProvider {...methods}>
-          <form>
-            <Box minH="calc(100vh - 170px)">
-              <DebitNoteDetails getSelectedValue={getSelectedValue} />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <DebitNoteDetails getSelectedValue={getSelectedValue} />
 
-              <DebitProductTable />
+          <DebitProductTable />
 
-              <DebitBox />
-            </Box>
-          </form>
-        </FormProvider>
-      </Box>
+          <DebitBox />
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">
-        <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
-      </Box>
-    </Container>
+      <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
+    </FormLayout>
   );
 };

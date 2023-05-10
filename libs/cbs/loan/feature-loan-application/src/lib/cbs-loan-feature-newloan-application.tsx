@@ -1,19 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
-import {
-  Alert,
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  MemberCard,
-  Text,
-} from '@myra-ui';
+import { Alert, asyncToast, Box, MemberCard, Text } from '@myra-ui';
 
 import {
   InterestAuthority,
@@ -31,6 +22,7 @@ import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAmountInput,
   FormInput,
+  FormLayout,
   FormMemberSelect,
   FormSelect,
   FormTextArea,
@@ -276,141 +268,130 @@ export const NewLoanApplication = () => {
   }, [loanLinkedData, resetField]);
 
   return (
-    <Container minW="container.xl" p="0" bg="white">
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title={`New Loan Application - ${featureCode.newLoanApplication} `} />
-      </Box>
-      <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
-        <Box
-          display="flex"
-          flexDirection="column"
-          w="100%"
-          borderRight="1px solid"
-          borderColor="border.layout"
-        >
-          <FormProvider {...methods}>
-            <form>
-              <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
-                <Box display="flex" flexDir="column" gap="s16">
-                  <FormMemberSelect
-                    isRequired
-                    name="memberId"
-                    label="Member Id"
-                    isDisabled={!!id || !!redirectMemberId}
-                    isCurrentBranchMember
-                  />
-                  {memberId && !loanLinkedData && !isLinkAccDataFetching && (
-                    <Alert status="error"> Member does not have a Saving Account </Alert>
-                  )}
-                  {memberId && loanLinkedData && (
-                    <FormSelect
-                      name="productType"
-                      label="Loan Type"
-                      options={loanTypeData?.settings.general?.loan?.productType?.productTypes?.map(
-                        (product) => ({
-                          label: product?.productType as string,
-                          value: product?.id as string,
-                        })
-                      )}
-                    />
-                  )}
-                  {loanType && (
-                    <FormSelect
-                      name="productSubType"
-                      label="Loan Sub Type"
-                      options={loanSubTypeData?.settings?.general?.loan?.productType?.productSubTypes?.map(
-                        (product) => ({
-                          label: product?.productSubType as string,
-                          value: product?.id as string,
-                        })
-                      )}
-                    />
-                  )}
-                  {loanSubType && (
-                    <FormSelect
-                      name="productId"
-                      label="Loan Product"
-                      isLoading={isFetching}
-                      options={loanProductOptions}
-                    />
-                  )}
+    <FormLayout methods={methods} hasSidebar={!!memberId}>
+      <FormLayout.Header title={`New Loan Application - ${featureCode.newLoanApplication} `} />
 
-                  {errors && productId && (
-                    <Alert
-                      status="error"
-                      title="Error"
-                      bottomButtonlabel="View All Criteria"
-                      bottomButtonHandler={() => setShowCriteria((prev) => !prev)}
-                      hideCloseIcon
-                    >
-                      <Box pt="s8">
-                        <ul>
-                          {errors?.error?.map((item) => (
-                            <li key={item}>
-                              <Text fontWeight="400" fontSize="s2">
-                                {item}
-                              </Text>
-                            </li>
-                          ))}
-                        </ul>
-                      </Box>
-                    </Alert>
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
+            <Box display="flex" flexDir="column" gap="s16">
+              <FormMemberSelect
+                isRequired
+                name="memberId"
+                label="Member Id"
+                isDisabled={!!id || !!redirectMemberId}
+                isCurrentBranchMember
+              />
+              {memberId && !loanLinkedData && !isLinkAccDataFetching && (
+                <Alert status="error"> Member does not have a Saving Account </Alert>
+              )}
+              {memberId && loanLinkedData && (
+                <FormSelect
+                  name="productType"
+                  label="Loan Type"
+                  options={loanTypeData?.settings.general?.loan?.productType?.productTypes?.map(
+                    (product) => ({
+                      label: product?.productType as string,
+                      value: product?.id as string,
+                    })
                   )}
-                  {errors && showCriteria && (
-                    <Box border="1px solid" borderColor="border.layout" borderRadius="br2" p="s16">
-                      <CriteriaCard productId={String(productId)} />
-                    </Box>
+                />
+              )}
+              {loanType && (
+                <FormSelect
+                  name="productSubType"
+                  label="Loan Sub Type"
+                  options={loanSubTypeData?.settings?.general?.loan?.productType?.productSubTypes?.map(
+                    (product) => ({
+                      label: product?.productSubType as string,
+                      value: product?.id as string,
+                    })
                   )}
-                  {productId && !errors && (
-                    <>
-                      <FormInput name="loanAccountName" label="Loan Account Name" />
-                      <Box w="50%">
-                        <FormAmountInput
-                          isRequired
-                          type="number"
-                          name="appliedLoanAmount"
-                          label="Applied Loan Amount"
-                          placeholder="0.00"
-                          rules={{
-                            max: {
-                              value: loanProductDetailsdata?.maxLoanAmount as number,
-                              message: 'Maximum loan amount exceeded',
-                            },
-                            min: {
-                              value: loanProductDetailsdata?.minimumLoanAmount as number,
-                              message: 'Minimum loan amount must be higher',
-                            },
-                          }}
-                        />
-                      </Box>
-                    </>
-                  )}
+                />
+              )}
+              {loanSubType && (
+                <FormSelect
+                  name="productId"
+                  label="Loan Product"
+                  isLoading={isFetching}
+                  options={loanProductOptions}
+                />
+              )}
+
+              {errors && productId && (
+                <Alert
+                  status="error"
+                  title="Error"
+                  bottomButtonlabel="View All Criteria"
+                  bottomButtonHandler={() => setShowCriteria((prev) => !prev)}
+                  hideCloseIcon
+                >
+                  <Box pt="s8">
+                    <ul>
+                      {errors?.error?.map((item) => (
+                        <li key={item}>
+                          <Text fontWeight="400" fontSize="s2">
+                            {item}
+                          </Text>
+                        </li>
+                      ))}
+                    </ul>
+                  </Box>
+                </Alert>
+              )}
+              {errors && showCriteria && (
+                <Box border="1px solid" borderColor="border.layout" borderRadius="br2" p="s16">
+                  <CriteriaCard productId={String(productId)} />
                 </Box>
-                {productId && !errors && (
-                  <LoanProductContext.Provider value={loanProduct}>
-                    <CollateralDetails />
-                    <GuaranteeDetails />
-                    <LoanAmountDetails />
-                    <Interest />
-                    <Tenure />
-                    <InstallmentFrequencyComp />
-                    <LinkedAccounts />
-                    {/* {loanProductDetailsdata?.loanType === TypeOfLoan?.Normal && ( */}
-                    <LoanRepaymentSchemeComponent />
-                    {/* )} */}
-                    <LoanPaymentSchedule />
-                    {sanctionedAmount && <LoanProcessingCharge />}
-                    <RequiredDocuments />
-                    <FormTextArea name="note" label="Notes" />
-                  </LoanProductContext.Provider>
-                )}
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
+              )}
+              {productId && !errors && (
+                <>
+                  <FormInput name="loanAccountName" label="Loan Account Name" />
+                  <Box w="50%">
+                    <FormAmountInput
+                      isRequired
+                      type="number"
+                      name="appliedLoanAmount"
+                      label="Applied Loan Amount"
+                      placeholder="0.00"
+                      rules={{
+                        max: {
+                          value: loanProductDetailsdata?.maxLoanAmount as number,
+                          message: 'Maximum loan amount exceeded',
+                        },
+                        min: {
+                          value: loanProductDetailsdata?.minimumLoanAmount as number,
+                          message: 'Minimum loan amount must be higher',
+                        },
+                      }}
+                    />
+                  </Box>
+                </>
+              )}
+            </Box>
+            {productId && !errors && (
+              <LoanProductContext.Provider value={loanProduct}>
+                <CollateralDetails />
+                <GuaranteeDetails />
+                <LoanAmountDetails />
+                <Interest />
+                <Tenure />
+                <InstallmentFrequencyComp />
+                <LinkedAccounts />
+                {/* {loanProductDetailsdata?.loanType === TypeOfLoan?.Normal && ( */}
+                <LoanRepaymentSchemeComponent />
+                {/* )} */}
+                <LoanPaymentSchedule />
+                {sanctionedAmount && <LoanProcessingCharge />}
+                <RequiredDocuments />
+                <FormTextArea name="note" label="Notes" />
+              </LoanProductContext.Provider>
+            )}
+          </Box>
+        </FormLayout.Form>
 
         {memberId && (
-          <Box position="sticky" zIndex={9} top="170px" right="0" w="320px">
+          <FormLayout.Sidebar>
             <Box display="flex" flexDirection="column" gap="s16">
               <MemberCard
                 memberDetails={{
@@ -437,21 +418,20 @@ export const NewLoanApplication = () => {
                 <AccordianComponent productId={productId ?? undefined} />
               </Box>
             )}
-          </Box>
+          </FormLayout.Sidebar>
         )}
-      </Box>
-      <Box position="sticky" bottom={0} zIndex="10">
-        <FormFooter
-          status={
-            <>
-              Total Sanctioned Amount: <b>{amountConverter(watch('totalSanctionedAmount') || 0)}</b>
-            </>
-          }
-          mainButtonLabel="Send For Approval"
-          mainButtonHandler={sendForApprovalHandler}
-          isMainButtonDisabled={!!errors || !memberId || !productId || !loanType || !loanSubType}
-        />
-      </Box>
-    </Container>
+      </FormLayout.Content>
+
+      <FormLayout.Footer
+        status={
+          <>
+            Total Sanctioned Amount: <b>{amountConverter(watch('totalSanctionedAmount') || 0)}</b>
+          </>
+        }
+        mainButtonLabel="Send For Approval"
+        mainButtonHandler={sendForApprovalHandler}
+        isMainButtonDisabled={!!errors || !memberId || !productId || !loanType || !loanSubType}
+      />
+    </FormLayout>
   );
 };
