@@ -14031,7 +14031,6 @@ export type PenaltyRebateResult = {
 };
 
 export const PenaltyType = {
-  LoanInstallmentAmount: 'LoanInstallmentAmount',
   PenalInterest: 'PenalInterest',
   RemainingPrincipal: 'RemainingPrincipal',
 } as const;

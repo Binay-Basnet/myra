@@ -318,6 +318,7 @@ export const ROUTES = {
   INVENTORY_REGISTER: '/inventory/inventory/register/list',
   INVENTORY_INVENTORY_ADJUSTMENT: '/inventory/inventory/adjustments/list',
   INVENTORY_INVENTORY_ADJUSTMENT_ADD: '/inventory/inventory/adjustments/add',
+  INVENTORY_INVENTORY_ADJUSTMENT_DETAILS: '/inventory/inventory/adjustments/details',
 
   INVENTORY_ITEMS: '/inventory/items/items/list',
   INVENTORY_ITEMS_ADD: '/inventory/items/items/add',
