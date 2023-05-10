@@ -54,6 +54,7 @@
     "cbs-members-feature-details": "libs/cbs/members/feature-details",
     "cbs-members-feature-dormancy": "libs/cbs/members/feature-dormancy",
     "cbs-members-feature-list": "libs/cbs/members/feature-list",
+    "cbs-others-feature-bulk-transfer": "libs/cbs/others/feature-bulk-transfer",
     "cbs-others-feature-fund-management": "libs/cbs/others/feature-fund-management",
     "cbs-others-feature-share-dividend-posting": "libs/cbs/others/feature-share-dividend-posting",
     "cbs-others-ui-layouts": "libs/cbs/others/ui-layouts",

@@ -21832,6 +21832,25 @@ export type RevertTransactionMutation = {
   };
 };
 
+export type BulkTransferMutationVariables = Exact<{
+  data: BulkTransferInput;
+}>;
+
+export type BulkTransferMutation = {
+  transaction: {
+    bulkTransfer?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type GetAccountMemberListQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
@@ -32574,6 +32593,7 @@ export type GetSavingsAccountListQuery = {
                 code: string;
                 type: KymMemberTypesEnum;
                 name?: Record<'local' | 'en' | 'np', string> | null;
+                profilePicUrl?: string | null;
               } | null;
               product: { productCode: string; productName: string; nature: NatureOfDepositProduct };
               dues?: {
@@ -40928,6 +40948,31 @@ export const useRevertTransactionMutation = <TError = unknown, TContext = unknow
     useAxios<RevertTransactionMutation, RevertTransactionMutationVariables>(
       RevertTransactionDocument
     ),
+    options
+  );
+export const BulkTransferDocument = `
+    mutation bulkTransfer($data: BulkTransferInput!) {
+  transaction {
+    bulkTransfer(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useBulkTransferMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    BulkTransferMutation,
+    TError,
+    BulkTransferMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<BulkTransferMutation, TError, BulkTransferMutationVariables, TContext>(
+    ['bulkTransfer'],
+    useAxios<BulkTransferMutation, BulkTransferMutationVariables>(BulkTransferDocument),
     options
   );
 export const GetAccountMemberListDocument = `
@@ -54925,6 +54970,7 @@ export const GetSavingsAccountListDocument = `
                 code
                 type
                 name
+                profilePicUrl
               }
               balance
               interestAccured

@@ -2,15 +2,27 @@ import { useRouter } from 'next/router';
 import { migrateExcel } from '@dhadda-migration/data-access';
 import { useMutation } from '@tanstack/react-query';
 
-import { Box, Button } from '@myra-ui';
+import { Box, Button, toast } from '@myra-ui';
 
 export const MigrateExcel = (props: { validationStatus: boolean }) => {
-  const { validationStatus = false } = props;
+  const { validationStatus } = props;
   const router = useRouter();
 
   const { mutateAsync: validateExcelMutation, isLoading } = useMutation(migrateExcel, {
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: (res) => {
+      toast({
+        id: 'migrate-excel',
+        type: 'success',
+        message: res?.data?.message,
+      });
+    },
+    onError: () => {
+      toast({
+        id: 'migrate-excel',
+        type: 'error',
+        message: 'Something went wrong',
+      });
+    },
   });
   const onMigrateExcel = () => {
     const formData = new FormData();
@@ -43,7 +55,7 @@ export const MigrateExcel = (props: { validationStatus: boolean }) => {
         isLoading={isLoading}
         disabled={!validationStatus}
       >
-        Migrate Excel
+        Generate CSVs
       </Button>
     </Box>
   );

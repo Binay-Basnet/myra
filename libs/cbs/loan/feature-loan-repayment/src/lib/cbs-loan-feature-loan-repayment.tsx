@@ -190,6 +190,15 @@ export const LoanRepayment = () => {
     //     },
     //   }),
     // });
+
+    filteredValues = {
+      ...filteredValues,
+      discount: {
+        ...filteredValues?.discount,
+        amount: String(totalFine - Number(filteredValues?.discount?.amount || 0)),
+      },
+    };
+
     return filteredValues as LoanRepaymentInput;
   };
   const loanPreview = useGetLoanPreviewQuery(
@@ -258,219 +267,6 @@ export const LoanRepayment = () => {
     }
   }, [mode]);
 
-  // return (
-  //   <Container minW="container.xl" p="0" bg="white">
-  //     <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-  //       <FormHeader title={`New Loan Repayment - ${featureCode.newLoanRepayment} `} />
-  //     </Box>
-  //     <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
-  //       <Box
-  //         display="flex"
-  //         flexDirection="column"
-  //         w="100%"
-  //         borderRight="1px solid"
-  //         borderColor="border.layout"
-  //       >
-  //         <FormProvider {...methods}>
-  //           <form>
-  //             <Box
-  //               flexDirection="column"
-  //               gap="s16"
-  //               p="s20"
-  //               w="100%"
-  //               display={mode === '0' ? 'flex' : 'none'}
-  //             >
-  //               <FormMemberSelect
-  //                 isRequired
-  //                 name="memberId"
-  //                 label="Member"
-  //                 isDisabled={!!redirectMemberId}
-  //               />
-  //               {memberId && (
-  //                 <FormSelect
-  //                   name="loanAccountId"
-  //                   label="Loan Account Name"
-  //                   isLoading={isFetching}
-  //                   options={loanAccountOptions}
-  //                   isDisabled={!!redirectloanAccountId}
-  //                 />
-  //               )}
-  //               {memberId && loanAccountId && loanPaymentScheduleSplice && loanPaymentSchedule && (
-  //                 <Box display="flex" flexDirection="column" gap="s16" w="100%">
-  //                   <LoanPaymentSchedule totalFine={totalFine} setTotalFine={setTotalFine} />
-
-  //                   <Divider />
-
-  //                   {totalFine ? (
-  //                     <>
-  //                       <Discount totalFine={totalFine} />
-
-  //                       <Divider />
-  //                     </>
-  //                   ) : null}
-
-  //                   <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-  //                     <FormAmountInput isRequired name="amountPaid" label="Amount to Pay" />
-  //                   </Grid>
-
-  //                   {memberDetailData?.type === KymMemberTypesEnum.Individual && (
-  //                     <SuspiciousTransaction />
-  //                   )}
-
-  //                   <Divider />
-
-  //                   <InstallmentData
-  //                     loanAccountId={loanAccountId}
-  //                     totalPayableAmount={totalPayableAmount}
-  //                     setTotalPayableAmount={setTotalPayableAmount}
-  //                   />
-  //                 </Box>
-  //               )}
-  //             </Box>
-  //             <Box display={mode === '1' ? 'flex' : 'none'}>
-  //               <Payment
-  //                 amountPaid={String(amountPaid)}
-  //                 loanTotal={String(totalPayableAmount)}
-  //                 loanAccountId={loanAccountId}
-  //                 totalPayableAmount={totalPayableAmount}
-  //                 setTotalPayableAmount={setTotalPayableAmount}
-  //               />
-  //             </Box>
-  //           </form>
-  //         </FormProvider>
-  //       </Box>
-  //       {memberId && (
-  //         <Box position="sticky" zIndex={9} top="170px" right="0" w="320px">
-  //           <Box display="flex" flexDirection="column" gap="s16">
-  //             <MemberCard
-  //               memberDetails={{
-  //                 name: memberDetailData?.name,
-  //                 avatar: memberDetailData?.profilePicUrl ?? '',
-  //                 memberID: memberDetailData?.id,
-  //                 code: memberDetailData?.code,
-  //                 gender: memberDetailData?.gender,
-  //                 age: memberDetailData?.age,
-  //                 maritalStatus: memberDetailData?.maritalStatus,
-  //                 dateJoined: memberDetailData?.dateJoined,
-  //                 phoneNo: memberDetailData?.contact,
-  //                 email: memberDetailData?.email,
-  //                 address: memberDetailData?.address,
-  //               }}
-  //               signaturePath={memberSignatureUrl}
-  //               citizenshipPath={memberCitizenshipUrl}
-  //             />
-  //           </Box>
-  //           {loanAccountId && (
-  //             <Box p="s16">
-  //               <LoanProductCard loanAccountId={loanAccountId} />
-  //             </Box>
-  //           )}
-  //         </Box>
-  //       )}
-  //     </Box>
-  //     <Box position="sticky" bottom={0} zIndex={10}>
-  //       <Box>
-  //         {mode === '0' && (
-  //           <FormFooter
-  //             mainButtonLabel="Proceed Transaction"
-  //             mainButtonHandler={proceedButtonHandler}
-  //             isMainButtonDisabled={Boolean(!amountPaid || (isSuspicious && !suspicionRemarks))}
-  //             status={
-  //               <Box display="flex" gap="s32">
-  //                 <Text fontSize="r1" fontWeight={600} color="gray.500">
-  //                   Total Payable Amount
-  //                 </Text>
-  //                 <Text fontSize="r1" fontWeight={600} color="gray.700">
-  //                   {amountConverter(totalPayableAmount || 0)}
-  //                 </Text>
-  //               </Box>
-  //             }
-  //           />
-  //         )}
-  //         {mode === '1' && (
-  //           <FormFooter
-  //             mainButton={
-  //               <ResponseDialog
-  //                 onSuccess={() => {
-  //                   queryClient.invalidateQueries(['getLoanPreview']);
-  //                   router.push(ROUTES.CBS_LOAN_REPAYMENTS_LIST);
-  //                 }}
-  //                 promise={() => mutateAsync({ data: handleSubmit() })}
-  //                 successCardProps={(response) => {
-  //                   const result = response?.loanAccount?.repayment?.record;
-
-  //                   return {
-  //                     type: 'Loan Repayment',
-  //                     total: amountConverter(result?.totalAmount || 0) as string,
-  //                     totalWords: amountToWordsConverter(
-  //                       result?.totalAmount ? Number(result?.totalAmount) : 0
-  //                     ),
-  //                     title: 'Loan Repayment Successful',
-  //                     details: {
-  //                       'Loan Repayment Id': (
-  //                         <Text fontSize="s3" color="primary.500" fontWeight="600">
-  //                           {result?.transactionId}
-  //                         </Text>
-  //                       ),
-  //                       Date: localizedDate(result?.date),
-  //                       'Transaction Time': localizedTime(result?.createdAt),
-  //                       'Installment No': result?.installmentNo,
-  //                       'Principal Amount': amountConverter(result?.principalAmount ?? '0'),
-  //                       'Interest Amount': amountConverter(result?.interestAmount ?? '0'),
-  //                       'Penalty Amount': amountConverter(result?.penaltyAmount ?? '0'),
-  //                       'Discount Amount': amountConverter(result?.discountAmount ?? '0'),
-  //                       'Rebate Amount': amountConverter(result?.rebateAmount ?? '0'),
-
-  //                       'Payment Mode': result?.paymentMethod,
-  //                     },
-  //                     subTitle:
-  //                       'Loan amount has been repayed successfully. Details of the transaction is listed below.',
-  //                     meta: {
-  //                       memberId: result?.memberId,
-  //                       member: result?.memberName?.local,
-  //                       accountId: result?.accountId,
-  //                       accountName: result?.accountName,
-  //                     },
-  //                     nextInstallmentDetails: result?.nextInstallment
-  //                       ? {
-  //                           'Installment No': String(result?.nextInstallment?.installmentNo),
-  //                           'Payment Date': localizedDate(
-  //                             result?.nextInstallment?.installmentDate
-  //                           ) as string,
-  //                           'Remaining Principal Amount': amountConverter(
-  //                             result?.nextInstallment?.currentRemainingPrincipal ?? 0
-  //                           ),
-  //                           'Remaining Interest Amount': amountConverter(
-  //                             result?.nextInstallment?.remainingInterest ?? 0
-  //                           ),
-  //                           'Total Payable Amount': amountConverter(
-  //                             Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
-  //                               Number(result?.nextInstallment?.remainingInterest ?? 0)
-  //                           ),
-  //                         }
-  //                       : null,
-  //                     nextInstallmentTotal:
-  //                       Number(result?.nextInstallment?.currentRemainingPrincipal ?? 0) +
-  //                       Number(result?.nextInstallment?.remainingInterest ?? 0),
-  //                   };
-  //                 }}
-  //                 errorCardProps={{
-  //                   title: 'Loan Repayment Failed',
-  //                 }}
-  //               >
-  //                 <Button width="160px">Confirm Payment</Button>
-  //               </ResponseDialog>
-  //             }
-  //             status={<Button onClick={previousButtonHandler}> Previous</Button>}
-  //             mainButtonLabel="Confirm Payment"
-  //             mainButtonHandler={handleSubmit}
-  //           />
-  //         )}
-  //       </Box>
-  //     </Box>
-  //   </Container>
-  // );
-
   return (
     <FormLayout methods={methods} hasSidebar={!!memberId}>
       <FormLayout.Header title={`New Loan Repayment - ${featureCode.newLoanRepayment} `} />
@@ -507,7 +303,7 @@ export const LoanRepayment = () => {
 
                 {totalFine ? (
                   <>
-                    <Discount totalFine={totalFine} />
+                    <Discount />
 
                     <Divider />
                   </>

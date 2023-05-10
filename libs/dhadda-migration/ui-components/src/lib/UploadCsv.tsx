@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { uploadExcel } from '@dhadda-migration/data-access';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { Box, Button, Input, Text } from '@myra-ui';
+import { Box, Button, Input, Text, toast } from '@myra-ui';
 
 export const UploadCsv = () => {
   const router = useRouter();
@@ -14,12 +14,20 @@ export const UploadCsv = () => {
   const queryClient = useQueryClient();
 
   const { mutate: uploadExcelMutation } = useMutation(uploadExcel, {
-    onSuccess: () => {
+    onSuccess: (res) => {
+      toast({
+        id: 'upload-csv',
+        type: 'success',
+        message: res?.data?.message,
+      });
       queryClient.invalidateQueries(['project-status']);
     },
-    onError: () => {},
-    onSettled: () => {
-      // queryClient.invalidateQueries('create');
+    onError: () => {
+      toast({
+        id: 'upload-csv',
+        type: 'error',
+        message: 'CSV upload failed',
+      });
     },
   });
 
