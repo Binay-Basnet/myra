@@ -119352,6 +119352,12 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "LoanInstallmentAmount",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "PenalInterest",
             "description": null,
             "isDeprecated": false,
