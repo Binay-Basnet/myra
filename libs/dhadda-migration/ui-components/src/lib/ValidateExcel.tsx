@@ -8,7 +8,7 @@ import isEmpty from 'lodash/isEmpty';
 import { Box, Button, Text, toast } from '@myra-ui';
 
 export const ValidateExcel = (props: { inputStatus: boolean }) => {
-  const { inputStatus = false } = props;
+  const { inputStatus } = props;
   const router = useRouter();
   const [errorData, setErrorData] = useState([]);
   const queryClient = useQueryClient();

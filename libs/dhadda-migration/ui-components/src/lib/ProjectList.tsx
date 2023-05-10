@@ -3,12 +3,18 @@ import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/reac
 import { getProjectList } from '@dhadda-migration/data-access';
 import { useQuery } from '@tanstack/react-query';
 
-import { Box, Text } from '@myra-ui';
+import { Box, Loader, Text } from '@myra-ui';
 
 export const ProjectList = () => {
   const router = useRouter();
-  const { data } = useQuery(['list'], getProjectList);
-
+  const { data, isLoading } = useQuery(['list'], getProjectList);
+  if (isLoading) {
+    return (
+      <Box>
+        <Loader />
+      </Box>
+    );
+  }
   return (
     <Box
       display="flex"
