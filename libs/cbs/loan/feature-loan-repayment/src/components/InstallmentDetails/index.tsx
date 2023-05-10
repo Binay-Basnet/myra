@@ -56,23 +56,23 @@ export const InstallmentData = ({
       : loanInstallments;
   }, [loanInstallments]);
 
-  const overDueInstallments = useMemo(
-    () => loanInstallments?.filter((installment) => installment?.status === 'OVERDUE') ?? [],
-    [loanInstallments]
-  );
+  // const overDueInstallments = useMemo(
+  //   () => loanInstallments?.filter((installment) => installment?.status === 'OVERDUE') ?? [],
+  //   [loanInstallments]
+  // );
 
-  const totalFine = useMemo(
-    () =>
-      overDueInstallments?.reduce(
-        (sum, installment) => sum + Number(installment?.penalty ?? 0),
-        0
-      ) ?? 0,
-    [overDueInstallments]
-  );
+  // const totalFine = useMemo(
+  //   () =>
+  //     overDueInstallments?.reduce(
+  //       (sum, installment) => sum + Number(installment?.penalty ?? 0),
+  //       0
+  //     ) ?? 0,
+  //   [overDueInstallments]
+  // );
 
-  const discountAmount = watch('discount.amount');
+  const payableFine = watch('discount.amount');
 
-  const discountedFine = totalFine - Number(discountAmount ?? 0);
+  const discountedFine = Number(payableFine ?? 0);
 
   const coveredInstallments: CoveredInstallment[] = useMemo(() => {
     let tempAmount = Number(amountPaid) - discountedFine;
