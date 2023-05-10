@@ -577,6 +577,12 @@ export const CBS: NavType = {
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
           addRoute: ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD,
         },
+        {
+          label: 'Bulk Tansfers',
+          route: ROUTES.CBS_OTHERS_BULK_TRANSFERS_LIST,
+          aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
+          addRoute: ROUTES.CBS_OTHERS_BULK_TRANSFERS_ADD,
+        },
       ],
       forms: [
         {
@@ -592,6 +598,11 @@ export const CBS: NavType = {
         {
           label: 'New Share Dividend Posting',
           route: ROUTES.CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD,
+          aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
+        },
+        {
+          label: 'New Bulk Transfer',
+          route: ROUTES.CBS_OTHERS_BULK_TRANSFERS_ADD,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
         },
       ],

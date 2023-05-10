@@ -204,3 +204,14 @@ mutation revertTransaction($journalId: ID!) {
     }
   }
 }
+
+mutation bulkTransfer($data: BulkTransferInput!) {
+  transaction {
+    bulkTransfer(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

@@ -84,6 +84,10 @@ export interface TableProps<TData> {
   tableTitle?: string;
   showFooter?: boolean;
   isDetailPageTable?: boolean;
+
+  allowSelection?: boolean;
+
+  onRowSelect?: (selected: string[]) => void;
 }
 
 export type Column<TData> = Omit<ColumnDef<TData, unknown>, 'accessorKey' | 'accessorFn' | 'id'> & {
