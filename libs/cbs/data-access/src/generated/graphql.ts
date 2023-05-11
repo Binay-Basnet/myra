@@ -5065,6 +5065,7 @@ export type DepositTransactionView = {
   transactionBranch?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;
+  txnUserName?: Maybe<Scalars['String']>;
   voucherId?: Maybe<Scalars['String']>;
 };
 
@@ -17137,6 +17138,11 @@ export const TransferRequestAction = {
 
 export type TransferRequestAction =
   typeof TransferRequestAction[keyof typeof TransferRequestAction];
+export type TransferRequestInput = {
+  response: WarehouseRequestResponse;
+  transferId: Scalars['String'];
+};
+
 export type TransferResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
@@ -17579,8 +17585,13 @@ export type WarehouseInfo = {
 };
 
 export type WarehouseMutation = {
+  acceptTransferRequest?: Maybe<WarehouseTransferResult>;
   add?: Maybe<AddWarehouseResult>;
   transfer?: Maybe<WarehouseTransferResult>;
+};
+
+export type WarehouseMutationAcceptTransferRequestArgs = {
+  data: TransferRequestInput;
 };
 
 export type WarehouseMutationAddArgs = {
@@ -17606,6 +17617,13 @@ export type WarehouseQueryListWarehousesArgs = {
   paginate: Pagination;
 };
 
+export const WarehouseRequestResponse = {
+  Accept: 'ACCEPT',
+  Reject: 'REJECT',
+} as const;
+
+export type WarehouseRequestResponse =
+  typeof WarehouseRequestResponse[keyof typeof WarehouseRequestResponse];
 export type WarehouseTransfer = {
   date: Scalars['Localized'];
   destinationWarehouseId: Scalars['String'];
@@ -17632,6 +17650,7 @@ export type WarehouseTransferEdge = {
 export type WarehouseTransferFilter = {
   id?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
+  transferType?: InputMaybe<WarehouseTransferType>;
 };
 
 export type WarehouseTransferInput = {
@@ -17643,6 +17662,7 @@ export type WarehouseTransferInput = {
   note?: InputMaybe<Scalars['String']>;
   referenceNumber?: InputMaybe<Scalars['String']>;
   sourceWarehouse?: InputMaybe<Scalars['String']>;
+  transferType?: InputMaybe<WarehouseTransferType>;
 };
 
 export type WarehouseTransferResult = {
@@ -17658,6 +17678,13 @@ export const WarehouseTransferStatus = {
 
 export type WarehouseTransferStatus =
   typeof WarehouseTransferStatus[keyof typeof WarehouseTransferStatus];
+export const WarehouseTransferType = {
+  Direct: 'DIRECT',
+  Request: 'REQUEST',
+} as const;
+
+export type WarehouseTransferType =
+  typeof WarehouseTransferType[keyof typeof WarehouseTransferType];
 export const Week = {
   Friday: 'FRIDAY',
   Monday: 'MONDAY',
@@ -17855,6 +17882,7 @@ export type WithdrawTransactionView = {
   transactionBranch?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;
+  txnUserName?: Maybe<Scalars['String']>;
   withdrawAmount?: Maybe<Scalars['String']>;
   withdrawWith?: Maybe<WithdrawWith>;
   withdrawnBy?: Maybe<WithdrawBy>;
@@ -19055,6 +19083,27 @@ export type SetInventoryAdjustmentMutation = {
   inventory: {
     adjustment?: {
       new?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetInventoryWarehouseRequestAcceptHandlerMutationVariables = Exact<{
+  data: TransferRequestInput;
+}>;
+
+export type SetInventoryWarehouseRequestAcceptHandlerMutation = {
+  inventory: {
+    warehouse?: {
+      acceptTransferRequest?: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -36647,6 +36696,44 @@ export const useSetInventoryAdjustmentMutation = <TError = unknown, TContext = u
     useAxios<SetInventoryAdjustmentMutation, SetInventoryAdjustmentMutationVariables>(
       SetInventoryAdjustmentDocument
     ),
+    options
+  );
+export const SetInventoryWarehouseRequestAcceptHandlerDocument = `
+    mutation setInventoryWarehouseRequestAcceptHandler($data: TransferRequestInput!) {
+  inventory {
+    warehouse {
+      acceptTransferRequest(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetInventoryWarehouseRequestAcceptHandlerMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetInventoryWarehouseRequestAcceptHandlerMutation,
+    TError,
+    SetInventoryWarehouseRequestAcceptHandlerMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetInventoryWarehouseRequestAcceptHandlerMutation,
+    TError,
+    SetInventoryWarehouseRequestAcceptHandlerMutationVariables,
+    TContext
+  >(
+    ['setInventoryWarehouseRequestAcceptHandler'],
+    useAxios<
+      SetInventoryWarehouseRequestAcceptHandlerMutation,
+      SetInventoryWarehouseRequestAcceptHandlerMutationVariables
+    >(SetInventoryWarehouseRequestAcceptHandlerDocument),
     options
   );
 export const SendLoanApplicationForApprovalDocument = `
