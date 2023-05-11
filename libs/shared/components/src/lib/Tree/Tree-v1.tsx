@@ -312,6 +312,8 @@ const LeafNode = <T extends BaseType>({
             if (!e.target.checked) {
               // console.log({ sagar: selectedIds.filter((id) => id !== current.id) });
               setSelectedIds(selectedIds.filter((id) => !id.includes(current.under)));
+            } else {
+              setSelectedIds([...selectedIds, current.id]);
             }
           }}
         />

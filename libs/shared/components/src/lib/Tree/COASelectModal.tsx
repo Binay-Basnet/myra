@@ -16,7 +16,7 @@ import {
 import { GetCoaFullViewQuery, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
 
 import { BaseType, MultiTree } from './Tree';
-import { MultiTreeV1 } from './Tree-v1';
+import { MultiTreeV2 } from './Tree-v2';
 
 interface ICOASelectModalProps {
   trigger: (props: { id: string; name: string; under: string } | null) => React.ReactNode;
@@ -169,11 +169,29 @@ export const COATree = ({ defaultValue, onChange, onClose, value, setValue }: CO
                 </AccordionButton>
 
                 <AccordionPanel display="flex" flexDir="column" gap="s16">
-                  <MultiTreeV1
+                  {/* <MultiTreeV1 */}
+                  {/*  isMulti */}
+                  {/*  value={value} */}
+                  {/*  onValueChange={(newValue) => setValue(newValue)} */}
+                  {/*  data={coaLiabilitiesFullView || []} */}
+                  {/*  searchTerm={searchTerm} */}
+                  {/* /> */}
+
+                  {/* <TreeComponent */}
+                  {/*  isMulti */}
+                  {/*  arrayData={coaLiabilitiesFullView} */}
+                  {/*  value={value} */}
+                  {/*  onValueChange={(newValue) => setValue(newValue)} */}
+                  {/*  selectableNodes="all" */}
+                  {/*  searchTerm={searchTerm} */}
+                  {/* /> */}
+
+                  <MultiTreeV2
                     isMulti
+                    arrayData={coaLiabilitiesFullView}
                     value={value}
                     onValueChange={(newValue) => setValue(newValue)}
-                    data={coaLiabilitiesFullView || []}
+                    selectableNodes="all"
                     searchTerm={searchTerm}
                   />
 
