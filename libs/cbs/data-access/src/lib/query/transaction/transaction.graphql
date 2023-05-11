@@ -177,6 +177,7 @@ query transactionDepositDetail($transactionId: ID!) {
         totalDebit
         totalCredit
         note
+        txnUserName
       }
     }
   }
@@ -223,6 +224,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
         totalDebit
         totalCredit
         note
+        txnUserName
       }
     }
   }
