@@ -2,7 +2,10 @@ import { useMemo } from 'react';
 
 import { Column, Table } from '@myra-ui';
 
-import { useGetInventoryWarehouseTransferQuery } from '@coop/cbs/data-access';
+import {
+  useGetInventoryWarehouseTransferQuery,
+  WarehouseTransferType,
+} from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
 import { TableListPageHeader } from '@coop/myra/components';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
@@ -11,6 +14,9 @@ export const WarehouseTransferTable = () => {
   const { t } = useTranslation();
   const { data, isFetching } = useGetInventoryWarehouseTransferQuery({
     pagination: getPaginationQuery(),
+    filter: {
+      transferType: WarehouseTransferType?.Direct,
+    },
   });
 
   const rowItems = data?.inventory?.warehouse?.listTransfers?.edges ?? [];

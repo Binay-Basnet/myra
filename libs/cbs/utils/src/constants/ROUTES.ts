@@ -330,6 +330,8 @@ export const ROUTES = {
   INVENTORY_WAREHOUSE: '/inventory/warehouse/list',
   INVENTORY_WAREHOUSE_TRASFER_LIST: '/inventory/warehouse/transfer/list',
   INVENTORY_WAREHOUSE_TRANSFER_ADD: '/inventory/warehouse/transfer/add',
+  INVENTORY_WAREHOUSE_REQUEST_LIST: '/inventory/warehouse/request/list',
+  INVENTORY_WAREHOUSE_REQUEST_ADD: '/inventory/warehouse/request/add',
   INVENTORY_ITEMS_CATEGORY: '/inventory/items/category/list',
   INVENTORY_ITEMS_UNIT_LIST: '/inventory/items/units/list',
   INVENTORY_SUPPLIERS_LIST: '/inventory/suppliers/list',
