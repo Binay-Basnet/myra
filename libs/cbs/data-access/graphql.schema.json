@@ -95062,6 +95062,18 @@
         "description": null,
         "fields": [
           {
+            "name": "duesSince",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Localized",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "installments",
             "description": null,
             "args": [],
@@ -95813,6 +95825,18 @@
             "type": {
               "kind": "ENUM",
               "name": "NatureOfLoanProduct",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penalty",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "LoanPenalty",
               "ofType": null
             },
             "isDeprecated": false,
@@ -100935,6 +100959,18 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "writeOffLedgerId",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -100969,6 +101005,12 @@
           },
           {
             "name": "LOC_SAVING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WRITE_OFF",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -119351,6 +119393,12 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
+          {
+            "name": "LoanInstallmentAmount",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "PenalInterest",
             "description": null,

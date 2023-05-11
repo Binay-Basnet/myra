@@ -11174,6 +11174,7 @@ export const LoanInstallmentStatus = {
 export type LoanInstallmentStatus =
   typeof LoanInstallmentStatus[keyof typeof LoanInstallmentStatus];
 export type LoanInstallments = {
+  duesSince?: Maybe<Scalars['Localized']>;
   installments?: Maybe<Array<Maybe<LoanInstallment>>>;
   total: Scalars['String'];
   totalInterest?: Maybe<Scalars['String']>;
@@ -11272,6 +11273,7 @@ export type LoanPreviewGeneralInformation = {
   loanSubType?: Maybe<Scalars['String']>;
   loanType?: Maybe<Scalars['String']>;
   natureOfLoanProduct?: Maybe<NatureOfLoanProduct>;
+  penalty?: Maybe<LoanPenalty>;
   productCode?: Maybe<Scalars['String']>;
 };
 
@@ -11814,6 +11816,7 @@ export type LoanRepaymentInput = {
   paymentMethod: LoanRepaymentMethod;
   suspicionRemarks?: InputMaybe<Scalars['String']>;
   suspicionTopologies?: InputMaybe<Array<InputMaybe<SuspiciousTransactionTopology>>>;
+  writeOffLedgerId?: InputMaybe<Scalars['String']>;
 };
 
 export const LoanRepaymentMethod = {
@@ -11821,6 +11824,7 @@ export const LoanRepaymentMethod = {
   BankVoucher: 'BANK_VOUCHER',
   Cash: 'CASH',
   LocSaving: 'LOC_SAVING',
+  WriteOff: 'WRITE_OFF',
 } as const;
 
 export type LoanRepaymentMethod = typeof LoanRepaymentMethod[keyof typeof LoanRepaymentMethod];
@@ -14031,6 +14035,7 @@ export type PenaltyRebateResult = {
 };
 
 export const PenaltyType = {
+  LoanInstallmentAmount: 'LoanInstallmentAmount',
   PenalInterest: 'PenalInterest',
   RemainingPrincipal: 'RemainingPrincipal',
 } as const;
@@ -25830,6 +25835,12 @@ export type GetLoanPreviewQuery = {
           natureOfLoanProduct?: NatureOfLoanProduct | null;
           loanName?: string | null;
           productCode?: string | null;
+          penalty?: {
+            penaltyType?: PenaltyType | null;
+            penaltyDayAfterInstallmentDate?: number | null;
+            penaltyRate?: number | null;
+            penaltyAmount?: any | null;
+          } | null;
         } | null;
         loanDetails?: {
           appliedLoanAmount?: string | null;
@@ -25876,6 +25887,7 @@ export type GetLoanPreviewQuery = {
           totalInterest?: string | null;
           totalPrincipal?: string | null;
           totalRemainingPayable?: string | null;
+          duesSince?: Record<'local' | 'en' | 'np', string> | null;
           installments?: Array<{
             installmentDate: Record<'local' | 'en' | 'np', string>;
             installmentNo: number;
@@ -46074,6 +46086,12 @@ export const GetLoanPreviewDocument = `
           natureOfLoanProduct
           loanName
           productCode
+          penalty {
+            penaltyType
+            penaltyDayAfterInstallmentDate
+            penaltyRate
+            penaltyAmount
+          }
         }
         loanDetails {
           appliedLoanAmount
@@ -46142,6 +46160,7 @@ export const GetLoanPreviewDocument = `
             fullPrincipal
           }
           totalRemainingPayable
+          duesSince
         }
         statistics {
           remainingPayableAmount
