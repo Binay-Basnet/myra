@@ -4,7 +4,7 @@ import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Alert, asyncToast, Button, FormSection, GridItem } from '@myra-ui';
+import { Alert, asyncToast, Box, Button, FormSection, GridItem } from '@myra-ui';
 
 import {
   SlipSizeStandard,
@@ -17,7 +17,7 @@ import {
 import { ROUTES } from '@coop/cbs/utils';
 import { FormAccountSelect, FormLayout, FormMemberSelect, FormSelect } from '@coop/shared/form';
 
-import { WithdrawSlipBookPrintPreviewCard } from '../component';
+import { WithdrawPrintCard, WithdrawSlipBookPrintPreviewCard } from '../component';
 
 interface CustomWithdrawSlipIssueInput extends WithdrawSlipIssueInput {
   memberId: string;
@@ -162,6 +162,19 @@ export const WithdrawSlipBookPrint = () => {
       <FormLayout.Header title="Withdraw Slip Print" />
       <FormLayout.Content>
         <FormLayout.Form>
+          <Box
+            display="none"
+            sx={{
+              '@media print': {
+                display: 'flex',
+              },
+              '@page': {
+                size: 'A4 landscape',
+              },
+            }}
+          >
+            <WithdrawPrintCard ref={componentRef} {...printProps} />
+          </Box>
           <FormSection templateColumns={2}>
             <GridItem colSpan={2}>
               <FormMemberSelect isRequired name="memberId" label="Member" isDisabled />
