@@ -108,6 +108,7 @@ export const AddMemberModal = ({
               label={t['agentAssignedMembersAccount']}
               memberId={memberId}
               filterBy={ObjState.Active}
+              menuPosition="fixed"
             />
           </Box>
         </FormProvider>

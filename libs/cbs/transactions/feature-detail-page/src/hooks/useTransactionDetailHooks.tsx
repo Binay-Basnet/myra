@@ -48,7 +48,7 @@ export const useTransactionDetailHooks = () => {
     }
   );
 
-  const agentTransactionDetailData = agentTransaction?.transaction?.viewAgentList?.data;
+  const agentTransactionDetailData = agentTransaction?.agent?.viewAgentList?.data;
 
   // agent detail
   const { data: agentDetail } = useGetAgentDetailQuery(
@@ -62,7 +62,7 @@ export const useTransactionDetailHooks = () => {
     }
   );
 
-  const agentDetailData = agentDetail?.transaction?.agentDetail?.data;
+  const agentDetailData = agentDetail?.agent?.agentDetail?.data;
 
   // loan repayment detail
   const { data: loanRepaymentDetail } = useLoanRepaymentDetailQuery(

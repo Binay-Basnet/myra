@@ -282,39 +282,6 @@ query transactionAccountTransferDetail($transactionId: ID!) {
   }
 }
 
-query agentTransactionDetail($agentId: ID!, $date: String!) {
-  transaction {
-    viewAgentList(agentId: $agentId, date: $date) {
-      data {
-        transactionId
-        transactionDate
-        status
-        totalAmount
-        assignedMember {
-          transactionId
-          member
-          account
-          amount
-        }
-      }
-    }
-  }
-}
-
-query getAgentDetail($id: ID!) {
-  transaction {
-    agentDetail(id: $id) {
-      data {
-        id
-        name
-        branch
-        totalMembers
-        profilePicUrl
-      }
-    }
-  }
-}
-
 query loanRepaymentDetail($paymentId: ID!) {
   transaction {
     viewLoanRepayment(paymentId: $paymentId) {
