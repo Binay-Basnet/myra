@@ -18583,6 +18583,26 @@ export type SetAgentTodayDepositDataMutation = {
   };
 };
 
+export type RemoveMemberAccountAgentMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+  agentID: Scalars['ID'];
+}>;
+
+export type RemoveMemberAccountAgentMutation = {
+  agent: {
+    removeMemberAccountAgent?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type ResetPasswordMutationVariables = Exact<{
   userId: Scalars['String'];
   newPassword: Scalars['String'];
@@ -35794,6 +35814,38 @@ export const useSetAgentTodayDepositDataMutation = <TError = unknown, TContext =
     ['setAgentTodayDepositData'],
     useAxios<SetAgentTodayDepositDataMutation, SetAgentTodayDepositDataMutationVariables>(
       SetAgentTodayDepositDataDocument
+    ),
+    options
+  );
+export const RemoveMemberAccountAgentDocument = `
+    mutation removeMemberAccountAgent($accountId: ID!, $agentID: ID!) {
+  agent {
+    removeMemberAccountAgent(accountId: $accountId, agentID: $agentID) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useRemoveMemberAccountAgentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RemoveMemberAccountAgentMutation,
+    TError,
+    RemoveMemberAccountAgentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    RemoveMemberAccountAgentMutation,
+    TError,
+    RemoveMemberAccountAgentMutationVariables,
+    TContext
+  >(
+    ['removeMemberAccountAgent'],
+    useAxios<RemoveMemberAccountAgentMutation, RemoveMemberAccountAgentMutationVariables>(
+      RemoveMemberAccountAgentDocument
     ),
     options
   );
