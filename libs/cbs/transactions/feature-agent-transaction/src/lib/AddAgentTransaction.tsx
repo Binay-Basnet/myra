@@ -61,7 +61,7 @@ export const AddAgentTransaction = () => {
     new Promise<{ label: string; value: string }[]>((resolve) => {
       const tempAccountList: { label: string; value: string }[] = [];
 
-      assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.forEach((member) => {
+      assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.forEach((member) => {
         if (member?.node?.member?.id === mId) {
           tempAccountList.push({
             label: member?.node?.product?.productName as string,
@@ -82,7 +82,7 @@ export const AddAgentTransaction = () => {
 
   const todaysList = useMemo(
     () =>
-      agentTodayListQueryData?.transaction?.listAgentTask?.record?.map((record) => ({
+      agentTodayListQueryData?.agent?.listAgentTask?.record?.map((record) => ({
         id: record?.id,
         member: record?.member?.id as string,
         account: record?.account?.id as string,
@@ -116,7 +116,7 @@ export const AddAgentTransaction = () => {
     const tempMembers: { label: string; value: string }[] = [];
     const tempIds: string[] = [];
 
-    assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.forEach((member) => {
+    assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.forEach((member) => {
       if (!tempIds.includes(member?.node?.member?.id as string)) {
         tempIds.push(member?.node?.member?.id as string);
         tempMembers.push({
@@ -206,7 +206,7 @@ export const AddAgentTransaction = () => {
                       selectOptions: memberListSearchOptions,
                       cell: (row) => {
                         const memberName =
-                          assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
+                          assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
                             (member) => member?.node?.member?.id === row?.member
                           )?.node?.member?.name;
 

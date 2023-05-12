@@ -1,5 +1,5 @@
 query getAgentListData($filter: Filter, $currentBranchOnly: Boolean, $pagination: Pagination) {
-  transaction {
+  agent {
     listAgent(filter: $filter, currentBranchOnly: $currentBranchOnly, pagination: $pagination) {
       totalCount
       edges {
@@ -23,7 +23,7 @@ query getAgentListData($filter: Filter, $currentBranchOnly: Boolean, $pagination
 }
 
 query getAgentDetailData($id: ID!) {
-  transaction {
+  agent {
     agentDetail(id: $id) {
       data {
         id
@@ -37,7 +37,7 @@ query getAgentDetailData($id: ID!) {
 }
 
 query getAgentAssignedMemberListData($filter: Filter, $pagination: Pagination) {
-  transaction {
+  agent {
     assignedMemberList(filter: $filter, pagination: $pagination) {
       totalCount
       edges {
@@ -72,7 +72,7 @@ query getAgentAssignedMemberListData($filter: Filter, $pagination: Pagination) {
 }
 
 query getAgentTodayListData($id: ID!) {
-  transaction {
+  agent {
     listAgentTask(id: $id) {
       record {
         id
@@ -84,6 +84,39 @@ query getAgentTodayListData($id: ID!) {
         }
         amount
         paid
+      }
+    }
+  }
+}
+
+query agentTransactionDetail($agentId: ID!, $date: String!) {
+  agent {
+    viewAgentList(agentId: $agentId, date: $date) {
+      data {
+        transactionId
+        transactionDate
+        status
+        totalAmount
+        assignedMember {
+          transactionId
+          member
+          account
+          amount
+        }
+      }
+    }
+  }
+}
+
+query getAgentDetail($id: ID!) {
+  agent {
+    agentDetail(id: $id) {
+      data {
+        id
+        name
+        branch
+        totalMembers
+        profilePicUrl
       }
     }
   }

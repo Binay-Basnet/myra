@@ -50,7 +50,7 @@ export const AgentAssignedMembers = () => {
     { enabled: !!id }
   );
 
-  const rowData = useMemo(() => data?.transaction?.assignedMemberList?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.agent?.assignedMemberList?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -123,8 +123,8 @@ export const AgentAssignedMembers = () => {
           columns={columns}
           noDataTitle={t['agentAssignedMembersAssignedMembers']}
           pagination={{
-            total: data?.transaction?.assignedMemberList?.totalCount ?? 'Many',
-            pageInfo: data?.transaction?.assignedMemberList?.pageInfo,
+            total: data?.agent?.assignedMemberList?.totalCount ?? 'Many',
+            pageInfo: data?.agent?.assignedMemberList?.pageInfo,
           }}
         />
       </DetailPageContentCard>
