@@ -35,7 +35,7 @@ export const PenaltyDetailModal = ({ isOpen, onClose, penalty }: IPenaltyDetailM
             Day from end date
           </Text>
           <Text fontSize="r1" fontWeight={600} color="gray.800">
-            {`${penalty?.payload?.penaltyRate} %`}
+            {penalty?.payload?.dayAfterInstallmentDate ?? '-'}
           </Text>
         </Box>
         <Box display="flex" flexDirection="column" gap="s4">
@@ -43,7 +43,7 @@ export const PenaltyDetailModal = ({ isOpen, onClose, penalty }: IPenaltyDetailM
             New Penalty Rate
           </Text>
           <Text fontSize="r1" fontWeight={600} color="gray.800">
-            {`${penalty?.payload?.penaltyRate} %`}
+            {penalty?.payload?.penaltyRate ? `${penalty?.payload?.penaltyRate} %` : '-'}
           </Text>
         </Box>
         <Box display="flex" flexDirection="column" gap="s4">
@@ -73,7 +73,7 @@ export const PenaltyDetailModal = ({ isOpen, onClose, penalty }: IPenaltyDetailM
           Note
         </Text>
         <Text fontSize="r1" fontWeight={500} color="gray.700">
-          {penalty?.additionalData?.notes ?? '-'}
+          {penalty?.additionalData?.notes || '-'}
         </Text>
       </Box>
     </Box>

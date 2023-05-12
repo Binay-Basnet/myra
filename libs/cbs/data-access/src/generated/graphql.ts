@@ -19101,6 +19101,27 @@ export type SetInventoryAdjustmentMutation = {
   };
 };
 
+export type SetInventoryWarehouseRequestAcceptHandlerMutationVariables = Exact<{
+  data: TransferRequestInput;
+}>;
+
+export type SetInventoryWarehouseRequestAcceptHandlerMutation = {
+  inventory: {
+    warehouse?: {
+      acceptTransferRequest?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SendLoanApplicationForApprovalMutationVariables = Exact<{
   id: Scalars['ID'];
   data: LoanAccountInput;
@@ -33696,6 +33717,7 @@ export type TransactionDepositDetailQuery = {
         totalDebit?: string | null;
         totalCredit?: string | null;
         note?: string | null;
+        txnUserName?: string | null;
         member?: {
           id: string;
           code: string;
@@ -33749,6 +33771,7 @@ export type TransactionWithdrawDetailQuery = {
         totalDebit?: string | null;
         totalCredit?: string | null;
         note?: string | null;
+        txnUserName?: string | null;
         member?: {
           id: string;
           code: string;
@@ -36680,6 +36703,44 @@ export const useSetInventoryAdjustmentMutation = <TError = unknown, TContext = u
     useAxios<SetInventoryAdjustmentMutation, SetInventoryAdjustmentMutationVariables>(
       SetInventoryAdjustmentDocument
     ),
+    options
+  );
+export const SetInventoryWarehouseRequestAcceptHandlerDocument = `
+    mutation setInventoryWarehouseRequestAcceptHandler($data: TransferRequestInput!) {
+  inventory {
+    warehouse {
+      acceptTransferRequest(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetInventoryWarehouseRequestAcceptHandlerMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetInventoryWarehouseRequestAcceptHandlerMutation,
+    TError,
+    SetInventoryWarehouseRequestAcceptHandlerMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetInventoryWarehouseRequestAcceptHandlerMutation,
+    TError,
+    SetInventoryWarehouseRequestAcceptHandlerMutationVariables,
+    TContext
+  >(
+    ['setInventoryWarehouseRequestAcceptHandler'],
+    useAxios<
+      SetInventoryWarehouseRequestAcceptHandlerMutation,
+      SetInventoryWarehouseRequestAcceptHandlerMutationVariables
+    >(SetInventoryWarehouseRequestAcceptHandlerDocument),
     options
   );
 export const SendLoanApplicationForApprovalDocument = `
@@ -56569,6 +56630,7 @@ export const TransactionDepositDetailDocument = `
         totalDebit
         totalCredit
         note
+        txnUserName
       }
     }
   }
@@ -56630,6 +56692,7 @@ export const TransactionWithdrawDetailDocument = `
         totalDebit
         totalCredit
         note
+        txnUserName
       }
     }
   }

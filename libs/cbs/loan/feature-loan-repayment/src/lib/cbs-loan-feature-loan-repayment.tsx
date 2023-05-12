@@ -174,6 +174,11 @@ export const LoanRepayment = () => {
         account: omit({ ...filteredValues.account }, ['amount']) as LoanRepaymentAccountMode,
       };
     }
+
+    if (values.paymentMethod === LoanRepaymentMethod.WriteOff) {
+      filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash', 'account']);
+    }
+
     // asyncToast({
     //   id: 'share-settings-transfer-id',
     //   msgs: {

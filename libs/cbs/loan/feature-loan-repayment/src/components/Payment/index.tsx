@@ -1,9 +1,15 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import debounce from 'lodash/debounce';
 
 import { Box, Divider, Grid, GridItem, Text } from '@myra-ui';
 
-import { LoanRepaymentMethod, ObjState } from '@coop/cbs/data-access';
+import {
+  LoanRepaymentMethod,
+  ObjState,
+  useGetLedgerForJvPostingQuery,
+  useGetLoanCloseDataQuery,
+} from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
   FormAccountSelect,
@@ -11,6 +17,7 @@ import {
   FormBankSelect,
   FormEditableTable,
   FormInput,
+  FormSelect,
   FormSwitch,
   FormSwitchTab,
   FormTextArea,
@@ -31,6 +38,10 @@ const paymentModes = [
   {
     label: 'Bank Cheque',
     value: LoanRepaymentMethod.BankVoucher,
+  },
+  {
+    label: 'Write Off',
+    value: LoanRepaymentMethod.WriteOff,
   },
 ];
 
@@ -99,6 +110,48 @@ export const Payment = ({
   useEffect(() => {
     setValue('cash.returned_amount', Number(cashPaid) - Number(loanTotal));
   }, [cashPaid]);
+
+  const { data: loanCloseData } = useGetLoanCloseDataQuery(
+    { loanAccountId },
+    {
+      enabled: !!loanAccountId,
+    }
+  );
+
+  const writeOffPayable = useMemo(
+    () => loanCloseData?.loanAccount?.remainingPayments?.data?.totalPayableAmount,
+    [loanCloseData]
+  );
+
+  useEffect(() => {
+    if (selectedPaymentMode === LoanRepaymentMethod?.WriteOff && writeOffPayable) {
+      setValue('amountPaid', writeOffPayable);
+    }
+  }, [selectedPaymentMode, writeOffPayable]);
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const { data: accountList, isFetching } = useGetLedgerForJvPostingQuery({
+    pagination: {
+      after: '',
+      first: 10,
+    },
+    filter: {
+      name: searchTerm,
+      filterMode: 'OR',
+    },
+  });
+
+  const accountListData = accountList?.settings?.chartsOfAccount?.ledgersForJVPosting?.edges;
+
+  const accountSearchOptions = useMemo(
+    () =>
+      accountListData?.map((account) => ({
+        label: account?.node?.accountName?.local as string,
+        value: account?.node?.accountCode as string,
+      })),
+    [accountListData]
+  );
 
   return (
     <ContainerWithDivider p="s16">
@@ -288,6 +341,40 @@ export const Payment = ({
               <FormTextArea name="cash.note" label="Note" rows={5} />
             </Box>
           </>
+        )}
+
+        {selectedPaymentMode === LoanRepaymentMethod?.WriteOff && (
+          <Grid templateColumns="repeat(2,1fr)" gap="s20">
+            <FormSelect
+              name="writeOffLedgerId"
+              label="Write Off From"
+              options={accountSearchOptions}
+              isLoading={isFetching}
+              onInputChange={debounce((id) => {
+                // if (id) {
+                setSearchTerm(id);
+                // }
+              }, 800)}
+            />
+
+            <FormAmountInput isRequired name="amountPaid" label="Amount" />
+
+            <GridItem colSpan={2}>
+              <InstallmentData
+                loanAccountId={loanAccountId}
+                totalPayableAmount={totalPayableAmount}
+                setTotalPayableAmount={setTotalPayableAmount}
+              />
+            </GridItem>
+
+            <GridItem colSpan={2}>
+              <Divider />
+            </GridItem>
+
+            <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
+              <FormTextArea name="closeNotes" label="Note" />
+            </GridItem>
+          </Grid>
         )}
       </BoxContainer>
     </ContainerWithDivider>
