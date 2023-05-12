@@ -10,8 +10,9 @@ import {
   useGetWarehouseListQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
+import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormDatePicker, FormSelect } from '@coop/shared/form';
+import { FormSelect } from '@coop/shared/form';
 import { amountConverter, quantityConverter } from '@coop/shared/utils';
 
 type InventoryRegisterFilter = {
@@ -34,7 +35,7 @@ export const InventoryRegisterReport = () => {
     {
       data: {
         ...filters,
-        period: filters?.period?.from,
+
         warehouseId: wareHouseIds,
       } as InventoryRegistrationFilter,
     },
@@ -77,9 +78,6 @@ export const InventoryRegisterReport = () => {
           ]}
         />
         <Report.Inputs hideDate>
-          <GridItem colSpan={3}>
-            <FormDatePicker name="period.from" label="Date" />
-          </GridItem>
           <GridItem colSpan={1}>
             <FormSelect
               isMulti
@@ -87,6 +85,9 @@ export const InventoryRegisterReport = () => {
               label="Select Warehouse"
               options={wareHouseSearchOptions}
             />
+          </GridItem>
+          <GridItem colSpan={3}>
+            <ReportDateRange />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

@@ -5065,6 +5065,7 @@ export type DepositTransactionView = {
   transactionBranch?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;
+  txnUserName?: Maybe<Scalars['String']>;
   voucherId?: Maybe<Scalars['String']>;
 };
 
@@ -7759,9 +7760,12 @@ export type InventoryAdjustmentConnection = {
 
 export type InventoryAdjustmentDetail = {
   code: Scalars['String'];
+  createdBy: Scalars['String'];
+  createdDate: Scalars['Time'];
   date: Scalars['Localized'];
   itemDetails?: Maybe<Array<Maybe<InventoryAdjustmentItemDetailsType>>>;
-  modeOfAdjustment: Scalars['String'];
+  modeOfAdjustment: InventoryAdjustmentMode;
+  notes?: Maybe<Scalars['String']>;
   referenceNo: Scalars['String'];
 };
 
@@ -7785,6 +7789,7 @@ export type InventoryAdjustmentInput = {
 
 export type InventoryAdjustmentItemDetails = {
   itemId?: InputMaybe<Scalars['String']>;
+  itemName?: InputMaybe<Scalars['String']>;
   newQuantity?: InputMaybe<Scalars['String']>;
   /** For value adjustment */
   newValue?: InputMaybe<Scalars['String']>;
@@ -7798,6 +7803,7 @@ export type InventoryAdjustmentItemDetails = {
 
 export type InventoryAdjustmentItemDetailsType = {
   itemId?: Maybe<Scalars['String']>;
+  itemName?: Maybe<Scalars['String']>;
   newQuantity?: Maybe<Scalars['String']>;
   /** For value adjustment */
   newValue?: Maybe<Scalars['String']>;
@@ -7921,7 +7927,7 @@ export type InventoryRegistrationData = {
 };
 
 export type InventoryRegistrationFilter = {
-  period: Scalars['Localized'];
+  period: LocalizedDateFilter;
   warehouseId?: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -17137,6 +17143,11 @@ export const TransferRequestAction = {
 
 export type TransferRequestAction =
   typeof TransferRequestAction[keyof typeof TransferRequestAction];
+export type TransferRequestInput = {
+  response: WarehouseRequestResponse;
+  transferId: Scalars['String'];
+};
+
 export type TransferResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
@@ -17579,8 +17590,13 @@ export type WarehouseInfo = {
 };
 
 export type WarehouseMutation = {
+  acceptTransferRequest?: Maybe<WarehouseTransferResult>;
   add?: Maybe<AddWarehouseResult>;
   transfer?: Maybe<WarehouseTransferResult>;
+};
+
+export type WarehouseMutationAcceptTransferRequestArgs = {
+  data: TransferRequestInput;
 };
 
 export type WarehouseMutationAddArgs = {
@@ -17606,6 +17622,13 @@ export type WarehouseQueryListWarehousesArgs = {
   paginate: Pagination;
 };
 
+export const WarehouseRequestResponse = {
+  Accept: 'ACCEPT',
+  Reject: 'REJECT',
+} as const;
+
+export type WarehouseRequestResponse =
+  typeof WarehouseRequestResponse[keyof typeof WarehouseRequestResponse];
 export type WarehouseTransfer = {
   date: Scalars['Localized'];
   destinationWarehouseId: Scalars['String'];
@@ -17632,6 +17655,7 @@ export type WarehouseTransferEdge = {
 export type WarehouseTransferFilter = {
   id?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
+  transferType?: InputMaybe<WarehouseTransferType>;
 };
 
 export type WarehouseTransferInput = {
@@ -17643,6 +17667,7 @@ export type WarehouseTransferInput = {
   note?: InputMaybe<Scalars['String']>;
   referenceNumber?: InputMaybe<Scalars['String']>;
   sourceWarehouse?: InputMaybe<Scalars['String']>;
+  transferType?: InputMaybe<WarehouseTransferType>;
 };
 
 export type WarehouseTransferResult = {
@@ -17658,6 +17683,13 @@ export const WarehouseTransferStatus = {
 
 export type WarehouseTransferStatus =
   typeof WarehouseTransferStatus[keyof typeof WarehouseTransferStatus];
+export const WarehouseTransferType = {
+  Direct: 'DIRECT',
+  Request: 'REQUEST',
+} as const;
+
+export type WarehouseTransferType =
+  typeof WarehouseTransferType[keyof typeof WarehouseTransferType];
 export const Week = {
   Friday: 'FRIDAY',
   Monday: 'MONDAY',
@@ -17855,6 +17887,7 @@ export type WithdrawTransactionView = {
   transactionBranch?: Maybe<Scalars['String']>;
   transactionCode?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;
+  txnUserName?: Maybe<Scalars['String']>;
   withdrawAmount?: Maybe<Scalars['String']>;
   withdrawWith?: Maybe<WithdrawWith>;
   withdrawnBy?: Maybe<WithdrawBy>;
@@ -25301,7 +25334,7 @@ export type GetInventoryAdjustmentDetailsQuery = {
           referenceNo: string;
           code: string;
           date: Record<'local' | 'en' | 'np', string>;
-          modeOfAdjustment: string;
+          modeOfAdjustment: InventoryAdjustmentMode;
           itemDetails?: Array<{
             itemId?: string | null;
             warehouseId?: string | null;
