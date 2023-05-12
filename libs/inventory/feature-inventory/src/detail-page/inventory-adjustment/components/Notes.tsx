@@ -7,7 +7,7 @@ export const InventoryAdjustmentNotes = () => {
 
   return (
     <DetailsCard title="Notes" bg="white" hasTable>
-      <Text>{detailData?.modeOfAdjustment}</Text>
+      <Text>{detailData?.notes}</Text>
     </DetailsCard>
   );
 };

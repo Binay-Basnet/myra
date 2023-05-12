@@ -30,7 +30,7 @@ export const InventoryAdjustmentDetailsSidebar = () => {
             </Text>
 
             <Text fontSize="r1" fontWeight="400" color="gray.800" wordBreak="break-all">
-              {`REF-NO ${detailData?.referenceNo}`}
+              {`REF-NO: ${detailData?.referenceNo}`}
             </Text>
           </Box>
           <Chips variant="solid" type="label" size="md" theme="success" label="Adjusted" />

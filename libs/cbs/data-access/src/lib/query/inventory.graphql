@@ -246,11 +246,13 @@ query getInventoryAdjustmentDetails($id: ID!) {
           referenceNo
           code
           date
+          notes
           modeOfAdjustment
           itemDetails {
             itemId
-            warehouseId
 
+            warehouseId
+            itemName
             warehouseName
             newQuantity
             quantityAdjusted

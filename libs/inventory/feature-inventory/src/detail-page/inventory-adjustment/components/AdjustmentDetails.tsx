@@ -11,9 +11,11 @@ export const AdjustmentDetails = () => {
   const quantityData =
     detailData?.itemDetails?.map((data, index) => ({
       sn: Number(index) + 1,
+      itemName: data?.itemName,
 
       itemId: data?.itemId,
       warehouseName: data?.warehouseName,
+
       newQuantity: data?.newQuantity,
       oldQuantity:
         data?.quantityAdjustedUnit === AdjustmentUnit.Minus
@@ -25,7 +27,8 @@ export const AdjustmentDetails = () => {
   const valueData =
     detailData?.itemDetails?.map((data, index) => ({
       sn: Number(index) + 1,
-
+      itemName: data?.itemName,
+      oldValue: String(Number(data?.newValue) - Number(data?.valueAdjusted)),
       itemId: data?.itemId,
       newValue: data?.newValue,
       date: detailData?.date,

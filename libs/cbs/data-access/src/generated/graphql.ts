@@ -13349,7 +13349,7 @@ export type MyraUser = {
 
 export type MyraUserConnection = {
   edges?: Maybe<Array<MyraUserEdge>>;
-  pageInfo: PageInfo;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -25355,10 +25355,12 @@ export type GetInventoryAdjustmentDetailsQuery = {
           referenceNo: string;
           code: string;
           date: Record<'local' | 'en' | 'np', string>;
+          notes?: string | null;
           modeOfAdjustment: InventoryAdjustmentMode;
           itemDetails?: Array<{
             itemId?: string | null;
             warehouseId?: string | null;
+            itemName?: string | null;
             warehouseName?: string | null;
             newQuantity?: string | null;
             quantityAdjusted?: string | null;
@@ -33125,7 +33127,7 @@ export type GetSettingsUserListDataQuery = {
             branch?: { id: string; name?: string | null } | null;
           } | null;
         }> | null;
-        pageInfo: PaginationFragment;
+        pageInfo?: PaginationFragment | null;
       } | null;
     } | null;
   };
@@ -45561,10 +45563,12 @@ export const GetInventoryAdjustmentDetailsDocument = `
           referenceNo
           code
           date
+          notes
           modeOfAdjustment
           itemDetails {
             itemId
             warehouseId
+            itemName
             warehouseName
             newQuantity
             quantityAdjusted
