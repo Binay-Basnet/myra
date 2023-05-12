@@ -763,10 +763,10 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
           : column.accessorFn
           ? column.accessorFn(data)
             ? String(column.accessorFn(data))
-            : undefined
+            : ''
           : data[column.accessor]
           ? (data[column.accessor] as string)
-          : undefined
+          : ''
       }
     >
       {column.fieldType === 'modal' ? (
@@ -893,7 +893,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
           border="none"
           onWheel={(e) => e.currentTarget.blur()}
           borderRadius="0"
-          value={String(data[column.accessor])}
+          // value={data[column.accessor] !== '' ? String(data[column.accessor]) : '1234'}
           onChange={(e) => {
             dispatch({
               type: EditableTableActionKind.EDIT,

@@ -44,9 +44,9 @@ export const ServiceCenterTable = () => {
             {
               accessor: 'branchId',
               header: 'Service Center',
-              fieldType: 'select',
+              fieldType: 'search',
               cellWidth: 'auto',
-              selectOptions: serviceCenterOptions,
+              searchOptions: serviceCenterOptions,
             },
             {
               accessor: 'dr',
