@@ -9,6 +9,8 @@ interface ILoanPaymentScheduleTableProps {
     | {
         sn: number;
         itemId: string | null | undefined;
+        itemName: string | null | undefined;
+        oldValue: string | null | undefined;
         newValue: string | null | undefined;
         date: Record<'local' | 'en' | 'np', string> | null | undefined;
       }[];
@@ -24,8 +26,8 @@ export const ValueAdjustmentTable = ({ data }: ILoanPaymentScheduleTableProps) =
         accessorKey: 'sn',
       },
       {
-        header: 'Item Id',
-        accessorKey: 'itemId',
+        header: 'Item Name',
+        accessorKey: 'itemName',
         meta: {
           width: '60%',
         },
@@ -35,6 +37,10 @@ export const ValueAdjustmentTable = ({ data }: ILoanPaymentScheduleTableProps) =
         header: 'Date',
         accessorKey: 'date',
         accessorFn: (row) => localizedDate(row?.date),
+      },
+      {
+        header: 'Old Value',
+        accessorKey: 'oldValue',
       },
       {
         header: 'New Adjusted Value',

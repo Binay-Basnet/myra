@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
@@ -9,6 +10,8 @@ import {
   InventoryAdjustmentInput,
   InventoryAdjustmentItemDetails,
   InventoryAdjustmentMode,
+  useGetInventoryItemsListQuery,
+  useGetWarehouseListQuery,
   useSetInventoryAdjustmentMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -24,8 +27,43 @@ type CustomInventoryAdjustmentInput = {
 
 export const InventoryFeatureAdjustment = () => {
   const router = useRouter();
-  const methods = useForm<CustomInventoryAdjustmentInput>({});
+  const methods = useForm<CustomInventoryAdjustmentInput>({
+    defaultValues: {
+      modeOfAdjustment: InventoryAdjustmentMode?.Quantity,
+    },
+  });
   const { mutateAsync: AddAdjustments } = useSetInventoryAdjustmentMutation();
+  const { data: inventoryItems } = useGetInventoryItemsListQuery({
+    pagination: {
+      after: '',
+      first: -1,
+    },
+  });
+  const inventoryItemsData = inventoryItems?.inventory?.items?.list?.edges;
+
+  const itemsSearchOptions = useMemo(
+    () =>
+      inventoryItemsData?.map((account) => ({
+        label: account?.node?.name as string,
+        value: account?.node?.id as string,
+      })),
+    [inventoryItemsData]
+  );
+  const { data: wareHouse } = useGetWarehouseListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+  const warehouseData = wareHouse?.inventory?.warehouse?.listWarehouses?.edges;
+  const wareHouseSearchOptions = useMemo(
+    () =>
+      warehouseData?.map((account) => ({
+        label: account?.node?.name as string,
+        value: account?.node?.id as string,
+      })),
+    [warehouseData]
+  );
 
   const handleSave = () => {
     const values = methods.getValues();
@@ -37,6 +75,9 @@ export const InventoryFeatureAdjustment = () => {
       mode === InventoryAdjustmentMode?.Quantity
         ? tableData?.map((data) => ({
             itemId: data?.itemId,
+            itemName: itemsSearchOptions?.find((d) => d?.value === data?.itemId)?.label,
+            warehouseName: wareHouseSearchOptions?.find((d) => d?.value === data?.warehouseId)
+              ?.label,
             warehouseId: data?.warehouseId,
 
             newQuantity: String(data?.newQuantity),
@@ -45,8 +86,9 @@ export const InventoryFeatureAdjustment = () => {
           })) || []
         : tableValueData?.map((data) => ({
             itemId: data?.itemId,
-
+            itemName: itemsSearchOptions?.find((d) => d?.value === data?.itemId)?.label,
             newValue: String(data?.newValue),
+            valueAdjusted: String(data?.quantityAdjusted),
           })) || [];
     const filteredValues = omit({ ...values }, ['valueItems']);
 

@@ -25436,10 +25436,12 @@ export type GetInventoryAdjustmentDetailsQuery = {
           referenceNo: string;
           code: string;
           date: Record<'local' | 'en' | 'np', string>;
+          notes?: string | null;
           modeOfAdjustment: InventoryAdjustmentMode;
           itemDetails?: Array<{
             itemId?: string | null;
             warehouseId?: string | null;
+            itemName?: string | null;
             warehouseName?: string | null;
             newQuantity?: string | null;
             quantityAdjusted?: string | null;
@@ -45693,10 +45695,12 @@ export const GetInventoryAdjustmentDetailsDocument = `
           referenceNo
           code
           date
+          notes
           modeOfAdjustment
           itemDetails {
             itemId
             warehouseId
+            itemName
             warehouseName
             newQuantity
             quantityAdjusted

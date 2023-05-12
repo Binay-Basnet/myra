@@ -10,6 +10,7 @@ interface ILoanPaymentScheduleTableProps {
     | {
         sn: number;
         itemId: string | null | undefined;
+        itemName: string | null | undefined;
         warehouseName: string | null | undefined;
         newQuantity: string | null | undefined;
         oldQuantity: string | number | null | undefined;
