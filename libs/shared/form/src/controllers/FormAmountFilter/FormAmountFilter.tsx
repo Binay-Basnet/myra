@@ -50,7 +50,7 @@ export const AmountFilter = React.forwardRef(
     ];
 
     useEffect(() => {
-      onChange({ min: undefined, max: undefined }, null);
+      onChange({ min: '', max: '' }, null);
     }, [amountCondition]);
 
     return (

@@ -59,20 +59,20 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
                     ? {
                         max: value.to,
                         min: value.from,
-                        conditon: compare,
+                        condition: compare,
                       }
                     : compare === '=' && typeof value === 'string'
-                    ? { max: value, min: value, conditon: '=' }
+                    ? { max: value, min: value, condition: '=' }
                     : compare === '<' && typeof value === 'string'
-                    ? { max: undefined, min: value, conditon: '<' }
+                    ? { max: undefined, min: value, condition: '<' }
                     : compare === '>' && typeof value === 'string'
-                    ? { max: value, min: undefined, conditon: '>' }
+                    ? { max: value, min: undefined, condition: '>' }
                     : undefined
                 }
                 onClose={onClose}
                 onChange={(newValue) => {
                   let queryString;
-                  if (newValue.conditon === '=') {
+                  if (newValue.condition === '=') {
                     queryString = qs.stringify(
                       {
                         ...parsedQuery,
@@ -83,7 +83,7 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
                       },
                       { allowDots: true, arrayFormat: 'brackets', encode: false }
                     );
-                  } else if (newValue.conditon === '<') {
+                  } else if (newValue.condition === '<') {
                     queryString = qs.stringify(
                       {
                         ...parsedQuery,
@@ -94,7 +94,7 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
                       },
                       { allowDots: true, arrayFormat: 'brackets', encode: false }
                     );
-                  } else if (newValue.conditon === '>') {
+                  } else if (newValue.condition === '>') {
                     queryString = qs.stringify(
                       {
                         ...parsedQuery,
@@ -105,7 +105,7 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
                       },
                       { allowDots: true, arrayFormat: 'brackets', encode: false }
                     );
-                  } else if (newValue.conditon === '< >') {
+                  } else if (newValue.condition === '< >') {
                     queryString = qs.stringify(
                       {
                         ...parsedQuery,
@@ -144,15 +144,31 @@ export const TableAmountFilter = ({ column }: TableAmountFilterProps) => {
 export interface TableAmountFilterContentProps {
   onClose?: () => void;
 
-  value: { min: string | undefined; max: string | undefined; conditon: Condition } | undefined;
+  value: { min: string | undefined; max: string | undefined; condition: Condition } | undefined;
   onChange: (newValue: {
     min: string | undefined;
     max: string | undefined;
-    conditon: Condition;
+    condition: Condition;
   }) => void;
 }
 
 export default TableAmountFilter;
+
+const isButtonDisabled = (
+  buttonMin: string | undefined,
+  buttonMax: string | undefined,
+  buttonCondition: Condition
+) => {
+  if (buttonCondition === '< >') {
+    return !buttonMin || !buttonMax;
+  }
+
+  if (buttonCondition === '>') {
+    return !buttonMax;
+  }
+
+  return !buttonMin;
+};
 
 export const TableAmountFilterContent = React.forwardRef(
   (
@@ -161,7 +177,13 @@ export const TableAmountFilterContent = React.forwardRef(
   ) => {
     const [min, setMin] = useState<string | undefined>(value?.min || undefined);
     const [max, setMax] = useState<string | undefined>(value?.max || undefined);
-    const [amountCondition, setAmountCondition] = useState<Condition>(value?.conditon || '< >');
+    const [amountCondition, setAmountCondition] = useState<Condition>(value?.condition || '< >');
+
+    React.useEffect(() => {
+      setMin(value?.min);
+      setMax(value?.max);
+      setAmountCondition(value?.condition || '< >');
+    }, []);
 
     return (
       <Box
@@ -181,9 +203,9 @@ export const TableAmountFilterContent = React.forwardRef(
             max,
             condition: amountCondition,
           }}
-          onChange={(newValue, conditon) => {
-            if (conditon) {
-              setAmountCondition(conditon);
+          onChange={(newValue, condition) => {
+            if (condition) {
+              setAmountCondition(condition);
             }
             setMin(newValue.min);
             setMax(newValue.max);
@@ -205,8 +227,9 @@ export const TableAmountFilterContent = React.forwardRef(
           <Spacer />
           <Button
             paddingX="12"
+            isDisabled={isButtonDisabled(min, max, amountCondition)}
             onClick={() => {
-              onChange({ min, max, conditon: amountCondition });
+              onChange({ min, max, condition: amountCondition });
               onClose && onClose();
             }}
           >
