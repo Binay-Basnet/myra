@@ -322,7 +322,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
         <Box w="100%" mb="s12">
           <Box display="flex" flexDir="column" gap="s12">
             <Box display="flex" alignItems="flex-start" justifyContent="space-between" gap="s8">
-              <Box display="flex" alignItems="center" gap="s8">
+              <Box display="flex" alignItems="center" flex={1} gap="s8">
                 <Box position="relative">
                   <Avatar
                     w="s48"

@@ -7760,9 +7760,12 @@ export type InventoryAdjustmentConnection = {
 
 export type InventoryAdjustmentDetail = {
   code: Scalars['String'];
+  createdBy: Scalars['String'];
+  createdDate: Scalars['Time'];
   date: Scalars['Localized'];
   itemDetails?: Maybe<Array<Maybe<InventoryAdjustmentItemDetailsType>>>;
-  modeOfAdjustment: Scalars['String'];
+  modeOfAdjustment: InventoryAdjustmentMode;
+  notes?: Maybe<Scalars['String']>;
   referenceNo: Scalars['String'];
 };
 
@@ -7786,6 +7789,7 @@ export type InventoryAdjustmentInput = {
 
 export type InventoryAdjustmentItemDetails = {
   itemId?: InputMaybe<Scalars['String']>;
+  itemName?: InputMaybe<Scalars['String']>;
   newQuantity?: InputMaybe<Scalars['String']>;
   /** For value adjustment */
   newValue?: InputMaybe<Scalars['String']>;
@@ -7799,6 +7803,7 @@ export type InventoryAdjustmentItemDetails = {
 
 export type InventoryAdjustmentItemDetailsType = {
   itemId?: Maybe<Scalars['String']>;
+  itemName?: Maybe<Scalars['String']>;
   newQuantity?: Maybe<Scalars['String']>;
   /** For value adjustment */
   newValue?: Maybe<Scalars['String']>;
@@ -7922,7 +7927,7 @@ export type InventoryRegistrationData = {
 };
 
 export type InventoryRegistrationFilter = {
-  period: Scalars['Localized'];
+  period: LocalizedDateFilter;
   warehouseId?: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -25350,7 +25355,7 @@ export type GetInventoryAdjustmentDetailsQuery = {
           referenceNo: string;
           code: string;
           date: Record<'local' | 'en' | 'np', string>;
-          modeOfAdjustment: string;
+          modeOfAdjustment: InventoryAdjustmentMode;
           itemDetails?: Array<{
             itemId?: string | null;
             warehouseId?: string | null;
