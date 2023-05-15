@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast } from '@myra-ui';
 
 import {
   InputMaybe,
@@ -15,6 +15,7 @@ import {
   useSetInventoryAdjustmentMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormLayout } from '@coop/shared/form';
 
 import InventoryAdjustmentForm from '../component/form/InventoryAdjustmentForm';
 import { PurchaseAdjustmentTableType } from '../component/form/InventoryAdjustmentTable';
@@ -112,26 +113,14 @@ export const InventoryFeatureAdjustment = () => {
   };
 
   return (
-    <Container minW="container.lg" height="fit-content" bg="gray.0">
-      <Box margin="0px auto" width="100%" zIndex="10">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title="Inventory Adjustment" />
-        </Box>
-        <Box minH="calc(100vh - 230px)">
-          <FormProvider {...methods}>
-            <form>
-              <InventoryAdjustmentForm />
-            </form>
-          </FormProvider>
-        </Box>
-      </Box>
-
-      <Box position="sticky" bottom={0}>
-        <Box>
-          {' '}
-          <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSave} />{' '}
-        </Box>
-      </Box>
-    </Container>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title="Inventory Adjsutment" />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <InventoryAdjustmentForm />
+        </FormLayout.Form>
+      </FormLayout.Content>
+      <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={handleSave} />{' '}
+    </FormLayout>
   );
 };
