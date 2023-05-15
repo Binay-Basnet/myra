@@ -370,6 +370,12 @@ export const ROUTES = {
   ACCOUNTING_EXTERNAL_LOAN_ORGANIZATION_EDIT: '/accounting/loan/organizations/edit',
 
   ACCOUNTING_EXTERNAL_LOAN_EDIT: '/accounting/loan/external-loan/edit',
+
+  HRMODULE_EMPLOYEES_LIST: '/hr-module/employee/employee/list',
+  HRMODULE_CONTRACTS_LIST: '/hr-module/employee/contracts/list',
+  HRMODULE_ATTENDENCE_LIST: '/hr-module/employee/attendence/list',
+  HRMODULE_LEAVE_LIST: '/hr-module/employee/leave/list',
+  HRMODULE_EXIT_DETAILS_LIST: '/hr-module/employee/exit-details/list',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

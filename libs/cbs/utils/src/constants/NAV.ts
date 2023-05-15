@@ -4,9 +4,22 @@ import { useAbility } from '@casl/react';
 import { Id_Type } from '@coop/cbs/data-access';
 import { AbilityContext, AclKey, Actions, RouteValue } from '@coop/cbs/utils';
 
-import { ACCOUNTING, ALTERNATIVE_CHANNELS, CBS, INVENTORY, SETTINGS } from './navigations';
+import {
+  ACCOUNTING,
+  ALTERNATIVE_CHANNELS,
+  CBS,
+  HRMODULE,
+  INVENTORY,
+  SETTINGS,
+} from './navigations';
 
-export type ModuleType = 'CBS' | 'SETTINGS' | 'ALTERNATIVE_CHANNELS' | 'ACCOUNTING' | 'INVENTORY';
+export type ModuleType =
+  | 'CBS'
+  | 'SETTINGS'
+  | 'ALTERNATIVE_CHANNELS'
+  | 'ACCOUNTING'
+  | 'INVENTORY'
+  | 'HRMODULE';
 
 export type MenuType =
   | 'MEMBERS'
@@ -32,7 +45,13 @@ export type MenuType =
   | 'SUPPLIERS'
   | 'MONITOR'
   | 'EXTERNAL_LOAN'
-  | 'SETTINGS_SAVINGS_ORGANIZATION_RATE';
+  | 'SETTINGS_SAVINGS_ORGANIZATION_RATE'
+  | 'EMPLOYEE'
+  | 'EMPLOYEE_LIFECYCLE'
+  | 'PAYROLL'
+  | 'TRAINING'
+  | 'RECRUITMENT'
+  | 'POLICY';
 
 export type Page = {
   label: string;
@@ -70,6 +89,7 @@ export const APP_NAVS = {
   ALTERNATIVE_CHANNELS,
   ACCOUNTING,
   INVENTORY,
+  HRMODULE,
 };
 
 export const useLink = (app: ModuleType = 'CBS') => {
