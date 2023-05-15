@@ -12,7 +12,7 @@ export const MigrationFileComponent = () => {
   const router = useRouter();
   const [changedRows, setChangedRows] = useState([]);
 
-  const { data, refetch, isLoading } = useGetCsvDataQuery(
+  const { data, refetch, isLoading, isFetching } = useGetCsvDataQuery(
     {
       input: {
         fileName: router?.query['filename'] as string,
@@ -96,7 +96,7 @@ export const MigrationFileComponent = () => {
     });
   };
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <Box>
         <Loader />
