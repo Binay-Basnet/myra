@@ -87,6 +87,8 @@ export interface TableProps<TData> {
 
   allowSelection?: boolean;
 
+  allowSearch?: boolean;
+
   onRowSelect?: (selected: string[]) => void;
 }
 
