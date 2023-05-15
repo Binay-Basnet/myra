@@ -109,13 +109,13 @@ export const WarehouseRequestTable = () => {
           <TablePopover
             items={[
               {
-                title: 'Accept Transfer Request',
+                title: 'Accept Transfer',
                 aclKey: 'CBS_MEMBERS_MEMBER',
 
                 onClick: (row) => makeActiveHandler(row?.id, WarehouseRequestResponse?.Accept),
               },
               {
-                title: 'Reject Transfer Request',
+                title: 'Reject Transfer',
                 aclKey: 'CBS_MEMBERS_MEMBER',
 
                 onClick: (row) => rejectRequestHandler(row?.id, WarehouseRequestResponse?.Reject),
