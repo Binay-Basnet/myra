@@ -77,29 +77,29 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
       <Box display="flex" flexDirection="column" p="s16" gap="s16">
         <Box display="flex" gap="s16">
           <Avatar
-            name={agentDetailQueryData?.transaction?.agentDetail?.data?.name ?? 'Agent'}
+            name={agentDetailQueryData?.agent?.agentDetail?.data?.name ?? 'Agent'}
             size="md"
-            src={agentDetailQueryData?.transaction?.agentDetail?.data?.profilePicUrl ?? ''}
+            src={agentDetailQueryData?.agent?.agentDetail?.data?.profilePicUrl ?? ''}
           />
 
           <Box display="flex" flexDirection="column" gap="s4">
             <Text fontSize="r1" fontWeight="500" color="primary.500">
-              {agentDetailQueryData?.transaction?.agentDetail?.data?.name}
+              {agentDetailQueryData?.agent?.agentDetail?.data?.name}
             </Text>
             <Text fontSize="s3" fontWeight="400" color="gray.800" wordBreak="break-all">
-              {agentDetailQueryData?.transaction?.agentDetail?.data?.branch}
+              {agentDetailQueryData?.agent?.agentDetail?.data?.branch}
             </Text>
             <Box display="flex" alignItems="center" gap="s10">
               <Text fontSize="s3" fontWeight="400" color="gray.800" wordBreak="break-all">
-                {agentDetailQueryData?.transaction?.agentDetail?.data?.id}
+                {agentDetailQueryData?.agent?.agentDetail?.data?.id}
               </Text>
-              {agentDetailQueryData?.transaction?.agentDetail?.data?.id && (
+              {agentDetailQueryData?.agent?.agentDetail?.data?.id && (
                 <Icon
                   _hover={{ cursor: 'pointer' }}
                   size="sm"
                   as={IoCopyOutline}
                   onClick={() =>
-                    handleCopyAgentId(agentDetailQueryData?.transaction?.agentDetail?.data?.id)
+                    handleCopyAgentId(agentDetailQueryData?.agent?.agentDetail?.data?.id)
                   }
                 />
               )}

@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Avatar, Box, FormSection, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -18,7 +19,11 @@ export const BulkTransferAccountTable = ({
   productId,
   setSelectedAccounts,
 }: IBulkTransferAccountTableProps) => {
+  const router = useRouter();
+
   const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
+
+  const search = router.query['search'] || '';
 
   const { data: accountListData, isLoading } = useGetSavingsAccountListQuery(
     {
@@ -28,7 +33,7 @@ export const BulkTransferAccountTable = ({
         order: null,
       },
       filter: {
-        query: productId,
+        query: search as string,
         orConditions: [
           {
             andConditions: [
@@ -37,10 +42,11 @@ export const BulkTransferAccountTable = ({
                 comparator: 'EqualTo',
                 value: ObjState.Active,
               },
-            ],
-          },
-          {
-            andConditions: [
+              {
+                column: 'productId',
+                comparator: 'EqualTo',
+                value: productId,
+              },
               {
                 column: 'branch',
                 comparator: 'EqualTo',
@@ -119,6 +125,7 @@ export const BulkTransferAccountTable = ({
       <Table
         isStatic
         allowSelection
+        allowSearch
         data={accountList}
         getRowId={(row) => row?.node?.id as string}
         columns={columns}

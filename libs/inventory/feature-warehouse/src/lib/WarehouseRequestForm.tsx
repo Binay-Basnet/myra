@@ -1,10 +1,11 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast } from '@myra-ui';
 
 import { useSetWareHouseTransferMutation, WarehouseTransferType } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormLayout } from '@coop/shared/form';
 
 import { WarehouseTransferForm } from '../component/WarehouseTransferForm';
 
@@ -40,26 +41,15 @@ export const WarehouseRequestForm = () => {
   const methods = useForm({});
 
   return (
-    <Container minW="container.lg" height="fit-content" bg="gray.0">
-      <Box margin="0px auto" width="100%" zIndex="10">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title="Request Warehouse" />
-        </Box>
-        <Box minH="calc(100vh - 230px)">
-          <FormProvider {...methods}>
-            <form>
-              <WarehouseTransferForm />
-            </form>
-          </FormProvider>
-        </Box>
-      </Box>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title="Warehouse Transfer Request" />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <WarehouseTransferForm />
+        </FormLayout.Form>
+      </FormLayout.Content>
 
-      <Box position="sticky" bottom={0}>
-        <Box>
-          {' '}
-          <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSave} />{' '}
-        </Box>
-      </Box>
-    </Container>
+      <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={handleSave} />
+    </FormLayout>
   );
 };

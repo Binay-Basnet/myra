@@ -49,6 +49,7 @@ export const TableWithoutRef = <T,>(
     isDetailPageTable,
     allowSelection,
     onRowSelect,
+    allowSearch,
   } = props;
 
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -92,12 +93,13 @@ export const TableWithoutRef = <T,>(
           <TableSelectionBar tableInstance={table} columns={columns as Column<T>[]} />
         </Collapse>
       )}
-      {!isStatic && (
+      {(!isStatic || allowSearch) && (
         <TableSearch
           placeholder={searchPlaceholder}
           pagination={pagination}
           size={tableSize}
           setSize={setTableSize}
+          isStatic={isStatic}
         />
       )}
 

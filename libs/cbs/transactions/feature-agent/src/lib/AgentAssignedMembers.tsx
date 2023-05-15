@@ -1,17 +1,22 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { Box, DetailPageContentCard, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { asyncToast, Box, DetailPageContentCard, Text } from '@myra-ui';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
-import { useGetAgentAssignedMemberListDataQuery } from '@coop/cbs/data-access';
+import {
+  useGetAgentAssignedMemberListDataQuery,
+  useRemoveMemberAccountAgentMutation,
+} from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 import { AddMemberModal } from '../components';
 
 export const AgentAssignedMembers = () => {
+  const queryClient = useQueryClient();
+
   const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState<boolean>(false);
 
   // const [isOverrideMemberAlertOpen, setIsOverrideMemberAlertOpen] =
@@ -22,6 +27,8 @@ export const AgentAssignedMembers = () => {
   const router = useRouter();
 
   const id = router?.query?.['id'];
+
+  const { mutateAsync: removeMemberAccount } = useRemoveMemberAccountAgentMutation();
 
   const {
     data,
@@ -50,7 +57,7 @@ export const AgentAssignedMembers = () => {
     { enabled: !!id }
   );
 
-  const rowData = useMemo(() => data?.transaction?.assignedMemberList?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.agent?.assignedMemberList?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -90,7 +97,26 @@ export const AgentAssignedMembers = () => {
         header: '',
         accessorKey: 'actions',
         cell: (props) => (
-          <ActionPopoverComponent items={[]} id={props?.row?.original?.node?.id as string} />
+          <TablePopover
+            node={props?.row?.original?.node}
+            items={[
+              {
+                title: 'Remove Account',
+                onClick: (row) => {
+                  asyncToast({
+                    id: 'remove-agent-assigned member account',
+                    msgs: { loading: 'Removing account', success: 'Account removed' },
+                    promise: removeMemberAccount({
+                      agentID: id as string,
+                      accountId: row?.account?.id as string,
+                    }),
+                    onSuccess: () =>
+                      queryClient.invalidateQueries(['getAgentAssignedMemberListData']),
+                  });
+                },
+              },
+            ]}
+          />
         ),
         meta: {
           width: '60px',
@@ -123,8 +149,8 @@ export const AgentAssignedMembers = () => {
           columns={columns}
           noDataTitle={t['agentAssignedMembersAssignedMembers']}
           pagination={{
-            total: data?.transaction?.assignedMemberList?.totalCount ?? 'Many',
-            pageInfo: data?.transaction?.assignedMemberList?.pageInfo,
+            total: data?.agent?.assignedMemberList?.totalCount ?? 'Many',
+            pageInfo: data?.agent?.assignedMemberList?.pageInfo,
           }}
         />
       </DetailPageContentCard>

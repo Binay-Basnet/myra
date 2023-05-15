@@ -1039,6 +1039,66 @@ export type AgentFilterMapping = {
   branchId: Array<LabelValueArray>;
 };
 
+export type AgentMutation = {
+  addMemberToAgent?: Maybe<DepositLoanAccountData>;
+  agentTodayDeposit?: Maybe<AgentTodayListResult>;
+  agentTodayList?: Maybe<AgentTodayListResult>;
+  removeMemberAccountAgent?: Maybe<RemoveMemberResult>;
+};
+
+export type AgentMutationAddMemberToAgentArgs = {
+  agentId: Scalars['String'];
+  data?: InputMaybe<AssignMembersInput>;
+  override?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AgentMutationAgentTodayDepositArgs = {
+  agentID: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
+};
+
+export type AgentMutationAgentTodayListArgs = {
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
+  id: Scalars['ID'];
+};
+
+export type AgentMutationRemoveMemberAccountAgentArgs = {
+  accountId: Scalars['ID'];
+  agentID: Scalars['ID'];
+};
+
+export type AgentQuery = {
+  agentDetail?: Maybe<AgentRecord>;
+  assignedMemberList: AssignedMembersListConnection;
+  listAgent: AccountAgentListConnection;
+  listAgentTask?: Maybe<AgentTodayListData>;
+  viewAgentList?: Maybe<AgentTransactionViewResult>;
+};
+
+export type AgentQueryAgentDetailArgs = {
+  id: Scalars['ID'];
+};
+
+export type AgentQueryAssignedMemberListArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AgentQueryListAgentArgs = {
+  currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AgentQueryListAgentTaskArgs = {
+  id: Scalars['ID'];
+};
+
+export type AgentQueryViewAgentListArgs = {
+  agentId: Scalars['ID'];
+  date: Scalars['String'];
+};
+
 export type AgentRecord = {
   data?: Maybe<AgentDetails>;
   error?: Maybe<QueryError>;
@@ -13286,6 +13346,7 @@ export type Municipality = {
 export type Mutation = {
   account: DepositLoanAccountMutation;
   accounting: AccountingMutation;
+  agent: AgentMutation;
   alternativeChannel?: Maybe<AlternativeChannelMutation>;
   auth: AuthMutation;
   bank: BankMutation;
@@ -13349,7 +13410,7 @@ export type MyraUser = {
 
 export type MyraUserConnection = {
   edges?: Maybe<Array<MyraUserEdge>>;
-  pageInfo: PageInfo;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -14414,6 +14475,7 @@ export type Query = {
   account: DepositLoanAccountQuery;
   accounting: AccountingQuery;
   administration: AdministrationQuery;
+  agent: AgentQuery;
   allAccounts: AllAccountsQuery;
   alternativeChannel: AlternativeChannelQuery;
   auditLog: AuditLogQuery;
@@ -14637,6 +14699,11 @@ export type RebateTypeInput = {
 export type ReleaseGuaranteeInput = {
   files?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   note: Scalars['String'];
+};
+
+export type RemoveMemberResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type RepaymentDiscount = {
@@ -16839,9 +16906,6 @@ export const TransactionMode = {
 
 export type TransactionMode = typeof TransactionMode[keyof typeof TransactionMode];
 export type TransactionMutation = {
-  addMemberToAgent?: Maybe<DepositLoanAccountData>;
-  agentTodayDeposit?: Maybe<AgentTodayListResult>;
-  agentTodayList?: Maybe<AgentTodayListResult>;
   approveIBT?: Maybe<ApproveIbtResult>;
   bulkDeposit: BulkDepositResult;
   bulkTransfer?: Maybe<BulkTransferResult>;
@@ -16857,22 +16921,6 @@ export type TransactionMutation = {
   tellerTransferAction: TellerTransferActionResult;
   transfer: TransferResult;
   withdraw: WithdrawResult;
-};
-
-export type TransactionMutationAddMemberToAgentArgs = {
-  agentId: Scalars['String'];
-  data?: InputMaybe<AssignMembersInput>;
-  override?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type TransactionMutationAgentTodayDepositArgs = {
-  agentID: Scalars['ID'];
-  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
-};
-
-export type TransactionMutationAgentTodayListArgs = {
-  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
-  id: Scalars['ID'];
 };
 
 export type TransactionMutationApproveIbtArgs = {
@@ -16938,15 +16986,11 @@ export type TransactionMyDayData = {
 };
 
 export type TransactionQuery = {
-  agentDetail?: Maybe<AgentRecord>;
-  assignedMemberList: AssignedMembersListConnection;
   cashInTransit: CashInTransitConnection;
   cashInTransitDetail?: Maybe<CashInTransitViewResult>;
   endOfDayDate: EodDate;
   eodStatus?: Maybe<EodSatusResult>;
   filterMapping?: Maybe<TransactionFilterMapping>;
-  listAgent: AccountAgentListConnection;
-  listAgentTask?: Maybe<AgentTodayListData>;
   listAllTransactions?: Maybe<AllTransactionsConnection>;
   listDeposit: AccountActivityListConnection;
   listServiceCenterCashTransfer?: Maybe<ServiceCentreCashTransferActivity>;
@@ -16957,21 +17001,11 @@ export type TransactionQuery = {
   tellerBankTransfer?: Maybe<TellerBankTransferQuery>;
   transferDetail?: Maybe<TransferDetailViewResult>;
   viewAccountTransfer?: Maybe<AccountTransferViewResult>;
-  viewAgentList?: Maybe<AgentTransactionViewResult>;
   viewDeposit?: Maybe<DepositTransactionViewResult>;
   viewLoanRepayment?: Maybe<LoanRepaymentViewResult>;
   viewServiceCenterCashTransfer?: Maybe<ServiceCenterCashTransferDetail>;
   viewTransactionDetail?: Maybe<AllTransactionViewResult>;
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
-};
-
-export type TransactionQueryAgentDetailArgs = {
-  id: Scalars['ID'];
-};
-
-export type TransactionQueryAssignedMemberListArgs = {
-  filter?: InputMaybe<Filter>;
-  pagination?: InputMaybe<Pagination>;
 };
 
 export type TransactionQueryCashInTransitArgs = {
@@ -16982,16 +17016,6 @@ export type TransactionQueryCashInTransitArgs = {
 
 export type TransactionQueryCashInTransitDetailArgs = {
   transitID: Scalars['ID'];
-};
-
-export type TransactionQueryListAgentArgs = {
-  currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
-  filter?: InputMaybe<Filter>;
-  pagination?: InputMaybe<Pagination>;
-};
-
-export type TransactionQueryListAgentTaskArgs = {
-  id: Scalars['ID'];
 };
 
 export type TransactionQueryListAllTransactionsArgs = {
@@ -17035,11 +17059,6 @@ export type TransactionQueryTransferDetailArgs = {
 
 export type TransactionQueryViewAccountTransferArgs = {
   transactionId: Scalars['ID'];
-};
-
-export type TransactionQueryViewAgentListArgs = {
-  agentId: Scalars['ID'];
-  date: Scalars['String'];
 };
 
 export type TransactionQueryViewDepositArgs = {
@@ -18512,7 +18531,7 @@ export type SetAddMemberToAgentDataMutationVariables = Exact<{
 }>;
 
 export type SetAddMemberToAgentDataMutation = {
-  transaction: {
+  agent: {
     addMemberToAgent?: {
       data?: { id: string } | null;
       error?:
@@ -18532,7 +18551,7 @@ export type SetAgentTodayListDataMutationVariables = Exact<{
 }>;
 
 export type SetAgentTodayListDataMutation = {
-  transaction: {
+  agent: {
     agentTodayList?: {
       error?:
         | MutationError_AuthorizationError_Fragment
@@ -18551,8 +18570,28 @@ export type SetAgentTodayDepositDataMutationVariables = Exact<{
 }>;
 
 export type SetAgentTodayDepositDataMutation = {
-  transaction: {
+  agent: {
     agentTodayDeposit?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type RemoveMemberAccountAgentMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+  agentID: Scalars['ID'];
+}>;
+
+export type RemoveMemberAccountAgentMutation = {
+  agent: {
+    removeMemberAccountAgent?: {
+      recordId?: string | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -23740,7 +23779,7 @@ export type GetAgentListDataQueryVariables = Exact<{
 }>;
 
 export type GetAgentListDataQuery = {
-  transaction: {
+  agent: {
     listAgent: {
       totalCount: number;
       edges?: Array<{
@@ -23768,7 +23807,7 @@ export type GetAgentDetailDataQueryVariables = Exact<{
 }>;
 
 export type GetAgentDetailDataQuery = {
-  transaction: {
+  agent: {
     agentDetail?: {
       data?: {
         id?: string | null;
@@ -23787,7 +23826,7 @@ export type GetAgentAssignedMemberListDataQueryVariables = Exact<{
 }>;
 
 export type GetAgentAssignedMemberListDataQuery = {
-  transaction: {
+  agent: {
     assignedMemberList: {
       totalCount: number;
       edges?: Array<{
@@ -23819,7 +23858,7 @@ export type GetAgentTodayListDataQueryVariables = Exact<{
 }>;
 
 export type GetAgentTodayListDataQuery = {
-  transaction: {
+  agent: {
     listAgentTask?: {
       record?: Array<{
         id?: string | null;
@@ -23828,6 +23867,48 @@ export type GetAgentTodayListDataQuery = {
         member?: { id: string } | null;
         account?: { id: string } | null;
       } | null> | null;
+    } | null;
+  };
+};
+
+export type AgentTransactionDetailQueryVariables = Exact<{
+  agentId: Scalars['ID'];
+  date: Scalars['String'];
+}>;
+
+export type AgentTransactionDetailQuery = {
+  agent: {
+    viewAgentList?: {
+      data?: {
+        transactionId: string;
+        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+        status: string;
+        totalAmount?: string | null;
+        assignedMember?: Array<{
+          transactionId?: string | null;
+          member?: string | null;
+          account?: string | null;
+          amount?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAgentDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAgentDetailQuery = {
+  agent: {
+    agentDetail?: {
+      data?: {
+        id?: string | null;
+        name?: string | null;
+        branch?: string | null;
+        totalMembers?: number | null;
+        profilePicUrl?: string | null;
+      } | null;
     } | null;
   };
 };
@@ -25355,10 +25436,12 @@ export type GetInventoryAdjustmentDetailsQuery = {
           referenceNo: string;
           code: string;
           date: Record<'local' | 'en' | 'np', string>;
+          notes?: string | null;
           modeOfAdjustment: InventoryAdjustmentMode;
           itemDetails?: Array<{
             itemId?: string | null;
             warehouseId?: string | null;
+            itemName?: string | null;
             warehouseName?: string | null;
             newQuantity?: string | null;
             quantityAdjusted?: string | null;
@@ -33125,7 +33208,7 @@ export type GetSettingsUserListDataQuery = {
             branch?: { id: string; name?: string | null } | null;
           } | null;
         }> | null;
-        pageInfo: PaginationFragment;
+        pageInfo?: PaginationFragment | null;
       } | null;
     } | null;
   };
@@ -33836,48 +33919,6 @@ export type TransactionAccountTransferDetailQuery = {
           balance?: string | null;
           balanceType?: BalanceType | null;
         } | null> | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type AgentTransactionDetailQueryVariables = Exact<{
-  agentId: Scalars['ID'];
-  date: Scalars['String'];
-}>;
-
-export type AgentTransactionDetailQuery = {
-  transaction: {
-    viewAgentList?: {
-      data?: {
-        transactionId: string;
-        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
-        status: string;
-        totalAmount?: string | null;
-        assignedMember?: Array<{
-          transactionId?: string | null;
-          member?: string | null;
-          account?: string | null;
-          amount?: string | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetAgentDetailQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetAgentDetailQuery = {
-  transaction: {
-    agentDetail?: {
-      data?: {
-        id?: string | null;
-        name?: string | null;
-        branch?: string | null;
-        totalMembers?: number | null;
-        profilePicUrl?: string | null;
       } | null;
     } | null;
   };
@@ -35684,7 +35725,7 @@ export const usePrintSlipMutation = <TError = unknown, TContext = unknown>(
   );
 export const SetAddMemberToAgentDataDocument = `
     mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput, $override: Boolean) {
-  transaction {
+  agent {
     addMemberToAgent(agentId: $agentId, data: $data, override: $override) {
       data {
         id
@@ -35718,7 +35759,7 @@ export const useSetAddMemberToAgentDataMutation = <TError = unknown, TContext = 
   );
 export const SetAgentTodayListDataDocument = `
     mutation setAgentTodayListData($id: ID!, $data: [AgentTodayListInput]) {
-  transaction {
+  agent {
     agentTodayList(id: $id, data: $data) {
       error {
         ...MutationError
@@ -35749,7 +35790,7 @@ export const useSetAgentTodayListDataMutation = <TError = unknown, TContext = un
   );
 export const SetAgentTodayDepositDataDocument = `
     mutation setAgentTodayDepositData($id: ID!, $data: [AgentTodayListInput]) {
-  transaction {
+  agent {
     agentTodayDeposit(agentID: $id, data: $data) {
       error {
         ...MutationError
@@ -35775,6 +35816,38 @@ export const useSetAgentTodayDepositDataMutation = <TError = unknown, TContext =
     ['setAgentTodayDepositData'],
     useAxios<SetAgentTodayDepositDataMutation, SetAgentTodayDepositDataMutationVariables>(
       SetAgentTodayDepositDataDocument
+    ),
+    options
+  );
+export const RemoveMemberAccountAgentDocument = `
+    mutation removeMemberAccountAgent($accountId: ID!, $agentID: ID!) {
+  agent {
+    removeMemberAccountAgent(accountId: $accountId, agentID: $agentID) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useRemoveMemberAccountAgentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RemoveMemberAccountAgentMutation,
+    TError,
+    RemoveMemberAccountAgentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    RemoveMemberAccountAgentMutation,
+    TError,
+    RemoveMemberAccountAgentMutationVariables,
+    TContext
+  >(
+    ['removeMemberAccountAgent'],
+    useAxios<RemoveMemberAccountAgentMutation, RemoveMemberAccountAgentMutationVariables>(
+      RemoveMemberAccountAgentDocument
     ),
     options
   );
@@ -43526,7 +43599,7 @@ export const useGetAllLocalGovernmentQuery = <TData = GetAllLocalGovernmentQuery
   );
 export const GetAgentListDataDocument = `
     query getAgentListData($filter: Filter, $currentBranchOnly: Boolean, $pagination: Pagination) {
-  transaction {
+  agent {
     listAgent(
       filter: $filter
       currentBranchOnly: $currentBranchOnly
@@ -43567,7 +43640,7 @@ export const useGetAgentListDataQuery = <TData = GetAgentListDataQuery, TError =
   );
 export const GetAgentDetailDataDocument = `
     query getAgentDetailData($id: ID!) {
-  transaction {
+  agent {
     agentDetail(id: $id) {
       data {
         id
@@ -43593,7 +43666,7 @@ export const useGetAgentDetailDataQuery = <TData = GetAgentDetailDataQuery, TErr
   );
 export const GetAgentAssignedMemberListDataDocument = `
     query getAgentAssignedMemberListData($filter: Filter, $pagination: Pagination) {
-  transaction {
+  agent {
     assignedMemberList(filter: $filter, pagination: $pagination) {
       totalCount
       edges {
@@ -43645,7 +43718,7 @@ export const useGetAgentAssignedMemberListDataQuery = <
   );
 export const GetAgentTodayListDataDocument = `
     query getAgentTodayListData($id: ID!) {
-  transaction {
+  agent {
     listAgentTask(id: $id) {
       record {
         id
@@ -43671,6 +43744,67 @@ export const useGetAgentTodayListDataQuery = <TData = GetAgentTodayListDataQuery
     useAxios<GetAgentTodayListDataQuery, GetAgentTodayListDataQueryVariables>(
       GetAgentTodayListDataDocument
     ).bind(null, variables),
+    options
+  );
+export const AgentTransactionDetailDocument = `
+    query agentTransactionDetail($agentId: ID!, $date: String!) {
+  agent {
+    viewAgentList(agentId: $agentId, date: $date) {
+      data {
+        transactionId
+        transactionDate
+        status
+        totalAmount
+        assignedMember {
+          transactionId
+          member
+          account
+          amount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useAgentTransactionDetailQuery = <
+  TData = AgentTransactionDetailQuery,
+  TError = unknown
+>(
+  variables: AgentTransactionDetailQueryVariables,
+  options?: UseQueryOptions<AgentTransactionDetailQuery, TError, TData>
+) =>
+  useQuery<AgentTransactionDetailQuery, TError, TData>(
+    ['agentTransactionDetail', variables],
+    useAxios<AgentTransactionDetailQuery, AgentTransactionDetailQueryVariables>(
+      AgentTransactionDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAgentDetailDocument = `
+    query getAgentDetail($id: ID!) {
+  agent {
+    agentDetail(id: $id) {
+      data {
+        id
+        name
+        branch
+        totalMembers
+        profilePicUrl
+      }
+    }
+  }
+}
+    `;
+export const useGetAgentDetailQuery = <TData = GetAgentDetailQuery, TError = unknown>(
+  variables: GetAgentDetailQueryVariables,
+  options?: UseQueryOptions<GetAgentDetailQuery, TError, TData>
+) =>
+  useQuery<GetAgentDetailQuery, TError, TData>(
+    ['getAgentDetail', variables],
+    useAxios<GetAgentDetailQuery, GetAgentDetailQueryVariables>(GetAgentDetailDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetMeDocument = `
@@ -45561,10 +45695,12 @@ export const GetInventoryAdjustmentDetailsDocument = `
           referenceNo
           code
           date
+          notes
           modeOfAdjustment
           itemDetails {
             itemId
             warehouseId
+            itemName
             warehouseName
             newQuantity
             quantityAdjusted
@@ -56776,67 +56912,6 @@ export const useTransactionAccountTransferDetailQuery = <
     useAxios<TransactionAccountTransferDetailQuery, TransactionAccountTransferDetailQueryVariables>(
       TransactionAccountTransferDetailDocument
     ).bind(null, variables),
-    options
-  );
-export const AgentTransactionDetailDocument = `
-    query agentTransactionDetail($agentId: ID!, $date: String!) {
-  transaction {
-    viewAgentList(agentId: $agentId, date: $date) {
-      data {
-        transactionId
-        transactionDate
-        status
-        totalAmount
-        assignedMember {
-          transactionId
-          member
-          account
-          amount
-        }
-      }
-    }
-  }
-}
-    `;
-export const useAgentTransactionDetailQuery = <
-  TData = AgentTransactionDetailQuery,
-  TError = unknown
->(
-  variables: AgentTransactionDetailQueryVariables,
-  options?: UseQueryOptions<AgentTransactionDetailQuery, TError, TData>
-) =>
-  useQuery<AgentTransactionDetailQuery, TError, TData>(
-    ['agentTransactionDetail', variables],
-    useAxios<AgentTransactionDetailQuery, AgentTransactionDetailQueryVariables>(
-      AgentTransactionDetailDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetAgentDetailDocument = `
-    query getAgentDetail($id: ID!) {
-  transaction {
-    agentDetail(id: $id) {
-      data {
-        id
-        name
-        branch
-        totalMembers
-        profilePicUrl
-      }
-    }
-  }
-}
-    `;
-export const useGetAgentDetailQuery = <TData = GetAgentDetailQuery, TError = unknown>(
-  variables: GetAgentDetailQueryVariables,
-  options?: UseQueryOptions<GetAgentDetailQuery, TError, TData>
-) =>
-  useQuery<GetAgentDetailQuery, TError, TData>(
-    ['getAgentDetail', variables],
-    useAxios<GetAgentDetailQuery, GetAgentDetailQueryVariables>(GetAgentDetailDocument).bind(
-      null,
-      variables
-    ),
     options
   );
 export const LoanRepaymentDetailDocument = `

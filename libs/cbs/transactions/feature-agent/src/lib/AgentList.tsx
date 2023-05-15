@@ -24,7 +24,7 @@ export const AgentList = () => {
     currentBranchOnly: true,
   });
 
-  const rowData = useMemo(() => data?.transaction?.listAgent?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.agent?.listAgent?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -115,8 +115,8 @@ export const AgentList = () => {
         }
         noDataTitle={t['agentListMarketRepresentative']}
         pagination={{
-          total: data?.transaction?.listAgent?.totalCount ?? 'Many',
-          pageInfo: data?.transaction?.listAgent?.pageInfo,
+          total: data?.agent?.listAgent?.totalCount ?? 'Many',
+          pageInfo: data?.agent?.listAgent?.pageInfo,
         }}
         menu="TRANSACTIONS"
       />
