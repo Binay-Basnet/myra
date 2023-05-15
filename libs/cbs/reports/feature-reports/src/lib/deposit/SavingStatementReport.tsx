@@ -101,6 +101,11 @@ export const SavingStatementReport = () => {
               {
                 header: 'Particular',
                 accessorKey: 'particular',
+                cell: (props) => (
+                  <Box whiteSpace="pre-line" my="s4">
+                    {props.getValue() as string}
+                  </Box>
+                ),
                 meta: {
                   width: '100%',
                   Footer: {
