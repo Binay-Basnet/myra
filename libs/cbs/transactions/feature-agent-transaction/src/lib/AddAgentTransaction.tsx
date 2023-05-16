@@ -176,7 +176,7 @@ export const AddAgentTransaction = () => {
   );
 
   return (
-    <FormLayout methods={methods}>
+    <FormLayout methods={methods} hasSidebar>
       <FormLayout.Header
         title={`New Market Representative Transaction - ${featureCode?.newMarketRepresentativeTransaction}`}
         buttonHandler={() => router.back()}
@@ -219,7 +219,14 @@ export const AddAgentTransaction = () => {
 
                         return (
                           <Box display="flex" flexDirection="column" py="s4">
-                            <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
+                            <Text
+                              fontSize="r1"
+                              fontWeight={500}
+                              color="neutralColorLight.Gray-80"
+                              maxW="32ch"
+                              textOverflow="ellipsis"
+                              overflow="hidden"
+                            >
                               {localizedText(selectedMember?.name)}
                             </Text>
                             <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
@@ -239,7 +246,31 @@ export const AddAgentTransaction = () => {
                       header: 'Account',
                       loadOptions: (row) => getMemberAccounts(row?.member),
                       fieldType: 'select',
-                      cellWidth: 'lg',
+                      cellWidth: 'auto',
+                      cell: (row) => {
+                        const selectedMember =
+                          assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+                            (member) => member?.node?.member?.id === row?.member
+                          )?.node?.account;
+
+                        return (
+                          <Box display="flex" flexDirection="column" py="s4">
+                            <Text
+                              fontSize="r1"
+                              fontWeight={500}
+                              color="neutralColorLight.Gray-80"
+                              maxW="32ch"
+                              textOverflow="ellipsis"
+                              overflow="hidden"
+                            >
+                              {selectedMember?.accountName}
+                            </Text>
+                            <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
+                              {selectedMember?.id}
+                            </Text>
+                          </Box>
+                        );
+                      },
                       getDisabled: (row) => {
                         const item = todaysList?.find((account) => account?.member === row?.member);
 
@@ -250,6 +281,7 @@ export const AddAgentTransaction = () => {
                       accessor: 'amount',
                       header: 'Amount',
                       isNumeric: true,
+                      cellWidth: 'lg',
                       getDisabled: (row) => {
                         const item = todaysList?.find((account) => account?.member === row?.member);
 
@@ -275,16 +307,18 @@ export const AddAgentTransaction = () => {
                         );
                       },
                       isNumeric: true,
+                      cellWidth: 'lg',
                     },
                     {
                       accessor: 'paid',
-                      header: 'Payment Confirm',
+                      header: '',
                       fieldType: 'checkbox',
                       getDisabled: (row) => {
                         const item = todaysList?.find((account) => account?.member === row?.member);
 
                         return !!item?.paid;
                       },
+                      cellWidth: 'sm',
                     },
                   ]}
                   defaultData={todaysList}
