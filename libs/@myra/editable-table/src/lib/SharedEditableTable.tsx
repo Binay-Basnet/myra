@@ -15,7 +15,7 @@ import {
   Text,
   Textarea,
 } from '@chakra-ui/react';
-import { AsyncSelect, Select } from 'chakra-react-select';
+import { AsyncSelect, chakraComponents, Select } from 'chakra-react-select';
 import _, { debounce, uniqueId } from 'lodash';
 
 import { Checkbox, Grid, GridItem } from '@myra-ui';
@@ -362,7 +362,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
                 <Box
                   fontWeight="600"
                   fontSize="r1"
-                  textAlign={column.isNumeric ? 'right' : 'left'}
+                  // textAlign={column.isNumeric ? 'right' : 'left'}
                   flexGrow={column.cellWidth === 'auto' ? 1 : 0}
                   flexBasis={flexBasisFunc(column)}
                 >
@@ -799,11 +799,12 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
             }}
           />
         ) : null
-      ) : column.fieldType === 'checkbox' ? null : column.cell ? (
+      ) : column.fieldType === 'checkbox' ? null : column.fieldType ===
+        'select' ? null : column.cell ? (
         <Box px="s8" width="100%" cursor="not-allowed">
           {column.cell(data)}
         </Box>
-      ) : column.fieldType === 'select' ? null : (
+      ) : (
         <EditablePreview
           width="100%"
           mr={column.fieldType === 'percentage' ? 's24' : '0'}
@@ -826,7 +827,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
       )}
 
       {column.fieldType === 'select' ? (
-        <Box w="100%">
+        <Box w="100%" h="100%">
           {column.loadOptions ? (
             <AsyncSelect
               value={asyncOptions?.find((option) => option.value === data[column.accessor])}
@@ -847,6 +848,13 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
             />
           ) : (
             <Select
+              components={{
+                SingleValue: (props) => (
+                  <chakraComponents.SingleValue {...props}>
+                    {column?.cell?.(data)}
+                  </chakraComponents.SingleValue>
+                ),
+              }}
               value={column.selectOptions?.find((option) => option.value === data[column.accessor])}
               onChange={(newValue: { label: string; value: string }) => {
                 dispatch({
