@@ -831,6 +831,13 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
           {column.loadOptions ? (
             <AsyncSelect
               value={asyncOptions?.find((option) => option.value === data[column.accessor])}
+              components={{
+                SingleValue: (props) => (
+                  <chakraComponents.SingleValue {...props}>
+                    {column?.cell?.(data)}
+                  </chakraComponents.SingleValue>
+                ),
+              }}
               onChange={(newValue: { label: string; value: string }) => {
                 dispatch({
                   type: EditableTableActionKind.EDIT,

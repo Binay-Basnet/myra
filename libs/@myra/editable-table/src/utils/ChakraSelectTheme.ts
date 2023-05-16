@@ -75,6 +75,7 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
     display: 'flex',
     alignItems: 'center',
     height: '100%',
+    maxW: '33ch',
     color: state.hasValue ? 'neutralColorLight.Gray-80' : 'neutralColorLight.Gray-50',
     fontSize: 'r1',
   }),
