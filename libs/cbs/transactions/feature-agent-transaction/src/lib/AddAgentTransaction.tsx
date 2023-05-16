@@ -221,6 +221,7 @@ export const AddAgentTransaction = () => {
                           </Box>
                         );
                       },
+                      getDisabled: (row) => row?.paid,
                     },
                     {
                       accessor: 'account',
@@ -228,11 +229,13 @@ export const AddAgentTransaction = () => {
                       loadOptions: (row) => getMemberAccounts(row?.member),
                       fieldType: 'select',
                       cellWidth: 'lg',
+                      getDisabled: (row) => row?.paid,
                     },
                     {
                       accessor: 'amount',
                       header: 'Amount',
                       isNumeric: true,
+                      getDisabled: (row) => row?.paid,
                     },
                     {
                       id: 'installmentAmount',
@@ -258,6 +261,7 @@ export const AddAgentTransaction = () => {
                       accessor: 'paid',
                       header: 'Payment Confirm',
                       fieldType: 'checkbox',
+                      getDisabled: (row) => row?.paid,
                     },
                   ]}
                   defaultData={todaysList}

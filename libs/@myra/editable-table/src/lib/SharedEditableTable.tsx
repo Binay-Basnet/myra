@@ -843,6 +843,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
               chakraStyles={chakraDefaultStyles}
               loadOptions={() => column.loadOptions && column.loadOptions(data)}
               noOptionsMessage={({ inputValue }) => (!inputValue ? 'Type to Search' : 'No Options')}
+              isDisabled={column.getDisabled && column.getDisabled(data)}
             />
           ) : (
             <Select
@@ -859,6 +860,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
               }}
               chakraStyles={chakraDefaultStyles}
               options={column.selectOptions}
+              isDisabled={column.getDisabled && column.getDisabled(data)}
             />
           )}
         </Box>
@@ -875,6 +877,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
               },
             });
           }}
+          isDisabled={column.getDisabled && column.getDisabled(data)}
         />
       ) : (
         <Input
