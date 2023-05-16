@@ -2,16 +2,16 @@ import { ReactElement } from 'react';
 
 import { Box } from '@myra-ui';
 
-import { HRMODULEEmployeeSidebarLayout, HRModuleLayout } from '@coop/hr-module/ui-layouts';
+import { HREmployeeSidebarLayout, HRLayout } from '@coop/hr-module/ui-layouts';
 
 // TODO ( Update this page when design arrives )
 const AccountingQuickTransferList = () => <Box> HR- Employee- Leave</Box>;
 
 AccountingQuickTransferList.getLayout = function getLayout(page: ReactElement) {
   return (
-    <HRModuleLayout>
-      <HRMODULEEmployeeSidebarLayout>{page}</HRMODULEEmployeeSidebarLayout>
-    </HRModuleLayout>
+    <HRLayout>
+      <HREmployeeSidebarLayout>{page}</HREmployeeSidebarLayout>
+    </HRLayout>
   );
 };
 export default AccountingQuickTransferList;

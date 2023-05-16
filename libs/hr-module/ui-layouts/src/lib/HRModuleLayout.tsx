@@ -11,7 +11,7 @@ export interface HRModuleLayoutProps {
   children: React.ReactNode;
 }
 
-export const HRModuleLayout = (props: HRModuleLayoutProps) => {
+export const HRLayout = (props: HRModuleLayoutProps) => {
   const { children } = props;
   return (
     <MainLayoutContainer>
@@ -22,7 +22,7 @@ export const HRModuleLayout = (props: HRModuleLayoutProps) => {
           {
             title: 'Employee',
             icon: BiUserPin,
-            link: '/hr-module/employee/list',
+            link: '/hr/employee/list',
             match: ['employee'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'EMPLOYEE',
@@ -30,7 +30,7 @@ export const HRModuleLayout = (props: HRModuleLayoutProps) => {
           {
             title: 'Employee Lifecycle',
             icon: FiUserCheck,
-            link: '/hr-module/lifecycle/list',
+            link: '/hr/lifecycle/list',
             match: ['lifecycle'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'EMPLOYEE_LIFECYCLE',
@@ -38,7 +38,7 @@ export const HRModuleLayout = (props: HRModuleLayoutProps) => {
           {
             title: 'Payroll',
             icon: FiDollarSign,
-            link: '/hr-module/payroll/list',
+            link: '/hr/payroll/list',
             match: ['payroll'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'PAYROLL',
@@ -46,7 +46,7 @@ export const HRModuleLayout = (props: HRModuleLayoutProps) => {
           {
             title: 'Training',
             icon: FiBookOpen,
-            link: '/hr-module/training/list',
+            link: '/hr/training/list',
             match: ['training'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'TRAINING',
@@ -55,7 +55,7 @@ export const HRModuleLayout = (props: HRModuleLayoutProps) => {
             title: 'Recruitment',
             icon: FiBriefcase,
 
-            link: '/hr-module/recruitment/list',
+            link: '/hr/recruitment/list',
             match: ['recruitment'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'RECRUITMENT',
@@ -64,7 +64,7 @@ export const HRModuleLayout = (props: HRModuleLayoutProps) => {
             title: 'Policy',
             icon: TbScale,
 
-            link: '/hr-module/policy/list',
+            link: '/hr/policy/list',
             match: ['policy'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'POLICY',
@@ -86,4 +86,4 @@ export const HRModuleLayout = (props: HRModuleLayoutProps) => {
   );
 };
 
-export default HRModuleLayout;
+export default HRLayout;

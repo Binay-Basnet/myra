@@ -8,7 +8,7 @@ interface HRMODULEEmployeeSidebarLayoutProps {
   children: React.ReactNode;
 }
 
-export const HRMODULEEmployeeSidebarLayout = ({ children }: HRMODULEEmployeeSidebarLayoutProps) => (
+export const HREmployeeSidebarLayout = ({ children }: HRMODULEEmployeeSidebarLayoutProps) => (
   <Can I="SHOW_IN_MENU" a="CBS_MEMBERS_MEMBER" showError isErrorCentered>
     <MenuContainer>
       <AppSidebar module="HRMODULE" menu="EMPLOYEE" />
