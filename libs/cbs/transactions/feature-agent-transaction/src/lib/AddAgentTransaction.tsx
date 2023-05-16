@@ -12,7 +12,7 @@ import {
 import { BoxContainer } from '@coop/cbs/transactions/ui-containers';
 import { localizedText } from '@coop/cbs/utils';
 import { FormAgentSelect, FormEditableTable, FormLayout } from '@coop/shared/form';
-import { featureCode } from '@coop/shared/utils';
+import { amountConverter, featureCode } from '@coop/shared/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface AddAgentTransactionProps {}
@@ -64,7 +64,7 @@ export const AddAgentTransaction = () => {
       assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.forEach((member) => {
         if (member?.node?.member?.id === mId) {
           tempAccountList.push({
-            label: member?.node?.product?.productName as string,
+            label: member?.node?.account?.accountName as string,
             value: member?.node?.account?.id as string,
           });
         }
@@ -205,18 +205,18 @@ export const AddAgentTransaction = () => {
                       fieldType: 'select',
                       selectOptions: memberListSearchOptions,
                       cell: (row) => {
-                        const memberName =
+                        const selectedMember =
                           assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
                             (member) => member?.node?.member?.id === row?.member
-                          )?.node?.member?.name;
+                          )?.node?.member;
 
                         return (
                           <Box display="flex" flexDirection="column" py="s4">
                             <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
-                              {localizedText(memberName)}
+                              {localizedText(selectedMember?.name)}
                             </Text>
                             <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
-                              {row?.member}
+                              {selectedMember?.code}
                             </Text>
                           </Box>
                         );
@@ -232,6 +232,26 @@ export const AddAgentTransaction = () => {
                     {
                       accessor: 'amount',
                       header: 'Amount',
+                      isNumeric: true,
+                    },
+                    {
+                      id: 'installmentAmount',
+                      header: 'Installment Amount',
+                      accessor: 'account',
+                      cell: (row) => {
+                        const selectedAccount =
+                          assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+                            (item) => item?.node?.account?.id === row?.account
+                          )?.node?.account;
+
+                        return (
+                          <Box textAlign="right">
+                            {selectedAccount?.installmentAmount
+                              ? amountConverter(selectedAccount?.installmentAmount || 0)
+                              : 'N/A'}
+                          </Box>
+                        );
+                      },
                       isNumeric: true,
                     },
                     {

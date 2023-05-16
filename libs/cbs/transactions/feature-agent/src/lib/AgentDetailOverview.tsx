@@ -113,7 +113,7 @@ export const AgentDetailOverview = () => {
       assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.forEach((member) => {
         if (member?.node?.member?.id === mId) {
           tempAccountList.push({
-            label: member?.node?.product?.productName as string,
+            label: member?.node?.account?.accountName as string,
             value: member?.node?.account?.id as string,
           });
         }
@@ -231,18 +231,18 @@ export const AgentDetailOverview = () => {
                     fieldType: 'select',
                     selectOptions: memberListSearchOptions,
                     cell: (row) => {
-                      const memberName =
+                      const selectedMember =
                         assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
                           (member) => member?.node?.member?.id === row?.member
-                        )?.node?.member?.name;
+                        )?.node?.member;
 
                       return (
                         <Box display="flex" flexDirection="column" py="s4">
                           <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
-                            {localizedText(memberName)}
+                            {localizedText(selectedMember?.name)}
                           </Text>
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
-                            {row?.member}
+                            {selectedMember?.code}
                           </Text>
                         </Box>
                       );

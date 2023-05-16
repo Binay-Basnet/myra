@@ -10605,6 +10605,7 @@ export type LoanAccountMutation = {
   editAccountInterest: InterestSetupMutationResult;
   loanCollateralActions?: Maybe<LoanCollateralActionsMutation>;
   loanGuaranteeActions?: Maybe<LoanGuaranteeActionsMutation>;
+  loanProvision?: Maybe<LoanProvisionResult>;
   repayment?: Maybe<LoanRepaymentResult>;
   updateAccountInterest: InterestSetupMutationResult;
   updateLinkedAccount?: Maybe<LoanAccountResult>;
@@ -10639,6 +10640,10 @@ export type LoanAccountMutationEditAccountInterestArgs = {
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
   id: Scalars['ID'];
+};
+
+export type LoanAccountMutationLoanProvisionArgs = {
+  data?: InputMaybe<LoanLossProvisionInput>;
 };
 
 export type LoanAccountMutationRepaymentArgs = {
@@ -10709,6 +10714,7 @@ export type LoanAccountQuery = {
   listAccountInterestRates: InterestSetupListResult;
   loanAccountDetails?: Maybe<LoanAccountDetailsResult>;
   loanPreview?: Maybe<LoanAccountPreviewResult>;
+  loanProvisionAccounts?: Maybe<LoanProvisionCase>;
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
   paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
   remainingPayments?: Maybe<LoanAccountRemainingPaymentData>;
@@ -11287,6 +11293,18 @@ export const LoanInterestMethod = {
 } as const;
 
 export type LoanInterestMethod = typeof LoanInterestMethod[keyof typeof LoanInterestMethod];
+export type LoanLossProvisionInput = {
+  note?: InputMaybe<Scalars['String']>;
+  provision1To12M?: InputMaybe<ProvisionAccount>;
+  provision1To30D?: InputMaybe<ProvisionAccount>;
+  provisionAbove12M?: InputMaybe<ProvisionAccount>;
+  provisionForAbove12Months?: InputMaybe<Scalars['Boolean']>;
+  provisionForGoodLoan?: InputMaybe<Scalars['Boolean']>;
+  provisionForMatured1To12Months?: InputMaybe<Scalars['Boolean']>;
+  provisionForMatured1To30Days?: InputMaybe<Scalars['Boolean']>;
+  provisionGood?: InputMaybe<ProvisionAccount>;
+};
+
 export type LoanNatureOfProductInput = {
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
@@ -11817,6 +11835,33 @@ export type LoanProductsResult = {
   query?: Maybe<LoanProductsQuery>;
   record?: Maybe<LoanProduct>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type LoanProvisionAccount = {
+  amount: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type LoanProvisionCase = {
+  above12Months?: Maybe<Array<Maybe<LoanProvisionAccount>>>;
+  goodLoan?: Maybe<Array<Maybe<LoanProvisionAccount>>>;
+  oneTo12Months?: Maybe<Array<Maybe<LoanProvisionAccount>>>;
+  oneTo30Days?: Maybe<Array<Maybe<LoanProvisionAccount>>>;
+};
+
+export type LoanProvisionInfo = {
+  amount?: Maybe<Scalars['String']>;
+  conditions?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['String']>;
+  provisionCount?: Maybe<Scalars['Int']>;
+};
+
+export type LoanProvisionResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<LoanAccountQuery>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type LoanRepaymentAccountMode = {
@@ -14384,6 +14429,17 @@ export type Province = {
   id: Scalars['Int'];
   name: Scalars['String'];
   nameNp: Scalars['String'];
+};
+
+export type ProvisionAccount = {
+  loanAccounts?: InputMaybe<Array<Scalars['String']>>;
+  provisionMapping?: InputMaybe<ProvisionMapping>;
+  selectAll?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type ProvisionMapping = {
+  from: Scalars['String'];
+  to: Scalars['String'];
 };
 
 export type PurchaseDebitNote = {
@@ -23839,7 +23895,12 @@ export type GetAgentAssignedMemberListDataQuery = {
             name?: Record<'local' | 'en' | 'np', string> | null;
             code: string;
           } | null;
-          account?: { id: string; dues?: { totalDue?: string | null } | null } | null;
+          account?: {
+            id: string;
+            accountName?: string | null;
+            installmentAmount?: string | null;
+            dues?: { totalDue?: string | null } | null;
+          } | null;
           product?: { productName: string } | null;
         } | null;
       } | null> | null;
@@ -23864,8 +23925,12 @@ export type GetAgentTodayListDataQuery = {
         id?: string | null;
         amount?: any | null;
         paid?: boolean | null;
-        member?: { id: string } | null;
-        account?: { id: string } | null;
+        member?: {
+          id: string;
+          code: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        account?: { id: string; installmentAmount?: string | null } | null;
       } | null> | null;
     } | null;
   };
@@ -43679,9 +43744,11 @@ export const GetAgentAssignedMemberListDataDocument = `
           }
           account {
             id
+            accountName
             dues {
               totalDue
             }
+            installmentAmount
           }
           product {
             productName
@@ -43724,9 +43791,12 @@ export const GetAgentTodayListDataDocument = `
         id
         member {
           id
+          code
+          name
         }
         account {
           id
+          installmentAmount
         }
         amount
         paid
