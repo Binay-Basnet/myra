@@ -6,17 +6,13 @@ import axios from 'axios';
 import { logout, saveToken } from './slices/auth-slice';
 
 interface IToken {
-  access: string;
-  refresh: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 interface RefreshTokenResponse {
   data: {
-    auth: {
-      token: {
-        token: IToken;
-      };
-    };
+    resetToken: IToken;
   };
 }
 
@@ -53,17 +49,11 @@ export const useRefreshToken = (url: string) => {
         }`,
       })
       .then((res) => {
-        const tokens = res.data?.data?.auth?.token?.token;
-
+        const tokens = res.data?.data?.resetToken;
         if (tokens) {
-          dispatch(
-            saveToken({
-              accessToken: tokens.access,
-              refreshToken: tokens.refresh,
-            })
-          );
+          dispatch(saveToken(tokens.accessToken));
 
-          return tokens.access;
+          return tokens.accessToken;
         }
         replace('/login');
         throw new Error('Credentials are Expired!!');
