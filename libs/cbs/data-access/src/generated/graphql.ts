@@ -11920,11 +11920,11 @@ export type LoanRepaymentInput = {
   bankVoucher?: InputMaybe<LoanRepaymentBankVoucher>;
   cash?: InputMaybe<DepositCash>;
   closeNotes?: InputMaybe<Scalars['String']>;
-  discount?: InputMaybe<RepaymentDiscount>;
   isSuspicious?: InputMaybe<Scalars['Boolean']>;
   loanAccountId: Scalars['ID'];
   memberId: Scalars['ID'];
   paymentMethod: LoanRepaymentMethod;
+  penalty?: InputMaybe<RepaymentPenaltyInput>;
   suspicionRemarks?: InputMaybe<Scalars['String']>;
   suspicionTopologies?: InputMaybe<Array<InputMaybe<SuspiciousTransactionTopology>>>;
   writeOffLedgerId?: InputMaybe<Scalars['String']>;
@@ -14762,7 +14762,7 @@ export type RemoveMemberResult = {
   recordId?: Maybe<Scalars['String']>;
 };
 
-export type RepaymentDiscount = {
+export type RepaymentPenaltyInput = {
   amount: Scalars['String'];
   doc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
