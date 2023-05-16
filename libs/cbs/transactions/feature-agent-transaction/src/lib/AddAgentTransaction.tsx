@@ -168,6 +168,13 @@ export const AddAgentTransaction = () => {
     });
   };
 
+  const accounts = watch('accounts');
+
+  const isMainButtonDisabled = useMemo(
+    () => !accounts?.find((account: { paid: boolean }) => account?.paid),
+    [accounts]
+  );
+
   return (
     <FormLayout methods={methods}>
       <FormLayout.Header
@@ -221,7 +228,11 @@ export const AddAgentTransaction = () => {
                           </Box>
                         );
                       },
-                      getDisabled: (row) => row?.paid,
+                      getDisabled: (row) => {
+                        const item = todaysList?.find((account) => account?.member === row?.member);
+
+                        return !!item?.paid;
+                      },
                     },
                     {
                       accessor: 'account',
@@ -229,13 +240,21 @@ export const AddAgentTransaction = () => {
                       loadOptions: (row) => getMemberAccounts(row?.member),
                       fieldType: 'select',
                       cellWidth: 'lg',
-                      getDisabled: (row) => row?.paid,
+                      getDisabled: (row) => {
+                        const item = todaysList?.find((account) => account?.member === row?.member);
+
+                        return !!item?.paid;
+                      },
                     },
                     {
                       accessor: 'amount',
                       header: 'Amount',
                       isNumeric: true,
-                      getDisabled: (row) => row?.paid,
+                      getDisabled: (row) => {
+                        const item = todaysList?.find((account) => account?.member === row?.member);
+
+                        return !!item?.paid;
+                      },
                     },
                     {
                       id: 'installmentAmount',
@@ -261,7 +280,11 @@ export const AddAgentTransaction = () => {
                       accessor: 'paid',
                       header: 'Payment Confirm',
                       fieldType: 'checkbox',
-                      getDisabled: (row) => row?.paid,
+                      getDisabled: (row) => {
+                        const item = todaysList?.find((account) => account?.member === row?.member);
+
+                        return !!item?.paid;
+                      },
                     },
                   ]}
                   defaultData={todaysList}
@@ -277,6 +300,7 @@ export const AddAgentTransaction = () => {
       <FormLayout.Footer
         mainButtonLabel="Save Transaction"
         mainButtonHandler={handleSaveTodayList}
+        isMainButtonDisabled={isMainButtonDisabled}
       />
     </FormLayout>
   );
