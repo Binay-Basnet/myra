@@ -42,3 +42,12 @@ mutation generateReport($input: ReportInput!) {
     }
   }
 }
+
+mutation uploadCSV($input: FileUpload) {
+  protectedMutation {
+    uploadCSV(input: $input) {
+      status
+      data
+    }
+  }
+}
