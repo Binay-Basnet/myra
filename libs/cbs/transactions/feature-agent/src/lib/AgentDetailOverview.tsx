@@ -104,7 +104,7 @@ export const AgentDetailOverview = () => {
         ),
       });
     }
-  }, [accounts, assignedMemberListQueryData]);
+  }, [assignedMemberListQueryData]);
 
   const getMemberAccounts = async (mId: string) =>
     new Promise<{ label: string; value: string }[]>((resolve) => {
@@ -254,6 +254,30 @@ export const AgentDetailOverview = () => {
                     loadOptions: (row) => getMemberAccounts(row?.member),
                     fieldType: 'select',
                     cellWidth: 'auto',
+                    cell: (row) => {
+                      const selectedMember =
+                        assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+                          (member) => member?.node?.member?.id === row?.member
+                        )?.node?.account;
+
+                      return (
+                        <Box display="flex" flexDirection="column" py="s4">
+                          <Text
+                            fontSize="r1"
+                            fontWeight={500}
+                            color="neutralColorLight.Gray-80"
+                            maxW="32ch"
+                            textOverflow="ellipsis"
+                            overflow="hidden"
+                          >
+                            {selectedMember?.accountName}
+                          </Text>
+                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
+                            {selectedMember?.id}
+                          </Text>
+                        </Box>
+                      );
+                    },
                   },
                   {
                     accessor: 'amount',

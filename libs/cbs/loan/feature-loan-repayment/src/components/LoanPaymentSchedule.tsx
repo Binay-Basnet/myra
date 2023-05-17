@@ -80,15 +80,22 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     [paymentSchedule]
   );
 
-  useDeepCompareEffect(() => {
-    setTotalFine(
-      overDueInstallments?.reduce((sum, installment) => sum + Number(installment?.penalty ?? 0), 0)
-    );
-  }, [overDueInstallments]);
-
   const currentInstallment = loanInstallments?.find(
     (installment) => installment?.status === 'CURRENT'
   );
+
+  useDeepCompareEffect(() => {
+    let tempFine = overDueInstallments?.reduce(
+      (sum, installment) => sum + Number(installment?.penalty || 0),
+      0
+    );
+
+    tempFine += Number(partialPaidInstallment?.penalty || 0);
+
+    tempFine += Number(currentInstallment?.penalty || 0);
+
+    setTotalFine(tempFine);
+  }, [overDueInstallments, partialPaidInstallment, currentInstallment]);
 
   const partialLoanPaymentSchedule = useMemo(() => {
     let tempInstallments = [...overDueInstallments];
@@ -302,6 +309,14 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
                   {amountConverter(currentInstallment?.fullPrincipal ?? 0)}
                 </Text>
               </Box>
+              {currentInstallment?.penalty && currentInstallment?.penalty !== '0' && (
+                <Box display="flex" gap="s4">
+                  <Text>Fine:</Text>
+                  <Text fontWeight={500} color="danger.500">
+                    {amountConverter(currentInstallment?.penalty ?? 0)}
+                  </Text>
+                </Box>
+              )}
               <Box display="flex" gap="s4">
                 <Text>Interest Till Date:</Text>
                 <Text fontWeight={500}>{amountConverter(currentInstallment?.interest ?? 0)}</Text>
