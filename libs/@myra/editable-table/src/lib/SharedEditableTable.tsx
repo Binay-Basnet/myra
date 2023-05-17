@@ -837,6 +837,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
                     {column?.cell?.(data)}
                   </chakraComponents.SingleValue>
                 ),
+                DropdownIndicator: () => null,
               }}
               onChange={(newValue: { label: string; value: string }) => {
                 dispatch({
@@ -861,6 +862,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
                     {column?.cell?.(data)}
                   </chakraComponents.SingleValue>
                 ),
+                DropdownIndicator: () => null,
               }}
               value={column.selectOptions?.find((option) => option.value === data[column.accessor])}
               onChange={(newValue: { label: string; value: string }) => {

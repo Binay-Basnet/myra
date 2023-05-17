@@ -104,7 +104,7 @@ export const AgentDetailOverview = () => {
         ),
       });
     }
-  }, [accounts, assignedMemberListQueryData]);
+  }, [assignedMemberListQueryData]);
 
   const getMemberAccounts = async (mId: string) =>
     new Promise<{ label: string; value: string }[]>((resolve) => {
