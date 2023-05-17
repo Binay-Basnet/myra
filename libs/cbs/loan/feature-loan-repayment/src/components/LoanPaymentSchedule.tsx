@@ -93,7 +93,13 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
       0
     );
 
-    tempFine += Number(partialPaidInstallment?.penalty || 0);
+    if (
+      !overDueInstallments?.find(
+        (installment) => installment?.installmentNo === partialPaidInstallment?.installmentNo
+      )
+    ) {
+      tempFine += Number(partialPaidInstallment?.penalty || 0);
+    }
 
     tempFine += Number(currentInstallment?.penalty || 0);
 
@@ -140,6 +146,7 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     partialPaidInstallment,
     currentInstallment,
     paymentSchedule?.installments,
+    loanInstallments,
   ]);
 
   const totalOverdueAmount = useMemo(
