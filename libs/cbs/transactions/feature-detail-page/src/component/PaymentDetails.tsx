@@ -38,7 +38,9 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
             title={t['transDetailDepositedBy']}
             subtitle={
               depositDetailData?.depositedBy === 'AGENT'
-                ? agentSlug[depositDetailData?.depositedBy]
+                ? `${agentSlug[depositDetailData?.depositedBy]} (${depositDetailData?.txnUserName})`
+                : depositDetailData?.txnUserName
+                ? `${depositDetailData?.depositedBy} (${depositDetailData?.txnUserName})`
                 : depositDetailData?.depositedBy
             }
           />
@@ -76,7 +78,13 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailWithdrawnBy']}
-            subtitle={withdrawDetailData?.withdrawnBy?.replace(/_/g, ' ')}
+            subtitle={
+              withdrawDetailData?.txnUserName
+                ? `${withdrawDetailData?.withdrawnBy?.replace(/_/g, ' ')} (${
+                    withdrawDetailData?.txnUserName
+                  })`
+                : withdrawDetailData?.withdrawnBy?.replace(/_/g, ' ')
+            }
           />
         </>
       )}

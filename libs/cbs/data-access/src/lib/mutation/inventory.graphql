@@ -101,3 +101,16 @@ mutation setInventoryAdjustment($data: InventoryAdjustmentInput) {
     }
   }
 }
+
+mutation setInventoryWarehouseRequestAcceptHandler($data: TransferRequestInput!) {
+  inventory {
+    warehouse {
+      acceptTransferRequest(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

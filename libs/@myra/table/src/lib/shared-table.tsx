@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Collapse } from '@chakra-ui/react';
 import { ExpandedState } from '@tanstack/react-table';
 
@@ -47,16 +47,24 @@ export const TableWithoutRef = <T,>(
     menu,
     forms,
     isDetailPageTable,
+    allowSelection,
+    onRowSelect,
+    allowSearch,
   } = props;
 
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
 
+  useEffect(() => {
+    onRowSelect && onRowSelect(Object.keys(rowSelection));
+  }, [rowSelection]);
+
   const table = useTable<T>({
     columns,
     data,
     isStatic,
+    allowSelection,
 
     state: {
       rowSelection,
@@ -80,15 +88,18 @@ export const TableWithoutRef = <T,>(
 
   return (
     <>
-      <Collapse in={Object.keys(rowSelection).length !== 0} animateOpacity>
-        <TableSelectionBar tableInstance={table} columns={columns as Column<T>[]} />
-      </Collapse>
       {!isStatic && (
+        <Collapse in={Object.keys(rowSelection).length !== 0} animateOpacity>
+          <TableSelectionBar tableInstance={table} columns={columns as Column<T>[]} />
+        </Collapse>
+      )}
+      {(!isStatic || allowSearch) && (
         <TableSearch
           placeholder={searchPlaceholder}
           pagination={pagination}
           size={tableSize}
           setSize={setTableSize}
+          isStatic={isStatic}
         />
       )}
 

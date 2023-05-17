@@ -74,9 +74,16 @@ export type TableSearchProps = {
   };
   size: 'default' | 'compact' | 'report' | 'small' | 'dataGrid';
   setSize: (size: 'default' | 'compact') => void;
+  isStatic?: boolean;
 };
 
-export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSearchProps) => {
+export const TableSearch = ({
+  placeholder,
+  pagination,
+  size,
+  setSize,
+  isStatic,
+}: TableSearchProps) => {
   const [search, setSearch] = React.useState('');
   const router = useRouter();
   const searchTerm = router?.query['search'] as string;
@@ -125,76 +132,17 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
           }, 800)}
         />
       </InputGroup>
-      <Box
-        px="s16"
-        borderLeft="1px"
-        borderRight="1px"
-        borderColor="border.layout"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Button
-          variant="ghost"
-          colorScheme="gray"
-          color="gray.600"
-          fontSize="r1"
-          display="flex"
-          alignItems="center"
-          gap="s8"
-          onClick={() => router.push({ query: {} })}
-        >
-          <Icon as={RefreshIcon} size="sm" />
-          <span>Reset Table</span>
-        </Button>
-      </Box>
-
-      {pagination?.pageInfo && (
-        <Box
-          px="s16"
-          borderRight="1px"
-          borderColor="border.layout"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          flexShrink={0}
-        >
-          <SmallPagination
-            limit={pageSize}
-            total={pagination?.total ?? 'Many'}
-            pageInfo={pagination.pageInfo}
-          />
-        </Box>
-      )}
-
-      <Box
-        px="s16"
-        borderRight="1px"
-        borderColor="border.layout"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Button
-          variant="ghost"
-          colorScheme="gray"
-          color="gray.600"
-          fontSize="r1"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          gap="s8"
-          onClick={() => {
-            setSize(size === 'default' ? 'compact' : size === 'compact' ? 'default' : 'default');
-          }}
-        >
-          <Icon as={GiHamburgerMenu} size="sm" color="primary.500" />
-          <Text textTransform="capitalize">{size}</Text>
-        </Button>
-      </Box>
-      <Popover placement="bottom-start">
-        <PopoverTrigger>
-          <Box px="s16" display="flex" alignItems="center" justifyContent="center">
+      {!isStatic && (
+        <>
+          <Box
+            px="s16"
+            borderLeft="1px"
+            borderRight="1px"
+            borderColor="border.layout"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
             <Button
               variant="ghost"
               colorScheme="gray"
@@ -203,35 +151,100 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
               display="flex"
               alignItems="center"
               gap="s8"
+              onClick={() => router.push({ query: {} })}
             >
-              <Icon as={OptionsIcon} size="sm" />
-              <span>Options</span>
+              <Icon as={RefreshIcon} size="sm" />
+              <span>Reset Table</span>
             </Button>
           </Box>
-        </PopoverTrigger>
-        <PopoverContent minWidth="180px" w="180px" color="white" _focus={{ boxShadow: 'none' }}>
-          <PopoverBody px="0" py="s8">
-            <Grid>
-              {/* <GridItem px="s16" py="s8" _hover={{ bg: 'gray.100' }} cursor="pointer">
+
+          {pagination?.pageInfo && (
+            <Box
+              px="s16"
+              borderRight="1px"
+              borderColor="border.layout"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flexShrink={0}
+            >
+              <SmallPagination
+                limit={pageSize}
+                total={pagination?.total ?? 'Many'}
+                pageInfo={pagination.pageInfo}
+              />
+            </Box>
+          )}
+
+          <Box
+            px="s16"
+            borderRight="1px"
+            borderColor="border.layout"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Button
+              variant="ghost"
+              colorScheme="gray"
+              color="gray.600"
+              fontSize="r1"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              gap="s8"
+              onClick={() => {
+                setSize(
+                  size === 'default' ? 'compact' : size === 'compact' ? 'default' : 'default'
+                );
+              }}
+            >
+              <Icon as={GiHamburgerMenu} size="sm" color="primary.500" />
+              <Text textTransform="capitalize">{size}</Text>
+            </Button>
+          </Box>
+          <Popover placement="bottom-start">
+            <PopoverTrigger>
+              <Box px="s16" display="flex" alignItems="center" justifyContent="center">
+                <Button
+                  variant="ghost"
+                  colorScheme="gray"
+                  color="gray.600"
+                  fontSize="r1"
+                  display="flex"
+                  alignItems="center"
+                  gap="s8"
+                >
+                  <Icon as={OptionsIcon} size="sm" />
+                  <span>Options</span>
+                </Button>
+              </Box>
+            </PopoverTrigger>
+            <PopoverContent minWidth="180px" w="180px" color="white" _focus={{ boxShadow: 'none' }}>
+              <PopoverBody px="0" py="s8">
+                <Grid>
+                  {/* <GridItem px="s16" py="s8" _hover={{ bg: 'gray.100' }} cursor="pointer">
                 <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
                   Export All (.xlsx)
                 </Text>
               </GridItem> */}
-              <GridItem
-                px="s16"
-                py="s8"
-                _hover={{ bg: 'gray.100' }}
-                cursor="pointer"
-                onClick={() => exportVisibleTableToExcel(excelFileName)}
-              >
-                <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                  Export Visible
-                </Text>
-              </GridItem>
-            </Grid>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
+                  <GridItem
+                    px="s16"
+                    py="s8"
+                    _hover={{ bg: 'gray.100' }}
+                    cursor="pointer"
+                    onClick={() => exportVisibleTableToExcel(excelFileName)}
+                  >
+                    <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                      Export Visible
+                    </Text>
+                  </GridItem>
+                </Grid>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </>
+      )}
     </Box>
   );
 };

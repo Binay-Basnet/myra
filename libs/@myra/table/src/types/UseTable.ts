@@ -12,4 +12,6 @@ export type IUseTableProps<TData> = Omit<
   columns: Column<TData>[];
 
   isStatic: boolean;
+
+  allowSelection?: boolean;
 };

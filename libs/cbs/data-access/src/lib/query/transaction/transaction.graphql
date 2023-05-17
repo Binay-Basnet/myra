@@ -177,6 +177,7 @@ query transactionDepositDetail($transactionId: ID!) {
         totalDebit
         totalCredit
         note
+        txnUserName
       }
     }
   }
@@ -223,6 +224,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
         totalDebit
         totalCredit
         note
+        txnUserName
       }
     }
   }
@@ -275,39 +277,6 @@ query transactionAccountTransferDetail($transactionId: ID!) {
         totalDebit
         totalCredit
         note
-      }
-    }
-  }
-}
-
-query agentTransactionDetail($agentId: ID!, $date: String!) {
-  transaction {
-    viewAgentList(agentId: $agentId, date: $date) {
-      data {
-        transactionId
-        transactionDate
-        status
-        totalAmount
-        assignedMember {
-          transactionId
-          member
-          account
-          amount
-        }
-      }
-    }
-  }
-}
-
-query getAgentDetail($id: ID!) {
-  transaction {
-    agentDetail(id: $id) {
-      data {
-        id
-        name
-        branch
-        totalMembers
-        profilePicUrl
       }
     }
   }

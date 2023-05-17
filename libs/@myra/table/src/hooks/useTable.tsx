@@ -11,7 +11,13 @@ import { IUseTableProps } from '../types/UseTable';
 // eslint-disable-next-line import/no-cycle
 import { getCheckBoxColumn } from '../utils/getCheckBoxColumn';
 
-export const useTable = <T,>({ data, columns, isStatic, ...rest }: IUseTableProps<T>) => {
+export const useTable = <T,>({
+  data,
+  columns,
+  isStatic,
+  allowSelection,
+  ...rest
+}: IUseTableProps<T>) => {
   const columnsWithRowSelection = [getCheckBoxColumn<T>(), ...columns];
 
   const columnsWithoutRowSelection = columns;
@@ -28,8 +34,11 @@ export const useTable = <T,>({ data, columns, isStatic, ...rest }: IUseTableProp
     enableRowSelection: true,
 
     data: data as T[],
-    columns: (isStatic ? columnsWithoutRowSelection : columnsWithRowSelection) as ColumnDef<T>[],
-
+    columns: (allowSelection
+      ? columnsWithRowSelection
+      : isStatic
+      ? columnsWithoutRowSelection
+      : columnsWithRowSelection) as ColumnDef<T>[],
     ...rest,
 
     getCoreRowModel: getCoreRowModel(),

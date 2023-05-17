@@ -80,12 +80,23 @@ export const INVENTORY: NavType = {
           route: ROUTES.INVENTORY_WAREHOUSE_TRASFER_LIST,
           addRoute: ROUTES.INVENTORY_WAREHOUSE_TRANSFER_ADD,
         },
+        {
+          label: 'Warehouse Requests',
+          aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.INVENTORY_WAREHOUSE_REQUEST_LIST,
+          addRoute: ROUTES.INVENTORY_WAREHOUSE_REQUEST_ADD,
+        },
       ],
       forms: [
         {
           label: 'New Warehouse Transfer',
           aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.INVENTORY_WAREHOUSE_TRANSFER_ADD,
+        },
+        {
+          label: 'New Warehouse Request',
+          aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.INVENTORY_WAREHOUSE_REQUEST_ADD,
         },
       ],
     },

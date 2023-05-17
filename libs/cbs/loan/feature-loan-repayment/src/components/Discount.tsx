@@ -9,24 +9,24 @@ import { amountConverter } from '@coop/shared/utils';
 export const Discount = () => {
   const { watch, resetField } = useFormContext();
 
-  const isDiscountApplied = watch('isDiscountApplied');
+  const isFinePaid = watch('isFinePaid');
 
   const payableFine = watch('discount.amount');
 
   // const newFine = useMemo(() => totalFine - Number(discountAmount), [totalFine, discountAmount]);
 
   useEffect(() => {
-    if (!isDiscountApplied) {
-      resetField('discount.amount');
-      resetField('discount.doc');
+    if (!isFinePaid) {
+      resetField('penalty.amount');
+      resetField('penalty.doc');
     }
-  }, [isDiscountApplied]);
+  }, [isFinePaid]);
 
   return (
     <>
-      <FormCheckbox name="isDiscountApplied" label="Fine to be paid" />
+      <FormCheckbox name="isFinePaid" label="Fine to be paid" />
 
-      {isDiscountApplied && (
+      {isFinePaid && (
         <Box
           display="flex"
           flexDirection="column"
@@ -35,9 +35,9 @@ export const Discount = () => {
           backgroundColor="highlight.500"
         >
           <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-            <FormAmountInput name="discount.amount" label="Payable Fine" />
+            <FormAmountInput name="penalty.amount" label="Payable Fine" />
 
-            <FormFileInput name="discount.doc" label="File Upload" size="sm" />
+            <FormFileInput name="penalty.doc" label="File Upload" size="sm" />
           </Grid>
 
           {payableFine ? (

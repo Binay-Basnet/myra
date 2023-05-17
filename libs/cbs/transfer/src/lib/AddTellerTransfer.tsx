@@ -51,7 +51,11 @@ export const AddTellerTransfer = () => {
     defaultValues: { srcTellerID: [user?.firstName?.local, user?.lastName?.local].join(' ') },
   });
 
-  const { watch, getValues } = methods;
+  const {
+    watch,
+    getValues,
+    formState: { isDirty },
+  } = methods;
 
   const { mutateAsync: setVaultTransfer } = useSetTellerTransferDataMutation();
 
@@ -95,7 +99,10 @@ export const AddTellerTransfer = () => {
 
   return (
     <FormLayout methods={methods}>
-      <FormLayout.Header title={`New Teller Transfer - ${featureCode.newTellerTransfer}`} />
+      <FormLayout.Header
+        title={`New Teller Transfer - ${featureCode.newTellerTransfer}`}
+        isFormDirty={isDirty}
+      />
 
       <FormLayout.Content>
         <FormLayout.Form>

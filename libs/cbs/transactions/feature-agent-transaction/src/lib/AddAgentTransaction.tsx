@@ -12,7 +12,7 @@ import {
 import { BoxContainer } from '@coop/cbs/transactions/ui-containers';
 import { localizedText } from '@coop/cbs/utils';
 import { FormAgentSelect, FormEditableTable, FormLayout } from '@coop/shared/form';
-import { featureCode } from '@coop/shared/utils';
+import { amountConverter, featureCode } from '@coop/shared/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface AddAgentTransactionProps {}
@@ -30,7 +30,11 @@ export const AddAgentTransaction = () => {
 
   const methods = useForm();
 
-  const { watch, getValues } = methods;
+  const {
+    watch,
+    getValues,
+    formState: { isDirty },
+  } = methods;
 
   const agentId: string = watch('agentId');
 
@@ -61,10 +65,10 @@ export const AddAgentTransaction = () => {
     new Promise<{ label: string; value: string }[]>((resolve) => {
       const tempAccountList: { label: string; value: string }[] = [];
 
-      assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.forEach((member) => {
+      assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.forEach((member) => {
         if (member?.node?.member?.id === mId) {
           tempAccountList.push({
-            label: member?.node?.product?.productName as string,
+            label: member?.node?.account?.accountName as string,
             value: member?.node?.account?.id as string,
           });
         }
@@ -82,7 +86,7 @@ export const AddAgentTransaction = () => {
 
   const todaysList = useMemo(
     () =>
-      agentTodayListQueryData?.transaction?.listAgentTask?.record?.map((record) => ({
+      agentTodayListQueryData?.agent?.listAgentTask?.record?.map((record) => ({
         id: record?.id,
         member: record?.member?.id as string,
         account: record?.account?.id as string,
@@ -116,7 +120,7 @@ export const AddAgentTransaction = () => {
     const tempMembers: { label: string; value: string }[] = [];
     const tempIds: string[] = [];
 
-    assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.forEach((member) => {
+    assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.forEach((member) => {
       if (!tempIds.includes(member?.node?.member?.id as string)) {
         tempIds.push(member?.node?.member?.id as string);
         tempMembers.push({
@@ -168,11 +172,19 @@ export const AddAgentTransaction = () => {
     });
   };
 
+  const accounts = watch('accounts');
+
+  const isMainButtonDisabled = useMemo(
+    () => !accounts?.find((account: { paid: boolean }) => account?.paid),
+    [accounts]
+  );
+
   return (
-    <FormLayout methods={methods}>
+    <FormLayout methods={methods} hasSidebar>
       <FormLayout.Header
         title={`New Market Representative Transaction - ${featureCode?.newMarketRepresentativeTransaction}`}
         buttonHandler={() => router.back()}
+        isFormDirty={isDirty}
       />
 
       <FormLayout.Content>
@@ -205,21 +217,35 @@ export const AddAgentTransaction = () => {
                       fieldType: 'select',
                       selectOptions: memberListSearchOptions,
                       cell: (row) => {
-                        const memberName =
-                          assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
+                        const selectedMember =
+                          assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
                             (member) => member?.node?.member?.id === row?.member
-                          )?.node?.member?.name;
+                          )?.node?.member;
 
                         return (
                           <Box display="flex" flexDirection="column" py="s4">
-                            <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
-                              {localizedText(memberName)}
+                            <Text
+                              fontSize="r1"
+                              fontWeight={500}
+                              color="neutralColorLight.Gray-80"
+                              maxW="32ch"
+                              textOverflow="ellipsis"
+                              overflow="hidden"
+                            >
+                              {localizedText(selectedMember?.name)}
                             </Text>
                             <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
-                              {row?.member}
+                              {selectedMember?.code}
                             </Text>
                           </Box>
                         );
+                      },
+                      getDisabled: (row) => {
+                        const item = todaysList?.find(
+                          (account) => account?.account === row?.account
+                        );
+
+                        return !!item?.paid;
                       },
                     },
                     {
@@ -227,17 +253,85 @@ export const AddAgentTransaction = () => {
                       header: 'Account',
                       loadOptions: (row) => getMemberAccounts(row?.member),
                       fieldType: 'select',
-                      cellWidth: 'lg',
+                      cellWidth: 'auto',
+                      cell: (row) => {
+                        const selectedMember =
+                          assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+                            (member) => member?.node?.account?.id === row?.account
+                          )?.node?.account;
+
+                        return (
+                          <Box display="flex" flexDirection="column" py="s4">
+                            <Text
+                              fontSize="r1"
+                              fontWeight={500}
+                              color="neutralColorLight.Gray-80"
+                              maxW="32ch"
+                              textOverflow="ellipsis"
+                              overflow="hidden"
+                            >
+                              {selectedMember?.accountName}
+                            </Text>
+                            <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
+                              {selectedMember?.id}
+                            </Text>
+                          </Box>
+                        );
+                      },
+                      getDisabled: (row) => {
+                        const item = todaysList?.find(
+                          (account) => account?.account === row?.account
+                        );
+
+                        return !!item?.paid;
+                      },
                     },
                     {
                       accessor: 'amount',
                       header: 'Amount',
                       isNumeric: true,
+                      cellWidth: 'lg',
+                      getDisabled: (row) => {
+                        const item = todaysList?.find(
+                          (account) => account?.account === row?.account
+                        );
+
+                        return !!item?.paid;
+                      },
+                    },
+                    {
+                      id: 'installmentAmount',
+                      header: 'Installment Amount',
+                      accessor: 'account',
+                      cell: (row) => {
+                        const selectedAccount =
+                          assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+                            (item) => item?.node?.account?.id === row?.account
+                          )?.node?.account;
+
+                        return (
+                          <Box textAlign="right">
+                            {selectedAccount?.installmentAmount
+                              ? amountConverter(selectedAccount?.installmentAmount || 0)
+                              : 'N/A'}
+                          </Box>
+                        );
+                      },
+                      isNumeric: true,
+                      cellWidth: 'lg',
                     },
                     {
                       accessor: 'paid',
-                      header: 'Payment Confirm',
+                      header: '',
                       fieldType: 'checkbox',
+                      getDisabled: (row) => {
+                        const item = todaysList?.find(
+                          (account) => account?.account === row?.account
+                        );
+
+                        return !!item?.paid;
+                      },
+                      cellWidth: 'sm',
                     },
                   ]}
                   defaultData={todaysList}
@@ -253,6 +347,7 @@ export const AddAgentTransaction = () => {
       <FormLayout.Footer
         mainButtonLabel="Save Transaction"
         mainButtonHandler={handleSaveTodayList}
+        isMainButtonDisabled={isMainButtonDisabled}
       />
     </FormLayout>
   );

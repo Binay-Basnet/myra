@@ -69,7 +69,12 @@ export const NewLoanApplication = () => {
       interestAuthority: InterestAuthority?.Default,
     },
   });
-  const { watch, resetField, setValue } = methods;
+  const {
+    watch,
+    resetField,
+    setValue,
+    formState: { isDirty },
+  } = methods;
 
   const memberId = watch('memberId');
   const loanType = watch('productType');
@@ -269,7 +274,10 @@ export const NewLoanApplication = () => {
 
   return (
     <FormLayout methods={methods} hasSidebar={!!memberId}>
-      <FormLayout.Header title={`New Loan Application - ${featureCode.newLoanApplication} `} />
+      <FormLayout.Header
+        title={`New Loan Application - ${featureCode.newLoanApplication} `}
+        isFormDirty={isDirty}
+      />
 
       <FormLayout.Content>
         <FormLayout.Form>

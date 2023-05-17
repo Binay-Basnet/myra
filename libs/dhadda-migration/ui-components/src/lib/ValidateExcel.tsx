@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { validateExcel } from '@dhadda-migration/data-access';
@@ -7,10 +6,13 @@ import isEmpty from 'lodash/isEmpty';
 
 import { Box, Button, Text, toast } from '@myra-ui';
 
-export const ValidateExcel = (props: { inputStatus: boolean }) => {
-  const { inputStatus } = props;
+export const ValidateExcel = (props: {
+  inputStatus: boolean;
+  errorData: { data: { error_message: string; sheet_name: string }; row: number }[];
+  setErrorData: (value: []) => void;
+}) => {
+  const { inputStatus, errorData, setErrorData } = props;
   const router = useRouter();
-  const [errorData, setErrorData] = useState([]);
   const queryClient = useQueryClient();
 
   const alteredErrorData = errorData?.map(

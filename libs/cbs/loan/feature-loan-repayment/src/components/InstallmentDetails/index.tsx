@@ -70,7 +70,7 @@ export const InstallmentData = ({
   //   [overDueInstallments]
   // );
 
-  const payableFine = watch('discount.amount');
+  const payableFine = watch('penalty.amount');
 
   const discountedFine = Number(payableFine ?? 0);
 

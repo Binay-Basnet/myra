@@ -1,15 +1,16 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
-import { Box, Column, Table } from '@myra-ui';
+import { Column, PageHeader, Table } from '@myra-ui';
 
 import { useGetInventoryAdjustmentListQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
-
-import { TableListPageHeader } from '../../TableListPageHeader';
 
 export const InventoryAdjustmentsTableList = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+
   const { data, isFetching } = useGetInventoryAdjustmentListQuery({
     pagination: getPaginationQuery(),
   });
@@ -44,11 +45,12 @@ export const InventoryAdjustmentsTableList = () => {
 
   return (
     <>
-      <Box position="sticky" top="0px">
-        <TableListPageHeader heading="Items" />
-      </Box>
+      <PageHeader heading="Inventory Adjustment Table" />
       <Table
         isLoading={isFetching}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.INVENTORY_INVENTORY_ADJUSTMENT_DETAILS}?id=${row?.node?.id}`);
+        }}
         data={rowItems}
         columns={columns}
         pagination={{

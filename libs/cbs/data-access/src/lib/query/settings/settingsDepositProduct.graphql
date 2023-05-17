@@ -401,6 +401,7 @@ query getSavingsAccountList($paginate: Pagination, $filter: Filter) {
                 code
                 type
                 name
+                profilePicUrl
               }
               balance
               interestAccured

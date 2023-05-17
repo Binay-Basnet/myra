@@ -103,6 +103,8 @@ export const ROUTES = {
   CBS_OTHERS_SHARE_DIVIDEND_POSTING_LIST: '/cbs/others/share-dividend-posting/list',
   CBS_OTHERS_FUND_MANAGEMENT_LIST: '/cbs/others/fund-management/list',
   CBS_OTHERS_SHARE_DIVIDEND_POSTING_ADD: '/cbs/others/share-dividend-posting/add',
+  CBS_OTHERS_BULK_TRANSFERS_LIST: '/cbs/others/bulk-transfer/list',
+  CBS_OTHERS_BULK_TRANSFERS_ADD: '/cbs/others/bulk-transfer/add',
 
   /* SETTINGS APP & NOT INDEXED BY GLOBAL SEARCH */
 
@@ -318,6 +320,7 @@ export const ROUTES = {
   INVENTORY_REGISTER: '/inventory/inventory/register/list',
   INVENTORY_INVENTORY_ADJUSTMENT: '/inventory/inventory/adjustments/list',
   INVENTORY_INVENTORY_ADJUSTMENT_ADD: '/inventory/inventory/adjustments/add',
+  INVENTORY_INVENTORY_ADJUSTMENT_DETAILS: '/inventory/inventory/adjustments/details',
 
   INVENTORY_ITEMS: '/inventory/items/items/list',
   INVENTORY_ITEMS_ADD: '/inventory/items/items/add',
@@ -327,6 +330,8 @@ export const ROUTES = {
   INVENTORY_WAREHOUSE: '/inventory/warehouse/list',
   INVENTORY_WAREHOUSE_TRASFER_LIST: '/inventory/warehouse/transfer/list',
   INVENTORY_WAREHOUSE_TRANSFER_ADD: '/inventory/warehouse/transfer/add',
+  INVENTORY_WAREHOUSE_REQUEST_LIST: '/inventory/warehouse/request/list',
+  INVENTORY_WAREHOUSE_REQUEST_ADD: '/inventory/warehouse/request/add',
   INVENTORY_ITEMS_CATEGORY: '/inventory/items/category/list',
   INVENTORY_ITEMS_UNIT_LIST: '/inventory/items/units/list',
   INVENTORY_SUPPLIERS_LIST: '/inventory/suppliers/list',

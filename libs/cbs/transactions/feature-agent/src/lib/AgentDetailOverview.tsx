@@ -71,11 +71,11 @@ export const AgentDetailOverview = () => {
   const accounts = watch('accounts');
 
   useEffect(() => {
-    if (agentTodayListQueryData?.transaction?.listAgentTask?.record?.length) {
+    if (agentTodayListQueryData?.agent?.listAgentTask?.record?.length) {
       setShowMemberTable(true);
 
       reset({
-        accounts: agentTodayListQueryData?.transaction?.listAgentTask?.record?.map((record) => ({
+        accounts: agentTodayListQueryData?.agent?.listAgentTask?.record?.map((record) => ({
           id: record?.id,
           member: record?.member?.id,
           account: record?.account?.id,
@@ -90,10 +90,9 @@ export const AgentDetailOverview = () => {
       reset({
         accounts: accounts?.map(
           (record: { id: string; account: string | undefined; member: any; amount: any }) => {
-            const account =
-              assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
-                (member) => member?.node?.account?.id === record?.account
-              );
+            const account = assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+              (member) => member?.node?.account?.id === record?.account
+            );
 
             return {
               id: record?.id,
@@ -105,16 +104,16 @@ export const AgentDetailOverview = () => {
         ),
       });
     }
-  }, [accounts, assignedMemberListQueryData]);
+  }, [assignedMemberListQueryData]);
 
   const getMemberAccounts = async (mId: string) =>
     new Promise<{ label: string; value: string }[]>((resolve) => {
       const tempAccountList: { label: string; value: string }[] = [];
 
-      assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.forEach((member) => {
+      assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.forEach((member) => {
         if (member?.node?.member?.id === mId) {
           tempAccountList.push({
-            label: member?.node?.product?.productName as string,
+            label: member?.node?.account?.accountName as string,
             value: member?.node?.account?.id as string,
           });
         }
@@ -127,7 +126,7 @@ export const AgentDetailOverview = () => {
     const tempMembers: { label: string; value: string }[] = [];
     const tempIds: string[] = [];
 
-    assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.forEach((member) => {
+    assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.forEach((member) => {
       if (!tempIds.includes(member?.node?.member?.id as string)) {
         tempIds.push(member?.node?.member?.id as string);
         tempMembers.push({
@@ -179,9 +178,9 @@ export const AgentDetailOverview = () => {
   };
 
   const handleDiscardChanges = () => {
-    if (agentTodayListQueryData?.transaction?.listAgentTask?.record?.length) {
+    if (agentTodayListQueryData?.agent?.listAgentTask?.record?.length) {
       reset({
-        accounts: agentTodayListQueryData?.transaction?.listAgentTask?.record?.map((record) => ({
+        accounts: agentTodayListQueryData?.agent?.listAgentTask?.record?.map((record) => ({
           member: record?.member?.id,
           account: record?.account?.id,
           amount: record?.amount,
@@ -232,18 +231,18 @@ export const AgentDetailOverview = () => {
                     fieldType: 'select',
                     selectOptions: memberListSearchOptions,
                     cell: (row) => {
-                      const memberName =
-                        assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
+                      const selectedMember =
+                        assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
                           (member) => member?.node?.member?.id === row?.member
-                        )?.node?.member?.name;
+                        )?.node?.member;
 
                       return (
                         <Box display="flex" flexDirection="column" py="s4">
                           <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
-                            {localizedText(memberName)}
+                            {localizedText(selectedMember?.name)}
                           </Text>
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
-                            {row?.member}
+                            {selectedMember?.code}
                           </Text>
                         </Box>
                       );
@@ -255,6 +254,30 @@ export const AgentDetailOverview = () => {
                     loadOptions: (row) => getMemberAccounts(row?.member),
                     fieldType: 'select',
                     cellWidth: 'auto',
+                    cell: (row) => {
+                      const selectedMember =
+                        assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+                          (member) => member?.node?.account?.id === row?.account
+                        )?.node?.account;
+
+                      return (
+                        <Box display="flex" flexDirection="column" py="s4">
+                          <Text
+                            fontSize="r1"
+                            fontWeight={500}
+                            color="neutralColorLight.Gray-80"
+                            maxW="32ch"
+                            textOverflow="ellipsis"
+                            overflow="hidden"
+                          >
+                            {selectedMember?.accountName}
+                          </Text>
+                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
+                            {selectedMember?.id}
+                          </Text>
+                        </Box>
+                      );
+                    },
                   },
                   {
                     accessor: 'amount',

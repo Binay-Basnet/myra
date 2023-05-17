@@ -15,7 +15,7 @@ import {
   Text,
   Textarea,
 } from '@chakra-ui/react';
-import { AsyncSelect, Select } from 'chakra-react-select';
+import { AsyncSelect, chakraComponents, Select } from 'chakra-react-select';
 import _, { debounce, uniqueId } from 'lodash';
 
 import { Checkbox, Grid, GridItem } from '@myra-ui';
@@ -362,7 +362,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
                 <Box
                   fontWeight="600"
                   fontSize="r1"
-                  textAlign={column.isNumeric ? 'right' : 'left'}
+                  // textAlign={column.isNumeric ? 'right' : 'left'}
                   flexGrow={column.cellWidth === 'auto' ? 1 : 0}
                   flexBasis={flexBasisFunc(column)}
                 >
@@ -763,10 +763,10 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
           : column.accessorFn
           ? column.accessorFn(data)
             ? String(column.accessorFn(data))
-            : undefined
+            : ''
           : data[column.accessor]
           ? (data[column.accessor] as string)
-          : undefined
+          : ''
       }
     >
       {column.fieldType === 'modal' ? (
@@ -799,11 +799,12 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
             }}
           />
         ) : null
-      ) : column.fieldType === 'checkbox' ? null : column.cell ? (
+      ) : column.fieldType === 'checkbox' ? null : column.fieldType ===
+        'select' ? null : column.cell ? (
         <Box px="s8" width="100%" cursor="not-allowed">
           {column.cell(data)}
         </Box>
-      ) : column.fieldType === 'select' ? null : (
+      ) : (
         <EditablePreview
           width="100%"
           mr={column.fieldType === 'percentage' ? 's24' : '0'}
@@ -826,10 +827,20 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
       )}
 
       {column.fieldType === 'select' ? (
-        <Box w="100%">
+        <Box w="100%" h="100%">
           {column.loadOptions ? (
             <AsyncSelect
               value={asyncOptions?.find((option) => option.value === data[column.accessor])}
+              components={{
+                SingleValue: column?.cell
+                  ? (props) => (
+                      <chakraComponents.SingleValue {...props}>
+                        {column?.cell?.(data)}
+                      </chakraComponents.SingleValue>
+                    )
+                  : (props) => <chakraComponents.SingleValue {...props} />,
+                DropdownIndicator: () => null,
+              }}
               onChange={(newValue: { label: string; value: string }) => {
                 dispatch({
                   type: EditableTableActionKind.EDIT,
@@ -843,9 +854,20 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
               chakraStyles={chakraDefaultStyles}
               loadOptions={() => column.loadOptions && column.loadOptions(data)}
               noOptionsMessage={({ inputValue }) => (!inputValue ? 'Type to Search' : 'No Options')}
+              isDisabled={column.getDisabled && column.getDisabled(data)}
             />
           ) : (
             <Select
+              components={{
+                SingleValue: column?.cell
+                  ? (props) => (
+                      <chakraComponents.SingleValue {...props}>
+                        {column?.cell?.(data)}
+                      </chakraComponents.SingleValue>
+                    )
+                  : (props) => <chakraComponents.SingleValue {...props} />,
+                DropdownIndicator: () => null,
+              }}
               value={column.selectOptions?.find((option) => option.value === data[column.accessor])}
               onChange={(newValue: { label: string; value: string }) => {
                 dispatch({
@@ -859,6 +881,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
               }}
               chakraStyles={chakraDefaultStyles}
               options={column.selectOptions}
+              isDisabled={column.getDisabled && column.getDisabled(data)}
             />
           )}
         </Box>
@@ -875,6 +898,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
               },
             });
           }}
+          isDisabled={column.getDisabled && column.getDisabled(data)}
         />
       ) : (
         <Input
@@ -893,7 +917,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
           border="none"
           onWheel={(e) => e.currentTarget.blur()}
           borderRadius="0"
-          value={String(data[column.accessor])}
+          // value={data[column.accessor] !== '' ? String(data[column.accessor]) : '1234'}
           onChange={(e) => {
             dispatch({
               type: EditableTableActionKind.EDIT,

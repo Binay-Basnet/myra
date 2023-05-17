@@ -84,7 +84,11 @@ export const LoanRepayment = () => {
     },
   });
 
-  const { getValues, watch } = methods;
+  const {
+    getValues,
+    watch,
+    formState: { isDirty },
+  } = methods;
   const memberId = watch('memberId');
   const loanAccountId = watch('loanAccountId');
   const isDisableDenomination = watch('cash.disableDenomination');
@@ -138,7 +142,7 @@ export const LoanRepayment = () => {
   };
   const handleSubmit = () => {
     const values = getValues();
-    let filteredValues = omit(values, ['isDiscountApplied']);
+    let filteredValues = omit(values, ['isFinePaid']);
 
     if (values.paymentMethod === LoanRepaymentMethod.LocSaving) {
       filteredValues = omit({ ...filteredValues }, ['account', 'bankVoucher', 'cash']);
@@ -174,6 +178,11 @@ export const LoanRepayment = () => {
         account: omit({ ...filteredValues.account }, ['amount']) as LoanRepaymentAccountMode,
       };
     }
+
+    if (values.paymentMethod === LoanRepaymentMethod.WriteOff) {
+      filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash', 'account']);
+    }
+
     // asyncToast({
     //   id: 'share-settings-transfer-id',
     //   msgs: {
@@ -193,10 +202,6 @@ export const LoanRepayment = () => {
 
     filteredValues = {
       ...filteredValues,
-      discount: {
-        ...filteredValues?.discount,
-        amount: String(totalFine - Number(filteredValues?.discount?.amount || 0)),
-      },
     };
 
     return filteredValues as LoanRepaymentInput;
@@ -269,7 +274,10 @@ export const LoanRepayment = () => {
 
   return (
     <FormLayout methods={methods} hasSidebar={!!memberId}>
-      <FormLayout.Header title={`New Loan Repayment - ${featureCode.newLoanRepayment} `} />
+      <FormLayout.Header
+        title={`New Loan Repayment - ${featureCode.newLoanRepayment} `}
+        isFormDirty={isDirty}
+      />
 
       <FormLayout.Content>
         <FormLayout.Form>

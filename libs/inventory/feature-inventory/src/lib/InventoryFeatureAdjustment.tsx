@@ -1,17 +1,21 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useMemo } from 'react';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { asyncToast } from '@myra-ui';
 
 import {
   InputMaybe,
   InventoryAdjustmentInput,
   InventoryAdjustmentItemDetails,
   InventoryAdjustmentMode,
+  useGetInventoryItemsListQuery,
+  useGetWarehouseListQuery,
   useSetInventoryAdjustmentMutation,
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormLayout } from '@coop/shared/form';
 
 import InventoryAdjustmentForm from '../component/form/InventoryAdjustmentForm';
 import { PurchaseAdjustmentTableType } from '../component/form/InventoryAdjustmentTable';
@@ -24,8 +28,43 @@ type CustomInventoryAdjustmentInput = {
 
 export const InventoryFeatureAdjustment = () => {
   const router = useRouter();
-  const methods = useForm<CustomInventoryAdjustmentInput>({});
+  const methods = useForm<CustomInventoryAdjustmentInput>({
+    defaultValues: {
+      modeOfAdjustment: InventoryAdjustmentMode?.Quantity,
+    },
+  });
   const { mutateAsync: AddAdjustments } = useSetInventoryAdjustmentMutation();
+  const { data: inventoryItems } = useGetInventoryItemsListQuery({
+    pagination: {
+      after: '',
+      first: -1,
+    },
+  });
+  const inventoryItemsData = inventoryItems?.inventory?.items?.list?.edges;
+
+  const itemsSearchOptions = useMemo(
+    () =>
+      inventoryItemsData?.map((account) => ({
+        label: account?.node?.name as string,
+        value: account?.node?.id as string,
+      })),
+    [inventoryItemsData]
+  );
+  const { data: wareHouse } = useGetWarehouseListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+  const warehouseData = wareHouse?.inventory?.warehouse?.listWarehouses?.edges;
+  const wareHouseSearchOptions = useMemo(
+    () =>
+      warehouseData?.map((account) => ({
+        label: account?.node?.name as string,
+        value: account?.node?.id as string,
+      })),
+    [warehouseData]
+  );
 
   const handleSave = () => {
     const values = methods.getValues();
@@ -37,6 +76,9 @@ export const InventoryFeatureAdjustment = () => {
       mode === InventoryAdjustmentMode?.Quantity
         ? tableData?.map((data) => ({
             itemId: data?.itemId,
+            itemName: itemsSearchOptions?.find((d) => d?.value === data?.itemId)?.label,
+            warehouseName: wareHouseSearchOptions?.find((d) => d?.value === data?.warehouseId)
+              ?.label,
             warehouseId: data?.warehouseId,
 
             newQuantity: String(data?.newQuantity),
@@ -45,8 +87,9 @@ export const InventoryFeatureAdjustment = () => {
           })) || []
         : tableValueData?.map((data) => ({
             itemId: data?.itemId,
-
+            itemName: itemsSearchOptions?.find((d) => d?.value === data?.itemId)?.label,
             newValue: String(data?.newValue),
+            valueAdjusted: String(data?.quantityAdjusted),
           })) || [];
     const filteredValues = omit({ ...values }, ['valueItems']);
 
@@ -70,26 +113,14 @@ export const InventoryFeatureAdjustment = () => {
   };
 
   return (
-    <Container minW="container.lg" height="fit-content" bg="gray.0">
-      <Box margin="0px auto" width="100%" zIndex="10">
-        <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title="Inventory Adjustment" />
-        </Box>
-        <Box minH="calc(100vh - 230px)">
-          <FormProvider {...methods}>
-            <form>
-              <InventoryAdjustmentForm />
-            </form>
-          </FormProvider>
-        </Box>
-      </Box>
-
-      <Box position="sticky" bottom={0}>
-        <Box>
-          {' '}
-          <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSave} />{' '}
-        </Box>
-      </Box>
-    </Container>
+    <FormLayout methods={methods}>
+      <FormLayout.Header title="Inventory Adjsutment" />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <InventoryAdjustmentForm />
+        </FormLayout.Form>
+      </FormLayout.Content>
+      <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={handleSave} />{' '}
+    </FormLayout>
   );
 };

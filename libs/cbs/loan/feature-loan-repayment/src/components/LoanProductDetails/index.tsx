@@ -1,14 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Box, Text } from '@myra-ui';
 
-import { LoanProductInstallment, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
+import { LoanProductInstallment, PenaltyType, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter } from '@coop/shared/utils';
 
 interface IProductProps {
   loanAccountId: string;
 }
+
+const penaltyType: Partial<Record<PenaltyType, string>> = {
+  RemainingPrincipal: 'Remaining Principal',
+  LoanInstallmentAmount: 'Loan Installment Amount',
+  PenalInterest: 'Penalt Interest',
+};
 
 export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
   const [triggerQuery, setTriggerQuery] = useState(false);
@@ -26,6 +32,36 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
     }
   }, [loanAccountId]);
   const loanGeneralInfo = loanData?.generalInformation;
+
+  const penaltyInfo: { label: string; value: string | null | undefined }[] = useMemo(() => {
+    const penaltyGeneralInfo = loanData?.generalInformation?.penalty;
+
+    return [
+      {
+        label: 'Penalty Type',
+        value: penaltyType[penaltyGeneralInfo?.penaltyType as PenaltyType],
+      },
+      {
+        label: 'Days After Installment Date',
+        value: String(penaltyGeneralInfo?.penaltyDayAfterInstallmentDate),
+      },
+      {
+        label: 'Penalty Rate',
+        value: penaltyGeneralInfo?.penaltyRate ? `${penaltyGeneralInfo?.penaltyRate} %` : '-',
+      },
+      {
+        label: 'Penalty Amount',
+        value: amountConverter(penaltyGeneralInfo?.penaltyAmount),
+      },
+      {
+        label: 'Dues Since',
+        value:
+          loanData?.paymentSchedule?.duesSince &&
+          localizedDate(loanData?.paymentSchedule?.duesSince),
+      },
+    ];
+  }, [loanData]);
+
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       {' '}
@@ -138,6 +174,19 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
                 : 'Yearly'}
             </Text>
           </Box>
+          {penaltyInfo?.map(
+            (info) =>
+              info?.value && (
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Text fontSize="s3" fontWeight="400">
+                    {info?.label}
+                  </Text>
+                  <Text fontSize="s3" fontWeight="600">
+                    {info?.value}
+                  </Text>
+                </Box>
+              )
+          )}
         </Box>
       </Box>
       <Box>

@@ -26,7 +26,7 @@ export const AssignedMembersCard = () => {
   );
 
   const todaysCount = useMemo(
-    () => agentTodayListQueryData?.transaction?.listAgentTask?.record?.length ?? 0,
+    () => agentTodayListQueryData?.agent?.listAgentTask?.record?.length ?? 0,
     [agentTodayListQueryData]
   );
 
@@ -37,7 +37,7 @@ export const AssignedMembersCard = () => {
           {t['agentOverviewTotalAssignedMembers']}
         </Text>
         <Text fontSize="l1" fontWeight={500} color="neutralColorLight.Gray-60">
-          {agentDetailQueryData?.transaction?.agentDetail?.data?.totalMembers ?? 0}
+          {agentDetailQueryData?.agent?.agentDetail?.data?.totalMembers ?? 0}
         </Text>
 
         <Button

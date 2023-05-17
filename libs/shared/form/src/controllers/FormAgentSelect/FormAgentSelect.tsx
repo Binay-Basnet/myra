@@ -30,7 +30,7 @@ export const FormAgentSelect = ({
     currentBranchOnly,
   });
 
-  const agentList = agentListQueryData?.transaction?.listAgent?.edges;
+  const agentList = agentListQueryData?.agent?.listAgent?.edges;
 
   const agentOptions = agentList?.reduce(
     (prevVal, curVal) => [
