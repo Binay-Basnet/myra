@@ -1,4 +1,5 @@
 export * from './lib/alert-dialog/AlertDialog';
+export * from './lib/breadcrumb/Breadcrumb';
 export * from './lib/callout/Callout';
 export * from './lib/data-display';
 export * from './lib/feedbacks';
