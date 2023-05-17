@@ -1,7 +1,7 @@
 import { IoCopyOutline, IoQrCodeOutline } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { AccountQRModal, Avatar, Box, Icon, Text } from '@myra-ui';
+import { AccountQRModal, Avatar, Box, Icon, Text, Tooltip } from '@myra-ui';
 
 import { RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { copyToClipboard } from '@coop/shared/utils';
@@ -92,7 +92,7 @@ export const LoanInfo = () => {
         <Avatar src={memberDetails?.profilePicUrl as string} size="sm" />{' '}
         <Box display="flex" flexDir="column">
           <RedirectButton
-            label={memberDetails?.memberName?.local}
+            label={<Tooltip title={memberDetails?.memberName?.local as string} />}
             link={`${ROUTES.CBS_MEMBER_DETAILS}?id=${memberDetails?.memberId}`}
           />
           <Text fontSize="r1" fontWeight="400" color="gray.800" wordBreak="break-all">
