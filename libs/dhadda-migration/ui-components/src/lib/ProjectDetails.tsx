@@ -11,7 +11,12 @@ import { ValidateExcel } from './ValidateExcel';
 
 export const ProjectDetails = () => {
   const router = useRouter();
-  const [errorData, setErrorData] = useState([]);
+  const [errorData, setErrorData] = useState<
+    {
+      data: { error_message: string; sheet_name: string };
+      row: number;
+    }[]
+  >([]);
 
   const clearErrorData = () => {
     setErrorData([]);

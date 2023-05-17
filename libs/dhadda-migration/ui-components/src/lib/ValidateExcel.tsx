@@ -8,7 +8,7 @@ import { Box, Button, Text, toast } from '@myra-ui';
 
 export const ValidateExcel = (props: {
   inputStatus: boolean;
-  errorData: never[];
+  errorData: { data: { error_message: string; sheet_name: string }; row: number }[];
   setErrorData: (value: []) => void;
 }) => {
   const { inputStatus, errorData, setErrorData } = props;
