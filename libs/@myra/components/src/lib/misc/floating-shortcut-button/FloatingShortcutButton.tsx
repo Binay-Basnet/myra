@@ -1,10 +1,5 @@
 import { useState } from 'react';
-import {
-  AiOutlineBug,
-  AiOutlineExclamation,
-  AiOutlineQuestionCircle,
-  AiOutlineStar,
-} from 'react-icons/ai';
+import { AiOutlineBug, AiOutlineQuestionCircle, AiOutlineStar } from 'react-icons/ai';
 import { BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { CgShortcut } from 'react-icons/cg';
 import { TbMessageDots } from 'react-icons/tb';
@@ -142,7 +137,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
             </UnorderedList>
           </Box>
         )}
-        {!isEmpty(whatsNewData?.knownBugs?.data) && (
+        {/* {!isEmpty(whatsNewData?.knownBugs?.data) && (
           <Box>
             <Box display="flex" alignItems="center" gap={2}>
               <AiOutlineExclamation size={18} />
@@ -158,7 +153,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
               ))}
             </UnorderedList>
           </Box>
-        )}
+        )} */}
       </Box>
       <Divider />
     </Modal>
