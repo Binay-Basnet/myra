@@ -1,10 +1,5 @@
 import { useState } from 'react';
-import {
-  AiOutlineBug,
-  AiOutlineExclamation,
-  AiOutlineQuestionCircle,
-  AiOutlineStar,
-} from 'react-icons/ai';
+import { AiOutlineBug, AiOutlineQuestionCircle, AiOutlineStar } from 'react-icons/ai';
 import { BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { CgShortcut } from 'react-icons/cg';
 import { TbMessageDots } from 'react-icons/tb';
@@ -36,90 +31,40 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Transactions print',
-      'Report print',
-      'Withdraw-slip print',
-      'Headoffice information to be filled from neosys portal and subsequent head office will be created automatically * added in required fields',
-      'COA - (Holding Account) Detail Page',
-      'No validation with calendar date for day end (user will be able to close day anytime and multiple times',
-      'Branch Readiness implemented for each branch and Day End for all branch only through Head Branch',
-      'COA Account List',
-      'Service Center Cash Transfer',
-      'Roles and Permissions',
-      'Global search',
-      'Audit logs',
-      'Export of reports',
-      'Cash in Transit',
-      'Creation of multiple environment from neosys portal for same client',
-      'Closed accounts detail page',
-      'Coa account, ledger detail page',
-      'Table search',
-      'Completed Reports:',
-      '1. Mobile Banking Registration',
-      '2. Mobile Banking Expiry',
-      '3. Service Center List',
-      '4. Member Classification',
-      '5. Interest Tax',
-      '6. Interest Statement',
-      '7. General Ledger',
-      '8. Saving Statement',
-      '9. Share Statement',
-      '10. Loan Statement',
-      '11. Active/Inactive Member',
-      '12. KYM Status Report',
-      '13. Trial Balance',
-      '14. Mobile App Transaction',
-      '15. User List',
-      '16. Account Closing Report',
-      '17. Account Opening Report',
-      '18. Cash Book / Cash Register',
-      '19. Teller Report',
-      '20. Saving Balance',
-      '21. Loan Balance',
-      '22. Member Register',
-      '23. Share Transactions',
-      '24. Share Return / Purchase Register',
-      '25. Bank GL Statement',
-      '26. Vault Balance',
-      '27. Share Balance Report',
-      '28. Loan Ageing Report',
-      '29. Daybook Report',
-      '30. Pl Report',
-      '31. Balance Sheet',
-      '32. STR Report(detail page is being worked on)',
+      'Bulk Transfer',
+      'Allow multiple installment payment of Recurring through MR Transaction',
+      'Show MR and deposited by others name in deposit,withdraw detail page',
     ],
   },
   bugsSquashed: {
-    title: 'Bug Squashed',
+    title: 'Fixes',
     data: [
-      'loan individual statement report interest fine to be mapped.',
-      'member details with value parameters of the service center are mapped.',
-      'Banks are added in the Bank GL statement.',
-      'nationality in kym appears in the form.',
-      'add balance in the member detail page in the share section.',
-      'share trans. report  filters are mapped.',
-      'member recent transactions are amount values are fixed with amount power.',
-      'Remove the loan account from search, if all the loans are paid.',
-      'Change validation message in withdraw and deposit section.',
-      'Error popup issue in Loan Repayment.',
-      'account name in loan application ( member name - product name).',
-      'negative sign remove from all reports',
+      'Fine and penalty fix',
+      'MR user cannot be created from user section',
+      'Paid and todays payment issue in MR.',
+      'Changes In recurring saving and regular saving about future pay installment',
+      'Disable the transacted accounts after confirm payment',
+      'Fixed Saving Account to not be assigned to any MR(while account opening, while assigning member)',
+      'Account name shows the product name instead of the account name of that individual member',
+      'Member can be assigned the inactive MR user',
+      'Print of Loan and Saving Statement in single A4',
+      'Installment issue in deposit section as "installment not found" as DB not set as deposit freq.',
     ],
   },
-  knownBugs: {
-    title: 'Known Bugs',
-    data: [
-      'Share transaction report filters have some issues in filters.',
-      'Member register report table fields are not properly populated.',
-      'Saving statement service filter and amount range not working.',
-      'Interest reports with filters, TTR reports filters might not work.',
-      'Vault balance filter, bank GL filter, ledger report filter are not working in the reports.',
-      'Mobile banking channel transaction report,userlist reports are not working.',
-      'Other sections are not fully workable as share dividend posting, profit to fund management with UI only.',
-      'In the accounting section, bank accounts do not reflect the amount of transactions paid by the bank.',
-      'kym member selection placement should be fixed ',
-    ],
-  },
+  // knownBugs: {
+  //   title: 'Known Bugs',
+  //   data: [
+  //     'Share transaction report filters have some issues in filters.',
+  //     'Member register report table fields are not properly populated.',
+  //     'Saving statement service filter and amount range not working.',
+  //     'Interest reports with filters, TTR reports filters might not work.',
+  //     'Vault balance filter, bank GL filter, ledger report filter are not working in the reports.',
+  //     'Mobile banking channel transaction report,userlist reports are not working.',
+  //     'Other sections are not fully workable as share dividend posting, profit to fund management with UI only.',
+  //     'In the accounting section, bank accounts do not reflect the amount of transactions paid by the bank.',
+  //     'kym member selection placement should be fixed ',
+  //   ],
+  // },
 };
 
 const WhatsNewModal = (props: WhatsNewModalProps) => {
@@ -156,8 +101,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.1.6</Text>
-          <Text fontSize="s3">January 20, 2023</Text>
+          <Text fontSize="r2">Version 1.0.63</Text>
+          <Text fontSize="s3">May 17, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
@@ -192,7 +137,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
             </UnorderedList>
           </Box>
         )}
-        {!isEmpty(whatsNewData?.knownBugs?.data) && (
+        {/* {!isEmpty(whatsNewData?.knownBugs?.data) && (
           <Box>
             <Box display="flex" alignItems="center" gap={2}>
               <AiOutlineExclamation size={18} />
@@ -208,7 +153,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
               ))}
             </UnorderedList>
           </Box>
-        )}
+        )} */}
       </Box>
       <Divider />
     </Modal>
