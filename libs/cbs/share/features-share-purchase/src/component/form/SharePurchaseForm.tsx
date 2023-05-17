@@ -86,7 +86,11 @@ export const SharePurchaseForm = () => {
       },
     },
   });
-  const { watch, getValues } = methods;
+  const {
+    watch,
+    getValues,
+    formState: { isDirty },
+  } = methods;
 
   const router = useRouter();
   const redirectPath = router.query['redirect'];
@@ -251,6 +255,7 @@ export const SharePurchaseForm = () => {
     <FormLayout hasSidebar={!!memberDetailData} methods={methods}>
       <FormLayout.Header
         title={`${t['sharePurchaseNewShareIssue']} - ${featureCode?.newShareIssue}`}
+        isFormDirty={isDirty}
       />
       <FormLayout.Content>
         <FormLayout.Form>

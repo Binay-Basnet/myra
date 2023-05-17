@@ -87,7 +87,12 @@ export const AddDeposit = () => {
     },
   });
 
-  const { watch, reset, getValues } = methods;
+  const {
+    watch,
+    reset,
+    getValues,
+    formState: { isDirty },
+  } = methods;
 
   const memberId = watch('memberId');
 
@@ -341,6 +346,7 @@ export const AddDeposit = () => {
           title={`${t['addDepositNewDeposit']} - ${featureCode?.newDeposit}`}
           buttonLabel={t['addDepositAddBulkDeposit']}
           buttonHandler={() => router.push(ROUTES.CBS_TRANS_BULK_DEPOSIT_ADD)}
+          isFormDirty={isDirty}
         />
 
         <FormLayout.Content>

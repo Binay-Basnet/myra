@@ -52,7 +52,11 @@ export const AddCashTransitTransfer = () => {
     },
   });
 
-  const { watch, getValues } = methods;
+  const {
+    watch,
+    getValues,
+    formState: { isDirty },
+  } = methods;
 
   const amount = watch('amount');
 
@@ -97,6 +101,7 @@ export const AddCashTransitTransfer = () => {
       <FormLayout.Header
         title={`New Cash in Transit - ${featureCode.newVaultTransfer}`}
         closeLink={ROUTES.CBS_TRANSFER_CASH_IN_TRANSIT_LIST}
+        isFormDirty={isDirty}
       />
 
       <FormLayout.Content>

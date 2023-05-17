@@ -23,7 +23,11 @@ export const AddCashTransfer = () => {
   const methods = useForm();
   const router = useRouter();
 
-  const { getValues, watch } = methods;
+  const {
+    getValues,
+    watch,
+    formState: { isDirty },
+  } = methods;
 
   const branchId = watch('branchEntries');
 
@@ -100,6 +104,7 @@ export const AddCashTransfer = () => {
       <FormHeader
         title={`Inter Service Center Transaction - ${featureCode.newVaultTransfer}`}
         closeLink={ROUTES.CBS_TRANSFER_INTER_SERVICE_TRANS_LIST}
+        isFormDirty={isDirty}
       />
 
       <FormLayout.Content>

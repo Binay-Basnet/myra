@@ -65,7 +65,11 @@ export const AddVaultTransfer = () => {
     },
   });
 
-  const { watch, getValues } = methods;
+  const {
+    watch,
+    getValues,
+    formState: { isDirty },
+  } = methods;
 
   const amount = watch('amount');
 
@@ -115,7 +119,10 @@ export const AddVaultTransfer = () => {
 
   return (
     <FormLayout methods={methods}>
-      <FormLayout.Header title={`New Vault Transfer - ${featureCode.newVaultTransfer}`} />
+      <FormLayout.Header
+        title={`New Vault Transfer - ${featureCode.newVaultTransfer}`}
+        isFormDirty={isDirty}
+      />
 
       <FormLayout.Content>
         <FormLayout.Form>

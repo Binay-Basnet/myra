@@ -103,7 +103,13 @@ export const CbsAccountClose = () => {
     },
   });
 
-  const { watch, getValues, setValue, reset } = methods;
+  const {
+    watch,
+    getValues,
+    setValue,
+    reset,
+    formState: { isDirty },
+  } = methods;
 
   const [mode, setMode] = useState('0');
 
@@ -389,7 +395,10 @@ export const CbsAccountClose = () => {
 
   return (
     <FormLayout methods={methods} hasSidebar={Boolean(memberId && memberId !== 'undefined')}>
-      <FormLayout.Header title={`${t['accountClose']} - ${featureCode?.newAccountClose}`} />
+      <FormLayout.Header
+        title={`${t['accountClose']} - ${featureCode?.newAccountClose}`}
+        isFormDirty={isDirty}
+      />
 
       <FormLayout.Content>
         <FormLayout.Form>
