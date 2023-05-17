@@ -48,7 +48,12 @@ export const AddBlockWithdrawSlipRequest = () => {
 
   const methods = useForm<CancelWithdrawSlipInput>({ defaultValues: { blockMode: 'Number' } });
 
-  const { watch, reset, getValues } = methods;
+  const {
+    watch,
+    reset,
+    getValues,
+    formState: { isDirty },
+  } = methods;
 
   const memberId = watch('memberId');
 
@@ -109,6 +114,7 @@ export const AddBlockWithdrawSlipRequest = () => {
     <FormLayout methods={methods}>
       <FormLayout.Header
         title={`Block Withdraw Slip Book - ${featureCode.newBlockWithdrawSlipBook}`}
+        isFormDirty={isDirty}
       />
 
       <FormLayout.Content>
