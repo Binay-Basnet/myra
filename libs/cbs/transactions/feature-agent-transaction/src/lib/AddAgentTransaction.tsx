@@ -241,7 +241,9 @@ export const AddAgentTransaction = () => {
                         );
                       },
                       getDisabled: (row) => {
-                        const item = todaysList?.find((account) => account?.member === row?.member);
+                        const item = todaysList?.find(
+                          (account) => account?.account === row?.account
+                        );
 
                         return !!item?.paid;
                       },
@@ -277,7 +279,9 @@ export const AddAgentTransaction = () => {
                         );
                       },
                       getDisabled: (row) => {
-                        const item = todaysList?.find((account) => account?.member === row?.member);
+                        const item = todaysList?.find(
+                          (account) => account?.account === row?.account
+                        );
 
                         return !!item?.paid;
                       },
@@ -288,7 +292,9 @@ export const AddAgentTransaction = () => {
                       isNumeric: true,
                       cellWidth: 'lg',
                       getDisabled: (row) => {
-                        const item = todaysList?.find((account) => account?.member === row?.member);
+                        const item = todaysList?.find(
+                          (account) => account?.account === row?.account
+                        );
 
                         return !!item?.paid;
                       },
@@ -319,7 +325,9 @@ export const AddAgentTransaction = () => {
                       header: '',
                       fieldType: 'checkbox',
                       getDisabled: (row) => {
-                        const item = todaysList?.find((account) => account?.member === row?.member);
+                        const item = todaysList?.find(
+                          (account) => account?.account === row?.account
+                        );
 
                         return !!item?.paid;
                       },
