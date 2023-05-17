@@ -832,11 +832,13 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
             <AsyncSelect
               value={asyncOptions?.find((option) => option.value === data[column.accessor])}
               components={{
-                SingleValue: (props) => (
-                  <chakraComponents.SingleValue {...props}>
-                    {column?.cell?.(data)}
-                  </chakraComponents.SingleValue>
-                ),
+                SingleValue: column?.cell
+                  ? (props) => (
+                      <chakraComponents.SingleValue {...props}>
+                        {column?.cell?.(data)}
+                      </chakraComponents.SingleValue>
+                    )
+                  : (props) => <chakraComponents.SingleValue {...props} />,
                 DropdownIndicator: () => null,
               }}
               onChange={(newValue: { label: string; value: string }) => {
@@ -857,11 +859,13 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
           ) : (
             <Select
               components={{
-                SingleValue: (props) => (
-                  <chakraComponents.SingleValue {...props}>
-                    {column?.cell?.(data)}
-                  </chakraComponents.SingleValue>
-                ),
+                SingleValue: column?.cell
+                  ? (props) => (
+                      <chakraComponents.SingleValue {...props}>
+                        {column?.cell?.(data)}
+                      </chakraComponents.SingleValue>
+                    )
+                  : (props) => <chakraComponents.SingleValue {...props} />,
                 DropdownIndicator: () => null,
               }}
               value={column.selectOptions?.find((option) => option.value === data[column.accessor])}
