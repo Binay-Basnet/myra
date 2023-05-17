@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getProjectStatus } from '@dhadda-migration/data-access';
 import { useQuery } from '@tanstack/react-query';
@@ -11,6 +11,15 @@ import { ValidateExcel } from './ValidateExcel';
 
 export const ProjectDetails = () => {
   const router = useRouter();
+  const [errorData, setErrorData] = useState([]);
+
+  const clearErrorData = () => {
+    setErrorData([]);
+  };
+
+  const errorDataSet = (value: []) => {
+    setErrorData(value);
+  };
 
   const { data, refetch, isLoading } = useQuery(['project-status'], () =>
     getProjectStatus({ project_name: router?.query?.['projectName'] as string })
@@ -29,8 +38,12 @@ export const ProjectDetails = () => {
 
   return (
     <Box display="flex" flexDir="column" gap={5}>
-      <UploadCsv />
-      <ValidateExcel inputStatus={data?.data?.data?.input_file_status || false} />
+      <UploadCsv clearErrorData={clearErrorData} />
+      <ValidateExcel
+        inputStatus={data?.data?.data?.input_file_status || false}
+        errorData={errorData}
+        setErrorData={errorDataSet}
+      />
       <MigrateExcel validationStatus={data?.data?.data?.validation_status || false} />
     </Box>
   );

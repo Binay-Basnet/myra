@@ -6,7 +6,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { Box, Button, Input, Text, toast } from '@myra-ui';
 
-export const UploadCsv = () => {
+export const UploadCsv = (props: { clearErrorData: () => void }) => {
+  const { clearErrorData } = props;
   const router = useRouter();
   const methods = useForm();
   const { handleSubmit } = methods;
@@ -36,6 +37,7 @@ export const UploadCsv = () => {
     formData.append('project_name', router?.query?.['projectName'] as string);
     formData.append('excel_file', selectedFile as unknown as string | Blob);
     uploadExcelMutation(formData as unknown as { project_name: string; excel_file: string | Blob });
+    clearErrorData();
   };
   const handleUploadFile = async (e) => {
     setSelectedFile(e.target.files[0]);
