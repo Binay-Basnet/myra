@@ -257,7 +257,7 @@ export const AgentDetailOverview = () => {
                     cell: (row) => {
                       const selectedMember =
                         assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
-                          (member) => member?.node?.member?.id === row?.member
+                          (member) => member?.node?.account?.id === row?.account
                         )?.node?.account;
 
                       return (
