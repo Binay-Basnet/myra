@@ -30,8 +30,8 @@ type TreeProps<TBase extends BaseType, TArray extends ArrayTree> = {
   treeData: TBase[];
   arrayData: TArray[];
 
-  value: TArray[] | null;
-  onValueChange: (newValue: TArray[] | null) => void;
+  value: string[];
+  onValueChange: (newValue: string[]) => void;
 
   selectableNodes: 'leaf' | 'root' | 'all';
 };
@@ -41,8 +41,8 @@ type MultiTreeProps<TBase extends BaseType, TArray extends ArrayTree> = {
 
   arrayData: TArray[];
 
-  value: TArray[] | null;
-  onValueChange: (newValue: TArray[] | null) => void;
+  value: string[];
+  onValueChange: (newValue: string[]) => void;
 
   selectableNodes: 'leaf' | 'root' | 'all';
 
@@ -89,20 +89,10 @@ export const TreeComponent = <TBase extends BaseType, TArray extends ArrayTree>(
           <Tree.Summary>
             <TreeHeader
               currentSubTree={currentSubTree}
-              selectedIds={value?.map((v) => v.id) || []}
-              onHeaderSelect={(newIds) =>
-                onValueChange(
-                  newIds.map((id) => {
-                    const foundArray = arrayData.find((d) => d.id === id);
-
-                    if (foundArray) {
-                      return foundArray;
-                    }
-
-                    throw new Error('Something went wrong');
-                  })
-                )
-              }
+              selectedIds={value}
+              onHeaderSelect={(newIds) => {
+                onValueChange(newIds);
+              }}
             />
           </Tree.Summary>
           <Tree.Details>
@@ -156,7 +146,7 @@ const TreeHeader = <T extends BaseType>({
                 .map((t) => t.id),
             ]);
           } else {
-            onHeaderSelect(selectedIds.filter((id) => !id.includes(currentSubTree.id)));
+            onHeaderSelect(selectedIds.filter((id) => !id.includes(currentSubTree.under)));
           }
         }}
       />
@@ -192,20 +182,10 @@ const TreeDetails = <TBase extends BaseType, TArray extends ArrayTree>({
           return (
             <LeafNode
               currentSubTree={tree}
-              selectedIds={props.value?.map((v) => v.id) || []}
-              onLeafSelect={(newIds) =>
-                props.onValueChange(
-                  newIds.map((id) => {
-                    const foundArray = props.arrayData.find((d) => d.id === id);
-
-                    if (foundArray) {
-                      return foundArray;
-                    }
-
-                    throw new Error('Something went wrong');
-                  })
-                )
-              }
+              selectedIds={props.value}
+              onLeafSelect={(newIds) => {
+                props.onValueChange(newIds);
+              }}
             />
           );
         }

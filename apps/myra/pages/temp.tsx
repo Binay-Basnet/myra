@@ -7,16 +7,18 @@ import { MdOutlineDragIndicator } from 'react-icons/md';
 import { Menu, MenuButton, MenuItem, MenuList, Portal, useDisclosure } from '@chakra-ui/react';
 import { motion, useDragControls } from 'framer-motion';
 
-import { Box, Icon, Text } from '@myra-ui/foundations';
+import { Box, Button, Icon, Text } from '@myra-ui/foundations';
 
 import { COATree } from '@coop/shared/components';
 
 const FORMULA_JSON = {
-  formula: '[{@20+(@30+@40)}-(@40+@50)]',
-  input: {
-    a: '20.1',
-    b: '30',
-    c: '40',
+  expression: '[{var_1+(var_2+var_3)}-(var_4+var_5)]',
+  variables: {
+    var_1: '20.1',
+    var_2: '30',
+    var_3: '40',
+    var_4: '50',
+    var_5: '60',
   },
 };
 
@@ -49,33 +51,16 @@ const OPERATOR_ICONS = {
 };
 
 const getFormulaInArray = (str: string) => {
-  const arr = [];
-  let currentToken = '';
-
-  for (let i = 0; i < str.length; i += 1) {
-    if (charsToSplitOn.includes(str[i])) {
-      if (currentToken) {
-        arr.push(currentToken);
-      }
-      arr.push(str[i]);
-      currentToken = '';
-    } else if (str[i].match(/[0-9]/)) {
-      currentToken += str[i];
-    }
-  }
-
-  return arr;
+  const delimiters = ['[', '{', '(', '+', '-', '*', '/', ')', '}', ']'];
+  const pattern = new RegExp(`(${delimiters.map((d) => `\\${d}`).join('|')})`);
+  return str.split(pattern).filter((s) => s.trim() !== '');
 };
 
 const Temp = () => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [value, setValue] = useState<any>(null);
-  const coaSelectRef = useRef<HTMLDivElement | null>(null);
+  const [variablesMap, setVariablesMap] = useState(FORMULA_JSON.variables);
 
-  const [coaModalPosition, setCoaModalPosition] = useState({ x: 0, y: 0 });
-  const controls = useDragControls();
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log(variablesMap);
 
   useEffect(() => {
     // Select the target element using the ref
@@ -93,9 +78,15 @@ const Temp = () => {
               if (children.getAttribute('data-operator')) {
                 return children.getAttribute('data-operator');
               }
+              if (children.getAttribute('data-coa')) {
+                return children.getAttribute('data-coa');
+              }
               return children.textContent;
             })
-            .join('');
+            .join('')
+            .replace(/ /g, '')
+            .replace(/,/g, '+');
+
           console.log(textContent);
           return;
         }
@@ -126,6 +117,7 @@ const Temp = () => {
       minH="100vh"
     >
       <Box
+        as="div"
         bg="white"
         display="flex"
         border="1px"
@@ -137,7 +129,7 @@ const Temp = () => {
         h="s48"
         ref={ref}
       >
-        {getFormulaInArray(FORMULA_JSON.formula).map((char) => {
+        {getFormulaInArray(FORMULA_JSON.expression).map((char) => {
           if (
             char === '(' ||
             char === ')' ||
@@ -152,10 +144,47 @@ const Temp = () => {
           if (char === '+' || char === '-' || char === '*' || char === '/') {
             return <OperatorSelector value={char} />;
           }
-          return <COAMenu onOpen={onOpen} setCOAModalPosition={setCoaModalPosition} char={char} />;
+          return (
+            <CoaModal
+              variable={char}
+              char={variablesMap[char]}
+              onCharChange={(newChar) => {
+                setVariablesMap((prev) => ({
+                  ...prev,
+                  [char]: newChar,
+                }));
+              }}
+            />
+          );
         })}
       </Box>
+    </Box>
+  );
+};
 
+interface CoaModalProps {
+  char: string;
+  variable: string;
+  onCharChange: (newChar: string) => void;
+}
+
+const CoaModal = ({ char, onCharChange, variable }: CoaModalProps) => {
+  const [finalValue, setFinalValue] = useState<string | null>(null);
+  const [value, setValue] = useState<any>(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [coaModalPosition, setCoaModalPosition] = useState({ x: 0, y: 0 });
+
+  const controls = useDragControls();
+
+  return (
+    <>
+      <COAMenu
+        variable={variable}
+        onOpen={onOpen}
+        setCOAModalPosition={setCoaModalPosition}
+        char={finalValue || char}
+      />
       <Portal>
         {isOpen && (
           <motion.div
@@ -170,18 +199,9 @@ const Temp = () => {
             dragMomentum={false}
             dragControls={controls}
           >
-            <Box
-              w="486px"
-              position="relative"
-              boxShadow="E0"
-              h="600px"
-              bg="white"
-              borderRadius="8px"
-            >
+            <Box w="486px" position="relative" boxShadow="E0" bg="white" borderRadius="8px">
               <Box
                 h="50px"
-                position="sticky"
-                top={0}
                 bg="white"
                 zIndex={10}
                 borderBottom="1px"
@@ -213,37 +233,85 @@ const Temp = () => {
                 />
               </Box>
 
-              <Box px="s16" py="s16" h="550px" overflowY="auto">
+              <Box h="400px" px="s16" py="s16" overflowY="auto">
                 <COATree
-                  defaultValue={null}
-                  onChange={(v) => console.log(v)}
-                  onClose={() => false}
                   value={value}
                   setValue={setValue}
+                  // type="multi"
                 />
+              </Box>
+
+              <Box
+                h="50px"
+                bg="white"
+                zIndex={10}
+                borderTop="1px"
+                borderTopColor="border.layout"
+                px="s16"
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Box />
+                <Button
+                  w="100px"
+                  onClick={() => {
+                    const ids = value.sort((a, b) => {
+                      const partsA = a.split('.').map(Number);
+                      const partsB = b.split('.').map(Number);
+
+                      const minLength = Math.min(partsA.length, partsB.length);
+
+                      for (let i = 0; i < minLength; i++) {
+                        if (partsA[i] !== partsB[i]) {
+                          return partsA[i] - partsB[i];
+                        }
+                      }
+
+                      return partsA.length - partsB.length;
+                    });
+
+                    const finalIds = ids.reduce((acc, curr) => {
+                      if (!acc.includes(curr)) {
+                        if (!acc.some((n) => curr.includes(n))) {
+                          acc.push(curr);
+                        }
+                      }
+
+                      return acc;
+                    }, [] as string[]);
+
+                    setFinalValue(finalIds.join(', '));
+                    onCharChange(finalIds.join(','));
+                    onClose();
+                  }}
+                >
+                  Apply
+                </Button>
               </Box>
             </Box>
           </motion.div>
         )}
       </Portal>
-    </Box>
+    </>
   );
 };
 
 interface COAMenuProps {
   char: string;
+  variable: string;
   setCOAModalPosition: ({ x, y }: { x: number; y: number }) => void;
   onOpen: () => void;
 }
 
-const COAMenu = ({ char, setCOAModalPosition, onOpen }: COAMenuProps) => {
+const COAMenu = ({ char, setCOAModalPosition, onOpen, variable }: COAMenuProps) => {
   const coaSelectRef = useRef<HTMLInputElement | null>(null);
 
   return (
-    <Menu placement="bottom-start">
+    <Menu placement="bottom-start" key={variable}>
       {({ isOpen: menuIsOpen }) => (
         <>
-          <MenuButton>
+          <MenuButton data-coa={variable}>
             <Box
               ref={coaSelectRef}
               tabIndex={0}
