@@ -12,13 +12,15 @@ import { Box, Button, Icon, Text } from '@myra-ui/foundations';
 import { COATree } from '@coop/shared/components';
 
 const FORMULA_JSON = {
-  expression: '[{var_1+(var_2+var_3)}-(var_4+var_5)]',
+  expression: '[{var_1+(var_2+var_3)}-(var_4+var_5) + maturedAbove12Months(var_6+ var_7) + 0.35]',
   variables: {
     var_1: '20.1',
     var_2: '30',
     var_3: '40',
     var_4: '50',
     var_5: '60',
+    var_6: '80',
+    var_7: '100',
   },
 };
 
@@ -52,15 +54,30 @@ const OPERATOR_ICONS = {
 
 const getFormulaInArray = (str: string) => {
   const delimiters = ['[', '{', '(', '+', '-', '*', '/', ')', '}', ']'];
-  const pattern = new RegExp(`(${delimiters.map((d) => `\\${d}`).join('|')})`);
-  return str.split(pattern).filter((s) => s.trim() !== '');
+  const pattern = new RegExp(`\\s*(${delimiters.map((d) => `\\${d}`).join('|')})\\s*`);
+  return str.split(pattern).filter((s) => s.trim() !== '' && s !== ' ');
+};
+
+type Formula = {
+  expression: string;
+  variables: Record<string, string>;
 };
 
 const Temp = () => {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [variablesMap, setVariablesMap] = useState(FORMULA_JSON.variables);
+  const [formula, setFormula] = useState<Formula>(FORMULA_JSON);
 
-  console.log(variablesMap);
+  console.log(JSON.stringify(formula, null, 2));
+
+  return <FormulaEditor formula={formula} onFormulaEdit={(newFormula) => setFormula(newFormula)} />;
+};
+
+interface FormulaEditorProps {
+  formula: Formula;
+  onFormulaEdit: (newFormula: Formula) => void;
+}
+
+const FormulaEditor = ({ formula, onFormulaEdit }: FormulaEditorProps) => {
+  const ref = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     // Select the target element using the ref
@@ -87,7 +104,10 @@ const Temp = () => {
             .replace(/ /g, '')
             .replace(/,/g, '+');
 
-          console.log(textContent);
+          onFormulaEdit({
+            expression: textContent,
+            variables: formula.variables,
+          });
           return;
         }
       }
@@ -144,17 +164,29 @@ const Temp = () => {
           if (char === '+' || char === '-' || char === '*' || char === '/') {
             return <OperatorSelector value={char} />;
           }
+
+          if (char.startsWith('var_')) {
+            return (
+              <CoaModal
+                variable={char}
+                char={formula.variables[char]}
+                onCharChange={(newChar) => {
+                  onFormulaEdit({
+                    expression: formula.expression,
+                    variables: {
+                      ...formula.variables,
+                      [char]: newChar,
+                    },
+                  });
+                }}
+              />
+            );
+          }
+
           return (
-            <CoaModal
-              variable={char}
-              char={variablesMap[char]}
-              onCharChange={(newChar) => {
-                setVariablesMap((prev) => ({
-                  ...prev,
-                  [char]: newChar,
-                }));
-              }}
-            />
+            <Box fontStyle="italic" color="gray.600">
+              {char}
+            </Box>
           );
         })}
       </Box>
@@ -170,7 +202,7 @@ interface CoaModalProps {
 
 const CoaModal = ({ char, onCharChange, variable }: CoaModalProps) => {
   const [finalValue, setFinalValue] = useState<string | null>(null);
-  const [value, setValue] = useState<any>(null);
+  const [value, setValue] = useState<any>(char.split(','));
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [coaModalPosition, setCoaModalPosition] = useState({ x: 0, y: 0 });
@@ -281,7 +313,7 @@ const CoaModal = ({ char, onCharChange, variable }: CoaModalProps) => {
                       return acc;
                     }, [] as string[]);
 
-                    setFinalValue(finalIds.join(', '));
+                    setFinalValue(finalIds.join(','));
                     onCharChange(finalIds.join(','));
                     onClose();
                   }}
