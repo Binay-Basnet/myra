@@ -1,0 +1,16 @@
+mutation updatePearlsReportFormula($indicatorId: String!, $data: PearlsConfigurationInput) {
+  settings {
+    general {
+      reports {
+        pearls {
+          update(indicatorId: $indicatorId, data: $data) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}

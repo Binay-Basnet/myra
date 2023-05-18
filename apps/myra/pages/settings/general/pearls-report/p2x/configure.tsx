@@ -1,12 +1,11 @@
-import { Box } from '@myra-ui';
-
 import {
   SettingsGeneralLayout,
   SettingsLayout,
   SettingsPEARLSLayout,
 } from '@coop/cbs/settings/ui-layout';
+import { ReportSettings } from '@coop/settings/reports';
 
-const ReportSettingsPage = () => <Box>This is pearls REport</Box>;
+const ReportSettingsPage = () => <ReportSettings indicator="P2X" />;
 
 export default ReportSettingsPage;
 ReportSettingsPage.getLayout = function getLayout(page) {

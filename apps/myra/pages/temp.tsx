@@ -43,8 +43,6 @@ const BASIC_OPERATORS: { label: string; value: '+' | '-' | '*' | '/' }[] = [
   },
 ];
 
-const charsToSplitOn = ['+', '-', '*', '/', '(', ')', '[', ']', '{', '}']; // characters to split the string on
-
 const OPERATOR_ICONS = {
   '+': AiOutlinePlus,
   '-': AiOutlineMinus,
@@ -66,8 +64,6 @@ type Formula = {
 const Temp = () => {
   const [formula, setFormula] = useState<Formula>(FORMULA_JSON);
 
-  console.log(JSON.stringify(formula, null, 2));
-
   return <FormulaEditor formula={formula} onFormulaEdit={(newFormula) => setFormula(newFormula)} />;
 };
 
@@ -76,7 +72,7 @@ interface FormulaEditorProps {
   onFormulaEdit: (newFormula: Formula) => void;
 }
 
-const FormulaEditor = ({ formula, onFormulaEdit }: FormulaEditorProps) => {
+export const FormulaEditor = ({ formula, onFormulaEdit }: FormulaEditorProps) => {
   const ref = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -84,12 +80,9 @@ const FormulaEditor = ({ formula, onFormulaEdit }: FormulaEditorProps) => {
     const targetElement = ref.current;
 
     // Create a new instance of MutationObserver
-    const observer = new MutationObserver((mutationsList, observer) => {
-      // Loop through each mutation that has occurred
-      for (const mutation of mutationsList) {
-        // Check if any of the mutations were made to nodes inside the target element
+    const observer = new MutationObserver((mutationsList) => {
+      mutationsList.forEach((mutation) => {
         if (mutation.target.contains(targetElement)) {
-          // Return the target element
           const textContent = Array.from(targetElement.children || [])
             .map((children) => {
               if (children.getAttribute('data-operator')) {
@@ -108,9 +101,8 @@ const FormulaEditor = ({ formula, onFormulaEdit }: FormulaEditorProps) => {
             expression: textContent,
             variables: formula.variables,
           });
-          return;
         }
-      }
+      });
     });
 
     // Configure the observer to watch for changes to child nodes of the target element
@@ -126,16 +118,7 @@ const FormulaEditor = ({ formula, onFormulaEdit }: FormulaEditorProps) => {
   }, []);
 
   return (
-    <Box
-      display="flex"
-      flexDir="column"
-      alignItems="center"
-      bg="gray.100"
-      px="120px"
-      justifyContent="center"
-      gap="s16"
-      minH="100vh"
-    >
+    <Box p="s8" bg="highlight.500" borderRadius="br2">
       <Box
         as="div"
         bg="white"
@@ -147,9 +130,10 @@ const FormulaEditor = ({ formula, onFormulaEdit }: FormulaEditorProps) => {
         px="s12"
         gap="s4"
         h="s48"
+        w="100%"
         ref={ref}
       >
-        {getFormulaInArray(FORMULA_JSON.expression).map((char) => {
+        {getFormulaInArray(formula.expression).map((char) => {
           if (
             char === '(' ||
             char === ')' ||
@@ -202,12 +186,16 @@ interface CoaModalProps {
 
 const CoaModal = ({ char, onCharChange, variable }: CoaModalProps) => {
   const [finalValue, setFinalValue] = useState<string | null>(null);
-  const [value, setValue] = useState<any>(char.split(','));
+  const [value, setValue] = useState<any>(char?.split(',') || []);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [coaModalPosition, setCoaModalPosition] = useState({ x: 0, y: 0 });
 
   const controls = useDragControls();
+
+  useEffect(() => {
+    setValue(char?.split(','));
+  }, [char]);
 
   return (
     <>
@@ -294,7 +282,7 @@ const CoaModal = ({ char, onCharChange, variable }: CoaModalProps) => {
 
                       const minLength = Math.min(partsA.length, partsB.length);
 
-                      for (let i = 0; i < minLength; i++) {
+                      for (let i = 0; i < minLength; i += 1) {
                         if (partsA[i] !== partsB[i]) {
                           return partsA[i] - partsB[i];
                         }

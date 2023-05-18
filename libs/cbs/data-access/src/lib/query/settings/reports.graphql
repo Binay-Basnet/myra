@@ -1,0 +1,17 @@
+query getPearlsReportsFormula {
+  settings {
+    general {
+      reports {
+        pearls {
+          list {
+            description
+            expression
+            goal
+            indicatorId
+            values
+          }
+        }
+      }
+    }
+  }
+}

@@ -14470,7 +14470,6 @@ export type PearlsConfiguration = {
 };
 
 export type PearlsConfigurationInput = {
-  expression?: InputMaybe<Scalars['String']>;
   values: Scalars['Map'];
 };
 
@@ -19822,6 +19821,14 @@ export type GetWithdrawSlipPrintPreferenceQueryVariables = Exact<{ [key: string]
 
 export type GetWithdrawSlipPrintPreferenceQuery = { settings: { general?: { printPreference?: { get?: { data?: Array<{ isSlipStandardActive?: boolean | null, slipSizeStandard: SlipSizeStandard, slipSizeCustom?: { height?: number | null, width?: number | null } | null, blockOne?: { top?: number | null, left?: number | null } | null, blockTwo?: { top?: number | null, left?: number | null } | null, blockThree?: { top?: number | null, left?: number | null } | null } | null> | null } | null } | null } | null } };
 
+export type UpdatePearlsReportFormulaMutationVariables = Exact<{
+  indicatorId: Scalars['String'];
+  data?: InputMaybe<PearlsConfigurationInput>;
+}>;
+
+
+export type UpdatePearlsReportFormulaMutation = { settings: { general?: { reports?: { pearls?: { update?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } | null } };
+
 export type SetSettingsShareBonusMutationVariables = Exact<{
   data?: InputMaybe<ShareBonusSettingsInput>;
 }>;
@@ -22058,6 +22065,11 @@ export type GetOrganizationEditDataQueryVariables = Exact<{ [key: string]: never
 
 
 export type GetOrganizationEditDataQuery = { settings: { general?: { organization?: { formState?: { data?: { id?: string | null, documents?: Array<string | null> | null, basicDetails?: { name?: string | null, logo?: string | null, typeOfOrganization?: TypeOfOrganization | null } | null, contactDetails?: { phoneNumber?: string | null, email?: string | null, website?: string | null } | null, mainContactPerson?: { contactPersonName?: string | null, contactPersonContactNumber?: string | null, title?: string | null } | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, registrationDetails?: { regdNo?: string | null, regdOffice?: string | null, regdAddress?: string | null, panOrVat?: string | null } | null, statistics?: { totalMembers: number, totalCapital: number } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } | null } | null } | null } };
+
+export type GetPearlsReportsFormulaQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPearlsReportsFormulaQuery = { settings: { general?: { reports?: { pearls?: { list?: Array<{ description: string, expression: string, goal: string, indicatorId: string, values: Record<string, string> } | null> | null } | null } | null } | null } };
 
 export type GetDepositSettingsIroQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -26852,6 +26864,33 @@ export const useGetWithdrawSlipPrintPreferenceQuery = <
     useQuery<GetWithdrawSlipPrintPreferenceQuery, TError, TData>(
       variables === undefined ? ['getWithdrawSlipPrintPreference'] : ['getWithdrawSlipPrintPreference', variables],
       useAxios<GetWithdrawSlipPrintPreferenceQuery, GetWithdrawSlipPrintPreferenceQueryVariables>(GetWithdrawSlipPrintPreferenceDocument).bind(null, variables),
+      options
+    );
+export const UpdatePearlsReportFormulaDocument = `
+    mutation updatePearlsReportFormula($indicatorId: String!, $data: PearlsConfigurationInput) {
+  settings {
+    general {
+      reports {
+        pearls {
+          update(indicatorId: $indicatorId, data: $data) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdatePearlsReportFormulaMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdatePearlsReportFormulaMutation, TError, UpdatePearlsReportFormulaMutationVariables, TContext>) =>
+    useMutation<UpdatePearlsReportFormulaMutation, TError, UpdatePearlsReportFormulaMutationVariables, TContext>(
+      ['updatePearlsReportFormula'],
+      useAxios<UpdatePearlsReportFormulaMutation, UpdatePearlsReportFormulaMutationVariables>(UpdatePearlsReportFormulaDocument),
       options
     );
 export const SetSettingsShareBonusDocument = `
@@ -40790,6 +40829,37 @@ export const useGetOrganizationEditDataQuery = <
     useQuery<GetOrganizationEditDataQuery, TError, TData>(
       variables === undefined ? ['getOrganizationEditData'] : ['getOrganizationEditData', variables],
       useAxios<GetOrganizationEditDataQuery, GetOrganizationEditDataQueryVariables>(GetOrganizationEditDataDocument).bind(null, variables),
+      options
+    );
+export const GetPearlsReportsFormulaDocument = `
+    query getPearlsReportsFormula {
+  settings {
+    general {
+      reports {
+        pearls {
+          list {
+            description
+            expression
+            goal
+            indicatorId
+            values
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetPearlsReportsFormulaQuery = <
+      TData = GetPearlsReportsFormulaQuery,
+      TError = unknown
+    >(
+      variables?: GetPearlsReportsFormulaQueryVariables,
+      options?: UseQueryOptions<GetPearlsReportsFormulaQuery, TError, TData>
+    ) =>
+    useQuery<GetPearlsReportsFormulaQuery, TError, TData>(
+      variables === undefined ? ['getPearlsReportsFormula'] : ['getPearlsReportsFormula', variables],
+      useAxios<GetPearlsReportsFormulaQuery, GetPearlsReportsFormulaQueryVariables>(GetPearlsReportsFormulaDocument).bind(null, variables),
       options
     );
 export const GetDepositSettingsIroDocument = `
