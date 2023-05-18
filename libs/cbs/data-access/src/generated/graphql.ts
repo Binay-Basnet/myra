@@ -5968,6 +5968,7 @@ export type FianancialTransactionReport = {
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
   dayBookReport: DayBookReportResult;
+  mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tellerReport: TellerReportResult;
   trialSheetReport: TrialSheetReportResult;
@@ -5992,6 +5993,10 @@ export type FianancialTransactionReportCharKhataReportArgs = {
 
 export type FianancialTransactionReportDayBookReportArgs = {
   data: DayBookReportFilter;
+};
+
+export type FianancialTransactionReportMrTransactionReportArgs = {
+  data: MrTransactionReportFilter;
 };
 
 export type FianancialTransactionReportServiceCenterBalanceReportArgs = {
@@ -6745,6 +6750,7 @@ export type GeneralSettingsMutation = {
   loanProducts?: Maybe<LoanProductsMutation>;
   organization?: Maybe<OrganizationSettingsMutation>;
   printPreference?: Maybe<PrintPreferenceMutation>;
+  reports?: Maybe<ReportSettingsMutation>;
   setup: SetupMutation;
   share?: Maybe<ShareSettingsMutation>;
   valuator?: Maybe<ValuatorSettingsMutation>;
@@ -6763,6 +6769,7 @@ export type GeneralSettingsQuery = {
   loanProducts?: Maybe<LoanProductsQuery>;
   organization?: Maybe<OrganizationSettingsQuery>;
   printPreference?: Maybe<PrintPreferenceQuery>;
+  reports?: Maybe<ReportSettingsQuery>;
   setup: SetupQuery;
   share?: Maybe<ShareSettingsQuery>;
   valuator?: Maybe<ValuatorSettingsQuery>;
@@ -12286,6 +12293,40 @@ export type MBankingTransactionResult = {
   error?: Maybe<QueryError>;
 };
 
+export const MrTransactionFilter = {
+  Deposit: 'DEPOSIT',
+  Withdraw: 'WITHDRAW',
+} as const;
+
+export type MrTransactionFilter = typeof MrTransactionFilter[keyof typeof MrTransactionFilter];
+export type MrTransactionFilterType = {
+  transactionType?: InputMaybe<MrTransactionFilter>;
+};
+
+export type MrTransactionReport = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNo?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['String']>;
+  mrId?: Maybe<Scalars['String']>;
+  mrName?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
+  typeOfTransaction?: Maybe<MrTransactionFilter>;
+};
+
+export type MrTransactionReportFilter = {
+  filter?: InputMaybe<MrTransactionFilterType>;
+  period: LocalizedDateFilter;
+  userId: Array<Scalars['String']>;
+};
+
+export type MrTransactionReportResult = {
+  data?: Maybe<Array<Maybe<MrTransactionReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type MRmemberInstallmentData = {
   installments?: Maybe<Scalars['Int']>;
   memberCode: Scalars['String'];
@@ -14081,6 +14122,38 @@ export type PaymentDetail = {
   vat?: Maybe<Scalars['String']>;
 };
 
+export type PearlsConfiguration = {
+  description: Scalars['String'];
+  expression: Scalars['String'];
+  goal: Scalars['String'];
+  indicatorId: Scalars['String'];
+  values: Scalars['Map'];
+};
+
+export type PearlsConfigurationInput = {
+  expression?: InputMaybe<Scalars['String']>;
+  values: Scalars['Map'];
+};
+
+export type PearlsConfigurationMutation = {
+  update?: Maybe<PearlsConfigurationResult>;
+};
+
+export type PearlsConfigurationMutationUpdateArgs = {
+  data?: InputMaybe<PearlsConfigurationInput>;
+  indicatorId: Scalars['String'];
+};
+
+export type PearlsConfigurationQuery = {
+  list?: Maybe<Array<Maybe<PearlsConfiguration>>>;
+};
+
+export type PearlsConfigurationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<PearlsConfigurationQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type PearlsRecord = {
   denominator: Scalars['String'];
   description: Scalars['String'];
@@ -14863,6 +14936,14 @@ export type ReportResult = {
 
 export type ReportSettingMutation = {
   resetTrialCache?: Maybe<Scalars['String']>;
+};
+
+export type ReportSettingsMutation = {
+  pearls?: Maybe<PearlsConfigurationMutation>;
+};
+
+export type ReportSettingsQuery = {
+  pearls?: Maybe<PearlsConfigurationQuery>;
 };
 
 export type RequestApproveOrDeclineInput = {
@@ -30489,6 +30570,39 @@ export type GetAbbsTransactionReportQuery = {
             paymentPayable?: string | null;
             paymentReceivable?: string | null;
           } | null> | null;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetMrTransactionReportQueryVariables = Exact<{
+  data: MrTransactionReportFilter;
+}>;
+
+export type GetMrTransactionReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        mrTransactionReport?: {
+          data?: Array<{
+            memberId?: string | null;
+            memberCode?: string | null;
+            memberName?: string | null;
+            mrId?: string | null;
+            mrName?: string | null;
+            transactionId?: string | null;
+            accountNo?: string | null;
+            accountName?: string | null;
+            typeOfTransaction?: MrTransactionFilter | null;
+            amount?: string | null;
+          } | null> | null;
+          error?:
+            | QueryError_AuthorizationError_Fragment
+            | QueryError_BadRequestError_Fragment
+            | QueryError_NotFoundError_Fragment
+            | QueryError_ServerError_Fragment
+            | null;
         } | null;
       };
     };
@@ -52148,6 +52262,47 @@ export const useGetAbbsTransactionReportQuery = <
     ['getABBSTransactionReport', variables],
     useAxios<GetAbbsTransactionReportQuery, GetAbbsTransactionReportQueryVariables>(
       GetAbbsTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMrTransactionReportDocument = `
+    query getMrTransactionReport($data: MRTransactionReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        mrTransactionReport(data: $data) {
+          data {
+            memberId
+            memberCode
+            memberName
+            mrId
+            mrName
+            transactionId
+            accountNo
+            accountName
+            typeOfTransaction
+            amount
+          }
+          error {
+            ...QueryError
+          }
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetMrTransactionReportQuery = <
+  TData = GetMrTransactionReportQuery,
+  TError = unknown
+>(
+  variables: GetMrTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetMrTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetMrTransactionReportQuery, TError, TData>(
+    ['getMrTransactionReport', variables],
+    useAxios<GetMrTransactionReportQuery, GetMrTransactionReportQueryVariables>(
+      GetMrTransactionReportDocument
     ).bind(null, variables),
     options
   );

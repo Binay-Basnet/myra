@@ -51,6 +51,7 @@ export * from './lib/share/ShareBalanceReport';
 export * from './lib/share/ShareRegisterReport';
 export * from './lib/share/ShareStatementReport';
 export * from './lib/share/ShareTransactionReport';
+export * from './lib/transactions';
 export * from './lib/transactions/ABBSStatusReport';
 export * from './lib/transactions/ABBSTransactionReport';
 export * from './lib/transactions/BalanceSheetReport';
