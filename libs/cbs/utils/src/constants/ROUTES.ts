@@ -168,6 +168,47 @@ export const ROUTES = {
   SETTINGS_USERS_ADD: '/settings/users/super-admin/add',
   SETTINGS_USERS_EDIT: '/settings/users/super-admin/edit',
   SETTINGS_USERS_DETAILS: '/settings/users/super-admin/details',
+  SETTINGS_GENERAL_PEARLS_REPORT_P1: '/settings/general/pearls-report/p1/configure',
+  SETTINGS_GENERAL_PEARLS_REPORT_P2: '/settings/general/pearls-report/p2/configure',
+
+  SETTINGS_GENERAL_PEARLS_REPORT_P2X: '/settings/general/pearls-report/p2x/configure',
+
+  SETTINGS_GENERAL_PEARLS_REPORT_E1: '/settings/general/pearls-report/e1/configure',
+
+  SETTINGS_GENERAL_PEARLS_REPORT_E5: '/settings/general/pearls-report/e5/configure',
+
+  SETTINGS_GENERAL_PEARLS_REPORT_E6: '/settings/general/pearls-report/e6/configure',
+  SETTINGS_GENERAL_PEARLS_REPORT_E7: '/settings/general/pearls-report/e7/configure',
+  SETTINGS_GENERAL_PEARLS_REPORT_E8: '/settings/general/pearls-report/e8/configure',
+
+  SETTINGS_GENERAL_PEARLS_REPORT_A1: '/settings/general/pearls-report/a1/configure',
+
+  SETTINGS_GENERAL_PEARLS_REPORT_A2: '/settings/general/pearls-report/a2/configure',
+
+  SETTINGS_GENERAL_PEARLS_REPORT_L1: '/settings/general/pearls-report/l1/configure',
+
+  SETTINGS_GENERAL_PEARLS_REPORT_L2: '/settings/general/pearls-report/l2/configure',
+
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_P1: '/settings/general/copomis-report/p1/configure',
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_P2: '/settings/general/copomis-report/p2/configure',
+
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_P2X: '/settings/general/copomis-report/p2x/configure',
+
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_E1: '/settings/general/copomis-report/e1/configure',
+
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_E5: '/settings/general/copomis-report/e5/configure',
+
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_E6: '/settings/general/copomis-report/e6/configure',
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_E7: '/settings/general/copomis-report/e7/configure',
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_E8: '/settings/general/copomis-report/e8/configure',
+
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_A1: '/settings/general/copomis-report/a1/configure',
+
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_A2: '/settings/general/copomis-report/a2/configure',
+
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_L1: '/settings/general/copomis-report/l1/configure',
+
+  SETTINGS_GENERAL_COPOMIS_FINACIAL_L2: '/settings/general/copomis-report/l2/configure',
 
   SETTINGS_ACCESS_LOG: '/settings/monitor/access-log/list',
 
