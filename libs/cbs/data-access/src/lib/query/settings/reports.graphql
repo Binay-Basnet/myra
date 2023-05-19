@@ -16,3 +16,21 @@ query getPearlsReportsFormula {
     }
   }
 }
+
+query getCopomisReportSettings{
+  settings {
+    general {
+      reports {
+        copomis {
+          list {
+            expression
+            id
+            indicatorName
+            values
+          }
+        }
+      }
+    }
+  }
+}
+

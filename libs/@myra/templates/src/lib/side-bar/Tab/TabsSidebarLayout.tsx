@@ -50,7 +50,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
     <Tabs variant="enclosed" index={10000}>
       {list.map((item) => {
         const isActive =
-          router.asPath.split('/')[3] === item.route.split('/')[3] &&
+          router.asPath.split('/')[3] === item.route.split('/')[3] ||
           router.asPath.split('/')[4] === item.route.split('/')[4];
 
         return (

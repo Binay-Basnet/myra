@@ -3965,6 +3965,38 @@ export type CoordinateInput = {
   longitude?: InputMaybe<Scalars['Float']>;
 };
 
+export type CopomisConfiguration = {
+  expression: Scalars['String'];
+  id: Scalars['String'];
+  indicatorName: Scalars['String'];
+  values: Scalars['Map'];
+};
+
+export type CopomisConfigurationInput = {
+  expression?: InputMaybe<Scalars['String']>;
+  values: Scalars['Map'];
+};
+
+export type CopomisConfigurationMutation = {
+  update?: Maybe<CopomisConfigurationResult>;
+};
+
+
+export type CopomisConfigurationMutationUpdateArgs = {
+  data?: InputMaybe<CopomisConfigurationInput>;
+  indicatorId: Scalars['String'];
+};
+
+export type CopomisConfigurationQuery = {
+  list?: Maybe<Array<Maybe<CopomisConfiguration>>>;
+};
+
+export type CopomisConfigurationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<CopomisConfigurationQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type CopomisReportData = {
   address?: Maybe<Scalars['Localized']>;
   castRecordId?: Maybe<Scalars['Int']>;
@@ -15280,10 +15312,12 @@ export type ReportSettingMutation = {
 };
 
 export type ReportSettingsMutation = {
+  copomis?: Maybe<CopomisConfigurationMutation>;
   pearls?: Maybe<PearlsConfigurationMutation>;
 };
 
 export type ReportSettingsQuery = {
+  copomis?: Maybe<CopomisConfigurationQuery>;
   pearls?: Maybe<PearlsConfigurationQuery>;
 };
 
@@ -22071,6 +22105,11 @@ export type GetPearlsReportsFormulaQueryVariables = Exact<{ [key: string]: never
 
 
 export type GetPearlsReportsFormulaQuery = { settings: { general?: { reports?: { pearls?: { list?: Array<{ header: string, description: string, expression: string, goal: string, indicatorId: string, values: Record<string, string> } | null> | null } | null } | null } | null } };
+
+export type GetCopomisReportSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCopomisReportSettingsQuery = { settings: { general?: { reports?: { copomis?: { list?: Array<{ expression: string, id: string, indicatorName: string, values: Record<string, string> } | null> | null } | null } | null } | null } };
 
 export type GetDepositSettingsIroQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -40862,6 +40901,36 @@ export const useGetPearlsReportsFormulaQuery = <
     useQuery<GetPearlsReportsFormulaQuery, TError, TData>(
       variables === undefined ? ['getPearlsReportsFormula'] : ['getPearlsReportsFormula', variables],
       useAxios<GetPearlsReportsFormulaQuery, GetPearlsReportsFormulaQueryVariables>(GetPearlsReportsFormulaDocument).bind(null, variables),
+      options
+    );
+export const GetCopomisReportSettingsDocument = `
+    query getCopomisReportSettings {
+  settings {
+    general {
+      reports {
+        copomis {
+          list {
+            expression
+            id
+            indicatorName
+            values
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCopomisReportSettingsQuery = <
+      TData = GetCopomisReportSettingsQuery,
+      TError = unknown
+    >(
+      variables?: GetCopomisReportSettingsQueryVariables,
+      options?: UseQueryOptions<GetCopomisReportSettingsQuery, TError, TData>
+    ) =>
+    useQuery<GetCopomisReportSettingsQuery, TError, TData>(
+      variables === undefined ? ['getCopomisReportSettings'] : ['getCopomisReportSettings', variables],
+      useAxios<GetCopomisReportSettingsQuery, GetCopomisReportSettingsQueryVariables>(GetCopomisReportSettingsDocument).bind(null, variables),
       options
     );
 export const GetDepositSettingsIroDocument = `

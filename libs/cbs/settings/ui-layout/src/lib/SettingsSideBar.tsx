@@ -11,6 +11,7 @@ import {
 
 import { Icon, TabColumn } from '@myra-ui';
 
+import { useGetCopomisReportSettingsQuery } from '@coop/cbs/data-access';
 import { AclKey, ROUTES } from '@coop/cbs/utils';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -143,21 +144,31 @@ const accountingTabList: TabList[] = [
   },
 ];
 
-const reportTabs: TabList[] = [
-  {
-    label: 'PEARLS Report',
-    route: ROUTES.SETTINGS_GENERAL_PEARLS_REPORT_P1,
-    aclKey: 'SETTINGS_INDEXING',
-  },
-  {
-    label: 'Copomis Financial',
-    route: ROUTES.SETTINGS_GENERAL_COPOMIS_FINACIAL_P1,
-    aclKey: 'SETTINGS_INDEXING',
-  },
-];
 export const SettingSideBar = () => {
   const { t } = useTranslation();
   const router = useRouter();
+
+  const { data } = useGetCopomisReportSettingsQuery();
+
+  const tabs =
+    data?.settings?.general?.reports?.copomis?.list?.map((tab) => ({
+      title: tab?.indicatorName as string,
+      to: tab?.id as string,
+    })) || [];
+
+  const reportTabs: TabList[] = [
+    {
+      label: 'PEARLS Report',
+      route: ROUTES.SETTINGS_GENERAL_PEARLS_REPORT_P1,
+      aclKey: 'SETTINGS_INDEXING',
+    },
+    {
+      label: 'Copomis Financial',
+      route: `/settings/general/copomis-report/${tabs?.[0]?.to}/configure`,
+      aclKey: 'SETTINGS_INDEXING',
+    },
+  ];
+
   return (
     <Box position="sticky">
       <Box

@@ -1,15 +1,15 @@
-import { Box } from '@myra-ui';
-
 import {
   SettingsCOPOMISLayout,
   SettingsGeneralLayout,
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
+import { ReportSettings } from '@coop/settings/reports';
 
-const ReportSettingsPage = () => <Box>This is COMOPIS REport</Box>;
+const COPOMISReportSettingsPage = () => <ReportSettings indicator="A1" />;
 
-export default ReportSettingsPage;
-ReportSettingsPage.getLayout = function getLayout(page) {
+export default COPOMISReportSettingsPage;
+
+COPOMISReportSettingsPage.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
       <SettingsGeneralLayout>

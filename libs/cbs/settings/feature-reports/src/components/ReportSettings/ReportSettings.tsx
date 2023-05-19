@@ -62,6 +62,7 @@ export const ReportSettings = ({ indicator }: ReportSettingsProps) => {
             display="flex"
             flexDir="column"
             gap="s16"
+            borderRadius="br2"
           >
             <FormulaEditor
               label="Expression"
