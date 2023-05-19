@@ -7,6 +7,7 @@ import { asyncToast } from '@myra-ui';
 
 import {
   SalesSaleEntryInput,
+  useGetInventoryItemsListQuery,
   useGetNewIdMutation,
   useSetSalesSaleEntryDataMutation,
 } from '@coop/cbs/data-access';
@@ -59,11 +60,23 @@ export const NewSalesForm = () => {
 
   const { mutateAsync: setSalesEntryData } = useSetSalesSaleEntryDataMutation();
 
+  const { data: inventoryItems } = useGetInventoryItemsListQuery({
+    pagination: {
+      after: '',
+      first: -1,
+    },
+  });
+  const inventoryItemsData = inventoryItems?.inventory?.items?.list?.edges;
+
   const handleSubmit = () => {
     const values = getValues();
 
     const filteredValues = {
       ...values,
+      products: values?.products?.map((product) => ({
+        ...product,
+        tax: inventoryItemsData?.find((item) => item?.node?.id === product?.itemId)?.node?.taxId,
+      })),
     };
 
     asyncToast({
