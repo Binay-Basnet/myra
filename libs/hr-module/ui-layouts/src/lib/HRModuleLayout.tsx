@@ -22,7 +22,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
           {
             title: 'Employee',
             icon: BiUserPin,
-            link: '/hr/employee/list',
+            link: ROUTES.HRMODULE_EMPLOYEES_LIST,
             match: ['employee'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'EMPLOYEE',
@@ -30,7 +30,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
           {
             title: 'Employee Lifecycle',
             icon: FiUserCheck,
-            link: '/hr/lifecycle/list',
+            link: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING,
             match: ['lifecycle'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'EMPLOYEE_LIFECYCLE',
@@ -38,7 +38,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
           {
             title: 'Payroll',
             icon: FiDollarSign,
-            link: '/hr/payroll/list',
+            link: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING,
             match: ['payroll'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'PAYROLL',
@@ -46,7 +46,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
           {
             title: 'Training',
             icon: FiBookOpen,
-            link: '/hr/training/list',
+            link: ROUTES.HR_TRAINING_COURSES,
             match: ['training'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'TRAINING',
@@ -55,7 +55,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
             title: 'Recruitment',
             icon: FiBriefcase,
 
-            link: '/hr/recruitment/list',
+            link: ROUTES.HR_RECRUITMENT_STAFF_PLANNING,
             match: ['recruitment'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'RECRUITMENT',

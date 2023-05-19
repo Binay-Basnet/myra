@@ -3878,6 +3878,37 @@ export type CoordinateInput = {
   longitude?: InputMaybe<Scalars['Float']>;
 };
 
+export type CopomisConfiguration = {
+  expression: Scalars['String'];
+  id: Scalars['String'];
+  indicatorName: Scalars['String'];
+  values: Scalars['Map'];
+};
+
+export type CopomisConfigurationInput = {
+  expression?: InputMaybe<Scalars['String']>;
+  values: Scalars['Map'];
+};
+
+export type CopomisConfigurationMutation = {
+  update?: Maybe<CopomisConfigurationResult>;
+};
+
+export type CopomisConfigurationMutationUpdateArgs = {
+  data?: InputMaybe<CopomisConfigurationInput>;
+  indicatorId: Scalars['String'];
+};
+
+export type CopomisConfigurationQuery = {
+  list?: Maybe<Array<Maybe<CopomisConfiguration>>>;
+};
+
+export type CopomisConfigurationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<CopomisConfigurationQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type CopomisReportData = {
   address?: Maybe<Scalars['Localized']>;
   castRecordId?: Maybe<Scalars['Int']>;
@@ -5968,6 +5999,7 @@ export type FianancialTransactionReport = {
   bankGLStatementReport: BankGlStatementResult;
   charKhataReport: TrialSheetReportResult;
   dayBookReport: DayBookReportResult;
+  mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
   tellerReport: TellerReportResult;
   trialSheetReport: TrialSheetReportResult;
@@ -5992,6 +6024,10 @@ export type FianancialTransactionReportCharKhataReportArgs = {
 
 export type FianancialTransactionReportDayBookReportArgs = {
   data: DayBookReportFilter;
+};
+
+export type FianancialTransactionReportMrTransactionReportArgs = {
+  data: MrTransactionReportFilter;
 };
 
 export type FianancialTransactionReportServiceCenterBalanceReportArgs = {
@@ -6745,6 +6781,7 @@ export type GeneralSettingsMutation = {
   loanProducts?: Maybe<LoanProductsMutation>;
   organization?: Maybe<OrganizationSettingsMutation>;
   printPreference?: Maybe<PrintPreferenceMutation>;
+  reports?: Maybe<ReportSettingsMutation>;
   setup: SetupMutation;
   share?: Maybe<ShareSettingsMutation>;
   valuator?: Maybe<ValuatorSettingsMutation>;
@@ -6763,6 +6800,7 @@ export type GeneralSettingsQuery = {
   loanProducts?: Maybe<LoanProductsQuery>;
   organization?: Maybe<OrganizationSettingsQuery>;
   printPreference?: Maybe<PrintPreferenceQuery>;
+  reports?: Maybe<ReportSettingsQuery>;
   setup: SetupQuery;
   share?: Maybe<ShareSettingsQuery>;
   valuator?: Maybe<ValuatorSettingsQuery>;
@@ -11920,11 +11958,11 @@ export type LoanRepaymentInput = {
   bankVoucher?: InputMaybe<LoanRepaymentBankVoucher>;
   cash?: InputMaybe<DepositCash>;
   closeNotes?: InputMaybe<Scalars['String']>;
-  discount?: InputMaybe<RepaymentDiscount>;
   isSuspicious?: InputMaybe<Scalars['Boolean']>;
   loanAccountId: Scalars['ID'];
   memberId: Scalars['ID'];
   paymentMethod: LoanRepaymentMethod;
+  penalty?: InputMaybe<RepaymentPenaltyInput>;
   suspicionRemarks?: InputMaybe<Scalars['String']>;
   suspicionTopologies?: InputMaybe<Array<InputMaybe<SuspiciousTransactionTopology>>>;
   writeOffLedgerId?: InputMaybe<Scalars['String']>;
@@ -12283,6 +12321,40 @@ export type MBankingTransactionFilterData = {
 
 export type MBankingTransactionResult = {
   data?: Maybe<Array<Maybe<MBankingTransactionData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export const MrTransactionFilter = {
+  Deposit: 'DEPOSIT',
+  Withdraw: 'WITHDRAW',
+} as const;
+
+export type MrTransactionFilter = typeof MrTransactionFilter[keyof typeof MrTransactionFilter];
+export type MrTransactionFilterType = {
+  transactionType?: InputMaybe<MrTransactionFilter>;
+};
+
+export type MrTransactionReport = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNo?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['String']>;
+  mrId?: Maybe<Scalars['String']>;
+  mrName?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
+  typeOfTransaction?: Maybe<MrTransactionFilter>;
+};
+
+export type MrTransactionReportFilter = {
+  filter?: InputMaybe<MrTransactionFilterType>;
+  period: LocalizedDateFilter;
+  userId: Array<Scalars['String']>;
+};
+
+export type MrTransactionReportResult = {
+  data?: Maybe<Array<Maybe<MrTransactionReport>>>;
   error?: Maybe<QueryError>;
 };
 
@@ -13767,6 +13839,7 @@ export type Order = {
 };
 
 export type Organization = {
+  aKey?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
   basicDetails?: Maybe<OrganizationBasicDetails>;
   contactDetails?: Maybe<OrganizationContactDetails>;
@@ -13774,6 +13847,7 @@ export type Organization = {
   id: Scalars['ID'];
   mainContactPerson?: Maybe<OrganizationMainContactPerson>;
   registrationDetails?: Maybe<OrganizationRegistrationDetails>;
+  sKey?: Maybe<Scalars['String']>;
   statistics?: Maybe<OrganizationStatistics>;
 };
 
@@ -14079,6 +14153,38 @@ export type PaymentDetail = {
   subTotal?: Maybe<Scalars['String']>;
   taxableTotal?: Maybe<Scalars['String']>;
   vat?: Maybe<Scalars['String']>;
+};
+
+export type PearlsConfiguration = {
+  description: Scalars['String'];
+  expression: Scalars['String'];
+  goal: Scalars['String'];
+  header: Scalars['String'];
+  indicatorId: Scalars['String'];
+  values: Scalars['Map'];
+};
+
+export type PearlsConfigurationInput = {
+  values: Scalars['Map'];
+};
+
+export type PearlsConfigurationMutation = {
+  update?: Maybe<PearlsConfigurationResult>;
+};
+
+export type PearlsConfigurationMutationUpdateArgs = {
+  data?: InputMaybe<PearlsConfigurationInput>;
+  indicatorId: Scalars['String'];
+};
+
+export type PearlsConfigurationQuery = {
+  list?: Maybe<Array<Maybe<PearlsConfiguration>>>;
+};
+
+export type PearlsConfigurationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<PearlsConfigurationQuery>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type PearlsRecord = {
@@ -14762,7 +14868,7 @@ export type RemoveMemberResult = {
   recordId?: Maybe<Scalars['String']>;
 };
 
-export type RepaymentDiscount = {
+export type RepaymentPenaltyInput = {
   amount: Scalars['String'];
   doc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
@@ -14863,6 +14969,16 @@ export type ReportResult = {
 
 export type ReportSettingMutation = {
   resetTrialCache?: Maybe<Scalars['String']>;
+};
+
+export type ReportSettingsMutation = {
+  copomis?: Maybe<CopomisConfigurationMutation>;
+  pearls?: Maybe<PearlsConfigurationMutation>;
+};
+
+export type ReportSettingsQuery = {
+  copomis?: Maybe<CopomisConfigurationQuery>;
+  pearls?: Maybe<PearlsConfigurationQuery>;
 };
 
 export type RequestApproveOrDeclineInput = {

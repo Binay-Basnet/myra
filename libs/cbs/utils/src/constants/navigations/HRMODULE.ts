@@ -41,28 +41,28 @@ export const HRMODULE: NavType = {
       label: 'Employee-Lifecycle',
       pages: [
         {
-          label: 'Employees',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Employee Onboarding',
+          route: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Contracts',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Employee Transfer',
+          route: ROUTES.HR_LIFECYCLE_EMPLOYEE_TRANSFER,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Attedance',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Employee Seperation',
+          route: ROUTES.HR_LIFECYCLE_EMPLOYEE_SEPERATION,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Leave',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Employee Promotion',
+          route: ROUTES.HR_LIFECYCLE_EMPLOYEE_PROMOTION,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Exit Details',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Employee Exit',
+          route: ROUTES.HR_LIFECYCLE_EMPLOYEE_EXIT,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
       ],
@@ -72,28 +72,23 @@ export const HRMODULE: NavType = {
       label: 'Payroll',
       pages: [
         {
-          label: 'Employees',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Payroll Run',
+          route: ROUTES.HR_PAYROLL_PAYROLL_RUN,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Contracts',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Salary Structure Alignment',
+          route: ROUTES.HR_PAYROLL_SALARY_STRUCTURE_,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Attedance',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Salary Slip',
+          route: ROUTES.HR_PAYROLL_SALARY_SLIP,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Leave',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
-          aclKey: 'CBS_MEMBERS_MEMBER',
-        },
-        {
-          label: 'Exit Details',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Expen',
+          route: ROUTES.HR_PAYROLL_EXPEN,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
       ],
@@ -103,28 +98,13 @@ export const HRMODULE: NavType = {
       label: 'Training',
       pages: [
         {
-          label: 'Employees',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Courses',
+          route: ROUTES.HR_TRAINING_COURSES,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Contracts',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
-          aclKey: 'CBS_MEMBERS_MEMBER',
-        },
-        {
-          label: 'Attedance',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
-          aclKey: 'CBS_MEMBERS_MEMBER',
-        },
-        {
-          label: 'Leave',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
-          aclKey: 'CBS_MEMBERS_MEMBER',
-        },
-        {
-          label: 'Exit Details',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Students',
+          route: ROUTES.HR_TRAINING_STUDENTS,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
       ],
@@ -134,28 +114,28 @@ export const HRMODULE: NavType = {
       label: 'Recruitment',
       pages: [
         {
-          label: 'Employees',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Staff Planing',
+          route: ROUTES.HR_RECRUITMENT_STAFF_PLANNING,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Contracts',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Job Posting',
+          route: ROUTES.HR_RECRUITMENT_JOB_POSTING,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Attedance',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Job Application',
+          route: ROUTES.HR_RECRUITMENT_JOB_APPLICATION,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Leave',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Interview',
+          route: ROUTES.HR_RECRUITMENT_INTERVIEW,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
         {
-          label: 'Exit Details',
-          route: ROUTES.HRMODULE_EMPLOYEES_LIST,
+          label: 'Appointment Letter',
+          route: ROUTES.HR_RECRUITMENT_APPOINTMENT_LETTER,
           aclKey: 'CBS_MEMBERS_MEMBER',
         },
       ],
@@ -194,11 +174,11 @@ export const HRMODULE: NavType = {
     },
     REPORTS: {
       label: 'REPORTS',
-      aclKey: 'ACCOUNTING_INVESTMENT',
+      aclKey: 'CBS_MEMBERS_MEMBER',
       pages: [
         {
           label: 'Accounting Reports',
-          aclKey: 'ACCOUNTING_INVESTMENT',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.ACCOUNTING_REPORTS,
         },
       ],
