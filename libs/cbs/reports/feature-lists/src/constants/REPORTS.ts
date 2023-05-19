@@ -107,6 +107,7 @@ export enum Report {
   TRANSACTION_ABBS_STATUS_REPORT = 'ABBS Report',
   TRANSACTION_ABBS_TRANSACTION_REPORT = 'ABBS Transaction Report',
   TRANSACTION_CHAR_KHATA_REPORT = 'Charkhata Ledger Report',
+  TRANSACTION_MRTRANSACTION_REPORT = 'Market Representative Transaction Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -598,6 +599,11 @@ export const REPORTS = {
       id: '7.7.1',
       report: Report.TRANSACTION_ABBS_TRANSACTION_REPORT,
       link: 'abbs-transaction',
+    },
+    {
+      id: '7.7.1',
+      report: Report.TRANSACTION_MRTRANSACTION_REPORT,
+      link: 'mr-transaction',
     },
   ],
   [ReportGroup.BRANCHLESS_BANKING]: [

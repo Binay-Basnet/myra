@@ -30576,6 +30576,39 @@ export type GetAbbsTransactionReportQuery = {
   };
 };
 
+export type GetMrTransactionReportQueryVariables = Exact<{
+  data: MrTransactionReportFilter;
+}>;
+
+export type GetMrTransactionReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        mrTransactionReport?: {
+          data?: Array<{
+            memberId?: string | null;
+            memberCode?: string | null;
+            memberName?: string | null;
+            mrId?: string | null;
+            mrName?: string | null;
+            transactionId?: string | null;
+            accountNo?: string | null;
+            accountName?: string | null;
+            typeOfTransaction?: MrTransactionFilter | null;
+            amount?: string | null;
+          } | null> | null;
+          error?:
+            | QueryError_AuthorizationError_Fragment
+            | QueryError_BadRequestError_Fragment
+            | QueryError_NotFoundError_Fragment
+            | QueryError_ServerError_Fragment
+            | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<RequestFilter>;
@@ -52229,6 +52262,47 @@ export const useGetAbbsTransactionReportQuery = <
     ['getABBSTransactionReport', variables],
     useAxios<GetAbbsTransactionReportQuery, GetAbbsTransactionReportQueryVariables>(
       GetAbbsTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMrTransactionReportDocument = `
+    query getMrTransactionReport($data: MRTransactionReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        mrTransactionReport(data: $data) {
+          data {
+            memberId
+            memberCode
+            memberName
+            mrId
+            mrName
+            transactionId
+            accountNo
+            accountName
+            typeOfTransaction
+            amount
+          }
+          error {
+            ...QueryError
+          }
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetMrTransactionReportQuery = <
+  TData = GetMrTransactionReportQuery,
+  TError = unknown
+>(
+  variables: GetMrTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetMrTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetMrTransactionReportQuery, TError, TData>(
+    ['getMrTransactionReport', variables],
+    useAxios<GetMrTransactionReportQuery, GetMrTransactionReportQueryVariables>(
+      GetMrTransactionReportDocument
     ).bind(null, variables),
     options
   );
