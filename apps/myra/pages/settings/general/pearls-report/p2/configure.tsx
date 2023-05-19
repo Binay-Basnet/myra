@@ -3,9 +3,9 @@ import {
   SettingsLayout,
   SettingsPEARLSLayout,
 } from '@coop/cbs/settings/ui-layout';
-import { ReportSettings } from '@coop/settings/reports';
+import { PEARLSReportSettings } from '@coop/settings/reports';
 
-const ReportSettingsPage = () => <ReportSettings indicator="P2" />;
+const ReportSettingsPage = () => <PEARLSReportSettings indicator="P2" />;
 
 export default ReportSettingsPage;
 ReportSettingsPage.getLayout = function getLayout(page) {

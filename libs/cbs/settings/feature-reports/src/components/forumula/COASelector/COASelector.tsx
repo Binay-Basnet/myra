@@ -26,13 +26,17 @@ export const COASelector = ({ char, onCharChange, variable }: COASelectorProps) 
     setValue(char?.split(','));
   }, [char]);
 
+  useEffect(() => {
+    setFinalValue(null);
+  }, []);
+
   return (
     <>
       <COAMenu
         variable={variable}
         onOpen={onOpen}
         setCOAModalPosition={setCoaModalPosition}
-        char={finalValue || char}
+        char={finalValue || char || variable.slice(4, variable.length)}
       />
       <Portal>
         {isOpen && (
@@ -105,7 +109,7 @@ export const COASelector = ({ char, onCharChange, variable }: COASelectorProps) 
                 <Button
                   w="100px"
                   onClick={() => {
-                    const ids = value.sort((a, b) => {
+                    const ids = value.filter(Boolean).sort((a, b) => {
                       const partsA = a.split('.').map(Number);
                       const partsB = b.split('.').map(Number);
 
@@ -156,6 +160,7 @@ interface COAMenuProps {
 const COAMenu = ({ char, setCOAModalPosition, onOpen, variable }: COAMenuProps) => {
   const coaSelectRef = useRef<HTMLInputElement | null>(null);
 
+  console.log(char, 'char');
   return (
     <Menu placement="bottom-start" key={variable}>
       {({ isOpen: menuIsOpen }) => (

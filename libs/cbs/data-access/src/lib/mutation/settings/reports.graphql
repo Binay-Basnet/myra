@@ -14,3 +14,20 @@ mutation updatePearlsReportFormula($indicatorId: String!, $data: PearlsConfigura
     }
   }
 }
+
+mutation updateCOPOMISReportFormula($indicatorId: String!, $data: CopomisConfigurationInput) {
+  settings {
+    general {
+      reports {
+        copomis {
+          update(data: $data, indicatorId: $indicatorId){
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}

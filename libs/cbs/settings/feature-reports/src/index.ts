@@ -1,1 +1,2 @@
-export * from './components/ReportSettings';
+export * from './lib/COPOMISReportSettings';
+export * from './lib/PEARLSReportSettings';

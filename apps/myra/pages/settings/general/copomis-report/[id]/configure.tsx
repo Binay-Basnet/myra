@@ -1,11 +1,17 @@
+import { useRouter } from 'next/router';
+
 import {
   SettingsCOPOMISLayout,
   SettingsGeneralLayout,
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
-import { ReportSettings } from '@coop/settings/reports';
+import { COPOMISReportSettings } from '@coop/settings/reports';
 
-const COPOMISReportSettingsPage = () => <ReportSettings indicator="A1" />;
+const COPOMISReportSettingsPage = () => {
+  const router = useRouter();
+
+  return <COPOMISReportSettings indicator={router.query['id'] as string} />;
+};
 
 export default COPOMISReportSettingsPage;
 

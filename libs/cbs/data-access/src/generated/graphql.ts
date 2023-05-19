@@ -19864,6 +19864,14 @@ export type UpdatePearlsReportFormulaMutationVariables = Exact<{
 
 export type UpdatePearlsReportFormulaMutation = { settings: { general?: { reports?: { pearls?: { update?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } | null } };
 
+export type UpdateCopomisReportFormulaMutationVariables = Exact<{
+  indicatorId: Scalars['String'];
+  data?: InputMaybe<CopomisConfigurationInput>;
+}>;
+
+
+export type UpdateCopomisReportFormulaMutation = { settings: { general?: { reports?: { copomis?: { update?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } | null } };
+
 export type SetSettingsShareBonusMutationVariables = Exact<{
   data?: InputMaybe<ShareBonusSettingsInput>;
 }>;
@@ -26931,6 +26939,33 @@ export const useUpdatePearlsReportFormulaMutation = <
     useMutation<UpdatePearlsReportFormulaMutation, TError, UpdatePearlsReportFormulaMutationVariables, TContext>(
       ['updatePearlsReportFormula'],
       useAxios<UpdatePearlsReportFormulaMutation, UpdatePearlsReportFormulaMutationVariables>(UpdatePearlsReportFormulaDocument),
+      options
+    );
+export const UpdateCopomisReportFormulaDocument = `
+    mutation updateCOPOMISReportFormula($indicatorId: String!, $data: CopomisConfigurationInput) {
+  settings {
+    general {
+      reports {
+        copomis {
+          update(data: $data, indicatorId: $indicatorId) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateCopomisReportFormulaMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCopomisReportFormulaMutation, TError, UpdateCopomisReportFormulaMutationVariables, TContext>) =>
+    useMutation<UpdateCopomisReportFormulaMutation, TError, UpdateCopomisReportFormulaMutationVariables, TContext>(
+      ['updateCOPOMISReportFormula'],
+      useAxios<UpdateCopomisReportFormulaMutation, UpdateCopomisReportFormulaMutationVariables>(UpdateCopomisReportFormulaDocument),
       options
     );
 export const SetSettingsShareBonusDocument = `
