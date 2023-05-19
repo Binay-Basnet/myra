@@ -61,7 +61,7 @@ interface COATreeProps {
   // type: 'single' | 'multi';
 
   value: string[];
-  setValue: React.Dispatch<React.SetStateAction<string[] | null>>;
+  setValue: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export const COATree = ({ value, setValue }: COATreeProps) => {

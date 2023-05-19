@@ -14465,6 +14465,7 @@ export type PearlsConfiguration = {
   description: Scalars['String'];
   expression: Scalars['String'];
   goal: Scalars['String'];
+  header: Scalars['String'];
   indicatorId: Scalars['String'];
   values: Scalars['Map'];
 };
@@ -22069,7 +22070,7 @@ export type GetOrganizationEditDataQuery = { settings: { general?: { organizatio
 export type GetPearlsReportsFormulaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPearlsReportsFormulaQuery = { settings: { general?: { reports?: { pearls?: { list?: Array<{ description: string, expression: string, goal: string, indicatorId: string, values: Record<string, string> } | null> | null } | null } | null } | null } };
+export type GetPearlsReportsFormulaQuery = { settings: { general?: { reports?: { pearls?: { list?: Array<{ header: string, description: string, expression: string, goal: string, indicatorId: string, values: Record<string, string> } | null> | null } | null } | null } | null } };
 
 export type GetDepositSettingsIroQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -40838,6 +40839,7 @@ export const GetPearlsReportsFormulaDocument = `
       reports {
         pearls {
           list {
+            header
             description
             expression
             goal

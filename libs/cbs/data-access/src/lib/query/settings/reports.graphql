@@ -4,6 +4,7 @@ query getPearlsReportsFormula {
       reports {
         pearls {
           list {
+            header
             description
             expression
             goal

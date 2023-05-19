@@ -6,11 +6,12 @@ import { Text } from '@myra-ui/foundations';
 import { SettingsFooter } from '@myra-ui/templates';
 
 import {
+  useGetCoaFullViewQuery,
   useGetPearlsReportsFormulaQuery,
   useUpdatePearlsReportFormulaMutation,
 } from '@coop/cbs/data-access';
 
-import { FormulaEditor } from '../../../../../../../apps/myra/pages/temp';
+import { FormulaEditor } from '../forumula/FormulaEditor';
 
 interface ReportSettingsProps {
   indicator: 'P1' | 'P2X' | 'P2' | 'E1' | 'E5' | 'E6' | 'E7' | 'E8' | 'A1' | 'A2' | 'L1' | 'L2';
@@ -26,6 +27,7 @@ export const ReportSettings = ({ indicator }: ReportSettingsProps) => {
 
   const { data, isFetching } = useGetPearlsReportsFormulaQuery();
   const { mutateAsync: updateFormula } = useUpdatePearlsReportFormulaMutation();
+  const { data: coaView } = useGetCoaFullViewQuery();
 
   const pearlsGroup = data?.settings?.general?.reports?.pearls?.list?.find(
     (group) => group?.indicatorId === indicator
@@ -45,7 +47,7 @@ export const ReportSettings = ({ indicator }: ReportSettingsProps) => {
       <Box p="s16" display="flex" flexDir="column" gap="s16">
         <Box display="flex" flexDir="column" gap="s4">
           <Text fontSize="r1" color="gray.800" fontWeight="600" lineHeight="16.25px">
-            {pearlsGroup?.indicatorId}
+            {pearlsGroup?.indicatorId} - {pearlsGroup?.header}
           </Text>
           <Text fontSize="s3" color="gray.600" fontWeight="500" lineHeight="16.25px">
             {pearlsGroup?.description}
@@ -53,7 +55,40 @@ export const ReportSettings = ({ indicator }: ReportSettingsProps) => {
         </Box>
 
         {formula && (
-          <FormulaEditor formula={formula} onFormulaEdit={(newFormula) => setFormula(newFormula)} />
+          <Box
+            p="s16"
+            border="1px"
+            borderColor="border.layout"
+            display="flex"
+            flexDir="column"
+            gap="s16"
+          >
+            <FormulaEditor
+              label="Expression"
+              formula={formula}
+              onFormulaEdit={(newFormula) => setFormula(newFormula)}
+            />
+            <Box display="flex" flexDir="column" gap="s8">
+              <Text fontSize="r1" fontWeight={500} color="gray.700">
+                Ledger Code & Names
+              </Text>
+              <Box display="flex" flexDir="column">
+                {Object.values(formula.variables).map((variables) => (
+                  <>
+                    {variables.split(',').map((v) => (
+                      <Box fontSize="r1" color="gray.800">
+                        {`${v} -  ${
+                          coaView?.settings?.chartsOfAccount?.fullView.data?.find(
+                            (d) => d?.id === v
+                          )?.name?.local
+                        }`}
+                      </Box>
+                    ))}
+                  </>
+                ))}
+              </Box>
+            </Box>
+          </Box>
         )}
       </Box>
       <SettingsFooter
