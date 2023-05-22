@@ -3878,6 +3878,52 @@ export type CoordinateInput = {
   longitude?: InputMaybe<Scalars['Float']>;
 };
 
+export type CopomisConfiguration = {
+  expression: Scalars['String'];
+  id: Scalars['String'];
+  indicatorName: Scalars['String'];
+  values: Scalars['Map'];
+};
+
+export type CopomisConfigurationInput = {
+  expression?: InputMaybe<Scalars['String']>;
+  values: Scalars['Map'];
+};
+
+export type CopomisConfigurationMutation = {
+  update?: Maybe<CopomisConfigurationResult>;
+};
+
+export type CopomisConfigurationMutationUpdateArgs = {
+  data?: InputMaybe<CopomisConfigurationInput>;
+  indicatorId: Scalars['String'];
+};
+
+export type CopomisConfigurationQuery = {
+  list?: Maybe<Array<Maybe<CopomisConfiguration>>>;
+};
+
+export type CopomisConfigurationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<CopomisConfigurationQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type CopomisFinancial = {
+  cr?: Maybe<Scalars['String']>;
+  dr?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  indicatorName?: Maybe<Scalars['String']>;
+};
+
+export type CopomisFinancialInput = {
+  period: LocalizedDateFilter;
+};
+
+export type CopomisFinancialResult = {
+  data?: Maybe<Array<Maybe<CopomisFinancial>>>;
+};
+
 export type CopomisReportData = {
   address?: Maybe<Scalars['Localized']>;
   castRecordId?: Maybe<Scalars['Int']>;
@@ -14125,16 +14171,19 @@ export type PaymentDetail = {
 };
 
 export type PearlsConfiguration = {
+  denominator: Scalars['String'];
+  denominatorVariables: Scalars['Map'];
   description: Scalars['String'];
-  expression: Scalars['String'];
   goal: Scalars['String'];
   header: Scalars['String'];
   indicatorId: Scalars['String'];
-  values: Scalars['Map'];
+  numerator: Scalars['String'];
+  numeratorVariables: Scalars['Map'];
 };
 
 export type PearlsConfigurationInput = {
-  values: Scalars['Map'];
+  denominatorVariables: Scalars['Map'];
+  numeratorVariables: Scalars['Map'];
 };
 
 export type PearlsConfigurationMutation = {
@@ -14899,6 +14948,7 @@ export type ReportQuery = {
   branchReport: BranchReport;
   cashReport: CashReport;
   committeeQuery: CommitteeReport;
+  copomisFinancialReport: CopomisFinancialResult;
   depositReport: DepositReport;
   employeeReport: EmployeeReport;
   exceptionReport: ExceptionReport;
@@ -14913,6 +14963,10 @@ export type ReportQuery = {
   printReport: CertificatePrint;
   shareReport: ShareReport;
   transactionReport: TransactionReport;
+};
+
+export type ReportQueryCopomisFinancialReportArgs = {
+  data: CopomisFinancialInput;
 };
 
 export type ReportQueryGetReportArgs = {
@@ -14941,10 +14995,12 @@ export type ReportSettingMutation = {
 };
 
 export type ReportSettingsMutation = {
+  copomis?: Maybe<CopomisConfigurationMutation>;
   pearls?: Maybe<PearlsConfigurationMutation>;
 };
 
 export type ReportSettingsQuery = {
+  copomis?: Maybe<CopomisConfigurationQuery>;
   pearls?: Maybe<PearlsConfigurationQuery>;
 };
 
@@ -29999,6 +30055,23 @@ export type GetFdCertificatePrintReportQuery = {
           | QueryError_ServerError_Fragment
           | null;
       } | null;
+    };
+  };
+};
+
+export type GetCopomisFinancialReportQueryVariables = Exact<{
+  data: CopomisFinancialInput;
+}>;
+
+export type GetCopomisFinancialReportQuery = {
+  report: {
+    copomisFinancialReport: {
+      data?: Array<{
+        id?: string | null;
+        indicatorName?: string | null;
+        dr?: string | null;
+        cr?: string | null;
+      } | null> | null;
     };
   };
 };
@@ -51530,6 +51603,34 @@ export const useGetFdCertificatePrintReportQuery = <
     ['getFDCertificatePrintReport', variables],
     useAxios<GetFdCertificatePrintReportQuery, GetFdCertificatePrintReportQueryVariables>(
       GetFdCertificatePrintReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCopomisFinancialReportDocument = `
+    query getCopomisFinancialReport($data: CopomisFinancialInput!) {
+  report {
+    copomisFinancialReport(data: $data) {
+      data {
+        id
+        indicatorName
+        dr
+        cr
+      }
+    }
+  }
+}
+    `;
+export const useGetCopomisFinancialReportQuery = <
+  TData = GetCopomisFinancialReportQuery,
+  TError = unknown
+>(
+  variables: GetCopomisFinancialReportQueryVariables,
+  options?: UseQueryOptions<GetCopomisFinancialReportQuery, TError, TData>
+) =>
+  useQuery<GetCopomisFinancialReportQuery, TError, TData>(
+    ['getCopomisFinancialReport', variables],
+    useAxios<GetCopomisFinancialReportQuery, GetCopomisFinancialReportQueryVariables>(
+      GetCopomisFinancialReportDocument
     ).bind(null, variables),
     options
   );
