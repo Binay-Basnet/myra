@@ -1,12 +1,18 @@
 // @ts-check
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
 const { withNx } = require('@nrwl/next/plugins/with-nx');
 
 /**
  * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
  * */
 const nextConfig = {
+
+  output: 'standalone',
+  experimental: {
+    outputFileTracingRoot: path.join(__dirname, '../../'),
+  },
   nx: {
     // Set this to true if you would like to to use SVGR
     // See: https://github.com/gregberge/svgr

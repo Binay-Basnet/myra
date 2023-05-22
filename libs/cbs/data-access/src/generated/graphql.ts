@@ -13808,6 +13808,7 @@ export type Order = {
 };
 
 export type Organization = {
+  aKey?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
   basicDetails?: Maybe<OrganizationBasicDetails>;
   contactDetails?: Maybe<OrganizationContactDetails>;
@@ -13815,6 +13816,7 @@ export type Organization = {
   id: Scalars['ID'];
   mainContactPerson?: Maybe<OrganizationMainContactPerson>;
   registrationDetails?: Maybe<OrganizationRegistrationDetails>;
+  sKey?: Maybe<Scalars['String']>;
   statistics?: Maybe<OrganizationStatistics>;
 };
 
@@ -14126,12 +14128,12 @@ export type PearlsConfiguration = {
   description: Scalars['String'];
   expression: Scalars['String'];
   goal: Scalars['String'];
+  header: Scalars['String'];
   indicatorId: Scalars['String'];
   values: Scalars['Map'];
 };
 
 export type PearlsConfigurationInput = {
-  expression?: InputMaybe<Scalars['String']>;
   values: Scalars['Map'];
 };
 
