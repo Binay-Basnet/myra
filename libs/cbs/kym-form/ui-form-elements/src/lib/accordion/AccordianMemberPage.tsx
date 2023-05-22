@@ -49,7 +49,7 @@ const Decleration: string[] = [
 ];
 
 interface AccordianProps {
-  formStatus?: any | null;
+  // formStatus?: any | null;
   kymCurrentSection?: {
     section: string;
     subSection: string;
@@ -75,7 +75,7 @@ export const AccorrdianAddMember = (props: AccordianProps) => {
   }, [kymCurrentSection]);
 
   return (
-    <Box overflow="auto" h="700px">
+    <>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -224,6 +224,6 @@ export const AccorrdianAddMember = (props: AccordianProps) => {
           ))}
         </Box>
       </Collapse>
-    </Box>
+    </>
   );
 };

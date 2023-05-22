@@ -436,6 +436,7 @@ export type NeosysMutation = {
 export type NeosysQuery = {
   auth?: Maybe<NeosysAuthQuery>;
   client?: Maybe<NeosysClientQuery>;
+  tasks?: Maybe<Array<Maybe<Task>>>;
   user?: Maybe<NeosysUserQuery>;
   versions?: Maybe<Array<Maybe<ApplicationVersion>>>;
 };
@@ -783,6 +784,29 @@ export const Transaction_Direction = {
 
 export type Transaction_Direction =
   typeof Transaction_Direction[keyof typeof Transaction_Direction];
+export type Task = {
+  id: Scalars['ID'];
+  message: Scalars['String'];
+  slug: Scalars['String'];
+  status: TaskStatus;
+  type: TaskType;
+};
+
+export const TaskStatus = {
+  Completed: 'COMPLETED',
+  Failed: 'FAILED',
+  Running: 'RUNNING',
+} as const;
+
+export type TaskStatus = typeof TaskStatus[keyof typeof TaskStatus];
+export const TaskType = {
+  CloneEnv: 'CLONE_ENV',
+  CreateDatabase: 'CREATE_DATABASE',
+  DeleteEnv: 'DELETE_ENV',
+  UpgradeEnvVersion: 'UPGRADE_ENV_VERSION',
+} as const;
+
+export type TaskType = typeof TaskType[keyof typeof TaskType];
 export const TextFormat = {
   Email: 'EMAIL',
   IPv4: 'IPv4',
@@ -1208,6 +1232,20 @@ export type PaginationFragment = {
   endCursor?: string | null;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
+};
+
+export type GetTasksQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetTasksQuery = {
+  neosys: {
+    tasks?: Array<{
+      id: string;
+      type: TaskType;
+      slug: string;
+      status: TaskStatus;
+      message: string;
+    } | null> | null;
+  };
 };
 
 export type GetUserListQueryVariables = Exact<{
@@ -1829,6 +1867,28 @@ export const useGetVersionQuery = <TData = GetVersionQuery, TError = unknown>(
   useQuery<GetVersionQuery, TError, TData>(
     variables === undefined ? ['getVersion'] : ['getVersion', variables],
     useAxios<GetVersionQuery, GetVersionQueryVariables>(GetVersionDocument).bind(null, variables),
+    options
+  );
+export const GetTasksDocument = `
+    query getTasks {
+  neosys {
+    tasks {
+      id
+      type
+      slug
+      status
+      message
+    }
+  }
+}
+    `;
+export const useGetTasksQuery = <TData = GetTasksQuery, TError = unknown>(
+  variables?: GetTasksQueryVariables,
+  options?: UseQueryOptions<GetTasksQuery, TError, TData>
+) =>
+  useQuery<GetTasksQuery, TError, TData>(
+    variables === undefined ? ['getTasks'] : ['getTasks', variables],
+    useAxios<GetTasksQuery, GetTasksQueryVariables>(GetTasksDocument).bind(null, variables),
     options
   );
 export const GetUserListDocument = `

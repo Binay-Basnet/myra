@@ -635,8 +635,8 @@ steps:
       - aws configure set aws_access_key_id $aws_access_key
       - aws configure set aws_secret_access_key $aws_secret_key
       - aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.ap-south-1.amazonaws.com
-      - docker compose -f docker-compose.dhadda-migration.yaml build
-      - docker compose -f docker-compose.dhadda-migration.yaml push
+      - docker compose -f docker-compose.dhadda.yaml build
+      - docker compose -f docker-compose.dhadda.yaml push
 
 volumes:
   - name: env file
