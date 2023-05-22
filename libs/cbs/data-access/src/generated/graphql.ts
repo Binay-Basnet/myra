@@ -2139,6 +2139,7 @@ export type BulkTransferInput = {
   bulkTransferType?: InputMaybe<BulkTransferType>;
   ledger?: InputMaybe<Scalars['String']>;
   savingProduct?: InputMaybe<Scalars['String']>;
+  selectAll?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type BulkTransferResult = {
@@ -3907,6 +3908,21 @@ export type CopomisConfigurationResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<CopomisConfigurationQuery>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type CopomisFinancial = {
+  cr?: Maybe<Scalars['String']>;
+  dr?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  indicatorName?: Maybe<Scalars['String']>;
+};
+
+export type CopomisFinancialInput = {
+  period: LocalizedDateFilter;
+};
+
+export type CopomisFinancialResult = {
+  data?: Maybe<Array<Maybe<CopomisFinancial>>>;
 };
 
 export type CopomisReportData = {
@@ -10753,6 +10769,7 @@ export type LoanAccountQuery = {
   loanAccountDetails?: Maybe<LoanAccountDetailsResult>;
   loanPreview?: Maybe<LoanAccountPreviewResult>;
   loanProvisionAccounts?: Maybe<LoanProvisionCase>;
+  loanProvisionList?: Maybe<LoanProvisionConnection>;
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
   paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
   remainingPayments?: Maybe<LoanAccountRemainingPaymentData>;
@@ -10809,6 +10826,11 @@ export type LoanAccountQueryLoanAccountDetailsArgs = {
 
 export type LoanAccountQueryLoanPreviewArgs = {
   loanAccountId: Scalars['String'];
+};
+
+export type LoanAccountQueryLoanProvisionListArgs = {
+  filter?: InputMaybe<Filter>;
+  paginate?: InputMaybe<Pagination>;
 };
 
 export type LoanAccountQueryMemberDisbursedLoanAccountsArgs = {
@@ -11888,12 +11910,23 @@ export type LoanProvisionCase = {
   oneTo30Days?: Maybe<Array<Maybe<LoanProvisionAccount>>>;
 };
 
+export type LoanProvisionConnection = {
+  edges?: Maybe<Array<LoanProvisionEdge>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type LoanProvisionEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<LoanProvisionInfo>;
+};
+
 export type LoanProvisionInfo = {
-  amount?: Maybe<Scalars['String']>;
-  conditions?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['Localized']>;
-  id?: Maybe<Scalars['String']>;
-  provisionCount?: Maybe<Scalars['Int']>;
+  amount: Scalars['String'];
+  conditions: Scalars['String'];
+  date: Scalars['Localized'];
+  id: Scalars['String'];
+  provisionCount: Scalars['Int'];
 };
 
 export type LoanProvisionResult = {
@@ -14933,6 +14966,7 @@ export type ReportQuery = {
   branchReport: BranchReport;
   cashReport: CashReport;
   committeeQuery: CommitteeReport;
+  copomisFinancialReport: CopomisFinancialResult;
   depositReport: DepositReport;
   employeeReport: EmployeeReport;
   exceptionReport: ExceptionReport;
@@ -14947,6 +14981,10 @@ export type ReportQuery = {
   printReport: CertificatePrint;
   shareReport: ShareReport;
   transactionReport: TransactionReport;
+};
+
+export type ReportQueryCopomisFinancialReportArgs = {
+  data: CopomisFinancialInput;
 };
 
 export type ReportQueryGetReportArgs = {
@@ -30035,6 +30073,23 @@ export type GetFdCertificatePrintReportQuery = {
           | QueryError_ServerError_Fragment
           | null;
       } | null;
+    };
+  };
+};
+
+export type GetCopomisFinancialReportQueryVariables = Exact<{
+  data: CopomisFinancialInput;
+}>;
+
+export type GetCopomisFinancialReportQuery = {
+  report: {
+    copomisFinancialReport: {
+      data?: Array<{
+        id?: string | null;
+        indicatorName?: string | null;
+        dr?: string | null;
+        cr?: string | null;
+      } | null> | null;
     };
   };
 };
@@ -51566,6 +51621,34 @@ export const useGetFdCertificatePrintReportQuery = <
     ['getFDCertificatePrintReport', variables],
     useAxios<GetFdCertificatePrintReportQuery, GetFdCertificatePrintReportQueryVariables>(
       GetFdCertificatePrintReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCopomisFinancialReportDocument = `
+    query getCopomisFinancialReport($data: CopomisFinancialInput!) {
+  report {
+    copomisFinancialReport(data: $data) {
+      data {
+        id
+        indicatorName
+        dr
+        cr
+      }
+    }
+  }
+}
+    `;
+export const useGetCopomisFinancialReportQuery = <
+  TData = GetCopomisFinancialReportQuery,
+  TError = unknown
+>(
+  variables: GetCopomisFinancialReportQueryVariables,
+  options?: UseQueryOptions<GetCopomisFinancialReportQuery, TError, TData>
+) =>
+  useQuery<GetCopomisFinancialReportQuery, TError, TData>(
+    ['getCopomisFinancialReport', variables],
+    useAxios<GetCopomisFinancialReportQuery, GetCopomisFinancialReportQueryVariables>(
+      GetCopomisFinancialReportDocument
     ).bind(null, variables),
     options
   );
