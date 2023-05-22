@@ -89,7 +89,7 @@ export const FormulaEditor = ({ formula, onFormulaEdit, label }: FormulaEditorPr
           px="s12"
           gap="s4"
           h="s48"
-          contentEditable
+          contentEditable={false}
           w="100%"
           ref={ref}
         >

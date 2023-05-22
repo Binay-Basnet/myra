@@ -15,6 +15,8 @@ interface COASelectorProps {
 }
 
 export const COASelector = ({ char, onCharChange, variable }: COASelectorProps) => {
+  const constraintsRef = useRef(null);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const controls = useDragControls();
 
@@ -40,118 +42,130 @@ export const COASelector = ({ char, onCharChange, variable }: COASelectorProps) 
       />
       <Portal>
         {isOpen && (
-          <motion.div
-            style={{
-              position: 'absolute',
-              top: coaModalPosition.y,
-              left: coaModalPosition.x,
-              zIndex: 999999,
-            }}
-            drag
-            dragListener={false}
-            dragMomentum={false}
-            dragControls={controls}
+          <Box
+            position="fixed"
+            top={0}
+            zIndex={9999}
+            left={0}
+            h="100vh"
+            w="100vw"
+            ref={constraintsRef}
           >
-            <Box
-              w="32rem"
-              position="relative"
-              boxShadow="E1"
-              bg="white"
-              borderRadius="8px"
-              overflow="hidden"
+            <motion.div
+              style={{
+                position: 'absolute',
+                top: coaModalPosition.y,
+                left: coaModalPosition.x,
+                zIndex: 999999,
+              }}
+              drag
+              dragListener={false}
+              dragMomentum={false}
+              dragControls={controls}
+              dragConstraints={constraintsRef}
             >
               <Box
-                h="50px"
+                w="32rem"
+                position="relative"
+                boxShadow="E1"
                 bg="white"
-                zIndex={10}
-                borderBottom="1px"
-                borderBottomColor="border.layout"
-                px="s16"
-                borderTopRadius="8px"
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
+                borderRadius="8px"
+                overflow="hidden"
               >
-                <Box display="flex" alignItems="center" gap="s8">
+                <Box
+                  h="50px"
+                  bg="white"
+                  zIndex={10}
+                  borderBottom="1px"
+                  borderBottomColor="border.layout"
+                  px="s16"
+                  borderTopRadius="8px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Box display="flex" alignItems="center" gap="s8">
+                    <Icon
+                      as={MdOutlineDragIndicator}
+                      cursor="move"
+                      color="gray.500"
+                      userSelect="none"
+                      onPointerDown={(e) => controls.start(e)}
+                      _hover={{ color: 'gray.800' }}
+                    />
+                    <Text fontSize="r2" color="gray.800" fontWeight={600}>
+                      Ledger
+                    </Text>
+                  </Box>
                   <Icon
-                    as={MdOutlineDragIndicator}
-                    cursor="move"
+                    as={IoClose}
+                    onClick={onClose}
+                    cursor="pointer"
                     color="gray.500"
-                    onPointerDown={(e) => controls.start(e)}
                     _hover={{ color: 'gray.800' }}
                   />
-                  <Text fontSize="r2" color="gray.800" fontWeight={600}>
-                    Ledger
-                  </Text>
                 </Box>
-                <Icon
-                  as={IoClose}
-                  onClick={onClose}
-                  cursor="pointer"
-                  color="gray.500"
-                  _hover={{ color: 'gray.800' }}
-                />
-              </Box>
 
-              <Box h="37.5rem" px="s16" py="s16" overflowY="auto">
-                <COATree
-                  value={value}
-                  onValueChange={(newValue) => setValue(newValue)}
-                  isMulti
-                  selectableNodes="all"
-                />
-              </Box>
+                <Box h="37.5rem" px="s16" py="s16" overflowY="auto">
+                  <COATree
+                    value={value}
+                    onValueChange={(newValue) => setValue(newValue)}
+                    isMulti
+                    selectableNodes="all"
+                  />
+                </Box>
 
-              <Box
-                h="50px"
-                bg="white"
-                zIndex={10}
-                borderTop="1px"
-                borderTopColor="border.layout"
-                px="s16"
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Box />
-                <Button
-                  w="100px"
-                  onClick={() => {
-                    const ids = value.filter(Boolean).sort((a, b) => {
-                      const partsA = a.split('.').map(Number);
-                      const partsB = b.split('.').map(Number);
-
-                      const minLength = Math.min(partsA.length, partsB.length);
-
-                      for (let i = 0; i < minLength; i += 1) {
-                        if (partsA[i] !== partsB[i]) {
-                          return partsA[i] - partsB[i];
-                        }
-                      }
-
-                      return partsA.length - partsB.length;
-                    });
-
-                    const finalIds = ids.reduce((acc, curr) => {
-                      if (!acc.includes(curr)) {
-                        if (!acc.some((n) => curr.includes(n))) {
-                          acc.push(curr);
-                        }
-                      }
-
-                      return acc;
-                    }, [] as string[]);
-
-                    setFinalValue(finalIds.join(','));
-                    onCharChange(finalIds.join(','));
-                    onClose();
-                  }}
+                <Box
+                  h="50px"
+                  bg="white"
+                  zIndex={10}
+                  borderTop="1px"
+                  borderTopColor="border.layout"
+                  px="s16"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
                 >
-                  Apply
-                </Button>
+                  <Box />
+                  <Button
+                    w="100px"
+                    onClick={() => {
+                      const ids = value.filter(Boolean).sort((a, b) => {
+                        const partsA = a.split('.').map(Number);
+                        const partsB = b.split('.').map(Number);
+
+                        const minLength = Math.min(partsA.length, partsB.length);
+
+                        for (let i = 0; i < minLength; i += 1) {
+                          if (partsA[i] !== partsB[i]) {
+                            return partsA[i] - partsB[i];
+                          }
+                        }
+
+                        return partsA.length - partsB.length;
+                      });
+
+                      const finalIds = ids.reduce((acc, curr) => {
+                        if (!acc.includes(curr)) {
+                          if (!acc.some((n) => curr.includes(n))) {
+                            acc.push(curr);
+                          }
+                        }
+
+                        return acc;
+                      }, [] as string[]);
+
+                      setFinalValue(finalIds.join(','));
+                      onCharChange(finalIds.join(','));
+                      onClose();
+                    }}
+                  >
+                    Apply
+                  </Button>
+                </Box>
               </Box>
-            </Box>
-          </motion.div>
+            </motion.div>
+          </Box>
         )}
       </Portal>
     </>
