@@ -53,8 +53,8 @@ export const KYMIndividualPage = () => {
     subSection: string;
   }>();
 
-  const kymFormStatusQuery = useGetKymFormStatusQuery({ id }, { enabled: id !== 'undefined' });
-  const kymFormStatus = kymFormStatusQuery?.data?.members?.individual?.formState?.sectionStatus;
+  // const kymFormStatusQuery = useGetKymFormStatusQuery({ id }, { enabled: id !== 'undefined' });
+  // const kymFormStatus = kymFormStatusQuery?.data?.members?.individual?.formState?.sectionStatus;
 
   const { data: editValues, refetch: refetchEdit } = useGetIndividualKymEditDataQuery(
     {
@@ -117,7 +117,7 @@ export const KYMIndividualPage = () => {
           <FormLayout.Sidebar borderPosition="right">
             <Box p="s16" pr="s20">
               <AccorrdianAddMember
-                formStatus={kymFormStatus}
+                // formStatus={kymFormStatus}
                 kymCurrentSection={kymCurrentSection}
               />
             </Box>

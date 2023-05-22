@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import { Box, Collapse, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 const OrganizationInformation = [
@@ -70,7 +71,7 @@ export const AccorrdianAddInstitution = (props: AccordianProps) => {
   }, [kymCurrentSection]);
 
   return (
-    <Box overflow="auto" h="700px">
+    <>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -248,6 +249,6 @@ export const AccorrdianAddInstitution = (props: AccordianProps) => {
           ))}
         </Box>
       </Collapse>
-    </Box>
+    </>
   );
 };
