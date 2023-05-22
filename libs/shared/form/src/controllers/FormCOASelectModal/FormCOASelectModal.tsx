@@ -16,9 +16,13 @@ export const FormCOASelectModal = <T extends FieldValues>({ name }: IFormCOASele
       control={control}
       render={({ field: { onChange, value } }) => (
         <COASelectModal
-          trigger={(props) => <Input value={props?.name ? props?.name : '-- SELECT --'} />}
-          defaultValue={value}
+          trigger={(props) => (
+            <Input value={props?.name ? `${props.id} - ${props.name}` : '-- SELECT --'} />
+          )}
+          value={value}
           onChange={onChange}
+          isMulti={false}
+          selectableNodes="leaf"
         />
       )}
       name={name}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsFillCaretRightFill } from 'react-icons/bs';
 import { MdOutlineCircle } from 'react-icons/md';
 import { Text } from '@chakra-ui/react';
@@ -36,7 +36,7 @@ type TreeProps<TBase extends BaseType, TArray extends ArrayTree> = {
   selectableNodes: 'leaf' | 'root' | 'all';
 };
 
-type MultiTreeProps<TBase extends BaseType, TArray extends ArrayTree> = {
+type MultiTreeProps<TArray extends ArrayTree> = {
   isMulti: boolean;
 
   arrayData: TArray[];
@@ -47,20 +47,46 @@ type MultiTreeProps<TBase extends BaseType, TArray extends ArrayTree> = {
   selectableNodes: 'leaf' | 'root' | 'all';
 
   searchTerm: string;
+
+  index: number;
+
+  setAccordionIndices: React.Dispatch<React.SetStateAction<number[]>>;
+  accordionIndices: number[];
 };
 
-export const MultiTreeV2 = <TBase extends BaseType, TArray extends ArrayTree>(
-  props: MultiTreeProps<TBase, TArray>
-) => {
-  const { isMulti, treeData, arrayData, selectableNodes, searchTerm, value, onValueChange } = props;
+export const MultiTreeV2 = <TArray extends ArrayTree>(props: MultiTreeProps<TArray>) => {
+  const {
+    isMulti,
+    arrayData,
+    selectableNodes,
+    searchTerm,
+    value,
+    onValueChange,
+    accordionIndices,
+    setAccordionIndices,
+    index,
+  } = props;
 
-  const treeAfterSearch =
-    searchTerm === '' ? arrayToTree(arrayData) : arrayToTree(searchTree(arrayData, searchTerm));
+  const treeAfterSearch = React.useMemo(
+    () =>
+      searchTerm === '' ? arrayToTree(arrayData) : arrayToTree(searchTree(arrayData, searchTerm)),
+    [searchTerm, arrayData]
+  );
+
+  useEffect(() => {
+    if (!searchTerm) return;
+    if (treeAfterSearch?.length === 0) {
+      setAccordionIndices((prev) => prev?.filter((d) => d !== index));
+    } else {
+      setAccordionIndices((prev) => [...prev, index]);
+    }
+  }, [accordionIndices, treeAfterSearch.length, searchTerm]);
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
       {treeAfterSearch.map((tree) => (
         <TreeComponent
+          open={!!searchTerm}
           arrayData={arrayData}
           currentSubTree={tree}
           isMulti={isMulti}
@@ -77,33 +103,40 @@ export const MultiTreeV2 = <TBase extends BaseType, TArray extends ArrayTree>(
 export const TreeComponent = <TBase extends BaseType, TArray extends ArrayTree>(
   props: TreeProps<TBase, TArray> & {
     currentSubTree: TBase;
+    open: boolean;
   }
 ) => {
-  const { isMulti, treeData, arrayData, selectableNodes, value, onValueChange, currentSubTree } =
-    props;
+  const {
+    isMulti,
+    treeData,
+    arrayData,
+    selectableNodes,
+    value,
+    onValueChange,
+    currentSubTree,
+    open,
+  } = props;
 
-  if (isMulti) {
-    return (
-      <Box>
-        <Tree.Root treeData={treeData || []} arrayData={arrayData} defaultOpen={false}>
-          <Tree.Summary>
-            <TreeHeader
-              currentSubTree={currentSubTree}
-              selectedIds={value}
-              onHeaderSelect={(newIds) => {
-                onValueChange(newIds);
-              }}
-            />
-          </Tree.Summary>
-          <Tree.Details>
-            <TreeDetails {...props} treeData={treeData} />
-          </Tree.Details>
-        </Tree.Root>
-      </Box>
-    );
-  }
-
-  return null;
+  return (
+    <Box>
+      <Tree.Root treeData={treeData || []} arrayData={arrayData} defaultOpen={open}>
+        <Tree.Summary>
+          <TreeHeader
+            isMulti={isMulti}
+            selectableNodes={selectableNodes}
+            currentSubTree={currentSubTree}
+            selectedIds={value}
+            onHeaderSelect={(newIds) => {
+              onValueChange(newIds);
+            }}
+          />
+        </Tree.Summary>
+        <Tree.Details>
+          <TreeDetails {...props} treeData={treeData} />
+        </Tree.Details>
+      </Tree.Root>
+    </Box>
+  );
 };
 
 /*-------------------------------------------------------------------------------------*/
@@ -112,12 +145,16 @@ type TreeHeaderProps<TBase extends BaseType> = {
   currentSubTree: TBase;
   selectedIds: string[];
   onHeaderSelect: (newIds: string[]) => void;
+  selectableNodes: 'leaf' | 'root' | 'all';
+  isMulti: boolean;
 };
 
 const TreeHeader = <T extends BaseType>({
   selectedIds,
   onHeaderSelect,
   currentSubTree,
+  selectableNodes,
+  isMulti,
 }: TreeHeaderProps<T>) => {
   const { isOpen, arrayData } = useTree();
 
@@ -135,30 +172,35 @@ const TreeHeader = <T extends BaseType>({
         <Icon size="sm" as={MdOutlineCircle} color="gray.500" />
       )}
 
-      <Checkbox
-        isChecked={selectedIds?.includes(currentSubTree.id)}
-        onChange={(e) => {
-          if (e.target.checked) {
-            onHeaderSelect([
-              ...(selectedIds || []),
-              ...arrayData
-                .filter((tree) => tree.id.indexOf(currentSubTree.id) === 0)
-                .map((t) => t.id),
-            ]);
-          } else {
-            onHeaderSelect(selectedIds.filter((id) => !id.includes(currentSubTree.under)));
-          }
-        }}
-      />
+      {isMulti && selectableNodes === 'all' && (
+        <Checkbox
+          id={currentSubTree.id}
+          isChecked={selectedIds?.includes(currentSubTree.id)}
+          onChange={(e) => {
+            if (e.target.checked) {
+              onHeaderSelect([
+                ...(selectedIds || []),
+                ...arrayData
+                  .filter((tree) => tree.id.indexOf(currentSubTree.id) === 0)
+                  .map((t) => t.id),
+              ]);
+            } else {
+              onHeaderSelect(selectedIds.filter((id) => !id.includes(currentSubTree.under)));
+            }
+          }}
+        />
+      )}
 
-      <Box display="flex" alignItems="center" gap="s8" role="group">
-        <Text fontWeight="bold" fontSize="14px">
-          {currentSubTree.id}
-        </Text>
-        <Text fontWeight="400" fontSize="14px" color="gray.800">
-          {currentSubTree.name}
-        </Text>
-      </Box>
+      <label htmlFor={currentSubTree.id}>
+        <Box display="flex" alignItems="center" gap="s8" role="group" cursor="pointer">
+          <Text fontWeight="bold" fontSize="14px">
+            {currentSubTree.id}
+          </Text>
+          <Text fontWeight="400" fontSize="14px" color="gray.800">
+            {currentSubTree.name}
+          </Text>
+        </Box>
+      </label>
     </Box>
   );
 };
@@ -167,8 +209,11 @@ const TreeHeader = <T extends BaseType>({
 
 const TreeDetails = <TBase extends BaseType, TArray extends ArrayTree>({
   treeData,
+
   ...props
-}: TreeProps<TBase, TArray>) => {
+}: TreeProps<TBase, TArray> & {
+  open: boolean;
+}) => {
   const { isOpen } = useTree();
 
   return (
@@ -178,19 +223,17 @@ const TreeDetails = <TBase extends BaseType, TArray extends ArrayTree>({
           return <Node {...props} treeData={tree.children as TBase[]} currentSubTree={tree} />;
         }
 
-        if (props.isMulti) {
-          return (
-            <LeafNode
-              currentSubTree={tree}
-              selectedIds={props.value}
-              onLeafSelect={(newIds) => {
-                props.onValueChange(newIds);
-              }}
-            />
-          );
-        }
-
-        return null;
+        return (
+          <LeafNode
+            isMulti={props.isMulti}
+            selectableNodes={props.selectableNodes}
+            currentSubTree={tree}
+            selectedIds={props.value}
+            onLeafSelect={(newIds) => {
+              props.onValueChange(newIds);
+            }}
+          />
+        );
       })}
     </Collapse>
   );
@@ -206,8 +249,8 @@ const NodeWrapper = ({ children }: INodeWrapper) => (
   <Box position="relative">
     <Box
       position="absolute"
-      height="27.5px"
-      width="35px"
+      height="1.703125rem"
+      width="2.3125rem"
       borderBottom="1px"
       borderStyle="dashed"
       borderColor="gray.500"
@@ -223,6 +266,7 @@ const NodeWrapper = ({ children }: INodeWrapper) => (
 interface TreeDetailsProps<TBase extends BaseType, TArray extends ArrayTree>
   extends TreeProps<TBase, TArray> {
   currentSubTree: TBase;
+  open: boolean;
 }
 
 const Node = <T extends BaseType, U extends ArrayTree>(props: TreeDetailsProps<T, U>) => (
@@ -237,34 +281,53 @@ interface LeafNodeProps<TBase extends BaseType> {
   currentSubTree: TBase;
   selectedIds: string[];
   onLeafSelect: (newIds: string[]) => void;
+  selectableNodes: 'leaf' | 'root' | 'all';
+  isMulti: boolean;
 }
 
 const LeafNode = <TBase extends BaseType>({
   currentSubTree,
   selectedIds,
   onLeafSelect,
+  selectableNodes,
+  isMulti,
 }: LeafNodeProps<TBase>) => (
   <NodeWrapper>
     <Box display="flex" gap="s8" ml="-3px" alignItems="center" cursor="pointer">
       <Icon size="sm" as={MdOutlineCircle} color="gray.500" />
-      <Checkbox
-        isChecked={selectedIds?.includes(currentSubTree.id)}
-        onChange={(e) => {
-          if (!e.target.checked) {
-            onLeafSelect(selectedIds.filter((id) => !id.includes(currentSubTree.under)));
-          } else {
-            onLeafSelect([...selectedIds, currentSubTree.id]);
+      {selectableNodes !== 'root' && (
+        <Checkbox
+          id={currentSubTree?.id}
+          isChecked={
+            isMulti
+              ? selectedIds?.includes(currentSubTree.id)
+              : currentSubTree.id === selectedIds[0]
           }
-        }}
-      />
-      <Box display="flex" alignItems="center" gap="s8" role="group">
-        <Text fontWeight="bold" fontSize="14px">
-          {currentSubTree.id}
-        </Text>
-        <Text fontWeight="400" fontSize="14px">
-          {currentSubTree.name}
-        </Text>
-      </Box>
+          onChange={(e) => {
+            if (!e.target.checked) {
+              if (isMulti) {
+                onLeafSelect(selectedIds.filter((id) => !id.includes(currentSubTree.under)));
+              } else {
+                onLeafSelect([]);
+              }
+            } else if (isMulti) {
+              onLeafSelect([...selectedIds, currentSubTree.id]);
+            } else {
+              onLeafSelect([currentSubTree.id]);
+            }
+          }}
+        />
+      )}
+      <label htmlFor={currentSubTree?.id}>
+        <Box display="flex" alignItems="center" gap="s8" role="group" cursor="pointer">
+          <Text fontWeight="bold" fontSize="14px">
+            {currentSubTree.id}
+          </Text>
+          <Text fontWeight="400" fontSize="14px">
+            {currentSubTree.name}
+          </Text>
+        </Box>
+      </label>
     </Box>
   </NodeWrapper>
 );

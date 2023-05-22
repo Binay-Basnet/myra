@@ -23,7 +23,8 @@ type Formula = {
 };
 
 export const PEARLSReportSettings = ({ indicator }: ReportSettingsProps) => {
-  const [formula, setFormula] = useState<Formula | null>(null);
+  const [numeratorFormula, setNumeratorFormula] = useState<Formula | null>(null);
+  const [denominatorFormula, setDenominatorFormula] = useState<Formula | null>(null);
 
   const { data, isFetching } = useGetPearlsReportsFormulaQuery();
   const { mutateAsync: updateFormula } = useUpdatePearlsReportFormulaMutation();
@@ -34,10 +35,17 @@ export const PEARLSReportSettings = ({ indicator }: ReportSettingsProps) => {
   );
 
   useEffect(() => {
-    if (pearlsGroup?.expression && pearlsGroup?.values) {
-      setFormula({
-        expression: pearlsGroup?.expression,
-        variables: pearlsGroup?.values,
+    if (pearlsGroup?.numerator && pearlsGroup?.numeratorVariables) {
+      setNumeratorFormula({
+        expression: pearlsGroup?.numerator,
+        variables: pearlsGroup?.numeratorVariables,
+      });
+    }
+
+    if (pearlsGroup?.denominator && pearlsGroup?.denominatorVariables) {
+      setDenominatorFormula({
+        expression: pearlsGroup?.denominator,
+        variables: pearlsGroup?.denominatorVariables,
       });
     }
   }, [isFetching, indicator]);
@@ -54,7 +62,7 @@ export const PEARLSReportSettings = ({ indicator }: ReportSettingsProps) => {
           </Text>
         </Box>
 
-        {formula && (
+        {numeratorFormula && denominatorFormula && (
           <Box
             p="s16"
             border="1px"
@@ -65,16 +73,24 @@ export const PEARLSReportSettings = ({ indicator }: ReportSettingsProps) => {
             borderRadius="br2"
           >
             <FormulaEditor
-              label="Expression"
-              formula={formula}
-              onFormulaEdit={(newFormula) => setFormula(newFormula)}
+              label="Numerator Expression"
+              formula={numeratorFormula}
+              onFormulaEdit={(newFormula) => setNumeratorFormula(newFormula)}
+            />
+            <FormulaEditor
+              label="Denominator Expression"
+              formula={denominatorFormula}
+              onFormulaEdit={(newFormula) => setDenominatorFormula(newFormula)}
             />
             <Box display="flex" flexDir="column" gap="s8">
               <Text fontSize="r1" fontWeight={500} color="gray.700">
                 Ledger Code & Names
               </Text>
               <Box display="flex" flexDir="column">
-                {Object.values(formula.variables).map((variables) => (
+                {Object.values({
+                  ...numeratorFormula.variables,
+                  ...denominatorFormula?.variables,
+                }).map((variables) => (
                   <>
                     {variables.split(',').map((v) => (
                       <Box fontSize="r1" color="gray.800">
@@ -94,7 +110,7 @@ export const PEARLSReportSettings = ({ indicator }: ReportSettingsProps) => {
       </Box>
       <SettingsFooter
         handleSave={async () => {
-          if (formula?.variables) {
+          if (numeratorFormula?.variables && denominatorFormula?.variables) {
             await asyncToast({
               id: 'formula',
               msgs: {
@@ -103,7 +119,8 @@ export const PEARLSReportSettings = ({ indicator }: ReportSettingsProps) => {
               },
               promise: updateFormula({
                 data: {
-                  values: formula?.variables,
+                  denominatorVariables: denominatorFormula.variables,
+                  numeratorVariables: numeratorFormula.variables,
                 },
                 indicatorId: indicator,
               }),
@@ -111,10 +128,17 @@ export const PEARLSReportSettings = ({ indicator }: ReportSettingsProps) => {
           }
         }}
         handleDiscard={() => {
-          if (pearlsGroup?.expression && pearlsGroup?.values) {
-            setFormula({
-              expression: pearlsGroup?.expression,
-              variables: pearlsGroup?.values,
+          if (pearlsGroup?.numerator && pearlsGroup?.numeratorVariables) {
+            setNumeratorFormula({
+              expression: pearlsGroup?.numerator,
+              variables: pearlsGroup?.numeratorVariables,
+            });
+          }
+
+          if (pearlsGroup?.denominator && pearlsGroup?.denominatorVariables) {
+            setDenominatorFormula({
+              expression: pearlsGroup?.denominator,
+              variables: pearlsGroup?.denominatorVariables,
             });
           }
         }}

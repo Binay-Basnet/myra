@@ -6,10 +6,12 @@ query getPearlsReportsFormula {
           list {
             header
             description
-            expression
+            numerator
+            numeratorVariables
+            denominator
+            denominatorVariables
             goal
             indicatorId
-            values
           }
         }
       }
