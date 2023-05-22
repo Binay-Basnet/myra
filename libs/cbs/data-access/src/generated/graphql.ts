@@ -21474,6 +21474,58 @@ export type GetWithdrawSlipPrintPreferenceQuery = {
   };
 };
 
+export type UpdatePearlsReportFormulaMutationVariables = Exact<{
+  indicatorId: Scalars['String'];
+  data?: InputMaybe<PearlsConfigurationInput>;
+}>;
+
+export type UpdatePearlsReportFormulaMutation = {
+  settings: {
+    general?: {
+      reports?: {
+        pearls?: {
+          update?: {
+            recordId?: string | null;
+            error?:
+              | MutationError_AuthorizationError_Fragment
+              | MutationError_BadRequestError_Fragment
+              | MutationError_NotFoundError_Fragment
+              | MutationError_ServerError_Fragment
+              | MutationError_ValidationError_Fragment
+              | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdateCopomisReportFormulaMutationVariables = Exact<{
+  indicatorId: Scalars['String'];
+  data?: InputMaybe<CopomisConfigurationInput>;
+}>;
+
+export type UpdateCopomisReportFormulaMutation = {
+  settings: {
+    general?: {
+      reports?: {
+        copomis?: {
+          update?: {
+            recordId?: string | null;
+            error?:
+              | MutationError_AuthorizationError_Fragment
+              | MutationError_BadRequestError_Fragment
+              | MutationError_NotFoundError_Fragment
+              | MutationError_ServerError_Fragment
+              | MutationError_ValidationError_Fragment
+              | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetSettingsShareBonusMutationVariables = Exact<{
   data?: InputMaybe<ShareBonusSettingsInput>;
 }>;
@@ -32538,6 +32590,48 @@ export type GetOrganizationEditDataQuery = {
   };
 };
 
+export type GetPearlsReportsFormulaQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPearlsReportsFormulaQuery = {
+  settings: {
+    general?: {
+      reports?: {
+        pearls?: {
+          list?: Array<{
+            header: string;
+            description: string;
+            numerator: string;
+            numeratorVariables: Record<string, string>;
+            denominator: string;
+            denominatorVariables: Record<string, string>;
+            goal: string;
+            indicatorId: string;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetCopomisReportSettingsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCopomisReportSettingsQuery = {
+  settings: {
+    general?: {
+      reports?: {
+        copomis?: {
+          list?: Array<{
+            expression: string;
+            id: string;
+            indicatorName: string;
+            values: Record<string, string>;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetDepositSettingsIroQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetDepositSettingsIroQuery = {
@@ -40428,6 +40522,82 @@ export const useGetWithdrawSlipPrintPreferenceQuery = <
     useAxios<GetWithdrawSlipPrintPreferenceQuery, GetWithdrawSlipPrintPreferenceQueryVariables>(
       GetWithdrawSlipPrintPreferenceDocument
     ).bind(null, variables),
+    options
+  );
+export const UpdatePearlsReportFormulaDocument = `
+    mutation updatePearlsReportFormula($indicatorId: String!, $data: PearlsConfigurationInput) {
+  settings {
+    general {
+      reports {
+        pearls {
+          update(indicatorId: $indicatorId, data: $data) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdatePearlsReportFormulaMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdatePearlsReportFormulaMutation,
+    TError,
+    UpdatePearlsReportFormulaMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdatePearlsReportFormulaMutation,
+    TError,
+    UpdatePearlsReportFormulaMutationVariables,
+    TContext
+  >(
+    ['updatePearlsReportFormula'],
+    useAxios<UpdatePearlsReportFormulaMutation, UpdatePearlsReportFormulaMutationVariables>(
+      UpdatePearlsReportFormulaDocument
+    ),
+    options
+  );
+export const UpdateCopomisReportFormulaDocument = `
+    mutation updateCOPOMISReportFormula($indicatorId: String!, $data: CopomisConfigurationInput) {
+  settings {
+    general {
+      reports {
+        copomis {
+          update(data: $data, indicatorId: $indicatorId) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateCopomisReportFormulaMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateCopomisReportFormulaMutation,
+    TError,
+    UpdateCopomisReportFormulaMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateCopomisReportFormulaMutation,
+    TError,
+    UpdateCopomisReportFormulaMutationVariables,
+    TContext
+  >(
+    ['updateCOPOMISReportFormula'],
+    useAxios<UpdateCopomisReportFormulaMutation, UpdateCopomisReportFormulaMutationVariables>(
+      UpdateCopomisReportFormulaDocument
+    ),
     options
   );
 export const SetSettingsShareBonusDocument = `
@@ -54935,6 +55105,76 @@ export const useGetOrganizationEditDataQuery = <
     variables === undefined ? ['getOrganizationEditData'] : ['getOrganizationEditData', variables],
     useAxios<GetOrganizationEditDataQuery, GetOrganizationEditDataQueryVariables>(
       GetOrganizationEditDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetPearlsReportsFormulaDocument = `
+    query getPearlsReportsFormula {
+  settings {
+    general {
+      reports {
+        pearls {
+          list {
+            header
+            description
+            numerator
+            numeratorVariables
+            denominator
+            denominatorVariables
+            goal
+            indicatorId
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetPearlsReportsFormulaQuery = <
+  TData = GetPearlsReportsFormulaQuery,
+  TError = unknown
+>(
+  variables?: GetPearlsReportsFormulaQueryVariables,
+  options?: UseQueryOptions<GetPearlsReportsFormulaQuery, TError, TData>
+) =>
+  useQuery<GetPearlsReportsFormulaQuery, TError, TData>(
+    variables === undefined ? ['getPearlsReportsFormula'] : ['getPearlsReportsFormula', variables],
+    useAxios<GetPearlsReportsFormulaQuery, GetPearlsReportsFormulaQueryVariables>(
+      GetPearlsReportsFormulaDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCopomisReportSettingsDocument = `
+    query getCopomisReportSettings {
+  settings {
+    general {
+      reports {
+        copomis {
+          list {
+            expression
+            id
+            indicatorName
+            values
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCopomisReportSettingsQuery = <
+  TData = GetCopomisReportSettingsQuery,
+  TError = unknown
+>(
+  variables?: GetCopomisReportSettingsQueryVariables,
+  options?: UseQueryOptions<GetCopomisReportSettingsQuery, TError, TData>
+) =>
+  useQuery<GetCopomisReportSettingsQuery, TError, TData>(
+    variables === undefined
+      ? ['getCopomisReportSettings']
+      : ['getCopomisReportSettings', variables],
+    useAxios<GetCopomisReportSettingsQuery, GetCopomisReportSettingsQueryVariables>(
+      GetCopomisReportSettingsDocument
     ).bind(null, variables),
     options
   );

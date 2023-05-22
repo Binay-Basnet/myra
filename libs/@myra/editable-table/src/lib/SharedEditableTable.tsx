@@ -39,9 +39,12 @@ interface RecordWithId {
 }
 
 interface ModalProps {
-  defaultValue: string | undefined | null;
   trigger: (props: { id: string; name: string; under: string } | null) => React.ReactNode;
+  value: string;
   onChange: (newValue: string) => void;
+
+  isMulti: boolean;
+  selectableNodes: 'leaf' | 'root' | 'all';
 }
 
 export type Column<T extends RecordWithId & Record<string, EditableValue>> = {
@@ -772,7 +775,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
       {column.fieldType === 'modal' ? (
         Modal ? (
           <Modal
-            defaultValue={data[column.accessor] as string}
+            value={data[column.accessor] as string}
             trigger={(props) => (
               <Text
                 _hover={{ bg: 'gray.100' }}
@@ -797,6 +800,8 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
                 },
               });
             }}
+            isMulti={false}
+            selectableNodes="leaf"
           />
         ) : null
       ) : column.fieldType === 'checkbox' ? null : column.fieldType ===

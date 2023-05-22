@@ -1,0 +1,33 @@
+mutation updatePearlsReportFormula($indicatorId: String!, $data: PearlsConfigurationInput) {
+  settings {
+    general {
+      reports {
+        pearls {
+          update(indicatorId: $indicatorId, data: $data) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updateCOPOMISReportFormula($indicatorId: String!, $data: CopomisConfigurationInput) {
+  settings {
+    general {
+      reports {
+        copomis {
+          update(data: $data, indicatorId: $indicatorId){
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}

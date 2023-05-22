@@ -25,7 +25,7 @@ export const SettingsFooter = (props: SettingsFooterProps) => {
       right={0}
       borderTop="1px solid"
       borderColor="gray.100"
-      w="calc(100vw - 510px)"
+      w="calc(100vw - 520px)"
       justifyContent="flex-end"
       bg="white"
       gap={2}
