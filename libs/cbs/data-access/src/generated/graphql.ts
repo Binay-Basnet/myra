@@ -3999,8 +3999,6 @@ export type CopomisConfigurationResult = {
 };
 
 export type CopomisFinancial = {
-  cr?: Maybe<Scalars['String']>;
-  dr?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   indicatorName?: Maybe<Scalars['String']>;
 };
@@ -4014,8 +4012,6 @@ export type CopomisFinancialResult = {
 };
 
 export type CopomisReportData = {
-  address?: Maybe<Scalars['Localized']>;
-  castRecordId?: Maybe<Scalars['Int']>;
   citizenshipIssuedDate?: Maybe<Scalars['Localized']>;
   citizenshipIssuedDistrictId?: Maybe<Scalars['Int']>;
   citizenshipNo?: Maybe<Scalars['String']>;

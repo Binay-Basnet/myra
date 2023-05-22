@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { useUploadCsvMutation } from '@migration/data-access';
+import { store } from '@migration/data-access';
+import axios from 'axios';
 
 import { Box, Button, Collapse, Input, Text } from '@myra-ui';
 
@@ -11,20 +12,70 @@ export const MapperCsv = (props) => {
   const [mapperCollapse, setMapperCollapse] = useState(true);
   const [selectedFile, setSelectedFile] = useState();
 
-  const { mutateAsync: uploadCSVMutateAsync } = useUploadCsvMutation();
+  const uploadFile = async (file: File[]) => {
+    const formData = new FormData();
+    formData.append(
+      'operations',
+      JSON.stringify({
+        query: `
+        mutation ($file: [Upload!]!) {
+          protectedMutation{
+            uploadCSV(input: { file: $file, dbName: ${router?.query?.['name'] as string} }){
+              status
+              data
+            }
+          }
+        }
+    `,
+        variables: {
+          file: Array.from({ length: file.length }),
+        },
+      })
+    );
+
+    const map = {};
+    Array.from(file).forEach((f, index) => {
+      map[index] = [`variables.file.${index}`];
+    });
+
+    formData.append('map', JSON.stringify(map));
+
+    // formData.append('0', file);
+
+    Array.from(file).forEach((f, index) => {
+      formData.append(`${index}`, f);
+    });
+
+    const API = axios.create({ baseURL: `${process.env['NX_SCHEMA_PATH']}/query` });
+
+    API.interceptors.request.use((req) => {
+      req.headers.Authorization = `Bearer ${store.getState().auth.token}`;
+      req.headers.slug = 'neosys';
+      return req;
+    });
+
+    await API({
+      url: `${process.env['NX_SCHEMA_PATH']}/query`,
+      method: 'post',
+      data: formData,
+    });
+  };
+
+  // const { mutateAsync: uploadCSVMutateAsync } = useUploadCsvMutation();
 
   const mapperCSVData =
     directoryStructureData?.protectedQuery?.getDirectoryStructure?.data[0]?.mapperCSV;
 
   const handleUploadFile = (e) => {
-    setSelectedFile(e.target.files[0]);
+    setSelectedFile(e.target.files);
   };
 
   const onSubmitCSV = (e) => {
     e.preventDefault();
-    uploadCSVMutateAsync({
-      input: { dbName: router?.query?.['name'] as string, file: [selectedFile] },
-    });
+    uploadFile(selectedFile);
+    // uploadCSVMutateAsync({
+    //   input: { dbName: router?.query?.['name'] as string, file: [selectedFile] },
+    // });
   };
 
   return (
@@ -63,7 +114,13 @@ export const MapperCsv = (props) => {
             <Text fontSize="r3" fontWeight="medium">
               Upload Csv
             </Text>
-            <Input type="file" border="none" onChange={handleUploadFile} w="-webkit-fit-content" />
+            <Input
+              type="file"
+              border="none"
+              onChange={handleUploadFile}
+              w="-webkit-fit-content"
+              multiple
+            />
             <Button type="submit" w="-webkit-fit-content">
               Submit
             </Button>
