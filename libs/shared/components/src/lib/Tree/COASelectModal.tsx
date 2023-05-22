@@ -205,7 +205,7 @@ const COAView = React.memo(
           <AccordionButton
             onClick={() => {
               setAccordionIndices((prev) =>
-                prev?.includes(0) ? prev?.filter((p) => p !== 0) : [...prev, 0]
+                prev?.includes(index) ? prev?.filter((p) => p !== index) : [...prev, index]
               );
             }}
             p="s12"

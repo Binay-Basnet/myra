@@ -67,8 +67,6 @@ export const FormulaEditor = ({ formula, onFormulaEdit, label }: FormulaEditorPr
     };
   }, []);
 
-  console.log(JSON.stringify(formula, null, 2));
-
   return (
     <Box display="flex" flexDir="column" gap="s4">
       {label && (
