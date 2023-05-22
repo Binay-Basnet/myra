@@ -14,8 +14,6 @@ import { theme } from '@myra-ui/theme';
 import { store, useInit } from '@coop/cbs/data-access';
 import { AbilityContext, buildEmptyPermissions } from '@coop/cbs/utils';
 
-import { useSnap } from '../../../libs/shared/utils/src/hooks/useSnap';
-
 import '@raralabs/web-feedback/dist/css/style.css';
 import './app.css';
 
@@ -45,7 +43,6 @@ const queryClient = new QueryClient({
 
 const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const { isLoading } = useInit();
-  useSnap();
 
   const getLayout = Component.getLayout || ((page) => page);
 
