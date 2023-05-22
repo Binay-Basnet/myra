@@ -30129,6 +30129,23 @@ export type GetFdCertificatePrintReportQuery = {
   };
 };
 
+export type GetCopomisFinancialReportQueryVariables = Exact<{
+  data: CopomisFinancialInput;
+}>;
+
+export type GetCopomisFinancialReportQuery = {
+  report: {
+    copomisFinancialReport: {
+      data?: Array<{
+        id?: string | null;
+        indicatorName?: string | null;
+        dr?: string | null;
+        cr?: string | null;
+      } | null> | null;
+    };
+  };
+};
+
 export type GetAllSavedReportsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -51774,6 +51791,34 @@ export const useGetFdCertificatePrintReportQuery = <
     ['getFDCertificatePrintReport', variables],
     useAxios<GetFdCertificatePrintReportQuery, GetFdCertificatePrintReportQueryVariables>(
       GetFdCertificatePrintReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCopomisFinancialReportDocument = `
+    query getCopomisFinancialReport($data: CopomisFinancialInput!) {
+  report {
+    copomisFinancialReport(data: $data) {
+      data {
+        id
+        indicatorName
+        dr
+        cr
+      }
+    }
+  }
+}
+    `;
+export const useGetCopomisFinancialReportQuery = <
+  TData = GetCopomisFinancialReportQuery,
+  TError = unknown
+>(
+  variables: GetCopomisFinancialReportQueryVariables,
+  options?: UseQueryOptions<GetCopomisFinancialReportQuery, TError, TData>
+) =>
+  useQuery<GetCopomisFinancialReportQuery, TError, TData>(
+    ['getCopomisFinancialReport', variables],
+    useAxios<GetCopomisFinancialReportQuery, GetCopomisFinancialReportQueryVariables>(
+      GetCopomisFinancialReportDocument
     ).bind(null, variables),
     options
   );

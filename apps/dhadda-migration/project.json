@@ -16,7 +16,9 @@
         "development": {
           "outputPath": "apps/dhadda-migration"
         },
-        "production": {}
+        "production": {
+          "outputPath": "apps/dhadda-migration/dist"
+        }
       }
     },
     "serve": {
