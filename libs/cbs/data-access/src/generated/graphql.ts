@@ -3878,6 +3878,37 @@ export type CoordinateInput = {
   longitude?: InputMaybe<Scalars['Float']>;
 };
 
+export type CopomisConfiguration = {
+  expression: Scalars['String'];
+  id: Scalars['String'];
+  indicatorName: Scalars['String'];
+  values: Scalars['Map'];
+};
+
+export type CopomisConfigurationInput = {
+  expression?: InputMaybe<Scalars['String']>;
+  values: Scalars['Map'];
+};
+
+export type CopomisConfigurationMutation = {
+  update?: Maybe<CopomisConfigurationResult>;
+};
+
+export type CopomisConfigurationMutationUpdateArgs = {
+  data?: InputMaybe<CopomisConfigurationInput>;
+  indicatorId: Scalars['String'];
+};
+
+export type CopomisConfigurationQuery = {
+  list?: Maybe<Array<Maybe<CopomisConfiguration>>>;
+};
+
+export type CopomisConfigurationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<CopomisConfigurationQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type CopomisReportData = {
   address?: Maybe<Scalars['Localized']>;
   castRecordId?: Maybe<Scalars['Int']>;
@@ -14125,16 +14156,19 @@ export type PaymentDetail = {
 };
 
 export type PearlsConfiguration = {
+  denominator: Scalars['String'];
+  denominatorVariables: Scalars['Map'];
   description: Scalars['String'];
-  expression: Scalars['String'];
   goal: Scalars['String'];
   header: Scalars['String'];
   indicatorId: Scalars['String'];
-  values: Scalars['Map'];
+  numerator: Scalars['String'];
+  numeratorVariables: Scalars['Map'];
 };
 
 export type PearlsConfigurationInput = {
-  values: Scalars['Map'];
+  denominatorVariables: Scalars['Map'];
+  numeratorVariables: Scalars['Map'];
 };
 
 export type PearlsConfigurationMutation = {
@@ -14941,10 +14975,12 @@ export type ReportSettingMutation = {
 };
 
 export type ReportSettingsMutation = {
+  copomis?: Maybe<CopomisConfigurationMutation>;
   pearls?: Maybe<PearlsConfigurationMutation>;
 };
 
 export type ReportSettingsQuery = {
+  copomis?: Maybe<CopomisConfigurationQuery>;
   pearls?: Maybe<PearlsConfigurationQuery>;
 };
 
