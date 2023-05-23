@@ -153,19 +153,25 @@ export const AgentDetailOverview = () => {
       promise: setAgentTodayList({
         id: id as string,
         data: getValues()['accounts'].map(
-          (account: { id: string; member: string; account: string; amount: string }) =>
-            account.id
+          (account: { id: string; member: string; account: string; amount: string }) => {
+            const selectedAccount =
+              assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+                (member) => member?.node?.account?.id === account?.account
+              )?.node?.account;
+
+            return account.id
               ? {
                   id: account.id,
                   member: account.member,
                   account: account.account,
-                  amount: String(account.amount),
+                  amount: selectedAccount?.dues?.totalDue,
                 }
               : {
                   member: account.member,
                   account: account.account,
-                  amount: String(account.amount),
-                }
+                  amount: selectedAccount?.dues?.totalDue,
+                };
+          }
         ),
       }),
       msgs: {
