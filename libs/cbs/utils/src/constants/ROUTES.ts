@@ -44,6 +44,9 @@ export const ROUTES = {
   CBS_LOAN_ACCOUNTS_LIST: '/cbs/loan/accounts/list',
   CBS_LOAN_ACCOUNT_DETAILS: '/cbs/loan/accounts/details',
 
+  CBS_LOAN_LOSS_PROVISION_LIST: '/cbs/loan/loan-loss-provision/list',
+  CBS_LOAN_LOSS_PROVISION_ADD: '/cbs/loan/loan-loss-provision/add',
+
   CBS_TRANS_DEPOSIT_ADD: '/cbs/transactions/deposit/add',
   CBS_TRANS_WITHDRAW_ADD: '/cbs/transactions/withdraw/add',
   CBS_TRANS_ACCOUNT_TRANSFER_ADD: '/cbs/transactions/account-transfer/add',

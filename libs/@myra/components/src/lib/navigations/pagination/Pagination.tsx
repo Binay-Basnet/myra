@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
+import { Table } from '@tanstack/react-table';
 import qs from 'qs';
 
 import { Select } from '@myra-ui/forms';
@@ -10,7 +11,7 @@ import { DEFAULT_PAGE_SIZE as UTIL_PAGE_SIZE, quantityConverter } from '@coop/sh
 import SmallPagination from '../small-pagination/SmallPagination';
 
 /* eslint-disable-next-line */
-export interface PaginationProps {
+export interface PaginationProps<T> {
   total: number | string;
   pageInfo?: {
     startCursor?: string | null;
@@ -19,16 +20,26 @@ export interface PaginationProps {
     hasPreviousPage: boolean;
   } | null;
   pageSizeOptions: number[];
+  tablePagination?: boolean;
+  table: Table<T>;
 }
 
 export const DEFAULT_PAGE_SIZE = UTIL_PAGE_SIZE;
 
-export const Pagination = ({ pageInfo, total, pageSizeOptions }: PaginationProps) => {
+export const Pagination = <T,>({
+  table,
+  pageInfo,
+  total,
+  pageSizeOptions,
+  tablePagination,
+}: PaginationProps<T>) => {
   const router = useRouter();
   const paginationParams = qs.parse(router?.query['paginate'] as string);
 
   const pageSize = Number(
-    paginationParams['first'] ?? paginationParams['last'] ?? DEFAULT_PAGE_SIZE
+    tablePagination
+      ? table?.getState()?.pagination?.pageSize
+      : paginationParams['first'] ?? paginationParams['last'] ?? DEFAULT_PAGE_SIZE
   );
 
   return (
@@ -52,16 +63,20 @@ export const Pagination = ({ pageInfo, total, pageSizeOptions }: PaginationProps
               value={{ label: quantityConverter(pageSize), value: pageSize }}
               onChange={(newValue) => {
                 if (newValue && 'value' in newValue) {
-                  router.push({
-                    query: {
-                      ...router.query,
-                      paginate: qs.stringify({
-                        page: 1,
-                        after: '',
-                        first: newValue?.value,
-                      }),
-                    },
-                  });
+                  if (tablePagination) {
+                    table.setPageSize(Number(newValue?.value));
+                  } else {
+                    router.push({
+                      query: {
+                        ...router.query,
+                        paginate: qs.stringify({
+                          page: 1,
+                          after: '',
+                          first: newValue?.value,
+                        }),
+                      },
+                    });
+                  }
                 }
               }}
               options={pageSizeOptions?.map((size) => ({
@@ -74,7 +89,15 @@ export const Pagination = ({ pageInfo, total, pageSizeOptions }: PaginationProps
           <span>items per page</span>
         </Box>
 
-        {pageInfo && <SmallPagination limit={pageSize} total={total} pageInfo={pageInfo} />}
+        {(pageInfo || tablePagination) && (
+          <SmallPagination
+            table={table}
+            limit={pageSize}
+            total={total}
+            pageInfo={pageInfo}
+            tablePagination={tablePagination}
+          />
+        )}
       </Box>
     </Text>
   );

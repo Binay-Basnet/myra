@@ -191,3 +191,14 @@ mutation setLoanGuarantee($loanAccountID: ID!, $data: LoanAccountGuranteeInput!)
     }
   }
 }
+
+mutation loanLossProvision($data: LoanLossProvisionInput) {
+  loanAccount {
+    loanProvision(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

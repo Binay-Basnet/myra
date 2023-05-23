@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { Collapse } from '@chakra-ui/react';
-import { ExpandedState } from '@tanstack/react-table';
+import { ExpandedState, getPaginationRowModel } from '@tanstack/react-table';
 
 import { Pagination } from '@myra-ui/components';
+
+import { DEFAULT_PAGE_SIZE } from '@coop/shared/utils';
 
 import {
   TableBody,
@@ -50,6 +52,7 @@ export const TableWithoutRef = <T,>(
     allowSelection,
     onRowSelect,
     allowSearch,
+    tablePagination,
   } = props;
 
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -60,31 +63,67 @@ export const TableWithoutRef = <T,>(
     onRowSelect && onRowSelect(Object.keys(rowSelection));
   }, [rowSelection]);
 
-  const table = useTable<T>({
-    columns,
-    data,
-    isStatic,
-    allowSelection,
+  const table = useTable<T>(
+    tablePagination
+      ? {
+          columns,
+          data,
+          isStatic,
+          allowSelection,
 
-    state: {
-      rowSelection,
-      expanded,
-    },
+          state: {
+            rowSelection,
+            expanded,
+          },
 
-    onExpandedChange: setExpanded,
-    onRowSelectionChange: setRowSelection,
-    getRowId,
+          onExpandedChange: setExpanded,
+          onRowSelectionChange: setRowSelection,
+          getRowId,
 
-    filterFns: {
-      dateTime: () => true,
-      amount: () => true,
-    },
-    manualFiltering: true,
+          filterFns: {
+            dateTime: () => true,
+            amount: () => true,
+          },
+          manualFiltering: true,
 
-    enableSorting,
-    manualSorting,
-    getSubRows,
-  });
+          enableSorting,
+          manualSorting,
+          getSubRows,
+
+          getPaginationRowModel: getPaginationRowModel(),
+
+          initialState: {
+            pagination: { pageSize: DEFAULT_PAGE_SIZE },
+          },
+        }
+      : {
+          columns,
+          data,
+          isStatic,
+          allowSelection,
+
+          state: {
+            rowSelection,
+            expanded,
+          },
+
+          onExpandedChange: setExpanded,
+          onRowSelectionChange: setRowSelection,
+          getRowId,
+
+          filterFns: {
+            dateTime: () => true,
+            amount: () => true,
+          },
+          manualFiltering: true,
+
+          enableSorting,
+          manualSorting,
+          getSubRows,
+
+          manualPagination: true,
+        }
+  );
 
   return (
     <>
@@ -139,11 +178,14 @@ export const TableWithoutRef = <T,>(
 
           <TableFooter table={table} showFooter={showFooter} />
         </TableRoot>
-        {pagination && data && data?.length !== 0 && (
+
+        {(pagination || tablePagination) && data && data?.length !== 0 && (
           <Pagination
-            total={pagination.total}
-            pageInfo={pagination.pageInfo}
+            table={table}
+            total={tablePagination ? data?.length : Number(pagination?.total)}
+            pageInfo={pagination?.pageInfo}
             pageSizeOptions={[100, 300, 500, 1000]}
+            tablePagination={tablePagination}
           />
         )}
       </TableContainer>
