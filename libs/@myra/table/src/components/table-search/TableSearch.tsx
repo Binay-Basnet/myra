@@ -10,6 +10,7 @@ import {
   PopoverContent,
   Text,
 } from '@chakra-ui/react';
+import { Table } from '@tanstack/react-table';
 import debounce from 'lodash/debounce';
 import qs from 'qs';
 
@@ -61,7 +62,7 @@ export const OptionsIcon = () => (
   </svg>
 );
 
-export type TableSearchProps = {
+export type TableSearchProps<T> = {
   placeholder?: string;
   pagination?: {
     pageInfo?: {
@@ -75,15 +76,17 @@ export type TableSearchProps = {
   size: 'default' | 'compact' | 'report' | 'small' | 'dataGrid';
   setSize: (size: 'default' | 'compact') => void;
   isStatic?: boolean;
+  table: Table<T>;
 };
 
-export const TableSearch = ({
+export const TableSearch = <T,>({
+  table,
   placeholder,
   pagination,
   size,
   setSize,
   isStatic,
-}: TableSearchProps) => {
+}: TableSearchProps<T>) => {
   const [search, setSearch] = React.useState('');
   const router = useRouter();
   const searchTerm = router?.query['search'] as string;
@@ -172,6 +175,7 @@ export const TableSearch = ({
                 limit={pageSize}
                 total={pagination?.total ?? 'Many'}
                 pageInfo={pagination.pageInfo}
+                table={table}
               />
             </Box>
           )}

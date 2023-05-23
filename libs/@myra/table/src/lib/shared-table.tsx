@@ -139,6 +139,7 @@ export const TableWithoutRef = <T,>(
           size={tableSize}
           setSize={setTableSize}
           isStatic={isStatic}
+          table={table}
         />
       )}
 
