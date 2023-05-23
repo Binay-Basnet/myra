@@ -106,9 +106,11 @@ export type Mutation = {
   userLogin: LoginResponse;
 };
 
+
 export type MutationResetTokenArgs = {
   refreshToken: Scalars['String'];
 };
+
 
 export type MutationUserLoginArgs = {
   input: Credentials;
@@ -133,21 +135,26 @@ export type ProtectedMutation = {
   uploadCSV: ExtractionResponse;
 };
 
+
 export type ProtectedMutationGenerateReportArgs = {
   input: ReportInput;
 };
+
 
 export type ProtectedMutationSendFileDataArgs = {
   input: FileDetails;
 };
 
+
 export type ProtectedMutationStartExtractionArgs = {
   input: ExtractionEnv;
 };
 
+
 export type ProtectedMutationStartTransformArgs = {
   input: Transform;
 };
+
 
 export type ProtectedMutationUploadCsvArgs = {
   input?: InputMaybe<FileUpload>;
@@ -165,29 +172,36 @@ export type ProtectedQuery = {
   getreportStatus: ExtractionResponse;
 };
 
+
 export type ProtectedQueryCheckErrorsArgs = {
   input: Array<InputMaybe<Scalars['String']>>;
 };
+
 
 export type ProtectedQueryGetDirectoryStructureArgs = {
   dbName: Scalars['String'];
 };
 
+
 export type ProtectedQueryGetExtractionDataArgs = {
   dbName: Scalars['String'];
 };
+
 
 export type ProtectedQueryGetFileDataArgs = {
   input: FileDetails;
 };
 
+
 export type ProtectedQueryGetTransformationDataArgs = {
   dbName: Scalars['String'];
 };
 
+
 export type ProtectedQueryGetTransformedDirStructArgs = {
   folderPath: Array<InputMaybe<Scalars['String']>>;
 };
+
 
 export type ProtectedQueryGetreportStatusArgs = {
   dbName?: InputMaybe<Scalars['String']>;
@@ -216,59 +230,53 @@ export type SetAuthMutationVariables = Exact<{
   password: Scalars['String'];
 }>;
 
-export type SetAuthMutation = {
-  userLogin: { accessToken: string; refreshToken: string; name: string; email: string };
-};
+
+export type SetAuthMutation = { userLogin: { accessToken: string, refreshToken: string, name: string, email: string } };
 
 export type RefreshMutationVariables = Exact<{
   refreshToken: Scalars['String'];
 }>;
 
-export type RefreshMutation = {
-  resetToken: { accessToken: string; refreshToken: string; name: string; email: string };
-};
+
+export type RefreshMutation = { resetToken: { accessToken: string, refreshToken: string, name: string, email: string } };
 
 export type CreateProjectMutationVariables = Exact<{
   input: ExtractionEnv;
 }>;
 
-export type CreateProjectMutation = {
-  protectedMutation: { startExtraction: { status: string; data?: Array<string | null> | null } };
-};
+
+export type CreateProjectMutation = { protectedMutation: { startExtraction: { status: string, data?: Array<string | null> | null } } };
 
 export type StartTransformMutationVariables = Exact<{
   input: Transform;
 }>;
 
-export type StartTransformMutation = {
-  protectedMutation: { startTransform: { status: string; data?: Array<string | null> | null } };
-};
+
+export type StartTransformMutation = { protectedMutation: { startTransform: { status: string, data?: Array<string | null> | null } } };
 
 export type SetCsvDataMutationVariables = Exact<{
   input: FileDetails;
 }>;
 
-export type SetCsvDataMutation = {
-  protectedMutation: { sendFileData: { status: string; data?: Array<string | null> | null } };
-};
+
+export type SetCsvDataMutation = { protectedMutation: { sendFileData: { status: string, data?: Array<string | null> | null } } };
 
 export type GenerateReportMutationVariables = Exact<{
   input: ReportInput;
 }>;
 
-export type GenerateReportMutation = {
-  protectedMutation: { generateReport: { status: string; data?: Array<string | null> | null } };
-};
+
+export type GenerateReportMutation = { protectedMutation: { generateReport: { status: string, data?: Array<string | null> | null } } };
 
 export type UploadCsvMutationVariables = Exact<{
   input?: InputMaybe<FileUpload>;
 }>;
 
-export type UploadCsvMutation = {
-  protectedMutation: { uploadCSV: { status: string; data?: Array<string | null> | null } };
-};
 
-export type GetProjectsQueryVariables = Exact<{ [key: string]: never }>;
+export type UploadCsvMutation = { protectedMutation: { uploadCSV: { status: string, data?: Array<string | null> | null } } };
+
+export type GetProjectsQueryVariables = Exact<{ [key: string]: never; }>;
+
 
 export type GetProjectsQuery = { protectedQuery: { getProjects: Array<string | null> } };
 
@@ -276,65 +284,46 @@ export type GetDirectoryStructureQueryVariables = Exact<{
   dbName: Scalars['String'];
 }>;
 
-export type GetDirectoryStructureQuery = {
-  protectedQuery: {
-    getDirectoryStructure?: {
-      data?: Array<{
-        database?: string | null;
-        mapperCSV?: Array<string | null> | null;
-        sourceCSV?: Array<string | null> | null;
-        transformedCSV?: Record<string, string> | null;
-      } | null> | null;
-    } | null;
-  };
-};
+
+export type GetDirectoryStructureQuery = { protectedQuery: { getDirectoryStructure?: { data?: Array<{ database?: string | null, mapperCSV?: Array<string | null> | null, sourceCSV?: Array<string | null> | null, transformedCSV?: Record<string, string> | null } | null> | null } | null } };
 
 export type GetExtractionDataQueryVariables = Exact<{
   dbName: Scalars['String'];
 }>;
 
-export type GetExtractionDataQuery = {
-  protectedQuery: { getExtractionData: { status: string; data?: Array<string | null> | null } };
-};
+
+export type GetExtractionDataQuery = { protectedQuery: { getExtractionData: { status: string, data?: Array<string | null> | null } } };
 
 export type GetTransformationDataQueryVariables = Exact<{
   dbName: Scalars['String'];
 }>;
 
-export type GetTransformationDataQuery = {
-  protectedQuery: { getTransformationData: { status: string; data?: Array<string | null> | null } };
-};
+
+export type GetTransformationDataQuery = { protectedQuery: { getTransformationData: { status: string, data?: Array<string | null> | null } } };
 
 export type GetCsvDataQueryVariables = Exact<{
   input: FileDetails;
 }>;
 
-export type GetCsvDataQuery = {
-  protectedQuery: {
-    getFileData: {
-      totalPages: string;
-      data?: Array<{ row?: string | null; data?: Record<string, string> | null } | null> | null;
-    };
-  };
-};
+
+export type GetCsvDataQuery = { protectedQuery: { getFileData: { totalPages: string, data?: Array<{ row?: string | null, data?: Record<string, string> | null } | null> | null } } };
 
 export type GetTransformedDirStructureQueryVariables = Exact<{
   folderPath: Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>;
 }>;
 
-export type GetTransformedDirStructureQuery = {
-  protectedQuery: { getTransformedDirStruct?: Array<string> | null };
-};
+
+export type GetTransformedDirStructureQuery = { protectedQuery: { getTransformedDirStruct?: Array<string> | null } };
 
 export type GetErrorsQueryVariables = Exact<{
   input: Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>;
 }>;
 
-export type GetErrorsQuery = {
-  protectedQuery: { checkErrors: { files: Array<string | null>; count: string } };
-};
 
-export type GetReportTypesQueryVariables = Exact<{ [key: string]: never }>;
+export type GetErrorsQuery = { protectedQuery: { checkErrors: { files: Array<string | null>, count: string } } };
+
+export type GetReportTypesQueryVariables = Exact<{ [key: string]: never; }>;
+
 
 export type GetReportTypesQuery = { protectedQuery: { getReportType: Array<string> } };
 
@@ -342,9 +331,9 @@ export type GetReportStatusQueryVariables = Exact<{
   dbName?: InputMaybe<Scalars['String']>;
 }>;
 
-export type GetReportStatusQuery = {
-  protectedQuery: { getreportStatus: { status: string; data?: Array<string | null> | null } };
-};
+
+export type GetReportStatusQuery = { protectedQuery: { getreportStatus: { status: string, data?: Array<string | null> | null } } };
+
 
 export const SetAuthDocument = `
     mutation setAuth($userName: String!, $password: String!) {
@@ -356,14 +345,15 @@ export const SetAuthDocument = `
   }
 }
     `;
-export const useSetAuthMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<SetAuthMutation, TError, SetAuthMutationVariables, TContext>
-) =>
-  useMutation<SetAuthMutation, TError, SetAuthMutationVariables, TContext>(
-    ['setAuth'],
-    useAxios<SetAuthMutation, SetAuthMutationVariables>(SetAuthDocument),
-    options
-  );
+export const useSetAuthMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetAuthMutation, TError, SetAuthMutationVariables, TContext>) =>
+    useMutation<SetAuthMutation, TError, SetAuthMutationVariables, TContext>(
+      ['setAuth'],
+      useAxios<SetAuthMutation, SetAuthMutationVariables>(SetAuthDocument),
+      options
+    );
 export const RefreshDocument = `
     mutation refresh($refreshToken: String!) {
   resetToken(refreshToken: $refreshToken) {
@@ -374,14 +364,15 @@ export const RefreshDocument = `
   }
 }
     `;
-export const useRefreshMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>
-) =>
-  useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
-    ['refresh'],
-    useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
-    options
-  );
+export const useRefreshMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>) =>
+    useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
+      ['refresh'],
+      useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
+      options
+    );
 export const CreateProjectDocument = `
     mutation createProject($input: ExtractionEnv!) {
   protectedMutation {
@@ -392,19 +383,15 @@ export const CreateProjectDocument = `
   }
 }
     `;
-export const useCreateProjectMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    CreateProjectMutation,
-    TError,
-    CreateProjectMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<CreateProjectMutation, TError, CreateProjectMutationVariables, TContext>(
-    ['createProject'],
-    useAxios<CreateProjectMutation, CreateProjectMutationVariables>(CreateProjectDocument),
-    options
-  );
+export const useCreateProjectMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateProjectMutation, TError, CreateProjectMutationVariables, TContext>) =>
+    useMutation<CreateProjectMutation, TError, CreateProjectMutationVariables, TContext>(
+      ['createProject'],
+      useAxios<CreateProjectMutation, CreateProjectMutationVariables>(CreateProjectDocument),
+      options
+    );
 export const StartTransformDocument = `
     mutation startTransform($input: Transform!) {
   protectedMutation {
@@ -415,19 +402,15 @@ export const StartTransformDocument = `
   }
 }
     `;
-export const useStartTransformMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    StartTransformMutation,
-    TError,
-    StartTransformMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<StartTransformMutation, TError, StartTransformMutationVariables, TContext>(
-    ['startTransform'],
-    useAxios<StartTransformMutation, StartTransformMutationVariables>(StartTransformDocument),
-    options
-  );
+export const useStartTransformMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<StartTransformMutation, TError, StartTransformMutationVariables, TContext>) =>
+    useMutation<StartTransformMutation, TError, StartTransformMutationVariables, TContext>(
+      ['startTransform'],
+      useAxios<StartTransformMutation, StartTransformMutationVariables>(StartTransformDocument),
+      options
+    );
 export const SetCsvDataDocument = `
     mutation setCSVData($input: FileDetails!) {
   protectedMutation {
@@ -438,14 +421,15 @@ export const SetCsvDataDocument = `
   }
 }
     `;
-export const useSetCsvDataMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<SetCsvDataMutation, TError, SetCsvDataMutationVariables, TContext>
-) =>
-  useMutation<SetCsvDataMutation, TError, SetCsvDataMutationVariables, TContext>(
-    ['setCSVData'],
-    useAxios<SetCsvDataMutation, SetCsvDataMutationVariables>(SetCsvDataDocument),
-    options
-  );
+export const useSetCsvDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetCsvDataMutation, TError, SetCsvDataMutationVariables, TContext>) =>
+    useMutation<SetCsvDataMutation, TError, SetCsvDataMutationVariables, TContext>(
+      ['setCSVData'],
+      useAxios<SetCsvDataMutation, SetCsvDataMutationVariables>(SetCsvDataDocument),
+      options
+    );
 export const GenerateReportDocument = `
     mutation generateReport($input: ReportInput!) {
   protectedMutation {
@@ -456,19 +440,15 @@ export const GenerateReportDocument = `
   }
 }
     `;
-export const useGenerateReportMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    GenerateReportMutation,
-    TError,
-    GenerateReportMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<GenerateReportMutation, TError, GenerateReportMutationVariables, TContext>(
-    ['generateReport'],
-    useAxios<GenerateReportMutation, GenerateReportMutationVariables>(GenerateReportDocument),
-    options
-  );
+export const useGenerateReportMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<GenerateReportMutation, TError, GenerateReportMutationVariables, TContext>) =>
+    useMutation<GenerateReportMutation, TError, GenerateReportMutationVariables, TContext>(
+      ['generateReport'],
+      useAxios<GenerateReportMutation, GenerateReportMutationVariables>(GenerateReportDocument),
+      options
+    );
 export const UploadCsvDocument = `
     mutation uploadCSV($input: FileUpload) {
   protectedMutation {
@@ -479,14 +459,15 @@ export const UploadCsvDocument = `
   }
 }
     `;
-export const useUploadCsvMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<UploadCsvMutation, TError, UploadCsvMutationVariables, TContext>
-) =>
-  useMutation<UploadCsvMutation, TError, UploadCsvMutationVariables, TContext>(
-    ['uploadCSV'],
-    useAxios<UploadCsvMutation, UploadCsvMutationVariables>(UploadCsvDocument),
-    options
-  );
+export const useUploadCsvMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UploadCsvMutation, TError, UploadCsvMutationVariables, TContext>) =>
+    useMutation<UploadCsvMutation, TError, UploadCsvMutationVariables, TContext>(
+      ['uploadCSV'],
+      useAxios<UploadCsvMutation, UploadCsvMutationVariables>(UploadCsvDocument),
+      options
+    );
 export const GetProjectsDocument = `
     query getProjects {
   protectedQuery {
@@ -494,18 +475,18 @@ export const GetProjectsDocument = `
   }
 }
     `;
-export const useGetProjectsQuery = <TData = GetProjectsQuery, TError = unknown>(
-  variables?: GetProjectsQueryVariables,
-  options?: UseQueryOptions<GetProjectsQuery, TError, TData>
-) =>
-  useQuery<GetProjectsQuery, TError, TData>(
-    variables === undefined ? ['getProjects'] : ['getProjects', variables],
-    useAxios<GetProjectsQuery, GetProjectsQueryVariables>(GetProjectsDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetProjectsQuery = <
+      TData = GetProjectsQuery,
+      TError = unknown
+    >(
+      variables?: GetProjectsQueryVariables,
+      options?: UseQueryOptions<GetProjectsQuery, TError, TData>
+    ) =>
+    useQuery<GetProjectsQuery, TError, TData>(
+      variables === undefined ? ['getProjects'] : ['getProjects', variables],
+      useAxios<GetProjectsQuery, GetProjectsQueryVariables>(GetProjectsDocument).bind(null, variables),
+      options
+    );
 export const GetDirectoryStructureDocument = `
     query getDirectoryStructure($dbName: String!) {
   protectedQuery {
@@ -520,17 +501,18 @@ export const GetDirectoryStructureDocument = `
   }
 }
     `;
-export const useGetDirectoryStructureQuery = <TData = GetDirectoryStructureQuery, TError = unknown>(
-  variables: GetDirectoryStructureQueryVariables,
-  options?: UseQueryOptions<GetDirectoryStructureQuery, TError, TData>
-) =>
-  useQuery<GetDirectoryStructureQuery, TError, TData>(
-    ['getDirectoryStructure', variables],
-    useAxios<GetDirectoryStructureQuery, GetDirectoryStructureQueryVariables>(
-      GetDirectoryStructureDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetDirectoryStructureQuery = <
+      TData = GetDirectoryStructureQuery,
+      TError = unknown
+    >(
+      variables: GetDirectoryStructureQueryVariables,
+      options?: UseQueryOptions<GetDirectoryStructureQuery, TError, TData>
+    ) =>
+    useQuery<GetDirectoryStructureQuery, TError, TData>(
+      ['getDirectoryStructure', variables],
+      useAxios<GetDirectoryStructureQuery, GetDirectoryStructureQueryVariables>(GetDirectoryStructureDocument).bind(null, variables),
+      options
+    );
 export const GetExtractionDataDocument = `
     query getExtractionData($dbName: String!) {
   protectedQuery {
@@ -541,17 +523,18 @@ export const GetExtractionDataDocument = `
   }
 }
     `;
-export const useGetExtractionDataQuery = <TData = GetExtractionDataQuery, TError = unknown>(
-  variables: GetExtractionDataQueryVariables,
-  options?: UseQueryOptions<GetExtractionDataQuery, TError, TData>
-) =>
-  useQuery<GetExtractionDataQuery, TError, TData>(
-    ['getExtractionData', variables],
-    useAxios<GetExtractionDataQuery, GetExtractionDataQueryVariables>(
-      GetExtractionDataDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetExtractionDataQuery = <
+      TData = GetExtractionDataQuery,
+      TError = unknown
+    >(
+      variables: GetExtractionDataQueryVariables,
+      options?: UseQueryOptions<GetExtractionDataQuery, TError, TData>
+    ) =>
+    useQuery<GetExtractionDataQuery, TError, TData>(
+      ['getExtractionData', variables],
+      useAxios<GetExtractionDataQuery, GetExtractionDataQueryVariables>(GetExtractionDataDocument).bind(null, variables),
+      options
+    );
 export const GetTransformationDataDocument = `
     query getTransformationData($dbName: String!) {
   protectedQuery {
@@ -562,17 +545,18 @@ export const GetTransformationDataDocument = `
   }
 }
     `;
-export const useGetTransformationDataQuery = <TData = GetTransformationDataQuery, TError = unknown>(
-  variables: GetTransformationDataQueryVariables,
-  options?: UseQueryOptions<GetTransformationDataQuery, TError, TData>
-) =>
-  useQuery<GetTransformationDataQuery, TError, TData>(
-    ['getTransformationData', variables],
-    useAxios<GetTransformationDataQuery, GetTransformationDataQueryVariables>(
-      GetTransformationDataDocument
-    ).bind(null, variables),
-    options
-  );
+export const useGetTransformationDataQuery = <
+      TData = GetTransformationDataQuery,
+      TError = unknown
+    >(
+      variables: GetTransformationDataQueryVariables,
+      options?: UseQueryOptions<GetTransformationDataQuery, TError, TData>
+    ) =>
+    useQuery<GetTransformationDataQuery, TError, TData>(
+      ['getTransformationData', variables],
+      useAxios<GetTransformationDataQuery, GetTransformationDataQueryVariables>(GetTransformationDataDocument).bind(null, variables),
+      options
+    );
 export const GetCsvDataDocument = `
     query getCSVData($input: FileDetails!) {
   protectedQuery {
@@ -586,15 +570,18 @@ export const GetCsvDataDocument = `
   }
 }
     `;
-export const useGetCsvDataQuery = <TData = GetCsvDataQuery, TError = unknown>(
-  variables: GetCsvDataQueryVariables,
-  options?: UseQueryOptions<GetCsvDataQuery, TError, TData>
-) =>
-  useQuery<GetCsvDataQuery, TError, TData>(
-    ['getCSVData', variables],
-    useAxios<GetCsvDataQuery, GetCsvDataQueryVariables>(GetCsvDataDocument).bind(null, variables),
-    options
-  );
+export const useGetCsvDataQuery = <
+      TData = GetCsvDataQuery,
+      TError = unknown
+    >(
+      variables: GetCsvDataQueryVariables,
+      options?: UseQueryOptions<GetCsvDataQuery, TError, TData>
+    ) =>
+    useQuery<GetCsvDataQuery, TError, TData>(
+      ['getCSVData', variables],
+      useAxios<GetCsvDataQuery, GetCsvDataQueryVariables>(GetCsvDataDocument).bind(null, variables),
+      options
+    );
 export const GetTransformedDirStructureDocument = `
     query getTransformedDirStructure($folderPath: [String]!) {
   protectedQuery {
@@ -603,19 +590,17 @@ export const GetTransformedDirStructureDocument = `
 }
     `;
 export const useGetTransformedDirStructureQuery = <
-  TData = GetTransformedDirStructureQuery,
-  TError = unknown
->(
-  variables: GetTransformedDirStructureQueryVariables,
-  options?: UseQueryOptions<GetTransformedDirStructureQuery, TError, TData>
-) =>
-  useQuery<GetTransformedDirStructureQuery, TError, TData>(
-    ['getTransformedDirStructure', variables],
-    useAxios<GetTransformedDirStructureQuery, GetTransformedDirStructureQueryVariables>(
-      GetTransformedDirStructureDocument
-    ).bind(null, variables),
-    options
-  );
+      TData = GetTransformedDirStructureQuery,
+      TError = unknown
+    >(
+      variables: GetTransformedDirStructureQueryVariables,
+      options?: UseQueryOptions<GetTransformedDirStructureQuery, TError, TData>
+    ) =>
+    useQuery<GetTransformedDirStructureQuery, TError, TData>(
+      ['getTransformedDirStructure', variables],
+      useAxios<GetTransformedDirStructureQuery, GetTransformedDirStructureQueryVariables>(GetTransformedDirStructureDocument).bind(null, variables),
+      options
+    );
 export const GetErrorsDocument = `
     query getErrors($input: [String]!) {
   protectedQuery {
@@ -626,15 +611,18 @@ export const GetErrorsDocument = `
   }
 }
     `;
-export const useGetErrorsQuery = <TData = GetErrorsQuery, TError = unknown>(
-  variables: GetErrorsQueryVariables,
-  options?: UseQueryOptions<GetErrorsQuery, TError, TData>
-) =>
-  useQuery<GetErrorsQuery, TError, TData>(
-    ['getErrors', variables],
-    useAxios<GetErrorsQuery, GetErrorsQueryVariables>(GetErrorsDocument).bind(null, variables),
-    options
-  );
+export const useGetErrorsQuery = <
+      TData = GetErrorsQuery,
+      TError = unknown
+    >(
+      variables: GetErrorsQueryVariables,
+      options?: UseQueryOptions<GetErrorsQuery, TError, TData>
+    ) =>
+    useQuery<GetErrorsQuery, TError, TData>(
+      ['getErrors', variables],
+      useAxios<GetErrorsQuery, GetErrorsQueryVariables>(GetErrorsDocument).bind(null, variables),
+      options
+    );
 export const GetReportTypesDocument = `
     query getReportTypes {
   protectedQuery {
@@ -642,18 +630,18 @@ export const GetReportTypesDocument = `
   }
 }
     `;
-export const useGetReportTypesQuery = <TData = GetReportTypesQuery, TError = unknown>(
-  variables?: GetReportTypesQueryVariables,
-  options?: UseQueryOptions<GetReportTypesQuery, TError, TData>
-) =>
-  useQuery<GetReportTypesQuery, TError, TData>(
-    variables === undefined ? ['getReportTypes'] : ['getReportTypes', variables],
-    useAxios<GetReportTypesQuery, GetReportTypesQueryVariables>(GetReportTypesDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetReportTypesQuery = <
+      TData = GetReportTypesQuery,
+      TError = unknown
+    >(
+      variables?: GetReportTypesQueryVariables,
+      options?: UseQueryOptions<GetReportTypesQuery, TError, TData>
+    ) =>
+    useQuery<GetReportTypesQuery, TError, TData>(
+      variables === undefined ? ['getReportTypes'] : ['getReportTypes', variables],
+      useAxios<GetReportTypesQuery, GetReportTypesQueryVariables>(GetReportTypesDocument).bind(null, variables),
+      options
+    );
 export const GetReportStatusDocument = `
     query getReportStatus($dbName: String) {
   protectedQuery {
@@ -664,15 +652,15 @@ export const GetReportStatusDocument = `
   }
 }
     `;
-export const useGetReportStatusQuery = <TData = GetReportStatusQuery, TError = unknown>(
-  variables?: GetReportStatusQueryVariables,
-  options?: UseQueryOptions<GetReportStatusQuery, TError, TData>
-) =>
-  useQuery<GetReportStatusQuery, TError, TData>(
-    variables === undefined ? ['getReportStatus'] : ['getReportStatus', variables],
-    useAxios<GetReportStatusQuery, GetReportStatusQueryVariables>(GetReportStatusDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useGetReportStatusQuery = <
+      TData = GetReportStatusQuery,
+      TError = unknown
+    >(
+      variables?: GetReportStatusQueryVariables,
+      options?: UseQueryOptions<GetReportStatusQuery, TError, TData>
+    ) =>
+    useQuery<GetReportStatusQuery, TError, TData>(
+      variables === undefined ? ['getReportStatus'] : ['getReportStatus', variables],
+      useAxios<GetReportStatusQuery, GetReportStatusQueryVariables>(GetReportStatusDocument).bind(null, variables),
+      options
+    );

@@ -1,0 +1,38 @@
+query getPearlsReportsFormula {
+  settings {
+    general {
+      reports {
+        pearls {
+          list {
+            header
+            description
+            numerator
+            numeratorVariables
+            denominator
+            denominatorVariables
+            goal
+            indicatorId
+          }
+        }
+      }
+    }
+  }
+}
+
+query getCopomisReportSettings{
+  settings {
+    general {
+      reports {
+        copomis {
+          list {
+            expression
+            id
+            indicatorName
+            values
+          }
+        }
+      }
+    }
+  }
+}
+

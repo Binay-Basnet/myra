@@ -138,16 +138,20 @@ export const MigrationFileComponent = () => {
               </Text>
             ) : (
               <>
-                <MigrationPaginationComponent
-                  totalPages={data?.protectedQuery?.getFileData?.totalPages}
-                />
-                <Spreadsheet
-                  data={csvData}
-                  columnLabels={columnLabel}
-                  // hideRowIndicators
-                  onChange={setCsvData}
-                  rowLabels={rowLabel}
-                />
+                <Box mb={10}>
+                  <Spreadsheet
+                    data={csvData}
+                    columnLabels={columnLabel}
+                    // hideRowIndicators
+                    onChange={setCsvData}
+                    rowLabels={rowLabel}
+                  />
+                </Box>
+                <Box position="fixed" bottom={0}>
+                  <MigrationPaginationComponent
+                    totalPages={data?.protectedQuery?.getFileData?.totalPages}
+                  />
+                </Box>
               </>
             )}
           </Box>
