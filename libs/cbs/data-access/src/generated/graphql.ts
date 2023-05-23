@@ -2139,6 +2139,7 @@ export type BulkTransferInput = {
   bulkTransferType?: InputMaybe<BulkTransferType>;
   ledger?: InputMaybe<Scalars['String']>;
   savingProduct?: InputMaybe<Scalars['String']>;
+  selectAll?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type BulkTransferResult = {
@@ -3907,6 +3908,21 @@ export type CopomisConfigurationResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<CopomisConfigurationQuery>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type CopomisFinancial = {
+  cr?: Maybe<Scalars['String']>;
+  dr?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  indicatorName?: Maybe<Scalars['String']>;
+};
+
+export type CopomisFinancialInput = {
+  period: LocalizedDateFilter;
+};
+
+export type CopomisFinancialResult = {
+  data?: Maybe<Array<Maybe<CopomisFinancial>>>;
 };
 
 export type CopomisReportData = {
@@ -10753,6 +10769,7 @@ export type LoanAccountQuery = {
   loanAccountDetails?: Maybe<LoanAccountDetailsResult>;
   loanPreview?: Maybe<LoanAccountPreviewResult>;
   loanProvisionAccounts?: Maybe<LoanProvisionCase>;
+  loanProvisionList?: Maybe<LoanProvisionConnection>;
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
   paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
   remainingPayments?: Maybe<LoanAccountRemainingPaymentData>;
@@ -10809,6 +10826,11 @@ export type LoanAccountQueryLoanAccountDetailsArgs = {
 
 export type LoanAccountQueryLoanPreviewArgs = {
   loanAccountId: Scalars['String'];
+};
+
+export type LoanAccountQueryLoanProvisionListArgs = {
+  filter?: InputMaybe<Filter>;
+  paginate?: InputMaybe<Pagination>;
 };
 
 export type LoanAccountQueryMemberDisbursedLoanAccountsArgs = {
@@ -11888,12 +11910,23 @@ export type LoanProvisionCase = {
   oneTo30Days?: Maybe<Array<Maybe<LoanProvisionAccount>>>;
 };
 
+export type LoanProvisionConnection = {
+  edges?: Maybe<Array<LoanProvisionEdge>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type LoanProvisionEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<LoanProvisionInfo>;
+};
+
 export type LoanProvisionInfo = {
-  amount?: Maybe<Scalars['String']>;
-  conditions?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['Localized']>;
-  id?: Maybe<Scalars['String']>;
-  provisionCount?: Maybe<Scalars['Int']>;
+  amount: Scalars['String'];
+  conditions: Scalars['String'];
+  date: Scalars['Localized'];
+  id: Scalars['String'];
+  provisionCount: Scalars['Int'];
 };
 
 export type LoanProvisionResult = {
@@ -12368,8 +12401,13 @@ export type MRmemberInstallmentData = {
   profilePicUrl?: Maybe<Scalars['String']>;
 };
 
+export type MRmemberInstallmentDataGroup = {
+  recurringData?: Maybe<Array<Maybe<MRmemberInstallmentData>>>;
+  savingData?: Maybe<Array<Maybe<MRmemberInstallmentData>>>;
+};
+
 export type MRmemberInstallmentResult = {
-  data?: Maybe<Array<Maybe<MRmemberInstallmentData>>>;
+  data?: Maybe<MRmemberInstallmentDataGroup>;
   error?: Maybe<QueryError>;
 };
 
@@ -14933,6 +14971,7 @@ export type ReportQuery = {
   branchReport: BranchReport;
   cashReport: CashReport;
   committeeQuery: CommitteeReport;
+  copomisFinancialReport: CopomisFinancialResult;
   depositReport: DepositReport;
   employeeReport: EmployeeReport;
   exceptionReport: ExceptionReport;
@@ -14947,6 +14986,10 @@ export type ReportQuery = {
   printReport: CertificatePrint;
   shareReport: ShareReport;
   transactionReport: TransactionReport;
+};
+
+export type ReportQueryCopomisFinancialReportArgs = {
+  data: CopomisFinancialInput;
 };
 
 export type ReportQueryGetReportArgs = {
@@ -19640,6 +19683,25 @@ export type SetLoanGuaranteeMutation = {
           | MutationError_ValidationError_Fragment
           | null;
       } | null;
+    } | null;
+  };
+};
+
+export type LoanLossProvisionMutationVariables = Exact<{
+  data?: InputMaybe<LoanLossProvisionInput>;
+}>;
+
+export type LoanLossProvisionMutation = {
+  loanAccount: {
+    loanProvision?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
     } | null;
   };
 };
@@ -26640,6 +26702,48 @@ export type GetLoanAccountInterestRateDetailQuery = {
         fileUploads?: Array<{ identifier: string; url: string } | null> | null;
       } | null;
     };
+  };
+};
+
+export type GetLoanProvisionAccountsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetLoanProvisionAccountsQuery = {
+  loanAccount: {
+    loanProvisionAccounts?: {
+      goodLoan?: Array<{ id: string; name: string; amount: string } | null> | null;
+      oneTo30Days?: Array<{ id: string; name: string; amount: string } | null> | null;
+      oneTo12Months?: Array<{ id: string; name: string; amount: string } | null> | null;
+      above12Months?: Array<{ id: string; name: string; amount: string } | null> | null;
+    } | null;
+  };
+};
+
+export type LoanProvisionListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type LoanProvisionListQuery = {
+  loanAccount: {
+    loanProvisionList?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          conditions: string;
+          provisionCount: number;
+          amount: string;
+        } | null;
+      }> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    } | null;
   };
 };
 
@@ -37455,6 +37559,33 @@ export const useSetLoanGuaranteeMutation = <TError = unknown, TContext = unknown
     useAxios<SetLoanGuaranteeMutation, SetLoanGuaranteeMutationVariables>(SetLoanGuaranteeDocument),
     options
   );
+export const LoanLossProvisionDocument = `
+    mutation loanLossProvision($data: LoanLossProvisionInput) {
+  loanAccount {
+    loanProvision(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useLoanLossProvisionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    LoanLossProvisionMutation,
+    TError,
+    LoanLossProvisionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<LoanLossProvisionMutation, TError, LoanLossProvisionMutationVariables, TContext>(
+    ['loanLossProvision'],
+    useAxios<LoanLossProvisionMutation, LoanLossProvisionMutationVariables>(
+      LoanLossProvisionDocument
+    ),
+    options
+  );
 export const GetNewIdDocument = `
     mutation getNewId($idType: ID_TYPE) {
   newId(idType: $idType)
@@ -47186,6 +47317,86 @@ export const useGetLoanAccountInterestRateDetailQuery = <
     ['getLoanAccountInterestRateDetail', variables],
     useAxios<GetLoanAccountInterestRateDetailQuery, GetLoanAccountInterestRateDetailQueryVariables>(
       GetLoanAccountInterestRateDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanProvisionAccountsDocument = `
+    query getLoanProvisionAccounts {
+  loanAccount {
+    loanProvisionAccounts {
+      goodLoan {
+        id
+        name
+        amount
+      }
+      oneTo30Days {
+        id
+        name
+        amount
+      }
+      oneTo12Months {
+        id
+        name
+        amount
+      }
+      above12Months {
+        id
+        name
+        amount
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProvisionAccountsQuery = <
+  TData = GetLoanProvisionAccountsQuery,
+  TError = unknown
+>(
+  variables?: GetLoanProvisionAccountsQueryVariables,
+  options?: UseQueryOptions<GetLoanProvisionAccountsQuery, TError, TData>
+) =>
+  useQuery<GetLoanProvisionAccountsQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanProvisionAccounts']
+      : ['getLoanProvisionAccounts', variables],
+    useAxios<GetLoanProvisionAccountsQuery, GetLoanProvisionAccountsQueryVariables>(
+      GetLoanProvisionAccountsDocument
+    ).bind(null, variables),
+    options
+  );
+export const LoanProvisionListDocument = `
+    query loanProvisionList($paginate: Pagination, $filter: Filter) {
+  loanAccount {
+    loanProvisionList(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          date
+          conditions
+          provisionCount
+          amount
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useLoanProvisionListQuery = <TData = LoanProvisionListQuery, TError = unknown>(
+  variables?: LoanProvisionListQueryVariables,
+  options?: UseQueryOptions<LoanProvisionListQuery, TError, TData>
+) =>
+  useQuery<LoanProvisionListQuery, TError, TData>(
+    variables === undefined ? ['loanProvisionList'] : ['loanProvisionList', variables],
+    useAxios<LoanProvisionListQuery, LoanProvisionListQueryVariables>(
+      LoanProvisionListDocument
     ).bind(null, variables),
     options
   );

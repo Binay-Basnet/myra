@@ -47,6 +47,7 @@
     "cbs-loan-feature-loan-account-detail": "libs/cbs/loan/feature-loan-account-detail",
     "cbs-loan-feature-loan-application": "libs/cbs/loan/feature-loan-application",
     "cbs-loan-feature-loan-close": "libs/cbs/loan/feature-loan-close",
+    "cbs-loan-feature-loan-loss-provision": "libs/cbs/loan/feature-loan-loss-provision",
     "cbs-loan-feature-loan-repayment": "libs/cbs/loan/feature-loan-repayment",
     "cbs-loan-feature-loan-switch": "libs/cbs/loan/feature-loan-switch",
     "cbs-loan-ui-layouts": "libs/cbs/loan/ui-layouts",

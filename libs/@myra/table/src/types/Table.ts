@@ -90,6 +90,8 @@ export interface TableProps<TData> {
   allowSearch?: boolean;
 
   onRowSelect?: (selected: string[]) => void;
+
+  tablePagination?: boolean;
 }
 
 export type Column<TData> = Omit<ColumnDef<TData, unknown>, 'accessorKey' | 'accessorFn' | 'id'> & {
