@@ -4,7 +4,7 @@ import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/reac
 import { store } from '@migration/data-access';
 import axios from 'axios';
 
-import { Box, Button, Collapse, Input, Text } from '@myra-ui';
+import { Box, Button, Collapse, Input, Text, toast } from '@myra-ui';
 
 export const MapperCsv = (props) => {
   const { directoryStructureData, directoryRefetch } = props;
@@ -20,7 +20,7 @@ export const MapperCsv = (props) => {
         query: `
         mutation ($file: [Upload!]!) {
           protectedMutation{
-            uploadCSV(input: { file: $file, dbName: ${router?.query?.['name'] as string} }){
+            uploadCSV(input: { file: $file, dbName: "${router?.query?.['name'] as string}" }){
               status
               data
             }
@@ -58,10 +58,14 @@ export const MapperCsv = (props) => {
       url: `${process.env['NX_SCHEMA_PATH']}/query`,
       method: 'post',
       data: formData,
+    }).then((res) => {
+      toast({
+        id: 'migration-file-upload',
+        type: 'success',
+        message: res?.data?.data?.protectedMutation?.uploadCSV?.status,
+      });
     });
   };
-
-  // const { mutateAsync: uploadCSVMutateAsync } = useUploadCsvMutation();
 
   const mapperCSVData =
     directoryStructureData?.protectedQuery?.getDirectoryStructure?.data[0]?.mapperCSV;
@@ -73,9 +77,6 @@ export const MapperCsv = (props) => {
   const onSubmitCSV = (e) => {
     e.preventDefault();
     uploadFile(selectedFile);
-    // uploadCSVMutateAsync({
-    //   input: { dbName: router?.query?.['name'] as string, file: [selectedFile] },
-    // });
   };
 
   return (

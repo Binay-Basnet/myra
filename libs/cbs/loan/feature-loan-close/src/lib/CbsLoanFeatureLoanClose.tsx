@@ -1,19 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  MemberCard,
-  ResponseDialog,
-  Text,
-} from '@myra-ui';
+import { Box, Button, MemberCard, ResponseDialog, Text } from '@myra-ui';
 
 import {
   CashValue,
@@ -27,7 +18,7 @@ import {
   useSetLoanCloseMutation,
 } from '@coop/cbs/data-access';
 import { localizedDate, ROUTES } from '@coop/cbs/utils';
-import { FormMemberSelect, FormSelect, FormTextArea } from '@coop/shared/form';
+import { FormLayout, FormMemberSelect, FormSelect, FormTextArea } from '@coop/shared/form';
 import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
 
 import { LoanProductCard, Payment } from '../components';
@@ -240,57 +231,47 @@ export const LoanCloseForm = () => {
   }, [redirectloanAccountId, redirectMemberId]);
 
   return (
-    <Container minW="container.xl" p="0" bg="white">
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title="Loan Account Close" isFormDirty={isDirty} />
-      </Box>
-      <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
-        <Box
-          display="flex"
-          flexDirection="column"
-          w="100%"
-          borderRight="1px solid"
-          borderColor="border.layout"
-        >
-          <FormProvider {...methods}>
-            <form>
-              <Box
-                flexDirection="column"
-                gap="s16"
-                p="s20"
-                w="100%"
-                display={mode === '0' ? 'flex' : 'none'}
-              >
-                <FormMemberSelect
-                  isRequired
-                  name="memberId"
-                  label="Member"
-                  isCurrentBranchMember
+    <FormLayout methods={methods} hasSidebar={Boolean(memberId)}>
+      <FormLayout.Header title="Loan Account Close" isFormDirty={isDirty} />
+      <FormLayout.Content>
+        <FormLayout.Form>
+          <Box display="flex" flexDirection="column" w="100%">
+            <Box
+              flexDirection="column"
+              gap="s16"
+              p="s20"
+              w="100%"
+              display={mode === '0' ? 'flex' : 'none'}
+            >
+              <FormMemberSelect
+                isRequired
+                name="memberId"
+                label="Member"
+                isCurrentBranchMember
 
-                  // isDisabled={!!redirectMemberId}
+                // isDisabled={!!redirectMemberId}
+              />
+              {memberId && (
+                <FormSelect
+                  name="loanAccountId"
+                  label="Loan Account Name"
+                  isLoading={isFetching}
+                  options={loanAccountOptions}
                 />
-                {memberId && (
-                  <FormSelect
-                    name="loanAccountId"
-                    label="Loan Account Name"
-                    isLoading={isFetching}
-                    options={loanAccountOptions}
-                  />
-                )}
-                {memberId && loanAccountId && (
-                  <OutstandingPayments loanAccountId={loanAccountId as string} />
-                )}
-                {memberId && loanAccountId && <FormTextArea name="closeNotes" />}
-              </Box>
+              )}
+              {memberId && loanAccountId && (
+                <OutstandingPayments loanAccountId={loanAccountId as string} />
+              )}
+              {memberId && loanAccountId && <FormTextArea name="closeNotes" />}
+            </Box>
 
-              <Box display={mode === '1' ? 'flex' : 'none'}>
-                <Payment amountPaid={totalPayableAmount ?? '0'} />
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
+            <Box display={mode === '1' ? 'flex' : 'none'}>
+              <Payment amountPaid={totalPayableAmount ?? '0'} />
+            </Box>
+          </Box>
+        </FormLayout.Form>
         {memberId && (
-          <Box position="sticky" zIndex={9} top="170px" right="0" w="320px">
+          <FormLayout.Sidebar borderPosition="left">
             <Box display="flex" flexDirection="column" gap="s16">
               <MemberCard
                 memberDetails={{
@@ -309,75 +290,72 @@ export const LoanCloseForm = () => {
                 signaturePath={memberSignatureUrl}
                 citizenshipPath={memberCitizenshipUrl}
               />
-            </Box>
-            {loanAccountId && (
-              <Box p="s16">
-                <LoanProductCard loanAccountId={loanAccountId} />
-              </Box>
-            )}
-          </Box>
-        )}
-      </Box>
-      <Box position="sticky" bottom={0} zIndex={10}>
-        <Box>
-          {mode === '0' && (
-            <FormFooter
-              mainButtonLabel="Close Account"
-              mainButtonHandler={proceedButtonHandler}
-              isMainButtonDisabled={!memberId || !loanAccountId || !totalPayableAmount}
-              dangerButton
-            />
-          )}
-          {mode === '1' && (
-            <FormFooter
-              mainButton={
-                <ResponseDialog
-                  onSuccess={() => {
-                    queryClient.invalidateQueries(['getLoanPreview']);
-                    router.push(ROUTES.CBS_LOAN_REPAYMENTS_LIST);
-                  }}
-                  promise={() => mutateAsync({ data: handleSubmit() })}
-                  successCardProps={(response) => {
-                    const result = response?.loanAccount?.close?.record;
 
-                    return {
-                      type: 'Loan Account Close',
-                      total: amountConverter(result?.totalAmount || 0) as string,
-                      totalWords: amountToWordsConverter(
-                        result?.totalAmount ? Number(result?.totalAmount) : 0
-                      ),
-                      title: 'Account Close Successful',
-                      details: {
-                        'Account Id': (
-                          <Text fontSize="s3" color="primary.500" fontWeight="600">
-                            {result?.accountID}
-                          </Text>
-                        ),
-                        'Account Close Date': localizedDate(result?.closedDate),
-                        'Account Name': result?.accountName,
-                        'Total Principal': result?.totalPrincipal,
-                        'Total Interest': result?.totalInterest,
-                        'Total Fine': result?.totalFine,
-                        'Payment Mode': result?.paymentMode,
-                      },
-                      subTitle:
-                        'Account closed successfully. Details of the account is listed below.',
-                    };
-                  }}
-                  errorCardProps={{
-                    title: 'Loan Close Failed',
-                  }}
-                >
-                  <Button width="160px">Confirm Payment</Button>
-                </ResponseDialog>
-              }
-              status={<Button onClick={previousButtonHandler}> Previous</Button>}
-              mainButtonLabel="Confirm Payment"
-              mainButtonHandler={handleSubmit}
-            />
-          )}
-        </Box>
-      </Box>
-    </Container>
+              {loanAccountId && (
+                <Box p="s16">
+                  <LoanProductCard loanAccountId={loanAccountId} />
+                </Box>
+              )}
+            </Box>
+          </FormLayout.Sidebar>
+        )}
+      </FormLayout.Content>
+
+      {mode === '0' && (
+        <FormLayout.Footer
+          mainButtonLabel="Close Account"
+          mainButtonHandler={proceedButtonHandler}
+          isMainButtonDisabled={!memberId || !loanAccountId || !totalPayableAmount}
+          dangerButton
+        />
+      )}
+      {mode === '1' && (
+        <FormLayout.Footer
+          mainButton={
+            <ResponseDialog
+              onSuccess={() => {
+                queryClient.invalidateQueries(['getLoanPreview']);
+                router.push(ROUTES.CBS_LOAN_REPAYMENTS_LIST);
+              }}
+              promise={() => mutateAsync({ data: handleSubmit() })}
+              successCardProps={(response) => {
+                const result = response?.loanAccount?.close?.record;
+
+                return {
+                  type: 'Loan Account Close',
+                  total: amountConverter(result?.totalAmount || 0) as string,
+                  totalWords: amountToWordsConverter(
+                    result?.totalAmount ? Number(result?.totalAmount) : 0
+                  ),
+                  title: 'Account Close Successful',
+                  details: {
+                    'Account Id': (
+                      <Text fontSize="s3" color="primary.500" fontWeight="600">
+                        {result?.accountID}
+                      </Text>
+                    ),
+                    'Account Close Date': localizedDate(result?.closedDate),
+                    'Account Name': result?.accountName,
+                    'Total Principal': result?.totalPrincipal,
+                    'Total Interest': result?.totalInterest,
+                    'Total Fine': result?.totalFine,
+                    'Payment Mode': result?.paymentMode,
+                  },
+                  subTitle: 'Account closed successfully. Details of the account is listed below.',
+                };
+              }}
+              errorCardProps={{
+                title: 'Loan Close Failed',
+              }}
+            >
+              <Button width="160px">Confirm Payment</Button>
+            </ResponseDialog>
+          }
+          status={<Button onClick={previousButtonHandler}> Previous</Button>}
+          mainButtonLabel="Confirm Payment"
+          mainButtonHandler={handleSubmit}
+        />
+      )}
+    </FormLayout>
   );
 };
