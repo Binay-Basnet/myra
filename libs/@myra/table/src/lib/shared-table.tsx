@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Collapse } from '@chakra-ui/react';
-import { ExpandedState, getPaginationRowModel } from '@tanstack/react-table';
+import { rankItem } from '@tanstack/match-sorter-utils';
+import { ExpandedState, FilterFn, getPaginationRowModel } from '@tanstack/react-table';
 
 import { Pagination } from '@myra-ui/components';
 
@@ -24,6 +25,19 @@ import { TableSearch, TableSelectionBar } from '../components';
 // eslint-disable-next-line import/no-cycle
 import { useTable } from '../hooks/useTable';
 import { Column, TableProps } from '../types/Table';
+
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+  // Rank the item
+  const itemRank = rankItem(row.getValue(columnId), value);
+
+  // Store the itemRank info
+  addMeta({
+    itemRank,
+  });
+
+  // Return if the item should be filtered in/out
+  return itemRank.passed;
+};
 
 export const TableWithoutRef = <T,>(
   props: TableProps<T>,
@@ -59,6 +73,8 @@ export const TableWithoutRef = <T,>(
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
 
+  const [globalFilter, setGlobalFilter] = React.useState('');
+
   useEffect(() => {
     onRowSelect && onRowSelect(Object.keys(rowSelection));
   }, [rowSelection]);
@@ -74,7 +90,12 @@ export const TableWithoutRef = <T,>(
           state: {
             rowSelection,
             expanded,
+            globalFilter,
           },
+
+          globalFilterFn: fuzzyFilter,
+
+          onGlobalFilterChange: setGlobalFilter,
 
           onExpandedChange: setExpanded,
           onRowSelectionChange: setRowSelection,
@@ -84,10 +105,11 @@ export const TableWithoutRef = <T,>(
             dateTime: () => true,
             amount: () => true,
           },
-          manualFiltering: true,
 
           enableSorting,
           manualSorting,
+          enableGlobalFilter: true,
+
           getSubRows,
 
           getPaginationRowModel: getPaginationRowModel(),
@@ -140,6 +162,9 @@ export const TableWithoutRef = <T,>(
           setSize={setTableSize}
           isStatic={isStatic}
           table={table}
+          tablePagination={!!tablePagination}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
       )}
 

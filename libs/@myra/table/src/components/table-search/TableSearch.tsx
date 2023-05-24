@@ -77,6 +77,9 @@ export type TableSearchProps<T> = {
   setSize: (size: 'default' | 'compact') => void;
   isStatic?: boolean;
   table: Table<T>;
+  tablePagination: boolean;
+  globalFilter: string;
+  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const TableSearch = <T,>({
@@ -86,6 +89,9 @@ export const TableSearch = <T,>({
   size,
   setSize,
   isStatic,
+  tablePagination,
+  globalFilter,
+  setGlobalFilter,
 }: TableSearchProps<T>) => {
   const [search, setSearch] = React.useState('');
   const router = useRouter();
@@ -124,14 +130,18 @@ export const TableSearch = <T,>({
           color="gray.600"
           _focus={{ border: 'solid 1px', borderColor: 'primary.300' }}
           _active={{ border: 'solid 1px', borderColor: 'primary.500' }}
-          defaultValue={search && search}
+          defaultValue={tablePagination ? globalFilter : search && search}
           onChange={debounce((e) => {
-            router.push({
-              query: {
-                ...router.query,
-                search: e.target.value,
-              },
-            });
+            if (tablePagination) {
+              setGlobalFilter(e.target.value);
+            } else {
+              router.push({
+                query: {
+                  ...router.query,
+                  search: e.target.value,
+                },
+              });
+            }
           }, 800)}
         />
       </InputGroup>
