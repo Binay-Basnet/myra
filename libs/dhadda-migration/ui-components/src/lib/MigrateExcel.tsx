@@ -9,11 +9,11 @@ export const MigrateExcel = (props: { validationStatus: boolean }) => {
   const router = useRouter();
 
   const { mutateAsync: validateExcelMutation, isLoading } = useMutation(migrateExcel, {
-    onSuccess: (res) => {
+    onSuccess: () => {
       toast({
         id: 'migrate-excel',
         type: 'success',
-        message: res?.data?.message,
+        message: 'CSVs generated successfully',
       });
     },
     onError: () => {

@@ -10,6 +10,7 @@ import {
   PopoverContent,
   Text,
 } from '@chakra-ui/react';
+import { Table } from '@tanstack/react-table';
 import debounce from 'lodash/debounce';
 import qs from 'qs';
 
@@ -61,7 +62,7 @@ export const OptionsIcon = () => (
   </svg>
 );
 
-export type TableSearchProps = {
+export type TableSearchProps<T> = {
   placeholder?: string;
   pagination?: {
     pageInfo?: {
@@ -75,15 +76,23 @@ export type TableSearchProps = {
   size: 'default' | 'compact' | 'report' | 'small' | 'dataGrid';
   setSize: (size: 'default' | 'compact') => void;
   isStatic?: boolean;
+  table: Table<T>;
+  tablePagination: boolean;
+  globalFilter: string;
+  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const TableSearch = ({
+export const TableSearch = <T,>({
+  table,
   placeholder,
   pagination,
   size,
   setSize,
   isStatic,
-}: TableSearchProps) => {
+  tablePagination,
+  globalFilter,
+  setGlobalFilter,
+}: TableSearchProps<T>) => {
   const [search, setSearch] = React.useState('');
   const router = useRouter();
   const searchTerm = router?.query['search'] as string;
@@ -121,14 +130,18 @@ export const TableSearch = ({
           color="gray.600"
           _focus={{ border: 'solid 1px', borderColor: 'primary.300' }}
           _active={{ border: 'solid 1px', borderColor: 'primary.500' }}
-          defaultValue={search && search}
+          defaultValue={tablePagination ? globalFilter : search && search}
           onChange={debounce((e) => {
-            router.push({
-              query: {
-                ...router.query,
-                search: e.target.value,
-              },
-            });
+            if (tablePagination) {
+              setGlobalFilter(e.target.value);
+            } else {
+              router.push({
+                query: {
+                  ...router.query,
+                  search: e.target.value,
+                },
+              });
+            }
           }, 800)}
         />
       </InputGroup>
@@ -172,6 +185,7 @@ export const TableSearch = ({
                 limit={pageSize}
                 total={pagination?.total ?? 'Many'}
                 pageInfo={pagination.pageInfo}
+                table={table}
               />
             </Box>
           )}

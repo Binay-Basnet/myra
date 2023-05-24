@@ -131,6 +131,7 @@ export type ProtectedMutation = {
   startExtraction: ExtractionResponse;
   startTransform: ExtractionResponse;
   uploadCSV: ExtractionResponse;
+  uploadSingleCSV: ExtractionResponse;
 };
 
 export type ProtectedMutationGenerateReportArgs = {
@@ -151,6 +152,10 @@ export type ProtectedMutationStartTransformArgs = {
 
 export type ProtectedMutationUploadCsvArgs = {
   input?: InputMaybe<FileUpload>;
+};
+
+export type ProtectedMutationUploadSingleCsvArgs = {
+  input?: InputMaybe<SingleFileUpload>;
 };
 
 export type ProtectedQuery = {
@@ -202,6 +207,11 @@ export type ReportInput = {
   dbName: Scalars['String'];
   head?: InputMaybe<Scalars['String']>;
   title: Array<InputMaybe<Scalars['String']>>;
+};
+
+export type SingleFileUpload = {
+  dbName: Scalars['String'];
+  file?: InputMaybe<Scalars['Upload']>;
 };
 
 export type Transform = {

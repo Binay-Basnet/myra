@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
 import { Alert, asyncToast, Box, Button, DetailPageContentCard, Text } from '@myra-ui';
@@ -34,7 +33,7 @@ export const AgentDetailOverview = () => {
 
   const methods = useForm();
 
-  const { getValues, reset, watch } = methods;
+  const { getValues, reset } = methods;
 
   const [showMemberTable, setShowMemberTable] = useState<boolean>(false);
 
@@ -68,7 +67,7 @@ export const AgentDetailOverview = () => {
     { enabled: !!id, staleTime: 0 }
   );
 
-  const accounts = watch('accounts');
+  // const accounts = watch('accounts');
 
   useEffect(() => {
     if (agentTodayListQueryData?.agent?.listAgentTask?.record?.length) {
@@ -85,26 +84,26 @@ export const AgentDetailOverview = () => {
     }
   }, [agentTodayListQueryData]);
 
-  useDeepCompareEffect(() => {
-    if (accounts?.length) {
-      reset({
-        accounts: accounts?.map(
-          (record: { id: string; account: string | undefined; member: any; amount: any }) => {
-            const account = assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
-              (member) => member?.node?.account?.id === record?.account
-            );
+  // useDeepCompareEffect(() => {
+  //   if (accounts?.length) {
+  //     reset({
+  //       accounts: accounts?.map(
+  //         (record: { id: string; account: string | undefined; member: any; amount: any }) => {
+  //           const account = assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+  //             (member) => member?.node?.account?.id === record?.account
+  //           );
 
-            return {
-              id: record?.id,
-              member: record?.member,
-              account: record?.account,
-              amount: record?.amount || account?.node?.account?.dues?.totalDue,
-            };
-          }
-        ),
-      });
-    }
-  }, [assignedMemberListQueryData]);
+  //           return {
+  //             id: record?.id,
+  //             member: record?.member,
+  //             account: record?.account,
+  //             amount: account?.node?.account?.dues?.totalDue,
+  //           };
+  //         }
+  //       ),
+  //     });
+  //   }
+  // }, [assignedMemberListQueryData]);
 
   const getMemberAccounts = async (mId: string) =>
     new Promise<{ label: string; value: string }[]>((resolve) => {
@@ -154,19 +153,25 @@ export const AgentDetailOverview = () => {
       promise: setAgentTodayList({
         id: id as string,
         data: getValues()['accounts'].map(
-          (account: { id: string; member: string; account: string; amount: string }) =>
-            account.id
+          (account: { id: string; member: string; account: string; amount: string }) => {
+            const selectedAccount =
+              assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+                (member) => member?.node?.account?.id === account?.account
+              )?.node?.account;
+
+            return account.id
               ? {
                   id: account.id,
                   member: account.member,
                   account: account.account,
-                  amount: String(account.amount),
+                  amount: selectedAccount?.dues?.totalDue,
                 }
               : {
                   member: account.member,
                   account: account.account,
-                  amount: String(account.amount),
-                }
+                  amount: selectedAccount?.dues?.totalDue,
+                };
+          }
         ),
       }),
       msgs: {
@@ -281,8 +286,16 @@ export const AgentDetailOverview = () => {
                   },
                   {
                     accessor: 'amount',
-                    header: t['agentOverviewAmount'],
+                    header: 'Due Amount',
                     isNumeric: true,
+                    cell: (row) => {
+                      const selectedAccount =
+                        assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+                          (member) => member?.node?.account?.id === row?.account
+                        )?.node?.account;
+
+                      return <Box textAlign="right">{selectedAccount?.dues?.totalDue}</Box>;
+                    },
                   },
                 ]}
                 canDeleteRow

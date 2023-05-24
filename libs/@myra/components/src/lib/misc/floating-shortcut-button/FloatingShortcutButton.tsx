@@ -31,24 +31,22 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Bulk Transfer',
-      'Allow multiple installment payment of Recurring through MR Transaction',
-      'Show MR and deposited by others name in deposit,withdraw detail page',
+      'Loan Write Off',
+      'Loan Loss Provision',
+      'Settings: Copomis Report Configuration',
+      'Settings: Pearls Report Configuration',
+      'Copomis Report',
+      'Pearls Report',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Fine and penalty fix',
-      'MR user cannot be created from user section',
-      'Paid and todays payment issue in MR.',
-      'Changes In recurring saving and regular saving about future pay installment',
-      'Disable the transacted accounts after confirm payment',
-      'Fixed Saving Account to not be assigned to any MR(while account opening, while assigning member)',
-      'Account name shows the product name instead of the account name of that individual member',
-      'Member can be assigned the inactive MR user',
-      'Print of Loan and Saving Statement in single A4',
-      'Installment issue in deposit section as "installment not found" as DB not set as deposit freq.',
+      'updated interest posting narration',
+      'interest posting fix',
+      'installment date  fix',
+      'service center name in JV overview page',
+      'MR user create issue fix',
     ],
   },
   // knownBugs: {
@@ -101,8 +99,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.63</Text>
-          <Text fontSize="s3">May 17, 2023</Text>
+          <Text fontSize="r2">Version 1.0.64</Text>
+          <Text fontSize="s3">May 24, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
