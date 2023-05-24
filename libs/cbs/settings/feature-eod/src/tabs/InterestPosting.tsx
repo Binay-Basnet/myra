@@ -1,10 +1,12 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { Button } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useEodHistoryDetailsQuery } from '@coop/cbs/data-access';
 import { SettingsCard } from '@coop/cbs/settings/ui-components';
+import { exportVisibleTableToExcel } from '@coop/cbs/utils';
 import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 export const InterestPosting = () => {
@@ -54,7 +56,21 @@ export const InterestPosting = () => {
   );
 
   return (
-    <SettingsCard title="Interest Posting">
+    <SettingsCard
+      title="Interest Posting"
+      headerButton={
+        <Button
+          variant="ghost"
+          onClick={() =>
+            exportVisibleTableToExcel(
+              `Saving Interest Booking - ${objState === 'success' ? 'Success' : 'Errors'}`
+            )
+          }
+        >
+          Export
+        </Button>
+      }
+    >
       <Table
         isLoading={isFetching}
         isStatic
