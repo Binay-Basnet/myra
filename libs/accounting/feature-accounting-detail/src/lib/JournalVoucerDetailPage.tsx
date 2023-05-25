@@ -37,7 +37,7 @@ export const JournalVoucerDetailPage = () => {
 
   const otherData = {
     tellerName: voucherData?.creatorName,
-    serviceCenter: voucherData?.reference,
+    serviceCenter: voucherData?.branchName,
   };
 
   return (

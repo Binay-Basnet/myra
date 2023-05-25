@@ -23635,6 +23635,7 @@ export type GetJournalVoucherDetailQuery = {
           reference?: string | null;
           note?: string | null;
           transactionCode?: string | null;
+          branchName?: string | null;
           totalDebit?: string | null;
           totalCredit?: string | null;
           creatorName?: string | null;
@@ -43444,6 +43445,7 @@ export const GetJournalVoucherDetailDocument = `
           reference
           note
           transactionCode
+          branchName
           glTransaction {
             ledgerId
             account
