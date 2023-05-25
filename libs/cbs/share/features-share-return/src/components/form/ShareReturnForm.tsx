@@ -77,12 +77,7 @@ export const ShareReturnForm = () => {
       },
     },
   });
-  const {
-    watch,
-    getValues,
-    reset,
-    formState: { isDirty },
-  } = methods;
+  const { watch, getValues, reset } = methods;
 
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -263,7 +258,6 @@ export const ShareReturnForm = () => {
     <FormLayout methods={methods} hasSidebar={!!memberDetailData}>
       <FormLayout.Header
         title={`${t['shareLayoutShareReturnAdd']} - ${featureCode?.newShareReturn}`}
-        isFormDirty={isDirty}
       />
 
       <FormLayout.Content>

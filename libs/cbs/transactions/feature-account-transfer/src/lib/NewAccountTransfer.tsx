@@ -81,12 +81,7 @@ export const NewAccountTransfer = () => {
     },
   });
 
-  const {
-    watch,
-    reset,
-    getValues,
-    formState: { isDirty },
-  } = methods;
+  const { watch, reset, getValues } = methods;
 
   const memberId = watch('memberId');
 
@@ -184,7 +179,6 @@ export const NewAccountTransfer = () => {
     <FormLayout methods={methods} hasSidebar={!!memberId}>
       <FormLayout.Header
         title={`${t['newAccountTransferNewAccountTransfer']} - ${featureCode?.newAccountTransfer}`}
-        isFormDirty={isDirty}
       />
 
       <FormLayout.Content>

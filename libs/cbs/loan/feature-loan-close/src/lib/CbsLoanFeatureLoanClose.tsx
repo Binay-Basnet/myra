@@ -75,11 +75,7 @@ export const LoanCloseForm = () => {
     },
   });
 
-  const {
-    getValues,
-    watch,
-    formState: { isDirty },
-  } = methods;
+  const { getValues, watch } = methods;
   const memberId = watch('memberId');
   const loanAccountId = watch('loanAccountId');
   const isDisableDenomination = watch('cash.disableDenomination');
@@ -232,7 +228,7 @@ export const LoanCloseForm = () => {
 
   return (
     <FormLayout methods={methods} hasSidebar={Boolean(memberId)}>
-      <FormLayout.Header title="Loan Account Close" isFormDirty={isDirty} />
+      <FormLayout.Header title="Loan Account Close" />
       <FormLayout.Content>
         <FormLayout.Form>
           <Box display="flex" flexDirection="column" w="100%">

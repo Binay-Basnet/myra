@@ -23,11 +23,7 @@ export const NewFundManagement = () => {
 
   const methods = useForm<CustomFundManagementInput>();
 
-  const {
-    watch,
-    getValues,
-    formState: { isDirty },
-  } = methods;
+  const { watch, getValues } = methods;
 
   const otherFunds = watch('otherFunds');
 
@@ -75,7 +71,6 @@ export const NewFundManagement = () => {
           <FormHeader
             title={`New Profit to Fund Management - ${featureCode?.newProfitToFundManagement}`}
             // closeLink="/others/fund-management/list"
-            isFormDirty={isDirty}
           />
         </Box>
 

@@ -84,12 +84,7 @@ export const AddWithdraw = () => {
     },
   });
 
-  const {
-    watch,
-    resetField,
-    getValues,
-    formState: { isDirty },
-  } = methods;
+  const { watch, resetField, getValues } = methods;
 
   const { mutateAsync } = useSetWithdrawDataMutation();
 
@@ -301,10 +296,7 @@ export const AddWithdraw = () => {
 
   return (
     <FormLayout methods={methods} hasSidebar={Boolean(memberId && mode === 0)}>
-      <FormLayout.Header
-        title={`${t['addWithdrawNewWithdraw']} - ${featureCode?.newWithdraw}`}
-        isFormDirty={isDirty}
-      />
+      <FormLayout.Header title={`${t['addWithdrawNewWithdraw']} - ${featureCode?.newWithdraw}`} />
 
       <FormLayout.Content>
         <FormLayout.Form>

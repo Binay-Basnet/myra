@@ -54,11 +54,7 @@ export const AddBankTransfer = () => {
     },
   ];
 
-  const {
-    getValues,
-    watch,
-    formState: { isDirty },
-  } = methods;
+  const { getValues, watch } = methods;
   const { mutateAsync } = useSetBankTransferMutation();
 
   const handleSubmit = () => {
@@ -81,11 +77,7 @@ export const AddBankTransfer = () => {
 
   return (
     <FormLayout methods={methods}>
-      <FormLayout.Header
-        title="Add Bank Transfer"
-        closeLink={ROUTES.CBS_TRANSFER_BANK_LIST}
-        isFormDirty={isDirty}
-      />
+      <FormLayout.Header title="Add Bank Transfer" closeLink={ROUTES.CBS_TRANSFER_BANK_LIST} />
 
       <FormLayout.Content>
         <FormLayout.Form>

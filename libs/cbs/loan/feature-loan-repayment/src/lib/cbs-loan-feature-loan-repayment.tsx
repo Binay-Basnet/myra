@@ -84,11 +84,7 @@ export const LoanRepayment = () => {
     },
   });
 
-  const {
-    getValues,
-    watch,
-    formState: { isDirty },
-  } = methods;
+  const { getValues, watch } = methods;
   const memberId = watch('memberId');
   const loanAccountId = watch('loanAccountId');
   const isDisableDenomination = watch('cash.disableDenomination');
@@ -274,10 +270,7 @@ export const LoanRepayment = () => {
 
   return (
     <FormLayout methods={methods} hasSidebar={!!memberId}>
-      <FormLayout.Header
-        title={`New Loan Repayment - ${featureCode.newLoanRepayment} `}
-        isFormDirty={isDirty}
-      />
+      <FormLayout.Header title={`New Loan Repayment - ${featureCode.newLoanRepayment} `} />
 
       <FormLayout.Content>
         <FormLayout.Form>

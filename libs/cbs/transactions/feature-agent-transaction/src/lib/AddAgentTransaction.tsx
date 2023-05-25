@@ -30,11 +30,7 @@ export const AddAgentTransaction = () => {
 
   const methods = useForm();
 
-  const {
-    watch,
-    getValues,
-    formState: { isDirty },
-  } = methods;
+  const { watch, getValues } = methods;
 
   const agentId: string = watch('agentId');
 
@@ -184,7 +180,6 @@ export const AddAgentTransaction = () => {
       <FormLayout.Header
         title={`New Market Representative Transaction - ${featureCode?.newMarketRepresentativeTransaction}`}
         buttonHandler={() => router.back()}
-        isFormDirty={isDirty}
       />
 
       <FormLayout.Content>

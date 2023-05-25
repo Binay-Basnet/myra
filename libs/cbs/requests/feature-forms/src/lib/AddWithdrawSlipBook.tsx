@@ -42,11 +42,7 @@ export const AddWithdrawSlipBook = () => {
     defaultValues: { pickupMethod: PickupMethod.Self },
   });
 
-  const {
-    watch,
-    getValues,
-    formState: { isDirty },
-  } = methods;
+  const { watch, getValues } = methods;
 
   const memberId = watch('memberId');
 
@@ -111,10 +107,7 @@ export const AddWithdrawSlipBook = () => {
 
   return (
     <FormLayout methods={methods}>
-      <FormLayout.Header
-        title={`Create Withdraw Slip Book - ${featureCode.newWithdrawSlipBook}`}
-        isFormDirty={isDirty}
-      />
+      <FormLayout.Header title={`Create Withdraw Slip Book - ${featureCode.newWithdrawSlipBook}`} />
 
       <FormLayout.Content>
         <FormLayout.Form>
