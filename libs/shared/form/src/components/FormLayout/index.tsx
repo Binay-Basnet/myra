@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { FieldValues, FormProvider, UseFormReturn } from 'react-hook-form';
+import { FieldValues, FormProvider, useFormContext, UseFormReturn } from 'react-hook-form';
 
 import { Box, FormFooter, FormFooterProps, FormHeader, FormHeaderProps } from '@myra-ui';
 
@@ -40,15 +40,21 @@ const FormLayout = <T extends FieldValues>({
     </Box>
   );
 
-// type HeaderProps = FormHeaderProps & {
-//   isFormAutoSave?: boolean;
-// };
+type HeaderProps = FormHeaderProps & {
+  isFormAutoSave?: boolean;
+};
 
-const Header = (props: FormHeaderProps) => (
-  <Box bg="gray.100" width="100%" maxH="3.125rem">
-    <FormHeader {...props} />
-  </Box>
-);
+const Header = (props: HeaderProps) => {
+  const {
+    formState: { isDirty },
+  } = useFormContext();
+
+  return (
+    <Box bg="gray.100" width="100%" maxH="3.125rem">
+      <FormHeader {...props} isFormDirty={isDirty} />
+    </Box>
+  );
+};
 
 const Footer = (props: FormFooterProps) => (
   <Box bg="gray.100" width="100%" maxH="3.75rem">
