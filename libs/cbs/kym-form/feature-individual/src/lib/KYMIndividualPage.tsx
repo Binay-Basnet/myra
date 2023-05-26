@@ -14,7 +14,7 @@ import {
   useGetIndividualKymOptionsQuery,
   useGetKymFormStatusQuery,
 } from '@coop/cbs/data-access';
-import { Box, Button, Icon, Text, toast } from '@myra-ui';
+import { Box, Button, FormHeader, Icon, Text, toast } from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { AccorrdianAddMember, KYMUpdateModal } from '@coop/cbs/kym-form/formElements';
 import { ROUTES } from '@coop/cbs/utils';
@@ -108,7 +108,7 @@ export const KYMIndividualPage = () => {
   return (
     <>
       <FormLayout hasSidebar>
-        <FormLayout.Header
+        <FormHeader
           title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberIndiviual}`}
           closeLink={ROUTES.CBS_MEMBER_LIST}
         />
