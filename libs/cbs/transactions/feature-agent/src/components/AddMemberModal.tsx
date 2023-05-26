@@ -53,14 +53,13 @@ export const AddMemberModal = ({
         success: t['agentAssignedMembersAssignedNewMember'],
       },
       onSuccess: () => {
-        reset();
         refetchAssignedMembersList();
-        onClose();
+        handleClose();
       },
       onError: (error) => {
         if (error?.code === 418) {
           setIsOverrideMemberAlertOpen(true);
-          onClose();
+          handleClose();
         }
       },
     });
@@ -84,17 +83,22 @@ export const AddMemberModal = ({
       },
       onSuccess: () => {
         setIsOverrideMemberAlertOpen(false);
-        reset();
+        handleClose();
         refetchAssignedMembersList();
       },
     });
+  };
+
+  const handleClose = () => {
+    reset({ memberId: '', accountId: '' });
+    onClose();
   };
 
   return (
     <>
       <Modal
         open={isOpen}
-        onClose={onClose}
+        onClose={handleClose}
         title={t['agentAssignedMembersAddMember']}
         primaryButtonLabel="Save"
         primaryButtonHandler={handleAssignMember}
