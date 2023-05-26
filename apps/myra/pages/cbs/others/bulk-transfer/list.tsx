@@ -1,14 +1,11 @@
 import { ReactElement } from 'react';
 
-import { Box, MainLayout, WIPState } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
+import { BulkTransferList } from '@coop/cbs/others/bulk-transfer';
 import { OthersPageLayout } from '@coop/cbs/others/ui-layouts';
 
-const BulkTransfersListPage = () => (
-  <Box display="flex" justifyContent="center" alignItems="center" pt="60px">
-    <WIPState />
-  </Box>
-);
+const BulkTransfersListPage = () => <BulkTransferList />;
 
 export default BulkTransfersListPage;
 

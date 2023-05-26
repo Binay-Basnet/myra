@@ -640,3 +640,31 @@ query getAllTransactionFilterMapping {
     }
   }
 }
+
+query bulkTransfersList($filter: Filter, $pagination: Pagination) {
+  transaction {
+    listBulkTransfers(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          transferType
+          transferDate
+          transferAmount
+          totalTransferAmount
+          sourceId
+          sourceName
+          destinationId
+          destinationName
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}

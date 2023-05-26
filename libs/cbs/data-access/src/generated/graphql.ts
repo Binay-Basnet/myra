@@ -35023,6 +35023,39 @@ export type GetAllTransactionFilterMappingQuery = {
   };
 };
 
+export type BulkTransfersListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type BulkTransfersListQuery = {
+  transaction: {
+    listBulkTransfers?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id?: string | null;
+          transferType?: BulkTransferType | null;
+          transferDate?: Record<'local' | 'en' | 'np', string> | null;
+          transferAmount?: string | null;
+          totalTransferAmount?: string | null;
+          sourceId?: string | null;
+          sourceName?: string | null;
+          destinationId?: string | null;
+          destinationName?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetTransferDetailQueryVariables = Exact<{
   transferID: Scalars['ID'];
 }>;
@@ -58503,6 +58536,46 @@ export const useGetAllTransactionFilterMappingQuery = <
       : ['getAllTransactionFilterMapping', variables],
     useAxios<GetAllTransactionFilterMappingQuery, GetAllTransactionFilterMappingQueryVariables>(
       GetAllTransactionFilterMappingDocument
+    ).bind(null, variables),
+    options
+  );
+export const BulkTransfersListDocument = `
+    query bulkTransfersList($filter: Filter, $pagination: Pagination) {
+  transaction {
+    listBulkTransfers(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          transferType
+          transferDate
+          transferAmount
+          totalTransferAmount
+          sourceId
+          sourceName
+          destinationId
+          destinationName
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useBulkTransfersListQuery = <TData = BulkTransfersListQuery, TError = unknown>(
+  variables?: BulkTransfersListQueryVariables,
+  options?: UseQueryOptions<BulkTransfersListQuery, TError, TData>
+) =>
+  useQuery<BulkTransfersListQuery, TError, TData>(
+    variables === undefined ? ['bulkTransfersList'] : ['bulkTransfersList', variables],
+    useAxios<BulkTransfersListQuery, BulkTransfersListQueryVariables>(
+      BulkTransfersListDocument
     ).bind(null, variables),
     options
   );
