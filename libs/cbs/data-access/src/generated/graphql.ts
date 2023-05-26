@@ -2133,6 +2133,29 @@ export type BulkInstallmentResult = {
   value?: Maybe<InstallmentResult>;
 };
 
+export type BulkTransferConnection = {
+  edges?: Maybe<Array<Maybe<BulkTransferEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BulkTransferEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BulkTransferInfo>;
+};
+
+export type BulkTransferInfo = {
+  destinationId?: Maybe<Scalars['String']>;
+  destinationName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  sourceId?: Maybe<Scalars['String']>;
+  sourceName?: Maybe<Scalars['String']>;
+  totalTransferAmount?: Maybe<Scalars['String']>;
+  transferAmount?: Maybe<Scalars['String']>;
+  transferDate?: Maybe<Scalars['Localized']>;
+  transferType?: Maybe<BulkTransferType>;
+};
+
 export type BulkTransferInput = {
   accounts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   amount?: InputMaybe<Scalars['String']>;
@@ -17488,6 +17511,7 @@ export type TransactionQuery = {
   eodStatus?: Maybe<EodSatusResult>;
   filterMapping?: Maybe<TransactionFilterMapping>;
   listAllTransactions?: Maybe<AllTransactionsConnection>;
+  listBulkTransfers?: Maybe<BulkTransferConnection>;
   listDeposit: AccountActivityListConnection;
   listServiceCenterCashTransfer?: Maybe<ServiceCentreCashTransferActivity>;
   listTellerTransaction: TellerActivityListConnection;
@@ -17515,6 +17539,11 @@ export type TransactionQueryCashInTransitDetailArgs = {
 };
 
 export type TransactionQueryListAllTransactionsArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListBulkTransfersArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };

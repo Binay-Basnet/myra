@@ -15,6 +15,10 @@ export const LOAN_LIST_TAB_ITEMS = [
     title: 'memberNavInactive',
     key: 'SUBMITTED',
   },
+  {
+    title: 'Write Off',
+    key: 'WRITE_OFF',
+  },
 ];
 
 export const LoanList = () => {
