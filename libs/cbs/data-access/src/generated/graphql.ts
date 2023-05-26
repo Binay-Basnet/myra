@@ -939,6 +939,7 @@ export type AddChartsOfAccountResult = {
 
 export type AddWarehouseInput = {
   address?: InputMaybe<Scalars['String']>;
+  branchId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   phoneNumber?: InputMaybe<Scalars['String']>;
 };
@@ -2131,6 +2132,29 @@ export type BulkDepositResult = {
 export type BulkInstallmentResult = {
   accountId?: Maybe<Scalars['String']>;
   value?: Maybe<InstallmentResult>;
+};
+
+export type BulkTransferConnection = {
+  edges?: Maybe<Array<Maybe<BulkTransferEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BulkTransferEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<BulkTransferInfo>;
+};
+
+export type BulkTransferInfo = {
+  destinationId?: Maybe<Scalars['String']>;
+  destinationName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  sourceId?: Maybe<Scalars['String']>;
+  sourceName?: Maybe<Scalars['String']>;
+  totalTransferAmount?: Maybe<Scalars['String']>;
+  transferAmount?: Maybe<Scalars['String']>;
+  transferDate?: Maybe<Scalars['Localized']>;
+  transferType?: Maybe<BulkTransferType>;
 };
 
 export type BulkTransferInput = {
@@ -17488,6 +17512,7 @@ export type TransactionQuery = {
   eodStatus?: Maybe<EodSatusResult>;
   filterMapping?: Maybe<TransactionFilterMapping>;
   listAllTransactions?: Maybe<AllTransactionsConnection>;
+  listBulkTransfers?: Maybe<BulkTransferConnection>;
   listDeposit: AccountActivityListConnection;
   listServiceCenterCashTransfer?: Maybe<ServiceCentreCashTransferActivity>;
   listTellerTransaction: TellerActivityListConnection;
@@ -17515,6 +17540,11 @@ export type TransactionQueryCashInTransitDetailArgs = {
 };
 
 export type TransactionQueryListAllTransactionsArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListBulkTransfersArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -18099,6 +18129,8 @@ export type WarehouseFilter = {
 
 export type WarehouseInfo = {
   address?: Maybe<Scalars['String']>;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
@@ -18133,7 +18165,7 @@ export type WarehouseQueryListTransfersArgs = {
 };
 
 export type WarehouseQueryListWarehousesArgs = {
-  filter?: InputMaybe<WarehouseFilter>;
+  filter?: InputMaybe<Filter>;
   paginate: Pagination;
 };
 
@@ -25837,7 +25869,7 @@ export type GetUnitsListQuery = {
 
 export type GetWarehouseListQueryVariables = Exact<{
   paginate: Pagination;
-  filter?: InputMaybe<WarehouseFilter>;
+  filter?: InputMaybe<Filter>;
 }>;
 
 export type GetWarehouseListQuery = {
@@ -25852,6 +25884,8 @@ export type GetWarehouseListQuery = {
             name?: string | null;
             phoneNumber?: string | null;
             address?: string | null;
+            branchId?: string | null;
+            branchName?: string | null;
           } | null;
         } | null> | null;
         pageInfo?: PaginationFragment | null;
@@ -46264,7 +46298,7 @@ export const useGetUnitsListQuery = <TData = GetUnitsListQuery, TError = unknown
     options
   );
 export const GetWarehouseListDocument = `
-    query getWarehouseList($paginate: Pagination!, $filter: WarehouseFilter) {
+    query getWarehouseList($paginate: Pagination!, $filter: Filter) {
   inventory {
     warehouse {
       listWarehouses(paginate: $paginate, filter: $filter) {
@@ -46275,6 +46309,8 @@ export const GetWarehouseListDocument = `
             name
             phoneNumber
             address
+            branchId
+            branchName
           }
           cursor
         }
