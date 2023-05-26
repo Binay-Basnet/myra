@@ -254,6 +254,11 @@ export const CBS: NavType = {
           aclKey: 'CBS_LOAN_LOAN_ACCOUNT_CLOSE',
           addRoute: ROUTES.CBS_LOAN_LOSS_PROVISION_ADD,
         },
+        {
+          label: 'Loan Write Off',
+          route: ROUTES.CBS_LOAN_WRITE_OFF_LIST,
+          aclKey: 'CBS_LOAN_LOAN_ACCOUNT_CLOSE',
+        },
       ],
       settingPages: [
         {
