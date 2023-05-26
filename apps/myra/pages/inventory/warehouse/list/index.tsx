@@ -17,6 +17,7 @@ const InventoryWarehousePage = () => {
   const handleMinorAccountClose = () => {
     setIsAddMinorAccountModalOpen(false);
   };
+
   // const tabList = [
   //   {
   //     title: 'warehouseListView',

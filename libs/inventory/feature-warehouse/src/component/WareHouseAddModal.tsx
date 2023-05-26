@@ -3,8 +3,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { asyncToast, Box, Modal } from '@myra-ui';
 
-import { useSetWareHouseMutation } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
+import { useGetBranchListQuery, useSetWareHouseMutation } from '@coop/cbs/data-access';
+import { FormInput, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IWAREHOUSEMODALPROPS {
@@ -18,6 +18,18 @@ export const WarehouseAddModal = ({
   const { t } = useTranslation();
   const methods = useForm({});
   const queryClient = useQueryClient();
+
+  const { data: branchData } = useGetBranchListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  const serviceCenterOptions = branchData?.settings?.general?.branch?.list?.edges?.map((data) => ({
+    label: data?.node?.name as string,
+    value: data?.node?.id as string,
+  }));
 
   const { mutateAsync: warehouseMutateAsync } = useSetWareHouseMutation();
 
@@ -49,6 +61,7 @@ export const WarehouseAddModal = ({
       name: null,
       phoneNumber: null,
       address: null,
+      branchId: null,
     });
   };
   return isAddWareHouseModalOpen ? (
@@ -62,6 +75,11 @@ export const WarehouseAddModal = ({
     >
       <FormProvider {...methods}>
         <Box display="flex" flexDirection="column" gap="s24">
+          <FormSelect
+            label="Select Service Center"
+            options={serviceCenterOptions}
+            name="branchId"
+          />
           <FormInput type="text" name="name" label={t['warehouseFormName']} />
 
           <FormInput type="number" name="phoneNumber" label={t['warehouseFormPhoneNumber']} />

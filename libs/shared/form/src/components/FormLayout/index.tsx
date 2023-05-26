@@ -40,11 +40,7 @@ const FormLayout = <T extends FieldValues>({
     </Box>
   );
 
-type HeaderProps = FormHeaderProps & {
-  isFormAutoSave?: boolean;
-};
-
-const Header = (props: HeaderProps) => {
+const Header = (props: FormHeaderProps) => {
   const {
     formState: { isDirty },
   } = useFormContext();
