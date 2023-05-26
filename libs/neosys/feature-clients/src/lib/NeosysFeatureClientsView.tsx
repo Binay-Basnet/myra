@@ -21,16 +21,24 @@ import {
   useDeleteEnvironementMutation,
   useGetClientDetailsQuery,
   useGetVersionQuery,
+  useSeedDbWithCsvMutation,
   useSetEnvironementMutation,
   useSetUpEnvironmentDatabaseMutation,
   useUpdateVersionMutation,
 } from '@coop/neosys-admin/data-access';
-import { FormCheckbox, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
+import {
+  FormCheckbox,
+  FormInput,
+  FormNeosysFileInput,
+  FormSelect,
+  FormTextArea,
+} from '@coop/shared/form';
 
 export const NeosysFeatureClientView = () => {
   const router = useRouter();
   const clientId = router?.query['id'] as string;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [seedWithCSVModalOpen, setSeedWithCSVModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentId, setCurrentId] = useState('');
   const [isUpdateEnvironmentOpen, setIsUpdateEnvironmentOpen] = useState(false);
@@ -39,6 +47,8 @@ export const NeosysFeatureClientView = () => {
   const { mutateAsync: setEnvironmentMutation } = useSetEnvironementMutation();
   const { mutateAsync: deleteEnvironmentMutation } = useDeleteEnvironementMutation();
   const { mutateAsync: setUpEnvironmentDatabaseMutation } = useSetUpEnvironmentDatabaseMutation();
+  const { mutateAsync: seedWithCSVMutation } = useSeedDbWithCsvMutation();
+
   const { data: versionData } = useGetVersionQuery();
   const versionOption = versionData?.neosys?.versions?.map((item) => ({
     label: item?.id as string,
@@ -46,6 +56,9 @@ export const NeosysFeatureClientView = () => {
   }));
 
   const methods = useForm();
+  const seedCsvMethod = useForm();
+
+  const { getValues: seedCsvGetValues, handleSubmit: seedCsvHandlesubmit } = seedCsvMethod;
 
   const { getValues, reset, clearErrors, setError } = methods;
 
@@ -127,6 +140,13 @@ export const NeosysFeatureClientView = () => {
                     setIsUpdateEnvironmentOpen(true);
                   },
                 },
+                {
+                  title: 'Seed with CSV',
+                  onClick: (node) => {
+                    setCurrentId(node?.id);
+                    setSeedWithCSVModalOpen(true);
+                  },
+                },
               ]}
             />
           ) : null,
@@ -140,6 +160,10 @@ export const NeosysFeatureClientView = () => {
   };
   const handleModalClose = () => {
     setIsModalOpen(false);
+  };
+
+  const handleSeedWithCSVModalClose = () => {
+    setSeedWithCSVModalOpen(false);
   };
   const handleDeleteModalClose = () => {
     setIsDeleteModalOpen(false);
@@ -205,6 +229,33 @@ export const NeosysFeatureClientView = () => {
       });
   };
 
+  const onSeedCsvSubmit = () => {
+    const fileToBeSent = seedCsvGetValues()?.['file'][0];
+    seedWithCSVMutation({
+      environmentId: currentId,
+      fileURL: fileToBeSent,
+    })
+      .then(() => {
+        toast({
+          id: 'seed-with-csv',
+          type: 'success',
+          state: 'success',
+          message: 'Seed with csv',
+        });
+        setCurrentId('');
+        refetch();
+        handleSeedWithCSVModalClose();
+      })
+      .catch(() => {
+        toast({
+          id: 'seed-with-csv',
+          type: 'error',
+          state: 'error',
+          message: 'Something went wrong',
+        });
+      });
+  };
+
   return (
     <>
       <Box display="flex" justifyContent="space-between" p={2}>
@@ -216,11 +267,6 @@ export const NeosysFeatureClientView = () => {
         columns={columns}
         getRowId={(row) => row?.id as string}
         isLoading={isLoading}
-        // noDataTitle={t['member']}
-        // pagination={{
-        //   total: data?.members?.list?.totalCount ?? 'Many',
-        //   pageInfo: data?.members?.list?.pageInfo,
-        // }}
       />
       <Modal
         open={isUpdateEnvironmentOpen}
@@ -305,6 +351,24 @@ export const NeosysFeatureClientView = () => {
               Submit
             </Button>
           </Box>
+        </FormProvider>
+      </Modal>
+      <Modal
+        open={seedWithCSVModalOpen}
+        onClose={handleSeedWithCSVModalClose}
+        isCentered
+        title="Seed with CSV"
+        width="sm"
+      >
+        <FormProvider {...seedCsvMethod}>
+          <form onSubmit={seedCsvHandlesubmit(onSeedCsvSubmit)}>
+            <Box display="flex" flexDir="column" gap={5}>
+              <FormNeosysFileInput name="file" label="Upload file" />
+              <Button w="-webkit-fit-content" type="submit">
+                Submit
+              </Button>
+            </Box>
+          </form>
         </FormProvider>
       </Modal>
     </>

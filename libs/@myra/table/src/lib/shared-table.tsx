@@ -79,6 +79,10 @@ export const TableWithoutRef = <T,>(
     onRowSelect && onRowSelect(Object.keys(rowSelection));
   }, [rowSelection]);
 
+  useEffect(() => {
+    setRowSelection([]);
+  }, [data]);
+
   const table = useTable<T>(
     tablePagination
       ? {

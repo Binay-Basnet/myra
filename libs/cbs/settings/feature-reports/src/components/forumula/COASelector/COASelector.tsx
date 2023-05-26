@@ -20,7 +20,6 @@ export const COASelector = ({ char, onCharChange, variable }: COASelectorProps) 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const controls = useDragControls();
 
-  const [finalValue, setFinalValue] = useState<string | null>(null);
   const [value, setValue] = useState<string[]>(char?.split(',') || []);
   const [coaModalPosition, setCoaModalPosition] = useState({ x: 0, y: 0 });
 
@@ -28,17 +27,13 @@ export const COASelector = ({ char, onCharChange, variable }: COASelectorProps) 
     setValue(char?.split(','));
   }, [char]);
 
-  useEffect(() => {
-    setFinalValue(null);
-  }, []);
-
   return (
     <>
       <COAMenu
         variable={variable}
         onOpen={onOpen}
         setCOAModalPosition={setCoaModalPosition}
-        char={finalValue || char || variable.slice(4, variable.length)}
+        char={char || variable.slice(4, variable.length)}
       />
       <Portal>
         {isOpen && (
@@ -155,7 +150,6 @@ export const COASelector = ({ char, onCharChange, variable }: COASelectorProps) 
                         return acc;
                       }, [] as string[]);
 
-                      setFinalValue(finalIds.join(','));
                       onCharChange(finalIds.join(','));
                       onClose();
                     }}
