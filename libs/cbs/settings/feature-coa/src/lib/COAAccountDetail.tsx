@@ -1,24 +1,62 @@
+import { FormProvider, useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { Box, Scrollable, Text, WIPState } from '@myra-ui';
+import { asyncToast, Box, DetailPageHeader, Modal, Scrollable, Text, WIPState } from '@myra-ui';
 
-import { COADetailSidebar, ProductDetailPathBar } from '@coop/cbs/settings/ui-layout';
+import { useUpdateLedgerNameMutation } from '@coop/cbs/data-access';
+import { COADetailSidebar } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormInput } from '@coop/shared/form';
 
 import { Overview, Transactions } from '../components/detail-tabs';
 import { useCOAAccountDetails } from '../hooks';
 
 export const COAAccountDetail = () => {
+  const queryClient = useQueryClient();
+
   const router = useRouter();
+
+  const { id } = router.query;
 
   const tabQuery = router.query['tab'] as string;
 
   const { accountDetails } = useCOAAccountDetails();
 
+  const { isOpen, onClose, onToggle } = useDisclosure();
+
+  const methods = useForm();
+
+  const { mutateAsync: updateLedgerName } = useUpdateLedgerNameMutation();
+
+  const handleEdit = () => {
+    asyncToast({
+      id: 'update-ledger-name',
+      msgs: {
+        loading: 'Updating ledger name',
+        success: 'Ledger name updated',
+      },
+      promise: updateLedgerName({
+        ledgerId: id as string,
+        newName: methods?.getValues()?.['newName'],
+      }),
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getCOAAccountDetails']);
+        handleUpdateModalClose();
+      },
+    });
+  };
+
+  const handleUpdateModalClose = () => {
+    methods.reset({ newName: '' });
+    onClose();
+  };
+
   return (
     <>
-      <ProductDetailPathBar
+      <DetailPageHeader
         title="Charts of Accounts"
         name={
           <Link
@@ -49,6 +87,7 @@ export const COAAccountDetail = () => {
             </Text>
           </Link>
         }
+        options={[{ label: 'Edit Ledger Name', handler: onToggle }]}
       />
       <Box display="flex">
         <Box
@@ -93,6 +132,21 @@ export const COAAccountDetail = () => {
           </Box>
         </Scrollable>
       </Box>
+
+      <Modal
+        open={isOpen}
+        onClose={handleUpdateModalClose}
+        isCentered
+        title="Edit Ledger Name"
+        primaryButtonLabel="Update"
+        primaryButtonHandler={handleEdit}
+      >
+        <FormProvider {...methods}>
+          {/* <Grid templateColumns="repeat(2,1fr)"> */}
+          <FormInput label="New Ledger Name" name="newName" />
+          {/* </Grid> */}
+        </FormProvider>
+      </Modal>
     </>
   );
 };

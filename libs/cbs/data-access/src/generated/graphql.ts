@@ -701,6 +701,14 @@ export type AccountingQuery = {
   sales: AccountingSalesQuery;
 };
 
+export type AccountingReport = {
+  externalLoanStatementReport: ExternalLoanStatementReportResult;
+};
+
+export type AccountingReportExternalLoanStatementReportArgs = {
+  data?: InputMaybe<ExternalLoanStatementReportFilter>;
+};
+
 export type AccountingSalesCreditNoteQueryResult = {
   data?: Maybe<SalesCreditNote>;
   error?: Maybe<QueryError>;
@@ -6016,6 +6024,37 @@ export type ExternalLoanPaymentResult = {
 export type ExternalLoanQuery = {
   loan?: Maybe<ExternalLoanApplicationQuery>;
   payment?: Maybe<ExternalLoanPaymentQuery>;
+};
+
+export type ExternalLoanStatementReportData = {
+  date?: Maybe<Scalars['Localized']>;
+  discount?: Maybe<Scalars['String']>;
+  paidFine?: Maybe<Scalars['String']>;
+  paidInterest?: Maybe<Scalars['String']>;
+  paidPrincipal?: Maybe<Scalars['String']>;
+  particulars?: Maybe<Scalars['String']>;
+  receivedPrincipal?: Maybe<Scalars['String']>;
+  remainingPrincipal?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
+};
+
+export type ExternalLoanStatementReportFilter = {
+  branchId: Array<Scalars['String']>;
+  loanId: Scalars['String'];
+  period: LocalizedDateFilter;
+};
+
+export type ExternalLoanStatementReportResult = {
+  data?: Maybe<Array<Maybe<ExternalLoanStatementReportData>>>;
+  error?: Maybe<QueryError>;
+  summary?: Maybe<ExternalLoanStatementReportSummary>;
+};
+
+export type ExternalLoanStatementReportSummary = {
+  discountTotal?: Maybe<Scalars['String']>;
+  paidFineTotal?: Maybe<Scalars['String']>;
+  paidInterestTotal?: Maybe<Scalars['String']>;
+  paidPrincipalTotal?: Maybe<Scalars['String']>;
 };
 
 export const ExternalLoanType = {
@@ -15280,6 +15319,7 @@ export const ReportPeriodType = {
 
 export type ReportPeriodType = typeof ReportPeriodType[keyof typeof ReportPeriodType];
 export type ReportQuery = {
+  accountingReport: AccountingReport;
   branchReport: BranchReport;
   cashReport: CashReport;
   committeeQuery: CommitteeReport;
@@ -19396,6 +19436,32 @@ export type UpdateLedgerStatusMutation = {
       chartsOfAccount?: {
         account?: {
           updateMoneyLedger?: {
+            recordId: string;
+            error?:
+              | MutationError_AuthorizationError_Fragment
+              | MutationError_BadRequestError_Fragment
+              | MutationError_NotFoundError_Fragment
+              | MutationError_ServerError_Fragment
+              | MutationError_ValidationError_Fragment
+              | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type UpdateLedgerNameMutationVariables = Exact<{
+  ledgerId: Scalars['ID'];
+  newName: Scalars['String'];
+}>;
+
+export type UpdateLedgerNameMutation = {
+  settings: {
+    general?: {
+      chartsOfAccount?: {
+        account?: {
+          updateLedgerName?: {
             recordId: string;
             error?:
               | MutationError_AuthorizationError_Fragment
@@ -36985,6 +37051,37 @@ export const useUpdateLedgerStatusMutation = <TError = unknown, TContext = unkno
     useAxios<UpdateLedgerStatusMutation, UpdateLedgerStatusMutationVariables>(
       UpdateLedgerStatusDocument
     ),
+    options
+  );
+export const UpdateLedgerNameDocument = `
+    mutation updateLedgerName($ledgerId: ID!, $newName: String!) {
+  settings {
+    general {
+      chartsOfAccount {
+        account {
+          updateLedgerName(ledgerId: $ledgerId, newName: $newName) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateLedgerNameMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateLedgerNameMutation,
+    TError,
+    UpdateLedgerNameMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpdateLedgerNameMutation, TError, UpdateLedgerNameMutationVariables, TContext>(
+    ['updateLedgerName'],
+    useAxios<UpdateLedgerNameMutation, UpdateLedgerNameMutationVariables>(UpdateLedgerNameDocument),
     options
   );
 export const SetCooperativeDataDocument = `
