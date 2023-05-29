@@ -131,6 +131,7 @@
     "ebanking-ui-cards": "libs/ebanking/ui-cards",
     "ebanking-ui-components": "libs/ebanking/ui-components",
     "ebanking-ui-layout": "libs/ebanking/ui-layout",
+    "hr-module-ui-layouts": "libs/hr-module/ui-layouts",
     "inventory-ui-layout": "libs/inventory/ui-layout",
     "migration": "apps/migration",
     "migration-data-access": "libs/migration/data-access",

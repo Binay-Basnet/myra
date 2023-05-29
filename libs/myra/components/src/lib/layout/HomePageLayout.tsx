@@ -46,12 +46,6 @@ const comingSoon = [
     img: '/zcl.svg',
     link: '/cbs/members/list',
   },
-
-  {
-    title: 'hrTrainingAndCapacityManagement',
-    img: '/btcd.svg',
-    link: '/cbs/members/list',
-  },
 ];
 
 const myraAppn = [
@@ -79,6 +73,11 @@ const myraAppn = [
     title: 'inventoryManagement',
     img: '/inventory.svg',
     link: '/inventory/inventory/register/list',
+  },
+  {
+    title: 'hrTrainingAndCapacityManagement',
+    img: '/btcd.svg',
+    link: '/hr/employee/employee/list',
   },
 ];
 

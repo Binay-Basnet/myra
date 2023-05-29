@@ -395,6 +395,36 @@ export const ROUTES = {
   ACCOUNTING_EXTERNAL_LOAN_ORGANIZATION_EDIT: '/accounting/loan/organizations/edit',
 
   ACCOUNTING_EXTERNAL_LOAN_EDIT: '/accounting/loan/external-loan/edit',
+
+  HRMODULE_EMPLOYEES_LIST: '/hr/employee/employee/list',
+  HRMODULE_CONTRACTS_LIST: '/hr/employee/contracts/list',
+  HRMODULE_ATTENDENCE_LIST: '/hr/employee/attendence/list',
+  HRMODULE_LEAVE_LIST: '/hr/employee/leave/list',
+  HRMODULE_EXIT_DETAILS_LIST: '/hr/employee/exit-details/list',
+  HR_LIFECYCLE_EMPLOYEE_ONBOAORDING: '/hr/lifecycle/employee-onboarding/list',
+  HR_LIFECYCLE_EMPLOYEE_SEPERATION: '/hr/lifecycle/seperation/list',
+
+  HR_LIFECYCLE_EMPLOYEE_TRANSFER: '/hr/lifecycle/transfer/list',
+
+  HR_LIFECYCLE_EMPLOYEE_PROMOTION: '/hr/lifecycle/promotion/list',
+
+  HR_LIFECYCLE_EMPLOYEE_EXIT: '/hr/lifecycle/exit/list',
+  HR_RECRUITMENT_STAFF_PLANNING: '/hr/recruitment/staff-planning/list',
+  HR_RECRUITMENT_JOB_POSTING: '/hr/recruitment/job-posting/list',
+
+  HR_RECRUITMENT_JOB_APPLICATION: '/hr/recruitment/job-application/list',
+
+  HR_RECRUITMENT_INTERVIEW: '/hr/recruitment/interview/list',
+
+  HR_RECRUITMENT_JOB_OFFER: '/hr/recruitment/job-offer/list',
+  HR_RECRUITMENT_APPOINTMENT_LETTER: '/hr/recruitment/appointment-letter/list',
+  HR_PAYROLL_PAYROLL_RUN: '/hr/payroll/payroll-run/list',
+  HR_PAYROLL_SALARY_STRUCTURE_: '/hr/payroll/salary-structure/list',
+  HR_PAYROLL_SALARY_SLIP: '/hr/payroll/salary-slip/list',
+  HR_PAYROLL_EXPEN: '/hr/payroll/expen/list',
+  HR_TRAINING_COURSES: '/hr/training/courses/list',
+  HR_TRAINING_STUDENTS: '/hr/training/students/list',
+  HR_REPORTS: '/hr/reports/transactions',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
