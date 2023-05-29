@@ -303,7 +303,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
             // };
             acc = {
               ...acc,
-              [key]: value && typeof value === 'object' && 'value' in value ? value.value : value,
+              [key]: value,
             };
 
             return acc;

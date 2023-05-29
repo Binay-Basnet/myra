@@ -1,6 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
 import { Box } from '@myra-ui';
@@ -25,7 +24,7 @@ export const JournalVouchersTable = () => {
   // const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
-  const { watch, setValue } = useFormContext<CustomJournalVoucherInput>();
+  const { watch, reset, getValues } = useFormContext<CustomJournalVoucherInput>();
 
   const entries = watch('entries');
 
@@ -58,6 +57,14 @@ export const JournalVouchersTable = () => {
     ? JSON.parse(router.query['entries'] as string)
     : [];
 
+  const redirectEntriesMap = redirectEntries.map(
+    (entry: { accountId: string; accountName: string; drAmount: string; crAmount: string }) => ({
+      accountId: { label: entry.accountName, value: entry.accountId },
+      drAmount: entry.drAmount,
+      crAmount: entry.crAmount,
+    })
+  );
+
   const accountSearchOptions = useMemo(
     () =>
       accountListData?.map((account) => ({
@@ -73,25 +80,14 @@ export const JournalVouchersTable = () => {
     { label: crTotal?.toFixed(2), width: 'lg', isNumeric: true },
   ];
 
-  useDeepCompareEffect(() => {
-    if (redirectEntries?.length) {
-      setValue(
-        'entries',
-        redirectEntries.map(
-          (entry: {
-            accountId: string;
-            accountName: string;
-            drAmount: string;
-            crAmount: string;
-          }) => ({
-            accountId: { label: entry.accountName, value: entry.accountId },
-            drAmount: entry.drAmount,
-            crAmount: entry.crAmount,
-          })
-        )
-      );
+  useEffect(() => {
+    if (redirectEntriesMap?.length) {
+      reset({
+        ...getValues(),
+        entries: redirectEntriesMap,
+      });
     }
-  }, [redirectEntries]);
+  }, [router?.query['entries']]);
 
   return (
     <Box display="flex" flexDir="column" gap="s12">
