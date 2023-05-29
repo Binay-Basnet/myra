@@ -73,9 +73,9 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
           {
             title: 'reports',
             icon: FiFileText,
-            link: ROUTES.ACCOUNTING_REPORTS,
+            link: ROUTES.HR_REPORTS,
             match: ['reports'],
-            aclKey: 'ACCOUNTING_INVESTMENT',
+            aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'REPORTS',
           },
         ]}

@@ -424,6 +424,7 @@ export const ROUTES = {
   HR_PAYROLL_EXPEN: '/hr/payroll/expen/list',
   HR_TRAINING_COURSES: '/hr/training/courses/list',
   HR_TRAINING_STUDENTS: '/hr/training/students/list',
+  HR_REPORTS: '/hr/reports/transactions',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
