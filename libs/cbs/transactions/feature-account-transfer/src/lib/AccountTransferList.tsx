@@ -72,6 +72,10 @@ export const AccountTransferList = () => {
         },
       },
       {
+        header: 'Service Center',
+        accessorKey: 'node.branchName',
+      },
+      {
         id: 'amount',
         header: t['accountTransferListAmount'],
         meta: {

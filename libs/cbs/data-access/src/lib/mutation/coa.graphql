@@ -84,3 +84,20 @@ mutation updateLedgerStatus($id: ID!, $status: Boolean!) {
     }
   }
 }
+
+mutation updateLedgerName($ledgerId: ID!, $newName: String!) {
+  settings {
+    general {
+      chartsOfAccount {
+        account {
+          updateLedgerName(ledgerId: $ledgerId, newName: $newName) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}

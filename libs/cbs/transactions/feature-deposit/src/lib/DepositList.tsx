@@ -113,6 +113,10 @@ export const DepositList = () => {
         },
       },
       {
+        header: 'Service Center',
+        accessorKey: 'node.branchName',
+      },
+      {
         id: 'amount',
         header: t['depositListAmount'],
 
