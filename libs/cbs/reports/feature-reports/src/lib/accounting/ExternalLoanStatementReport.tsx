@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { Box, GridItem } from '@myra-ui';
 
@@ -38,23 +39,9 @@ export const ExternalLoanStatementReport = () => {
     },
     { enabled: !!filters }
   );
-  const { data: loanList } = useExternalLoanListQuery({
-    pagination: {
-      after: '',
-      first: -1,
-    },
-  });
-  const loanListData = loanList?.accounting?.externalLoan?.loan?.list?.edges;
-  const loanListSearchOptions = useMemo(
-    () =>
-      loanListData?.map((account) => ({
-        label: account?.node?.loanName as string,
-        value: account?.node?.id as string,
-      })),
-    [loanListData]
-  );
 
   const externalLoanReport = data?.report?.accountingReport?.externalLoanStatementReport?.data;
+
   const summary = data?.report?.accountingReport?.externalLoanStatementReport?.summary;
 
   return (
@@ -76,21 +63,7 @@ export const ExternalLoanStatementReport = () => {
             },
           ]}
         />
-        <Report.Inputs>
-          <GridItem colSpan={2}>
-            <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
-          </GridItem>
-          <GridItem colSpan={1}>
-            <FormSelect
-              name="loanId"
-              label="Select External Loan"
-              options={loanListSearchOptions}
-            />
-          </GridItem>
-          <GridItem colSpan={1}>
-            <ReportDateRange />
-          </GridItem>
-        </Report.Inputs>
+        <ExternalLoanStatementReportInputs />
       </Report.Header>
 
       <Report.Body>
@@ -208,5 +181,52 @@ export const ExternalLoanStatementReport = () => {
         </Report.Content>
       </Report.Body>
     </Report>
+  );
+};
+
+const ExternalLoanStatementReportInputs = () => {
+  const { watch } = useFormContext<ExternalLoanStatementFilters>();
+
+  const { data: loanList } = useExternalLoanListQuery({
+    pagination: {
+      after: '',
+      first: -1,
+    },
+    filter: {
+      orConditions: [
+        {
+          andConditions: [
+            {
+              column: 'branchId',
+              value: watch('branchId')?.map((branch) => branch.value) || [],
+              comparator: 'IN',
+            },
+          ],
+        },
+      ],
+    },
+  });
+  const loanListData = loanList?.accounting?.externalLoan?.loan?.list?.edges;
+  const loanListSearchOptions = useMemo(
+    () =>
+      loanListData?.map((account) => ({
+        label: account?.node?.loanName as string,
+        value: account?.node?.id as string,
+      })),
+    [loanListData]
+  );
+
+  return (
+    <Report.Inputs>
+      <GridItem colSpan={2}>
+        <FormBranchSelect isMulti name="branchId" label="Select Service Center" />
+      </GridItem>
+      <GridItem colSpan={1}>
+        <FormSelect name="loanId" label="Select External Loan" options={loanListSearchOptions} />
+      </GridItem>
+      <GridItem colSpan={1}>
+        <ReportDateRange />
+      </GridItem>
+    </Report.Inputs>
   );
 };
