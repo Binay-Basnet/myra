@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 
-import { Box, Scrollable } from '@myra-ui';
+import { Box, Breadcrumb, Scrollable } from '@myra-ui';
 
-import { ProductDetailPathBar } from '@coop/cbs/settings/ui-layout';
+import { ROUTES } from '@coop/cbs/utils';
 
 import { InventoryAdjustmentDetailsSidebar } from './components/InventoryAdjustmentSidebar';
 import { useInventoryAdjustmentHook } from './hooks/useInventoryAdjustmentHook';
@@ -13,10 +13,22 @@ export const InventoryAdjustmentDetails = () => {
   const { detailData } = useInventoryAdjustmentHook();
 
   const tabQuery = router.query['tab'] as string;
+  const paths = [
+    {
+      label: 'Adjustment Table',
+      link: ROUTES.INVENTORY_INVENTORY_ADJUSTMENT,
+    },
+
+    {
+      label: `${detailData?.code}`,
+      link: `${ROUTES.INVENTORY_INVENTORY_ADJUSTMENT_DETAILS}?id=${router?.query['id']}`,
+    },
+  ];
 
   return (
     <>
-      <ProductDetailPathBar name={`${detailData?.code}`} title="Inventory Adjustment" />
+      {/* <ProductDetailPathBar name={`${detailData?.code}`} title="Inventory Adjustment" /> */}
+      <Breadcrumb paths={paths} />
       <Box display="flex">
         <Box
           w="320px"

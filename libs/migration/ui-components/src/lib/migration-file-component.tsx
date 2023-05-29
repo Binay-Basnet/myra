@@ -12,7 +12,7 @@ export const MigrationFileComponent = () => {
   const router = useRouter();
   const [changedRows, setChangedRows] = useState([]);
 
-  const { data, refetch, isLoading } = useGetCsvDataQuery(
+  const { data, refetch, isLoading, isFetching } = useGetCsvDataQuery(
     {
       input: {
         fileName: router?.query['filename'] as string,
@@ -96,7 +96,7 @@ export const MigrationFileComponent = () => {
     });
   };
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <Box>
         <Loader />
@@ -138,16 +138,20 @@ export const MigrationFileComponent = () => {
               </Text>
             ) : (
               <>
-                <MigrationPaginationComponent
-                  totalPages={data?.protectedQuery?.getFileData?.totalPages}
-                />
-                <Spreadsheet
-                  data={csvData}
-                  columnLabels={columnLabel}
-                  // hideRowIndicators
-                  onChange={setCsvData}
-                  rowLabels={rowLabel}
-                />
+                <Box mb={10}>
+                  <Spreadsheet
+                    data={csvData}
+                    columnLabels={columnLabel}
+                    // hideRowIndicators
+                    onChange={setCsvData}
+                    rowLabels={rowLabel}
+                  />
+                </Box>
+                <Box position="fixed" bottom={0}>
+                  <MigrationPaginationComponent
+                    totalPages={data?.protectedQuery?.getFileData?.totalPages}
+                  />
+                </Box>
               </>
             )}
           </Box>

@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import { Collapse } from '@chakra-ui/react';
-import { ExpandedState } from '@tanstack/react-table';
+import { rankItem } from '@tanstack/match-sorter-utils';
+import { ExpandedState, FilterFn, getPaginationRowModel } from '@tanstack/react-table';
 
 import { Pagination } from '@myra-ui/components';
+
+import { DEFAULT_PAGE_SIZE } from '@coop/shared/utils';
 
 import {
   TableBody,
@@ -22,6 +25,19 @@ import { TableSearch, TableSelectionBar } from '../components';
 // eslint-disable-next-line import/no-cycle
 import { useTable } from '../hooks/useTable';
 import { Column, TableProps } from '../types/Table';
+
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+  // Rank the item
+  const itemRank = rankItem(row.getValue(columnId), value);
+
+  // Store the itemRank info
+  addMeta({
+    itemRank,
+  });
+
+  // Return if the item should be filtered in/out
+  return itemRank.passed;
+};
 
 export const TableWithoutRef = <T,>(
   props: TableProps<T>,
@@ -49,41 +65,91 @@ export const TableWithoutRef = <T,>(
     isDetailPageTable,
     allowSelection,
     onRowSelect,
+    allowSearch,
+    tablePagination,
   } = props;
 
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
 
+  const [globalFilter, setGlobalFilter] = React.useState('');
+
   useEffect(() => {
     onRowSelect && onRowSelect(Object.keys(rowSelection));
   }, [rowSelection]);
 
-  const table = useTable<T>({
-    columns,
-    data,
-    isStatic,
-    allowSelection,
+  useEffect(() => {
+    setRowSelection([]);
+  }, [data]);
 
-    state: {
-      rowSelection,
-      expanded,
-    },
+  const table = useTable<T>(
+    tablePagination
+      ? {
+          columns,
+          data,
+          isStatic,
+          allowSelection,
 
-    onExpandedChange: setExpanded,
-    onRowSelectionChange: setRowSelection,
-    getRowId,
+          state: {
+            rowSelection,
+            expanded,
+            globalFilter,
+          },
 
-    filterFns: {
-      dateTime: () => true,
-      amount: () => true,
-    },
-    manualFiltering: true,
+          globalFilterFn: fuzzyFilter,
 
-    enableSorting,
-    manualSorting,
-    getSubRows,
-  });
+          onGlobalFilterChange: setGlobalFilter,
+
+          onExpandedChange: setExpanded,
+          onRowSelectionChange: setRowSelection,
+          getRowId,
+
+          filterFns: {
+            dateTime: () => true,
+            amount: () => true,
+          },
+
+          enableSorting,
+          manualSorting,
+          enableGlobalFilter: true,
+
+          getSubRows,
+
+          getPaginationRowModel: getPaginationRowModel(),
+
+          initialState: {
+            pagination: { pageSize: DEFAULT_PAGE_SIZE },
+          },
+        }
+      : {
+          columns,
+          data,
+          isStatic,
+          allowSelection,
+
+          state: {
+            rowSelection,
+            expanded,
+          },
+
+          onExpandedChange: setExpanded,
+          onRowSelectionChange: setRowSelection,
+          getRowId,
+
+          filterFns: {
+            dateTime: () => true,
+            amount: () => true,
+          },
+          manualFiltering: true,
+
+          enableSorting,
+          manualSorting,
+          getSubRows,
+
+          manualPagination: true,
+        }
+  );
 
   return (
     <>
@@ -92,12 +158,17 @@ export const TableWithoutRef = <T,>(
           <TableSelectionBar tableInstance={table} columns={columns as Column<T>[]} />
         </Collapse>
       )}
-      {!isStatic && (
+      {(!isStatic || allowSearch) && (
         <TableSearch
           placeholder={searchPlaceholder}
           pagination={pagination}
           size={tableSize}
           setSize={setTableSize}
+          isStatic={isStatic}
+          table={table}
+          tablePagination={!!tablePagination}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
       )}
 
@@ -137,11 +208,14 @@ export const TableWithoutRef = <T,>(
 
           <TableFooter table={table} showFooter={showFooter} />
         </TableRoot>
-        {pagination && data && data?.length !== 0 && (
+
+        {(pagination || tablePagination) && data && data?.length !== 0 && (
           <Pagination
-            total={pagination.total}
-            pageInfo={pagination.pageInfo}
+            table={table}
+            total={tablePagination ? data?.length : Number(pagination?.total)}
+            pageInfo={pagination?.pageInfo}
             pageSizeOptions={[100, 300, 500, 1000]}
+            tablePagination={tablePagination}
           />
         )}
       </TableContainer>

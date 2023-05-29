@@ -905,3 +905,54 @@ query getLoanAccountInterestRateDetail($id: ID!, $accountId: String!) {
     }
   }
 }
+
+query getLoanProvisionAccounts {
+  loanAccount {
+    loanProvisionAccounts {
+      goodLoan {
+        id
+        name
+        amount
+      }
+      oneTo30Days {
+        id
+        name
+        amount
+      }
+      oneTo12Months {
+        id
+        name
+        amount
+      }
+      above12Months {
+        id
+        name
+        amount
+      }
+    }
+  }
+}
+
+query loanProvisionList($paginate: Pagination, $filter: Filter) {
+  loanAccount {
+    loanProvisionList(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          date
+          conditions
+          provisionCount
+          amount
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}

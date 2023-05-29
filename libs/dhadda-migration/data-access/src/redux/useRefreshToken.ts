@@ -3,21 +3,13 @@ import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
 import axios from 'axios';
 
+import { getAPIUrl } from '@coop/shared/utils';
+
 import { logout, saveToken } from './slices/auth-slice';
 
-interface IToken {
-  access: string;
-  refresh: string;
-}
-
 interface RefreshTokenResponse {
-  data: {
-    auth: {
-      token: {
-        token: IToken;
-      };
-    };
-  };
+  access_token: string;
+  refresh_token: string;
 }
 
 // https://github.com/vercel/next.js/issues/18127#issuecomment-950907739
@@ -33,6 +25,8 @@ function useReplace() {
   return replace;
 }
 
+const schemaPath = getAPIUrl();
+
 export const useRefreshToken = (url: string) => {
   const replace = useReplace();
   const dispatch = useDispatch();
@@ -42,28 +36,16 @@ export const useRefreshToken = (url: string) => {
     // eslint-disable-next-line prefer-promise-reject-errors
     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
     return axios
-      .post<RefreshTokenResponse>(url, {
-        query: `mutation{
-            newtoken(refresh_token:"${refreshToken}"){
-              accessToken
-              refreshToken
-              name
-              email
-          }
-        }`,
+      .post<RefreshTokenResponse>(`${schemaPath}/newtoken`, {
+        refresh_token: refreshToken,
       })
       .then((res) => {
-        const tokens = res.data?.data?.auth?.token?.token;
+        const tokens = res.data;
 
         if (tokens) {
-          dispatch(
-            saveToken({
-              accessToken: tokens.access,
-              refreshToken: tokens.refresh,
-            })
-          );
+          dispatch(saveToken(tokens.access_token));
 
-          return tokens.access;
+          return tokens.access_token;
         }
         replace('/login');
         throw new Error('Credentials are Expired!!');

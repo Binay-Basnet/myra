@@ -1,0 +1,11 @@
+query getTasks {
+  neosys {
+    tasks {
+      id
+      type
+      slug
+      status
+      message
+    }
+  }
+}

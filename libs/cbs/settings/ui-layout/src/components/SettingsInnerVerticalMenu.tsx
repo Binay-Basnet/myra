@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
@@ -42,10 +41,7 @@ export const SettingsInnerVerticalMenu = ({ tablinks }: IVerticalSidebarProps) =
   const { t } = useTranslation();
   const router = useRouter();
 
-  const currentIndex = useMemo(
-    () => tablinks.findIndex((link) => router.pathname === link.to),
-    [router.pathname]
-  );
+  const currentIndex = tablinks.findIndex((link) => router.asPath === link.to);
 
   return (
     <Box>

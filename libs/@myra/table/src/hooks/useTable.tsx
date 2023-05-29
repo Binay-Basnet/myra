@@ -34,12 +34,11 @@ export const useTable = <T,>({
     enableRowSelection: true,
 
     data: data as T[],
-    columns: (isStatic
-      ? allowSelection
-        ? columnsWithRowSelection
-        : columnsWithoutRowSelection
+    columns: (allowSelection
+      ? columnsWithRowSelection
+      : isStatic
+      ? columnsWithoutRowSelection
       : columnsWithRowSelection) as ColumnDef<T>[],
-
     ...rest,
 
     getCoreRowModel: getCoreRowModel(),

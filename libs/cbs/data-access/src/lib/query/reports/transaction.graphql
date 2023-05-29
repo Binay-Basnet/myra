@@ -357,3 +357,28 @@ query getABBSTransactionReport($data: AbbsTransactionReportFilter!) {
     }
   }
 }
+query getMrTransactionReport($data: MRTransactionReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        mrTransactionReport(data: $data) {
+          data {
+            memberId
+            memberCode
+            memberName
+            mrId
+            mrName
+            transactionId
+            accountNo
+            accountName
+            typeOfTransaction
+            amount
+          }
+          error {
+            ...QueryError
+          }
+        }
+      }
+    }
+  }
+}

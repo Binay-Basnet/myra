@@ -3,19 +3,24 @@ import { featureCode, useTranslation } from '@coop/shared/utils';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
+  addIndividualError,
   FormFieldSearchTerm,
   reset,
   RootState,
+  setIndividualHasPressedNext,
   useAppDispatch,
   useAppSelector,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useGetKymFormStatusQuery,
 } from '@coop/cbs/data-access';
-import { Box, Container, FormHeader, Text } from '@myra-ui';
+import { Box, Button, FormHeader, Icon, Text, toast } from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
-import { AccorrdianAddMember } from '@coop/cbs/kym-form/formElements';
+import { AccorrdianAddMember, KYMUpdateModal } from '@coop/cbs/kym-form/formElements';
 import { ROUTES } from '@coop/cbs/utils';
+import { FormLayout } from '@coop/shared/form';
+import { useDisclosure } from '@chakra-ui/react';
+import { BiSave } from 'react-icons/bi';
 import {
   KYMBasiccoopDetails,
   KYMDeclaration,
@@ -23,7 +28,6 @@ import {
   KYMDocumentDeclaration,
   KYMEstimatedAmount,
   KYMFinancialTransactionDetails,
-  KymIndividualFooter,
   MemberKYMAddress,
   MemberKYMBasicInfo,
   MemberKYMContactDetails,
@@ -40,6 +44,8 @@ export const KYMIndividualPage = () => {
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [isMarried, setIsMarried] = useState(false);
 
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
@@ -47,8 +53,8 @@ export const KYMIndividualPage = () => {
     subSection: string;
   }>();
 
-  const kymFormStatusQuery = useGetKymFormStatusQuery({ id }, { enabled: id !== 'undefined' });
-  const kymFormStatus = kymFormStatusQuery?.data?.members?.individual?.formState?.sectionStatus;
+  // const kymFormStatusQuery = useGetKymFormStatusQuery({ id }, { enabled: id !== 'undefined' });
+  // const kymFormStatus = kymFormStatusQuery?.data?.members?.individual?.formState?.sectionStatus;
 
   const { data: editValues, refetch: refetchEdit } = useGetIndividualKymEditDataQuery(
     {
@@ -88,36 +94,36 @@ export const KYMIndividualPage = () => {
     dispatch(reset());
   }, []);
 
+  const { refetch } = useGetKymFormStatusQuery(
+    { id, hasPressedNext: true },
+    {
+      enabled: false,
+    }
+  );
+
+  const isFormDirty = useAppSelector((state) => state.individual.isFormDirty);
+
+  const action = String(router.query['action']);
+
   return (
     <>
-      {/* // Top Bar */}
+      <FormLayout hasSidebar>
+        <FormHeader
+          title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberIndiviual}`}
+          closeLink={ROUTES.CBS_MEMBER_LIST}
+        />
 
-      <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
-        <Container minW="container.xl" height="fit-content">
-          <FormHeader
-            title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberIndiviual}`}
-            closeLink={ROUTES.CBS_MEMBER_LIST}
-          />
-        </Container>
-      </Box>
+        <FormLayout.Content>
+          <FormLayout.Sidebar borderPosition="right">
+            <Box p="s16" pr="s20">
+              <AccorrdianAddMember
+                // formStatus={kymFormStatus}
+                kymCurrentSection={kymCurrentSection}
+              />
+            </Box>
+          </FormLayout.Sidebar>
 
-      <Container minW="container.xl" height="fit-content">
-        <Box>
-          <Box
-            w={320}
-            p="s16"
-            pr="s20"
-            position="fixed"
-            borderRight="1px solid"
-            borderColor="border.layout"
-            minHeight="100%"
-            bg="gray.0"
-            zIndex={2}
-          >
-            <AccorrdianAddMember formStatus={kymFormStatus} kymCurrentSection={kymCurrentSection} />
-          </Box>
-
-          <Box zIndex={1} background="gray.0" ml="320" pb="120px">
+          <FormLayout.Form>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymInd1PersonalInformation']}
@@ -160,15 +166,71 @@ export const KYMIndividualPage = () => {
             </SectionContainer>
 
             <KYMDeclarationAgree />
-          </Box>
-        </Box>
-      </Container>
+          </FormLayout.Form>
+        </FormLayout.Content>
 
-      <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">
-        <Container minW="container.xl" height="fit-content">
-          <KymIndividualFooter />
-        </Container>
-      </Box>
+        <FormLayout.Footer
+          status={
+            <Box display="flex" gap="s8">
+              <Text as="i" fontSize="r1">
+                {t['formDetails']}
+              </Text>
+            </Box>
+          }
+          draftButton={
+            <Button
+              type="submit"
+              variant="ghost"
+              onClick={() => router.push(ROUTES.CBS_MEMBER_LIST)}
+            >
+              <Icon as={BiSave} color="primary.500" />
+              <Text
+                alignSelf="center"
+                color="primary.500"
+                fontWeight="Medium"
+                fontSize="s2"
+                ml="5px"
+              >
+                {t['saveDraft']}
+              </Text>
+            </Button>
+          }
+          isMainButtonDisabled={!isFormDirty}
+          mainButtonLabel={action === 'update' ? 'Update' : t['next']}
+          mainButtonHandler={async () => {
+            if (action === 'update') {
+              onOpen();
+            } else {
+              const response = await refetch();
+              const sectionStatus =
+                response?.data?.members?.individual?.formState?.sectionStatus?.errors;
+              const basicAllErrors =
+                response?.data?.members?.individual?.formState?.sectionStatus?.errors;
+
+              if (basicAllErrors) {
+                dispatch(addIndividualError(basicAllErrors));
+              } else {
+                dispatch(addIndividualError({}));
+              }
+              if (response) {
+                dispatch(setIndividualHasPressedNext(true));
+                if (!sectionStatus) {
+                  router.push(
+                    `${ROUTES.CBS_MEMBER_TRANSLATION}/${router.query['id']}?type=individual`
+                  );
+                } else {
+                  toast({
+                    id: 'validation-error',
+                    message: 'Some fields are empty or have error',
+                    type: 'error',
+                  });
+                }
+              }
+            }
+          }}
+        />
+      </FormLayout>
+      <KYMUpdateModal isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

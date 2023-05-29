@@ -156,13 +156,7 @@ export const AccountOpenNew = () => {
     },
   });
 
-  const {
-    getValues,
-    watch,
-    reset,
-    setValue,
-    formState: { isDirty },
-  } = methods;
+  const { getValues, watch, reset, setValue } = methods;
 
   const memberId = watch('memberId');
   const redirectPath = router.query['redirect'];
@@ -532,7 +526,6 @@ export const AccountOpenNew = () => {
       <FormLayout methods={methods} hasSidebar={!!memberId}>
         <FormLayout.Header
           title={`${t['newAccountOpen']} - ${featureCode?.newSavingAccountOpen}`}
-          isFormDirty={isDirty}
         />
 
         <FormLayout.Content>

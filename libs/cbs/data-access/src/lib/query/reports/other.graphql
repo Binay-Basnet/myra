@@ -305,3 +305,16 @@ query getFDCertificatePrintReport($data: CertificatePrintFilter!) {
     }
   }
 }
+
+query getCopomisFinancialReport($data: CopomisFinancialInput!) {
+  report {
+    copomisFinancialReport(data: $data) {
+      data {
+        id
+        indicatorName
+        dr
+        cr
+      }
+    }
+  }
+}

@@ -70,7 +70,7 @@ export const InstallmentData = ({
   //   [overDueInstallments]
   // );
 
-  const payableFine = watch('discount.amount');
+  const payableFine = watch('penalty.amount');
 
   const discountedFine = Number(payableFine ?? 0);
 
@@ -82,7 +82,7 @@ export const InstallmentData = ({
     const tempCoveredInstallments: CoveredInstallment[] = [];
 
     for (let index = 0; index < remainingInstallments.length; index += 1) {
-      if (tempAmount < 0) break;
+      if (tempAmount <= 0) break;
 
       const installment = remainingInstallments[index];
 
@@ -111,7 +111,7 @@ export const InstallmentData = ({
       );
 
       if (interest && (loanType !== 'EPI' || (loanType === 'EPI' && index === 0))) {
-        if (tempAmount > interest) {
+        if (tempAmount >= interest) {
           if (existingIndex !== -1) {
             tempCoveredInstallments[existingIndex].interest = interest;
             tempCoveredInstallments[existingIndex].isInterestPartial = false;
@@ -134,7 +134,7 @@ export const InstallmentData = ({
       }
 
       if (principal) {
-        if (tempAmount > principal) {
+        if (tempAmount >= principal) {
           if (existingIndex !== -1) {
             tempCoveredInstallments[existingIndex].principal = principal;
             tempCoveredInstallments[existingIndex].isPrincipalPartial = false;

@@ -35,6 +35,13 @@ export const WarehouseListTable = () => {
           width: '40%',
         },
       },
+      {
+        header: 'Service Center Name',
+        accessorFn: (row) => row?.node?.branchName,
+        meta: {
+          width: '40%',
+        },
+      },
     ],
     [t]
   );

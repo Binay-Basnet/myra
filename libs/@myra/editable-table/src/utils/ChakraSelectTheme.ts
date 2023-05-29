@@ -50,10 +50,11 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
     ...provided,
     bg: 'white',
     px: 's8',
-    minHeight: 0,
-    height: '36px',
+    minHeight: '36px',
+    height: '100%',
     border: '0',
     borderRadius: '0',
+
     _focus: {
       bg: 'primary.100',
     },
@@ -62,6 +63,10 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
       boxShadow: 'none',
     },
   }),
+  container: (provided) => ({
+    ...provided,
+    height: '100%',
+  }),
   valueContainer: (provided, state) => ({
     ...provided,
     p: '0',
@@ -69,7 +74,8 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
 
     display: 'flex',
     alignItems: 'center',
-    height: 's36',
+    height: '100%',
+    maxW: '33ch',
     color: state.hasValue ? 'neutralColorLight.Gray-80' : 'neutralColorLight.Gray-50',
     fontSize: 'r1',
   }),

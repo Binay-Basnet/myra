@@ -88,6 +88,11 @@ export const LoanStatementReport = () => {
               {
                 header: 'Particular',
                 accessorKey: 'particular',
+                cell: (props) => (
+                  <Box whiteSpace="pre-line" my="s4">
+                    {props.getValue() as string}
+                  </Box>
+                ),
                 meta: {
                   width: '100%',
                   Footer: {
@@ -108,17 +113,17 @@ export const LoanStatementReport = () => {
                 ),
               },
 
-              {
-                header: 'Disburse Principal',
-                accessorKey: 'disbursePrinciple',
-                cell: (props) => amountConverter(props.getValue() as string),
-                meta: {
-                  isNumeric: true,
-                  Footer: {
-                    display: 'none',
-                  },
-                },
-              },
+              // {
+              //   header: 'Disburse Principal',
+              //   accessorKey: 'disbursePrinciple',
+              //   cell: (props) => amountConverter(props.getValue() as string),
+              //   meta: {
+              //     isNumeric: true,
+              //     Footer: {
+              //       display: 'none',
+              //     },
+              //   },
+              // },
 
               {
                 header: 'Paid Principal',
@@ -149,16 +154,16 @@ export const LoanStatementReport = () => {
                   isNumeric: true,
                 },
               },
-              {
-                header: 'Discount',
-                accessorKey: 'discount',
-                cell: (props) => amountConverter(props.getValue() as string),
-
-                footer: () => amountConverter(0),
-                meta: {
-                  isNumeric: true,
-                },
-              },
+              // {
+              //   header: 'Discount',
+              //   accessorKey: 'discount',
+              //   cell: (props) => amountConverter(props.getValue() as string),
+              //
+              //   footer: () => amountConverter(0),
+              //   meta: {
+              //     isNumeric: true,
+              //   },
+              // },
               {
                 header: 'Remaining Principal',
                 accessorKey: 'remainingPrinciple',

@@ -138,7 +138,7 @@ export const LoanRepayment = () => {
   };
   const handleSubmit = () => {
     const values = getValues();
-    let filteredValues = omit(values, ['isDiscountApplied']);
+    let filteredValues = omit(values, ['isFinePaid']);
 
     if (values.paymentMethod === LoanRepaymentMethod.LocSaving) {
       filteredValues = omit({ ...filteredValues }, ['account', 'bankVoucher', 'cash']);
@@ -198,10 +198,6 @@ export const LoanRepayment = () => {
 
     filteredValues = {
       ...filteredValues,
-      discount: {
-        ...filteredValues?.discount,
-        amount: String(totalFine - Number(filteredValues?.discount?.amount || 0)),
-      },
     };
 
     return filteredValues as LoanRepaymentInput;

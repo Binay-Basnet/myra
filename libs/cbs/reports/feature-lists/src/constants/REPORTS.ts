@@ -107,6 +107,7 @@ export enum Report {
   TRANSACTION_ABBS_STATUS_REPORT = 'ABBS Report',
   TRANSACTION_ABBS_TRANSACTION_REPORT = 'ABBS Transaction Report',
   TRANSACTION_CHAR_KHATA_REPORT = 'Charkhata Ledger Report',
+  TRANSACTION_MRTRANSACTION_REPORT = 'Market Representative Transaction Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -135,6 +136,7 @@ export enum Report {
   SAVING_BALANCE_REPORT = 'Saving Balance [Individual]',
   SAVING_BALANCE_MINOR_REPORT = 'Minor Saving Balance Report',
   COPOMIS_IMPORT_MEMBER_REPORT = 'Copomis Import Member Report',
+  COPOMIS_FINANCIAL_REPORT = 'Copomis Financial Report',
   PEARLS_REPORT = 'Pearls Report',
 
   EXCEPTION_SAVING_BALANCE = 'Saving Balance Exception Report',
@@ -599,6 +601,11 @@ export const REPORTS = {
       report: Report.TRANSACTION_ABBS_TRANSACTION_REPORT,
       link: 'abbs-transaction',
     },
+    {
+      id: '7.7.1',
+      report: Report.TRANSACTION_MRTRANSACTION_REPORT,
+      link: 'mr-transaction',
+    },
   ],
   [ReportGroup.BRANCHLESS_BANKING]: [
     {
@@ -649,6 +656,11 @@ export const REPORTS = {
       id: '11',
       report: Report.COPOMIS_IMPORT_MEMBER_REPORT,
       link: 'copomis-import-member',
+    },
+    {
+      id: '11.1',
+      report: Report.COPOMIS_FINANCIAL_REPORT,
+      link: 'copomis-financial',
     },
     {
       id: '12',

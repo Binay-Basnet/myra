@@ -63,9 +63,7 @@ export type FileDetails = {
 
 export type FileUpload = {
   dbName: Scalars['String'];
-  file: Scalars['Upload'];
-  fileName: Scalars['String'];
-  folder: Scalars['String'];
+  file: Array<Scalars['Upload']>;
 };
 
 export type InputCsvFileDetails = {
@@ -132,7 +130,8 @@ export type ProtectedMutation = {
   sendFileData: ExtractionResponse;
   startExtraction: ExtractionResponse;
   startTransform: ExtractionResponse;
-  uploadCSV: Scalars['Boolean'];
+  uploadCSV: ExtractionResponse;
+  uploadSingleCSV: ExtractionResponse;
 };
 
 export type ProtectedMutationGenerateReportArgs = {
@@ -153,6 +152,10 @@ export type ProtectedMutationStartTransformArgs = {
 
 export type ProtectedMutationUploadCsvArgs = {
   input?: InputMaybe<FileUpload>;
+};
+
+export type ProtectedMutationUploadSingleCsvArgs = {
+  input?: InputMaybe<SingleFileUpload>;
 };
 
 export type ProtectedQuery = {
@@ -204,6 +207,11 @@ export type ReportInput = {
   dbName: Scalars['String'];
   head?: InputMaybe<Scalars['String']>;
   title: Array<InputMaybe<Scalars['String']>>;
+};
+
+export type SingleFileUpload = {
+  dbName: Scalars['String'];
+  file?: InputMaybe<Scalars['Upload']>;
 };
 
 export type Transform = {
@@ -260,6 +268,14 @@ export type GenerateReportMutationVariables = Exact<{
 
 export type GenerateReportMutation = {
   protectedMutation: { generateReport: { status: string; data?: Array<string | null> | null } };
+};
+
+export type UploadCsvMutationVariables = Exact<{
+  input?: InputMaybe<FileUpload>;
+}>;
+
+export type UploadCsvMutation = {
+  protectedMutation: { uploadCSV: { status: string; data?: Array<string | null> | null } };
 };
 
 export type GetProjectsQueryVariables = Exact<{ [key: string]: never }>;
@@ -461,6 +477,24 @@ export const useGenerateReportMutation = <TError = unknown, TContext = unknown>(
   useMutation<GenerateReportMutation, TError, GenerateReportMutationVariables, TContext>(
     ['generateReport'],
     useAxios<GenerateReportMutation, GenerateReportMutationVariables>(GenerateReportDocument),
+    options
+  );
+export const UploadCsvDocument = `
+    mutation uploadCSV($input: FileUpload) {
+  protectedMutation {
+    uploadCSV(input: $input) {
+      status
+      data
+    }
+  }
+}
+    `;
+export const useUploadCsvMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<UploadCsvMutation, TError, UploadCsvMutationVariables, TContext>
+) =>
+  useMutation<UploadCsvMutation, TError, UploadCsvMutationVariables, TContext>(
+    ['uploadCSV'],
+    useAxios<UploadCsvMutation, UploadCsvMutationVariables>(UploadCsvDocument),
     options
   );
 export const GetProjectsDocument = `
