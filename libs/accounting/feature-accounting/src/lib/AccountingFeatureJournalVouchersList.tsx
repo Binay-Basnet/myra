@@ -57,7 +57,7 @@ export const AccountingFeatureJournalVouchersList = () => {
       },
       {
         header: 'Service Center',
-        accessorKey: 'node.branchName',
+        accessorFn: (row) => row?.node?.branchName,
       },
       {
         header: 'Amount',
