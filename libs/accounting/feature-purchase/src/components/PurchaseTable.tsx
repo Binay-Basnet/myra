@@ -1,4 +1,6 @@
 import { useMemo } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 
 import { FormSection } from '@myra-ui';
 import { Column } from '@myra-ui/editable-table';
@@ -30,7 +32,7 @@ export const PurchaseTable = () => {
   const accountSearchOptions = useMemo(
     () =>
       inventoryItemsData?.map((account) => ({
-        label: account?.node?.name as string,
+        label: `${account?.node?.name} (Rate = ${account?.node?.costPrice})`,
         value: account?.node?.id as string,
       })),
     [inventoryItemsData]
@@ -50,22 +52,30 @@ export const PurchaseTable = () => {
       })),
     [warehouseData]
   );
+  const { watch, reset } = useFormContext();
+  const itemDetails = watch('itemDetails');
 
-  // useDeepCompareEffect(() => {
-  //   const hello = 'Hello';
-  //   console.log({ hello });
-  //   if (itemDetails) {
-  //     setValue(
-  //       'itemDetails',
-  //       itemDetails?.map((entry) => ({
-  //         itemId: entry?.itemId,
-  //         quantity: entry?.quantity,
-  //         rate: inventoryItemsData?.find((t) => entry?.itemId === t?.node?.id)?.node?.name,
-  //         tax: entry?.tax,
-  //       }))
-  //     );
-  //   }
-  // }, [itemDetails]);
+  useDeepCompareEffect(() => {
+    if (itemDetails?.length) {
+      reset({
+        itemDetails: itemDetails?.map((items: PurchaseTableType) => {
+          const costPrice = inventoryItemsData?.find((item) => items?.itemId === item?.node?.id)
+            ?.node?.costPrice;
+
+          return {
+            itemId: items?.itemId,
+            quantity: items?.quantity,
+
+            rate: items?.rate || costPrice,
+            tax: items?.tax,
+            amount: items?.amount,
+            description: items?.description,
+            warehouse: items?.warehouse,
+          };
+        }),
+      });
+    }
+  }, [itemDetails, inventoryItemsData]);
   const tableColumns: Column<PurchaseTableType>[] = [
     {
       accessor: 'itemId',
@@ -81,12 +91,12 @@ export const PurchaseTable = () => {
     },
     {
       accessor: 'rate',
-      header: t['accountingPurchaseTableRate'],
-      accessorFn: (row: any) =>
-        inventoryItemsData?.find((item) => row?.itemId?.value === item?.node?.id)
-          ? (inventoryItemsData?.find((item) => row?.itemId?.value === item?.node?.id)?.node
-              ?.costPrice as string)
-          : '',
+      header: 'Purchase Rate',
+      // accessorFn: (row: any) =>
+      //   inventoryItemsData?.find((item) => row?.itemId?.value === item?.node?.id)
+      //     ? (inventoryItemsData?.find((item) => row?.itemId?.value === item?.node?.id)?.node
+      //         ?.costPrice as string)
+      //     : '',
     },
     {
       accessor: 'tax',
