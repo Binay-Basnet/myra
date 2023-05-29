@@ -12,6 +12,7 @@ export enum ReportGroup {
   BRANCH = 'Branch',
   EXCEPTION = 'Exception',
   INVENTORY = 'Inventory',
+  ACCOUNTING = 'Accounting',
 }
 
 export enum Report {
@@ -150,6 +151,8 @@ export enum Report {
   OTHERS_FD_CERTIFICATE_PRINT_REPORT = 'FD-Certificate Report',
 
   INVENTORY_REGISTER_REPORT = 'Inventory Register Report',
+
+  ACCOUNTING_EXTERNAL_LOAN_REPORT = 'External Loan Statement Report',
 }
 
 export const REPORTS = {
@@ -705,6 +708,13 @@ export const REPORTS = {
       id: '',
       report: Report.INVENTORY_REGISTER_REPORT,
       link: 'register',
+    },
+  ],
+  [ReportGroup.ACCOUNTING]: [
+    {
+      id: '',
+      report: Report.ACCOUNTING_EXTERNAL_LOAN_REPORT,
+      link: 'external-loan',
     },
   ],
 };

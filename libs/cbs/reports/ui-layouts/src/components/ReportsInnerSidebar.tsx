@@ -46,6 +46,10 @@ const REPORTS_INNER_TAB_LINKS = [
     to: '/reports/cbs/inventory',
   },
   {
+    title: 'Accounting Reports',
+    to: '/reports/cbs/accounting',
+  },
+  {
     title: 'Others Report',
     to: '/reports/cbs/others',
   },
