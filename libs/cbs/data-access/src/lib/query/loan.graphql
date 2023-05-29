@@ -572,6 +572,7 @@ query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) 
           loanProductName
           amount
           paymentDate
+          branchName
         }
         cursor
       }

@@ -151,6 +151,8 @@ export type AccountActivityEntry = {
   agentPic?: Maybe<Scalars['String']>;
   agentPicUrl?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
+  branchId: Scalars['String'];
+  branchName: Scalars['String'];
   date?: Maybe<Scalars['Localized']>;
   name?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<Scalars['String']>;
@@ -328,6 +330,8 @@ export type AccountOperatorDetailsType = {
 export type AccountTransferEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
+  branchId: Scalars['String'];
+  branchName: Scalars['String'];
   date?: Maybe<Scalars['Localized']>;
   destAccountID: Scalars['String'];
   srcAccountID: Scalars['String'];
@@ -2755,6 +2759,7 @@ export type ChartsOfAccountMutation = {
   addAccount?: Maybe<CoaAddAccountResult>;
   delete: AddChartsOfAccountResult;
   newGroup: NewCoaGroupResult;
+  updateLedgerName?: Maybe<UpdateLedgerResult>;
   updateMoneyLedger?: Maybe<MoneyLedgerResult>;
 };
 
@@ -2775,6 +2780,11 @@ export type ChartsOfAccountMutationDeleteArgs = {
 
 export type ChartsOfAccountMutationNewGroupArgs = {
   data: NewCoaGroupInput;
+};
+
+export type ChartsOfAccountMutationUpdateLedgerNameArgs = {
+  ledgerId: Scalars['ID'];
+  newName?: InputMaybe<Scalars['String']>;
 };
 
 export type ChartsOfAccountMutationUpdateMoneyLedgerArgs = {
@@ -8281,10 +8291,53 @@ export type InventoryRegistrationReportResult = {
 
 export type InventoryReport = {
   inventoryRegistrationReport?: Maybe<InventoryRegistrationReportResult>;
+  inventoryStockStatusreport?: Maybe<InventoryStockStatusReportResult>;
 };
 
 export type InventoryReportInventoryRegistrationReportArgs = {
   data?: InputMaybe<InventoryRegistrationFilter>;
+};
+
+export type InventoryReportInventoryStockStatusreportArgs = {
+  data?: InputMaybe<InventoryStockStatusFilter>;
+};
+
+export type InventoryStockStatusData = {
+  itemCode: Scalars['String'];
+  itemName: Scalars['String'];
+  netQuantity: Scalars['String'];
+  purchasedDate?: Maybe<Scalars['Localized']>;
+  purchasedQuantity: Scalars['String'];
+  soldDate?: Maybe<Scalars['Localized']>;
+  soldQuantity: Scalars['String'];
+  warehouseId: Scalars['String'];
+  warehouseName: Scalars['String'];
+};
+
+export type InventoryStockStatusDataList = {
+  lower?: Maybe<Array<Maybe<InventoryStockStatusData>>>;
+  upper?: Maybe<InventoryStockStatusTotal>;
+};
+
+export type InventoryStockStatusFilter = {
+  itemId: Array<Scalars['String']>;
+  period: Scalars['Localized'];
+  warehouseId: Array<Scalars['String']>;
+};
+
+export type InventoryStockStatusReportResult = {
+  data?: Maybe<Array<Maybe<InventoryStockStatusDataList>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type InventoryStockStatusTotal = {
+  itemCode: Scalars['String'];
+  itemName: Scalars['String'];
+  totalNet: Scalars['String'];
+  totalPurchased: Scalars['String'];
+  totalSoled: Scalars['String'];
+  warehouseId: Scalars['String'];
+  warehouseName: Scalars['String'];
 };
 
 export const InventoryTransactionType = {
@@ -10578,6 +10631,7 @@ export type LoanAccount = {
   appliedDate?: Maybe<Scalars['Localized']>;
   appliedLoanAmount: Scalars['String'];
   approvedDate?: Maybe<Scalars['Localized']>;
+  branchId?: Maybe<Scalars['String']>;
   closedDate?: Maybe<Scalars['Localized']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -12186,6 +12240,8 @@ export type LoanRepaymentConnection = {
 
 export type LoanRepaymentDetail = {
   amount: Scalars['String'];
+  branchId: Scalars['String'];
+  branchName: Scalars['String'];
   id: Scalars['String'];
   loanAccountId: Scalars['String'];
   loanAccountName: Scalars['String'];
@@ -17796,6 +17852,11 @@ export type UpdateDormancyInput = {
   blockLoanTransaction: Scalars['Boolean'];
   blockSavingTransaction: Scalars['Boolean'];
   blockShareTransaction: Scalars['Boolean'];
+};
+
+export type UpdateLedgerResult = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['ID'];
 };
 
 export type UploadedDocument = {
@@ -23638,6 +23699,7 @@ export type GetJournalVoucherListQuery = {
             reference?: string | null;
             amount?: string | null;
             note?: string | null;
+            branchName?: string | null;
           } | null;
         } | null> | null;
         pageInfo?: {
@@ -26711,6 +26773,7 @@ export type GetLoanRepaymentListQuery = {
           loanProductName: string;
           amount: string;
           paymentDate: Record<'local' | 'en' | 'np', string>;
+          branchName: string;
         } | null;
       }> | null;
       pageInfo?: {
@@ -34385,6 +34448,7 @@ export type GetDepositListDataQuery = {
           agentId?: string | null;
           profilePicUrl?: string | null;
           agentPicUrl?: string | null;
+          branchName: string;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -34418,6 +34482,7 @@ export type GetWithdrawListDataQuery = {
           processedBy?: string | null;
           date?: Record<'local' | 'en' | 'np', string> | null;
           profilePicUrl?: string | null;
+          branchName: string;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -34448,6 +34513,7 @@ export type GetAccountTransferListDataQuery = {
           state: TransactionState;
           transferType: TransferType;
           date?: Record<'local' | 'en' | 'np', string> | null;
+          branchName: string;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -43474,6 +43540,7 @@ export const GetJournalVoucherListDocument = `
             reference
             amount
             note
+            branchName
           }
           cursor
         }
@@ -47345,6 +47412,7 @@ export const GetLoanRepaymentListDocument = `
           loanProductName
           amount
           paymentDate
+          branchName
         }
         cursor
       }
@@ -57644,6 +57712,7 @@ export const GetDepositListDataDocument = `
           agentId
           profilePicUrl
           agentPicUrl
+          branchName
         }
         cursor
       }
@@ -57684,6 +57753,7 @@ export const GetWithdrawListDataDocument = `
           processedBy
           date
           profilePicUrl
+          branchName
         }
         cursor
       }
@@ -57721,6 +57791,7 @@ export const GetAccountTransferListDataDocument = `
           state
           transferType
           date
+          branchName
         }
         cursor
       }
