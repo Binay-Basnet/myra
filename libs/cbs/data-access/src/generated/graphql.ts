@@ -28743,6 +28743,42 @@ export type GetMemberPdfQueryVariables = Exact<{
 
 export type GetMemberPdfQuery = { members: { memberPDF: string } };
 
+export type GetAccountingExternalLoanStatementReportQueryVariables = Exact<{
+  data?: InputMaybe<ExternalLoanStatementReportFilter>;
+}>;
+
+export type GetAccountingExternalLoanStatementReportQuery = {
+  report: {
+    accountingReport: {
+      externalLoanStatementReport: {
+        data?: Array<{
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          particulars?: string | null;
+          transactionId?: string | null;
+          receivedPrincipal?: string | null;
+          paidPrincipal?: string | null;
+          paidInterest?: string | null;
+          paidFine?: string | null;
+          discount?: string | null;
+          remainingPrincipal?: string | null;
+        } | null> | null;
+        summary?: {
+          paidPrincipalTotal?: string | null;
+          paidInterestTotal?: string | null;
+          paidFineTotal?: string | null;
+          discountTotal?: string | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
 export type GetBranchReportQueryVariables = Exact<{
   data?: InputMaybe<BranchReportFilter>;
 }>;
@@ -50030,6 +50066,53 @@ export const useGetMemberPdfQuery = <TData = GetMemberPdfQuery, TError = unknown
       null,
       variables
     ),
+    options
+  );
+export const GetAccountingExternalLoanStatementReportDocument = `
+    query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementReportFilter) {
+  report {
+    accountingReport {
+      externalLoanStatementReport(data: $data) {
+        data {
+          date
+          particulars
+          transactionId
+          receivedPrincipal
+          paidPrincipal
+          paidInterest
+          paidFine
+          discount
+          remainingPrincipal
+        }
+        summary {
+          paidPrincipalTotal
+          paidInterestTotal
+          paidFineTotal
+          discountTotal
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetAccountingExternalLoanStatementReportQuery = <
+  TData = GetAccountingExternalLoanStatementReportQuery,
+  TError = unknown
+>(
+  variables?: GetAccountingExternalLoanStatementReportQueryVariables,
+  options?: UseQueryOptions<GetAccountingExternalLoanStatementReportQuery, TError, TData>
+) =>
+  useQuery<GetAccountingExternalLoanStatementReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountingExternalLoanStatementReport']
+      : ['getAccountingExternalLoanStatementReport', variables],
+    useAxios<
+      GetAccountingExternalLoanStatementReportQuery,
+      GetAccountingExternalLoanStatementReportQueryVariables
+    >(GetAccountingExternalLoanStatementReportDocument).bind(null, variables),
     options
   );
 export const GetBranchReportDocument = `
