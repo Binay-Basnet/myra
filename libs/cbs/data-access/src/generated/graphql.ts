@@ -702,11 +702,16 @@ export type AccountingQuery = {
 };
 
 export type AccountingReport = {
+  externalLoanReport: ExternalLoanReportResult;
   externalLoanStatementReport: ExternalLoanStatementReportResult;
 };
 
+export type AccountingReportExternalLoanReportArgs = {
+  data: ExternalLoanReportFilter;
+};
+
 export type AccountingReportExternalLoanStatementReportArgs = {
-  data?: InputMaybe<ExternalLoanStatementReportFilter>;
+  data: ExternalLoanStatementReportFilter;
 };
 
 export type AccountingSalesCreditNoteQueryResult = {
@@ -6026,6 +6031,52 @@ export type ExternalLoanQuery = {
   payment?: Maybe<ExternalLoanPaymentQuery>;
 };
 
+export type ExternalLoanReportData = {
+  date?: Maybe<Scalars['Localized']>;
+  finePaid?: Maybe<Scalars['String']>;
+  installmentFrequency?: Maybe<InstallmentFrequency>;
+  installmentType?: Maybe<LoanRepaymentScheme>;
+  interestPaidAmount?: Maybe<Scalars['String']>;
+  interestRate?: Maybe<Scalars['Float']>;
+  loanAmount?: Maybe<Scalars['String']>;
+  loanApprovedDate?: Maybe<Scalars['Localized']>;
+  loanClosedDate?: Maybe<Scalars['Localized']>;
+  loanId?: Maybe<Scalars['ID']>;
+  loanNumber?: Maybe<Scalars['String']>;
+  maturityDate?: Maybe<Scalars['Localized']>;
+  mortgage?: Maybe<MortageType>;
+  organizationBranch?: Maybe<Scalars['String']>;
+  organizationName?: Maybe<Scalars['String']>;
+  outstandingLoanAmount?: Maybe<Scalars['String']>;
+  principalPaidAmount?: Maybe<Scalars['String']>;
+  rebate?: Maybe<Scalars['String']>;
+  relatedBranch?: Maybe<Scalars['String']>;
+  remainingTenure?: Maybe<Scalars['Int']>;
+  tenure?: Maybe<Scalars['Int']>;
+  totalPaid?: Maybe<Scalars['String']>;
+};
+
+export type ExternalLoanReportFilter = {
+  branchId: Array<Scalars['String']>;
+  period: LocalizedDateFilter;
+};
+
+export type ExternalLoanReportResult = {
+  data?: Maybe<Array<Maybe<ExternalLoanReportData>>>;
+  error?: Maybe<QueryError>;
+  summary?: Maybe<ExternalLoanReportSummary>;
+};
+
+export type ExternalLoanReportSummary = {
+  totalFinePaid?: Maybe<Scalars['String']>;
+  totalInterestAmount?: Maybe<Scalars['String']>;
+  totalLoanAmount?: Maybe<Scalars['String']>;
+  totalOfTotalPaid?: Maybe<Scalars['String']>;
+  totalOutstandingLoanAmount?: Maybe<Scalars['String']>;
+  totalPrincipalAmount?: Maybe<Scalars['String']>;
+  totalRebate?: Maybe<Scalars['String']>;
+};
+
 export type ExternalLoanStatementReportData = {
   date?: Maybe<Scalars['Localized']>;
   discount?: Maybe<Scalars['String']>;
@@ -8388,6 +8439,7 @@ export type InventoryTransactionType =
   typeof InventoryTransactionType[keyof typeof InventoryTransactionType];
 export type InvestmentAccountInput = {
   address: KymAddressInput;
+  branch: Scalars['String'];
   name: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
 };
@@ -28748,7 +28800,7 @@ export type GetMemberPdfQueryVariables = Exact<{
 export type GetMemberPdfQuery = { members: { memberPDF: string } };
 
 export type GetAccountingExternalLoanStatementReportQueryVariables = Exact<{
-  data?: InputMaybe<ExternalLoanStatementReportFilter>;
+  data: ExternalLoanStatementReportFilter;
 }>;
 
 export type GetAccountingExternalLoanStatementReportQuery = {
@@ -28778,6 +28830,58 @@ export type GetAccountingExternalLoanStatementReportQuery = {
           | QueryError_NotFoundError_Fragment
           | QueryError_ServerError_Fragment
           | null;
+      };
+    };
+  };
+};
+
+export type GetAccountingExternalLoanReportQueryVariables = Exact<{
+  data: ExternalLoanReportFilter;
+}>;
+
+export type GetAccountingExternalLoanReportQuery = {
+  report: {
+    accountingReport: {
+      externalLoanReport: {
+        data?: Array<{
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          organizationName?: string | null;
+          organizationBranch?: string | null;
+          loanNumber?: string | null;
+          loanId?: string | null;
+          mortgage?: MortageType | null;
+          loanApprovedDate?: Record<'local' | 'en' | 'np', string> | null;
+          interestRate?: number | null;
+          maturityDate?: Record<'local' | 'en' | 'np', string> | null;
+          principalPaidAmount?: string | null;
+          interestPaidAmount?: string | null;
+          outstandingLoanAmount?: string | null;
+          rebate?: string | null;
+          finePaid?: string | null;
+          totalPaid?: string | null;
+          installmentType?: LoanRepaymentScheme | null;
+          installmentFrequency?: InstallmentFrequency | null;
+          tenure?: number | null;
+          remainingTenure?: number | null;
+          loanClosedDate?: Record<'local' | 'en' | 'np', string> | null;
+          relatedBranch?: string | null;
+          loanAmount?: string | null;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+        summary?: {
+          totalFinePaid?: string | null;
+          totalInterestAmount?: string | null;
+          totalLoanAmount?: string | null;
+          totalOfTotalPaid?: string | null;
+          totalOutstandingLoanAmount?: string | null;
+          totalPrincipalAmount?: string | null;
+          totalRebate?: string | null;
+        } | null;
       };
     };
   };
@@ -50075,7 +50179,7 @@ export const useGetMemberPdfQuery = <TData = GetMemberPdfQuery, TError = unknown
     options
   );
 export const GetAccountingExternalLoanStatementReportDocument = `
-    query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementReportFilter) {
+    query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementReportFilter!) {
   report {
     accountingReport {
       externalLoanStatementReport(data: $data) {
@@ -50108,17 +50212,75 @@ export const useGetAccountingExternalLoanStatementReportQuery = <
   TData = GetAccountingExternalLoanStatementReportQuery,
   TError = unknown
 >(
-  variables?: GetAccountingExternalLoanStatementReportQueryVariables,
+  variables: GetAccountingExternalLoanStatementReportQueryVariables,
   options?: UseQueryOptions<GetAccountingExternalLoanStatementReportQuery, TError, TData>
 ) =>
   useQuery<GetAccountingExternalLoanStatementReportQuery, TError, TData>(
-    variables === undefined
-      ? ['getAccountingExternalLoanStatementReport']
-      : ['getAccountingExternalLoanStatementReport', variables],
+    ['getAccountingExternalLoanStatementReport', variables],
     useAxios<
       GetAccountingExternalLoanStatementReportQuery,
       GetAccountingExternalLoanStatementReportQueryVariables
     >(GetAccountingExternalLoanStatementReportDocument).bind(null, variables),
+    options
+  );
+export const GetAccountingExternalLoanReportDocument = `
+    query getAccountingExternalLoanReport($data: ExternalLoanReportFilter!) {
+  report {
+    accountingReport {
+      externalLoanReport(data: $data) {
+        data {
+          date
+          organizationName
+          organizationBranch
+          loanNumber
+          loanId
+          mortgage
+          loanApprovedDate
+          interestRate
+          maturityDate
+          principalPaidAmount
+          interestPaidAmount
+          outstandingLoanAmount
+          rebate
+          finePaid
+          totalPaid
+          installmentType
+          installmentFrequency
+          tenure
+          remainingTenure
+          loanClosedDate
+          relatedBranch
+          loanAmount
+        }
+        error {
+          ...QueryError
+        }
+        summary {
+          totalFinePaid
+          totalInterestAmount
+          totalLoanAmount
+          totalOfTotalPaid
+          totalOutstandingLoanAmount
+          totalPrincipalAmount
+          totalRebate
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetAccountingExternalLoanReportQuery = <
+  TData = GetAccountingExternalLoanReportQuery,
+  TError = unknown
+>(
+  variables: GetAccountingExternalLoanReportQueryVariables,
+  options?: UseQueryOptions<GetAccountingExternalLoanReportQuery, TError, TData>
+) =>
+  useQuery<GetAccountingExternalLoanReportQuery, TError, TData>(
+    ['getAccountingExternalLoanReport', variables],
+    useAxios<GetAccountingExternalLoanReportQuery, GetAccountingExternalLoanReportQueryVariables>(
+      GetAccountingExternalLoanReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetBranchReportDocument = `

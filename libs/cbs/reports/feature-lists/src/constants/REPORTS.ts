@@ -152,7 +152,8 @@ export enum Report {
 
   INVENTORY_REGISTER_REPORT = 'Inventory Register Report',
 
-  ACCOUNTING_EXTERNAL_LOAN_REPORT = 'External Loan Statement Report',
+  ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT = 'External Loan Statement Report',
+  ACCOUNTING_EXTERNAL_LOAN_REPORT = 'External Loan Report',
 }
 
 export const REPORTS = {
@@ -711,6 +712,11 @@ export const REPORTS = {
     },
   ],
   [ReportGroup.ACCOUNTING]: [
+    {
+      id: '',
+      report: Report.ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT,
+      link: 'external-loan-statement',
+    },
     {
       id: '',
       report: Report.ACCOUNTING_EXTERNAL_LOAN_REPORT,
