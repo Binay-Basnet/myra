@@ -1,0 +1,28 @@
+query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementReportFilter) {
+  report {
+    accountingReport {
+      externalLoanStatementReport(data: $data) {
+        data {
+          date
+          particulars
+          transactionId
+          receivedPrincipal
+          paidPrincipal
+          paidInterest
+          paidFine
+          discount
+          remainingPrincipal
+        }
+        summary {
+          paidPrincipalTotal
+          paidInterestTotal
+          paidFineTotal
+          discountTotal
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}

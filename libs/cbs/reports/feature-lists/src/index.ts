@@ -1,4 +1,5 @@
 export * from './constants/REPORTS';
+export * from './lib/AccountingReportsList';
 export * from './lib/ATMReport';
 export * from './lib/BranchLessBankingReport';
 export * from './lib/BranchReport';
