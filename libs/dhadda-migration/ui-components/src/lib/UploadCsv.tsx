@@ -23,11 +23,13 @@ export const UploadCsv = (props: { clearErrorData: () => void }) => {
       });
       queryClient.invalidateQueries(['project-status']);
     },
-    onError: () => {
+    onError: (res: { response: { data: { message: string } } }) => {
       toast({
         id: 'upload-csv',
         type: 'error',
-        message: 'CSV upload failed',
+        message: res?.response?.data
+          ? 'Invalid file format. Only Excel files are allowed.'
+          : 'Something went wrong',
       });
     },
   });
