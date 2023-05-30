@@ -117,7 +117,7 @@ export const WithdrawPrintCard = React.forwardRef<
           number={number}
           details={{
             ...props.details,
-            slipNumber: String(Number(props.details.slipNumber + number) - 1).padStart(10, '0'),
+            slipNumber: String(Number(props.details.slipNumber) + number - 1).padStart(10, '0'),
           }}
         />
       ))}
