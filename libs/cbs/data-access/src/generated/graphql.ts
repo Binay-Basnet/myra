@@ -17228,6 +17228,8 @@ export type TellerActivityEntry = {
   srcProfilePic?: Maybe<Scalars['String']>;
   srcProfilePicUrl?: Maybe<Scalars['String']>;
   srcTeller?: Maybe<Scalars['Localized']>;
+  transactionBranchId?: Maybe<Scalars['String']>;
+  transactionBranchName?: Maybe<Scalars['String']>;
   transferCode?: Maybe<Scalars['String']>;
   transferState: TellerActivityState;
   transferType: TellerTransferType;
@@ -17255,6 +17257,8 @@ export type TellerBankTransfer = {
   amount?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   tellerName?: Maybe<Scalars['String']>;
+  transactionBranchId?: Maybe<Scalars['String']>;
+  transactionBranchName?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;
   transactionId?: Maybe<Scalars['String']>;
   transferType?: Maybe<TellerBankTransferType>;
@@ -17896,7 +17900,7 @@ export type UpdateDormancyInput = {
 
 export type UpdateLedgerResult = {
   error?: Maybe<MutationError>;
-  recordId: Scalars['ID'];
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type UploadedDocument = {
@@ -19462,7 +19466,7 @@ export type UpdateLedgerNameMutation = {
       chartsOfAccount?: {
         account?: {
           updateLedgerName?: {
-            recordId: string;
+            recordId?: string | null;
             error?:
               | MutationError_AuthorizationError_Fragment
               | MutationError_BadRequestError_Fragment
