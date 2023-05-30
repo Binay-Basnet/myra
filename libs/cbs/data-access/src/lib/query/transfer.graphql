@@ -159,6 +159,7 @@ query getBankTransferList($filter: TellerBankTransferFilter, $pagination: Pagina
             tellerName
             transferType
             amount
+            transactionBranchName
           }
           cursor
         }

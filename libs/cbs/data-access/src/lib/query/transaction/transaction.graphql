@@ -121,6 +121,7 @@ query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination
             quantity
             amount
           }
+          transactionBranchName
         }
         cursor
       }

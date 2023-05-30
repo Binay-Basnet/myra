@@ -702,12 +702,7 @@ export type AccountingQuery = {
 };
 
 export type AccountingReport = {
-  externalLoanReport: ExternalLoanReportResult;
   externalLoanStatementReport: ExternalLoanStatementReportResult;
-};
-
-export type AccountingReportExternalLoanReportArgs = {
-  data?: InputMaybe<ExternalLoanReportFilter>;
 };
 
 export type AccountingReportExternalLoanStatementReportArgs = {
@@ -6029,51 +6024,6 @@ export type ExternalLoanPaymentResult = {
 export type ExternalLoanQuery = {
   loan?: Maybe<ExternalLoanApplicationQuery>;
   payment?: Maybe<ExternalLoanPaymentQuery>;
-};
-
-export type ExternalLoanReportData = {
-  date?: Maybe<Scalars['Localized']>;
-  finePaid?: Maybe<Scalars['String']>;
-  installmentType?: Maybe<LoanRepaymentScheme>;
-  interestPaidAmount?: Maybe<Scalars['String']>;
-  interestRate?: Maybe<Scalars['Float']>;
-  interestType?: Maybe<LoanRepaymentScheme>;
-  loanAmount?: Maybe<Scalars['String']>;
-  loanClosedDate?: Maybe<Scalars['Localized']>;
-  loanId?: Maybe<Scalars['ID']>;
-  loanNumber?: Maybe<Scalars['String']>;
-  loanType?: Maybe<ExternalLoanType>;
-  maturityDate?: Maybe<Scalars['Localized']>;
-  organizationBranch?: Maybe<Scalars['String']>;
-  organizationName?: Maybe<Scalars['String']>;
-  outstandingLoanAmount?: Maybe<Scalars['String']>;
-  principalPaidAmount?: Maybe<Scalars['String']>;
-  rebate?: Maybe<Scalars['String']>;
-  receiptDate?: Maybe<Scalars['Localized']>;
-  relatedBranch?: Maybe<Scalars['String']>;
-  remainingTenure?: Maybe<Scalars['Int']>;
-  tenure?: Maybe<Scalars['Int']>;
-  totalPaid?: Maybe<Scalars['String']>;
-};
-
-export type ExternalLoanReportFilter = {
-  branchId: Array<Scalars['String']>;
-  period: LocalizedDateFilter;
-};
-
-export type ExternalLoanReportResult = {
-  data?: Maybe<Array<Maybe<ExternalLoanReportData>>>;
-  error?: Maybe<QueryError>;
-  summary?: Maybe<ExternalLoanReportSummary>;
-};
-
-export type ExternalLoanReportSummary = {
-  totalFinePaid?: Maybe<Scalars['String']>;
-  totalInterestAmount?: Maybe<Scalars['String']>;
-  totalLoanAmount?: Maybe<Scalars['String']>;
-  totalOfTotalPaid?: Maybe<Scalars['String']>;
-  totalOutstandingLoanAmount?: Maybe<Scalars['String']>;
-  totalPrincipalAmount?: Maybe<Scalars['String']>;
 };
 
 export type ExternalLoanStatementReportData = {
@@ -34721,6 +34671,7 @@ export type GetTellerTransactionListDataQuery = {
           destProfilePicUrl?: string | null;
           destBranch?: Record<'local' | 'en' | 'np', string> | null;
           srcBranch?: Record<'local' | 'en' | 'np', string> | null;
+          transactionBranchName?: string | null;
           denomination?: Array<{
             value: CashValue;
             quantity: number;
@@ -35456,6 +35407,7 @@ export type GetBankTransferListQuery = {
             tellerName?: string | null;
             transferType?: TellerBankTransferType | null;
             amount?: string | null;
+            transactionBranchName?: string | null;
           } | null;
         } | null> | null;
         pageInfo?: {
@@ -58104,6 +58056,7 @@ export const GetTellerTransactionListDataDocument = `
             quantity
             amount
           }
+          transactionBranchName
         }
         cursor
       }
@@ -59103,6 +59056,7 @@ export const GetBankTransferListDocument = `
             tellerName
             transferType
             amount
+            transactionBranchName
           }
           cursor
         }
