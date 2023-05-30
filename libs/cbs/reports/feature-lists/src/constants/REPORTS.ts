@@ -151,6 +151,7 @@ export enum Report {
   OTHERS_FD_CERTIFICATE_PRINT_REPORT = 'FD-Certificate Report',
 
   INVENTORY_REGISTER_REPORT = 'Inventory Register Report',
+  INVENTORY_STOCK_STATUS_REPORT = 'Inventory Stock Status Report',
 
   ACCOUNTING_EXTERNAL_LOAN_REPORT = 'External Loan Statement Report',
 }
@@ -708,6 +709,11 @@ export const REPORTS = {
       id: '',
       report: Report.INVENTORY_REGISTER_REPORT,
       link: 'register',
+    },
+    {
+      id: '',
+      report: Report.INVENTORY_STOCK_STATUS_REPORT,
+      link: 'stock-status',
     },
   ],
   [ReportGroup.ACCOUNTING]: [

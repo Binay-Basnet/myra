@@ -17228,6 +17228,8 @@ export type TellerActivityEntry = {
   srcProfilePic?: Maybe<Scalars['String']>;
   srcProfilePicUrl?: Maybe<Scalars['String']>;
   srcTeller?: Maybe<Scalars['Localized']>;
+  transactionBranchId?: Maybe<Scalars['String']>;
+  transactionBranchName?: Maybe<Scalars['String']>;
   transferCode?: Maybe<Scalars['String']>;
   transferState: TellerActivityState;
   transferType: TellerTransferType;
@@ -17255,6 +17257,8 @@ export type TellerBankTransfer = {
   amount?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   tellerName?: Maybe<Scalars['String']>;
+  transactionBranchId?: Maybe<Scalars['String']>;
+  transactionBranchName?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['Localized']>;
   transactionId?: Maybe<Scalars['String']>;
   transferType?: Maybe<TellerBankTransferType>;
@@ -17896,7 +17900,7 @@ export type UpdateDormancyInput = {
 
 export type UpdateLedgerResult = {
   error?: Maybe<MutationError>;
-  recordId: Scalars['ID'];
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type UploadedDocument = {
@@ -19462,7 +19466,7 @@ export type UpdateLedgerNameMutation = {
       chartsOfAccount?: {
         account?: {
           updateLedgerName?: {
-            recordId: string;
+            recordId?: string | null;
             error?:
               | MutationError_AuthorizationError_Fragment
               | MutationError_BadRequestError_Fragment
@@ -29503,6 +29507,47 @@ export type GetInventoryRegisterReportQuery = {
           totalVatAmount?: string | null;
           totalStockValueVat?: string | null;
         } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type GetInventoryStockStatusReportQueryVariables = Exact<{
+  data?: InputMaybe<InventoryStockStatusFilter>;
+}>;
+
+export type GetInventoryStockStatusReportQuery = {
+  report: {
+    inventoryReport: {
+      inventoryStockStatusreport?: {
+        data?: Array<{
+          upper?: {
+            itemCode: string;
+            itemName: string;
+            warehouseId: string;
+            warehouseName: string;
+            totalPurchased: string;
+            totalSoled: string;
+            totalNet: string;
+          } | null;
+          lower?: Array<{
+            itemCode: string;
+            itemName: string;
+            warehouseName: string;
+            warehouseId: string;
+            purchasedQuantity: string;
+            soldQuantity: string;
+            purchasedDate?: Record<'local' | 'en' | 'np', string> | null;
+            soldDate?: Record<'local' | 'en' | 'np', string> | null;
+            netQuantity: string;
+          } | null> | null;
+        } | null> | null;
         error?:
           | QueryError_AuthorizationError_Fragment
           | QueryError_BadRequestError_Fragment
@@ -51096,6 +51141,57 @@ export const useGetInventoryRegisterReportQuery = <
       : ['getInventoryRegisterReport', variables],
     useAxios<GetInventoryRegisterReportQuery, GetInventoryRegisterReportQueryVariables>(
       GetInventoryRegisterReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryStockStatusReportDocument = `
+    query getInventoryStockStatusReport($data: InventoryStockStatusFilter) {
+  report {
+    inventoryReport {
+      inventoryStockStatusreport(data: $data) {
+        data {
+          upper {
+            itemCode
+            itemName
+            warehouseId
+            warehouseName
+            totalPurchased
+            totalSoled
+            totalNet
+          }
+          lower {
+            itemCode
+            itemName
+            warehouseName
+            warehouseId
+            purchasedQuantity
+            soldQuantity
+            purchasedDate
+            soldDate
+            netQuantity
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryStockStatusReportQuery = <
+  TData = GetInventoryStockStatusReportQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryStockStatusReportQueryVariables,
+  options?: UseQueryOptions<GetInventoryStockStatusReportQuery, TError, TData>
+) =>
+  useQuery<GetInventoryStockStatusReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryStockStatusReport']
+      : ['getInventoryStockStatusReport', variables],
+    useAxios<GetInventoryStockStatusReportQuery, GetInventoryStockStatusReportQueryVariables>(
+      GetInventoryStockStatusReportDocument
     ).bind(null, variables),
     options
   );

@@ -30,3 +30,37 @@ query getInventoryRegisterReport($data: InventoryRegistrationFilter) {
     }
   }
 }
+
+query getInventoryStockStatusReport($data: InventoryStockStatusFilter) {
+  report {
+    inventoryReport {
+      inventoryStockStatusreport(data: $data) {
+        data {
+          upper {
+            itemCode
+            itemName
+            warehouseId
+            warehouseName
+            totalPurchased
+            totalSoled
+            totalNet
+          }
+          lower {
+            itemCode
+            itemName
+            warehouseName
+            warehouseId
+            purchasedQuantity
+            soldQuantity
+            purchasedDate
+            soldDate
+            netQuantity
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
