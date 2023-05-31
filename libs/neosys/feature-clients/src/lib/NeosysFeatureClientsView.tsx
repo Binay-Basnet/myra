@@ -278,7 +278,12 @@ export const NeosysFeatureClientView = () => {
         <FormProvider {...updateEnvironmentMethods}>
           <form onSubmit={updateEnvHandleSubmit(onSubmitEnvUpdate)}>
             <Box display="flex" flexDir="column" gap={5}>
-              <FormSelect name="version" label="Select Versions" options={versionOption} />
+              <FormSelect
+                name="version"
+                label="Select Versions"
+                options={versionOption}
+                menuPosition="fixed"
+              />
 
               <Button type="submit" w="-webkit-fit-content">
                 Submit
