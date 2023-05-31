@@ -26,3 +26,49 @@ query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementRepor
     }
   }
 }
+
+
+query getAccountingExternalLoanReport($data: ExternalLoanReportFilter!){
+  report {
+    accountingReport {
+      externalLoanReport(data: $data){
+        data {
+          date
+          organizationName
+          organizationBranch
+          loanNumber
+          loanId
+          mortgage
+          loanApprovedDate
+          interestRate
+          maturityDate
+          principalPaidAmount
+          interestPaidAmount
+          outstandingLoanAmount
+          rebate
+          finePaid
+          totalPaid
+          installmentType
+          installmentFrequency
+          tenure
+          remainingTenure
+          loanClosedDate
+          relatedBranch
+          loanAmount
+        }
+        error {
+          ...QueryError
+        }
+        summary {
+          totalFinePaid
+          totalInterestAmount
+          totalLoanAmount
+          totalOfTotalPaid
+          totalOutstandingLoanAmount
+          totalPrincipalAmount
+          totalRebate
+        }
+      }
+    }
+  }
+}

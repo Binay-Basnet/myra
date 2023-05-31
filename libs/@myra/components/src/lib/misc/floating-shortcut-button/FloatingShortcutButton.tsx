@@ -31,22 +31,26 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Loan Write Off',
-      'Loan Loss Provision',
-      'Settings: Copomis Report Configuration',
-      'Settings: Pearls Report Configuration',
-      'Copomis Report',
-      'Pearls Report',
+      'inventory stock report',
+      'external loan statement report',
+      'external loan report',
+      'Edit ledger accounting',
+      'branch filter added in loan account list',
+      'Add loan write list page',
+      'Add bulk transfer list',
+      'Branch name field added in accounting organization',
     ],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'updated interest posting narration',
-      'interest posting fix',
-      'installment date  fix',
-      'service center name in JV overview page',
-      'MR user create issue fix',
+      'Mr. transactions roles and permission updated for MR.',
+      'Select/Remove issue in the member assigned.',
+      'Inactive saving account are removed from search filter of MR list',
+      'ledger select issue in report section of settings.',
+      'withdraw slip print issue.',
+      'Loan repay, disbursed loan, closed account revert transactions removed',
+      'MR transactions checkbox fixes removed',
     ],
   },
   // knownBugs: {
@@ -99,8 +103,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.64</Text>
-          <Text fontSize="s3">May 24, 2023</Text>
+          <Text fontSize="r2">Version 1.0.65</Text>
+          <Text fontSize="s3">May 31, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

@@ -8414,6 +8414,7 @@ export type InventoryRegistrationReportResult = {
 export type InventoryReport = {
   inventoryRegistrationReport?: Maybe<InventoryRegistrationReportResult>;
   inventoryStockStatusreport?: Maybe<InventoryStockStatusReportResult>;
+  newinventoryStockStatusreport?: Maybe<InventoryStockStatusReportResult>;
 };
 
 export type InventoryReportInventoryRegistrationReportArgs = {
@@ -8424,16 +8425,20 @@ export type InventoryReportInventoryStockStatusreportArgs = {
   data?: InputMaybe<InventoryStockStatusFilter>;
 };
 
+export type InventoryReportNewinventoryStockStatusreportArgs = {
+  data?: InputMaybe<InventoryStockStatusFilter>;
+};
+
 export type InventoryStockStatusData = {
-  itemCode: Scalars['String'];
-  itemName: Scalars['String'];
+  lowerItemCode: Scalars['String'];
+  lowerItemName: Scalars['String'];
+  lowerWarehouseId: Scalars['String'];
+  lowerWarehouseName: Scalars['String'];
   netQuantity: Scalars['String'];
   purchasedDate?: Maybe<Scalars['Localized']>;
   purchasedQuantity: Scalars['String'];
   soldDate?: Maybe<Scalars['Localized']>;
   soldQuantity: Scalars['String'];
-  warehouseId: Scalars['String'];
-  warehouseName: Scalars['String'];
 };
 
 export type InventoryStockStatusDataList = {
@@ -28875,6 +28880,58 @@ export type GetAccountingExternalLoanStatementReportQuery = {
   };
 };
 
+export type GetAccountingExternalLoanReportQueryVariables = Exact<{
+  data: ExternalLoanReportFilter;
+}>;
+
+export type GetAccountingExternalLoanReportQuery = {
+  report: {
+    accountingReport: {
+      externalLoanReport: {
+        data?: Array<{
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          organizationName?: string | null;
+          organizationBranch?: string | null;
+          loanNumber?: string | null;
+          loanId?: string | null;
+          mortgage?: MortageType | null;
+          loanApprovedDate?: Record<'local' | 'en' | 'np', string> | null;
+          interestRate?: number | null;
+          maturityDate?: Record<'local' | 'en' | 'np', string> | null;
+          principalPaidAmount?: string | null;
+          interestPaidAmount?: string | null;
+          outstandingLoanAmount?: string | null;
+          rebate?: string | null;
+          finePaid?: string | null;
+          totalPaid?: string | null;
+          installmentType?: LoanRepaymentScheme | null;
+          installmentFrequency?: InstallmentFrequency | null;
+          tenure?: number | null;
+          remainingTenure?: number | null;
+          loanClosedDate?: Record<'local' | 'en' | 'np', string> | null;
+          relatedBranch?: string | null;
+          loanAmount?: string | null;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+        summary?: {
+          totalFinePaid?: string | null;
+          totalInterestAmount?: string | null;
+          totalLoanAmount?: string | null;
+          totalOfTotalPaid?: string | null;
+          totalOutstandingLoanAmount?: string | null;
+          totalPrincipalAmount?: string | null;
+          totalRebate?: string | null;
+        } | null;
+      };
+    };
+  };
+};
+
 export type GetBranchReportQueryVariables = Exact<{
   data?: InputMaybe<BranchReportFilter>;
 }>;
@@ -29599,6 +29656,47 @@ export type GetInventoryRegisterReportQuery = {
           totalVatAmount?: string | null;
           totalStockValueVat?: string | null;
         } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type GetInventoryStockStatusReportQueryVariables = Exact<{
+  data?: InputMaybe<InventoryStockStatusFilter>;
+}>;
+
+export type GetInventoryStockStatusReportQuery = {
+  report: {
+    inventoryReport: {
+      newinventoryStockStatusreport?: {
+        data?: Array<{
+          upper?: {
+            itemCode: string;
+            itemName: string;
+            warehouseId: string;
+            warehouseName: string;
+            totalPurchased: string;
+            totalSoled: string;
+            totalNet: string;
+          } | null;
+          lower?: Array<{
+            lowerItemCode: string;
+            lowerItemName: string;
+            lowerWarehouseName: string;
+            lowerWarehouseId: string;
+            purchasedQuantity: string;
+            soldQuantity: string;
+            purchasedDate?: Record<'local' | 'en' | 'np', string> | null;
+            soldDate?: Record<'local' | 'en' | 'np', string> | null;
+            netQuantity: string;
+          } | null> | null;
+        } | null> | null;
         error?:
           | QueryError_AuthorizationError_Fragment
           | QueryError_BadRequestError_Fragment
@@ -34763,6 +34861,7 @@ export type GetTellerTransactionListDataQuery = {
           destProfilePicUrl?: string | null;
           destBranch?: Record<'local' | 'en' | 'np', string> | null;
           srcBranch?: Record<'local' | 'en' | 'np', string> | null;
+          transactionBranchName?: string | null;
           denomination?: Array<{
             value: CashValue;
             quantity: number;
@@ -35498,6 +35597,7 @@ export type GetBankTransferListQuery = {
             tellerName?: string | null;
             transferType?: TellerBankTransferType | null;
             amount?: string | null;
+            transactionBranchName?: string | null;
           } | null;
         } | null> | null;
         pageInfo?: {
@@ -50209,6 +50309,66 @@ export const useGetAccountingExternalLoanStatementReportQuery = <
     >(GetAccountingExternalLoanStatementReportDocument).bind(null, variables),
     options
   );
+export const GetAccountingExternalLoanReportDocument = `
+    query getAccountingExternalLoanReport($data: ExternalLoanReportFilter!) {
+  report {
+    accountingReport {
+      externalLoanReport(data: $data) {
+        data {
+          date
+          organizationName
+          organizationBranch
+          loanNumber
+          loanId
+          mortgage
+          loanApprovedDate
+          interestRate
+          maturityDate
+          principalPaidAmount
+          interestPaidAmount
+          outstandingLoanAmount
+          rebate
+          finePaid
+          totalPaid
+          installmentType
+          installmentFrequency
+          tenure
+          remainingTenure
+          loanClosedDate
+          relatedBranch
+          loanAmount
+        }
+        error {
+          ...QueryError
+        }
+        summary {
+          totalFinePaid
+          totalInterestAmount
+          totalLoanAmount
+          totalOfTotalPaid
+          totalOutstandingLoanAmount
+          totalPrincipalAmount
+          totalRebate
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetAccountingExternalLoanReportQuery = <
+  TData = GetAccountingExternalLoanReportQuery,
+  TError = unknown
+>(
+  variables: GetAccountingExternalLoanReportQueryVariables,
+  options?: UseQueryOptions<GetAccountingExternalLoanReportQuery, TError, TData>
+) =>
+  useQuery<GetAccountingExternalLoanReportQuery, TError, TData>(
+    ['getAccountingExternalLoanReport', variables],
+    useAxios<GetAccountingExternalLoanReportQuery, GetAccountingExternalLoanReportQueryVariables>(
+      GetAccountingExternalLoanReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetBranchReportDocument = `
     query getBranchReport($data: BranchReportFilter) {
   report {
@@ -51190,6 +51350,57 @@ export const useGetInventoryRegisterReportQuery = <
       : ['getInventoryRegisterReport', variables],
     useAxios<GetInventoryRegisterReportQuery, GetInventoryRegisterReportQueryVariables>(
       GetInventoryRegisterReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryStockStatusReportDocument = `
+    query getInventoryStockStatusReport($data: InventoryStockStatusFilter) {
+  report {
+    inventoryReport {
+      newinventoryStockStatusreport(data: $data) {
+        data {
+          upper {
+            itemCode
+            itemName
+            warehouseId
+            warehouseName
+            totalPurchased
+            totalSoled
+            totalNet
+          }
+          lower {
+            lowerItemCode
+            lowerItemName
+            lowerWarehouseName
+            lowerWarehouseId
+            purchasedQuantity
+            soldQuantity
+            purchasedDate
+            soldDate
+            netQuantity
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryStockStatusReportQuery = <
+  TData = GetInventoryStockStatusReportQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryStockStatusReportQueryVariables,
+  options?: UseQueryOptions<GetInventoryStockStatusReportQuery, TError, TData>
+) =>
+  useQuery<GetInventoryStockStatusReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryStockStatusReport']
+      : ['getInventoryStockStatusReport', variables],
+    useAxios<GetInventoryStockStatusReportQuery, GetInventoryStockStatusReportQueryVariables>(
+      GetInventoryStockStatusReportDocument
     ).bind(null, variables),
     options
   );
@@ -58144,6 +58355,7 @@ export const GetTellerTransactionListDataDocument = `
             quantity
             amount
           }
+          transactionBranchName
         }
         cursor
       }
@@ -59143,6 +59355,7 @@ export const GetBankTransferListDocument = `
             tellerName
             transferType
             amount
+            transactionBranchName
           }
           cursor
         }

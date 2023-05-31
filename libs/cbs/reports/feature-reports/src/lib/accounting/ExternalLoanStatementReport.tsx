@@ -59,7 +59,7 @@ export const ExternalLoanStatementReport = () => {
             { label: 'Accounting Reports', link: '/reports/cbs/accounting' },
             {
               label: 'External Loan Statement Report',
-              link: '/reports/cbs/accounting/external-loan/new',
+              link: '/reports/cbs/accounting/external-loan-statement/new',
             },
           ]}
         />
