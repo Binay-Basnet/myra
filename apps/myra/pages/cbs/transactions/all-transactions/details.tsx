@@ -1,4 +1,5 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useRef, useState } from 'react';
+import { useReactToPrint } from 'react-to-print';
 import { useRouter } from 'next/router';
 
 import { Box, Button, DetailPageHeader, MainLayout, Modal, Text, toast } from '@myra-ui';
@@ -16,15 +17,22 @@ const DepositDetailsPage = () => {
   };
   const { mutateAsync } = useRevertTransactionMutation();
 
+  const printRef = useRef<HTMLInputElement | null>(null);
+
+  const handlePrintVoucher = useReactToPrint({
+    content: () => printRef.current,
+  });
+
   return (
     <>
       <DetailPageHeader
         title="Transaction List"
         options={[
           { label: 'Revert Transaction', handler: () => setIsRevertTransactionModalOpen(true) },
+          { label: 'Print', handler: handlePrintVoucher },
         ]}
       />
-      <AllTransactionDetailPage />
+      <AllTransactionDetailPage printRef={printRef} />
       <Modal
         open={isRevertTransactionModalOpen}
         onClose={handleRevertTransactionModalClose}

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { DetailsCard, Text, Tooltip } from '@myra-ui';
+import { Box, DetailsCard, Text, Tooltip } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { BalanceType } from '@coop/cbs/data-access';
@@ -51,14 +51,36 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
         cell: (props) => {
           const accountId = props.getValue() as string;
           return (
-            <RedirectButton
-              link={`${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${props?.row?.original?.ledgerId}`}
-              label={<Tooltip title={accountId} />}
-            />
+            <>
+              <Box
+                sx={{
+                  '@media print': {
+                    display: 'none',
+                  },
+                }}
+              >
+                <RedirectButton
+                  link={`${ROUTES.CBS_TRANS_ALL_LEDGERS_DETAIL}?id=${props?.row?.original?.ledgerId}`}
+                  label={<Tooltip title={accountId} />}
+                />
+              </Box>
+              <Box
+                whiteSpace="pre-line"
+                my="s4"
+                display="none"
+                sx={{
+                  '@media print': {
+                    display: 'flex',
+                  },
+                }}
+              >
+                <Text>{accountId}</Text>
+              </Box>
+            </>
           );
         },
         meta: {
-          width: '50%',
+          width: '150px',
         },
       },
       {
@@ -66,6 +88,9 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
         id: 'serviceCenterName',
 
         accessorFn: (row) => row?.serviceCenter,
+        meta: {
+          // width: '5%',
+        },
       },
       {
         header: t['transDetailDebit'],
@@ -75,6 +100,7 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
         accessorFn: (row) => amountConverter(row?.debit ?? 0),
         meta: {
           isNumeric: true,
+          // width: '5%',
         },
       },
       {
@@ -85,14 +111,20 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
         accessorFn: (row) => amountConverter(row?.credit ?? 0),
         meta: {
           isNumeric: true,
+          // width: '5%',
         },
       },
       {
         header: 'Balance',
         id: 'balance',
-        accessorFn: (row) => amountConverter(row?.balance ?? 0),
+        cell: (props) => (
+          <Box whiteSpace="pre-line" my="s4">
+            {amountConverter(props?.row?.original?.balance ?? 0)}
+          </Box>
+        ),
         meta: {
           isNumeric: true,
+          // width: '5%',
         },
       },
       {
@@ -103,6 +135,9 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
             {getTypeProps(props?.row?.original?.balanceType)?.text}
           </Text>
         ),
+        meta: {
+          width: '10px',
+        },
       },
     ],
     [totalDebit, totalCredit]

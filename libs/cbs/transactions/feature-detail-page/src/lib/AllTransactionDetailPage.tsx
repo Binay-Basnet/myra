@@ -1,3 +1,4 @@
+import { MutableRefObject } from 'react';
 import { useRouter } from 'next/router';
 
 import { Box, DetailCardContent, DetailsCard, Text } from '@myra-ui';
@@ -6,7 +7,7 @@ import { AllTransactionType, useGetAllTransactionsDetailQuery } from '@coop/cbs/
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
-import { GlTransaction, Note } from '../component';
+import { AllTransactionDetailPagePrint, GlTransaction, Note } from '../component';
 
 const ROUTESOBJTRANS: Partial<Record<AllTransactionType, string>> = {
   [AllTransactionType.Deposit]: ROUTES.CBS_TRANS_DEPOSIT_DETAILS,
@@ -18,7 +19,11 @@ const ROUTESOBJTRANS: Partial<Record<AllTransactionType, string>> = {
 
 const objKeys = Object.keys(ROUTESOBJTRANS);
 
-export const AllTransactionDetailPage = () => {
+export const AllTransactionDetailPage = ({
+  printRef,
+}: {
+  printRef: MutableRefObject<HTMLInputElement>;
+}) => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -32,68 +37,72 @@ export const AllTransactionDetailPage = () => {
   const tableData = allTransactionsData?.glTransaction;
 
   return (
-    <Box bg="gray.100" minH="calc(100vh - 110px)">
-      {/* <TransactionDetails detailPage="deposit" />
+    <>
+      <Box bg="gray.100" minH="calc(100vh - 110px)">
+        {/* <TransactionDetails detailPage="deposit" />
         <PaymentDetails detailPage="deposit" />
         <OtherDetails
           branch={depositDetailData?.transactionBranch as string}
           teller={depositDetailData?.teller as string}
         /> */}
 
-      <Box p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
-        <Text color="gray.800" fontWeight="SemiBold" fontSize="r3">
-          {t['transDetailOverview']}
-        </Text>
-        <DetailsCard title={t['transDetailTransactionDetails']} hasThreeRows>
-          {!objKeys.includes(allTransactionsData?.txnType as string) && (
+        <Box p="s16" display="flex" flexDir="column" minH="100vh" gap="s16">
+          <Text color="gray.800" fontWeight="SemiBold" fontSize="r3">
+            {t['transDetailOverview']}
+          </Text>
+          <DetailsCard title={t['transDetailTransactionDetails']} hasThreeRows>
+            {!objKeys.includes(allTransactionsData?.txnType as string) && (
+              <DetailCardContent
+                title={t['transDetailTransactionID']}
+                subtitle={`#${allTransactionsData?.id}`}
+              />
+            )}
+            {allTransactionsData?.txnType && objKeys.includes(allTransactionsData?.txnType) && (
+              <DetailCardContent
+                title={t['transDetailTransactionID']}
+                subtitle={
+                  <RedirectButton
+                    label={allTransactionsData?.id}
+                    link={`${ROUTESOBJTRANS[allTransactionsData?.txnType]}?id=${
+                      allTransactionsData?.id
+                    }`}
+                  />
+                }
+              />
+            )}
+
             <DetailCardContent
-              title={t['transDetailTransactionID']}
-              subtitle={`#${allTransactionsData?.id}`}
+              title="Transaction Date"
+              subtitle={localizedDate(allTransactionsData?.transactionDate)}
             />
-          )}
-          {allTransactionsData?.txnType && objKeys.includes(allTransactionsData?.txnType) && (
             <DetailCardContent
-              title={t['transDetailTransactionID']}
-              subtitle={
-                <RedirectButton
-                  label={allTransactionsData?.id}
-                  link={`${ROUTESOBJTRANS[allTransactionsData?.txnType]}?id=${
-                    allTransactionsData?.id
-                  }`}
-                />
-              }
+              title="Transaction Type"
+              subtitle={allTransactionsData?.txnType?.replace(/_/g, ' ')}
             />
-          )}
+            <DetailCardContent
+              title="Transaction Mode"
+              subtitle={allTransactionsData?.transactionMode}
+            />
+            <DetailCardContent
+              title="Transaction Amount"
+              subtitle={amountConverter(allTransactionsData?.amount ?? 0)}
+            />
+            <DetailCardContent title="Transaction Branch" subtitle={allTransactionsData?.branch} />
+            <DetailCardContent title="User" subtitle={allTransactionsData?.user} />
+            <DetailCardContent title={t['transDetailStatus']} status />
+          </DetailsCard>
 
-          <DetailCardContent
-            title="Transaction Date"
-            subtitle={localizedDate(allTransactionsData?.transactionDate)}
-          />
-          <DetailCardContent
-            title="Transaction Type"
-            subtitle={allTransactionsData?.txnType?.replace(/_/g, ' ')}
-          />
-          <DetailCardContent
-            title="Transaction Mode"
-            subtitle={allTransactionsData?.transactionMode}
-          />
-          <DetailCardContent
-            title="Transaction Amount"
-            subtitle={amountConverter(allTransactionsData?.amount ?? 0)}
-          />
-          <DetailCardContent title="Transaction Branch" subtitle={allTransactionsData?.branch} />
-          <DetailCardContent title="User" subtitle={allTransactionsData?.user} />
-          <DetailCardContent title={t['transDetailStatus']} status />
-        </DetailsCard>
+          {allTransactionsData?.note && <Note note={allTransactionsData?.note} />}
 
-        {allTransactionsData?.note && <Note note={allTransactionsData?.note} />}
-
-        <GlTransaction
-          totalDebit={String(amountConverter(allTransactionsData?.totalDebit ?? 0))}
-          totalCredit={String(amountConverter(allTransactionsData?.totalCredit ?? 0))}
-          data={tableData ?? []}
-        />
+          <GlTransaction
+            totalDebit={String(amountConverter(allTransactionsData?.totalDebit ?? 0))}
+            totalCredit={String(amountConverter(allTransactionsData?.totalCredit ?? 0))}
+            data={tableData ?? []}
+          />
+        </Box>
       </Box>
-    </Box>
+
+      <AllTransactionDetailPagePrint printRef={printRef} />
+    </>
   );
 };
