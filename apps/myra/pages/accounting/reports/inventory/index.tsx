@@ -4,13 +4,13 @@ import { MainLayout } from '@myra-ui';
 
 import { AccountingReportsLayout } from '@coop/accounting/ui-layouts';
 import { ReportsAccountingLayout } from '@coop/cbs/reports/layout';
-import { TransactionReportList } from '@coop/cbs/reports/list';
+import { InventoryReportList } from '@coop/cbs/reports/list';
 
-const LoanReports = () => (
-  <TransactionReportList reportParentLink="/accounting/reports/transactions" />
+const InventoryReports = () => (
+  <InventoryReportList reportParentLink="/accounting/reports/inventory" />
 );
 
-LoanReports.getLayout = function getLayout(page: ReactElement) {
+InventoryReports.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
       <AccountingReportsLayout>
@@ -19,4 +19,4 @@ LoanReports.getLayout = function getLayout(page: ReactElement) {
     </MainLayout>
   );
 };
-export default LoanReports;
+export default InventoryReports;
