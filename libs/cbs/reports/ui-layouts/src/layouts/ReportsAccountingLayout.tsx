@@ -29,20 +29,26 @@ export const ReportsAccountingLayout = ({ children }: ReportsCbsLayoutProps) => 
           w="250px"
           px="s8"
           position="fixed"
-          py="s16"
+          py="s40"
           borderRight="1px"
           borderRightColor="border.layout"
           minHeight="100vh"
           bg="white"
         >
-          <ReportsInnerSidebar
-            tabs={[
-              {
-                title: 'Transaction Report',
-                to: '/accounting/reports/transactions',
-              },
-            ]}
-          />
+          <Box pt="s16">
+            <ReportsInnerSidebar
+              tabs={[
+                {
+                  title: 'Transaction Report',
+                  to: '/accounting/reports/transactions',
+                },
+                {
+                  title: 'Inventory Report',
+                  to: '/accounting/reports/inventory',
+                },
+              ]}
+            />
+          </Box>
         </Box>
       )}
 

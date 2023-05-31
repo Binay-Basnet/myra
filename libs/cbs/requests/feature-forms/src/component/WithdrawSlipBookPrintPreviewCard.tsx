@@ -56,7 +56,7 @@ export const WithdrawSlipBookPrintPreviewCard = ({
     }}
   >
     <Text
-      fontSize="s3"
+      fontSize="r1"
       fontWeight={500}
       color="black"
       position="absolute"
@@ -74,19 +74,19 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       flexDirection="column"
       gap="s4"
     >
-      <Text fontSize="s3" fontWeight={500} color="black" fontFamily="Times New Roman">
+      <Text fontSize="r1" fontWeight={500} color="black" fontFamily="Times New Roman">
         {details?.memberName}
       </Text>
-      <Text fontSize="s3" fontWeight={500} color="black" fontFamily="Times New Roman">
+      <Text fontSize="r1" fontWeight={500} color="black" fontFamily="Times New Roman">
         {details?.accountNumber}
       </Text>
-      <Text fontSize="s3" fontWeight={500} color="black" fontFamily="Times New Roman">
+      <Text fontSize="r1" fontWeight={500} color="black" fontFamily="Times New Roman">
         {details?.accountName}
       </Text>
     </Box>
 
     <Text
-      fontSize="s3"
+      fontSize="r1"
       fontWeight={500}
       color="black"
       position="absolute"

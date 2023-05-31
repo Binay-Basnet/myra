@@ -16,7 +16,7 @@ import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { localizedDate } from '@coop/cbs/utils';
 import { FormDatePicker, FormSelect } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, useIsCbs } from '@coop/shared/utils';
 
 type LoanGuranteeData = Partial<{
   itemCode: string;
@@ -42,6 +42,8 @@ type ReportFilter = Omit<InventoryStockStatusFilter, 'warehouseId' | 'itemId'> &
 
 export const InventoryStockStatusReport = () => {
   const [filters, setFilters] = useState<ReportFilter | null>(null);
+  const { isCbs } = useIsCbs();
+
   const wareHouseIds =
     filters?.warehouseId && filters?.warehouseId.length !== 0
       ? filters?.warehouseId?.map((t) => t.value)
@@ -110,10 +112,15 @@ export const InventoryStockStatusReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Inventory Reports', link: '/reports/cbs/inventory' },
             {
-              label: 'Inventory Stock Status Report',
-              link: '/reports/cbs/inventory/stock-status/new',
+              label: 'Inventory Reports',
+              link: isCbs ? '/reports/cbs/inventory' : '/accounting/reports/inventory',
+            },
+            {
+              label: 'Inventory Register Report',
+              link: isCbs
+                ? '/reports/cbs/inventory/stock-status/new'
+                : '/accounting/reports/inventory/stock-status/new',
             },
           ]}
         />
