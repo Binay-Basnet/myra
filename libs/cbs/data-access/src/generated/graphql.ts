@@ -718,6 +718,7 @@ export type AccountingQuery = {
 export type AccountingReport = {
   externalLoanReport: ExternalLoanReportResult;
   externalLoanStatementReport: ExternalLoanStatementReportResult;
+  fdInvestmentStatementReport: FdInvestmentStatementReportResult;
 };
 
 
@@ -728,6 +729,11 @@ export type AccountingReportExternalLoanReportArgs = {
 
 export type AccountingReportExternalLoanStatementReportArgs = {
   data: ExternalLoanStatementReportFilter;
+};
+
+
+export type AccountingReportFdInvestmentStatementReportArgs = {
+  data: FdInvestmentStatementReportFilter;
 };
 
 export type AccountingSalesCreditNoteQueryResult = {
@@ -6342,6 +6348,34 @@ export type FdInvestmentInput = {
   rate: Scalars['Float'];
   startDate: Scalars['Localized'];
   type: FdInvestmentType;
+};
+
+export type FdInvestmentStatementReportData = {
+  chequeNo?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  fdAmount?: Maybe<Scalars['String']>;
+  interestReceived?: Maybe<Scalars['String']>;
+  particular?: Maybe<Scalars['String']>;
+  tds?: Maybe<Scalars['String']>;
+};
+
+export type FdInvestmentStatementReportFilter = {
+  accountId: Scalars['String'];
+  branchId: Array<Scalars['String']>;
+  period: LocalizedDateFilter;
+};
+
+export type FdInvestmentStatementReportResult = {
+  data?: Maybe<Array<Maybe<FdInvestmentStatementReportData>>>;
+  error?: Maybe<QueryError>;
+  summary?: Maybe<FdInvestmentStatementReportSummary>;
+};
+
+export type FdInvestmentStatementReportSummary = {
+  fdAmountTotal?: Maybe<Scalars['String']>;
+  interestReceivedTotal?: Maybe<Scalars['String']>;
+  openingBalance?: Maybe<Scalars['String']>;
+  tdsTotal?: Maybe<Scalars['String']>;
 };
 
 export const FdInvestmentType = {

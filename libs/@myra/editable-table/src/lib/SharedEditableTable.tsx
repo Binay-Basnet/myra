@@ -320,7 +320,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
             // };
             acc = {
               ...acc,
-              [key]: value,
+              [key]: typeof value !== 'object' ? value : 'value' in value && value.value,
             };
 
             return acc;
