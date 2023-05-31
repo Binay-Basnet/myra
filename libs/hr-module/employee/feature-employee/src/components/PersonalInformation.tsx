@@ -7,7 +7,8 @@ import { localizedText } from '@coop/cbs/utils';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
-export const PersonalInformation = () => {
+export const PersonalInformation = (props) => {
+  const { setCurrentSection } = props;
   const { t } = useTranslation();
 
   const { data: genderFields, isLoading: genderLoading } = useGetIndividualKymOptionsQuery({
