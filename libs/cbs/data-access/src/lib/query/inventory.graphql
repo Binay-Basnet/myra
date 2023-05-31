@@ -87,7 +87,7 @@ query getUnitsList($filter: InvUnitOfMeasureDataFilter, $pagination: Pagination)
   }
 }
 
-query getWarehouseList($paginate: Pagination!, $filter: WarehouseFilter) {
+query getWarehouseList($paginate: Pagination!, $filter: Filter) {
   inventory {
     warehouse {
       listWarehouses(paginate: $paginate, filter: $filter) {
@@ -98,6 +98,8 @@ query getWarehouseList($paginate: Pagination!, $filter: WarehouseFilter) {
             name
             phoneNumber
             address
+            branchId
+            branchName
           }
           cursor
         }

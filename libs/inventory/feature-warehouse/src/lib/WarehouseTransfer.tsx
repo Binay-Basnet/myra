@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 
 import { asyncToast } from '@myra-ui';
 
@@ -21,11 +22,14 @@ export const WarehouseTransfer = () => {
     const values = methods.getValues();
     const transferType = { transferType: WarehouseTransferType?.Direct };
     const fullValues = { ...values, ...transferType };
+    const filteredValues = {
+      ...omit({ ...fullValues }, ['branchId']),
+    };
     asyncToast({
       id: 'account-open-add-minor',
       promise: AddItems({
         data: {
-          ...fullValues,
+          ...filteredValues,
         },
       }),
       msgs: {

@@ -49,11 +49,7 @@ export const BulkTransferAdd = () => {
     defaultValues: { bulkTransferType: 'ONE_TO_MANY' },
   });
 
-  const {
-    watch,
-    getValues,
-    formState: { isDirty },
-  } = methods;
+  const { watch, getValues } = methods;
 
   const bulkTransferType = watch('bulkTransferType');
 
@@ -121,7 +117,7 @@ export const BulkTransferAdd = () => {
 
   return (
     <FormLayout methods={methods}>
-      <FormLayout.Header title="Bulk Transfer" isFormDirty={isDirty} />
+      <FormLayout.Header title="Bulk Transfer" />
 
       <FormLayout.Content>
         <FormLayout.Form>

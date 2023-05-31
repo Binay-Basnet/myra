@@ -23,10 +23,7 @@ export const NewShareDividendPosting = () => {
     },
   });
 
-  const {
-    watch,
-    formState: { isDirty },
-  } = methods;
+  const { watch } = methods;
 
   const dividendTransferTreatment = watch('dividendTransferTreatment') as DividendTransferTreatment;
 
@@ -37,7 +34,6 @@ export const NewShareDividendPosting = () => {
           <FormHeader
             title={`Share Dividend Posting - ${featureCode.shareDividendPostingList}`}
             // closeLink="/others/share-dividend-posting/list"
-            isFormDirty={isDirty}
           />
         </Box>
 

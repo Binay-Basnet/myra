@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { Box, Button, Icon, Text, toast } from '@myra-ui';
+import { Box, Button, FormHeader, Icon, Text, toast } from '@myra-ui';
 
 import {
   addAccountError,
@@ -239,7 +239,7 @@ export const KYMInstitutionPage = () => {
   return (
     <>
       <FormLayout hasSidebar>
-        <FormLayout.Header
+        <FormHeader
           title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberInstitution}`}
           closeLink={ROUTES.CBS_MEMBER_LIST}
         />

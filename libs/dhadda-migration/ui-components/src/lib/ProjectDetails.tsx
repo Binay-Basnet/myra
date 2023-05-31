@@ -5,9 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 
 import { Box, Loader } from '@myra-ui';
 
+import { DownloadCsvs } from './DownloadCsv';
 import { MigrateExcel } from './MigrateExcel';
 import UploadCsv from './UploadCsv';
 import { ValidateExcel } from './ValidateExcel';
+import { ViewAllCsvs } from './ViewAllCsv';
 
 export const ProjectDetails = () => {
   const router = useRouter();
@@ -29,9 +31,10 @@ export const ProjectDetails = () => {
   const { data, refetch, isLoading } = useQuery(['project-status'], () =>
     getProjectStatus({ project_name: router?.query?.['projectName'] as string })
   );
+
   useEffect(() => {
     refetch();
-  }, []);
+  }, [JSON.stringify(router?.query?.['projectName'])]);
 
   if (isLoading) {
     return (
@@ -50,6 +53,12 @@ export const ProjectDetails = () => {
         setErrorData={errorDataSet}
       />
       <MigrateExcel validationStatus={data?.data?.data?.validation_status || false} />
+      {data?.data?.data?.transformation_status && (
+        <>
+          <DownloadCsvs />
+          <ViewAllCsvs />
+        </>
+      )}
     </Box>
   );
 };

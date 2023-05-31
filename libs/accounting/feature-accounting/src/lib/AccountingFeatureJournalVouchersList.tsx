@@ -56,9 +56,14 @@ export const AccountingFeatureJournalVouchersList = () => {
         accessorFn: (row) => row?.node?.note,
       },
       {
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.branchName,
+      },
+      {
         header: 'Amount',
         meta: {
           isNumeric: true,
+          width: '15%',
         },
         accessorFn: (row) => amountConverter(row?.node?.amount || 0),
       },

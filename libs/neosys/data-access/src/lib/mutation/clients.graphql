@@ -87,3 +87,18 @@ mutation updateVersion($environmentId: String!, $version: String!) {
     }
   }
 }
+
+mutation seedDBWithCSV($environmentId: String!, $fileURL: String!) {
+  neosys {
+    client {
+      environment {
+        seedDBWithCSV(environmentId: $environmentId, fileURL: $fileURL) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

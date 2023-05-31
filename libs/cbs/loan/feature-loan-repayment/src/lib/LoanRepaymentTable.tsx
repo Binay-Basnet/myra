@@ -87,6 +87,10 @@ export const CBSLoanRepaymentList = () => {
         ),
       },
       {
+        header: 'Service Center',
+        accessorKey: 'node.branchName',
+      },
+      {
         header: 'Amount',
         meta: {
           isNumeric: true,

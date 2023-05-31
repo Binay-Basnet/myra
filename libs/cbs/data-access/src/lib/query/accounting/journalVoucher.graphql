@@ -11,6 +11,7 @@ query getJournalVoucherList($pagination: Pagination, $filter: JournalVoucherFilt
             reference
             amount
             note
+            branchName
           }
           cursor
         }
@@ -37,6 +38,7 @@ query getJournalVoucherDetail($entryId: ID!) {
           reference
           note
           transactionCode
+          branchName
           glTransaction {
             ledgerId
             account

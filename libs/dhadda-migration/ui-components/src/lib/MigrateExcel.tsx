@@ -9,11 +9,11 @@ export const MigrateExcel = (props: { validationStatus: boolean }) => {
   const router = useRouter();
 
   const { mutateAsync: validateExcelMutation, isLoading } = useMutation(migrateExcel, {
-    onSuccess: () => {
+    onSuccess: (res) => {
       toast({
         id: 'migrate-excel',
         type: 'success',
-        message: 'CSVs generated successfully',
+        message: res?.data?.message,
       });
     },
     onError: () => {
@@ -27,14 +27,7 @@ export const MigrateExcel = (props: { validationStatus: boolean }) => {
   const onMigrateExcel = () => {
     const formData = new FormData();
     formData.append('project_name', router?.query?.['projectName'] as string);
-    validateExcelMutation(formData as unknown as { project_name: string }).then((res) => {
-      const url = window.URL.createObjectURL(new Blob([res.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `${router?.query?.['projectName']}.zip`);
-      document.body.appendChild(link);
-      link.click();
-    });
+    validateExcelMutation(formData as unknown as { project_name: string });
   };
 
   return (
@@ -47,7 +40,6 @@ export const MigrateExcel = (props: { validationStatus: boolean }) => {
       width="-webkit-fit-content"
       borderRadius={5}
       boxShadow="lg"
-      mb={10}
     >
       <Button
         w="-webkit-fit-content"

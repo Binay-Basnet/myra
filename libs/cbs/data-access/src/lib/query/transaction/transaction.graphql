@@ -16,6 +16,7 @@ query getDepositListData($filter: Filter, $pagination: Pagination) {
           agentId
           profilePicUrl
           agentPicUrl
+          branchName
         }
         cursor
       }
@@ -44,6 +45,7 @@ query getWithdrawListData($filter: Filter, $pagination: Pagination) {
           processedBy
           date
           profilePicUrl
+          branchName
         }
         cursor
       }
@@ -69,6 +71,7 @@ query getAccountTransferListData($filter: Filter, $pagination: Pagination) {
           state
           transferType
           date
+          branchName
         }
         cursor
       }
@@ -118,6 +121,7 @@ query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination
             quantity
             amount
           }
+          transactionBranchName
         }
         cursor
       }
@@ -636,6 +640,34 @@ query getAllTransactionFilterMapping {
         txnType {
           ...OptionType
         }
+      }
+    }
+  }
+}
+
+query bulkTransfersList($filter: Filter, $pagination: Pagination) {
+  transaction {
+    listBulkTransfers(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          transferType
+          transferDate
+          transferAmount
+          totalTransferAmount
+          sourceId
+          sourceName
+          destinationId
+          destinationName
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }
