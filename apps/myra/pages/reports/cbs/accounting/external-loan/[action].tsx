@@ -2,9 +2,9 @@ import { ReactElement } from 'react';
 
 import { MainLayout, Scrollable } from '@myra-ui';
 
-import { ExternalLoanStatementReport } from '@coop/cbs/reports';
+import { ExternalLoanReport } from '@coop/cbs/reports';
 
-export const AccountingExternalLoanStatementPage = () => <ExternalLoanStatementReport />;
+export const AccountingExternalLoanStatementPage = () => <ExternalLoanReport />;
 
 export default AccountingExternalLoanStatementPage;
 
