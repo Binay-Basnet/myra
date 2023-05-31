@@ -34,7 +34,7 @@ query getInventoryRegisterReport($data: InventoryRegistrationFilter) {
 query getInventoryStockStatusReport($data: InventoryStockStatusFilter) {
   report {
     inventoryReport {
-      inventoryStockStatusreport(data: $data) {
+      newinventoryStockStatusreport(data: $data) {
         data {
           upper {
             itemCode
@@ -46,10 +46,10 @@ query getInventoryStockStatusReport($data: InventoryStockStatusFilter) {
             totalNet
           }
           lower {
-            itemCode
-            itemName
-            warehouseName
-            warehouseId
+            lowerItemCode
+            lowerItemName
+            lowerWarehouseName
+            lowerWarehouseId
             purchasedQuantity
             soldQuantity
             purchasedDate

@@ -702,11 +702,16 @@ export type AccountingQuery = {
 };
 
 export type AccountingReport = {
+  externalLoanReport: ExternalLoanReportResult;
   externalLoanStatementReport: ExternalLoanStatementReportResult;
 };
 
+export type AccountingReportExternalLoanReportArgs = {
+  data: ExternalLoanReportFilter;
+};
+
 export type AccountingReportExternalLoanStatementReportArgs = {
-  data?: InputMaybe<ExternalLoanStatementReportFilter>;
+  data: ExternalLoanStatementReportFilter;
 };
 
 export type AccountingSalesCreditNoteQueryResult = {
@@ -1040,6 +1045,25 @@ export type AffiliatedDirectorDetailsType = {
   yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
+export type AgentCollection = {
+  amount: Scalars['String'];
+  date: Scalars['Localized'];
+  id: Scalars['String'];
+  mrId: Scalars['String'];
+  mrName: Scalars['String'];
+};
+
+export type AgentCollectionListConnection = {
+  edges?: Maybe<Array<Maybe<AgentCollectionListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AgentCollectionListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AgentCollection>;
+};
+
 export type AgentDetails = {
   branch?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
@@ -1054,6 +1078,7 @@ export type AgentFilterMapping = {
 
 export type AgentMutation = {
   addMemberToAgent?: Maybe<DepositLoanAccountData>;
+  agentTodayCollection?: Maybe<AgentTodayListResult>;
   agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
   removeMemberAccountAgent?: Maybe<RemoveMemberResult>;
@@ -1063,6 +1088,11 @@ export type AgentMutationAddMemberToAgentArgs = {
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
   override?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AgentMutationAgentTodayCollectionArgs = {
+  agentId: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
 };
 
 export type AgentMutationAgentTodayDepositArgs = {
@@ -1084,6 +1114,7 @@ export type AgentQuery = {
   agentDetail?: Maybe<AgentRecord>;
   assignedMemberList: AssignedMembersListConnection;
   listAgent: AccountAgentListConnection;
+  listAgentCollection?: Maybe<AgentCollectionListConnection>;
   listAgentTask?: Maybe<AgentTodayListData>;
   viewAgentList?: Maybe<AgentTransactionViewResult>;
 };
@@ -1099,6 +1130,11 @@ export type AgentQueryAssignedMemberListArgs = {
 
 export type AgentQueryListAgentArgs = {
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AgentQueryListAgentCollectionArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -1123,6 +1159,7 @@ export type AgentTodayList = {
   id?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   paid?: Maybe<Scalars['Boolean']>;
+  status?: Maybe<TodayListStatus>;
 };
 
 export type AgentTodayListData = {
@@ -6026,6 +6063,52 @@ export type ExternalLoanQuery = {
   payment?: Maybe<ExternalLoanPaymentQuery>;
 };
 
+export type ExternalLoanReportData = {
+  date?: Maybe<Scalars['Localized']>;
+  finePaid?: Maybe<Scalars['String']>;
+  installmentFrequency?: Maybe<InstallmentFrequency>;
+  installmentType?: Maybe<LoanRepaymentScheme>;
+  interestPaidAmount?: Maybe<Scalars['String']>;
+  interestRate?: Maybe<Scalars['Float']>;
+  loanAmount?: Maybe<Scalars['String']>;
+  loanApprovedDate?: Maybe<Scalars['Localized']>;
+  loanClosedDate?: Maybe<Scalars['Localized']>;
+  loanId?: Maybe<Scalars['ID']>;
+  loanNumber?: Maybe<Scalars['String']>;
+  maturityDate?: Maybe<Scalars['Localized']>;
+  mortgage?: Maybe<MortageType>;
+  organizationBranch?: Maybe<Scalars['String']>;
+  organizationName?: Maybe<Scalars['String']>;
+  outstandingLoanAmount?: Maybe<Scalars['String']>;
+  principalPaidAmount?: Maybe<Scalars['String']>;
+  rebate?: Maybe<Scalars['String']>;
+  relatedBranch?: Maybe<Scalars['String']>;
+  remainingTenure?: Maybe<Scalars['Int']>;
+  tenure?: Maybe<Scalars['Int']>;
+  totalPaid?: Maybe<Scalars['String']>;
+};
+
+export type ExternalLoanReportFilter = {
+  branchId: Array<Scalars['String']>;
+  period: LocalizedDateFilter;
+};
+
+export type ExternalLoanReportResult = {
+  data?: Maybe<Array<Maybe<ExternalLoanReportData>>>;
+  error?: Maybe<QueryError>;
+  summary?: Maybe<ExternalLoanReportSummary>;
+};
+
+export type ExternalLoanReportSummary = {
+  totalFinePaid?: Maybe<Scalars['String']>;
+  totalInterestAmount?: Maybe<Scalars['String']>;
+  totalLoanAmount?: Maybe<Scalars['String']>;
+  totalOfTotalPaid?: Maybe<Scalars['String']>;
+  totalOutstandingLoanAmount?: Maybe<Scalars['String']>;
+  totalPrincipalAmount?: Maybe<Scalars['String']>;
+  totalRebate?: Maybe<Scalars['String']>;
+};
+
 export type ExternalLoanStatementReportData = {
   date?: Maybe<Scalars['Localized']>;
   discount?: Maybe<Scalars['String']>;
@@ -8331,6 +8414,7 @@ export type InventoryRegistrationReportResult = {
 export type InventoryReport = {
   inventoryRegistrationReport?: Maybe<InventoryRegistrationReportResult>;
   inventoryStockStatusreport?: Maybe<InventoryStockStatusReportResult>;
+  newinventoryStockStatusreport?: Maybe<InventoryStockStatusReportResult>;
 };
 
 export type InventoryReportInventoryRegistrationReportArgs = {
@@ -8341,16 +8425,20 @@ export type InventoryReportInventoryStockStatusreportArgs = {
   data?: InputMaybe<InventoryStockStatusFilter>;
 };
 
+export type InventoryReportNewinventoryStockStatusreportArgs = {
+  data?: InputMaybe<InventoryStockStatusFilter>;
+};
+
 export type InventoryStockStatusData = {
-  itemCode: Scalars['String'];
-  itemName: Scalars['String'];
+  lowerItemCode: Scalars['String'];
+  lowerItemName: Scalars['String'];
+  lowerWarehouseId: Scalars['String'];
+  lowerWarehouseName: Scalars['String'];
   netQuantity: Scalars['String'];
   purchasedDate?: Maybe<Scalars['Localized']>;
   purchasedQuantity: Scalars['String'];
   soldDate?: Maybe<Scalars['Localized']>;
   soldQuantity: Scalars['String'];
-  warehouseId: Scalars['String'];
-  warehouseName: Scalars['String'];
 };
 
 export type InventoryStockStatusDataList = {
@@ -8388,6 +8476,7 @@ export type InventoryTransactionType =
   typeof InventoryTransactionType[keyof typeof InventoryTransactionType];
 export type InvestmentAccountInput = {
   address: KymAddressInput;
+  branch: Scalars['String'];
   name: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
 };
@@ -17469,6 +17558,14 @@ export const TextFormat = {
 } as const;
 
 export type TextFormat = typeof TextFormat[keyof typeof TextFormat];
+export const TodayListStatus = {
+  Collected: 'COLLECTED',
+  Completed: 'COMPLETED',
+  Failed: 'FAILED',
+  Pending: 'PENDING',
+} as const;
+
+export type TodayListStatus = typeof TodayListStatus[keyof typeof TodayListStatus];
 export type TotalReport = {
   totalBalanceSheet?: Maybe<Scalars['Int']>;
   totalCr?: Maybe<Scalars['Int']>;
@@ -28748,7 +28845,7 @@ export type GetMemberPdfQueryVariables = Exact<{
 export type GetMemberPdfQuery = { members: { memberPDF: string } };
 
 export type GetAccountingExternalLoanStatementReportQueryVariables = Exact<{
-  data?: InputMaybe<ExternalLoanStatementReportFilter>;
+  data: ExternalLoanStatementReportFilter;
 }>;
 
 export type GetAccountingExternalLoanStatementReportQuery = {
@@ -29525,7 +29622,7 @@ export type GetInventoryStockStatusReportQueryVariables = Exact<{
 export type GetInventoryStockStatusReportQuery = {
   report: {
     inventoryReport: {
-      inventoryStockStatusreport?: {
+      newinventoryStockStatusreport?: {
         data?: Array<{
           upper?: {
             itemCode: string;
@@ -29537,10 +29634,10 @@ export type GetInventoryStockStatusReportQuery = {
             totalNet: string;
           } | null;
           lower?: Array<{
-            itemCode: string;
-            itemName: string;
-            warehouseName: string;
-            warehouseId: string;
+            lowerItemCode: string;
+            lowerItemName: string;
+            lowerWarehouseName: string;
+            lowerWarehouseId: string;
             purchasedQuantity: string;
             soldQuantity: string;
             purchasedDate?: Record<'local' | 'en' | 'np', string> | null;
@@ -50114,7 +50211,7 @@ export const useGetMemberPdfQuery = <TData = GetMemberPdfQuery, TError = unknown
     options
   );
 export const GetAccountingExternalLoanStatementReportDocument = `
-    query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementReportFilter) {
+    query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementReportFilter!) {
   report {
     accountingReport {
       externalLoanStatementReport(data: $data) {
@@ -50147,13 +50244,11 @@ export const useGetAccountingExternalLoanStatementReportQuery = <
   TData = GetAccountingExternalLoanStatementReportQuery,
   TError = unknown
 >(
-  variables?: GetAccountingExternalLoanStatementReportQueryVariables,
+  variables: GetAccountingExternalLoanStatementReportQueryVariables,
   options?: UseQueryOptions<GetAccountingExternalLoanStatementReportQuery, TError, TData>
 ) =>
   useQuery<GetAccountingExternalLoanStatementReportQuery, TError, TData>(
-    variables === undefined
-      ? ['getAccountingExternalLoanStatementReport']
-      : ['getAccountingExternalLoanStatementReport', variables],
+    ['getAccountingExternalLoanStatementReport', variables],
     useAxios<
       GetAccountingExternalLoanStatementReportQuery,
       GetAccountingExternalLoanStatementReportQueryVariables
@@ -51148,7 +51243,7 @@ export const GetInventoryStockStatusReportDocument = `
     query getInventoryStockStatusReport($data: InventoryStockStatusFilter) {
   report {
     inventoryReport {
-      inventoryStockStatusreport(data: $data) {
+      newinventoryStockStatusreport(data: $data) {
         data {
           upper {
             itemCode
@@ -51160,10 +51255,10 @@ export const GetInventoryStockStatusReportDocument = `
             totalNet
           }
           lower {
-            itemCode
-            itemName
-            warehouseName
-            warehouseId
+            lowerItemCode
+            lowerItemName
+            lowerWarehouseName
+            lowerWarehouseId
             purchasedQuantity
             soldQuantity
             purchasedDate

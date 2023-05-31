@@ -91,10 +91,12 @@ export const InventoryStockStatusReport = () => {
     { enabled: !!filters }
   );
 
-  const loanReport = data?.report?.inventoryReport?.inventoryStockStatusreport?.data?.map((d) => ({
-    ...d?.upper,
-    children: d?.lower,
-  })) as LoanGuranteeData[];
+  const loanReport = data?.report?.inventoryReport?.newinventoryStockStatusreport?.data?.map(
+    (d) => ({
+      ...d?.upper,
+      children: d?.lower,
+    })
+  ) as LoanGuranteeData[];
 
   return (
     <Report
