@@ -7,32 +7,59 @@ export const HRMODULE: NavType = {
     EMPLOYEE: {
       aclKey: 'CBS_MEMBERS_MEMBER',
       label: 'Employee',
+      forms: [
+        {
+          label: 'New Employee',
+          aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.HRMODULE_EMPLOYEES_ADD,
+        },
+        {
+          label: 'New Attendance',
+          aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.HRMODULE_ATTENDENCE_ADD,
+        },
+        {
+          label: 'New Leave',
+          aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.HRMODULE_LEAVE_ADD,
+        },
+      ],
 
       pages: [
         {
           label: 'Employees',
           route: ROUTES.HRMODULE_EMPLOYEES_LIST,
           aclKey: 'CBS_MEMBERS_MEMBER',
-        },
-        {
-          label: 'Contracts',
-          route: ROUTES.HRMODULE_CONTRACTS_LIST,
-          aclKey: 'CBS_MEMBERS_MEMBER',
+          addRoute: ROUTES.HRMODULE_EMPLOYEES_ADD,
         },
         {
           label: 'Attedance',
           route: ROUTES.HRMODULE_ATTENDENCE_LIST,
           aclKey: 'CBS_MEMBERS_MEMBER',
+          addRoute: ROUTES.HRMODULE_ATTENDENCE_ADD,
         },
         {
           label: 'Leave',
           route: ROUTES.HRMODULE_LEAVE_LIST,
           aclKey: 'CBS_MEMBERS_MEMBER',
+          addRoute: ROUTES.HRMODULE_LEAVE_ADD,
+        },
+      ],
+      settingPages: [
+        {
+          label: 'Employee Settings',
+          aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.HRMODULE_EMPLOYEES_SETTINGS,
         },
         {
-          label: 'Exit Details',
-          route: ROUTES.HRMODULE_EXIT_DETAILS_LIST,
+          label: 'Attendance Settings',
           aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.HRMODULE_LEAVE_SETTINGS,
+        },
+        {
+          label: 'Leave Settings',
+          aclKey: 'CBS_MEMBERS_MEMBER',
+          route: ROUTES.HRMODULE_ATTENDENCE_SETTINGS,
         },
       ],
     },

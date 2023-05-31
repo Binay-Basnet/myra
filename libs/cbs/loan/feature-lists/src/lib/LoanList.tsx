@@ -1,6 +1,6 @@
 import { PageHeader } from '@myra-ui';
 
-import { LoanObjState, ObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
+import { LoanObjState, ObjState, useAppSelector, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { featureCode, getFilter, getFilterQuery, getPaginationQuery } from '@coop/shared/utils';
 
@@ -18,10 +18,15 @@ export const LOAN_LIST_TAB_ITEMS = [
 ];
 
 export const LoanList = () => {
+  const branchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
+
   const objState = getFilter('objState');
   const { data, isFetching } = useGetLoanListQuery({
     paginate: getPaginationQuery(),
-    filter: getFilterQuery({ objState: { value: 'APPROVED', compare: '=' } }),
+    filter: getFilterQuery({
+      objState: { value: 'APPROVED', compare: '=' },
+      branchId: { value: branchId as string, compare: '=' },
+    }),
   });
 
   return (

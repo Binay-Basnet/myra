@@ -1,3 +1,4 @@
+export * from './AllTransactionDetailPagePrint';
 export * from './AssignedMemberList';
 export * from './GlTransaction';
 export * from './InstallmentDetails';

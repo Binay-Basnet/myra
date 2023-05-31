@@ -159,7 +159,7 @@ export const ExternalLoanReport = () => {
               {
                 header: 'Interest Rate',
                 accessorKey: 'interestRate',
-                cell: (props) => `${quantityConverter(props?.row?.original?.interestRate || '0')}%`,
+                cell: (props) => `${props?.row?.original?.interestRate || '0'}%`,
                 meta: {
                   isNumeric: true,
                 },
