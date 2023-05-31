@@ -397,10 +397,18 @@ export const ROUTES = {
   ACCOUNTING_EXTERNAL_LOAN_EDIT: '/accounting/loan/external-loan/edit',
 
   HRMODULE_EMPLOYEES_LIST: '/hr/employee/employee/list',
-  HREMPLOYEE_ADD_FORM: '/hr/employee/employee/add',
-  HRMODULE_CONTRACTS_LIST: '/hr/employee/contracts/list',
   HRMODULE_ATTENDENCE_LIST: '/hr/employee/attendence/list',
   HRMODULE_LEAVE_LIST: '/hr/employee/leave/list',
+
+  HRMODULE_EMPLOYEES_ADD: '/hr/employee/employee/add',
+  HRMODULE_ATTENDENCE_ADD: '/hr/employee/attendence/add',
+  HRMODULE_LEAVE_ADD: '/hr/employee/leave/add',
+
+  HRMODULE_EMPLOYEES_SETTINGS: '/hr/employee/employee/list',
+  HRMODULE_ATTENDENCE_SETTINGS: '/hr/employee/attendence/list',
+  HRMODULE_LEAVE_SETTINGS: '/hr/employee/leave/list',
+
+  HRMODULE_CONTRACTS_LIST: '/hr/employee/contracts/list',
   HRMODULE_EXIT_DETAILS_LIST: '/hr/employee/exit-details/list',
   HR_LIFECYCLE_EMPLOYEE_ONBOAORDING: '/hr/lifecycle/employee-onboarding/list',
   HR_LIFECYCLE_EMPLOYEE_SEPERATION: '/hr/lifecycle/seperation/list',
