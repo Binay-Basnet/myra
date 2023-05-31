@@ -200,6 +200,7 @@ export const NewAccountTransfer = () => {
                     memberId={memberId}
                     filterBy={ObjState.Active}
                     isLinkedAccounts
+                    includeLoc
                     isDisabled={!!redirectSrcAccountId}
                   />
                 )}
@@ -222,6 +223,7 @@ export const NewAccountTransfer = () => {
                       filterBy={ObjState.Active}
                       excludeIds={[srcAccountId]}
                       isLinkedAccounts
+                      includeLoc
                     />
                   )}
 
