@@ -13,6 +13,7 @@ export const HRMODULE: NavType = {
           label: 'Employees',
           route: ROUTES.HRMODULE_EMPLOYEES_LIST,
           aclKey: 'CBS_MEMBERS_MEMBER',
+          addRoute: ROUTES.HREMPLOYEE_ADD_FORM,
         },
         {
           label: 'Contracts',

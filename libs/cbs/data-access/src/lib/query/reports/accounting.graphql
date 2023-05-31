@@ -1,4 +1,4 @@
-query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementReportFilter) {
+query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementReportFilter!) {
   report {
     accountingReport {
       externalLoanStatementReport(data: $data) {

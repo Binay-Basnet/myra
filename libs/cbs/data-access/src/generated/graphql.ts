@@ -707,11 +707,11 @@ export type AccountingReport = {
 };
 
 export type AccountingReportExternalLoanReportArgs = {
-  data?: InputMaybe<ExternalLoanReportFilter>;
+  data: ExternalLoanReportFilter;
 };
 
 export type AccountingReportExternalLoanStatementReportArgs = {
-  data?: InputMaybe<ExternalLoanStatementReportFilter>;
+  data: ExternalLoanStatementReportFilter;
 };
 
 export type AccountingSalesCreditNoteQueryResult = {
@@ -1045,6 +1045,25 @@ export type AffiliatedDirectorDetailsType = {
   yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
+export type AgentCollection = {
+  amount: Scalars['String'];
+  date: Scalars['Localized'];
+  id: Scalars['String'];
+  mrId: Scalars['String'];
+  mrName: Scalars['String'];
+};
+
+export type AgentCollectionListConnection = {
+  edges?: Maybe<Array<Maybe<AgentCollectionListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AgentCollectionListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AgentCollection>;
+};
+
 export type AgentDetails = {
   branch?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
@@ -1059,6 +1078,7 @@ export type AgentFilterMapping = {
 
 export type AgentMutation = {
   addMemberToAgent?: Maybe<DepositLoanAccountData>;
+  agentTodayCollection?: Maybe<AgentTodayListResult>;
   agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
   removeMemberAccountAgent?: Maybe<RemoveMemberResult>;
@@ -1068,6 +1088,11 @@ export type AgentMutationAddMemberToAgentArgs = {
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
   override?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AgentMutationAgentTodayCollectionArgs = {
+  agentId: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
 };
 
 export type AgentMutationAgentTodayDepositArgs = {
@@ -1089,6 +1114,7 @@ export type AgentQuery = {
   agentDetail?: Maybe<AgentRecord>;
   assignedMemberList: AssignedMembersListConnection;
   listAgent: AccountAgentListConnection;
+  listAgentCollection?: Maybe<AgentCollectionListConnection>;
   listAgentTask?: Maybe<AgentTodayListData>;
   viewAgentList?: Maybe<AgentTransactionViewResult>;
 };
@@ -1104,6 +1130,11 @@ export type AgentQueryAssignedMemberListArgs = {
 
 export type AgentQueryListAgentArgs = {
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AgentQueryListAgentCollectionArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -1128,6 +1159,7 @@ export type AgentTodayList = {
   id?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   paid?: Maybe<Scalars['Boolean']>;
+  status?: Maybe<TodayListStatus>;
 };
 
 export type AgentTodayListData = {
@@ -6034,22 +6066,22 @@ export type ExternalLoanQuery = {
 export type ExternalLoanReportData = {
   date?: Maybe<Scalars['Localized']>;
   finePaid?: Maybe<Scalars['String']>;
+  installmentFrequency?: Maybe<InstallmentFrequency>;
   installmentType?: Maybe<LoanRepaymentScheme>;
   interestPaidAmount?: Maybe<Scalars['String']>;
   interestRate?: Maybe<Scalars['Float']>;
-  interestType?: Maybe<LoanRepaymentScheme>;
   loanAmount?: Maybe<Scalars['String']>;
+  loanApprovedDate?: Maybe<Scalars['Localized']>;
   loanClosedDate?: Maybe<Scalars['Localized']>;
   loanId?: Maybe<Scalars['ID']>;
   loanNumber?: Maybe<Scalars['String']>;
-  loanType?: Maybe<ExternalLoanType>;
   maturityDate?: Maybe<Scalars['Localized']>;
+  mortgage?: Maybe<MortageType>;
   organizationBranch?: Maybe<Scalars['String']>;
   organizationName?: Maybe<Scalars['String']>;
   outstandingLoanAmount?: Maybe<Scalars['String']>;
   principalPaidAmount?: Maybe<Scalars['String']>;
   rebate?: Maybe<Scalars['String']>;
-  receiptDate?: Maybe<Scalars['Localized']>;
   relatedBranch?: Maybe<Scalars['String']>;
   remainingTenure?: Maybe<Scalars['Int']>;
   tenure?: Maybe<Scalars['Int']>;
@@ -6074,6 +6106,7 @@ export type ExternalLoanReportSummary = {
   totalOfTotalPaid?: Maybe<Scalars['String']>;
   totalOutstandingLoanAmount?: Maybe<Scalars['String']>;
   totalPrincipalAmount?: Maybe<Scalars['String']>;
+  totalRebate?: Maybe<Scalars['String']>;
 };
 
 export type ExternalLoanStatementReportData = {
@@ -8438,6 +8471,7 @@ export type InventoryTransactionType =
   typeof InventoryTransactionType[keyof typeof InventoryTransactionType];
 export type InvestmentAccountInput = {
   address: KymAddressInput;
+  branch: Scalars['String'];
   name: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
 };
@@ -17519,6 +17553,14 @@ export const TextFormat = {
 } as const;
 
 export type TextFormat = typeof TextFormat[keyof typeof TextFormat];
+export const TodayListStatus = {
+  Collected: 'COLLECTED',
+  Completed: 'COMPLETED',
+  Failed: 'FAILED',
+  Pending: 'PENDING',
+} as const;
+
+export type TodayListStatus = typeof TodayListStatus[keyof typeof TodayListStatus];
 export type TotalReport = {
   totalBalanceSheet?: Maybe<Scalars['Int']>;
   totalCr?: Maybe<Scalars['Int']>;
@@ -28798,7 +28840,7 @@ export type GetMemberPdfQueryVariables = Exact<{
 export type GetMemberPdfQuery = { members: { memberPDF: string } };
 
 export type GetAccountingExternalLoanStatementReportQueryVariables = Exact<{
-  data?: InputMaybe<ExternalLoanStatementReportFilter>;
+  data: ExternalLoanStatementReportFilter;
 }>;
 
 export type GetAccountingExternalLoanStatementReportQuery = {
@@ -50123,7 +50165,7 @@ export const useGetMemberPdfQuery = <TData = GetMemberPdfQuery, TError = unknown
     options
   );
 export const GetAccountingExternalLoanStatementReportDocument = `
-    query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementReportFilter) {
+    query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementReportFilter!) {
   report {
     accountingReport {
       externalLoanStatementReport(data: $data) {
@@ -50156,13 +50198,11 @@ export const useGetAccountingExternalLoanStatementReportQuery = <
   TData = GetAccountingExternalLoanStatementReportQuery,
   TError = unknown
 >(
-  variables?: GetAccountingExternalLoanStatementReportQueryVariables,
+  variables: GetAccountingExternalLoanStatementReportQueryVariables,
   options?: UseQueryOptions<GetAccountingExternalLoanStatementReportQuery, TError, TData>
 ) =>
   useQuery<GetAccountingExternalLoanStatementReportQuery, TError, TData>(
-    variables === undefined
-      ? ['getAccountingExternalLoanStatementReport']
-      : ['getAccountingExternalLoanStatementReport', variables],
+    ['getAccountingExternalLoanStatementReport', variables],
     useAxios<
       GetAccountingExternalLoanStatementReportQuery,
       GetAccountingExternalLoanStatementReportQueryVariables

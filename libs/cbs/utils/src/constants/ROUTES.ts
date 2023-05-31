@@ -397,6 +397,7 @@ export const ROUTES = {
   ACCOUNTING_EXTERNAL_LOAN_EDIT: '/accounting/loan/external-loan/edit',
 
   HRMODULE_EMPLOYEES_LIST: '/hr/employee/employee/list',
+  HREMPLOYEE_ADD_FORM: '/hr/employee/employee/add',
   HRMODULE_CONTRACTS_LIST: '/hr/employee/contracts/list',
   HRMODULE_ATTENDENCE_LIST: '/hr/employee/attendence/list',
   HRMODULE_LEAVE_LIST: '/hr/employee/leave/list',
