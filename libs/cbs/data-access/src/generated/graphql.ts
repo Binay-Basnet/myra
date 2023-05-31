@@ -1045,6 +1045,25 @@ export type AffiliatedDirectorDetailsType = {
   yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
+export type AgentCollection = {
+  amount: Scalars['String'];
+  date: Scalars['Localized'];
+  id: Scalars['String'];
+  mrId: Scalars['String'];
+  mrName: Scalars['String'];
+};
+
+export type AgentCollectionListConnection = {
+  edges?: Maybe<Array<Maybe<AgentCollectionListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AgentCollectionListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AgentCollection>;
+};
+
 export type AgentDetails = {
   branch?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
@@ -1059,6 +1078,7 @@ export type AgentFilterMapping = {
 
 export type AgentMutation = {
   addMemberToAgent?: Maybe<DepositLoanAccountData>;
+  agentTodayCollection?: Maybe<AgentTodayListResult>;
   agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
   removeMemberAccountAgent?: Maybe<RemoveMemberResult>;
@@ -1068,6 +1088,11 @@ export type AgentMutationAddMemberToAgentArgs = {
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
   override?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AgentMutationAgentTodayCollectionArgs = {
+  agentId: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
 };
 
 export type AgentMutationAgentTodayDepositArgs = {
@@ -1089,6 +1114,7 @@ export type AgentQuery = {
   agentDetail?: Maybe<AgentRecord>;
   assignedMemberList: AssignedMembersListConnection;
   listAgent: AccountAgentListConnection;
+  listAgentCollection?: Maybe<AgentCollectionListConnection>;
   listAgentTask?: Maybe<AgentTodayListData>;
   viewAgentList?: Maybe<AgentTransactionViewResult>;
 };
@@ -1104,6 +1130,11 @@ export type AgentQueryAssignedMemberListArgs = {
 
 export type AgentQueryListAgentArgs = {
   currentBranchOnly?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AgentQueryListAgentCollectionArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -1128,6 +1159,7 @@ export type AgentTodayList = {
   id?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   paid?: Maybe<Scalars['Boolean']>;
+  status?: Maybe<TodayListStatus>;
 };
 
 export type AgentTodayListData = {
@@ -8382,6 +8414,7 @@ export type InventoryRegistrationReportResult = {
 export type InventoryReport = {
   inventoryRegistrationReport?: Maybe<InventoryRegistrationReportResult>;
   inventoryStockStatusreport?: Maybe<InventoryStockStatusReportResult>;
+  newinventoryStockStatusreport?: Maybe<InventoryStockStatusReportResult>;
 };
 
 export type InventoryReportInventoryRegistrationReportArgs = {
@@ -8392,16 +8425,20 @@ export type InventoryReportInventoryStockStatusreportArgs = {
   data?: InputMaybe<InventoryStockStatusFilter>;
 };
 
+export type InventoryReportNewinventoryStockStatusreportArgs = {
+  data?: InputMaybe<InventoryStockStatusFilter>;
+};
+
 export type InventoryStockStatusData = {
-  itemCode: Scalars['String'];
-  itemName: Scalars['String'];
+  lowerItemCode: Scalars['String'];
+  lowerItemName: Scalars['String'];
+  lowerWarehouseId: Scalars['String'];
+  lowerWarehouseName: Scalars['String'];
   netQuantity: Scalars['String'];
   purchasedDate?: Maybe<Scalars['Localized']>;
   purchasedQuantity: Scalars['String'];
   soldDate?: Maybe<Scalars['Localized']>;
   soldQuantity: Scalars['String'];
-  warehouseId: Scalars['String'];
-  warehouseName: Scalars['String'];
 };
 
 export type InventoryStockStatusDataList = {
@@ -17521,6 +17558,14 @@ export const TextFormat = {
 } as const;
 
 export type TextFormat = typeof TextFormat[keyof typeof TextFormat];
+export const TodayListStatus = {
+  Collected: 'COLLECTED',
+  Completed: 'COMPLETED',
+  Failed: 'FAILED',
+  Pending: 'PENDING',
+} as const;
+
+export type TodayListStatus = typeof TodayListStatus[keyof typeof TodayListStatus];
 export type TotalReport = {
   totalBalanceSheet?: Maybe<Scalars['Int']>;
   totalCr?: Maybe<Scalars['Int']>;
@@ -29611,6 +29656,47 @@ export type GetInventoryRegisterReportQuery = {
           totalVatAmount?: string | null;
           totalStockValueVat?: string | null;
         } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type GetInventoryStockStatusReportQueryVariables = Exact<{
+  data?: InputMaybe<InventoryStockStatusFilter>;
+}>;
+
+export type GetInventoryStockStatusReportQuery = {
+  report: {
+    inventoryReport: {
+      newinventoryStockStatusreport?: {
+        data?: Array<{
+          upper?: {
+            itemCode: string;
+            itemName: string;
+            warehouseId: string;
+            warehouseName: string;
+            totalPurchased: string;
+            totalSoled: string;
+            totalNet: string;
+          } | null;
+          lower?: Array<{
+            lowerItemCode: string;
+            lowerItemName: string;
+            lowerWarehouseName: string;
+            lowerWarehouseId: string;
+            purchasedQuantity: string;
+            soldQuantity: string;
+            purchasedDate?: Record<'local' | 'en' | 'np', string> | null;
+            soldDate?: Record<'local' | 'en' | 'np', string> | null;
+            netQuantity: string;
+          } | null> | null;
+        } | null> | null;
         error?:
           | QueryError_AuthorizationError_Fragment
           | QueryError_BadRequestError_Fragment
@@ -51264,6 +51350,57 @@ export const useGetInventoryRegisterReportQuery = <
       : ['getInventoryRegisterReport', variables],
     useAxios<GetInventoryRegisterReportQuery, GetInventoryRegisterReportQueryVariables>(
       GetInventoryRegisterReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryStockStatusReportDocument = `
+    query getInventoryStockStatusReport($data: InventoryStockStatusFilter) {
+  report {
+    inventoryReport {
+      newinventoryStockStatusreport(data: $data) {
+        data {
+          upper {
+            itemCode
+            itemName
+            warehouseId
+            warehouseName
+            totalPurchased
+            totalSoled
+            totalNet
+          }
+          lower {
+            lowerItemCode
+            lowerItemName
+            lowerWarehouseName
+            lowerWarehouseId
+            purchasedQuantity
+            soldQuantity
+            purchasedDate
+            soldDate
+            netQuantity
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryStockStatusReportQuery = <
+  TData = GetInventoryStockStatusReportQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryStockStatusReportQueryVariables,
+  options?: UseQueryOptions<GetInventoryStockStatusReportQuery, TError, TData>
+) =>
+  useQuery<GetInventoryStockStatusReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryStockStatusReport']
+      : ['getInventoryStockStatusReport', variables],
+    useAxios<GetInventoryStockStatusReportQuery, GetInventoryStockStatusReportQueryVariables>(
+      GetInventoryStockStatusReportDocument
     ).bind(null, variables),
     options
   );
