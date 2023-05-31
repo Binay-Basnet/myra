@@ -105,7 +105,11 @@ export const AddMemberModal = ({
       >
         <FormProvider {...methods}>
           <Box display="flex" flexDirection="column" gap="s20" pb="200px">
-            <FormMemberSelect name="memberId" label={t['agentAssignedMembersMember']} />
+            <FormMemberSelect
+              name="memberId"
+              label={t['agentAssignedMembersMember']}
+              isCurrentBranchMember
+            />
 
             <FormAccountSelect
               name="accountId"

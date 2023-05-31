@@ -218,7 +218,7 @@ export const InventoryStockStatusReport = () => {
                 columns: [
                   {
                     header: 'Sales Date',
-                    accessorKey: 'date',
+                    accessorKey: 'soldDate',
                     cell: (props) =>
                       props.row?.original?.soldDate
                         ? localizedDate(props?.row?.original?.soldDate)
