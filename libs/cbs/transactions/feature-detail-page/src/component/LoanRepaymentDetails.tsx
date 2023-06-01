@@ -9,6 +9,16 @@ export const LoanRepaymentDetails = () => {
   const { t } = useTranslation();
   const { loanRepaymentDetailData } = useTransactionDetailHooks();
 
+  const totalInterestAmount = loanRepaymentDetailData?.installmentDetails?.reduce(
+    (sum, installment) => sum + Number(installment?.interestAmount ?? 0),
+    0
+  );
+
+  const totalPrincipalAmount = loanRepaymentDetailData?.installmentDetails?.reduce(
+    (sum, installment) => sum + Number(installment?.principalAmount ?? 0),
+    0
+  );
+
   return (
     <DetailsCard title={t['transDetailLoanRepaymentDetails']} hasThreeRows>
       <DetailCardContent
@@ -16,17 +26,15 @@ export const LoanRepaymentDetails = () => {
         subtitle={loanRepaymentDetailData?.transactionCode}
       />
       <DetailCardContent
-        title={t['transDetailRepaymentDate']}
-        subtitle={localizedDate(loanRepaymentDetailData?.repaymentDate)}
-      />
-      <DetailCardContent
         title={t['transDetailInstallmentNo']}
         subtitle={loanRepaymentDetailData?.installmentNo}
       />
       <DetailCardContent
-        title={t['transDetailInstallmentAmount']}
-        subtitle={amountConverter(loanRepaymentDetailData?.installmentAmount ?? 0)}
+        title={t['transDetailRepaymentDate']}
+        subtitle={localizedDate(loanRepaymentDetailData?.repaymentDate)}
       />
+      <DetailCardContent title="Principal" subtitle={amountConverter(totalPrincipalAmount ?? 0)} />
+      <DetailCardContent title="Interest" subtitle={amountConverter(totalInterestAmount || 0)} />
       <DetailCardContent
         title={t['transDetailFine']}
         subtitle={amountConverter(loanRepaymentDetailData?.fine ?? 0)}

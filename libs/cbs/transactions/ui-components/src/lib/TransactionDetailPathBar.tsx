@@ -251,6 +251,11 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         0
       );
 
+      const totalPrincipalAmount = loanRepaymentDetailData?.installmentDetails?.reduce(
+        (sum, installment) => sum + Number(installment?.principalAmount ?? 0),
+        0
+      );
+
       tempDetails = {
         'Loan Repayment Id': (
           <Text fontSize="s3" color="primary.500" fontWeight="600">
@@ -259,7 +264,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         ),
         Date: localizedDate(loanRepaymentDetailData?.repaymentDate),
         'Installment No': loanRepaymentDetailData?.installmentNo,
-        'Principal Amount': amountConverter(loanRepaymentDetailData?.totalRepaymentAmount || 0),
+        'Principal Amount': amountConverter(totalPrincipalAmount || 0),
         'Interest Amount': amountConverter(totalInterestAmount || 0),
         'Penalty Amount': amountConverter(loanRepaymentDetailData?.fine || 0),
         'Discount Amount': amountConverter(loanRepaymentDetailData?.discount || 0),
@@ -268,11 +273,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         'Payment Mode': loanRepaymentDetailData?.paymentMode,
       };
 
-      tempTotal = (
-        Number(loanRepaymentDetailData?.totalRepaymentAmount) +
-        Number(totalInterestAmount) +
-        Number(loanRepaymentDetailData?.fine)
-      ).toFixed(2);
+      tempTotal = Number(loanRepaymentDetailData?.totalRepaymentAmount).toFixed(2);
 
       tempGLTransactions = loanRepaymentDetailData?.glTransaction;
     }
