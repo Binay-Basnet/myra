@@ -10,19 +10,6 @@ const PersonalInformation = [
   'Temprorary Address',
 ];
 
-// const personalInfoEnum: Record<
-//   typeof PersonalInformation[number],
-//   KymIndPersonalSection
-// > = {
-//   kymAccIndBasicInformation: KymIndPersonalSection.BasicInformation,
-//   kymAccIndContactDetails: KymIndPersonalSection.ContactDetails,
-//   kymAccIndIdentificationDetails: KymIndPersonalSection.IdentificationDetails,
-//   kymAccIndPermanentAddress: KymIndPersonalSection.PermanentAddress,
-//   kymAccIndTemporaryAddress: KymIndPersonalSection.TemporaryAddress,
-//   kymAccIndIncaseofresidinginRentedHouse: KymIndPersonalSection.RentedHouse,
-//   kymAccIndFamilyDetails: KymIndPersonalSection.FamilyDetails,
-// };
-
 const ProfessionalDetails: string[] = [
   'Work Information',
   'Joining Details',
@@ -89,14 +76,6 @@ export const SidebarEmployeeAddForm = (props: AccordianProps) => {
                   {item}
                 </Text>
               </a>
-              {/* {formStatus?.data?.personal?.completed?.includes(
-                personalInfoEnum[item]
-              ) && (
-                <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />
-              )} */}
-              {/* {formStatus?.data?.personal?.error?.includes(
-                personalInfoEnum[item]
-              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />} */}
             </Box>
           ))}
         </Box>

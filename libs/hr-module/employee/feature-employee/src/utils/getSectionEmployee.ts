@@ -8,7 +8,12 @@ const basicInfo = [
   'maritalStatusId',
 ];
 
-const contact = ['phoneNumber', 'mobileNumber', 'email'];
+const contact = [
+  'workPhoneNumber',
+  'workEmailAddress',
+  'personalPhoneNumber',
+  'personalEmailAddress',
+];
 
 export const getEmployeeSection = (id: string) => {
   if (basicInfo.includes(id)) {

@@ -6,7 +6,18 @@ import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { EmployeeContactDetails, PersonalInformation, SidebarEmployeeAddForm } from '../components';
+import {
+  Approvers,
+  EmployeeAddress,
+  EmployeeContactDetails,
+  EmployeeHealthInsurance,
+  EmployeeWorkInformation,
+  JoiningDetails,
+  PersonalInformation,
+  SalaryDetails,
+  SidebarEmployeeAddForm,
+  WorkExperienceTable,
+} from '../components';
 import { getEmployeeSection } from '../utils/getSectionEmployee';
 
 export const EmployeeAddForm = () => {
@@ -29,21 +40,34 @@ export const EmployeeAddForm = () => {
         <FormLayout.Form>
           <Box
             onFocus={(e) => {
-              const kymSection = getEmployeeSection(e.target.id);
-              setCurrentSection(kymSection);
+              const employeeSection = getEmployeeSection(e.target.id);
+              setCurrentSection(employeeSection);
             }}
           >
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 Basic Information{' '}
               </Text>
-              <PersonalInformation setCurrentSection={setCurrentSection} />
+              <PersonalInformation />
+
+              <EmployeeContactDetails />
+              <EmployeeAddress />
             </SectionContainer>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                Contact Details{' '}
+                Professional Information
               </Text>
-              <EmployeeContactDetails />
+              <EmployeeWorkInformation />
+              <WorkExperienceTable />
+              <JoiningDetails />
+              <SalaryDetails />
+            </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                Configurations
+              </Text>
+              <Approvers />
+              <EmployeeHealthInsurance />
             </SectionContainer>
           </Box>
         </FormLayout.Form>
