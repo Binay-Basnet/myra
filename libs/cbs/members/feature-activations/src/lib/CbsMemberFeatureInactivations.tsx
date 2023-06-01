@@ -3,7 +3,7 @@ import { IoCheckmarkDone } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Button, Divider, Icon, Text, VStack } from '@myra-ui';
+import { asyncToast, Box, Button, Divider, FormHeader, Icon, Text, VStack } from '@myra-ui';
 
 import {
   AccountTypeFilter,
@@ -20,6 +20,7 @@ import { NumberStatus } from './CbsMembersFeatureActivations';
 
 export const CbsMemberFeatureInactivations = () => {
   const router = useRouter();
+
   const queryClient = useQueryClient();
   const id = router.query['id'] as string;
 
@@ -43,7 +44,7 @@ export const CbsMemberFeatureInactivations = () => {
 
   return (
     <FormLayout>
-      <FormLayout.Header title="Member Inactive" />
+      <FormHeader title="Member Inactive" />
 
       <FormLayout.Content>
         <FormLayout.Form>
