@@ -17,7 +17,7 @@ export const EmployeeAddress = () => {
         name="permanentAddress"
       />
 
-      <FormSection id="kymAccIndTemporaryAddress" header="Temporary Address">
+      <FormSection id="Temporary Address" header="Temporary Address">
         <GridItem colSpan={3}>
           <FormSwitch
             name="sameTempAsPermanentAddress"

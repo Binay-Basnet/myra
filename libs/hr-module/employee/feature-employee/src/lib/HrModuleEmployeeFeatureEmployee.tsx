@@ -8,6 +8,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Approvers,
+  Declerations,
   EmployeeAddress,
   EmployeeContactDetails,
   EmployeeHealthInsurance,
@@ -28,7 +29,7 @@ export const EmployeeAddForm = () => {
   const methods = useForm();
   return (
     <FormLayout hasSidebar methods={methods}>
-      <FormHeader title="Add Employee" closeLink={ROUTES.CBS_MEMBER_LIST} />
+      <FormHeader title="Add Employee" closeLink={ROUTES.HRMODULE_EMPLOYEES_LIST} />
 
       <FormLayout.Content>
         <FormLayout.Sidebar borderPosition="right">
@@ -68,6 +69,12 @@ export const EmployeeAddForm = () => {
               </Text>
               <Approvers />
               <EmployeeHealthInsurance />
+            </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                Declerations
+              </Text>
+              <Declerations />
             </SectionContainer>
           </Box>
         </FormLayout.Form>
