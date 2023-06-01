@@ -144,6 +144,15 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempTotal = depositDetailData?.totalDepositedAmount as string;
 
       tempGLTransactions = depositDetailData?.glTransaction;
+
+      tempVoucherDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {depositDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(depositDetailData?.transactionDate),
+      };
     }
 
     if (router?.asPath?.includes('/withdraw/')) {
