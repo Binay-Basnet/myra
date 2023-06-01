@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -30,7 +30,7 @@ export const AddAgentTransaction = () => {
 
   const methods = useForm();
 
-  const { watch, getValues } = methods;
+  const { watch, getValues, setValue } = methods;
 
   const agentId: string = watch('agentId');
 
@@ -91,6 +91,21 @@ export const AddAgentTransaction = () => {
       })),
     [agentTodayListQueryData]
   );
+
+  useEffect(() => {
+    if (agentTodayListQueryData) {
+      setValue(
+        'accounts',
+        agentTodayListQueryData?.agent?.listAgentTask?.record?.map((record) => ({
+          id: record?.id,
+          member: record?.member?.id as string,
+          account: record?.account?.id as string,
+          amount: record?.amount,
+          status: record?.status,
+        }))
+      );
+    }
+  }, [agentTodayListQueryData]);
 
   // const { data: memberListQueryData } = useGetAgentAssignedMemberListDataQuery(
   //   {
@@ -329,7 +344,7 @@ export const AddAgentTransaction = () => {
                       cellWidth: 'sm',
                     },
                   ]}
-                  defaultData={todaysList}
+                  // defaultData={todaysList}
                   searchPlaceholder="Search or add member"
                   canDeleteRow
                 />

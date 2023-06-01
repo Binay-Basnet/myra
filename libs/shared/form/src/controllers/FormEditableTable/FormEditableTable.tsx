@@ -19,6 +19,7 @@ export const FormEditableTable = <
 >({
   name,
   label,
+  defaultData,
   ...rest
 }: IFormEditableTableProps<T>) => {
   const methods = useFormContext();
@@ -39,7 +40,11 @@ export const FormEditableTable = <
               {label}
             </Text>
           )}
-          <EditableTable defaultData={(value as T[]) ?? []} onChange={onChange} {...rest} />
+          <EditableTable
+            defaultData={([...(value || []), ...(defaultData || [])] as T[]) ?? []}
+            onChange={onChange}
+            {...rest}
+          />
         </Box>
       )}
     />

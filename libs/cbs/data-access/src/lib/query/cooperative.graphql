@@ -99,6 +99,7 @@ query getCoOperativeKymEditData($id: ID!, $hasPressedNext: Boolean) {
             # accountHolderSignature
             # accountHolderStamp
             hasTCAccepted
+            vatNo
           }
 
           sectionStatus {

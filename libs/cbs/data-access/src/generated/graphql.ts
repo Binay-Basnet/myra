@@ -704,6 +704,8 @@ export type AccountingQuery = {
 export type AccountingReport = {
   externalLoanReport: ExternalLoanReportResult;
   externalLoanStatementReport: ExternalLoanStatementReportResult;
+  fdInvestmentReport: FdInvestmentReportResult;
+  fdInvestmentStatementReport: FdInvestmentStatementReportResult;
 };
 
 export type AccountingReportExternalLoanReportArgs = {
@@ -712,6 +714,14 @@ export type AccountingReportExternalLoanReportArgs = {
 
 export type AccountingReportExternalLoanStatementReportArgs = {
   data: ExternalLoanStatementReportFilter;
+};
+
+export type AccountingReportFdInvestmentReportArgs = {
+  data: FdInvestmentReportFilter;
+};
+
+export type AccountingReportFdInvestmentStatementReportArgs = {
+  data: FdInvestmentStatementReportFilter;
 };
 
 export type AccountingSalesCreditNoteQueryResult = {
@@ -6166,6 +6176,58 @@ export type FdInvestmentInput = {
   rate: Scalars['Float'];
   startDate: Scalars['Localized'];
   type: FdInvestmentType;
+};
+
+export type FdInvestmentReportData = {
+  fdAccountName?: Maybe<Scalars['String']>;
+  fdAmount?: Maybe<Scalars['String']>;
+  fdOpeningDate?: Maybe<Scalars['Localized']>;
+  fdType?: Maybe<FdInvestmentType>;
+  interestRate?: Maybe<Scalars['Float']>;
+  maturityDate?: Maybe<Scalars['Localized']>;
+  nomineeBankAccountNo?: Maybe<Scalars['String']>;
+  organizationBranch?: Maybe<Scalars['String']>;
+  organizationName?: Maybe<Scalars['String']>;
+  remainingTenure?: Maybe<Scalars['Int']>;
+  tenure?: Maybe<Scalars['Int']>;
+};
+
+export type FdInvestmentReportFilter = {
+  branchId: Array<Scalars['String']>;
+  period: LocalizedDateFilter;
+};
+
+export type FdInvestmentReportResult = {
+  data?: Maybe<Array<Maybe<FdInvestmentReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type FdInvestmentStatementReportData = {
+  chequeNo?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  fdAmount?: Maybe<Scalars['String']>;
+  interestReceived?: Maybe<Scalars['String']>;
+  particulars?: Maybe<Scalars['String']>;
+  tds?: Maybe<Scalars['String']>;
+};
+
+export type FdInvestmentStatementReportFilter = {
+  accountId: Scalars['String'];
+  branchId: Array<Scalars['String']>;
+  period: LocalizedDateFilter;
+};
+
+export type FdInvestmentStatementReportResult = {
+  data?: Maybe<Array<Maybe<FdInvestmentStatementReportData>>>;
+  error?: Maybe<QueryError>;
+  summary?: Maybe<FdInvestmentStatementReportSummary>;
+};
+
+export type FdInvestmentStatementReportSummary = {
+  fdAmountTotal?: Maybe<Scalars['String']>;
+  interestReceivedTotal?: Maybe<Scalars['String']>;
+  openingBalance?: Maybe<Scalars['String']>;
+  tdsTotal?: Maybe<Scalars['String']>;
 };
 
 export const FdInvestmentType = {
@@ -19333,6 +19395,25 @@ export type RemoveMemberAccountAgentMutation = {
   };
 };
 
+export type AgentTodayCollectionMutationVariables = Exact<{
+  agentId: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>>;
+}>;
+
+export type AgentTodayCollectionMutation = {
+  agent: {
+    agentTodayCollection?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type ResetPasswordMutationVariables = Exact<{
   userId: Scalars['String'];
   newPassword: Scalars['String'];
@@ -24698,6 +24779,7 @@ export type GetAgentTodayListDataQuery = {
         id?: string | null;
         amount?: any | null;
         paid?: boolean | null;
+        status?: TodayListStatus | null;
         member?: {
           id: string;
           code: string;
@@ -24746,6 +24828,35 @@ export type GetAgentDetailQuery = {
         branch?: string | null;
         totalMembers?: number | null;
         profilePicUrl?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ListAgentCollectionQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ListAgentCollectionQuery = {
+  agent: {
+    listAgentCollection?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          mrId: string;
+          mrName: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          amount: string;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
       } | null;
     } | null;
   };
@@ -24996,6 +25107,7 @@ export type GetCoOperativeKymEditDataQuery = {
             totalAssets?: number | null;
             accountHoldersName?: string | null;
             hasTCAccepted?: boolean | null;
+            vatNo?: string | null;
             registeredAddress?: {
               provinceId?: number | null;
               districtId?: number | null;
@@ -36993,6 +37105,37 @@ export const useRemoveMemberAccountAgentMutation = <TError = unknown, TContext =
     ),
     options
   );
+export const AgentTodayCollectionDocument = `
+    mutation agentTodayCollection($agentId: ID!, $data: [AgentTodayListInput]) {
+  agent {
+    agentTodayCollection(agentId: $agentId, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAgentTodayCollectionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AgentTodayCollectionMutation,
+    TError,
+    AgentTodayCollectionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    AgentTodayCollectionMutation,
+    TError,
+    AgentTodayCollectionMutationVariables,
+    TContext
+  >(
+    ['agentTodayCollection'],
+    useAxios<AgentTodayCollectionMutation, AgentTodayCollectionMutationVariables>(
+      AgentTodayCollectionDocument
+    ),
+    options
+  );
 export const ResetPasswordDocument = `
     mutation resetPassword($userId: String!, $newPassword: String!, $oldPassword: String!) {
   user {
@@ -45013,6 +45156,7 @@ export const GetAgentTodayListDataDocument = `
         }
         amount
         paid
+        status
       }
     }
   }
@@ -45088,6 +45232,42 @@ export const useGetAgentDetailQuery = <TData = GetAgentDetailQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const ListAgentCollectionDocument = `
+    query listAgentCollection($filter: Filter, $pagination: Pagination) {
+  agent {
+    listAgentCollection(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          mrId
+          mrName
+          date
+          amount
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useListAgentCollectionQuery = <TData = ListAgentCollectionQuery, TError = unknown>(
+  variables?: ListAgentCollectionQueryVariables,
+  options?: UseQueryOptions<ListAgentCollectionQuery, TError, TData>
+) =>
+  useQuery<ListAgentCollectionQuery, TError, TData>(
+    variables === undefined ? ['listAgentCollection'] : ['listAgentCollection', variables],
+    useAxios<ListAgentCollectionQuery, ListAgentCollectionQueryVariables>(
+      ListAgentCollectionDocument
+    ).bind(null, variables),
     options
   );
 export const GetMeDocument = `
@@ -45325,6 +45505,7 @@ export const GetCoOperativeKymEditDataDocument = `
             totalAssets
             accountHoldersName
             hasTCAccepted
+            vatNo
           }
           sectionStatus {
             errors

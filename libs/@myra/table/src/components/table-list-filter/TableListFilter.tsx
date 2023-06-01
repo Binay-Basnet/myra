@@ -151,7 +151,7 @@ export const TableListFilterContent = React.forwardRef(
     const [searchTerm, setSearchTerm] = useState('');
 
     const listData = useMemo(
-      () => (data ? data?.filter((item) => item.label.match(new RegExp(searchTerm, 'i'))) : []),
+      () => (data ? data?.filter((item) => new RegExp(searchTerm, 'i').test(item.label)) : []),
       [data, searchTerm]
     );
 
@@ -335,7 +335,9 @@ const TableListCheckbox = React.memo(
       <Checkbox colorScheme="green" isChecked={isChecked} />
     </Box>
   ),
-  (prevProps, nextProps) => prevProps.isChecked === nextProps.isChecked
+  (prevProps, nextProps) =>
+    prevProps.isChecked === nextProps.isChecked &&
+    prevProps.listItem.label === nextProps.listItem.label
 );
 
 export default TableListFilter;
