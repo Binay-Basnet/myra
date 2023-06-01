@@ -1,6 +1,6 @@
 import { SelectProps } from '@myra-ui';
 
-import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
+import { ObjState, useGetAgentListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
@@ -9,6 +9,7 @@ interface IFormAgentSelectProps extends SelectProps {
   label: string;
   isRequired?: boolean;
   currentBranchOnly?: boolean;
+  state?: ObjState;
 }
 
 type OptionType = { label: string; value: string };
@@ -18,6 +19,7 @@ export const FormAgentSelect = ({
   label,
   isRequired,
   currentBranchOnly = false,
+  state,
   ...rest
 }: IFormAgentSelectProps) => {
   // const { watch } = useFormContext();
@@ -26,6 +28,21 @@ export const FormAgentSelect = ({
     pagination: {
       ...getPaginationQuery(),
       first: -1,
+    },
+    filter: {
+      orConditions: state
+        ? [
+            {
+              andConditions: [
+                {
+                  column: 'state',
+                  comparator: 'EqualTo',
+                  value: state,
+                },
+              ],
+            },
+          ]
+        : [],
     },
     currentBranchOnly,
   });

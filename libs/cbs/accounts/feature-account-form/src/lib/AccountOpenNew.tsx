@@ -665,6 +665,7 @@ export const AccountOpenNew = () => {
                           name="agentId"
                           label="Market Representative"
                           currentBranchOnly
+                          state="APPROVED"
                         />
                       </Grid>
                       <FeesAndCharge setTotalCharge={setTotalCharge} />
