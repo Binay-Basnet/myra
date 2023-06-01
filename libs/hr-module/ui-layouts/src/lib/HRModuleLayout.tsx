@@ -1,7 +1,6 @@
 import React from 'react';
 import { BiUserPin } from 'react-icons/bi';
 import { FiBookOpen, FiBriefcase, FiDollarSign, FiFileText, FiUserCheck } from 'react-icons/fi';
-import { TbScale } from 'react-icons/tb';
 
 import { MainLayoutContainer, TabMenu, TopLevelHeader } from '@myra-ui';
 
@@ -30,15 +29,24 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
           {
             title: 'Employee Lifecycle',
             icon: FiUserCheck,
-            link: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING,
+            link: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_LIST,
             match: ['lifecycle'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'EMPLOYEE_LIFECYCLE',
           },
           {
+            title: 'Recruitment',
+            icon: FiBriefcase,
+            link: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_LIST,
+            // link: ROUTES.HR_RECRUITMENT_STAFF_PLANNING_LIST,
+            match: ['recruitment'],
+            aclKey: 'CBS_MEMBERS_MEMBER',
+            navMenu: 'RECRUITMENT',
+          },
+          {
             title: 'Payroll',
             icon: FiDollarSign,
-            link: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING,
+            link: ROUTES.HR_PAYROLL_ENTRY_LIST,
             match: ['payroll'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'PAYROLL',
@@ -46,29 +54,21 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
           {
             title: 'Training',
             icon: FiBookOpen,
-            link: ROUTES.HR_TRAINING_COURSES,
+            link: ROUTES.HR_TRAINING_COURSES_LIST,
             match: ['training'],
             aclKey: 'CBS_MEMBERS_MEMBER',
             navMenu: 'TRAINING',
           },
-          {
-            title: 'Recruitment',
-            icon: FiBriefcase,
 
-            link: ROUTES.HR_RECRUITMENT_STAFF_PLANNING,
-            match: ['recruitment'],
-            aclKey: 'CBS_MEMBERS_MEMBER',
-            navMenu: 'RECRUITMENT',
-          },
-          {
-            title: 'Policy',
-            icon: TbScale,
+          // {
+          //   title: 'Policy',
+          //   icon: TbScale,
 
-            link: '/hr/policy/list',
-            match: ['policy'],
-            aclKey: 'CBS_MEMBERS_MEMBER',
-            navMenu: 'POLICY',
-          },
+          //   link: '/hr/policy/list',
+          //   match: ['policy'],
+          //   aclKey: 'CBS_MEMBERS_MEMBER',
+          //   navMenu: 'POLICY',
+          // },
 
           {
             title: 'reports',
