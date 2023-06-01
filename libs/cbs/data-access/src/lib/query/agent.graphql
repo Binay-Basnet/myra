@@ -89,6 +89,7 @@ query getAgentTodayListData($id: ID!) {
         }
         amount
         paid
+        status
       }
     }
   }
@@ -122,6 +123,30 @@ query getAgentDetail($id: ID!) {
         branch
         totalMembers
         profilePicUrl
+      }
+    }
+  }
+}
+
+query listAgentCollection($filter: Filter, $pagination: Pagination) {
+  agent {
+    listAgentCollection(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          mrId
+          mrName
+          date
+          amount
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }

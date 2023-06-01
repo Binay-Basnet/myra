@@ -1,18 +1,20 @@
 import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
 import { asyncToast, Box, Text } from '@myra-ui';
 
 import {
+  useAgentTodayCollectionMutation,
+  useAppSelector,
   useGetAgentAssignedMemberListDataQuery,
   useGetAgentTodayListDataQuery,
-  useSetAgentTodayDepositDataMutation,
 } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/cbs/transactions/ui-containers';
 import { localizedText } from '@coop/cbs/utils';
-import { FormAgentSelect, FormEditableTable, FormLayout } from '@coop/shared/form';
-import { amountConverter, featureCode } from '@coop/shared/utils';
+import { FormEditableTable, FormInput, FormLayout } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface AddAgentTransactionProps {}
@@ -22,17 +24,19 @@ type DepositAccountTable = {
   account: string;
   amount: string;
   memberName?: string;
-  paid: boolean;
+  id?: string;
 };
 
-export const AddAgentTransaction = () => {
+export const MarketRepresentativeCollectionAdd = () => {
+  const user = useAppSelector((state) => state?.auth?.user);
+
   const router = useRouter();
 
   const methods = useForm();
 
-  const { watch, getValues, setValue } = methods;
+  const { getValues, setValue, watch } = methods;
 
-  const agentId: string = watch('agentId');
+  const agentId = user?.id;
 
   const { data: assignedMemberListQueryData } = useGetAgentAssignedMemberListDataQuery(
     {
@@ -75,7 +79,7 @@ export const AddAgentTransaction = () => {
 
   const { data: agentTodayListQueryData } = useGetAgentTodayListDataQuery(
     {
-      id: agentId,
+      id: agentId as string,
     },
     { staleTime: 0, enabled: !!agentId }
   );
@@ -87,7 +91,7 @@ export const AddAgentTransaction = () => {
         member: record?.member?.id as string,
         account: record?.account?.id as string,
         amount: record?.amount,
-        paid: Boolean(record?.paid),
+        status: record?.status,
       })),
     [agentTodayListQueryData]
   );
@@ -107,26 +111,6 @@ export const AddAgentTransaction = () => {
     }
   }, [agentTodayListQueryData]);
 
-  // const { data: memberListQueryData } = useGetAgentAssignedMemberListDataQuery(
-  //   {
-  //     pagination: getPaginationQuery(),
-  //     filter: {
-  //       orConditions: [
-  //         {
-  //           andConditions: [
-  //             {
-  //               column: 'agentId',
-  //               comparator: 'EqualTo',
-  //               value: agentId,
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //     },
-  //   },
-  //   { enabled: !!agentId }
-  // );
-
   const memberListSearchOptions = useMemo(() => {
     const tempMembers: { label: string; value: string }[] = [];
     const tempIds: string[] = [];
@@ -144,72 +128,76 @@ export const AddAgentTransaction = () => {
     return tempMembers;
   }, [assignedMemberListQueryData]);
 
-  const { mutateAsync: setAgentTodayList } = useSetAgentTodayDepositDataMutation();
+  const accounts = watch('accounts');
+
+  useDeepCompareEffect(() => {
+    if (accounts?.length) {
+      setValue(
+        'accounts',
+        accounts?.map(
+          (record: { id: string; account: string | undefined; member: any; amount: any }) => {
+            const account = assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+              (member) => member?.node?.account?.id === record?.account
+            );
+
+            return {
+              id: record?.id,
+              member: record?.member,
+              account: record?.account,
+              amount: record?.amount || account?.node?.account?.dues?.totalDue,
+            };
+          }
+        )
+      );
+    }
+  }, [accounts, assignedMemberListQueryData]);
+
+  const { mutateAsync: setAgentTodayCollection } = useAgentTodayCollectionMutation();
 
   const handleSaveTodayList = () => {
     asyncToast({
-      id: 'set-agent-today-transaction-confirm',
-      promise: setAgentTodayList({
-        id: agentId,
+      id: 'set-agent-today-transaction-collection',
+      promise: setAgentTodayCollection({
+        agentId: agentId as string,
         data: getValues()['accounts'].map(
-          (account: {
-            id: string;
-            member: string;
-            account: string;
-            amount: string;
-            paid: boolean;
-          }) =>
+          (account: { id: string; member: string; account: string; amount: string }) =>
             account.id
               ? {
                   id: account.id,
                   member: account.member,
                   account: account.account,
                   amount: String(account.amount),
-                  paid: account.paid,
                 }
               : {
                   member: account.member,
                   account: account.account,
                   amount: String(account.amount),
-                  paid: account.paid,
                 }
         ),
       }),
       msgs: {
-        loading: 'Adding Agent Todays Transaction',
-        success: 'Added Agent Todays Transaction',
+        loading: 'Adding Agent Todays Collection',
+        success: 'Added Agent Todays Collection',
       },
       onSuccess: () => router.back(),
     });
   };
 
-  const accounts = watch('accounts');
-
-  const isMainButtonDisabled = useMemo(
-    () => !accounts?.find((account: { paid: boolean }) => account?.paid),
-    [accounts]
-  );
+  useEffect(() => {
+    setValue('agentId', [user?.firstName?.local, user?.lastName?.local].join(' '));
+  }, [user]);
 
   return (
     <FormLayout methods={methods} hasSidebar>
       <FormLayout.Header
-        title={`New Market Representative Transaction - ${featureCode?.newMarketRepresentativeTransaction}`}
+        title="New Market Representative Collection"
         buttonHandler={() => router.back()}
       />
 
       <FormLayout.Content>
         <FormLayout.Form>
           <Box p="s16" pb="100px" width="100%" display="flex" flexDirection="column" gap="s32">
-            <Box display="flex" flexDirection="column" gap="s16">
-              <Text>Market Representative Transaction</Text>
-
-              <FormAgentSelect
-                isRequired
-                name="agentId"
-                label="Market Representative"
-                currentBranchOnly
-              />
-            </Box>
+            <FormInput name="agentId" label="Market Representative" isDisabled />
 
             {agentId && (
               <BoxContainer>
@@ -255,7 +243,7 @@ export const AddAgentTransaction = () => {
                           (account) => account?.account === row?.account
                         );
 
-                        return !!item?.paid;
+                        return !!item?.status && item?.status !== 'PENDING';
                       },
                     },
                     {
@@ -293,7 +281,7 @@ export const AddAgentTransaction = () => {
                           (account) => account?.account === row?.account
                         );
 
-                        return !!item?.paid;
+                        return !!item?.status && item?.status !== 'PENDING';
                       },
                     },
                     {
@@ -306,7 +294,7 @@ export const AddAgentTransaction = () => {
                           (account) => account?.account === row?.account
                         );
 
-                        return !!item?.paid;
+                        return !!item?.status && item?.status !== 'PENDING';
                       },
                     },
                     {
@@ -330,19 +318,6 @@ export const AddAgentTransaction = () => {
                       isNumeric: true,
                       cellWidth: 'lg',
                     },
-                    {
-                      accessor: 'paid',
-                      header: '',
-                      fieldType: 'checkbox',
-                      getDisabled: (row) => {
-                        const item = todaysList?.find(
-                          (account) => account?.account === row?.account
-                        );
-
-                        return !!item?.paid;
-                      },
-                      cellWidth: 'sm',
-                    },
                   ]}
                   // defaultData={todaysList}
                   searchPlaceholder="Search or add member"
@@ -355,12 +330,11 @@ export const AddAgentTransaction = () => {
       </FormLayout.Content>
 
       <FormLayout.Footer
-        mainButtonLabel="Save Transaction"
+        mainButtonLabel="Save Collection"
         mainButtonHandler={handleSaveTodayList}
-        isMainButtonDisabled={isMainButtonDisabled}
       />
     </FormLayout>
   );
 };
 
-export default AddAgentTransaction;
+export default MarketRepresentativeCollectionAdd;
