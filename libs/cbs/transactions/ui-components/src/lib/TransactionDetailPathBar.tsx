@@ -268,7 +268,11 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         'Payment Mode': loanRepaymentDetailData?.paymentMode,
       };
 
-      tempTotal = loanRepaymentDetailData?.totalRepaymentAmount as string;
+      tempTotal = (
+        Number(loanRepaymentDetailData?.totalRepaymentAmount) +
+        Number(totalInterestAmount) +
+        Number(loanRepaymentDetailData?.fine)
+      ).toFixed(2);
 
       tempGLTransactions = loanRepaymentDetailData?.glTransaction;
     }
