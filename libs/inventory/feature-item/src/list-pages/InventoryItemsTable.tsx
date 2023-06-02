@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, PageHeader, Table } from '@myra-ui';
 
 import { useGetInventoryItemsListQuery } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const InventoryItemTable = () => {
@@ -10,6 +12,7 @@ export const InventoryItemTable = () => {
   const { data, isFetching } = useGetInventoryItemsListQuery({
     pagination: getPaginationQuery(),
   });
+  const router = useRouter();
 
   const rowItems = data?.inventory?.items?.list?.edges ?? [];
 
@@ -68,6 +71,9 @@ export const InventoryItemTable = () => {
         isLoading={isFetching}
         data={rowItems}
         columns={columns}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.INVENTORY_ITEM_DETAILS}?id=${row?.node?.id}`);
+        }}
         pagination={{
           total: data?.inventory?.items?.list?.totalCount ?? 'Many',
           pageInfo: data?.inventory?.items?.list?.pageInfo,

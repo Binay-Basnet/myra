@@ -14,7 +14,7 @@ export const InventoryItemDetails = () => {
 
   return (
     <>
-      <ProductDetailPathBar name="Purchase Entry" title={`Purchase `} />
+      <ProductDetailPathBar name="Item Details" title={`Inventory `} />
       <Box display="flex">
         <Box
           w="320px"
@@ -36,10 +36,7 @@ export const InventoryItemDetails = () => {
             bg="background.500"
             minH="calc(100vh - 170px)"
           >
-            <>
-              <Box>sdsd</Box>
-              {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
-            </>
+            {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
           </Box>
         </Scrollable>
       </Box>
