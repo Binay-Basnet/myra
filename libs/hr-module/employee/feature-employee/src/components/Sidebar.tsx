@@ -10,26 +10,14 @@ const PersonalInformation = [
   'Temprorary Address',
 ];
 
-// const personalInfoEnum: Record<
-//   typeof PersonalInformation[number],
-//   KymIndPersonalSection
-// > = {
-//   kymAccIndBasicInformation: KymIndPersonalSection.BasicInformation,
-//   kymAccIndContactDetails: KymIndPersonalSection.ContactDetails,
-//   kymAccIndIdentificationDetails: KymIndPersonalSection.IdentificationDetails,
-//   kymAccIndPermanentAddress: KymIndPersonalSection.PermanentAddress,
-//   kymAccIndTemporaryAddress: KymIndPersonalSection.TemporaryAddress,
-//   kymAccIndIncaseofresidinginRentedHouse: KymIndPersonalSection.RentedHouse,
-//   kymAccIndFamilyDetails: KymIndPersonalSection.FamilyDetails,
-// };
-
 const ProfessionalDetails: string[] = [
   'Work Information',
+  'Work Experience',
   'Joining Details',
   'Salary Info',
-  'Separation Information',
+  // 'Separation Information',
 ];
-const configuration: string[] = ['Salary Details', 'Hierarchy Information'];
+const configuration: string[] = ['Approvers', 'Employee Health Insurance'];
 const Decleration: string[] = ['Documents'];
 
 interface AccordianProps {
@@ -46,14 +34,14 @@ export const SidebarEmployeeAddForm = (props: AccordianProps) => {
   const subsection = currentSection?.subSection;
   const [isOpenPersonal, setIsOpenPersonal] = React.useState(false);
   const [isOpenProfessional, setIsOpenProfessional] = React.useState(false);
-  const [isOpenCoopMemberShip, setIsOpenCoopMembership] = React.useState(false);
+  const [isOpenConfigurations, setIsOpenConfigurations] = React.useState(false);
   const [isOpenDeclaration, setIsOpenDeclaration] = React.useState(false);
 
   React.useEffect(() => {
     const section = currentSection?.section;
     setIsOpenPersonal(section === 'personalDetails');
     setIsOpenProfessional(section === 'professionalDetails');
-    setIsOpenCoopMembership(section === 'COOPmembership');
+    setIsOpenConfigurations(section === 'Configurations');
     setIsOpenDeclaration(section === 'declaration');
   }, [currentSection]);
 
@@ -89,14 +77,6 @@ export const SidebarEmployeeAddForm = (props: AccordianProps) => {
                   {item}
                 </Text>
               </a>
-              {/* {formStatus?.data?.personal?.completed?.includes(
-                personalInfoEnum[item]
-              ) && (
-                <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />
-              )} */}
-              {/* {formStatus?.data?.personal?.error?.includes(
-                personalInfoEnum[item]
-              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />} */}
             </Box>
           ))}
         </Box>
@@ -141,17 +121,17 @@ export const SidebarEmployeeAddForm = (props: AccordianProps) => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        onClick={() => setIsOpenCoopMembership(!isOpenCoopMemberShip)}
+        onClick={() => setIsOpenConfigurations(!isOpenConfigurations)}
         cursor="pointer"
         minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
           3. Configurations
         </Text>
-        {!isOpenCoopMemberShip ? <ChevronRightIcon /> : <ChevronDownIcon />}
+        {!isOpenConfigurations ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
-      <Collapse in={isOpenCoopMemberShip}>
+      <Collapse in={isOpenConfigurations}>
         <Box display="flex" flexDirection="column" mb="s16">
           {configuration.map((item) => (
             <Box
@@ -181,7 +161,7 @@ export const SidebarEmployeeAddForm = (props: AccordianProps) => {
         minH="3.125rem"
       >
         <Text fontSize="r1" fontWeight="Semibold">
-          4. Declaration (4/4)
+          4. Declaration
         </Text>
         {!isOpenDeclaration ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>

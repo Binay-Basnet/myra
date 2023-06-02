@@ -6,8 +6,21 @@ import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { EmployeeContactDetails, PersonalInformation, SidebarEmployeeAddForm } from '../components';
+import {
+  Approvers,
+  Declerations,
+  EmployeeAddress,
+  EmployeeContactDetails,
+  EmployeeHealthInsurance,
+  EmployeeWorkInformation,
+  JoiningDetails,
+  PersonalInformation,
+  SalaryDetails,
+  SidebarEmployeeAddForm,
+  WorkExperienceTable,
+} from '../components';
 import { getEmployeeSection } from '../utils/getSectionEmployee';
+import { EducationalDetails } from '../components/EducationalDetails';
 
 export const EmployeeAddForm = () => {
   const [kymCurrentSection, setCurrentSection] = React.useState<{
@@ -17,7 +30,7 @@ export const EmployeeAddForm = () => {
   const methods = useForm();
   return (
     <FormLayout hasSidebar methods={methods}>
-      <FormHeader title="Add Employee" closeLink={ROUTES.CBS_MEMBER_LIST} />
+      <FormHeader title="Add Employee" closeLink={ROUTES.HRMODULE_EMPLOYEES_LIST} />
 
       <FormLayout.Content>
         <FormLayout.Sidebar borderPosition="right">
@@ -29,21 +42,40 @@ export const EmployeeAddForm = () => {
         <FormLayout.Form>
           <Box
             onFocus={(e) => {
-              const kymSection = getEmployeeSection(e.target.id);
-              setCurrentSection(kymSection);
+              const employeeSection = getEmployeeSection(e.target.id);
+              setCurrentSection(employeeSection);
             }}
           >
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 Basic Information{' '}
               </Text>
-              <PersonalInformation setCurrentSection={setCurrentSection} />
+              <PersonalInformation />
+              <EducationalDetails />
+              <EmployeeContactDetails />
+              <EmployeeAddress />
             </SectionContainer>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                Contact Details{' '}
+                Professional Information
               </Text>
-              <EmployeeContactDetails />
+              <EmployeeWorkInformation />
+              <WorkExperienceTable />
+              <JoiningDetails />
+              <SalaryDetails />
+            </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                Configurations
+              </Text>
+              <Approvers />
+              <EmployeeHealthInsurance />
+            </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                Declerations
+              </Text>
+              <Declerations />
             </SectionContainer>
           </Box>
         </FormLayout.Form>
