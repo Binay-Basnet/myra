@@ -36443,12 +36443,8 @@ export type GetWithdrawSlipDataQuery = {
       data?: {
         id?: string | null;
         noOfLeaves?: number | null;
-        member?: {
-          id: string;
-          name?: Record<'local' | 'en' | 'np', string> | null;
-          code: string;
-        } | null;
-        account?: { id: string; accountName?: string | null; productName?: string | null } | null;
+        member?: { id: string; name?: Record<'local' | 'en' | 'np', string> | null } | null;
+        account?: { id: string; accountName?: string | null } | null;
         availableRange?: { from: string; to: string } | null;
       } | null;
     } | null;
@@ -60338,12 +60334,10 @@ export const GetWithdrawSlipDataDocument = `
         member {
           id
           name
-          code
         }
         account {
           id
           accountName
-          productName
         }
         noOfLeaves
         availableRange {
