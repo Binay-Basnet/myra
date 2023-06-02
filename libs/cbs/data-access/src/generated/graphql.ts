@@ -1459,6 +1459,52 @@ export type AmountLimitFormState = {
   minAmount?: Maybe<Scalars['Amount']>;
 };
 
+export type AppointmentLetterConnection = {
+  edges?: Maybe<Array<Maybe<AppointmentLetters>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AppointmentLetterInput = {
+  appointmentDate: Scalars['Localized'];
+  appointmentTerms: Array<AppointmentTermInput>;
+  body: Scalars['String'];
+  jobApplication?: InputMaybe<Scalars['ID']>;
+};
+
+export type AppointmentLetterListed = {
+  applicantId: Scalars['ID'];
+  designation: Scalars['String'];
+  email: Scalars['String'];
+  name: Scalars['String'];
+  offerDate: Scalars['Localized'];
+  probationPeriod: Scalars['String'];
+};
+
+export type AppointmentLetterRecord = {
+  appointmentDate: Scalars['Localized'];
+  appointmentLetterID: Scalars['ID'];
+  appointmentTerms: Array<AppointmentTerm>;
+  body: Scalars['String'];
+  jobApplication: Scalars['ID'];
+};
+
+export type AppointmentLetters = {
+  cursor: Scalars['Cursor'];
+  node: AppointmentLetterListed;
+};
+
+export type AppointmentTerm = {
+  description: Scalars['String'];
+  sn: Scalars['ID'];
+  title: Scalars['String'];
+};
+
+export type AppointmentTermInput = {
+  description: Scalars['String'];
+  title: Scalars['String'];
+};
+
 export type ApproveIbtResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<JournalVoucherRecord>;
@@ -2211,6 +2257,7 @@ export type BulkTransferInfo = {
   sourceId?: Maybe<Scalars['String']>;
   sourceName?: Maybe<Scalars['String']>;
   totalTransferAmount?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
   transferAmount?: Maybe<Scalars['String']>;
   transferDate?: Maybe<Scalars['Localized']>;
   transferType?: Maybe<BulkTransferType>;
@@ -5684,6 +5731,21 @@ export type EtdsReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export type EachAppointmentLetterRecords = {
+  data: AppointmentLetterRecord;
+  error: QueryError;
+};
+
+export type EachJobOfferRecords = {
+  data: JobOfferRecord;
+  error: QueryError;
+};
+
+export type EachJobOpeningRecord = {
+  data: JobOpeningRecord;
+  error: QueryError;
+};
+
 export type EachStaffRecord = {
   data?: Maybe<StaffPlanRecord>;
   error?: Maybe<QueryError>;
@@ -5771,6 +5833,52 @@ export type EmployeeHealthInsuranceResult = {
   recordId: Scalars['String'];
 };
 
+export type EmployeeInput = {
+  age?: InputMaybe<Scalars['Int']>;
+  branchId?: InputMaybe<Scalars['String']>;
+  dateOfBirth?: InputMaybe<Scalars['Localized']>;
+  dateOfCompletion?: InputMaybe<Scalars['String']>;
+  degree_diploma?: InputMaybe<Scalars['String']>;
+  departmentId?: InputMaybe<Scalars['String']>;
+  designationId?: InputMaybe<Scalars['String']>;
+  employmentStatus?: InputMaybe<EmployeeStatus>;
+  employmentTypeId?: InputMaybe<EmployeeTypeEnum>;
+  expenseApproverId?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  genderId?: InputMaybe<Scalars['ID']>;
+  healthInsuranceNumberId?: InputMaybe<Scalars['String']>;
+  healthInsuranceProviderId?: InputMaybe<Scalars['String']>;
+  instituteName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  leaveApproverId?: InputMaybe<Scalars['String']>;
+  maritalStatusId?: InputMaybe<Scalars['ID']>;
+  middleName?: InputMaybe<Scalars['String']>;
+  pastWorkedAddress?: InputMaybe<Scalars['String']>;
+  pastWorkedCompanyName?: InputMaybe<Scalars['String']>;
+  pastWorkedDesignation?: InputMaybe<Scalars['String']>;
+  pastWorkedSalary?: InputMaybe<Scalars['Int']>;
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  personalEmailAddress?: InputMaybe<Scalars['String']>;
+  personalPhoneNumber?: InputMaybe<Scalars['String']>;
+  reportsToId?: InputMaybe<Scalars['String']>;
+  salaryPaymentMode?: InputMaybe<PaymentMode>;
+  sourceOfHire?: InputMaybe<SourceOfHire>;
+  specialization?: InputMaybe<Scalars['String']>;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
+  workEmailAddress?: InputMaybe<Scalars['String']>;
+  workPhoneNumber?: InputMaybe<Scalars['String']>;
+};
+
+export type EmployeeListType = {
+  employeeAddress?: Maybe<Scalars['String']>;
+  employeeContact?: Maybe<Scalars['String']>;
+  employeeDateOfJoining?: Maybe<Scalars['Localized']>;
+  employeeDepartment?: Maybe<Scalars['String']>;
+  employeeEmail?: Maybe<Scalars['String']>;
+  employeeId?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
+};
+
 export type EmployeeReport = {
   userReport?: Maybe<UserReportResult>;
 };
@@ -5779,15 +5887,39 @@ export type EmployeeReportUserReportArgs = {
   data?: InputMaybe<UserReportFilter>;
 };
 
+export type EmployeeReturnResult = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['String'];
+};
+
+export const EmployeeStatus = {
+  Active: 'ACTIVE',
+  Deceased: 'DECEASED',
+  Inactive: 'INACTIVE',
+  NoticePeriod: 'NOTICE_PERIOD',
+  Prabation: 'PRABATION',
+  Resigned: 'RESIGNED',
+  Terminated: 'TERMINATED',
+} as const;
+
+export type EmployeeStatus = typeof EmployeeStatus[keyof typeof EmployeeStatus];
 export type EmployeeType = {
   description: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
 };
 
+export const EmployeeTypeEnum = {
+  Contract: 'CONTRACT',
+  Permanent: 'PERMANENT',
+  Temporary: 'TEMPORARY',
+  Trainee: 'TRAINEE',
+} as const;
+
+export type EmployeeTypeEnum = typeof EmployeeTypeEnum[keyof typeof EmployeeTypeEnum];
 export type EmployeeTypeResult = {
   error?: Maybe<MutationError>;
-  recodId?: Maybe<Scalars['String']>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type EndOfDayDetail = {
@@ -7177,10 +7309,10 @@ export const GuaranteeStatus = {
 
 export type GuaranteeStatus = typeof GuaranteeStatus[keyof typeof GuaranteeStatus];
 export type HcmEmployeeGeneralMutation = {
-  UpsertDepartment: DepartmentResult;
-  UpsertDesignation: DesignationResult;
-  UpsertEmployeeHealthInsurance: EmployeeHealthInsuranceResult;
-  UpsertEmployeeType: EmployeeTypeResult;
+  upsertDepartment: DepartmentResult;
+  upsertDesignation: DesignationResult;
+  upsertEmployeeHealthInsurance: EmployeeHealthInsuranceResult;
+  upsertEmployeeType: EmployeeTypeResult;
 };
 
 export type HcmEmployeeGeneralMutationUpsertDepartmentArgs = {
@@ -7190,7 +7322,7 @@ export type HcmEmployeeGeneralMutationUpsertDepartmentArgs = {
 
 export type HcmEmployeeGeneralMutationUpsertDesignationArgs = {
   id?: InputMaybe<Scalars['String']>;
-  input: NewEmployeeType;
+  input: NewDesignation;
 };
 
 export type HcmEmployeeGeneralMutationUpsertEmployeeHealthInsuranceArgs = {
@@ -7204,10 +7336,10 @@ export type HcmEmployeeGeneralMutationUpsertEmployeeTypeArgs = {
 };
 
 export type HcmEmployeeGeneralQuery = {
-  listDepartment: HcmDepartmentListConnection;
-  listDesignation: HcmDesignationListConnection;
+  listDepartment?: Maybe<HcmEmployeeListConnection>;
+  listDesignation?: Maybe<HcmEmployeeListConnection>;
   listEmployeeHealthInsurance?: Maybe<HcmEmployeeHealthInsuranceListConnection>;
-  listEmployeeType: HcmEmployeeTypeListConnection;
+  listEmployeeType?: Maybe<HcmEmployeeListConnection>;
 };
 
 export type HcmEmployeeGeneralQueryListDepartmentArgs = {
@@ -7222,12 +7354,23 @@ export type HcmEmployeeGeneralQueryListDesignationArgs = {
 
 export type HcmEmployeeGeneralQueryListEmployeeHealthInsuranceArgs = {
   filter?: InputMaybe<Filter>;
-  paginations?: InputMaybe<Pagination>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HcmEmployeeGeneralQueryListEmployeeTypeArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type HcmEmployeeListConnection = {
+  edges?: Maybe<Array<Maybe<HcmEmployeeListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type HcmEmployeeListEdges = {
+  cursor: Scalars['Cursor'];
+  node: HcmEmployeeSchema;
 };
 
 export type HcmEmployeeMutation = {
@@ -7238,6 +7381,12 @@ export type HcmEmployeeQuery = {
   employee: HcmEmployeeGeneralQuery;
 };
 
+export type HcmEmployeeSchema = {
+  description: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
 export type HcmSettingsMutation = {
   employee: HcmEmployeeMutation;
 };
@@ -7246,20 +7395,139 @@ export type HcmSettingsQuery = {
   employee: HcmEmployeeGeneralQuery;
 };
 
+export type HrEmployeeKyeMutation = {
+  upsertEmployee: EmployeeReturnResult;
+};
+
+export type HrEmployeeKyeMutationUpsertEmployeeArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: EmployeeInput;
+};
+
+export type HrEmployeeKyeQuery = {
+  getEmployee: SingleEmployeeResult;
+  listEmployee: HrEmployeeListConnection;
+};
+
+export type HrEmployeeKyeQueryGetEmployeeArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type HrEmployeeKyeQueryListEmployeeArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrEmployeeListConnection = {
+  edges?: Maybe<Array<Maybe<HrEmployeeListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type HrEmployeeListEdges = {
+  cursor: Scalars['Cursor'];
+  node: EmployeeListType;
+};
+
+export type HrEmployeeMutation = {
+  employee: HrEmployeeMutation;
+};
+
+export type HrEmployeeQuery = {
+  employee: HrEmployeeKyeQuery;
+};
+
 export type HrMutation = {
+  employee: HrEmployeeMutation;
   recruitment: HrRecruitmentMutation;
 };
 
 export type HrQuery = {
+  employee: HrEmployeeQuery;
   recruitment: HrRecruitmentQuery;
+};
+
+export type HrRecruitmentAppointmentLetterMutation = {
+  upsertAppointmentLetter: ReturnAppointmentLetter;
+};
+
+export type HrRecruitmentAppointmentLetterMutationUpsertAppointmentLetterArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: AppointmentLetterInput;
+};
+
+export type HrRecruitmentAppointmentLetterQuery = {
+  getAppointmentLetter: EachAppointmentLetterRecords;
+  listAppointmentLetter: AppointmentLetterConnection;
+};
+
+export type HrRecruitmentAppointmentLetterQueryGetAppointmentLetterArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrRecruitmentAppointmentLetterQueryListAppointmentLetterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrRecruitmentJobOfferMutation = {
+  upsertJobOffer: ReturnJobOffer;
+};
+
+export type HrRecruitmentJobOfferMutationUpsertJobOfferArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: JobOfferInput;
+};
+
+export type HrRecruitmentJobOfferQuery = {
+  getJobOffer: EachJobOfferRecords;
+  listJobOffer: JobOfferConnection;
+};
+
+export type HrRecruitmentJobOfferQueryGetJobOfferArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrRecruitmentJobOfferQueryListJobOfferArgs = {
+  filter: Filter;
+  pagination: Pagination;
+};
+
+export type HrRecruitmentJobOpeningMutation = {
+  upsertJobOpening: ReturnJobOpening;
+};
+
+export type HrRecruitmentJobOpeningMutationUpsertJobOpeningArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: JobOpeningInput;
+};
+
+export type HrRecruitmentJobOpeningQuery = {
+  getJobOpening: EachJobOpeningRecord;
+  listJobOpening: JobOpeningConnection;
+};
+
+export type HrRecruitmentJobOpeningQueryGetJobOpeningArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrRecruitmentJobOpeningQueryListJobOpeningArgs = {
+  filter: Filter;
+  pagination: Pagination;
 };
 
 export type HrRecruitmentMutation = {
   recruitment: HrRecruitmentStaffPlanningMutation;
+  recruitmentAppointmentLetter: HrRecruitmentAppointmentLetterMutation;
+  recruitmentJobOffer: HrRecruitmentJobOfferMutation;
+  recruitmentJobOpening: HrRecruitmentJobOpeningMutation;
 };
 
 export type HrRecruitmentQuery = {
   recruitment: HrRecruitmentStaffPlanningQuery;
+  recruitmentAppointmentLetter: HrRecruitmentAppointmentLetterQuery;
+  recruitmentJobOffer: HrRecruitmentJobOfferQuery;
+  recruitmentJobOpening: HrRecruitmentJobOpeningQuery;
 };
 
 export type HrRecruitmentStaffPlanningMutation = {
@@ -7285,30 +7553,8 @@ export type HrRecruitmentStaffPlanningQueryListStaffPlanningArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
-export type HcmDepartmentListConnection = {
-  edges?: Maybe<Array<Maybe<HcmDepartmentListEdges>>>;
-  pageInfo?: Maybe<PageInfo>;
-  totalCount: Scalars['Int'];
-};
-
-export type HcmDepartmentListEdges = {
-  cursor: Scalars['Cursor'];
-  node: Department;
-};
-
-export type HcmDesignationListConnection = {
-  edges?: Maybe<Array<Maybe<HcmDesignationListEdges>>>;
-  pageInfo?: Maybe<PageInfo>;
-  totalCount: Scalars['Int'];
-};
-
-export type HcmDesignationListEdges = {
-  cursor: Scalars['Cursor'];
-  node: Designation;
-};
-
 export type HcmEmployeeHealthInsuranceListConnection = {
-  edge?: Maybe<Array<Maybe<HcmEmployeeTypeListEdges>>>;
+  edges?: Maybe<Array<Maybe<HcmEmployeeHealthInsuranceListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
@@ -7316,17 +7562,6 @@ export type HcmEmployeeHealthInsuranceListConnection = {
 export type HcmEmployeeHealthInsuranceListEdges = {
   cursor: Scalars['Cursor'];
   node: EmployeeHealthInsurance;
-};
-
-export type HcmEmployeeTypeListConnection = {
-  edges?: Maybe<Array<Maybe<HcmEmployeeTypeListEdges>>>;
-  pageInfo?: Maybe<PageInfo>;
-  totalCount: Scalars['Int'];
-};
-
-export type HcmEmployeeTypeListEdges = {
-  cursor: Scalars['Cursor'];
-  node: EmployeeType;
 };
 
 export type HumanizeAuditLog = {
@@ -8630,6 +8865,13 @@ export const InvestmentType = {
 } as const;
 
 export type InvestmentType = typeof InvestmentType[keyof typeof InvestmentType];
+export const IsOpenClosed = {
+  Archived: 'ARCHIVED',
+  Drafted: 'DRAFTED',
+  Open: 'OPEN',
+} as const;
+
+export type IsOpenClosed = typeof IsOpenClosed[keyof typeof IsOpenClosed];
 export type ItemVariantDetail = {
   costPrice?: InputMaybe<Scalars['String']>;
   itemName?: InputMaybe<Scalars['String']>;
@@ -8637,6 +8879,106 @@ export type ItemVariantDetail = {
   sku?: InputMaybe<Scalars['String']>;
 };
 
+export type JobOfferConnection = {
+  edges?: Maybe<Array<Maybe<JobOffers>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type JobOfferInput = {
+  jobApplicant?: InputMaybe<Scalars['ID']>;
+  jobDepartment?: InputMaybe<Scalars['ID']>;
+  jobDesignation?: InputMaybe<Scalars['ID']>;
+  jobOfferDate: Scalars['Localized'];
+  jobOfferTerms: Array<JobOfferTermInput>;
+  jobStatus: JobStatus;
+};
+
+export type JobOfferListed = {
+  applicantId: Scalars['ID'];
+  designation: Scalars['String'];
+  email: Scalars['String'];
+  name: Scalars['String'];
+  offerDate: Scalars['Localized'];
+  status: JobStatus;
+};
+
+export type JobOfferRecord = {
+  id: Scalars['ID'];
+  jobApplicant: Scalars['ID'];
+  jobDepartment: Scalars['ID'];
+  jobDesignation: Scalars['ID'];
+  jobOfferDate: Scalars['Localized'];
+  jobOfferTerms: Array<JobOfferTerm>;
+  jobStatus: JobStatus;
+};
+
+export type JobOfferTerm = {
+  offerTerm: Scalars['String'];
+  sn: Scalars['ID'];
+  value: Scalars['String'];
+};
+
+export type JobOfferTermInput = {
+  offerTerm: Scalars['String'];
+  value: Scalars['String'];
+};
+
+export type JobOffers = {
+  cursor: Scalars['Cursor'];
+  node: JobOfferListed;
+};
+
+export type JobOpeningConnection = {
+  edges?: Maybe<Array<Maybe<JobOpenings>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type JobOpeningInput = {
+  branchId?: InputMaybe<Scalars['String']>;
+  department: Scalars['ID'];
+  description: Scalars['String'];
+  designation: Scalars['ID'];
+  experienceLevel: Level;
+  salaryRange: SalaryRangeInput;
+  staffPlan: Scalars['ID'];
+  title: Scalars['String'];
+};
+
+export type JobOpeningListed = {
+  department: Scalars['ID'];
+  designation: Scalars['ID'];
+  jobId: Scalars['ID'];
+  staffPlan: Scalars['ID'];
+  status: IsOpenClosed;
+  title: Scalars['String'];
+};
+
+export type JobOpeningRecord = {
+  branchId?: Maybe<Scalars['String']>;
+  department: Scalars['ID'];
+  description: Scalars['String'];
+  designation: Scalars['ID'];
+  experienceLevel: Level;
+  id: Scalars['ID'];
+  salaryRange: SalaryRange;
+  staffPlan: Scalars['ID'];
+  title: Scalars['String'];
+};
+
+export type JobOpenings = {
+  cursor: Scalars['Cursor'];
+  node: JobOpeningListed;
+};
+
+export const JobStatus = {
+  Accepted: 'ACCEPTED',
+  AwaitingResponse: 'AWAITING_RESPONSE',
+  Rejected: 'REJECTED',
+} as const;
+
+export type JobStatus = typeof JobStatus[keyof typeof JobStatus];
 export type JournalChartsOfAccount = {
   journalCode: Scalars['String'];
 };
@@ -14694,6 +15036,12 @@ export type PaymentDetail = {
   vat?: Maybe<Scalars['String']>;
 };
 
+export const PaymentMode = {
+  Bank: 'BANK',
+  Cash: 'CASH',
+} as const;
+
+export type PaymentMode = typeof PaymentMode[keyof typeof PaymentMode];
 export type PearlsConfiguration = {
   denominator: Scalars['String'];
   denominatorVariables: Scalars['Map'];
@@ -15629,6 +15977,24 @@ export type Result = {
   nameNp: Scalars['String'];
 };
 
+export type ReturnAppointmentLetter = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<AppointmentLetterRecord>;
+  recordId: Scalars['ID'];
+};
+
+export type ReturnJobOffer = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<JobOfferRecord>;
+  recordId: Scalars['ID'];
+};
+
+export type ReturnJobOpening = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<JobOpeningRecord>;
+  recordId: Scalars['ID'];
+};
+
 export type ReturnStaffPlan = {
   error?: Maybe<MutationError>;
   record?: Maybe<StaffPlanRecord>;
@@ -15735,6 +16101,19 @@ export type StrTransactionActionResult = {
 export type StrTransactionDetailQuery = {
   data?: Maybe<StrDetailData>;
   error?: Maybe<QueryError>;
+};
+
+export type SalaryRange = {
+  default: Scalars['String'];
+  id: Scalars['ID'];
+  max: Scalars['String'];
+  min: Scalars['String'];
+};
+
+export type SalaryRangeInput = {
+  default: Scalars['String'];
+  max: Scalars['String'];
+  min: Scalars['String'];
 };
 
 export type SaleProduct = {
@@ -17111,6 +17490,42 @@ export const ShareVoucherDepositedBy = {
 
 export type ShareVoucherDepositedBy =
   typeof ShareVoucherDepositedBy[keyof typeof ShareVoucherDepositedBy];
+export type SingleEmployeeResult = {
+  age?: Maybe<Scalars['Int']>;
+  branchId?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
+  dateOfCompletion?: Maybe<Scalars['String']>;
+  degree_diploma?: Maybe<Scalars['String']>;
+  departmentId?: Maybe<Scalars['String']>;
+  designationId?: Maybe<Scalars['String']>;
+  employmentStatus?: Maybe<EmployeeStatus>;
+  employmentTypeId?: Maybe<EmployeeTypeEnum>;
+  expenseApproverId?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  genderId?: Maybe<Scalars['ID']>;
+  healthInsuranceNumberId?: Maybe<Scalars['String']>;
+  healthInsuranceProviderId?: Maybe<Scalars['String']>;
+  instituteName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  leaveApproverId?: Maybe<Scalars['String']>;
+  maritalStatusId?: Maybe<Scalars['ID']>;
+  middleName?: Maybe<Scalars['String']>;
+  pastWorkedAddress?: Maybe<Scalars['String']>;
+  pastWorkedCompanyName?: Maybe<Scalars['String']>;
+  pastWorkedDesignation?: Maybe<Scalars['String']>;
+  pastWorkedSalary?: Maybe<Scalars['Int']>;
+  permanentAddress?: Maybe<Address>;
+  personalEmailAddress?: Maybe<Scalars['String']>;
+  personalPhoneNumber?: Maybe<Scalars['String']>;
+  reportsToId?: Maybe<Scalars['String']>;
+  salaryPaymentMode?: Maybe<PaymentMode>;
+  sourceOfHire?: Maybe<SourceOfHire>;
+  specialization?: Maybe<Scalars['String']>;
+  temporaryAddress?: Maybe<Address>;
+  workEmailAddress?: Maybe<Scalars['String']>;
+  workPhoneNumber?: Maybe<Scalars['String']>;
+};
+
 export type SisterConcernDetails = {
   address?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -17174,24 +17589,45 @@ export const SlipState = {
 } as const;
 
 export type SlipState = typeof SlipState[keyof typeof SlipState];
+export const SourceOfHire = {
+  Direct: 'DIRECT',
+  Referral: 'REFERRAL',
+  Vacancy: 'VACANCY',
+} as const;
+
+export type SourceOfHire = typeof SourceOfHire[keyof typeof SourceOfHire];
 export type StaffPlanInput = {
+  branchId?: InputMaybe<Scalars['String']>;
   date: LocalizedDateFilter;
-  designation: Scalars['String'];
-  estimated_cost: Scalars['Float'];
-  estimated_cost_per_employee: Scalars['Float'];
   note?: InputMaybe<Scalars['String']>;
+  staffPlans?: InputMaybe<Array<StaffPlanTypesInput>>;
   title: Scalars['String'];
-  vacancies: Scalars['Int'];
+  total_cost_estimation: Scalars['String'];
+  total_vacancies: Scalars['Int'];
 };
 
 export type StaffPlanRecord = {
+  branchId?: Maybe<Scalars['String']>;
   date: LocalizedDate;
-  designation: Scalars['String'];
-  estimated_cost: Scalars['Float'];
-  estimated_cost_per_employee: Scalars['Float'];
   id: Scalars['ID'];
   note?: Maybe<Scalars['String']>;
+  staffPlans?: Maybe<Array<StaffPlanTypes>>;
   title: Scalars['String'];
+  total_cost_estimation: Scalars['String'];
+  total_vacancies: Scalars['String'];
+};
+
+export type StaffPlanTypes = {
+  designation: Scalars['String'];
+  estimated_cost: Scalars['String'];
+  estimated_cost_per_employee: Scalars['String'];
+  vacancies: Scalars['Int'];
+};
+
+export type StaffPlanTypesInput = {
+  designation: Scalars['String'];
+  estimated_cost: Scalars['String'];
+  estimated_cost_per_employee: Scalars['String'];
   vacancies: Scalars['Int'];
 };
 
@@ -17204,8 +17640,8 @@ export type StaffPlanning = {
 };
 
 export type StaffPlanningConnection = {
-  edges: Array<StaffPlanningEdge>;
-  pageInfo: PageInfo;
+  edges?: Maybe<Array<Maybe<StaffPlanningEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -18752,6 +19188,14 @@ export type LedgerDetails = {
   taxAmount: Scalars['String'];
 };
 
+export const Level = {
+  BelowOneYrs: 'BELOW_ONE_YRS',
+  BetweenOneTwoYrs: 'BETWEEN_ONE_TWO_YRS',
+  BetweenTwoThreeYrs: 'BETWEEN_TWO_THREE_YRS',
+  ThreeYrsAndAbove: 'THREE_YRS_AND_ABOVE',
+} as const;
+
+export type Level = typeof Level[keyof typeof Level];
 export type SetBankAccountsMutationVariables = Exact<{
   data?: InputMaybe<NewBankAccountInput>;
 }>;
@@ -35524,6 +35968,7 @@ export type BulkTransfersListQuery = {
           sourceName?: string | null;
           destinationId?: string | null;
           destinationName?: string | null;
+          transactionId?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -59300,6 +59745,7 @@ export const BulkTransfersListDocument = `
           sourceName
           destinationId
           destinationName
+          transactionId
         }
         cursor
       }

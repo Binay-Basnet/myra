@@ -4,7 +4,7 @@ import { PageHeader, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useBulkTransfersListQuery } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { amountConverter, getPaginationQuery } from '@coop/shared/utils';
 
 export const BulkTransferList = () => {
@@ -77,7 +77,12 @@ export const BulkTransferList = () => {
           total: bulkTransfersListData?.transaction?.listBulkTransfers?.totalCount ?? 'Many',
           pageInfo: bulkTransfersListData?.transaction?.listBulkTransfers?.pageInfo,
         }}
-        menu="LOAN"
+        rowOnClick={(row) =>
+          window.open(
+            `${ROUTES.CBS_TRANS_ALL_TRANSACTIONS_DETAILS}?id=${row?.node?.transactionId}`,
+            '_blank'
+          )
+        }
       />
     </>
   );
