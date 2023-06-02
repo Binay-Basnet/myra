@@ -1,0 +1,133 @@
+query getSuppliersList($filter: InvSupplierFilter, $pagination: Pagination) {
+  inventory {
+    suppliers {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            location {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            phoneNo
+            email
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+query getInventoryRegisterList($filter: InventoryRegisterFilter, $pagination: Pagination) {
+  inventory {
+    register(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          itemId
+          itemCode
+          itemName
+          transaction_type
+          unitPrice
+          totalCost
+          quantity
+        }
+        cursor
+      }
+
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+
+query getInventoryAdjustmentList($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
+  inventory {
+    adjustment {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getInventoryAdjustmentTable($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
+  inventory {
+    adjustment {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getInventoryAdjustmentDetails($id: ID!) {
+  inventory {
+    adjustment {
+      detailAdjustment(id: $id) {
+        data {
+          referenceNo
+          code
+          date
+          notes
+          modeOfAdjustment
+          itemDetails {
+            itemId
+
+            warehouseId
+            itemName
+            warehouseName
+            newQuantity
+            quantityAdjusted
+            quantityAdjustedUnit
+            newValue
+
+            valueAdjusted
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
