@@ -4494,6 +4494,7 @@ export type DepositLoanAccount = Base & {
   modifiedBy: Identity;
   objState: ObjState;
   productId: Scalars['ID'];
+  productName?: Maybe<Scalars['String']>;
   serviceCharge?: Maybe<Array<Maybe<ServiceCharge>>>;
   smsBanking?: Maybe<Scalars['Boolean']>;
   tenure?: Maybe<FrequencyTenure>;
@@ -8247,10 +8248,15 @@ export type InvItemsGroupMutationAddArgs = {
 
 export type InvItemsGroupQuery = {
   get: InvItemsGroup;
+  getGroupdetails: InventoryItemGroupDataResult;
   list?: Maybe<InvItemsGroupConnection>;
 };
 
 export type InvItemsGroupQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvItemsGroupQueryGetGroupdetailsArgs = {
   id: Scalars['ID'];
 };
 
@@ -8292,11 +8298,16 @@ export type InvItemsMutationAddArgs = {
 
 export type InvItemsQuery = {
   get: InvItems;
+  getItemDetails?: Maybe<InventoryItemDetailsResult>;
   getNewItemCode: Scalars['String'];
   list?: Maybe<InvItemsConnection>;
 };
 
 export type InvItemsQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvItemsQueryGetItemDetailsArgs = {
   id: Scalars['ID'];
 };
 
@@ -8372,11 +8383,16 @@ export type InvSuppliersEdge = {
 
 export type InvSuppliersQuery = {
   list?: Maybe<InvSupplierConnection>;
+  supplierDetail?: Maybe<InventorySupplierDetailResult>;
 };
 
 export type InvSuppliersQueryListArgs = {
   filter?: InputMaybe<InvSupplierFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type InvSuppliersQuerySupplierDetailArgs = {
+  id: Scalars['ID'];
 };
 
 export type InvUnitOfMeasure = {
@@ -8427,10 +8443,15 @@ export type InvUnitOfMeasureMutationAddArgs = {
 
 export type InvUnitOfMeasureQuery = {
   get: InvUnitOfMeasure;
+  getUnitDetails: InventoryUnitDataResult;
   list?: Maybe<InvUnitOfMeasureConnection>;
 };
 
 export type InvUnitOfMeasureQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvUnitOfMeasureQueryGetUnitDetailsArgs = {
   id: Scalars['ID'];
 };
 
@@ -8621,6 +8642,42 @@ export type InventoryAdjustmentResult = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export type InventoryItemDetails = {
+  itemCode: Scalars['String'];
+  itemGroup: Scalars['String'];
+  itemName: Scalars['String'];
+  ledgerDetail: InventoryItemLedgerDetail;
+  reorderLevel?: Maybe<Scalars['String']>;
+  tax?: Maybe<Scalars['String']>;
+  unit: Scalars['String'];
+  valuationMethod?: Maybe<InvItemsValuationMethod>;
+  variants?: Maybe<Array<Maybe<InventoryItemVariantDetail>>>;
+};
+
+export type InventoryItemDetailsResult = {
+  data?: Maybe<InventoryItemDetails>;
+  error?: Maybe<QueryError>;
+};
+
+export type InventoryItemGroupData = {
+  description?: Maybe<Scalars['String']>;
+  groupId: Scalars['String'];
+  groupName: Scalars['String'];
+  underGroup?: Maybe<Scalars['String']>;
+};
+
+export type InventoryItemGroupDataResult = {
+  data?: Maybe<InventoryItemGroupData>;
+  error?: Maybe<QueryError>;
+};
+
+export type InventoryItemLedgerDetail = {
+  purchaseLedger: Scalars['String'];
+  purchaseReturnLedger: Scalars['String'];
+  salesLedger: Scalars['String'];
+  salesReturnLedger: Scalars['String'];
+};
+
 export type InventoryItemSummationData = {
   totalQuantityInStock?: Maybe<Scalars['String']>;
   totalQuantityPurchased: Scalars['String'];
@@ -8628,6 +8685,13 @@ export type InventoryItemSummationData = {
   totalStockValue?: Maybe<Scalars['String']>;
   totalStockValueVat?: Maybe<Scalars['String']>;
   totalVatAmount?: Maybe<Scalars['String']>;
+};
+
+export type InventoryItemVariantDetail = {
+  costPrice?: Maybe<Scalars['String']>;
+  itemName?: Maybe<Scalars['String']>;
+  sellingPrice?: Maybe<Scalars['String']>;
+  sku?: Maybe<Scalars['String']>;
 };
 
 export type InventoryMutation = {
@@ -8764,6 +8828,29 @@ export type InventoryStockStatusTotal = {
   warehouseName: Scalars['String'];
 };
 
+export type InventorySupplierDetailData = {
+  applicationDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  contactNo: Scalars['String'];
+  contactPersonName?: Maybe<Scalars['String']>;
+  contactPersonPhoneNo?: Maybe<Scalars['String']>;
+  creditLimit?: Maybe<Scalars['Float']>;
+  creditTerms?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
+  legalStatusDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  location?: Maybe<Address>;
+  openingBalance?: Maybe<Scalars['String']>;
+  othersDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  panNo?: Maybe<Scalars['String']>;
+  registrationDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  supplierCode: Scalars['String'];
+  supplierName: Scalars['String'];
+};
+
+export type InventorySupplierDetailResult = {
+  data?: Maybe<InventorySupplierDetailData>;
+  error?: Maybe<QueryError>;
+};
+
 export const InventoryTransactionType = {
   Purchase: 'PURCHASE',
   Sales: 'SALES',
@@ -8771,6 +8858,17 @@ export const InventoryTransactionType = {
 
 export type InventoryTransactionType =
   typeof InventoryTransactionType[keyof typeof InventoryTransactionType];
+export type InventoryUnitData = {
+  description?: Maybe<Scalars['String']>;
+  shortName?: Maybe<Scalars['String']>;
+  unitName: Scalars['String'];
+};
+
+export type InventoryUnitDataResult = {
+  data?: Maybe<InventoryUnitData>;
+  error?: Maybe<QueryError>;
+};
+
 export type InvestmentAccountInput = {
   address: KymAddressInput;
   branch: Scalars['String'];
@@ -8872,6 +8970,13 @@ export const IsOpenClosed = {
 } as const;
 
 export type IsOpenClosed = typeof IsOpenClosed[keyof typeof IsOpenClosed];
+export type ItemDetails = {
+  amount: Scalars['String'];
+  itemName: Scalars['String'];
+  quantity: Scalars['String'];
+  rate: Scalars['String'];
+};
+
 export type ItemVariantDetail = {
   costPrice?: InputMaybe<Scalars['String']>;
   itemName?: InputMaybe<Scalars['String']>;
@@ -18812,6 +18917,11 @@ export type VaultBalanceReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export type WareHouseDetailDataResult = {
+  data?: Maybe<WarehouseInfo>;
+  error?: Maybe<QueryError>;
+};
+
 export type WarehouseConnection = {
   edges?: Maybe<Array<Maybe<WarehouseEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -18855,8 +18965,18 @@ export type WarehouseMutationTransferArgs = {
 };
 
 export type WarehouseQuery = {
+  getWarehouseDetails: WareHouseDetailDataResult;
+  getWarehouseTransferDetail: WarehouseTransferDetailDataResult;
   listTransfers?: Maybe<WarehouseTransferConnection>;
   listWarehouses?: Maybe<WarehouseConnection>;
+};
+
+export type WarehouseQueryGetWarehouseDetailsArgs = {
+  id: Scalars['ID'];
+};
+
+export type WarehouseQueryGetWarehouseTransferDetailArgs = {
+  id: Scalars['ID'];
 };
 
 export type WarehouseQueryListTransfersArgs = {
@@ -18892,6 +19012,20 @@ export type WarehouseTransferConnection = {
   edges?: Maybe<Array<Maybe<WarehouseTransferEdge>>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
+};
+
+export type WarehouseTransferDetailData = {
+  authorizedReceiver?: Maybe<Scalars['String']>;
+  authorizedSender?: Maybe<Scalars['String']>;
+  branchName: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  itemDetails?: Maybe<Array<Maybe<ItemDetails>>>;
+  transferEntry?: Maybe<WarehouseTransfer>;
+};
+
+export type WarehouseTransferDetailDataResult = {
+  data?: Maybe<WarehouseTransferDetailData>;
+  error?: Maybe<QueryError>;
 };
 
 export type WarehouseTransferEdge = {
@@ -36309,8 +36443,12 @@ export type GetWithdrawSlipDataQuery = {
       data?: {
         id?: string | null;
         noOfLeaves?: number | null;
-        member?: { id: string; name?: Record<'local' | 'en' | 'np', string> | null } | null;
-        account?: { id: string; accountName?: string | null } | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+        } | null;
+        account?: { id: string; accountName?: string | null; productName?: string | null } | null;
         availableRange?: { from: string; to: string } | null;
       } | null;
     } | null;
@@ -60200,10 +60338,12 @@ export const GetWithdrawSlipDataDocument = `
         member {
           id
           name
+          code
         }
         account {
           id
           accountName
+          productName
         }
         noOfLeaves
         availableRange {
