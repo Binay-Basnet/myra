@@ -26952,6 +26952,46 @@ export type GetInventoryUnitsDetailsQuery = {
   };
 };
 
+export type GetInventoryItemsDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryItemsDetailsQuery = {
+  inventory: {
+    items?: {
+      getItemDetails?: {
+        data?: {
+          itemName: string;
+          itemCode: string;
+          itemGroup: string;
+          unit: string;
+          tax?: string | null;
+          reorderLevel?: string | null;
+          valuationMethod?: InvItemsValuationMethod | null;
+          variants?: Array<{
+            costPrice?: string | null;
+            itemName?: string | null;
+            sellingPrice?: string | null;
+            sku?: string | null;
+          } | null> | null;
+          ledgerDetail: {
+            purchaseLedger: string;
+            purchaseReturnLedger: string;
+            salesLedger: string;
+            salesReturnLedger: string;
+          };
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetInventoryWarehouseDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -47804,6 +47844,54 @@ export const useGetInventoryUnitsDetailsQuery = <
     ['getInventoryUnitsDetails', variables],
     useAxios<GetInventoryUnitsDetailsQuery, GetInventoryUnitsDetailsQueryVariables>(
       GetInventoryUnitsDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryItemsDetailsDocument = `
+    query getInventoryItemsDetails($id: ID!) {
+  inventory {
+    items {
+      getItemDetails(id: $id) {
+        data {
+          itemName
+          itemCode
+          itemGroup
+          unit
+          tax
+          variants {
+            costPrice
+            itemName
+            sellingPrice
+            sku
+          }
+          ledgerDetail {
+            purchaseLedger
+            purchaseReturnLedger
+            salesLedger
+            salesReturnLedger
+          }
+          reorderLevel
+          valuationMethod
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryItemsDetailsQuery = <
+  TData = GetInventoryItemsDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryItemsDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryItemsDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryItemsDetailsQuery, TError, TData>(
+    ['getInventoryItemsDetails', variables],
+    useAxios<GetInventoryItemsDetailsQuery, GetInventoryItemsDetailsQueryVariables>(
+      GetInventoryItemsDetailsDocument
     ).bind(null, variables),
     options
   );

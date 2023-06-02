@@ -121,3 +121,36 @@ query getInventoryUnitsDetails($id: ID!) {
     }
   }
 }
+
+query getInventoryItemsDetails($id: ID!) {
+  inventory {
+    items {
+      getItemDetails(id: $id) {
+        data {
+          itemName
+          itemCode
+          itemGroup
+          unit
+          tax
+          variants {
+            costPrice
+            itemName
+            sellingPrice
+            sku
+          }
+          ledgerDetail {
+            purchaseLedger
+            purchaseReturnLedger
+            salesLedger
+            salesReturnLedger
+          }
+          reorderLevel
+          valuationMethod
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
