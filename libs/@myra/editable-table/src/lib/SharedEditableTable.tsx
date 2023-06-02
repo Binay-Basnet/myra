@@ -505,7 +505,10 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
                 dispatch({
                   type: EditableTableActionKind.ADD,
                   payload: Object.fromEntries(
-                    columns.map((key) => [key.accessor, key.isNumeric ? 0 : ''])
+                    columns.map((key) => [
+                      key.accessor,
+                      key.isNumeric ? 0 : key.fieldType === 'checkbox' ? false : '',
+                    ])
                   ) as T,
                 });
               }

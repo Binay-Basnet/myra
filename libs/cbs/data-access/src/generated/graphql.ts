@@ -1459,6 +1459,52 @@ export type AmountLimitFormState = {
   minAmount?: Maybe<Scalars['Amount']>;
 };
 
+export type AppointmentLetterConnection = {
+  edges?: Maybe<Array<Maybe<AppointmentLetters>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AppointmentLetterInput = {
+  appointmentDate: Scalars['Localized'];
+  appointmentTerms: Array<AppointmentTermInput>;
+  body: Scalars['String'];
+  jobApplication?: InputMaybe<Scalars['ID']>;
+};
+
+export type AppointmentLetterListed = {
+  applicantId: Scalars['ID'];
+  designation: Scalars['String'];
+  email: Scalars['String'];
+  name: Scalars['String'];
+  offerDate: Scalars['Localized'];
+  probationPeriod: Scalars['String'];
+};
+
+export type AppointmentLetterRecord = {
+  appointmentDate: Scalars['Localized'];
+  appointmentLetterID: Scalars['ID'];
+  appointmentTerms: Array<AppointmentTerm>;
+  body: Scalars['String'];
+  jobApplication: Scalars['ID'];
+};
+
+export type AppointmentLetters = {
+  cursor: Scalars['Cursor'];
+  node: AppointmentLetterListed;
+};
+
+export type AppointmentTerm = {
+  description: Scalars['String'];
+  sn: Scalars['ID'];
+  title: Scalars['String'];
+};
+
+export type AppointmentTermInput = {
+  description: Scalars['String'];
+  title: Scalars['String'];
+};
+
 export type ApproveIbtResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<JournalVoucherRecord>;
@@ -2211,6 +2257,7 @@ export type BulkTransferInfo = {
   sourceId?: Maybe<Scalars['String']>;
   sourceName?: Maybe<Scalars['String']>;
   totalTransferAmount?: Maybe<Scalars['String']>;
+  transactionId?: Maybe<Scalars['String']>;
   transferAmount?: Maybe<Scalars['String']>;
   transferDate?: Maybe<Scalars['Localized']>;
   transferType?: Maybe<BulkTransferType>;
@@ -4447,6 +4494,7 @@ export type DepositLoanAccount = Base & {
   modifiedBy: Identity;
   objState: ObjState;
   productId: Scalars['ID'];
+  productName?: Maybe<Scalars['String']>;
   serviceCharge?: Maybe<Array<Maybe<ServiceCharge>>>;
   smsBanking?: Maybe<Scalars['Boolean']>;
   tenure?: Maybe<FrequencyTenure>;
@@ -5684,6 +5732,21 @@ export type EtdsReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export type EachAppointmentLetterRecords = {
+  data: AppointmentLetterRecord;
+  error: QueryError;
+};
+
+export type EachJobOfferRecords = {
+  data: JobOfferRecord;
+  error: QueryError;
+};
+
+export type EachJobOpeningRecord = {
+  data: JobOpeningRecord;
+  error: QueryError;
+};
+
 export type EachStaffRecord = {
   data?: Maybe<StaffPlanRecord>;
   error?: Maybe<QueryError>;
@@ -5771,6 +5834,52 @@ export type EmployeeHealthInsuranceResult = {
   recordId: Scalars['String'];
 };
 
+export type EmployeeInput = {
+  age?: InputMaybe<Scalars['Int']>;
+  branchId?: InputMaybe<Scalars['String']>;
+  dateOfBirth?: InputMaybe<Scalars['Localized']>;
+  dateOfCompletion?: InputMaybe<Scalars['String']>;
+  degree_diploma?: InputMaybe<Scalars['String']>;
+  departmentId?: InputMaybe<Scalars['String']>;
+  designationId?: InputMaybe<Scalars['String']>;
+  employmentStatus?: InputMaybe<EmployeeStatus>;
+  employmentTypeId?: InputMaybe<EmployeeTypeEnum>;
+  expenseApproverId?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  genderId?: InputMaybe<Scalars['ID']>;
+  healthInsuranceNumberId?: InputMaybe<Scalars['String']>;
+  healthInsuranceProviderId?: InputMaybe<Scalars['String']>;
+  instituteName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  leaveApproverId?: InputMaybe<Scalars['String']>;
+  maritalStatusId?: InputMaybe<Scalars['ID']>;
+  middleName?: InputMaybe<Scalars['String']>;
+  pastWorkedAddress?: InputMaybe<Scalars['String']>;
+  pastWorkedCompanyName?: InputMaybe<Scalars['String']>;
+  pastWorkedDesignation?: InputMaybe<Scalars['String']>;
+  pastWorkedSalary?: InputMaybe<Scalars['Int']>;
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  personalEmailAddress?: InputMaybe<Scalars['String']>;
+  personalPhoneNumber?: InputMaybe<Scalars['String']>;
+  reportsToId?: InputMaybe<Scalars['String']>;
+  salaryPaymentMode?: InputMaybe<PaymentMode>;
+  sourceOfHire?: InputMaybe<SourceOfHire>;
+  specialization?: InputMaybe<Scalars['String']>;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
+  workEmailAddress?: InputMaybe<Scalars['String']>;
+  workPhoneNumber?: InputMaybe<Scalars['String']>;
+};
+
+export type EmployeeListType = {
+  employeeAddress?: Maybe<Scalars['String']>;
+  employeeContact?: Maybe<Scalars['String']>;
+  employeeDateOfJoining?: Maybe<Scalars['Localized']>;
+  employeeDepartment?: Maybe<Scalars['String']>;
+  employeeEmail?: Maybe<Scalars['String']>;
+  employeeId?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
+};
+
 export type EmployeeReport = {
   userReport?: Maybe<UserReportResult>;
 };
@@ -5779,15 +5888,39 @@ export type EmployeeReportUserReportArgs = {
   data?: InputMaybe<UserReportFilter>;
 };
 
+export type EmployeeReturnResult = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['String'];
+};
+
+export const EmployeeStatus = {
+  Active: 'ACTIVE',
+  Deceased: 'DECEASED',
+  Inactive: 'INACTIVE',
+  NoticePeriod: 'NOTICE_PERIOD',
+  Prabation: 'PRABATION',
+  Resigned: 'RESIGNED',
+  Terminated: 'TERMINATED',
+} as const;
+
+export type EmployeeStatus = typeof EmployeeStatus[keyof typeof EmployeeStatus];
 export type EmployeeType = {
   description: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
 };
 
+export const EmployeeTypeEnum = {
+  Contract: 'CONTRACT',
+  Permanent: 'PERMANENT',
+  Temporary: 'TEMPORARY',
+  Trainee: 'TRAINEE',
+} as const;
+
+export type EmployeeTypeEnum = typeof EmployeeTypeEnum[keyof typeof EmployeeTypeEnum];
 export type EmployeeTypeResult = {
   error?: Maybe<MutationError>;
-  recodId?: Maybe<Scalars['String']>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type EndOfDayDetail = {
@@ -7177,10 +7310,10 @@ export const GuaranteeStatus = {
 
 export type GuaranteeStatus = typeof GuaranteeStatus[keyof typeof GuaranteeStatus];
 export type HcmEmployeeGeneralMutation = {
-  UpsertDepartment: DepartmentResult;
-  UpsertDesignation: DesignationResult;
-  UpsertEmployeeHealthInsurance: EmployeeHealthInsuranceResult;
-  UpsertEmployeeType: EmployeeTypeResult;
+  upsertDepartment: DepartmentResult;
+  upsertDesignation: DesignationResult;
+  upsertEmployeeHealthInsurance: EmployeeHealthInsuranceResult;
+  upsertEmployeeType: EmployeeTypeResult;
 };
 
 export type HcmEmployeeGeneralMutationUpsertDepartmentArgs = {
@@ -7190,7 +7323,7 @@ export type HcmEmployeeGeneralMutationUpsertDepartmentArgs = {
 
 export type HcmEmployeeGeneralMutationUpsertDesignationArgs = {
   id?: InputMaybe<Scalars['String']>;
-  input: NewEmployeeType;
+  input: NewDesignation;
 };
 
 export type HcmEmployeeGeneralMutationUpsertEmployeeHealthInsuranceArgs = {
@@ -7204,10 +7337,10 @@ export type HcmEmployeeGeneralMutationUpsertEmployeeTypeArgs = {
 };
 
 export type HcmEmployeeGeneralQuery = {
-  listDepartment: HcmDepartmentListConnection;
-  listDesignation: HcmDesignationListConnection;
+  listDepartment?: Maybe<HcmEmployeeListConnection>;
+  listDesignation?: Maybe<HcmEmployeeListConnection>;
   listEmployeeHealthInsurance?: Maybe<HcmEmployeeHealthInsuranceListConnection>;
-  listEmployeeType: HcmEmployeeTypeListConnection;
+  listEmployeeType?: Maybe<HcmEmployeeListConnection>;
 };
 
 export type HcmEmployeeGeneralQueryListDepartmentArgs = {
@@ -7222,12 +7355,23 @@ export type HcmEmployeeGeneralQueryListDesignationArgs = {
 
 export type HcmEmployeeGeneralQueryListEmployeeHealthInsuranceArgs = {
   filter?: InputMaybe<Filter>;
-  paginations?: InputMaybe<Pagination>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HcmEmployeeGeneralQueryListEmployeeTypeArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type HcmEmployeeListConnection = {
+  edges?: Maybe<Array<Maybe<HcmEmployeeListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type HcmEmployeeListEdges = {
+  cursor: Scalars['Cursor'];
+  node: HcmEmployeeSchema;
 };
 
 export type HcmEmployeeMutation = {
@@ -7238,6 +7382,12 @@ export type HcmEmployeeQuery = {
   employee: HcmEmployeeGeneralQuery;
 };
 
+export type HcmEmployeeSchema = {
+  description: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
 export type HcmSettingsMutation = {
   employee: HcmEmployeeMutation;
 };
@@ -7246,20 +7396,139 @@ export type HcmSettingsQuery = {
   employee: HcmEmployeeGeneralQuery;
 };
 
+export type HrEmployeeKyeMutation = {
+  upsertEmployee: EmployeeReturnResult;
+};
+
+export type HrEmployeeKyeMutationUpsertEmployeeArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: EmployeeInput;
+};
+
+export type HrEmployeeKyeQuery = {
+  getEmployee: SingleEmployeeResult;
+  listEmployee: HrEmployeeListConnection;
+};
+
+export type HrEmployeeKyeQueryGetEmployeeArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type HrEmployeeKyeQueryListEmployeeArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrEmployeeListConnection = {
+  edges?: Maybe<Array<Maybe<HrEmployeeListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type HrEmployeeListEdges = {
+  cursor: Scalars['Cursor'];
+  node: EmployeeListType;
+};
+
+export type HrEmployeeMutation = {
+  employee: HrEmployeeMutation;
+};
+
+export type HrEmployeeQuery = {
+  employee: HrEmployeeKyeQuery;
+};
+
 export type HrMutation = {
+  employee: HrEmployeeMutation;
   recruitment: HrRecruitmentMutation;
 };
 
 export type HrQuery = {
+  employee: HrEmployeeQuery;
   recruitment: HrRecruitmentQuery;
+};
+
+export type HrRecruitmentAppointmentLetterMutation = {
+  upsertAppointmentLetter: ReturnAppointmentLetter;
+};
+
+export type HrRecruitmentAppointmentLetterMutationUpsertAppointmentLetterArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: AppointmentLetterInput;
+};
+
+export type HrRecruitmentAppointmentLetterQuery = {
+  getAppointmentLetter: EachAppointmentLetterRecords;
+  listAppointmentLetter: AppointmentLetterConnection;
+};
+
+export type HrRecruitmentAppointmentLetterQueryGetAppointmentLetterArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrRecruitmentAppointmentLetterQueryListAppointmentLetterArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrRecruitmentJobOfferMutation = {
+  upsertJobOffer: ReturnJobOffer;
+};
+
+export type HrRecruitmentJobOfferMutationUpsertJobOfferArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: JobOfferInput;
+};
+
+export type HrRecruitmentJobOfferQuery = {
+  getJobOffer: EachJobOfferRecords;
+  listJobOffer: JobOfferConnection;
+};
+
+export type HrRecruitmentJobOfferQueryGetJobOfferArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrRecruitmentJobOfferQueryListJobOfferArgs = {
+  filter: Filter;
+  pagination: Pagination;
+};
+
+export type HrRecruitmentJobOpeningMutation = {
+  upsertJobOpening: ReturnJobOpening;
+};
+
+export type HrRecruitmentJobOpeningMutationUpsertJobOpeningArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: JobOpeningInput;
+};
+
+export type HrRecruitmentJobOpeningQuery = {
+  getJobOpening: EachJobOpeningRecord;
+  listJobOpening: JobOpeningConnection;
+};
+
+export type HrRecruitmentJobOpeningQueryGetJobOpeningArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrRecruitmentJobOpeningQueryListJobOpeningArgs = {
+  filter: Filter;
+  pagination: Pagination;
 };
 
 export type HrRecruitmentMutation = {
   recruitment: HrRecruitmentStaffPlanningMutation;
+  recruitmentAppointmentLetter: HrRecruitmentAppointmentLetterMutation;
+  recruitmentJobOffer: HrRecruitmentJobOfferMutation;
+  recruitmentJobOpening: HrRecruitmentJobOpeningMutation;
 };
 
 export type HrRecruitmentQuery = {
   recruitment: HrRecruitmentStaffPlanningQuery;
+  recruitmentAppointmentLetter: HrRecruitmentAppointmentLetterQuery;
+  recruitmentJobOffer: HrRecruitmentJobOfferQuery;
+  recruitmentJobOpening: HrRecruitmentJobOpeningQuery;
 };
 
 export type HrRecruitmentStaffPlanningMutation = {
@@ -7285,30 +7554,8 @@ export type HrRecruitmentStaffPlanningQueryListStaffPlanningArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
-export type HcmDepartmentListConnection = {
-  edges?: Maybe<Array<Maybe<HcmDepartmentListEdges>>>;
-  pageInfo?: Maybe<PageInfo>;
-  totalCount: Scalars['Int'];
-};
-
-export type HcmDepartmentListEdges = {
-  cursor: Scalars['Cursor'];
-  node: Department;
-};
-
-export type HcmDesignationListConnection = {
-  edges?: Maybe<Array<Maybe<HcmDesignationListEdges>>>;
-  pageInfo?: Maybe<PageInfo>;
-  totalCount: Scalars['Int'];
-};
-
-export type HcmDesignationListEdges = {
-  cursor: Scalars['Cursor'];
-  node: Designation;
-};
-
 export type HcmEmployeeHealthInsuranceListConnection = {
-  edge?: Maybe<Array<Maybe<HcmEmployeeTypeListEdges>>>;
+  edges?: Maybe<Array<Maybe<HcmEmployeeHealthInsuranceListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
@@ -7316,17 +7563,6 @@ export type HcmEmployeeHealthInsuranceListConnection = {
 export type HcmEmployeeHealthInsuranceListEdges = {
   cursor: Scalars['Cursor'];
   node: EmployeeHealthInsurance;
-};
-
-export type HcmEmployeeTypeListConnection = {
-  edges?: Maybe<Array<Maybe<HcmEmployeeTypeListEdges>>>;
-  pageInfo?: Maybe<PageInfo>;
-  totalCount: Scalars['Int'];
-};
-
-export type HcmEmployeeTypeListEdges = {
-  cursor: Scalars['Cursor'];
-  node: EmployeeType;
 };
 
 export type HumanizeAuditLog = {
@@ -8012,10 +8248,15 @@ export type InvItemsGroupMutationAddArgs = {
 
 export type InvItemsGroupQuery = {
   get: InvItemsGroup;
+  getGroupdetails: InventoryItemGroupDataResult;
   list?: Maybe<InvItemsGroupConnection>;
 };
 
 export type InvItemsGroupQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvItemsGroupQueryGetGroupdetailsArgs = {
   id: Scalars['ID'];
 };
 
@@ -8057,11 +8298,16 @@ export type InvItemsMutationAddArgs = {
 
 export type InvItemsQuery = {
   get: InvItems;
+  getItemDetails?: Maybe<InventoryItemDetailsResult>;
   getNewItemCode: Scalars['String'];
   list?: Maybe<InvItemsConnection>;
 };
 
 export type InvItemsQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvItemsQueryGetItemDetailsArgs = {
   id: Scalars['ID'];
 };
 
@@ -8137,11 +8383,16 @@ export type InvSuppliersEdge = {
 
 export type InvSuppliersQuery = {
   list?: Maybe<InvSupplierConnection>;
+  supplierDetail?: Maybe<InventorySupplierDetailResult>;
 };
 
 export type InvSuppliersQueryListArgs = {
   filter?: InputMaybe<InvSupplierFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type InvSuppliersQuerySupplierDetailArgs = {
+  id: Scalars['ID'];
 };
 
 export type InvUnitOfMeasure = {
@@ -8192,10 +8443,15 @@ export type InvUnitOfMeasureMutationAddArgs = {
 
 export type InvUnitOfMeasureQuery = {
   get: InvUnitOfMeasure;
+  getUnitDetails: InventoryUnitDataResult;
   list?: Maybe<InvUnitOfMeasureConnection>;
 };
 
 export type InvUnitOfMeasureQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvUnitOfMeasureQueryGetUnitDetailsArgs = {
   id: Scalars['ID'];
 };
 
@@ -8386,6 +8642,42 @@ export type InventoryAdjustmentResult = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export type InventoryItemDetails = {
+  itemCode: Scalars['String'];
+  itemGroup: Scalars['String'];
+  itemName: Scalars['String'];
+  ledgerDetail: InventoryItemLedgerDetail;
+  reorderLevel?: Maybe<Scalars['String']>;
+  tax?: Maybe<Scalars['String']>;
+  unit: Scalars['String'];
+  valuationMethod?: Maybe<InvItemsValuationMethod>;
+  variants?: Maybe<Array<Maybe<InventoryItemVariantDetail>>>;
+};
+
+export type InventoryItemDetailsResult = {
+  data?: Maybe<InventoryItemDetails>;
+  error?: Maybe<QueryError>;
+};
+
+export type InventoryItemGroupData = {
+  description?: Maybe<Scalars['String']>;
+  groupId: Scalars['String'];
+  groupName: Scalars['String'];
+  underGroup?: Maybe<Scalars['String']>;
+};
+
+export type InventoryItemGroupDataResult = {
+  data?: Maybe<InventoryItemGroupData>;
+  error?: Maybe<QueryError>;
+};
+
+export type InventoryItemLedgerDetail = {
+  purchaseLedger: Scalars['String'];
+  purchaseReturnLedger: Scalars['String'];
+  salesLedger: Scalars['String'];
+  salesReturnLedger: Scalars['String'];
+};
+
 export type InventoryItemSummationData = {
   totalQuantityInStock?: Maybe<Scalars['String']>;
   totalQuantityPurchased: Scalars['String'];
@@ -8393,6 +8685,13 @@ export type InventoryItemSummationData = {
   totalStockValue?: Maybe<Scalars['String']>;
   totalStockValueVat?: Maybe<Scalars['String']>;
   totalVatAmount?: Maybe<Scalars['String']>;
+};
+
+export type InventoryItemVariantDetail = {
+  costPrice?: Maybe<Scalars['String']>;
+  itemName?: Maybe<Scalars['String']>;
+  sellingPrice?: Maybe<Scalars['String']>;
+  sku?: Maybe<Scalars['String']>;
 };
 
 export type InventoryMutation = {
@@ -8529,6 +8828,29 @@ export type InventoryStockStatusTotal = {
   warehouseName: Scalars['String'];
 };
 
+export type InventorySupplierDetailData = {
+  applicationDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  contactNo: Scalars['String'];
+  contactPersonName?: Maybe<Scalars['String']>;
+  contactPersonPhoneNo?: Maybe<Scalars['String']>;
+  creditLimit?: Maybe<Scalars['Float']>;
+  creditTerms?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
+  legalStatusDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  location?: Maybe<Address>;
+  openingBalance?: Maybe<Scalars['String']>;
+  othersDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  panNo?: Maybe<Scalars['String']>;
+  registrationDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  supplierCode: Scalars['String'];
+  supplierName: Scalars['String'];
+};
+
+export type InventorySupplierDetailResult = {
+  data?: Maybe<InventorySupplierDetailData>;
+  error?: Maybe<QueryError>;
+};
+
 export const InventoryTransactionType = {
   Purchase: 'PURCHASE',
   Sales: 'SALES',
@@ -8536,6 +8858,17 @@ export const InventoryTransactionType = {
 
 export type InventoryTransactionType =
   typeof InventoryTransactionType[keyof typeof InventoryTransactionType];
+export type InventoryUnitData = {
+  description?: Maybe<Scalars['String']>;
+  shortName?: Maybe<Scalars['String']>;
+  unitName: Scalars['String'];
+};
+
+export type InventoryUnitDataResult = {
+  data?: Maybe<InventoryUnitData>;
+  error?: Maybe<QueryError>;
+};
+
 export type InvestmentAccountInput = {
   address: KymAddressInput;
   branch: Scalars['String'];
@@ -8630,6 +8963,20 @@ export const InvestmentType = {
 } as const;
 
 export type InvestmentType = typeof InvestmentType[keyof typeof InvestmentType];
+export const IsOpenClosed = {
+  Archived: 'ARCHIVED',
+  Drafted: 'DRAFTED',
+  Open: 'OPEN',
+} as const;
+
+export type IsOpenClosed = typeof IsOpenClosed[keyof typeof IsOpenClosed];
+export type ItemDetails = {
+  amount: Scalars['String'];
+  itemName: Scalars['String'];
+  quantity: Scalars['String'];
+  rate: Scalars['String'];
+};
+
 export type ItemVariantDetail = {
   costPrice?: InputMaybe<Scalars['String']>;
   itemName?: InputMaybe<Scalars['String']>;
@@ -8637,6 +8984,106 @@ export type ItemVariantDetail = {
   sku?: InputMaybe<Scalars['String']>;
 };
 
+export type JobOfferConnection = {
+  edges?: Maybe<Array<Maybe<JobOffers>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type JobOfferInput = {
+  jobApplicant?: InputMaybe<Scalars['ID']>;
+  jobDepartment?: InputMaybe<Scalars['ID']>;
+  jobDesignation?: InputMaybe<Scalars['ID']>;
+  jobOfferDate: Scalars['Localized'];
+  jobOfferTerms: Array<JobOfferTermInput>;
+  jobStatus: JobStatus;
+};
+
+export type JobOfferListed = {
+  applicantId: Scalars['ID'];
+  designation: Scalars['String'];
+  email: Scalars['String'];
+  name: Scalars['String'];
+  offerDate: Scalars['Localized'];
+  status: JobStatus;
+};
+
+export type JobOfferRecord = {
+  id: Scalars['ID'];
+  jobApplicant: Scalars['ID'];
+  jobDepartment: Scalars['ID'];
+  jobDesignation: Scalars['ID'];
+  jobOfferDate: Scalars['Localized'];
+  jobOfferTerms: Array<JobOfferTerm>;
+  jobStatus: JobStatus;
+};
+
+export type JobOfferTerm = {
+  offerTerm: Scalars['String'];
+  sn: Scalars['ID'];
+  value: Scalars['String'];
+};
+
+export type JobOfferTermInput = {
+  offerTerm: Scalars['String'];
+  value: Scalars['String'];
+};
+
+export type JobOffers = {
+  cursor: Scalars['Cursor'];
+  node: JobOfferListed;
+};
+
+export type JobOpeningConnection = {
+  edges?: Maybe<Array<Maybe<JobOpenings>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type JobOpeningInput = {
+  branchId?: InputMaybe<Scalars['String']>;
+  department: Scalars['ID'];
+  description: Scalars['String'];
+  designation: Scalars['ID'];
+  experienceLevel: Level;
+  salaryRange: SalaryRangeInput;
+  staffPlan: Scalars['ID'];
+  title: Scalars['String'];
+};
+
+export type JobOpeningListed = {
+  department: Scalars['ID'];
+  designation: Scalars['ID'];
+  jobId: Scalars['ID'];
+  staffPlan: Scalars['ID'];
+  status: IsOpenClosed;
+  title: Scalars['String'];
+};
+
+export type JobOpeningRecord = {
+  branchId?: Maybe<Scalars['String']>;
+  department: Scalars['ID'];
+  description: Scalars['String'];
+  designation: Scalars['ID'];
+  experienceLevel: Level;
+  id: Scalars['ID'];
+  salaryRange: SalaryRange;
+  staffPlan: Scalars['ID'];
+  title: Scalars['String'];
+};
+
+export type JobOpenings = {
+  cursor: Scalars['Cursor'];
+  node: JobOpeningListed;
+};
+
+export const JobStatus = {
+  Accepted: 'ACCEPTED',
+  AwaitingResponse: 'AWAITING_RESPONSE',
+  Rejected: 'REJECTED',
+} as const;
+
+export type JobStatus = typeof JobStatus[keyof typeof JobStatus];
 export type JournalChartsOfAccount = {
   journalCode: Scalars['String'];
 };
@@ -14694,6 +15141,12 @@ export type PaymentDetail = {
   vat?: Maybe<Scalars['String']>;
 };
 
+export const PaymentMode = {
+  Bank: 'BANK',
+  Cash: 'CASH',
+} as const;
+
+export type PaymentMode = typeof PaymentMode[keyof typeof PaymentMode];
 export type PearlsConfiguration = {
   denominator: Scalars['String'];
   denominatorVariables: Scalars['Map'];
@@ -15629,6 +16082,24 @@ export type Result = {
   nameNp: Scalars['String'];
 };
 
+export type ReturnAppointmentLetter = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<AppointmentLetterRecord>;
+  recordId: Scalars['ID'];
+};
+
+export type ReturnJobOffer = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<JobOfferRecord>;
+  recordId: Scalars['ID'];
+};
+
+export type ReturnJobOpening = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<JobOpeningRecord>;
+  recordId: Scalars['ID'];
+};
+
 export type ReturnStaffPlan = {
   error?: Maybe<MutationError>;
   record?: Maybe<StaffPlanRecord>;
@@ -15735,6 +16206,19 @@ export type StrTransactionActionResult = {
 export type StrTransactionDetailQuery = {
   data?: Maybe<StrDetailData>;
   error?: Maybe<QueryError>;
+};
+
+export type SalaryRange = {
+  default: Scalars['String'];
+  id: Scalars['ID'];
+  max: Scalars['String'];
+  min: Scalars['String'];
+};
+
+export type SalaryRangeInput = {
+  default: Scalars['String'];
+  max: Scalars['String'];
+  min: Scalars['String'];
 };
 
 export type SaleProduct = {
@@ -17111,6 +17595,42 @@ export const ShareVoucherDepositedBy = {
 
 export type ShareVoucherDepositedBy =
   typeof ShareVoucherDepositedBy[keyof typeof ShareVoucherDepositedBy];
+export type SingleEmployeeResult = {
+  age?: Maybe<Scalars['Int']>;
+  branchId?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
+  dateOfCompletion?: Maybe<Scalars['String']>;
+  degree_diploma?: Maybe<Scalars['String']>;
+  departmentId?: Maybe<Scalars['String']>;
+  designationId?: Maybe<Scalars['String']>;
+  employmentStatus?: Maybe<EmployeeStatus>;
+  employmentTypeId?: Maybe<EmployeeTypeEnum>;
+  expenseApproverId?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  genderId?: Maybe<Scalars['ID']>;
+  healthInsuranceNumberId?: Maybe<Scalars['String']>;
+  healthInsuranceProviderId?: Maybe<Scalars['String']>;
+  instituteName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  leaveApproverId?: Maybe<Scalars['String']>;
+  maritalStatusId?: Maybe<Scalars['ID']>;
+  middleName?: Maybe<Scalars['String']>;
+  pastWorkedAddress?: Maybe<Scalars['String']>;
+  pastWorkedCompanyName?: Maybe<Scalars['String']>;
+  pastWorkedDesignation?: Maybe<Scalars['String']>;
+  pastWorkedSalary?: Maybe<Scalars['Int']>;
+  permanentAddress?: Maybe<Address>;
+  personalEmailAddress?: Maybe<Scalars['String']>;
+  personalPhoneNumber?: Maybe<Scalars['String']>;
+  reportsToId?: Maybe<Scalars['String']>;
+  salaryPaymentMode?: Maybe<PaymentMode>;
+  sourceOfHire?: Maybe<SourceOfHire>;
+  specialization?: Maybe<Scalars['String']>;
+  temporaryAddress?: Maybe<Address>;
+  workEmailAddress?: Maybe<Scalars['String']>;
+  workPhoneNumber?: Maybe<Scalars['String']>;
+};
+
 export type SisterConcernDetails = {
   address?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -17174,24 +17694,45 @@ export const SlipState = {
 } as const;
 
 export type SlipState = typeof SlipState[keyof typeof SlipState];
+export const SourceOfHire = {
+  Direct: 'DIRECT',
+  Referral: 'REFERRAL',
+  Vacancy: 'VACANCY',
+} as const;
+
+export type SourceOfHire = typeof SourceOfHire[keyof typeof SourceOfHire];
 export type StaffPlanInput = {
+  branchId?: InputMaybe<Scalars['String']>;
   date: LocalizedDateFilter;
-  designation: Scalars['String'];
-  estimated_cost: Scalars['Float'];
-  estimated_cost_per_employee: Scalars['Float'];
   note?: InputMaybe<Scalars['String']>;
+  staffPlans?: InputMaybe<Array<StaffPlanTypesInput>>;
   title: Scalars['String'];
-  vacancies: Scalars['Int'];
+  total_cost_estimation: Scalars['String'];
+  total_vacancies: Scalars['Int'];
 };
 
 export type StaffPlanRecord = {
+  branchId?: Maybe<Scalars['String']>;
   date: LocalizedDate;
-  designation: Scalars['String'];
-  estimated_cost: Scalars['Float'];
-  estimated_cost_per_employee: Scalars['Float'];
   id: Scalars['ID'];
   note?: Maybe<Scalars['String']>;
+  staffPlans?: Maybe<Array<StaffPlanTypes>>;
   title: Scalars['String'];
+  total_cost_estimation: Scalars['String'];
+  total_vacancies: Scalars['String'];
+};
+
+export type StaffPlanTypes = {
+  designation: Scalars['String'];
+  estimated_cost: Scalars['String'];
+  estimated_cost_per_employee: Scalars['String'];
+  vacancies: Scalars['Int'];
+};
+
+export type StaffPlanTypesInput = {
+  designation: Scalars['String'];
+  estimated_cost: Scalars['String'];
+  estimated_cost_per_employee: Scalars['String'];
   vacancies: Scalars['Int'];
 };
 
@@ -17204,8 +17745,8 @@ export type StaffPlanning = {
 };
 
 export type StaffPlanningConnection = {
-  edges: Array<StaffPlanningEdge>;
-  pageInfo: PageInfo;
+  edges?: Maybe<Array<Maybe<StaffPlanningEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -18376,6 +18917,11 @@ export type VaultBalanceReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export type WareHouseDetailDataResult = {
+  data?: Maybe<WarehouseInfo>;
+  error?: Maybe<QueryError>;
+};
+
 export type WarehouseConnection = {
   edges?: Maybe<Array<Maybe<WarehouseEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -18419,8 +18965,18 @@ export type WarehouseMutationTransferArgs = {
 };
 
 export type WarehouseQuery = {
+  getWarehouseDetails: WareHouseDetailDataResult;
+  getWarehouseTransferDetail: WarehouseTransferDetailDataResult;
   listTransfers?: Maybe<WarehouseTransferConnection>;
   listWarehouses?: Maybe<WarehouseConnection>;
+};
+
+export type WarehouseQueryGetWarehouseDetailsArgs = {
+  id: Scalars['ID'];
+};
+
+export type WarehouseQueryGetWarehouseTransferDetailArgs = {
+  id: Scalars['ID'];
 };
 
 export type WarehouseQueryListTransfersArgs = {
@@ -18456,6 +19012,20 @@ export type WarehouseTransferConnection = {
   edges?: Maybe<Array<Maybe<WarehouseTransferEdge>>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
+};
+
+export type WarehouseTransferDetailData = {
+  authorizedReceiver?: Maybe<Scalars['String']>;
+  authorizedSender?: Maybe<Scalars['String']>;
+  branchName: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  itemDetails?: Maybe<Array<Maybe<ItemDetails>>>;
+  transferEntry?: Maybe<WarehouseTransfer>;
+};
+
+export type WarehouseTransferDetailDataResult = {
+  data?: Maybe<WarehouseTransferDetailData>;
+  error?: Maybe<QueryError>;
 };
 
 export type WarehouseTransferEdge = {
@@ -18752,6 +19322,14 @@ export type LedgerDetails = {
   taxAmount: Scalars['String'];
 };
 
+export const Level = {
+  BelowOneYrs: 'BELOW_ONE_YRS',
+  BetweenOneTwoYrs: 'BETWEEN_ONE_TWO_YRS',
+  BetweenTwoThreeYrs: 'BETWEEN_TWO_THREE_YRS',
+  ThreeYrsAndAbove: 'THREE_YRS_AND_ABOVE',
+} as const;
+
+export type Level = typeof Level[keyof typeof Level];
 export type SetBankAccountsMutationVariables = Exact<{
   data?: InputMaybe<NewBankAccountInput>;
 }>;
@@ -21373,6 +21951,118 @@ export type EodActivitiesSetupMutationVariables = Exact<{
 
 export type EodActivitiesSetupMutation = {
   settings: { general?: { setup: { eodAction?: boolean | null } } | null };
+};
+
+export type SetDepartmentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewDepartment;
+}>;
+
+export type SetDepartmentMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertDepartment: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetDesignationMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewDesignation;
+}>;
+
+export type SetDesignationMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertDesignation: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetEmployeeTypeMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewEmployeeType;
+}>;
+
+export type SetEmployeeTypeMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertEmployeeType: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetEmployeeHealthInsuranceMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewEmployeeHealthInsurance;
+}>;
+
+export type SetEmployeeHealthInsuranceMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertEmployeeHealthInsurance: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
 };
 
 export type SetLoanProductMutationVariables = Exact<{
@@ -26117,6 +26807,154 @@ export type GetInsAccountOperatorEditListQuery = {
   };
 };
 
+export type GetSuppliersListQueryVariables = Exact<{
+  filter?: InputMaybe<InvSupplierFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSuppliersListQuery = {
+  inventory: {
+    suppliers?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            name?: string | null;
+            phoneNo?: string | null;
+            email?: string | null;
+            location?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventoryRegisterListQueryVariables = Exact<{
+  filter?: InputMaybe<InventoryRegisterFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetInventoryRegisterListQuery = {
+  inventory: {
+    register?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: {
+          id: string;
+          itemId: string;
+          itemCode: string;
+          itemName: string;
+          transaction_type: InventoryTransactionType;
+          unitPrice: string;
+          totalCost: string;
+          quantity: string;
+        } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
+export type GetInventoryAdjustmentListQueryVariables = Exact<{
+  filter?: InputMaybe<InventoryAdjustmentFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetInventoryAdjustmentListQuery = {
+  inventory: {
+    adjustment?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            entryNo?: string | null;
+            reference?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventoryAdjustmentTableQueryVariables = Exact<{
+  filter?: InputMaybe<InventoryAdjustmentFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetInventoryAdjustmentTableQuery = {
+  inventory: {
+    adjustment?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            entryNo?: string | null;
+            reference?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventoryAdjustmentDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryAdjustmentDetailsQuery = {
+  inventory: {
+    adjustment?: {
+      detailAdjustment: {
+        data?: {
+          referenceNo: string;
+          code: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          notes?: string | null;
+          modeOfAdjustment: InventoryAdjustmentMode;
+          itemDetails?: Array<{
+            itemId?: string | null;
+            warehouseId?: string | null;
+            itemName?: string | null;
+            warehouseName?: string | null;
+            newQuantity?: string | null;
+            quantityAdjusted?: string | null;
+            quantityAdjustedUnit?: AdjustmentUnit | null;
+            newValue?: string | null;
+            valueAdjusted?: string | null;
+          } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
 export type GetInventoryItemsListQueryVariables = Exact<{
   filter?: InputMaybe<InvItemsDataFilter>;
   pagination?: InputMaybe<Pagination>;
@@ -26208,6 +27046,118 @@ export type GetUnitsListQuery = {
   };
 };
 
+export type GetInventoryItemGroupsDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryItemGroupsDetailsQuery = {
+  inventory: {
+    itemsGroup?: {
+      getGroupdetails: {
+        data?: {
+          groupId: string;
+          groupName: string;
+          underGroup?: string | null;
+          description?: string | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type GetInventoryUnitsDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryUnitsDetailsQuery = {
+  inventory: {
+    unitOfMeasure?: {
+      getUnitDetails: {
+        data?: { description?: string | null; shortName?: string | null; unitName: string } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type GetInventoryItemsDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryItemsDetailsQuery = {
+  inventory: {
+    items?: {
+      getItemDetails?: {
+        data?: {
+          itemName: string;
+          itemCode: string;
+          itemGroup: string;
+          unit: string;
+          tax?: string | null;
+          reorderLevel?: string | null;
+          valuationMethod?: InvItemsValuationMethod | null;
+          variants?: Array<{
+            costPrice?: string | null;
+            itemName?: string | null;
+            sellingPrice?: string | null;
+            sku?: string | null;
+          } | null> | null;
+          ledgerDetail: {
+            purchaseLedger: string;
+            purchaseReturnLedger: string;
+            salesLedger: string;
+            salesReturnLedger: string;
+          };
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventoryWarehouseDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryWarehouseDetailsQuery = {
+  inventory: {
+    warehouse?: {
+      getWarehouseDetails: {
+        data?: {
+          id?: string | null;
+          name?: string | null;
+          phoneNumber?: string | null;
+          address?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
 export type GetWarehouseListQueryVariables = Exact<{
   paginate: Pagination;
   filter?: InputMaybe<Filter>;
@@ -26231,67 +27181,6 @@ export type GetWarehouseListQuery = {
         } | null> | null;
         pageInfo?: PaginationFragment | null;
       } | null;
-    } | null;
-  };
-};
-
-export type GetSuppliersListQueryVariables = Exact<{
-  filter?: InputMaybe<InvSupplierFilter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetSuppliersListQuery = {
-  inventory: {
-    suppliers?: {
-      list?: {
-        totalCount: number;
-        edges?: Array<{
-          cursor?: string | null;
-          node?: {
-            id?: string | null;
-            name?: string | null;
-            phoneNo?: string | null;
-            email?: string | null;
-            location?: {
-              state?: Record<'local' | 'en' | 'np', string> | null;
-              district?: Record<'local' | 'en' | 'np', string> | null;
-              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
-              wardNo?: string | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
-            } | null;
-          } | null;
-        } | null> | null;
-        pageInfo?: PaginationFragment | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetInventoryRegisterListQueryVariables = Exact<{
-  filter?: InputMaybe<InventoryRegisterFilter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetInventoryRegisterListQuery = {
-  inventory: {
-    register?: {
-      totalCount: number;
-      edges?: Array<{
-        cursor?: string | null;
-        node?: {
-          id: string;
-          itemId: string;
-          itemCode: string;
-          itemName: string;
-          transaction_type: InventoryTransactionType;
-          unitPrice: string;
-          totalCost: string;
-          quantity: string;
-        } | null;
-      } | null> | null;
-      pageInfo?: PaginationFragment | null;
     } | null;
   };
 };
@@ -26322,93 +27211,6 @@ export type GetInventoryWarehouseTransferQuery = {
         } | null> | null;
         pageInfo?: PaginationFragment | null;
       } | null;
-    } | null;
-  };
-};
-
-export type GetInventoryAdjustmentListQueryVariables = Exact<{
-  filter?: InputMaybe<InventoryAdjustmentFilter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetInventoryAdjustmentListQuery = {
-  inventory: {
-    adjustment?: {
-      list?: {
-        totalCount: number;
-        edges?: Array<{
-          cursor?: string | null;
-          node?: {
-            id?: string | null;
-            date?: Record<'local' | 'en' | 'np', string> | null;
-            entryNo?: string | null;
-            reference?: string | null;
-          } | null;
-        } | null> | null;
-        pageInfo?: PaginationFragment | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetInventoryAdjustmentTableQueryVariables = Exact<{
-  filter?: InputMaybe<InventoryAdjustmentFilter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetInventoryAdjustmentTableQuery = {
-  inventory: {
-    adjustment?: {
-      list?: {
-        totalCount: number;
-        edges?: Array<{
-          cursor?: string | null;
-          node?: {
-            id?: string | null;
-            date?: Record<'local' | 'en' | 'np', string> | null;
-            entryNo?: string | null;
-            reference?: string | null;
-          } | null;
-        } | null> | null;
-        pageInfo?: PaginationFragment | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetInventoryAdjustmentDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetInventoryAdjustmentDetailsQuery = {
-  inventory: {
-    adjustment?: {
-      detailAdjustment: {
-        data?: {
-          referenceNo: string;
-          code: string;
-          date: Record<'local' | 'en' | 'np', string>;
-          notes?: string | null;
-          modeOfAdjustment: InventoryAdjustmentMode;
-          itemDetails?: Array<{
-            itemId?: string | null;
-            warehouseId?: string | null;
-            itemName?: string | null;
-            warehouseName?: string | null;
-            newQuantity?: string | null;
-            quantityAdjusted?: string | null;
-            quantityAdjustedUnit?: AdjustmentUnit | null;
-            newValue?: string | null;
-            valueAdjusted?: string | null;
-          } | null> | null;
-        } | null;
-        error?:
-          | QueryError_AuthorizationError_Fragment
-          | QueryError_BadRequestError_Fragment
-          | QueryError_NotFoundError_Fragment
-          | QueryError_ServerError_Fragment
-          | null;
-      };
     } | null;
   };
 };
@@ -32481,6 +33283,102 @@ export type GetEodExceptionsQuery = {
   };
 };
 
+export type GetDepartmentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetDepartmentListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listDepartment?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; name: string; description: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDesignationListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetDesignationListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listDesignation?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; name: string; description: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeTypeListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeTypeListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listEmployeeType?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; name: string; description: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeHealthInsuranceListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeHealthInsuranceListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listEmployeeHealthInsurance?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; healthInsuranceProvider: string; healthInsuranceNumber: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetLoanProductListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<LoanProductSearchFilter>;
@@ -35524,6 +36422,7 @@ export type BulkTransfersListQuery = {
           sourceName?: string | null;
           destinationId?: string | null;
           destinationName?: string | null;
+          transactionId?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -35864,8 +36763,12 @@ export type GetWithdrawSlipDataQuery = {
       data?: {
         id?: string | null;
         noOfLeaves?: number | null;
-        member?: { id: string; name?: Record<'local' | 'en' | 'np', string> | null } | null;
-        account?: { id: string; accountName?: string | null } | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+        } | null;
+        account?: { id: string; accountName?: string | null; productName?: string | null } | null;
         availableRange?: { from: string; to: string } | null;
       } | null;
     } | null;
@@ -40396,6 +41299,145 @@ export const useEodActivitiesSetupMutation = <TError = unknown, TContext = unkno
     ['eodActivitiesSetup'],
     useAxios<EodActivitiesSetupMutation, EodActivitiesSetupMutationVariables>(
       EodActivitiesSetupDocument
+    ),
+    options
+  );
+export const SetDepartmentDocument = `
+    mutation setDepartment($id: String, $input: NewDepartment!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertDepartment(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetDepartmentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDepartmentMutation,
+    TError,
+    SetDepartmentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDepartmentMutation, TError, SetDepartmentMutationVariables, TContext>(
+    ['setDepartment'],
+    useAxios<SetDepartmentMutation, SetDepartmentMutationVariables>(SetDepartmentDocument),
+    options
+  );
+export const SetDesignationDocument = `
+    mutation setDesignation($id: String, $input: NewDesignation!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertDesignation(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetDesignationMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDesignationMutation,
+    TError,
+    SetDesignationMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDesignationMutation, TError, SetDesignationMutationVariables, TContext>(
+    ['setDesignation'],
+    useAxios<SetDesignationMutation, SetDesignationMutationVariables>(SetDesignationDocument),
+    options
+  );
+export const SetEmployeeTypeDocument = `
+    mutation setEmployeeType($id: String, $input: NewEmployeeType!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertEmployeeType(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeTypeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeTypeMutation,
+    TError,
+    SetEmployeeTypeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEmployeeTypeMutation, TError, SetEmployeeTypeMutationVariables, TContext>(
+    ['setEmployeeType'],
+    useAxios<SetEmployeeTypeMutation, SetEmployeeTypeMutationVariables>(SetEmployeeTypeDocument),
+    options
+  );
+export const SetEmployeeHealthInsuranceDocument = `
+    mutation setEmployeeHealthInsurance($id: String, $input: NewEmployeeHealthInsurance!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertEmployeeHealthInsurance(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeHealthInsuranceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeHealthInsuranceMutation,
+    TError,
+    SetEmployeeHealthInsuranceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeHealthInsuranceMutation,
+    TError,
+    SetEmployeeHealthInsuranceMutationVariables,
+    TContext
+  >(
+    ['setEmployeeHealthInsurance'],
+    useAxios<SetEmployeeHealthInsuranceMutation, SetEmployeeHealthInsuranceMutationVariables>(
+      SetEmployeeHealthInsuranceDocument
     ),
     options
   );
@@ -46764,6 +47806,217 @@ export const useGetInsAccountOperatorEditListQuery = <
     ).bind(null, variables),
     options
   );
+export const GetSuppliersListDocument = `
+    query getSuppliersList($filter: InvSupplierFilter, $pagination: Pagination) {
+  inventory {
+    suppliers {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            location {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            phoneNo
+            email
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSuppliersListQuery = <TData = GetSuppliersListQuery, TError = unknown>(
+  variables?: GetSuppliersListQueryVariables,
+  options?: UseQueryOptions<GetSuppliersListQuery, TError, TData>
+) =>
+  useQuery<GetSuppliersListQuery, TError, TData>(
+    variables === undefined ? ['getSuppliersList'] : ['getSuppliersList', variables],
+    useAxios<GetSuppliersListQuery, GetSuppliersListQueryVariables>(GetSuppliersListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetInventoryRegisterListDocument = `
+    query getInventoryRegisterList($filter: InventoryRegisterFilter, $pagination: Pagination) {
+  inventory {
+    register(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          itemId
+          itemCode
+          itemName
+          transaction_type
+          unitPrice
+          totalCost
+          quantity
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetInventoryRegisterListQuery = <
+  TData = GetInventoryRegisterListQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryRegisterListQueryVariables,
+  options?: UseQueryOptions<GetInventoryRegisterListQuery, TError, TData>
+) =>
+  useQuery<GetInventoryRegisterListQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryRegisterList']
+      : ['getInventoryRegisterList', variables],
+    useAxios<GetInventoryRegisterListQuery, GetInventoryRegisterListQueryVariables>(
+      GetInventoryRegisterListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryAdjustmentListDocument = `
+    query getInventoryAdjustmentList($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
+  inventory {
+    adjustment {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetInventoryAdjustmentListQuery = <
+  TData = GetInventoryAdjustmentListQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryAdjustmentListQueryVariables,
+  options?: UseQueryOptions<GetInventoryAdjustmentListQuery, TError, TData>
+) =>
+  useQuery<GetInventoryAdjustmentListQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryAdjustmentList']
+      : ['getInventoryAdjustmentList', variables],
+    useAxios<GetInventoryAdjustmentListQuery, GetInventoryAdjustmentListQueryVariables>(
+      GetInventoryAdjustmentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryAdjustmentTableDocument = `
+    query getInventoryAdjustmentTable($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
+  inventory {
+    adjustment {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetInventoryAdjustmentTableQuery = <
+  TData = GetInventoryAdjustmentTableQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryAdjustmentTableQueryVariables,
+  options?: UseQueryOptions<GetInventoryAdjustmentTableQuery, TError, TData>
+) =>
+  useQuery<GetInventoryAdjustmentTableQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryAdjustmentTable']
+      : ['getInventoryAdjustmentTable', variables],
+    useAxios<GetInventoryAdjustmentTableQuery, GetInventoryAdjustmentTableQueryVariables>(
+      GetInventoryAdjustmentTableDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryAdjustmentDetailsDocument = `
+    query getInventoryAdjustmentDetails($id: ID!) {
+  inventory {
+    adjustment {
+      detailAdjustment(id: $id) {
+        data {
+          referenceNo
+          code
+          date
+          notes
+          modeOfAdjustment
+          itemDetails {
+            itemId
+            warehouseId
+            itemName
+            warehouseName
+            newQuantity
+            quantityAdjusted
+            quantityAdjustedUnit
+            newValue
+            valueAdjusted
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryAdjustmentDetailsQuery = <
+  TData = GetInventoryAdjustmentDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryAdjustmentDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryAdjustmentDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryAdjustmentDetailsQuery, TError, TData>(
+    ['getInventoryAdjustmentDetails', variables],
+    useAxios<GetInventoryAdjustmentDetailsQuery, GetInventoryAdjustmentDetailsQueryVariables>(
+      GetInventoryAdjustmentDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInventoryItemsListDocument = `
     query getInventoryItemsList($filter: InvItemsDataFilter, $pagination: Pagination) {
   inventory {
@@ -46907,6 +48160,154 @@ export const useGetUnitsListQuery = <TData = GetUnitsListQuery, TError = unknown
     ),
     options
   );
+export const GetInventoryItemGroupsDetailsDocument = `
+    query getInventoryItemGroupsDetails($id: ID!) {
+  inventory {
+    itemsGroup {
+      getGroupdetails(id: $id) {
+        data {
+          groupId
+          groupName
+          underGroup
+          description
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryItemGroupsDetailsQuery = <
+  TData = GetInventoryItemGroupsDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryItemGroupsDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryItemGroupsDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryItemGroupsDetailsQuery, TError, TData>(
+    ['getInventoryItemGroupsDetails', variables],
+    useAxios<GetInventoryItemGroupsDetailsQuery, GetInventoryItemGroupsDetailsQueryVariables>(
+      GetInventoryItemGroupsDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryUnitsDetailsDocument = `
+    query getInventoryUnitsDetails($id: ID!) {
+  inventory {
+    unitOfMeasure {
+      getUnitDetails(id: $id) {
+        data {
+          description
+          shortName
+          unitName
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryUnitsDetailsQuery = <
+  TData = GetInventoryUnitsDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryUnitsDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryUnitsDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryUnitsDetailsQuery, TError, TData>(
+    ['getInventoryUnitsDetails', variables],
+    useAxios<GetInventoryUnitsDetailsQuery, GetInventoryUnitsDetailsQueryVariables>(
+      GetInventoryUnitsDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryItemsDetailsDocument = `
+    query getInventoryItemsDetails($id: ID!) {
+  inventory {
+    items {
+      getItemDetails(id: $id) {
+        data {
+          itemName
+          itemCode
+          itemGroup
+          unit
+          tax
+          variants {
+            costPrice
+            itemName
+            sellingPrice
+            sku
+          }
+          ledgerDetail {
+            purchaseLedger
+            purchaseReturnLedger
+            salesLedger
+            salesReturnLedger
+          }
+          reorderLevel
+          valuationMethod
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryItemsDetailsQuery = <
+  TData = GetInventoryItemsDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryItemsDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryItemsDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryItemsDetailsQuery, TError, TData>(
+    ['getInventoryItemsDetails', variables],
+    useAxios<GetInventoryItemsDetailsQuery, GetInventoryItemsDetailsQueryVariables>(
+      GetInventoryItemsDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryWarehouseDetailsDocument = `
+    query getInventoryWarehouseDetails($id: ID!) {
+  inventory {
+    warehouse {
+      getWarehouseDetails(id: $id) {
+        data {
+          id
+          name
+          phoneNumber
+          address
+          branchId
+          branchName
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryWarehouseDetailsQuery = <
+  TData = GetInventoryWarehouseDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryWarehouseDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryWarehouseDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryWarehouseDetailsQuery, TError, TData>(
+    ['getInventoryWarehouseDetails', variables],
+    useAxios<GetInventoryWarehouseDetailsQuery, GetInventoryWarehouseDetailsQueryVariables>(
+      GetInventoryWarehouseDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetWarehouseListDocument = `
     query getWarehouseList($paginate: Pagination!, $filter: Filter) {
   inventory {
@@ -46942,94 +48343,6 @@ export const useGetWarehouseListQuery = <TData = GetWarehouseListQuery, TError =
       null,
       variables
     ),
-    options
-  );
-export const GetSuppliersListDocument = `
-    query getSuppliersList($filter: InvSupplierFilter, $pagination: Pagination) {
-  inventory {
-    suppliers {
-      list(filter: $filter, pagination: $pagination) {
-        totalCount
-        edges {
-          node {
-            id
-            name
-            location {
-              state
-              district
-              localGovernment
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            phoneNo
-            email
-          }
-          cursor
-        }
-        pageInfo {
-          ...Pagination
-        }
-      }
-    }
-  }
-}
-    ${PaginationFragmentDoc}`;
-export const useGetSuppliersListQuery = <TData = GetSuppliersListQuery, TError = unknown>(
-  variables?: GetSuppliersListQueryVariables,
-  options?: UseQueryOptions<GetSuppliersListQuery, TError, TData>
-) =>
-  useQuery<GetSuppliersListQuery, TError, TData>(
-    variables === undefined ? ['getSuppliersList'] : ['getSuppliersList', variables],
-    useAxios<GetSuppliersListQuery, GetSuppliersListQueryVariables>(GetSuppliersListDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
-export const GetInventoryRegisterListDocument = `
-    query getInventoryRegisterList($filter: InventoryRegisterFilter, $pagination: Pagination) {
-  inventory {
-    register(filter: $filter, pagination: $pagination) {
-      totalCount
-      edges {
-        node {
-          id
-          itemId
-          itemCode
-          itemName
-          transaction_type
-          unitPrice
-          totalCost
-          quantity
-        }
-        cursor
-      }
-      pageInfo {
-        ...Pagination
-      }
-    }
-  }
-}
-    ${PaginationFragmentDoc}`;
-export const useGetInventoryRegisterListQuery = <
-  TData = GetInventoryRegisterListQuery,
-  TError = unknown
->(
-  variables?: GetInventoryRegisterListQueryVariables,
-  options?: UseQueryOptions<GetInventoryRegisterListQuery, TError, TData>
-) =>
-  useQuery<GetInventoryRegisterListQuery, TError, TData>(
-    variables === undefined
-      ? ['getInventoryRegisterList']
-      : ['getInventoryRegisterList', variables],
-    useAxios<GetInventoryRegisterListQuery, GetInventoryRegisterListQueryVariables>(
-      GetInventoryRegisterListDocument
-    ).bind(null, variables),
     options
   );
 export const GetInventoryWarehouseTransferDocument = `
@@ -47071,129 +48384,6 @@ export const useGetInventoryWarehouseTransferQuery = <
     ['getInventoryWarehouseTransfer', variables],
     useAxios<GetInventoryWarehouseTransferQuery, GetInventoryWarehouseTransferQueryVariables>(
       GetInventoryWarehouseTransferDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetInventoryAdjustmentListDocument = `
-    query getInventoryAdjustmentList($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
-  inventory {
-    adjustment {
-      list(filter: $filter, pagination: $pagination) {
-        totalCount
-        edges {
-          node {
-            id
-            date
-            entryNo
-            reference
-          }
-          cursor
-        }
-        pageInfo {
-          ...Pagination
-        }
-      }
-    }
-  }
-}
-    ${PaginationFragmentDoc}`;
-export const useGetInventoryAdjustmentListQuery = <
-  TData = GetInventoryAdjustmentListQuery,
-  TError = unknown
->(
-  variables?: GetInventoryAdjustmentListQueryVariables,
-  options?: UseQueryOptions<GetInventoryAdjustmentListQuery, TError, TData>
-) =>
-  useQuery<GetInventoryAdjustmentListQuery, TError, TData>(
-    variables === undefined
-      ? ['getInventoryAdjustmentList']
-      : ['getInventoryAdjustmentList', variables],
-    useAxios<GetInventoryAdjustmentListQuery, GetInventoryAdjustmentListQueryVariables>(
-      GetInventoryAdjustmentListDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetInventoryAdjustmentTableDocument = `
-    query getInventoryAdjustmentTable($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
-  inventory {
-    adjustment {
-      list(filter: $filter, pagination: $pagination) {
-        totalCount
-        edges {
-          node {
-            id
-            date
-            entryNo
-            reference
-          }
-          cursor
-        }
-        pageInfo {
-          ...Pagination
-        }
-      }
-    }
-  }
-}
-    ${PaginationFragmentDoc}`;
-export const useGetInventoryAdjustmentTableQuery = <
-  TData = GetInventoryAdjustmentTableQuery,
-  TError = unknown
->(
-  variables?: GetInventoryAdjustmentTableQueryVariables,
-  options?: UseQueryOptions<GetInventoryAdjustmentTableQuery, TError, TData>
-) =>
-  useQuery<GetInventoryAdjustmentTableQuery, TError, TData>(
-    variables === undefined
-      ? ['getInventoryAdjustmentTable']
-      : ['getInventoryAdjustmentTable', variables],
-    useAxios<GetInventoryAdjustmentTableQuery, GetInventoryAdjustmentTableQueryVariables>(
-      GetInventoryAdjustmentTableDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetInventoryAdjustmentDetailsDocument = `
-    query getInventoryAdjustmentDetails($id: ID!) {
-  inventory {
-    adjustment {
-      detailAdjustment(id: $id) {
-        data {
-          referenceNo
-          code
-          date
-          notes
-          modeOfAdjustment
-          itemDetails {
-            itemId
-            warehouseId
-            itemName
-            warehouseName
-            newQuantity
-            quantityAdjusted
-            quantityAdjustedUnit
-            newValue
-            valueAdjusted
-          }
-        }
-        error {
-          ...QueryError
-        }
-      }
-    }
-  }
-}
-    ${QueryErrorFragmentDoc}`;
-export const useGetInventoryAdjustmentDetailsQuery = <
-  TData = GetInventoryAdjustmentDetailsQuery,
-  TError = unknown
->(
-  variables: GetInventoryAdjustmentDetailsQueryVariables,
-  options?: UseQueryOptions<GetInventoryAdjustmentDetailsQuery, TError, TData>
-) =>
-  useQuery<GetInventoryAdjustmentDetailsQuery, TError, TData>(
-    ['getInventoryAdjustmentDetails', variables],
-    useAxios<GetInventoryAdjustmentDetailsQuery, GetInventoryAdjustmentDetailsQueryVariables>(
-      GetInventoryAdjustmentDetailsDocument
     ).bind(null, variables),
     options
   );
@@ -55067,6 +56257,159 @@ export const useGetEodExceptionsQuery = <TData = GetEodExceptionsQuery, TError =
     ),
     options
   );
+export const GetDepartmentListDocument = `
+    query getDepartmentList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listDepartment(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                description
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetDepartmentListQuery = <TData = GetDepartmentListQuery, TError = unknown>(
+  variables?: GetDepartmentListQueryVariables,
+  options?: UseQueryOptions<GetDepartmentListQuery, TError, TData>
+) =>
+  useQuery<GetDepartmentListQuery, TError, TData>(
+    variables === undefined ? ['getDepartmentList'] : ['getDepartmentList', variables],
+    useAxios<GetDepartmentListQuery, GetDepartmentListQueryVariables>(
+      GetDepartmentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDesignationListDocument = `
+    query getDesignationList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listDesignation(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                description
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetDesignationListQuery = <TData = GetDesignationListQuery, TError = unknown>(
+  variables?: GetDesignationListQueryVariables,
+  options?: UseQueryOptions<GetDesignationListQuery, TError, TData>
+) =>
+  useQuery<GetDesignationListQuery, TError, TData>(
+    variables === undefined ? ['getDesignationList'] : ['getDesignationList', variables],
+    useAxios<GetDesignationListQuery, GetDesignationListQueryVariables>(
+      GetDesignationListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeTypeListDocument = `
+    query getEmployeeTypeList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listEmployeeType(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                description
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeTypeListQuery = <TData = GetEmployeeTypeListQuery, TError = unknown>(
+  variables?: GetEmployeeTypeListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeTypeListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeTypeListQuery, TError, TData>(
+    variables === undefined ? ['getEmployeeTypeList'] : ['getEmployeeTypeList', variables],
+    useAxios<GetEmployeeTypeListQuery, GetEmployeeTypeListQueryVariables>(
+      GetEmployeeTypeListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeHealthInsuranceListDocument = `
+    query getEmployeeHealthInsuranceList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listEmployeeHealthInsurance(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                healthInsuranceProvider
+                healthInsuranceNumber
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeHealthInsuranceListQuery = <
+  TData = GetEmployeeHealthInsuranceListQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeeHealthInsuranceListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeHealthInsuranceListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeHealthInsuranceListQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeeHealthInsuranceList']
+      : ['getEmployeeHealthInsuranceList', variables],
+    useAxios<GetEmployeeHealthInsuranceListQuery, GetEmployeeHealthInsuranceListQueryVariables>(
+      GetEmployeeHealthInsuranceListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanProductListDocument = `
     query getLoanProductList($paginate: Pagination, $filter: LoanProductSearchFilter) {
   settings {
@@ -59300,6 +60643,7 @@ export const BulkTransfersListDocument = `
           sourceName
           destinationId
           destinationName
+          transactionId
         }
         cursor
       }
@@ -59754,10 +61098,12 @@ export const GetWithdrawSlipDataDocument = `
         member {
           id
           name
+          code
         }
         account {
           id
           accountName
+          productName
         }
         noOfLeaves
         availableRange {

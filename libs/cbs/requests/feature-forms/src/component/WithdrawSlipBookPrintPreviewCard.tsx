@@ -24,6 +24,8 @@ interface IWithdrawSlipBookPrintPreviewCardProps {
     accountNumber: string;
     accountName: string;
     slipNumber: string;
+    memberCode: string;
+    productName: string;
   };
   number?: number;
 }
@@ -76,13 +78,13 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       gap="s4"
     >
       <Text fontSize="r1" color="black" fontFamily="Arial">
-        {details?.memberName}
+        {`${details?.memberName} (${details?.memberCode})`}
       </Text>
       <Text fontSize="r1" color="black" fontFamily="Arial">
         {details?.accountNumber}
       </Text>
       <Text fontSize="r1" color="black" fontFamily="Arial">
-        {details?.accountName}
+        {details?.productName}
       </Text>
     </Box>
 

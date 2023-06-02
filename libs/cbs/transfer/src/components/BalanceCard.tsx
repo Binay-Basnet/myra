@@ -1,5 +1,7 @@
 import { Box, Text } from '@myra-ui';
 
+import { amountConverter, amountToWordsConverter } from '@coop/shared/utils';
+
 interface IBalanceCardProps {
   label: string;
   balance: string;
@@ -11,7 +13,10 @@ export const BalanceCard = ({ label, balance }: IBalanceCardProps) => (
       {label}
     </Text>
     <Text fontSize="r2" fontWeight={600} color="primary">
-      {balance}
+      {amountConverter(balance)}
+    </Text>
+    <Text fontSize="r2" fontWeight={600} color="primary">
+      {amountToWordsConverter(balance)}
     </Text>
   </Box>
 );

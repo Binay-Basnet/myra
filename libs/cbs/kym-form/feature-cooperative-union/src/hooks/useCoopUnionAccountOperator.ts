@@ -10,7 +10,6 @@ import {
   addError,
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelInput,
-  RootState,
   useAppDispatch,
   useAppSelector,
   useGetAccountOperatorDetailsListQuery,
@@ -73,11 +72,6 @@ export const useCoopUnionAccountOperator = ({ methods, accountOpId }: IUseCoopUn
   });
 
   // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetchEdit();
-  }, [preference?.date]);
 
   // Get Back The Initial Data when page reloads or user edits
   useEffect(() => {
@@ -95,7 +89,7 @@ export const useCoopUnionAccountOperator = ({ methods, accountOpId }: IUseCoopUn
         trainingAttended: accountOperatorDetail?.trainingAttended ?? [],
       });
     }
-  }, [editLoading, accountOperatorDetail]);
+  }, [editLoading]);
 
   // Call The Mutation To Add Data on Each Form Change
   useEffect(() => {
@@ -113,7 +107,7 @@ export const useCoopUnionAccountOperator = ({ methods, accountOpId }: IUseCoopUn
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, accountOperatorDetail]);
+  }, [watch, id, accountOpId]);
 
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {
