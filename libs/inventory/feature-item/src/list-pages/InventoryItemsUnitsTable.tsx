@@ -12,6 +12,7 @@ import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const InventoryItemUnitsTable = () => {
   const [openModalUnits, setOpenModalUnits] = useState(false);
+  const [openDetailModal, setOpenDetailModal] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -25,6 +26,14 @@ export const InventoryItemUnitsTable = () => {
 
   const onCloseModalUnits = () => {
     setOpenModalUnits(false);
+  };
+
+  const onOpenDetailsModal = () => {
+    setOpenDetailModal(true);
+  };
+
+  const onCloseDetailsModal = () => {
+    setOpenDetailModal(false);
   };
   const handleUpdateModalClose = () => {
     methods.reset({
