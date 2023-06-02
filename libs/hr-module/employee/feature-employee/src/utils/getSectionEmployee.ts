@@ -47,6 +47,7 @@ const workExperience = ['workExperience'];
 const salaryDetails = ['salaryPaymentMode', 'pan', 'pfAccount', 'salaryStructure'];
 const approvers = ['reportsToId', 'leaveApproverId', 'expenseApproverId'];
 const healthInsurance = ['healthInsuranceProviderId', 'healthInsuranceNumberId'];
+const educationalDetails = ['educationalDetails'];
 
 export const getEmployeeSection = (id: string) => {
   if (basicInfo.includes(id)) {
@@ -59,6 +60,12 @@ export const getEmployeeSection = (id: string) => {
     return {
       section: 'personalDetails',
       subSection: 'Contact Details',
+    };
+  }
+  if (educationalDetails.includes(id.split('.')[0])) {
+    return {
+      section: 'personalDetails',
+      subSection: 'Education Information',
     };
   }
   if (permanentAddress.includes(id)) {

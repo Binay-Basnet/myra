@@ -20,6 +20,7 @@ import {
   WorkExperienceTable,
 } from '../components';
 import { getEmployeeSection } from '../utils/getSectionEmployee';
+import { EducationalDetails } from '../components/EducationalDetails';
 
 export const EmployeeAddForm = () => {
   const [kymCurrentSection, setCurrentSection] = React.useState<{
@@ -50,7 +51,7 @@ export const EmployeeAddForm = () => {
                 Basic Information{' '}
               </Text>
               <PersonalInformation />
-
+              <EducationalDetails />
               <EmployeeContactDetails />
               <EmployeeAddress />
             </SectionContainer>
