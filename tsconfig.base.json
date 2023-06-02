@@ -93,6 +93,7 @@
       ],
       "@coop/cbs/settings/documents": ["libs/cbs/settings/feature-documents/src/index.ts"],
       "@coop/cbs/settings/eod": ["libs/cbs/settings/feature-eod/src/index.ts"],
+      "@coop/cbs/settings/feature-hcm": ["libs/cbs/settings/feature-hcm/src/index.ts"],
       "@coop/cbs/settings/loan-product": [
         "libs/cbs/settings/feature-loan-product-detail/src/index.ts"
       ],

@@ -21953,6 +21953,118 @@ export type EodActivitiesSetupMutation = {
   settings: { general?: { setup: { eodAction?: boolean | null } } | null };
 };
 
+export type SetDepartmentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewDepartment;
+}>;
+
+export type SetDepartmentMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertDepartment: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetDesignationMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewDesignation;
+}>;
+
+export type SetDesignationMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertDesignation: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetEmployeeTypeMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewEmployeeType;
+}>;
+
+export type SetEmployeeTypeMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertEmployeeType: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetEmployeeHealthInsuranceMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewEmployeeHealthInsurance;
+}>;
+
+export type SetEmployeeHealthInsuranceMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertEmployeeHealthInsurance: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type SetLoanProductMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<LoanProductInput>;
@@ -33059,6 +33171,102 @@ export type GetEodExceptionsQuery = {
   };
 };
 
+export type GetDepartmentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetDepartmentListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listDepartment?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; name: string; description: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDesignationListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetDesignationListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listDesignation?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; name: string; description: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeTypeListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeTypeListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listEmployeeType?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; name: string; description: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeHealthInsuranceListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeHealthInsuranceListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listEmployeeHealthInsurance?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; healthInsuranceProvider: string; healthInsuranceNumber: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetLoanProductListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<LoanProductSearchFilter>;
@@ -36443,8 +36651,12 @@ export type GetWithdrawSlipDataQuery = {
       data?: {
         id?: string | null;
         noOfLeaves?: number | null;
-        member?: { id: string; name?: Record<'local' | 'en' | 'np', string> | null } | null;
-        account?: { id: string; accountName?: string | null } | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+        } | null;
+        account?: { id: string; accountName?: string | null; productName?: string | null } | null;
         availableRange?: { from: string; to: string } | null;
       } | null;
     } | null;
@@ -40975,6 +41187,145 @@ export const useEodActivitiesSetupMutation = <TError = unknown, TContext = unkno
     ['eodActivitiesSetup'],
     useAxios<EodActivitiesSetupMutation, EodActivitiesSetupMutationVariables>(
       EodActivitiesSetupDocument
+    ),
+    options
+  );
+export const SetDepartmentDocument = `
+    mutation setDepartment($id: String, $input: NewDepartment!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertDepartment(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetDepartmentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDepartmentMutation,
+    TError,
+    SetDepartmentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDepartmentMutation, TError, SetDepartmentMutationVariables, TContext>(
+    ['setDepartment'],
+    useAxios<SetDepartmentMutation, SetDepartmentMutationVariables>(SetDepartmentDocument),
+    options
+  );
+export const SetDesignationDocument = `
+    mutation setDesignation($id: String, $input: NewDesignation!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertDesignation(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetDesignationMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDesignationMutation,
+    TError,
+    SetDesignationMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDesignationMutation, TError, SetDesignationMutationVariables, TContext>(
+    ['setDesignation'],
+    useAxios<SetDesignationMutation, SetDesignationMutationVariables>(SetDesignationDocument),
+    options
+  );
+export const SetEmployeeTypeDocument = `
+    mutation setEmployeeType($id: String, $input: NewEmployeeType!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertEmployeeType(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeTypeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeTypeMutation,
+    TError,
+    SetEmployeeTypeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEmployeeTypeMutation, TError, SetEmployeeTypeMutationVariables, TContext>(
+    ['setEmployeeType'],
+    useAxios<SetEmployeeTypeMutation, SetEmployeeTypeMutationVariables>(SetEmployeeTypeDocument),
+    options
+  );
+export const SetEmployeeHealthInsuranceDocument = `
+    mutation setEmployeeHealthInsurance($id: String, $input: NewEmployeeHealthInsurance!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertEmployeeHealthInsurance(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeHealthInsuranceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeHealthInsuranceMutation,
+    TError,
+    SetEmployeeHealthInsuranceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeHealthInsuranceMutation,
+    TError,
+    SetEmployeeHealthInsuranceMutationVariables,
+    TContext
+  >(
+    ['setEmployeeHealthInsurance'],
+    useAxios<SetEmployeeHealthInsuranceMutation, SetEmployeeHealthInsuranceMutationVariables>(
+      SetEmployeeHealthInsuranceDocument
     ),
     options
   );
@@ -55646,6 +55997,159 @@ export const useGetEodExceptionsQuery = <TData = GetEodExceptionsQuery, TError =
     ),
     options
   );
+export const GetDepartmentListDocument = `
+    query getDepartmentList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listDepartment(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                description
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetDepartmentListQuery = <TData = GetDepartmentListQuery, TError = unknown>(
+  variables?: GetDepartmentListQueryVariables,
+  options?: UseQueryOptions<GetDepartmentListQuery, TError, TData>
+) =>
+  useQuery<GetDepartmentListQuery, TError, TData>(
+    variables === undefined ? ['getDepartmentList'] : ['getDepartmentList', variables],
+    useAxios<GetDepartmentListQuery, GetDepartmentListQueryVariables>(
+      GetDepartmentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDesignationListDocument = `
+    query getDesignationList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listDesignation(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                description
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetDesignationListQuery = <TData = GetDesignationListQuery, TError = unknown>(
+  variables?: GetDesignationListQueryVariables,
+  options?: UseQueryOptions<GetDesignationListQuery, TError, TData>
+) =>
+  useQuery<GetDesignationListQuery, TError, TData>(
+    variables === undefined ? ['getDesignationList'] : ['getDesignationList', variables],
+    useAxios<GetDesignationListQuery, GetDesignationListQueryVariables>(
+      GetDesignationListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeTypeListDocument = `
+    query getEmployeeTypeList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listEmployeeType(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                description
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeTypeListQuery = <TData = GetEmployeeTypeListQuery, TError = unknown>(
+  variables?: GetEmployeeTypeListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeTypeListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeTypeListQuery, TError, TData>(
+    variables === undefined ? ['getEmployeeTypeList'] : ['getEmployeeTypeList', variables],
+    useAxios<GetEmployeeTypeListQuery, GetEmployeeTypeListQueryVariables>(
+      GetEmployeeTypeListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeHealthInsuranceListDocument = `
+    query getEmployeeHealthInsuranceList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listEmployeeHealthInsurance(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                healthInsuranceProvider
+                healthInsuranceNumber
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeHealthInsuranceListQuery = <
+  TData = GetEmployeeHealthInsuranceListQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeeHealthInsuranceListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeHealthInsuranceListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeHealthInsuranceListQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeeHealthInsuranceList']
+      : ['getEmployeeHealthInsuranceList', variables],
+    useAxios<GetEmployeeHealthInsuranceListQuery, GetEmployeeHealthInsuranceListQueryVariables>(
+      GetEmployeeHealthInsuranceListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanProductListDocument = `
     query getLoanProductList($paginate: Pagination, $filter: LoanProductSearchFilter) {
   settings {
@@ -60334,10 +60838,12 @@ export const GetWithdrawSlipDataDocument = `
         member {
           id
           name
+          code
         }
         account {
           id
           accountName
+          productName
         }
         noOfLeaves
         availableRange {
