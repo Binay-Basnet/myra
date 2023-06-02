@@ -8247,10 +8247,15 @@ export type InvItemsGroupMutationAddArgs = {
 
 export type InvItemsGroupQuery = {
   get: InvItemsGroup;
+  getGroupdetails: InventoryItemGroupDataResult;
   list?: Maybe<InvItemsGroupConnection>;
 };
 
 export type InvItemsGroupQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvItemsGroupQueryGetGroupdetailsArgs = {
   id: Scalars['ID'];
 };
 
@@ -8292,11 +8297,16 @@ export type InvItemsMutationAddArgs = {
 
 export type InvItemsQuery = {
   get: InvItems;
+  getItemDetails?: Maybe<InventoryItemDetailsResult>;
   getNewItemCode: Scalars['String'];
   list?: Maybe<InvItemsConnection>;
 };
 
 export type InvItemsQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvItemsQueryGetItemDetailsArgs = {
   id: Scalars['ID'];
 };
 
@@ -8372,11 +8382,16 @@ export type InvSuppliersEdge = {
 
 export type InvSuppliersQuery = {
   list?: Maybe<InvSupplierConnection>;
+  supplierDetail?: Maybe<InventorySupplierDetailResult>;
 };
 
 export type InvSuppliersQueryListArgs = {
   filter?: InputMaybe<InvSupplierFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type InvSuppliersQuerySupplierDetailArgs = {
+  id: Scalars['ID'];
 };
 
 export type InvUnitOfMeasure = {
@@ -8427,10 +8442,15 @@ export type InvUnitOfMeasureMutationAddArgs = {
 
 export type InvUnitOfMeasureQuery = {
   get: InvUnitOfMeasure;
+  getUnitDetails: InventoryUnitDataResult;
   list?: Maybe<InvUnitOfMeasureConnection>;
 };
 
 export type InvUnitOfMeasureQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvUnitOfMeasureQueryGetUnitDetailsArgs = {
   id: Scalars['ID'];
 };
 
@@ -8621,6 +8641,42 @@ export type InventoryAdjustmentResult = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export type InventoryItemDetails = {
+  itemCode: Scalars['String'];
+  itemGroup: Scalars['String'];
+  itemName: Scalars['String'];
+  ledgerDetail: InventoryItemLedgerDetail;
+  reorderLevel?: Maybe<Scalars['String']>;
+  tax?: Maybe<Scalars['String']>;
+  unit: Scalars['String'];
+  valuationMethod?: Maybe<InvItemsValuationMethod>;
+  variants?: Maybe<Array<Maybe<InventoryItemVariantDetail>>>;
+};
+
+export type InventoryItemDetailsResult = {
+  data?: Maybe<InventoryItemDetails>;
+  error?: Maybe<QueryError>;
+};
+
+export type InventoryItemGroupData = {
+  description?: Maybe<Scalars['String']>;
+  groupId: Scalars['String'];
+  groupName: Scalars['String'];
+  underGroup?: Maybe<Scalars['String']>;
+};
+
+export type InventoryItemGroupDataResult = {
+  data?: Maybe<InventoryItemGroupData>;
+  error?: Maybe<QueryError>;
+};
+
+export type InventoryItemLedgerDetail = {
+  purchaseLedger: Scalars['String'];
+  purchaseReturnLedger: Scalars['String'];
+  salesLedger: Scalars['String'];
+  salesReturnLedger: Scalars['String'];
+};
+
 export type InventoryItemSummationData = {
   totalQuantityInStock?: Maybe<Scalars['String']>;
   totalQuantityPurchased: Scalars['String'];
@@ -8628,6 +8684,13 @@ export type InventoryItemSummationData = {
   totalStockValue?: Maybe<Scalars['String']>;
   totalStockValueVat?: Maybe<Scalars['String']>;
   totalVatAmount?: Maybe<Scalars['String']>;
+};
+
+export type InventoryItemVariantDetail = {
+  costPrice?: Maybe<Scalars['String']>;
+  itemName?: Maybe<Scalars['String']>;
+  sellingPrice?: Maybe<Scalars['String']>;
+  sku?: Maybe<Scalars['String']>;
 };
 
 export type InventoryMutation = {
@@ -8764,6 +8827,29 @@ export type InventoryStockStatusTotal = {
   warehouseName: Scalars['String'];
 };
 
+export type InventorySupplierDetailData = {
+  applicationDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  contactNo: Scalars['String'];
+  contactPersonName?: Maybe<Scalars['String']>;
+  contactPersonPhoneNo?: Maybe<Scalars['String']>;
+  creditLimit?: Maybe<Scalars['Float']>;
+  creditTerms?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
+  legalStatusDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  location?: Maybe<Address>;
+  openingBalance?: Maybe<Scalars['String']>;
+  othersDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  panNo?: Maybe<Scalars['String']>;
+  registrationDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
+  supplierCode: Scalars['String'];
+  supplierName: Scalars['String'];
+};
+
+export type InventorySupplierDetailResult = {
+  data?: Maybe<InventorySupplierDetailData>;
+  error?: Maybe<QueryError>;
+};
+
 export const InventoryTransactionType = {
   Purchase: 'PURCHASE',
   Sales: 'SALES',
@@ -8771,6 +8857,17 @@ export const InventoryTransactionType = {
 
 export type InventoryTransactionType =
   typeof InventoryTransactionType[keyof typeof InventoryTransactionType];
+export type InventoryUnitData = {
+  description?: Maybe<Scalars['String']>;
+  shortName?: Maybe<Scalars['String']>;
+  unitName: Scalars['String'];
+};
+
+export type InventoryUnitDataResult = {
+  data?: Maybe<InventoryUnitData>;
+  error?: Maybe<QueryError>;
+};
+
 export type InvestmentAccountInput = {
   address: KymAddressInput;
   branch: Scalars['String'];
@@ -18812,6 +18909,11 @@ export type VaultBalanceReportResult = {
   error?: Maybe<QueryError>;
 };
 
+export type WareHouseDetailDataResult = {
+  data?: Maybe<WarehouseInfo>;
+  error?: Maybe<QueryError>;
+};
+
 export type WarehouseConnection = {
   edges?: Maybe<Array<Maybe<WarehouseEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -18855,8 +18957,13 @@ export type WarehouseMutationTransferArgs = {
 };
 
 export type WarehouseQuery = {
+  getWarehouseDetails: WareHouseDetailDataResult;
   listTransfers?: Maybe<WarehouseTransferConnection>;
   listWarehouses?: Maybe<WarehouseConnection>;
+};
+
+export type WarehouseQueryGetWarehouseDetailsArgs = {
+  id: Scalars['ID'];
 };
 
 export type WarehouseQueryListTransfersArgs = {
@@ -26845,6 +26952,33 @@ export type GetInventoryAdjustmentDetailsQuery = {
             newValue?: string | null;
             valueAdjusted?: string | null;
           } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type GetInventoryWarehouseDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryWarehouseDetailsQuery = {
+  inventory: {
+    warehouse?: {
+      getWarehouseDetails: {
+        data?: {
+          id?: string | null;
+          name?: string | null;
+          phoneNumber?: string | null;
+          address?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
         } | null;
         error?:
           | QueryError_AuthorizationError_Fragment
@@ -47639,6 +47773,41 @@ export const useGetInventoryAdjustmentDetailsQuery = <
     ['getInventoryAdjustmentDetails', variables],
     useAxios<GetInventoryAdjustmentDetailsQuery, GetInventoryAdjustmentDetailsQueryVariables>(
       GetInventoryAdjustmentDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryWarehouseDetailsDocument = `
+    query getInventoryWarehouseDetails($id: ID!) {
+  inventory {
+    warehouse {
+      getWarehouseDetails(id: $id) {
+        data {
+          id
+          name
+          phoneNumber
+          address
+          branchId
+          branchName
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryWarehouseDetailsQuery = <
+  TData = GetInventoryWarehouseDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryWarehouseDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryWarehouseDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryWarehouseDetailsQuery, TError, TData>(
+    ['getInventoryWarehouseDetails', variables],
+    useAxios<GetInventoryWarehouseDetailsQuery, GetInventoryWarehouseDetailsQueryVariables>(
+      GetInventoryWarehouseDetailsDocument
     ).bind(null, variables),
     options
   );
