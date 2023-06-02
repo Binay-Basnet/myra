@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box, Column, Table, Text } from '@myra-ui';
+import { Column, PageHeader, Table } from '@myra-ui';
 
 import { useLoanProvisionListQuery } from '@coop/cbs/data-access';
 import { localizedDate } from '@coop/cbs/utils';
@@ -50,24 +50,17 @@ export const LoanProvisionList = () => {
 
   return (
     <>
-      <Box p="s16" display="flex" flexDir="column" gap="s16">
-        <Box display="flex" justifyContent="space-between" w="100%">
-          <Text fontWeight="SemiBold" fontSize="r3" color="gray.800" lineHeight="150%">
-            Loan Loss Provision List
-          </Text>
-        </Box>
-      </Box>
-      <Box p="s16" minH="100vh">
-        <Table
-          isLoading={isLoading}
-          data={rowData}
-          columns={columns}
-          pagination={{
-            total: data?.loanAccount?.loanProvisionList?.totalCount ?? 'Many',
-            pageInfo: data?.loanAccount?.loanProvisionList?.pageInfo,
-          }}
-        />
-      </Box>
+      <PageHeader heading="Loan Loss Provision List" />
+
+      <Table
+        isLoading={isLoading}
+        data={rowData}
+        columns={columns}
+        pagination={{
+          total: data?.loanAccount?.loanProvisionList?.totalCount ?? 'Many',
+          pageInfo: data?.loanAccount?.loanProvisionList?.pageInfo,
+        }}
+      />
     </>
   );
 };

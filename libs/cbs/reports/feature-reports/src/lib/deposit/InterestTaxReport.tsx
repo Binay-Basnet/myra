@@ -5,6 +5,7 @@ import { GridItem } from '@myra-ui/components';
 import {
   InterestTaxReportEntry,
   InterestTaxReportFilter,
+  LocalizedDate,
   useGetInterestTaxReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -14,12 +15,28 @@ import { localizedDate, RouteToDetailsPage } from '@coop/cbs/utils';
 import { FormAmountFilter, FormBranchSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
+type InterestTaxReportFilters = Omit<InterestTaxReportFilter, 'branchId'> & {
+  branchId: {
+    label: string;
+    value: string;
+  }[];
+};
+
 export const InterestTaxReport = () => {
-  const [filters, setFilters] = useState<InterestTaxReportFilter | null>(null);
+  const [filters, setFilters] = useState<InterestTaxReportFilters | null>(null);
+
+  const branchIds =
+    filters?.branchId && filters?.branchId.length !== 0
+      ? filters?.branchId?.map((t) => t.value)
+      : [];
 
   const { data: interestTaxReportData, isFetching } = useGetInterestTaxReportQuery(
     {
-      data: filters as InterestTaxReportFilter,
+      data: {
+        branchId: branchIds,
+        filter: filters?.filter,
+        period: filters?.period as LocalizedDate,
+      },
     },
     { enabled: !!filters }
   );
@@ -46,7 +63,7 @@ export const InterestTaxReport = () => {
         />
         <Report.Inputs>
           <GridItem colSpan={2}>
-            <FormBranchSelect name="branchId" label="Select Branch" />
+            <FormBranchSelect isMulti name="branchId" label="Select Branch" />
           </GridItem>
           <GridItem colSpan={2}>
             <ReportDateRange label="Tax Deduct Date Period" />

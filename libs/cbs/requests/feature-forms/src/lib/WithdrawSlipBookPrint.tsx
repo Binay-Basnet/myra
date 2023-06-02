@@ -151,9 +151,11 @@ export const WithdrawSlipBookPrint = () => {
     details: {
       branch: user?.currentBranch?.name as string,
       memberName: withdrawSlipData?.member?.name?.local as string,
+      memberCode: withdrawSlipData?.member?.code as string,
       accountNumber: withdrawSlipData?.account?.id as string,
       accountName: withdrawSlipData?.account?.accountName as string,
       slipNumber: String(from),
+      productName: withdrawSlipData?.account?.productName as string,
     },
   };
 

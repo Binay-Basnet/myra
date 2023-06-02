@@ -275,7 +275,11 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         'Installment No': loanRepaymentDetailData?.installmentNo,
         'Principal Amount': amountConverter(totalPrincipalAmount || 0),
         'Interest Amount': amountConverter(totalInterestAmount || 0),
-        'Penalty Amount': amountConverter(loanRepaymentDetailData?.fine || 0),
+        'Actual Fine': amountConverter(
+          Number(loanRepaymentDetailData?.fine || 0) +
+            Number(loanRepaymentDetailData?.discount || 0)
+        ),
+        'Paid Fine': amountConverter(loanRepaymentDetailData?.fine || 0),
         'Discount Amount': amountConverter(loanRepaymentDetailData?.discount || 0),
         'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
 
