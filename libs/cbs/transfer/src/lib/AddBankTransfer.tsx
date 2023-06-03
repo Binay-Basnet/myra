@@ -96,7 +96,7 @@ export const AddBankTransfer = () => {
 
             {isDeposit && (
               <FormSection>
-                <BalanceCard label="Teller Bank Available Cash" balance={userBalance as string} />
+                <BalanceCard label="Teller Bank Available Cash" balance={userBalance} />
               </FormSection>
             )}
 

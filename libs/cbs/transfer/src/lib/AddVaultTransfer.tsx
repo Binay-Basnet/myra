@@ -141,9 +141,7 @@ export const AddVaultTransfer = () => {
                       : 'Available Cash with Teller'
                   }
                   balance={
-                    (transferType === TellerTransferType.VaultToCash
-                      ? branchBalance
-                      : userBalance) ?? '0'
+                    transferType === TellerTransferType.VaultToCash ? branchBalance : userBalance
                   }
                 />
               </GridItem>

@@ -36,7 +36,10 @@ fragment User on User {
   firstName
   lastName
   profilePic
-  userBalance
+  userBalance {
+    amount
+    amountType
+  }
   userLedger
   currentRole {
     id
@@ -46,7 +49,10 @@ fragment User on User {
     id
     name
     category
-    branchBalance
+    branchBalance {
+      amount
+      amountType
+    }
     branchCode
     branchStatus
   }
@@ -81,9 +87,15 @@ query getUserAndBranchBalance {
     me {
       data {
         user {
-          userBalance
+          userBalance {
+            amount
+            amountType
+          }
           currentBranch {
-            branchBalance
+            branchBalance {
+              amount
+              amountType
+            }
           }
         }
       }
