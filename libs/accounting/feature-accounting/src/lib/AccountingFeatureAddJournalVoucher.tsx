@@ -161,6 +161,8 @@ export const AccountingFeatureAddJournalVoucher = () => {
                     transactionId: result?.transactionId,
                     transactionTime: localizedTime(result?.createdAt),
                   },
+                  total: amountConverter(total),
+                  totalWords: amountToWordsConverter(total),
                   title: 'Journal Voucher Entry Successful',
                   details: {
                     'Transaction Id': (
@@ -177,6 +179,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
 
                     Note: result?.note,
                   },
+
                   subTitle:
                     'Journal Voucher entered successfully. Details of the entry is listed below.',
                 };
@@ -237,6 +240,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
                     transactionId: result?.transactionId,
                     transactionTime: localizedTime(result?.createdAt),
                   },
+                  totalWords: amountToWordsConverter(total),
                   title: 'Journal Voucher Entry Successful',
                   details: {
                     'Transaction Id': (

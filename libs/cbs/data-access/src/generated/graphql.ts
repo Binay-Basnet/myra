@@ -2036,7 +2036,7 @@ export type BlockChequeRequestList = {
 export type Branch = {
   abbsTransaction?: Maybe<AbbsTransaction>;
   address?: Maybe<Address>;
-  branchBalance?: Maybe<Scalars['String']>;
+  branchBalance?: Maybe<BalanceValue>;
   branchCode?: Maybe<Scalars['String']>;
   branchStatus?: Maybe<Scalars['Boolean']>;
   category?: Maybe<BranchCategory>;
@@ -18625,7 +18625,7 @@ export type User = {
   middleName: Scalars['Localized'];
   organization?: Maybe<Organization>;
   profilePic?: Maybe<Scalars['String']>;
-  userBalance?: Maybe<Scalars['String']>;
+  userBalance?: Maybe<BalanceValue>;
   userLedger?: Maybe<Scalars['String']>;
   username: Scalars['String'];
 };
@@ -25585,16 +25585,16 @@ export type UserFragment = {
   firstName: Record<'local' | 'en' | 'np', string>;
   lastName: Record<'local' | 'en' | 'np', string>;
   profilePic?: string | null;
-  userBalance?: string | null;
   userLedger?: string | null;
+  userBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
   currentRole?: { id: string; name: string } | null;
   currentBranch?: {
     id: string;
     name?: string | null;
     category?: BranchCategory | null;
-    branchBalance?: string | null;
     branchCode?: string | null;
     branchStatus?: boolean | null;
+    branchBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
   } | null;
   organization?: {
     id: string;
@@ -25623,8 +25623,10 @@ export type GetUserAndBranchBalanceQuery = {
     me: {
       data?: {
         user?: {
-          userBalance?: string | null;
-          currentBranch?: { branchBalance?: string | null } | null;
+          userBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          currentBranch?: {
+            branchBalance?: { amount?: string | null; amountType?: BalanceType | null } | null;
+          } | null;
         } | null;
       } | null;
       error?:
@@ -36783,7 +36785,10 @@ export const UserFragmentDoc = `
   firstName
   lastName
   profilePic
-  userBalance
+  userBalance {
+    amount
+    amountType
+  }
   userLedger
   currentRole {
     id
@@ -36793,7 +36798,10 @@ export const UserFragmentDoc = `
     id
     name
     category
-    branchBalance
+    branchBalance {
+      amount
+      amountType
+    }
     branchCode
     branchStatus
   }
@@ -46360,9 +46368,15 @@ export const GetUserAndBranchBalanceDocument = `
     me {
       data {
         user {
-          userBalance
+          userBalance {
+            amount
+            amountType
+          }
           currentBranch {
-            branchBalance
+            branchBalance {
+              amount
+              amountType
+            }
           }
         }
       }
