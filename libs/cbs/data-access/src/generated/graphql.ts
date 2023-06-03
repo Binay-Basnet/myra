@@ -21953,6 +21953,118 @@ export type EodActivitiesSetupMutation = {
   settings: { general?: { setup: { eodAction?: boolean | null } } | null };
 };
 
+export type SetDepartmentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewDepartment;
+}>;
+
+export type SetDepartmentMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertDepartment: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetDesignationMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewDesignation;
+}>;
+
+export type SetDesignationMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertDesignation: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetEmployeeTypeMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewEmployeeType;
+}>;
+
+export type SetEmployeeTypeMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertEmployeeType: {
+              recordId?: string | null;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type SetEmployeeHealthInsuranceMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: NewEmployeeHealthInsurance;
+}>;
+
+export type SetEmployeeHealthInsuranceMutation = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          employee: {
+            upsertEmployeeHealthInsurance: {
+              recordId: string;
+              error?:
+                | MutationError_AuthorizationError_Fragment
+                | MutationError_BadRequestError_Fragment
+                | MutationError_NotFoundError_Fragment
+                | MutationError_ServerError_Fragment
+                | MutationError_ValidationError_Fragment
+                | null;
+            };
+          };
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type SetLoanProductMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<LoanProductInput>;
@@ -26697,6 +26809,154 @@ export type GetInsAccountOperatorEditListQuery = {
   };
 };
 
+export type GetSuppliersListQueryVariables = Exact<{
+  filter?: InputMaybe<InvSupplierFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetSuppliersListQuery = {
+  inventory: {
+    suppliers?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            name?: string | null;
+            phoneNo?: string | null;
+            email?: string | null;
+            location?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventoryRegisterListQueryVariables = Exact<{
+  filter?: InputMaybe<InventoryRegisterFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetInventoryRegisterListQuery = {
+  inventory: {
+    register?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor?: string | null;
+        node?: {
+          id: string;
+          itemId: string;
+          itemCode: string;
+          itemName: string;
+          transaction_type: InventoryTransactionType;
+          unitPrice: string;
+          totalCost: string;
+          quantity: string;
+        } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
+    } | null;
+  };
+};
+
+export type GetInventoryAdjustmentListQueryVariables = Exact<{
+  filter?: InputMaybe<InventoryAdjustmentFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetInventoryAdjustmentListQuery = {
+  inventory: {
+    adjustment?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            entryNo?: string | null;
+            reference?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventoryAdjustmentTableQueryVariables = Exact<{
+  filter?: InputMaybe<InventoryAdjustmentFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetInventoryAdjustmentTableQuery = {
+  inventory: {
+    adjustment?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor?: string | null;
+          node?: {
+            id?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            entryNo?: string | null;
+            reference?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventoryAdjustmentDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryAdjustmentDetailsQuery = {
+  inventory: {
+    adjustment?: {
+      detailAdjustment: {
+        data?: {
+          referenceNo: string;
+          code: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          notes?: string | null;
+          modeOfAdjustment: InventoryAdjustmentMode;
+          itemDetails?: Array<{
+            itemId?: string | null;
+            warehouseId?: string | null;
+            itemName?: string | null;
+            warehouseName?: string | null;
+            newQuantity?: string | null;
+            quantityAdjusted?: string | null;
+            quantityAdjustedUnit?: AdjustmentUnit | null;
+            newValue?: string | null;
+            valueAdjusted?: string | null;
+          } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
 export type GetInventoryItemsListQueryVariables = Exact<{
   filter?: InputMaybe<InvItemsDataFilter>;
   pagination?: InputMaybe<Pagination>;
@@ -26788,6 +27048,118 @@ export type GetUnitsListQuery = {
   };
 };
 
+export type GetInventoryItemGroupsDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryItemGroupsDetailsQuery = {
+  inventory: {
+    itemsGroup?: {
+      getGroupdetails: {
+        data?: {
+          groupId: string;
+          groupName: string;
+          underGroup?: string | null;
+          description?: string | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type GetInventoryUnitsDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryUnitsDetailsQuery = {
+  inventory: {
+    unitOfMeasure?: {
+      getUnitDetails: {
+        data?: { description?: string | null; shortName?: string | null; unitName: string } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type GetInventoryItemsDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryItemsDetailsQuery = {
+  inventory: {
+    items?: {
+      getItemDetails?: {
+        data?: {
+          itemName: string;
+          itemCode: string;
+          itemGroup: string;
+          unit: string;
+          tax?: string | null;
+          reorderLevel?: string | null;
+          valuationMethod?: InvItemsValuationMethod | null;
+          variants?: Array<{
+            costPrice?: string | null;
+            itemName?: string | null;
+            sellingPrice?: string | null;
+            sku?: string | null;
+          } | null> | null;
+          ledgerDetail: {
+            purchaseLedger: string;
+            purchaseReturnLedger: string;
+            salesLedger: string;
+            salesReturnLedger: string;
+          };
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventoryWarehouseDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryWarehouseDetailsQuery = {
+  inventory: {
+    warehouse?: {
+      getWarehouseDetails: {
+        data?: {
+          id?: string | null;
+          name?: string | null;
+          phoneNumber?: string | null;
+          address?: string | null;
+          branchId?: string | null;
+          branchName?: string | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
 export type GetWarehouseListQueryVariables = Exact<{
   paginate: Pagination;
   filter?: InputMaybe<Filter>;
@@ -26811,67 +27183,6 @@ export type GetWarehouseListQuery = {
         } | null> | null;
         pageInfo?: PaginationFragment | null;
       } | null;
-    } | null;
-  };
-};
-
-export type GetSuppliersListQueryVariables = Exact<{
-  filter?: InputMaybe<InvSupplierFilter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetSuppliersListQuery = {
-  inventory: {
-    suppliers?: {
-      list?: {
-        totalCount: number;
-        edges?: Array<{
-          cursor?: string | null;
-          node?: {
-            id?: string | null;
-            name?: string | null;
-            phoneNo?: string | null;
-            email?: string | null;
-            location?: {
-              state?: Record<'local' | 'en' | 'np', string> | null;
-              district?: Record<'local' | 'en' | 'np', string> | null;
-              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
-              wardNo?: string | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
-            } | null;
-          } | null;
-        } | null> | null;
-        pageInfo?: PaginationFragment | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetInventoryRegisterListQueryVariables = Exact<{
-  filter?: InputMaybe<InventoryRegisterFilter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetInventoryRegisterListQuery = {
-  inventory: {
-    register?: {
-      totalCount: number;
-      edges?: Array<{
-        cursor?: string | null;
-        node?: {
-          id: string;
-          itemId: string;
-          itemCode: string;
-          itemName: string;
-          transaction_type: InventoryTransactionType;
-          unitPrice: string;
-          totalCost: string;
-          quantity: string;
-        } | null;
-      } | null> | null;
-      pageInfo?: PaginationFragment | null;
     } | null;
   };
 };
@@ -26902,93 +27213,6 @@ export type GetInventoryWarehouseTransferQuery = {
         } | null> | null;
         pageInfo?: PaginationFragment | null;
       } | null;
-    } | null;
-  };
-};
-
-export type GetInventoryAdjustmentListQueryVariables = Exact<{
-  filter?: InputMaybe<InventoryAdjustmentFilter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetInventoryAdjustmentListQuery = {
-  inventory: {
-    adjustment?: {
-      list?: {
-        totalCount: number;
-        edges?: Array<{
-          cursor?: string | null;
-          node?: {
-            id?: string | null;
-            date?: Record<'local' | 'en' | 'np', string> | null;
-            entryNo?: string | null;
-            reference?: string | null;
-          } | null;
-        } | null> | null;
-        pageInfo?: PaginationFragment | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetInventoryAdjustmentTableQueryVariables = Exact<{
-  filter?: InputMaybe<InventoryAdjustmentFilter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetInventoryAdjustmentTableQuery = {
-  inventory: {
-    adjustment?: {
-      list?: {
-        totalCount: number;
-        edges?: Array<{
-          cursor?: string | null;
-          node?: {
-            id?: string | null;
-            date?: Record<'local' | 'en' | 'np', string> | null;
-            entryNo?: string | null;
-            reference?: string | null;
-          } | null;
-        } | null> | null;
-        pageInfo?: PaginationFragment | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetInventoryAdjustmentDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetInventoryAdjustmentDetailsQuery = {
-  inventory: {
-    adjustment?: {
-      detailAdjustment: {
-        data?: {
-          referenceNo: string;
-          code: string;
-          date: Record<'local' | 'en' | 'np', string>;
-          notes?: string | null;
-          modeOfAdjustment: InventoryAdjustmentMode;
-          itemDetails?: Array<{
-            itemId?: string | null;
-            warehouseId?: string | null;
-            itemName?: string | null;
-            warehouseName?: string | null;
-            newQuantity?: string | null;
-            quantityAdjusted?: string | null;
-            quantityAdjustedUnit?: AdjustmentUnit | null;
-            newValue?: string | null;
-            valueAdjusted?: string | null;
-          } | null> | null;
-        } | null;
-        error?:
-          | QueryError_AuthorizationError_Fragment
-          | QueryError_BadRequestError_Fragment
-          | QueryError_NotFoundError_Fragment
-          | QueryError_ServerError_Fragment
-          | null;
-      };
     } | null;
   };
 };
@@ -33057,6 +33281,102 @@ export type GetEodExceptionsQuery = {
           loanRepayment: boolean;
         } | null;
       };
+    } | null;
+  };
+};
+
+export type GetDepartmentListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetDepartmentListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listDepartment?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; name: string; description: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDesignationListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetDesignationListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listDesignation?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; name: string; description: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeTypeListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeTypeListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listEmployeeType?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; name: string; description: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type GetEmployeeHealthInsuranceListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetEmployeeHealthInsuranceListQuery = {
+  settings: {
+    general?: {
+      HCM?: {
+        employee: {
+          listEmployeeHealthInsurance?: {
+            totalCount: number;
+            edges?: Array<{
+              cursor: string;
+              node: { id: string; healthInsuranceProvider: string; healthInsuranceNumber: string };
+            } | null> | null;
+            pageInfo?: PaginationFragment | null;
+          } | null;
+        };
+      } | null;
     } | null;
   };
 };
@@ -40990,6 +41310,145 @@ export const useEodActivitiesSetupMutation = <TError = unknown, TContext = unkno
     ),
     options
   );
+export const SetDepartmentDocument = `
+    mutation setDepartment($id: String, $input: NewDepartment!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertDepartment(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetDepartmentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDepartmentMutation,
+    TError,
+    SetDepartmentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDepartmentMutation, TError, SetDepartmentMutationVariables, TContext>(
+    ['setDepartment'],
+    useAxios<SetDepartmentMutation, SetDepartmentMutationVariables>(SetDepartmentDocument),
+    options
+  );
+export const SetDesignationDocument = `
+    mutation setDesignation($id: String, $input: NewDesignation!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertDesignation(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetDesignationMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDesignationMutation,
+    TError,
+    SetDesignationMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDesignationMutation, TError, SetDesignationMutationVariables, TContext>(
+    ['setDesignation'],
+    useAxios<SetDesignationMutation, SetDesignationMutationVariables>(SetDesignationDocument),
+    options
+  );
+export const SetEmployeeTypeDocument = `
+    mutation setEmployeeType($id: String, $input: NewEmployeeType!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertEmployeeType(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeTypeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeTypeMutation,
+    TError,
+    SetEmployeeTypeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEmployeeTypeMutation, TError, SetEmployeeTypeMutationVariables, TContext>(
+    ['setEmployeeType'],
+    useAxios<SetEmployeeTypeMutation, SetEmployeeTypeMutationVariables>(SetEmployeeTypeDocument),
+    options
+  );
+export const SetEmployeeHealthInsuranceDocument = `
+    mutation setEmployeeHealthInsurance($id: String, $input: NewEmployeeHealthInsurance!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertEmployeeHealthInsurance(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeHealthInsuranceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeHealthInsuranceMutation,
+    TError,
+    SetEmployeeHealthInsuranceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeHealthInsuranceMutation,
+    TError,
+    SetEmployeeHealthInsuranceMutationVariables,
+    TContext
+  >(
+    ['setEmployeeHealthInsurance'],
+    useAxios<SetEmployeeHealthInsuranceMutation, SetEmployeeHealthInsuranceMutationVariables>(
+      SetEmployeeHealthInsuranceDocument
+    ),
+    options
+  );
 export const SetLoanProductDocument = `
     mutation setLoanProduct($id: ID!, $data: LoanProductInput, $edit: Boolean) {
   settings {
@@ -47361,6 +47820,217 @@ export const useGetInsAccountOperatorEditListQuery = <
     ).bind(null, variables),
     options
   );
+export const GetSuppliersListDocument = `
+    query getSuppliersList($filter: InvSupplierFilter, $pagination: Pagination) {
+  inventory {
+    suppliers {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            location {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            phoneNo
+            email
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSuppliersListQuery = <TData = GetSuppliersListQuery, TError = unknown>(
+  variables?: GetSuppliersListQueryVariables,
+  options?: UseQueryOptions<GetSuppliersListQuery, TError, TData>
+) =>
+  useQuery<GetSuppliersListQuery, TError, TData>(
+    variables === undefined ? ['getSuppliersList'] : ['getSuppliersList', variables],
+    useAxios<GetSuppliersListQuery, GetSuppliersListQueryVariables>(GetSuppliersListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetInventoryRegisterListDocument = `
+    query getInventoryRegisterList($filter: InventoryRegisterFilter, $pagination: Pagination) {
+  inventory {
+    register(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          itemId
+          itemCode
+          itemName
+          transaction_type
+          unitPrice
+          totalCost
+          quantity
+        }
+        cursor
+      }
+      pageInfo {
+        ...Pagination
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetInventoryRegisterListQuery = <
+  TData = GetInventoryRegisterListQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryRegisterListQueryVariables,
+  options?: UseQueryOptions<GetInventoryRegisterListQuery, TError, TData>
+) =>
+  useQuery<GetInventoryRegisterListQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryRegisterList']
+      : ['getInventoryRegisterList', variables],
+    useAxios<GetInventoryRegisterListQuery, GetInventoryRegisterListQueryVariables>(
+      GetInventoryRegisterListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryAdjustmentListDocument = `
+    query getInventoryAdjustmentList($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
+  inventory {
+    adjustment {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetInventoryAdjustmentListQuery = <
+  TData = GetInventoryAdjustmentListQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryAdjustmentListQueryVariables,
+  options?: UseQueryOptions<GetInventoryAdjustmentListQuery, TError, TData>
+) =>
+  useQuery<GetInventoryAdjustmentListQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryAdjustmentList']
+      : ['getInventoryAdjustmentList', variables],
+    useAxios<GetInventoryAdjustmentListQuery, GetInventoryAdjustmentListQueryVariables>(
+      GetInventoryAdjustmentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryAdjustmentTableDocument = `
+    query getInventoryAdjustmentTable($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
+  inventory {
+    adjustment {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetInventoryAdjustmentTableQuery = <
+  TData = GetInventoryAdjustmentTableQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryAdjustmentTableQueryVariables,
+  options?: UseQueryOptions<GetInventoryAdjustmentTableQuery, TError, TData>
+) =>
+  useQuery<GetInventoryAdjustmentTableQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryAdjustmentTable']
+      : ['getInventoryAdjustmentTable', variables],
+    useAxios<GetInventoryAdjustmentTableQuery, GetInventoryAdjustmentTableQueryVariables>(
+      GetInventoryAdjustmentTableDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryAdjustmentDetailsDocument = `
+    query getInventoryAdjustmentDetails($id: ID!) {
+  inventory {
+    adjustment {
+      detailAdjustment(id: $id) {
+        data {
+          referenceNo
+          code
+          date
+          notes
+          modeOfAdjustment
+          itemDetails {
+            itemId
+            warehouseId
+            itemName
+            warehouseName
+            newQuantity
+            quantityAdjusted
+            quantityAdjustedUnit
+            newValue
+            valueAdjusted
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryAdjustmentDetailsQuery = <
+  TData = GetInventoryAdjustmentDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryAdjustmentDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryAdjustmentDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryAdjustmentDetailsQuery, TError, TData>(
+    ['getInventoryAdjustmentDetails', variables],
+    useAxios<GetInventoryAdjustmentDetailsQuery, GetInventoryAdjustmentDetailsQueryVariables>(
+      GetInventoryAdjustmentDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInventoryItemsListDocument = `
     query getInventoryItemsList($filter: InvItemsDataFilter, $pagination: Pagination) {
   inventory {
@@ -47504,6 +48174,154 @@ export const useGetUnitsListQuery = <TData = GetUnitsListQuery, TError = unknown
     ),
     options
   );
+export const GetInventoryItemGroupsDetailsDocument = `
+    query getInventoryItemGroupsDetails($id: ID!) {
+  inventory {
+    itemsGroup {
+      getGroupdetails(id: $id) {
+        data {
+          groupId
+          groupName
+          underGroup
+          description
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryItemGroupsDetailsQuery = <
+  TData = GetInventoryItemGroupsDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryItemGroupsDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryItemGroupsDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryItemGroupsDetailsQuery, TError, TData>(
+    ['getInventoryItemGroupsDetails', variables],
+    useAxios<GetInventoryItemGroupsDetailsQuery, GetInventoryItemGroupsDetailsQueryVariables>(
+      GetInventoryItemGroupsDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryUnitsDetailsDocument = `
+    query getInventoryUnitsDetails($id: ID!) {
+  inventory {
+    unitOfMeasure {
+      getUnitDetails(id: $id) {
+        data {
+          description
+          shortName
+          unitName
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryUnitsDetailsQuery = <
+  TData = GetInventoryUnitsDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryUnitsDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryUnitsDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryUnitsDetailsQuery, TError, TData>(
+    ['getInventoryUnitsDetails', variables],
+    useAxios<GetInventoryUnitsDetailsQuery, GetInventoryUnitsDetailsQueryVariables>(
+      GetInventoryUnitsDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryItemsDetailsDocument = `
+    query getInventoryItemsDetails($id: ID!) {
+  inventory {
+    items {
+      getItemDetails(id: $id) {
+        data {
+          itemName
+          itemCode
+          itemGroup
+          unit
+          tax
+          variants {
+            costPrice
+            itemName
+            sellingPrice
+            sku
+          }
+          ledgerDetail {
+            purchaseLedger
+            purchaseReturnLedger
+            salesLedger
+            salesReturnLedger
+          }
+          reorderLevel
+          valuationMethod
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryItemsDetailsQuery = <
+  TData = GetInventoryItemsDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryItemsDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryItemsDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryItemsDetailsQuery, TError, TData>(
+    ['getInventoryItemsDetails', variables],
+    useAxios<GetInventoryItemsDetailsQuery, GetInventoryItemsDetailsQueryVariables>(
+      GetInventoryItemsDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryWarehouseDetailsDocument = `
+    query getInventoryWarehouseDetails($id: ID!) {
+  inventory {
+    warehouse {
+      getWarehouseDetails(id: $id) {
+        data {
+          id
+          name
+          phoneNumber
+          address
+          branchId
+          branchName
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryWarehouseDetailsQuery = <
+  TData = GetInventoryWarehouseDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryWarehouseDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryWarehouseDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryWarehouseDetailsQuery, TError, TData>(
+    ['getInventoryWarehouseDetails', variables],
+    useAxios<GetInventoryWarehouseDetailsQuery, GetInventoryWarehouseDetailsQueryVariables>(
+      GetInventoryWarehouseDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetWarehouseListDocument = `
     query getWarehouseList($paginate: Pagination!, $filter: Filter) {
   inventory {
@@ -47539,94 +48357,6 @@ export const useGetWarehouseListQuery = <TData = GetWarehouseListQuery, TError =
       null,
       variables
     ),
-    options
-  );
-export const GetSuppliersListDocument = `
-    query getSuppliersList($filter: InvSupplierFilter, $pagination: Pagination) {
-  inventory {
-    suppliers {
-      list(filter: $filter, pagination: $pagination) {
-        totalCount
-        edges {
-          node {
-            id
-            name
-            location {
-              state
-              district
-              localGovernment
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            phoneNo
-            email
-          }
-          cursor
-        }
-        pageInfo {
-          ...Pagination
-        }
-      }
-    }
-  }
-}
-    ${PaginationFragmentDoc}`;
-export const useGetSuppliersListQuery = <TData = GetSuppliersListQuery, TError = unknown>(
-  variables?: GetSuppliersListQueryVariables,
-  options?: UseQueryOptions<GetSuppliersListQuery, TError, TData>
-) =>
-  useQuery<GetSuppliersListQuery, TError, TData>(
-    variables === undefined ? ['getSuppliersList'] : ['getSuppliersList', variables],
-    useAxios<GetSuppliersListQuery, GetSuppliersListQueryVariables>(GetSuppliersListDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
-export const GetInventoryRegisterListDocument = `
-    query getInventoryRegisterList($filter: InventoryRegisterFilter, $pagination: Pagination) {
-  inventory {
-    register(filter: $filter, pagination: $pagination) {
-      totalCount
-      edges {
-        node {
-          id
-          itemId
-          itemCode
-          itemName
-          transaction_type
-          unitPrice
-          totalCost
-          quantity
-        }
-        cursor
-      }
-      pageInfo {
-        ...Pagination
-      }
-    }
-  }
-}
-    ${PaginationFragmentDoc}`;
-export const useGetInventoryRegisterListQuery = <
-  TData = GetInventoryRegisterListQuery,
-  TError = unknown
->(
-  variables?: GetInventoryRegisterListQueryVariables,
-  options?: UseQueryOptions<GetInventoryRegisterListQuery, TError, TData>
-) =>
-  useQuery<GetInventoryRegisterListQuery, TError, TData>(
-    variables === undefined
-      ? ['getInventoryRegisterList']
-      : ['getInventoryRegisterList', variables],
-    useAxios<GetInventoryRegisterListQuery, GetInventoryRegisterListQueryVariables>(
-      GetInventoryRegisterListDocument
-    ).bind(null, variables),
     options
   );
 export const GetInventoryWarehouseTransferDocument = `
@@ -47668,129 +48398,6 @@ export const useGetInventoryWarehouseTransferQuery = <
     ['getInventoryWarehouseTransfer', variables],
     useAxios<GetInventoryWarehouseTransferQuery, GetInventoryWarehouseTransferQueryVariables>(
       GetInventoryWarehouseTransferDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetInventoryAdjustmentListDocument = `
-    query getInventoryAdjustmentList($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
-  inventory {
-    adjustment {
-      list(filter: $filter, pagination: $pagination) {
-        totalCount
-        edges {
-          node {
-            id
-            date
-            entryNo
-            reference
-          }
-          cursor
-        }
-        pageInfo {
-          ...Pagination
-        }
-      }
-    }
-  }
-}
-    ${PaginationFragmentDoc}`;
-export const useGetInventoryAdjustmentListQuery = <
-  TData = GetInventoryAdjustmentListQuery,
-  TError = unknown
->(
-  variables?: GetInventoryAdjustmentListQueryVariables,
-  options?: UseQueryOptions<GetInventoryAdjustmentListQuery, TError, TData>
-) =>
-  useQuery<GetInventoryAdjustmentListQuery, TError, TData>(
-    variables === undefined
-      ? ['getInventoryAdjustmentList']
-      : ['getInventoryAdjustmentList', variables],
-    useAxios<GetInventoryAdjustmentListQuery, GetInventoryAdjustmentListQueryVariables>(
-      GetInventoryAdjustmentListDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetInventoryAdjustmentTableDocument = `
-    query getInventoryAdjustmentTable($filter: InventoryAdjustmentFilter, $pagination: Pagination) {
-  inventory {
-    adjustment {
-      list(filter: $filter, pagination: $pagination) {
-        totalCount
-        edges {
-          node {
-            id
-            date
-            entryNo
-            reference
-          }
-          cursor
-        }
-        pageInfo {
-          ...Pagination
-        }
-      }
-    }
-  }
-}
-    ${PaginationFragmentDoc}`;
-export const useGetInventoryAdjustmentTableQuery = <
-  TData = GetInventoryAdjustmentTableQuery,
-  TError = unknown
->(
-  variables?: GetInventoryAdjustmentTableQueryVariables,
-  options?: UseQueryOptions<GetInventoryAdjustmentTableQuery, TError, TData>
-) =>
-  useQuery<GetInventoryAdjustmentTableQuery, TError, TData>(
-    variables === undefined
-      ? ['getInventoryAdjustmentTable']
-      : ['getInventoryAdjustmentTable', variables],
-    useAxios<GetInventoryAdjustmentTableQuery, GetInventoryAdjustmentTableQueryVariables>(
-      GetInventoryAdjustmentTableDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetInventoryAdjustmentDetailsDocument = `
-    query getInventoryAdjustmentDetails($id: ID!) {
-  inventory {
-    adjustment {
-      detailAdjustment(id: $id) {
-        data {
-          referenceNo
-          code
-          date
-          notes
-          modeOfAdjustment
-          itemDetails {
-            itemId
-            warehouseId
-            itemName
-            warehouseName
-            newQuantity
-            quantityAdjusted
-            quantityAdjustedUnit
-            newValue
-            valueAdjusted
-          }
-        }
-        error {
-          ...QueryError
-        }
-      }
-    }
-  }
-}
-    ${QueryErrorFragmentDoc}`;
-export const useGetInventoryAdjustmentDetailsQuery = <
-  TData = GetInventoryAdjustmentDetailsQuery,
-  TError = unknown
->(
-  variables: GetInventoryAdjustmentDetailsQueryVariables,
-  options?: UseQueryOptions<GetInventoryAdjustmentDetailsQuery, TError, TData>
-) =>
-  useQuery<GetInventoryAdjustmentDetailsQuery, TError, TData>(
-    ['getInventoryAdjustmentDetails', variables],
-    useAxios<GetInventoryAdjustmentDetailsQuery, GetInventoryAdjustmentDetailsQueryVariables>(
-      GetInventoryAdjustmentDetailsDocument
     ).bind(null, variables),
     options
   );
@@ -55662,6 +56269,159 @@ export const useGetEodExceptionsQuery = <TData = GetEodExceptionsQuery, TError =
       null,
       variables
     ),
+    options
+  );
+export const GetDepartmentListDocument = `
+    query getDepartmentList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listDepartment(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                description
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetDepartmentListQuery = <TData = GetDepartmentListQuery, TError = unknown>(
+  variables?: GetDepartmentListQueryVariables,
+  options?: UseQueryOptions<GetDepartmentListQuery, TError, TData>
+) =>
+  useQuery<GetDepartmentListQuery, TError, TData>(
+    variables === undefined ? ['getDepartmentList'] : ['getDepartmentList', variables],
+    useAxios<GetDepartmentListQuery, GetDepartmentListQueryVariables>(
+      GetDepartmentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDesignationListDocument = `
+    query getDesignationList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listDesignation(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                description
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetDesignationListQuery = <TData = GetDesignationListQuery, TError = unknown>(
+  variables?: GetDesignationListQueryVariables,
+  options?: UseQueryOptions<GetDesignationListQuery, TError, TData>
+) =>
+  useQuery<GetDesignationListQuery, TError, TData>(
+    variables === undefined ? ['getDesignationList'] : ['getDesignationList', variables],
+    useAxios<GetDesignationListQuery, GetDesignationListQueryVariables>(
+      GetDesignationListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeTypeListDocument = `
+    query getEmployeeTypeList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listEmployeeType(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                description
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeTypeListQuery = <TData = GetEmployeeTypeListQuery, TError = unknown>(
+  variables?: GetEmployeeTypeListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeTypeListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeTypeListQuery, TError, TData>(
+    variables === undefined ? ['getEmployeeTypeList'] : ['getEmployeeTypeList', variables],
+    useAxios<GetEmployeeTypeListQuery, GetEmployeeTypeListQueryVariables>(
+      GetEmployeeTypeListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEmployeeHealthInsuranceListDocument = `
+    query getEmployeeHealthInsuranceList($filter: Filter, $pagination: Pagination) {
+  settings {
+    general {
+      HCM {
+        employee {
+          listEmployeeHealthInsurance(filter: $filter, pagination: $pagination) {
+            totalCount
+            edges {
+              node {
+                id
+                healthInsuranceProvider
+                healthInsuranceNumber
+              }
+              cursor
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetEmployeeHealthInsuranceListQuery = <
+  TData = GetEmployeeHealthInsuranceListQuery,
+  TError = unknown
+>(
+  variables?: GetEmployeeHealthInsuranceListQueryVariables,
+  options?: UseQueryOptions<GetEmployeeHealthInsuranceListQuery, TError, TData>
+) =>
+  useQuery<GetEmployeeHealthInsuranceListQuery, TError, TData>(
+    variables === undefined
+      ? ['getEmployeeHealthInsuranceList']
+      : ['getEmployeeHealthInsuranceList', variables],
+    useAxios<GetEmployeeHealthInsuranceListQuery, GetEmployeeHealthInsuranceListQueryVariables>(
+      GetEmployeeHealthInsuranceListDocument
+    ).bind(null, variables),
     options
   );
 export const GetLoanProductListDocument = `

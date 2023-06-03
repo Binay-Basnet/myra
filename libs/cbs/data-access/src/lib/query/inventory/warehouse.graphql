@@ -1,0 +1,71 @@
+query getInventoryWarehouseDetails($id: ID!) {
+  inventory {
+    warehouse {
+      getWarehouseDetails(id: $id) {
+        data {
+          id
+          name
+          phoneNumber
+          address
+          branchId
+          branchName
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+
+query getWarehouseList($paginate: Pagination!, $filter: Filter) {
+  inventory {
+    warehouse {
+      listWarehouses(paginate: $paginate, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            phoneNumber
+            address
+            branchId
+            branchName
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+
+query getInventoryWarehouseTransfer($filter: WarehouseTransferFilter, $pagination: Pagination!) {
+  inventory {
+    warehouse {
+      listTransfers(filter: $filter, paginate: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            entryNo
+            reference
+            sourceWarehouseId
+            sourceWarehouseName
+            destinationWarehouseId
+            destinationWarehouseName
+            status
+          }
+          cursor
+        }
+
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}

@@ -1,18 +1,23 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BsThreeDots } from 'react-icons/bs';
+import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { asyncToast, Box, Column, Modal, PageHeader, Table } from '@myra-ui';
 
 import { useGetUnitsListQuery, useSetUnitsMutation } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormInput, FormSwitch } from '@coop/shared/form';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
+import { UnitsDetailsModal } from '../component/details/UnitsDEtails';
+
 export const InventoryItemUnitsTable = () => {
   const [openModalUnits, setOpenModalUnits] = useState(false);
-
+  const [openDetailModal, setOpenDetailModal] = useState(false);
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const methods = useForm();
@@ -25,6 +30,14 @@ export const InventoryItemUnitsTable = () => {
 
   const onCloseModalUnits = () => {
     setOpenModalUnits(false);
+  };
+
+  const onOpenDetailsModal = () => {
+    setOpenDetailModal(true);
+  };
+
+  const onCloseDetailsModal = () => {
+    setOpenDetailModal(false);
   };
   const handleUpdateModalClose = () => {
     methods.reset({
@@ -90,7 +103,15 @@ export const InventoryItemUnitsTable = () => {
     <>
       <PageHeader heading="Units" buttonTitle="New Unit Add" onClick={onOpenModalUnits} button />
 
-      <Table isLoading={isFetching} data={rowItems} columns={columns} />
+      <Table
+        isLoading={isFetching}
+        data={rowItems}
+        columns={columns}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.INVENTORY_ITEMS_UNIT_LIST}?id=${row?.node?.id}`);
+          onOpenDetailsModal();
+        }}
+      />
       <Modal
         open={openModalUnits}
         onClose={onCloseModalUnits}
@@ -108,6 +129,10 @@ export const InventoryItemUnitsTable = () => {
           </Box>
         </FormProvider>
       </Modal>
+      <UnitsDetailsModal
+        isDetailModalOpen={openDetailModal}
+        handleDetailClose={onCloseDetailsModal}
+      />
     </>
   );
 };
