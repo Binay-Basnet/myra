@@ -107,7 +107,7 @@ export const DesignationsTable = () => {
     }
   };
   return (
-    <>
+    <Box id="designation">
       <SettingsCard
         title="Designations"
         subtitle="Extends Fields that can be added to forms for additional input Fields"
@@ -152,7 +152,7 @@ export const DesignationsTable = () => {
           </form>
         </FormProvider>
       </Modal>
-    </>
+    </Box>
   );
 };
 

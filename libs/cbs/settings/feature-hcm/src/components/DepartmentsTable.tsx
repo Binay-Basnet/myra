@@ -107,7 +107,7 @@ export const DepartmentsTable = () => {
     }
   };
   return (
-    <>
+    <Box id="department">
       <SettingsCard
         title="Departments"
         subtitle="Extends Fields that can be added to forms for additional input Fields"
@@ -146,7 +146,7 @@ export const DepartmentsTable = () => {
           </form>
         </FormProvider>
       </Modal>
-    </>
+    </Box>
   );
 };
 
