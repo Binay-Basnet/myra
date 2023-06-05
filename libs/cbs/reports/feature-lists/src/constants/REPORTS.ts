@@ -155,6 +155,8 @@ export enum Report {
 
   ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT = 'External Loan Statement Report',
   ACCOUNTING_EXTERNAL_LOAN_REPORT = 'External Loan Report',
+  ACCOUNTING_FD_INVESTMENT_STATEMENT_REPORT = 'FD Investment Statement Report',
+  ACCOUNTING_FD_INVESTMENT = 'FD Investment Report',
 }
 
 export const REPORTS = {
@@ -719,14 +721,24 @@ export const REPORTS = {
   ],
   [ReportGroup.ACCOUNTING]: [
     {
-      id: '',
+      id: '1',
       report: Report.ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT,
       link: 'external-loan-statement',
     },
     {
-      id: '',
+      id: '2',
       report: Report.ACCOUNTING_EXTERNAL_LOAN_REPORT,
       link: 'external-loan',
+    },
+    {
+      id: '3',
+      report: Report.ACCOUNTING_FD_INVESTMENT_STATEMENT_REPORT,
+      link: 'fd-investment-statement',
+    },
+    {
+      id: 4,
+      report: Report.ACCOUNTING_FD_INVESTMENT,
+      link: 'fd-investment',
     },
   ],
 };
