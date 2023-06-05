@@ -311,9 +311,7 @@ export const AddAgentTransaction = () => {
                       header: '',
                       fieldType: 'checkbox',
                       getDisabled: (row) => {
-                        const item = todaysList?.find(
-                          (account) => account?.account === row?.account
-                        );
+                        const item = todaysList?.find((account) => account?.id === row?.id);
 
                         return !!item?.paid;
                       },
