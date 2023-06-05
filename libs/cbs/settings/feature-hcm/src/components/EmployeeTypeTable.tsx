@@ -107,7 +107,7 @@ export const EmployeeTypeTable = () => {
     }
   };
   return (
-    <>
+    <Box id="employee-type">
       <SettingsCard
         title="Employee Type"
         subtitle="Extends Fields that can be added to forms for additional input Fields"
@@ -152,7 +152,7 @@ export const EmployeeTypeTable = () => {
           </form>
         </FormProvider>
       </Modal>
-    </>
+    </Box>
   );
 };
 

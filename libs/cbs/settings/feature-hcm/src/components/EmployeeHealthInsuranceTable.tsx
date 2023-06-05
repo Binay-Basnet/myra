@@ -118,7 +118,7 @@ export const EmployeeHealthInsuranceTable = () => {
     }
   };
   return (
-    <>
+    <Box id="employee-health-insurance">
       <SettingsCard
         title="Employee Health Insurance"
         subtitle="Extends Fields that can be added to forms for additional input Fields"
@@ -163,7 +163,7 @@ export const EmployeeHealthInsuranceTable = () => {
           </form>
         </FormProvider>
       </Modal>
-    </>
+    </Box>
   );
 };
 
