@@ -64,6 +64,9 @@
       "@coop/cbs/members/list": ["libs/cbs/members/feature-list/src/index.ts"],
       "@coop/cbs/members/profile": ["libs/cbs/members/feature-profile/src/index.ts"],
       "@coop/cbs/others/bulk-transfer": ["libs/cbs/others/feature-bulk-transfer/src/index.ts"],
+      "@coop/cbs/others/feature-market-representative-collection": [
+        "libs/cbs/others/feature-market-representative-collection/src/index.ts"
+      ],
       "@coop/cbs/others/fund-management": ["libs/cbs/others/feature-fund-management/src/index.ts"],
       "@coop/cbs/others/share-dividend-posting": [
         "libs/cbs/others/feature-share-dividend-posting/src/index.ts"
@@ -90,6 +93,7 @@
       ],
       "@coop/cbs/settings/documents": ["libs/cbs/settings/feature-documents/src/index.ts"],
       "@coop/cbs/settings/eod": ["libs/cbs/settings/feature-eod/src/index.ts"],
+      "@coop/cbs/settings/feature-hcm": ["libs/cbs/settings/feature-hcm/src/index.ts"],
       "@coop/cbs/settings/loan-product": [
         "libs/cbs/settings/feature-loan-product-detail/src/index.ts"
       ],
@@ -144,6 +148,8 @@
       "@coop/ebanking/products": ["libs/ebanking/feature-products/src/index.ts"],
       "@coop/ebanking/settings": ["libs/ebanking/feature-settings/src/index.ts"],
       "@coop/ebanking/ui-layout": ["libs/ebanking/ui-layout/src/index.ts"],
+      "@coop/hr-module/ui-layouts": ["libs/hr-module/ui-layouts/src/index.ts"],
+      "@coop/hr/employee": ["libs/hr-module/employee/feature-employee/src/index.ts"],
       "@coop/inventory/inventory": ["libs/inventory/feature-inventory/src/index.ts"],
       "@coop/inventory/warehouse": ["libs/inventory/feature-warehouse/src/index.ts"],
       "@coop/loan/account-details": ["libs/cbs/loan/feature-loan-account-detail/src/index.ts"],

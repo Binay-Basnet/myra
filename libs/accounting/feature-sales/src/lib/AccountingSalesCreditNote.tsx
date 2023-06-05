@@ -8,6 +8,7 @@ import { asyncToast } from '@myra-ui';
 import {
   SalesCreditNoteInput,
   SalesSaleEntryEntry,
+  useGetInventoryItemsListQuery,
   useSetSalesCreditNoteDataMutation,
 } from '@coop/cbs/data-access';
 import { FormLayout } from '@coop/shared/form';
@@ -67,6 +68,14 @@ export const CreditNoteForm = () => {
 
   const { mutateAsync: setCreditNoteData } = useSetSalesCreditNoteDataMutation();
 
+  const { data: inventoryItems } = useGetInventoryItemsListQuery({
+    pagination: {
+      after: '',
+      first: -1,
+    },
+  });
+  const inventoryItemsData = inventoryItems?.inventory?.items?.list?.edges;
+
   const handleSubmit = () => {
     const values = getValues();
 
@@ -76,6 +85,7 @@ export const CreditNoteForm = () => {
         ...product,
         quantity: String(product?.quantity),
         rate: String(product?.rate),
+        tax: inventoryItemsData?.find((item) => item?.node?.id === product?.itemId)?.node?.taxId,
       })),
     };
 

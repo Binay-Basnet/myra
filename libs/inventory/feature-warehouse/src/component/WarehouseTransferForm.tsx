@@ -1,19 +1,54 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { Box, FormSection } from '@myra-ui';
 
-import { useGetWarehouseListQuery } from '@coop/cbs/data-access';
+import {
+  useAppSelector,
+  useGetBranchListQuery,
+  useGetWarehouseListQuery,
+} from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { WarehouseTransferTable } from './WareHouseTransferEditableTable';
 
 export const WarehouseTransferForm = () => {
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
   const { t } = useTranslation();
+  const user = useAppSelector((state) => state.auth.user);
+  const currentBranchId = user?.currentBranch?.id;
+
+  const { data: branchData } = useGetBranchListQuery({
+    paginate: {
+      after: '',
+      first: -1,
+    },
+  });
+
+  const serviceCenterOptions = branchData?.settings?.general?.branch?.list?.edges?.map((data) => ({
+    label: data?.node?.name as string,
+    value: data?.node?.id as string,
+  }));
+
   const { data: wareHouse } = useGetWarehouseListQuery({
     paginate: {
       after: '',
       first: -1,
+    },
+    filter: {
+      orConditions: [
+        {
+          andConditions: [
+            {
+              column: 'branch_id',
+              comparator: 'EqualTo',
+              value: currentBranchId,
+            },
+          ],
+        },
+      ],
     },
   });
   const warehouseData = wareHouse?.inventory?.warehouse?.listWarehouses?.edges;
@@ -25,6 +60,50 @@ export const WarehouseTransferForm = () => {
       })),
     [warehouseData]
   );
+
+  const methods = useFormContext();
+  const { watch } = methods;
+  const destinationBranchId = watch('branchId');
+  const { data: wareHouseDest } = useGetWarehouseListQuery(
+    {
+      paginate: {
+        after: '',
+        first: -1,
+      },
+      filter: {
+        orConditions: [
+          {
+            andConditions: [
+              {
+                column: 'branch_id',
+                comparator: 'EqualTo',
+                value: destinationBranchId,
+              },
+            ],
+          },
+        ],
+      },
+    },
+    {
+      enabled: triggerQuery,
+    }
+  );
+  const warehouseDataDestination = wareHouseDest?.inventory?.warehouse?.listWarehouses?.edges;
+  const wareHouseDestinationSearch = useMemo(
+    () =>
+      warehouseDataDestination?.map((account) => ({
+        label: account?.node?.name as string,
+        value: account?.node?.id as string,
+      })),
+    [warehouseDataDestination]
+  );
+
+  useEffect(() => {
+    if (destinationBranchId) {
+      setTriggerQuery(true);
+    }
+  }, [destinationBranchId]);
+
   return (
     <>
       <FormSection header="Warehouse Transfer" templateColumns={2}>
@@ -34,11 +113,13 @@ export const WarehouseTransferForm = () => {
           __placeholder={t['warehouseTransferSourceWarehouse']}
           options={wareHouseSearchOptions}
         />
+        <FormSelect label="Select Service Center" options={serviceCenterOptions} name="branchId" />
+
         <FormSelect
           name="destinationWarehouse"
           label={t['warehouseTransferDestinationWarehouse']}
           __placeholder={t['warehouseTransferDestinationWarehouse']}
-          options={wareHouseSearchOptions}
+          options={wareHouseDestinationSearch}
         />
 
         <FormInput

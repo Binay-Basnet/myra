@@ -41,3 +41,13 @@ mutation removeMemberAccountAgent($accountId: ID!, $agentID: ID!) {
     }
   }
 }
+
+mutation agentTodayCollection($agentId: ID!, $data: [AgentTodayListInput]) {
+  agent {
+    agentTodayCollection(agentId: $agentId, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

@@ -95,6 +95,10 @@ export const WithdrawList = () => {
         },
       },
       {
+        header: 'Service Center',
+        accessorKey: 'node.branchName',
+      },
+      {
         id: 'amount',
         header: t['withdrawListAmount'],
         filterFn: 'amount',

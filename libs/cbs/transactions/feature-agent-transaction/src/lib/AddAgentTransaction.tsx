@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -18,6 +18,7 @@ import { amountConverter, featureCode } from '@coop/shared/utils';
 export interface AddAgentTransactionProps {}
 
 type DepositAccountTable = {
+  id?: string;
   member: string;
   account: string;
   amount: string;
@@ -30,7 +31,7 @@ export const AddAgentTransaction = () => {
 
   const methods = useForm();
 
-  const { watch, getValues } = methods;
+  const { watch, getValues, setValue } = methods;
 
   const agentId: string = watch('agentId');
 
@@ -92,25 +93,21 @@ export const AddAgentTransaction = () => {
     [agentTodayListQueryData]
   );
 
-  // const { data: memberListQueryData } = useGetAgentAssignedMemberListDataQuery(
-  //   {
-  //     pagination: getPaginationQuery(),
-  //     filter: {
-  //       orConditions: [
-  //         {
-  //           andConditions: [
-  //             {
-  //               column: 'agentId',
-  //               comparator: 'EqualTo',
-  //               value: agentId,
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //     },
-  //   },
-  //   { enabled: !!agentId }
-  // );
+  useEffect(() => {
+    if (agentTodayListQueryData) {
+      setValue(
+        'accounts',
+        agentTodayListQueryData?.agent?.listAgentTask?.record?.map((record) => ({
+          id: record?.id,
+          member: record?.member?.id as string,
+          account: record?.account?.id as string,
+          amount: record?.amount,
+          status: record?.status,
+          paid: Boolean(record?.paid),
+        }))
+      );
+    }
+  }, [agentTodayListQueryData]);
 
   const memberListSearchOptions = useMemo(() => {
     const tempMembers: { label: string; value: string }[] = [];
@@ -236,9 +233,7 @@ export const AddAgentTransaction = () => {
                         );
                       },
                       getDisabled: (row) => {
-                        const item = todaysList?.find(
-                          (account) => account?.account === row?.account
-                        );
+                        const item = todaysList?.find((account) => account?.id === row?.id);
 
                         return !!item?.paid;
                       },
@@ -274,9 +269,7 @@ export const AddAgentTransaction = () => {
                         );
                       },
                       getDisabled: (row) => {
-                        const item = todaysList?.find(
-                          (account) => account?.account === row?.account
-                        );
+                        const item = todaysList?.find((account) => account?.id === row?.id);
 
                         return !!item?.paid;
                       },
@@ -287,9 +280,7 @@ export const AddAgentTransaction = () => {
                       isNumeric: true,
                       cellWidth: 'lg',
                       getDisabled: (row) => {
-                        const item = todaysList?.find(
-                          (account) => account?.account === row?.account
-                        );
+                        const item = todaysList?.find((account) => account?.id === row?.id);
 
                         return !!item?.paid;
                       },
@@ -320,18 +311,16 @@ export const AddAgentTransaction = () => {
                       header: '',
                       fieldType: 'checkbox',
                       getDisabled: (row) => {
-                        const item = todaysList?.find(
-                          (account) => account?.account === row?.account
-                        );
+                        const item = todaysList?.find((account) => account?.id === row?.id);
 
                         return !!item?.paid;
                       },
                       cellWidth: 'sm',
                     },
                   ]}
-                  defaultData={todaysList}
+                  // defaultData={todaysList}
                   searchPlaceholder="Search or add member"
-                  canDeleteRow
+                  canDeleteRow={false}
                 />
               </BoxContainer>
             )}

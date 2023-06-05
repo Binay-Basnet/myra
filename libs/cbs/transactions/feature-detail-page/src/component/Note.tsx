@@ -12,6 +12,13 @@ export const Note = ({ note }: NoteProps) => (
     display="flex"
     flexDirection="column"
     gap="s28"
+    sx={{
+      '@media print': {
+        py: 's8',
+        px: '0',
+        gap: 's8',
+      },
+    }}
   >
     <Text fontSize="r1" fontWeight="SemiBold">
       Note

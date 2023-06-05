@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
-import isEqual from 'lodash/isEqual';
 import pickBy from 'lodash/pickBy';
 
 import {
@@ -33,7 +32,11 @@ export const useAccountOperators = ({ accountId, methods }: IUseAccountOperators
   const bodErrors = useAppSelector((state) => state.cooperative?.accountOperator?.operator);
   const hasPressedNext = useAppSelector((state) => state.cooperative?.hasPressedNext);
 
-  const { data: editValues, refetch } = useGetCoOperativeAccountOperatorEditDataQuery(
+  const {
+    data: editValues,
+    refetch,
+    isLoading: editLoading,
+  } = useGetCoOperativeAccountOperatorEditDataQuery(
     {
       id,
       hasPressedNext,
@@ -94,16 +97,12 @@ export const useAccountOperators = ({ accountId, methods }: IUseAccountOperators
         });
       }
     }
-  }, [editValues]);
+  }, [editLoading]);
 
   useEffect(() => {
     const subscription = watch(
       debounce((item) => {
-        const editValueData = editValues?.members?.cooperative?.listAccountOperators?.data;
-
-        const familyMemberDetail = editValueData?.find((family) => family?.id === accountId);
-
-        if (id && accountId && !isEqual(item, familyMemberDetail)) {
+        if (id && accountId) {
           mutate({
             id,
             accOperatorId: accountId,
@@ -114,7 +113,7 @@ export const useAccountOperators = ({ accountId, methods }: IUseAccountOperators
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady, editValues]);
+  }, [watch, id, accountId]);
 
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {

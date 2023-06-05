@@ -32,6 +32,7 @@ export const FormMemberSelect = ({
   const [IDMember, setIDMember] = useState('');
   const { watch, control } = useFormContext();
   const currrentBranch = useAppSelector((state) => state?.auth?.user?.currentBranch?.name);
+  const currrentBranchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
 
   const router = useRouter();
 
@@ -78,6 +79,37 @@ export const FormMemberSelect = ({
         query: isCurrentBranchMember ? `${currrentBranch} ${IDMember}` : IDMember,
         orConditions: allMembers
           ? []
+          : isCurrentBranchMember
+          ? [
+              {
+                andConditions: [
+                  {
+                    column: 'objState',
+                    comparator: 'EqualTo',
+                    value: 'APPROVED',
+                  },
+                  {
+                    column: 'serviceCenter',
+                    comparator: 'EqualTo',
+                    value: currrentBranchId,
+                  },
+                ],
+              },
+              {
+                andConditions: [
+                  {
+                    column: 'objState',
+                    comparator: 'EqualTo',
+                    value: 'DORMANT',
+                  },
+                  {
+                    column: 'serviceCenter',
+                    comparator: 'EqualTo',
+                    value: currrentBranchId,
+                  },
+                ],
+              },
+            ]
           : [
               {
                 andConditions: [

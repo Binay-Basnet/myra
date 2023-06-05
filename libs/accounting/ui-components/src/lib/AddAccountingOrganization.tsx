@@ -89,8 +89,9 @@ export const AddAccountingOrganization = () => {
         <FormLayout.Form>
           <FormSection>
             <GridItem colSpan={2}>
-              <FormInput name="name" label="Name" />
+              <FormInput name="name" label="Name" isRequired />
             </GridItem>
+            <FormInput name="branch" label="Branch Name" />
 
             {/* <FormSelect name="type" label="Type" options={investmentTypeOptions} /> */}
           </FormSection>

@@ -4,7 +4,11 @@ import { useRouter } from 'next/router';
 
 import { asyncToast, Box, GridItem, Text } from '@myra-ui';
 
-import { PurchaseItemDetails, useSetPurchaseEntryMutation } from '@coop/cbs/data-access';
+import {
+  PurchaseItemDetails,
+  useGetInventoryItemsListQuery,
+  useSetPurchaseEntryMutation,
+} from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormLayout, FormNumberInput, FormTextArea } from '@coop/shared/form';
@@ -20,14 +24,31 @@ export const AccountingFeaturePurchaseAdd = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const { mutateAsync: AddItems } = useSetPurchaseEntryMutation();
+
+  const { data: inventoryItems } = useGetInventoryItemsListQuery({
+    pagination: {
+      after: '',
+      first: -1,
+    },
+  });
+  const inventoryItemsData = inventoryItems?.inventory?.items?.list?.edges;
+
   const handleSave = () => {
     const values = methods.getValues();
+
+    const filteredValues = {
+      ...values,
+      itemDetails: values?.['itemDetails']?.map((product: { itemId: string | undefined }) => ({
+        ...product,
+        tax: inventoryItemsData?.find((item) => item?.node?.id === product?.itemId)?.node?.taxId,
+      })),
+    };
 
     asyncToast({
       id: 'account-open-add-minor',
       promise: AddItems({
         data: {
-          ...values,
+          ...filteredValues,
         },
       }),
       msgs: {

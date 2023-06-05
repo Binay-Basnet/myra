@@ -600,6 +600,12 @@ export const CBS: NavType = {
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
           addRoute: ROUTES.CBS_OTHERS_BULK_TRANSFERS_ADD,
         },
+        {
+          label: 'Market Representative Collection',
+          route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_LIST,
+          aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
+          addRoute: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_ADD,
+        },
       ],
       forms: [
         {
@@ -621,6 +627,11 @@ export const CBS: NavType = {
           label: 'New Bulk Transfer',
           route: ROUTES.CBS_OTHERS_BULK_TRANSFERS_ADD,
           aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES_SHARE_DIVIDEND_POSTING',
+        },
+        {
+          label: 'New Market Representative Collection',
+          route: ROUTES.CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_ADD,
+          aclKey: 'CBS_MISCELLANEOUS_MARKET_REPRESENTATIVES',
         },
       ],
     },

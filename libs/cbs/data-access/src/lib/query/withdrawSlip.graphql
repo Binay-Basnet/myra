@@ -41,10 +41,12 @@ query getWithdrawSlipData($requestID: ID!) {
         member {
           id
           name
+          code
         }
         account {
           id
           accountName
+          productName
         }
         noOfLeaves
         availableRange {

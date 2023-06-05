@@ -79,11 +79,16 @@ export const VaultTransferList = () => {
         ),
       },
       {
+        header: 'Transaction Service Center',
+        accessorFn: (row) => row?.node?.transactionBranchName,
+      },
+      {
         header: 'Cash Amount',
 
         accessorFn: (row) => amountConverter(row?.node?.amount as string),
         meta: {
           isNumeric: true,
+          width: '15%',
         },
       },
 

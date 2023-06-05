@@ -11,7 +11,6 @@ import {
   addError,
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelInput,
-  RootState,
   useAppDispatch,
   useAppSelector,
   useGetBoardOfDirectorsDetailsListQuery,
@@ -35,11 +34,7 @@ export const useCoopUnionBod = ({ methods, directorId }: IUseCoopUnionBodProps) 
 
   const hasPressedNext = useAppSelector((state) => state.coopUnion.hasPressedNext);
 
-  const {
-    data: editValues,
-    refetch: refetchEdit,
-    isLoading: editLoading,
-  } = useGetBoardOfDirectorsDetailsListQuery(
+  const { data: editValues, isLoading: editLoading } = useGetBoardOfDirectorsDetailsListQuery(
     { id, includeRequiredErrors: hasPressedNext },
     {
       enabled: !!id,
@@ -75,13 +70,6 @@ export const useCoopUnionBod = ({ methods, directorId }: IUseCoopUnionBodProps) 
     },
   });
 
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetchEdit();
-  }, [preference?.date]);
-
   // Get Back The Initial Data when page reloads or user edits
   useEffect(() => {
     if (directorDetail) {
@@ -98,7 +86,7 @@ export const useCoopUnionBod = ({ methods, directorId }: IUseCoopUnionBodProps) 
         },
       });
     }
-  }, [editLoading, editValues]);
+  }, [editLoading]);
 
   // Call The Mutation To Add Data on Each Form Change
   useEffect(() => {
@@ -116,7 +104,7 @@ export const useCoopUnionBod = ({ methods, directorId }: IUseCoopUnionBodProps) 
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, directorDetail]);
+  }, [watch, directorId, id]);
 
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {

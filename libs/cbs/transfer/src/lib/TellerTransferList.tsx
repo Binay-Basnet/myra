@@ -121,6 +121,10 @@ export const TellerTransferList = () => {
         ),
       },
       {
+        header: 'Transaction Service Center',
+        accessorFn: (row) => row?.node?.transactionBranchName,
+      },
+      {
         header: 'Amount',
 
         accessorFn: (row) => amountConverter(row?.node?.amount as string),

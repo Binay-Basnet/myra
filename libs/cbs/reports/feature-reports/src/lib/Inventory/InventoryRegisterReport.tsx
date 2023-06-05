@@ -13,7 +13,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormSelect } from '@coop/shared/form';
-import { amountConverter, quantityConverter } from '@coop/shared/utils';
+import { amountConverter, quantityConverter, useIsCbs } from '@coop/shared/utils';
 
 type InventoryRegisterFilter = {
   period: LocalizedDateFilter;
@@ -25,6 +25,7 @@ type InventoryRegisterFilter = {
 
 export const InventoryRegisterReport = () => {
   const [filters, setFilters] = useState<InventoryRegisterFilter | null>(null);
+  const { isCbs } = useIsCbs();
 
   const wareHouseIds =
     filters?.warehouseId && filters?.warehouseId?.length !== 0
@@ -73,8 +74,16 @@ export const InventoryRegisterReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Inventory Reports', link: '/reports/cbs/inventory' },
-            { label: 'Inventory Register Report', link: '/reports/cbs/inventory/register/new' },
+            {
+              label: 'Inventory Reports',
+              link: isCbs ? '/reports/cbs/inventory' : '/accounting/reports/inventory',
+            },
+            {
+              label: 'Inventory Register Report',
+              link: isCbs
+                ? '/reports/cbs/inventory/register/new'
+                : '/accounting/reports/inventory/register/new',
+            },
           ]}
         />
         <Report.Inputs hideDate>

@@ -236,6 +236,7 @@ export const SuccessCard = ({
         <SuccessPrintJornalVoucher
           showSignatures={showSignatures}
           jVPrint={jVPrint}
+          totalWords={totalWords}
           ref={componentRef}
         />
       )}
@@ -456,7 +457,6 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
               </Box>
             ))}
           </Box>
-
           {glTransactions && (
             <>
               <Text fontSize="s1" fontWeight="600" pt="s10">
@@ -465,7 +465,6 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
               <GlTransactionJornalVoucherPrint data={glTransactions} total={glTransactionsTotal} />
             </>
           )}
-
           {total && (
             <Box display="flex" py="s8" justifyContent="space-between">
               <Box />
@@ -730,12 +729,13 @@ interface SuccessPrintJVProps {
       | null
       | undefined;
   };
+  totalWords?: string;
   showSignatures?: boolean;
   count?: number;
 }
 
 export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, SuccessPrintJVProps>(
-  ({ jVPrint, showSignatures, count }, ref) => {
+  ({ jVPrint, showSignatures, count, totalWords }, ref) => {
     const user = useAppSelector((state) => state.auth.user);
 
     return (
@@ -891,6 +891,19 @@ export const SuccessPrintJornalVoucher = React.forwardRef<HTMLInputElement, Succ
           data={jVPrint?.glTransactions}
           total={jVPrint?.totalDebit}
         />
+
+        {totalWords && (
+          <Box display="flex" py="s8" justifyContent="space-between">
+            <Box display="flex" flexDir="column" gap="s4" alignItems="start" justifyContent="start">
+              <Text fontSize="s3" color="gray.600" fontWeight="500" lineHeight="125%">
+                Total Amount In Words
+              </Text>
+              <Text fontSize="r2" color="primary.500" fontWeight="500" lineHeight="125%">
+                Rs. {totalWords}
+              </Text>
+            </Box>
+          </Box>
+        )}
 
         {showSignatures && (
           <Box

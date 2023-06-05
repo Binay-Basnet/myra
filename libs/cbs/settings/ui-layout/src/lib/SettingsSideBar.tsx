@@ -144,6 +144,14 @@ const accountingTabList: TabList[] = [
   },
 ];
 
+const hcmTabList: TabList[] = [
+  {
+    label: 'Employee',
+    route: ROUTES.HRMODULE_EMPLOYEES_SETTINGS,
+    aclKey: 'SETTINGS_INDEXING',
+  },
+];
+
 export const SettingSideBar = () => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -453,6 +461,58 @@ export const SettingSideBar = () => {
                   </AccordionButton>
                   <AccordionPanel px="s8" py="s4">
                     <TabColumn list={reportTabs} />
+                  </AccordionPanel>
+                </>
+              )}
+            </AccordionItem>
+            <AccordionItem bg="transparent" border="none">
+              {({ isExpanded }) => (
+                <>
+                  <AccordionButton
+                    border="none"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    // _hover={{
+                    //   bg: 'highlight.500',
+                    //   borderRadius: 'br2',
+                    // }}
+                    _expanded={{}}
+                    pl="s8"
+                    w="100%"
+                    h="40px"
+                    pr="0"
+                  >
+                    <Text
+                      color="gray.800"
+                      fontWeight="500"
+                      fontSize="r1"
+                      _hover={{
+                        cursor: 'pointer',
+                        textDecoration: 'underline',
+                      }}
+                      onClick={() => router.push(ROUTES.SETTINGS_GENERAL_CODE_MANAGEMENT_CBS)}
+                    >
+                      HCM
+                    </Text>
+                    <Box
+                      _hover={{
+                        bg: 'gray.200',
+                        borderRadius: 'br2',
+                      }}
+                      p="s8"
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <Icon
+                        as={isExpanded ? IoChevronUpSharp : IoChevronDownSharp}
+                        color="gray.800"
+                        flexShrink={0}
+                      />
+                    </Box>
+                  </AccordionButton>
+                  <AccordionPanel px="s8" py="s4">
+                    <TabColumn list={hcmTabList} />
                   </AccordionPanel>
                 </>
               )}

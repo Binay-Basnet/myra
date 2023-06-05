@@ -226,6 +226,12 @@ export const ROUTES = {
   CBS_OTHERS_MARKET_REPRESENTATIVE_TRANS_DETAILS:
     '/cbs/others/market-representative-transaction/details',
   CBS_OTHERS_MARKET_REPRESENTATIVE_DETAILS: '/cbs/others/market-representative/details',
+
+  CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_LIST:
+    '/cbs/others/market-representative-collection/list',
+  CBS_OTHERS_MARKET_REPRESENTATIVE_COLLECTION_ADD:
+    '/cbs/others/market-representative-collection/add',
+
   CBS_ACCOUNT_DEPOSIT_LIST: '/cbs/savings/deposit/list',
   CBS_ACCOUNT_DEPOSIT_ADD: '/cbs/savings/deposit/add',
   CBS_ACCOUNT_WITHDRAW_LIST: '/cbs/savings/withdraw/list',
@@ -348,6 +354,7 @@ export const ROUTES = {
   INVENTORY_INVENTORY_ADJUSTMENT_DETAILS: '/inventory/inventory/adjustments/details',
 
   INVENTORY_ITEMS: '/inventory/items/items/list',
+  INVENTORY_ITEM_DETAILS: '/inventory/items/items/details',
   INVENTORY_ITEMS_ADD: '/inventory/items/items/add',
   INVENTORY_ITEMS_VARIANT_ADD: '/inventory/items/items-variant/add',
   INVENTORY_SUPPLIERS: '/inventory/suppliers/list',
@@ -395,6 +402,72 @@ export const ROUTES = {
   ACCOUNTING_EXTERNAL_LOAN_ORGANIZATION_EDIT: '/accounting/loan/organizations/edit',
 
   ACCOUNTING_EXTERNAL_LOAN_EDIT: '/accounting/loan/external-loan/edit',
+
+  HRMODULE_EMPLOYEES_LIST: '/hr/employee/employee/list',
+  HRMODULE_ATTENDENCE_LIST: '/hr/employee/attendence/list',
+  HRMODULE_LEAVE_LIST: '/hr/employee/leave/list',
+
+  HRMODULE_EMPLOYEES_ADD: '/hr/employee/employee/add',
+  HRMODULE_ATTENDENCE_ADD: '/hr/employee/attendence/add',
+  HRMODULE_LEAVE_ADD: '/hr/employee/leave/add',
+
+  HRMODULE_EMPLOYEES_SETTINGS: '/settings/general/hcm/employee',
+  HRMODULE_ATTENDENCE_SETTINGS: '/hr/employee/attendence/list',
+  HRMODULE_LEAVE_SETTINGS: '/hr/employee/leave/list',
+
+  HRMODULE_CONTRACTS_LIST: '/hr/employee/contracts/list',
+  HRMODULE_EXIT_DETAILS_LIST: '/hr/employee/exit-details/list',
+
+  HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_LIST: '/hr/lifecycle/employee-onboarding/list',
+  HR_LIFECYCLE_EMPLOYEE_TRANSFER_LIST: '/hr/lifecycle/transfer/list',
+  HR_LIFECYCLE_EMPLOYEE_SEPERATION_LIST: '/hr/lifecycle/seperation/list',
+  HR_LIFECYCLE_EMPLOYEE_PROMOTION_LIST: '/hr/lifecycle/promotion/list',
+  HR_LIFECYCLE_EMPLOYEE_EXIT_LIST: '/hr/lifecycle/exit/list',
+
+  HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_ADD: '/hr/lifecycle/employee-onboarding/add',
+  HR_LIFECYCLE_EMPLOYEE_TRANSFER_ADD: '/hr/lifecycle/transfer/add',
+  HR_LIFECYCLE_EMPLOYEE_SEPERATION_ADD: '/hr/lifecycle/seperation/add',
+  HR_LIFECYCLE_EMPLOYEE_PROMOTION_ADD: '/hr/lifecycle/promotion/add',
+  HR_LIFECYCLE_EMPLOYEE_EXIT_ADD: '/hr/lifecycle/exit/add',
+
+  HR_RECRUITMENT_STAFF_PLANNING_LIST: '/hr/recruitment/staff-planning/list',
+  HR_RECRUITMENT_JOB_POSTING_LIST: '/hr/recruitment/job-posting/list',
+  HR_RECRUITMENT_JOB_APPLICATION_LIST: '/hr/recruitment/job-application/list',
+  HR_RECRUITMENT_INTERVIEW_LIST: '/hr/recruitment/interview/list',
+  HR_RECRUITMENT_JOB_OFFER_LIST: '/hr/recruitment/job-offer/list',
+  HR_RECRUITMENT_APPOINTMENT_LETTER_LIST: '/hr/recruitment/appointment-letter/list',
+
+  HR_RECRUITMENT_STAFF_PLANNING_ADD: '/hr/recruitment/staff-planning/add',
+  HR_RECRUITMENT_JOB_POSTING_ADD: '/hr/recruitment/job-posting/add',
+  HR_RECRUITMENT_JOB_APPLICATION_ADD: '/hr/recruitment/job-application/add',
+  HR_RECRUITMENT_INTERVIEW_ADD: '/hr/recruitment/interview/add',
+  HR_RECRUITMENT_JOB_OFFER_ADD: '/hr/recruitment/job-offer/add',
+  HR_RECRUITMENT_APPOINTMENT_LETTER_ADD: '/hr/recruitment/appointment-letter/add',
+
+  HR_RECRUITMENT_SETTINGS: '/hr/recruitment/staff-planning/list',
+  HR_INTERVIEW_ROUNDS: '/hr/recruitment/staff-planning/list',
+  HR_EMAIL_TEMPLATES: '/hr/recruitment/staff-planning/list',
+
+  HR_PAYROLL_ENTRY_LIST: '/hr/payroll/payroll-run/list',
+  HR_PAYROLL_SALARY_STRUCTURE_LIST: '/hr/payroll/salary-structure/list',
+  HR_PAYROLL_SALARY_SLIP_LIST: '/hr/payroll/salary-slip/list',
+  HR_PAYROLL_EXPEN_LIST: '/hr/payroll/expen/list',
+
+  HR_PAYROLL_ENTRY_ADD: '/hr/payroll/payroll-run/add',
+  HR_PAYROLL_SALARY_STRUCTURE_ADD: '/hr/payroll/salary-structure/add',
+  HR_PAYROLL_SALARY_SLIP_ADD: '/hr/payroll/salary-slip/add',
+  HR_PAYROLL_EXPEN_ADD: '/hr/payroll/expen/add',
+
+  HR_TRAINING_COURSES_LIST: '/hr/training/courses/list',
+  HR_TRAINING_STUDENTS_LIST: '/hr/training/students/list',
+
+  HR_TRAINING_COURSES_ADD: '/hr/training/courses/add',
+  HR_TRAINING_STUDENTS_ADD: '/hr/training/students/add',
+
+  HR_TRAINING_SETTINGS: '/hr/training/courses/list',
+  HR_TRAINING_REPORTS: '/hr/training/courses/list',
+
+  HR_REPORTS: '/hr/reports/transactions',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

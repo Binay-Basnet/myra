@@ -4,6 +4,7 @@ import { IoFilterOutline } from 'react-icons/io5';
 import { TbArrowsDiagonalMinimize2 } from 'react-icons/tb';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel, Spinner } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   Accordion,
@@ -282,6 +283,7 @@ export const ReportInputs = <T extends FieldValues | null>({
   children?: React.ReactNode;
   hideDate?: boolean;
 }) => {
+  const queryClient = useQueryClient();
   const { getValues, watch } = useFormContext<NonNullable<T>>();
 
   const { isFilterShown, setIsFilterShown, setFilters } = useReport();
@@ -302,6 +304,7 @@ export const ReportInputs = <T extends FieldValues | null>({
           isDisabled={hideDate ? false : !watch()?.['period']}
           size="lg"
           onClick={() => {
+            queryClient.invalidateQueries(['']);
             setFilters({
               ...getValues(),
             });

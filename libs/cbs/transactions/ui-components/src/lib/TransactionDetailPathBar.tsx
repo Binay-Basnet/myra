@@ -19,6 +19,7 @@ export interface PathBarProps {
   title: string;
   closeLink?: string;
 }
+
 const transferTypeObj = {
   [TransferType.Self]: 'Self Transfer',
   [TransferType.Member]: 'Member to Member',
@@ -144,6 +145,15 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
       tempTotal = depositDetailData?.totalDepositedAmount as string;
 
       tempGLTransactions = depositDetailData?.glTransaction;
+
+      tempVoucherDetails = {
+        'Transaction Id': (
+          <Text fontSize="s3" color="primary.500" fontWeight="600">
+            {depositDetailData?.transactionCode}
+          </Text>
+        ),
+        Date: localizedDate(depositDetailData?.transactionDate),
+      };
     }
 
     if (router?.asPath?.includes('/withdraw/')) {
@@ -251,6 +261,11 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         0
       );
 
+      const totalPrincipalAmount = loanRepaymentDetailData?.installmentDetails?.reduce(
+        (sum, installment) => sum + Number(installment?.principalAmount ?? 0),
+        0
+      );
+
       tempDetails = {
         'Loan Repayment Id': (
           <Text fontSize="s3" color="primary.500" fontWeight="600">
@@ -259,16 +274,20 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
         ),
         Date: localizedDate(loanRepaymentDetailData?.repaymentDate),
         'Installment No': loanRepaymentDetailData?.installmentNo,
-        'Principal Amount': amountConverter(loanRepaymentDetailData?.totalRepaymentAmount || 0),
+        'Principal Amount': amountConverter(totalPrincipalAmount || 0),
         'Interest Amount': amountConverter(totalInterestAmount || 0),
-        'Penalty Amount': amountConverter(loanRepaymentDetailData?.fine || 0),
+        'Actual Fine': amountConverter(
+          Number(loanRepaymentDetailData?.fine || 0) +
+            Number(loanRepaymentDetailData?.discount || 0)
+        ),
+        'Paid Fine': amountConverter(loanRepaymentDetailData?.fine || 0),
         'Discount Amount': amountConverter(loanRepaymentDetailData?.discount || 0),
         'Rebate Amount': amountConverter(loanRepaymentDetailData?.rebate || 0),
 
         'Payment Mode': loanRepaymentDetailData?.paymentMode,
       };
 
-      tempTotal = loanRepaymentDetailData?.totalRepaymentAmount as string;
+      tempTotal = Number(loanRepaymentDetailData?.totalRepaymentAmount).toFixed(2);
 
       tempGLTransactions = loanRepaymentDetailData?.glTransaction;
     }
@@ -360,6 +379,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           jVPrint={jvDetails}
           showSignatures={showSignatures}
           count={printCount}
+          totalWords={amountToWordsConverter(Number(total || '0'))}
           ref={printComponentRef}
         />
       )}
@@ -386,6 +406,7 @@ export const TransactionDetailPathBar = ({ title, closeLink }: PathBarProps) => 
           jVPrint={jvDetails}
           showSignatures={showSignatures}
           count={printCount}
+          totalWords={amountToWordsConverter(Number(total || '0'))}
           ref={voucherPrintRef}
         />
       )}

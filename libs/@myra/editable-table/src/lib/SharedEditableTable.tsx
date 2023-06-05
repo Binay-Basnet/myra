@@ -114,6 +114,7 @@ enum EditableTableActionKind {
   REPLACE = 'Replace',
   ADD_WITH_ID = 'AddWithId',
   ACCESSOR_FN_EDIT = 'Accessor',
+  SELECT_ALL = 'SelectAll',
 }
 
 type EditableTableAction<TData extends RecordWithId & Record<string, EditableValue>> =
@@ -154,6 +155,10 @@ type EditableTableAction<TData extends RecordWithId & Record<string, EditableVal
         data: TData;
         column: Column<TData>;
       };
+    }
+  | {
+      type: EditableTableActionKind.SELECT_ALL;
+      payload: { column: Column<TData>; isChecked: boolean };
     };
 
 interface EditableState<T extends RecordWithId & Record<string, EditableValue>> {
@@ -247,6 +252,18 @@ function editableReducer<T extends RecordWithId & Record<string, EditableValue>>
       }
       return state;
 
+    case EditableTableActionKind.SELECT_ALL:
+      return {
+        ...state,
+        data: state.data.map((item) => ({
+          ...item,
+          [payload.column.accessor]:
+            payload?.column?.getDisabled && payload.column.getDisabled(item)
+              ? item[payload.column.accessor]
+              : payload?.isChecked,
+        })),
+      };
+
     default:
       return state;
   }
@@ -303,7 +320,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
             // };
             acc = {
               ...acc,
-              [key]: value && typeof value === 'object' && 'value' in value ? value.value : value,
+              [key]: typeof value !== 'object' ? value : 'value' in value && value.value,
             };
 
             return acc;
@@ -368,8 +385,26 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
                   // textAlign={column.isNumeric ? 'right' : 'left'}
                   flexGrow={column.cellWidth === 'auto' ? 1 : 0}
                   flexBasis={flexBasisFunc(column)}
+                  display="flex"
+                  px="s8"
+                  gap="s4"
                 >
-                  <Text px="s8">{column.header}</Text>
+                  <Text>{column.header}</Text>
+
+                  {column?.fieldType === 'checkbox' && (
+                    <Checkbox
+                      isChecked={state?.data?.findIndex((item) => !item[column?.accessor]) === -1}
+                      onChange={(e) => {
+                        dispatch({
+                          type: EditableTableActionKind.SELECT_ALL,
+                          payload: {
+                            column,
+                            isChecked: e.target.checked,
+                          },
+                        });
+                      }}
+                    />
+                  )}
                 </Box>
               </Fragment>
             ))}
@@ -470,7 +505,10 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
                 dispatch({
                   type: EditableTableActionKind.ADD,
                   payload: Object.fromEntries(
-                    columns.map((key) => [key.accessor, key.isNumeric ? 0 : ''])
+                    columns.map((key) => [
+                      key.accessor,
+                      key.isNumeric ? 0 : key.fieldType === 'checkbox' ? false : '',
+                    ])
                   ) as T,
                 });
               }

@@ -8,7 +8,6 @@ import {
   PickupMethod,
   useAccountDetails,
   useGetAvailableRangeQuery,
-  useGetAvailableSlipsListQuery,
   useSetIssueNewSlipMutation,
   WithdrawSlipIssueInput,
 } from '@coop/cbs/data-access';
@@ -40,10 +39,10 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
 
   const pickupMethod = watch('pickupMethod');
 
-  const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
-    { accountId: accountDetails?.accountId as string },
-    { enabled: !!accountDetails?.accountId }
-  );
+  // const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
+  //   { accountId: accountDetails?.accountId as string },
+  //   { enabled: !!accountDetails?.accountId }
+  // );
 
   const { data: availableRangeQueryData } = useGetAvailableRangeQuery(
     { count },
@@ -99,7 +98,7 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
               options={WITHDRAW_SLIP_COUNT_OPTIONS}
             />
 
-            {availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.length ? (
+            {/* {availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.length ? (
               <GridItem colSpan={2}>
                 <Alert
                   status="warning"
@@ -107,7 +106,7 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
                   hideCloseIcon
                 />
               </GridItem>
-            ) : null}
+            ) : null} */}
 
             {count && from && to && (
               <>

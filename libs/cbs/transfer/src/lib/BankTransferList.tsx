@@ -49,6 +49,10 @@ export const BankTransferList = () => {
         },
       },
       {
+        header: 'Service Center',
+        accessorFn: (row) => row?.node?.transactionBranchName,
+      },
+      {
         header: 'Amount',
         meta: {
           isNumeric: true,

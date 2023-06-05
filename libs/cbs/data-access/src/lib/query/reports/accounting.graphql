@@ -1,0 +1,117 @@
+query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementReportFilter!) {
+  report {
+    accountingReport {
+      externalLoanStatementReport(data: $data) {
+        data {
+          date
+          particulars
+          transactionId
+          receivedPrincipal
+          paidPrincipal
+          paidInterest
+          paidFine
+          discount
+          remainingPrincipal
+        }
+        summary {
+          paidPrincipalTotal
+          paidInterestTotal
+          paidFineTotal
+          discountTotal
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+
+query getAccountingExternalLoanReport($data: ExternalLoanReportFilter!) {
+  report {
+    accountingReport {
+      externalLoanReport(data: $data) {
+        data {
+          date
+          organizationName
+          organizationBranch
+          loanNumber
+          loanId
+          mortgage
+          loanApprovedDate
+          interestRate
+          maturityDate
+          principalPaidAmount
+          interestPaidAmount
+          outstandingLoanAmount
+          rebate
+          finePaid
+          totalPaid
+          installmentType
+          installmentFrequency
+          tenure
+          remainingTenure
+          loanClosedDate
+          relatedBranch
+          loanAmount
+        }
+        error {
+          ...QueryError
+        }
+        summary {
+          totalFinePaid
+          totalInterestAmount
+          totalLoanAmount
+          totalOfTotalPaid
+          totalOutstandingLoanAmount
+          totalPrincipalAmount
+          totalRebate
+        }
+      }
+    }
+  }
+}
+
+query getFDInvestmentStatementReport($data: FDInvestmentStatementReportFilter!) {
+  report {
+    accountingReport {
+      fdInvestmentStatementReport(data: $data) {
+        data {
+          date
+          chequeNo
+          transactionAmount
+          transactionType
+          particulars
+        }
+        summary {
+          fdAmountTotal
+          openingBalance
+        }
+      }
+    }
+  }
+}
+
+query getFDInvestmentReport($data: FDInvestmentReportFilter!){
+  report {
+    accountingReport {
+      fdInvestmentReport(data: $data){
+        data {
+          organizationName
+          organizationBranch
+          fdAmount
+          fdAccountName
+          fdOpeningDate
+          fdType
+          interestRate
+          maturityDate
+          nomineeBankAccountNo
+          remainingTenure
+          tenure
+        }
+      }
+    }
+  }
+}
+
+

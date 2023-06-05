@@ -24,6 +24,8 @@ interface IWithdrawSlipBookPrintPreviewCardProps {
     accountNumber: string;
     accountName: string;
     slipNumber: string;
+    memberCode: string;
+    productName: string;
   };
   number?: number;
 }
@@ -43,26 +45,27 @@ export const WithdrawSlipBookPrintPreviewCard = ({
     bg="white"
     boxShadow="E2"
     position="relative"
+    fontWeight={700}
     sx={{
       pageBreakAfter: number && number % 2 === 0 ? 'always' : 'avoid',
       '@media print': {
         display: 'flex',
         boxShadow: 'none',
-        // fontFamily: 'Times New Roman',
+        // fontFamily: 'Arial',
       },
       '@page': {
+        resolution: '360dpi',
         size: 'A4 landscape',
       },
     }}
   >
     <Text
-      fontSize="s3"
-      fontWeight={500}
+      fontSize="r1"
       color="black"
       position="absolute"
       top={`${branchPosition?.top || 0}mm`}
       left={`${branchPosition?.left || 0}mm`}
-      fontFamily="Times New Roman"
+      fontFamily="Arial"
     >
       {details?.branch}
     </Text>
@@ -74,25 +77,24 @@ export const WithdrawSlipBookPrintPreviewCard = ({
       flexDirection="column"
       gap="s4"
     >
-      <Text fontSize="s3" fontWeight={500} color="black" fontFamily="Times New Roman">
-        {details?.memberName}
+      <Text fontSize="r1" color="black" fontFamily="Arial">
+        {`${details?.memberName} (${details?.memberCode})`}
       </Text>
-      <Text fontSize="s3" fontWeight={500} color="black" fontFamily="Times New Roman">
+      <Text fontSize="r1" color="black" fontFamily="Arial">
         {details?.accountNumber}
       </Text>
-      <Text fontSize="s3" fontWeight={500} color="black" fontFamily="Times New Roman">
-        {details?.accountName}
+      <Text fontSize="r1" color="black" fontFamily="Arial">
+        {details?.productName}
       </Text>
     </Box>
 
     <Text
-      fontSize="s3"
-      fontWeight={500}
+      fontSize="r1"
       color="black"
       position="absolute"
       bottom={`${slipNumberPosition?.top || 0}mm`}
       left={`${slipNumberPosition?.left || 0}mm`}
-      fontFamily="Times New Roman"
+      fontFamily="Arial"
     >
       {details?.slipNumber}
     </Text>
@@ -117,7 +119,7 @@ export const WithdrawPrintCard = React.forwardRef<
           number={number}
           details={{
             ...props.details,
-            slipNumber: String(Number(props.details.slipNumber + number) - 1).padStart(10, '0'),
+            slipNumber: String(Number(props.details.slipNumber) + number - 1).padStart(10, '0'),
           }}
         />
       ))}

@@ -200,6 +200,7 @@ export const NewAccountTransfer = () => {
                     memberId={memberId}
                     filterBy={ObjState.Active}
                     isLinkedAccounts
+                    includeLoc
                     isDisabled={!!redirectSrcAccountId}
                   />
                 )}
@@ -222,6 +223,7 @@ export const NewAccountTransfer = () => {
                       filterBy={ObjState.Active}
                       excludeIds={[srcAccountId]}
                       isLinkedAccounts
+                      includeLoc
                     />
                   )}
 
@@ -240,6 +242,7 @@ export const NewAccountTransfer = () => {
                         label={t['newAccountTransferReceipentAccount']}
                         memberId={destMemberId}
                         filterBy={ObjState.Active}
+                        includeLoc
                       />
                     </>
                   )}
@@ -323,8 +326,8 @@ export const NewAccountTransfer = () => {
                       // branch: 'Kumaripati',
                       openDate: localizedDate(sourceAccount?.accountOpenDate) ?? 'N/A',
                       expiryDate: localizedDate(sourceAccount?.accountExpiryDate) ?? 'N/A',
-                      lastTransactionDate:
-                        localizedDate(sourceAccount?.lastTransactionDate) ?? 'N/A',
+                      // lastTransactionDate:
+                      //   localizedDate(sourceAccount?.lastTransactionDate) ?? 'N/A',
                       productName: sourceAccount?.product?.productName,
                       installmentAmount:
                         sourceAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||

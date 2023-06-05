@@ -1,6 +1,8 @@
 import { ReactElement } from 'react';
 
-import { AccountingLayout, AccountingReportsLayout } from '@coop/accounting/ui-layouts';
+import { MainLayout } from '@myra-ui';
+
+import { AccountingReportsLayout } from '@coop/accounting/ui-layouts';
 import { ReportsAccountingLayout } from '@coop/cbs/reports/layout';
 import { TransactionReportList } from '@coop/cbs/reports/list';
 
@@ -10,11 +12,11 @@ const LoanReports = () => (
 
 LoanReports.getLayout = function getLayout(page: ReactElement) {
   return (
-    <AccountingLayout>
+    <MainLayout>
       <AccountingReportsLayout>
         <ReportsAccountingLayout>{page}</ReportsAccountingLayout>
       </AccountingReportsLayout>
-    </AccountingLayout>
+    </MainLayout>
   );
 };
 export default LoanReports;

@@ -9,7 +9,9 @@ import { LoanAccTable } from '../components/LoanTable';
 export const LoanAccountList = () => {
   const { data, isFetching } = useGetLoanListQuery({
     paginate: getPaginationQuery(),
-    filter: getFilterQuery({ objState: { value: LoanObjState.Disbursed, compare: '=' } }),
+    filter: getFilterQuery({
+      objState: { value: LoanObjState.Disbursed, compare: '=' },
+    }),
   });
 
   return (
