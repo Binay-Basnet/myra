@@ -56,7 +56,7 @@ export const ExternalLoanReport = () => {
           paths={[
             { label: 'Accounting Reports', link: '/reports/cbs/accounting' },
             {
-              label: 'External Loan Statement Report',
+              label: ReportEnum.ACCOUNTING_EXTERNAL_LOAN_REPORT,
               link: '/reports/cbs/accounting/external-loan/new',
             },
           ]}
@@ -76,6 +76,7 @@ export const ExternalLoanReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
+
           <Report.Table<ExternalLoanReportData & { index: number }>
             showFooter
             columns={[
@@ -230,7 +231,7 @@ export const ExternalLoanReport = () => {
                 header: 'Installment Type',
                 accessorKey: 'installmentType',
                 cell: (props) => (
-                  <Box textTransform="uppercase">
+                  <Box textTransform="capitalize">
                     {props?.row?.original?.installmentType?.replace(/_/g, ' ').toLowerCase()}
                   </Box>
                 ),
