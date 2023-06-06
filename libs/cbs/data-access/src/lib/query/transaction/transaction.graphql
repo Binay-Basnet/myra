@@ -660,6 +660,7 @@ query bulkTransfersList($filter: Filter, $pagination: Pagination) {
           sourceName
           destinationId
           destinationName
+          transactionId
         }
         cursor
       }

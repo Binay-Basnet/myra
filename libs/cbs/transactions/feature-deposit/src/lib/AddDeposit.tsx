@@ -548,8 +548,8 @@ export const AddDeposit = () => {
                         // branch: 'Kumaripati',
                         openDate: localizedDate(selectedAccount?.accountOpenDate) ?? 'N/A',
                         expiryDate: localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
-                        lastTransactionDate:
-                          localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
+                        // lastTransactionDate:
+                        //   localizedDate(selectedAccount?.lastTransactionDate) ?? 'N/A',
                         productName: selectedAccount?.product?.productName,
                         installmentAmount:
                           selectedAccount?.product?.nature ===

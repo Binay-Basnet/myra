@@ -1,0 +1,75 @@
+mutation setDepartment($id: String, $input: NewDepartment!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertDepartment(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setDesignation($id: String, $input: NewDesignation!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertDesignation(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setEmployeeType($id: String, $input: NewEmployeeType!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertEmployeeType(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setEmployeeHealthInsurance($id: String, $input: NewEmployeeHealthInsurance!) {
+  settings {
+    general {
+      HCM {
+        employee {
+          employee {
+            upsertEmployeeHealthInsurance(id: $id, input: $input) {
+              recordId
+              error {
+                ...MutationError
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

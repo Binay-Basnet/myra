@@ -1,17 +1,24 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BsThreeDots } from 'react-icons/bs';
+import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { asyncToast, Box, Column, Modal, PageHeader, Table } from '@myra-ui';
 
 import { useGetItemCategoryListQuery, useSetItemCategoryMutation } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
+import { ItemGroupDetailsModal } from '../component/details/ItemGroupDEtails';
+
 export const InventoryItemCategoryTable = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [openDetailModal, setOpenDetailModal] = useState(false);
+  const router = useRouter();
+
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
@@ -48,6 +55,13 @@ export const InventoryItemCategoryTable = () => {
 
   const onCloseModal = () => {
     setOpenModal(false);
+  };
+  const onOpenDetailsModal = () => {
+    setOpenDetailModal(true);
+  };
+
+  const onCloseDetailsModal = () => {
+    setOpenDetailModal(false);
   };
   const handleSubmit = () => {
     const values = methods.getValues();
@@ -109,7 +123,15 @@ export const InventoryItemCategoryTable = () => {
         button
       />
 
-      <Table isLoading={isFetching} data={rowItems} columns={columns} />
+      <Table
+        isLoading={isFetching}
+        data={rowItems}
+        columns={columns}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.INVENTORY_ITEMS_CATEGORY}?id=${row?.node?.id}`);
+          onOpenDetailsModal();
+        }}
+      />
       <Modal
         open={openModal}
         onClose={onCloseModal}
@@ -132,6 +154,10 @@ export const InventoryItemCategoryTable = () => {
           </Box>
         </FormProvider>
       </Modal>
+      <ItemGroupDetailsModal
+        isDetailModalOpen={openDetailModal}
+        handleDetailClose={onCloseDetailsModal}
+      />
     </>
   );
 };

@@ -3,7 +3,6 @@ import { UseFormReturn } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
-import { isEqual } from 'lodash';
 import debounce from 'lodash/debounce';
 import pickBy from 'lodash/pickBy';
 
@@ -39,7 +38,11 @@ export const useCooperativeBOD = ({ methods, directorId }: IUseCooperativeBODPro
     },
   });
 
-  const { data: editValues, refetch } = useGetCoOperativeDirectorEditDataQuery(
+  const {
+    data: editValues,
+    isLoading: editLoading,
+    refetch,
+  } = useGetCoOperativeDirectorEditDataQuery(
     {
       id,
       hasPressedNext,
@@ -93,16 +96,12 @@ export const useCooperativeBOD = ({ methods, directorId }: IUseCooperativeBODPro
         });
       }
     }
-  }, [editValues]);
+  }, [editLoading]);
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        const editValueData = editValues?.members?.cooperative?.listDirectors?.data;
-
-        const directorDetails = editValueData?.find((detail) => detail?.id === directorId);
-
-        if (id && directorId && !isEqual(data, directorDetails)) {
+        if (id && directorId) {
           mutate({
             id,
             dirId: directorId,
@@ -116,7 +115,7 @@ export const useCooperativeBOD = ({ methods, directorId }: IUseCooperativeBODPro
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady, editValues]);
+  }, [watch, id, directorId]);
 
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {

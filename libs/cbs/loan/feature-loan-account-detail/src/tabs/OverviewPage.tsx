@@ -19,12 +19,10 @@ export const OverviewPage = () => {
     transactionList,
     accountSummary,
     additionalFeatures,
-    paymentList,
     productId,
     isClosed,
     generalInfo,
     memberDetails,
-    paymentAllList,
   } = useLoanAccountDetailHooks();
 
   const links = [
@@ -54,7 +52,7 @@ export const OverviewPage = () => {
         productId={productId}
       />
 
-      {!isClosed && <UpcomingPayments paymentList={paymentList} allList={paymentAllList} />}
+      {!isClosed && <UpcomingPayments />}
 
       <RecentTransactions txnList={transactionList} isClosed={isClosed} />
 

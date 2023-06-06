@@ -27,11 +27,10 @@ query getAccountingExternalLoanStatementReport($data: ExternalLoanStatementRepor
   }
 }
 
-
-query getAccountingExternalLoanReport($data: ExternalLoanReportFilter!){
+query getAccountingExternalLoanReport($data: ExternalLoanReportFilter!) {
   report {
     accountingReport {
-      externalLoanReport(data: $data){
+      externalLoanReport(data: $data) {
         data {
           date
           organizationName
@@ -72,3 +71,47 @@ query getAccountingExternalLoanReport($data: ExternalLoanReportFilter!){
     }
   }
 }
+
+query getFDInvestmentStatementReport($data: FDInvestmentStatementReportFilter!) {
+  report {
+    accountingReport {
+      fdInvestmentStatementReport(data: $data) {
+        data {
+          date
+          chequeNo
+          transactionAmount
+          transactionType
+          particulars
+        }
+        summary {
+          fdAmountTotal
+          openingBalance
+        }
+      }
+    }
+  }
+}
+
+query getFDInvestmentReport($data: FDInvestmentReportFilter!){
+  report {
+    accountingReport {
+      fdInvestmentReport(data: $data){
+        data {
+          organizationName
+          organizationBranch
+          fdAmount
+          fdAccountName
+          fdOpeningDate
+          fdType
+          interestRate
+          maturityDate
+          nomineeBankAccountNo
+          remainingTenure
+          tenure
+        }
+      }
+    }
+  }
+}
+
+

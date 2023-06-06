@@ -59,7 +59,7 @@ export const AddMemberModal = ({
       onError: (error) => {
         if (error?.code === 418) {
           setIsOverrideMemberAlertOpen(true);
-          handleClose();
+          onClose();
         }
       },
     });

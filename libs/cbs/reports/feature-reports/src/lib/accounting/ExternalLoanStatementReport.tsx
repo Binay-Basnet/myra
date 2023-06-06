@@ -51,14 +51,14 @@ export const ExternalLoanStatementReport = () => {
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
-      report={ReportEnum.ACCOUNTING_EXTERNAL_LOAN_REPORT}
+      report={ReportEnum.ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT}
     >
       <Report.Header>
         <Report.PageHeader
           paths={[
             { label: 'Accounting Reports', link: '/reports/cbs/accounting' },
             {
-              label: 'External Loan Statement Report',
+              label: ReportEnum.ACCOUNTING_EXTERNAL_LOAN_STATEMENT_REPORT,
               link: '/reports/cbs/accounting/external-loan-statement/new',
             },
           ]}

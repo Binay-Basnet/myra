@@ -13,6 +13,7 @@ import {
 } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import {
+  FormAmountInput,
   FormBankSelect,
   FormInput,
   FormLayout,
@@ -95,7 +96,7 @@ export const AddBankTransfer = () => {
 
             {isDeposit && (
               <FormSection>
-                <BalanceCard label="Teller Bank Available Cash" balance={userBalance ?? '0'} />
+                <BalanceCard label="Teller Bank Available Cash" balance={userBalance} />
               </FormSection>
             )}
 
@@ -107,7 +108,7 @@ export const AddBankTransfer = () => {
                 <FormBankSelect isRequired name="bankId" label="Select Bank" currentBranchOnly />
               </GridItem>
               <GridItem colSpan={1}>
-                <FormInput name="amount" label="Amount" />
+                <FormAmountInput name="amount" label="Amount" />
               </GridItem>
               <GridItem colSpan={2}>
                 <FormTextArea name="note" label="Note" />

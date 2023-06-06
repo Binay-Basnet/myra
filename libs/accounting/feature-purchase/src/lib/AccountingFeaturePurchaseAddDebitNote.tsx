@@ -9,6 +9,7 @@ import {
   PurchaseDebitNoteInput,
   SalesSaleEntryEntry,
   useAddNewDebitNoteMutation,
+  useGetInventoryItemsListQuery,
 } from '@coop/cbs/data-access';
 import { FormLayout } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
@@ -65,6 +66,14 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
 
   const { mutateAsync: setCreditNoteData } = useAddNewDebitNoteMutation();
 
+  const { data: inventoryItems } = useGetInventoryItemsListQuery({
+    pagination: {
+      after: '',
+      first: -1,
+    },
+  });
+  const inventoryItemsData = inventoryItems?.inventory?.items?.list?.edges;
+
   const handleSubmit = () => {
     const values = getValues();
 
@@ -74,6 +83,7 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
         ...product,
         quantity: String(product?.quantity),
         rate: String(product?.rate),
+        tax: inventoryItemsData?.find((item) => item?.node?.id === product?.itemId)?.node?.taxId,
       })),
     };
 

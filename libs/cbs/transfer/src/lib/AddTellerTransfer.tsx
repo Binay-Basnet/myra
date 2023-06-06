@@ -112,7 +112,7 @@ export const AddTellerTransfer = () => {
 
           <FormSection templateColumns={3} divider={false}>
             <GridItem colSpan={3}>
-              <BalanceCard label="Sender Teller Available Cash" balance={userBalance ?? '0'} />
+              <BalanceCard label="Sender Teller Available Cash" balance={userBalance} />
             </GridItem>
 
             <FormAmountInput isRequired name="amount" label="Cash Amount" />
