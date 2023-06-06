@@ -20508,6 +20508,30 @@ export type AddProfitToFundManagementDataMutation = {
   };
 };
 
+export type SetStaffPlanningMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: StaffPlanInput;
+}>;
+
+export type SetStaffPlanningMutation = {
+  hr: {
+    recruitment: {
+      recruitment: {
+        upsertStaffPlan: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type SearchIndexingMutationVariables = Exact<{ [key: string]: never }>;
 
 export type SearchIndexingMutation = { search: { indexData?: string | null } };
@@ -26633,6 +26657,59 @@ export type GetPreviousYearFundManagementQuery = {
       amount?: string | null;
       percent?: number | null;
     } | null> | null;
+  };
+};
+
+export type GetStaffPlanQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetStaffPlanQuery = {
+  hr: {
+    recruitment: {
+      recruitment: {
+        getStaffPlan: {
+          data?: { total_vacancies: number; total_cost_estimation: string } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetStaffPlanningListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetStaffPlanningListQuery = {
+  hr: {
+    recruitment: {
+      recruitment: {
+        listStaffPlanning: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id: string;
+              staffPlanTitle: string;
+              vacancies: number;
+              open_position: number;
+              date: {
+                from: Record<'local' | 'en' | 'np', string>;
+                to: Record<'local' | 'en' | 'np', string>;
+              };
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
   };
 };
 
@@ -39019,6 +39096,35 @@ export const useAddProfitToFundManagementDataMutation = <TError = unknown, TCont
     ),
     options
   );
+export const SetStaffPlanningDocument = `
+    mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
+  hr {
+    recruitment {
+      recruitment {
+        upsertStaffPlan(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetStaffPlanningMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetStaffPlanningMutation,
+    TError,
+    SetStaffPlanningMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetStaffPlanningMutation, TError, SetStaffPlanningMutationVariables, TContext>(
+    ['setStaffPlanning'],
+    useAxios<SetStaffPlanningMutation, SetStaffPlanningMutationVariables>(SetStaffPlanningDocument),
+    options
+  );
 export const SearchIndexingDocument = `
     mutation searchIndexing {
   search {
@@ -47724,6 +47830,77 @@ export const useGetPreviousYearFundManagementQuery = <
       : ['getPreviousYearFundManagement', variables],
     useAxios<GetPreviousYearFundManagementQuery, GetPreviousYearFundManagementQueryVariables>(
       GetPreviousYearFundManagementDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetStaffPlanDocument = `
+    query getStaffPlan($id: ID!) {
+  hr {
+    recruitment {
+      recruitment {
+        getStaffPlan(id: $id) {
+          data {
+            total_vacancies
+            total_cost_estimation
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetStaffPlanQuery = <TData = GetStaffPlanQuery, TError = unknown>(
+  variables: GetStaffPlanQueryVariables,
+  options?: UseQueryOptions<GetStaffPlanQuery, TError, TData>
+) =>
+  useQuery<GetStaffPlanQuery, TError, TData>(
+    ['getStaffPlan', variables],
+    useAxios<GetStaffPlanQuery, GetStaffPlanQueryVariables>(GetStaffPlanDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetStaffPlanningListDocument = `
+    query getStaffPlanningList($filter: Filter, $pagination: Pagination) {
+  hr {
+    recruitment {
+      recruitment {
+        listStaffPlanning(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              staffPlanTitle
+              vacancies
+              open_position
+              date {
+                from
+                to
+              }
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetStaffPlanningListQuery = <TData = GetStaffPlanningListQuery, TError = unknown>(
+  variables?: GetStaffPlanningListQueryVariables,
+  options?: UseQueryOptions<GetStaffPlanningListQuery, TError, TData>
+) =>
+  useQuery<GetStaffPlanningListQuery, TError, TData>(
+    variables === undefined ? ['getStaffPlanningList'] : ['getStaffPlanningList', variables],
+    useAxios<GetStaffPlanningListQuery, GetStaffPlanningListQueryVariables>(
+      GetStaffPlanningListDocument
     ).bind(null, variables),
     options
   );

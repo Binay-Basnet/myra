@@ -1,0 +1,14 @@
+mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
+  hr {
+    recruitment {
+      recruitment {
+        upsertStaffPlan(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
