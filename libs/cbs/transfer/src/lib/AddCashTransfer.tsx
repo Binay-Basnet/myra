@@ -5,8 +5,6 @@ import { useRouter } from 'next/router';
 import { asyncToast, FormFooter, FormHeader } from '@myra-ui';
 
 import {
-  CashTransferSelfEntry,
-  CashTransferServiceCentreEntry,
   ServiceCentreCashTransferInput,
   useSetServiceCenterCashTransferMutation,
 } from '@coop/cbs/data-access';
@@ -16,11 +14,26 @@ import { featureCode } from '@coop/shared/utils';
 
 import { LedgerTable, ServiceCenterTable } from '../components';
 
-/* eslint-disable-next-line */
-export interface AddCashTransferProps {}
+type CashTransferSelfEntry = {
+  accountId: { label: string; value: string };
+  cr?: string;
+  dr?: string;
+};
+
+type CashTransferServiceCentreEntry = {
+  branchId: { label: string; value: string };
+  cr?: string;
+  dr?: string;
+};
+
+type ServiceCenterTransferForm = {
+  branchEntries: CashTransferServiceCentreEntry[];
+  selfEntries: CashTransferSelfEntry[];
+  note: string;
+};
 
 export const AddCashTransfer = () => {
-  const methods = useForm();
+  const methods = useForm<ServiceCenterTransferForm>();
   const router = useRouter();
 
   const { getValues, watch } = methods;
@@ -36,7 +49,7 @@ export const AddCashTransfer = () => {
     let tempCR = 0;
     let tempDR = 0;
 
-    values['branchEntries']?.forEach((entry: CashTransferServiceCentreEntry) => {
+    values['branchEntries']?.forEach((entry) => {
       tempCR += Number(entry?.cr ?? 0);
       tempDR += Number(entry?.dr ?? 0);
     });
@@ -48,7 +61,7 @@ export const AddCashTransfer = () => {
     let tempCR = 0;
     let tempDR = 0;
 
-    values['selfEntries']?.forEach((entry: CashTransferSelfEntry) => {
+    values['selfEntries']?.forEach((entry) => {
       tempCR += Number(entry?.cr ?? 0);
       tempDR += Number(entry?.dr ?? 0);
     });
@@ -72,11 +85,14 @@ export const AddCashTransfer = () => {
       ...value,
       selfEntries: value['selfEntries']?.map((item: CashTransferSelfEntry) => ({
         ...item,
+        accountId: item.accountId.value,
+
         dr: String(item.dr),
         cr: String(item.cr),
       })),
       branchEntries: value['branchEntries']?.map((item: CashTransferServiceCentreEntry) => ({
         ...item,
+        branchId: item.branchId.value,
         dr: String(item.dr),
         cr: String(item.cr),
       })),

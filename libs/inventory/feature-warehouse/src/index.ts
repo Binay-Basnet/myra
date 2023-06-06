@@ -1,4 +1,5 @@
 export * from './component/WareHouseAddModal';
+export * from './detail-pages/warehouse-transfer/WarehouseTransferDetails';
 export * from './lib/WarehouseListTable';
 export * from './lib/WarehouseRequestForm';
 export * from './lib/WarehouseRequestTable';

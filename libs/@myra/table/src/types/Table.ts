@@ -92,6 +92,7 @@ export interface TableProps<TData> {
   onRowSelect?: (selected: string[]) => void;
 
   tablePagination?: boolean;
+  enableAllFilters?: boolean;
 }
 
 export type Column<TData> = Omit<ColumnDef<TData, unknown>, 'accessorKey' | 'accessorFn' | 'id'> & {

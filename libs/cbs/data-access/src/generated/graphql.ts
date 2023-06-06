@@ -27268,6 +27268,42 @@ export type GetInventoryItemsDetailsQuery = {
   };
 };
 
+export type GetInventorySuppliersDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventorySuppliersDetailsQuery = {
+  inventory: {
+    suppliers?: {
+      supplierDetail?: {
+        data?: {
+          supplierName: string;
+          supplierCode: string;
+          panNo?: string | null;
+          contactNo: string;
+          email: string;
+          contactPersonName?: string | null;
+          contactPersonPhoneNo?: string | null;
+          openingBalance?: string | null;
+          creditTerms?: string | null;
+          creditLimit?: number | null;
+          location?: AddressFragment | null;
+          registrationDoc?: Array<{ identifier: string; url: string } | null> | null;
+          applicationDoc?: Array<{ identifier: string; url: string } | null> | null;
+          legalStatusDoc?: Array<{ identifier: string; url: string } | null> | null;
+          othersDoc?: Array<{ identifier: string; url: string } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetInventoryWarehouseDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -27348,6 +27384,48 @@ export type GetInventoryWarehouseTransferQuery = {
         } | null> | null;
         pageInfo?: PaginationFragment | null;
       } | null;
+    } | null;
+  };
+};
+
+export type GetInventoryWarehouseRequestTransferDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryWarehouseRequestTransferDetailsQuery = {
+  inventory: {
+    warehouse?: {
+      getWarehouseTransferDetail: {
+        data?: {
+          branchName: string;
+          authorizedReceiver?: string | null;
+          authorizedSender?: string | null;
+          description?: string | null;
+          transferEntry?: {
+            id: string;
+            date: Record<'local' | 'en' | 'np', string>;
+            entryNo: string;
+            reference: string;
+            sourceWarehouseId: string;
+            sourceWarehouseName: string;
+            destinationWarehouseId: string;
+            destinationWarehouseName: string;
+            status: WarehouseTransferStatus;
+          } | null;
+          itemDetails?: Array<{
+            itemName: string;
+            quantity: string;
+            rate: string;
+            amount: string;
+          } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
     } | null;
   };
 };
@@ -48519,6 +48597,65 @@ export const useGetInventoryItemsDetailsQuery = <
     ).bind(null, variables),
     options
   );
+export const GetInventorySuppliersDetailsDocument = `
+    query getInventorySuppliersDetails($id: ID!) {
+  inventory {
+    suppliers {
+      supplierDetail(id: $id) {
+        data {
+          supplierName
+          supplierCode
+          panNo
+          contactNo
+          email
+          location {
+            ...Address
+          }
+          contactPersonName
+          contactPersonPhoneNo
+          openingBalance
+          creditTerms
+          creditLimit
+          registrationDoc {
+            identifier
+            url
+          }
+          applicationDoc {
+            identifier
+            url
+          }
+          legalStatusDoc {
+            identifier
+            url
+          }
+          othersDoc {
+            identifier
+            url
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${QueryErrorFragmentDoc}`;
+export const useGetInventorySuppliersDetailsQuery = <
+  TData = GetInventorySuppliersDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventorySuppliersDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventorySuppliersDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventorySuppliersDetailsQuery, TError, TData>(
+    ['getInventorySuppliersDetails', variables],
+    useAxios<GetInventorySuppliersDetailsQuery, GetInventorySuppliersDetailsQueryVariables>(
+      GetInventorySuppliersDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInventoryWarehouseDetailsDocument = `
     query getInventoryWarehouseDetails($id: ID!) {
   inventory {
@@ -48631,6 +48768,57 @@ export const useGetInventoryWarehouseTransferQuery = <
     useAxios<GetInventoryWarehouseTransferQuery, GetInventoryWarehouseTransferQueryVariables>(
       GetInventoryWarehouseTransferDocument
     ).bind(null, variables),
+    options
+  );
+export const GetInventoryWarehouseRequestTransferDetailsDocument = `
+    query getInventoryWarehouseRequestTransferDetails($id: ID!) {
+  inventory {
+    warehouse {
+      getWarehouseTransferDetail(id: $id) {
+        data {
+          transferEntry {
+            id
+            date
+            entryNo
+            reference
+            sourceWarehouseId
+            sourceWarehouseName
+            destinationWarehouseId
+            destinationWarehouseName
+            status
+          }
+          branchName
+          authorizedReceiver
+          authorizedSender
+          description
+          itemDetails {
+            itemName
+            quantity
+            rate
+            amount
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryWarehouseRequestTransferDetailsQuery = <
+  TData = GetInventoryWarehouseRequestTransferDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryWarehouseRequestTransferDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryWarehouseRequestTransferDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryWarehouseRequestTransferDetailsQuery, TError, TData>(
+    ['getInventoryWarehouseRequestTransferDetails', variables],
+    useAxios<
+      GetInventoryWarehouseRequestTransferDetailsQuery,
+      GetInventoryWarehouseRequestTransferDetailsQueryVariables
+    >(GetInventoryWarehouseRequestTransferDetailsDocument).bind(null, variables),
     options
   );
 export const GetIndividualKymOptionsDocument = `

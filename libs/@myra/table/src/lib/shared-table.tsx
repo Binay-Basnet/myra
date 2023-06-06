@@ -67,6 +67,7 @@ export const TableWithoutRef = <T,>(
     onRowSelect,
     allowSearch,
     tablePagination,
+    enableAllFilters = true,
   } = props;
 
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -112,7 +113,7 @@ export const TableWithoutRef = <T,>(
 
           enableSorting,
           manualSorting,
-          enableGlobalFilter: true,
+          enableGlobalFilter: enableAllFilters,
 
           getSubRows,
 
