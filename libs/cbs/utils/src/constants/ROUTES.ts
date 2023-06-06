@@ -359,6 +359,7 @@ export const ROUTES = {
   INVENTORY_ITEMS_VARIANT_ADD: '/inventory/items/items-variant/add',
   INVENTORY_SUPPLIERS: '/inventory/suppliers/list',
   INVENTORY_SUPPLIERS_ADD: '/inventory/suppliers/add',
+  INVENTORY_SUPPLIERS_DETAILS: '/inventory/suppliers/details',
   INVENTORY_WAREHOUSE: '/inventory/warehouse/list',
   INVENTORY_WAREHOUSE_TRASFER_LIST: '/inventory/warehouse/transfer/list',
   INVENTORY_WAREHOUSE_TRANSFER_ADD: '/inventory/warehouse/transfer/add',

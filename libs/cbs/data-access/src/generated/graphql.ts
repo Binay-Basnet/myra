@@ -13011,7 +13011,6 @@ export type LoanReport = {
   loanCollateralReport?: Maybe<LoanCollateralReportResult>;
   loanProductBalance?: Maybe<LoanProductBalanceReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
-  loanWriteOffReport?: Maybe<LoanWriteOffReportResult>;
   personalGuaranteeReport?: Maybe<LoanAccountGuaranteeReportResult>;
 };
 
@@ -13049,10 +13048,6 @@ export type LoanReportLoanProductBalanceArgs = {
 
 export type LoanReportLoanStatementReportArgs = {
   data: LoanStatementReportSettings;
-};
-
-export type LoanReportLoanWriteOffReportArgs = {
-  data: LoanWriteOffReportFilter;
 };
 
 export type LoanReportPersonalGuaranteeReportArgs = {
@@ -13219,50 +13214,6 @@ export type LoanStatementReportSettings = {
   loanAccountId: Scalars['ID'];
   memberId: Scalars['ID'];
   period: LocalizedDateFilter;
-};
-
-export type LoanWriteOffReportData = {
-  disbursedPrincipal?: Maybe<Scalars['String']>;
-  loanId?: Maybe<Scalars['String']>;
-  loanIssueDate?: Maybe<Scalars['Localized']>;
-  loanMaturityDate?: Maybe<Scalars['Localized']>;
-  loanNo?: Maybe<Scalars['String']>;
-  loanType?: Maybe<Scalars['String']>;
-  memberId?: Maybe<Scalars['String']>;
-  memberNo?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  overdueDays?: Maybe<Scalars['Int']>;
-  remainingFineAmount?: Maybe<Scalars['String']>;
-  remainingInterestAmount?: Maybe<Scalars['String']>;
-  remainingPrincipal?: Maybe<Scalars['String']>;
-  remainingPrincipalAmount?: Maybe<Scalars['String']>;
-  writeOffDate?: Maybe<Scalars['Localized']>;
-  writeOffFine?: Maybe<Scalars['String']>;
-  writeOffInterestAmount?: Maybe<Scalars['String']>;
-  writeOffPrincipalAmount?: Maybe<Scalars['String']>;
-  writeOffReason?: Maybe<Scalars['String']>;
-};
-
-export type LoanWriteOffReportFilter = {
-  branchId: Array<Scalars['String']>;
-  period: LocalizedDateFilter;
-};
-
-export type LoanWriteOffReportResult = {
-  data?: Maybe<Array<Maybe<LoanWriteOffReportData>>>;
-  error?: Maybe<QueryError>;
-  summary?: Maybe<LoanWriteOffReportSummary>;
-};
-
-export type LoanWriteOffReportSummary = {
-  totalDisbursedPrincipal?: Maybe<Scalars['String']>;
-  totalRemainingFine?: Maybe<Scalars['String']>;
-  totalRemainingInterestAmount?: Maybe<Scalars['String']>;
-  totalRemainingPrincipal?: Maybe<Scalars['String']>;
-  totalRemainingPrincipalAmount?: Maybe<Scalars['String']>;
-  totalWriteOffFine?: Maybe<Scalars['String']>;
-  totalWriteOffInterestAmount?: Maybe<Scalars['String']>;
-  totalWriteOffPrincipalAmount?: Maybe<Scalars['String']>;
 };
 
 export type LocalizationExample = {
@@ -15647,20 +15598,26 @@ export type PurchaseItemDetails = {
   amount?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   itemId?: InputMaybe<Scalars['String']>;
+  itemName?: InputMaybe<Scalars['String']>;
   quantity?: InputMaybe<Scalars['String']>;
   rate?: InputMaybe<Scalars['String']>;
   tax?: InputMaybe<Scalars['String']>;
+  taxValue?: InputMaybe<Scalars['String']>;
   warehouse?: InputMaybe<Scalars['String']>;
+  warehouseName?: InputMaybe<Scalars['String']>;
 };
 
 export type PurchaseItemDetailsType = {
   amount?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   itemId?: Maybe<Scalars['String']>;
+  itemName?: Maybe<Scalars['String']>;
   quantity?: Maybe<Scalars['String']>;
   rate?: Maybe<Scalars['String']>;
   tax?: Maybe<Scalars['String']>;
+  taxValue?: Maybe<Scalars['String']>;
   warehouse?: Maybe<Scalars['String']>;
+  warehouseName?: Maybe<Scalars['String']>;
 };
 
 export type QuarterlyDividendRate = {
@@ -27183,6 +27140,42 @@ export type GetInventoryItemsDetailsQuery = {
   };
 };
 
+export type GetInventorySuppliersDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventorySuppliersDetailsQuery = {
+  inventory: {
+    suppliers?: {
+      supplierDetail?: {
+        data?: {
+          supplierName: string;
+          supplierCode: string;
+          panNo?: string | null;
+          contactNo: string;
+          email: string;
+          contactPersonName?: string | null;
+          contactPersonPhoneNo?: string | null;
+          openingBalance?: string | null;
+          creditTerms?: string | null;
+          creditLimit?: number | null;
+          location?: AddressFragment | null;
+          registrationDoc?: Array<{ identifier: string; url: string } | null> | null;
+          applicationDoc?: Array<{ identifier: string; url: string } | null> | null;
+          legalStatusDoc?: Array<{ identifier: string; url: string } | null> | null;
+          othersDoc?: Array<{ identifier: string; url: string } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetInventoryWarehouseDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -31152,56 +31145,6 @@ export type GetDosariReportQuery = {
             } | null> | null;
           } | null;
         } | null> | null;
-      } | null;
-    };
-  };
-};
-
-export type GetLoanWriteOffReportQueryVariables = Exact<{
-  data: LoanWriteOffReportFilter;
-}>;
-
-export type GetLoanWriteOffReportQuery = {
-  report: {
-    loanReport: {
-      loanWriteOffReport?: {
-        data?: Array<{
-          memberNo?: string | null;
-          memberId?: string | null;
-          loanNo?: string | null;
-          loanId?: string | null;
-          name?: string | null;
-          loanType?: string | null;
-          loanIssueDate?: Record<'local' | 'en' | 'np', string> | null;
-          loanMaturityDate?: Record<'local' | 'en' | 'np', string> | null;
-          disbursedPrincipal?: string | null;
-          remainingPrincipal?: string | null;
-          writeOffPrincipalAmount?: string | null;
-          writeOffInterestAmount?: string | null;
-          writeOffFine?: string | null;
-          remainingPrincipalAmount?: string | null;
-          remainingInterestAmount?: string | null;
-          remainingFineAmount?: string | null;
-          writeOffDate?: Record<'local' | 'en' | 'np', string> | null;
-          writeOffReason?: string | null;
-          overdueDays?: number | null;
-        } | null> | null;
-        summary?: {
-          totalDisbursedPrincipal?: string | null;
-          totalWriteOffFine?: string | null;
-          totalWriteOffInterestAmount?: string | null;
-          totalWriteOffPrincipalAmount?: string | null;
-          totalRemainingPrincipal?: string | null;
-          totalRemainingPrincipalAmount?: string | null;
-          totalRemainingInterestAmount?: string | null;
-          totalRemainingFine?: string | null;
-        } | null;
-        error?:
-          | QueryError_AuthorizationError_Fragment
-          | QueryError_BadRequestError_Fragment
-          | QueryError_NotFoundError_Fragment
-          | QueryError_ServerError_Fragment
-          | null;
       } | null;
     };
   };
@@ -48434,6 +48377,65 @@ export const useGetInventoryItemsDetailsQuery = <
     ).bind(null, variables),
     options
   );
+export const GetInventorySuppliersDetailsDocument = `
+    query getInventorySuppliersDetails($id: ID!) {
+  inventory {
+    suppliers {
+      supplierDetail(id: $id) {
+        data {
+          supplierName
+          supplierCode
+          panNo
+          contactNo
+          email
+          location {
+            ...Address
+          }
+          contactPersonName
+          contactPersonPhoneNo
+          openingBalance
+          creditTerms
+          creditLimit
+          registrationDoc {
+            identifier
+            url
+          }
+          applicationDoc {
+            identifier
+            url
+          }
+          legalStatusDoc {
+            identifier
+            url
+          }
+          othersDoc {
+            identifier
+            url
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${QueryErrorFragmentDoc}`;
+export const useGetInventorySuppliersDetailsQuery = <
+  TData = GetInventorySuppliersDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventorySuppliersDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventorySuppliersDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventorySuppliersDetailsQuery, TError, TData>(
+    ['getInventorySuppliersDetails', variables],
+    useAxios<GetInventorySuppliersDetailsQuery, GetInventorySuppliersDetailsQueryVariables>(
+      GetInventorySuppliersDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInventoryWarehouseDetailsDocument = `
     query getInventoryWarehouseDetails($id: ID!) {
   inventory {
@@ -53547,61 +53549,6 @@ export const useGetDosariReportQuery = <TData = GetDosariReportQuery, TError = u
       null,
       variables
     ),
-    options
-  );
-export const GetLoanWriteOffReportDocument = `
-    query getLoanWriteOffReport($data: LoanWriteOffReportFilter!) {
-  report {
-    loanReport {
-      loanWriteOffReport(data: $data) {
-        data {
-          memberNo
-          memberId
-          loanNo
-          loanId
-          name
-          loanType
-          loanIssueDate
-          loanMaturityDate
-          disbursedPrincipal
-          remainingPrincipal
-          writeOffPrincipalAmount
-          writeOffInterestAmount
-          writeOffFine
-          remainingPrincipalAmount
-          remainingInterestAmount
-          remainingFineAmount
-          writeOffDate
-          writeOffReason
-          overdueDays
-        }
-        summary {
-          totalDisbursedPrincipal
-          totalWriteOffFine
-          totalWriteOffInterestAmount
-          totalWriteOffPrincipalAmount
-          totalRemainingPrincipal
-          totalRemainingPrincipalAmount
-          totalRemainingInterestAmount
-          totalRemainingFine
-        }
-        error {
-          ...QueryError
-        }
-      }
-    }
-  }
-}
-    ${QueryErrorFragmentDoc}`;
-export const useGetLoanWriteOffReportQuery = <TData = GetLoanWriteOffReportQuery, TError = unknown>(
-  variables: GetLoanWriteOffReportQueryVariables,
-  options?: UseQueryOptions<GetLoanWriteOffReportQuery, TError, TData>
-) =>
-  useQuery<GetLoanWriteOffReportQuery, TError, TData>(
-    ['getLoanWriteOffReport', variables],
-    useAxios<GetLoanWriteOffReportQuery, GetLoanWriteOffReportQueryVariables>(
-      GetLoanWriteOffReportDocument
-    ).bind(null, variables),
     options
   );
 export const GetMemberClassificationReportDocument = `
