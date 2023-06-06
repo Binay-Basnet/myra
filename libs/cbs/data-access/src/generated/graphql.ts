@@ -4299,6 +4299,11 @@ export const DefaultAccountType = {
 } as const;
 
 export type DefaultAccountType = typeof DefaultAccountType[keyof typeof DefaultAccountType];
+export type DeleteResponse = {
+  error: MutationError;
+  responseStatus: Scalars['Boolean'];
+};
+
 export type Denomination = {
   quantity: Scalars['Int'];
   value: CashValue;
@@ -7318,10 +7323,15 @@ export const GuaranteeStatus = {
 
 export type GuaranteeStatus = typeof GuaranteeStatus[keyof typeof GuaranteeStatus];
 export type HcmEmployeeGeneralMutation = {
+  deleteHcmEmployeeGeneral: DeleteResponse;
   upsertDepartment: DepartmentResult;
   upsertDesignation: DesignationResult;
   upsertEmployeeHealthInsurance: EmployeeHealthInsuranceResult;
   upsertEmployeeType: EmployeeTypeResult;
+};
+
+export type HcmEmployeeGeneralMutationDeleteHcmEmployeeGeneralArgs = {
+  id: Scalars['String'];
 };
 
 export type HcmEmployeeGeneralMutationUpsertDepartmentArgs = {
@@ -7498,8 +7508,8 @@ export type HrRecruitmentJobOfferQueryGetJobOfferArgs = {
 };
 
 export type HrRecruitmentJobOfferQueryListJobOfferArgs = {
-  filter: Filter;
-  pagination: Pagination;
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrRecruitmentJobOpeningMutation = {
@@ -7521,8 +7531,8 @@ export type HrRecruitmentJobOpeningQueryGetJobOpeningArgs = {
 };
 
 export type HrRecruitmentJobOpeningQueryListJobOpeningArgs = {
-  filter: Filter;
-  pagination: Pagination;
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrRecruitmentMutation = {
@@ -17832,8 +17842,8 @@ export type StaffPlanInput = {
   note?: InputMaybe<Scalars['String']>;
   staffPlans?: InputMaybe<Array<StaffPlanTypesInput>>;
   title: Scalars['String'];
-  total_cost_estimation: Scalars['String'];
-  total_vacancies: Scalars['Int'];
+  total_cost_estimation?: InputMaybe<Scalars['String']>;
+  total_vacancies?: InputMaybe<Scalars['Int']>;
 };
 
 export type StaffPlanRecord = {
@@ -17844,7 +17854,7 @@ export type StaffPlanRecord = {
   staffPlans?: Maybe<Array<StaffPlanTypes>>;
   title: Scalars['String'];
   total_cost_estimation: Scalars['String'];
-  total_vacancies: Scalars['String'];
+  total_vacancies: Scalars['Int'];
 };
 
 export type StaffPlanTypes = {
