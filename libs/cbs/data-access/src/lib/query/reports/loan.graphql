@@ -393,3 +393,46 @@ query getDosariReport($data: DosariReportInput!) {
     }
   }
 }
+
+query getLoanWriteOffReport($data: LoanWriteOffReportFilter!) {
+  report {
+    loanReport {
+      loanWriteOffReport(data: $data){
+        data {
+          memberNo
+          memberId
+          loanNo
+          loanId
+          name
+          loanType
+          loanIssueDate
+          loanMaturityDate
+          disbursedPrincipal
+          remainingPrincipal
+          writeOffPrincipalAmount
+          writeOffInterestAmount
+          writeOffFine
+          remainingPrincipalAmount
+          remainingInterestAmount
+          remainingFineAmount
+          writeOffDate
+          writeOffReason
+          overdueDays
+        }
+        summary {
+          totalDisbursedPrincipal
+          totalWriteOffFine
+          totalWriteOffInterestAmount
+          totalWriteOffPrincipalAmount
+          totalRemainingPrincipal
+          totalRemainingPrincipalAmount
+          totalRemainingInterestAmount
+          totalRemainingFine
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
