@@ -59,6 +59,7 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
         },
       },
       {
+        id: 'balance',
         header: 'Balance',
         accessorFn: (row) =>
           debitCreditConverter(row?.balance as string, row?.balanceType as string),

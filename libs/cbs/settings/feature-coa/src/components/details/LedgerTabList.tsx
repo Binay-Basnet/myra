@@ -57,6 +57,7 @@ export const LedgerTabList = () => {
         ),
       },
       {
+        id: 'serviceCenter',
         header: 'Service Center',
         accessorFn: (row) => row?.node?.serviceCenter as string,
         enableColumnFilter: true,
@@ -67,6 +68,8 @@ export const LedgerTabList = () => {
         },
       },
       {
+        id: 'balance',
+
         header: 'Balance',
         accessorFn: (row) =>
           debitCreditConverter(row?.node?.balance as string, row?.node?.balanceType as string),
