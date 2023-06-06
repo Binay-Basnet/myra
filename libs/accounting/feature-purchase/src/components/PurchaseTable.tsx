@@ -61,13 +61,19 @@ export const PurchaseTable = () => {
         itemDetails: itemDetails?.map((items: PurchaseTableType) => {
           const costPrice = inventoryItemsData?.find((item) => items?.itemId === item?.node?.id)
             ?.node?.costPrice;
+          const taxData = String(
+            inventoryItemsData?.find((item) => items?.itemId === item?.node?.id)?.node
+              ?.taxValue as number
+          );
+
+          // const amount = String(Number(items.quantity || 0) * Number(items.rate || 0));
 
           return {
             itemId: items?.itemId,
             quantity: items?.quantity,
 
             rate: items?.rate || costPrice,
-            tax: items?.tax,
+            tax: taxData,
             amount: items?.amount,
             description: items?.description,
             warehouse: items?.warehouse,
@@ -80,9 +86,9 @@ export const PurchaseTable = () => {
     {
       accessor: 'itemId',
       header: t['accountingPurchaseTableProduct'],
-      cellWidth: 'auto',
-      fieldType: 'search',
-      searchOptions: accountSearchOptions,
+      fieldType: 'select',
+      selectOptions: accountSearchOptions,
+      cellWidth: 'md',
     },
     {
       accessor: 'quantity',
@@ -101,14 +107,15 @@ export const PurchaseTable = () => {
     {
       accessor: 'tax',
       header: 'Tax(%)',
+      getDisabled: () => true,
 
-      accessorFn: (row: any) =>
-        inventoryItemsData?.find((item) => row?.itemId?.value === item?.node?.id)
-          ? String(
-              inventoryItemsData?.find((item) => row?.itemId?.value === item?.node?.id)?.node
-                ?.taxValue as number
-            )
-          : '',
+      // accessorFn: (row: any) =>
+      //   inventoryItemsData?.find((item) => row?.itemId?.value === item?.node?.id)
+      //     ? String(
+      //         inventoryItemsData?.find((item) => row?.itemId?.value === item?.node?.id)?.node
+      //           ?.taxValue as number
+      //       )
+      //     : '',
     },
     {
       accessor: 'amount',
