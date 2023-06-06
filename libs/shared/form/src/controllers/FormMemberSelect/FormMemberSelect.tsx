@@ -7,6 +7,7 @@ import { MemberSelect, MemberSelectProps, Option } from '@myra-ui/forms';
 
 import { KymIndFormStateQuery, useAppSelector, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { getPaginationQuery } from '@coop/shared/utils';
+
 // import FormCustomSelect from './FormCustomSelect';
 
 interface IMemberSelectProps extends MemberSelectProps {
@@ -31,7 +32,6 @@ export const FormMemberSelect = ({
 }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
   const { watch, control } = useFormContext();
-  const currrentBranch = useAppSelector((state) => state?.auth?.user?.currentBranch?.name);
   const currrentBranchId = useAppSelector((state) => state?.auth?.user?.currentBranch?.id);
 
   const router = useRouter();
@@ -76,7 +76,8 @@ export const FormMemberSelect = ({
         },
       },
       filter: {
-        query: isCurrentBranchMember ? `${currrentBranch} ${IDMember}` : IDMember,
+        // query: isCurrentBranchMember ? `${currrentBranch} ${IDMember}` : IDMember,
+        query: IDMember,
         orConditions: allMembers
           ? []
           : isCurrentBranchMember

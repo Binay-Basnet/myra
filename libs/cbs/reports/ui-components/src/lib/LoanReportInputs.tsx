@@ -26,7 +26,7 @@ export const LoanReportInputs = ({ isClosed, accountName }: LoanReportInputProps
   const { data: loanAccountData } = useGetMemberLoanAccountSearchQuery(
     {
       filter: {
-        query: memberId,
+        // query: memberId,
         orConditions: [
           {
             andConditions: [
@@ -38,8 +38,8 @@ export const LoanReportInputs = ({ isClosed, accountName }: LoanReportInputProps
               {
                 column: 'memberId',
                 comparator: 'EqualTo',
-                value: memberId
-              }
+                value: memberId,
+              },
             ],
           },
         ],
