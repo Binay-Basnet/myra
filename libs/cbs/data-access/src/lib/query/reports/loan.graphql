@@ -397,7 +397,7 @@ query getDosariReport($data: DosariReportInput!) {
 query getLoanWriteOffReport($data: LoanWriteOffReportFilter!) {
   report {
     loanReport {
-      loanWriteOffReport(data: $data){
+      loanWriteOffReport(data: $data) {
         data {
           memberNo
           memberId

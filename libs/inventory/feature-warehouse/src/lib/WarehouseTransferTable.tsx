@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { Column, Table } from '@myra-ui';
 
@@ -6,7 +7,7 @@ import {
   useGetInventoryWarehouseTransferQuery,
   WarehouseTransferType,
 } from '@coop/cbs/data-access';
-import { localizedDate } from '@coop/cbs/utils';
+import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { TableListPageHeader } from '@coop/myra/components';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
@@ -18,6 +19,7 @@ export const WarehouseTransferTable = () => {
       transferType: WarehouseTransferType?.Direct,
     },
   });
+  const router = useRouter();
 
   const rowItems = data?.inventory?.warehouse?.listTransfers?.edges ?? [];
 
@@ -63,6 +65,9 @@ export const WarehouseTransferTable = () => {
         isLoading={isFetching}
         data={rowItems}
         columns={columns}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.INVENTORY_WAREHOUSE_TRANSFER_DETAILS}?id=${row?.node?.id}`);
+        }}
         pagination={{
           total: data?.inventory?.warehouse?.listTransfers?.totalCount ?? 'Many',
           pageInfo: data?.inventory?.warehouse?.listTransfers?.pageInfo,
