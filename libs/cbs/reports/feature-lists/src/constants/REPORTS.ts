@@ -468,6 +468,10 @@ export const REPORTS = {
       report: Report.DOSARI_LOAN_REPORT,
       link: 'dosari-loan',
     },
+    {
+      report: Report.LOAN_WRITE_OFF_REPORT,
+      link: 'loan-write-off',
+    },
   ],
 
   [ReportGroup.MOBILE_BANKING]: [

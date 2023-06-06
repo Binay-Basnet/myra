@@ -146,7 +146,7 @@ export const LoanAccTable = ({ data, isLoading, type, viewLink }: ILoanAccTable)
         },
       },
     ],
-    [router]
+    [router, loanFilterMapping]
   );
 
   return (
