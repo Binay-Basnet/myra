@@ -4299,6 +4299,11 @@ export const DefaultAccountType = {
 } as const;
 
 export type DefaultAccountType = typeof DefaultAccountType[keyof typeof DefaultAccountType];
+export type DeleteResponse = {
+  error: MutationError;
+  responseStatus: Scalars['Boolean'];
+};
+
 export type Denomination = {
   quantity: Scalars['Int'];
   value: CashValue;
@@ -5836,37 +5841,37 @@ export type EmployeeHealthInsuranceResult = {
 
 export type EmployeeInput = {
   age?: InputMaybe<Scalars['Int']>;
+  appointmentLetter?: InputMaybe<Scalars['ID']>;
   branchId?: InputMaybe<Scalars['String']>;
   dateOfBirth?: InputMaybe<Scalars['Localized']>;
-  dateOfCompletion?: InputMaybe<Scalars['String']>;
-  degree_diploma?: InputMaybe<Scalars['String']>;
   departmentId?: InputMaybe<Scalars['String']>;
   designationId?: InputMaybe<Scalars['String']>;
-  employmentStatus?: InputMaybe<EmployeeStatus>;
-  employmentTypeId?: InputMaybe<EmployeeTypeEnum>;
+  educationDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
+  employeeStatus?: InputMaybe<EmployeeStatus>;
+  employmentType?: InputMaybe<EmployeeTypeEnum>;
   expenseApproverId?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
-  genderId?: InputMaybe<Scalars['ID']>;
+  gender?: InputMaybe<GenderInputType>;
   healthInsuranceNumberId?: InputMaybe<Scalars['String']>;
   healthInsuranceProviderId?: InputMaybe<Scalars['String']>;
-  instituteName?: InputMaybe<Scalars['String']>;
+  jobApplicationId?: InputMaybe<Scalars['ID']>;
+  jobOffer?: InputMaybe<Scalars['ID']>;
   lastName?: InputMaybe<Scalars['String']>;
   leaveApproverId?: InputMaybe<Scalars['String']>;
-  maritalStatusId?: InputMaybe<Scalars['ID']>;
+  maritalStatus?: InputMaybe<MaritalStatusInputType>;
   middleName?: InputMaybe<Scalars['String']>;
-  pastWorkedAddress?: InputMaybe<Scalars['String']>;
-  pastWorkedCompanyName?: InputMaybe<Scalars['String']>;
-  pastWorkedDesignation?: InputMaybe<Scalars['String']>;
-  pastWorkedSalary?: InputMaybe<Scalars['Int']>;
+  panNumber?: InputMaybe<Scalars['String']>;
   permanentAddress?: InputMaybe<KymAddressInput>;
   personalEmailAddress?: InputMaybe<Scalars['String']>;
   personalPhoneNumber?: InputMaybe<Scalars['String']>;
+  providedFund?: InputMaybe<Scalars['String']>;
   reportsToId?: InputMaybe<Scalars['String']>;
   salaryPaymentMode?: InputMaybe<PaymentMode>;
+  salaryStructureAssignment?: InputMaybe<Scalars['String']>;
   sourceOfHire?: InputMaybe<SourceOfHire>;
-  specialization?: InputMaybe<Scalars['String']>;
   temporaryAddress?: InputMaybe<KymAddressInput>;
   workEmailAddress?: InputMaybe<Scalars['String']>;
+  workExperience?: InputMaybe<Array<InputMaybe<HrEmployeeWorkExperience>>>;
   workPhoneNumber?: InputMaybe<Scalars['String']>;
 };
 
@@ -5898,7 +5903,7 @@ export const EmployeeStatus = {
   Deceased: 'DECEASED',
   Inactive: 'INACTIVE',
   NoticePeriod: 'NOTICE_PERIOD',
-  Prabation: 'PRABATION',
+  Probation: 'PROBATION',
   Resigned: 'RESIGNED',
   Terminated: 'TERMINATED',
 } as const;
@@ -7119,6 +7124,13 @@ export type GlStatementFilter = {
   natureOfTransactions?: InputMaybe<NatureOfBankTransaction>;
 };
 
+export const GenderInputType = {
+  Female: 'FEMALE',
+  Male: 'MALE',
+  Other: 'OTHER',
+} as const;
+
+export type GenderInputType = typeof GenderInputType[keyof typeof GenderInputType];
 export type GenderLedgerReportResult = {
   data?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
   error?: Maybe<QueryError>;
@@ -7311,10 +7323,15 @@ export const GuaranteeStatus = {
 
 export type GuaranteeStatus = typeof GuaranteeStatus[keyof typeof GuaranteeStatus];
 export type HcmEmployeeGeneralMutation = {
+  deleteHcmEmployeeGeneral: DeleteResponse;
   upsertDepartment: DepartmentResult;
   upsertDesignation: DesignationResult;
   upsertEmployeeHealthInsurance: EmployeeHealthInsuranceResult;
   upsertEmployeeType: EmployeeTypeResult;
+};
+
+export type HcmEmployeeGeneralMutationDeleteHcmEmployeeGeneralArgs = {
+  id: Scalars['String'];
 };
 
 export type HcmEmployeeGeneralMutationUpsertDepartmentArgs = {
@@ -7432,7 +7449,7 @@ export type HrEmployeeListEdges = {
 };
 
 export type HrEmployeeMutation = {
-  employee: HrEmployeeMutation;
+  employee: HrEmployeeKyeMutation;
 };
 
 export type HrEmployeeQuery = {
@@ -7491,8 +7508,8 @@ export type HrRecruitmentJobOfferQueryGetJobOfferArgs = {
 };
 
 export type HrRecruitmentJobOfferQueryListJobOfferArgs = {
-  filter: Filter;
-  pagination: Pagination;
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrRecruitmentJobOpeningMutation = {
@@ -7514,8 +7531,8 @@ export type HrRecruitmentJobOpeningQueryGetJobOpeningArgs = {
 };
 
 export type HrRecruitmentJobOpeningQueryListJobOpeningArgs = {
-  filter: Filter;
-  pagination: Pagination;
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrRecruitmentMutation = {
@@ -7564,6 +7581,34 @@ export type HcmEmployeeHealthInsuranceListConnection = {
 export type HcmEmployeeHealthInsuranceListEdges = {
   cursor: Scalars['Cursor'];
   node: EmployeeHealthInsurance;
+};
+
+export type HrEmployeeEducationDetail = {
+  dateOfCompletion?: InputMaybe<Scalars['Localized']>;
+  degree_diploma?: InputMaybe<Scalars['String']>;
+  instituteName?: InputMaybe<Scalars['String']>;
+  specialization?: InputMaybe<Scalars['String']>;
+};
+
+export type HrEmployeeEducationDetailType = {
+  dateOfCompletion?: Maybe<Scalars['Localized']>;
+  degree_diploma?: Maybe<Scalars['String']>;
+  instituteName?: Maybe<Scalars['String']>;
+  specialization?: Maybe<Scalars['String']>;
+};
+
+export type HrEmployeeWorkExperience = {
+  Address?: InputMaybe<Scalars['String']>;
+  CompanyName?: InputMaybe<Scalars['String']>;
+  Designation?: InputMaybe<Scalars['String']>;
+  Salary?: InputMaybe<Scalars['Int']>;
+};
+
+export type HrEmployeeWorkExperienceType = {
+  Address?: Maybe<Scalars['String']>;
+  CompanyName?: Maybe<Scalars['String']>;
+  Designation?: Maybe<Scalars['String']>;
+  Salary?: Maybe<Scalars['Int']>;
 };
 
 export type HumanizeAuditLog = {
@@ -13011,6 +13056,7 @@ export type LoanReport = {
   loanCollateralReport?: Maybe<LoanCollateralReportResult>;
   loanProductBalance?: Maybe<LoanProductBalanceReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
+  loanWriteOffReport?: Maybe<LoanWriteOffReportResult>;
   personalGuaranteeReport?: Maybe<LoanAccountGuaranteeReportResult>;
 };
 
@@ -13048,6 +13094,10 @@ export type LoanReportLoanProductBalanceArgs = {
 
 export type LoanReportLoanStatementReportArgs = {
   data: LoanStatementReportSettings;
+};
+
+export type LoanReportLoanWriteOffReportArgs = {
+  data: LoanWriteOffReportFilter;
 };
 
 export type LoanReportPersonalGuaranteeReportArgs = {
@@ -13216,6 +13266,50 @@ export type LoanStatementReportSettings = {
   period: LocalizedDateFilter;
 };
 
+export type LoanWriteOffReportData = {
+  disbursedPrincipal?: Maybe<Scalars['String']>;
+  loanId?: Maybe<Scalars['String']>;
+  loanIssueDate?: Maybe<Scalars['Localized']>;
+  loanMaturityDate?: Maybe<Scalars['Localized']>;
+  loanNo?: Maybe<Scalars['String']>;
+  loanType?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberNo?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  overdueDays?: Maybe<Scalars['Int']>;
+  remainingFineAmount?: Maybe<Scalars['String']>;
+  remainingInterestAmount?: Maybe<Scalars['String']>;
+  remainingPrincipal?: Maybe<Scalars['String']>;
+  remainingPrincipalAmount?: Maybe<Scalars['String']>;
+  writeOffDate?: Maybe<Scalars['Localized']>;
+  writeOffFine?: Maybe<Scalars['String']>;
+  writeOffInterestAmount?: Maybe<Scalars['String']>;
+  writeOffPrincipalAmount?: Maybe<Scalars['String']>;
+  writeOffReason?: Maybe<Scalars['String']>;
+};
+
+export type LoanWriteOffReportFilter = {
+  branchId: Array<Scalars['String']>;
+  period: LocalizedDateFilter;
+};
+
+export type LoanWriteOffReportResult = {
+  data?: Maybe<Array<Maybe<LoanWriteOffReportData>>>;
+  error?: Maybe<QueryError>;
+  summary?: Maybe<LoanWriteOffReportSummary>;
+};
+
+export type LoanWriteOffReportSummary = {
+  totalDisbursedPrincipal?: Maybe<Scalars['String']>;
+  totalRemainingFine?: Maybe<Scalars['String']>;
+  totalRemainingInterestAmount?: Maybe<Scalars['String']>;
+  totalRemainingPrincipal?: Maybe<Scalars['String']>;
+  totalRemainingPrincipalAmount?: Maybe<Scalars['String']>;
+  totalWriteOffFine?: Maybe<Scalars['String']>;
+  totalWriteOffInterestAmount?: Maybe<Scalars['String']>;
+  totalWriteOffPrincipalAmount?: Maybe<Scalars['String']>;
+};
+
 export type LocalizationExample = {
   name?: Maybe<Scalars['Localized']>;
 };
@@ -13339,6 +13433,14 @@ export type MRmemberInstallmentResult = {
   error?: Maybe<QueryError>;
 };
 
+export const MaritalStatusInputType = {
+  Divorced: 'DIVORCED',
+  Married: 'MARRIED',
+  Unmrarried: 'UNMRARRIED',
+} as const;
+
+export type MaritalStatusInputType =
+  typeof MaritalStatusInputType[keyof typeof MaritalStatusInputType];
 export type MeResult = {
   data?: Maybe<UserData>;
   error?: Maybe<QueryError>;
@@ -15707,6 +15809,7 @@ export const Resource = {
   AppAccounting: 'APP_ACCOUNTING',
   AppAlternativeChannel: 'APP_ALTERNATIVE_CHANNEL',
   AppCbs: 'APP_CBS',
+  AppHcm: 'APP_HCM',
   AppInventory: 'APP_INVENTORY',
   AppMemberShare: 'APP_MEMBER_SHARE',
   CbbMembersMemberFee: 'CBB_MEMBERS_MEMBER_FEE',
@@ -15792,6 +15895,32 @@ export const Resource = {
   CbsWithdrawSlipsWithdrawSlipsBlock: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_BLOCK',
   CbsWithdrawSlipsWithdrawSlipsIssue: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_ISSUE',
   CbsWithdrawSlipsWithdrawSlipsRequests: 'CBS_WITHDRAW_SLIPS_WITHDRAW_SLIPS_REQUESTS',
+  HcmEmployee: 'HCM_EMPLOYEE',
+  HcmEmployeeAttendance: 'HCM_EMPLOYEE_ATTENDANCE',
+  HcmEmployeeEmployees: 'HCM_EMPLOYEE_EMPLOYEES',
+  HcmEmployeeLeave: 'HCM_EMPLOYEE_LEAVE',
+  HcmEmployeeLifecycle: 'HCM_EMPLOYEE_LIFECYCLE',
+  HcmEmployeeLifecycleExit: 'HCM_EMPLOYEE_LIFECYCLE_EXIT',
+  HcmEmployeeLifecycleOnboarding: 'HCM_EMPLOYEE_LIFECYCLE_ONBOARDING',
+  HcmEmployeeLifecyclePromotion: 'HCM_EMPLOYEE_LIFECYCLE_PROMOTION',
+  HcmEmployeeLifecycleSeperation: 'HCM_EMPLOYEE_LIFECYCLE_SEPERATION',
+  HcmEmployeeLifecycleTransfer: 'HCM_EMPLOYEE_LIFECYCLE_TRANSFER',
+  HcmPayroll: 'HCM_PAYROLL',
+  HcmPayrollEntry: 'HCM_PAYROLL_ENTRY',
+  HcmPayrollExpense: 'HCM_PAYROLL_EXPENSE',
+  HcmPayrollSalarySlip: 'HCM_PAYROLL_SALARY_SLIP',
+  HcmPayrollSalaryStructureAssignment: 'HCM_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT',
+  HcmRecruitment: 'HCM_RECRUITMENT',
+  HcmRecruitmentAppointmentLetter: 'HCM_RECRUITMENT_APPOINTMENT_LETTER',
+  HcmRecruitmentInterview: 'HCM_RECRUITMENT_INTERVIEW',
+  HcmRecruitmentJobApplication: 'HCM_RECRUITMENT_JOB_APPLICATION',
+  HcmRecruitmentJobOffer: 'HCM_RECRUITMENT_JOB_OFFER',
+  HcmRecruitmentJobOpening: 'HCM_RECRUITMENT_JOB_OPENING',
+  HcmRecruitmentStaffPlanning: 'HCM_RECRUITMENT_STAFF_PLANNING',
+  HcmReport: 'HCM_REPORT',
+  HcmTraining: 'HCM_TRAINING',
+  HcmTrainingCourses: 'HCM_TRAINING_COURSES',
+  HcmTrainingStudents: 'HCM_TRAINING_STUDENTS',
   SettingsAlternativeChannels: 'SETTINGS_ALTERNATIVE_CHANNELS',
   SettingsAuditLog: 'SETTINGS_AUDIT_LOG',
   SettingsBank: 'SETTINGS_BANK',
@@ -15800,6 +15929,8 @@ export const Resource = {
   SettingsDocumentManagement: 'SETTINGS_DOCUMENT_MANAGEMENT',
   SettingsEodSeed: 'SETTINGS_EOD_SEED',
   SettingsGeneral: 'SETTINGS_GENERAL',
+  SettingsHcmEmployee: 'SETTINGS_HCM_EMPLOYEE',
+  SettingsHcmPayroll: 'SETTINGS_HCM_PAYROLL',
   SettingsIndexing: 'SETTINGS_INDEXING',
   SettingsInsurance: 'SETTINGS_INSURANCE',
   SettingsKymSetting: 'SETTINGS_KYM_SETTING',
@@ -17606,35 +17737,32 @@ export type SingleEmployeeResult = {
   age?: Maybe<Scalars['Int']>;
   branchId?: Maybe<Scalars['String']>;
   dateOfBirth?: Maybe<Scalars['Localized']>;
-  dateOfCompletion?: Maybe<Scalars['String']>;
-  degree_diploma?: Maybe<Scalars['String']>;
   departmentId?: Maybe<Scalars['String']>;
   designationId?: Maybe<Scalars['String']>;
-  employmentStatus?: Maybe<EmployeeStatus>;
-  employmentTypeId?: Maybe<EmployeeTypeEnum>;
+  educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
+  employmentStatus?: Maybe<Scalars['String']>;
+  employmentTypeId?: Maybe<Scalars['String']>;
   expenseApproverId?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   genderId?: Maybe<Scalars['ID']>;
   healthInsuranceNumberId?: Maybe<Scalars['String']>;
   healthInsuranceProviderId?: Maybe<Scalars['String']>;
-  instituteName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   leaveApproverId?: Maybe<Scalars['String']>;
   maritalStatusId?: Maybe<Scalars['ID']>;
   middleName?: Maybe<Scalars['String']>;
-  pastWorkedAddress?: Maybe<Scalars['String']>;
-  pastWorkedCompanyName?: Maybe<Scalars['String']>;
-  pastWorkedDesignation?: Maybe<Scalars['String']>;
-  pastWorkedSalary?: Maybe<Scalars['Int']>;
+  panNumber?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<Address>;
   personalEmailAddress?: Maybe<Scalars['String']>;
   personalPhoneNumber?: Maybe<Scalars['String']>;
+  providedFundAccount?: Maybe<Scalars['String']>;
   reportsToId?: Maybe<Scalars['String']>;
   salaryPaymentMode?: Maybe<PaymentMode>;
-  sourceOfHire?: Maybe<SourceOfHire>;
-  specialization?: Maybe<Scalars['String']>;
+  salaryStructureAssignment?: Maybe<Scalars['String']>;
+  sourceOfHire?: Maybe<Scalars['String']>;
   temporaryAddress?: Maybe<Address>;
   workEmailAddress?: Maybe<Scalars['String']>;
+  workExperience?: Maybe<Array<Maybe<HrEmployeeWorkExperienceType>>>;
   workPhoneNumber?: Maybe<Scalars['String']>;
 };
 
@@ -17714,8 +17842,8 @@ export type StaffPlanInput = {
   note?: InputMaybe<Scalars['String']>;
   staffPlans?: InputMaybe<Array<StaffPlanTypesInput>>;
   title: Scalars['String'];
-  total_cost_estimation: Scalars['String'];
-  total_vacancies: Scalars['Int'];
+  total_cost_estimation?: InputMaybe<Scalars['String']>;
+  total_vacancies?: InputMaybe<Scalars['Int']>;
 };
 
 export type StaffPlanRecord = {
@@ -17726,7 +17854,7 @@ export type StaffPlanRecord = {
   staffPlans?: Maybe<Array<StaffPlanTypes>>;
   title: Scalars['String'];
   total_cost_estimation: Scalars['String'];
-  total_vacancies: Scalars['String'];
+  total_vacancies: Scalars['Int'];
 };
 
 export type StaffPlanTypes = {
@@ -31187,6 +31315,56 @@ export type GetDosariReportQuery = {
             } | null> | null;
           } | null;
         } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetLoanWriteOffReportQueryVariables = Exact<{
+  data: LoanWriteOffReportFilter;
+}>;
+
+export type GetLoanWriteOffReportQuery = {
+  report: {
+    loanReport: {
+      loanWriteOffReport?: {
+        data?: Array<{
+          memberNo?: string | null;
+          memberId?: string | null;
+          loanNo?: string | null;
+          loanId?: string | null;
+          name?: string | null;
+          loanType?: string | null;
+          loanIssueDate?: Record<'local' | 'en' | 'np', string> | null;
+          loanMaturityDate?: Record<'local' | 'en' | 'np', string> | null;
+          disbursedPrincipal?: string | null;
+          remainingPrincipal?: string | null;
+          writeOffPrincipalAmount?: string | null;
+          writeOffInterestAmount?: string | null;
+          writeOffFine?: string | null;
+          remainingPrincipalAmount?: string | null;
+          remainingInterestAmount?: string | null;
+          remainingFineAmount?: string | null;
+          writeOffDate?: Record<'local' | 'en' | 'np', string> | null;
+          writeOffReason?: string | null;
+          overdueDays?: number | null;
+        } | null> | null;
+        summary?: {
+          totalDisbursedPrincipal?: string | null;
+          totalWriteOffFine?: string | null;
+          totalWriteOffInterestAmount?: string | null;
+          totalWriteOffPrincipalAmount?: string | null;
+          totalRemainingPrincipal?: string | null;
+          totalRemainingPrincipalAmount?: string | null;
+          totalRemainingInterestAmount?: string | null;
+          totalRemainingFine?: string | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
       } | null;
     };
   };
@@ -53642,6 +53820,61 @@ export const useGetDosariReportQuery = <TData = GetDosariReportQuery, TError = u
       null,
       variables
     ),
+    options
+  );
+export const GetLoanWriteOffReportDocument = `
+    query getLoanWriteOffReport($data: LoanWriteOffReportFilter!) {
+  report {
+    loanReport {
+      loanWriteOffReport(data: $data) {
+        data {
+          memberNo
+          memberId
+          loanNo
+          loanId
+          name
+          loanType
+          loanIssueDate
+          loanMaturityDate
+          disbursedPrincipal
+          remainingPrincipal
+          writeOffPrincipalAmount
+          writeOffInterestAmount
+          writeOffFine
+          remainingPrincipalAmount
+          remainingInterestAmount
+          remainingFineAmount
+          writeOffDate
+          writeOffReason
+          overdueDays
+        }
+        summary {
+          totalDisbursedPrincipal
+          totalWriteOffFine
+          totalWriteOffInterestAmount
+          totalWriteOffPrincipalAmount
+          totalRemainingPrincipal
+          totalRemainingPrincipalAmount
+          totalRemainingInterestAmount
+          totalRemainingFine
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetLoanWriteOffReportQuery = <TData = GetLoanWriteOffReportQuery, TError = unknown>(
+  variables: GetLoanWriteOffReportQueryVariables,
+  options?: UseQueryOptions<GetLoanWriteOffReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanWriteOffReportQuery, TError, TData>(
+    ['getLoanWriteOffReport', variables],
+    useAxios<GetLoanWriteOffReportQuery, GetLoanWriteOffReportQueryVariables>(
+      GetLoanWriteOffReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetMemberClassificationReportDocument = `
