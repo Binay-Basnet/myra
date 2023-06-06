@@ -6,6 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { asyncToast } from '@myra-ui';
 
 import {
+  PurchaseItemDetails,
   SalesSaleEntryInput,
   useGetInventoryItemsListQuery,
   useGetNewIdMutation,
@@ -16,6 +17,13 @@ import { FormLayout } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { EntryTable, SalesBox, SalesDetails } from '../components/form-components/salesEntry';
+
+type SalesEntryForm = Omit<SalesSaleEntryInput, 'products'> & {
+  products: Omit<PurchaseItemDetails, 'itemId'> &
+    {
+      itemId: { label: string; value: string };
+    }[];
+};
 
 export const NewSalesForm = () => {
   const { t } = useTranslation();
@@ -32,7 +40,7 @@ export const NewSalesForm = () => {
 
   const queryClient = useQueryClient();
 
-  const methods = useForm<SalesSaleEntryInput>();
+  const methods = useForm<SalesEntryForm>();
 
   const { getValues } = methods;
 
@@ -75,7 +83,10 @@ export const NewSalesForm = () => {
       ...values,
       products: values?.products?.map((product) => ({
         ...product,
-        tax: inventoryItemsData?.find((item) => item?.node?.id === product?.itemId)?.node?.taxId,
+        itemId: product.itemId.value,
+
+        tax: inventoryItemsData?.find((item) => item?.node?.id === product?.itemId.value)?.node
+          ?.taxId,
       })),
     };
 

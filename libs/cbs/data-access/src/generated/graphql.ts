@@ -5836,37 +5836,37 @@ export type EmployeeHealthInsuranceResult = {
 
 export type EmployeeInput = {
   age?: InputMaybe<Scalars['Int']>;
+  appointmentLetter?: InputMaybe<Scalars['ID']>;
   branchId?: InputMaybe<Scalars['String']>;
   dateOfBirth?: InputMaybe<Scalars['Localized']>;
-  dateOfCompletion?: InputMaybe<Scalars['String']>;
-  degree_diploma?: InputMaybe<Scalars['String']>;
   departmentId?: InputMaybe<Scalars['String']>;
   designationId?: InputMaybe<Scalars['String']>;
-  employmentStatus?: InputMaybe<EmployeeStatus>;
-  employmentTypeId?: InputMaybe<EmployeeTypeEnum>;
+  educationDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
+  employeeStatus?: InputMaybe<EmployeeStatus>;
+  employmentType?: InputMaybe<EmployeeTypeEnum>;
   expenseApproverId?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
-  genderId?: InputMaybe<Scalars['ID']>;
+  gender?: InputMaybe<GenderInputType>;
   healthInsuranceNumberId?: InputMaybe<Scalars['String']>;
   healthInsuranceProviderId?: InputMaybe<Scalars['String']>;
-  instituteName?: InputMaybe<Scalars['String']>;
+  jobApplicationId?: InputMaybe<Scalars['ID']>;
+  jobOffer?: InputMaybe<Scalars['ID']>;
   lastName?: InputMaybe<Scalars['String']>;
   leaveApproverId?: InputMaybe<Scalars['String']>;
-  maritalStatusId?: InputMaybe<Scalars['ID']>;
+  maritalStatus?: InputMaybe<MaritalStatusInputType>;
   middleName?: InputMaybe<Scalars['String']>;
-  pastWorkedAddress?: InputMaybe<Scalars['String']>;
-  pastWorkedCompanyName?: InputMaybe<Scalars['String']>;
-  pastWorkedDesignation?: InputMaybe<Scalars['String']>;
-  pastWorkedSalary?: InputMaybe<Scalars['Int']>;
+  panNumber?: InputMaybe<Scalars['String']>;
   permanentAddress?: InputMaybe<KymAddressInput>;
   personalEmailAddress?: InputMaybe<Scalars['String']>;
   personalPhoneNumber?: InputMaybe<Scalars['String']>;
+  providedFund?: InputMaybe<Scalars['String']>;
   reportsToId?: InputMaybe<Scalars['String']>;
   salaryPaymentMode?: InputMaybe<PaymentMode>;
+  salaryStructureAssignment?: InputMaybe<Scalars['String']>;
   sourceOfHire?: InputMaybe<SourceOfHire>;
-  specialization?: InputMaybe<Scalars['String']>;
   temporaryAddress?: InputMaybe<KymAddressInput>;
   workEmailAddress?: InputMaybe<Scalars['String']>;
+  workExperience?: InputMaybe<Array<InputMaybe<HrEmployeeWorkExperience>>>;
   workPhoneNumber?: InputMaybe<Scalars['String']>;
 };
 
@@ -5898,7 +5898,7 @@ export const EmployeeStatus = {
   Deceased: 'DECEASED',
   Inactive: 'INACTIVE',
   NoticePeriod: 'NOTICE_PERIOD',
-  Prabation: 'PRABATION',
+  Probation: 'PROBATION',
   Resigned: 'RESIGNED',
   Terminated: 'TERMINATED',
 } as const;
@@ -7119,6 +7119,13 @@ export type GlStatementFilter = {
   natureOfTransactions?: InputMaybe<NatureOfBankTransaction>;
 };
 
+export const GenderInputType = {
+  Female: 'FEMALE',
+  Male: 'MALE',
+  Other: 'OTHER',
+} as const;
+
+export type GenderInputType = typeof GenderInputType[keyof typeof GenderInputType];
 export type GenderLedgerReportResult = {
   data?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
   error?: Maybe<QueryError>;
@@ -7432,7 +7439,7 @@ export type HrEmployeeListEdges = {
 };
 
 export type HrEmployeeMutation = {
-  employee: HrEmployeeMutation;
+  employee: HrEmployeeKyeMutation;
 };
 
 export type HrEmployeeQuery = {
@@ -7564,6 +7571,34 @@ export type HcmEmployeeHealthInsuranceListConnection = {
 export type HcmEmployeeHealthInsuranceListEdges = {
   cursor: Scalars['Cursor'];
   node: EmployeeHealthInsurance;
+};
+
+export type HrEmployeeEducationDetail = {
+  dateOfCompletion?: InputMaybe<Scalars['Localized']>;
+  degree_diploma?: InputMaybe<Scalars['String']>;
+  instituteName?: InputMaybe<Scalars['String']>;
+  specialization?: InputMaybe<Scalars['String']>;
+};
+
+export type HrEmployeeEducationDetailType = {
+  dateOfCompletion?: Maybe<Scalars['Localized']>;
+  degree_diploma?: Maybe<Scalars['String']>;
+  instituteName?: Maybe<Scalars['String']>;
+  specialization?: Maybe<Scalars['String']>;
+};
+
+export type HrEmployeeWorkExperience = {
+  Address?: InputMaybe<Scalars['String']>;
+  CompanyName?: InputMaybe<Scalars['String']>;
+  Designation?: InputMaybe<Scalars['String']>;
+  Salary?: InputMaybe<Scalars['Int']>;
+};
+
+export type HrEmployeeWorkExperienceType = {
+  Address?: Maybe<Scalars['String']>;
+  CompanyName?: Maybe<Scalars['String']>;
+  Designation?: Maybe<Scalars['String']>;
+  Salary?: Maybe<Scalars['Int']>;
 };
 
 export type HumanizeAuditLog = {
@@ -13388,6 +13423,14 @@ export type MRmemberInstallmentResult = {
   error?: Maybe<QueryError>;
 };
 
+export const MaritalStatusInputType = {
+  Divorced: 'DIVORCED',
+  Married: 'MARRIED',
+  Unmrarried: 'UNMRARRIED',
+} as const;
+
+export type MaritalStatusInputType =
+  typeof MaritalStatusInputType[keyof typeof MaritalStatusInputType];
 export type MeResult = {
   data?: Maybe<UserData>;
   error?: Maybe<QueryError>;
@@ -15647,20 +15690,26 @@ export type PurchaseItemDetails = {
   amount?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   itemId?: InputMaybe<Scalars['String']>;
+  itemName?: InputMaybe<Scalars['String']>;
   quantity?: InputMaybe<Scalars['String']>;
   rate?: InputMaybe<Scalars['String']>;
   tax?: InputMaybe<Scalars['String']>;
+  taxValue?: InputMaybe<Scalars['String']>;
   warehouse?: InputMaybe<Scalars['String']>;
+  warehouseName?: InputMaybe<Scalars['String']>;
 };
 
 export type PurchaseItemDetailsType = {
   amount?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   itemId?: Maybe<Scalars['String']>;
+  itemName?: Maybe<Scalars['String']>;
   quantity?: Maybe<Scalars['String']>;
   rate?: Maybe<Scalars['String']>;
   tax?: Maybe<Scalars['String']>;
+  taxValue?: Maybe<Scalars['String']>;
   warehouse?: Maybe<Scalars['String']>;
+  warehouseName?: Maybe<Scalars['String']>;
 };
 
 export type QuarterlyDividendRate = {
@@ -17678,35 +17727,32 @@ export type SingleEmployeeResult = {
   age?: Maybe<Scalars['Int']>;
   branchId?: Maybe<Scalars['String']>;
   dateOfBirth?: Maybe<Scalars['Localized']>;
-  dateOfCompletion?: Maybe<Scalars['String']>;
-  degree_diploma?: Maybe<Scalars['String']>;
   departmentId?: Maybe<Scalars['String']>;
   designationId?: Maybe<Scalars['String']>;
-  employmentStatus?: Maybe<EmployeeStatus>;
-  employmentTypeId?: Maybe<EmployeeTypeEnum>;
+  educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
+  employmentStatus?: Maybe<Scalars['String']>;
+  employmentTypeId?: Maybe<Scalars['String']>;
   expenseApproverId?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   genderId?: Maybe<Scalars['ID']>;
   healthInsuranceNumberId?: Maybe<Scalars['String']>;
   healthInsuranceProviderId?: Maybe<Scalars['String']>;
-  instituteName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   leaveApproverId?: Maybe<Scalars['String']>;
   maritalStatusId?: Maybe<Scalars['ID']>;
   middleName?: Maybe<Scalars['String']>;
-  pastWorkedAddress?: Maybe<Scalars['String']>;
-  pastWorkedCompanyName?: Maybe<Scalars['String']>;
-  pastWorkedDesignation?: Maybe<Scalars['String']>;
-  pastWorkedSalary?: Maybe<Scalars['Int']>;
+  panNumber?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<Address>;
   personalEmailAddress?: Maybe<Scalars['String']>;
   personalPhoneNumber?: Maybe<Scalars['String']>;
+  providedFundAccount?: Maybe<Scalars['String']>;
   reportsToId?: Maybe<Scalars['String']>;
   salaryPaymentMode?: Maybe<PaymentMode>;
-  sourceOfHire?: Maybe<SourceOfHire>;
-  specialization?: Maybe<Scalars['String']>;
+  salaryStructureAssignment?: Maybe<Scalars['String']>;
+  sourceOfHire?: Maybe<Scalars['String']>;
   temporaryAddress?: Maybe<Address>;
   workEmailAddress?: Maybe<Scalars['String']>;
+  workExperience?: Maybe<Array<Maybe<HrEmployeeWorkExperienceType>>>;
   workPhoneNumber?: Maybe<Scalars['String']>;
 };
 

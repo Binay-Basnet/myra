@@ -320,7 +320,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
             // };
             acc = {
               ...acc,
-              [key]: typeof value !== 'object' ? value : 'value' in value && value.value,
+              [key]: value,
             };
 
             return acc;
@@ -333,7 +333,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
   }, [state.data]);
 
   useDeepCompareEffect(() => {
-    if (defaultData && !columns.some((column) => !!column.searchOptions)) {
+    if (defaultData) {
       dispatch({
         type: EditableTableActionKind.REPLACE,
         payload: {
