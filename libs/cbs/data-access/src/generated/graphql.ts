@@ -27260,6 +27260,48 @@ export type GetInventoryWarehouseTransferQuery = {
   };
 };
 
+export type GetInventoryWarehouseRequestTransferDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryWarehouseRequestTransferDetailsQuery = {
+  inventory: {
+    warehouse?: {
+      getWarehouseTransferDetail: {
+        data?: {
+          branchName: string;
+          authorizedReceiver?: string | null;
+          authorizedSender?: string | null;
+          description?: string | null;
+          transferEntry?: {
+            id: string;
+            date: Record<'local' | 'en' | 'np', string>;
+            entryNo: string;
+            reference: string;
+            sourceWarehouseId: string;
+            sourceWarehouseName: string;
+            destinationWarehouseId: string;
+            destinationWarehouseName: string;
+            status: WarehouseTransferStatus;
+          } | null;
+          itemDetails?: Array<{
+            itemName: string;
+            quantity: string;
+            rate: string;
+            amount: string;
+          } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
 export type GetIndividualKymOptionsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
 }>;
@@ -48548,6 +48590,57 @@ export const useGetInventoryWarehouseTransferQuery = <
     useAxios<GetInventoryWarehouseTransferQuery, GetInventoryWarehouseTransferQueryVariables>(
       GetInventoryWarehouseTransferDocument
     ).bind(null, variables),
+    options
+  );
+export const GetInventoryWarehouseRequestTransferDetailsDocument = `
+    query getInventoryWarehouseRequestTransferDetails($id: ID!) {
+  inventory {
+    warehouse {
+      getWarehouseTransferDetail(id: $id) {
+        data {
+          transferEntry {
+            id
+            date
+            entryNo
+            reference
+            sourceWarehouseId
+            sourceWarehouseName
+            destinationWarehouseId
+            destinationWarehouseName
+            status
+          }
+          branchName
+          authorizedReceiver
+          authorizedSender
+          description
+          itemDetails {
+            itemName
+            quantity
+            rate
+            amount
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryWarehouseRequestTransferDetailsQuery = <
+  TData = GetInventoryWarehouseRequestTransferDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryWarehouseRequestTransferDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryWarehouseRequestTransferDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryWarehouseRequestTransferDetailsQuery, TError, TData>(
+    ['getInventoryWarehouseRequestTransferDetails', variables],
+    useAxios<
+      GetInventoryWarehouseRequestTransferDetailsQuery,
+      GetInventoryWarehouseRequestTransferDetailsQueryVariables
+    >(GetInventoryWarehouseRequestTransferDetailsDocument).bind(null, variables),
     options
   );
 export const GetIndividualKymOptionsDocument = `

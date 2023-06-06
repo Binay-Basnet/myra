@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -14,7 +14,11 @@ import { localizedDate, ROUTES } from '@coop/cbs/utils';
 import { TableListPageHeader } from '@coop/myra/components';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
+import { WarehouseRequestDetailsModal } from '../component/WareHouseRequestDetails';
+
 export const WarehouseRequestTable = () => {
+  const [openDetailModal, setOpenDetailModal] = useState(false);
+
   const { t } = useTranslation();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -25,6 +29,14 @@ export const WarehouseRequestTable = () => {
       transferType: WarehouseTransferType?.Request,
     },
   });
+
+  const onOpenDetailsModal = () => {
+    setOpenDetailModal(true);
+  };
+
+  const onCloseDetailsModal = () => {
+    setOpenDetailModal(false);
+  };
 
   const rowItems = data?.inventory?.warehouse?.listTransfers?.edges ?? [];
 
@@ -140,10 +152,18 @@ export const WarehouseRequestTable = () => {
         isLoading={isFetching}
         data={rowItems}
         columns={columns}
+        rowOnClick={(row) => {
+          router.push(`${ROUTES.INVENTORY_WAREHOUSE_REQUEST_LIST}?id=${row?.node?.id}`);
+          onOpenDetailsModal();
+        }}
         pagination={{
           total: data?.inventory?.warehouse?.listTransfers?.totalCount ?? 'Many',
           pageInfo: data?.inventory?.warehouse?.listTransfers?.pageInfo,
         }}
+      />
+      <WarehouseRequestDetailsModal
+        isDetailModalOpen={openDetailModal}
+        handleDetailClose={onCloseDetailsModal}
       />
     </>
   );
