@@ -32,7 +32,7 @@ export const PurchaseTable = () => {
   const accountSearchOptions = useMemo(
     () =>
       inventoryItemsData?.map((account) => ({
-        label: `${account?.node?.name} (Rate = ${account?.node?.costPrice})`,
+        label: `${account?.node?.name}`,
         value: account?.node?.id as string,
       })),
     [inventoryItemsData]
@@ -62,8 +62,8 @@ export const PurchaseTable = () => {
           const costPrice = inventoryItemsData?.find((item) => items?.itemId === item?.node?.id)
             ?.node?.costPrice;
           const taxData = String(
-            inventoryItemsData?.find((item) => items?.itemId === item?.node?.id)?.node
-              ?.taxValue as number
+            inventoryItemsData?.find((item) => items?.itemId === item?.node?.id)?.node?.taxValue ??
+              '0'
           );
 
           // const amount = String(Number(items.quantity || 0) * Number(items.rate || 0));
