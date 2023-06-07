@@ -1,0 +1,42 @@
+query getInventorySuppliersDetails($id: ID!) {
+  inventory {
+    suppliers {
+      supplierDetail(id: $id) {
+        data {
+          supplierName
+          supplierCode
+          panNo
+          contactNo
+          email
+          location {
+            ...Address
+          }
+          contactPersonName
+          contactPersonPhoneNo
+          openingBalance
+          creditTerms
+          creditLimit
+          registrationDoc {
+            identifier
+            url
+          }
+          applicationDoc {
+            identifier
+            url
+          }
+          legalStatusDoc {
+            identifier
+            url
+          }
+          othersDoc {
+            identifier
+            url
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}

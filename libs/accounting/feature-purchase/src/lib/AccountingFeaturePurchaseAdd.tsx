@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { asyncToast, Box, GridItem, Text } from '@myra-ui';
 
 import {
-  PurchaseItemDetails,
+  PurchaseEntryInput,
   useGetInventoryItemsListQuery,
   useSetPurchaseEntryMutation,
 } from '@coop/cbs/data-access';
@@ -16,10 +16,25 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { PurchaseDetails, PurchaseTable } from '../components';
 
-/* eslint-disable-next-line */
-export interface AccountingFeaturePurchaseAddProps {}
+type PurchaseEntryForm = Omit<PurchaseEntryInput, 'itemDetails'> & {
+  itemDetails: {
+    itemId: { label: string; value: string };
+    amount?: string;
+    description?: string;
+    itemName?: string;
+    quantity?: string;
+    rate?: string;
+    tax?: string;
+    taxValue?: string;
+    warehouse?: string;
+    warehouseName?: string;
+  }[];
+};
 
 export const AccountingFeaturePurchaseAdd = () => {
+  const methods = useForm<PurchaseEntryForm>();
+  const { watch } = methods;
+
   const [grandTotal, setGrandTotal] = useState(0);
   const { t } = useTranslation();
   const router = useRouter();
@@ -38,9 +53,11 @@ export const AccountingFeaturePurchaseAdd = () => {
 
     const filteredValues = {
       ...values,
-      itemDetails: values?.['itemDetails']?.map((product: { itemId: string | undefined }) => ({
+      itemDetails: values?.['itemDetails']?.map((product) => ({
         ...product,
-        tax: inventoryItemsData?.find((item) => item?.node?.id === product?.itemId)?.node?.taxId,
+        itemId: product.itemId.value,
+        tax: inventoryItemsData?.find((item) => item?.node?.id === product?.itemId.value)?.node
+          ?.taxId,
       })),
     };
 
@@ -62,9 +79,7 @@ export const AccountingFeaturePurchaseAdd = () => {
     });
   };
 
-  const methods = useForm();
-  const { watch } = methods;
-  const itemDetails = watch('itemDetails') as PurchaseItemDetails[];
+  const itemDetails = watch('itemDetails');
 
   const totalAmount = itemDetails?.reduce((a, b) => a + Number(b?.amount), 0);
   const discount = watch('discount');

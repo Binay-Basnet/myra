@@ -69,3 +69,38 @@ query getInventoryWarehouseTransfer($filter: WarehouseTransferFilter, $paginatio
     }
   }
 }
+
+query getInventoryWarehouseRequestTransferDetails($id: ID!) {
+  inventory {
+    warehouse {
+      getWarehouseTransferDetail(id: $id) {
+        data {
+          transferEntry {
+            id
+            date
+            entryNo
+            reference
+            sourceWarehouseId
+            sourceWarehouseName
+            destinationWarehouseId
+            destinationWarehouseName
+            status
+          }
+          branchName
+          authorizedReceiver
+          authorizedSender
+          description
+          itemDetails {
+            itemName
+            quantity
+            rate
+            amount
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}

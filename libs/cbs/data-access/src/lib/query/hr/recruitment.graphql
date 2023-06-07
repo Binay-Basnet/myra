@@ -1,0 +1,45 @@
+query getStaffPlan($id: ID!) {
+  hr {
+    recruitment {
+      recruitment {
+        getStaffPlan(id: $id) {
+          data {
+            total_vacancies
+            total_cost_estimation
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getStaffPlanningList($filter: Filter, $pagination: Pagination) {
+  hr {
+    recruitment {
+      recruitment {
+        listStaffPlanning(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              staffPlanTitle
+              vacancies
+              open_position
+              date {
+                from
+                to
+              }
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
-import { BiUserPin } from 'react-icons/bi';
-import { FiBookOpen, FiBriefcase, FiDollarSign, FiFileText, FiUserCheck } from 'react-icons/fi';
+import { BiBookBookmark, BiUserPin } from 'react-icons/bi';
+import { FiBriefcase, FiDollarSign, FiFileText, FiUserCheck } from 'react-icons/fi';
 
 import { MainLayoutContainer, TabMenu, TopLevelHeader } from '@myra-ui';
 
@@ -53,7 +53,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
           },
           {
             title: 'Training',
-            icon: FiBookOpen,
+            icon: BiBookBookmark,
             link: ROUTES.HR_TRAINING_COURSES_LIST,
             match: ['training'],
             aclKey: 'CBS_MEMBERS_MEMBER',

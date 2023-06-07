@@ -14,7 +14,6 @@ import {
   Button,
   GridItem,
   Icon,
-  NoDataState,
   Text,
 } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -46,27 +45,27 @@ export const ReportContent = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  if (filters && (!data || data?.length === 0)) {
-    return (
-      <Box display="flex" w="100%" justifyContent="center" overflowY="auto">
-        <Box
-          transition="all 0.1s ease-in-out"
-          width={isFilterShown ? '100%' : 'clamp(860px, 80%, 75vw)'}
-          bg="white"
-          borderRadius="br2"
-        >
-          <NoDataState
-            custom={{
-              title: 'No Reports Found',
-              subtitle: 'Please select a different member or a different filter to get reports',
-            }}
-          />
-        </Box>
-      </Box>
-    );
-  }
-
-  if (!data || data?.length === 0) {
+  // if (filters && (!data || data?.length === 0)) {
+  //   return (
+  //     <Box display="flex" w="100%" justifyContent="center" overflowY="auto">
+  //       <Box
+  //         transition="all 0.1s ease-in-out"
+  //         width={isFilterShown ? '100%' : 'clamp(860px, 80%, 75vw)'}
+  //         bg="white"
+  //         borderRadius="br2"
+  //       >
+  //         <NoDataState
+  //           custom={{
+  //             title: 'No Reports Found',
+  //             subtitle: 'Please select a different member or a different filter to get reports',
+  //           }}
+  //         />
+  //       </Box>
+  //     </Box>
+  //   );
+  // }
+  //
+  if (!filters && (!data || data?.length === 0)) {
     return (
       <Box display="flex" w="100%" justifyContent="center" overflowY="auto">
         <Box
@@ -361,15 +360,16 @@ export const ReportTable = <T,>({
         variant="report"
         size="report"
         isStatic
+        noDataTitle="No Reports Found"
         getSubRows={getSubRows || ((row) => (row as { children: T[] })['children'])}
         data={
           (tableData
             ? hasSNo
               ? tableData?.map((d, index) => ({ ...d, index: index + 1 }))
-              : tableData
+              : tableData || []
             : hasSNo
             ? data?.map((d, index) => ({ ...d, index: index + 1 }))
-            : data) as unknown as T[]
+            : data || []) as unknown as T[]
         }
         columns={columns}
         tableTitle={tableTitle}

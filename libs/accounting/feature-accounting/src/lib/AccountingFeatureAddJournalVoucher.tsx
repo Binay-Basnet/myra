@@ -53,7 +53,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
     const filteredValues = {
       ...values,
       entries: values?.entries?.map((entry) => ({
-        accountId: entry.accountId,
+        accountId: entry.accountId.value,
         drAmount: String(entry.drAmount),
         crAmount: String(entry.crAmount),
         description: entry.description,

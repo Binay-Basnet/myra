@@ -117,7 +117,7 @@ export const InventoryStockStatusReport = () => {
               link: isCbs ? '/reports/cbs/inventory' : '/accounting/reports/inventory',
             },
             {
-              label: 'Inventory Register Report',
+              label: ReportEnum.INVENTORY_STOCK_STATUS_REPORT,
               link: isCbs
                 ? '/reports/cbs/inventory/stock-status/new'
                 : '/accounting/reports/inventory/stock-status/new',

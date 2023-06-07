@@ -27,6 +27,7 @@ export * from './lib/loan/LoanCallReport';
 export * from './lib/loan/LoanCollateralReport';
 export * from './lib/loan/LoanProductWiseBalanceReport';
 export * from './lib/loan/LoanStatementReport';
+export * from './lib/loan/LoanWriteOffReport';
 export * from './lib/loan/PersonalGuranteeReport';
 export * from './lib/members/DosariMemberReport';
 export * from './lib/members/IndividualMemberReport';

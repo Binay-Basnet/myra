@@ -188,6 +188,7 @@
       "@dhadda-migration/data-access": ["libs/dhadda-migration/data-access/src/index.ts"],
       "@dhadda-migration/ui-components": ["libs/dhadda-migration/ui-components/src/index.ts"],
       "@dhadda-migration/ui-layout": ["libs/dhadda-migration/ui-layout/src/index.ts"],
+      "@hr/feature-recruitment": ["libs/hr-module/feature-recruitment/src/index.ts"],
       "@migration/data-access": ["libs/migration/data-access/src/index.ts"],
       "@migration/ui-components": ["libs/migration/ui-components/src/index.ts"],
       "@migration/ui-layout": ["libs/migration/ui-layout/src/index.ts"],

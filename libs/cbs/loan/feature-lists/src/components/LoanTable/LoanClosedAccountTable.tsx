@@ -143,7 +143,7 @@ export const LoanClosedAccountTable = ({
         },
       },
     ],
-    [router]
+    [router, loanFilterMapping]
   );
 
   return (

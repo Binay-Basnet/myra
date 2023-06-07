@@ -134,7 +134,7 @@ export const LoanDeclinedTable = ({ data, isLoading, type, viewLink }: ILoanDecl
         },
       },
     ],
-    [router]
+    [router, loanFilterMapping]
   );
 
   return (
