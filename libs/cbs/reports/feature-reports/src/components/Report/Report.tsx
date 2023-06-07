@@ -363,13 +363,13 @@ export const ReportTable = <T,>({
         noDataTitle="No Reports Found"
         getSubRows={getSubRows || ((row) => (row as { children: T[] })['children'])}
         data={
-          (tableData
+          ((tableData
             ? hasSNo
               ? tableData?.map((d, index) => ({ ...d, index: index + 1 }))
-              : tableData || []
+              : tableData
             : hasSNo
             ? data?.map((d, index) => ({ ...d, index: index + 1 }))
-            : data || []) as unknown as T[]
+            : data) || []) as unknown as T[]
         }
         columns={columns}
         tableTitle={tableTitle}
