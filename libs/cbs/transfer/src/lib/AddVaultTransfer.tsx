@@ -62,6 +62,19 @@ export const AddVaultTransfer = () => {
     defaultValues: {
       transferType: TellerTransferType.VaultToCash,
       teller: [user?.firstName?.local, user?.lastName?.local].join(' '),
+      denominations: [
+        { value: '1000', quantity: 0, amount: '0' },
+        { value: '500', quantity: 0, amount: '0' },
+        { value: '100', quantity: 0, amount: '0' },
+        { value: '50', quantity: 0, amount: '0' },
+        { value: '25', quantity: 0, amount: '0' },
+        { value: '20', quantity: 0, amount: '0' },
+        { value: '10', quantity: 0, amount: '0' },
+        { value: '5', quantity: 0, amount: '0' },
+        { value: '2', quantity: 0, amount: '0' },
+        { value: '1', quantity: 0, amount: '0' },
+        { value: 'PAISA', quantity: 0, amount: '0' },
+      ],
     },
   });
 

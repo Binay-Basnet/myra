@@ -8340,6 +8340,7 @@ export type InvItemsMutation = {
 
 export type InvItemsMutationAddArgs = {
   data: InvItemsInput;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type InvItemsQuery = {
@@ -8485,6 +8486,7 @@ export type InvUnitOfMeasureMutation = {
 
 export type InvUnitOfMeasureMutationAddArgs = {
   data: InvUnitOfMeasureInput;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type InvUnitOfMeasureQuery = {
@@ -9025,6 +9027,7 @@ export type ItemDetails = {
 
 export type ItemVariantDetail = {
   costPrice?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
   itemName?: InputMaybe<Scalars['String']>;
   sellingPrice?: InputMaybe<Scalars['String']>;
   sku?: InputMaybe<Scalars['String']>;
@@ -19093,6 +19096,7 @@ export type WarehouseMutationAcceptTransferRequestArgs = {
 
 export type WarehouseMutationAddArgs = {
   data?: InputMaybe<AddWarehouseInput>;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type WarehouseMutationTransferArgs = {
