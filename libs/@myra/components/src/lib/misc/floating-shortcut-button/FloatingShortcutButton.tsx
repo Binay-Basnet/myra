@@ -30,27 +30,17 @@ interface WhatsNewModalProps {
 const whatsNewData = {
   features: {
     title: 'New Features',
-    data: [
-      'inventory stock report',
-      'external loan statement report',
-      'external loan report',
-      'Edit ledger accounting',
-      'branch filter added in loan account list',
-      'Add loan write list page',
-      'Add bulk transfer list',
-      'Branch name field added in accounting organization',
-    ],
+    data: ['Fd Investment statement report', 'Fd investment report'],
   },
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Mr. transactions roles and permission updated for MR.',
-      'Select/Remove issue in the member assigned.',
-      'Inactive saving account are removed from search filter of MR list',
-      'ledger select issue in report section of settings.',
-      'withdraw slip print issue.',
-      'Loan repay, disbursed loan, closed account revert transactions removed',
-      'MR transactions checkbox fixes removed',
+      'Tenure flag issue in the database',
+      'LOC loan closed not working issue',
+      'Teller to teller transfer issue fixes',
+      'New Entries get void after MR transactions issue fixes',
+      'Loan repayment and loan close penny balancing fixes',
+      'Teller transfer list page fix',
     ],
   },
   // knownBugs: {
@@ -103,8 +93,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.65</Text>
-          <Text fontSize="s3">May 31, 2023</Text>
+          <Text fontSize="r2">Version 1.0.66</Text>
+          <Text fontSize="s3">June 7, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
