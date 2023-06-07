@@ -12,3 +12,48 @@ mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
     }
   }
 }
+
+mutation setJobOpening($id: ID, $input: JobOpeningInput!) {
+  hr {
+    recruitment {
+      recruitmentJobOpening {
+        upsertJobOpening(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setJobOffer($id: ID, $input: JobOfferInput!) {
+  hr {
+    recruitment {
+      recruitmentJobOffer {
+        upsertJobOffer(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setAppointmentLetter($id: ID, $input: AppointmentLetterInput!) {
+  hr {
+    recruitment {
+      recruitmentAppointmentLetter {
+        upsertAppointmentLetter(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

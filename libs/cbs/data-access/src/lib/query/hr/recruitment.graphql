@@ -43,3 +43,107 @@ query getStaffPlanningList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getJobOpeningList($filter: Filter, $pagination: Pagination) {
+  hr {
+    recruitment {
+      recruitmentJobOpening {
+        listJobOpening(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              jobId
+              title
+              status
+              staffPlan
+              designation
+              department
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getJobOfferList($filter: Filter, $pagination: Pagination) {
+  hr {
+    recruitment {
+      recruitmentJobOffer {
+        listJobOffer(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              applicantId
+              name
+              status
+              offerDate
+              email
+              designation
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getJobOfferList($filter: Filter, $pagination: Pagination) {
+  hr {
+    recruitment {
+      recruitmentJobOffer {
+        listJobOffer(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              applicantId
+              name
+              status
+              offerDate
+              email
+              designation
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAppointmentLetterList($filter: Filter, $pagination: Pagination) {
+  hr {
+    recruitment {
+      recruitmentAppointmentLetter {
+        listAppointmentLetter(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              applicantId
+              name
+              probationPeriod
+              offerDate
+              email
+              designation
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

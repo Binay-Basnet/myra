@@ -186,7 +186,7 @@ export const HRMODULE: NavType = {
           addRoute: ROUTES.HR_RECRUITMENT_STAFF_PLANNING_ADD,
         },
         {
-          label: 'Job Posting',
+          label: 'Job Opening',
           route: ROUTES.HR_RECRUITMENT_JOB_POSTING_LIST,
           aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_RECRUITMENT_JOB_POSTING_ADD,
