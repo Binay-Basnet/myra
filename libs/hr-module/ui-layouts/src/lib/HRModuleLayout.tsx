@@ -23,7 +23,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
             icon: BiUserPin,
             link: ROUTES.HRMODULE_EMPLOYEES_LIST,
             match: ['employee'],
-            aclKey: 'CBS_MEMBERS_MEMBER',
+            aclKey: 'HCM_EMPLOYEE',
             navMenu: 'EMPLOYEE',
           },
           {
@@ -31,7 +31,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
             icon: FiUserCheck,
             link: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_LIST,
             match: ['lifecycle'],
-            aclKey: 'CBS_MEMBERS_MEMBER',
+            aclKey: 'HCM_EMPLOYEE_LIFECYCLE',
             navMenu: 'EMPLOYEE_LIFECYCLE',
           },
           {
@@ -40,7 +40,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
             link: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_LIST,
             // link: ROUTES.HR_RECRUITMENT_STAFF_PLANNING_LIST,
             match: ['recruitment'],
-            aclKey: 'CBS_MEMBERS_MEMBER',
+            aclKey: 'HCM_RECRUITMENT',
             navMenu: 'RECRUITMENT',
           },
           {
@@ -48,7 +48,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
             icon: FiDollarSign,
             link: ROUTES.HR_PAYROLL_ENTRY_LIST,
             match: ['payroll'],
-            aclKey: 'CBS_MEMBERS_MEMBER',
+            aclKey: 'HCM_PAYROLL',
             navMenu: 'PAYROLL',
           },
           {
@@ -56,7 +56,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
             icon: BiBookBookmark,
             link: ROUTES.HR_TRAINING_COURSES_LIST,
             match: ['training'],
-            aclKey: 'CBS_MEMBERS_MEMBER',
+            aclKey: 'HCM_TRAINING',
             navMenu: 'TRAINING',
           },
 
@@ -75,7 +75,7 @@ export const HRLayout = (props: HRModuleLayoutProps) => {
             icon: FiFileText,
             link: ROUTES.HR_REPORTS,
             match: ['reports'],
-            aclKey: 'CBS_MEMBERS_MEMBER',
+            aclKey: 'HCM_REPORT',
             navMenu: 'REPORTS',
           },
         ]}
