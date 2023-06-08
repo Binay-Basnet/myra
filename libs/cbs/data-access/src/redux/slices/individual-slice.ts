@@ -4,6 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface IndividualState {
   isFormDirty: boolean;
   hasPressedNext: boolean;
+  isFormLoading: boolean;
   basic: {
     errors: Record<string, string[]>;
   };
@@ -13,6 +14,7 @@ interface IndividualState {
 const initialState: () => IndividualState = () => ({
   hasPressedNext: false,
   isFormDirty: false,
+  isFormLoading: false,
   basic: {
     errors: {},
     incomplete: {},
@@ -37,6 +39,10 @@ export const individuialSLice = createSlice({
     },
 
     resetIndividual: () => initialState(),
+
+    setFormLoading: (state, action: PayloadAction<boolean>) => {
+      state.isFormLoading = action.payload;
+    },
   },
 });
 

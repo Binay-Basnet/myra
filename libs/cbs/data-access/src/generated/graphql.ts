@@ -752,7 +752,7 @@ export type AccountingSalesMutationCreditNoteArgs = {
 
 export type AccountingSalesMutationUpsertCustomerArgs = {
   data: SalesCustomerInput;
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type AccountingSalesMutationUpsertCustomerPaymentArgs = {
@@ -7030,6 +7030,60 @@ export type FormSettingQuery = {
   section: FormSectionQuery;
 };
 
+export type FormStateInvItemsInput = {
+  costPrice?: Maybe<Scalars['String']>;
+  isVariantItem: Scalars['Boolean'];
+  itemCode: Scalars['String'];
+  itemGroup: Scalars['String'];
+  itemName: Scalars['String'];
+  ledgers?: Maybe<InventoryItemLedgerDetail>;
+  primaryUnit: Scalars['String'];
+  reorderLevel?: Maybe<Scalars['String']>;
+  sellingPrice?: Maybe<Scalars['String']>;
+  tax: Scalars['String'];
+  valuationMethod?: Maybe<InvItemsValuationMethod>;
+  variantList?: Maybe<Array<Maybe<FormStateItemVariantDetail>>>;
+  variants?: Maybe<Array<Maybe<FormStateInvItemsVariant>>>;
+};
+
+export type FormStateInvItemsVariant = {
+  options?: Maybe<Array<Maybe<Scalars['String']>>>;
+  variantName?: Maybe<Scalars['String']>;
+};
+
+export type FormStateInvSupplierInput = {
+  address: KymAddress;
+  applicationDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  contactNo: Scalars['String'];
+  contactPersonName?: Maybe<Scalars['String']>;
+  contactPersonPhoneNo?: Maybe<Scalars['String']>;
+  creditLimit?: Maybe<Scalars['Float']>;
+  creditTerms?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
+  legalStatusDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  name: Scalars['String'];
+  openingBalance?: Maybe<Scalars['String']>;
+  othersDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  panNo?: Maybe<Scalars['String']>;
+  registrationDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  supplierCode: Scalars['String'];
+};
+
+export type FormStateInvUnitOfMeasureInput = {
+  acceptFraction?: Maybe<Scalars['Boolean']>;
+  description?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  shortName: Scalars['String'];
+};
+
+export type FormStateItemVariantDetail = {
+  costPrice?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  itemName?: Maybe<Scalars['String']>;
+  sellingPrice?: Maybe<Scalars['String']>;
+  sku?: Maybe<Scalars['String']>;
+};
+
 export const Frequency = {
   Daily: 'DAILY',
   Monthly: 'MONTHLY',
@@ -7235,6 +7289,26 @@ export type GeneralSettingsQuery = {
   setup: SetupQuery;
   share?: Maybe<ShareSettingsQuery>;
   valuator?: Maybe<ValuatorSettingsQuery>;
+};
+
+export type GetInventoryItemResponse = {
+  data?: Maybe<FormStateInvItemsInput>;
+  error?: Maybe<QueryError>;
+};
+
+export type GetSupplierResponse = {
+  data?: Maybe<FormStateInvSupplierInput>;
+  error?: Maybe<QueryError>;
+};
+
+export type GetUnitResponse = {
+  data?: Maybe<FormStateInvUnitOfMeasureInput>;
+  error?: Maybe<QueryError>;
+};
+
+export type GetWarehouseResponse = {
+  data?: Maybe<ReturnWarehouseInput>;
+  error?: Maybe<QueryError>;
 };
 
 export type GlTransaction = {
@@ -8344,13 +8418,13 @@ export type InvItemsMutationAddArgs = {
 };
 
 export type InvItemsQuery = {
-  get: InvItems;
+  getItem: GetInventoryItemResponse;
   getItemDetails?: Maybe<InventoryItemDetailsResult>;
   getNewItemCode: Scalars['String'];
   list?: Maybe<InvItemsConnection>;
 };
 
-export type InvItemsQueryGetArgs = {
+export type InvItemsQueryGetItemArgs = {
   id: Scalars['ID'];
 };
 
@@ -8421,6 +8495,7 @@ export type InvSupplierMutation = {
 
 export type InvSupplierMutationAddArgs = {
   data?: InputMaybe<InvSupplierInput>;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type InvSuppliersEdge = {
@@ -8429,8 +8504,13 @@ export type InvSuppliersEdge = {
 };
 
 export type InvSuppliersQuery = {
+  getSupplier?: Maybe<GetSupplierResponse>;
   list?: Maybe<InvSupplierConnection>;
   supplierDetail?: Maybe<InventorySupplierDetailResult>;
+};
+
+export type InvSuppliersQueryGetSupplierArgs = {
+  id: Scalars['ID'];
 };
 
 export type InvSuppliersQueryListArgs = {
@@ -8492,6 +8572,7 @@ export type InvUnitOfMeasureMutationAddArgs = {
 export type InvUnitOfMeasureQuery = {
   get: InvUnitOfMeasure;
   getUnitDetails: InventoryUnitDataResult;
+  getunit: GetUnitResponse;
   list?: Maybe<InvUnitOfMeasureConnection>;
 };
 
@@ -8500,6 +8581,10 @@ export type InvUnitOfMeasureQueryGetArgs = {
 };
 
 export type InvUnitOfMeasureQueryGetUnitDetailsArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvUnitOfMeasureQueryGetunitArgs = {
   id: Scalars['ID'];
 };
 
@@ -16247,6 +16332,13 @@ export type ReturnStaffPlan = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export type ReturnWarehouseInput = {
+  address: Scalars['String'];
+  branchId: Scalars['String'];
+  name: Scalars['String'];
+  phoneNumber: Scalars['String'];
+};
+
 export type RevertTransactionResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
@@ -19104,10 +19196,15 @@ export type WarehouseMutationTransferArgs = {
 };
 
 export type WarehouseQuery = {
+  getWarehouse: GetWarehouseResponse;
   getWarehouseDetails: WareHouseDetailDataResult;
   getWarehouseTransferDetail: WarehouseTransferDetailDataResult;
   listTransfers?: Maybe<WarehouseTransferConnection>;
   listWarehouses?: Maybe<WarehouseConnection>;
+};
+
+export type WarehouseQueryGetWarehouseArgs = {
+  id: Scalars['ID'];
 };
 
 export type WarehouseQueryGetWarehouseDetailsArgs = {
@@ -20382,7 +20479,25 @@ export type SetCooperativeDataMutationVariables = Exact<{
 }>;
 
 export type SetCooperativeDataMutation = {
-  members: { cooperative?: { add?: { recordId: string } | null } | null };
+  members: {
+    cooperative?: {
+      add?: {
+        recordId: string;
+        query?: {
+          formState?: { data?: { sectionStatus?: { id?: string | null } | null } | null } | null;
+          overallFormStatus?: {
+            coopDetails?: {
+              id?: string | null;
+              sectionStatus?: {
+                errors?: Array<string> | null;
+                incomplete?: Array<string> | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
 };
 
 export type SetCoopAccOperatorDataMutationVariables = Exact<{
@@ -38926,6 +39041,24 @@ export const SetCooperativeDataDocument = `
     cooperative(id: $id) {
       add(data: $data) {
         recordId
+        query {
+          formState(id: $id) {
+            data {
+              sectionStatus {
+                id
+              }
+            }
+          }
+          overallFormStatus(id: $id) {
+            coopDetails {
+              id
+              sectionStatus {
+                errors
+                incomplete
+              }
+            }
+          }
+        }
       }
     }
   }

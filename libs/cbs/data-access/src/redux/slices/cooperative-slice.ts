@@ -4,6 +4,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface CooperativeSlice {
   isFormDirty: boolean;
   hasPressedNext: boolean;
+  isFormLoading: boolean;
+
   basic: {
     errors: Record<string, string[]>;
   };
@@ -33,6 +35,7 @@ interface CooperativeSlice {
 const initialState: () => CooperativeSlice = () => ({
   hasPressedNext: false,
   isFormDirty: false,
+  isFormLoading: false,
   totalEquity: 0,
   totalAssets: 0,
   basic: {
@@ -109,18 +112,21 @@ export const cooperativeSlice = createSlice({
     },
 
     resetCooperative: () => initialState(),
+
+    setCooperativeFormLoading: (state, action: PayloadAction<boolean>) => {
+      state.isFormLoading = action.payload;
+    },
   },
 });
 
 export const {
-  addSisterCoopError,
   addCooperativeAccountError,
   addCooperativeDirectorError,
   addCooperativeError,
   setCooperativeFormDirty,
   setCooperativeHasPressedNext,
-  resetCooperative,
   setCooperativeTotalAssets,
+  setCooperativeFormLoading,
   setCooperativeTotalEquity,
 } = cooperativeSlice.actions;
 

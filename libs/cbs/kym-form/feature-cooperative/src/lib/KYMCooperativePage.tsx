@@ -26,7 +26,7 @@ import {
 } from '@coop/cbs/data-access';
 import { useDispatch } from 'react-redux';
 import { ROUTES } from '@coop/cbs/utils';
-import { useDisclosure } from '@chakra-ui/react';
+import { Spinner, useDisclosure } from '@chakra-ui/react';
 import {
   KymAccountHolderDeclaration,
   KymCoopAccountOperatorDetail,
@@ -54,6 +54,7 @@ export const KYMCooperativePage = () => {
     subSection: string;
   }>();
 
+  const isFormLoading = useAppSelector((state) => state.cooperative.isFormLoading);
   const dispatch = useDispatch();
 
   const router = useRouter();
@@ -75,6 +76,7 @@ export const KYMCooperativePage = () => {
       <Box position="sticky" top="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
           <FormHeader
+            isFormDirty={isFormLoading}
             title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberCooperative}`}
             closeLink={ROUTES.CBS_MEMBER_LIST}
           />
@@ -164,9 +166,18 @@ export const KYMCooperativePage = () => {
           <FormFooter
             status={
               <Box display="flex" gap="s8">
-                <Text as="i" fontSize="r1">
-                  {t['formDetails']}
-                </Text>
+                {isFormLoading ? (
+                  <>
+                    <Spinner />
+                    <Text as="i" fontSize="r1">
+                      Form is Being Saved. Please Don&apos;t Close the form
+                    </Text>
+                  </>
+                ) : (
+                  <Text as="i" fontSize="r1">
+                    {t['formDetails']}
+                  </Text>
+                )}
               </Box>
             }
             draftButton={

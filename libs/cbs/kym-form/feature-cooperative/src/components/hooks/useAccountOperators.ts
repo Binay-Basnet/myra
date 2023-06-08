@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 import debounce from 'lodash/debounce';
 import pickBy from 'lodash/pickBy';
 
@@ -10,6 +11,8 @@ import {
   addCooperativeAccountError,
   addCooperativeError,
   KymCoopAccountOperatorDetailsFormInput,
+  KymCoopDirectorDetailsFormInput,
+  setCooperativeFormLoading,
   useAppSelector,
   useGetCoOperativeAccountOperatorEditDataQuery,
   useSetCoopAccOperatorDataMutation,
@@ -61,9 +64,17 @@ export const useAccountOperators = ({ accountId, methods }: IUseAccountOperators
     }
   );
 
-  const { mutate } = useSetCoopAccOperatorDataMutation({
+  const { mutateAsync } = useSetCoopAccOperatorDataMutation({
     onSuccess: async () => {
       await refetch();
+      dispatch(setCooperativeFormLoading(false));
+    },
+
+    onMutate: async () => {
+      dispatch(setCooperativeFormLoading(true));
+    },
+    onError: async () => {
+      dispatch(setCooperativeFormLoading(false));
     },
   });
 
@@ -100,20 +111,29 @@ export const useAccountOperators = ({ accountId, methods }: IUseAccountOperators
   }, [editLoading]);
 
   useEffect(() => {
-    const subscription = watch(
-      debounce((item) => {
-        if (id && accountId) {
-          mutate({
-            id,
-            accOperatorId: accountId,
-            data: { ...pickBy(item, (v) => v !== null && v !== undefined) },
-          });
-        }
-      }, 800)
-    );
+    const subscription = watch((item) => {
+      if (id && accountId) {
+        dispatch(setCooperativeFormLoading(true));
+        saveData({ ...pickBy(item, (v) => v !== null && v !== undefined) }, id, accountId);
+      }
+    });
 
     return () => subscription.unsubscribe();
   }, [watch, id, accountId]);
+
+  const saveData = useCallback(
+    debounce(
+      async (data: KymCoopDirectorDetailsFormInput, formId: string, formdirectorId: string) => {
+        await mutateAsync({
+          id: formId,
+          accOperatorId: formdirectorId,
+          data: pickBy(omit(data, ['hasTCAccepted']), (v) => v !== null && v !== undefined),
+        });
+      },
+      2000
+    ),
+    []
+  );
 
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {
