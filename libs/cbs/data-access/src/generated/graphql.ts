@@ -20803,6 +20803,7 @@ export type SetUnitsMutation = {
 };
 
 export type SetWareHouseMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   data?: InputMaybe<AddWarehouseInput>;
 }>;
 
@@ -27646,6 +27647,54 @@ export type GetInventoryItemsDetailsQuery = {
   };
 };
 
+export type GetItemsFormStateQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetItemsFormStateQuery = {
+  inventory: {
+    items?: {
+      getItem: {
+        data?: {
+          itemName: string;
+          itemCode: string;
+          itemGroup: string;
+          primaryUnit: string;
+          sellingPrice?: string | null;
+          costPrice?: string | null;
+          tax: string;
+          isVariantItem: boolean;
+          reorderLevel?: string | null;
+          valuationMethod?: InvItemsValuationMethod | null;
+          ledgers?: {
+            salesLedger: string;
+            purchaseLedger: string;
+            salesReturnLedger: string;
+            purchaseReturnLedger: string;
+          } | null;
+          variants?: Array<{
+            variantName?: string | null;
+            options?: Array<string | null> | null;
+          } | null> | null;
+          variantList?: Array<{
+            id?: string | null;
+            sku?: string | null;
+            itemName?: string | null;
+            sellingPrice?: string | null;
+            costPrice?: string | null;
+          } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
 export type GetInventorySuppliersDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -27797,6 +27846,26 @@ export type GetInventoryWarehouseRequestTransferDetailsQuery = {
             amount: string;
           } | null> | null;
         } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type GetWarehouseFormStateDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetWarehouseFormStateDetailsQuery = {
+  inventory: {
+    warehouse?: {
+      getWarehouse: {
+        data?: { name: string; phoneNumber: string; address: string; branchId: string } | null;
         error?:
           | QueryError_AuthorizationError_Fragment
           | QueryError_BadRequestError_Fragment
@@ -39659,10 +39728,10 @@ export const useSetUnitsMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const SetWareHouseDocument = `
-    mutation setWareHouse($data: AddWarehouseInput) {
+    mutation setWareHouse($id: ID, $data: AddWarehouseInput) {
   inventory {
     warehouse {
-      add(data: $data) {
+      add(data: $data, id: $id) {
         recordId
         error {
           ...MutationError
@@ -49302,6 +49371,59 @@ export const useGetInventoryItemsDetailsQuery = <
     ).bind(null, variables),
     options
   );
+export const GetItemsFormStateDocument = `
+    query getItemsFormState($id: ID!) {
+  inventory {
+    items {
+      getItem(id: $id) {
+        data {
+          itemName
+          itemCode
+          itemGroup
+          primaryUnit
+          sellingPrice
+          costPrice
+          tax
+          ledgers {
+            salesLedger
+            purchaseLedger
+            salesReturnLedger
+            purchaseReturnLedger
+          }
+          isVariantItem
+          variants {
+            variantName
+            options
+          }
+          variantList {
+            id
+            sku
+            itemName
+            sellingPrice
+            costPrice
+          }
+          reorderLevel
+          valuationMethod
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetItemsFormStateQuery = <TData = GetItemsFormStateQuery, TError = unknown>(
+  variables: GetItemsFormStateQueryVariables,
+  options?: UseQueryOptions<GetItemsFormStateQuery, TError, TData>
+) =>
+  useQuery<GetItemsFormStateQuery, TError, TData>(
+    ['getItemsFormState', variables],
+    useAxios<GetItemsFormStateQuery, GetItemsFormStateQueryVariables>(
+      GetItemsFormStateDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInventorySuppliersDetailsDocument = `
     query getInventorySuppliersDetails($id: ID!) {
   inventory {
@@ -49524,6 +49646,39 @@ export const useGetInventoryWarehouseRequestTransferDetailsQuery = <
       GetInventoryWarehouseRequestTransferDetailsQuery,
       GetInventoryWarehouseRequestTransferDetailsQueryVariables
     >(GetInventoryWarehouseRequestTransferDetailsDocument).bind(null, variables),
+    options
+  );
+export const GetWarehouseFormStateDetailsDocument = `
+    query getWarehouseFormStateDetails($id: ID!) {
+  inventory {
+    warehouse {
+      getWarehouse(id: $id) {
+        data {
+          name
+          phoneNumber
+          address
+          branchId
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetWarehouseFormStateDetailsQuery = <
+  TData = GetWarehouseFormStateDetailsQuery,
+  TError = unknown
+>(
+  variables: GetWarehouseFormStateDetailsQueryVariables,
+  options?: UseQueryOptions<GetWarehouseFormStateDetailsQuery, TError, TData>
+) =>
+  useQuery<GetWarehouseFormStateDetailsQuery, TError, TData>(
+    ['getWarehouseFormStateDetails', variables],
+    useAxios<GetWarehouseFormStateDetailsQuery, GetWarehouseFormStateDetailsQueryVariables>(
+      GetWarehouseFormStateDetailsDocument
+    ).bind(null, variables),
     options
   );
 export const GetIndividualKymOptionsDocument = `

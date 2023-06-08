@@ -104,3 +104,21 @@ query getInventoryWarehouseRequestTransferDetails($id: ID!) {
     }
   }
 }
+
+query getWarehouseFormStateDetails($id: ID!) {
+  inventory {
+    warehouse {
+      getWarehouse(id: $id) {
+        data {
+          name
+          phoneNumber
+          address
+          branchId
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
