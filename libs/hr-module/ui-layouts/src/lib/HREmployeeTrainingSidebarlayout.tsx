@@ -9,7 +9,7 @@ interface HRMODULEEmployeeSidebarLayoutProps {
 }
 
 export const HRTrainingSidebarayout = ({ children }: HRMODULEEmployeeSidebarLayoutProps) => (
-  <Can I="SHOW_IN_MENU" a="HCM_TRAINING" showError isErrorCentered>
+  <Can I="SHOW_IN_MENU" a="CBS_MEMBERS_MEMBER" showError isErrorCentered>
     <MenuContainer>
       <AppSidebar module="HRMODULE" menu="TRAINING" />
       <PageContainer>{children}</PageContainer>

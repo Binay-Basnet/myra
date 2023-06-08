@@ -5,22 +5,22 @@ export const HRMODULE: NavType = {
   label: 'HR & Capacity Management',
   menus: {
     EMPLOYEE: {
-      aclKey: 'HCM_EMPLOYEE',
+      aclKey: 'CBS_MEMBERS_MEMBER',
       label: 'Employee',
       forms: [
         {
           label: 'New Employee',
-          aclKey: 'HCM_EMPLOYEE_EMPLOYEES',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_EMPLOYEES_ADD,
         },
         {
           label: 'New Attendance',
-          aclKey: 'HCM_EMPLOYEE_ATTENDANCE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_ATTENDENCE_ADD,
         },
         {
           label: 'New Leave',
-          aclKey: 'HCM_EMPLOYEE_LEAVE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_LEAVE_ADD,
         },
       ],
@@ -48,48 +48,48 @@ export const HRMODULE: NavType = {
       settingPages: [
         {
           label: 'Employee Settings',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_EMPLOYEES_SETTINGS,
         },
         {
           label: 'Attendance Settings',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_LEAVE_SETTINGS,
         },
         {
           label: 'Leave Settings',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_ATTENDENCE_SETTINGS,
         },
       ],
     },
     EMPLOYEE_LIFECYCLE: {
-      aclKey: 'HCM_EMPLOYEE_LIFECYCLE',
+      aclKey: 'CBS_MEMBERS_MEMBER',
       label: 'Employee-Lifecycle',
       forms: [
         {
           label: 'New Employee Onboarding',
-          aclKey: 'HCM_EMPLOYEE_LIFECYCLE_ONBOARDING',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_ADD,
         },
         {
           label: 'New Employee Transfer',
-          aclKey: 'HCM_EMPLOYEE_LIFECYCLE_TRANSFER',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_LIFECYCLE_EMPLOYEE_TRANSFER_ADD,
         },
         {
           label: 'New Employee Separation',
-          aclKey: 'HCM_EMPLOYEE_LIFECYCLE_SEPERATION',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_LIFECYCLE_EMPLOYEE_SEPERATION_ADD,
         },
         {
           label: 'New Employee Promotion',
-          aclKey: 'HCM_EMPLOYEE_LIFECYCLE_PROMOTION',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_LIFECYCLE_EMPLOYEE_PROMOTION_ADD,
         },
         {
           label: 'New Employee Exit',
-          aclKey: 'HCM_EMPLOYEE_LIFECYCLE_EXIT',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_LIFECYCLE_EMPLOYEE_EXIT_ADD,
         },
       ],
@@ -97,84 +97,84 @@ export const HRMODULE: NavType = {
         {
           label: 'Employee Onboarding',
           route: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_LIST,
-          aclKey: 'HCM_EMPLOYEE_LIFECYCLE_ONBOARDING',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_ADD,
         },
         {
           label: 'Employee Transfer',
           route: ROUTES.HR_LIFECYCLE_EMPLOYEE_TRANSFER_LIST,
-          aclKey: 'HCM_EMPLOYEE_LIFECYCLE_TRANSFER',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_LIFECYCLE_EMPLOYEE_TRANSFER_ADD,
         },
         {
           label: 'Employee Seperation',
           route: ROUTES.HR_LIFECYCLE_EMPLOYEE_SEPERATION_LIST,
-          aclKey: 'HCM_EMPLOYEE_LIFECYCLE_PROMOTION',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_LIFECYCLE_EMPLOYEE_SEPERATION_ADD,
         },
         {
           label: 'Employee Promotion',
           route: ROUTES.HR_LIFECYCLE_EMPLOYEE_PROMOTION_LIST,
-          aclKey: 'HCM_EMPLOYEE_LIFECYCLE_PROMOTION',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_LIFECYCLE_EMPLOYEE_PROMOTION_ADD,
         },
         {
           label: 'Employee Exit',
           route: ROUTES.HR_LIFECYCLE_EMPLOYEE_EXIT_LIST,
-          aclKey: 'HCM_EMPLOYEE_LIFECYCLE_EXIT',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_LIFECYCLE_EMPLOYEE_EXIT_ADD,
         },
       ],
       settingPages: [
         {
           label: 'Employee Settings',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_EMPLOYEES_SETTINGS,
         },
         {
           label: 'Attendance Settings',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_LEAVE_SETTINGS,
         },
         {
           label: 'Leave Settings',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_ATTENDENCE_SETTINGS,
         },
       ],
     },
     RECRUITMENT: {
-      aclKey: 'HCM_RECRUITMENT',
+      aclKey: 'CBS_MEMBERS_MEMBER',
       label: 'Recruitment',
       forms: [
         {
           label: 'New Staff Planning',
-          aclKey: 'HCM_RECRUITMENT_STAFF_PLANNING',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_RECRUITMENT_STAFF_PLANNING_ADD,
         },
         {
           label: 'New Job Posting',
-          aclKey: 'HCM_RECRUITMENT_INTERVIEW',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_RECRUITMENT_JOB_POSTING_ADD,
         },
         {
           label: 'New Job Application',
-          aclKey: 'HCM_RECRUITMENT_JOB_APPLICATION',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_RECRUITMENT_JOB_APPLICATION_ADD,
         },
         {
           label: 'New Interview',
-          aclKey: 'HCM_RECRUITMENT_INTERVIEW',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_RECRUITMENT_INTERVIEW_ADD,
         },
         {
           label: 'New Job Offer',
-          aclKey: 'HCM_RECRUITMENT_JOB_OFFER',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_RECRUITMENT_JOB_OFFER_ADD,
         },
         {
           label: 'New Appointment Letter',
-          aclKey: 'HCM_RECRUITMENT_APPOINTMENT_LETTER',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_RECRUITMENT_APPOINTMENT_LETTER_ADD,
         },
       ],
@@ -182,80 +182,80 @@ export const HRMODULE: NavType = {
         {
           label: 'Staff Planing',
           route: ROUTES.HR_RECRUITMENT_STAFF_PLANNING_LIST,
-          aclKey: 'HCM_RECRUITMENT_STAFF_PLANNING',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_RECRUITMENT_STAFF_PLANNING_ADD,
         },
         {
           label: 'Job Posting',
           route: ROUTES.HR_RECRUITMENT_JOB_POSTING_LIST,
-          aclKey: 'HCM_RECRUITMENT_INTERVIEW',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_RECRUITMENT_JOB_POSTING_ADD,
         },
         {
           label: 'Job Application',
           route: ROUTES.HR_RECRUITMENT_JOB_APPLICATION_LIST,
-          aclKey: 'HCM_RECRUITMENT_JOB_APPLICATION',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_RECRUITMENT_JOB_APPLICATION_ADD,
         },
         {
           label: 'Interview',
           route: ROUTES.HR_RECRUITMENT_INTERVIEW_LIST,
-          aclKey: 'HCM_RECRUITMENT_INTERVIEW',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_RECRUITMENT_INTERVIEW_ADD,
         },
         {
           label: 'Job Offer',
           route: ROUTES.HR_RECRUITMENT_JOB_OFFER_LIST,
-          aclKey: 'HCM_RECRUITMENT_JOB_OFFER',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_RECRUITMENT_JOB_OFFER_ADD,
         },
         {
           label: 'Appointment Letter',
           route: ROUTES.HR_RECRUITMENT_APPOINTMENT_LETTER_LIST,
-          aclKey: 'HCM_RECRUITMENT_APPOINTMENT_LETTER',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_RECRUITMENT_APPOINTMENT_LETTER_ADD,
         },
       ],
       settingPages: [
         {
           label: 'Recruitment Settings',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_RECRUITMENT_SETTINGS,
         },
         {
           label: 'Interview Rounds',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_INTERVIEW_ROUNDS,
         },
         {
           label: 'Email Templates',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_EMAIL_TEMPLATES,
         },
       ],
     },
     PAYROLL: {
-      aclKey: 'HCM_PAYROLL',
+      aclKey: 'CBS_MEMBERS_MEMBER',
       label: 'Payroll',
       forms: [
         {
           label: 'New Payroll Entry',
-          aclKey: 'HCM_PAYROLL_ENTRY',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_PAYROLL_ENTRY_ADD,
         },
         {
           label: 'New Salary Structure Assignment',
-          aclKey: 'HCM_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_PAYROLL_SALARY_STRUCTURE_ADD,
         },
         {
           label: 'New Salary Slip',
-          aclKey: 'HCM_PAYROLL_SALARY_SLIP',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_PAYROLL_SALARY_SLIP_ADD,
         },
         {
           label: 'New Expen',
-          aclKey: 'HCM_PAYROLL_EXPENSE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_PAYROLL_EXPEN_ADD,
         },
       ],
@@ -263,58 +263,58 @@ export const HRMODULE: NavType = {
         {
           label: 'Payroll Entry',
           route: ROUTES.HR_PAYROLL_ENTRY_LIST,
-          aclKey: 'HCM_PAYROLL_ENTRY',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_PAYROLL_ENTRY_ADD,
         },
         {
           label: 'Salary Structure Alignment',
           route: ROUTES.HR_PAYROLL_SALARY_STRUCTURE_LIST,
-          aclKey: 'HCM_PAYROLL_SALARY_STRUCTURE_ASSIGNMENT',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_PAYROLL_SALARY_STRUCTURE_ADD,
         },
         {
           label: 'Salary Slip',
           route: ROUTES.HR_PAYROLL_SALARY_SLIP_LIST,
-          aclKey: 'HCM_PAYROLL_SALARY_SLIP',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_PAYROLL_SALARY_SLIP_ADD,
         },
         {
           label: 'Expen',
           route: ROUTES.HR_PAYROLL_EXPEN_LIST,
-          aclKey: 'HCM_PAYROLL_EXPENSE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_PAYROLL_EXPEN_ADD,
         },
       ],
       settingPages: [
         {
           label: 'Employee Settings',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_EMPLOYEES_SETTINGS,
         },
         {
           label: 'Attendance Settings',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_LEAVE_SETTINGS,
         },
         {
           label: 'Leave Settings',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HRMODULE_ATTENDENCE_SETTINGS,
         },
       ],
     },
     TRAINING: {
-      aclKey: 'HCM_TRAINING',
+      aclKey: 'CBS_MEMBERS_MEMBER',
       label: 'Training',
       forms: [
         {
           label: 'New Courses',
-          aclKey: 'HCM_TRAINING_COURSES',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_TRAINING_COURSES_ADD,
         },
         {
           label: 'New Students',
-          aclKey: 'HCM_TRAINING_STUDENTS',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_TRAINING_STUDENTS_ADD,
         },
       ],
@@ -322,32 +322,32 @@ export const HRMODULE: NavType = {
         {
           label: 'Courses',
           route: ROUTES.HR_TRAINING_COURSES_LIST,
-          aclKey: 'HCM_TRAINING_COURSES',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_TRAINING_COURSES_ADD,
         },
         {
           label: 'Students',
           route: ROUTES.HR_TRAINING_STUDENTS_LIST,
-          aclKey: 'HCM_TRAINING_STUDENTS',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           addRoute: ROUTES.HR_TRAINING_STUDENTS_ADD,
         },
       ],
       settingPages: [
         {
           label: 'Training Settings',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_TRAINING_SETTINGS,
         },
         {
           label: 'Training Reports',
-          aclKey: 'SETTINGS_HCM_EMPLOYEE',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.HR_TRAINING_REPORTS,
         },
       ],
     },
 
     POLICY: {
-      aclKey: 'HCM_EMPLOYEE',
+      aclKey: 'CBS_MEMBERS_MEMBER',
       label: 'Policy',
       pages: [
         {
@@ -379,11 +379,11 @@ export const HRMODULE: NavType = {
     },
     REPORTS: {
       label: 'REPORTS',
-      aclKey: 'HCM_REPORT',
+      aclKey: 'CBS_MEMBERS_MEMBER',
       pages: [
         {
           label: 'Accounting Reports',
-          aclKey: 'HCM_REPORT',
+          aclKey: 'CBS_MEMBERS_MEMBER',
           route: ROUTES.ACCOUNTING_REPORTS,
         },
       ],
