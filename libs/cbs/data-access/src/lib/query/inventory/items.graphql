@@ -154,3 +154,44 @@ query getInventoryItemsDetails($id: ID!) {
     }
   }
 }
+
+query getItemsFormState($id: ID!) {
+  inventory {
+    items {
+      getItem(id: $id) {
+        data {
+          itemName
+          itemCode
+          itemGroup
+          primaryUnit
+          sellingPrice
+          costPrice
+          tax
+          ledgers {
+            salesLedger
+            purchaseLedger
+            salesReturnLedger
+            purchaseReturnLedger
+          }
+          isVariantItem
+          variants {
+            variantName
+            options
+          }
+          variantList {
+            id
+            sku
+            itemName
+            sellingPrice
+            costPrice
+          }
+          reorderLevel
+          valuationMethod
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
