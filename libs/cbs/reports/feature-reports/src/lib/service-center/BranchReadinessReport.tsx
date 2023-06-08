@@ -45,7 +45,7 @@ export const BranchReadinessReport = () => {
               {
                 header: 'Status',
                 accessorKey: 'status',
-                accessorFn: (row) => (row?.status ? 'YES' : 'No'),
+                accessorFn: (row) => (row?.status ? 'Yes' : 'No'),
               },
             ]}
           />

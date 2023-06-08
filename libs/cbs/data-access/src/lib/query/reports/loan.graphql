@@ -436,3 +436,62 @@ query getLoanWriteOffReport($data: LoanWriteOffReportFilter!) {
     }
   }
 }
+
+query getLoanTransactionReport($data: LoanStatementReportSettings!) {
+  report {
+    loanReport {
+      loanTransactionStatementReport(data: $data) {
+        memberId
+        member {
+          name
+          code
+          branch
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+        }
+        statement {
+          ... on LoanStatementReport {
+            meta {
+              accountNo
+              approvedAmount
+              interestRate
+              loanType
+              loanSubtype
+              issuedDate
+              installment
+              charge
+              openingBalance
+              disbursedAmount
+            }
+
+            loanStatement {
+              date
+              particular
+              txnId
+              disbursePrinciple
+              paidPrinciple
+              interestPaid
+              finePaid
+              discount
+              remainingPrinciple
+            }
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}

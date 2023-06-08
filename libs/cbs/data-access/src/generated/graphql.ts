@@ -5856,6 +5856,7 @@ export type EmployeeInput = {
   appointmentLetter?: InputMaybe<Scalars['ID']>;
   branchId?: InputMaybe<Scalars['String']>;
   dateOfBirth?: InputMaybe<Scalars['Localized']>;
+  dateOfJoining?: InputMaybe<Scalars['Localized']>;
   departmentId?: InputMaybe<Scalars['String']>;
   designationId?: InputMaybe<Scalars['String']>;
   educationDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
@@ -5910,6 +5911,7 @@ export type EmployeeResultResponseType = {
   appointmentLetter?: Maybe<Scalars['ID']>;
   branchId?: Maybe<Scalars['String']>;
   dateOfBirth?: Maybe<Scalars['Localized']>;
+  dateOfJoining?: Maybe<Scalars['Localized']>;
   departmentId?: Maybe<Scalars['String']>;
   designationId?: Maybe<Scalars['String']>;
   educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
@@ -13205,6 +13207,7 @@ export type LoanReport = {
   loanCollateralReport?: Maybe<LoanCollateralReportResult>;
   loanProductBalance?: Maybe<LoanProductBalanceReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
+  loanTransactionStatementReport?: Maybe<ReportResult>;
   loanWriteOffReport?: Maybe<LoanWriteOffReportResult>;
   personalGuaranteeReport?: Maybe<LoanAccountGuaranteeReportResult>;
 };
@@ -13242,6 +13245,10 @@ export type LoanReportLoanProductBalanceArgs = {
 };
 
 export type LoanReportLoanStatementReportArgs = {
+  data: LoanStatementReportSettings;
+};
+
+export type LoanReportLoanTransactionStatementReportArgs = {
   data: LoanStatementReportSettings;
 };
 
@@ -31834,6 +31841,68 @@ export type GetLoanWriteOffReportQuery = {
           totalRemainingInterestAmount?: string | null;
           totalRemainingFine?: string | null;
         } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type GetLoanTransactionReportQueryVariables = Exact<{
+  data: LoanStatementReportSettings;
+}>;
+
+export type GetLoanTransactionReportQuery = {
+  report: {
+    loanReport: {
+      loanTransactionStatementReport?: {
+        memberId?: string | null;
+        member?: {
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+          branch?: string | null;
+          address?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+        } | null;
+        statement?:
+          | {
+              meta?: {
+                accountNo?: string | null;
+                approvedAmount?: string | null;
+                interestRate?: number | null;
+                loanType?: string | null;
+                loanSubtype?: string | null;
+                issuedDate?: Record<'local' | 'en' | 'np', string> | null;
+                installment?: number | null;
+                charge?: string | null;
+                openingBalance?: string | null;
+                disbursedAmount?: string | null;
+              } | null;
+              loanStatement?: Array<{
+                date?: Record<'local' | 'en' | 'np', string> | null;
+                particular?: string | null;
+                txnId?: string | null;
+                disbursePrinciple?: string | null;
+                paidPrinciple?: string | null;
+                interestPaid?: string | null;
+                finePaid?: string | null;
+                discount?: string | null;
+                remainingPrinciple?: string | null;
+              } | null> | null;
+            }
+          | {}
+          | null;
         error?:
           | QueryError_AuthorizationError_Fragment
           | QueryError_BadRequestError_Fragment
@@ -54793,6 +54862,78 @@ export const useGetLoanWriteOffReportQuery = <TData = GetLoanWriteOffReportQuery
     ['getLoanWriteOffReport', variables],
     useAxios<GetLoanWriteOffReportQuery, GetLoanWriteOffReportQueryVariables>(
       GetLoanWriteOffReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanTransactionReportDocument = `
+    query getLoanTransactionReport($data: LoanStatementReportSettings!) {
+  report {
+    loanReport {
+      loanTransactionStatementReport(data: $data) {
+        memberId
+        member {
+          name
+          code
+          branch
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+        }
+        statement {
+          ... on LoanStatementReport {
+            meta {
+              accountNo
+              approvedAmount
+              interestRate
+              loanType
+              loanSubtype
+              issuedDate
+              installment
+              charge
+              openingBalance
+              disbursedAmount
+            }
+            loanStatement {
+              date
+              particular
+              txnId
+              disbursePrinciple
+              paidPrinciple
+              interestPaid
+              finePaid
+              discount
+              remainingPrinciple
+            }
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetLoanTransactionReportQuery = <
+  TData = GetLoanTransactionReportQuery,
+  TError = unknown
+>(
+  variables: GetLoanTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetLoanTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanTransactionReportQuery, TError, TData>(
+    ['getLoanTransactionReport', variables],
+    useAxios<GetLoanTransactionReportQuery, GetLoanTransactionReportQueryVariables>(
+      GetLoanTransactionReportDocument
     ).bind(null, variables),
     options
   );

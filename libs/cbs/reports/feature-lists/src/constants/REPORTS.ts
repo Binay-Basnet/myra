@@ -74,6 +74,7 @@ export enum Report {
   LOAN_ACCOUNT_ACCRUED_INTEREST_REPORT = 'Loan Account Accrued Interest Report',
 
   LOAN_PERSONAL_GURANTEE_REPORT = 'Personal Guarantee Report',
+  LOAN_TRANSACTION_STATEMENT_REPORT = 'Loan Transaction Statement Report',
   LOAN_WRITE_OFF_REPORT = 'Loan write off report',
   LOAN_PRE_INFORM_REPORT = 'Loan pre-inform report',
   LOAN_APPROVAL_REPORT_REJECT = 'Loan Approval Report / Reject Report',
@@ -472,6 +473,10 @@ export const REPORTS = {
     {
       report: Report.LOAN_WRITE_OFF_REPORT,
       link: 'loan-write-off',
+    },
+    {
+      report: Report.LOAN_TRANSACTION_STATEMENT_REPORT,
+      link: 'loan-transaction-statement',
     },
   ],
 
