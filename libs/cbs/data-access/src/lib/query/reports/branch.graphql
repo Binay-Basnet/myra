@@ -43,3 +43,17 @@ query getServiceCenterCOABalanceReport($data: ServiceCenterCOAWiseBalanceFilter!
     }
   }
 }
+
+query getBranchReadinessReport{
+  report {
+    branchReport {
+      branchReadinessReport {
+        data {
+          branchName
+          branchCode
+          status
+        }
+      }
+    }
+  }
+}

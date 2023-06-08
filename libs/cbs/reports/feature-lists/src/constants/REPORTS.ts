@@ -130,6 +130,7 @@ export enum Report {
 
   BRANCH_WISE_FINANCIAL_REPORT = 'Service Centerwise financial Report',
   SERVICE_CENTER_LIST_REPORT = 'Service Center List Report',
+  BRANCH_READINESS_REPORT = 'Branch Readiness Report',
 
   BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Service Centerwise Target vs Achievement',
 
@@ -649,6 +650,10 @@ export const REPORTS = {
       id: '7.2.2',
       report: Report.TRANSACTION_SERVICE_CENTER_COA_WISE_BALANCE,
       link: 'service-center-coa-wise-balance',
+    },
+    {
+      report: Report.BRANCH_READINESS_REPORT,
+      link: 'branch-readiness',
     },
   ],
 

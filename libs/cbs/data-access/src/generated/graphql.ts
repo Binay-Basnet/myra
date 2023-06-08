@@ -2152,8 +2152,20 @@ export const BranchPaymentMode = {
 } as const;
 
 export type BranchPaymentMode = typeof BranchPaymentMode[keyof typeof BranchPaymentMode];
+export type BranchReadinessReport = {
+  data?: Maybe<Array<Maybe<BranchReadinessReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type BranchReadinessReportData = {
+  branchCode?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Boolean']>;
+};
+
 export type BranchReport = {
   abbsStatusReport: AbbsSatusResult;
+  branchReadinessReport: BranchReadinessReport;
   branchReport?: Maybe<BranchReportResult>;
   serviceCenterCOAWiseBalanceReport: SericeCenterWiseStatementResult;
 };
@@ -30610,6 +30622,22 @@ export type GetServiceCenterCoaBalanceReportQuery = {
   };
 };
 
+export type GetBranchReadinessReportQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetBranchReadinessReportQuery = {
+  report: {
+    branchReport: {
+      branchReadinessReport: {
+        data?: Array<{
+          branchName?: string | null;
+          branchCode?: string | null;
+          status?: boolean | null;
+        } | null> | null;
+      };
+    };
+  };
+};
+
 export type GetCashLedgerReportQueryVariables = Exact<{
   data?: InputMaybe<CashLedgerReportFilterData>;
 }>;
@@ -53175,6 +53203,37 @@ export const useGetServiceCenterCoaBalanceReportQuery = <
     ['getServiceCenterCOABalanceReport', variables],
     useAxios<GetServiceCenterCoaBalanceReportQuery, GetServiceCenterCoaBalanceReportQueryVariables>(
       GetServiceCenterCoaBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetBranchReadinessReportDocument = `
+    query getBranchReadinessReport {
+  report {
+    branchReport {
+      branchReadinessReport {
+        data {
+          branchName
+          branchCode
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBranchReadinessReportQuery = <
+  TData = GetBranchReadinessReportQuery,
+  TError = unknown
+>(
+  variables?: GetBranchReadinessReportQueryVariables,
+  options?: UseQueryOptions<GetBranchReadinessReportQuery, TError, TData>
+) =>
+  useQuery<GetBranchReadinessReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getBranchReadinessReport']
+      : ['getBranchReadinessReport', variables],
+    useAxios<GetBranchReadinessReportQuery, GetBranchReadinessReportQueryVariables>(
+      GetBranchReadinessReportDocument
     ).bind(null, variables),
     options
   );
