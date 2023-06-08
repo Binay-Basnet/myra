@@ -5893,6 +5893,43 @@ export type EmployeeReportUserReportArgs = {
   data?: InputMaybe<UserReportFilter>;
 };
 
+export type EmployeeResultResponseType = {
+  age?: Maybe<Scalars['Int']>;
+  appointmentLetter?: Maybe<Scalars['ID']>;
+  branchId?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
+  departmentId?: Maybe<Scalars['String']>;
+  designationId?: Maybe<Scalars['String']>;
+  educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
+  employeeStatus?: Maybe<EmployeeStatus>;
+  employmentType?: Maybe<EmployeeTypeEnum>;
+  expenseApproverId?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  gender?: Maybe<GenderType>;
+  healthInsuranceNumberId?: Maybe<Scalars['String']>;
+  healthInsuranceProviderId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  jobApplicationId?: Maybe<Scalars['ID']>;
+  jobOffer?: Maybe<Scalars['ID']>;
+  lastName?: Maybe<Scalars['String']>;
+  leaveApproverId?: Maybe<Scalars['String']>;
+  maritalStatus?: Maybe<MaritalStatusType>;
+  middleName?: Maybe<Scalars['String']>;
+  panNumber?: Maybe<Scalars['String']>;
+  permanentAddress?: Maybe<KymAddress>;
+  personalEmailAddress?: Maybe<Scalars['String']>;
+  personalPhoneNumber?: Maybe<Scalars['String']>;
+  providedFund?: Maybe<Scalars['String']>;
+  reportsToId?: Maybe<Scalars['String']>;
+  salaryPaymentMode?: Maybe<PaymentMode>;
+  salaryStructureAssignment?: Maybe<Scalars['String']>;
+  sourceOfHire?: Maybe<SourceOfHire>;
+  temporaryAddress?: Maybe<KymAddress>;
+  workEmailAddress?: Maybe<Scalars['String']>;
+  workExperience?: Maybe<Array<Maybe<HrEmployeeWorkExperienceType>>>;
+  workPhoneNumber?: Maybe<Scalars['String']>;
+};
+
 export type EmployeeReturnResult = {
   error?: Maybe<MutationError>;
   recordId: Scalars['String'];
@@ -5926,6 +5963,11 @@ export type EmployeeTypeEnum = typeof EmployeeTypeEnum[keyof typeof EmployeeType
 export type EmployeeTypeResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type EmployteeResultWithError = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<EmployeeResultResponseType>;
 };
 
 export type EndOfDayDetail = {
@@ -7192,6 +7234,13 @@ export type GenderLedgerReportResult = {
   summary?: Maybe<GlReportSummary>;
 };
 
+export const GenderType = {
+  Female: 'FEMALE',
+  Male: 'MALE',
+  Other: 'OTHER',
+} as const;
+
+export type GenderType = typeof GenderType[keyof typeof GenderType];
 export type GeneralBranchSettingsMutation = {
   add: BranchAddResult;
 };
@@ -7498,12 +7547,12 @@ export type HrEmployeeKyeMutationUpsertEmployeeArgs = {
 };
 
 export type HrEmployeeKyeQuery = {
-  getEmployee: SingleEmployeeResult;
+  getEmployee: EmployteeResultWithError;
   listEmployee: HrEmployeeListConnection;
 };
 
 export type HrEmployeeKyeQueryGetEmployeeArgs = {
-  id?: InputMaybe<Scalars['String']>;
+  id: Scalars['String'];
 };
 
 export type HrEmployeeKyeQueryListEmployeeArgs = {
@@ -10319,7 +10368,7 @@ export type KymCooperativeFormData = {
   otherNonCurrentAssets?: Maybe<Scalars['Float']>;
   permanentRepresentativeAddress?: Maybe<KymAddress>;
   regdDate?: Maybe<Scalars['Localized']>;
-  regdNumber?: Maybe<Scalars['Int']>;
+  regdNumber?: Maybe<Scalars['String']>;
   regdOffice?: Maybe<Scalars['String']>;
   registeredAddress?: Maybe<KymAddress>;
   representativeContactNumber?: Maybe<Scalars['String']>;
@@ -10367,7 +10416,7 @@ export type KymCooperativeFormInput = {
   otherNonCurrentAssets?: InputMaybe<Scalars['Float']>;
   permanentRepresentativeAddress?: InputMaybe<KymAddressInput>;
   regdDate?: InputMaybe<Scalars['Localized']>;
-  regdNumber?: InputMaybe<Scalars['Int']>;
+  regdNumber?: InputMaybe<Scalars['String']>;
   regdOffice?: InputMaybe<Scalars['String']>;
   registeredAddress?: InputMaybe<KymAddressInput>;
   representativeContactNumber?: InputMaybe<Scalars['String']>;
@@ -13529,6 +13578,13 @@ export const MaritalStatusInputType = {
 
 export type MaritalStatusInputType =
   typeof MaritalStatusInputType[keyof typeof MaritalStatusInputType];
+export const MaritalStatusType = {
+  Divorced: 'DIVORCED',
+  Married: 'MARRIED',
+  Unmrarried: 'UNMRARRIED',
+} as const;
+
+export type MaritalStatusType = typeof MaritalStatusType[keyof typeof MaritalStatusType];
 export type MeResult = {
   data?: Maybe<UserData>;
   error?: Maybe<QueryError>;
@@ -17828,39 +17884,6 @@ export const ShareVoucherDepositedBy = {
 
 export type ShareVoucherDepositedBy =
   typeof ShareVoucherDepositedBy[keyof typeof ShareVoucherDepositedBy];
-export type SingleEmployeeResult = {
-  age?: Maybe<Scalars['Int']>;
-  branchId?: Maybe<Scalars['String']>;
-  dateOfBirth?: Maybe<Scalars['Localized']>;
-  departmentId?: Maybe<Scalars['String']>;
-  designationId?: Maybe<Scalars['String']>;
-  educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
-  employmentStatus?: Maybe<Scalars['String']>;
-  employmentTypeId?: Maybe<Scalars['String']>;
-  expenseApproverId?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  genderId?: Maybe<Scalars['ID']>;
-  healthInsuranceNumberId?: Maybe<Scalars['String']>;
-  healthInsuranceProviderId?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  leaveApproverId?: Maybe<Scalars['String']>;
-  maritalStatusId?: Maybe<Scalars['ID']>;
-  middleName?: Maybe<Scalars['String']>;
-  panNumber?: Maybe<Scalars['String']>;
-  permanentAddress?: Maybe<Address>;
-  personalEmailAddress?: Maybe<Scalars['String']>;
-  personalPhoneNumber?: Maybe<Scalars['String']>;
-  providedFundAccount?: Maybe<Scalars['String']>;
-  reportsToId?: Maybe<Scalars['String']>;
-  salaryPaymentMode?: Maybe<PaymentMode>;
-  salaryStructureAssignment?: Maybe<Scalars['String']>;
-  sourceOfHire?: Maybe<Scalars['String']>;
-  temporaryAddress?: Maybe<Address>;
-  workEmailAddress?: Maybe<Scalars['String']>;
-  workExperience?: Maybe<Array<Maybe<HrEmployeeWorkExperienceType>>>;
-  workPhoneNumber?: Maybe<Scalars['String']>;
-};
-
 export type SisterConcernDetails = {
   address?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -26111,7 +26134,7 @@ export type GetCoOperativeKymEditDataQuery = {
         data?: {
           formData?: {
             nameOfOrganization?: string | null;
-            regdNumber?: number | null;
+            regdNumber?: string | null;
             regdDate?: Record<'local' | 'en' | 'np', string> | null;
             regdOffice?: string | null;
             email?: string | null;
@@ -28970,7 +28993,7 @@ export type GetMemberIndividualDataQuery = {
               data?: {
                 formData?: {
                   nameOfOrganization?: string | null;
-                  regdNumber?: number | null;
+                  regdNumber?: string | null;
                   regdDate?: Record<'local' | 'en' | 'np', string> | null;
                 } | null;
               } | null;
