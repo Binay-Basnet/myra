@@ -1,9 +1,16 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { asyncToast, Box, Modal } from '@myra-ui';
 
-import { useGetBranchListQuery, useSetWareHouseMutation } from '@coop/cbs/data-access';
+import {
+  AddWarehouseInput,
+  useGetBranchListQuery,
+  useGetWarehouseFormStateDetailsQuery,
+  useSetWareHouseMutation,
+} from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -18,6 +25,11 @@ export const WarehouseAddModal = ({
   const { t } = useTranslation();
   const methods = useForm({});
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const idWarehouse = router?.query['id'];
+  const { data: wareHouseData } = useGetWarehouseFormStateDetailsQuery({
+    id: idWarehouse as string,
+  });
 
   const { data: branchData } = useGetBranchListQuery({
     paginate: {
@@ -32,6 +44,7 @@ export const WarehouseAddModal = ({
   }));
 
   const { mutateAsync: warehouseMutateAsync } = useSetWareHouseMutation();
+  const { reset } = methods;
 
   const onSubmit = () => {
     const values = methods.getValues();
@@ -39,6 +52,8 @@ export const WarehouseAddModal = ({
     asyncToast({
       id: 'account-open-add-minor',
       promise: warehouseMutateAsync({
+        id: idWarehouse ? (idWarehouse as string) : undefined,
+
         data: {
           ...values,
         },
@@ -64,9 +79,28 @@ export const WarehouseAddModal = ({
       branchId: null,
     });
   };
-  return isAddWareHouseModalOpen ? (
+
+  useEffect(() => {
+    if (wareHouseData && idWarehouse) {
+      const editValueData = wareHouseData?.inventory?.warehouse?.getWarehouse?.data;
+
+      if (editValueData) {
+        const newData = {
+          name: editValueData?.name,
+          phoneNumber: editValueData?.phoneNumber,
+          address: editValueData?.address,
+          branchId: editValueData?.branchId,
+        };
+        reset({
+          ...(newData as unknown as AddWarehouseInput),
+        });
+      }
+    }
+  }, [wareHouseData, idWarehouse, reset]);
+
+  return (
     <Modal
-      open={isAddWareHouseModalOpen}
+      open={isAddWareHouseModalOpen as boolean}
       onClose={handleWarehouseClose}
       title="Add Warehouse"
       primaryButtonLabel="Add"
@@ -88,5 +122,5 @@ export const WarehouseAddModal = ({
         </Box>
       </FormProvider>
     </Modal>
-  ) : null;
+  );
 };

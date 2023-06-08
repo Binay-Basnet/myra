@@ -122,6 +122,7 @@ export const AddWithdrawSlipBook = () => {
               label="Account"
               memberId={memberId}
               filterBy="ACTIVE"
+              includeLoc
             />
 
             <FormSelect

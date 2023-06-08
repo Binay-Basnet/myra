@@ -333,7 +333,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, EditableVa
   }, [state.data]);
 
   useDeepCompareEffect(() => {
-    if (defaultData) {
+    if (defaultData && !columns.some((column) => !!column.searchOptions)) {
       dispatch({
         type: EditableTableActionKind.REPLACE,
         payload: {

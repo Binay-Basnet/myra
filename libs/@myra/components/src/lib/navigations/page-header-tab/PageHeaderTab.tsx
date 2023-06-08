@@ -39,7 +39,7 @@ export const PageHeaderTab = ({ list, showTabsInFilter }: PageHeaderTabProps) =>
 
   const currentIndex = showTabsInFilter
     ? list.findIndex((value) => router?.query['filter']?.includes(value.key))
-    : list.findIndex((value) => router?.query['objState']?.includes(value.key));
+    : list.findIndex((value) => value.key === router.query['objState']);
 
   return (
     <Tabs variant="unstyled" index={currentIndex === -1 ? 0 : currentIndex}>

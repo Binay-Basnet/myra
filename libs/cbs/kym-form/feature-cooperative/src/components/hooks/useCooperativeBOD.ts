@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 import debounce from 'lodash/debounce';
 import pickBy from 'lodash/pickBy';
 
@@ -10,6 +11,7 @@ import {
   addCooperativeDirectorError,
   addCooperativeError,
   KymCoopDirectorDetailsFormInput,
+  setCooperativeFormLoading,
   useAppSelector,
   useGetCoOperativeDirectorEditDataQuery,
   useSetCooPdirectorDataMutation,
@@ -32,9 +34,16 @@ export const useCooperativeBOD = ({ methods, directorId }: IUseCooperativeBODPro
   const bodErrors = useAppSelector((state) => state.cooperative?.directorDetails?.director);
   const hasPressedNext = useAppSelector((state) => state.cooperative?.hasPressedNext);
 
-  const { mutate } = useSetCooPdirectorDataMutation({
+  const { mutateAsync } = useSetCooPdirectorDataMutation({
     onSuccess: async () => {
       await refetch();
+      dispatch(setCooperativeFormLoading(false));
+    },
+    onMutate: async () => {
+      dispatch(setCooperativeFormLoading(true));
+    },
+    onError: async () => {
+      dispatch(setCooperativeFormLoading(false));
     },
   });
 
@@ -99,23 +108,29 @@ export const useCooperativeBOD = ({ methods, directorId }: IUseCooperativeBODPro
   }, [editLoading]);
 
   useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        if (id && directorId) {
-          mutate({
-            id,
-            dirId: directorId,
-            data: {
-              cooperativeId: id,
-              ...pickBy(data, (v) => v !== null && v !== undefined),
-            },
-          });
-        }
-      }, 800)
-    );
+    const subscription = watch((data) => {
+      if (id && directorId) {
+        dispatch(setCooperativeFormLoading(true));
+        saveData(data as KymCoopDirectorDetailsFormInput, id, directorId);
+      }
+    });
 
     return () => subscription.unsubscribe();
   }, [watch, id, directorId]);
+
+  const saveData = useCallback(
+    debounce(
+      async (data: KymCoopDirectorDetailsFormInput, formId: string, formdirectorId: string) => {
+        await mutateAsync({
+          id: formId,
+          dirId: formdirectorId,
+          data: pickBy(omit(data, ['hasTCAccepted']), (v) => v !== null && v !== undefined),
+        });
+      },
+      2000
+    ),
+    []
+  );
 
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {

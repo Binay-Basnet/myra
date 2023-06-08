@@ -3,6 +3,24 @@ mutation setCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
     cooperative(id: $id) {
       add(data: $data) {
         recordId
+        query {
+          formState(id: $id){
+            data {
+              sectionStatus {
+                id
+              }
+            }
+          }
+          overallFormStatus(id: $id){
+            coopDetails {
+              id
+              sectionStatus {
+                errors
+                incomplete
+              }
+            }
+          }
+        }
       }
     }
   }

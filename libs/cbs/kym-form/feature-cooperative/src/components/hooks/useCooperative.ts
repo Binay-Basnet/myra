@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useDeepCompareEffect } from 'react-use';
@@ -11,6 +11,7 @@ import {
   GetCoOperativeKymEditDataQuery,
   KymCooperativeFormInput,
   setCooperativeFormDirty,
+  setCooperativeFormLoading,
   useAppSelector,
   useGetCoOperativeKymEditDataQuery,
   useSetCooperativeDataMutation,
@@ -35,6 +36,9 @@ const getCooperativeData = (data: GetCoOperativeKymEditDataQuery | undefined) =>
   const temporaryAddressLocality = editValueData?.temporaryRepresentativeAddress?.locality?.local;
   return {
     ...editValueData,
+    noOfMaleEmployee: Number(editValueData.noOfMaleEmployee),
+    noOfFemaleEmployee: Number(editValueData.noOfFemaleEmployee),
+
     registeredAddress: {
       ...editValueData?.registeredAddress,
       localGovernmentId: editValueData?.registeredAddress?.localGovernmentId || null,
@@ -64,7 +68,15 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
   const { errors } = useAppSelector((state) => state.cooperative?.basic);
   const hasPressedNext = useAppSelector((state) => state.cooperative?.hasPressedNext);
   const id = router?.query?.['id'] as string;
-  const { setError, watch, reset, clearErrors } = methods;
+  const {
+    setError,
+    watch,
+    reset,
+    clearErrors,
+    formState: { dirtyFields },
+  } = methods;
+
+  const dirtyFieldsLength = Object.keys(dirtyFields).length;
 
   const {
     data: editValues,
@@ -94,23 +106,39 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
     onSuccess: async () => {
       await refetch();
       dispatch(setCooperativeFormDirty(true));
+      dispatch(setCooperativeFormLoading(false));
+    },
+    onMutate: async () => {
+      dispatch(setCooperativeFormLoading(true));
+    },
+    onError: async () => {
+      dispatch(setCooperativeFormLoading(false));
     },
   });
 
+  const saveData = useCallback(
+    debounce(async (data: KymCooperativeFormInput) => {
+      await mutateAsync({
+        id,
+        data,
+      });
+    }, 2000),
+    []
+  );
+
   useEffect(() => {
-    const subscription = watch(
-      debounce(async (data) => {
-        if (id) {
-          await mutateAsync({
-            id,
-            data: pickBy(omit(data, ['hasTCAccepted']), (v) => v !== null && v !== undefined),
-          });
-        }
-      }, 800)
-    );
+    const subscription = watch(async (data) => {
+      const tempData = pickBy(omit(data, ['hasTCAccepted']), (v) => v !== null && v !== undefined);
+
+      if (id && dirtyFieldsLength) {
+        dispatch(setCooperativeFormLoading(true));
+
+        saveData(tempData as KymCooperativeFormInput);
+      }
+    });
 
     return () => subscription.unsubscribe();
-  }, [watch, id]);
+  }, [watch, id, dirtyFieldsLength]);
 
   useEffect(() => {
     if (editValues) {
@@ -120,7 +148,7 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
         dispatch(setCooperativeFormDirty(true));
 
         reset({
-          ...pickBy(filteredData ?? {}, (v) => v !== undefined && v !== null),
+          ...pickBy(filteredData ?? {}, (v) => v !== undefined && v !== null && v !== 0),
         });
       }
     }

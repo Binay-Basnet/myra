@@ -24,10 +24,10 @@ mutation setUnits($data: InvUnitOfMeasureInput!) {
   }
 }
 
-mutation setWareHouse($data: AddWarehouseInput) {
+mutation setWareHouse($id: ID, $data: AddWarehouseInput) {
   inventory {
     warehouse {
-      add(data: $data) {
+      add(data: $data, id: $id) {
         recordId
         error {
           ...MutationError

@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+
 import { Box, GridItem, Text } from '@myra-ui';
 
 import { CashValue } from '@coop/cbs/data-access';
@@ -57,82 +60,129 @@ export const DenominationTable = ({
   disableDenomination,
   denominationTotalOnly,
   hideReturnAmount = false,
-}: PurchaseProps) => (
-  <Box>
-    {!disableDenomination && (
-      <GridItem colSpan={3}>
-        <FormEditableTable<DenominationTableType>
-          name={fieldName}
-          columns={[
-            {
-              accessor: 'value',
-              header: 'Denomination',
-              cellWidth: 'auto',
-              fieldType: 'search',
-              searchOptions: denominationsOptions,
-            },
-            {
-              accessor: 'quantity',
-              header: 'Quantity',
-              isNumeric: true,
-            },
-            {
-              accessor: 'amount',
-              header: 'Amount',
-              isNumeric: true,
-              accessorFn: (row) =>
-                row.value === 'PAISA'
-                  ? Number(row.quantity) / 100
-                  : row.quantity
-                  ? Number(row.value) * Number(row.quantity)
-                  : '0',
-            },
-          ]}
-          defaultData={[
-            { value: '1000', quantity: '0', amount: '0' },
-            { value: '500', quantity: '0', amount: '0' },
-            { value: '100', quantity: '0', amount: '0' },
-            { value: '50', quantity: '0', amount: '0' },
-            { value: '25', quantity: '0', amount: '0' },
-            { value: '20', quantity: '0', amount: '0' },
-            { value: '10', quantity: '0', amount: '0' },
-            { value: '5', quantity: '0', amount: '0' },
-            { value: '2', quantity: '0', amount: '0' },
-            { value: '1', quantity: '0', amount: '0' },
-            { value: 'PAISA', quantity: '0', amount: '0' },
-          ]}
-          canDeleteRow={false}
-          canAddRow={false}
-        />
-        {denominationTotalOnly ? (
-          <Box
-            display="flex"
-            flexDirection="column"
-            gap="s20"
-            px="s8"
-            py="s10"
-            border="1px"
-            borderColor="border.layout"
-            borderRadius="br2"
-          >
-            <Box display="flex" justifyContent="space-between">
-              <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-60">
-                Grand Total
-              </Text>
-              <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-60">
-                {denominationTotal || 0}
-              </Text>
+}: PurchaseProps) => {
+  const { setValue } = useFormContext();
+
+  useEffect(() => {
+    setValue(fieldName, [
+      { value: '1000', quantity: 0, amount: '0' },
+      { value: '500', quantity: 0, amount: '0' },
+      { value: '100', quantity: 0, amount: '0' },
+      { value: '50', quantity: 0, amount: '0' },
+      { value: '25', quantity: 0, amount: '0' },
+      { value: '20', quantity: 0, amount: '0' },
+      { value: '10', quantity: 0, amount: '0' },
+      { value: '5', quantity: 0, amount: '0' },
+      { value: '2', quantity: 0, amount: '0' },
+      { value: '1', quantity: 0, amount: '0' },
+      { value: 'PAISA', quantity: 0, amount: '0' },
+    ]);
+  }, []);
+
+  return (
+    <Box>
+      {!disableDenomination && (
+        <GridItem colSpan={3}>
+          <FormEditableTable<DenominationTableType>
+            name={fieldName}
+            columns={[
+              {
+                accessor: 'value',
+                header: 'Denomination',
+                cellWidth: 'auto',
+                fieldType: 'search',
+                searchOptions: denominationsOptions,
+              },
+              {
+                accessor: 'quantity',
+                header: 'Quantity',
+                isNumeric: true,
+              },
+              {
+                accessor: 'amount',
+                header: 'Amount',
+                isNumeric: true,
+                accessorFn: (row) =>
+                  row.value === 'PAISA'
+                    ? Number(row.quantity) / 100
+                    : row.quantity
+                    ? Number(row.value) * Number(row.quantity)
+                    : '0',
+              },
+            ]}
+            canDeleteRow={false}
+            canAddRow={false}
+          />
+          {denominationTotalOnly ? (
+            <Box
+              display="flex"
+              flexDirection="column"
+              gap="s20"
+              px="s8"
+              py="s10"
+              border="1px"
+              borderColor="border.layout"
+              borderRadius="br2"
+            >
+              <Box display="flex" justifyContent="space-between">
+                <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-60">
+                  Grand Total
+                </Text>
+                <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-60">
+                  {denominationTotal || 0}
+                </Text>
+              </Box>
             </Box>
-          </Box>
-        ) : (
+          ) : (
+            <Box
+              display="flex"
+              gap="s20"
+              px="s8"
+              py="s10"
+              border="1px"
+              borderColor="border.layout"
+              borderRadius="br2"
+            >
+              <Box
+                color="neutralColorLight.Gray-60"
+                fontSize="r1"
+                fontWeight="Regular"
+                display="flex"
+                flexDirection="column"
+                gap="s8"
+              >
+                <Text>Total</Text>
+                {!hideReturnAmount && <Text>Return</Text>}
+                <Text>Grand Total</Text>
+              </Box>
+
+              <Box
+                color="neutralColorLight.Gray-60"
+                fontSize="r1"
+                fontWeight="Regular"
+                display="flex"
+                flexDirection="column"
+                gap="s8"
+              >
+                <Text>{denominationTotal}</Text>
+                {!hideReturnAmount && <Text>{totalCashPaid ? returnAmount.toFixed(2) : 0}</Text>}
+                <Text>{(totalCashPaid && totalCashPaid.toFixed(2)) || 0}</Text>
+              </Box>
+            </Box>
+          )}
+        </GridItem>
+      )}
+
+      {disableDenomination && (
+        <GridItem colSpan={2}>
           <Box
-            display="flex"
-            gap="s20"
-            px="s8"
-            py="s10"
-            border="1px"
+            border="1px solid"
             borderColor="border.layout"
+            display="flex"
+            justifyContent="space-between"
+            mt="s16"
             borderRadius="br2"
+            p="s8"
           >
             <Box
               color="neutralColorLight.Gray-60"
@@ -155,53 +205,13 @@ export const DenominationTable = ({
               flexDirection="column"
               gap="s8"
             >
-              <Text>{denominationTotal}</Text>
-              {!hideReturnAmount && <Text>{totalCashPaid ? returnAmount.toFixed(2) : 0}</Text>}
-              <Text>{(totalCashPaid && totalCashPaid.toFixed(2)) || 0}</Text>
+              <Text>{cashPaid || 0}</Text>
+              {!hideReturnAmount && <Text>{returnAmount.toFixed(2) || 0}</Text>}
+              <Text>{Number(totalCashPaid).toFixed(2) || 0}</Text>
             </Box>
           </Box>
-        )}
-      </GridItem>
-    )}
-
-    {disableDenomination && (
-      <GridItem colSpan={2}>
-        <Box
-          border="1px solid"
-          borderColor="border.layout"
-          display="flex"
-          justifyContent="space-between"
-          mt="s16"
-          borderRadius="br2"
-          p="s8"
-        >
-          <Box
-            color="neutralColorLight.Gray-60"
-            fontSize="r1"
-            fontWeight="Regular"
-            display="flex"
-            flexDirection="column"
-            gap="s8"
-          >
-            <Text>Total</Text>
-            {!hideReturnAmount && <Text>Return</Text>}
-            <Text>Grand Total</Text>
-          </Box>
-
-          <Box
-            color="neutralColorLight.Gray-60"
-            fontSize="r1"
-            fontWeight="Regular"
-            display="flex"
-            flexDirection="column"
-            gap="s8"
-          >
-            <Text>{cashPaid || 0}</Text>
-            {!hideReturnAmount && <Text>{returnAmount.toFixed(2) || 0}</Text>}
-            <Text>{Number(totalCashPaid).toFixed(2) || 0}</Text>
-          </Box>
-        </Box>
-      </GridItem>
-    )}
-  </Box>
-);
+        </GridItem>
+      )}
+    </Box>
+  );
+};

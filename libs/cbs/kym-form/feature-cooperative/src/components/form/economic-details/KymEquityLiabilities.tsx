@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
-import { isNaN } from 'lodash';
 
 import { KymCooperativeFormInput, setCooperativeTotalEquity } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
@@ -24,22 +23,22 @@ export const KymEquityLiabilities = (props: IProps) => {
 
   const { watch } = methods;
   useCooperative({ methods });
-  const shareCapital = watch('shareCapital');
-  const reserveAndSurplus = watch('reserveAndSurplus');
-  const savingDeposit = watch('savingDeposit');
-  const loanAccount = watch('loanAccount');
-  const capitalGrant = watch('capitalGrant');
-  const currentLiabilities = watch('currentLiabilities');
-  const nonCurrentLiabilities = watch('nonCurrentLiabilities');
+  const shareCapital = watch('shareCapital') || 0;
+  const reserveAndSurplus = watch('reserveAndSurplus') || 0;
+  const savingDeposit = watch('savingDeposit') || 0;
+  const loanAccount = watch('loanAccount') || 0;
+  const capitalGrant = watch('capitalGrant') || 0;
+  const currentLiabilities = watch('currentLiabilities') || 0;
+  const nonCurrentLiabilities = watch('nonCurrentLiabilities') || 0;
 
   const totalEquityAndLiabilities =
-    Number(shareCapital) +
-    Number(reserveAndSurplus) +
-    Number(savingDeposit) +
-    Number(loanAccount) +
-    Number(capitalGrant) +
-    Number(currentLiabilities) +
-    Number(nonCurrentLiabilities);
+    shareCapital +
+    reserveAndSurplus +
+    savingDeposit +
+    loanAccount +
+    capitalGrant +
+    currentLiabilities +
+    nonCurrentLiabilities;
 
   useEffect(() => {
     dispatch(setCooperativeTotalEquity(totalEquityAndLiabilities));
@@ -198,7 +197,7 @@ export const KymEquityLiabilities = (props: IProps) => {
                 textAlign="right"
                 type="text"
                 name="totalEquityLiabilities"
-                value={isNaN(totalEquityAndLiabilities) ? '0.00' : totalEquityAndLiabilities}
+                value={totalEquityAndLiabilities}
               />
             </GridItem>
           </Grid>

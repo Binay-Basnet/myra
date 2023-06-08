@@ -752,7 +752,7 @@ export type AccountingSalesMutationCreditNoteArgs = {
 
 export type AccountingSalesMutationUpsertCustomerArgs = {
   data: SalesCustomerInput;
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type AccountingSalesMutationUpsertCustomerPaymentArgs = {
@@ -2152,8 +2152,20 @@ export const BranchPaymentMode = {
 } as const;
 
 export type BranchPaymentMode = typeof BranchPaymentMode[keyof typeof BranchPaymentMode];
+export type BranchReadinessReport = {
+  data?: Maybe<Array<Maybe<BranchReadinessReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type BranchReadinessReportData = {
+  branchCode?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Boolean']>;
+};
+
 export type BranchReport = {
   abbsStatusReport: AbbsSatusResult;
+  branchReadinessReport: BranchReadinessReport;
   branchReport?: Maybe<BranchReportResult>;
   serviceCenterCOAWiseBalanceReport: SericeCenterWiseStatementResult;
 };
@@ -5893,6 +5905,43 @@ export type EmployeeReportUserReportArgs = {
   data?: InputMaybe<UserReportFilter>;
 };
 
+export type EmployeeResultResponseType = {
+  age?: Maybe<Scalars['Int']>;
+  appointmentLetter?: Maybe<Scalars['ID']>;
+  branchId?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['Localized']>;
+  departmentId?: Maybe<Scalars['String']>;
+  designationId?: Maybe<Scalars['String']>;
+  educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
+  employeeStatus?: Maybe<EmployeeStatus>;
+  employmentType?: Maybe<EmployeeTypeEnum>;
+  expenseApproverId?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  gender?: Maybe<GenderType>;
+  healthInsuranceNumberId?: Maybe<Scalars['String']>;
+  healthInsuranceProviderId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  jobApplicationId?: Maybe<Scalars['ID']>;
+  jobOffer?: Maybe<Scalars['ID']>;
+  lastName?: Maybe<Scalars['String']>;
+  leaveApproverId?: Maybe<Scalars['String']>;
+  maritalStatus?: Maybe<MaritalStatusType>;
+  middleName?: Maybe<Scalars['String']>;
+  panNumber?: Maybe<Scalars['String']>;
+  permanentAddress?: Maybe<KymAddress>;
+  personalEmailAddress?: Maybe<Scalars['String']>;
+  personalPhoneNumber?: Maybe<Scalars['String']>;
+  providedFund?: Maybe<Scalars['String']>;
+  reportsToId?: Maybe<Scalars['String']>;
+  salaryPaymentMode?: Maybe<PaymentMode>;
+  salaryStructureAssignment?: Maybe<Scalars['String']>;
+  sourceOfHire?: Maybe<SourceOfHire>;
+  temporaryAddress?: Maybe<KymAddress>;
+  workEmailAddress?: Maybe<Scalars['String']>;
+  workExperience?: Maybe<Array<Maybe<HrEmployeeWorkExperienceType>>>;
+  workPhoneNumber?: Maybe<Scalars['String']>;
+};
+
 export type EmployeeReturnResult = {
   error?: Maybe<MutationError>;
   recordId: Scalars['String'];
@@ -5926,6 +5975,11 @@ export type EmployeeTypeEnum = typeof EmployeeTypeEnum[keyof typeof EmployeeType
 export type EmployeeTypeResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type EmployteeResultWithError = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<EmployeeResultResponseType>;
 };
 
 export type EndOfDayDetail = {
@@ -7030,6 +7084,60 @@ export type FormSettingQuery = {
   section: FormSectionQuery;
 };
 
+export type FormStateInvItemsInput = {
+  costPrice?: Maybe<Scalars['String']>;
+  isVariantItem: Scalars['Boolean'];
+  itemCode: Scalars['String'];
+  itemGroup: Scalars['String'];
+  itemName: Scalars['String'];
+  ledgers?: Maybe<InventoryItemLedgerDetail>;
+  primaryUnit: Scalars['String'];
+  reorderLevel?: Maybe<Scalars['String']>;
+  sellingPrice?: Maybe<Scalars['String']>;
+  tax: Scalars['String'];
+  valuationMethod?: Maybe<InvItemsValuationMethod>;
+  variantList?: Maybe<Array<Maybe<FormStateItemVariantDetail>>>;
+  variants?: Maybe<Array<Maybe<FormStateInvItemsVariant>>>;
+};
+
+export type FormStateInvItemsVariant = {
+  options?: Maybe<Array<Maybe<Scalars['String']>>>;
+  variantName?: Maybe<Scalars['String']>;
+};
+
+export type FormStateInvSupplierInput = {
+  address: KymAddress;
+  applicationDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  contactNo: Scalars['String'];
+  contactPersonName?: Maybe<Scalars['String']>;
+  contactPersonPhoneNo?: Maybe<Scalars['String']>;
+  creditLimit?: Maybe<Scalars['Float']>;
+  creditTerms?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
+  legalStatusDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  name: Scalars['String'];
+  openingBalance?: Maybe<Scalars['String']>;
+  othersDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  panNo?: Maybe<Scalars['String']>;
+  registrationDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  supplierCode: Scalars['String'];
+};
+
+export type FormStateInvUnitOfMeasureInput = {
+  acceptFraction?: Maybe<Scalars['Boolean']>;
+  description?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  shortName: Scalars['String'];
+};
+
+export type FormStateItemVariantDetail = {
+  costPrice?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  itemName?: Maybe<Scalars['String']>;
+  sellingPrice?: Maybe<Scalars['String']>;
+  sku?: Maybe<Scalars['String']>;
+};
+
 export const Frequency = {
   Daily: 'DAILY',
   Monthly: 'MONTHLY',
@@ -7138,6 +7246,13 @@ export type GenderLedgerReportResult = {
   summary?: Maybe<GlReportSummary>;
 };
 
+export const GenderType = {
+  Female: 'FEMALE',
+  Male: 'MALE',
+  Other: 'OTHER',
+} as const;
+
+export type GenderType = typeof GenderType[keyof typeof GenderType];
 export type GeneralBranchSettingsMutation = {
   add: BranchAddResult;
 };
@@ -7235,6 +7350,26 @@ export type GeneralSettingsQuery = {
   setup: SetupQuery;
   share?: Maybe<ShareSettingsQuery>;
   valuator?: Maybe<ValuatorSettingsQuery>;
+};
+
+export type GetInventoryItemResponse = {
+  data?: Maybe<FormStateInvItemsInput>;
+  error?: Maybe<QueryError>;
+};
+
+export type GetSupplierResponse = {
+  data?: Maybe<FormStateInvSupplierInput>;
+  error?: Maybe<QueryError>;
+};
+
+export type GetUnitResponse = {
+  data?: Maybe<FormStateInvUnitOfMeasureInput>;
+  error?: Maybe<QueryError>;
+};
+
+export type GetWarehouseResponse = {
+  data?: Maybe<ReturnWarehouseInput>;
+  error?: Maybe<QueryError>;
 };
 
 export type GlTransaction = {
@@ -7424,12 +7559,12 @@ export type HrEmployeeKyeMutationUpsertEmployeeArgs = {
 };
 
 export type HrEmployeeKyeQuery = {
-  getEmployee: SingleEmployeeResult;
+  getEmployee: EmployteeResultWithError;
   listEmployee: HrEmployeeListConnection;
 };
 
 export type HrEmployeeKyeQueryGetEmployeeArgs = {
-  id?: InputMaybe<Scalars['String']>;
+  id: Scalars['String'];
 };
 
 export type HrEmployeeKyeQueryListEmployeeArgs = {
@@ -8340,16 +8475,17 @@ export type InvItemsMutation = {
 
 export type InvItemsMutationAddArgs = {
   data: InvItemsInput;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type InvItemsQuery = {
-  get: InvItems;
+  getItem: GetInventoryItemResponse;
   getItemDetails?: Maybe<InventoryItemDetailsResult>;
   getNewItemCode: Scalars['String'];
   list?: Maybe<InvItemsConnection>;
 };
 
-export type InvItemsQueryGetArgs = {
+export type InvItemsQueryGetItemArgs = {
   id: Scalars['ID'];
 };
 
@@ -8420,6 +8556,7 @@ export type InvSupplierMutation = {
 
 export type InvSupplierMutationAddArgs = {
   data?: InputMaybe<InvSupplierInput>;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type InvSuppliersEdge = {
@@ -8428,8 +8565,13 @@ export type InvSuppliersEdge = {
 };
 
 export type InvSuppliersQuery = {
+  getSupplier?: Maybe<GetSupplierResponse>;
   list?: Maybe<InvSupplierConnection>;
   supplierDetail?: Maybe<InventorySupplierDetailResult>;
+};
+
+export type InvSuppliersQueryGetSupplierArgs = {
+  id: Scalars['ID'];
 };
 
 export type InvSuppliersQueryListArgs = {
@@ -8485,11 +8627,13 @@ export type InvUnitOfMeasureMutation = {
 
 export type InvUnitOfMeasureMutationAddArgs = {
   data: InvUnitOfMeasureInput;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type InvUnitOfMeasureQuery = {
   get: InvUnitOfMeasure;
   getUnitDetails: InventoryUnitDataResult;
+  getunit: GetUnitResponse;
   list?: Maybe<InvUnitOfMeasureConnection>;
 };
 
@@ -8498,6 +8642,10 @@ export type InvUnitOfMeasureQueryGetArgs = {
 };
 
 export type InvUnitOfMeasureQueryGetUnitDetailsArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvUnitOfMeasureQueryGetunitArgs = {
   id: Scalars['ID'];
 };
 
@@ -9025,6 +9173,7 @@ export type ItemDetails = {
 
 export type ItemVariantDetail = {
   costPrice?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
   itemName?: InputMaybe<Scalars['String']>;
   sellingPrice?: InputMaybe<Scalars['String']>;
   sku?: InputMaybe<Scalars['String']>;
@@ -10231,7 +10380,7 @@ export type KymCooperativeFormData = {
   otherNonCurrentAssets?: Maybe<Scalars['Float']>;
   permanentRepresentativeAddress?: Maybe<KymAddress>;
   regdDate?: Maybe<Scalars['Localized']>;
-  regdNumber?: Maybe<Scalars['Int']>;
+  regdNumber?: Maybe<Scalars['String']>;
   regdOffice?: Maybe<Scalars['String']>;
   registeredAddress?: Maybe<KymAddress>;
   representativeContactNumber?: Maybe<Scalars['String']>;
@@ -10279,7 +10428,7 @@ export type KymCooperativeFormInput = {
   otherNonCurrentAssets?: InputMaybe<Scalars['Float']>;
   permanentRepresentativeAddress?: InputMaybe<KymAddressInput>;
   regdDate?: InputMaybe<Scalars['Localized']>;
-  regdNumber?: InputMaybe<Scalars['Int']>;
+  regdNumber?: InputMaybe<Scalars['String']>;
   regdOffice?: InputMaybe<Scalars['String']>;
   registeredAddress?: InputMaybe<KymAddressInput>;
   representativeContactNumber?: InputMaybe<Scalars['String']>;
@@ -13441,6 +13590,13 @@ export const MaritalStatusInputType = {
 
 export type MaritalStatusInputType =
   typeof MaritalStatusInputType[keyof typeof MaritalStatusInputType];
+export const MaritalStatusType = {
+  Divorced: 'DIVORCED',
+  Married: 'MARRIED',
+  Unmrarried: 'UNMRARRIED',
+} as const;
+
+export type MaritalStatusType = typeof MaritalStatusType[keyof typeof MaritalStatusType];
 export type MeResult = {
   data?: Maybe<UserData>;
   error?: Maybe<QueryError>;
@@ -16244,6 +16400,13 @@ export type ReturnStaffPlan = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export type ReturnWarehouseInput = {
+  address: Scalars['String'];
+  branchId: Scalars['String'];
+  name: Scalars['String'];
+  phoneNumber: Scalars['String'];
+};
+
 export type RevertTransactionResult = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
@@ -17733,39 +17896,6 @@ export const ShareVoucherDepositedBy = {
 
 export type ShareVoucherDepositedBy =
   typeof ShareVoucherDepositedBy[keyof typeof ShareVoucherDepositedBy];
-export type SingleEmployeeResult = {
-  age?: Maybe<Scalars['Int']>;
-  branchId?: Maybe<Scalars['String']>;
-  dateOfBirth?: Maybe<Scalars['Localized']>;
-  departmentId?: Maybe<Scalars['String']>;
-  designationId?: Maybe<Scalars['String']>;
-  educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
-  employmentStatus?: Maybe<Scalars['String']>;
-  employmentTypeId?: Maybe<Scalars['String']>;
-  expenseApproverId?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  genderId?: Maybe<Scalars['ID']>;
-  healthInsuranceNumberId?: Maybe<Scalars['String']>;
-  healthInsuranceProviderId?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  leaveApproverId?: Maybe<Scalars['String']>;
-  maritalStatusId?: Maybe<Scalars['ID']>;
-  middleName?: Maybe<Scalars['String']>;
-  panNumber?: Maybe<Scalars['String']>;
-  permanentAddress?: Maybe<Address>;
-  personalEmailAddress?: Maybe<Scalars['String']>;
-  personalPhoneNumber?: Maybe<Scalars['String']>;
-  providedFundAccount?: Maybe<Scalars['String']>;
-  reportsToId?: Maybe<Scalars['String']>;
-  salaryPaymentMode?: Maybe<PaymentMode>;
-  salaryStructureAssignment?: Maybe<Scalars['String']>;
-  sourceOfHire?: Maybe<Scalars['String']>;
-  temporaryAddress?: Maybe<Address>;
-  workEmailAddress?: Maybe<Scalars['String']>;
-  workExperience?: Maybe<Array<Maybe<HrEmployeeWorkExperienceType>>>;
-  workPhoneNumber?: Maybe<Scalars['String']>;
-};
-
 export type SisterConcernDetails = {
   address?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -19093,6 +19223,7 @@ export type WarehouseMutationAcceptTransferRequestArgs = {
 
 export type WarehouseMutationAddArgs = {
   data?: InputMaybe<AddWarehouseInput>;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type WarehouseMutationTransferArgs = {
@@ -19100,10 +19231,15 @@ export type WarehouseMutationTransferArgs = {
 };
 
 export type WarehouseQuery = {
+  getWarehouse: GetWarehouseResponse;
   getWarehouseDetails: WareHouseDetailDataResult;
   getWarehouseTransferDetail: WarehouseTransferDetailDataResult;
   listTransfers?: Maybe<WarehouseTransferConnection>;
   listWarehouses?: Maybe<WarehouseConnection>;
+};
+
+export type WarehouseQueryGetWarehouseArgs = {
+  id: Scalars['ID'];
 };
 
 export type WarehouseQueryGetWarehouseDetailsArgs = {
@@ -20378,7 +20514,25 @@ export type SetCooperativeDataMutationVariables = Exact<{
 }>;
 
 export type SetCooperativeDataMutation = {
-  members: { cooperative?: { add?: { recordId: string } | null } | null };
+  members: {
+    cooperative?: {
+      add?: {
+        recordId: string;
+        query?: {
+          formState?: { data?: { sectionStatus?: { id?: string | null } | null } | null } | null;
+          overallFormStatus?: {
+            coopDetails?: {
+              id?: string | null;
+              sectionStatus?: {
+                errors?: Array<string> | null;
+                incomplete?: Array<string> | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
 };
 
 export type SetCoopAccOperatorDataMutationVariables = Exact<{
@@ -20532,6 +20686,78 @@ export type SetStaffPlanningMutation = {
   };
 };
 
+export type SetJobOpeningMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: JobOpeningInput;
+}>;
+
+export type SetJobOpeningMutation = {
+  hr: {
+    recruitment: {
+      recruitmentJobOpening: {
+        upsertJobOpening: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type SetJobOfferMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: JobOfferInput;
+}>;
+
+export type SetJobOfferMutation = {
+  hr: {
+    recruitment: {
+      recruitmentJobOffer: {
+        upsertJobOffer: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
+export type SetAppointmentLetterMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: AppointmentLetterInput;
+}>;
+
+export type SetAppointmentLetterMutation = {
+  hr: {
+    recruitment: {
+      recruitmentAppointmentLetter: {
+        upsertAppointmentLetter: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type SearchIndexingMutationVariables = Exact<{ [key: string]: never }>;
 
 export type SearchIndexingMutation = { search: { indexData?: string | null } };
@@ -20589,6 +20815,7 @@ export type SetUnitsMutation = {
 };
 
 export type SetWareHouseMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   data?: InputMaybe<AddWarehouseInput>;
 }>;
 
@@ -25920,7 +26147,7 @@ export type GetCoOperativeKymEditDataQuery = {
         data?: {
           formData?: {
             nameOfOrganization?: string | null;
-            regdNumber?: number | null;
+            regdNumber?: string | null;
             regdDate?: Record<'local' | 'en' | 'np', string> | null;
             regdOffice?: string | null;
             email?: string | null;
@@ -26713,6 +26940,93 @@ export type GetStaffPlanningListQuery = {
   };
 };
 
+export type GetJobOpeningListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetJobOpeningListQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobOpening: {
+        listJobOpening: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              jobId: string;
+              title: string;
+              status: IsOpenClosed;
+              staffPlan: string;
+              designation: string;
+              department: string;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetJobOfferListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetJobOfferListQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobOffer: {
+        listJobOffer: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              applicantId: string;
+              name: string;
+              status: JobStatus;
+              offerDate: Record<'local' | 'en' | 'np', string>;
+              email: string;
+              designation: string;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetAppointmentLetterListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetAppointmentLetterListQuery = {
+  hr: {
+    recruitment: {
+      recruitmentAppointmentLetter: {
+        listAppointmentLetter: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              applicantId: string;
+              name: string;
+              probationPeriod: string;
+              offerDate: Record<'local' | 'en' | 'np', string>;
+              email: string;
+              designation: string;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetKymFormStatusInstitutionQueryVariables = Exact<{
   id: Scalars['ID'];
   hasPressedNext?: InputMaybe<Scalars['Boolean']>;
@@ -27345,6 +27659,54 @@ export type GetInventoryItemsDetailsQuery = {
   };
 };
 
+export type GetItemsFormStateQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetItemsFormStateQuery = {
+  inventory: {
+    items?: {
+      getItem: {
+        data?: {
+          itemName: string;
+          itemCode: string;
+          itemGroup: string;
+          primaryUnit: string;
+          sellingPrice?: string | null;
+          costPrice?: string | null;
+          tax: string;
+          isVariantItem: boolean;
+          reorderLevel?: string | null;
+          valuationMethod?: InvItemsValuationMethod | null;
+          ledgers?: {
+            salesLedger: string;
+            purchaseLedger: string;
+            salesReturnLedger: string;
+            purchaseReturnLedger: string;
+          } | null;
+          variants?: Array<{
+            variantName?: string | null;
+            options?: Array<string | null> | null;
+          } | null> | null;
+          variantList?: Array<{
+            id?: string | null;
+            sku?: string | null;
+            itemName?: string | null;
+            sellingPrice?: string | null;
+            costPrice?: string | null;
+          } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
 export type GetInventorySuppliersDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -27496,6 +27858,26 @@ export type GetInventoryWarehouseRequestTransferDetailsQuery = {
             amount: string;
           } | null> | null;
         } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type GetWarehouseFormStateDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetWarehouseFormStateDetailsQuery = {
+  inventory: {
+    warehouse?: {
+      getWarehouse: {
+        data?: { name: string; phoneNumber: string; address: string; branchId: string } | null;
         error?:
           | QueryError_AuthorizationError_Fragment
           | QueryError_BadRequestError_Fragment
@@ -28692,7 +29074,7 @@ export type GetMemberIndividualDataQuery = {
               data?: {
                 formData?: {
                   nameOfOrganization?: string | null;
-                  regdNumber?: number | null;
+                  regdNumber?: string | null;
                   regdDate?: Record<'local' | 'en' | 'np', string> | null;
                 } | null;
               } | null;
@@ -30235,6 +30617,22 @@ export type GetServiceCenterCoaBalanceReportQuery = {
             serviceCenterCode?: string | null;
           } | null> | null;
         } | null;
+      };
+    };
+  };
+};
+
+export type GetBranchReadinessReportQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetBranchReadinessReportQuery = {
+  report: {
+    branchReport: {
+      branchReadinessReport: {
+        data?: Array<{
+          branchName?: string | null;
+          branchCode?: string | null;
+          status?: boolean | null;
+        } | null> | null;
       };
     };
   };
@@ -38763,6 +39161,24 @@ export const SetCooperativeDataDocument = `
     cooperative(id: $id) {
       add(data: $data) {
         recordId
+        query {
+          formState(id: $id) {
+            data {
+              sectionStatus {
+                id
+              }
+            }
+          }
+          overallFormStatus(id: $id) {
+            coopDetails {
+              id
+              sectionStatus {
+                errors
+                incomplete
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -39125,6 +39541,95 @@ export const useSetStaffPlanningMutation = <TError = unknown, TContext = unknown
     useAxios<SetStaffPlanningMutation, SetStaffPlanningMutationVariables>(SetStaffPlanningDocument),
     options
   );
+export const SetJobOpeningDocument = `
+    mutation setJobOpening($id: ID, $input: JobOpeningInput!) {
+  hr {
+    recruitment {
+      recruitmentJobOpening {
+        upsertJobOpening(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetJobOpeningMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetJobOpeningMutation,
+    TError,
+    SetJobOpeningMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetJobOpeningMutation, TError, SetJobOpeningMutationVariables, TContext>(
+    ['setJobOpening'],
+    useAxios<SetJobOpeningMutation, SetJobOpeningMutationVariables>(SetJobOpeningDocument),
+    options
+  );
+export const SetJobOfferDocument = `
+    mutation setJobOffer($id: ID, $input: JobOfferInput!) {
+  hr {
+    recruitment {
+      recruitmentJobOffer {
+        upsertJobOffer(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetJobOfferMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetJobOfferMutation, TError, SetJobOfferMutationVariables, TContext>
+) =>
+  useMutation<SetJobOfferMutation, TError, SetJobOfferMutationVariables, TContext>(
+    ['setJobOffer'],
+    useAxios<SetJobOfferMutation, SetJobOfferMutationVariables>(SetJobOfferDocument),
+    options
+  );
+export const SetAppointmentLetterDocument = `
+    mutation setAppointmentLetter($id: ID, $input: AppointmentLetterInput!) {
+  hr {
+    recruitment {
+      recruitmentAppointmentLetter {
+        upsertAppointmentLetter(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAppointmentLetterMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAppointmentLetterMutation,
+    TError,
+    SetAppointmentLetterMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAppointmentLetterMutation,
+    TError,
+    SetAppointmentLetterMutationVariables,
+    TContext
+  >(
+    ['setAppointmentLetter'],
+    useAxios<SetAppointmentLetterMutation, SetAppointmentLetterMutationVariables>(
+      SetAppointmentLetterDocument
+    ),
+    options
+  );
 export const SearchIndexingDocument = `
     mutation searchIndexing {
   search {
@@ -39251,10 +39756,10 @@ export const useSetUnitsMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const SetWareHouseDocument = `
-    mutation setWareHouse($data: AddWarehouseInput) {
+    mutation setWareHouse($id: ID, $data: AddWarehouseInput) {
   inventory {
     warehouse {
-      add(data: $data) {
+      add(data: $data, id: $id) {
         recordId
         error {
           ...MutationError
@@ -47904,6 +48409,126 @@ export const useGetStaffPlanningListQuery = <TData = GetStaffPlanningListQuery, 
     ).bind(null, variables),
     options
   );
+export const GetJobOpeningListDocument = `
+    query getJobOpeningList($filter: Filter, $pagination: Pagination) {
+  hr {
+    recruitment {
+      recruitmentJobOpening {
+        listJobOpening(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              jobId
+              title
+              status
+              staffPlan
+              designation
+              department
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetJobOpeningListQuery = <TData = GetJobOpeningListQuery, TError = unknown>(
+  variables?: GetJobOpeningListQueryVariables,
+  options?: UseQueryOptions<GetJobOpeningListQuery, TError, TData>
+) =>
+  useQuery<GetJobOpeningListQuery, TError, TData>(
+    variables === undefined ? ['getJobOpeningList'] : ['getJobOpeningList', variables],
+    useAxios<GetJobOpeningListQuery, GetJobOpeningListQueryVariables>(
+      GetJobOpeningListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetJobOfferListDocument = `
+    query getJobOfferList($filter: Filter, $pagination: Pagination) {
+  hr {
+    recruitment {
+      recruitmentJobOffer {
+        listJobOffer(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              applicantId
+              name
+              status
+              offerDate
+              email
+              designation
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetJobOfferListQuery = <TData = GetJobOfferListQuery, TError = unknown>(
+  variables?: GetJobOfferListQueryVariables,
+  options?: UseQueryOptions<GetJobOfferListQuery, TError, TData>
+) =>
+  useQuery<GetJobOfferListQuery, TError, TData>(
+    variables === undefined ? ['getJobOfferList'] : ['getJobOfferList', variables],
+    useAxios<GetJobOfferListQuery, GetJobOfferListQueryVariables>(GetJobOfferListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetAppointmentLetterListDocument = `
+    query getAppointmentLetterList($filter: Filter, $pagination: Pagination) {
+  hr {
+    recruitment {
+      recruitmentAppointmentLetter {
+        listAppointmentLetter(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              applicantId
+              name
+              probationPeriod
+              offerDate
+              email
+              designation
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetAppointmentLetterListQuery = <
+  TData = GetAppointmentLetterListQuery,
+  TError = unknown
+>(
+  variables?: GetAppointmentLetterListQueryVariables,
+  options?: UseQueryOptions<GetAppointmentLetterListQuery, TError, TData>
+) =>
+  useQuery<GetAppointmentLetterListQuery, TError, TData>(
+    variables === undefined
+      ? ['getAppointmentLetterList']
+      : ['getAppointmentLetterList', variables],
+    useAxios<GetAppointmentLetterListQuery, GetAppointmentLetterListQueryVariables>(
+      GetAppointmentLetterListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetKymFormStatusInstitutionDocument = `
     query getKymFormStatusInstitution($id: ID!, $hasPressedNext: Boolean) {
   members {
@@ -48774,6 +49399,59 @@ export const useGetInventoryItemsDetailsQuery = <
     ).bind(null, variables),
     options
   );
+export const GetItemsFormStateDocument = `
+    query getItemsFormState($id: ID!) {
+  inventory {
+    items {
+      getItem(id: $id) {
+        data {
+          itemName
+          itemCode
+          itemGroup
+          primaryUnit
+          sellingPrice
+          costPrice
+          tax
+          ledgers {
+            salesLedger
+            purchaseLedger
+            salesReturnLedger
+            purchaseReturnLedger
+          }
+          isVariantItem
+          variants {
+            variantName
+            options
+          }
+          variantList {
+            id
+            sku
+            itemName
+            sellingPrice
+            costPrice
+          }
+          reorderLevel
+          valuationMethod
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetItemsFormStateQuery = <TData = GetItemsFormStateQuery, TError = unknown>(
+  variables: GetItemsFormStateQueryVariables,
+  options?: UseQueryOptions<GetItemsFormStateQuery, TError, TData>
+) =>
+  useQuery<GetItemsFormStateQuery, TError, TData>(
+    ['getItemsFormState', variables],
+    useAxios<GetItemsFormStateQuery, GetItemsFormStateQueryVariables>(
+      GetItemsFormStateDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInventorySuppliersDetailsDocument = `
     query getInventorySuppliersDetails($id: ID!) {
   inventory {
@@ -48996,6 +49674,39 @@ export const useGetInventoryWarehouseRequestTransferDetailsQuery = <
       GetInventoryWarehouseRequestTransferDetailsQuery,
       GetInventoryWarehouseRequestTransferDetailsQueryVariables
     >(GetInventoryWarehouseRequestTransferDetailsDocument).bind(null, variables),
+    options
+  );
+export const GetWarehouseFormStateDetailsDocument = `
+    query getWarehouseFormStateDetails($id: ID!) {
+  inventory {
+    warehouse {
+      getWarehouse(id: $id) {
+        data {
+          name
+          phoneNumber
+          address
+          branchId
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetWarehouseFormStateDetailsQuery = <
+  TData = GetWarehouseFormStateDetailsQuery,
+  TError = unknown
+>(
+  variables: GetWarehouseFormStateDetailsQueryVariables,
+  options?: UseQueryOptions<GetWarehouseFormStateDetailsQuery, TError, TData>
+) =>
+  useQuery<GetWarehouseFormStateDetailsQuery, TError, TData>(
+    ['getWarehouseFormStateDetails', variables],
+    useAxios<GetWarehouseFormStateDetailsQuery, GetWarehouseFormStateDetailsQueryVariables>(
+      GetWarehouseFormStateDetailsDocument
+    ).bind(null, variables),
     options
   );
 export const GetIndividualKymOptionsDocument = `
@@ -52492,6 +53203,37 @@ export const useGetServiceCenterCoaBalanceReportQuery = <
     ['getServiceCenterCOABalanceReport', variables],
     useAxios<GetServiceCenterCoaBalanceReportQuery, GetServiceCenterCoaBalanceReportQueryVariables>(
       GetServiceCenterCoaBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetBranchReadinessReportDocument = `
+    query getBranchReadinessReport {
+  report {
+    branchReport {
+      branchReadinessReport {
+        data {
+          branchName
+          branchCode
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBranchReadinessReportQuery = <
+  TData = GetBranchReadinessReportQuery,
+  TError = unknown
+>(
+  variables?: GetBranchReadinessReportQueryVariables,
+  options?: UseQueryOptions<GetBranchReadinessReportQuery, TError, TData>
+) =>
+  useQuery<GetBranchReadinessReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getBranchReadinessReport']
+      : ['getBranchReadinessReport', variables],
+    useAxios<GetBranchReadinessReportQuery, GetBranchReadinessReportQueryVariables>(
+      GetBranchReadinessReportDocument
     ).bind(null, variables),
     options
   );

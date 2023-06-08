@@ -25,20 +25,14 @@ export const KymCoopAssets = (props: IProps) => {
   const { watch } = methods;
 
   useCooperative({ methods });
-  const cashEquivalent = watch('cashAndCashEquivalent');
-  const bank = watch('bank');
-  const investments = watch('investments');
-  const loan = watch('loan');
-  const currentAssets = watch('nonCurrentAssets');
-  const nonCurrentAssets = watch('otherNonCurrentAssets');
+  const cashEquivalent = watch('cashAndCashEquivalent') || 0;
+  const bank = watch('bank') || 0;
+  const investments = watch('investments') || 0;
+  const loan = watch('loan') || 0;
+  const currentAssets = watch('nonCurrentAssets') || 0;
+  const nonCurrentAssets = watch('otherNonCurrentAssets') || 0;
 
-  const totalAssets =
-    Number(cashEquivalent) +
-    Number(bank) +
-    Number(investments) +
-    Number(loan) +
-    Number(currentAssets) +
-    Number(nonCurrentAssets);
+  const totalAssets = cashEquivalent + bank + investments + loan + currentAssets + nonCurrentAssets;
 
   useEffect(() => {
     dispatch(setCooperativeTotalAssets(totalAssets));
