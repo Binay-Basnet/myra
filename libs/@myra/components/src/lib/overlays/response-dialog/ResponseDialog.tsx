@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { Box, Modal, ModalContent, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 
 import {
@@ -28,6 +29,8 @@ export const ResponseDialog = <T extends Record<string, unknown>>({
   onError,
   onSuccess,
 }: ResponseDialogProps<T>) => {
+  const { reset } = useFormContext();
+
   const [errorMessage, setErrorMessage] = useState('');
   const [finalResponse, setFinalResponse] = useState<T | null>(null);
 
@@ -40,6 +43,8 @@ export const ResponseDialog = <T extends Record<string, unknown>>({
       {isLoading && <LoaderOverlay />}
       <Box
         onClick={async () => {
+          reset({}, { keepValues: true });
+
           setIsLoading(true);
 
           const response = await promise();

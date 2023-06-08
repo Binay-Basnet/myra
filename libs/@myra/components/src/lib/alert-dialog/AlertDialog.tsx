@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useBeforeUnload } from 'react-use';
 import Router, { useRouter } from 'next/router';
@@ -40,38 +40,44 @@ export const AlertDialog = ({ isFormDirty, title, description, closeLink }: Aler
   const router = useRouter();
   const [showDialog, setShowDialog] = useState(false);
 
-  const unsavedChangesHandler = useCallback((e: BeforeUnloadEvent) => {
-    e.preventDefault();
-    e.returnValue = '';
+  // TODO!
+  // useEffect(() => {
+  //   const unsavedChangesHandler = (e: BeforeUnloadEvent) => {
+  //     if (isFormDirty && !hasPressLeave) {
+  //       e.preventDefault();
+  //       e.stopImmediatePropagation();
+  //       e.returnValue = '';
+  //       setShowDialog(true);
+  //     }
+  //   };
+  //
+  //   window.addEventListener('beforeunload', unsavedChangesHandler);
+  //
+  //   return () => {
+  //     window.removeEventListener('beforeunload', unsavedChangesHandler);
+  //   };
+  // }, [isFormDirty]);
 
-    if (isFormDirty) {
-      setShowDialog(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('beforeunload', unsavedChangesHandler);
-
-    return () => {
-      window.removeEventListener('beforeunload', unsavedChangesHandler);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handler = () => {
-      if (isFormDirty) {
-        setShowDialog(true);
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
-        throw 'Route Canceled';
-      }
-    };
-
-    Router.events.on('beforeHistoryChange', handler);
-
-    return () => {
-      Router.events.off('beforeHistoryChange', handler);
-    };
-  }, [isFormDirty]);
+  // useEffect(() => {
+  //   const handler = () => {
+  //     if (isFormDirty) {
+  //       setShowDialog(true);
+  //
+  //       if (hasPressLeave) {
+  //         setShowDialog(false);
+  //       } else {
+  //         // eslint-disable-next-line @typescript-eslint/no-throw-literal
+  //         throw 'Route Canceled';
+  //       }
+  //     }
+  //   };
+  //
+  //   Router.events.on('beforeHistoryChange', handler);
+  //
+  //   return () => {
+  //     Router.events.off('beforeHistoryChange', handler);
+  //   };
+  // }, [isFormDirty, hasPressLeave]);
 
   return (
     <>
@@ -96,7 +102,15 @@ export const AlertDialog = ({ isFormDirty, title, description, closeLink }: Aler
         open={showDialog}
         title={title || 'Are you sure want to leave this page?'}
         onClose={() => setShowDialog(false)}
-        primaryButtonHandler={() => router.back()}
+        primaryButtonHandler={() => {
+          setShowDialog(false);
+
+          if (closeLink) {
+            router.push(closeLink);
+          } else {
+            router.back();
+          }
+        }}
         primaryButtonLabel="Leave"
         isDanger
         secondaryButtonLabel="Stay"

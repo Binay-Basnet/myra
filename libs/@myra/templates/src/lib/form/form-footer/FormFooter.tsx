@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { Box, Button, Text } from '@myra-ui/foundations';
 
@@ -27,6 +28,9 @@ export const FormFooter = ({
   mainButton,
 }: FormFooterProps) => {
   const { t } = useTranslation();
+  const { reset } = useFormContext() || {
+    reset: () => {},
+  };
   return (
     <Box
       display="flex"
@@ -49,10 +53,13 @@ export const FormFooter = ({
           <Button
             width="160px"
             isDisabled={isMainButtonDisabled}
-            onClick={mainButtonHandler}
+            onClick={() => {
+              reset({}, { keepValues: true });
+              mainButtonHandler?.();
+            }}
             shade={dangerButton ? 'danger' : 'primary'}
           >
-            {mainButtonLabel ?? t['next']}
+            {`${mainButtonLabel}` ?? t['next']}
           </Button>
         )}
       </Box>
