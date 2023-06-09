@@ -3,17 +3,24 @@ import { useForm } from 'react-hook-form';
 import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
+  JobOfferTermInput,
   JobOpeningInput,
-  Level,
+  JobStatus,
   useGetDepartmentListQuery,
   useGetDesignationListQuery,
   useGetStaffPlanningListQuery,
   useSetJobOpeningMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormLayout, FormSelect, FormTextArea } from '@coop/shared/form';
+import {
+  FormDatePicker,
+  FormEditableTable,
+  FormInput,
+  FormLayout,
+  FormSelect,
+} from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
-export const HrRecruitmentJobOpeningAdd = () => {
+export const HrRecruitmentJobOfferAdd = () => {
   const methods = useForm();
   const { getValues } = methods;
 
@@ -68,11 +75,10 @@ export const HrRecruitmentJobOpeningAdd = () => {
       value: item?.node?.id as string,
     }));
 
-  const experienceLevelOptions = [
-    { label: 'No Experience', value: Level?.BelowOneYrs },
-    { label: 'One-Two', value: Level?.BetweenOneTwoYrs },
-    { label: 'Two-Three', value: Level?.BetweenTwoThreeYrs },
-    { label: 'Three and above', value: Level?.ThreeYrsAndAbove },
+  const statusOptions = [
+    { label: 'Accepted', value: JobStatus?.Accepted },
+    { label: 'Awaiting Response', value: JobStatus?.AwaitingResponse },
+    { label: 'Rejected', value: JobStatus?.Rejected },
   ];
 
   const submitForm = () => {
@@ -93,30 +99,37 @@ export const HrRecruitmentJobOpeningAdd = () => {
   };
   return (
     <FormLayout methods={methods}>
-      <FormLayout.Header title="New Job Opening" />
+      <FormLayout.Header title="New Job Offer" />
 
       <FormLayout.Content>
         <FormLayout.Form>
           <FormSection templateColumns={3} divider>
             <GridItem colSpan={2}>
-              <FormInput name="title" type="text" label="Title" />
+              <FormInput name="jobApplicant" type="text" label="Job Applicant" />
             </GridItem>
-            <FormSelect name="staffPlan" label="Staff Plan" options={staffPlanningOptions} />
-            <FormSelect name="department" label="Department" options={departmentOptions} />
-            <FormSelect name="designation" label="Designation" options={designationOptions} />
-            <FormSelect
-              name="experienceLevel"
-              label="Experience Level"
-              options={experienceLevelOptions}
-            />
-            <GridItem colSpan={3}>
-              <FormTextArea label="Description(RTE)" name="description" />
-            </GridItem>
+            <FormSelect name="jobStatus" label="Status" options={statusOptions} />
+            <FormSelect name="jobDepartment" label="Department" options={departmentOptions} />
+            <FormSelect name="jobDesignation" label="Designation" options={designationOptions} />
+            <FormDatePicker name="jobOfferDate" label="Offer Date" />
           </FormSection>
-          <FormSection templateColumns={3} divider={false} header="Salary Range">
-            <FormInput name="salaryRange.default" label="Default Amount" />
-            <FormInput name="salaryRange.min" label="Min.Salary" />
-            <FormInput name="salaryRange.max" label="Max.Salary" />
+          <FormSection templateColumns={3} divider>
+            <GridItem colSpan={4}>
+              <FormEditableTable<JobOfferTermInput>
+                name="jobOfferTerms"
+                columns={[
+                  {
+                    accessor: 'offerTerm',
+                    header: 'Offer Terms',
+                    cellWidth: 'lg',
+                  },
+                  {
+                    accessor: 'value',
+                    header: 'Value',
+                    isNumeric: true,
+                  },
+                ]}
+              />
+            </GridItem>
           </FormSection>
         </FormLayout.Form>{' '}
       </FormLayout.Content>
@@ -125,4 +138,4 @@ export const HrRecruitmentJobOpeningAdd = () => {
   );
 };
 
-export default HrRecruitmentJobOpeningAdd;
+export default HrRecruitmentJobOfferAdd;
