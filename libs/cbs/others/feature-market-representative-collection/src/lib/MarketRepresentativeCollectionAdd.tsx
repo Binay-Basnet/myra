@@ -23,6 +23,7 @@ type DepositAccountTable = {
   member: string;
   account: string;
   amount: string;
+  fine: string;
   memberName?: string;
   id?: string;
 };
@@ -90,7 +91,11 @@ export const MarketRepresentativeCollectionAdd = () => {
         id: record?.id,
         member: record?.member?.id as string,
         account: record?.account?.id as string,
-        amount: record?.amount,
+        amount:
+          record?.status === 'PENDING'
+            ? Number(record?.amountToBeCollected || 0) - Number(record?.fineToBeCollected || 0)
+            : Number(record?.amount || 0) - Number(record?.fine || 0),
+        fine: record?.status === 'PENDING' ? record?.fineToBeCollected : record?.fine,
         status: record?.status,
       })),
     [agentTodayListQueryData]
@@ -104,7 +109,11 @@ export const MarketRepresentativeCollectionAdd = () => {
           id: record?.id,
           member: record?.member?.id as string,
           account: record?.account?.id as string,
-          amount: record?.amount,
+          amount:
+            record?.status === 'PENDING'
+              ? Number(record?.amountToBeCollected || 0) - Number(record?.fineToBeCollected || 0)
+              : Number(record?.amount || 0) - Number(record?.fine || 0),
+          fine: record?.status === 'PENDING' ? record?.fineToBeCollected : record?.fine,
           status: record?.status,
         }))
       );
@@ -135,7 +144,13 @@ export const MarketRepresentativeCollectionAdd = () => {
       setValue(
         'accounts',
         accounts?.map(
-          (record: { id: string; account: string | undefined; member: any; amount: any }) => {
+          (record: {
+            id: string;
+            account: string | undefined;
+            member: any;
+            amount: any;
+            fine: any;
+          }) => {
             const account = assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
               (member) => member?.node?.account?.id === record?.account
             );
@@ -144,7 +159,11 @@ export const MarketRepresentativeCollectionAdd = () => {
               id: record?.id,
               member: record?.member,
               account: record?.account,
-              amount: record?.amount || account?.node?.account?.dues?.totalDue,
+              amount:
+                record?.amount ??
+                Number(account?.node?.account?.dues?.totalDue || 0) -
+                  Number(account?.node?.account?.dues?.fine || 0),
+              fine: record?.fine ?? account?.node?.account?.dues?.fine,
             };
           }
         )
@@ -160,18 +179,26 @@ export const MarketRepresentativeCollectionAdd = () => {
       promise: setAgentTodayCollection({
         agentId: agentId as string,
         data: getValues()['accounts'].map(
-          (account: { id: string; member: string; account: string; amount: string }) =>
+          (account: {
+            id: string;
+            member: string;
+            account: string;
+            amount: string;
+            fine: string;
+          }) =>
             account.id
               ? {
                   id: account.id,
                   member: account.member,
                   account: account.account,
-                  amount: String(account.amount),
+                  amount: String(Number(account.amount || 0) + Number(account.fine || 0)),
+                  fine: String(account.fine),
                 }
               : {
                   member: account.member,
                   account: account.account,
-                  amount: String(account.amount),
+                  amount: String(Number(account.amount || 0) + Number(account.fine || 0)),
+                  fine: String(account.fine),
                 }
         ),
       }),
@@ -287,6 +314,19 @@ export const MarketRepresentativeCollectionAdd = () => {
                     {
                       accessor: 'amount',
                       header: 'Amount',
+                      isNumeric: true,
+                      cellWidth: 'lg',
+                      getDisabled: (row) => {
+                        const item = todaysList?.find(
+                          (account) => account?.account === row?.account
+                        );
+
+                        return !!item?.status && item?.status !== 'PENDING';
+                      },
+                    },
+                    {
+                      accessor: 'fine',
+                      header: 'Fine',
                       isNumeric: true,
                       cellWidth: 'lg',
                       getDisabled: (row) => {

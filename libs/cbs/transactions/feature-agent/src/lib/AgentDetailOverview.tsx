@@ -22,6 +22,7 @@ type DepositAccountTable = {
   account: string;
   amount: string;
   memberName: string;
+  fine: string;
 };
 
 export const AgentDetailOverview = () => {
@@ -79,6 +80,7 @@ export const AgentDetailOverview = () => {
           member: record?.member?.id,
           account: record?.account?.id,
           amount: record?.amount,
+          fine: record?.fine,
         })),
       });
     }
@@ -165,11 +167,13 @@ export const AgentDetailOverview = () => {
                   member: account.member,
                   account: account.account,
                   amount: selectedAccount?.dues?.totalDue,
+                  fine: selectedAccount?.dues?.fine,
                 }
               : {
                   member: account.member,
                   account: account.account,
                   amount: selectedAccount?.dues?.totalDue,
+                  fine: selectedAccount?.dues?.fine,
                 };
           }
         ),
@@ -295,6 +299,19 @@ export const AgentDetailOverview = () => {
                         )?.node?.account;
 
                       return <Box textAlign="right">{selectedAccount?.dues?.totalDue}</Box>;
+                    },
+                  },
+                  {
+                    accessor: 'fine',
+                    header: 'Fine',
+                    isNumeric: true,
+                    cell: (row) => {
+                      const selectedAccount =
+                        assignedMemberListQueryData?.agent?.assignedMemberList?.edges?.find(
+                          (member) => member?.node?.account?.id === row?.account
+                        )?.node?.account;
+
+                      return <Box textAlign="right">{selectedAccount?.dues?.fine}</Box>;
                     },
                   },
                 ]}

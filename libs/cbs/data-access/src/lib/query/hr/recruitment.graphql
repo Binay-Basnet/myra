@@ -52,7 +52,7 @@ query getJobOpeningList($filter: Filter, $pagination: Pagination) {
           totalCount
           edges {
             node {
-              jobId
+              id
               title
               status
               staffPlan
@@ -78,33 +78,7 @@ query getJobOfferList($filter: Filter, $pagination: Pagination) {
           totalCount
           edges {
             node {
-              applicantId
-              name
-              status
-              offerDate
-              email
-              designation
-            }
-            cursor
-          }
-          pageInfo {
-            ...Pagination
-          }
-        }
-      }
-    }
-  }
-}
-
-query getJobOfferList($filter: Filter, $pagination: Pagination) {
-  hr {
-    recruitment {
-      recruitmentJobOffer {
-        listJobOffer(filter: $filter, pagination: $pagination) {
-          totalCount
-          edges {
-            node {
-              applicantId
+              id
               name
               status
               offerDate

@@ -22,6 +22,7 @@ type DepositAccountTable = {
   member: string;
   account: string;
   amount: string;
+  fine: string;
   memberName?: string;
   paid: boolean;
 };
@@ -101,7 +102,8 @@ export const AddAgentTransaction = () => {
           id: record?.id,
           member: record?.member?.id as string,
           account: record?.account?.id as string,
-          amount: record?.amount,
+          amount: Number(record?.amount || 0) - Number(record?.fine || 0),
+          fine: record?.fine,
           status: record?.status,
           paid: Boolean(record?.paid),
         }))
@@ -139,6 +141,7 @@ export const AddAgentTransaction = () => {
             member: string;
             account: string;
             amount: string;
+            fine: string;
             paid: boolean;
           }) =>
             account.id
@@ -146,13 +149,15 @@ export const AddAgentTransaction = () => {
                   id: account.id,
                   member: account.member,
                   account: account.account,
-                  amount: String(account.amount),
+                  amount: String(Number(account.amount || 0) + Number(account.fine || 0)),
+                  fine: String(account.fine),
                   paid: account.paid,
                 }
               : {
                   member: account.member,
                   account: account.account,
-                  amount: String(account.amount),
+                  amount: String(Number(account.amount || 0) + Number(account.fine || 0)),
+                  fine: String(account.fine),
                   paid: account.paid,
                 }
         ),
@@ -279,11 +284,14 @@ export const AddAgentTransaction = () => {
                       header: 'Amount',
                       isNumeric: true,
                       cellWidth: 'lg',
-                      getDisabled: (row) => {
-                        const item = todaysList?.find((account) => account?.id === row?.id);
-
-                        return !!item?.paid;
-                      },
+                      getDisabled: () => true,
+                    },
+                    {
+                      accessor: 'fine',
+                      header: 'Fine',
+                      isNumeric: true,
+                      cellWidth: 'lg',
+                      getDisabled: () => true,
                     },
                     {
                       id: 'installmentAmount',

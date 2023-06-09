@@ -1166,6 +1166,9 @@ export type AgentRecord = {
 export type AgentTodayList = {
   account?: Maybe<DepositLoanAccount>;
   amount?: Maybe<Scalars['Amount']>;
+  amountToBeCollected?: Maybe<Scalars['String']>;
+  fine?: Maybe<Scalars['String']>;
+  fineToBeCollected?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   paid?: Maybe<Scalars['Boolean']>;
@@ -1180,6 +1183,7 @@ export type AgentTodayListData = {
 export type AgentTodayListInput = {
   account?: InputMaybe<Scalars['String']>;
   amount?: InputMaybe<Scalars['Amount']>;
+  fine?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   member?: InputMaybe<Scalars['String']>;
   paid?: InputMaybe<Scalars['Boolean']>;
@@ -1476,6 +1480,7 @@ export type AppointmentLetterListed = {
   applicantId: Scalars['ID'];
   designation: Scalars['String'];
   email: Scalars['String'];
+  id: Scalars['ID'];
   name: Scalars['String'];
   offerDate: Scalars['Localized'];
   probationPeriod: Scalars['String'];
@@ -5160,6 +5165,7 @@ export type DepositRecord = {
   date?: Maybe<Scalars['Localized']>;
   depositedBy?: Maybe<DepositedBy>;
   depositedOther?: Maybe<Scalars['String']>;
+  discount?: Maybe<Scalars['String']>;
   fine?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['Localized']>;
@@ -5754,6 +5760,11 @@ export type EachAppointmentLetterRecords = {
   error: QueryError;
 };
 
+export type EachEmployeeOnboardingRecord = {
+  data: EmployeeOnboardingRecord;
+  error: QueryError;
+};
+
 export type EachJobOfferRecords = {
   data: JobOfferRecord;
   error: QueryError;
@@ -5889,13 +5900,51 @@ export type EmployeeInput = {
 };
 
 export type EmployeeListType = {
-  employeeAddress?: Maybe<Scalars['String']>;
+  employeeAddress?: Maybe<Address>;
   employeeContact?: Maybe<Scalars['String']>;
   employeeDateOfJoining?: Maybe<Scalars['Localized']>;
   employeeDepartment?: Maybe<Scalars['String']>;
   employeeEmail?: Maybe<Scalars['String']>;
   employeeId?: Maybe<Scalars['String']>;
   employeeName?: Maybe<Scalars['String']>;
+};
+
+export type EmployeeOnboardingConnection = {
+  edges?: Maybe<Array<Maybe<EmployeeOnboardings>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type EmployeeOnboardingInput = {
+  activity_details?: InputMaybe<Array<InputMaybe<ActivityInput>>>;
+  applicantId?: InputMaybe<Scalars['ID']>;
+  dateOfJoining?: InputMaybe<Scalars['Localized']>;
+  designation?: InputMaybe<Scalars['ID']>;
+  onboarding_status?: InputMaybe<OnboardingStatus>;
+  serviceCenter?: InputMaybe<Scalars['String']>;
+};
+
+export type EmployeeOnboardingListed = {
+  activity?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  onboarding_status?: Maybe<OnboardingStatus>;
+};
+
+export type EmployeeOnboardingRecord = {
+  activity_details?: Maybe<Array<Maybe<Activity>>>;
+  applicantId?: Maybe<Scalars['ID']>;
+  dateOfJoining?: Maybe<Scalars['Localized']>;
+  designation?: Maybe<Scalars['ID']>;
+  onboardingId?: Maybe<Scalars['ID']>;
+  onboarding_status?: Maybe<OnboardingStatus>;
+  serviceCenter?: Maybe<Scalars['String']>;
+};
+
+export type EmployeeOnboardings = {
+  cursor: Scalars['Cursor'];
+  node: EmployeeOnboardingListed;
 };
 
 export type EmployeeReport = {
@@ -7574,6 +7623,37 @@ export type HrEmployeeKyeQueryListEmployeeArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HrEmployeeLifecycleEmployeeOnboardingMutation = {
+  upsertEmployeeOnboarding: ReturnEmployeeOnboarding;
+};
+
+export type HrEmployeeLifecycleEmployeeOnboardingMutationUpsertEmployeeOnboardingArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: EmployeeOnboardingInput;
+};
+
+export type HrEmployeeLifecycleEmployeeOnboardingQuery = {
+  getEmployeeOnboarding: EachEmployeeOnboardingRecord;
+  listEmployeeOnboarding: EmployeeOnboardingConnection;
+};
+
+export type HrEmployeeLifecycleEmployeeOnboardingQueryGetEmployeeOnboardingArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrEmployeeLifecycleEmployeeOnboardingQueryListEmployeeOnboardingArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HrEmployeeLifecycleMutation = {
+  employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingMutation;
+};
+
+export type HrEmployeeLifecycleQuery = {
+  employeeOnboarding: HrEmployeeLifecycleEmployeeOnboardingQuery;
+};
+
 export type HrEmployeeListConnection = {
   edges?: Maybe<Array<Maybe<HrEmployeeListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -7595,11 +7675,13 @@ export type HrEmployeeQuery = {
 
 export type HrMutation = {
   employee: HrEmployeeMutation;
+  employeelifecycle?: Maybe<HrEmployeeLifecycleMutation>;
   recruitment: HrRecruitmentMutation;
 };
 
 export type HrQuery = {
   employee: HrEmployeeQuery;
+  employeelifecycle: HrEmployeeLifecycleQuery;
   recruitment: HrRecruitmentQuery;
 };
 
@@ -9198,9 +9280,9 @@ export type JobOfferInput = {
 };
 
 export type JobOfferListed = {
-  applicantId: Scalars['ID'];
   designation: Scalars['String'];
   email: Scalars['String'];
+  id: Scalars['ID'];
   name: Scalars['String'];
   offerDate: Scalars['Localized'];
   status: JobStatus;
@@ -9252,7 +9334,7 @@ export type JobOpeningInput = {
 export type JobOpeningListed = {
   department: Scalars['ID'];
   designation: Scalars['ID'];
-  jobId: Scalars['ID'];
+  id: Scalars['ID'];
   staffPlan: Scalars['ID'];
   status: IsOpenClosed;
   title: Scalars['String'];
@@ -15082,6 +15164,13 @@ export const OfficialUseRiskCategory = {
 
 export type OfficialUseRiskCategory =
   typeof OfficialUseRiskCategory[keyof typeof OfficialUseRiskCategory];
+export const OnboardingStatus = {
+  Completed: 'COMPLETED',
+  Draft: 'DRAFT',
+  Pending: 'PENDING',
+} as const;
+
+export type OnboardingStatus = typeof OnboardingStatus[keyof typeof OnboardingStatus];
 export type OrConditions = {
   andConditions: Array<Condition>;
 };
@@ -16387,6 +16476,12 @@ export type Result = {
 export type ReturnAppointmentLetter = {
   error?: Maybe<MutationError>;
   record?: Maybe<AppointmentLetterRecord>;
+  recordId: Scalars['ID'];
+};
+
+export type ReturnEmployeeOnboarding = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EmployeeOnboardingRecord>;
   recordId: Scalars['ID'];
 };
 
@@ -19594,6 +19689,24 @@ export const WithdrawWith = {
 } as const;
 
 export type WithdrawWith = typeof WithdrawWith[keyof typeof WithdrawWith];
+export type Activity = {
+  beginsOn?: Maybe<Scalars['Localized']>;
+  duration?: Maybe<Scalars['String']>;
+  isDone?: Maybe<Scalars['Boolean']>;
+  name?: Maybe<Scalars['String']>;
+  role?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+};
+
+export type ActivityInput = {
+  beginsOn?: InputMaybe<Scalars['Localized']>;
+  duration?: InputMaybe<Scalars['String']>;
+  isDone?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
+};
+
 export type LedgerDetails = {
   accountId: Scalars['String'];
   amount?: Maybe<Scalars['String']>;
@@ -23645,7 +23758,9 @@ export type SetDepositDataMutation = {
         transactionID?: string | null;
         date?: Record<'local' | 'en' | 'np', string> | null;
         amount?: string | null;
+        fine?: string | null;
         rebate?: string | null;
+        discount?: string | null;
         paymentMode?: DepositPaymentType | null;
         depositedBy?: DepositedBy | null;
         createdAt?: Record<'local' | 'en' | 'np', string> | null;
@@ -25840,7 +25955,7 @@ export type GetAgentAssignedMemberListDataQuery = {
             id: string;
             accountName?: string | null;
             installmentAmount?: string | null;
-            dues?: { totalDue?: string | null } | null;
+            dues?: { totalDue?: string | null; fine?: string | null } | null;
           } | null;
           product?: { productName: string } | null;
         } | null;
@@ -25865,6 +25980,9 @@ export type GetAgentTodayListDataQuery = {
       record?: Array<{
         id?: string | null;
         amount?: any | null;
+        fine?: string | null;
+        amountToBeCollected?: string | null;
+        fineToBeCollected?: string | null;
         paid?: boolean | null;
         status?: TodayListStatus | null;
         member?: {
@@ -26965,7 +27083,7 @@ export type GetJobOpeningListQuery = {
           edges?: Array<{
             cursor: string;
             node: {
-              jobId: string;
+              id: string;
               title: string;
               status: IsOpenClosed;
               staffPlan: string;
@@ -26994,7 +27112,7 @@ export type GetJobOfferListQuery = {
           edges?: Array<{
             cursor: string;
             node: {
-              applicantId: string;
+              id: string;
               name: string;
               status: JobStatus;
               offerDate: Record<'local' | 'en' | 'np', string>;
@@ -44296,7 +44414,9 @@ export const SetDepositDataDocument = `
         transactionID
         date
         amount
+        fine
         rebate
+        discount
         paymentMode
         depositedBy
         createdAt
@@ -47252,6 +47372,7 @@ export const GetAgentAssignedMemberListDataDocument = `
             accountName
             dues {
               totalDue
+              fine
             }
             installmentAmount
           }
@@ -47304,6 +47425,9 @@ export const GetAgentTodayListDataDocument = `
           installmentAmount
         }
         amount
+        fine
+        amountToBeCollected
+        fineToBeCollected
         paid
         status
       }
@@ -48596,7 +48720,7 @@ export const GetJobOpeningListDocument = `
           totalCount
           edges {
             node {
-              jobId
+              id
               title
               status
               staffPlan
@@ -48634,7 +48758,7 @@ export const GetJobOfferListDocument = `
           totalCount
           edges {
             node {
-              applicantId
+              id
               name
               status
               offerDate
