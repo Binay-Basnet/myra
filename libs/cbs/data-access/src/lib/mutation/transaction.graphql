@@ -6,7 +6,9 @@ mutation setDepositData($data: DepositInput!) {
         transactionID
         date
         amount
+        fine
         rebate
+        discount
         paymentMode
         depositedBy
         createdAt

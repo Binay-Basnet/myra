@@ -27,9 +27,11 @@ import { CashOptions } from '@coop/shared/components';
 import {
   FormAccountSelect,
   FormAmountInput,
+  FormCheckbox,
   FormInput,
   FormLayout,
   FormMemberSelect,
+  FormNumberInput,
 } from '@coop/shared/form';
 import {
   amountConverter,
@@ -55,6 +57,7 @@ type DepositFormInput = Omit<DepositInput, 'cash'> & {
       }
     | undefined
     | null;
+  isFinePaid: boolean;
 };
 
 const REBATE = '0';
@@ -162,6 +165,10 @@ export const AddDeposit = () => {
 
   const suspicionRemarks = watch('suspicionRemarks');
 
+  const isFinePaid = watch('isFinePaid');
+
+  const payableFine = Number(watch('fine') || 0);
+
   const checkIsSubmitButtonDisabled = () => {
     if (mode === 0) {
       return Boolean(!totalDeposit || (isSuspicious && !suspicionRemarks));
@@ -209,7 +216,7 @@ export const AddDeposit = () => {
     }
   }, [accountId, selectedAccount?.product?.nature]);
 
-  const { firstMonth, lastMonth, fine, rebate } = useMemo(() => {
+  const { firstMonth, lastMonth, rebate } = useMemo(() => {
     const installmentData = installmentsListQueryData?.account?.getInstallments?.data;
 
     if (!installmentData?.length || !noOfInstallments) {
@@ -227,10 +234,6 @@ export const AddDeposit = () => {
       filteredInstallments.length + Number(noOfInstallments)
     );
 
-    const tempFine = pendingInstallments.reduce(
-      (accumulator, curr) => accumulator + Number(curr?.fine),
-      0
-    );
     const tempRebate = pendingInstallments.reduce(
       (accumulator, curr) => accumulator + Number(curr?.rebate),
       0
@@ -239,7 +242,6 @@ export const AddDeposit = () => {
     return {
       firstMonth: localizedDate(pendingInstallments[0]?.dueDate),
       lastMonth: localizedDate(pendingInstallments[pendingInstallments.length - 1]?.dueDate),
-      fine: decimalAdjust('ceil', tempFine, -2),
       rebate: decimalAdjust('floor', tempRebate, -2),
     };
   }, [noOfInstallments, installmentsListQueryData, preferenceDate]);
@@ -254,9 +256,11 @@ export const AddDeposit = () => {
   const totalDeposit = useMemo(
     () =>
       amountToBeDeposited
-        ? Number(amountToBeDeposited) + Number(fine ?? FINE) + Number(rebate ?? REBATE)
+        ? Number(amountToBeDeposited) +
+          Number(isFinePaid ? payableFine : FINE) +
+          Number(rebate ?? REBATE)
         : 0,
-    [amountToBeDeposited]
+    [amountToBeDeposited, isFinePaid, payableFine, FINE, rebate, REBATE]
   );
 
   const returnAmount =
@@ -268,8 +272,8 @@ export const AddDeposit = () => {
   const handleSubmit = () => {
     const values = getValues();
     let filteredValues = {
-      ...values,
-      fine: String(fine ?? FINE),
+      ...omit(values, ['isFinePaid']),
+      fine: String(isFinePaid ? payableFine : FINE),
       rebate: String(rebate ?? REBATE),
     };
 
@@ -376,7 +380,7 @@ export const AddDeposit = () => {
 
                         <Box />
 
-                        <FormInput
+                        <FormNumberInput
                           isRequired
                           name="noOfInstallments"
                           label={t['addDepositNoOfInstallments']}
@@ -388,6 +392,22 @@ export const AddDeposit = () => {
                           </Button>
                         </Box>
                       </Grid>
+
+                      <FormCheckbox name="isFinePaid" label="Fine to be paid" />
+
+                      {isFinePaid && (
+                        <Box
+                          display="flex"
+                          flexDirection="column"
+                          gap="s16"
+                          p="s16"
+                          backgroundColor="highlight.500"
+                        >
+                          <Grid templateColumns="repeat(2, 1fr)" gap="s16">
+                            <FormAmountInput name="fine" label="Payable Fine" />
+                          </Grid>
+                        </Box>
+                      )}
 
                       {memberDetailData?.type === KymMemberTypesEnum.Individual && (
                         <SuspiciousTransaction />
@@ -472,7 +492,7 @@ export const AddDeposit = () => {
                           </Text>
 
                           <Text fontSize="s3" fontWeight={500} color="danger.500">
-                            {`+ ${amountConverter(fine ?? FINE)}`}
+                            {`+ ${amountConverter(isFinePaid ? payableFine : FINE)}`}
                           </Text>
                         </Box>
                       )}
@@ -544,7 +564,7 @@ export const AddDeposit = () => {
                         interestAccured: selectedAccount?.interestAccrued ?? '0',
                         guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                         overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
-                        fine: fine ?? FINE,
+                        fine: FINE,
                         // branch: 'Kumaripati',
                         openDate: localizedDate(selectedAccount?.accountOpenDate) ?? 'N/A',
                         expiryDate: localizedDate(selectedAccount?.accountExpiryDate) ?? 'N/A',
@@ -598,6 +618,10 @@ export const AddDeposit = () => {
                       Date: localizedDate(result?.date),
                       'Transaction Time': localizedTime(result?.createdAt),
                       'Deposit Amount': amountConverter(result?.amount || 0),
+                      'Actual Fine': amountConverter(
+                        Number(result?.fine ?? 0) + Number(result?.discount || 0)
+                      ),
+                      'Paid Fine': amountConverter(result?.fine || 0),
                       Rebate: amountConverter(result?.rebate || 0),
                       'Payment Mode': result?.paymentMode,
                       'Deposited By': !isDepositedByOther
