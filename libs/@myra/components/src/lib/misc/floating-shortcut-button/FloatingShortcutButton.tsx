@@ -35,28 +35,23 @@ const whatsNewData = {
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Tenure flag issue in the database',
-      'LOC loan closed not working issue',
-      'Teller to teller transfer issue fixes',
-      'New Entries get void after MR transactions issue fixes',
-      'Loan repayment and loan close penny balancing fixes',
-      'Teller transfer list page fix',
+      'Loan transaction statement report',
+      'Branch readiness report',
+      'Withdraw slip for loc saving accounts',
+      'Print loan schedule',
+      'Inventory detail pages',
+      'Edit unit rate during item purchase',
     ],
   },
-  // knownBugs: {
-  //   title: 'Known Bugs',
-  //   data: [
-  //     'Share transaction report filters have some issues in filters.',
-  //     'Member register report table fields are not properly populated.',
-  //     'Saving statement service filter and amount range not working.',
-  //     'Interest reports with filters, TTR reports filters might not work.',
-  //     'Vault balance filter, bank GL filter, ledger report filter are not working in the reports.',
-  //     'Mobile banking channel transaction report,userlist reports are not working.',
-  //     'Other sections are not fully workable as share dividend posting, profit to fund management with UI only.',
-  //     'In the accounting section, bank accounts do not reflect the amount of transactions paid by the bank.',
-  //     'kym member selection placement should be fixed ',
-  //   ],
-  // },
+  knownBugs: {
+    title: 'Known Bugs',
+    data: [
+      'Loc close fix (BE)',
+      'Hide 0.00 transaction from gl and statement(BE)',
+      'Loc service charge fix(BE)',
+      'Optimization of kym(coop)(FE)',
+    ],
+  },
 };
 
 const WhatsNewModal = (props: WhatsNewModalProps) => {
@@ -93,8 +88,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.66</Text>
-          <Text fontSize="s3">June 7, 2023</Text>
+          <Text fontSize="r2">Version 1.0.67</Text>
+          <Text fontSize="s3">June 9, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
