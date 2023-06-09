@@ -32,13 +32,13 @@ export const KymEquityLiabilities = (props: IProps) => {
   const nonCurrentLiabilities = watch('nonCurrentLiabilities') || 0;
 
   const totalEquityAndLiabilities =
-    shareCapital +
-    reserveAndSurplus +
-    savingDeposit +
-    loanAccount +
-    capitalGrant +
-    currentLiabilities +
-    nonCurrentLiabilities;
+    Number(shareCapital) +
+    Number(reserveAndSurplus) +
+    Number(savingDeposit) +
+    Number(loanAccount) +
+    Number(capitalGrant) +
+    Number(currentLiabilities) +
+    Number(nonCurrentLiabilities);
 
   useEffect(() => {
     dispatch(setCooperativeTotalEquity(totalEquityAndLiabilities));
