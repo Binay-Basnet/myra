@@ -195,3 +195,20 @@ query getItemsFormState($id: ID!) {
     }
   }
 }
+
+query getUnitsFormStateDetails($id: ID!) {
+  inventory {
+    unitOfMeasure {
+      getUnitDetails(id: $id) {
+        data {
+          unitName
+          shortName
+          description
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}

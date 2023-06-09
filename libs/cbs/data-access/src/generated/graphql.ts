@@ -2152,8 +2152,20 @@ export const BranchPaymentMode = {
 } as const;
 
 export type BranchPaymentMode = typeof BranchPaymentMode[keyof typeof BranchPaymentMode];
+export type BranchReadinessReport = {
+  data?: Maybe<Array<Maybe<BranchReadinessReportData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type BranchReadinessReportData = {
+  branchCode?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Boolean']>;
+};
+
 export type BranchReport = {
   abbsStatusReport: AbbsSatusResult;
+  branchReadinessReport: BranchReadinessReport;
   branchReport?: Maybe<BranchReportResult>;
   serviceCenterCOAWiseBalanceReport: SericeCenterWiseStatementResult;
 };
@@ -5844,6 +5856,7 @@ export type EmployeeInput = {
   appointmentLetter?: InputMaybe<Scalars['ID']>;
   branchId?: InputMaybe<Scalars['String']>;
   dateOfBirth?: InputMaybe<Scalars['Localized']>;
+  dateOfJoining?: InputMaybe<Scalars['Localized']>;
   departmentId?: InputMaybe<Scalars['String']>;
   designationId?: InputMaybe<Scalars['String']>;
   educationDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
@@ -5898,6 +5911,7 @@ export type EmployeeResultResponseType = {
   appointmentLetter?: Maybe<Scalars['ID']>;
   branchId?: Maybe<Scalars['String']>;
   dateOfBirth?: Maybe<Scalars['Localized']>;
+  dateOfJoining?: Maybe<Scalars['Localized']>;
   departmentId?: Maybe<Scalars['String']>;
   designationId?: Maybe<Scalars['String']>;
   educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
@@ -13193,6 +13207,7 @@ export type LoanReport = {
   loanCollateralReport?: Maybe<LoanCollateralReportResult>;
   loanProductBalance?: Maybe<LoanProductBalanceReportResult>;
   loanStatementReport?: Maybe<ReportResult>;
+  loanTransactionStatementReport?: Maybe<ReportResult>;
   loanWriteOffReport?: Maybe<LoanWriteOffReportResult>;
   personalGuaranteeReport?: Maybe<LoanAccountGuaranteeReportResult>;
 };
@@ -13230,6 +13245,10 @@ export type LoanReportLoanProductBalanceArgs = {
 };
 
 export type LoanReportLoanStatementReportArgs = {
+  data: LoanStatementReportSettings;
+};
+
+export type LoanReportLoanTransactionStatementReportArgs = {
   data: LoanStatementReportSettings;
 };
 
@@ -20782,6 +20801,7 @@ export type SetItemCategoryMutation = {
 };
 
 export type SetUnitsMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   data: InvUnitOfMeasureInput;
 }>;
 
@@ -27684,6 +27704,26 @@ export type GetItemsFormStateQuery = {
             costPrice?: string | null;
           } | null> | null;
         } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type GetUnitsFormStateDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetUnitsFormStateDetailsQuery = {
+  inventory: {
+    unitOfMeasure?: {
+      getUnitDetails: {
+        data?: { unitName: string; shortName?: string | null; description?: string | null } | null;
         error?:
           | QueryError_AuthorizationError_Fragment
           | QueryError_BadRequestError_Fragment
@@ -39706,10 +39746,10 @@ export const useSetItemCategoryMutation = <TError = unknown, TContext = unknown>
     options
   );
 export const SetUnitsDocument = `
-    mutation setUnits($data: InvUnitOfMeasureInput!) {
+    mutation setUnits($id: ID, $data: InvUnitOfMeasureInput!) {
   inventory {
     unitOfMeasure {
-      add(data: $data) {
+      add(data: $data, id: $id) {
         recordId
         error {
           ...MutationError
@@ -49421,6 +49461,38 @@ export const useGetItemsFormStateQuery = <TData = GetItemsFormStateQuery, TError
     ['getItemsFormState', variables],
     useAxios<GetItemsFormStateQuery, GetItemsFormStateQueryVariables>(
       GetItemsFormStateDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetUnitsFormStateDetailsDocument = `
+    query getUnitsFormStateDetails($id: ID!) {
+  inventory {
+    unitOfMeasure {
+      getUnitDetails(id: $id) {
+        data {
+          unitName
+          shortName
+          description
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetUnitsFormStateDetailsQuery = <
+  TData = GetUnitsFormStateDetailsQuery,
+  TError = unknown
+>(
+  variables: GetUnitsFormStateDetailsQueryVariables,
+  options?: UseQueryOptions<GetUnitsFormStateDetailsQuery, TError, TData>
+) =>
+  useQuery<GetUnitsFormStateDetailsQuery, TError, TData>(
+    ['getUnitsFormStateDetails', variables],
+    useAxios<GetUnitsFormStateDetailsQuery, GetUnitsFormStateDetailsQueryVariables>(
+      GetUnitsFormStateDetailsDocument
     ).bind(null, variables),
     options
   );

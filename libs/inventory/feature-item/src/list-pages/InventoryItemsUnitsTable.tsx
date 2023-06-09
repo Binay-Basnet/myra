@@ -1,13 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BsThreeDots } from 'react-icons/bs';
 import { useRouter } from 'next/router';
-import { IconButton } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, Column, Modal, PageHeader, Table } from '@myra-ui';
+import { asyncToast, Box, Column, Modal, PageHeader, Table, TablePopover } from '@myra-ui';
 
-import { useGetUnitsListQuery, useSetUnitsMutation } from '@coop/cbs/data-access';
+import {
+  InvUnitOfMeasureInput,
+  useGetUnitsFormStateDetailsQuery,
+  useGetUnitsListQuery,
+  useSetUnitsMutation,
+} from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormInput, FormSwitch } from '@coop/shared/form';
 import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
@@ -18,6 +21,7 @@ export const InventoryItemUnitsTable = () => {
   const [openModalUnits, setOpenModalUnits] = useState(false);
   const [openDetailModal, setOpenDetailModal] = useState(false);
   const router = useRouter();
+  const idUnits = router?.query['id'];
   const queryClient = useQueryClient();
 
   const methods = useForm();
@@ -54,6 +58,8 @@ export const InventoryItemUnitsTable = () => {
     asyncToast({
       id: 'add-modal-units',
       promise: unitMutate({
+        id: idUnits ? (idUnits as string) : undefined,
+
         data: {
           ...values,
         },
@@ -76,6 +82,7 @@ export const InventoryItemUnitsTable = () => {
   const { data: unitTable, isFetching } = useGetUnitsListQuery({
     pagination: getPaginationQuery(),
   });
+  const { reset } = methods;
 
   const rowItems = unitTable?.inventory?.unitOfMeasure?.list?.edges ?? [];
 
@@ -91,17 +98,63 @@ export const InventoryItemUnitsTable = () => {
       },
       {
         accessorKey: 'actions',
-        cell: () => (
-          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
-        ),
+
+        cell: (props) =>
+          props?.row?.original && (
+            <TablePopover
+              node={props?.row?.original}
+              items={[
+                {
+                  title: 'Edit Units',
+                  aclKey: 'CBS_MEMBERS_MEMBER',
+                  action: 'VIEW',
+                  onClick: () => {
+                    router.push(
+                      `${ROUTES?.INVENTORY_ITEMS_UNIT_LIST}?id=${props?.row?.original?.node?.id}`
+                    );
+                    onOpenModalUnits();
+                  },
+                },
+              ]}
+            />
+          ),
+        meta: {
+          width: '20px',
+        },
       },
     ],
     [t]
   );
+  const { data: unitsData } = useGetUnitsFormStateDetailsQuery({
+    id: idUnits as string,
+  });
+
+  useEffect(() => {
+    if (unitsData && idUnits) {
+      const editValueData = unitsData?.inventory?.unitOfMeasure?.getUnitDetails?.data;
+
+      if (editValueData) {
+        const newData = {
+          name: editValueData?.unitName,
+          shortName: editValueData?.shortName,
+          description: editValueData?.description,
+          acceptFraction: null,
+        };
+        reset({
+          ...(newData as unknown as InvUnitOfMeasureInput),
+        });
+      }
+    }
+  }, [unitsData, idUnits, reset]);
+
+  const pageHeaderHandler = async () => {
+    await router.push({ query: {} });
+    onOpenModalUnits();
+  };
 
   return (
     <>
-      <PageHeader heading="Units" buttonTitle="New Unit Add" onClick={onOpenModalUnits} button />
+      <PageHeader heading="Units" buttonTitle="New Unit Add" onClick={pageHeaderHandler} button />
 
       <Table
         isLoading={isFetching}
