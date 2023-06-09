@@ -20887,6 +20887,7 @@ export type SetItemsMutation = {
 };
 
 export type SetSuppliersAddMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   data?: InputMaybe<InvSupplierInput>;
 }>;
 
@@ -27759,6 +27760,50 @@ export type GetInventorySuppliersDetailsQuery = {
           applicationDoc?: Array<{ identifier: string; url: string } | null> | null;
           legalStatusDoc?: Array<{ identifier: string; url: string } | null> | null;
           othersDoc?: Array<{ identifier: string; url: string } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventorySuppliersFormstateDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventorySuppliersFormstateDetailsQuery = {
+  inventory: {
+    suppliers?: {
+      getSupplier?: {
+        data?: {
+          name: string;
+          supplierCode: string;
+          panNo?: string | null;
+          contactNo: string;
+          email: string;
+          contactPersonName?: string | null;
+          contactPersonPhoneNo?: string | null;
+          openingBalance?: string | null;
+          creditTerms?: string | null;
+          creditLimit?: number | null;
+          registrationDoc?: Array<string | null> | null;
+          applicationDoc?: Array<string | null> | null;
+          legalStatusDoc?: Array<string | null> | null;
+          othersDoc?: Array<string | null> | null;
+          address: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          };
         } | null;
         error?:
           | QueryError_AuthorizationError_Fragment
@@ -39844,10 +39889,10 @@ export const useSetItemsMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const SetSuppliersAddDocument = `
-    mutation setSuppliersAdd($data: InvSupplierInput) {
+    mutation setSuppliersAdd($id: ID, $data: InvSupplierInput) {
   inventory {
     suppliers {
-      add(data: $data) {
+      add(data: $data, id: $id) {
         recordId
         error {
           ...MutationError
@@ -49553,6 +49598,62 @@ export const useGetInventorySuppliersDetailsQuery = <
     useAxios<GetInventorySuppliersDetailsQuery, GetInventorySuppliersDetailsQueryVariables>(
       GetInventorySuppliersDetailsDocument
     ).bind(null, variables),
+    options
+  );
+export const GetInventorySuppliersFormstateDetailsDocument = `
+    query getInventorySuppliersFormstateDetails($id: ID!) {
+  inventory {
+    suppliers {
+      getSupplier(id: $id) {
+        data {
+          name
+          supplierCode
+          panNo
+          contactNo
+          email
+          address {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          contactPersonName
+          contactPersonPhoneNo
+          openingBalance
+          creditTerms
+          creditLimit
+          registrationDoc
+          applicationDoc
+          legalStatusDoc
+          othersDoc
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventorySuppliersFormstateDetailsQuery = <
+  TData = GetInventorySuppliersFormstateDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventorySuppliersFormstateDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventorySuppliersFormstateDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventorySuppliersFormstateDetailsQuery, TError, TData>(
+    ['getInventorySuppliersFormstateDetails', variables],
+    useAxios<
+      GetInventorySuppliersFormstateDetailsQuery,
+      GetInventorySuppliersFormstateDetailsQueryVariables
+    >(GetInventorySuppliersFormstateDetailsDocument).bind(null, variables),
     options
   );
 export const GetInventoryWarehouseDetailsDocument = `
