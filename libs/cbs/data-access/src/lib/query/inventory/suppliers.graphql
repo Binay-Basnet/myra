@@ -40,3 +40,43 @@ query getInventorySuppliersDetails($id: ID!) {
     }
   }
 }
+
+query getInventorySuppliersFormstateDetails($id: ID!) {
+  inventory {
+    suppliers {
+      getSupplier(id: $id) {
+        data {
+          name
+          supplierCode
+          panNo
+          contactNo
+          email
+          address {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          contactPersonName
+          contactPersonPhoneNo
+          openingBalance
+          creditTerms
+          creditLimit
+          registrationDoc
+          applicationDoc
+          legalStatusDoc
+          othersDoc
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}

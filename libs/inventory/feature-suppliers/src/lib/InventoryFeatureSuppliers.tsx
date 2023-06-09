@@ -1,9 +1,14 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { asyncToast } from '@myra-ui';
 
-import { InvSupplierInput, useSetSuppliersAddMutation } from '@coop/cbs/data-access';
+import {
+  InvSupplierInput,
+  useGetInventorySuppliersFormstateDetailsQuery,
+  useSetSuppliersAddMutation,
+} from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 
@@ -13,6 +18,8 @@ import { AddSupplierForm } from '../component/form/AddSupplierForm';
 
 export const InventoryFeatureSuppliers = () => {
   const router = useRouter();
+  const supplierID = router?.query['id'];
+
   const { mutateAsync: AddSuppliers } = useSetSuppliersAddMutation();
   const handleSave = () => {
     const values = methods.getValues();
@@ -20,13 +27,14 @@ export const InventoryFeatureSuppliers = () => {
     asyncToast({
       id: 'account-open-add-minor',
       promise: AddSuppliers({
+        id: supplierID ? (supplierID as string) : undefined,
         data: {
           ...values,
         },
       }),
       msgs: {
-        loading: 'Adding Suppliers',
-        success: 'New Supplier Added',
+        loading: supplierID ? 'Editing Supplier' : 'Adding Suppliers',
+        success: supplierID ? 'Existing Supplier Edited' : 'New Supplier Added',
       },
       onSuccess: () => {
         router.push(ROUTES.INVENTORY_SUPPLIERS_LIST);
@@ -46,6 +54,22 @@ export const InventoryFeatureSuppliers = () => {
 
   // const router = useRouter();
   const methods = useForm({});
+  const suppliersData = useGetInventorySuppliersFormstateDetailsQuery({
+    id: supplierID as string,
+  });
+  const supplierFormData = suppliersData?.data?.inventory?.suppliers?.getSupplier?.data;
+
+  useEffect(() => {
+    if (supplierFormData) {
+      methods?.reset({
+        ...supplierFormData,
+        address: {
+          ...supplierFormData?.address,
+          locality: supplierFormData?.address?.locality?.local,
+        },
+      });
+    }
+  }, [supplierID, supplierFormData, methods]);
 
   return (
     <FormLayout methods={methods}>

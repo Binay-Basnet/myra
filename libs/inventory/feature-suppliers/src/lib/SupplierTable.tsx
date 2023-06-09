@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Column, PageHeader, Table } from '@myra-ui';
+import { Column, PageHeader, Table, TablePopover } from '@myra-ui';
 
 import { useGetSuppliersListQuery } from '@coop/cbs/data-access';
 import { formatAddress, ROUTES } from '@coop/cbs/utils';
@@ -34,6 +34,32 @@ export const SupplierTable = () => {
       {
         header: 'Email',
         accessorFn: (row) => row?.node?.email,
+      },
+      {
+        id: '_actions',
+        header: '',
+
+        cell: (props) =>
+          props?.row?.original && (
+            <TablePopover
+              node={props?.row?.original}
+              items={[
+                {
+                  title: 'Edit Supplier',
+                  aclKey: 'CBS_MEMBERS_MEMBER',
+                  action: 'VIEW',
+                  onClick: () => {
+                    router.push(
+                      `${ROUTES?.INVENTORY_SUPPLIERS_EDIT}?id=${props?.row?.original?.node?.id}`
+                    );
+                  },
+                },
+              ]}
+            />
+          ),
+        meta: {
+          width: '20px',
+        },
       },
 
       // {
