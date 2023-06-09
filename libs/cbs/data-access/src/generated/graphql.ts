@@ -20867,6 +20867,7 @@ export type SetSuppliersMutation = {
 };
 
 export type SetItemsMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   data: InvItemsInput;
 }>;
 
@@ -27509,6 +27510,7 @@ export type GetInventoryItemsListQuery = {
             id: string;
             itemCode: string;
             name: string;
+            isVariantItem: boolean;
             type: string;
             costPrice: string;
             sellingPrice: string;
@@ -27733,6 +27735,46 @@ export type GetUnitsFormStateDetailsQuery = {
           | QueryError_ServerError_Fragment
           | null;
       };
+    } | null;
+  };
+};
+
+export type GetInventoryItemsFormStateDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryItemsFormStateDetailsQuery = {
+  inventory: {
+    items?: {
+      getItemDetails?: {
+        data?: {
+          itemName: string;
+          itemCode: string;
+          itemGroup: string;
+          unit: string;
+          tax?: string | null;
+          reorderLevel?: string | null;
+          valuationMethod?: InvItemsValuationMethod | null;
+          variants?: Array<{
+            sku?: string | null;
+            itemName?: string | null;
+            sellingPrice?: string | null;
+            costPrice?: string | null;
+          } | null> | null;
+          ledgerDetail: {
+            salesLedger: string;
+            purchaseLedger: string;
+            salesReturnLedger: string;
+            purchaseReturnLedger: string;
+          };
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
     } | null;
   };
 };
@@ -39946,10 +39988,10 @@ export const useSetSuppliersMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const SetItemsDocument = `
-    mutation setItems($data: InvItemsInput!) {
+    mutation setItems($id: ID, $data: InvItemsInput!) {
   inventory {
     items {
-      add(data: $data) {
+      add(data: $data, id: $id) {
         recordId
         error {
           ...MutationError
@@ -49290,6 +49332,7 @@ export const GetInventoryItemsListDocument = `
             id
             itemCode
             name
+            isVariantItem
             type
             costPrice
             sellingPrice
@@ -49618,6 +49661,55 @@ export const useGetUnitsFormStateDetailsQuery = <
     useAxios<GetUnitsFormStateDetailsQuery, GetUnitsFormStateDetailsQueryVariables>(
       GetUnitsFormStateDetailsDocument
     ).bind(null, variables),
+    options
+  );
+export const GetInventoryItemsFormStateDetailsDocument = `
+    query getInventoryItemsFormStateDetails($id: ID!) {
+  inventory {
+    items {
+      getItemDetails(id: $id) {
+        data {
+          itemName
+          itemCode
+          itemGroup
+          unit
+          tax
+          variants {
+            sku
+            itemName
+            sellingPrice
+            costPrice
+          }
+          ledgerDetail {
+            salesLedger
+            purchaseLedger
+            salesReturnLedger
+            purchaseReturnLedger
+          }
+          reorderLevel
+          valuationMethod
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryItemsFormStateDetailsQuery = <
+  TData = GetInventoryItemsFormStateDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryItemsFormStateDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryItemsFormStateDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryItemsFormStateDetailsQuery, TError, TData>(
+    ['getInventoryItemsFormStateDetails', variables],
+    useAxios<
+      GetInventoryItemsFormStateDetailsQuery,
+      GetInventoryItemsFormStateDetailsQueryVariables
+    >(GetInventoryItemsFormStateDetailsDocument).bind(null, variables),
     options
   );
 export const GetInventorySuppliersDetailsDocument = `

@@ -50,10 +50,10 @@ mutation setSuppliers($data: InvSupplierInput) {
   }
 }
 
-mutation setItems($data: InvItemsInput!) {
+mutation setItems($id: ID, $data: InvItemsInput!) {
   inventory {
     items {
-      add(data: $data) {
+      add(data: $data, id: $id) {
         recordId
         error {
           ...MutationError
