@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Column, PageHeader, Table } from '@myra-ui';
+import { Column, PageHeader, Table, TablePopover } from '@myra-ui';
 
 import { useGetInventoryItemsListQuery } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
@@ -60,6 +60,38 @@ export const InventoryItemTable = () => {
       //     <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
       //   ),
       // },
+      {
+        id: '_actions',
+        header: '',
+
+        cell: (props) =>
+          props?.row?.original && (
+            <TablePopover
+              node={props?.row?.original}
+              items={[
+                {
+                  title: 'Edit Items',
+                  aclKey: 'CBS_MEMBERS_MEMBER',
+                  action: 'VIEW',
+                  onClick: () => {
+                    if (props?.row?.original?.node?.isVariantItem) {
+                      router.push(
+                        `${ROUTES?.INVENTORY_ITEMS_VARIANT_EDIT}?id=${props?.row?.original?.node?.id}`
+                      );
+                    } else if (!props?.row?.original?.node?.isVariantItem) {
+                      router.push(
+                        `${ROUTES?.INVENTORY_ITEMS_EDIT}?id=${props?.row?.original?.node?.id}`
+                      );
+                    }
+                  },
+                },
+              ]}
+            />
+          ),
+        meta: {
+          width: '20px',
+        },
+      },
     ],
     [t]
   );

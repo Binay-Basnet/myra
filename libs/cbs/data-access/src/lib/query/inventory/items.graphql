@@ -8,6 +8,7 @@ query getInventoryItemsList($filter: InvItemsDataFilter, $pagination: Pagination
             id
             itemCode
             name
+            isVariantItem
             type
             costPrice
             sellingPrice
@@ -204,6 +205,39 @@ query getUnitsFormStateDetails($id: ID!) {
           unitName
           shortName
           description
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+
+query getInventoryItemsFormStateDetails($id: ID!) {
+  inventory {
+    items {
+      getItemDetails(id: $id) {
+        data {
+          itemName
+          itemCode
+          itemGroup
+          unit
+          tax
+          variants {
+            sku
+            itemName
+            sellingPrice
+            costPrice
+          }
+          ledgerDetail {
+            salesLedger
+            purchaseLedger
+            salesReturnLedger
+            purchaseReturnLedger
+          }
+          reorderLevel
+          valuationMethod
         }
         error {
           ...QueryError
