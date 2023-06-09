@@ -68,10 +68,22 @@ query getInventorySuppliersFormstateDetails($id: ID!) {
           openingBalance
           creditTerms
           creditLimit
-          registrationDoc
-          applicationDoc
-          legalStatusDoc
-          othersDoc
+          registrationDoc {
+            identifier
+            url
+          }
+          applicationDoc {
+            identifier
+            url
+          }
+          legalStatusDoc {
+            identifier
+            url
+          }
+          othersDoc {
+            identifier
+            url
+          }
         }
         error {
           ...QueryError

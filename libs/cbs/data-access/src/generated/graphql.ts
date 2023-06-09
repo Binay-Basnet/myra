@@ -7109,19 +7109,19 @@ export type FormStateInvItemsVariant = {
 
 export type FormStateInvSupplierInput = {
   address: KymAddress;
-  applicationDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  applicationDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
   contactNo: Scalars['String'];
   contactPersonName?: Maybe<Scalars['String']>;
   contactPersonPhoneNo?: Maybe<Scalars['String']>;
   creditLimit?: Maybe<Scalars['Float']>;
   creditTerms?: Maybe<Scalars['String']>;
   email: Scalars['String'];
-  legalStatusDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  legalStatusDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
   name: Scalars['String'];
   openingBalance?: Maybe<Scalars['String']>;
-  othersDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  othersDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
   panNo?: Maybe<Scalars['String']>;
-  registrationDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  registrationDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
   supplierCode: Scalars['String'];
 };
 
@@ -8351,6 +8351,7 @@ export type InvAdjustmentEdge = {
 export type InvItems = {
   costPrice: Scalars['String'];
   id: Scalars['ID'];
+  isVariantItem: Scalars['Boolean'];
   itemCode: Scalars['String'];
   itemQuantity: Scalars['String'];
   itemsInWarehouses?: Maybe<Scalars['Map']>;
@@ -27791,10 +27792,6 @@ export type GetInventorySuppliersFormstateDetailsQuery = {
           openingBalance?: string | null;
           creditTerms?: string | null;
           creditLimit?: number | null;
-          registrationDoc?: Array<string | null> | null;
-          applicationDoc?: Array<string | null> | null;
-          legalStatusDoc?: Array<string | null> | null;
-          othersDoc?: Array<string | null> | null;
           address: {
             provinceId?: number | null;
             districtId?: number | null;
@@ -27804,6 +27801,10 @@ export type GetInventorySuppliersFormstateDetailsQuery = {
             houseNo?: string | null;
             coordinates?: { longitude?: number | null; latitude?: number | null } | null;
           };
+          registrationDoc?: Array<{ identifier: string; url: string } | null> | null;
+          applicationDoc?: Array<{ identifier: string; url: string } | null> | null;
+          legalStatusDoc?: Array<{ identifier: string; url: string } | null> | null;
+          othersDoc?: Array<{ identifier: string; url: string } | null> | null;
         } | null;
         error?:
           | QueryError_AuthorizationError_Fragment
@@ -49706,10 +49707,22 @@ export const GetInventorySuppliersFormstateDetailsDocument = `
           openingBalance
           creditTerms
           creditLimit
-          registrationDoc
-          applicationDoc
-          legalStatusDoc
-          othersDoc
+          registrationDoc {
+            identifier
+            url
+          }
+          applicationDoc {
+            identifier
+            url
+          }
+          legalStatusDoc {
+            identifier
+            url
+          }
+          othersDoc {
+            identifier
+            url
+          }
         }
         error {
           ...QueryError
