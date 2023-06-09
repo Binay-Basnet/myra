@@ -29,6 +29,7 @@ export * from './controllers/FormNumberInput/FormNumberInput';
 export * from './controllers/FormOrganizationSelect/FormOrganizationSelect';
 export * from './controllers/FormPasswordInput/FormPasswordInput';
 export * from './controllers/FormPhoneNumber/FormPhoneNumber';
+export * from './controllers/FormRating/FormRating';
 export * from './controllers/FormSalesInvoiceReference/FormSalesInvoiceReference';
 export * from './controllers/FormSelect/FormSelect';
 export * from './controllers/FormSelectPopout/FormSelectPopout';

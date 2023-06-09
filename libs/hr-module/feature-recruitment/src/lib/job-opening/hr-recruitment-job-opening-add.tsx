@@ -93,7 +93,7 @@ export const HrRecruitmentJobOpeningAdd = () => {
   };
   return (
     <FormLayout methods={methods}>
-      <FormLayout.Header title="Job Opening" />
+      <FormLayout.Header title="New Job Opening" />
 
       <FormLayout.Content>
         <FormLayout.Form>

@@ -155,12 +155,12 @@ export const InventoryItemGenerateVariantsForm = () => {
             {
               accessor: 'sellingPrice',
               header: t['inventoryItemTableSellingPrice'],
-              isNumeric: true,
+              // isNumeric: true,
             },
             {
               accessor: 'costPrice',
               header: t['inventoryItemTablePurchasePrice'],
-              isNumeric: true,
+              // isNumeric: true,
             },
           ]}
         />

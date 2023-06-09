@@ -7109,19 +7109,19 @@ export type FormStateInvItemsVariant = {
 
 export type FormStateInvSupplierInput = {
   address: KymAddress;
-  applicationDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  applicationDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
   contactNo: Scalars['String'];
   contactPersonName?: Maybe<Scalars['String']>;
   contactPersonPhoneNo?: Maybe<Scalars['String']>;
   creditLimit?: Maybe<Scalars['Float']>;
   creditTerms?: Maybe<Scalars['String']>;
   email: Scalars['String'];
-  legalStatusDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  legalStatusDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
   name: Scalars['String'];
   openingBalance?: Maybe<Scalars['String']>;
-  othersDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  othersDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
   panNo?: Maybe<Scalars['String']>;
-  registrationDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  registrationDoc?: Maybe<Array<Maybe<UploadedDocumentData>>>;
   supplierCode: Scalars['String'];
 };
 
@@ -8351,6 +8351,7 @@ export type InvAdjustmentEdge = {
 export type InvItems = {
   costPrice: Scalars['String'];
   id: Scalars['ID'];
+  isVariantItem: Scalars['Boolean'];
   itemCode: Scalars['String'];
   itemQuantity: Scalars['String'];
   itemsInWarehouses?: Maybe<Scalars['Map']>;
@@ -20801,6 +20802,7 @@ export type SetItemCategoryMutation = {
 };
 
 export type SetUnitsMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   data: InvUnitOfMeasureInput;
 }>;
 
@@ -20865,6 +20867,7 @@ export type SetSuppliersMutation = {
 };
 
 export type SetItemsMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   data: InvItemsInput;
 }>;
 
@@ -20886,6 +20889,7 @@ export type SetItemsMutation = {
 };
 
 export type SetSuppliersAddMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   data?: InputMaybe<InvSupplierInput>;
 }>;
 
@@ -27506,6 +27510,7 @@ export type GetInventoryItemsListQuery = {
             id: string;
             itemCode: string;
             name: string;
+            isVariantItem: boolean;
             type: string;
             costPrice: string;
             sellingPrice: string;
@@ -27714,6 +27719,66 @@ export type GetItemsFormStateQuery = {
   };
 };
 
+export type GetUnitsFormStateDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetUnitsFormStateDetailsQuery = {
+  inventory: {
+    unitOfMeasure?: {
+      getUnitDetails: {
+        data?: { unitName: string; shortName?: string | null; description?: string | null } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
+
+export type GetInventoryItemsFormStateDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventoryItemsFormStateDetailsQuery = {
+  inventory: {
+    items?: {
+      getItemDetails?: {
+        data?: {
+          itemName: string;
+          itemCode: string;
+          itemGroup: string;
+          unit: string;
+          tax?: string | null;
+          reorderLevel?: string | null;
+          valuationMethod?: InvItemsValuationMethod | null;
+          variants?: Array<{
+            sku?: string | null;
+            itemName?: string | null;
+            sellingPrice?: string | null;
+            costPrice?: string | null;
+          } | null> | null;
+          ledgerDetail: {
+            salesLedger: string;
+            purchaseLedger: string;
+            salesReturnLedger: string;
+            purchaseReturnLedger: string;
+          };
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetInventorySuppliersDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -27734,6 +27799,50 @@ export type GetInventorySuppliersDetailsQuery = {
           creditTerms?: string | null;
           creditLimit?: number | null;
           location?: AddressFragment | null;
+          registrationDoc?: Array<{ identifier: string; url: string } | null> | null;
+          applicationDoc?: Array<{ identifier: string; url: string } | null> | null;
+          legalStatusDoc?: Array<{ identifier: string; url: string } | null> | null;
+          othersDoc?: Array<{ identifier: string; url: string } | null> | null;
+        } | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetInventorySuppliersFormstateDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInventorySuppliersFormstateDetailsQuery = {
+  inventory: {
+    suppliers?: {
+      getSupplier?: {
+        data?: {
+          name: string;
+          supplierCode: string;
+          panNo?: string | null;
+          contactNo: string;
+          email: string;
+          contactPersonName?: string | null;
+          contactPersonPhoneNo?: string | null;
+          openingBalance?: string | null;
+          creditTerms?: string | null;
+          creditLimit?: number | null;
+          address: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          };
           registrationDoc?: Array<{ identifier: string; url: string } | null> | null;
           applicationDoc?: Array<{ identifier: string; url: string } | null> | null;
           legalStatusDoc?: Array<{ identifier: string; url: string } | null> | null;
@@ -39803,10 +39912,10 @@ export const useSetItemCategoryMutation = <TError = unknown, TContext = unknown>
     options
   );
 export const SetUnitsDocument = `
-    mutation setUnits($data: InvUnitOfMeasureInput!) {
+    mutation setUnits($id: ID, $data: InvUnitOfMeasureInput!) {
   inventory {
     unitOfMeasure {
-      add(data: $data) {
+      add(data: $data, id: $id) {
         recordId
         error {
           ...MutationError
@@ -39879,10 +39988,10 @@ export const useSetSuppliersMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const SetItemsDocument = `
-    mutation setItems($data: InvItemsInput!) {
+    mutation setItems($id: ID, $data: InvItemsInput!) {
   inventory {
     items {
-      add(data: $data) {
+      add(data: $data, id: $id) {
         recordId
         error {
           ...MutationError
@@ -39901,10 +40010,10 @@ export const useSetItemsMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const SetSuppliersAddDocument = `
-    mutation setSuppliersAdd($data: InvSupplierInput) {
+    mutation setSuppliersAdd($id: ID, $data: InvSupplierInput) {
   inventory {
     suppliers {
-      add(data: $data) {
+      add(data: $data, id: $id) {
         recordId
         error {
           ...MutationError
@@ -49223,6 +49332,7 @@ export const GetInventoryItemsListDocument = `
             id
             itemCode
             name
+            isVariantItem
             type
             costPrice
             sellingPrice
@@ -49521,6 +49631,87 @@ export const useGetItemsFormStateQuery = <TData = GetItemsFormStateQuery, TError
     ).bind(null, variables),
     options
   );
+export const GetUnitsFormStateDetailsDocument = `
+    query getUnitsFormStateDetails($id: ID!) {
+  inventory {
+    unitOfMeasure {
+      getUnitDetails(id: $id) {
+        data {
+          unitName
+          shortName
+          description
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetUnitsFormStateDetailsQuery = <
+  TData = GetUnitsFormStateDetailsQuery,
+  TError = unknown
+>(
+  variables: GetUnitsFormStateDetailsQueryVariables,
+  options?: UseQueryOptions<GetUnitsFormStateDetailsQuery, TError, TData>
+) =>
+  useQuery<GetUnitsFormStateDetailsQuery, TError, TData>(
+    ['getUnitsFormStateDetails', variables],
+    useAxios<GetUnitsFormStateDetailsQuery, GetUnitsFormStateDetailsQueryVariables>(
+      GetUnitsFormStateDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInventoryItemsFormStateDetailsDocument = `
+    query getInventoryItemsFormStateDetails($id: ID!) {
+  inventory {
+    items {
+      getItemDetails(id: $id) {
+        data {
+          itemName
+          itemCode
+          itemGroup
+          unit
+          tax
+          variants {
+            sku
+            itemName
+            sellingPrice
+            costPrice
+          }
+          ledgerDetail {
+            salesLedger
+            purchaseLedger
+            salesReturnLedger
+            purchaseReturnLedger
+          }
+          reorderLevel
+          valuationMethod
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventoryItemsFormStateDetailsQuery = <
+  TData = GetInventoryItemsFormStateDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventoryItemsFormStateDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventoryItemsFormStateDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryItemsFormStateDetailsQuery, TError, TData>(
+    ['getInventoryItemsFormStateDetails', variables],
+    useAxios<
+      GetInventoryItemsFormStateDetailsQuery,
+      GetInventoryItemsFormStateDetailsQueryVariables
+    >(GetInventoryItemsFormStateDetailsDocument).bind(null, variables),
+    options
+  );
 export const GetInventorySuppliersDetailsDocument = `
     query getInventorySuppliersDetails($id: ID!) {
   inventory {
@@ -49578,6 +49769,74 @@ export const useGetInventorySuppliersDetailsQuery = <
     useAxios<GetInventorySuppliersDetailsQuery, GetInventorySuppliersDetailsQueryVariables>(
       GetInventorySuppliersDetailsDocument
     ).bind(null, variables),
+    options
+  );
+export const GetInventorySuppliersFormstateDetailsDocument = `
+    query getInventorySuppliersFormstateDetails($id: ID!) {
+  inventory {
+    suppliers {
+      getSupplier(id: $id) {
+        data {
+          name
+          supplierCode
+          panNo
+          contactNo
+          email
+          address {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          contactPersonName
+          contactPersonPhoneNo
+          openingBalance
+          creditTerms
+          creditLimit
+          registrationDoc {
+            identifier
+            url
+          }
+          applicationDoc {
+            identifier
+            url
+          }
+          legalStatusDoc {
+            identifier
+            url
+          }
+          othersDoc {
+            identifier
+            url
+          }
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetInventorySuppliersFormstateDetailsQuery = <
+  TData = GetInventorySuppliersFormstateDetailsQuery,
+  TError = unknown
+>(
+  variables: GetInventorySuppliersFormstateDetailsQueryVariables,
+  options?: UseQueryOptions<GetInventorySuppliersFormstateDetailsQuery, TError, TData>
+) =>
+  useQuery<GetInventorySuppliersFormstateDetailsQuery, TError, TData>(
+    ['getInventorySuppliersFormstateDetails', variables],
+    useAxios<
+      GetInventorySuppliersFormstateDetailsQuery,
+      GetInventorySuppliersFormstateDetailsQueryVariables
+    >(GetInventorySuppliersFormstateDetailsDocument).bind(null, variables),
     options
   );
 export const GetInventoryWarehouseDetailsDocument = `
