@@ -7628,6 +7628,15 @@ export type HrEmployeeKyeQueryListEmployeeArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HrEmployeeLeaveMutation = {
+  upsertLeave: LeaveOutput;
+};
+
+export type HrEmployeeLeaveMutationUpsertLeaveArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: LeaveInput;
+};
+
 export type HrEmployeeLifecycleEmployeeOnboardingMutation = {
   upsertEmployeeOnboarding: ReturnEmployeeOnboarding;
 };
@@ -7672,6 +7681,7 @@ export type HrEmployeeListEdges = {
 
 export type HrEmployeeMutation = {
   employee: HrEmployeeKyeMutation;
+  leave: HrEmployeeLeaveMutation;
 };
 
 export type HrEmployeeQuery = {
@@ -11456,6 +11466,18 @@ export const Language = {
 } as const;
 
 export type Language = typeof Language[keyof typeof Language];
+export type LeaveInput = {
+  employeeId: Scalars['String'];
+  leaveFrom: Scalars['Localized'];
+  leaveTo: Scalars['Localized'];
+  leaveTypeId: Scalars['ID'];
+};
+
+export type LeaveOutput = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type LedgerAllTransactionConnection = {
   edges?: Maybe<Array<Maybe<LedgerAllTransactionEdge>>>;
   pageInfo?: Maybe<PageInfo>;
