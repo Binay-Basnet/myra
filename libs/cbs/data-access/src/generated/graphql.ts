@@ -7628,6 +7628,15 @@ export type HrEmployeeKyeQueryListEmployeeArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HrEmployeeLeaveMutation = {
+  upsertLeave: LeaveOutput;
+};
+
+export type HrEmployeeLeaveMutationUpsertLeaveArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: LeaveInput;
+};
+
 export type HrEmployeeLifecycleEmployeeOnboardingMutation = {
   upsertEmployeeOnboarding: ReturnEmployeeOnboarding;
 };
@@ -7672,6 +7681,7 @@ export type HrEmployeeListEdges = {
 
 export type HrEmployeeMutation = {
   employee: HrEmployeeKyeMutation;
+  leave: HrEmployeeLeaveMutation;
 };
 
 export type HrEmployeeQuery = {
@@ -11456,6 +11466,18 @@ export const Language = {
 } as const;
 
 export type Language = typeof Language[keyof typeof Language];
+export type LeaveInput = {
+  employeeId: Scalars['String'];
+  leaveFrom: Scalars['Localized'];
+  leaveTo: Scalars['Localized'];
+  leaveTypeId: Scalars['ID'];
+};
+
+export type LeaveOutput = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type LedgerAllTransactionConnection = {
   edges?: Maybe<Array<Maybe<LedgerAllTransactionEdge>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -20858,6 +20880,30 @@ export type AddProfitToFundManagementDataMutation = {
         | MutationError_ServerError_Fragment
         | MutationError_ValidationError_Fragment
         | null;
+    } | null;
+  };
+};
+
+export type SetEmployeeUnboardingUpsertMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: EmployeeOnboardingInput;
+}>;
+
+export type SetEmployeeUnboardingUpsertMutation = {
+  hr: {
+    employeelifecycle?: {
+      employeeOnboarding: {
+        upsertEmployeeOnboarding: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
     } | null;
   };
 };
@@ -39885,6 +39931,42 @@ export const useAddProfitToFundManagementDataMutation = <TError = unknown, TCont
     ['addProfitToFundManagementData'],
     useAxios<AddProfitToFundManagementDataMutation, AddProfitToFundManagementDataMutationVariables>(
       AddProfitToFundManagementDataDocument
+    ),
+    options
+  );
+export const SetEmployeeUnboardingUpsertDocument = `
+    mutation setEmployeeUnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
+  hr {
+    employeelifecycle {
+      employeeOnboarding {
+        upsertEmployeeOnboarding(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeUnboardingUpsertMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeUnboardingUpsertMutation,
+    TError,
+    SetEmployeeUnboardingUpsertMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeUnboardingUpsertMutation,
+    TError,
+    SetEmployeeUnboardingUpsertMutationVariables,
+    TContext
+  >(
+    ['setEmployeeUnboardingUpsert'],
+    useAxios<SetEmployeeUnboardingUpsertMutation, SetEmployeeUnboardingUpsertMutationVariables>(
+      SetEmployeeUnboardingUpsertDocument
     ),
     options
   );

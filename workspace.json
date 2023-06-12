@@ -134,6 +134,7 @@
     "ebanking-ui-components": "libs/ebanking/ui-components",
     "ebanking-ui-layout": "libs/ebanking/ui-layout",
     "hr-module-employee-feature-employee": "libs/hr-module/employee/feature-employee",
+    "hr-module-feature-lifecycle": "libs/hr-module/feature-lifecycle",
     "hr-module-feature-recruitment": "libs/hr-module/feature-recruitment",
     "hr-module-ui-layouts": "libs/hr-module/ui-layouts",
     "inventory-ui-layout": "libs/inventory/ui-layout",
