@@ -19,7 +19,7 @@ export const HrRecruitmentJobOpeningList = () => {
     () => [
       {
         header: 'Job ID',
-        accessorFn: (row) => row?.node?.jobId,
+        accessorFn: (row) => row?.node?.id,
       },
       {
         header: 'Title',

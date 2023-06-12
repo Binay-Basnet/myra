@@ -19,7 +19,7 @@ export const HrRecruitmentJobOfferList = () => {
     () => [
       {
         header: 'Application ID',
-        accessorFn: (row) => row?.node?.applicantId,
+        accessorFn: (row) => row?.node?.id,
       },
       {
         header: 'Name',
