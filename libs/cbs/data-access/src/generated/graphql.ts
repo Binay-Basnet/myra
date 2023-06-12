@@ -2370,6 +2370,7 @@ export type CoaAccount = {
   branch?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   parentGroup?: Maybe<Scalars['Localized']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export const CoaAccountClass = {
@@ -2511,6 +2512,7 @@ export type CoaListFilter = {
   filterMode?: InputMaybe<Filter_Mode>;
   ledgerId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  tag?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export const CoaListFlag = {
@@ -2891,6 +2893,7 @@ export type ChartsOfAccountMutationAddAccountArgs = {
   ledgerName?: InputMaybe<Scalars['String']>;
   openForBranches?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   parentAccountCode: Scalars['String'];
+  tagIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
 };
 
 export type ChartsOfAccountMutationDeleteArgs = {
@@ -2918,6 +2921,7 @@ export type ChartsOfAccountResult = {
 
 export type ChartsOfAccountSettingsMutation = {
   account?: Maybe<ChartsOfAccountMutation>;
+  tag?: Maybe<SettingLedgerTagMutation>;
 };
 
 export type ChartsOfAccountSettingsQuery = {
@@ -2934,6 +2938,7 @@ export type ChartsOfAccountSettingsQuery = {
   ledgerAllTransactionsList?: Maybe<LedgerAllTransactionConnection>;
   ledgersForJVPosting?: Maybe<LedgersForJvListResult>;
   search?: Maybe<CoaMinimalResult>;
+  tag?: Maybe<SettingLedgerTagQuery>;
 };
 
 export type ChartsOfAccountSettingsQueryAccountsArgs = {
@@ -11490,6 +11495,24 @@ export type LedgerMappingFormState = {
   principal?: Maybe<Scalars['String']>;
 };
 
+export type LedgerTag = {
+  createdAt?: Maybe<Scalars['Localized']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  ledgerCount?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type LedgerTagInput = {
+  description?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+export type LedgerTagsResult = {
+  data?: Maybe<Array<Maybe<LedgerTag>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LedgersForJvListEdges = {
   cursor: Scalars['Cursor'];
   node?: Maybe<CoaAccount>;
@@ -17287,6 +17310,62 @@ export type ServiceTypeFormState = {
   ledgerName?: Maybe<Scalars['String']>;
   percentage?: Maybe<Scalars['Float']>;
   serviceName?: Maybe<Scalars['String']>;
+};
+
+export type SettingAddTagToLedgerResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['String']>;
+};
+
+export type SettingLedgerTagListConnection = {
+  edges?: Maybe<Array<Maybe<SettingLedgerTagListEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SettingLedgerTagListEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<LedgerTag>;
+};
+
+export type SettingLedgerTagMutation = {
+  addTagToLedger?: Maybe<SettingAddTagToLedgerResult>;
+  removeTagFromLedger?: Maybe<MutationError>;
+  upsert?: Maybe<SettingLedgerTagResult>;
+};
+
+export type SettingLedgerTagMutationAddTagToLedgerArgs = {
+  ledgerId: Scalars['ID'];
+  tagId: Scalars['ID'];
+};
+
+export type SettingLedgerTagMutationRemoveTagFromLedgerArgs = {
+  ledgerId: Scalars['ID'];
+  tagId: Scalars['ID'];
+};
+
+export type SettingLedgerTagMutationUpsertArgs = {
+  data: LedgerTagInput;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type SettingLedgerTagQuery = {
+  list?: Maybe<SettingLedgerTagListConnection>;
+  listLedgerTags?: Maybe<LedgerTagsResult>;
+};
+
+export type SettingLedgerTagQueryListArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type SettingLedgerTagQueryListLedgerTagsArgs = {
+  ledgerId: Scalars['ID'];
+};
+
+export type SettingLedgerTagResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['String']>;
 };
 
 export type SettingsMutation = {
