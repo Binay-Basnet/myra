@@ -1,5 +1,6 @@
-import { FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, GridItem } from '@myra-ui';
+
+import { FormSwitchTab } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, SubHeadingText } from '../formui';
@@ -26,7 +27,7 @@ export const PartialPayment = () => {
             <SubHeadingText>{t['loanProductAllowPartialInstallment']}</SubHeadingText>
             <FormSwitchTab name="allowPartialInstallment" options={YesNoOptions} />
           </Box>
-          <Box
+          {/* <Box
             display="flex"
             flexDirection="row"
             justifyContent="space-between"
@@ -35,7 +36,7 @@ export const PartialPayment = () => {
           >
             <SubHeadingText>{t['loanProductIsMonthlyInterestCompulsory']}</SubHeadingText>
             <FormSwitchTab name="isMonthlyInstallmentCompulsory" options={YesNoOptions} />
-          </Box>
+          </Box> */}
         </BoxContainer>
       </GridItem>
     </FormSection>
