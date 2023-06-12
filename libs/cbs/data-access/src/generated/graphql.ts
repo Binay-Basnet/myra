@@ -34601,6 +34601,7 @@ export type GetLoanProductEditDataQuery = {
             modifiedAt: string;
             productName: string;
             productType: string;
+            loanType: TypeOfLoan;
             productSubType: string;
             productNature: NatureOfLoanProduct;
             description?: string | null;
@@ -58568,6 +58569,7 @@ export const GetLoanProductEditDataDocument = `
             modifiedAt
             productName
             productType
+            loanType
             productSubType
             productNature
             productCode {
