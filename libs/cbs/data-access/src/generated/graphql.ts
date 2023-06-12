@@ -5904,6 +5904,15 @@ export type EmployeeInput = {
   workPhoneNumber?: InputMaybe<Scalars['String']>;
 };
 
+export type EmployeeLeaveType = {
+  employeeId: Scalars['String'];
+  leaveFrom: Scalars['Localized'];
+  leaveId: Scalars['String'];
+  leaveNote: Scalars['String'];
+  leaveTo: Scalars['Localized'];
+  leaveTypeId: Scalars['String'];
+};
+
 export type EmployeeListType = {
   employeeAddress?: Maybe<Address>;
   employeeContact?: Maybe<Scalars['String']>;
@@ -7628,6 +7637,17 @@ export type HrEmployeeKyeQueryListEmployeeArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HrEmployeeLeaveConnection = {
+  PageInfo?: Maybe<PageInfo>;
+  edges?: Maybe<Array<Maybe<HrEmployeeLeaveEdges>>>;
+  totalCount: Scalars['Int'];
+};
+
+export type HrEmployeeLeaveEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<EmployeeLeaveType>;
+};
+
 export type HrEmployeeLeaveMutation = {
   upsertLeave: LeaveOutput;
 };
@@ -7635,6 +7655,20 @@ export type HrEmployeeLeaveMutation = {
 export type HrEmployeeLeaveMutationUpsertLeaveArgs = {
   id?: InputMaybe<Scalars['String']>;
   input: LeaveInput;
+};
+
+export type HrEmployeeLeaveQuery = {
+  getLeave: LeaveOutputType;
+  listLeave: HrEmployeeLeaveConnection;
+};
+
+export type HrEmployeeLeaveQueryGetLeaveArgs = {
+  id: Scalars['String'];
+};
+
+export type HrEmployeeLeaveQueryListLeaveArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type HrEmployeeLifecycleEmployeeOnboardingMutation = {
@@ -7686,6 +7720,7 @@ export type HrEmployeeMutation = {
 
 export type HrEmployeeQuery = {
   employee: HrEmployeeKyeQuery;
+  leave: HrEmployeeLeaveQuery;
 };
 
 export type HrMutation = {
@@ -11469,6 +11504,7 @@ export type Language = typeof Language[keyof typeof Language];
 export type LeaveInput = {
   employeeId: Scalars['String'];
   leaveFrom: Scalars['Localized'];
+  leaveNote: Scalars['String'];
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['ID'];
 };
@@ -11476,6 +11512,11 @@ export type LeaveInput = {
 export type LeaveOutput = {
   error?: Maybe<MutationError>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type LeaveOutputType = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<EmployeeLeaveType>;
 };
 
 export type LedgerAllTransactionConnection = {
@@ -20884,12 +20925,12 @@ export type AddProfitToFundManagementDataMutation = {
   };
 };
 
-export type SetEmployeeUnboardingUpsertMutationVariables = Exact<{
+export type SetEmployeeOnboardingUpsertMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: EmployeeOnboardingInput;
 }>;
 
-export type SetEmployeeUnboardingUpsertMutation = {
+export type SetEmployeeOnboardingUpsertMutation = {
   hr: {
     employeelifecycle?: {
       employeeOnboarding: {
@@ -39934,8 +39975,8 @@ export const useAddProfitToFundManagementDataMutation = <TError = unknown, TCont
     ),
     options
   );
-export const SetEmployeeUnboardingUpsertDocument = `
-    mutation setEmployeeUnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
+export const SetEmployeeOnboardingUpsertDocument = `
+    mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
   hr {
     employeelifecycle {
       employeeOnboarding {
@@ -39950,23 +39991,23 @@ export const SetEmployeeUnboardingUpsertDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetEmployeeUnboardingUpsertMutation = <TError = unknown, TContext = unknown>(
+export const useSetEmployeeOnboardingUpsertMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
-    SetEmployeeUnboardingUpsertMutation,
+    SetEmployeeOnboardingUpsertMutation,
     TError,
-    SetEmployeeUnboardingUpsertMutationVariables,
+    SetEmployeeOnboardingUpsertMutationVariables,
     TContext
   >
 ) =>
   useMutation<
-    SetEmployeeUnboardingUpsertMutation,
+    SetEmployeeOnboardingUpsertMutation,
     TError,
-    SetEmployeeUnboardingUpsertMutationVariables,
+    SetEmployeeOnboardingUpsertMutationVariables,
     TContext
   >(
-    ['setEmployeeUnboardingUpsert'],
-    useAxios<SetEmployeeUnboardingUpsertMutation, SetEmployeeUnboardingUpsertMutationVariables>(
-      SetEmployeeUnboardingUpsertDocument
+    ['setEmployeeOnboardingUpsert'],
+    useAxios<SetEmployeeOnboardingUpsertMutation, SetEmployeeOnboardingUpsertMutationVariables>(
+      SetEmployeeOnboardingUpsertDocument
     ),
     options
   );

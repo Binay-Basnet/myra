@@ -19,6 +19,7 @@ import { AsyncSelect, chakraComponents, Select } from 'chakra-react-select';
 import _, { debounce, uniqueId } from 'lodash';
 
 import { Checkbox, Grid, GridItem } from '@myra-ui';
+import { DatePicker } from '@myra-ui/date-picker';
 
 import { chakraDefaultStyles, getSearchBarStyle } from '../utils/ChakraSelectTheme';
 import { getComponents } from '../utils/SelectComponents';
@@ -843,7 +844,7 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
           />
         ) : null
       ) : column.fieldType === 'checkbox' ? null : column.fieldType ===
-        'select' ? null : column.cell ? (
+        'select' ? null : column.fieldType === 'date' ? null : column.cell ? (
         <Box px="s8" width="100%" cursor="not-allowed">
           {column.cell(data)}
         </Box>
@@ -942,6 +943,20 @@ const EditableCell = <T extends RecordWithId & Record<string, EditableValue>>({
             });
           }}
           isDisabled={column.getDisabled && column.getDisabled(data)}
+        />
+      ) : column?.fieldType === 'date' ? (
+        <DatePicker
+          calendarType="AD"
+          onChange={(e) => {
+            dispatch({
+              type: EditableTableActionKind.EDIT,
+              payload: {
+                data,
+                newValue: e.ad ?? '',
+                column,
+              },
+            });
+          }}
         />
       ) : (
         <Input

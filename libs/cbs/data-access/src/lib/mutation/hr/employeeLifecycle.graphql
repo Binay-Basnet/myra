@@ -1,4 +1,4 @@
-mutation setEmployeeUnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
+mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
   hr {
     employeelifecycle {
       employeeOnboarding {
