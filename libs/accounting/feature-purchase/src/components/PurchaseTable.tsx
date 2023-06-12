@@ -52,13 +52,14 @@ export const PurchaseTable = () => {
       })),
     [warehouseData]
   );
-  const { watch, reset } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const itemDetails = watch('itemDetails');
 
   useDeepCompareEffect(() => {
     if (itemDetails?.length) {
-      reset({
-        itemDetails: itemDetails?.map((items: PurchaseTableType) => {
+      setValue(
+        'itemDetails',
+        itemDetails?.map((items: PurchaseTableType) => {
           const costPrice = inventoryItemsData?.find((item) => items?.itemId === item?.node?.id)
             ?.node?.costPrice;
           const taxData = String(
@@ -78,8 +79,8 @@ export const PurchaseTable = () => {
             description: items?.description,
             warehouse: items?.warehouse,
           };
-        }),
-      });
+        })
+      );
     }
   }, [itemDetails, inventoryItemsData]);
   const tableColumns: Column<PurchaseTableType>[] = [

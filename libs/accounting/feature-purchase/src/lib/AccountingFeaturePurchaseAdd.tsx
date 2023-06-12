@@ -18,7 +18,7 @@ import { PurchaseDetails, PurchaseTable } from '../components';
 
 type PurchaseEntryForm = Omit<PurchaseEntryInput, 'itemDetails'> & {
   itemDetails: {
-    itemId: { label: string; value: string };
+    itemId: string;
     amount?: string;
     description?: string;
     itemName?: string;
@@ -55,9 +55,7 @@ export const AccountingFeaturePurchaseAdd = () => {
       ...values,
       itemDetails: values?.['itemDetails']?.map((product) => ({
         ...product,
-        itemId: product.itemId.value,
-        tax: inventoryItemsData?.find((item) => item?.node?.id === product?.itemId.value)?.node
-          ?.taxId,
+        tax: inventoryItemsData?.find((item) => item?.node?.id === product?.itemId)?.node?.taxId,
       })),
     };
 
