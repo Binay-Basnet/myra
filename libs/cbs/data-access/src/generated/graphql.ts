@@ -5904,6 +5904,15 @@ export type EmployeeInput = {
   workPhoneNumber?: InputMaybe<Scalars['String']>;
 };
 
+export type EmployeeLeaveType = {
+  employeeId: Scalars['String'];
+  leaveFrom: Scalars['Localized'];
+  leaveId: Scalars['String'];
+  leaveNote: Scalars['String'];
+  leaveTo: Scalars['Localized'];
+  leaveTypeId: Scalars['String'];
+};
+
 export type EmployeeListType = {
   employeeAddress?: Maybe<Address>;
   employeeContact?: Maybe<Scalars['String']>;
@@ -7628,6 +7637,40 @@ export type HrEmployeeKyeQueryListEmployeeArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HrEmployeeLeaveConnection = {
+  PageInfo?: Maybe<PageInfo>;
+  edges?: Maybe<Array<Maybe<HrEmployeeLeaveEdges>>>;
+  totalCount: Scalars['Int'];
+};
+
+export type HrEmployeeLeaveEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<EmployeeLeaveType>;
+};
+
+export type HrEmployeeLeaveMutation = {
+  upsertLeave: LeaveOutput;
+};
+
+export type HrEmployeeLeaveMutationUpsertLeaveArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: LeaveInput;
+};
+
+export type HrEmployeeLeaveQuery = {
+  getLeave: LeaveOutputType;
+  listLeave: HrEmployeeLeaveConnection;
+};
+
+export type HrEmployeeLeaveQueryGetLeaveArgs = {
+  id: Scalars['String'];
+};
+
+export type HrEmployeeLeaveQueryListLeaveArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type HrEmployeeLifecycleEmployeeOnboardingMutation = {
   upsertEmployeeOnboarding: ReturnEmployeeOnboarding;
 };
@@ -7672,10 +7715,12 @@ export type HrEmployeeListEdges = {
 
 export type HrEmployeeMutation = {
   employee: HrEmployeeKyeMutation;
+  leave: HrEmployeeLeaveMutation;
 };
 
 export type HrEmployeeQuery = {
   employee: HrEmployeeKyeQuery;
+  leave: HrEmployeeLeaveQuery;
 };
 
 export type HrMutation = {
@@ -11456,6 +11501,24 @@ export const Language = {
 } as const;
 
 export type Language = typeof Language[keyof typeof Language];
+export type LeaveInput = {
+  employeeId: Scalars['String'];
+  leaveFrom: Scalars['Localized'];
+  leaveNote: Scalars['String'];
+  leaveTo: Scalars['Localized'];
+  leaveTypeId: Scalars['ID'];
+};
+
+export type LeaveOutput = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export type LeaveOutputType = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<EmployeeLeaveType>;
+};
+
 export type LedgerAllTransactionConnection = {
   edges?: Maybe<Array<Maybe<LedgerAllTransactionEdge>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -20859,6 +20922,30 @@ export type AddProfitToFundManagementDataMutation = {
         | MutationError_ValidationError_Fragment
         | null;
     } | null;
+  };
+};
+
+export type SetNewEmployeeMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  input: EmployeeInput;
+}>;
+
+export type SetNewEmployeeMutation = {
+  hr: {
+    employee: {
+      employee: {
+        upsertEmployee: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
   };
 };
 
@@ -39886,6 +39973,35 @@ export const useAddProfitToFundManagementDataMutation = <TError = unknown, TCont
     useAxios<AddProfitToFundManagementDataMutation, AddProfitToFundManagementDataMutationVariables>(
       AddProfitToFundManagementDataDocument
     ),
+    options
+  );
+export const SetNewEmployeeDocument = `
+    mutation setNewEmployee($id: String, $input: EmployeeInput!) {
+  hr {
+    employee {
+      employee {
+        upsertEmployee(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetNewEmployeeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetNewEmployeeMutation,
+    TError,
+    SetNewEmployeeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetNewEmployeeMutation, TError, SetNewEmployeeMutationVariables, TContext>(
+    ['setNewEmployee'],
+    useAxios<SetNewEmployeeMutation, SetNewEmployeeMutationVariables>(SetNewEmployeeDocument),
     options
   );
 export const SetStaffPlanningDocument = `
