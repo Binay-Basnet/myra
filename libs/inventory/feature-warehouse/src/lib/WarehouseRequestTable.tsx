@@ -117,25 +117,51 @@ export const WarehouseRequestTable = () => {
       {
         id: '_actions',
         header: '',
-        cell: (props) => (
-          <TablePopover
-            items={[
-              {
-                title: 'Accept Transfer',
-                aclKey: 'CBS_MEMBERS_MEMBER',
+        cell: (props) => {
+          props?.row?.original?.node?.status !== 'COMPLETED' ? (
+            <TablePopover
+              items={[
+                {
+                  title: 'Accept Transfer',
+                  aclKey: 'CBS_MEMBERS_MEMBER',
 
-                onClick: (row) => makeActiveHandler(row?.id, WarehouseRequestResponse?.Accept),
-              },
-              {
-                title: 'Reject Transfer',
-                aclKey: 'CBS_MEMBERS_MEMBER',
+                  onClick: (row) => makeActiveHandler(row?.id, WarehouseRequestResponse?.Accept),
+                },
+                {
+                  title: 'Reject Transfer',
+                  aclKey: 'CBS_MEMBERS_MEMBER',
 
-                onClick: (row) => rejectRequestHandler(row?.id, WarehouseRequestResponse?.Reject),
-              },
-            ]}
-            node={props?.row?.original?.node}
-          />
-        ),
+                  onClick: (row) => rejectRequestHandler(row?.id, WarehouseRequestResponse?.Reject),
+                },
+                {
+                  title: 'View Details',
+                  aclKey: 'CBS_MEMBERS_MEMBER',
+
+                  onClick: (row) => {
+                    router.push(`${ROUTES.INVENTORY_WAREHOUSE_REQUEST_LIST}?id=${row?.id}`);
+                    onOpenDetailsModal();
+                  },
+                },
+              ]}
+              node={props?.row?.original?.node}
+            />
+          ) : (
+            <TablePopover
+              items={[
+                {
+                  title: 'View Details',
+                  aclKey: 'CBS_MEMBERS_MEMBER',
+
+                  onClick: (row) => {
+                    router.push(`${ROUTES.INVENTORY_WAREHOUSE_REQUEST_LIST}?id=${row?.id}`);
+                    onOpenDetailsModal();
+                  },
+                },
+              ]}
+              node={props?.row?.original?.node}
+            />
+          );
+        },
         meta: {
           width: '3.125rem',
         },
