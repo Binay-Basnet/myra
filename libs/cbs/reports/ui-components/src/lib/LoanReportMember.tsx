@@ -59,6 +59,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => (
               {account?.installment && <Text>Installment:</Text>}
               {/* <Text>Loan Processing Charge:</Text> */}
               {account?.disbursedAmount && <Text>Disbursed Amount:</Text>}
+              {account?.charge && <Text>Service Charge:</Text>}
             </Box>
           </GridItem>
 
@@ -73,6 +74,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => (
               {account?.disbursedAmount && (
                 <Text noOfLines={1}>{amountConverter(account?.disbursedAmount || 0)}</Text>
               )}
+              {account?.charge && <Text>{amountConverter(account?.charge || 0)}</Text>}
             </Box>
           </GridItem>
         </Grid>
