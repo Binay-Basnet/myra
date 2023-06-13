@@ -121,3 +121,27 @@ query getAppointmentLetterList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getJobApplicationList($filter: Filter, $pagination: Pagination) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        listJobApplication(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              name
+              jobPosting
+              applicantStatus
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

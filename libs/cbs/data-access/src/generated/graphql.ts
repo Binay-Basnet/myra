@@ -21250,6 +21250,30 @@ export type SetAppointmentLetterMutation = {
   };
 };
 
+export type SetJobApplicationMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: JobApplicationInput;
+}>;
+
+export type SetJobApplicationMutation = {
+  hr: {
+    recruitment: {
+      recruitmentJobApplication: {
+        upsertJobApplication: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    };
+  };
+};
+
 export type SearchIndexingMutationVariables = Exact<{ [key: string]: never }>;
 
 export type SearchIndexingMutation = { search: { indexData?: string | null } };
@@ -27548,6 +27572,33 @@ export type GetAppointmentLetterListQuery = {
               offerDate: Record<'local' | 'en' | 'np', string>;
               email: string;
               designation: string;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetJobApplicationListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetJobApplicationListQuery = {
+  hr: {
+    recruitment: {
+      recruitmentJobApplication: {
+        listJobApplication: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              id?: string | null;
+              name?: string | null;
+              jobPosting?: string | null;
+              applicantStatus?: ApplicantStatus | null;
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
@@ -40404,6 +40455,37 @@ export const useSetAppointmentLetterMutation = <TError = unknown, TContext = unk
     ),
     options
   );
+export const SetJobApplicationDocument = `
+    mutation setJobApplication($id: ID, $input: JobApplicationInput!) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        upsertJobApplication(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetJobApplicationMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetJobApplicationMutation,
+    TError,
+    SetJobApplicationMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetJobApplicationMutation, TError, SetJobApplicationMutationVariables, TContext>(
+    ['setJobApplication'],
+    useAxios<SetJobApplicationMutation, SetJobApplicationMutationVariables>(
+      SetJobApplicationDocument
+    ),
+    options
+  );
 export const SearchIndexingDocument = `
     mutation searchIndexing {
   search {
@@ -49349,6 +49431,42 @@ export const useGetAppointmentLetterListQuery = <
       : ['getAppointmentLetterList', variables],
     useAxios<GetAppointmentLetterListQuery, GetAppointmentLetterListQueryVariables>(
       GetAppointmentLetterListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetJobApplicationListDocument = `
+    query getJobApplicationList($filter: Filter, $pagination: Pagination) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        listJobApplication(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              name
+              jobPosting
+              applicantStatus
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetJobApplicationListQuery = <TData = GetJobApplicationListQuery, TError = unknown>(
+  variables?: GetJobApplicationListQueryVariables,
+  options?: UseQueryOptions<GetJobApplicationListQuery, TError, TData>
+) =>
+  useQuery<GetJobApplicationListQuery, TError, TData>(
+    variables === undefined ? ['getJobApplicationList'] : ['getJobApplicationList', variables],
+    useAxios<GetJobApplicationListQuery, GetJobApplicationListQueryVariables>(
+      GetJobApplicationListDocument
     ).bind(null, variables),
     options
   );

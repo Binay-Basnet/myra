@@ -57,3 +57,18 @@ mutation setAppointmentLetter($id: ID, $input: AppointmentLetterInput!) {
     }
   }
 }
+
+mutation setJobApplication($id: ID, $input: JobApplicationInput!) {
+  hr {
+    recruitment {
+      recruitmentJobApplication {
+        upsertJobApplication(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

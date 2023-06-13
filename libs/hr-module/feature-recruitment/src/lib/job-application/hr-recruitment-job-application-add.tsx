@@ -1,23 +1,73 @@
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
-import { FormSection, GridItem } from '@myra-ui';
+import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
+import {
+  ApplicantStatus,
+  useGetJobOpeningListQuery,
+  useSetJobApplicationMutation,
+} from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormAddress,
   FormEmailInput,
-  FormFileInput,
   FormInput,
   FormLayout,
   FormPhoneNumber,
   FormRating,
   FormSelect,
+  FormSwitch,
 } from '@coop/shared/form';
+import { getPaginationQuery } from '@coop/shared/utils';
 
 import { EducationalDetailsAdd } from '../../components/EducationDetailsAdd';
 import { ExperienceDetailsAdd } from '../../components/ExperienceDetailsAdd';
 
 export const HrRecruitmentJobApplicationAdd = () => {
+  const router = useRouter();
   const methods = useForm();
+  const { watch, getValues } = methods;
+  const { data, isFetching } = useGetJobOpeningListQuery({
+    pagination: getPaginationQuery(),
+  });
+
+  const { mutateAsync } = useSetJobApplicationMutation();
+
+  const jobOpeningOptions =
+    data?.hr?.recruitment?.recruitmentJobOpening?.listJobOpening?.edges?.map((item) => ({
+      label: item?.node?.title as string,
+      value: item?.node?.id as string,
+    }));
+
+  const applicationStatusOptions = [
+    { label: 'Accepted', value: ApplicantStatus?.Accepted },
+    { label: 'Not Accepted', value: ApplicantStatus?.NotAccepted },
+    { label: 'Pending', value: ApplicantStatus?.Pending },
+    { label: 'Short Listed', value: ApplicantStatus?.Shortlisted },
+  ];
+
+  const isTempSameAsPerm = watch('tempSameAsPerm');
+
+  const submitForm = () => {
+    asyncToast({
+      id: 'add-job-application',
+      msgs: {
+        success: 'new job application added succesfully',
+        loading: 'adding new job application',
+      },
+      onSuccess: () => {
+        router.push(ROUTES?.HR_RECRUITMENT_JOB_APPLICATION_LIST);
+      },
+      promise: mutateAsync({
+        id: null,
+        input: {
+          ...getValues(),
+        },
+      }),
+    });
+  };
+
   return (
     <FormLayout methods={methods}>
       <FormLayout.Header title="New Job Application" />
@@ -27,30 +77,51 @@ export const HrRecruitmentJobApplicationAdd = () => {
             <GridItem colSpan={2}>
               <FormInput name="applicantName" type="text" label="Applicant Name" />
             </GridItem>
-            <FormSelect name="jobOpening" label="Job Opening" />
+            <FormSelect
+              name="jobOpening"
+              label="Job Opening"
+              options={jobOpeningOptions}
+              isLoading={isFetching}
+            />
           </FormSection>
           <FormSection templateColumns={3} header="Contact Details" divider>
-            <FormEmailInput name="emailAddress" type="email" label="Personal Email Address" />
-            <FormPhoneNumber name="contactNumber" type="phone" label="Personal Contact Number" />
+            <FormEmailInput
+              name="personalEmailAddress"
+              type="email"
+              label="Personal Email Address"
+            />
+            <FormPhoneNumber
+              name="personalPhoneNumber"
+              type="phone"
+              label="Personal Contact Number"
+            />
           </FormSection>
           <FormSection templateColumns={3} header="Permanent Address" divider>
             <FormAddress name="permanentAddress" />
           </FormSection>
           <FormSection templateColumns={3} header="Temporary Address" divider>
-            <FormAddress name="temporaryAddress" />
+            <GridItem colSpan={3}>
+              <FormSwitch name="tempSameAsPerm" label="Temporary Address same as Permanent" />
+            </GridItem>
+            {!isTempSameAsPerm && <FormAddress name="temporaryAddress" />}
           </FormSection>
-          <FormSection templateColumns={2} header="Document" divider>
+          {/* <FormSection templateColumns={2} header="Document" divider>
             <FormFileInput size="sm" name="resume" label="Resume/CV" />
             <FormFileInput size="sm" name="coverLetter" label="Cover Letter" />
-          </FormSection>
+          </FormSection> */}
           <EducationalDetailsAdd />
           <ExperienceDetailsAdd />
           <FormSection templateColumns={2} header="Impression" divider>
-            <FormSelect name="status" label="Status" />
-            <FormRating name="Application Rating" label="Application Rating" />
+            <FormSelect
+              name="applicationStatus"
+              label="Status"
+              options={applicationStatusOptions}
+            />
+            <FormRating name="applicationRating" label="Application Rating" />
           </FormSection>
         </FormLayout.Form>{' '}
       </FormLayout.Content>
+      <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={submitForm} />
     </FormLayout>
   );
 };
