@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
 import { GridItem } from '@myra-ui/components';
+import { Box } from '@myra-ui/foundations';
+import { ExpandedCell, ExpandedHeader } from '@myra-ui/table';
 
 import {
   LocalizedDateFilter,
@@ -11,6 +13,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 type ReportFilter = {
   branchId: { label: string; value: string }[];
@@ -19,13 +22,23 @@ type ReportFilter = {
 };
 
 export type Ledger = {
-  closingBalance?: string;
+  closingBalance?: {
+    Value: string;
+    Type: string;
+  };
   crAmount?: string;
   drAmount?: string;
-  id?: string;
-  name?: string;
-  netBalance?: string;
-  openingBalance?: string;
+  tagId?: string;
+  tagName?: string;
+  netBalance?: {
+    Value: string;
+    Type: string;
+  };
+  openingBalance?: {
+    Value: string;
+    Type: string;
+  };
+  ledgers: Ledger[];
 };
 
 export const TagKhataReport = () => {
@@ -118,31 +131,105 @@ export const TagKhataReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization />
 
-          <Report.Table
+          <Report.Table<Ledger>
             showFooter
-            data={report}
+            data={(report || []) as Ledger[]}
             getSubRows={(row) => row?.ledgers}
             columns={[
-              { header: 'Tag', accessorFn: (row) => row.tagName },
+              {
+                header: ({ table }) => <ExpandedHeader table={table} value="Tag" />,
+                accessorKey: 'tagName',
+                cell: (props) => (
+                  <Box whiteSpace="pre-line" my="s4">
+                    <ExpandedCell row={props.row} value={props.getValue() as string} />
+                  </Box>
+                ),
+              },
               {
                 header: 'Opening Balance',
-                accessorFn: (row) => row.openingBalance,
+                accessorFn: (row) => row?.openingBalance?.Value,
+                cell: (props) => (
+                  <Box whiteSpace="pre-line" w="100%">
+                    {amountConverter(props.getValue() as string)}
+                  </Box>
+                ),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                id: 'openingBalanceType',
+                header: '',
+
+                accessorFn: (row) => row?.openingBalance?.Type || '-',
+                meta: {
+                  width: '50px',
+                },
               },
               {
                 header: 'Amount (Dr)',
                 accessorFn: (row) => row.drAmount,
+                cell: (props) => (
+                  <Box whiteSpace="pre-line" w="100%">
+                    {amountConverter(props.getValue() as string)}
+                  </Box>
+                ),
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Amount (Cr)',
                 accessorFn: (row) => row.crAmount,
+                cell: (props) => (
+                  <Box whiteSpace="pre-line" w="100%">
+                    {amountConverter(props.getValue() as string)}
+                  </Box>
+                ),
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Net Balance',
-                accessorFn: (row) => row.netBalance,
+                accessorFn: (row) => row?.netBalance?.Value,
+                cell: (props) => (
+                  <Box whiteSpace="pre-line" w="100%">
+                    {amountConverter(props.getValue() as string)}
+                  </Box>
+                ),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                id: 'netBalanceType',
+                header: '',
+
+                accessorFn: (row) => row?.netBalance?.Type || '-',
+                meta: {
+                  width: '50px',
+                },
               },
               {
                 header: 'Closing Balance',
-                accessorFn: (row) => row.closingBalance,
+                accessorFn: (row) => row?.closingBalance?.Value,
+                cell: (props) => (
+                  <Box whiteSpace="pre-line" w="100%">
+                    {amountConverter(props.getValue() as string)}
+                  </Box>
+                ),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                id: 'netBalanceType',
+                header: '',
+                accessorFn: (row) => row?.closingBalance?.Type || '-',
+                meta: {
+                  width: '50px',
+                },
               },
             ]}
             tableTitle="Payments (Dr.)"
