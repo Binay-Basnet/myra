@@ -70,7 +70,7 @@ export const HrLifecycleOnboardingAdd = () => {
 
 export default HrLifecycleOnboardingAdd;
 
-function convertDate(dateString: string) {
+const convertDate = (dateString: string) => {
   const date = new Date(dateString);
 
   const convertedDate = {
@@ -85,4 +85,4 @@ function convertDate(dateString: string) {
 
   const dateObj = { np: nepaliDate, en: dateString, local: '' };
   return dateObj;
-}
+};

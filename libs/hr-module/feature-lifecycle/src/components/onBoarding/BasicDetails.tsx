@@ -18,7 +18,7 @@ export const OnboardingBasicDetails = () => {
   return (
     <FormSection header="Basic Details">
       <GridItem colSpan={2}>
-        <FormSelect name="applicantId" label="Applicant" options={serviceCenterOptions} />
+        <FormSelect name="applicantId" label="Applicant" />
       </GridItem>
       <FormSelect name="serviceCenter" label="Service Center" options={serviceCenterOptions} />
     </FormSection>
