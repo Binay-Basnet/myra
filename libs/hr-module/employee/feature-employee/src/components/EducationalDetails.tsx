@@ -4,7 +4,11 @@ import { IoClose } from 'react-icons/io5';
 
 import { Box, Button, FormSection, Grid, GridItem, Icon, IconButton } from '@myra-ui';
 
-import { Frequency } from '@coop/cbs/data-access';
+import {
+  FormFieldSearchTerm,
+  GetIndividualKymOptionsQuery,
+  useGetIndividualKymOptionsQuery,
+} from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 
 interface IAddEducationalDetails {
@@ -12,62 +16,65 @@ interface IAddEducationalDetails {
   removeEducationalDetails: () => void;
 }
 
-const AddEducationalDetails = ({ index, removeEducationalDetails }: IAddEducationalDetails) => (
-  <Box bg="highlight.500" p="s20" display="flex" flexDirection="column">
-    <IconButton
-      aria-label="close-icon"
-      icon={<Icon as={IoClose} />}
-      onClick={removeEducationalDetails}
-      variant="ghost"
-      size="lg"
-      justifySelf="flex-end"
-      alignSelf="flex-end"
-    />
-    <Grid templateColumns="repeat(3,1fr)" gap="s20" rowGap="s16">
-      <GridItem colSpan={2}>
+export const getFieldOption = (
+  data?: GetIndividualKymOptionsQuery,
+  labelFormatter?: (label: string) => string
+) =>
+  data?.form?.options?.predefined?.data?.reduce((newArr, option) => {
+    if (option?.name.local && option?.id) {
+      newArr.push({
+        label: labelFormatter ? labelFormatter(option.name.local) : option.name.local,
+        value: option.id,
+      });
+    }
+
+    return newArr;
+  }, [] as { label: string; value: string }[]);
+
+const AddEducationalDetails = ({ index, removeEducationalDetails }: IAddEducationalDetails) => {
+  const { data: educationFields, isLoading: educationLoading } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.EducationQualification,
+  });
+  return (
+    <Box bg="highlight.500" p="s20" display="flex" flexDirection="column">
+      <IconButton
+        aria-label="close-icon"
+        icon={<Icon as={IoClose} />}
+        onClick={removeEducationalDetails}
+        variant="ghost"
+        size="lg"
+        justifySelf="flex-end"
+        alignSelf="flex-end"
+      />
+      <Grid templateColumns="repeat(3,1fr)" gap="s20" rowGap="s16">
+        <GridItem colSpan={2}>
+          <FormInput
+            type="text"
+            bg="white"
+            name={`educationalDetails.${index}.instituteName`}
+            label="Institute Name"
+          />
+        </GridItem>
+        <FormSelect
+          name={`educationalDetails.${index}.degree_diploma`}
+          label="Degree/Diploma"
+          isLoading={educationLoading}
+          options={getFieldOption(educationFields)}
+        />
         <FormInput
           type="text"
           bg="white"
-          name={`educationalDetails.${index}.instituteName`}
-          label="Institute Name"
+          name={`educationalDetails.${index}.specialization`}
+          label="Specialization"
         />
-      </GridItem>
-
-      <FormSelect
-        name={`educationalDetails.${index}.degree_diploma`}
-        label="Degree/Diploma"
-        options={[
-          {
-            label: 'daily',
-            value: Frequency.Daily,
-          },
-          {
-            label: 'weekly',
-            value: Frequency.Weekly,
-          },
-          {
-            label: 'monthly',
-            value: Frequency.Monthly,
-          },
-          {
-            label: 'yearly',
-            value: Frequency.Yearly,
-          },
-        ]}
-      />
-      <FormInput
-        type="text"
-        bg="white"
-        name={`educationalDetails.${index}.specialization`}
-        label="Specialization"
-      />
-      <FormDatePicker
-        name={`educationalDetails.${index}.dateOfCompletion`}
-        label="Date of Completion"
-      />
-    </Grid>
-  </Box>
-);
+        <FormDatePicker
+          name={`educationalDetails.${index}.dateOfCompletion`}
+          label="Date of Completion"
+        />
+      </Grid>
+    </Box>
+  );
+};
 
 export const EducationalDetails = () => {
   const {

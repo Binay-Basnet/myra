@@ -1,11 +1,13 @@
 /* eslint-disable-next-line */
 import { featureCode, useTranslation } from '@coop/shared/utils';
-import { Box, FormHeader, Text } from '@myra-ui';
+import { Box, FormHeader, Text, asyncToast } from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useSetNewEmployeeMutation } from '@coop/cbs/data-access';
+import { useRouter } from 'next/router';
 import {
   Approvers,
   Declerations,
@@ -23,11 +25,35 @@ import { getEmployeeSection } from '../utils/getSectionEmployee';
 import { EducationalDetails } from '../components/EducationalDetails';
 
 export const EmployeeAddForm = () => {
+  const router = useRouter();
   const [kymCurrentSection, setCurrentSection] = React.useState<{
     section: string;
     subSection: string;
   }>();
+
   const methods = useForm();
+  const { getValues } = methods;
+  const { mutateAsync } = useSetNewEmployeeMutation();
+
+  const onSave = () => {
+    asyncToast({
+      id: 'add-employee',
+      msgs: {
+        success: 'new employee added succesfully',
+        loading: 'adding new employee',
+      },
+      onSuccess: () => {
+        router.push(ROUTES?.HRMODULE_EMPLOYEES_LIST);
+      },
+      promise: mutateAsync({
+        id: null,
+        input: {
+          ...getValues(),
+        },
+      }),
+    });
+  };
+
   return (
     <FormLayout hasSidebar methods={methods}>
       <FormHeader title="Add Employee" closeLink={ROUTES.HRMODULE_EMPLOYEES_LIST} />
@@ -73,7 +99,7 @@ export const EmployeeAddForm = () => {
             </SectionContainer>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                Declerations
+                Declarations
               </Text>
               <Declerations />
             </SectionContainer>
@@ -81,7 +107,7 @@ export const EmployeeAddForm = () => {
         </FormLayout.Form>
       </FormLayout.Content>
 
-      <FormLayout.Footer mainButtonLabel="Save" />
+      <FormLayout.Footer mainButtonLabel="Save" mainButtonHandler={onSave} />
     </FormLayout>
   );
 };

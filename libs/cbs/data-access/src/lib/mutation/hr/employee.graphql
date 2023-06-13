@@ -1,0 +1,14 @@
+mutation setNewEmployee($id: String, $input: EmployeeInput!) {
+  hr {
+    employee {
+      employee {
+        upsertEmployee(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

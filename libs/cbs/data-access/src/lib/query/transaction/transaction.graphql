@@ -673,3 +673,32 @@ query bulkTransfersList($filter: Filter, $pagination: Pagination) {
     }
   }
 }
+
+query getTagKhataReport($data: TagKhataReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        tagKhataReport(data: $data) {
+          data {
+            tagId
+            tagName
+            openingBalance
+            drAmount
+            crAmount
+            netBalance
+            closingBalance
+            ledgers {
+              ledgerId
+              ledgerName
+              openingBalance
+              drAmount
+              crAmount
+              netBalance
+              closingBalance
+            }
+          }
+        }
+      }
+    }
+  }
+}
