@@ -119,8 +119,9 @@ export const InstallmentData = ({
         (loanType !== 'EPI' ||
           (loanType === 'EPI' &&
             index === 0 &&
-            new Date(installment?.installmentDate?.en).getTime() <
-              new Date(transactionDate?.en as string).getTime()))
+            (new Date(installment?.installmentDate?.en).getTime() <
+              new Date(transactionDate?.en as string).getTime() ||
+              installment?.status === 'CURRENT')))
       ) {
         if (tempAmount >= interest) {
           if (existingIndex !== -1) {
