@@ -327,6 +327,11 @@ export type AccountOperatorDetailsType = {
   temporaryAddress?: Maybe<KymAddress>;
 };
 
+export type AccountPremium = {
+  maxRate?: InputMaybe<Scalars['Float']>;
+  minRate?: InputMaybe<Scalars['Float']>;
+};
+
 export type AccountTransferEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
@@ -5004,6 +5009,7 @@ export type DepositProductSettingsMutation = {
   editChequeSettings?: Maybe<ProductActivateResult>;
   editProductInterest: InterestSetupMutationResult;
   makeInactive?: Maybe<DepositProductInactiveResult>;
+  updateAccountPremium: ProductChargeMutationResult;
   updateCloseCharge: ProductChargeMutationResult;
   updateOpenCharge: ProductChargeMutationResult;
   updatePenaltyCharge: ProductChargeMutationResult;
@@ -5042,6 +5048,12 @@ export type DepositProductSettingsMutationEditProductInterestArgs = {
 
 export type DepositProductSettingsMutationMakeInactiveArgs = {
   data?: InputMaybe<DepositProductInactiveData>;
+};
+
+export type DepositProductSettingsMutationUpdateAccountPremiumArgs = {
+  payload: AccountPremium;
+  productId: Scalars['ID'];
+  productType: AccountTypeFilter;
 };
 
 export type DepositProductSettingsMutationUpdateCloseChargeArgs = {
@@ -5937,8 +5949,8 @@ export type EmployeeListType = {
   employeeDateOfJoining?: Maybe<Scalars['Localized']>;
   employeeDepartment?: Maybe<Scalars['String']>;
   employeeEmail?: Maybe<Scalars['String']>;
-  employeeId?: Maybe<Scalars['String']>;
   employeeName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
 };
 
 export type EmployeeOnboardingConnection = {
@@ -11648,6 +11660,7 @@ export type LedgerList = {
   ledgerName?: Maybe<Scalars['String']>;
   serviceCenter?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['Boolean']>;
+  tags?: Maybe<Array<Maybe<TagConciseEntry>>>;
 };
 
 export type LedgerListEdges = {
@@ -14739,6 +14752,7 @@ export type MemberStatisticsView = {
   accountBalance?: Maybe<Scalars['String']>;
   loanBalance?: Maybe<Scalars['String']>;
   totalLoanInterest?: Maybe<Scalars['String']>;
+  totalLoanRemainingPrincipal?: Maybe<Scalars['String']>;
   totalSavingInterestAccured?: Maybe<Scalars['String']>;
   totalSavingInterestPosted?: Maybe<Scalars['String']>;
   totalShareValue?: Maybe<Scalars['String']>;
@@ -17519,7 +17533,7 @@ export type SettingLedgerTagMutation = {
 
 export type SettingLedgerTagMutationAddTagToLedgerArgs = {
   ledgerId: Scalars['ID'];
-  tagId: Scalars['ID'];
+  tagId: Array<Scalars['ID']>;
 };
 
 export type SettingLedgerTagMutationRemoveTagFromLedgerArgs = {
@@ -18546,6 +18560,11 @@ export type TtrReportFilter = {
 export type TtrReportResult = {
   data?: Maybe<TtrReportData>;
   error?: Maybe<QueryError>;
+};
+
+export type TagConciseEntry = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type TagKhataReportFilter = {
@@ -21130,54 +21149,6 @@ export type AddProfitToFundManagementDataMutation = {
   };
 };
 
-export type SetNewEmployeeMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['String']>;
-  input: EmployeeInput;
-}>;
-
-export type SetNewEmployeeMutation = {
-  hr: {
-    employee: {
-      employee: {
-        upsertEmployee: {
-          recordId: string;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | MutationError_ValidationError_Fragment
-            | null;
-        };
-      };
-    };
-  };
-};
-
-export type SetEmployeeOnboardingUpsertMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
-  input: EmployeeOnboardingInput;
-}>;
-
-export type SetEmployeeOnboardingUpsertMutation = {
-  hr: {
-    employeelifecycle?: {
-      employeeOnboarding: {
-        upsertEmployeeOnboarding: {
-          recordId: string;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | MutationError_ValidationError_Fragment
-            | null;
-        };
-      };
-    } | null;
-  };
-};
-
 export type SetStaffPlanningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: StaffPlanInput;
@@ -21260,30 +21231,6 @@ export type SetAppointmentLetterMutation = {
     recruitment: {
       recruitmentAppointmentLetter: {
         upsertAppointmentLetter: {
-          recordId: string;
-          error?:
-            | MutationError_AuthorizationError_Fragment
-            | MutationError_BadRequestError_Fragment
-            | MutationError_NotFoundError_Fragment
-            | MutationError_ServerError_Fragment
-            | MutationError_ValidationError_Fragment
-            | null;
-        };
-      };
-    };
-  };
-};
-
-export type SetJobApplicationMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
-  input: JobApplicationInput;
-}>;
-
-export type SetJobApplicationMutation = {
-  hr: {
-    recruitment: {
-      recruitmentJobApplication: {
-        upsertJobApplication: {
           recordId: string;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -27435,64 +27382,6 @@ export type GetPreviousYearFundManagementQuery = {
   };
 };
 
-export type GetEmployeeListQueryVariables = Exact<{
-  filter?: InputMaybe<Filter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetEmployeeListQuery = {
-  hr: {
-    employee: {
-      employee: {
-        listEmployee: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              employeeId?: string | null;
-              employeeName?: string | null;
-              employeeDepartment?: string | null;
-              employeeContact?: string | null;
-              employeeEmail?: string | null;
-              employeeDateOfJoining?: Record<'local' | 'en' | 'np', string> | null;
-              employeeAddress?: AddressFragment | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        };
-      };
-    };
-  };
-};
-
-export type GetHrEmployeeOnboardingListQueryVariables = Exact<{
-  filter?: InputMaybe<Filter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetHrEmployeeOnboardingListQuery = {
-  hr: {
-    employeelifecycle: {
-      employeeOnboarding: {
-        listEmployeeOnboarding: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              activity?: string | null;
-              email?: string | null;
-              id: string;
-              name?: string | null;
-              onboarding_status?: OnboardingStatus | null;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        };
-      };
-    };
-  };
-};
-
 export type GetStaffPlanQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -27624,33 +27513,6 @@ export type GetAppointmentLetterListQuery = {
               offerDate: Record<'local' | 'en' | 'np', string>;
               email: string;
               designation: string;
-            };
-          } | null> | null;
-          pageInfo?: PaginationFragment | null;
-        };
-      };
-    };
-  };
-};
-
-export type GetJobApplicationListQueryVariables = Exact<{
-  filter?: InputMaybe<Filter>;
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-export type GetJobApplicationListQuery = {
-  hr: {
-    recruitment: {
-      recruitmentJobApplication: {
-        listJobApplication: {
-          totalCount: number;
-          edges?: Array<{
-            cursor: string;
-            node: {
-              id?: string | null;
-              name?: string | null;
-              jobPosting?: string | null;
-              applicantStatus?: ApplicantStatus | null;
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
@@ -34725,20 +34587,6 @@ export type GetCoaAccountsAllTransactionListQuery = {
   };
 };
 
-export type GetTagListForReportQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetTagListForReportQuery = {
-  settings: {
-    chartsOfAccount?: {
-      tag?: {
-        list?: {
-          edges?: Array<{ node?: { id: string; name?: string | null } | null } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
-
 export type ListCbsShareCodesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ListCbsShareCodesQuery = {
@@ -38037,39 +37885,6 @@ export type BulkTransfersListQuery = {
   };
 };
 
-export type GetTagKhataReportQueryVariables = Exact<{
-  data: TagKhataReportFilter;
-}>;
-
-export type GetTagKhataReportQuery = {
-  report: {
-    transactionReport: {
-      financial: {
-        tagKhataReport: {
-          data?: Array<{
-            tagId?: string | null;
-            tagName?: string | null;
-            openingBalance?: unknown | null;
-            drAmount?: string | null;
-            crAmount?: string | null;
-            netBalance?: unknown | null;
-            closingBalance?: unknown | null;
-            ledgers?: Array<{
-              ledgerId?: string | null;
-              ledgerName?: string | null;
-              openingBalance?: unknown | null;
-              drAmount?: string | null;
-              crAmount?: string | null;
-              netBalance?: unknown | null;
-              closingBalance?: unknown | null;
-            } | null> | null;
-          } | null> | null;
-        };
-      };
-    };
-  };
-};
-
 export type GetTransferDetailQueryVariables = Exact<{
   transferID: Scalars['ID'];
 }>;
@@ -40360,71 +40175,6 @@ export const useAddProfitToFundManagementDataMutation = <TError = unknown, TCont
     ),
     options
   );
-export const SetNewEmployeeDocument = `
-    mutation setNewEmployee($id: String, $input: EmployeeInput!) {
-  hr {
-    employee {
-      employee {
-        upsertEmployee(id: $id, input: $input) {
-          recordId
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetNewEmployeeMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetNewEmployeeMutation,
-    TError,
-    SetNewEmployeeMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<SetNewEmployeeMutation, TError, SetNewEmployeeMutationVariables, TContext>(
-    ['setNewEmployee'],
-    useAxios<SetNewEmployeeMutation, SetNewEmployeeMutationVariables>(SetNewEmployeeDocument),
-    options
-  );
-export const SetEmployeeOnboardingUpsertDocument = `
-    mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
-  hr {
-    employeelifecycle {
-      employeeOnboarding {
-        upsertEmployeeOnboarding(id: $id, input: $input) {
-          recordId
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetEmployeeOnboardingUpsertMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetEmployeeOnboardingUpsertMutation,
-    TError,
-    SetEmployeeOnboardingUpsertMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    SetEmployeeOnboardingUpsertMutation,
-    TError,
-    SetEmployeeOnboardingUpsertMutationVariables,
-    TContext
-  >(
-    ['setEmployeeOnboardingUpsert'],
-    useAxios<SetEmployeeOnboardingUpsertMutation, SetEmployeeOnboardingUpsertMutationVariables>(
-      SetEmployeeOnboardingUpsertDocument
-    ),
-    options
-  );
 export const SetStaffPlanningDocument = `
     mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
   hr {
@@ -40540,37 +40290,6 @@ export const useSetAppointmentLetterMutation = <TError = unknown, TContext = unk
     ['setAppointmentLetter'],
     useAxios<SetAppointmentLetterMutation, SetAppointmentLetterMutationVariables>(
       SetAppointmentLetterDocument
-    ),
-    options
-  );
-export const SetJobApplicationDocument = `
-    mutation setJobApplication($id: ID, $input: JobApplicationInput!) {
-  hr {
-    recruitment {
-      recruitmentJobApplication {
-        upsertJobApplication(id: $id, input: $input) {
-          recordId
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetJobApplicationMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetJobApplicationMutation,
-    TError,
-    SetJobApplicationMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<SetJobApplicationMutation, TError, SetJobApplicationMutationVariables, TContext>(
-    ['setJobApplication'],
-    useAxios<SetJobApplicationMutation, SetJobApplicationMutationVariables>(
-      SetJobApplicationDocument
     ),
     options
   );
@@ -49288,91 +49007,6 @@ export const useGetPreviousYearFundManagementQuery = <
     ).bind(null, variables),
     options
   );
-export const GetEmployeeListDocument = `
-    query getEmployeeList($filter: Filter, $pagination: Pagination) {
-  hr {
-    employee {
-      employee {
-        listEmployee(filter: $filter, pagination: $pagination) {
-          totalCount
-          edges {
-            node {
-              employeeId
-              employeeName
-              employeeDepartment
-              employeeContact
-              employeeAddress {
-                ...Address
-              }
-              employeeEmail
-              employeeDateOfJoining
-            }
-            cursor
-          }
-          pageInfo {
-            ...Pagination
-          }
-        }
-      }
-    }
-  }
-}
-    ${AddressFragmentDoc}
-${PaginationFragmentDoc}`;
-export const useGetEmployeeListQuery = <TData = GetEmployeeListQuery, TError = unknown>(
-  variables?: GetEmployeeListQueryVariables,
-  options?: UseQueryOptions<GetEmployeeListQuery, TError, TData>
-) =>
-  useQuery<GetEmployeeListQuery, TError, TData>(
-    variables === undefined ? ['getEmployeeList'] : ['getEmployeeList', variables],
-    useAxios<GetEmployeeListQuery, GetEmployeeListQueryVariables>(GetEmployeeListDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
-export const GetHrEmployeeOnboardingListDocument = `
-    query getHREmployeeOnboardingList($filter: Filter, $pagination: Pagination) {
-  hr {
-    employeelifecycle {
-      employeeOnboarding {
-        listEmployeeOnboarding(filter: $filter, pagination: $pagination) {
-          totalCount
-          edges {
-            node {
-              activity
-              email
-              id
-              name
-              onboarding_status
-            }
-            cursor
-          }
-          pageInfo {
-            ...Pagination
-          }
-        }
-      }
-    }
-  }
-}
-    ${PaginationFragmentDoc}`;
-export const useGetHrEmployeeOnboardingListQuery = <
-  TData = GetHrEmployeeOnboardingListQuery,
-  TError = unknown
->(
-  variables?: GetHrEmployeeOnboardingListQueryVariables,
-  options?: UseQueryOptions<GetHrEmployeeOnboardingListQuery, TError, TData>
-) =>
-  useQuery<GetHrEmployeeOnboardingListQuery, TError, TData>(
-    variables === undefined
-      ? ['getHREmployeeOnboardingList']
-      : ['getHREmployeeOnboardingList', variables],
-    useAxios<GetHrEmployeeOnboardingListQuery, GetHrEmployeeOnboardingListQueryVariables>(
-      GetHrEmployeeOnboardingListDocument
-    ).bind(null, variables),
-    options
-  );
 export const GetStaffPlanDocument = `
     query getStaffPlan($id: ID!) {
   hr {
@@ -49561,42 +49195,6 @@ export const useGetAppointmentLetterListQuery = <
       : ['getAppointmentLetterList', variables],
     useAxios<GetAppointmentLetterListQuery, GetAppointmentLetterListQueryVariables>(
       GetAppointmentLetterListDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetJobApplicationListDocument = `
-    query getJobApplicationList($filter: Filter, $pagination: Pagination) {
-  hr {
-    recruitment {
-      recruitmentJobApplication {
-        listJobApplication(filter: $filter, pagination: $pagination) {
-          totalCount
-          edges {
-            node {
-              id
-              name
-              jobPosting
-              applicantStatus
-            }
-            cursor
-          }
-          pageInfo {
-            ...Pagination
-          }
-        }
-      }
-    }
-  }
-}
-    ${PaginationFragmentDoc}`;
-export const useGetJobApplicationListQuery = <TData = GetJobApplicationListQuery, TError = unknown>(
-  variables?: GetJobApplicationListQueryVariables,
-  options?: UseQueryOptions<GetJobApplicationListQuery, TError, TData>
-) =>
-  useQuery<GetJobApplicationListQuery, TError, TData>(
-    variables === undefined ? ['getJobApplicationList'] : ['getJobApplicationList', variables],
-    useAxios<GetJobApplicationListQuery, GetJobApplicationListQueryVariables>(
-      GetJobApplicationListDocument
     ).bind(null, variables),
     options
   );
@@ -58799,35 +58397,6 @@ export const useGetCoaAccountsAllTransactionListQuery = <
     ).bind(null, variables),
     options
   );
-export const GetTagListForReportDocument = `
-    query getTagListForReport {
-  settings {
-    chartsOfAccount {
-      tag {
-        list(pagination: {after: "", first: -1}) {
-          edges {
-            node {
-              id
-              name
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetTagListForReportQuery = <TData = GetTagListForReportQuery, TError = unknown>(
-  variables?: GetTagListForReportQueryVariables,
-  options?: UseQueryOptions<GetTagListForReportQuery, TError, TData>
-) =>
-  useQuery<GetTagListForReportQuery, TError, TData>(
-    variables === undefined ? ['getTagListForReport'] : ['getTagListForReport', variables],
-    useAxios<GetTagListForReportQuery, GetTagListForReportQueryVariables>(
-      GetTagListForReportDocument
-    ).bind(null, variables),
-    options
-  );
 export const ListCbsShareCodesDocument = `
     query listCBSShareCodes {
   settings {
@@ -63465,47 +63034,6 @@ export const useBulkTransfersListQuery = <TData = BulkTransfersListQuery, TError
     variables === undefined ? ['bulkTransfersList'] : ['bulkTransfersList', variables],
     useAxios<BulkTransfersListQuery, BulkTransfersListQueryVariables>(
       BulkTransfersListDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetTagKhataReportDocument = `
-    query getTagKhataReport($data: TagKhataReportFilter!) {
-  report {
-    transactionReport {
-      financial {
-        tagKhataReport(data: $data) {
-          data {
-            tagId
-            tagName
-            openingBalance
-            drAmount
-            crAmount
-            netBalance
-            closingBalance
-            ledgers {
-              ledgerId
-              ledgerName
-              openingBalance
-              drAmount
-              crAmount
-              netBalance
-              closingBalance
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetTagKhataReportQuery = <TData = GetTagKhataReportQuery, TError = unknown>(
-  variables: GetTagKhataReportQueryVariables,
-  options?: UseQueryOptions<GetTagKhataReportQuery, TError, TData>
-) =>
-  useQuery<GetTagKhataReportQuery, TError, TData>(
-    ['getTagKhataReport', variables],
-    useAxios<GetTagKhataReportQuery, GetTagKhataReportQueryVariables>(
-      GetTagKhataReportDocument
     ).bind(null, variables),
     options
   );
