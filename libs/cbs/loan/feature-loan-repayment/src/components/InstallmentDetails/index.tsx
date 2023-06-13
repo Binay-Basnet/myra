@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Box, Chips, Divider, Text } from '@myra-ui';
 
-import { useGetLoanPreviewQuery } from '@coop/cbs/data-access';
+import { useGetEndOfDayDateDataQuery, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 interface IProps {
@@ -29,6 +29,10 @@ export const InstallmentData = ({
 }: IProps) => {
   const methods = useFormContext();
   const { watch } = methods;
+
+  const { data } = useGetEndOfDayDateDataQuery();
+
+  const transactionDate = data?.transaction?.endOfDayDate?.value;
 
   const amountPaid = Number(watch('amountPaid')) ?? 0;
 
@@ -110,7 +114,14 @@ export const InstallmentData = ({
         (inst) => inst?.installmentNo === installment?.installmentNo
       );
 
-      if (interest && (loanType !== 'EPI' || (loanType === 'EPI' && index === 0))) {
+      if (
+        interest &&
+        (loanType !== 'EPI' ||
+          (loanType === 'EPI' &&
+            index === 0 &&
+            new Date(installment?.installmentDate?.en).getTime() <
+              new Date(transactionDate?.en as string).getTime()))
+      ) {
         if (tempAmount >= interest) {
           if (existingIndex !== -1) {
             tempCoveredInstallments[existingIndex].interest = interest;
