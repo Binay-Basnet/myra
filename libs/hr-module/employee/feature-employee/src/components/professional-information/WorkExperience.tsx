@@ -8,21 +8,21 @@ export const WorkExperienceTable = () => (
       name="workExperience"
       columns={[
         {
-          accessor: 'CompanyName',
+          accessor: 'companyName',
           header: 'Company Name',
           cellWidth: 'lg',
         },
         {
-          accessor: 'Designation',
+          accessor: 'designation',
           header: 'Designation',
         },
         {
-          accessor: 'Salary',
+          accessor: 'salary',
           header: 'Salary',
           isNumeric: true,
         },
         {
-          accessor: 'Address',
+          accessor: 'address',
           header: 'Address',
         },
       ]}

@@ -67,16 +67,12 @@ export const EmployeeWorkInformation = () => {
 
   return (
     <FormSection id="Work Information" header="Work Information">
-      <FormSelect name="employeeLevel" label="Employee Level" />
+      <FormSelect name="employeeLevelId" label="Employee Level" />
       <FormSelect name="departmentId" label="Department" options={departmentOptions} />
       <FormSelect name="designationId" label="Designation" options={designationOptions} />
-      <FormBranchSelect name="branchId" label="Service Center" />
+      <FormBranchSelect name="serviceCenter" label="Service Center" />
       <FormSelect name="employmentType" label="Employment Type" options={employeeTypeOptions} />
-      <FormSelect
-        name="employmentStatus"
-        label="Employment Status"
-        options={employeeStatusOptions}
-      />
+      <FormSelect name="employeeStatus" label="Employment Status" options={employeeStatusOptions} />
       <FormSelect name="sourceOfHire" label="Source of Hire" options={sourceOfHireOptions} />
     </FormSection>
   );

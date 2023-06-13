@@ -51,12 +51,12 @@ const AddEducationalDetails = ({ index, removeEducationalDetails }: IAddEducatio
           <FormInput
             type="text"
             bg="white"
-            name={`educationalDetails.${index}.instituteName`}
+            name={`educationDetails.${index}.instituteName`}
             label="Institute Name"
           />
         </GridItem>
         <FormSelect
-          name={`educationalDetails.${index}.degree_diploma`}
+          name={`educationDetails.${index}.degree_diploma`}
           label="Degree/Diploma"
           isLoading={educationLoading}
           options={getFieldOption(educationFields)}
@@ -64,11 +64,11 @@ const AddEducationalDetails = ({ index, removeEducationalDetails }: IAddEducatio
         <FormInput
           type="text"
           bg="white"
-          name={`educationalDetails.${index}.specialization`}
+          name={`educationDetails.${index}.specialization`}
           label="Specialization"
         />
         <FormDatePicker
-          name={`educationalDetails.${index}.dateOfCompletion`}
+          name={`educationDetails.${index}.dateOfCompletion`}
           label="Date of Completion"
         />
       </Grid>
@@ -81,7 +81,7 @@ export const EducationalDetails = () => {
     fields: educationalFields,
     append: educationalFieldsAppend,
     remove: educationalFieldsRemove,
-  } = useFieldArray({ name: 'insuranceScheme' });
+  } = useFieldArray({ name: 'educationDetails' });
 
   return (
     <FormSection header="Education Information" flexLayout id="Education Information">

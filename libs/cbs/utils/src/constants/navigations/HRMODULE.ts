@@ -155,7 +155,7 @@ export const HRMODULE: NavType = {
         {
           label: 'New Job Posting',
           aclKey: 'CBS_MEMBERS_MEMBER',
-          route: ROUTES.HR_RECRUITMENT_JOB_POSTING_ADD,
+          route: ROUTES.HR_RECRUITMENT_JOB_OPENING_ADD,
         },
         {
           label: 'New Job Application',
@@ -187,9 +187,9 @@ export const HRMODULE: NavType = {
         },
         {
           label: 'Job Opening',
-          route: ROUTES.HR_RECRUITMENT_JOB_POSTING_LIST,
+          route: ROUTES.HR_RECRUITMENT_JOB_OPENING_LIST,
           aclKey: 'CBS_MEMBERS_MEMBER',
-          addRoute: ROUTES.HR_RECRUITMENT_JOB_POSTING_ADD,
+          addRoute: ROUTES.HR_RECRUITMENT_JOB_OPENING_ADD,
         },
         {
           label: 'Job Application',

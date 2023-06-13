@@ -1,0 +1,28 @@
+query getEmployeeList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employee {
+      employee {
+        listEmployee(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              employeeId
+              employeeName
+              employeeDepartment
+              employeeContact
+              employeeAddress {
+                ...Address
+              }
+              employeeEmail
+              employeeDateOfJoining
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}

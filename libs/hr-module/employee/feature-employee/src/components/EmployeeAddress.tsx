@@ -20,7 +20,7 @@ export const EmployeeAddress = () => {
       <FormSection id="Temporary Address" header="Temporary Address">
         <GridItem colSpan={3}>
           <FormSwitch
-            name="sameTempAsPermanentAddress"
+            name="isTemporarySameAsPermanent"
             label="Temporary Address same as Permanent"
           />
         </GridItem>

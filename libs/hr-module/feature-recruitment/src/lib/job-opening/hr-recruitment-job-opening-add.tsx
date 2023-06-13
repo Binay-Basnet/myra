@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
@@ -10,10 +11,12 @@ import {
   useGetStaffPlanningListQuery,
   useSetJobOpeningMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormInput, FormLayout, FormSelect, FormTextArea } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrRecruitmentJobOpeningAdd = () => {
+  const router = useRouter();
   const methods = useForm();
   const { getValues } = methods;
 
@@ -82,7 +85,9 @@ export const HrRecruitmentJobOpeningAdd = () => {
         success: 'new job opening added succesfully',
         loading: 'adding new job opening',
       },
-      onSuccess: () => {},
+      onSuccess: () => {
+        router.push(ROUTES?.HR_RECRUITMENT_JOB_OPENING_LIST);
+      },
       promise: mutateAsync({
         id: null,
         input: {
