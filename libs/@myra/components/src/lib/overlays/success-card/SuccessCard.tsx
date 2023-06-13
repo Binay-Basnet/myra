@@ -306,9 +306,9 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
         ref={ref}
         display="none"
         bg="white"
-        p="s32"
+        p={dublicate ? 's8' : 's32'}
         flexDir="column"
-        gap="s8"
+        gap={dublicate ? 's4' : 's8'}
         position="relative"
         sx={{
           '@media print': {
@@ -320,8 +320,8 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
           },
         }}
       >
-        <Box w="100%" mb="s12">
-          <Box display="flex" flexDir="column" gap="s12">
+        <Box w="100%" mb={dublicate ? 's8' : 's12'}>
+          <Box display="flex" flexDir="column" gap={dublicate ? 's8' : 's12'}>
             <Box display="flex" alignItems="flex-start" justifyContent="space-between" gap="s8">
               <Box display="flex" alignItems="center" flex={1} gap="s8">
                 <Box position="relative">
@@ -433,13 +433,21 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
           </Box>
         )}
 
-        <Box mt="s12" w="100%" bg="highlight.500" display="flex" flexDir="column" py="s8" px="s16">
+        <Box
+          mt={dublicate ? 's8' : 's12'}
+          w="100%"
+          bg="highlight.500"
+          display="flex"
+          flexDir="column"
+          py="s8"
+          px="s16"
+        >
           <Box
             borderBottom={total ? '1px' : 'none'}
             borderBottomColor="border.layout"
             display="flex"
             flexDir="column"
-            gap="s10"
+            gap={dublicate ? 's4' : 's10'}
             py="s8"
           >
             {Object.entries(details).map((detail) => (
@@ -466,10 +474,16 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             </>
           )}
           {total && (
-            <Box display="flex" py="s8" justifyContent="space-between">
+            <Box display="flex" py={dublicate ? 's4' : 's8'} justifyContent="space-between">
               <Box />
 
-              <Box display="flex" flexDir="column" gap="s4" alignItems="end" justifyContent="end">
+              <Box
+                display="flex"
+                flexDir="column"
+                gap={dublicate ? '0' : 's4'}
+                alignItems="end"
+                justifyContent="end"
+              >
                 <Text fontSize="s3" color="gray.600" fontWeight="500" lineHeight="125%">
                   Total Amount
                 </Text>
@@ -523,14 +537,14 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             bottom="100px"
             left={0}
             bg="white"
-            p="s32"
+            p={dublicate ? 's8' : 's32'}
             pt="s8"
             flexDir="column"
-            gap="s8"
+            gap={dublicate ? 's4' : 's8'}
           >
             <Divider borderTop="1px dotted black" pb="s16" />
             <Box w="100%">
-              <Box display="flex" flexDir="column" gap="s12">
+              <Box display="flex" flexDir="column" gap={dublicate ? 's8' : 's12'}>
                 <Box display="flex" alignItems="center" gap="s8">
                   <Box position="relative">
                     <Avatar
@@ -630,7 +644,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
             )}
 
             <Box
-              mt="s12"
+              mt={dublicate ? 's8' : 's12'}
               w="100%"
               bg="highlight.500"
               display="flex"
@@ -643,7 +657,7 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
                 borderBottomColor="border.layout"
                 display="flex"
                 flexDir="column"
-                gap="s10"
+                gap={dublicate ? 's4' : 's10'}
                 py="s8"
               >
                 {Object.entries(details).map((detail) => (
@@ -680,13 +694,13 @@ export const SuccessPrint = React.forwardRef<HTMLInputElement, SuccessPrintProps
               )}
 
               {total && (
-                <Box display="flex" py="s8" justifyContent="space-between">
+                <Box display="flex" py={dublicate ? 's4' : 's8'} justifyContent="space-between">
                   <Box />
 
                   <Box
                     display="flex"
                     flexDir="column"
-                    gap="s4"
+                    gap={dublicate ? '0' : 's4'}
                     alignItems="end"
                     justifyContent="end"
                   >

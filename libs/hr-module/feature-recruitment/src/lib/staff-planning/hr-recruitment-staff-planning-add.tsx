@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { asyncToast, Box, FormSection, GridItem, Text } from '@myra-ui';
 
@@ -7,6 +8,7 @@ import {
   StaffPlanTypesInput,
   useSetStaffPlanningMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import {
   FormDatePicker,
   FormEditableTable,
@@ -16,6 +18,7 @@ import {
 } from '@coop/shared/form';
 
 export const HrRecruitmentStaffPlanningAdd = () => {
+  const router = useRouter();
   const methods = useForm();
   const { getValues, watch } = methods;
 
@@ -28,7 +31,9 @@ export const HrRecruitmentStaffPlanningAdd = () => {
         success: 'Staff planning added succesfully',
         loading: 'adding new staff planning',
       },
-      onSuccess: () => {},
+      onSuccess: () => {
+        router.push(ROUTES?.HR_RECRUITMENT_STAFF_PLANNING_LIST);
+      },
       promise: mutateAsync({
         id: null,
         input: {

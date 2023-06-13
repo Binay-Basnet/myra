@@ -1,1 +1,2 @@
-export * from './lib/HrModuleEmployeeFeatureEmployee';
+export * from './lib/HrModuleEmployeeFeatureEmployeeAdd';
+export * from './lib/HrModuleEmployeeFeatureEmployeeList';
