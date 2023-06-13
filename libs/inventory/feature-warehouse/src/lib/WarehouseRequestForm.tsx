@@ -4,13 +4,24 @@ import { omit } from 'lodash';
 
 import { asyncToast } from '@myra-ui';
 
-import { useSetWareHouseTransferMutation, WarehouseTransferType } from '@coop/cbs/data-access';
+import {
+  useSetWareHouseTransferMutation,
+  WarehouseTransferInput,
+  WarehouseTransferType,
+} from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 
 import { WarehouseTransferForm } from '../component/WarehouseTransferForm';
 
 /* eslint-disable-next-line */
+export type CustomWareHouseTransferType = {
+  itemDetails?: {
+    itemId: { label: string; value: string };
+    quantity: string;
+    description: string;
+  }[];
+} & WarehouseTransferInput;
 
 export const WarehouseRequestForm = () => {
   const router = useRouter();
@@ -23,12 +34,21 @@ export const WarehouseRequestForm = () => {
     const filteredValues = {
       ...omit({ ...fullValues }, ['branchId']),
     };
+    const tableData = values?.itemDetails;
+
+    const filteredTableData =
+      tableData?.map((data) => ({
+        itemId: data?.itemId?.value,
+        quantity: data?.quantity,
+        description: data?.description,
+      })) || [];
 
     asyncToast({
       id: 'account-open-add-minor',
       promise: AddItems({
         data: {
           ...filteredValues,
+          itemDetails: filteredTableData,
         },
       }),
       msgs: {
@@ -43,7 +63,7 @@ export const WarehouseRequestForm = () => {
   };
 
   // const router = useRouter();
-  const methods = useForm({});
+  const methods = useForm<CustomWareHouseTransferType>({});
 
   return (
     <FormLayout methods={methods}>
