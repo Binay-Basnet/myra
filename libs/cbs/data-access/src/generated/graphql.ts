@@ -5770,6 +5770,11 @@ export type EachEmployeeOnboardingRecord = {
   error: QueryError;
 };
 
+export type EachJobApplicationRecords = {
+  data: JobApplicationRecord;
+  error: QueryError;
+};
+
 export type EachJobOfferRecords = {
   data: JobOfferRecord;
   error: QueryError;
@@ -5870,12 +5875,12 @@ export type EmployeeHealthInsuranceResult = {
 export type EmployeeInput = {
   age?: InputMaybe<Scalars['Int']>;
   appointmentLetter?: InputMaybe<Scalars['ID']>;
-  branchId?: InputMaybe<Scalars['String']>;
   dateOfBirth?: InputMaybe<Scalars['Localized']>;
   dateOfJoining?: InputMaybe<Scalars['Localized']>;
   departmentId?: InputMaybe<Scalars['String']>;
   designationId?: InputMaybe<Scalars['String']>;
   educationDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
+  employeeLevelId?: InputMaybe<Scalars['String']>;
   employeeStatus?: InputMaybe<EmployeeStatus>;
   employmentType?: InputMaybe<EmployeeTypeEnum>;
   expenseApproverId?: InputMaybe<Scalars['String']>;
@@ -5883,6 +5888,7 @@ export type EmployeeInput = {
   gender?: InputMaybe<GenderInputType>;
   healthInsuranceNumberId?: InputMaybe<Scalars['String']>;
   healthInsuranceProviderId?: InputMaybe<Scalars['String']>;
+  isTemporarySameAsPermanent?: InputMaybe<Scalars['Boolean']>;
   jobApplicationId?: InputMaybe<Scalars['ID']>;
   jobOffer?: InputMaybe<Scalars['ID']>;
   lastName?: InputMaybe<Scalars['String']>;
@@ -5893,10 +5899,11 @@ export type EmployeeInput = {
   permanentAddress?: InputMaybe<KymAddressInput>;
   personalEmailAddress?: InputMaybe<Scalars['String']>;
   personalPhoneNumber?: InputMaybe<Scalars['String']>;
-  providedFund?: InputMaybe<Scalars['String']>;
+  providentFundAccount?: InputMaybe<Scalars['String']>;
   reportsToId?: InputMaybe<Scalars['String']>;
   salaryPaymentMode?: InputMaybe<PaymentMode>;
   salaryStructureAssignment?: InputMaybe<Scalars['String']>;
+  serviceCenter?: InputMaybe<Scalars['String']>;
   sourceOfHire?: InputMaybe<SourceOfHire>;
   temporaryAddress?: InputMaybe<KymAddressInput>;
   workEmailAddress?: InputMaybe<Scalars['String']>;
@@ -5911,6 +5918,17 @@ export type EmployeeLeaveType = {
   leaveNote: Scalars['String'];
   leaveTo: Scalars['Localized'];
   leaveTypeId: Scalars['String'];
+};
+
+export type EmployeeLevel = {
+  description: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type EmployeeLevelResult = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['String'];
 };
 
 export type EmployeeListType = {
@@ -5972,12 +5990,12 @@ export type EmployeeReportUserReportArgs = {
 export type EmployeeResultResponseType = {
   age?: Maybe<Scalars['Int']>;
   appointmentLetter?: Maybe<Scalars['ID']>;
-  branchId?: Maybe<Scalars['String']>;
   dateOfBirth?: Maybe<Scalars['Localized']>;
   dateOfJoining?: Maybe<Scalars['Localized']>;
   departmentId?: Maybe<Scalars['String']>;
   designationId?: Maybe<Scalars['String']>;
   educationDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
+  employeeLevelId?: Maybe<Scalars['String']>;
   employeeStatus?: Maybe<EmployeeStatus>;
   employmentType?: Maybe<EmployeeTypeEnum>;
   expenseApproverId?: Maybe<Scalars['String']>;
@@ -5986,6 +6004,7 @@ export type EmployeeResultResponseType = {
   healthInsuranceNumberId?: Maybe<Scalars['String']>;
   healthInsuranceProviderId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  isTemporarySameAsPermanent?: Maybe<Scalars['Boolean']>;
   jobApplicationId?: Maybe<Scalars['ID']>;
   jobOffer?: Maybe<Scalars['ID']>;
   lastName?: Maybe<Scalars['String']>;
@@ -5996,10 +6015,11 @@ export type EmployeeResultResponseType = {
   permanentAddress?: Maybe<KymAddress>;
   personalEmailAddress?: Maybe<Scalars['String']>;
   personalPhoneNumber?: Maybe<Scalars['String']>;
-  providedFund?: Maybe<Scalars['String']>;
+  providentFundAccount?: Maybe<Scalars['String']>;
   reportsToId?: Maybe<Scalars['String']>;
   salaryPaymentMode?: Maybe<PaymentMode>;
   salaryStructureAssignment?: Maybe<Scalars['String']>;
+  serviceCenter?: Maybe<Scalars['String']>;
   sourceOfHire?: Maybe<SourceOfHire>;
   temporaryAddress?: Maybe<KymAddress>;
   workEmailAddress?: Maybe<Scalars['String']>;
@@ -6542,6 +6562,7 @@ export type FianancialTransactionReport = {
   dayBookReport: DayBookReportResult;
   mrTransactionReport?: Maybe<MrTransactionReportResult>;
   serviceCenterBalanceReport: SericeCenterStatementResult;
+  tagKhataReport: TagKhataReportResult;
   tellerReport: TellerReportResult;
   trialSheetReport: TrialSheetReportResult;
   vaultBalanceReport: VaultBalanceReportResult;
@@ -6573,6 +6594,10 @@ export type FianancialTransactionReportMrTransactionReportArgs = {
 
 export type FianancialTransactionReportServiceCenterBalanceReportArgs = {
   data: ServiceCenterBalanceFilter;
+};
+
+export type FianancialTransactionReportTagKhataReportArgs = {
+  data: TagKhataReportFilter;
 };
 
 export type FianancialTransactionReportTellerReportArgs = {
@@ -7527,6 +7552,7 @@ export type HcmEmployeeGeneralMutation = {
   upsertDepartment: DepartmentResult;
   upsertDesignation: DesignationResult;
   upsertEmployeeHealthInsurance: EmployeeHealthInsuranceResult;
+  upsertEmployeeLevel?: Maybe<EmployeeLevelResult>;
   upsertEmployeeType: EmployeeTypeResult;
 };
 
@@ -7549,6 +7575,11 @@ export type HcmEmployeeGeneralMutationUpsertEmployeeHealthInsuranceArgs = {
   input: NewEmployeeHealthInsurance;
 };
 
+export type HcmEmployeeGeneralMutationUpsertEmployeeLevelArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: NewEmployeeLevel;
+};
+
 export type HcmEmployeeGeneralMutationUpsertEmployeeTypeArgs = {
   id?: InputMaybe<Scalars['String']>;
   input: NewEmployeeType;
@@ -7558,6 +7589,7 @@ export type HcmEmployeeGeneralQuery = {
   listDepartment?: Maybe<HcmEmployeeListConnection>;
   listDesignation?: Maybe<HcmEmployeeListConnection>;
   listEmployeeHealthInsurance?: Maybe<HcmEmployeeHealthInsuranceListConnection>;
+  listEmployeeLevel?: Maybe<HcmEmployeeListConnection>;
   listEmployeeType?: Maybe<HcmEmployeeListConnection>;
 };
 
@@ -7572,6 +7604,11 @@ export type HcmEmployeeGeneralQueryListDesignationArgs = {
 };
 
 export type HcmEmployeeGeneralQueryListEmployeeHealthInsuranceArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HcmEmployeeGeneralQueryListEmployeeLevelArgs = {
   filter?: InputMaybe<Filter>;
   pagination?: InputMaybe<Pagination>;
 };
@@ -7758,6 +7795,29 @@ export type HrRecruitmentAppointmentLetterQueryListAppointmentLetterArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HrRecruitmentJobApplicationMutation = {
+  upsertJobApplication: ReturnJobApplication;
+};
+
+export type HrRecruitmentJobApplicationMutationUpsertJobApplicationArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  input: JobApplicationInput;
+};
+
+export type HrRecruitmentJobApplicationQuery = {
+  getJobApplication: EachJobApplicationRecords;
+  listJobApplication: JobApplicationConnection;
+};
+
+export type HrRecruitmentJobApplicationQueryGetJobApplicationArgs = {
+  id: Scalars['ID'];
+};
+
+export type HrRecruitmentJobApplicationQueryListJobApplicationArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type HrRecruitmentJobOfferMutation = {
   upsertJobOffer: ReturnJobOffer;
 };
@@ -7807,6 +7867,7 @@ export type HrRecruitmentJobOpeningQueryListJobOpeningArgs = {
 export type HrRecruitmentMutation = {
   recruitment: HrRecruitmentStaffPlanningMutation;
   recruitmentAppointmentLetter: HrRecruitmentAppointmentLetterMutation;
+  recruitmentJobApplication: HrRecruitmentJobApplicationMutation;
   recruitmentJobOffer: HrRecruitmentJobOfferMutation;
   recruitmentJobOpening: HrRecruitmentJobOpeningMutation;
 };
@@ -7814,6 +7875,7 @@ export type HrRecruitmentMutation = {
 export type HrRecruitmentQuery = {
   recruitment: HrRecruitmentStaffPlanningQuery;
   recruitmentAppointmentLetter: HrRecruitmentAppointmentLetterQuery;
+  recruitmentJobApplication: HrRecruitmentJobApplicationQuery;
   recruitmentJobOffer: HrRecruitmentJobOfferQuery;
   recruitmentJobOpening: HrRecruitmentJobOpeningQuery;
 };
@@ -7867,17 +7929,17 @@ export type HrEmployeeEducationDetailType = {
 };
 
 export type HrEmployeeWorkExperience = {
-  Address?: InputMaybe<Scalars['String']>;
-  CompanyName?: InputMaybe<Scalars['String']>;
-  Designation?: InputMaybe<Scalars['String']>;
-  Salary?: InputMaybe<Scalars['Int']>;
+  address?: InputMaybe<Scalars['String']>;
+  companyName?: InputMaybe<Scalars['String']>;
+  designation?: InputMaybe<Scalars['String']>;
+  salary?: InputMaybe<Scalars['Int']>;
 };
 
 export type HrEmployeeWorkExperienceType = {
-  Address?: Maybe<Scalars['String']>;
-  CompanyName?: Maybe<Scalars['String']>;
-  Designation?: Maybe<Scalars['String']>;
-  Salary?: Maybe<Scalars['Int']>;
+  address?: Maybe<Scalars['String']>;
+  companyName?: Maybe<Scalars['String']>;
+  designation?: Maybe<Scalars['String']>;
+  salary?: Maybe<Scalars['Int']>;
 };
 
 export type HumanizeAuditLog = {
@@ -9312,6 +9374,53 @@ export type ItemVariantDetail = {
   itemName?: InputMaybe<Scalars['String']>;
   sellingPrice?: InputMaybe<Scalars['String']>;
   sku?: InputMaybe<Scalars['String']>;
+};
+
+export type JobApplicationConnection = {
+  edges?: Maybe<Array<Maybe<JobApplications>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type JobApplicationInput = {
+  applicantName?: InputMaybe<Scalars['String']>;
+  applicationRating?: InputMaybe<Scalars['Float']>;
+  applicationStatus?: InputMaybe<ApplicantStatus>;
+  educationalDetails?: InputMaybe<Array<InputMaybe<HrEmployeeEducationDetail>>>;
+  experienceDetails?: InputMaybe<Array<InputMaybe<ExperienceInput>>>;
+  jobOpening?: InputMaybe<Scalars['ID']>;
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  personalEmailAddress?: InputMaybe<Scalars['String']>;
+  personalPhoneNumber?: InputMaybe<Scalars['String']>;
+  tempSameAsPerm?: InputMaybe<Scalars['Boolean']>;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
+};
+
+export type JobApplicationListed = {
+  applicantStatus?: Maybe<ApplicantStatus>;
+  id?: Maybe<Scalars['ID']>;
+  jobPosting?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type JobApplicationRecord = {
+  applicantName?: Maybe<Scalars['String']>;
+  applicationRating?: Maybe<Scalars['Int']>;
+  applicationStatus?: Maybe<ApplicantStatus>;
+  educationalDetails?: Maybe<Array<Maybe<HrEmployeeEducationDetailType>>>;
+  experienceDetails?: Maybe<Array<Maybe<Experience>>>;
+  id: Scalars['ID'];
+  jobOpening?: Maybe<Scalars['ID']>;
+  permanentAddress?: Maybe<Address>;
+  personalEmailAddress?: Maybe<Scalars['String']>;
+  personalPhoneNumber?: Maybe<Scalars['String']>;
+  tempSameAsPerm?: Maybe<Scalars['Boolean']>;
+  temporaryAddress?: Maybe<Address>;
+};
+
+export type JobApplications = {
+  cursor: Scalars['Cursor'];
+  node: JobApplicationListed;
 };
 
 export type JobOfferConnection = {
@@ -15152,6 +15261,11 @@ export type NewEmployeeHealthInsurance = {
   healthInsuranceProvider: Scalars['String'];
 };
 
+export type NewEmployeeLevel = {
+  description: Scalars['String'];
+  name: Scalars['String'];
+};
+
 export type NewEmployeeType = {
   description: Scalars['String'];
   name: Scalars['String'];
@@ -16571,6 +16685,12 @@ export type ReturnEmployeeOnboarding = {
   recordId: Scalars['ID'];
 };
 
+export type ReturnJobApplication = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<JobApplicationRecord>;
+  recordId: Scalars['ID'];
+};
+
 export type ReturnJobOffer = {
   error?: Maybe<MutationError>;
   record?: Maybe<JobOfferRecord>;
@@ -17415,6 +17535,7 @@ export type SettingLedgerTagMutationUpsertArgs = {
 export type SettingLedgerTagQuery = {
   list?: Maybe<SettingLedgerTagListConnection>;
   listLedgerTags?: Maybe<LedgerTagsResult>;
+  listTagLedgers?: Maybe<SettingTagLedgersListConnection>;
 };
 
 export type SettingLedgerTagQueryListArgs = {
@@ -17426,9 +17547,25 @@ export type SettingLedgerTagQueryListLedgerTagsArgs = {
   ledgerId: Scalars['ID'];
 };
 
+export type SettingLedgerTagQueryListTagLedgersArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type SettingLedgerTagResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<Scalars['String']>;
+};
+
+export type SettingTagLedgersListConnection = {
+  edges?: Maybe<Array<Maybe<SettingTagLedgersListEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SettingTagLedgersListEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<TagLedger>;
 };
 
 export type SettingsMutation = {
@@ -18409,6 +18546,48 @@ export type TtrReportFilter = {
 export type TtrReportResult = {
   data?: Maybe<TtrReportData>;
   error?: Maybe<QueryError>;
+};
+
+export type TagKhataReportFilter = {
+  branchId: Array<InputMaybe<Scalars['String']>>;
+  filter?: InputMaybe<TrialSheetFilter>;
+  period: LocalizedDateFilter;
+  tagId: Array<Scalars['String']>;
+};
+
+export type TagKhataReportLedger = {
+  closingBalance?: Maybe<Scalars['Any']>;
+  crAmount?: Maybe<Scalars['String']>;
+  drAmount?: Maybe<Scalars['String']>;
+  ledgerId?: Maybe<Scalars['String']>;
+  ledgerName?: Maybe<Scalars['String']>;
+  netBalance?: Maybe<Scalars['Any']>;
+  openingBalance?: Maybe<Scalars['Any']>;
+};
+
+export type TagKhataReportResult = {
+  data?: Maybe<Array<Maybe<TagKhataReportTag>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type TagKhataReportTag = {
+  closingBalance?: Maybe<Scalars['Any']>;
+  crAmount?: Maybe<Scalars['String']>;
+  drAmount?: Maybe<Scalars['String']>;
+  ledgers?: Maybe<Array<Maybe<TagKhataReportLedger>>>;
+  netBalance?: Maybe<Scalars['Any']>;
+  openingBalance?: Maybe<Scalars['Any']>;
+  tagId?: Maybe<Scalars['String']>;
+  tagName?: Maybe<Scalars['String']>;
+};
+
+export type TagLedger = {
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  ledgerId: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  tagId?: Maybe<Scalars['String']>;
+  tagName?: Maybe<Scalars['String']>;
 };
 
 export const TaxPayerOptions = {
@@ -19847,6 +20026,32 @@ export type ActivityInput = {
   name?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Scalars['String']>;
   userName?: InputMaybe<Scalars['String']>;
+};
+
+export const ApplicantStatus = {
+  Accepted: 'ACCEPTED',
+  NotAccepted: 'NOT_ACCEPTED',
+  Pending: 'PENDING',
+  Shortlisted: 'SHORTLISTED',
+} as const;
+
+export type ApplicantStatus = typeof ApplicantStatus[keyof typeof ApplicantStatus];
+export type Experience = {
+  company?: Maybe<Scalars['String']>;
+  duration?: Maybe<Scalars['String']>;
+  fromDate?: Maybe<Scalars['Localized']>;
+  occupationName?: Maybe<Scalars['String']>;
+  summary?: Maybe<Scalars['String']>;
+  toDate?: Maybe<Scalars['Localized']>;
+};
+
+export type ExperienceInput = {
+  company?: InputMaybe<Scalars['String']>;
+  duration?: InputMaybe<Scalars['String']>;
+  fromDate?: InputMaybe<Scalars['Localized']>;
+  occupationName?: InputMaybe<Scalars['String']>;
+  summary?: InputMaybe<Scalars['String']>;
+  toDate?: InputMaybe<Scalars['Localized']>;
 };
 
 export type LedgerDetails = {
@@ -27179,6 +27384,34 @@ export type GetPreviousYearFundManagementQuery = {
       amount?: string | null;
       percent?: number | null;
     } | null> | null;
+  };
+};
+
+export type GetHrEmployeeOnboardingListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetHrEmployeeOnboardingListQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeOnboarding: {
+        listEmployeeOnboarding: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              activity?: string | null;
+              email?: string | null;
+              id: string;
+              name?: string | null;
+              onboarding_status?: OnboardingStatus | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
   };
 };
 
@@ -48840,6 +49073,48 @@ export const useGetPreviousYearFundManagementQuery = <
       : ['getPreviousYearFundManagement', variables],
     useAxios<GetPreviousYearFundManagementQuery, GetPreviousYearFundManagementQueryVariables>(
       GetPreviousYearFundManagementDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetHrEmployeeOnboardingListDocument = `
+    query getHREmployeeOnboardingList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeOnboarding {
+        listEmployeeOnboarding(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              activity
+              email
+              id
+              name
+              onboarding_status
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetHrEmployeeOnboardingListQuery = <
+  TData = GetHrEmployeeOnboardingListQuery,
+  TError = unknown
+>(
+  variables?: GetHrEmployeeOnboardingListQueryVariables,
+  options?: UseQueryOptions<GetHrEmployeeOnboardingListQuery, TError, TData>
+) =>
+  useQuery<GetHrEmployeeOnboardingListQuery, TError, TData>(
+    variables === undefined
+      ? ['getHREmployeeOnboardingList']
+      : ['getHREmployeeOnboardingList', variables],
+    useAxios<GetHrEmployeeOnboardingListQuery, GetHrEmployeeOnboardingListQueryVariables>(
+      GetHrEmployeeOnboardingListDocument
     ).bind(null, variables),
     options
   );

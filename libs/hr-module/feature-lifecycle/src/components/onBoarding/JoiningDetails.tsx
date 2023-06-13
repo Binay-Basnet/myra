@@ -21,28 +21,27 @@ export const OnboardingJoiningDetails = () => {
     },
   ];
 
-  const { data: suppliersDetails } = useGetDesignationListQuery({
+  const { data: degisnationData } = useGetDesignationListQuery({
     pagination: {
       after: '',
       first: -1,
     },
   });
 
-  const inventoryItemsData =
-    suppliersDetails?.settings?.general?.HCM?.employee?.listDesignation?.edges;
-  const supplierSearchOptions = useMemo(
+  const degisnation = degisnationData?.settings?.general?.HCM?.employee?.listDesignation?.edges;
+  const degisnationOptions = useMemo(
     () =>
-      inventoryItemsData?.map((account) => ({
+      degisnation?.map((account) => ({
         label: account?.node?.name as string,
         value: account?.node?.id as string,
       })),
-    [inventoryItemsData]
+    [degisnation]
   );
 
   return (
     <FormSection header="Joining Details">
       <FormDatePicker name="dateOfJoining" label="Date of Joining" />
-      <FormSelect name="designation" label="Designation" options={supplierSearchOptions} />
+      <FormSelect name="designation" label="Designation" options={degisnationOptions} />
       <FormSelect
         name="serviceCenter"
         label="Onboarding Status"

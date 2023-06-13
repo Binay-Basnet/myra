@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { Column, PageHeader, Table } from '@myra-ui';
 
 import { useGetInventoryRegisterListQuery } from '@coop/cbs/data-access';
-import { getPaginationQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, getPaginationQuery, useTranslation } from '@coop/shared/utils';
 
 export const InventoryRegisterTable = () => {
   const { t } = useTranslation();
@@ -34,11 +34,17 @@ export const InventoryRegisterTable = () => {
 
       {
         header: 'Unit Price',
-        accessorFn: (row) => row?.node?.unitPrice,
+        accessorFn: (row) => amountConverter(row?.node?.unitPrice || '0'),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Total Cost',
-        accessorFn: (row) => row?.node?.totalCost,
+        accessorFn: (row) => amountConverter(row?.node?.totalCost || '0'),
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         header: 'Item Quantity',

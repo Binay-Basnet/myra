@@ -1,0 +1,24 @@
+query getHREmployeeOnboardingList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeOnboarding {
+        listEmployeeOnboarding(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              activity
+              email
+              id
+              name
+              onboarding_status
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
