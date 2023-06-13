@@ -30,10 +30,7 @@ type LoginBody = {
 };
 
 const loginUser = async (body: LoginBody) => {
-  const response = await privateAgent.post<LoginResponse>(
-    `${process.env['NX_SCHEMA_PATH']}/neosys/login`,
-    body
-  );
+  const response = await privateAgent.post<LoginResponse>(`neosys/login`, body);
 
   return response?.data;
 };

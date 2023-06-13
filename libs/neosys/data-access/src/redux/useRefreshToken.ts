@@ -38,7 +38,7 @@ export const useRefreshToken = (url: string) => {
     // eslint-disable-next-line prefer-promise-reject-errors
     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
     return privateAgent
-      .post<RefreshTokenResponse>(`${process.env['NX_SCHEMA_PATH']}/neosys/reset-token`, {
+      .post<RefreshTokenResponse>(`neosys/reset-token`, {
         refreshToken,
       })
       .then((res) => {
