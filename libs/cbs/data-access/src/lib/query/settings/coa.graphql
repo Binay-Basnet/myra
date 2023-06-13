@@ -230,6 +230,10 @@ query getLedgerList($id: ID!, $pagination: Pagination, $filter: Filter, $branchI
             balance
             balanceType
             status
+            tags {
+              id
+              name
+            }
           }
           cursor
         }

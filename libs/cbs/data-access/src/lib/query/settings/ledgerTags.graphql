@@ -1,0 +1,54 @@
+query ledgerTagsList($filter: Filter, $pagination: Pagination) {
+  settings {
+    chartsOfAccount {
+      tag {
+        list(filter: $filter, pagination: $pagination) {
+          edges {
+            node {
+              id
+              name
+              description
+              createdAt
+              ledgerCount
+            }
+          }
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+        }
+      }
+    }
+  }
+}
+
+query listTagLedgers($filter: Filter, $pagination: Pagination) {
+  settings {
+    chartsOfAccount {
+      tag {
+        listTagLedgers(filter: $filter, pagination: $pagination) {
+          edges {
+            node {
+              ledgerId
+              name
+              branchId
+              branchName
+              tagId
+              tagName
+            }
+          }
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,12 +1,12 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { Box, Text } from '@chakra-ui/react';
 
-import { PageHeaderTab } from '@myra-ui/components';
+import { Breadcrumb, PageHeaderTab } from '@myra-ui/components';
 import { Button } from '@myra-ui/foundations';
 
 /* eslint-disable-next-line */
 export interface PageHeaderProps {
-  heading: string;
+  heading?: string;
   onClick?: () => void;
   button?: boolean;
   buttonTitle?: string;
@@ -15,6 +15,7 @@ export interface PageHeaderProps {
     key: string;
   }[];
   showTabsInFilter?: boolean;
+  paths?: { label: string; link?: string }[];
 }
 
 export const PageHeader = ({
@@ -24,6 +25,7 @@ export const PageHeader = ({
   button,
   buttonTitle,
   showTabsInFilter,
+  paths,
 }: PageHeaderProps) => (
   <Box
     h="3.125rem"
@@ -36,11 +38,15 @@ export const PageHeader = ({
   >
     <Box display="flex" justifyContent="space-between" alignItems="center">
       <Box display="flex" alignItems="center" h="3.125rem">
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <Text fontSize="r2" fontWeight="SemiBold" color="gray.800">
-            {heading}
-          </Text>
-        </Box>
+        {heading && (
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <Text fontSize="r2" fontWeight="SemiBold" color="gray.800">
+              {heading}
+            </Text>
+          </Box>
+        )}
+
+        {paths?.length && <Breadcrumb paths={paths} />}
         <Box h="100%" ml="48px" display="flex" alignItems="flex-end">
           <PageHeaderTab showTabsInFilter={showTabsInFilter} list={tabItems ?? []} />
         </Box>

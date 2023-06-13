@@ -196,6 +196,8 @@ export const ROUTES = {
 
   SETTINGS_ACCESS_LOG: '/settings/monitor/access-log/list',
 
+  SETTINGS_REPORTING_TAGS_LIST: '/settings/general/reporting-tags/list',
+
   /* NOT INDEXED BY GLOBAL SEARCH */
 
   CBS_ACCOUNT_OPEN_EDIT: '/cbs/savings/account-open/edit',

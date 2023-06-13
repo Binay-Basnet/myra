@@ -48,6 +48,7 @@ mutation addAccountInCOA(
   $parentAccountCode: String!
   $openForBranches: [ID]
   $ledgerName: String
+  $tagIds: [ID]
 ) {
   settings {
     chartsOfAccount {
@@ -57,6 +58,7 @@ mutation addAccountInCOA(
           parentAccountCode: $parentAccountCode
           openForBranches: $openForBranches
           ledgerName: $ledgerName
+          tagIds: $tagIds
         ) {
           success
           error {

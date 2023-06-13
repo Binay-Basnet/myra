@@ -4,12 +4,22 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { asyncToast, Box, DetailPageHeader, Modal, Scrollable, Text, WIPState } from '@myra-ui';
+import {
+  asyncToast,
+  Box,
+  Button,
+  DetailPageHeader,
+  Grid,
+  Modal,
+  Scrollable,
+  Text,
+  WIPState,
+} from '@myra-ui';
 
-import { useUpdateLedgerNameMutation } from '@coop/cbs/data-access';
+import { useAddTagToLedgerMutation, useUpdateLedgerNameMutation } from '@coop/cbs/data-access';
 import { COADetailSidebar } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
-import { FormInput } from '@coop/shared/form';
+import { FormInput, FormLedgerTagSelect } from '@coop/shared/form';
 
 import { Overview, Transactions } from '../components/detail-tabs';
 import { useCOAAccountDetails } from '../hooks';
@@ -54,6 +64,34 @@ export const COAAccountDetail = () => {
     onClose();
   };
 
+  const {
+    isOpen: isAssignTagModalOpen,
+    onClose: onAssignTagModalClose,
+    onToggle: onAssignTagModalToggle,
+  } = useDisclosure();
+
+  const assignTagMethods = useForm();
+
+  const { mutateAsync: assignTag } = useAddTagToLedgerMutation();
+
+  const handleAssignTag = () => {
+    asyncToast({
+      id: 'coa-assign-tag-to-ledger',
+      msgs: {
+        loading: 'Assigning tag',
+        success: 'Tag assigned',
+      },
+      promise: assignTag({
+        ledgerId: id as string,
+        tagId: assignTagMethods.getValues()?.['tagId']?.map((tag: { value: string }) => tag?.value),
+      }),
+      onSuccess: () => {
+        assignTagMethods.reset({});
+        onAssignTagModalClose();
+      },
+    });
+  };
+
   return (
     <>
       <DetailPageHeader
@@ -87,7 +125,10 @@ export const COAAccountDetail = () => {
             </Text>
           </Link>
         }
-        options={[{ label: 'Edit Ledger Name', handler: onToggle }]}
+        options={[
+          { label: 'Edit Ledger Name', handler: onToggle },
+          { label: 'Assign Tag', handler: onAssignTagModalToggle },
+        ]}
       />
       <Box display="flex">
         <Box
@@ -145,6 +186,25 @@ export const COAAccountDetail = () => {
           {/* <Grid templateColumns="repeat(2,1fr)"> */}
           <FormInput label="New Ledger Name" name="newName" />
           {/* </Grid> */}
+        </FormProvider>
+      </Modal>
+
+      <Modal
+        open={isAssignTagModalOpen}
+        onClose={onAssignTagModalClose}
+        isCentered
+        title="Assign Tags"
+        footer={
+          <Box display="flex" px={5} pb={5} justifyContent="flex-end">
+            <Button onClick={handleAssignTag}>Save</Button>
+          </Box>
+        }
+        width="xl"
+      >
+        <FormProvider {...assignTagMethods}>
+          <Grid templateColumns="repeat(2,1fr)" gap="s16">
+            <FormLedgerTagSelect name="tagId" label="Tags" menuPosition="fixed" isMulti />
+          </Grid>
         </FormProvider>
       </Modal>
     </>

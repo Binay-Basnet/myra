@@ -23,6 +23,7 @@ export * from './controllers/FormFileInput/FormFileInput';
 export * from './controllers/FormFileInput/FormNeosysFileInput';
 export * from './controllers/FormInput/FormInput';
 export * from './controllers/FormInvestmentEntrySelect/FormInvestmentEntrySelect';
+export * from './controllers/FormLedgerTagSelect/FormLedgerTagSelect';
 export * from './controllers/FormMap/FormMap';
 export * from './controllers/FormMemberSelect/FormMemberSelect';
 export * from './controllers/FormNumberInput/FormNumberInput';

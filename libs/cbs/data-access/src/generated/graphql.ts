@@ -20922,6 +20922,7 @@ export type AddAccountInCoaMutationVariables = Exact<{
   parentAccountCode: Scalars['String'];
   openForBranches?: InputMaybe<Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>>;
   ledgerName?: InputMaybe<Scalars['String']>;
+  tagIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>>;
 }>;
 
 export type AddAccountInCoaMutation = {
@@ -23008,6 +23009,54 @@ export type SetEmployeeHealthInsuranceMutation = {
             };
           };
         };
+      } | null;
+    } | null;
+  };
+};
+
+export type UpsertLedgerTagMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  data: LedgerTagInput;
+}>;
+
+export type UpsertLedgerTagMutation = {
+  settings: {
+    chartsOfAccount?: {
+      tag?: {
+        upsert?: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type AddTagToLedgerMutationVariables = Exact<{
+  ledgerId: Scalars['ID'];
+  tagId: Array<Scalars['ID']> | Scalars['ID'];
+}>;
+
+export type AddTagToLedgerMutation = {
+  settings: {
+    chartsOfAccount?: {
+      tag?: {
+        addTagToLedger?: {
+          record?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -34704,6 +34753,7 @@ export type GetLedgerListQuery = {
             balance?: string | null;
             balanceType?: BalanceType | null;
             status?: boolean | null;
+            tags?: Array<{ id?: string | null; name?: string | null } | null> | null;
           } | null;
         } | null> | null;
       } | null;
@@ -34995,6 +35045,71 @@ export type GetEmployeeHealthInsuranceListQuery = {
             pageInfo?: PaginationFragment | null;
           } | null;
         };
+      } | null;
+    } | null;
+  };
+};
+
+export type LedgerTagsListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type LedgerTagsListQuery = {
+  settings: {
+    chartsOfAccount?: {
+      tag?: {
+        list?: {
+          totalCount: number;
+          edges?: Array<{
+            node?: {
+              id: string;
+              name?: string | null;
+              description?: string | null;
+              createdAt?: Record<'local' | 'en' | 'np', string> | null;
+              ledgerCount?: number | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor?: string | null;
+            endCursor?: string | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ListTagLedgersQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ListTagLedgersQuery = {
+  settings: {
+    chartsOfAccount?: {
+      tag?: {
+        listTagLedgers?: {
+          totalCount: number;
+          edges?: Array<{
+            node?: {
+              ledgerId: string;
+              name?: string | null;
+              branchId?: string | null;
+              branchName?: string | null;
+              tagId?: string | null;
+              tagName?: string | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor?: string | null;
+            endCursor?: string | null;
+          } | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -39926,7 +40041,7 @@ export const useAddGroupMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const AddAccountInCoaDocument = `
-    mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!, $openForBranches: [ID], $ledgerName: String) {
+    mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!, $openForBranches: [ID], $ledgerName: String, $tagIds: [ID]) {
   settings {
     chartsOfAccount {
       account {
@@ -39935,6 +40050,7 @@ export const AddAccountInCoaDocument = `
           parentAccountCode: $parentAccountCode
           openForBranches: $openForBranches
           ledgerName: $ledgerName
+          tagIds: $tagIds
         ) {
           success
           error {
@@ -43332,6 +43448,64 @@ export const useSetEmployeeHealthInsuranceMutation = <TError = unknown, TContext
     useAxios<SetEmployeeHealthInsuranceMutation, SetEmployeeHealthInsuranceMutationVariables>(
       SetEmployeeHealthInsuranceDocument
     ),
+    options
+  );
+export const UpsertLedgerTagDocument = `
+    mutation upsertLedgerTag($id: ID, $data: LedgerTagInput!) {
+  settings {
+    chartsOfAccount {
+      tag {
+        upsert(id: $id, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpsertLedgerTagMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpsertLedgerTagMutation,
+    TError,
+    UpsertLedgerTagMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpsertLedgerTagMutation, TError, UpsertLedgerTagMutationVariables, TContext>(
+    ['upsertLedgerTag'],
+    useAxios<UpsertLedgerTagMutation, UpsertLedgerTagMutationVariables>(UpsertLedgerTagDocument),
+    options
+  );
+export const AddTagToLedgerDocument = `
+    mutation addTagToLedger($ledgerId: ID!, $tagId: [ID!]!) {
+  settings {
+    chartsOfAccount {
+      tag {
+        addTagToLedger(ledgerId: $ledgerId, tagId: $tagId) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddTagToLedgerMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddTagToLedgerMutation,
+    TError,
+    AddTagToLedgerMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddTagToLedgerMutation, TError, AddTagToLedgerMutationVariables, TContext>(
+    ['addTagToLedger'],
+    useAxios<AddTagToLedgerMutation, AddTagToLedgerMutationVariables>(AddTagToLedgerDocument),
     options
   );
 export const SetLoanProductDocument = `
@@ -58756,6 +58930,10 @@ export const GetLedgerListDocument = `
             balance
             balanceType
             status
+            tags {
+              id
+              name
+            }
           }
           cursor
         }
@@ -59228,6 +59406,87 @@ export const useGetEmployeeHealthInsuranceListQuery = <
     useAxios<GetEmployeeHealthInsuranceListQuery, GetEmployeeHealthInsuranceListQueryVariables>(
       GetEmployeeHealthInsuranceListDocument
     ).bind(null, variables),
+    options
+  );
+export const LedgerTagsListDocument = `
+    query ledgerTagsList($filter: Filter, $pagination: Pagination) {
+  settings {
+    chartsOfAccount {
+      tag {
+        list(filter: $filter, pagination: $pagination) {
+          edges {
+            node {
+              id
+              name
+              description
+              createdAt
+              ledgerCount
+            }
+          }
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useLedgerTagsListQuery = <TData = LedgerTagsListQuery, TError = unknown>(
+  variables?: LedgerTagsListQueryVariables,
+  options?: UseQueryOptions<LedgerTagsListQuery, TError, TData>
+) =>
+  useQuery<LedgerTagsListQuery, TError, TData>(
+    variables === undefined ? ['ledgerTagsList'] : ['ledgerTagsList', variables],
+    useAxios<LedgerTagsListQuery, LedgerTagsListQueryVariables>(LedgerTagsListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ListTagLedgersDocument = `
+    query listTagLedgers($filter: Filter, $pagination: Pagination) {
+  settings {
+    chartsOfAccount {
+      tag {
+        listTagLedgers(filter: $filter, pagination: $pagination) {
+          edges {
+            node {
+              ledgerId
+              name
+              branchId
+              branchName
+              tagId
+              tagName
+            }
+          }
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListTagLedgersQuery = <TData = ListTagLedgersQuery, TError = unknown>(
+  variables?: ListTagLedgersQueryVariables,
+  options?: UseQueryOptions<ListTagLedgersQuery, TError, TData>
+) =>
+  useQuery<ListTagLedgersQuery, TError, TData>(
+    variables === undefined ? ['listTagLedgers'] : ['listTagLedgers', variables],
+    useAxios<ListTagLedgersQuery, ListTagLedgersQueryVariables>(ListTagLedgersDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetLoanProductListDocument = `
