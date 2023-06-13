@@ -1,0 +1,14 @@
+mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
+  hr {
+    employeelifecycle {
+      employeeOnboarding {
+        upsertEmployeeOnboarding(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

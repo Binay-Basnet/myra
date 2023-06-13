@@ -21154,6 +21154,30 @@ export type SetNewEmployeeMutation = {
   };
 };
 
+export type SetEmployeeOnboardingUpsertMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  input: EmployeeOnboardingInput;
+}>;
+
+export type SetEmployeeOnboardingUpsertMutation = {
+  hr: {
+    employeelifecycle?: {
+      employeeOnboarding: {
+        upsertEmployeeOnboarding: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
+
 export type SetStaffPlanningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   input: StaffPlanInput;
@@ -27408,6 +27432,34 @@ export type GetEmployeeListQuery = {
               employeeEmail?: string | null;
               employeeDateOfJoining?: Record<'local' | 'en' | 'np', string> | null;
               employeeAddress?: AddressFragment | null;
+            };
+          } | null> | null;
+          pageInfo?: PaginationFragment | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetHrEmployeeOnboardingListQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetHrEmployeeOnboardingListQuery = {
+  hr: {
+    employeelifecycle: {
+      employeeOnboarding: {
+        listEmployeeOnboarding: {
+          totalCount: number;
+          edges?: Array<{
+            cursor: string;
+            node: {
+              activity?: string | null;
+              email?: string | null;
+              id: string;
+              name?: string | null;
+              onboarding_status?: OnboardingStatus | null;
             };
           } | null> | null;
           pageInfo?: PaginationFragment | null;
@@ -40286,6 +40338,42 @@ export const useSetNewEmployeeMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetNewEmployeeMutation, SetNewEmployeeMutationVariables>(SetNewEmployeeDocument),
     options
   );
+export const SetEmployeeOnboardingUpsertDocument = `
+    mutation setEmployeeOnboardingUpsert($id: ID, $input: EmployeeOnboardingInput!) {
+  hr {
+    employeelifecycle {
+      employeeOnboarding {
+        upsertEmployeeOnboarding(id: $id, input: $input) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetEmployeeOnboardingUpsertMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEmployeeOnboardingUpsertMutation,
+    TError,
+    SetEmployeeOnboardingUpsertMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEmployeeOnboardingUpsertMutation,
+    TError,
+    SetEmployeeOnboardingUpsertMutationVariables,
+    TContext
+  >(
+    ['setEmployeeOnboardingUpsert'],
+    useAxios<SetEmployeeOnboardingUpsertMutation, SetEmployeeOnboardingUpsertMutationVariables>(
+      SetEmployeeOnboardingUpsertDocument
+    ),
+    options
+  );
 export const SetStaffPlanningDocument = `
     mutation setStaffPlanning($id: ID, $input: StaffPlanInput!) {
   hr {
@@ -49159,6 +49247,48 @@ export const useGetEmployeeListQuery = <TData = GetEmployeeListQuery, TError = u
       null,
       variables
     ),
+    options
+  );
+export const GetHrEmployeeOnboardingListDocument = `
+    query getHREmployeeOnboardingList($filter: Filter, $pagination: Pagination) {
+  hr {
+    employeelifecycle {
+      employeeOnboarding {
+        listEmployeeOnboarding(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              activity
+              email
+              id
+              name
+              onboarding_status
+            }
+            cursor
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetHrEmployeeOnboardingListQuery = <
+  TData = GetHrEmployeeOnboardingListQuery,
+  TError = unknown
+>(
+  variables?: GetHrEmployeeOnboardingListQueryVariables,
+  options?: UseQueryOptions<GetHrEmployeeOnboardingListQuery, TError, TData>
+) =>
+  useQuery<GetHrEmployeeOnboardingListQuery, TError, TData>(
+    variables === undefined
+      ? ['getHREmployeeOnboardingList']
+      : ['getHREmployeeOnboardingList', variables],
+    useAxios<GetHrEmployeeOnboardingListQuery, GetHrEmployeeOnboardingListQueryVariables>(
+      GetHrEmployeeOnboardingListDocument
+    ).bind(null, variables),
     options
   );
 export const GetStaffPlanDocument = `

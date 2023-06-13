@@ -30,7 +30,7 @@ export const QuantityAdjustmentTable = ({ data }: ILoanPaymentScheduleTableProps
       },
       {
         header: 'Item Id',
-        accessorKey: 'itemId',
+        accessorKey: 'itemName',
         meta: {
           width: '60%',
         },
