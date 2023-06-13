@@ -266,3 +266,20 @@ query getCOAAccountsAllTransactionList($id: ID!, $pagination: Pagination) {
     }
   }
 }
+
+query getTagListForReport{
+  settings {
+    chartsOfAccount {
+      tag {
+        list(pagination: {after: "", first: -1}){
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
