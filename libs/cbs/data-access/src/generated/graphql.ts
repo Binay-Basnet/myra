@@ -327,6 +327,11 @@ export type AccountOperatorDetailsType = {
   temporaryAddress?: Maybe<KymAddress>;
 };
 
+export type AccountPremium = {
+  maxRate?: InputMaybe<Scalars['Float']>;
+  minRate?: InputMaybe<Scalars['Float']>;
+};
+
 export type AccountTransferEntry = {
   ID: Scalars['ID'];
   amount?: Maybe<Scalars['String']>;
@@ -5004,6 +5009,7 @@ export type DepositProductSettingsMutation = {
   editChequeSettings?: Maybe<ProductActivateResult>;
   editProductInterest: InterestSetupMutationResult;
   makeInactive?: Maybe<DepositProductInactiveResult>;
+  updateAccountPremium: ProductChargeMutationResult;
   updateCloseCharge: ProductChargeMutationResult;
   updateOpenCharge: ProductChargeMutationResult;
   updatePenaltyCharge: ProductChargeMutationResult;
@@ -5042,6 +5048,12 @@ export type DepositProductSettingsMutationEditProductInterestArgs = {
 
 export type DepositProductSettingsMutationMakeInactiveArgs = {
   data?: InputMaybe<DepositProductInactiveData>;
+};
+
+export type DepositProductSettingsMutationUpdateAccountPremiumArgs = {
+  payload: AccountPremium;
+  productId: Scalars['ID'];
+  productType: AccountTypeFilter;
 };
 
 export type DepositProductSettingsMutationUpdateCloseChargeArgs = {
@@ -5937,8 +5949,8 @@ export type EmployeeListType = {
   employeeDateOfJoining?: Maybe<Scalars['Localized']>;
   employeeDepartment?: Maybe<Scalars['String']>;
   employeeEmail?: Maybe<Scalars['String']>;
-  employeeId?: Maybe<Scalars['String']>;
   employeeName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
 };
 
 export type EmployeeOnboardingConnection = {
@@ -11648,6 +11660,7 @@ export type LedgerList = {
   ledgerName?: Maybe<Scalars['String']>;
   serviceCenter?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['Boolean']>;
+  tags?: Maybe<Array<Maybe<TagConciseEntry>>>;
 };
 
 export type LedgerListEdges = {
@@ -14739,6 +14752,7 @@ export type MemberStatisticsView = {
   accountBalance?: Maybe<Scalars['String']>;
   loanBalance?: Maybe<Scalars['String']>;
   totalLoanInterest?: Maybe<Scalars['String']>;
+  totalLoanRemainingPrincipal?: Maybe<Scalars['String']>;
   totalSavingInterestAccured?: Maybe<Scalars['String']>;
   totalSavingInterestPosted?: Maybe<Scalars['String']>;
   totalShareValue?: Maybe<Scalars['String']>;
@@ -17519,7 +17533,7 @@ export type SettingLedgerTagMutation = {
 
 export type SettingLedgerTagMutationAddTagToLedgerArgs = {
   ledgerId: Scalars['ID'];
-  tagId: Scalars['ID'];
+  tagId: Array<Scalars['ID']>;
 };
 
 export type SettingLedgerTagMutationRemoveTagFromLedgerArgs = {
@@ -18546,6 +18560,11 @@ export type TtrReportFilter = {
 export type TtrReportResult = {
   data?: Maybe<TtrReportData>;
   error?: Maybe<QueryError>;
+};
+
+export type TagConciseEntry = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type TagKhataReportFilter = {
@@ -27449,7 +27468,7 @@ export type GetEmployeeListQuery = {
           edges?: Array<{
             cursor: string;
             node: {
-              employeeId?: string | null;
+              id?: string | null;
               employeeName?: string | null;
               employeeDepartment?: string | null;
               employeeContact?: string | null;
@@ -30471,6 +30490,7 @@ export type GetMemberKymDetailsOverviewQuery = {
             totalSavingInterestAccured?: string | null;
             totalSavingInterestPosted?: string | null;
             totalLoanInterest?: string | null;
+            totalLoanRemainingPrincipal?: string | null;
           } | null;
           payments?: Array<{
             date?: Record<'local' | 'en' | 'np', string> | null;
@@ -49297,7 +49317,7 @@ export const GetEmployeeListDocument = `
           totalCount
           edges {
             node {
-              employeeId
+              id
               employeeName
               employeeDepartment
               employeeContact
@@ -53334,6 +53354,7 @@ export const GetMemberKymDetailsOverviewDocument = `
             totalSavingInterestAccured
             totalSavingInterestPosted
             totalLoanInterest
+            totalLoanRemainingPrincipal
           }
           payments {
             date

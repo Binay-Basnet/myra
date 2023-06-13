@@ -6,7 +6,7 @@ query getEmployeeList($filter: Filter, $pagination: Pagination) {
           totalCount
           edges {
             node {
-              employeeId
+              id
               employeeName
               employeeDepartment
               employeeContact

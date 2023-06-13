@@ -37,10 +37,20 @@ export const MemberStatistics = () => {
       {memberShareDetails?.loanBalance && (
         <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
           <Text fontSize="s3" fontWeight="500">
-            Total Loan Amount
+            Total Issued Lon Principal
           </Text>
           <Text fontSize="r3" fontWeight="600">
             {amountConverter(memberShareDetails?.loanBalance as string)}
+          </Text>
+        </Box>
+      )}
+      {memberShareDetails?.loanBalance && (
+        <Box boxShadow="E0" bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
+          <Text fontSize="s3" fontWeight="500">
+            Total Remaining Loan Principal
+          </Text>
+          <Text fontSize="r3" fontWeight="600">
+            {amountConverter(memberShareDetails?.totalLoanRemainingPrincipal as string)}
           </Text>
         </Box>
       )}

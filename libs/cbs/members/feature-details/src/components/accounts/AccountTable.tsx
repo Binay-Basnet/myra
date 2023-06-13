@@ -87,6 +87,10 @@ export const AccountTable = ({ data, memberName, contactNo }: ILoanPaymentSchedu
         ),
       },
       {
+        header: 'Account Number',
+        accessorKey: 'accountNumber',
+      },
+      {
         header: 'Balance',
         accessorKey: 'totalBalance',
         meta: {
