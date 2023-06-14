@@ -9,6 +9,7 @@ import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
+import { CustomWareHouseTransferType } from './WarehouseRequestForm';
 import { WarehouseTransferForm } from '../component/WarehouseTransferForm';
 
 /* eslint-disable-next-line */
@@ -25,11 +26,20 @@ export const WarehouseTransfer = () => {
     const filteredValues = {
       ...omit({ ...fullValues }, ['branchId']),
     };
+    const tableData = values?.itemDetails;
+    const filteredTableData =
+      tableData?.map((data) => ({
+        itemId: data?.itemId?.value,
+        quantity: data?.quantity,
+        description: data?.description,
+      })) || [];
+
     asyncToast({
       id: 'account-open-add-minor',
       promise: AddItems({
         data: {
           ...filteredValues,
+          itemDetails: filteredTableData,
         },
       }),
       msgs: {
@@ -44,7 +54,7 @@ export const WarehouseTransfer = () => {
   };
 
   // const router = useRouter();
-  const methods = useForm({});
+  const methods = useForm<CustomWareHouseTransferType>({});
 
   return (
     <FormLayout methods={methods}>

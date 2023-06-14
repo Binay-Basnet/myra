@@ -1,17 +1,16 @@
 import { ReactElement } from 'react';
-
-import { Box } from '@myra-ui';
+import { HrRecruitmentJobOfferList } from '@hr/feature-recruitment';
 
 import { HRLayout, HRRecruitmentSidebarayout } from '@coop/hr-module/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingQuickTransferList = () => <Box> HR- Employee</Box>;
+const JobOfferList = () => <HrRecruitmentJobOfferList />;
 
-AccountingQuickTransferList.getLayout = function getLayout(page: ReactElement) {
+JobOfferList.getLayout = function getLayout(page: ReactElement) {
   return (
     <HRLayout>
       <HRRecruitmentSidebarayout>{page}</HRRecruitmentSidebarayout>
     </HRLayout>
   );
 };
-export default AccountingQuickTransferList;
+export default JobOfferList;

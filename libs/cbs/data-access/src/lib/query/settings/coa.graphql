@@ -230,6 +230,10 @@ query getLedgerList($id: ID!, $pagination: Pagination, $filter: Filter, $branchI
             balance
             balanceType
             status
+            tags {
+              id
+              name
+            }
           }
           cursor
         }
@@ -261,6 +265,23 @@ query getCOAAccountsAllTransactionList($id: ID!, $pagination: Pagination) {
             balanceType
           }
           cursor
+        }
+      }
+    }
+  }
+}
+
+query getTagListForReport {
+  settings {
+    chartsOfAccount {
+      tag {
+        list(pagination: { after: "", first: -1 }) {
+          edges {
+            node {
+              id
+              name
+            }
+          }
         }
       }
     }

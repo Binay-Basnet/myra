@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { Box, Breadcrumb, Scrollable } from '@myra-ui';
+import { Box, PageHeader, Scrollable } from '@myra-ui';
 
 import { ROUTES } from '@coop/cbs/utils';
 
@@ -27,8 +27,7 @@ export const InventoryAdjustmentDetails = () => {
 
   return (
     <>
-      {/* <ProductDetailPathBar name={`${detailData?.code}`} title="Inventory Adjustment" /> */}
-      <Breadcrumb paths={paths} />
+      <PageHeader paths={paths} />
       <Box display="flex">
         <Box
           w="320px"

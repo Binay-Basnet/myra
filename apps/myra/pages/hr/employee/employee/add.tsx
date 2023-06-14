@@ -1,17 +1,12 @@
 import { ReactElement } from 'react';
 
-import { MainLayout, Scrollable } from '@myra-ui';
-
 import { EmployeeAddForm } from '@coop/hr/employee';
+import { HRLayout } from '@coop/hr-module/ui-layouts';
 
-const AddMember = () => <EmployeeAddForm />;
+const AddEmployee = () => <EmployeeAddForm />;
 
-AddMember.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <MainLayout>
-      <Scrollable>{page}</Scrollable>
-    </MainLayout>
-  );
+AddEmployee.getLayout = function getLayout(page: ReactElement) {
+  return <HRLayout>{page}</HRLayout>;
 };
 
-export default AddMember;
+export default AddEmployee;

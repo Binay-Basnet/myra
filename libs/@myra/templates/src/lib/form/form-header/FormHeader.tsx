@@ -7,6 +7,9 @@ export interface FormHeaderProps {
   buttonLabel?: string;
   buttonHandler?: () => void;
   isFormDirty?: boolean;
+
+  alertTitle?: string;
+  alertDescription?: string;
 }
 
 export const FormHeader = ({
@@ -15,6 +18,8 @@ export const FormHeader = ({
   buttonLabel,
   buttonHandler,
   isFormDirty = false,
+  alertTitle,
+  alertDescription,
 }: FormHeaderProps) => (
   <Box
     w="100%"
@@ -39,8 +44,8 @@ export const FormHeader = ({
       )}
 
       <AlertDialog
-        title="Saving in Progress: Your Form Changes are Being Safeguarded!"
-        description="Please Hold On! We're in the middle of saving your valuable modifications to ensure nothing gets lost. If you close now. Everything will be lost"
+        title={alertTitle}
+        description={alertDescription}
         isFormDirty={isFormDirty}
         closeLink={closeLink}
       />

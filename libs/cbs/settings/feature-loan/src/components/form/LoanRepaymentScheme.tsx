@@ -66,7 +66,6 @@ export const LoanRepaymentSchemes = () => {
           <Text mb="s16" fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
             {t['loanProductLoanRepaymentScheme']}
           </Text>
-
           {interestMethod === LoanInterestMethod.Straight && (
             <FormCheckboxGroup
               orientation="column"
@@ -74,7 +73,6 @@ export const LoanRepaymentSchemes = () => {
               list={loanschemeOptionsI}
             />
           )}
-
           {interestMethod === LoanInterestMethod.Diminishing && (
             <FormCheckboxGroup
               orientation="column"

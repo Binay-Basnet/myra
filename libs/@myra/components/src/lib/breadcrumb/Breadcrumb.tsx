@@ -11,15 +11,7 @@ interface BreadcrumbComponentProps {
 export const Breadcrumb = ({ paths }: BreadcrumbComponentProps) => {
   const router = useRouter();
   return (
-    <Box
-      h="3.125rem"
-      display="flex"
-      alignItems="center"
-      borderBottom="1px"
-      borderColor="border.layout"
-      pl="s8"
-      py="s8"
-    >
+    <Box display="flex" alignItems="center">
       {paths.map((item, index) => (
         <Fragment key={`${item?.link}-${item?.label}`}>
           <Text
@@ -27,10 +19,14 @@ export const Breadcrumb = ({ paths }: BreadcrumbComponentProps) => {
             px="s8"
             py="s4"
             color="gray.800"
-            _hover={{
-              bg: 'background.500',
-              borderRadius: 'br2',
-            }}
+            _hover={
+              item?.link
+                ? {
+                    bg: 'background.500',
+                    borderRadius: 'br2',
+                  }
+                : {}
+            }
             fontWeight={index === paths.length - 1 ? '600' : '500'}
             cursor={item?.link ? 'pointer' : 'auto'}
             onClick={() => {

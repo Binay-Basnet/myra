@@ -175,6 +175,11 @@ export const SettingSideBar = () => {
       route: `/settings/general/copomis-report/${tabs?.[0]?.to}/configure`,
       aclKey: 'SETTINGS_INDEXING',
     },
+    {
+      label: 'Reporting Tags',
+      route: ROUTES.SETTINGS_REPORTING_TAGS_LIST,
+      aclKey: 'SETTINGS_INDEXING',
+    },
   ];
 
   return (

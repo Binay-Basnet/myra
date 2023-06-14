@@ -1,15 +1,29 @@
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, useMemo, useRef, useState } from 'react';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { DetailsCard, Switch, Tooltip } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { asyncToast, Box, Button, Chips, DetailsCard, Switch, Text, Tooltip } from '@myra-ui';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
   LedgerList,
+  TagConciseEntry,
+  useAddTagToLedgerMutation,
   useGetMemberFilterMappingQuery,
   useUpdateLedgerStatusMutation,
 } from '@coop/cbs/data-access';
 import { localizedDate, RedirectButton, ROUTES } from '@coop/cbs/utils';
 import { debitCreditConverter } from '@coop/shared/utils';
+
+import { EditTagsModal } from '../modals';
 
 interface ILedgerListsProps {
   ledgers: LedgerList[];
@@ -17,6 +31,21 @@ interface ILedgerListsProps {
 }
 
 export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
+  const [selectedLedgerId, setSelectedLedgerId] = useState('');
+  const [selectedTags, setSelectedTags] = useState<(TagConciseEntry | null)[]>([]);
+
+  const alertCancelRef = useRef<HTMLButtonElement | null>(null);
+
+  const queryClient = useQueryClient();
+
+  const {
+    isOpen: isEditTagModalOpen,
+    onClose: onEditTagModalClose,
+    onToggle: onEditTagModalToggle,
+  } = useDisclosure();
+
+  const { isOpen: isAlertOpen, onClose: onAlertClose, onToggle: onAlertToggle } = useDisclosure();
+
   const { data: filterMapping } = useGetMemberFilterMappingQuery();
   const ledgersList = useMemo(
     () =>
@@ -59,6 +88,23 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
         },
       },
       {
+        header: 'Tags',
+        id: 'tags',
+        cell: (props) => (
+          <Box display="flex" gap="s4">
+            {props?.row?.original?.tags?.map((tag) => (
+              <Chips
+                label={tag?.name as string}
+                type="label"
+                variant="solid"
+                theme="neutral"
+                size="sm"
+              />
+            ))}
+          </Box>
+        ),
+      },
+      {
         id: 'balance',
         header: 'Balance',
         accessorFn: (row) =>
@@ -81,13 +127,109 @@ export const LedgerLists = ({ ledgers, headerButton }: ILedgerListsProps) => {
           />
         ),
       },
+      {
+        id: '_actions',
+        header: '',
+        accessorKey: 'actions',
+        cell: (props) => (
+          <TablePopover
+            items={[
+              {
+                title: 'Edit Tags',
+                onClick: () => {
+                  setSelectedLedgerId(props?.row?.original?.accountCode as string);
+                  setSelectedTags(props?.row?.original?.tags || []);
+                  onEditTagModalToggle();
+                },
+              },
+              {
+                title: 'Remove All Tags',
+                onClick: () => {
+                  setSelectedLedgerId(props?.row?.original?.accountCode as string);
+                  onAlertToggle();
+                },
+              },
+            ]}
+            node={props?.row?.original}
+          />
+        ),
+        meta: {
+          width: '60px',
+        },
+      },
     ],
     [filterMapping?.members?.filterMapping?.serviceCenter]
   );
 
+  const { mutateAsync: removeTags } = useAddTagToLedgerMutation();
+
+  const handleRemoveTags = () => {
+    asyncToast({
+      id: 'coa-remove-ledger-tags',
+      msgs: {
+        loading: 'Removing tags',
+        success: 'Tags removed',
+      },
+      promise: removeTags({
+        ledgerId: selectedLedgerId,
+        tagId: [],
+      }),
+      onSuccess: () => {
+        onAlertClose();
+        queryClient.invalidateQueries(['getLedgerList']);
+      },
+    });
+  };
+
   return (
-    <DetailsCard title="Ledger Lists" hasTable leftBtn={headerButton}>
-      <Table isDetailPageTable isStatic data={ledgersList} columns={columns} />
-    </DetailsCard>
+    <>
+      <DetailsCard title="Ledger Lists" hasTable leftBtn={headerButton}>
+        <Table isDetailPageTable isStatic data={ledgersList} columns={columns} />
+      </DetailsCard>
+
+      <EditTagsModal
+        isOpen={isEditTagModalOpen}
+        onClose={onEditTagModalClose}
+        ledgerId={selectedLedgerId}
+        tags={selectedTags}
+      />
+
+      <AlertDialog
+        isOpen={isAlertOpen}
+        leastDestructiveRef={alertCancelRef}
+        onClose={onAlertClose}
+        isCentered
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader
+              fontSize="lg"
+              fontWeight="bold"
+              borderBottom="1px"
+              borderColor="border.layout"
+            >
+              <Text fontWeight="SemiBold" fontSize="r2" color="gray.800" lineHeight="150%">
+                Remove Tags
+              </Text>
+            </AlertDialogHeader>
+
+            <AlertDialogBody borderBottom="1px solid" borderBottomColor="border.layout" p="s16">
+              <Text fontSize="s3" fontWeight={400} color="gray.800">
+                All the tags will be removed from the ledger. Do you want to continue?
+              </Text>
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={alertCancelRef} variant="outline" onClick={onAlertClose}>
+                Cancel
+              </Button>
+              <Button shade="danger" ml={3} onClick={handleRemoveTags}>
+                Confirm
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+    </>
   );
 };

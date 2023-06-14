@@ -53,6 +53,7 @@ query getAgentAssignedMemberListData($filter: Filter, $pagination: Pagination) {
             accountName
             dues {
               totalDue
+              fine
             }
             installmentAmount
           }
@@ -88,6 +89,9 @@ query getAgentTodayListData($id: ID!) {
           installmentAmount
         }
         amount
+        fine
+        amountToBeCollected
+        fineToBeCollected
         paid
         status
       }

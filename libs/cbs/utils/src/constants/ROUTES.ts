@@ -196,6 +196,8 @@ export const ROUTES = {
 
   SETTINGS_ACCESS_LOG: '/settings/monitor/access-log/list',
 
+  SETTINGS_REPORTING_TAGS_LIST: '/settings/general/reporting-tags/list',
+
   /* NOT INDEXED BY GLOBAL SEARCH */
 
   CBS_ACCOUNT_OPEN_EDIT: '/cbs/savings/account-open/edit',
@@ -356,9 +358,12 @@ export const ROUTES = {
   INVENTORY_ITEMS: '/inventory/items/items/list',
   INVENTORY_ITEM_DETAILS: '/inventory/items/items/details',
   INVENTORY_ITEMS_ADD: '/inventory/items/items/add',
+  INVENTORY_ITEMS_EDIT: '/inventory/items/items/edit',
   INVENTORY_ITEMS_VARIANT_ADD: '/inventory/items/items-variant/add',
+  INVENTORY_ITEMS_VARIANT_EDIT: '/inventory/items/items-variant/edit',
   INVENTORY_SUPPLIERS: '/inventory/suppliers/list',
   INVENTORY_SUPPLIERS_ADD: '/inventory/suppliers/add',
+  INVENTORY_SUPPLIERS_EDIT: '/inventory/suppliers/edit',
   INVENTORY_SUPPLIERS_DETAILS: '/inventory/suppliers/details',
   INVENTORY_WAREHOUSE: '/inventory/warehouse/list',
   INVENTORY_WAREHOUSE_TRASFER_LIST: '/inventory/warehouse/transfer/list',
@@ -434,14 +439,14 @@ export const ROUTES = {
   HR_LIFECYCLE_EMPLOYEE_EXIT_ADD: '/hr/lifecycle/exit/add',
 
   HR_RECRUITMENT_STAFF_PLANNING_LIST: '/hr/recruitment/staff-planning/list',
-  HR_RECRUITMENT_JOB_POSTING_LIST: '/hr/recruitment/job-opening/list',
+  HR_RECRUITMENT_JOB_OPENING_LIST: '/hr/recruitment/job-opening/list',
   HR_RECRUITMENT_JOB_APPLICATION_LIST: '/hr/recruitment/job-application/list',
   HR_RECRUITMENT_INTERVIEW_LIST: '/hr/recruitment/interview/list',
   HR_RECRUITMENT_JOB_OFFER_LIST: '/hr/recruitment/job-offer/list',
   HR_RECRUITMENT_APPOINTMENT_LETTER_LIST: '/hr/recruitment/appointment-letter/list',
 
   HR_RECRUITMENT_STAFF_PLANNING_ADD: '/hr/recruitment/staff-planning/add',
-  HR_RECRUITMENT_JOB_POSTING_ADD: '/hr/recruitment/job-opening/add',
+  HR_RECRUITMENT_JOB_OPENING_ADD: '/hr/recruitment/job-opening/add',
   HR_RECRUITMENT_JOB_APPLICATION_ADD: '/hr/recruitment/job-application/add',
   HR_RECRUITMENT_INTERVIEW_ADD: '/hr/recruitment/interview/add',
   HR_RECRUITMENT_JOB_OFFER_ADD: '/hr/recruitment/job-offer/add',

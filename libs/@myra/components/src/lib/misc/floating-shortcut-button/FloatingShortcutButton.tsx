@@ -35,21 +35,21 @@ const whatsNewData = {
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Loan transaction statement report',
-      'Branch readiness report',
-      'Withdraw slip for loc saving accounts',
-      'Print loan schedule',
-      'Inventory detail pages',
-      'Edit unit rate during item purchase',
+      'Leader Group report.',
+      'Create tag in the COA .',
+      'Edit and View details in inventory section like warehouse, inventory, sales section.',
+      'DUE and amount column added in the MR transactions.',
     ],
   },
   knownBugs: {
     title: 'Known Bugs',
     data: [
-      'Loc close fix (BE)',
-      'Hide 0.00 transaction from gl and statement(BE)',
-      'Loc service charge fix(BE)',
-      'Optimization of kym(coop)(FE)',
+      '2 Print voucher in single page.',
+      'Item name are randomly missing in the inventory section.',
+      'Landscape print in report section like loan statement, saving statements.',
+      'Loan Schedule payment print in the overview page.',
+      'loan products filter issue in loan account page.',
+      'String json issue in mr transactions fixes.',
     ],
   },
 };
@@ -88,8 +88,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.67</Text>
-          <Text fontSize="s3">June 9, 2023</Text>
+          <Text fontSize="r2">Version 1.0.68</Text>
+          <Text fontSize="s3">June 14, 2023</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

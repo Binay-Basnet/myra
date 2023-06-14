@@ -60,6 +60,10 @@ export const LoanTable = ({
         ),
       },
       {
+        header: 'Account Number',
+        accessorKey: 'accountNumber',
+      },
+      {
         header: 'Sanctioned Balance',
         accessorKey: 'totalBalance',
         meta: {

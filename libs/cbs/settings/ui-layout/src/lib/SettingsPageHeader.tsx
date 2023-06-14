@@ -2,7 +2,20 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { Box, Button, Icon, PageHeaderTab, Text } from '@myra-ui';
+import {
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  Icon,
+  OptionsIcon,
+  PageHeaderTab,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
+} from '@myra-ui';
 
 interface ITableListPageHeader {
   heading?: string;
@@ -13,6 +26,7 @@ interface ITableListPageHeader {
   buttonLabel?: string;
   buttonHandler?: () => void;
   breadcrumbs?: { label: string; link?: string }[];
+  options?: { label: string; handler: () => void }[];
 }
 
 export const SettingsPageHeader = ({
@@ -21,6 +35,7 @@ export const SettingsPageHeader = ({
   buttonLabel,
   buttonHandler,
   breadcrumbs,
+  options,
 }: ITableListPageHeader) => (
   <Box
     bg="white"
@@ -70,6 +85,48 @@ export const SettingsPageHeader = ({
     )}
 
     <PageHeaderTab list={tabItems ?? []} />
+
+    {options?.length ? (
+      <Box display="flex" justifyContent="flex-end" flexGrow={100}>
+        <Popover placement="bottom-end">
+          <PopoverTrigger>
+            <Box display="flex" alignItems="center" justifyContent="center">
+              <Button
+                variant="ghost"
+                colorScheme="gray"
+                color="gray.600"
+                fontSize="r1"
+                display="flex"
+                alignItems="center"
+                gap="s8"
+              >
+                <Icon as={OptionsIcon} size="sm" />
+                <span>Options</span>
+              </Button>
+            </Box>
+          </PopoverTrigger>
+          <PopoverContent minWidth="180px" w="180px" color="white" boxShadow="E2">
+            <PopoverBody px="0" py="0">
+              <Grid>
+                {options.map(({ label, handler }) => (
+                  <GridItem
+                    px="s16"
+                    py="s8"
+                    _hover={{ bg: 'gray.100' }}
+                    cursor="pointer"
+                    onClick={handler}
+                  >
+                    <Text fontSize="s3" color="neutralColorLight.Gray-80">
+                      {label}
+                    </Text>
+                  </GridItem>
+                ))}
+              </Grid>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+      </Box>
+    ) : null}
 
     {buttonLabel && buttonHandler && (
       <Box display="flex" justifyContent="flex-end" flexGrow={100}>

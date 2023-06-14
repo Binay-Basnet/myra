@@ -1,9 +1,8 @@
-import { IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Icon, IconButton, PathBar, Scrollable } from '@myra-ui';
+import { Box, Scrollable } from '@myra-ui';
 
-import { COALeafDetailSidebar } from '@coop/cbs/settings/ui-layout';
+import { COALeafDetailSidebar, SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { ROUTES } from '@coop/cbs/utils';
 
 import { LeafNodeOverview, LedgerTab } from '../components/detail-tabs';
@@ -12,13 +11,21 @@ import { useCOALeafNodeDetails } from '../hooks';
 export const COALeafDetail = () => {
   const router = useRouter();
 
-  const tabQuery = router.query['tab'] as string;
+  // const tabQuery = router.query['tab'] as string;
+
+  const { tabQuery } = router.query;
 
   const { leafNodeData } = useCOALeafNodeDetails();
 
   return (
     <>
-      <Box position="sticky" bg="white" top="0" zIndex="10" width="100%">
+      <SettingsPageHeader
+        breadcrumbs={[
+          { label: 'Charts of Accounts', link: ROUTES.SETTINGS_GENERAL_COA },
+          { label: leafNodeData?.accountType ?? '', link: '' },
+        ]}
+      />
+      {/* <Box position="sticky" bg="white" top="0" zIndex="10" width="100%">
         <PathBar
           paths={[
             { label: 'Charts of Accounts', link: ROUTES.SETTINGS_GENERAL_COA },
@@ -41,7 +48,7 @@ export const COALeafDetail = () => {
             />
           }
         />
-      </Box>
+      </Box> */}
       <Box display="flex">
         <Box
           w="320px"

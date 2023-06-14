@@ -8,7 +8,7 @@ export const EmployeeAddress = () => {
   const methods = useFormContext();
   const { watch } = methods;
 
-  const isPermanentAndTemporaryAddressSame = watch('sameTempAsPermanentAddress');
+  const isPermanentAndTemporaryAddressSame = watch('isTemporarySameAsPermanent');
   return (
     <>
       <FormAddress
@@ -20,7 +20,7 @@ export const EmployeeAddress = () => {
       <FormSection id="Temporary Address" header="Temporary Address">
         <GridItem colSpan={3}>
           <FormSwitch
-            name="sameTempAsPermanentAddress"
+            name="isTemporarySameAsPermanent"
             label="Temporary Address same as Permanent"
           />
         </GridItem>

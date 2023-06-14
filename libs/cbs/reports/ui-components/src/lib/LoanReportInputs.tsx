@@ -13,10 +13,11 @@ import { ReportDateRange } from '../components';
 
 interface LoanReportInputProps {
   isClosed?: boolean;
+  showAll?: boolean;
   accountName?: string;
 }
 
-export const LoanReportInputs = ({ isClosed, accountName }: LoanReportInputProps) => {
+export const LoanReportInputs = ({ isClosed, accountName, showAll }: LoanReportInputProps) => {
   const methods = useFormContext<SavingStatementReportSettings>();
   const router = useRouter();
   const loanAccountId = router.query?.['loanAccountId'];
@@ -32,8 +33,12 @@ export const LoanReportInputs = ({ isClosed, accountName }: LoanReportInputProps
             andConditions: [
               {
                 column: 'objState',
-                comparator: 'EqualTo',
-                value: isClosed ? 'COMPLETED' : 'DISBURSED',
+                comparator: 'IN',
+                value: isClosed
+                  ? 'COMPLETED'
+                  : showAll
+                  ? ['DISBURSED', 'COMPLETED']
+                  : ['DISBURSED'],
               },
               {
                 column: 'memberId',

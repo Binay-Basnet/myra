@@ -2,34 +2,27 @@ import { FormSection } from '@myra-ui';
 
 import { FormEditableTable } from '@coop/shared/form';
 
-type WorkTableType = {
-  pastWorkedCompanyName: string;
-  pastWorkedDesignation: string;
-  pastWorkedSalary: string;
-  pastWorkedAddress: string;
-};
-
 export const WorkExperienceTable = () => (
   <FormSection id="Work Experience" header="Work Experience" flexLayout>
-    <FormEditableTable<WorkTableType>
+    <FormEditableTable
       name="workExperience"
       columns={[
         {
-          accessor: 'pastWorkedCompanyName',
+          accessor: 'companyName',
           header: 'Company Name',
           cellWidth: 'lg',
         },
         {
-          accessor: 'pastWorkedDesignation',
+          accessor: 'designation',
           header: 'Designation',
         },
         {
-          accessor: 'pastWorkedSalary',
+          accessor: 'salary',
           header: 'Salary',
           isNumeric: true,
         },
         {
-          accessor: 'pastWorkedAddress',
+          accessor: 'address',
           header: 'Address',
         },
       ]}

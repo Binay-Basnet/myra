@@ -1,9 +1,10 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { asyncToast } from '@myra-ui';
 
-import { useSetItemsMutation } from '@coop/cbs/data-access';
+import { useGetItemsFormStateQuery, useSetItemsMutation } from '@coop/cbs/data-access';
 import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 
@@ -15,12 +16,15 @@ export const InventoryFeatureItem = () => {
   const router = useRouter();
   const { mutateAsync: AddItems } = useSetItemsMutation();
   const isAccounting = router?.pathname?.includes('accounting');
+
+  const itemID = router?.query['id'];
   const handleSave = () => {
     const values = methods.getValues();
 
     asyncToast({
       id: 'account-open-add-minor',
       promise: AddItems({
+        id: itemID ? (itemID as string) : undefined,
         data: {
           ...values,
 
@@ -48,6 +52,19 @@ export const InventoryFeatureItem = () => {
         : ROUTES.INVENTORY_ITEMS_VARIANT_ADD
     );
   };
+
+  const itemData = useGetItemsFormStateQuery({
+    id: itemID as string,
+  });
+  const itemFormData = itemData?.data?.inventory?.items?.getItem?.data;
+
+  useEffect(() => {
+    if (itemFormData) {
+      methods?.reset({
+        ...itemFormData,
+      });
+    }
+  }, [itemID, itemFormData, methods]);
 
   return (
     <FormLayout methods={methods}>

@@ -1,0 +1,29 @@
+mutation upsertLedgerTag($id: ID, $data: LedgerTagInput!) {
+  settings {
+    chartsOfAccount {
+      tag {
+        upsert(id: $id, data: $data) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation addTagToLedger($ledgerId: ID!, $tagId: [ID!]!) {
+  settings {
+    chartsOfAccount {
+      tag {
+        addTagToLedger(ledgerId: $ledgerId, tagId: $tagId) {
+          record
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

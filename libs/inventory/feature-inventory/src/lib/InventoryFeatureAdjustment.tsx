@@ -6,7 +6,7 @@ import { omit } from 'lodash';
 import { asyncToast } from '@myra-ui';
 
 import {
-  InputMaybe,
+  AdjustmentUnit,
   InventoryAdjustmentInput,
   InventoryAdjustmentItemDetails,
   InventoryAdjustmentMode,
@@ -18,12 +18,36 @@ import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 
 import InventoryAdjustmentForm from '../component/form/InventoryAdjustmentForm';
-import { PurchaseAdjustmentTableType } from '../component/form/InventoryAdjustmentTable';
 
 /* eslint-disable-next-line */
 export interface InventoryFeatureAdjustmentProps {}
 type CustomInventoryAdjustmentInput = {
-  valueItems?: InputMaybe<Array<InputMaybe<InventoryAdjustmentItemDetails>>>;
+  valueItems?: {
+    itemId: { label: string; value: string };
+    itemName: string;
+    warehouseId: string;
+
+    warehouseName: string;
+    newQuantity: string;
+    quantityAdjusted: string;
+    quantityAdjustedUnit: AdjustmentUnit;
+    newValue: string;
+
+    valueAdjusted: string;
+  }[];
+  itemDetails?: {
+    itemId: { label: string; value: string };
+    itemName: string;
+    warehouseId: string;
+
+    warehouseName: string;
+    newQuantity: string;
+    quantityAdjusted: string;
+    quantityAdjustedUnit: AdjustmentUnit;
+    newValue: string;
+
+    valueAdjusted: string;
+  }[];
 } & InventoryAdjustmentInput;
 
 export const InventoryFeatureAdjustment = () => {
@@ -69,14 +93,14 @@ export const InventoryFeatureAdjustment = () => {
   const handleSave = () => {
     const values = methods.getValues();
     const mode = values?.modeOfAdjustment;
-    const tableData = values?.itemDetails as PurchaseAdjustmentTableType[];
-    const tableValueData = values?.valueItems as PurchaseAdjustmentTableType[];
+    const tableData = values?.itemDetails;
+    const tableValueData = values?.valueItems;
 
     const filteredTableData =
       mode === InventoryAdjustmentMode?.Quantity
         ? tableData?.map((data) => ({
-            itemId: data?.itemId,
-            itemName: itemsSearchOptions?.find((d) => d?.value === data?.itemId)?.label,
+            itemId: data?.itemId?.value,
+            itemName: itemsSearchOptions?.find((d) => d?.value === data?.itemId?.value)?.label,
             warehouseName: wareHouseSearchOptions?.find((d) => d?.value === data?.warehouseId)
               ?.label,
             warehouseId: data?.warehouseId,
@@ -86,8 +110,8 @@ export const InventoryFeatureAdjustment = () => {
             quantityAdjustedUnit: Number(data?.quantityAdjusted) >= 0 ? 'PLUS' : 'MINUS',
           })) || []
         : tableValueData?.map((data) => ({
-            itemId: data?.itemId,
-            itemName: itemsSearchOptions?.find((d) => d?.value === data?.itemId)?.label,
+            itemId: data?.itemId?.value,
+            itemName: itemsSearchOptions?.find((d) => d?.value === data?.itemId?.value)?.label,
             newValue: String(data?.newValue),
             valueAdjusted: String(data?.quantityAdjusted),
           })) || [];

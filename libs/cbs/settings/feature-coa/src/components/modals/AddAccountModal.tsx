@@ -7,7 +7,12 @@ import { asyncToast, Modal } from '@myra-ui/components';
 import { Box } from '@myra-ui/foundations';
 
 import { CoaAccountSetup, useAddAccountInCoaMutation } from '@coop/cbs/data-access';
-import { FormBranchSelect, FormInput, FormRadioGroup } from '@coop/shared/form';
+import {
+  FormBranchSelect,
+  FormInput,
+  FormLedgerTagSelect,
+  FormRadioGroup,
+} from '@coop/shared/form';
 
 import { CoaTree } from '../../types';
 
@@ -22,6 +27,7 @@ export const AddAccountModal = ({ clickedAccount, modalProps }: IAddAccountProps
     parentAccountCode: string;
     openForBranches: { label: string; value: string }[];
     ledgerName: string;
+    tagIds: { label: string; value: string }[];
   }>();
   const { watch, reset } = methods;
   const isAccountOpenForSelectedBranch = watch('accountSetup') === CoaAccountSetup.SelectedBranch;
@@ -60,6 +66,7 @@ export const AddAccountModal = ({ clickedAccount, modalProps }: IAddAccountProps
             parentAccountCode: clickedAccount?.id as string,
             openForBranches: methods?.getValues()?.openForBranches?.map((item) => item?.value),
             ledgerName: methods?.getValues()?.ledgerName as string,
+            tagIds: methods?.getValues().tagIds?.map((tag) => tag?.value),
           }),
         });
       }}
@@ -85,6 +92,10 @@ export const AddAccountModal = ({ clickedAccount, modalProps }: IAddAccountProps
             <FormBranchSelect name="openForBranches" label="Select Service Center" isMulti />
           </Box>
         )}
+
+        <Box mt="s32" width={280}>
+          <FormLedgerTagSelect name="tagIds" label="Tags" menuPosition="fixed" isMulti />
+        </Box>
       </FormProvider>
     </Modal>
   );

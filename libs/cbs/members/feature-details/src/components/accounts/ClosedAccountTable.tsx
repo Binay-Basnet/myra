@@ -89,6 +89,10 @@ export const ClosedAccountTable = ({
         ),
       },
       {
+        header: 'Account Number',
+        accessorKey: 'accountNumber',
+      },
+      {
         header: 'Interest',
         accessorKey: 'interestRate',
         cell: (props) => (
