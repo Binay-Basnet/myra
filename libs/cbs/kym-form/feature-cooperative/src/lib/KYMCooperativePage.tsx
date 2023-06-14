@@ -79,6 +79,8 @@ export const KYMCooperativePage = () => {
             isFormDirty={isFormLoading}
             title={`${t['membersFormAddNewMembers']} - ${featureCode?.newMemberCooperative}`}
             closeLink={ROUTES.CBS_MEMBER_LIST}
+            alertTitle="Saving in Progress: Your Form Changes are Being Safeguarded!"
+            alertDescription="Please Hold On! We're in the middle of saving your valuable modifications to ensure nothing gets lost. If you close now. Everything will be lost"
           />
         </Container>
       </Box>
