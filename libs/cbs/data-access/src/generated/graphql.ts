@@ -4607,6 +4607,7 @@ export type DepositLoanAccountMutation = {
   issueFDCertificate: Scalars['String'];
   makeActive?: Maybe<Scalars['String']>;
   updateAccountInterest: InterestSetupMutationResult;
+  updateAccountName?: Maybe<SavingsTenureUpdateResult>;
   updateInstallmentAmount?: Maybe<SavingsTenureUpdateResult>;
   updateNomineeAccount?: Maybe<NomineeAccountUpdateResult>;
   updateSignature?: Maybe<SavingsTenureUpdateResult>;
@@ -4644,6 +4645,12 @@ export type DepositLoanAccountMutationMakeActiveArgs = {
 export type DepositLoanAccountMutationUpdateAccountInterestArgs = {
   accountId: Scalars['ID'];
   data: InterestRateSetupInput;
+};
+
+export type DepositLoanAccountMutationUpdateAccountNameArgs = {
+  accountID: Scalars['ID'];
+  accountType: AccountTypeFilter;
+  name: Scalars['String'];
 };
 
 export type DepositLoanAccountMutationUpdateInstallmentAmountArgs = {
