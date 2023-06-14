@@ -52,8 +52,10 @@ export const HrRecruitmentAppointmentLetterList = () => {
         data={rowData}
         columns={columns}
         pagination={{
-          total: data?.hr?.recruitment?.recruitmentJobOffer?.listJobOffer?.totalCount as number,
-          pageInfo: data?.hr?.recruitment?.recruitmentJobOffer?.listJobOffer?.pageInfo,
+          total: data?.hr?.recruitment?.recruitmentAppointmentLetter?.listAppointmentLetter
+            ?.totalCount as number,
+          pageInfo:
+            data?.hr?.recruitment?.recruitmentAppointmentLetter?.listAppointmentLetter?.pageInfo,
         }}
       />
     </>
