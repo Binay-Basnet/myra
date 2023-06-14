@@ -46,7 +46,7 @@ export const HrRecruitmentJobOfferList = () => {
   );
   return (
     <>
-      <PageHeader heading="Job Opening" />{' '}
+      <PageHeader heading="Job Offering" />{' '}
       <Table
         isLoading={isFetching}
         data={rowData}

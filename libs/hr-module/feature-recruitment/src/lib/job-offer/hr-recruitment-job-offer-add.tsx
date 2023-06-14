@@ -1,30 +1,27 @@
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { asyncToast, FormSection, GridItem } from '@myra-ui';
 
 import {
+  JobOfferInput,
   JobOfferTermInput,
-  JobOpeningInput,
   JobStatus,
   useGetDepartmentListQuery,
   useGetDesignationListQuery,
-  useGetStaffPlanningListQuery,
-  useSetJobOpeningMutation,
+  useGetJobApplicationListQuery,
+  useSetJobOfferMutation,
 } from '@coop/cbs/data-access';
-import {
-  FormDatePicker,
-  FormEditableTable,
-  FormInput,
-  FormLayout,
-  FormSelect,
-} from '@coop/shared/form';
+import { ROUTES } from '@coop/cbs/utils';
+import { FormDatePicker, FormEditableTable, FormLayout, FormSelect } from '@coop/shared/form';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const HrRecruitmentJobOfferAdd = () => {
   const methods = useForm();
+  const router = useRouter();
   const { getValues } = methods;
 
-  const { data: staffPlanData } = useGetStaffPlanningListQuery({
+  const { data: jobApplicationData } = useGetJobApplicationListQuery({
     pagination: {
       ...getPaginationQuery(),
       first: -1,
@@ -55,13 +52,15 @@ export const HrRecruitmentJobOfferAdd = () => {
     },
   });
 
-  const { mutateAsync } = useSetJobOpeningMutation();
+  const { mutateAsync } = useSetJobOfferMutation();
 
-  const staffPlanningOptions =
-    staffPlanData?.hr?.recruitment?.recruitment?.listStaffPlanning?.edges?.map((item) => ({
-      label: item?.node?.staffPlanTitle as string,
-      value: item?.node?.id as string,
-    }));
+  const jobApplicationOptions =
+    jobApplicationData?.hr?.recruitment?.recruitmentJobApplication?.listJobApplication?.edges?.map(
+      (item) => ({
+        label: item?.node?.name as string,
+        value: item?.node?.id as string,
+      })
+    );
 
   const departmentOptions =
     departmentData?.settings?.general?.HCM?.employee?.listDepartment?.edges?.map((item) => ({
@@ -83,17 +82,19 @@ export const HrRecruitmentJobOfferAdd = () => {
 
   const submitForm = () => {
     asyncToast({
-      id: 'add-job-opening',
+      id: 'add-job-offering',
       msgs: {
-        success: 'new job opening added succesfully',
-        loading: 'adding new job opening',
+        success: 'new job offering added succesfully',
+        loading: 'adding new job offering',
       },
-      onSuccess: () => {},
+      onSuccess: () => {
+        router.push(ROUTES?.HR_RECRUITMENT_JOB_OFFER_LIST);
+      },
       promise: mutateAsync({
         id: null,
         input: {
           ...getValues(),
-        } as unknown as JobOpeningInput,
+        } as JobOfferInput,
       }),
     });
   };
@@ -105,14 +106,18 @@ export const HrRecruitmentJobOfferAdd = () => {
         <FormLayout.Form>
           <FormSection templateColumns={3} divider>
             <GridItem colSpan={2}>
-              <FormInput name="jobApplicant" type="text" label="Job Applicant" />
+              <FormSelect
+                name="jobApplicant"
+                label="Job Applicant"
+                options={jobApplicationOptions}
+              />
             </GridItem>
             <FormSelect name="jobStatus" label="Status" options={statusOptions} />
             <FormSelect name="jobDepartment" label="Department" options={departmentOptions} />
             <FormSelect name="jobDesignation" label="Designation" options={designationOptions} />
             <FormDatePicker name="jobOfferDate" label="Offer Date" />
           </FormSection>
-          <FormSection templateColumns={3} divider>
+          <FormSection templateColumns={3} header="Job Offer Terms" divider>
             <GridItem colSpan={4}>
               <FormEditableTable<JobOfferTermInput>
                 name="jobOfferTerms"
@@ -125,7 +130,6 @@ export const HrRecruitmentJobOfferAdd = () => {
                   {
                     accessor: 'value',
                     header: 'Value',
-                    isNumeric: true,
                   },
                 ]}
               />
