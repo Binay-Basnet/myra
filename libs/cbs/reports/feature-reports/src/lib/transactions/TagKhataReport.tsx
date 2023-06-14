@@ -100,7 +100,7 @@ export const TagKhataReport = () => {
               link: '/reports/cbs/transactions',
             },
             {
-              label: 'Tag Khata Report',
+              label: 'Ledger Report',
               link: '/reports/cbs/transactions/tag-khata/new',
             },
           ]}
