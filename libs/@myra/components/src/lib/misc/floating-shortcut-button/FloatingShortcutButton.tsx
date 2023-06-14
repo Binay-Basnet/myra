@@ -35,21 +35,21 @@ const whatsNewData = {
   bugsSquashed: {
     title: 'Fixes',
     data: [
-      'Loan transaction statement report',
-      'Branch readiness report',
-      'Withdraw slip for loc saving accounts',
-      'Print loan schedule',
-      'Inventory detail pages',
-      'Edit unit rate during item purchase',
+      'Leader Group report.',
+      'Create tag in the COA .',
+      'Edit and View details in inventory section like warehouse, inventory, sales section.',
+      'DUE and amount column added in the MR transactions.',
     ],
   },
   knownBugs: {
     title: 'Known Bugs',
     data: [
-      'Loc close fix (BE)',
-      'Hide 0.00 transaction from gl and statement(BE)',
-      'Loc service charge fix(BE)',
-      'Optimization of kym(coop)(FE)',
+      '2 Print voucher in single page.',
+      'Item name are randomly missing in the inventory section.',
+      'Landscape print in report section like loan statement, saving statements.',
+      'Loan Schedule payment print in the overview page.',
+      'loan products filter issue in loan account page.',
+      'String json issue in mr transactions fixes.',
     ],
   },
 };
