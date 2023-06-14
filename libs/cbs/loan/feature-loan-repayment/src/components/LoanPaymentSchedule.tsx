@@ -53,6 +53,14 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     [loanPreviewData]
   );
 
+  const { totalPayablePrincipal, totalPayableInterest } = useMemo(
+    () => ({
+      totalPayablePrincipal: paymentSchedule?.totalPayablePrincipal,
+      totalPayableInterest: paymentSchedule?.totalPayableInterest,
+    }),
+    [paymentSchedule]
+  );
+
   // const nextInstallmentNo = repaymentDetails?.nextInstallmentNo ?? (1 as number);
 
   const loanInstallments: IdealLoanInstallment[] = useMemo(
@@ -283,6 +291,14 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
               <Box display="flex" gap="s4">
                 <Text>Total Fine:</Text>
                 <Text fontWeight={500}>{amountConverter(totalFine)}</Text>
+              </Box>
+              <Box display="flex" gap="s4">
+                <Text>Total Remaining Principal:</Text>
+                <Text fontWeight={500}>{amountConverter(totalPayablePrincipal || 0)}</Text>
+              </Box>
+              <Box display="flex" gap="s4">
+                <Text>Total Remaining Interest:</Text>
+                <Text fontWeight={500}>{amountConverter(totalPayableInterest || 0)}</Text>
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Total Overdue Amount:</Text>

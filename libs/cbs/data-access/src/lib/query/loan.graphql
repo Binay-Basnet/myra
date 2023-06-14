@@ -520,6 +520,8 @@ query getLoanPreview($id: String!) {
           }
           totalRemainingPayable
           duesSince
+          totalPayablePrincipal
+          totalPayableInterest
         }
         statistics {
           remainingPayableAmount

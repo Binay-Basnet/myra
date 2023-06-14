@@ -7630,6 +7630,40 @@ export type HcmEmployeeGeneralQueryListEmployeeTypeArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type HcmEmployeeLeaveMutation = {
+  upsertLeaveType: LeaveTypeOutput;
+};
+
+export type HcmEmployeeLeaveMutationUpsertLeaveTypeArgs = {
+  id?: InputMaybe<Scalars['String']>;
+  input: LeaveTypeInput;
+};
+
+export type HcmEmployeeLeaveQuery = {
+  getLeaveType: LeaveTypeGetOutput;
+  listLeaveType: HcmEmployeeLeaveTypeConnection;
+};
+
+export type HcmEmployeeLeaveQueryGetLeaveTypeArgs = {
+  id: Scalars['String'];
+};
+
+export type HcmEmployeeLeaveQueryListLeaveTypeArgs = {
+  filter?: InputMaybe<Filter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type HcmEmployeeLeaveTypeConnection = {
+  edges?: Maybe<Array<Maybe<HcmEmployeeLeaveTypeEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type HcmEmployeeLeaveTypeEdges = {
+  cursor: Scalars['Cursor'];
+  node: LeaveTypeNode;
+};
+
 export type HcmEmployeeListConnection = {
   edges?: Maybe<Array<Maybe<HcmEmployeeListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -7643,10 +7677,12 @@ export type HcmEmployeeListEdges = {
 
 export type HcmEmployeeMutation = {
   employee: HcmEmployeeGeneralMutation;
+  leave: HcmEmployeeLeaveMutation;
 };
 
 export type HcmEmployeeQuery = {
   employee: HcmEmployeeGeneralQuery;
+  leave: HcmEmployeeLeaveQuery;
 };
 
 export type HcmEmployeeSchema = {
@@ -7661,6 +7697,7 @@ export type HcmSettingsMutation = {
 
 export type HcmSettingsQuery = {
   employee: HcmEmployeeGeneralQuery;
+  leave: HcmEmployeeLeaveQuery;
 };
 
 export type HrEmployeeKyeMutation = {
@@ -11640,6 +11677,53 @@ export type LeaveOutputType = {
   record?: Maybe<EmployeeLeaveType>;
 };
 
+export const LeaveTypeEnum = {
+  Paid: 'PAID',
+  Unpaid: 'UNPAID',
+} as const;
+
+export type LeaveTypeEnum = typeof LeaveTypeEnum[keyof typeof LeaveTypeEnum];
+export type LeaveTypeGetOutput = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<LeaveTypeNode>;
+};
+
+export type LeaveTypeInput = {
+  applicableAfter?: InputMaybe<Scalars['Int']>;
+  description?: InputMaybe<Scalars['String']>;
+  fractionOfDailySalaryPerLeave?: InputMaybe<Scalars['Float']>;
+  includeHolidaysWithLeavesAsLeaves?: InputMaybe<Scalars['Boolean']>;
+  isCarriedForward?: InputMaybe<Scalars['Boolean']>;
+  isCompensatory?: InputMaybe<Scalars['Boolean']>;
+  isOptionalLeave?: InputMaybe<Scalars['Boolean']>;
+  isPartiallyPaid?: InputMaybe<Scalars['Boolean']>;
+  maximumContinuousDaysApplicable?: InputMaybe<Scalars['Int']>;
+  maximumLeaveAllowed?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  typeOfLeave?: InputMaybe<LeaveTypeEnum>;
+};
+
+export type LeaveTypeNode = {
+  applicableAfter?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
+  fractionOfDailySalaryPerLeave?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['String']>;
+  includeHolidaysWithLeavesAsLeaves?: Maybe<Scalars['Boolean']>;
+  isCarriedForward?: Maybe<Scalars['Boolean']>;
+  isCompensatory?: Maybe<Scalars['Boolean']>;
+  isOptionalLeave?: Maybe<Scalars['Boolean']>;
+  isPartiallyPaid?: Maybe<Scalars['Boolean']>;
+  maximumContinuousDaysApplicable?: Maybe<Scalars['Int']>;
+  maximumLeaveAllowed?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  typeOfLeave?: Maybe<LeaveTypeEnum>;
+};
+
+export type LeaveTypeOutput = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['String'];
+};
+
 export type LedgerAllTransactionConnection = {
   edges?: Maybe<Array<Maybe<LedgerAllTransactionEdge>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -12718,6 +12802,8 @@ export type LoanInstallments = {
   installments?: Maybe<Array<Maybe<LoanInstallment>>>;
   total: Scalars['String'];
   totalInterest?: Maybe<Scalars['String']>;
+  totalPayableInterest?: Maybe<Scalars['String']>;
+  totalPayablePrincipal?: Maybe<Scalars['String']>;
   totalPrincipal?: Maybe<Scalars['String']>;
   totalRemainingPayable?: Maybe<Scalars['String']>;
 };
@@ -29259,6 +29345,8 @@ export type GetLoanPreviewQuery = {
           totalPrincipal?: string | null;
           totalRemainingPayable?: string | null;
           duesSince?: Record<'local' | 'en' | 'np', string> | null;
+          totalPayablePrincipal?: string | null;
+          totalPayableInterest?: string | null;
           installments?: Array<{
             installmentDate: Record<'local' | 'en' | 'np', string>;
             installmentNo: number;
@@ -51784,6 +51872,8 @@ export const GetLoanPreviewDocument = `
           }
           totalRemainingPayable
           duesSince
+          totalPayablePrincipal
+          totalPayableInterest
         }
         statistics {
           remainingPayableAmount
