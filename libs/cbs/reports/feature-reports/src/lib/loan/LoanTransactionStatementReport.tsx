@@ -17,6 +17,7 @@ import { amountConverter } from '@coop/shared/utils';
 
 export const LoanTransactionStatementReport = () => {
   const [filters, setFilters] = useState<LoanStatementReportSettings | null>(null);
+
   const router = useRouter();
 
   const { data, isFetching } = useGetLoanTransactionReportQuery(
@@ -57,7 +58,7 @@ export const LoanTransactionStatementReport = () => {
           ]}
         />
         <Report.Inputs>
-          <LoanReportInputs />
+          <LoanReportInputs showAll />
         </Report.Inputs>
       </Report.Header>
 

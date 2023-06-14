@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -10,13 +11,17 @@ interface IReportDateRange {
   name?: string;
 }
 
-export const ReportDateRange = ({ label = 'Select Period', name }: IReportDateRange) => {
-  const { control } = useFormContext();
+export const ReportDateRange = ({ label = 'Select Period', name = 'period' }: IReportDateRange) => {
+  const { control, setValue } = useFormContext();
   const { locale } = useRouter();
   const { data } = useGetEndOfDayDateDataQuery();
 
   const calendarType = useAppSelector((state) => state?.auth?.preference?.date);
-  const transactionDate = data?.transaction?.endOfDayDate?.value?.en;
+  const transactionDate = data?.transaction?.endOfDayDate?.value;
+
+  useEffect(() => {
+    setValue(name, { from: transactionDate, to: transactionDate });
+  }, []);
 
   return (
     <Controller
@@ -26,7 +31,7 @@ export const ReportDateRange = ({ label = 'Select Period', name }: IReportDateRa
           locale={locale === 'ne' ? 'ne' : 'en'}
           calendarType={calendarType || 'BS'}
           value={value}
-          baseDate={new Date(transactionDate || '')}
+          baseDate={new Date(transactionDate?.en || '')}
           onChange={(newDate) =>
             onChange({
               from: {
