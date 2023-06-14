@@ -8,6 +8,7 @@ import {
   IndividualBasicMinInfo,
   InstitutionBasicMinInfo,
   useGetMemberKymDetailsOverviewQuery,
+  useIssueCertificateMutation,
 } from '@coop/cbs/data-access';
 
 import { AddMinorModal, MemberDetailsPathBar, MemberDetailsSidebar } from '../components';
@@ -37,6 +38,8 @@ export const MemberDetails = ({
   options,
 }: CbsMemberDetailsProps) => {
   const router = useRouter();
+
+  const { mutateAsync } = useIssueCertificateMutation();
 
   const memberId = router.query['id'] as string;
   const tabQuery = router.query['tab'] as string;
@@ -84,6 +87,12 @@ export const MemberDetails = ({
     memberType = 'individual';
   }
 
+  const getCertificate = () => {
+    mutateAsync({ id: router?.query?.['id'] as string }).then((res) =>
+      window.open(res?.members?.issueCertificate, '_blank')
+    );
+  };
+
   return (
     <>
       <MemberDetailsPathBar
@@ -96,12 +105,14 @@ export const MemberDetails = ({
                   label: 'Update Kym',
                   handler: () => router.push(`/cbs/members/individual/update/${memberId}`),
                 },
+                { label: 'Get Certificate', handler: getCertificate },
               ]
             : [
                 {
                   label: 'Update Kym',
                   handler: () => router.push(`/cbs/members/${memberType}/update/${memberId}`),
                 },
+                { label: 'Get Certificate', handler: getCertificate },
               ]
         }
       />
