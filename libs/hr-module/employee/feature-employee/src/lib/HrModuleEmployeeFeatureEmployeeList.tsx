@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { Column, PageHeader, Table } from '@myra-ui';
 
 import { useGetEmployeeListQuery } from '@coop/cbs/data-access';
+import { formatTableAddress } from '@coop/cbs/utils';
 import { getPaginationQuery } from '@coop/shared/utils';
 
 export const EmployeeList = () => {
@@ -16,7 +17,7 @@ export const EmployeeList = () => {
     () => [
       {
         header: 'Employee ID',
-        accessorFn: (row) => row?.node?.employeeId,
+        accessorFn: (row) => row?.node?.id,
       },
       {
         header: 'Name',
@@ -32,7 +33,7 @@ export const EmployeeList = () => {
       },
       {
         header: 'Address',
-        accessorFn: (row) => row?.node?.employeeAddress,
+        accessorFn: (row) => formatTableAddress(row?.node?.employeeAddress),
       },
       {
         header: 'Email',
@@ -40,7 +41,7 @@ export const EmployeeList = () => {
       },
       {
         header: 'Date of joining',
-        accessorFn: (row) => row?.node?.employeeDateOfJoining,
+        accessorFn: (row) => row?.node?.employeeDateOfJoining?.local,
       },
     ],
     []
