@@ -12802,6 +12802,8 @@ export type LoanInstallments = {
   installments?: Maybe<Array<Maybe<LoanInstallment>>>;
   total: Scalars['String'];
   totalInterest?: Maybe<Scalars['String']>;
+  totalPayableInterest?: Maybe<Scalars['String']>;
+  totalPayablePrincipal?: Maybe<Scalars['String']>;
   totalPrincipal?: Maybe<Scalars['String']>;
   totalRemainingPayable?: Maybe<Scalars['String']>;
 };
@@ -29343,6 +29345,8 @@ export type GetLoanPreviewQuery = {
           totalPrincipal?: string | null;
           totalRemainingPayable?: string | null;
           duesSince?: Record<'local' | 'en' | 'np', string> | null;
+          totalPayablePrincipal?: string | null;
+          totalPayableInterest?: string | null;
           installments?: Array<{
             installmentDate: Record<'local' | 'en' | 'np', string>;
             installmentNo: number;
@@ -51868,6 +51872,8 @@ export const GetLoanPreviewDocument = `
           }
           totalRemainingPayable
           duesSince
+          totalPayablePrincipal
+          totalPayableInterest
         }
         statistics {
           remainingPayableAmount
