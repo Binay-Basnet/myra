@@ -110,7 +110,7 @@ export enum Report {
   TRANSACTION_ABBS_TRANSACTION_REPORT = 'ABBS Transaction Report',
   TRANSACTION_CHAR_KHATA_REPORT = 'Charkhata Ledger Report',
   TRANSACTION_MRTRANSACTION_REPORT = 'Market Representative Transaction Report',
-  TRANSACTION_TAG_KHATA_REPORT = 'Tag Khata Report',
+  TRANSACTION_TAG_KHATA_REPORT = 'Ledger Group Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',

@@ -8,7 +8,7 @@ export const EmployeeAddress = () => {
   const methods = useFormContext();
   const { watch } = methods;
 
-  const isPermanentAndTemporaryAddressSame = watch('sameTempAsPermanentAddress');
+  const isPermanentAndTemporaryAddressSame = watch('isTemporarySameAsPermanent');
   return (
     <>
       <FormAddress

@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
 import { asyncToast } from '@myra-ui';
@@ -8,6 +9,7 @@ import {
   EmployeeOnboardingInput,
   useSetEmployeeOnboardingUpsertMutation,
 } from '@coop/cbs/data-access';
+import { ROUTES } from '@coop/cbs/utils';
 import { FormLayout } from '@coop/shared/form';
 
 import {
@@ -18,6 +20,7 @@ import {
 
 export const HrLifecycleOnboardingAdd = () => {
   const methods = useForm<EmployeeOnboardingInput>();
+  const router = useRouter();
 
   const { mutateAsync } = useSetEmployeeOnboardingUpsertMutation();
 
@@ -41,7 +44,9 @@ export const HrLifecycleOnboardingAdd = () => {
         success: 'Employee Onboarding Successful',
         loading: 'Onboarding Employee',
       },
-      onSuccess: () => {},
+      onSuccess: () => {
+        router.push(ROUTES?.HR_LIFECYCLE_EMPLOYEE_ONBOAORDING_LIST);
+      },
       promise: mutateAsync({
         id: null,
         input: {
