@@ -53,14 +53,6 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     [loanPreviewData]
   );
 
-  const { totalPayablePrincipal, totalPayableInterest } = useMemo(
-    () => ({
-      totalPayablePrincipal: paymentSchedule?.totalPayablePrincipal,
-      totalPayableInterest: paymentSchedule?.totalPayableInterest,
-    }),
-    [paymentSchedule]
-  );
-
   // const nextInstallmentNo = repaymentDetails?.nextInstallmentNo ?? (1 as number);
 
   const loanInstallments: IdealLoanInstallment[] = useMemo(
@@ -157,10 +149,20 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
     loanInstallments,
   ]);
 
+  const totalOverdueInterest = useMemo(
+    () => Number(paymentSchedule?.totalPayableInterest || 0),
+    [paymentSchedule]
+  );
+
   const totalOverdueAmount = useMemo(
     () =>
       overDueInstallments.reduce((sum, installment) => sum + Number(installment?.overdueAmount), 0),
     [overDueInstallments]
+  );
+
+  const totalOverduePrincipal = useMemo(
+    () => (totalOverdueAmount - totalOverdueInterest - totalFine).toFixed(2),
+    [totalOverdueInterest, totalOverdueAmount]
   );
 
   return (
@@ -294,11 +296,11 @@ export const LoanPaymentSchedule = ({ setTotalFine, totalFine }: ILoanPaymentSch
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Total Remaining Principal:</Text>
-                <Text fontWeight={500}>{amountConverter(totalPayablePrincipal || 0)}</Text>
+                <Text fontWeight={500}>{amountConverter(totalOverduePrincipal)}</Text>
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Total Remaining Interest:</Text>
-                <Text fontWeight={500}>{amountConverter(totalPayableInterest || 0)}</Text>
+                <Text fontWeight={500}>{amountConverter(totalOverdueInterest)}</Text>
               </Box>
               <Box display="flex" gap="s4">
                 <Text>Total Overdue Amount:</Text>
