@@ -3,24 +3,15 @@ import { useRouter } from 'next/router';
 
 import { MainLayout } from '@myra-ui';
 
-import { useIssueCertificateMutation } from '@coop/cbs/data-access';
 import { CbsMinorMembersFeatureDetails, MemberDetails } from '@coop/cbs/members/details';
 import { MemberPagesLayout } from '@coop/cbs/members/list';
 
 const MemberDEtailsPage = () => {
   const router = useRouter();
 
-  const { mutateAsync } = useIssueCertificateMutation();
-
   const [isAddMinorModalOpen, setIsAddMinorAccountModalOpen] = useState(false);
   const handleMinorAccountClose = () => {
     setIsAddMinorAccountModalOpen(false);
-  };
-
-  const getCertificate = () => {
-    mutateAsync({ id: router?.query?.['id'] as string }).then((res) =>
-      window.open(res?.members?.issueCertificate, '_blank')
-    );
   };
 
   if (router?.query?.['type'] === 'minor') {
@@ -31,10 +22,7 @@ const MemberDEtailsPage = () => {
     <MemberDetails
       isAddMinorModalOpen={isAddMinorModalOpen}
       handleMinorAccountClose={handleMinorAccountClose}
-      options={[
-        { label: 'Add Minor', handler: () => setIsAddMinorAccountModalOpen(true) },
-        { label: 'Get Certificate', handler: getCertificate },
-      ]}
+      options={[{ label: 'Add Minor', handler: () => setIsAddMinorAccountModalOpen(true) }]}
     />
   );
 };
