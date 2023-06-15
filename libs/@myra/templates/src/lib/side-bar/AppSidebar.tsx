@@ -86,6 +86,7 @@ export const AppSidebar = ({ module = 'CBS', menu, forms }: ISidebarProps) => {
                   <Can I="CREATE" a={item.aclKey} key={item?.label}>
                     <Box>
                       <AddButtonList
+                        testId={t[item.label] || item?.label}
                         label={t[item.label] || item?.label}
                         onClick={() => {
                           if (item.idType) {
