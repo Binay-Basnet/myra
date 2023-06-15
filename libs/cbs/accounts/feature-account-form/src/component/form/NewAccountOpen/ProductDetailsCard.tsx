@@ -57,7 +57,7 @@ export const ProductCard = ({ productId }: ProductProps) => {
           }
         </Text>
         <Text fontWeight="Medium" fontSize="s3">
-          Interest Rate :
+          Account Premium Rate :
           <b>
             {' '}
             {productData?.interest?.minRate} % -{productData?.interest?.maxRate}%{' '}
