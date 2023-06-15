@@ -46,6 +46,7 @@ export interface FileInputProps extends Omit<DropzoneOptions, 'maxFiles'> {
   onChange?: (file: string[] | FileWithUrl[] | null) => void;
   maxFiles?: 'one' | 'many';
   generateUrls?: true | never;
+  name?: string;
 }
 
 export const FileInput = ({
@@ -55,6 +56,7 @@ export const FileInput = ({
   value = [],
   maxFiles = 'many',
   generateUrls,
+  name,
   ...rest
 }: FileInputProps) => {
   const [files, setFiles] = useState<File[]>([]);
@@ -115,6 +117,7 @@ export const FileInput = ({
           bg: 'gray.100',
         }}
         {...getRootProps({ style })}
+        data-testid={name}
       >
         <input {...getInputProps()} />
         <Flex

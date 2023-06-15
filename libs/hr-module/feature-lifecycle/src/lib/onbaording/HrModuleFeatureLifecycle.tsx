@@ -16,7 +16,7 @@ import {
   OnboardingActivity,
   OnboardingBasicDetails,
   OnboardingJoiningDetails,
-} from '../components';
+} from '../../components';
 
 export const HrLifecycleOnboardingAdd = () => {
   const methods = useForm<EmployeeOnboardingInput>();

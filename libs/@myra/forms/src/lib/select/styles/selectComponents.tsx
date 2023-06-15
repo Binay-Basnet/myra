@@ -11,11 +11,13 @@ export interface Option {
 export const getComponents: (
   hasRadio?: boolean,
   addItemHandler?: () => void,
-  addItemLabel?: string
+  addItemLabel?: string,
+  name?: string
 ) => SelectComponentsConfig<Option, boolean, GroupBase<Option>> = (
   hasRadio,
   addItemHandler,
-  addItemLabel
+  addItemLabel,
+  name
 ) => ({
   Menu: ({ children, ...props }) => (
     <chakraComponents.Menu {...props}>
@@ -67,6 +69,18 @@ export const getComponents: (
       </chakraComponents.Placeholder>
     );
   },
+  Control: ({ innerProps, ...props }) => (
+    <chakraComponents.Control
+      {...props}
+      innerProps={
+        {
+          ...innerProps,
+          'data-testid': `${name}`,
+        } as unknown as Record<string, string>
+      }
+    />
+  ),
+
   DropdownIndicator: (props) => {
     const { options } = props;
     return (
@@ -81,7 +95,7 @@ export const getComponents: (
   },
   Option: ({ children, ...props }) =>
     hasRadio ? (
-      <chakraComponents.Option {...props}>
+      <chakraComponents.Option {...props} data-testid="testID">
         <Box display="flex" alignItems="center" gap="s8">
           <Box
             display="flex"
@@ -102,7 +116,16 @@ export const getComponents: (
         </Box>
       </chakraComponents.Option>
     ) : (
-      <chakraComponents.Option {...props}>
+      <chakraComponents.Option
+        {...props}
+        data-testid="testID"
+        innerProps={
+          {
+            ...props.innerProps,
+            'data-testid': `${name}-${props.data.label.toString().toLowerCase()}`,
+          } as unknown as Record<string, string>
+        }
+      >
         {children}
         {props.isMulti ? (
           <Box

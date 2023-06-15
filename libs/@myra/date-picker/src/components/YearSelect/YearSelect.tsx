@@ -1,5 +1,5 @@
 import React from 'react';
-import { GroupBase, Select } from 'chakra-react-select';
+import { chakraComponents, GroupBase, Select } from 'chakra-react-select';
 
 import { TDateState } from '../../types/date';
 import { ad2bs, bs2ad } from '../../utils/ad-bs-converter';
@@ -16,12 +16,14 @@ interface IYearBaseSelectProps {
   calendarType: 'AD' | 'BS';
   locale?: 'en' | 'ne';
   year: number;
+  name?: string;
   onChange: (newYear: number) => void;
 }
 
 export const YearBaseSelect = ({
   calendarType,
   year,
+  name,
   onChange,
   locale = 'en',
 }: IYearBaseSelectProps) => {
@@ -171,7 +173,32 @@ export const YearBaseSelect = ({
       }}
       isSearchable={false}
       isClearable={false}
-      components={{ ClearIndicator: () => null }}
+      components={{
+        ClearIndicator: () => null,
+        DropdownIndicator: null,
+        Control: ({ innerProps, ...props }) => (
+          <chakraComponents.Control
+            {...props}
+            innerProps={
+              {
+                ...innerProps,
+                'data-testid': `${name}-year`,
+              } as unknown as Record<string, string>
+            }
+          />
+        ),
+        Option: ({ innerProps, ...props }) => (
+          <chakraComponents.Option
+            {...props}
+            innerProps={
+              {
+                ...innerProps,
+                'data-testid': `${name}-${props?.data?.label}`,
+              } as unknown as Record<string, string>
+            }
+          />
+        ),
+      }}
       value={options.find((option) => option.value === year)}
     />
   );
@@ -180,7 +207,7 @@ export const YearBaseSelect = ({
 interface IYearSelectProps {
   calendarType: 'AD' | 'BS';
   locale?: 'en' | 'ne';
-
+  name?: string;
   showNextYear?: boolean;
   year?: number;
   state: TDateState;
@@ -191,12 +218,14 @@ export const YearSelect = ({
   calendarType,
   locale,
   state,
+  name,
   setState,
   showNextYear,
 }: IYearSelectProps) => (
   <YearBaseSelect
     locale={locale}
     calendarType={calendarType}
+    name={name}
     year={
       showNextYear
         ? calendarType === 'AD'

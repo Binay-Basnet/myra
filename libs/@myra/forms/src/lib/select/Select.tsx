@@ -82,8 +82,8 @@ export const Select = React.forwardRef(
     });
 
     const components = useMemo(
-      () => getComponents(hasRadioOption, addItemHandler, addItemLabel),
-      [hasRadioOption, addItemHandler, addItemLabel]
+      () => getComponents(hasRadioOption, addItemHandler, addItemLabel, name),
+      [hasRadioOption, addItemHandler, addItemLabel, name]
     );
 
     return (
@@ -91,33 +91,34 @@ export const Select = React.forwardRef(
         <Text variant="formLabel" color="gray.700">
           {isRequired ? `${label} *` : label}
         </Text>
-
-        <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
-          key={!isMulti ? `my_unique_select_key__${JSON.stringify(value)}` : 'isMulti'}
-          id="select"
-          data-testid={name}
-          instanceId="select"
-          isOptionSelected={isOptionSelected}
-          placeholder={placeholder ?? t['select']}
-          options={getOptions()}
-          value={getValue()}
-          controlShouldRenderValue={!isMulti}
-          closeMenuOnSelect={!isMulti}
-          isMulti={isMulti}
-          hideSelectedOptions={false}
-          isOptionDisabled={(option) => !!option.disabled}
-          isClearable={false}
-          onChange={multiOnChange}
-          chakraStyles={getChakraDefaultStyles(!!errorText, !!addItemHandler)}
-          components={components}
-          ref={
-            ref as unknown as
-              | Ref<SelectInstance<SelectOption, boolean, GroupBase<SelectOption>>>
-              | undefined
-          }
-          {...rest}
-        />
-
+        <div data-testid={`${name}`}>
+          <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
+            key={!isMulti ? `my_unique_select_key__${JSON.stringify(value)}` : 'isMulti'}
+            data-testid="select"
+            id="select"
+            name={name}
+            instanceId="select"
+            isOptionSelected={isOptionSelected}
+            placeholder={placeholder ?? t['select']}
+            options={getOptions()}
+            value={getValue()}
+            controlShouldRenderValue={!isMulti}
+            closeMenuOnSelect={!isMulti}
+            isMulti={isMulti}
+            hideSelectedOptions={false}
+            isOptionDisabled={(option) => !!option.disabled}
+            isClearable={false}
+            onChange={multiOnChange}
+            chakraStyles={getChakraDefaultStyles(!!errorText, !!addItemHandler)}
+            components={components}
+            ref={
+              ref as unknown as
+                | Ref<SelectInstance<SelectOption, boolean, GroupBase<SelectOption>>>
+                | undefined
+            }
+            {...rest}
+          />
+        </div>
         {errorText ? (
           <Text variant="formHelper" color="danger.500">
             {errorText}

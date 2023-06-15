@@ -79,8 +79,10 @@ const FormControl = <T extends Record<string, unknown>>({
 
   return (
     <Select
+      data-testid={name}
       errorText={name ? (get(errors, name)?.message as string) : undefined}
       options={options}
+      name={name}
       value={rest.isMulti ? filteredValue : foundValue}
       inputId={name}
       isClearable
